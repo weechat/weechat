@@ -38,8 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <para>
     Syntax for the FIFO pipe commands/text is one of following:
     <screen>
-      category,name *text or command here
-      name *text or command here
+      plugin.buffer *text or command here
       *text or command here
     </screen>
   </para>
@@ -49,19 +48,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <itemizedlist>
       <listitem>
         <para>
-          nick change on freenode to "mynick|out" :
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+          nick change on IRC server freenode to "newnick" :
+          <screen><prompt>$ </prompt><userinput>echo 'irc.server.freenode */nick newnick' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          display text on #weechat channel:
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
+          display text on IRC #weechat channel:
+          <screen><prompt>$ </prompt><userinput>echo 'irc.freenode.#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          display text on current channel (buffer displayed by WeeChat):
+          display text on current buffer:
           <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
           <emphasis>Warning:</emphasis> this is dangerous and you should
           not do that except if you know what you do!
@@ -69,9 +68,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          send two commands to unload/reload Perl scripts (you have to
-          separate them with "\n"):
-          <screen><prompt>$ </prompt><userinput>echo -e " weechat,weechat */perl unload\nweechat,weechat */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
+          send two commands to unload/reload Perl scripts (you have to separate
+          them with "\n"):
+          <screen><prompt>$ </prompt><userinput>echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
     </itemizedlist>
@@ -90,7 +89,7 @@ if [ $# -eq 1 ]; then
 fi
 </screen>
     If the script is called "auto_weechat_command", you can run it with:
-<screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
+<screen><prompt>$ </prompt><userinput>./auto_weechat_command 'irc.freenode.#weechat *hello'</userinput></screen>
   </para>
   
 </section>

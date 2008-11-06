@@ -6,67 +6,43 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>aspell.check.commands</command>
+<command>aspell.check.commands</command>: comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)
 <itemizedlist>
-  <listitem>
-    <para>description: comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: 'ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic'</para>
+    <para>values: any string (default value: 'ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic')</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.check.default_dict</command>
+<command>aspell.check.default_dict</command>: default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitely enabled it)
 <itemizedlist>
-  <listitem>
-    <para>description: default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitely enabled it)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.check.word_min_length</command>
+<command>aspell.check.word_min_length</command>: minimum length for a word to be spell checked (use 0 to check all words)
 <itemizedlist>
-  <listitem>
-    <para>description: minimum length for a word to be spell checked (use 0 to check all words)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 2</para>
+    <para>values: 0 .. 2147483647 (default value: 2)</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.look.color</command>
+<command>aspell.look.color</command>: color used for mispelled words
 <itemizedlist>
-  <listitem>
-    <para>description: color used for mispelled words</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
-  </listitem>
-  <listitem>
-    <para>default value: lightred</para>
+    <para>values: a color name (default value: lightred)</para>
   </listitem>
 </itemizedlist>
 

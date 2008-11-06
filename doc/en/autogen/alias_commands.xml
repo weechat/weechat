@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>alias  [alias_name [command [arguments]]]</command>
+<command>/alias  [alias_name [command [arguments]]]</command>
 <programlisting>
 create an alias for a command
 
@@ -17,3 +17,4 @@ alias_name: name of alias
 Note: in command, special variables $1, $2,..,$9 are replaced by arguments given by user, and $* is replaced by all arguments.
 Variables $nick, $channel and $server are replaced by current nick/channel/server.
 </programlisting>
+

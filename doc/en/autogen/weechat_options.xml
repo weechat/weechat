@@ -6,2099 +6,1313 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>weechat.color.bar_more</command>
+<command>weechat.color.bar_more</command>: text color for '+' when scrolling bars
 <itemizedlist>
   <listitem>
-    <para>description: text color for '+' when scrolling bars</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightmagenta</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat</command>
+<command>weechat.color.chat</command>: text color for chat
 <itemizedlist>
   <listitem>
-    <para>description: text color for chat</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_bg</command>
+<command>weechat.color.chat_bg</command>: background color for chat
 <itemizedlist>
   <listitem>
-    <para>description: background color for chat</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_buffer</command>
+<command>weechat.color.chat_buffer</command>: text color for buffer names
 <itemizedlist>
   <listitem>
-    <para>description: text color for buffer names</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
-  <listitem>
-    <para>default value: white</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_channel</command>
+<command>weechat.color.chat_channel</command>: text color for channel names
 <itemizedlist>
-  <listitem>
-    <para>description: text color for channel names</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: white</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_delimiters</command>
+<command>weechat.color.chat_delimiters</command>: text color for delimiters
 <itemizedlist>
-  <listitem>
-    <para>description: text color for delimiters</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: green</para>
+    <para>values: a color name (default value: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_highlight</command>
+<command>weechat.color.chat_highlight</command>: text color for highlighted prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for highlighted prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_highlight_bg</command>
+<command>weechat.color.chat_highlight_bg</command>: background color for highlighted prefix
 <itemizedlist>
-  <listitem>
-    <para>description: background color for highlighted prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: magenta</para>
+    <para>values: a color name (default value: magenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_host</command>
+<command>weechat.color.chat_host</command>: text color for hostnames
 <itemizedlist>
-  <listitem>
-    <para>description: text color for hostnames</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
-  <listitem>
-    <para>default value: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick</command>
+<command>weechat.color.chat_nick</command>: text color for nicks in chat window
 <itemizedlist>
-  <listitem>
-    <para>description: text color for nicks in chat window</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightcyan)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightcyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color01</command>
+<command>weechat.color.chat_nick_color01</command>: text color #1 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #1 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
-  <listitem>
-    <para>default value: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color02</command>
+<command>weechat.color.chat_nick_color02</command>: text color #2 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #2 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: magenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: magenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color03</command>
+<command>weechat.color.chat_nick_color03</command>: text color #3 for nick
 <itemizedlist>
   <listitem>
-    <para>description: text color #3 for nick</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: green</para>
+    <para>values: a color name (default value: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color04</command>
+<command>weechat.color.chat_nick_color04</command>: text color #4 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #4 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: brown</para>
+    <para>values: a color name (default value: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color05</command>
+<command>weechat.color.chat_nick_color05</command>: text color #5 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #5 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightblue</para>
+    <para>values: a color name (default value: lightblue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color06</command>
+<command>weechat.color.chat_nick_color06</command>: text color #6 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #6 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color07</command>
+<command>weechat.color.chat_nick_color07</command>: text color #7 for nick
 <itemizedlist>
-  <listitem>
-    <para>description: text color #7 for nick</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightcyan</para>
+    <para>values: a color name (default value: lightcyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color08</command>
+<command>weechat.color.chat_nick_color08</command>: text color #8 for nick
 <itemizedlist>
   <listitem>
-    <para>description: text color #8 for nick</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightmagenta</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color09</command>
+<command>weechat.color.chat_nick_color09</command>: text color #9 for nick
 <itemizedlist>
   <listitem>
-    <para>description: text color #9 for nick</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightgreen</para>
+    <para>values: a color name (default value: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color10</command>
+<command>weechat.color.chat_nick_color10</command>: text color #10 for nick
 <itemizedlist>
   <listitem>
-    <para>description: text color #10 for nick</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: blue</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_other</command>
+<command>weechat.color.chat_nick_other</command>: text color for other nick in private buffer
 <itemizedlist>
   <listitem>
-    <para>description: text color for other nick in private buffer</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
-  <listitem>
-    <para>default value: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_self</command>
+<command>weechat.color.chat_nick_self</command>: text color for local nick in chat window
 <itemizedlist>
-  <listitem>
-    <para>description: text color for local nick in chat window</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: white</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_action</command>
+<command>weechat.color.chat_prefix_action</command>: text color for action prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for action prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: white</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_error</command>
+<command>weechat.color.chat_prefix_error</command>: text color for error prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for error prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_join</command>
+<command>weechat.color.chat_prefix_join</command>: text color for join prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for join prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightgreen</para>
+    <para>values: a color name (default value: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_more</command>
+<command>weechat.color.chat_prefix_more</command>: text color for '+' when prefix is too long
 <itemizedlist>
-  <listitem>
-    <para>description: text color for '+' when prefix is too long</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_network</command>
+<command>weechat.color.chat_prefix_network</command>: text color for network prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for network prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: magenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: magenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_quit</command>
+<command>weechat.color.chat_prefix_quit</command>: text color for quit prefix
 <itemizedlist>
-  <listitem>
-    <para>description: text color for quit prefix</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightred)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightred</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_suffix</command>
+<command>weechat.color.chat_prefix_suffix</command>: text color for suffix (after prefix)
 <itemizedlist>
-  <listitem>
-    <para>description: text color for suffix (after prefix)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: green)</para>
   </listitem>
-  <listitem>
-    <para>default value: green</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_read_marker</command>
+<command>weechat.color.chat_read_marker</command>: text color for unread data marker
 <itemizedlist>
   <listitem>
-    <para>description: text color for unread data marker</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: magenta</para>
+    <para>values: a color name (default value: magenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_read_marker_bg</command>
+<command>weechat.color.chat_read_marker_bg</command>: background color for unread data marker
 <itemizedlist>
-  <listitem>
-    <para>description: background color for unread data marker</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_server</command>
+<command>weechat.color.chat_server</command>: text color for server names
 <itemizedlist>
-  <listitem>
-    <para>description: text color for server names</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: brown</para>
+    <para>values: a color name (default value: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_text_found</command>
+<command>weechat.color.chat_text_found</command>: text color for marker on lines where text sought is found
 <itemizedlist>
   <listitem>
-    <para>description: text color for marker on lines where text sought is found</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_text_found_bg</command>
+<command>weechat.color.chat_text_found_bg</command>: background color for marker on lines where text sought is found
 <itemizedlist>
   <listitem>
-    <para>description: background color for marker on lines where text sought is found</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_time</command>
+<command>weechat.color.chat_time</command>: text color for time in chat window
 <itemizedlist>
-  <listitem>
-    <para>description: text color for time in chat window</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_time_delimiters</command>
+<command>weechat.color.chat_time_delimiters</command>: text color for time delimiters
 <itemizedlist>
-  <listitem>
-    <para>description: text color for time delimiters</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: brown</para>
+    <para>values: a color name (default value: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input</command>
+<command>weechat.color.input</command>: text color for input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_actions</command>
+<command>weechat.color.input_actions</command>: text color for actions in input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for actions in input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightgreen</para>
+    <para>values: a color name (default value: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_bg</command>
+<command>weechat.color.input_bg</command>: background color for input line
 <itemizedlist>
-  <listitem>
-    <para>description: background color for input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
-  <listitem>
-    <para>default value: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_channel</command>
+<command>weechat.color.input_channel</command>: text color for channel name in input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for channel name in input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
-  <listitem>
-    <para>default value: white</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_delimiters</command>
+<command>weechat.color.input_delimiters</command>: text color for delimiters in input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for delimiters in input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
-  <listitem>
-    <para>default value: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_nick</command>
+<command>weechat.color.input_nick</command>: text color for nick name in input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for nick name in input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightcyan)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightcyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_server</command>
+<command>weechat.color.input_server</command>: text color for server name in input line
 <itemizedlist>
   <listitem>
-    <para>description: text color for server name in input line</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: brown</para>
+    <para>values: a color name (default value: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_text_not_found</command>
+<command>weechat.color.input_text_not_found</command>: text color for unsucessful text search in input line
 <itemizedlist>
-  <listitem>
-    <para>description: text color for unsucessful text search in input line</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: red</para>
+    <para>values: a color name (default value: red)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist</command>
+<command>weechat.color.nicklist</command>: text color for nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: text color for nicklist</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_away</command>
+<command>weechat.color.nicklist_away</command>: text color for away nicknames
 <itemizedlist>
-  <listitem>
-    <para>description: text color for away nicknames</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: cyan</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_bg</command>
+<command>weechat.color.nicklist_bg</command>: background color for nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: background color for nicklist</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_group</command>
+<command>weechat.color.nicklist_group</command>: text color for groups in nicklist
 <itemizedlist>
   <listitem>
-    <para>description: text color for groups in nicklist</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: green</para>
+    <para>values: a color name (default value: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_more</command>
+<command>weechat.color.nicklist_more</command>: text color for '+' when scrolling nicks in nicklist
 <itemizedlist>
   <listitem>
-    <para>description: text color for '+' when scrolling nicks in nicklist</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightmagenta</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix1</command>
+<command>weechat.color.nicklist_prefix1</command>: text color for prefix #1 in nicklist
 <itemizedlist>
   <listitem>
-    <para>description: text color for prefix #1 in nicklist</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightgreen</para>
+    <para>values: a color name (default value: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix2</command>
+<command>weechat.color.nicklist_prefix2</command>: text color for prefix #2 in nicklist
 <itemizedlist>
   <listitem>
-    <para>description: text color for prefix #2 in nicklist</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix3</command>
+<command>weechat.color.nicklist_prefix3</command>: text color for prefix #3 in nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: text color for prefix #3 in nicklist</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix4</command>
+<command>weechat.color.nicklist_prefix4</command>: text color for prefix #4 in nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: text color for prefix #4 in nicklist</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: blue</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix5</command>
+<command>weechat.color.nicklist_prefix5</command>: text color for prefix #5 in nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: text color for prefix #5 in nicklist</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: brown</para>
+    <para>values: a color name (default value: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_separator</command>
+<command>weechat.color.nicklist_separator</command>: text color for nicklist separator
 <itemizedlist>
-  <listitem>
-    <para>description: text color for nicklist separator</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: blue</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.separator</command>
+<command>weechat.color.separator</command>: background color for window separators (when splited)
 <itemizedlist>
-  <listitem>
-    <para>description: background color for window separators (when splited)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
-  <listitem>
-    <para>default value: blue</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status</command>
+<command>weechat.color.status</command>: text color for status bar
 <itemizedlist>
-  <listitem>
-    <para>description: text color for status bar</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
-  <listitem>
-    <para>default value: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_bg</command>
+<command>weechat.color.status_bg</command>: background color for status bar
 <itemizedlist>
-  <listitem>
-    <para>description: background color for status bar</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
-  <listitem>
-    <para>default value: blue</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_highlight</command>
+<command>weechat.color.status_data_highlight</command>: text color for buffer with highlight (status bar)
 <itemizedlist>
-  <listitem>
-    <para>description: text color for buffer with highlight (status bar)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>default value: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_msg</command>
+<command>weechat.color.status_data_msg</command>: text color for buffer with new messages (status bar)
 <itemizedlist>
   <listitem>
-    <para>description: text color for buffer with new messages (status bar)</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_other</command>
+<command>weechat.color.status_data_other</command>: text color for buffer with new data (not messages) (status bar)
 <itemizedlist>
-  <listitem>
-    <para>description: text color for buffer with new data (not messages) (status bar)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_private</command>
+<command>weechat.color.status_data_private</command>: text color for buffer with private message (status bar)
 <itemizedlist>
-  <listitem>
-    <para>description: text color for buffer with private message (status bar)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: lightgreen</para>
+    <para>values: a color name (default value: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_delimiters</command>
+<command>weechat.color.status_delimiters</command>: text color for status bar delimiters
 <itemizedlist>
-  <listitem>
-    <para>description: text color for status bar delimiters</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: cyan</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_more</command>
+<command>weechat.color.status_more</command>: text color for buffer with new data (status bar)
 <itemizedlist>
-  <listitem>
-    <para>description: text color for buffer with new data (status bar)</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: yellow</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_name</command>
+<command>weechat.color.status_name</command>: text color for current buffer name in status bar
 <itemizedlist>
   <listitem>
-    <para>description: text color for current buffer name in status bar</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: white</para>
+    <para>values: a color name (default value: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_number</command>
+<command>weechat.color.status_number</command>: text color for current buffer number in status bar
 <itemizedlist>
   <listitem>
-    <para>description: text color for current buffer number in status bar</para>
-  </listitem>
-  <listitem>
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name</para>
+    <para>values: a color name (default value: yellow)</para>
   </listitem>
-  <listitem>
-    <para>default value: yellow</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.title</command>
+<command>weechat.color.title</command>: text color for title bar
 <itemizedlist>
-  <listitem>
-    <para>description: text color for title bar</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: default</para>
+    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.title_bg</command>
+<command>weechat.color.title_bg</command>: background color for title bar
 <itemizedlist>
-  <listitem>
-    <para>description: background color for title bar</para>
-  </listitem>
   <listitem>
     <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
   </listitem>
   <listitem>
-    <para>default value: blue</para>
+    <para>values: a color name (default value: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_completor</command>
+<command>weechat.completion.nick_completor</command>: string inserted after nick completion
 <itemizedlist>
-  <listitem>
-    <para>description: string inserted after nick completion</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ':'</para>
+    <para>values: any string (default value: ':')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_first_only</command>
+<command>weechat.completion.nick_first_only</command>: complete only with first nick found
 <itemizedlist>
-  <listitem>
-    <para>description: complete only with first nick found</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_ignore_chars</command>
+<command>weechat.completion.nick_ignore_chars</command>: chars ignored for nick completion
 <itemizedlist>
-  <listitem>
-    <para>description: chars ignored for nick completion</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '[]-^'</para>
+    <para>values: any string (default value: '[]-^')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_alert</command>
+<command>weechat.completion.partial_completion_alert</command>: alert user when a partial completion occurs
 <itemizedlist>
-  <listitem>
-    <para>description: alert user when a partial completion occurs</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_command</command>
+<command>weechat.completion.partial_completion_command</command>: partially complete command names (stop when many commands found begin with same letters)
 <itemizedlist>
-  <listitem>
-    <para>description: partially complete command names (stop when many commands found begin with same letters)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_command_arg</command>
+<command>weechat.completion.partial_completion_command_arg</command>: partially complete command arguments (stop when many arguments found begin with same prefix)
 <itemizedlist>
-  <listitem>
-    <para>description: partially complete command arguments (stop when many arguments found begin with same prefix)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_count</command>
+<command>weechat.completion.partial_completion_count</command>: display count for each partial completion in bar item
 <itemizedlist>
-  <listitem>
-    <para>description: display count for each partial completion in bar item</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_nick</command>
+<command>weechat.completion.partial_completion_nick</command>: partially complete nicks (stop when many nicks found begin with same letters)
 <itemizedlist>
-  <listitem>
-    <para>description: partially complete nicks (stop when many nicks found begin with same letters)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.display_default</command>
+<command>weechat.history.display_default</command>: maximum number of commands to display by default in history listing (0 = unlimited)
 <itemizedlist>
-  <listitem>
-    <para>description: maximum number of commands to display by default in history listing (0 = unlimited)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 5</para>
+    <para>values: 0 .. 2147483647 (default value: 5)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.max_commands</command>
+<command>weechat.history.max_commands</command>: maximum number of user commands in history (0 = unlimited)
 <itemizedlist>
-  <listitem>
-    <para>description: maximum number of user commands in history (0 = unlimited)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 100</para>
+    <para>values: 0 .. 2147483647 (default value: 100)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.max_lines</command>
+<command>weechat.history.max_lines</command>: maximum number of lines in history per buffer (0 = unlimited)
 <itemizedlist>
-  <listitem>
-    <para>description: maximum number of lines in history per buffer (0 = unlimited)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 4096</para>
+    <para>values: 0 .. 2147483647 (default value: 4096)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.buffer_notify_default</command>
+<command>weechat.look.buffer_notify_default</command>: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message)
 <itemizedlist>
-  <listitem>
-    <para>description: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: none, highlight, message, all</para>
-  </listitem>
-  <listitem>
-    <para>default value: all</para>
+    <para>values: none, highlight, message, all (default value: all)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.buffer_time_format</command>
+<command>weechat.look.buffer_time_format</command>: time format for buffers
 <itemizedlist>
-  <listitem>
-    <para>description: time format for buffers</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '%H:%M:%S'</para>
+    <para>values: any string (default value: '%H:%M:%S')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.color_nicks_number</command>
+<command>weechat.look.color_nicks_number</command>: number of colors to use for nicks colors
 <itemizedlist>
-  <listitem>
-    <para>description: number of colors to use for nicks colors</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 1 .. 10</para>
-  </listitem>
-  <listitem>
-    <para>default value: 10</para>
+    <para>values: 1 .. 10 (default value: 10)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.color_real_white</command>
+<command>weechat.look.color_real_white</command>: if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)
 <itemizedlist>
-  <listitem>
-    <para>description: if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.day_change</command>
+<command>weechat.look.day_change</command>: display special message when day changes
 <itemizedlist>
-  <listitem>
-    <para>description: display special message when day changes</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.day_change_time_format</command>
+<command>weechat.look.day_change_time_format</command>: time format for date displayed when day changed
 <itemizedlist>
-  <listitem>
-    <para>description: time format for date displayed when day changed</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '%a, %d %b %Y'</para>
+    <para>values: any string (default value: '%a, %d %b %Y')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.highlight</command>
+<command>weechat.look.highlight</command>: comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)
 <itemizedlist>
-  <listitem>
-    <para>description: comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_count</command>
+<command>weechat.look.hotlist_names_count</command>: max number of names in hotlist (0 = no name displayed, only buffer numbers)
 <itemizedlist>
-  <listitem>
-    <para>description: max number of names in hotlist (0 = no name displayed, only buffer numbers)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 32</para>
-  </listitem>
-  <listitem>
-    <para>default value: 3</para>
+    <para>values: 0 .. 32 (default value: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_length</command>
+<command>weechat.look.hotlist_names_length</command>: max length of names in hotlist (0 = no limit)
 <itemizedlist>
-  <listitem>
-    <para>description: max length of names in hotlist (0 = no limit)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 32</para>
-  </listitem>
-  <listitem>
-    <para>default value: 0</para>
+    <para>values: 0 .. 32 (default value: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_level</command>
+<command>weechat.look.hotlist_names_level</command>: level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)
 <itemizedlist>
-  <listitem>
-    <para>description: level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 1 .. 15</para>
-  </listitem>
-  <listitem>
-    <para>default value: 12</para>
+    <para>values: 1 .. 15 (default value: 12)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_short_names</command>
+<command>weechat.look.hotlist_short_names</command>: if set, uses short names to display buffer names in hotlist (start after first '.' in name)
 <itemizedlist>
-  <listitem>
-    <para>description: if set, uses short names to display buffer names in hotlist (start after first '.' in name)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_sort</command>
+<command>weechat.look.hotlist_sort</command>: hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)
 <itemizedlist>
-  <listitem>
-    <para>description: hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc</para>
-  </listitem>
-  <listitem>
-    <para>default value: group_time_asc</para>
+    <para>values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (default value: group_time_asc)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.item_time_format</command>
+<command>weechat.look.item_time_format</command>: time format for "time" bar item
 <itemizedlist>
-  <listitem>
-    <para>description: time format for "time" bar item</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '%H:%M'</para>
+    <para>values: any string (default value: '%H:%M')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist</command>
+<command>weechat.look.nicklist</command>: display nicklist (on buffers with nicklist enabled)
 <itemizedlist>
-  <listitem>
-    <para>description: display nicklist (on buffers with nicklist enabled)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_max_size</command>
+<command>weechat.look.nicklist_max_size</command>: max size for nicklist (width or height, depending on nicklist_position (0 = no max size; if min = max and &gt; 0, then size is fixed))
 <itemizedlist>
-  <listitem>
-    <para>description: max size for nicklist (width or height, depending on nicklist_position (0 = no max size; if min = max and &gt; 0, then size is fixed))</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>default value: 0</para>
+    <para>values: 0 .. 100 (default value: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_min_size</command>
+<command>weechat.look.nicklist_min_size</command>: min size for nicklist (width or height, depending on nicklist_position (0 = no min size))
 <itemizedlist>
-  <listitem>
-    <para>description: min size for nicklist (width or height, depending on nicklist_position (0 = no min size))</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>default value: 0</para>
+    <para>values: 0 .. 100 (default value: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_position</command>
+<command>weechat.look.nicklist_position</command>: nicklist position (top, left, right (default), bottom)
 <itemizedlist>
-  <listitem>
-    <para>description: nicklist position (top, left, right (default), bottom)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: left, right, top, bottom</para>
-  </listitem>
-  <listitem>
-    <para>default value: right</para>
+    <para>values: left, right, top, bottom (default value: right)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_separator</command>
+<command>weechat.look.nicklist_separator</command>: separator between chat and nicklist
 <itemizedlist>
-  <listitem>
-    <para>description: separator between chat and nicklist</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nickmode</command>
+<command>weechat.look.nickmode</command>: display nick mode ((half)op/voice) before each nick
 <itemizedlist>
-  <listitem>
-    <para>description: display nick mode ((half)op/voice) before each nick</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nickmode_empty</command>
+<command>weechat.look.nickmode_empty</command>: display space if nick mode is not (half)op/voice
 <itemizedlist>
-  <listitem>
-    <para>description: display space if nick mode is not (half)op/voice</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.paste_max_lines</command>
+<command>weechat.look.paste_max_lines</command>: max number of lines for paste without asking user (0 = disable this feature)
 <itemizedlist>
-  <listitem>
-    <para>description: max number of lines for paste without asking user (0 = disable this feature)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 3</para>
+    <para>values: 0 .. 2147483647 (default value: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_action</command>
+<command>weechat.look.prefix_action</command>: prefix for action messages
 <itemizedlist>
-  <listitem>
-    <para>description: prefix for action messages</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ' *'</para>
+    <para>values: any string (default value: ' *')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_align</command>
+<command>weechat.look.prefix_align</command>: prefix alignment (none, left, right (default))
 <itemizedlist>
-  <listitem>
-    <para>description: prefix alignment (none, left, right (default))</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: none, left, right</para>
-  </listitem>
-  <listitem>
-    <para>default value: right</para>
+    <para>values: none, left, right (default value: right)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_align_max</command>
+<command>weechat.look.prefix_align_max</command>: max size for prefix (0 = no max size)
 <itemizedlist>
-  <listitem>
-    <para>description: max size for prefix (0 = no max size)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 64</para>
-  </listitem>
-  <listitem>
-    <para>default value: 0</para>
+    <para>values: 0 .. 64 (default value: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_error</command>
+<command>weechat.look.prefix_error</command>: prefix for error messages
 <itemizedlist>
-  <listitem>
-    <para>description: prefix for error messages</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '=!='</para>
+    <para>values: any string (default value: '=!=')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_join</command>
+<command>weechat.look.prefix_join</command>: prefix for join messages
 <itemizedlist>
-  <listitem>
-    <para>description: prefix for join messages</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '--&gt;'</para>
+    <para>values: any string (default value: '--&gt;')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_network</command>
+<command>weechat.look.prefix_network</command>: prefix for network messages
 <itemizedlist>
-  <listitem>
-    <para>description: prefix for network messages</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '--'</para>
+    <para>values: any string (default value: '--')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_quit</command>
+<command>weechat.look.prefix_quit</command>: prefix for quit messages
 <itemizedlist>
-  <listitem>
-    <para>description: prefix for quit messages</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '&lt;--'</para>
+    <para>values: any string (default value: '&lt;--')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_suffix</command>
+<command>weechat.look.prefix_suffix</command>: string displayed after prefix
 <itemizedlist>
-  <listitem>
-    <para>description: string displayed after prefix</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '|'</para>
+    <para>values: any string (default value: '|')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.read_marker</command>
+<command>weechat.look.read_marker</command>: use a marker (line or char) on buffers to show first unread line
 <itemizedlist>
-  <listitem>
-    <para>description: use a marker (line or char) on buffers to show first unread line</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: none, line, dotted-line, char</para>
-  </listitem>
-  <listitem>
-    <para>default value: dotted-line</para>
+    <para>values: none, line, dotted-line, char (default value: dotted-line)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_config_on_exit</command>
+<command>weechat.look.save_config_on_exit</command>: save configuration file on exit
 <itemizedlist>
-  <listitem>
-    <para>description: save configuration file on exit</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_layout_on_exit</command>
+<command>weechat.look.save_layout_on_exit</command>: save layout on exit (buffers, windows, or both)
 <itemizedlist>
-  <listitem>
-    <para>description: save layout on exit (buffers, windows, or both)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: none, buffers, windows, all</para>
-  </listitem>
-  <listitem>
-    <para>default value: all</para>
+    <para>values: none, buffers, windows, all (default value: all)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.scroll_amount</command>
+<command>weechat.look.scroll_amount</command>: how many lines to scroll by with scroll_up and scroll_down
 <itemizedlist>
-  <listitem>
-    <para>description: how many lines to scroll by with scroll_up and scroll_down</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 1 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>default value: 3</para>
+    <para>values: 1 .. 2147483647 (default value: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.scroll_page_percent</command>
+<command>weechat.look.scroll_page_percent</command>: percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)
 <itemizedlist>
-  <listitem>
-    <para>description: percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 1 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>default value: 100</para>
+    <para>values: 1 .. 100 (default value: 100)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.set_title</command>
+<command>weechat.look.set_title</command>: set title for window (terminal for Curses GUI) with name and version
 <itemizedlist>
-  <listitem>
-    <para>description: set title for window (terminal for Curses GUI) with name and version</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.autoload</command>
+<command>weechat.plugin.autoload</command>: comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "perl.so")
 <itemizedlist>
-  <listitem>
-    <para>description: comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "perl.so")</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '*'</para>
+    <para>values: any string (default value: '*')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.debug</command>
+<command>weechat.plugin.debug</command>: enable debug messages by default in all plugins (option disabled by default, which is highly recommended)
 <itemizedlist>
-  <listitem>
-    <para>description: enable debug messages by default in all plugins (option disabled by default, which is highly recommended)</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.extension</command>
+<command>weechat.plugin.extension</command>: standard plugins extension in filename (for example ".so" under Linux or ".dll" under Microsoft Windows)
 <itemizedlist>
-  <listitem>
-    <para>description: standard plugins extension in filename (for example ".so" under Linux or ".dll" under Microsoft Windows)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '.so'</para>
+    <para>values: any string (default value: '.so')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.path</command>
+<command>weechat.plugin.path</command>: path for searching plugins ('%h' will be replaced by WeeChat home, ~/.weechat by default)
 <itemizedlist>
-  <listitem>
-    <para>description: path for searching plugins ('%h' will be replaced by WeeChat home, ~/.weechat by default)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '%h/plugins'</para>
+    <para>values: any string (default value: '%h/plugins')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.save_config_on_unload</command>
+<command>weechat.plugin.save_config_on_unload</command>: save configuration files when unloading plugins
 <itemizedlist>
-  <listitem>
-    <para>description: save configuration files when unloading plugins</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.address</command>
+<command>weechat.proxy.address</command>: proxy server address (IP or hostname)
 <itemizedlist>
-  <listitem>
-    <para>description: proxy server address (IP or hostname)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.ipv6</command>
+<command>weechat.proxy.ipv6</command>: connect to proxy using ipv6
 <itemizedlist>
-  <listitem>
-    <para>description: connect to proxy using ipv6</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.password</command>
+<command>weechat.proxy.password</command>: password for proxy server
 <itemizedlist>
-  <listitem>
-    <para>description: password for proxy server</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.port</command>
+<command>weechat.proxy.port</command>: port for connecting to proxy server
 <itemizedlist>
-  <listitem>
-    <para>description: port for connecting to proxy server</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 65535</para>
-  </listitem>
-  <listitem>
-    <para>default value: 3128</para>
+    <para>values: 0 .. 65535 (default value: 3128)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.type</command>
+<command>weechat.proxy.type</command>: proxy type (http (default), socks4, socks5)
 <itemizedlist>
-  <listitem>
-    <para>description: proxy type (http (default), socks4, socks5)</para>
-  </listitem>
   <listitem>
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: http, socks4, socks5</para>
-  </listitem>
-  <listitem>
-    <para>default value: http</para>
+    <para>values: http, socks4, socks5 (default value: http)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.use</command>
+<command>weechat.proxy.use</command>: use a proxy server
 <itemizedlist>
-  <listitem>
-    <para>description: use a proxy server</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
+    <para>values: on, off (default value: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.username</command>
+<command>weechat.proxy.username</command>: username for proxy server
 <itemizedlist>
-  <listitem>
-    <para>description: username for proxy server</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.command_after_plugins</command>
+<command>weechat.startup.command_after_plugins</command>: command executed when WeeChat starts, after loading plugins
 <itemizedlist>
-  <listitem>
-    <para>description: command executed when WeeChat starts, after loading plugins</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.command_before_plugins</command>
+<command>weechat.startup.command_before_plugins</command>: command executed when WeeChat starts, before loading plugins
 <itemizedlist>
-  <listitem>
-    <para>description: command executed when WeeChat starts, before loading plugins</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: ''</para>
+    <para>values: any string (default value: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.display_logo</command>
+<command>weechat.startup.display_logo</command>: display WeeChat logo at startup
 <itemizedlist>
-  <listitem>
-    <para>description: display WeeChat logo at startup</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.display_version</command>
+<command>weechat.startup.display_version</command>: display WeeChat version at startup
 <itemizedlist>
-  <listitem>
-    <para>description: display WeeChat version at startup</para>
-  </listitem>
   <listitem>
     <para>type: boolean</para>
   </listitem>
   <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
+    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.weechat_slogan</command>
+<command>weechat.startup.weechat_slogan</command>: WeeChat slogan (if empty, slogan is not used)
 <itemizedlist>
-  <listitem>
-    <para>description: WeeChat slogan (if empty, slogan is not used)</para>
-  </listitem>
   <listitem>
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: 'le client de discussion le plus geek !'</para>
+    <para>values: any string (default value: 'le client de discussion le plus geek !')</para>
   </listitem>
 </itemizedlist>
 

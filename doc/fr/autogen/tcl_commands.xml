@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>tcl  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | [unload [nom]]</command>
+<command>/tcl  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | [unload [nom]]</command>
 <programlisting>
 liste/charge/décharge des scripts
 
@@ -15,3 +15,4 @@ nom: un nom de script
 
 Sans argument, cette commande liste tous les scripts chargés.
 </programlisting>
+

@@ -6,15 +6,17 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>demo_buffer  nom</command>
+<command>/demo_buffer  nom</command>
 <programlisting>
 ouvrir un nouveau tampon
 </programlisting>
-<command>demo_buffer_set  propriété valeur</command>
+
+<command>/demo_buffer_set  propriété valeur</command>
 <programlisting>
 définir une propriété de tampon
 </programlisting>
-<command>demo_info  [info [paramètres]]</command>
+
+<command>/demo_info  [info [paramètres]]</command>
 <programlisting>
 lit et affiche une info
 
@@ -23,7 +25,8 @@ paramètres: paramètres optionnels pour l'info
 
 Sans paramètre, cette commande affiche la liste des infos disponibles
 </programlisting>
-<command>demo_infolist  [infolist [paramètres]]</command>
+
+<command>/demo_infolist  [infolist [paramètres]]</command>
 <programlisting>
 lit et affiche une infolist
 
@@ -32,9 +35,11 @@ paramètres: paramètres optionnels pour l'infolist
 
 Sans paramètre, cette commande affiche la liste des infolists disponibles
 </programlisting>
-<command>demo_printf  [texte]</command>
+
+<command>/demo_printf  [texte]</command>
 <programlisting>
 affiche des messages sur le tampon courant
 
 texte: affiche ce texte
 </programlisting>
+

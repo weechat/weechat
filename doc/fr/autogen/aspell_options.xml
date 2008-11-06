@@ -6,67 +6,43 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>aspell.check.commands</command>
+<command>aspell.check.commands</command>: liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)
 <itemizedlist>
-  <listitem>
-    <para>description: liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 'ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: 'ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic')</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.check.default_dict</command>
+<command>aspell.check.default_dict</command>: dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)
 <itemizedlist>
-  <listitem>
-    <para>description: dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.check.word_min_length</command>
+<command>aspell.check.word_min_length</command>: longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)
 <itemizedlist>
-  <listitem>
-    <para>description: longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 2</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 2)</para>
   </listitem>
 </itemizedlist>
 
-<command>aspell.look.color</command>
+<command>aspell.look.color</command>: couleur utilisée pour les mots mal orthographiés
 <itemizedlist>
-  <listitem>
-    <para>description: couleur utilisée pour les mots mal orthographiés</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightred</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightred)</para>
   </listitem>
 </itemizedlist>
 

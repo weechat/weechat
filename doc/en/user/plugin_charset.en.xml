@@ -21,20 +21,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<section id="secCharset">
+<section id="secPluginCharset">
   <title>Charset plugin</title>
   
   <para>
-    Charset plugin lets you encode or decode data using charsets, with 3
-    levels: global, by server, or by channel.
+    Charset plugin lets you decode or encode data using charsets.
+    There is default charset for decode/encode, and specific charsets
+    for buffers (or group of buffers).
     This plugin is optional, but recommended: if it's not loaded, WeeChat
     can only read/write UTF-8 data.
   </para>
   
   <para>
     Charset plugin should be autoloaded by WeeChat at startup.
-    To be sure plugin is loaded, try:
-    "<literal>/charset</literal>".
+    To be sure plugin is loaded, try: <command>/charset</command>.
     If command is not found, then load plugin with command:
     <screen>/plugin load charset</screen>
     If plugin is not found, then you should compile again WeeChat with
@@ -45,54 +45,80 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     When Charset plugin starts, it displays terminal and internal charsets.
     Terminal charset depends on your locale, and internal is UTF-8.
     For example :
-<screen>
--P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
-</screen>
+    <screen>charset: terminal: ISO-8859-15, internal: UTF-8</screen>
   </para>
   
-  <section id="secCharsetSettings">
-    <title>Settings</title>
+  <section id="secCharsetOptions">
+    <title>Options (file charset.conf)</title>
     
-    <itemizedlist>
-      <listitem>
-        <para>
-          To set global decode and encode charsets, use
-          "<literal>/setp</literal>" command.
-          For example:
+    <para>
+      &charset_options.xml;
+    </para>
+    
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            To set global decode and encode charsets, use command
+            <command>/set</command>.
+            For example:
 <screen>
-/setp charset.global.decode = ISO-8859-15
-/setp charset.global.encode = ISO-8859-15
+/set charset.default.decode = ISO-8859-15
+/set charset.default.encode = ISO-8859-15
 </screen>
-          If global decode charset is not set (for example during first
-          load of Charset plugin), it will be automatically set to terminal
-          charset (if it's different from UTF-8), or by default to
-          "<literal>ISO-8859-1</literal>".
-          Default encode value is empty, so it sends by default with
-          internal charset (UTF-8).
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          To set server charset, use "<literal>/charset</literal>" command
-          on server buffer.
-          If you give only charset, then it will set "decode" and "encode"
-          values.
-          For example:
-          <screen>/charset ISO-8859-15</screen>
-          It's equivalent to:
+            If global decode charset is not set (for example during first
+            load of Charset plugin), it will be automatically set to terminal
+            charset (if it's different from UTF-8), or by default to
+            "<literal>ISO-8859-1</literal>".
+            Default encode value is empty, so it sends by default with
+            internal charset (UTF-8).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To set IRC server charset, use command <command>/charset</command> on
+            server buffer.
+            If you give only charset, then it will set "decode" and "encode"
+            values.
+            For example:
+            <screen>/charset ISO-8859-15</screen>
+            It's equivalent to:
 <screen>
 /charset decode ISO-8859-15
 /charset encode ISO-8859-15
 </screen>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          To set channel (or private) charset, use same commands as server,
-          but on channel (or private) buffer.
-        </para>
-      </listitem>
-    </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To set IRC channel (or private) charset, use same commands as server,
+            but on channel (or private) buffer.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To set charset for all IRC channels (and privates) of an IRC server,
+            use following command:
+            <screen>/set charset.decode.irc.freenode = ISO-8859-15</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To see all charsets used, use following command:
+            <screen>/set charset.*</screen>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+  <section id="secCharsetCommands">
+    <title>Commands</title>
+    
+    <para>
+      &charset_commands.xml;
+    </para>
     
   </section>
   
@@ -111,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            check charset line (on server buffer), you should see
+            check charset line (on WeeChat buffer), you should see
             ISO-XXXXXX or UTF-8 for terminal charset. If you see
             ANSI_X3.4-1968 or other values, probably your locale is wrong.
           </para>
@@ -119,7 +145,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             setup global decode value, for example:
-            <screen>/setp charset.global.decode = ISO-8859-15</screen>
+            <screen>/set charset.default.decode = ISO-8859-15</screen>
           </para>
         </listitem>
       </itemizedlist>

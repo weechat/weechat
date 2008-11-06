@@ -6,9 +6,10 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>xfer</command>
+<command>/xfer</command>
 <programlisting>
 contrôle xfer
 
 Ouverture du tampon avec la liste des xfers
 </programlisting>
+

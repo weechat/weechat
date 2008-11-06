@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>python  [list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] | [unload [name]]</command>
+<command>/python  [list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] | [unload [name]]</command>
 <programlisting>
 list/load/unload scripts
 
@@ -15,3 +15,4 @@ name: a script name
 
 Without argument, this command lists all loaded scripts.
 </programlisting>
+

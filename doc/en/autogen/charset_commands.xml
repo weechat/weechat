@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>charset  [[decode | encode] charset] | [reset]</command>
+<command>/charset  [[decode | encode] charset] | [reset]</command>
 <programlisting>
 change charset for current buffer
 
@@ -15,3 +15,4 @@ change charset for current buffer
 charset: new charset for current buffer
   reset: reset charsets for current buffer
 </programlisting>
+

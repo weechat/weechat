@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>charset  [[decode | encode] charset] | [reset]</command>
+<command>/charset  [[decode | encode] charset] | [reset]</command>
 <programlisting>
 changer le charset pour le tampon courant
 
@@ -15,3 +15,4 @@ changer le charset pour le tampon courant
 charset: nouveau charset pour le tampon courant
   reset: réinitialiser les charsets pour le tampon courant
 </programlisting>
+

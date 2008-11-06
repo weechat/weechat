@@ -21,12 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<section id="secCharset">
+<section id="secPluginCharset">
   <title>Zeichensatz Plugin</title>
   
   <para>
-    Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
-    auf 3 Ebenen: Global, pro Server oder pro Channel.
+    <!-- TRANSLATION NEEDED -->
+    Charset plugin lets you decode or encode data using charsets.
+    There is default charset for decode/encode, and specific charsets
+    for buffers (or group of buffers).
     Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen
     ist, kann WeeChat nur UTF-8-Daten lesen und schreiben.
   </para>
@@ -35,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Das Zeichensatz-Plugin sollte beim Start von WeeChat automatisch geladen
     werden.
     Um sicherzustellen, dass das Plugin geladen wurde, versuchen Sie:
-    "<literal>/charset</literal>".
+    <command>/charset</command>.
     Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit
     dem Befehl: <screen>/plugin load charset</screen>
     Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut
@@ -47,9 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     und den internen Zeichensatz an. Der Terminalzeichensatz hängt von
     den LOCALE-Einstellungen ab, der interne ist UTF-8.
     Zum Beispiel:
-<screen>
--P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
-</screen>
+    <screen>charset: terminal: ISO-8859-15, internal: UTF-8</screen>
   </para>
   
   <section id="secCharsetSettings">
@@ -59,11 +59,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <listitem>
         <para>
           Um den globalen Zeichensatz zum Kodieren und Dekodieren
-          festzulegen, benutzen Sie den "<literal>/setp</literal>" Befehl.
+          festzulegen, benutzen Sie den <command>/set</command>" Befehl.
           Zum Beispiel:
 <screen>
-/setp charset.global.decode = ISO-8859-15
-/setp charset.global.encode = ISO-8859-15
+/set charset.default.decode = ISO-8859-15
+/set charset.default.encode = ISO-8859-15
 </screen>
           Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim
           ersten Start des Plugins), wird es automatisch auf den
@@ -76,8 +76,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          Um den Serverzeichensatz festzulegen, benutzen Sie den
-          "<literal>/charset</literal>"-Befehl im Server-Puffer.
+          <!-- TRANSLATION NEEDED -->
+          To set IRC server charset, use command <command>/charset</command>
+          on server buffer.
           Wenn Sie nur einen Zeichensatz vorgeben, wird dieser automatisch
           zum Enkodieren und Dekodieren verwendet.
           Zum Beispiel:
@@ -91,9 +92,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          Um den zeichensatz im Channel (oder einem privatem Chat)
-          festzulegen, müssen Sie den gleichen Befehl wie für den Server
-          benutzen, jedoch in dem Channel-Puffer (oder Query-Puffer) 
+          <!-- TRANSLATION NEEDED -->
+          To set IRC channel (or private) charset, use same commands as server,
+          but on channel (or private) buffer.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <!-- TRANSLATION NEEDED -->
+          To set charset for all IRC channels (and privates) of an IRC server,
+          use following command:
+          <screen>/set charset.decode.irc.freenode = ISO-8859-15</screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <!-- TRANSLATION NEEDED -->
+          To see all charsets used, use following command:
+          <screen>/set charset.*</screen>
         </para>
       </listitem>
     </itemizedlist>
@@ -116,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort
+            überprüfen Sie die Zeichensatz-Zeile im WeeChat-Puffer, dort
             sollten ISO-XXXXXX oder UTF-8 für den Terminal-Zeichensatz
             stehen. Wenn Sie dort ANSI_X3.4-1968 oder andere Werte sehen,
             sind Ihre LOCALES eventuell falsch eingestellt.
@@ -125,7 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             Setze die globalen Dekodier-Einstellungen, z.B.:
-            <screen>/setp charset.global.decode = ISO-8859-15</screen>
+            <screen>/set charset.default.decode = ISO-8859-15</screen>
           </para>
         </listitem>
       </itemizedlist>

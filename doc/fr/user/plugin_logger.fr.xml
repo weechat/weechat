@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+WeeChat documentation (french version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<section id="secPluginLogger">
+  <title>Extension Logger</title>
+  
+  <para>
+    L'extension Logger permet de sauvegarder le contenu des tampons dans des
+    fichiers, avec des options sur comment et quoi sauvegarder.
+  </para>
+  
+  <section id="secLoggerOptions">
+    <title>Options (fichier logger.conf)</title>
+    
+    <para>
+      &logger_options.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secLoggerCommands">
+    <title>Commandes</title>
+    
+    <para>
+      &logger_commands.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secLoggerInfosHooked">
+    <title>Infos et infolists</title>
+    
+    <para>
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Nom</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            &logger_infos.xml;
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+  </section>
+  
+  <section id="secLoggerLevels">
+    <title>Niveaux</title>
+    
+    <para>
+      L'enregistrement est fait selon un niveau pour chaque tampon. Le niveau
+      par défaut est 9 (enregistrer tous les messages affichés dans le tampon).
+      Vous pouvez changer ce niveau pour un tampon, ou un groupe de tampons.
+    </para>
+    2
+    <para>
+      Les niveaux possibles vont de 0 à 9. Zéro signifie "<literal>ne rien
+      enregistrer</literal>" et 9 signifie "<literal>enregistrer tous les
+      messages</literal>".
+    </para>
+    
+    <para>
+      Les extensions utilisent différent niveaux pour les messages affichés.
+      L'extension IRC utilise les niveaux suivants :
+      <itemizedlist>
+        <listitem>
+          <para>
+            Niveau 1: message d'un utilisateur (sur un canal ou en privé)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Niveau 2: changement de pseudo (vous ou quelqu'un d'autre)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Niveau 3: tout message du serveur (sauf join/part/quit)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Niveau 4: message join/part/quit du serveur
+          </para>
+        </listitem>
+      </itemizedlist>
+      Donc si vous affectez le niveau 3 pour un canal IRC, WeeChat enregistrera
+      tous les messages sauf les join/part/quit.
+    </para>
+    
+    <para>
+      Quelques exemples :
+      <itemizedlist>
+        <listitem>
+          <para>
+            afecter le niveau 3 pour le canal IRC #weechat :
+            <screen>/set logger.level.irc.freenode.#weechat = 3</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            affecter le niveau 3 pour le tampon serveur freenode :
+            <screen>/set logger.level.irc.server.freenode = 3</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            affecter le niveau 3 pour tous les canaux sur le serveur freenode :
+            <screen>/set logger.level.irc.freenode = 3</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            affecter le niveau 2 pour tous les tampons IRC :
+            <screen>/set logger.level.irc = 2</screen>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+  <section id="secLoggerMasks">
+    <title>Masques de nom de fichier</title>
+    
+    <para>
+      Il est posible de définir un masque de nom de fichier pour chaque
+      tampon, et d'utiliser les variables locales du tampon pour construire le
+      nom de fichier (pour voir les variables du tampon courant:
+      <command>/buffer localvar</command>).
+    </para>
+    
+    <para>
+      Par exemple, si vous voulez un répertoire par serveur IRC et un fichier
+      par canal dedans :
+      <screen>/set logger.mask.irc = "irc/$server/$channel.weechatlog"</screen>
+      Vous obtiendrez les fichiers suivants :
+<screen>
+~/.weechat/
+    |--- logs/
+        |--- irc/
+            |--- freenode/
+            |       freenode.weechatlog
+            |       #weechat.weechatlog
+            |       #mychan.weechatlog
+            |--- oftc/
+            |       oftc.weechatlog
+            |       #chan1.weechatlog
+            |       #chan2.weechatlog
+</screen>
+    </para>
+    
+  </section>
+  
+</section>

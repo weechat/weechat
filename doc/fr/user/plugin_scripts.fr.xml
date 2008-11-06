@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+WeeChat documentation (french version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<section id="secPluginScripts">
+  <title>Extensions scripts</title>
+  
+  <para>
+    WeeChat fournit 5 extensions pour scripts: Perl, Python, Ruby, Lua and Tcl.
+    Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
+    langages.
+  </para>
+  
+  <para>
+    Pour plus d'informations sur comment écrire des scripts, ou sur l'API
+    WeeChat pour les scripts, merci de lire le "<literal>Guide du développeur
+    WeeChat</literal>".
+  </para>
+  
+  <para>
+    Vous pouvez trouver des scripts pour WeeChat ici :
+    <ulink url="http://weechat.flashtux.org/plugins.php">
+      http://weechat.flashtux.org/plugins.php
+    </ulink>
+  </para>
+  
+  <section id="secScriptsCommands">
+    <title>Commandes</title>
+    
+    <para>
+      &perl_commands.xml;
+      &python_commands.xml;
+      &ruby_commands.xml;
+      &lua_commands.xml;
+      &tcl_commands.xml;
+    </para>
+    
+  </section>
+  
+</section>

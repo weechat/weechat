@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>notify  reset | none | highlight | message | all</command>
+<command>/notify  reset | none | highlight | message | all</command>
 <programlisting>
 change notify level for current buffer
 
@@ -16,3 +16,4 @@ highlight: buffer will be in hotlist for highlights only
   message: buffer will be in hotlist for highlights and user messages only
       all: buffer will be in hotlist for any text printed
 </programlisting>
+

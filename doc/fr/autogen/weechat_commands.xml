@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listitems]</command>
+<command>/bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listitems]</command>
 <programlisting>
 gestion des barres
 
@@ -50,7 +50,8 @@ Exemples :
   faire défiler la liste des pseudos à la fin sur le tampon courant:
     /bar scroll nicklist * ye
 </programlisting>
-<command>buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
+
+<command>/buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
 <programlisting>
 gestion des tampons
 
@@ -77,14 +78,16 @@ Exemples:
 défiler 20 msgs haut: /buffer scroll -20
   aller sur #weechat: /buffer #weechat
 </programlisting>
-<command>command  extension commande</command>
+
+<command>/command  extension commande</command>
 <programlisting>
 lancer explicitement une commande WeeChat ou d'une extension
 
 extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
  commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 </programlisting>
-<command>debug  [list | extension niveau | dump | buffer windows]</command>
+
+<command>/debug  [list | extension niveau | dump | buffer windows]</command>
 <programlisting>
 contrôle du debug pour le coeur/les extensions
 
@@ -95,7 +98,8 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
   windows: affiche l'arbre des fenêtres&lt;
     texte: envoie le signal "debug" avec "texte" comme paramètre
 </programlisting>
-<command>filter  [list] | [enable|disable|toggle [nom]] | [add nom buffer tags regex] | [del nom|-all]</command>
+
+<command>/filter  [list] | [enable|disable|toggle [nom]] | [add nom buffer tags regex] | [del nom|-all]</command>
 <programlisting>
 filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières
 
@@ -123,27 +127,31 @@ Exemples:
   filtrer les lignes contenant "weechat sucks" sur le canal #weechat:
     /filter add sucks freenode.#weechat * weechat sucks
 </programlisting>
-<command>help  [commande | option]</command>
+
+<command>/help  [commande | option]</command>
 <programlisting>
 afficher l'aide sur les commandes et les options
 
 commande: nom d'une commande
   option: nom d'une option (utilisez /set pour voir la liste)
 </programlisting>
-<command>history  [clear | valeur]</command>
+
+<command>/history  [clear | valeur]</command>
 <programlisting>
 affiche l'historique des commandes du tampon
 
 clear: effacer l'historique
 valeur: nombre d'entrées dans l'historique à afficher
 </programlisting>
-<command>input  return | complete_next | complete_previous | search_next | delete_previous_char | delete_next_char | delete_previous_word | delete_next_word | delete_beginning_of_line | delete_end_of_line | delete_line | clipboard_paste | transpose_chars | move_beginning_of_line | move_end_of_line | move_previous_char | move_next_char | move_previous_word | move_next_word | history_previous | history_next | history_global_previous | history_global_next | jump_smart | jump_last_buffer | jump_previous_buffer | hotlist_clear | grab_key | scroll_unread | set_unread | set_unread_current_buffer | insert [args]</command>
+
+<command>/input  return | complete_next | complete_previous | search_next | delete_previous_char | delete_next_char | delete_previous_word | delete_next_word | delete_beginning_of_line | delete_end_of_line | delete_line | clipboard_paste | transpose_chars | move_beginning_of_line | move_end_of_line | move_previous_char | move_next_char | move_previous_word | move_next_word | history_previous | history_next | history_global_previous | history_global_next | jump_smart | jump_last_buffer | jump_previous_buffer | hotlist_clear | grab_key | scroll_unread | set_unread | set_unread_current_buffer | insert [args]</command>
 <programlisting>
 fonctions pour la ligne de commande
 
 Cette commande est utilisée par les associations de touches ou les extensions.
 </programlisting>
-<command>key  [touche [commande [args]]] | [unbind touche] | [reset -yes]</command>
+
+<command>/key  [touche [commande [args]]] | [unbind touche] | [reset -yes]</command>
 <programlisting>
 associer/libérer des touches
 
@@ -151,7 +159,8 @@ associer/libérer des touches
    unbind: supprimer l'association à une touche
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
 </programlisting>
-<command>layout  [[save | apply | reset] [buffers | windows]]</command>
+
+<command>/layout  [[save | apply | reset] [buffers | windows]]</command>
 <programlisting>
 sauve/applique/réinitialise la disposition des tampons et fenêtres
 
@@ -163,7 +172,8 @@ windows: sauve/applique seulement pour les fenêtres (le tampon affiché par cha
 
 Sans paramètre, cette commande affiche la disposition sauvegardée.
 </programlisting>
-<command>plugin  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
+
+<command>/plugin  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
 <programlisting>
 liste/charge/décharge des extensions
 
@@ -176,11 +186,13 @@ autoload: charger automatiquement les extensions dans un répertoire système ou
 
 Sans paramètre, cette commande liste les extensions chargées.
 </programlisting>
-<command>quit</command>
+
+<command>/quit</command>
 <programlisting>
 quitter WeeChat
 </programlisting>
-<command>reload  [fichier [fichier...]]</command>
+
+<command>/reload  [fichier [fichier...]]</command>
 <programlisting>
 recharger les fichiers de configuration depuis le disque
 
@@ -188,7 +200,8 @@ fichier: fichier de configuration à recharger
 
 Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
 </programlisting>
-<command>save  [fichier [fichier...]]</command>
+
+<command>/save  [fichier [fichier...]]</command>
 <programlisting>
 sauvegarder les fichiers de configuration sur disque
 
@@ -196,14 +209,16 @@ fichier: fichier de configuration à sauvegarder
 
 Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
 </programlisting>
-<command>set  [option [ = valeur]]</command>
+
+<command>/set  [option [ = valeur]]</command>
 <programlisting>
 modifier des options de configuration
 
 option: nom d'une option
 valeur: valeur pour l'option
 </programlisting>
-<command>unset  [option]</command>
+
+<command>/unset  [option]</command>
 <programlisting>
 supprimer/réinitialiser des options de configuration
 
@@ -211,7 +226,8 @@ option: nom d'une option (peut commencer ou se terminer par "*" pour réinitiali
 
 Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs).
 </programlisting>
-<command>upgrade  [chemin_vers_binaire]</command>
+
+<command>/upgrade  [chemin_vers_binaire]</command>
 <programlisting>
 mettre à jour WeeChat sans se déconnecter des serveurs
 
@@ -219,13 +235,15 @@ chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire cour
 
 Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 </programlisting>
-<command>uptime  [-o]</command>
+
+<command>/uptime  [-o]</command>
 <programlisting>
 montrer l'uptime de WeeChat
 
 -o: envoyer l'uptime sur le canal courant en tant que message IRC
 </programlisting>
-<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]</command>
+
+<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]</command>
 <programlisting>
 gestion des fenêtres
 
@@ -244,3 +262,4 @@ resize: redimensionne une fenêtre, la nouvelle taille est &lt;pct&gt; pourcenta
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
 </programlisting>
+

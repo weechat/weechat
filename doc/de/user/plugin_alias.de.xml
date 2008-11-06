@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+WeeChat documentation (german version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<section id="secPluginAlias">
+  <!-- TRANSLATION NEEDED -->
+  <title>Alias plugin</title>
+  
+  <para>
+    Alias plugin lets you create alias for commands (from WeeChat or other
+    plugins).
+  </para>
+  
+  <section id="secAliasCommands">
+    <title>Commands</title>
+    
+    <para>
+      &alias_commands.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secAliasInfosHooked">
+    <title>Infos and infolists</title>
+    
+    <para>
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Name</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            &alias_infos.xml;
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+  </section>
+  
+</section>

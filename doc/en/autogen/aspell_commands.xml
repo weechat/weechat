@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>aspell  [list | enable lang | disable | addword [lang] word]</command>
+<command>/aspell  [list | enable lang | disable | addword [lang] word]</command>
 <programlisting>
 aspell plugin configuration
 
@@ -17,3 +17,4 @@ addword: add a word in your personnal aspell dictionary
 
 Input line beginning with a '/' is not checked, except for some commands.
 </programlisting>
+

@@ -6,403 +6,253 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>xfer.color.status_aborted</command>
+<command>xfer.color.status_aborted</command>: couleur du texte pour le statut "interrompu"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "interrompu"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightred</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightred)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.status_active</command>
+<command>xfer.color.status_active</command>: couleur du texte pour le statut "actif"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "actif"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightblue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightblue)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.status_connecting</command>
+<command>xfer.color.status_connecting</command>: couleur du texte pour le statut "connexion"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "connexion"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.status_done</command>
+<command>xfer.color.status_done</command>: couleur du texte pour le statut "terminé"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "terminé"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.status_failed</command>
+<command>xfer.color.status_failed</command>: couleur du texte pour le statut "échoué"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "échoué"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightred</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightred)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.status_waiting</command>
+<command>xfer.color.status_waiting</command>: couleur du texte pour le statut "en attente"
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le statut "en attente"</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightcyan</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightcyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.text</command>
+<command>xfer.color.text</command>: couleur du texte
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.text_bg</command>
+<command>xfer.color.text_bg</command>: couleur du fond
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.color.text_selected</command>
+<command>xfer.color.text_selected</command>: couleur du texte pour la ligne xfer sélectionnée
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la ligne xfer sélectionnée</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: white</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.auto_accept_chats</command>
+<command>xfer.file.auto_accept_chats</command>: accepte automatiquement les demandes de discussion (à utiliser avec précaution !)
 <itemizedlist>
-  <listitem>
-    <para>description: accepte automatiquement les demandes de discussion (à utiliser avec précaution !)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.auto_accept_files</command>
+<command>xfer.file.auto_accept_files</command>: accepte automatiquement les demandes d'envoi de fichiers (à utiliser avec précaution !)
 <itemizedlist>
-  <listitem>
-    <para>description: accepte automatiquement les demandes d'envoi de fichiers (à utiliser avec précaution !)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.auto_rename</command>
+<command>xfer.file.auto_rename</command>: renommer les fichiers reçus s'ils existent déjà (ajoute '.1', '.2', ...)
 <itemizedlist>
-  <listitem>
-    <para>description: renommer les fichiers reçus s'ils existent déjà (ajoute '.1', '.2', ...)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.auto_resume</command>
+<command>xfer.file.auto_resume</command>: continuer automatiquement les transferts de fichiers si la connexion avec l'hôte a été perdue
 <itemizedlist>
-  <listitem>
-    <para>description: continuer automatiquement les transferts de fichiers si la connexion avec l'hôte a été perdue</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.convert_spaces</command>
+<command>xfer.file.convert_spaces</command>: convertir les espaces en underscores lors d'envoi de fichiers
 <itemizedlist>
-  <listitem>
-    <para>description: convertir les espaces en underscores lors d'envoi de fichiers</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.download_path</command>
+<command>xfer.file.download_path</command>: chemin où écrire les fichiers reçus
 <itemizedlist>
-  <listitem>
-    <para>description: chemin où écrire les fichiers reçus</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '%h/xfer'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%h/xfer')</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.upload_path</command>
+<command>xfer.file.upload_path</command>: chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié par l'utilisateur)
 <itemizedlist>
-  <listitem>
-    <para>description: chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié par l'utilisateur)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '~'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '~')</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.file.use_nick_in_filename</command>
+<command>xfer.file.use_nick_in_filename</command>: utiliser le pseudo distant comme préfixe dans le nom de fichier local lors de la réception d'un fichier
 <itemizedlist>
-  <listitem>
-    <para>description: utiliser le pseudo distant comme préfixe dans le nom de fichier local lors de la réception d'un fichier</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.look.auto_open_buffer</command>
+<command>xfer.look.auto_open_buffer</command>: ouvrir automatiquement le tampon xfer lorsqu'un nouveau xfer est ajouté à la liste
 <itemizedlist>
-  <listitem>
-    <para>description: ouvrir automatiquement le tampon xfer lorsqu'un nouveau xfer est ajouté à la liste</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.look.progress_bar_size</command>
+<command>xfer.look.progress_bar_size</command>: taille de la barre de progression, en caractères (si 0, la barre de progression est désactivée)
 <itemizedlist>
-  <listitem>
-    <para>description: taille de la barre de progression, en caractères (si 0, la barre de progression est désactivée)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 256</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 20</para>
+    <para>valeurs: 0 .. 256 (valeur par défaut: 20)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.blocksize</command>
+<command>xfer.network.blocksize</command>: taille de bloc pour les paquets envoyés, en octets
 <itemizedlist>
-  <listitem>
-    <para>description: taille de bloc pour les paquets envoyés, en octets</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 1024 .. 102400</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 65536</para>
+    <para>valeurs: 1024 .. 102400 (valeur par défaut: 65536)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.fast_send</command>
+<command>xfer.network.fast_send</command>: n'attend pas les accusés de réception lors de l'envoi de fichier
 <itemizedlist>
-  <listitem>
-    <para>description: n'attend pas les accusés de réception lors de l'envoi de fichier</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.own_ip</command>
+<command>xfer.network.own_ip</command>: adresse IP ou DNS utilisée pour envoyer les fichiers/discussions (si non renseigné, l'interface IP locale est utilisée)
 <itemizedlist>
-  <listitem>
-    <para>description: adresse IP ou DNS utilisée pour envoyer les fichiers/discussions (si non renseigné, l'interface IP locale est utilisée)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.port_range</command>
+<command>xfer.network.port_range</command>: restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)
 <itemizedlist>
-  <listitem>
-    <para>description: restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.speed_limit</command>
+<command>xfer.network.speed_limit</command>: limitation de vitesse pour l'envoi des fichiers, en kilo-octets par seconde (0 signifie pas de limite)
 <itemizedlist>
-  <listitem>
-    <para>description: limitation de vitesse pour l'envoi des fichiers, en kilo-octets par seconde (0 signifie pas de limite)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 0</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>xfer.network.timeout</command>
+<command>xfer.network.timeout</command>: délai d'attente pour la requête xfer (en secondes)
 <itemizedlist>
-  <listitem>
-    <para>description: délai d'attente pour la requête xfer (en secondes)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 5 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 300</para>
+    <para>valeurs: 5 .. 2147483647 (valeur par défaut: 300)</para>
   </listitem>
 </itemizedlist>
 

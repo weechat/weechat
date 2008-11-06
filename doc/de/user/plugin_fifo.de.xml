@@ -40,8 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- TRANSLATION NEEDED -->
     Syntax for the FIFO pipe commands/text is one of following:
     <screen>
-      category,name *text or command here
-      name *text or command here
+      plugin.buffer *text or command here
       *text or command here
     </screen>
   </para>
@@ -52,19 +51,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <listitem>
         <para>
           Ändern des Nicks auf freenode in "mynick|out" :
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+          <screen><prompt>$ </prompt><userinput>echo 'irc.server.freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          Senden einer Nachricht an #weechat:
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
+          <!-- TRANSLATION NEEDED -->
+          display text on IRC #weechat channel:
+          <screen><prompt>$ </prompt><userinput>echo 'irc.freenode.#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der
-          in WeeChat angezeigt wird):
+          <!-- TRANSLATION NEEDED -->
+          display text on current buffer:
           <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
           <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten
           das nicht tun, ausgenommen sie wissen was sie tun!
@@ -74,7 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <para>
           Sende zwei Kommandos um (alle) Perl-Skripte abzuschalten/neu zu
           laden (getrennt durch ein "\n"):
-          <screen><prompt>$ </prompt><userinput>echo -e "weechat,weechat */perl unload\nweechat,weechat */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
+          <screen><prompt>$ </prompt><userinput>echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
     </itemizedlist>
@@ -94,7 +94,7 @@ fi
 </screen>
     Wenn das Skript "auto_weechat_command" heisst, können sie es
     folgendermassen aufrufen:
-<screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
+<screen><prompt>$ </prompt><userinput>./auto_weechat_command 'irc.freenode.#weechat *hello'</userinput></screen>
   </para>
   
 </section>

@@ -33,9 +33,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!ENTITY intro.de.xml          SYSTEM "intro.de.xml">
   <!ENTITY install.de.xml        SYSTEM "install.de.xml">
   <!ENTITY usage.de.xml          SYSTEM "usage.de.xml">
-  <!ENTITY plugin_irc.de.xml     SYSTEM "plugin_irc.de.xml">
+  <!ENTITY plugins.de.xml        SYSTEM "plugins.de.xml">
+  <!ENTITY plugin_alias.de.xml   SYSTEM "plugin_alias.de.xml">
+  <!ENTITY plugin_aspell.de.xml  SYSTEM "plugin_aspell.de.xml">
   <!ENTITY plugin_charset.de.xml SYSTEM "plugin_charset.de.xml">
   <!ENTITY plugin_fifo.de.xml    SYSTEM "plugin_fifo.de.xml">
+  <!ENTITY plugin_irc.de.xml     SYSTEM "plugin_irc.de.xml">
+  <!ENTITY plugin_logger.de.xml  SYSTEM "plugin_logger.de.xml">
+  <!ENTITY plugin_scripts.de.xml SYSTEM "plugin_scripts.de.xml">
   <!ENTITY plugin_xfer.de.xml    SYSTEM "plugin_xfer.de.xml">
   <!ENTITY authors.de.xml        SYSTEM "authors.de.xml">
 ]>
@@ -106,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   &usage.de.xml;
   
-  <!-- &plugins.de.xml; -->
+  &plugins.de.xml;
   
   &authors.de.xml;
   

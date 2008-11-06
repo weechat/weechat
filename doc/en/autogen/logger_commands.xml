@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>logger  [list | set level | disable]</command>
+<command>/logger  [list | set level | disable]</command>
 <programlisting>
 logger plugin configuration
 
@@ -37,3 +37,4 @@ Log levels used by IRC plugin:
   4: join/part/quit
   9: all other messages
 </programlisting>
+

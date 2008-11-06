@@ -135,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       You can edit this file at your convenience to configure WeeChat
       or you can set parameters with "<literal>/set</literal>" command in
-      WeeChat (see <xref linkend="secWeeChatCommands" />)
+      WeeChat (see <xref linkend="secWeechatCommands" />)
     </para>
     
   </section>
@@ -668,42 +668,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secWeeChatCommands">
-    <title>WeeChat commands</title>
+  <section id="secWeechatOptions">
+    <title>WeeChat options (file weechat.conf)</title>
     
     <para>
-      This chapter lists all WeeChat commands.
-    </para>
-    
-    <para>
-      &weechat_commands.xml;
-    </para>
-      
-  </section>
-  
-  <section id="secConfigurationFile">
-    <title>Configuration file</title>
-    
-    <para>
-      List of options for config file:
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="5">
-          <thead>
-            <row>
-              <entry>Option</entry>
-              <entry>Type</entry>
-              <entry>Values</entry>
-              <entry>Default</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            
-            &weechat_options.xml;
-            
-          </tbody>
-        </tgroup>
-      </informaltable>
+      &weechat_options.xml;
     </para>
     
     <para>
@@ -780,6 +749,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </tbody>
         </tgroup>
       </informaltable>
+    </para>
+    
+  </section>
+  
+  <section id="secWeechatCommands">
+    <title>WeeChat commands</title>
+    
+    <para>
+      &weechat_commands.xml;
     </para>
     
   </section>

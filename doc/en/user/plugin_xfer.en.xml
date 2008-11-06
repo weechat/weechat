@@ -24,4 +24,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <section id="secPluginXfer">
   <title>Xfer plugin</title>
   
+  <section id="secXferOptions">
+    <title>Options (file xfer.conf)</title>
+    
+    <para>
+      &xfer_options.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secXferCommands">
+    <title>Commands</title>
+    
+    <para>
+      &xfer_commands.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secXferInfosHooked">
+    <title>Infos and infolists</title>
+    
+    <para>
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Name</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            &xfer_infos.xml;
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+  </section>
+  
 </section>

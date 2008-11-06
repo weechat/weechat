@@ -6,39 +6,44 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>admin  [target]</command>
+<command>/admin  [target]</command>
 <programlisting>
 find information about the administrator of the server
 
 target: server
 </programlisting>
-<command>ame  message</command>
+
+<command>/ame  message</command>
 <programlisting>
 send a CTCP action to all channels of all connected servers
 
 message: message to send
 </programlisting>
-<command>amsg  text</command>
+
+<command>/amsg  text</command>
 <programlisting>
 send message to all channels of all connected servers
 
 text: text to send
 </programlisting>
-<command>away  [-all] [message]</command>
+
+<command>/away  [-all] [message]</command>
 <programlisting>
 toggle away status
 
    -all: toggle away status on all connected servers
 message: message for away (if no message is given, away status is removed)
 </programlisting>
-<command>ban  [channel] [nickname [nickname ...]]</command>
+
+<command>/ban  [channel] [nickname [nickname ...]]</command>
 <programlisting>
 ban nicks or hosts
 
  channel: channel for ban
 nickname: user or host to ban
 </programlisting>
-<command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
+
+<command>/connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
 <programlisting>
 connect to server(s)
 
@@ -50,7 +55,8 @@ servername: internal server name to connect
       ipv6: use IPv6 protocol
        ssl: use SSL protocol
 </programlisting>
-<command>ctcp  receiver type [arguments]</command>
+
+<command>/ctcp  receiver type [arguments]</command>
 <programlisting>
 send a CTCP message (Client-To-Client Protocol)
 
@@ -58,14 +64,16 @@ send a CTCP message (Client-To-Client Protocol)
      type: CTCP type (examples: "version", "ping", ..)
 arguments: arguments for CTCP
 </programlisting>
-<command>cycle  [channel[,channel]] [part_message]</command>
+
+<command>/cycle  [channel[,channel]] [part_message]</command>
 <programlisting>
 leave and rejoin a channel
 
      channel: channel name for cycle
 part_message: part message (displayed to other users)
 </programlisting>
-<command>dcc  action [nickname [file]]</command>
+
+<command>/dcc  action [nickname [file]]</command>
 <programlisting>
 start DCC (file or chat)
 
@@ -73,34 +81,41 @@ start DCC (file or chat)
 nickname: nickname to send file or chat
     file: filename (on local host)
 </programlisting>
-<command>dehalfop  [nickname [nickname]]</command>
+
+<command>/dehalfop  [nickname [nickname]]</command>
 <programlisting>
 remove half channel operator status from nickname(s)
 </programlisting>
-<command>deop  [nickname [nickname]]</command>
+
+<command>/deop  [nickname [nickname]]</command>
 <programlisting>
 remove channel operator status from nickname(s)
 </programlisting>
-<command>devoice  [nickname [nickname]]</command>
+
+<command>/devoice  [nickname [nickname]]</command>
 <programlisting>
 remove voice from nickname(s)
 </programlisting>
-<command>die</command>
+
+<command>/die</command>
 <programlisting>
 shutdown the server
 </programlisting>
-<command>disconnect  [-all | servername [servername ...]]</command>
+
+<command>/disconnect  [-all | servername [servername ...]]</command>
 <programlisting>
 disconnect from server(s)
 
       -all: disconnect from all servers
 servername: server name to disconnect
 </programlisting>
-<command>halfop  [nickname [nickname]]</command>
+
+<command>/halfop  [nickname [nickname]]</command>
 <programlisting>
 give half channel operator status to nickname(s)
 </programlisting>
-<command>ignore  [list] | [add [re:]nick/host [server [channel]]] | [del number|-all]</command>
+
+<command>/ignore  [list] | [add [re:]nick/host [server [channel]]] | [del number|-all]</command>
 <programlisting>
 ignore nicks/hosts from servers or channels
 
@@ -121,33 +136,38 @@ Examples:
   ignore host "toto*@*.domain.com" on freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
 </programlisting>
-<command>info  [target]</command>
+
+<command>/info  [target]</command>
 <programlisting>
 get information describing the server
 
 target: server name
 </programlisting>
-<command>invite  nickname channel</command>
+
+<command>/invite  nickname channel</command>
 <programlisting>
 invite a nick on a channel
 
 nickname: nick to invite
  channel: channel to invite
 </programlisting>
-<command>ison  nickname [nickname ...]</command>
+
+<command>/ison  nickname [nickname ...]</command>
 <programlisting>
 check if a nickname is currently on IRC
 
 nickname: nickname
 </programlisting>
-<command>join  channel[,channel] [key[,key]]</command>
+
+<command>/join  channel[,channel] [key[,key]]</command>
 <programlisting>
 join a channel
 
 channel: channel name to join
     key: key to join the channel
 </programlisting>
-<command>kick  [channel] nickname [comment]</command>
+
+<command>/kick  [channel] nickname [comment]</command>
 <programlisting>
 forcibly remove a user from a channel
 
@@ -155,7 +175,8 @@ forcibly remove a user from a channel
 nickname: nickname to kick
  comment: comment for kick
 </programlisting>
-<command>kickban  [channel] nickname [comment]</command>
+
+<command>/kickban  [channel] nickname [comment]</command>
 <programlisting>
 kicks and bans a nick from a channel
 
@@ -163,41 +184,47 @@ kicks and bans a nick from a channel
 nickname: nickname to kick and ban
  comment: comment for kick
 </programlisting>
-<command>kill  nickname comment</command>
+
+<command>/kill  nickname comment</command>
 <programlisting>
 close client-server connection
 
 nickname: nickname
  comment: comment for kill
 </programlisting>
-<command>links  [[server] server_mask]</command>
+
+<command>/links  [[server] server_mask]</command>
 <programlisting>
 list all servernames which are known by the server answering the query
 
      server: this server should answer the query
 server_mask: list of servers must match this mask
 </programlisting>
-<command>list  [channel[,channel] [server]]</command>
+
+<command>/list  [channel[,channel] [server]]</command>
 <programlisting>
 list channels and their topic
 
 channel: channel to list (a regexp is allowed)
 server: server name
 </programlisting>
-<command>lusers  [mask [target]]</command>
+
+<command>/lusers  [mask [target]]</command>
 <programlisting>
 get statistics about the size of the IRC network
 
   mask: servers matching the mask only
 target: server for forwarding request
 </programlisting>
-<command>me  message</command>
+
+<command>/me  message</command>
 <programlisting>
 send a CTCP action to the current channel
 
 message: message to send
 </programlisting>
-<command>mode  { channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
+
+<command>/mode  { channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
 change channel or user mode
 
@@ -222,84 +249,97 @@ user modes:
   w: user receives wallops
   o: operator flag
 </programlisting>
-<command>motd  [target]</command>
+
+<command>/motd  [target]</command>
 <programlisting>
 get the "Message Of The Day"
 
 target: server name
 </programlisting>
-<command>msg  receiver[,receiver] text</command>
+
+<command>/msg  receiver[,receiver] text</command>
 <programlisting>
 send message to a nick or channel
 
 receiver: nick or channel (may be mask, '*' = current channel)
 text: text to send
 </programlisting>
-<command>names  [channel[,channel]]</command>
+
+<command>/names  [channel[,channel]]</command>
 <programlisting>
 list nicknames on channels
 
 channel: channel name
 </programlisting>
-<command>nick  [-all] nickname</command>
+
+<command>/nick  [-all] nickname</command>
 <programlisting>
 change current nickname
 
     -all: set new nickname for all connected servers
 nickname: new nickname
 </programlisting>
-<command>notice  nickname text</command>
+
+<command>/notice  nickname text</command>
 <programlisting>
 send notice message to user
 
 nickname: user to send notice to
     text: text to send
 </programlisting>
-<command>op  nickname [nickname]</command>
+
+<command>/op  nickname [nickname]</command>
 <programlisting>
 give channel operator status to nickname(s)
 </programlisting>
-<command>oper  user password</command>
+
+<command>/oper  user password</command>
 <programlisting>
 get operator privileges
 
 user/password: used to get privileges on current IRC server
 </programlisting>
-<command>part  [channel[,channel]] [part_message]</command>
+
+<command>/part  [channel[,channel]] [part_message]</command>
 <programlisting>
 leave a channel
 
      channel: channel name to leave
 part_message: part message (displayed to other users)
 </programlisting>
-<command>ping  server1 [server2]</command>
+
+<command>/ping  server1 [server2]</command>
 <programlisting>
 ping server
 
 server1: server to ping
 server2: forward ping to this server
 </programlisting>
-<command>pong  daemon [daemon2]</command>
+
+<command>/pong  daemon [daemon2]</command>
 <programlisting>
 answer to a ping message
 
  daemon: daemon who has responded to Ping message
 daemon2: forward message to this daemon
 </programlisting>
-<command>query  nickname [text]</command>
+
+<command>/query  nickname [text]</command>
 <programlisting>
 send a private message to a nick
 
 nickname: nickname for private conversation
     text: text to send
 </programlisting>
-<command>quote  data</command>
+
+<command>/quote  data</command>
 <programlisting>
 send raw data to server without parsing
 
 data: raw data to send
 </programlisting>
-<command>reconnect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
+
+<command>/reconnect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
 <programlisting>
 reconnect to server(s)
 
@@ -307,15 +347,18 @@ reconnect to server(s)
 servername: server name to reconnect
    -nojoin: do not join any channel (even if autojoin is enabled on server)
 </programlisting>
-<command>rehash</command>
+
+<command>/rehash</command>
 <programlisting>
 tell the server to reload its config file
 </programlisting>
-<command>restart</command>
+
+<command>/restart</command>
 <programlisting>
 tell the server to restart itself
 </programlisting>
-<command>server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [del servername] | [deloutq] | [switch]</command>
+
+<command>/server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [del servername] | [deloutq] | [switch]</command>
 <programlisting>
 list, add or remove servers
 
@@ -345,42 +388,48 @@ Examples:
   /server deloutq
   /server switch
 </programlisting>
-<command>service  nickname reserved distribution type reserved info</command>
+
+<command>/service  nickname reserved distribution type reserved info</command>
 <programlisting>
 register a new service
 
 distribution: visibility of service
         type: reserved for future usage
 </programlisting>
-<command>servlist  [mask [type]]</command>
+
+<command>/servlist  [mask [type]]</command>
 <programlisting>
 list services currently connected to the network
 
 mask: list only services matching this mask
 type: list only services of this type
 </programlisting>
-<command>squery  service text</command>
+
+<command>/squery  service text</command>
 <programlisting>
 deliver a message to a service
 
 service: name of service
 text: text to send
 </programlisting>
-<command>squit  server comment</command>
+
+<command>/squit  server comment</command>
 <programlisting>
 disconnect server links
 
 server: server name
 comment: comment for quit
 </programlisting>
-<command>stats  [query [server]]</command>
+
+<command>/stats  [query [server]]</command>
 <programlisting>
 query statistics about server
 
  query: c/h/i/k/l/m/o/y/u (see RFC1459)
 server: server name
 </programlisting>
-<command>summon  user [target [channel]]</command>
+
+<command>/summon  user [target [channel]]</command>
 <programlisting>
 give users who are on a host running an IRC server a message asking them to please join IRC
 
@@ -388,76 +437,88 @@ give users who are on a host running an IRC server a message asking them to plea
 target: server name
 channel: channel name
 </programlisting>
-<command>time  [target]</command>
+
+<command>/time  [target]</command>
 <programlisting>
 query local time from server
 
 target: query time from specified server
 </programlisting>
-<command>topic  [channel] [topic]</command>
+
+<command>/topic  [channel] [topic]</command>
 <programlisting>
 get/set channel topic
 
 channel: channel name
 topic: new topic for channel (if topic is "-delete" then topic is deleted)
 </programlisting>
-<command>trace  [target]</command>
+
+<command>/trace  [target]</command>
 <programlisting>
 find the route to specific server
 
 target: server
 </programlisting>
-<command>unban  [channel] nickname [nickname ...]</command>
+
+<command>/unban  [channel] nickname [nickname ...]</command>
 <programlisting>
 unban nicks or hosts
 
  channel: channel for unban
 nickname: user or host to unban
 </programlisting>
-<command>userhost  nickname [nickname ...]</command>
+
+<command>/userhost  nickname [nickname ...]</command>
 <programlisting>
 return a list of information about nicknames
 
 nickname: nickname
 </programlisting>
-<command>users  [target]</command>
+
+<command>/users  [target]</command>
 <programlisting>
 list of users logged into the server
 
 target: server
 </programlisting>
-<command>version  [server | nickname]</command>
+
+<command>/version  [server | nickname]</command>
 <programlisting>
 give the version info of nick or server (current or specified)
 
   server: server name
 nickname: nickname
 </programlisting>
-<command>voice  [nickname [nickname]]</command>
+
+<command>/voice  [nickname [nickname]]</command>
 <programlisting>
 give voice to nickname(s)
 </programlisting>
-<command>wallops  text</command>
+
+<command>/wallops  text</command>
 <programlisting>
 send a message to all currently connected users who have set the 'w' user mode for themselves
 
 text to send
 </programlisting>
-<command>who  [mask ["o"]]</command>
+
+<command>/who  [mask ["o"]]</command>
 <programlisting>
 generate a query which returns a list of information
 
 mask: only information which match this mask
    o: only operators are returned according to the mask supplied
 </programlisting>
-<command>whois  [server] nickname[,nickname]</command>
+
+<command>/whois  [server] nickname[,nickname]</command>
 <programlisting>
 query information about user(s)
 
   server: server name
 nickname: nickname (may be a mask)
 </programlisting>
-<command>whowas  nickname [,nickname [,nickname ...]] [count [target]]</command>
+
+<command>/whowas  nickname [,nickname [,nickname ...]] [count [target]]</command>
 <programlisting>
 ask for information about a nickname which no longer exists
 
@@ -465,3 +526,4 @@ nickname: nickname to search
    count: number of replies to return (full search if negative number)
   target: reply should match this mask
 </programlisting>
+

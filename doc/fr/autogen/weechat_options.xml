@@ -6,2099 +6,1313 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>weechat.color.bar_more</command>
+<command>weechat.color.bar_more</command>: couleur du texte pour les '+' lors du défilement des barres
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour les '+' lors du défilement des barres</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightmagenta</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat</command>
+<command>weechat.color.chat</command>: couleur du texte pour la discussion
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour la discussion</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_bg</command>
+<command>weechat.color.chat_bg</command>: couleur du fond pour la discussion
 <itemizedlist>
   <listitem>
-    <para>description: couleur du fond pour la discussion</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_buffer</command>
+<command>weechat.color.chat_buffer</command>: couleur du texte pour le nom des tampons
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le nom des tampons</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: white</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_channel</command>
+<command>weechat.color.chat_channel</command>: couleur du texte pour le nom des canaux
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le nom des canaux</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: white</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_delimiters</command>
+<command>weechat.color.chat_delimiters</command>: couleur du texte pour les délimiteurs
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les délimiteurs</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: green</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_highlight</command>
+<command>weechat.color.chat_highlight</command>: couleur du texte pour le préfixe surligné (highlight)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe surligné (highlight)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_highlight_bg</command>
+<command>weechat.color.chat_highlight_bg</command>: couleur du fond pour le préfixe surligné (highlight)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour le préfixe surligné (highlight)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: magenta</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: magenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_host</command>
+<command>weechat.color.chat_host</command>: couleur du texte pour les noms d'hôtes
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les noms d'hôtes</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick</command>
+<command>weechat.color.chat_nick</command>: couleur du texte pour l'heure dans la fenêtre de discussion
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour l'heure dans la fenêtre de discussion</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightcyan)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightcyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color01</command>
+<command>weechat.color.chat_nick_color01</command>: couleur du texte n°1 pour le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°1 pour le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color02</command>
+<command>weechat.color.chat_nick_color02</command>: couleur du texte n°2 pour le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°2 pour le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: magenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: magenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color03</command>
+<command>weechat.color.chat_nick_color03</command>: couleur du texte n°3 pour le pseudo
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte n°3 pour le pseudo</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: green</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color04</command>
+<command>weechat.color.chat_nick_color04</command>: couleur du texte n°4 le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°4 le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: brown</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color05</command>
+<command>weechat.color.chat_nick_color05</command>: couleur du texte n°5 pour le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°5 pour le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightblue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightblue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color06</command>
+<command>weechat.color.chat_nick_color06</command>: couleur du texte n°6 pour le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°6 pour le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color07</command>
+<command>weechat.color.chat_nick_color07</command>: couleur du texte n°7 pour le pseudo
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte n°7 pour le pseudo</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightcyan</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightcyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color08</command>
+<command>weechat.color.chat_nick_color08</command>: couleur du texte n°8 pour le pseudo
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte n°8 pour le pseudo</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightmagenta</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color09</command>
+<command>weechat.color.chat_nick_color09</command>: couleur du texte n°9 pour le pseudo
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte n°9 pour le pseudo</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_color10</command>
+<command>weechat.color.chat_nick_color10</command>: couleur du texte n°10 pour le pseudo
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte n°10 pour le pseudo</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: blue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_other</command>
+<command>weechat.color.chat_nick_other</command>: couleur du texte pour l'autre pseudo dans le tampon privée
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour l'autre pseudo dans le tampon privée</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_nick_self</command>
+<command>weechat.color.chat_nick_self</command>: couleur du texte pour le pseudo local dans la fenêtre de discussion
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le pseudo local dans la fenêtre de discussion</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: white</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_action</command>
+<command>weechat.color.chat_prefix_action</command>: couleur du texte pour le préfixe d'action
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe d'action</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: white</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_error</command>
+<command>weechat.color.chat_prefix_error</command>: couleur du texte pour le préfixe d'erreur
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe d'erreur</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_join</command>
+<command>weechat.color.chat_prefix_join</command>: couleur du texte pour le préfixe d'arrivée
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe d'arrivée</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_more</command>
+<command>weechat.color.chat_prefix_more</command>: couleur du texte pour les '+' lorsque le préfixe est trop long
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les '+' lorsque le préfixe est trop long</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_network</command>
+<command>weechat.color.chat_prefix_network</command>: couleur du texte pour le préfixe réseau
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe réseau</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: magenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: magenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_quit</command>
+<command>weechat.color.chat_prefix_quit</command>: couleur du texte pour le préfixe de départ
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe de départ</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightred)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightred</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_prefix_suffix</command>
+<command>weechat.color.chat_prefix_suffix</command>: couleur du texte pour le suffixe (après le préfixe)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le suffixe (après le préfixe)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: green)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: green</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_read_marker</command>
+<command>weechat.color.chat_read_marker</command>: couleur du texte pour le marqueur de données non lues
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le marqueur de données non lues</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: magenta</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: magenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_read_marker_bg</command>
+<command>weechat.color.chat_read_marker_bg</command>: couleur du fond pour le marqueur de données non lues
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour le marqueur de données non lues</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_server</command>
+<command>weechat.color.chat_server</command>: couleur du texte pour le nom des serveurs
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le nom des serveurs</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: brown</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_text_found</command>
+<command>weechat.color.chat_text_found</command>: couleur du texte pour le marqueur sur les lignes où le texte demandé est trouvé
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le marqueur sur les lignes où le texte demandé est trouvé</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_text_found_bg</command>
+<command>weechat.color.chat_text_found_bg</command>: couleur du fond pour le marqueur sur les lignes où le texte demandé est trouvé
 <itemizedlist>
   <listitem>
-    <para>description: couleur du fond pour le marqueur sur les lignes où le texte demandé est trouvé</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_time</command>
+<command>weechat.color.chat_time</command>: couleur du texte pour l'heure dans la fenêtre de discussion
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour l'heure dans la fenêtre de discussion</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.chat_time_delimiters</command>
+<command>weechat.color.chat_time_delimiters</command>: couleur du texte pour les délimiteurs de l'heure
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les délimiteurs de l'heure</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: brown</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input</command>
+<command>weechat.color.input</command>: couleur du texte pour la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_actions</command>
+<command>weechat.color.input_actions</command>: couleur du texte pour les actions dans la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les actions dans la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_bg</command>
+<command>weechat.color.input_bg</command>: couleur du fond pour la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_channel</command>
+<command>weechat.color.input_channel</command>: couleur du texte pour le canal dans la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le canal dans la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: white</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_delimiters</command>
+<command>weechat.color.input_delimiters</command>: couleur du texte pour les délimiteurs dans la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les délimiteurs dans la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: cyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_nick</command>
+<command>weechat.color.input_nick</command>: couleur du texte pour le pseudo dans la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le pseudo dans la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightcyan)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightcyan</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_server</command>
+<command>weechat.color.input_server</command>: couleur du texte pour le nom du serveur dans la ligne de saisie
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le nom du serveur dans la ligne de saisie</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: brown</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_text_not_found</command>
+<command>weechat.color.input_text_not_found</command>: couleur du texte pour la recherche infructueuse de texte dans la ligne de saisie
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la recherche infructueuse de texte dans la ligne de saisie</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: red</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: red)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist</command>
+<command>weechat.color.nicklist</command>: couleur du texte pour la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_away</command>
+<command>weechat.color.nicklist_away</command>: couleur du texte pour les pseudos absents
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les pseudos absents</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: cyan</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_bg</command>
+<command>weechat.color.nicklist_bg</command>: couleur du fond pour la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_group</command>
+<command>weechat.color.nicklist_group</command>: couleur du texte pour les groupes dans la liste des pseudos
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour les groupes dans la liste des pseudos</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: green</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: green)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_more</command>
+<command>weechat.color.nicklist_more</command>: couleur du texte pour les '+' lors du défilement des pseudos dans la liste des pseudos
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour les '+' lors du défilement des pseudos dans la liste des pseudos</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightmagenta</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix1</command>
+<command>weechat.color.nicklist_prefix1</command>: couleur du texte pour le préfixe n°1 de la liste des pseudos
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le préfixe n°1 de la liste des pseudos</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix2</command>
+<command>weechat.color.nicklist_prefix2</command>: couleur du texte pour le préfixe n°2 de la liste des pseudos
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le préfixe n°2 de la liste des pseudos</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix3</command>
+<command>weechat.color.nicklist_prefix3</command>: couleur du texte pour le préfixe n°3 de la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe n°3 de la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix4</command>
+<command>weechat.color.nicklist_prefix4</command>: couleur du texte pour le préfixe n°4 de la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe n°4 de la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: blue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_prefix5</command>
+<command>weechat.color.nicklist_prefix5</command>: couleur du texte pour le préfixe n°5 de la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le préfixe n°5 de la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: brown</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist_separator</command>
+<command>weechat.color.nicklist_separator</command>: couleur du texte pour le séparateur de la liste des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour le séparateur de la liste des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: blue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.separator</command>
+<command>weechat.color.separator</command>: couleur du fond pour les séparateurs de fenêtres (quand divisé)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour les séparateurs de fenêtres (quand divisé)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: blue</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status</command>
+<command>weechat.color.status</command>: couleur du texte pour la barre de statut
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la barre de statut</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: default</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_bg</command>
+<command>weechat.color.status_bg</command>: couleur du fond pour la barre de statut
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour la barre de statut</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: blue</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_highlight</command>
+<command>weechat.color.status_data_highlight</command>: couleur du texte pour un tampon avec un highlight (barre de statut)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour un tampon avec un highlight (barre de statut)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightmagenta)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: lightmagenta</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_msg</command>
+<command>weechat.color.status_data_msg</command>: couleur du texte pour un tampon avec de nouveaux messages (barre de statut)
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour un tampon avec de nouveaux messages (barre de statut)</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_other</command>
+<command>weechat.color.status_data_other</command>: couleur du texte pour un tampon avec des nouvelles données (pas des messages) (barre de statut)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour un tampon avec des nouvelles données (pas des messages) (barre de statut)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_data_private</command>
+<command>weechat.color.status_data_private</command>: couleur du texte pour un tampon avec un message privé (barre de statut)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour un tampon avec un message privé (barre de statut)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: lightgreen</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_delimiters</command>
+<command>weechat.color.status_delimiters</command>: couleur du texte pour les délimiteurs de la barre de statut
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour les délimiteurs de la barre de statut</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: cyan</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_more</command>
+<command>weechat.color.status_more</command>: couleur du texte pour un tampon avec des nouvelles données (barre de statut)
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour un tampon avec des nouvelles données (barre de statut)</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: yellow</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_name</command>
+<command>weechat.color.status_name</command>: couleur du texte pour le nom du tampon courant dans la barre de statut
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le nom du tampon courant dans la barre de statut</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: white</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_number</command>
+<command>weechat.color.status_number</command>: couleur du texte pour le numéro du tampon courant dans la barre de statut
 <itemizedlist>
   <listitem>
-    <para>description: couleur du texte pour le numéro du tampon courant dans la barre de statut</para>
-  </listitem>
-  <listitem>
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
   </listitem>
-  <listitem>
-    <para>valeur par défaut: yellow</para>
-  </listitem>
 </itemizedlist>
 
-<command>weechat.color.title</command>
+<command>weechat.color.title</command>: couleur du texte pour la barre de titre
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la barre de titre</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: default</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.title_bg</command>
+<command>weechat.color.title_bg</command>: couleur du fond pour la barre de titre
 <itemizedlist>
-  <listitem>
-    <para>description: couleur du fond pour la barre de titre</para>
-  </listitem>
   <listitem>
     <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: blue</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_completor</command>
+<command>weechat.completion.nick_completor</command>: chaîne affichée après la complétion des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: chaîne affichée après la complétion des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ':'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: ':')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_first_only</command>
+<command>weechat.completion.nick_first_only</command>: compléter seulement avec le premier pseudo trouvé
 <itemizedlist>
-  <listitem>
-    <para>description: compléter seulement avec le premier pseudo trouvé</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.nick_ignore_chars</command>
+<command>weechat.completion.nick_ignore_chars</command>: caractères à ignorer pour la complétion des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: caractères à ignorer pour la complétion des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '[]-^'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '[]-^')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_alert</command>
+<command>weechat.completion.partial_completion_alert</command>: alterte de l'utilisateur lorsqu'une complétion partielle survient
 <itemizedlist>
-  <listitem>
-    <para>description: alterte de l'utilisateur lorsqu'une complétion partielle survient</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_command</command>
+<command>weechat.completion.partial_completion_command</command>: complète partiellement les noms de commandes (stoppe quand plusieurs commandes trouvées commencent par les mêmes lettres)
 <itemizedlist>
-  <listitem>
-    <para>description: complète partiellement les noms de commandes (stoppe quand plusieurs commandes trouvées commencent par les mêmes lettres)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_command_arg</command>
+<command>weechat.completion.partial_completion_command_arg</command>: complète partiellement les paramètres de commande (stoppe quand plusieurs paramètres trouvés commencent par les mêmes lettres)
 <itemizedlist>
-  <listitem>
-    <para>description: complète partiellement les paramètres de commande (stoppe quand plusieurs paramètres trouvés commencent par les mêmes lettres)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_count</command>
+<command>weechat.completion.partial_completion_count</command>: afficher le compteur pour chaque complétion partielle dans l'objet de barre
 <itemizedlist>
-  <listitem>
-    <para>description: afficher le compteur pour chaque complétion partielle dans l'objet de barre</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_nick</command>
+<command>weechat.completion.partial_completion_nick</command>: complète partiellement les pseudos (stoppe quand plusieurs pseudos trouvés commencent par les mêmes lettres)
 <itemizedlist>
-  <listitem>
-    <para>description: complète partiellement les pseudos (stoppe quand plusieurs pseudos trouvés commencent par les mêmes lettres)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.display_default</command>
+<command>weechat.history.display_default</command>: nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 5</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 5)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.max_commands</command>
+<command>weechat.history.max_commands</command>: nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 100</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 100)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.history.max_lines</command>
+<command>weechat.history.max_lines</command>: nombre maximum de lignes dans l'historique (0 = sans limite)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum de lignes dans l'historique (0 = sans limite)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 4096</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 4096)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.buffer_notify_default</command>
+<command>weechat.look.buffer_notify_default</command>: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)
 <itemizedlist>
-  <listitem>
-    <para>description: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: none, highlight, message, all</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: all</para>
+    <para>valeurs: none, highlight, message, all (valeur par défaut: all)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.buffer_time_format</command>
+<command>weechat.look.buffer_time_format</command>: format de date/heure pour les tampons
 <itemizedlist>
-  <listitem>
-    <para>description: format de date/heure pour les tampons</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '%H:%M:%S'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%H:%M:%S')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.color_nicks_number</command>
+<command>weechat.look.color_nicks_number</command>: nombre de couleurs à utiliser pour les couleurs des pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: nombre de couleurs à utiliser pour les couleurs des pseudos</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 1 .. 10</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 10</para>
+    <para>valeurs: 1 .. 10 (valeur par défaut: 10)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.color_real_white</command>
+<command>weechat.look.color_real_white</command>: si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)
 <itemizedlist>
-  <listitem>
-    <para>description: si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.day_change</command>
+<command>weechat.look.day_change</command>: affiche un message quand le jour change
 <itemizedlist>
-  <listitem>
-    <para>description: affiche un message quand le jour change</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.day_change_time_format</command>
+<command>weechat.look.day_change_time_format</command>: format de date pour la date affichée quand le jour a changé
 <itemizedlist>
-  <listitem>
-    <para>description: format de date pour la date affichée quand le jour a changé</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '%a, %d %b %Y'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%a, %d %b %Y')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.highlight</command>
+<command>weechat.look.highlight</command>: liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)
 <itemizedlist>
-  <listitem>
-    <para>description: liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_count</command>
+<command>weechat.look.hotlist_names_count</command>: nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 32</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 3</para>
+    <para>valeurs: 0 .. 32 (valeur par défaut: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_length</command>
+<command>weechat.look.hotlist_names_length</command>: nombre maximum des noms dans la liste d'activité (0 = pas de limite)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum des noms dans la liste d'activité (0 = pas de limite)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 32</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 0</para>
+    <para>valeurs: 0 .. 32 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_names_level</command>
+<command>weechat.look.hotlist_names_level</command>: niveau pour l'affichage des noms dans la liste d'activité (combinaison de: 1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé+highlight)
 <itemizedlist>
-  <listitem>
-    <para>description: niveau pour l'affichage des noms dans la liste d'activité (combinaison de: 1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé+highlight)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 1 .. 15</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 12</para>
+    <para>valeurs: 1 .. 15 (valeur par défaut: 12)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_short_names</command>
+<command>weechat.look.hotlist_short_names</command>: si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)
 <itemizedlist>
-  <listitem>
-    <para>description: si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.hotlist_sort</command>
+<command>weechat.look.hotlist_sort</command>: type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)
 <itemizedlist>
-  <listitem>
-    <para>description: type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: group_time_asc</para>
+    <para>valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: group_time_asc)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.item_time_format</command>
+<command>weechat.look.item_time_format</command>: format de date/heure pour l'objet de barre "time"
 <itemizedlist>
-  <listitem>
-    <para>description: format de date/heure pour l'objet de barre "time"</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '%H:%M'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%H:%M')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist</command>
+<command>weechat.look.nicklist</command>: afficher la liste de pseudos (sur les tampons avec la liste de pseudos activée)
 <itemizedlist>
-  <listitem>
-    <para>description: afficher la liste de pseudos (sur les tampons avec la liste de pseudos activée)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_max_size</command>
+<command>weechat.look.nicklist_max_size</command>: taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille maximum; si min = max et &gt; 0, alors la taille est fixe))
 <itemizedlist>
-  <listitem>
-    <para>description: taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille maximum; si min = max et &gt; 0, alors la taille est fixe))</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 0</para>
+    <para>valeurs: 0 .. 100 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_min_size</command>
+<command>weechat.look.nicklist_min_size</command>: taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille minimum))
 <itemizedlist>
-  <listitem>
-    <para>description: taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille minimum))</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 0</para>
+    <para>valeurs: 0 .. 100 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_position</command>
+<command>weechat.look.nicklist_position</command>: position de la fenêtre des pseudos (top (haut), left (gauche), right (droite, par défaut), bottom (bas)
 <itemizedlist>
-  <listitem>
-    <para>description: position de la fenêtre des pseudos (top (haut), left (gauche), right (droite, par défaut), bottom (bas)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: left, right, top, bottom</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: right</para>
+    <para>valeurs: left, right, top, bottom (valeur par défaut: right)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nicklist_separator</command>
+<command>weechat.look.nicklist_separator</command>: séparateur entre la discussion et la liste de pseudos
 <itemizedlist>
-  <listitem>
-    <para>description: séparateur entre la discussion et la liste de pseudos</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nickmode</command>
+<command>weechat.look.nickmode</command>: afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur
 <itemizedlist>
-  <listitem>
-    <para>description: afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.nickmode_empty</command>
+<command>weechat.look.nickmode_empty</command>: afficher un espace si le mode du pseudo n'est pas (half)op/voice
 <itemizedlist>
-  <listitem>
-    <para>description: afficher un espace si le mode du pseudo n'est pas (half)op/voice</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.paste_max_lines</command>
+<command>weechat.look.paste_max_lines</command>: nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (0 = désactiver cette fonctionnalité)
 <itemizedlist>
-  <listitem>
-    <para>description: nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (0 = désactiver cette fonctionnalité)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 3</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_action</command>
+<command>weechat.look.prefix_action</command>: préfixe pour les messages d'action
 <itemizedlist>
-  <listitem>
-    <para>description: préfixe pour les messages d'action</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ' *'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: ' *')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_align</command>
+<command>weechat.look.prefix_align</command>: alignement de préfixe (none, left, right (par défaut))
 <itemizedlist>
-  <listitem>
-    <para>description: alignement de préfixe (none, left, right (par défaut))</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: none, left, right</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: right</para>
+    <para>valeurs: none, left, right (valeur par défaut: right)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_align_max</command>
+<command>weechat.look.prefix_align_max</command>: taille maximum pour le préfixe (0 = pas de taille maximum)
 <itemizedlist>
-  <listitem>
-    <para>description: taille maximum pour le préfixe (0 = pas de taille maximum)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 64</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 0</para>
+    <para>valeurs: 0 .. 64 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_error</command>
+<command>weechat.look.prefix_error</command>: préfixe pour les messages d'erreur
 <itemizedlist>
-  <listitem>
-    <para>description: préfixe pour les messages d'erreur</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '=!='</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '=!=')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_join</command>
+<command>weechat.look.prefix_join</command>: préfixe pour les messages d'arrivée
 <itemizedlist>
-  <listitem>
-    <para>description: préfixe pour les messages d'arrivée</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '--&gt;'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '--&gt;')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_network</command>
+<command>weechat.look.prefix_network</command>: préfixe pour les messages réseau
 <itemizedlist>
-  <listitem>
-    <para>description: préfixe pour les messages réseau</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '--'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '--')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_quit</command>
+<command>weechat.look.prefix_quit</command>: préfixe pour les messages de départ
 <itemizedlist>
-  <listitem>
-    <para>description: préfixe pour les messages de départ</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '&lt;--'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '&lt;--')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.prefix_suffix</command>
+<command>weechat.look.prefix_suffix</command>: chaîne affichée après le préfixe
 <itemizedlist>
-  <listitem>
-    <para>description: chaîne affichée après le préfixe</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '|'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '|')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.read_marker</command>
+<command>weechat.look.read_marker</command>: utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue
 <itemizedlist>
-  <listitem>
-    <para>description: utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: none, line, dotted-line, char</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: dotted-line</para>
+    <para>valeurs: none, line, dotted-line, char (valeur par défaut: dotted-line)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_config_on_exit</command>
+<command>weechat.look.save_config_on_exit</command>: sauvegarder la configuration en quittant
 <itemizedlist>
-  <listitem>
-    <para>description: sauvegarder la configuration en quittant</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_layout_on_exit</command>
+<command>weechat.look.save_layout_on_exit</command>: sauve la disposition en quittant (tampons, fenêtres, ou les deux)
 <itemizedlist>
-  <listitem>
-    <para>description: sauve la disposition en quittant (tampons, fenêtres, ou les deux)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: none, buffers, windows, all</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: all</para>
+    <para>valeurs: none, buffers, windows, all (valeur par défaut: all)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.scroll_amount</command>
+<command>weechat.look.scroll_amount</command>: nombre de lignes pour le défilement avec scroll_up et scroll_down
 <itemizedlist>
-  <listitem>
-    <para>description: nombre de lignes pour le défilement avec scroll_up et scroll_down</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 1 .. 2147483647</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 3</para>
+    <para>valeurs: 1 .. 2147483647 (valeur par défaut: 3)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.scroll_page_percent</command>
+<command>weechat.look.scroll_page_percent</command>: pourcentage de l'écran à faire défiler lors du défilement avec page précédente ou suivante (par exemple 100 signifie une page, 50 une demi-page)
 <itemizedlist>
-  <listitem>
-    <para>description: pourcentage de l'écran à faire défiler lors du défilement avec page précédente ou suivante (par exemple 100 signifie une page, 50 une demi-page)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 1 .. 100</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 100</para>
+    <para>valeurs: 1 .. 100 (valeur par défaut: 100)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.set_title</command>
+<command>weechat.look.set_title</command>: définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version
 <itemizedlist>
-  <listitem>
-    <para>description: définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.autoload</command>
+<command>weechat.plugin.autoload</command>: liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "perl.so")
 <itemizedlist>
-  <listitem>
-    <para>description: liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "perl.so")</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '*'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '*')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.debug</command>
+<command>weechat.plugin.debug</command>: active les messages de debug par défaut pour toutes les extensions (option désactivée par défaut, ce qui est hautement recommandé)
 <itemizedlist>
-  <listitem>
-    <para>description: active les messages de debug par défaut pour toutes les extensions (option désactivée par défaut, ce qui est hautement recommandé)</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.extension</command>
+<command>weechat.plugin.extension</command>: extension par défaut des extensions (par example ".so" sous Linux ou ".dll" sous Microsoft Windows)
 <itemizedlist>
-  <listitem>
-    <para>description: extension par défaut des extensions (par example ".so" sous Linux ou ".dll" sous Microsoft Windows)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '.so'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '.so')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.path</command>
+<command>weechat.plugin.path</command>: chemin de recherche des extensions ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)
 <itemizedlist>
-  <listitem>
-    <para>description: chemin de recherche des extensions ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '%h/plugins'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%h/plugins')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.plugin.save_config_on_unload</command>
+<command>weechat.plugin.save_config_on_unload</command>: sauvegarder les fichiers de configuration lors du déchargement des extensions
 <itemizedlist>
-  <listitem>
-    <para>description: sauvegarder les fichiers de configuration lors du déchargement des extensions</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.address</command>
+<command>weechat.proxy.address</command>: adresse du serveur proxy (IP ou nom de machine)
 <itemizedlist>
-  <listitem>
-    <para>description: adresse du serveur proxy (IP ou nom de machine)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.ipv6</command>
+<command>weechat.proxy.ipv6</command>: se connecter au proxy en ipv6
 <itemizedlist>
-  <listitem>
-    <para>description: se connecter au proxy en ipv6</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.password</command>
+<command>weechat.proxy.password</command>: mot de passe pour le serveur proxy
 <itemizedlist>
-  <listitem>
-    <para>description: mot de passe pour le serveur proxy</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.port</command>
+<command>weechat.proxy.port</command>: port pour se connecter au serveur proxy
 <itemizedlist>
-  <listitem>
-    <para>description: port pour se connecter au serveur proxy</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 65535</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 3128</para>
+    <para>valeurs: 0 .. 65535 (valeur par défaut: 3128)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.type</command>
+<command>weechat.proxy.type</command>: type de proxy (http (défaut), socks4, socks5)
 <itemizedlist>
-  <listitem>
-    <para>description: type de proxy (http (défaut), socks4, socks5)</para>
-  </listitem>
   <listitem>
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: http, socks4, socks5</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: http</para>
+    <para>valeurs: http, socks4, socks5 (valeur par défaut: http)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.use</command>
+<command>weechat.proxy.use</command>: utiliser un serveur proxy
 <itemizedlist>
-  <listitem>
-    <para>description: utiliser un serveur proxy</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.proxy.username</command>
+<command>weechat.proxy.username</command>: nom d'utilisateur pour le serveur proxy
 <itemizedlist>
-  <listitem>
-    <para>description: nom d'utilisateur pour le serveur proxy</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.command_after_plugins</command>
+<command>weechat.startup.command_after_plugins</command>: commande exécutée quand WeeChat démarre, après le chargement des extensions
 <itemizedlist>
-  <listitem>
-    <para>description: commande exécutée quand WeeChat démarre, après le chargement des extensions</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.command_before_plugins</command>
+<command>weechat.startup.command_before_plugins</command>: commande exécutée quand WeeChat démarre, avant le chargement des extensions
 <itemizedlist>
-  <listitem>
-    <para>description: commande exécutée quand WeeChat démarre, avant le chargement des extensions</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.display_logo</command>
+<command>weechat.startup.display_logo</command>: afficher le logo WeeChat au démarrage
 <itemizedlist>
-  <listitem>
-    <para>description: afficher le logo WeeChat au démarrage</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.display_version</command>
+<command>weechat.startup.display_version</command>: afficher la version de WeeChat au démarrage
 <itemizedlist>
-  <listitem>
-    <para>description: afficher la version de WeeChat au démarrage</para>
-  </listitem>
   <listitem>
     <para>type: booléen</para>
   </listitem>
   <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 
-<command>weechat.startup.weechat_slogan</command>
+<command>weechat.startup.weechat_slogan</command>: slogan WeeChat (si vide, le slogan ne sera pas utilisé)
 <itemizedlist>
-  <listitem>
-    <para>description: slogan WeeChat (si vide, le slogan ne sera pas utilisé)</para>
-  </listitem>
   <listitem>
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 'le client de discussion le plus geek !'</para>
+    <para>valeurs: toute chaîne (valeur par défaut: 'le client de discussion le plus geek !')</para>
   </listitem>
 </itemizedlist>
 

@@ -63,7 +63,7 @@ my @locale_list = qw(en_US fr_FR de_DE);
 # /name (where "name" # is name of plugin)
 # Note: we consider core is a plugin called "weechat"
 my %plugin_list = ("weechat" => "co", "alias"   => "",
-                   "aspell"  => "o",  "charset" => "c",
+                   "aspell"  => "o",  "charset" => "co",
                    "demo"    => "co", "fifo"    => "co",
                    "irc"     => "co", "logger"  => "co",
                    "notify"  => "co", "perl"    => "",
@@ -73,6 +73,8 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",
+                      "charset\\.decode\\..*",
+                      "charset\\.encode\\..*",
                       "irc\\.server\\..*",
                       "logger\\.level\\..*",
                       "logger\\.mask\\..*",
@@ -251,13 +253,13 @@ sub docgen
                         my $args_description = $plugin_commands{$plugin}{$command}{"args_description"};
                         $args_description = $d->get($args_description) if ($args_description ne "");
                         
-                        print FILE "<command>".$command;
+                        print FILE "<command>/".$command;
                         print FILE escape("  ".$args) if ($args ne "");
                         print FILE "</command>\n";
                         print FILE "<programlisting>\n";
                         print FILE escape($description."\n") if ($description ne "");
                         print FILE escape("\n".$args_description."\n") if ($args_description ne "");
-                        print FILE "</programlisting>\n";
+                        print FILE "</programlisting>\n\n";
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
                     $num_files_written++;
@@ -319,19 +321,14 @@ sub docgen
                                 $values = $d->get("a color name");
                             }
                             
-                            print FILE "<command>".$config.".".$section.".".$option."</command>\n";
+                            print FILE "<command>".$config.".".$section.".".$option."</command>: ".escape($description)."\n";
                             print FILE "<itemizedlist>\n";
-                            print FILE "  <listitem>\n";
-                            print FILE "    <para>".$d->get("description").": ".escape($description)."</para>\n";
-                            print FILE "  </listitem>\n";
                             print FILE "  <listitem>\n";
                             print FILE "    <para>".$d->get("type").": ".$type_nls."</para>\n";
                             print FILE "  </listitem>\n";
                             print FILE "  <listitem>\n";
-                            print FILE "    <para>".$d->get("values").": ".escape($values)."</para>\n";
-                            print FILE "  </listitem>\n";
-                            print FILE "  <listitem>\n";
-                            print FILE "    <para>".$d->get("default value").": ".escape($default_value)."</para>\n";
+                            print FILE "    <para>".$d->get("values").": ".escape($values)." "
+                                ."(".$d->get("default value").": ".escape($default_value).")</para>\n";
                             print FILE "  </listitem>\n";
                             print FILE "</itemizedlist>\n\n";
                         }

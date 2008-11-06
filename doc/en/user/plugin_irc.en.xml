@@ -24,11 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <section id="secPluginIrc">
   <title>IRC plugin</title>
   
-  The IRC plugin is designed to chat thru IRC protocols with other people.
-  It is multi-servers, and offers all expected IRC commands including DCC chat and
-  file transfer (via xfer plugin, see <xref linkend="secPluginXfer" />).
+  <para>
+    The IRC plugin is designed to chat thru IRC protocols with other people.
+    It is multi-servers, and offers all supported IRC commands including DCC
+    chat and file transfer (via xfer plugin, see
+    <xref linkend="secPluginXfer" />).
+  </para>
   
-  <section id="ircCommandLineOptions">
+  <section id="secIrcCommandLineOptions">
     <title>Command line options</title>
     
     <para>
@@ -43,8 +46,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="ircOptions">
-    <title>Configuration options</title>
+  <section id="secIrcOptions">
+    <title>Options (file irc.conf)</title>
     
     <para>
       &irc_options.xml;
@@ -52,7 +55,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="ircInfosHooked">
+  <section id="secIrcCommands">
+    <title>Commands</title>
+    
+    <para>
+      Almost all commands must be executed on a server or channel buffer.
+      Exceptions are: <command>/server</command>, <command>/connect</command>
+      and <command>/ignore</command>.
+    </para>
+    
+    <para>
+      &irc_commands.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secIrcInfosHooked">
     <title>Infos and infolists</title>
     
     <para>
@@ -66,9 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
           </thead>
           <tbody>
-            
             &irc_infos.xml;
-            
           </tbody>
         </tgroup>
       </informaltable>

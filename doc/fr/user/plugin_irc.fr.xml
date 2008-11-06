@@ -2,7 +2,7 @@
 
 <!--
 
-WeeChat documentation (english version)
+WeeChat documentation (french version)
 
 Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
 
@@ -22,6 +22,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <section id="secPluginIrc">
-  <title>IRC plugin</title>
+  <title>Extension IRC</title>
+  
+  <para>
+    L'extension IRC permet de dialoguer avec d'autres personnes via le
+    protocole IRC.
+    Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
+    compris la discussion directe (DCC chat) and le transfert de fichier DCC
+    (via l'extension xfer, voir <xref linkend="secPluginXfer" />).
+  </para>
+  
+  <section id="secIrcCommandLineOptions">
+    <title>Options de ligne de commande</title>
+    
+    <para>
+      Il est possible de passer une URL pour un ou plusieurs serveurs, comme
+      suit :
+      <screen>irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]</screen>
+      Exemple pour rejoindre #weechat et #toto sur le serveur
+      "<literal>irc.freenode.net</literal>", port par défaut (6667), avec le
+      pseudo "nono" :
+      <screen><prompt>$ </prompt><userinput>weechat-curses irc://nono@irc.freenode.net/#weechat,#toto</userinput></screen>
+    </para>
+    
+  </section>
+  
+  <section id="secIrcOptions">
+    <title>Options (fichier irc.conf)</title>
+    
+    <para>
+      &irc_options.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secIrcCommands">
+    <title>Commandes</title>
+    
+    <para>
+      Quasiment toutes les commandes doivent être exécutées sur un tampon de
+      serveur ou canal. Les exceptions sont : <command>/server</command>,
+      <command>/connect</command> et <command>/ignore</command>.
+    </para>
+    
+    <para>
+      &irc_commands.xml;
+    </para>
+    
+  </section>
+  
+  <section id="secIrcInfosHooked">
+    <title>Infos et infolists</title>
+    
+    <para>
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Nom</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            &irc_infos.xml;
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+  </section>
   
 </section>

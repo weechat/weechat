@@ -40,8 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO
     est une des suivantes :
     <screen>
-      catégorie,nom *texte ou commande ici
-      nom *texte ou commande ici
+      extension.tampon *texte ou commande ici
       *texte ou commande ici
     </screen>
   </para>
@@ -51,20 +50,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <itemizedlist>
       <listitem>
         <para>
-          changement du pseudo sur freenode en "pseudo|absent" :
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,freenode */nick pseudo|absent' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+          changement du pseudo sur freenode en "autrepseudo" :
+          <screen><prompt>$ </prompt><userinput>echo 'irc.server.freenode */nick autrepseudo' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          affichage de texte sur le canal #weechat :
-          <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *bonjour tout le monde !' >~/.weechat/weechat_fifo_12345</userinput></screen>
+          affichage de texte sur le canal IRC #weechat :
+          <screen><prompt>$ </prompt><userinput>echo 'irc.freenode.#weechat *bonjour tout le monde !' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
       <listitem>
         <para>
-          affichage de texte sur le canal courant (le tampon affiché
-          par WeeChat) :
+          affichage de texte sur le tampon courant :
           <screen><prompt>$ </prompt><userinput>echo '*bonjour !' >~/.weechat/weechat_fifo_12345</userinput></screen>
           <emphasis>Attention :</emphasis> ceci est dangereux et vous ne
           devriez pas le faire sauf si vous savez ce que vous faites !
@@ -74,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <para>
           envoyer deux commandes pour décharger/recharger les scripts Perl
           (vous devez les séparer par "\n") :
-          <screen><prompt>$ </prompt><userinput>echo -e "weechat,weechat */perl unload\nweechat,weechat */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
+          <screen><prompt>$ </prompt><userinput>echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
     </itemizedlist>
@@ -94,7 +92,7 @@ fi
 </screen>
     Si le script s'appelle "auto_weechat_command", vous pouvez le lancer
     ainsi :
-<screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *bonjour"</userinput></screen>
+<screen><prompt>$ </prompt><userinput>./auto_weechat_command 'irc.freenode.#weechat *bonjour'</userinput></screen>
   </para>
   
 </section>

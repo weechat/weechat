@@ -141,14 +141,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             IRC : serveur "<literal>irc.freenode.net</literal>",
-            canal "<literal>#weechat</literal>"
+            canal "<literal>#weechat</literal>" (anglais) ou
+            "<literal>#weechat-fr</literal>" (français)
           </para>
         </listitem>
         <listitem>
           <para>
             Forum WeeChat :
-            <ulink url="http://forums.flashtux.org">
-              http://forums.flashtux.org
+            <ulink url="http://forums.flashtux.org/">
+              http://forums.flashtux.org/
             </ulink>
           </para>
         </listitem>

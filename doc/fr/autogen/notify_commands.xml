@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>notify  reset | none | highlight | message | all</command>
+<command>/notify  reset | none | highlight | message | all</command>
 <programlisting>
 changer le niveau de notification pour le tampon courant
 
@@ -16,3 +16,4 @@ highlight: le tampon sera dans la hotlist pour les highlights seulement
   message: le tampon sera dans la hotlist pour les highlights et les messages d'utilisateurs seulement
       all: le tampon sera dans la hotlist pour tout texte affiché
 </programlisting>
+
