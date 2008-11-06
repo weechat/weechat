@@ -154,31 +154,31 @@ IF(BUILD_HTML OR BUILD_PDF)
       
     ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/user/weechat_user.${dlang}.xml)
     
-    IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/weechat_devel.${dlang}.xml)
+    IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/weechat_dev.${dlang}.xml)
       
       IF(BUILD_HTML)
-        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel)
-	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel)
-        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/autogen)
-	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/autogen)
-        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel)
-	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel)
+        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev)
+	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev)
+        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/autogen)
+	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/autogen)
+        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev)
+	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev)
         
 	ADD_CUSTOM_COMMAND(
-	  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel/index.html ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel/weechat_devel.${dlang}.html
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/"
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/autogen/"
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_BINARY_DIR}/date.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css" "${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel/"
-	  COMMAND ${XSLTPROC} ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel/ ${CMAKE_CURRENT_BINARY_DIR}/weechat-html.xsl ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/weechat_devel.${dlang}.xml
-	  COMMAND ${XSLTPROC} ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel/weechat_devel.${dlang}.html ${CMAKE_CURRENT_BINARY_DIR}/weechat-html-one.xsl ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel-build/weechat_devel.${dlang}.xml
+	  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/index.html ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/weechat_dev.${dlang}.html
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/autogen/"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_BINARY_DIR}/date.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css" "${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/"
+	  COMMAND ${XSLTPROC} ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/ ${CMAKE_CURRENT_BINARY_DIR}/weechat-html.xsl ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/weechat_dev.${dlang}.xml
+	  COMMAND ${XSLTPROC} ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/weechat_dev.${dlang}.html ${CMAKE_CURRENT_BINARY_DIR}/weechat-html-one.xsl ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev-build/weechat_dev.${dlang}.xml
 	  DEPENDS
           ${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml
-	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/*.xml
+	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/*.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
@@ -186,41 +186,41 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css
 	  COMMENT "Building html doc (${dlang})"
 	  )
-	ADD_CUSTOM_TARGET(doc-devel-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel/index.html)
-	ADD_CUSTOM_TARGET(doc-devel-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/devel/weechat_devel.${dlang}.html)
-	INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/devel DESTINATION share/doc/${PROJECT_NAME}/html/${dlang}/)
+	ADD_CUSTOM_TARGET(doc-dev-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/index.html)
+	ADD_CUSTOM_TARGET(doc-dev-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/weechat_dev.${dlang}.html)
+	INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev DESTINATION share/doc/${PROJECT_NAME}/html/${dlang}/)
 	
       ENDIF(BUILD_HTML)
       
       IF(BUILD_PDF)
-        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel)
-	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel)
-        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/autogen)
-        FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/autogen)
+        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev)
+	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev)
+        FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/autogen)
+        FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/autogen)
         
 	ADD_CUSTOM_COMMAND(
-	  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel/weechat_devel.${dlang}.pdf
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/"
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/"
-	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/autogen/"
-          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_BINARY_DIR}/date.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/"
-	  COMMAND ${DBLATEX} ARGS -P draft.mode=no -c ${CMAKE_CURRENT_SOURCE_DIR}/dblatex.conf -o ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel/weechat_devel.${dlang}.pdf ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel-build/weechat_devel.${dlang}.xml
+	  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/*.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/"
+	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/autogen/"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_BINARY_DIR}/date.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/"
+	  COMMAND ${DBLATEX} ARGS -P draft.mode=no -c ${CMAKE_CURRENT_SOURCE_DIR}/dblatex.conf -o ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev-build/weechat_dev.${dlang}.xml
 	  DEPENDS
           ${CMAKE_CURRENT_SOURCE_DIR}/include_autogen.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/*.xml
-	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/*.xml
+	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/*.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
 	  COMMENT "Building pdf doc (${dlang})"
 	  )
-	ADD_CUSTOM_TARGET(doc-devel-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel/weechat_devel.${dlang}.pdf)
-	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/devel/weechat_devel.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})
+	ADD_CUSTOM_TARGET(doc-dev-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf)
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})
         
       ENDIF(BUILD_PDF)
       
-    ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/devel/weechat_devel.${dlang}.xml)
+    ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/weechat_dev.${dlang}.xml)
   
   ENDFOREACH(dlang ${DOC_LANGS})
 
