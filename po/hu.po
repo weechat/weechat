@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-03 15:56+0100\n"
+"POT-Creation-Date: 2008-11-06 12:49+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1779,7 +1779,7 @@ msgid "  . description: %s\n"
 msgstr "  . leírás : %s\n"
 
 #, c-format
-msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2226,12 +2226,12 @@ msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
 msgstr ""
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
 msgstr ""
 
 #, c-format
 msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 
 msgid "print some messages on current ubffer"

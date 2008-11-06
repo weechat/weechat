@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-03 15:56+0100\n"
+"POT-Creation-Date: 2008-11-06 12:49+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1751,7 +1751,7 @@ msgid "  . description: %s\n"
 msgstr "  . popis: %s\n"
 
 #, c-format
-msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2209,13 +2209,13 @@ msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signálu: '%s'"
 msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
 msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signalu: %d"
 
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+#, fuzzy, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
 msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signalu: 0x%x"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 "ukázkový_signál: signál: %s, typ_dat: %s, data_signál: 0x%x (neznámý typ)"
 

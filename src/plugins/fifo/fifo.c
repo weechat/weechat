@@ -170,7 +170,7 @@ fifo_remove ()
 void
 fifo_exec (const char *text)
 {
-    char *text2, *pos_msg, *pos;
+    char *text2, *pos_msg, *pos_buffer, *pos;
     struct t_gui_buffer *ptr_buffer;
     
     text2 = strdup (text);
@@ -180,8 +180,8 @@ fifo_exec (const char *text)
     pos = NULL;
     ptr_buffer = NULL;
     
-    /* look for buffer name at beginning of text
-       text may be: "name *text" or "name *text" or "*text" */
+    /* look for plugin + buffer name at beginning of text
+       text may be: "plugin.buffer *text" or "*text" */
     if (text2[0] == '*')
     {
         pos_msg = text2 + 1;
@@ -201,12 +201,20 @@ fifo_exec (const char *text)
         pos_msg[0] = '\0';
         pos_msg += 2;
         
-        if (text2[0])
+        pos_buffer = strchr (text2, '.');
+        if (!pos_buffer)
         {
-            ptr_buffer = weechat_buffer_search (NULL, text2);
-            if (!ptr_buffer)
-                ptr_buffer = weechat_current_buffer;
+            weechat_printf (NULL,
+                            _("%s%s: error, invalid text received on pipe"),
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME);
+            free (text2);
+            return;
         }
+        pos_buffer[0] = '\0';
+        pos_buffer++;
+        
+        if (text2[0] && pos_buffer[0])
+            ptr_buffer = weechat_buffer_search (text2, pos_buffer);
     }
     
     if (!ptr_buffer)

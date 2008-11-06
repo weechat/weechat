@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-03 15:56+0100\n"
-"PO-Revision-Date: 2008-11-03 15:57+0100\n"
+"POT-Creation-Date: 2008-11-06 12:49+0100\n"
+"PO-Revision-Date: 2008-11-06 13:10+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1778,9 +1778,9 @@ msgid "  . description: %s\n"
 msgstr "  . description: %s\n"
 
 #, c-format
-msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
-"Décalage de l'horloge système détecté (-%ld secondes), réinitialisation de "
+"Décalage de l'horloge système détecté (%+ld secondes), réinitialisation de "
 "tous les minuteurs"
 
 #, c-format
@@ -2242,14 +2242,14 @@ msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
 msgstr "demo_signal: signal: %s, type_data: %s, signal_data: %d"
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
-msgstr "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
+msgstr "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
 
 #, c-format
 msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (type inconnu)"
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (type inconnu)"
 
 msgid "print some messages on current ubffer"
 msgstr "affiche des messages sur le tampon courant"

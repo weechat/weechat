@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-03 15:56+0100\n"
+"POT-Creation-Date: 2008-11-06 12:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1482,7 +1482,7 @@ msgid "  . description: %s\n"
 msgstr ""
 
 #, c-format
-msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, c-format
@@ -1889,12 +1889,12 @@ msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
 msgstr ""
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
 msgstr ""
 
 #, c-format
 msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 
 msgid "print some messages on current ubffer"
