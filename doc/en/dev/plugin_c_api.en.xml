@@ -2283,9 +2283,9 @@ void weechat_list_free (struct t_weelist *weelist);
         Prototype:
 <programlisting>
 struct t_config_file *weechat_config_new (const char *name,
-                                          int (*callback_reload)(void *data,
-                                                                 struct t_config_file *config_file),
-                                          void *callback_reload_data);
+    int (*callback_reload)(void *data,
+                           struct t_config_file *config_file),
+    void *callback_reload_data);
 </programlisting>
       </para>
       <para>
@@ -2341,7 +2341,9 @@ my_config_reload_cb (void *data, struct t_config_file *config_file)
     return WEECHAT_RC_OK;
 }
 
-struct t_config_file *config_file = weechat_config_new ("test", &amp;my_config_reload_cb, NULL);
+struct t_config_file *config_file = weechat_config_new ("test",
+                                                        &amp;my_config_reload_cb,
+                                                        NULL);
 </screen>
       </para>
     </section>
@@ -2353,34 +2355,35 @@ struct t_config_file *config_file = weechat_config_new ("test", &amp;my_config_r
         Prototype:
 <programlisting>
 struct t_config_section *weechat_config_new_section (struct t_config_file *config_file,
-                                                     const char *name,
-                                                     int user_can_add_options,
-                                                     int user_can_delete_options,
-                                                     int (*callback_read)(void *data,
-                                                                          struct t_config_file *config_file,
-                                                                          struct t_config_section *section,
-                                                                          const char *option_name,
-                                                                          const char *value),
-                                                     void *callback_read_data,
-                                                     int (*callback_write)(void *data,
-                                                                           struct t_config_file *config_file,
-                                                                           struct t_config_section *section, const char *option_name),
-                                                     void *callback_write_data,
-                                                     int (*callback_write_default)(void *data,
-                                                                                   struct t_config_file *config_file,
-                                                                                   const char *section_name);
-                                                     void *callback_write_default_data,
-                                                     int (*callback_create_option)(void *data,
-                                                                                   struct t_config_file *config_file,
-                                                                                   struct t_config_section *section,
-                                                                                   const char *option_name,
-                                                                                   const char *value),
-                                                     void *callback_create_option_data,
-                                                     int (*callback_delete_option)(void *data,
-                                                                                   struct t_config_file *config_file,
-                                                                                   struct t_config_section *section,
-                                                                                   struct t_config_option *option),
-                                                     void *callback_delete_option_data);
+    const char *name,
+    int user_can_add_options,
+    int user_can_delete_options,
+    int (*callback_read)(void *data,
+                         struct t_config_file *config_file,
+                         struct t_config_section *section,
+                         const char *option_name,
+                         const char *value),
+    void *callback_read_data,
+    int (*callback_write)(void *data,
+                          struct t_config_file *config_file,
+                          struct t_config_section *section,
+                          const char *option_name),
+    void *callback_write_data,
+    int (*callback_write_default)(void *data,
+                                  struct t_config_file *config_file,
+                                  const char *section_name);
+    void *callback_write_default_data,
+    int (*callback_create_option)(void *data,
+                                  struct t_config_file *config_file,
+                                  struct t_config_section *section,
+                                  const char *option_name,
+                                  const char *value),
+    void *callback_create_option_data,
+    int (*callback_delete_option)(void *data,
+                                  struct t_config_file *config_file,
+                                  struct t_config_section *section,
+                                  struct t_config_option *option),
+    void *callback_delete_option_data);
 </programlisting>
       </para>
       <para>
@@ -2538,21 +2541,23 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 }
 
 /* standard section, user can not add/delete options */
-struct t_config_section *new_section1 = weechat_config_new ("section1", 0, 0,
-                                                            NULL, NULL, /* read callback */
-                                                            NULL, NULL, /* write callback */
-                                                            NULL, NULL, /* write default callback */
-                                                            NULL, NULL, /* create option callback */
-                                                            NULL, NULL); /* delete option callback */
+struct t_config_section *new_section1 =
+    weechat_config_new ("section1", 0, 0,
+                        NULL, NULL, /* read callback */
+                        NULL, NULL, /* write callback */
+                        NULL, NULL, /* write default callback */
+                        NULL, NULL, /* create option callback */
+                        NULL, NULL); /* delete option callback */
 
 /* special section, user can add/delete options, and options need
    callback to be read/written */
-struct t_config_section *new_section2 = weechat_config_new ("section2", 1, 1,
-                                                            &amp;my_section_read_cb, NULL,
-                                                            &amp;my_section_write_cb, NULL,
-                                                            &amp;my_section_write_default_cb, NULL,
-                                                            &amp;my_section_create_option_cb, NULL,
-                                                            &amp;my_section_delete_option_cb, NULL);
+struct t_config_section *new_section2 =
+    weechat_config_new ("section2", 1, 1,
+                        &amp;my_section_read_cb, NULL,
+                        &amp;my_section_write_cb, NULL,
+                        &amp;my_section_write_default_cb, NULL,
+                        &amp;my_section_create_option_cb, NULL,
+                        &amp;my_section_delete_option_cb, NULL);
 </screen>
       </para>
     </section>
@@ -2603,25 +2608,25 @@ struct t_config_section *section = weechat_config_search_section (config_file, "
         Prototype:
 <programlisting>
 struct t_config_option *weechat_config_new_option (struct t_config_file *config_file,
-                                                   struct t_config_section *section,
-                                                   const char *name,
-                                                   const char *type,
-                                                   const char *description,
-                                                   const char *string_values,
-                                                   int min,
-                                                   int max,
-                                                   const chat *default_value,
-                                                   const char *value,
-                                                   int (*callback_check_value)(void *data,
-                                                                               struct t_config_option *option,
-                                                                               const char *value),
-                                                   void *callback_check_value_data,
-                                                   int (*callback_change)(void *data,
-                                                                          struct t_config_option *option),
-                                                   void *callback_change_data,
-                                                   int (*callback_delete)(void *data,
-                                                                          struct t_config_option *option),
-                                                   void *callback_delete_data);
+    struct t_config_section *section,
+    const char *name,
+    const char *type,
+    const char *description,
+    const char *string_values,
+    int min,
+    int max,
+    const chat *default_value,
+    const char *value,
+    int (*callback_check_value)(void *data,
+                                struct t_config_option *option,
+    const char *value),
+    void *callback_check_value_data,
+    int (*callback_change)(void *data,
+                           struct t_config_option *option),
+    void *callback_change_data,
+    int (*callback_delete)(void *data,
+                           struct t_config_option *option),
+    void *callback_delete_data);
 </programlisting>
       </para>
       <para>
@@ -2848,7 +2853,8 @@ struct t_config_option *weechat_config_search_option (struct t_config_file *conf
       <para>
         Example:
 <screen>
-struct t_config_option *option = weechat_config_search_option (config_file, section, "option");
+struct t_config_option *option =
+    weechat_config_search_option (config_file, section, "option");
 </screen>
       </para>
     </section>
@@ -2905,7 +2911,9 @@ struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
 
 weechat_config_search_with_string ("file.section.option",
-                                   &amp;ptr_config_file, &amp;ptr_section, &amp;ptr_option);
+                                   &amp;ptr_config_file,
+                                   &amp;ptr_section,
+                                   &amp;ptr_option);
 if (ptr_option)
 {
     /* option found */
