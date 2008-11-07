@@ -447,12 +447,18 @@ network_pass_proxy (int sock, const char *address, int port)
     rc = 0;
     if (CONFIG_BOOLEAN(config_proxy_use))
     {
-        if (string_strcasecmp (CONFIG_STRING(config_proxy_type), "http") == 0)
-            rc = network_pass_httpproxy (sock, address, port);
-        if (string_strcasecmp (CONFIG_STRING(config_proxy_type),  "socks4") == 0)
-            rc = network_pass_socks4proxy (sock, address, port);
-        if (string_strcasecmp (CONFIG_STRING(config_proxy_type), "socks5") == 0)
-            rc = network_pass_socks5proxy (sock, address, port);
+        switch (CONFIG_INTEGER(config_proxy_type))
+        {
+            case CONFIG_PROXY_TYPE_HTTP:
+                rc = network_pass_httpproxy (sock, address, port);
+                break;
+            case CONFIG_PROXY_TYPE_SOCKS4:
+                rc = network_pass_socks4proxy (sock, address, port);
+                break;
+            case CONFIG_PROXY_TYPE_SOCKS5:
+                rc = network_pass_socks5proxy (sock, address, port);
+                break;
+        }
     }
     return rc;
 }

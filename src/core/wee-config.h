@@ -65,6 +65,13 @@ enum t_config_look_save_layout_on_exit
     CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL,
 };
 
+enum t_config_proxy_type
+{
+    CONFIG_PROXY_TYPE_HTTP = 0,
+    CONFIG_PROXY_TYPE_SOCKS4,
+    CONFIG_PROXY_TYPE_SOCKS5,
+};
+
 extern struct t_config_file *weechat_config_file;
 extern struct t_config_section *weechat_config_section_bar;
 
