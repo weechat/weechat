@@ -184,7 +184,7 @@ struct t_weechat_plugin
     long (*timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*timeval_add) (struct timeval *tv, long interval);
     
-    /* sorted list */
+    /* sorted lists */
     struct t_weelist *(*list_new) ();
     struct t_weelist_item *(*list_add) (struct t_weelist *weelist,
                                         const char *data,
@@ -244,10 +244,12 @@ struct t_weechat_plugin
                                                        const char *section_name);
     struct t_config_option *(*config_new_option) (struct t_config_file *config_file,
                                                   struct t_config_section *section,
-                                                  const char *name, const char *type,
+                                                  const char *name,
+                                                  const char *type,
                                                   const char *description,
                                                   const char *string_values,
-                                                  int min, int max,
+                                                  int min,
+                                                  int max,
                                                   const char *default_value,
                                                   const char *value,
                                                   int (*callback_check_value)(void *data,
@@ -286,7 +288,7 @@ struct t_weechat_plugin
     int (*config_boolean) (struct t_config_option *option);
     int (*config_integer) (struct t_config_option *option);
     char *(*config_string) (struct t_config_option *option);
-    int (*config_color) (struct t_config_option *option);
+    char *(*config_color) (struct t_config_option *option);
     void (*config_write_line) (struct t_config_file *config_file,
                                const char *option_name,
                                const char *value, ...);
@@ -826,8 +828,6 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_printf(__buffer, __message, __argz...)                  \
     weechat_plugin->printf_date_tags(__buffer, 0, NULL, __message,      \
                                      ##__argz)
-#define weechat_printf_y(__buffer, __y, __message, __argz...)           \
-    weechat_plugin->printf_y(__buffer, __y, __message, ##__argz)
 #define weechat_printf_date(__buffer, __date, __message, __argz...)     \
     weechat_plugin->printf_date_tags(__buffer, __date, NULL,            \
                                      __message, ##__argz)
@@ -838,6 +838,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                  __argz...)                             \
     weechat_plugin->printf_date_tags(__buffer, __date, __tags,          \
                                      __message, ##__argz)
+#define weechat_printf_y(__buffer, __y, __message, __argz...)           \
+    weechat_plugin->printf_y(__buffer, __y, __message, ##__argz)
 #define weechat_log_printf(__message, __argz...)                        \
     weechat_plugin->log_printf(__message, ##__argz)
 

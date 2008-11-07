@@ -1886,7 +1886,8 @@ static int
 weechat_lua_api_config_color (lua_State *L)
 {
     const char *option;
-    int n, value;
+    char *result;
+    int n;
     
     /* make C compiler happy */
     (void) L;
@@ -1909,9 +1910,9 @@ weechat_lua_api_config_color (lua_State *L)
     
     option = lua_tostring (lua_current_interpreter, -1);
     
-    value = weechat_config_color (script_str2ptr (option));
+    result = weechat_config_color (script_str2ptr (option));
     
-    LUA_RETURN_INT(value);
+    LUA_RETURN_STRING(result);
 }
 
 /*

@@ -1855,7 +1855,8 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    int result, i;
+    char *result;
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -1874,7 +1875,7 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
     
     result = weechat_config_color (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* option */
     
-    TCL_RETURN_INT(result);
+    TCL_RETURN_STRING(result);
 }
 
 /*

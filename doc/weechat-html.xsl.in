@@ -9,7 +9,7 @@
 <xsl:param name="chunk.section.depth" select="2"/>
 <xsl:param name="chunk.quietly" select="1"/>
 <xsl:param name="chunk.first.sections" select="1"/>
-<xsl:param name="generate.section.toc.level" select="3"/>
+<xsl:param name="generate.section.toc.level" select="2"/>
 
 <xsl:param name="html.stylesheet">weechat-doc.css</xsl:param>
 

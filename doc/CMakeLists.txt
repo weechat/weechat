@@ -77,7 +77,7 @@ IF(BUILD_HTML OR BUILD_PDF)
     OUTPUT_VARIABLE DOC_DATE
     )
   STRING(REPLACE "\n" "" DOC_DATE "${DOC_DATE}")
-
+  
   CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
     ${CMAKE_CURRENT_BINARY_DIR}/date.xml
@@ -116,7 +116,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css
-	  COMMENT "Building html doc (${dlang})"
+	  COMMENT "Building user guide - html doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-user-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/user/index.html)
 	ADD_CUSTOM_TARGET(doc-user-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/user/weechat_user.${dlang}.html)
@@ -145,7 +145,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
-	  COMMENT "Building pdf doc (${dlang})"
+	  COMMENT "Building user guide - pdf doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-user-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user/weechat_user.${dlang}.pdf)
 	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user/weechat_user.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})
@@ -184,7 +184,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css
-	  COMMENT "Building html doc (${dlang})"
+	  COMMENT "Building developer guide - html doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-dev-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/index.html)
 	ADD_CUSTOM_TARGET(doc-dev-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/weechat_dev.${dlang}.html)
@@ -213,7 +213,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
-	  COMMENT "Building pdf doc (${dlang})"
+	  COMMENT "Building developer guide - pdf doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-dev-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf)
 	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})

@@ -1583,7 +1583,7 @@ static XS (XS_weechat_api_config_string)
 
 static XS (XS_weechat_api_config_color)
 {
-    int value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1601,9 +1601,9 @@ static XS (XS_weechat_api_config_color)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
     
-    PERL_RETURN_INT(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*

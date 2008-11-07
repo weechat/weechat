@@ -21,8 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<section id="secScriptsPlugins">
-  <title>Scripts plugins</title>
+<section id="secScriptPluginAPI">
+  <title>Script plugin API</title>
+  
+  <!--
   
   <para>
     Four plugins are provided with WeeChat to use script languages:
@@ -2845,5 +2847,7 @@ end
     </section>
     
   </section>
+  
+  -->
   
 </section>

@@ -804,14 +804,10 @@ config_file_string_to_boolean (const char *text)
 
 /*
  * config_file_option_reset: set default value for an option
- *                         return one of these values:
- *                           WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
- *                           WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
- *                           WEECHAT_CONFIG_OPTION_SET_ERROR
- *
- *                           2 if ok (value changed)
- *                           1 if ok (value is the same)
- *                           0 if failed
+ *                           return one of these values:
+ *                             WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+ *                             WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+ *                             WEECHAT_CONFIG_OPTION_SET_ERROR
  */
 
 int
@@ -1447,16 +1443,13 @@ config_file_option_string (struct t_config_option *option)
  * config_file_option_color: return color value of an option
  */
 
-int
+char *
 config_file_option_color (struct t_config_option *option)
 {
     if (!option)
-        return 0;
-    
-    if (option->type == CONFIG_OPTION_TYPE_COLOR)
-        return CONFIG_COLOR(option);
-    else
-        return 0;
+        return NULL;
+
+    return gui_color_get_name (CONFIG_COLOR(option));
 }
 
 /*

@@ -48,29 +48,29 @@ BOOK_COMMON_INCLUDE  = authors.$(LANGCODE).xml \
                        intro.$(LANGCODE).xml
 
 BOOK_USER            = weechat_user.$(LANGCODE)
-BOOK_USER_INCLUDE    = user/install.$(LANGCODE).xml        \
-                       user/usage.$(LANGCODE).xml          \
-                       user/plugins.$(LANGCODE).xml        \
-                       user/plugin_alias.$(LANGCODE).xml   \
-                       user/plugin_aspell.$(LANGCODE).xml  \
-                       user/plugin_charset.$(LANGCODE).xml \
-                       user/plugin_fifo.$(LANGCODE).xml    \
-                       user/plugin_irc.$(LANGCODE).xml     \
-                       user/plugin_logger.$(LANGCODE).xml  \
-                       user/plugin_scripts.$(LANGCODE).xml \
+BOOK_USER_INCLUDE    = user/install.$(LANGCODE).xml          \
+                       user/usage.$(LANGCODE).xml            \
+                       user/plugins.$(LANGCODE).xml          \
+                       user/plugin_alias.$(LANGCODE).xml     \
+                       user/plugin_aspell.$(LANGCODE).xml    \
+                       user/plugin_charset.$(LANGCODE).xml   \
+                       user/plugin_fifo.$(LANGCODE).xml      \
+                       user/plugin_irc.$(LANGCODE).xml       \
+                       user/plugin_logger.$(LANGCODE).xml    \
+                       user/plugin_scripts.$(LANGCODE).xml   \
                        user/plugin_xfer.$(LANGCODE).xml
 
 BOOK_DEV             = weechat_dev.$(LANGCODE)
-BOOK_DEV_INCLUDE     = dev/plugin_api.$(LANGCODE).xml      \
-                       dev/plugin_scripts.$(LANGCODE).xml  \
-                       dev/plugins.$(LANGCODE).xml         \
-                       dev/weechat_dev.$(LANGCODE).xml
+BOOK_DEV_INCLUDE     = dev/plugins.$(LANGCODE).xml           \
+                       dev/plugin_api.$(LANGCODE).xml        \
+                       dev/plugin_c_api.$(LANGCODE).xml      \
+                       dev/plugin_script_api.$(LANGCODE).xml
 
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
-EXTRA_DIST = $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) \
-             user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE)     \
-             dev/$(BOOK_DEV).xml $(BOOK_DEV_INCLUDE)        \
+EXTRA_DIST = $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE)  \
+             user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE)      \
+             dev/$(BOOK_DEV).xml $(BOOK_DEV_INCLUDE)         \
              $(QUICKSTART)
 
 if DBLATEX_FOUND

@@ -1672,8 +1672,7 @@ weechat_python_api_config_string (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_color (PyObject *self, PyObject *args)
 {
-    char *option;
-    int value;
+    char *option, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1692,9 +1691,9 @@ weechat_python_api_config_color (PyObject *self, PyObject *args)
         PYTHON_RETURN_INT(0);
     }
     
-    value = weechat_config_color (script_str2ptr (option));
+    result = weechat_config_color (script_str2ptr (option));
     
-    PYTHON_RETURN_INT(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*

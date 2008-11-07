@@ -30,11 +30,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     %include_autogen.xml;
 
   <!-- ***** written by hand: ***** -->
-  <!ENTITY intro.fr.xml          SYSTEM "intro.fr.xml">
-  <!ENTITY plugins.fr.xml        SYSTEM "plugins.fr.xml">
-  <!ENTITY plugin_api.fr.xml     SYSTEM "plugin_api.fr.xml">
-  <!ENTITY plugin_scripts.fr.xml SYSTEM "plugin_scripts.fr.xml">
-  <!ENTITY authors.fr.xml        SYSTEM "authors.fr.xml">
+  <!ENTITY intro.fr.xml             SYSTEM "intro.fr.xml">
+  <!ENTITY plugins.fr.xml           SYSTEM "plugins.fr.xml">
+  <!ENTITY plugin_api.fr.xml        SYSTEM "plugin_api.fr.xml">
+  <!ENTITY plugin_c_api.fr.xml      SYSTEM "plugin_c_api.fr.xml">
+  <!ENTITY plugin_script_api.fr.xml SYSTEM "plugin_script_api.fr.xml">
+  <!ENTITY authors.fr.xml           SYSTEM "authors.fr.xml">
 ]>
 
 <book lang="fr">
@@ -95,7 +96,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   &intro.fr.xml;
   
-  <!-- &plugins.fr.xml; -->
+  &plugins.fr.xml;
+  
+  &plugin_api.fr.xml;
   
   &authors.fr.xml;
   

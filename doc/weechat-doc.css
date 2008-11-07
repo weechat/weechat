@@ -79,6 +79,20 @@ a:hover {
     font-size: 11px;
 }
 
+.note {
+    border: dashed 1px #CCCCCC;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 6px 6px 0 6px;
+}
+
+.note h3 {
+    border: none;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
 .programlisting {
     font-size: 11px;
 }

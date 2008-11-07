@@ -129,8 +129,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </informaltable>
     </para>
     
-    &plugin_api.en.xml;
-    
     <section id="secCompilePlugin">
       <title>Compile plugin</title>
       
@@ -236,15 +234,5 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     </section>
     
   </section>
-  
-  &plugin_irc.en.xml;
-  
-  <!-- &plugin_charset.en.xml; -->
-  
-  &plugin_fifo.en.xml;
-  
-  <!-- &plugin_scripts.en.xml; -->
-  
-  &plugin_xfer.en.xml;
   
 </chapter>

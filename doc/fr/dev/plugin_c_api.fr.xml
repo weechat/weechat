@@ -1,0 +1,3561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+WeeChat documentation (french version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<section id="secPluginCApi">
+  <title>API extension en C</title>
+  
+  <section id="secAPI_set_charset">
+    <title>set_charset</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void set_charset (t_weechat_plugin *plugin, char *charset)
+      </command>
+    </para>
+    <para>
+      Change le jeu de caractères de l'extension.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>charset</option> : nouveau jeu de caractères à
+            utiliser
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->set_charset (plugin, "ISO-8859-1");</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_iconv_to_internal">
+    <title>iconv_to_internal</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void iconv_to_internal (t_weechat_plugin *plugin, char *charset,
+        char *string)
+      </command>
+    </para>
+    <para>
+      Convertit une chaîne de caractères vers le jeu de caractères
+      interne WeeChat (UTF-8).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>charset</option> : le jeu de caractères de départ
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>string</option> : la chaîne à convertir
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la chaîne convertie.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free" après utilisation.
+    </para>
+    <para>
+      Exemple :
+      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "chaine iso: é à");</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_iconv_from_internal">
+    <title>iconv_from_internal</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void iconv_from_internal (t_weechat_plugin *plugin, char *charset,
+        char *string)
+      </command>
+    </para>
+    <para>
+      Convertit une chaîne de caractères depuis le jeu de caractères
+      interne WeeChat (UTF-8) vers un autre.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>charset</option> : le jeu de caractères voulu
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>string</option> : la chaîne à convertir
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la chaîne convertie.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free" après utilisation.
+    </para>
+    <para>
+      Exemple :
+      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "chaine utf-8: é à");</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_ascii_strcasecmp">
+    <title>ascii_strcasecmp</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int ascii_strcasecmp (t_weechat_plugin *plugin,
+        char *chaine1, char *chaine2)
+      </command>
+    </para>
+    <para>
+      Effectue une comparaison entre deux chaînes, sans tenir compte des
+      majuscules/minuscules ni de la locale.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine1</option> : la première chaîne à comparer
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine2</option> : la deuxième chaîne à comparer
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la différence entre les deux chaînes : négatif
+      si chaine1 &lt; chaine2, zéro si chaine1 == chaine2, positif si
+      chaine1 &gt; chaine2
+    </para>
+    <para>
+      Exemple :
+      <screen>if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_ascii_strncasecmp">
+    <title>ascii_strncasecmp</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int ascii_strncasecmp (t_weechat_plugin *plugin,
+        char *chaine1, char *chaine2, int max)
+      </command>
+    </para>
+    <para>
+      Effectue une comparaison entre deux chaînes, sans tenir compte des
+      majuscules/minuscules ni de la locale, en comparant au plus "max"
+      caractères.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine1</option> : la première chaîne à comparer
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine2</option> : la deuxième chaîne à comparer
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>max</option> : nombre de caractères max à comparer
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la différence entre les deux chaînes : négatif
+      si chaine1 &lt; chaine2, zéro si chaine1 == chaine 2, positif si
+      chaine1 &gt; chaine2
+    </para>
+    <para>
+      Exemple :
+      <screen>if (plugin->ascii_strncasecmp (plugin, "abc", "def", 2) != 0) ...</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_explode_string">
+    <title>explode_string</title>
+    
+    <para>
+      Prototype :
+      <command>
+        char **explode_string (t_weechat_plugin *plugin, char *chaine,
+        char *separateurs, int num_items_max, int *num_items)
+      </command>
+    </para>
+    <para>
+      Explose une chaîne en plusieurs selon un/des délimiteur(s).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine</option> : la chaîne à exploser
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>separateurs</option> : les délimiteurs utilisés
+            pour exploser la chaîne
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>num_items_max</option> : nombre maximum de
+            sous-chaînes créées (0 = pas de limite)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>num_items</option> : pointeur vers un entier qui
+            contiendra le nombre de sous-chaînes créées en retour
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : un tableau de chaînes, ou NULL si un problème
+      a été rencontré.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_exploded_string" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+char **argv;
+int argc;
+argv = plugin->explode_string (plugin, chaine, " ", 0, &amp;argc);
+...
+if (argv != NULL)
+    plugin->free_exploded_string (plugin, argv);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_exploded_string">
+    <title>free_exploded_string</title>
+    
+    <para>
+      Prototype :
+      <command>
+        char **free_exploded_string (t_weechat_plugin *plugin,
+        char **chaine)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée pour une explosion de chaîne.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>chaine</option> : la chaîne explosée par la fonction
+            "explode_string"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+<screen>
+char *argv;
+int argc;
+argv = plugin->explode_string (plugin, chaine, " ", 0, &amp;argc);
+...
+if (argv != NULL)
+    plugin->free_exploded_string (plugin, argv);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_mkdir_home">
+    <title>mkdir_home</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int mkdir_home (t_weechat_plugin *plugin, char *repertoire)
+      </command>
+    </para>
+    <para>
+      Créé un répertoire dans le répertoire de base de WeeChat.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>repertoire</option> : répertoire à créer
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : 1 si le répertoire a été créé avec succès,
+      0 si une erreur s'est produite.
+    </para>
+    <para>
+      Example:
+<screen>
+if (!plugin->mkdir_home (plugin, "temp"))
+    plugin->print_server(plugin, "Impossible de créer le répertoire 'temp' dans la base WeeChat.");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_exec_on_files">
+    <title>exec_on_files</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void exec_on_files (t_weechat_plugin *plugin, char *repertoire,
+        int (*callback)(t_weechat_plugin *, char *))
+      </command>
+    </para>
+    <para>
+      Exécute une fonction sur tous les fichiers d'un répertoire.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>repertoire</option> : le répertoire où les fichiers
+            sont recherchés
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>callback</option> : une fonction appelée pour chaque
+            fichier trouvé
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+<screen>
+int callback (t_weechat_plugin *plugin, char *fichier)
+{
+    plugin->print_server (plugin, "fichier: %s", fichier);
+    return 1;
+}
+...
+plugin->exec_on_files (plugin, "/tmp", &amp;callback);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_print">
+    <title>print</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void print (t_weechat_plugin *plugin,
+        char *serveur, char *canal, char *message, ...)
+      </command>
+    </para>
+    <para>
+      Affiche un message sur un tampon WeeChat, identifié par le serveur
+      et le canal (tous deux pouvant être NULL pour le tampon courant).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur pour
+            trouver le tampon dans lequel afficher (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>canal</option> : nom du canal pour trouver le
+            tampon dans lequel afficher (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>message</option> : message à afficher
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Pour afficher du texte en couleur, il faut utiliser les codes
+      suivants :
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Code</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>0x02</entry>
+              <entry>
+                texte gras
+              </entry>
+            </row>
+            <row>
+              <entry>0x03 + "xx"</entry>
+              <entry>
+                couleur du texte "<literal>xx</literal>"
+                (voir <xref linkend="secAPI_get_irc_color" /> pour les
+                couleurs)
+              </entry>
+            </row>
+            <row>
+              <entry>0x03 + "xx,yy"</entry>
+              <entry>
+                couleur du texte "<literal>xx</literal>"
+                et du fond "<literal>yy</literal>"
+                (voir <xref linkend="secAPI_get_irc_color" /> pour les
+                couleurs)
+              </entry>
+            </row>
+            <row>
+              <entry>0x0F</entry>
+              <entry>
+                désactiver la couleur et tous les attributs
+              </entry>
+            </row>
+            <row>
+              <entry>0x12</entry>
+              <entry>
+                vidéo inverse (inversion de la couleur d'écriture et du
+                fond)
+              </entry>
+            </row>
+            <row>
+              <entry>0x1F</entry>
+              <entry>
+                texte souligné
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      NB: le même code (sans le numéro pour 0x03) peut être utilisé pour
+      stopper l'attribut défini.
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemples :
+<screen>
+plugin->print (plugin, NULL, NULL, "hello");
+plugin->print (plugin, NULL, "#weechat", "hello");
+plugin->print (plugin, "freenode", "#weechat", "hello");
+plugin->print (plugin, "freenode", "#weechat", "hello");
+plugin->print (plugin, NULL, NULL,
+               "test: \x02 gras \x0F\x03%02d bleu \x03%02d vert",
+               plugin->get_irc_color (plugin, "blue"),
+               plugin->get_irc_color (plugin, "green"));
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_print_server">
+    <title>print_server</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void print_server (t_weechat_plugin *plugin,
+        char *message, ...)
+      </command>
+    </para>
+    <para>
+      Affiche un message sur le tampon du serveur courant.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>message</option> : message à afficher
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Pour afficher du texte en couleur, voir
+      <xref linkend="secAPI_print" />.
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple : <screen>plugin->print_server (plugin, "hello");</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_log">
+    <title>log</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void log (t_weechat_plugin *plugin,
+        char *serveur, char *canal, char *message, ...)
+      </command>
+    </para>
+    <para>
+      Ecrit un message dans le fichier de log pour un serveur ou un
+      canal.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur pour
+            trouver le log du tampon (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>canal</option> : nom du canal pour trouver le
+            tampon le log du tampon (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>message</option> : message
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+<screen>
+plugin->log (plugin, "freenode", "#weechat", "test");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_msg_handler_add">
+    <title>msg_handler_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_handler *msg_handler_add (t_weechat_plugin
+        *plugin, char *message, t_plugin_handler_func *fonction,
+        char *handler_args, void *handler_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un gestionnaire de messages IRC, appelé dès qu'un message
+      IRC est reçu.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>message</option> : nom du message IRC pour lequel la
+            fonction est appelée ("*" pour tous les messages).
+            Pour connaître la liste des messages IRC disponibles, merci
+            de consulter les <acronym>RFC</acronym>s
+            <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+            et
+            <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+            De plus, vous pouvez utiliser un nom spécial, préfixé par
+            "weechat_" pour capturer des évènements spéciaux, comme
+            décrit dans le tableau ci-dessous :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Nom</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>weechat_pv</literal></entry>
+                    <entry>message privé reçu</entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_highlight</literal></entry>
+                    <entry>
+                      message avec highlight (sur un canal ou en privé)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_ctcp</literal></entry>
+                    <entry>
+                      message CTCP reçu (VERSION, PING, etc...)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_dcc</literal></entry>
+                    <entry>
+                      message DCC reçu (discussion ou fichier)
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée lorsque le
+            message est reçu
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              int ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Le paramètre argc vaut 3 et les arguments suivants sont
+            passés dans le tableau argv :
+            <itemizedlist>
+              <listitem>
+                <para>argv[0] = nom du serveur</para>
+              </listitem>
+              <listitem>
+                <para>argv[1] = message IRC</para>
+              </listitem>
+              <listitem>
+                <para>argv[2] = arguments de la commande</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      messages.
+    </para>
+    <para>
+      Note : la fonction appelée lorsque le message est reçu doit
+      renvoyer une des valeurs suivantes :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal> : le message
+            ne sera pas transmis à WeeChat
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal> : le message
+            ne sera pas transmis à d'autres extensions
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK_IGNORE_ALL</literal> : le message
+            ne sera ni transmis à WeeChat ni à d'autres extensions
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal> : la fonction
+            a réussi et provoque un "highlight" sur le message reçu
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+<screen>
+int msg_kick (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, argv[0], NULL, "KICK reçu");
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *msg_handler;
+msg_handler = plugin->msg_handler_add (plugin, "KICK",
+                                       &amp;msg_kick, NULL, NULL);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_cmd_handler_add">
+    <title>cmd_handler_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_handler *cmd_handler_add (t_weechat_plugin
+        *plugin, char *commande, char *description, char *arguments,
+        char *arguments_description, char *modele_completion,
+        t_plugin_handler_func *fonction, char *handler_args,
+        void *handler_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un gestionnaire de commande WeeChat, appelé dès que
+      l'utilisateur utilise la commande (par exemple /commande).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>commande</option> : nom de la nouvelle commande,
+            qui peut être une commande déjà existante (attention la
+            commande remplacée ne sera plus disponible jusqu'à ce que
+            l'extension soit déchargée)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>description</option> : brève description de la
+            commande (affichée par /help commande)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>arguments</option> : brève description des
+            paramètres de la commande (affichée par /help commande)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>arguments_description</option> : longue description
+            des paramètres de la commande (affichée par /help commande)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>modele_completion</option> : modèle pour la
+            complétion sous la forme "<literal>abc|%w def|%i</literal>"
+            qui signifie "abc" ou une commande WeeChat pour le premier
+            paramètre, et "def" ou une commande IRC pour le deuxième.
+            Une chaîne vide indique à WeeChat de compléter tout
+            paramètre avec un pseudo du canal courant, une valeur NULL
+            ou égale à "-" désactive toute complétion pour tous les
+            paramètres de la commande.
+          </para>
+          <para>
+            Les codes suivants peuvent être utilisés :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Code</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>%-</literal></entry>
+                    <entry>aucune complétion pour le paramètre</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%*</literal></entry>
+                    <entry>
+                      répétition de la dernière complétion pour tous
+                      les paramètres suivants (ce code doit être à la
+                      fin du modèle de complétion, précédé d'un "|")
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>%a</literal></entry>
+                    <entry>alias</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%A</literal></entry>
+                    <entry>
+                      alias et commandes (WeeChat, IRC et extensions)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>%c</literal></entry>
+                    <entry>canal courant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%C</literal></entry>
+                    <entry>tous les canaux (y compris les privés)</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%f</literal></entry>
+                    <entry>nom de fichier</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%h</literal></entry>
+                    <entry>commandes définies par des extensions</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%i</literal></entry>
+                    <entry>commandes IRC (envoyées)</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%I</literal></entry>
+                    <entry>commandes IRC (reçues)</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%k</literal></entry>
+                    <entry>fonctions associées aux touches</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%m</literal></entry>
+                    <entry>pseudo sur le serveur courant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%M</literal></entry>
+                    <entry>
+                      pseudos sur le serveur courant
+                      (tous les canaux ouverts)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>%n</literal></entry>
+                    <entry>pseudos du canal courant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%N</literal></entry>
+                    <entry>
+                      pseudos et noms de machines du canal
+                      courant
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>%o</literal></entry>
+                    <entry>options de configuration</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%O</literal></entry>
+                    <entry>options des extensions</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%p</literal></entry>
+                    <entry>message de "part" par défaut</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%q</literal></entry>
+                    <entry>message de "quit" par défaut</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%s</literal></entry>
+                    <entry>nom du serveur courant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%S</literal></entry>
+                    <entry>tous les serveurs</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%t</literal></entry>
+                    <entry>titre du canal courant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%v</literal></entry>
+                    <entry>valeur d'une option de configuration</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%V</literal></entry>
+                    <entry>valeur d'une option d'extension</entry>
+                  </row>
+                  <row>
+                    <entry><literal>%w</literal></entry>
+                    <entry>commandes WeeChat</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée lorsque la
+            commande est exécutée.
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              int ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Le paramètre argc vaut 3 et les arguments suivants sont
+            passés dans le tableau argv :
+            <itemizedlist>
+              <listitem>
+                <para>argv[0] = nom du serveur</para>
+              </listitem>
+              <listitem>
+                <para>argv[1] = commande</para>
+              </listitem>
+              <listitem>
+                <para>argv[2] = arguments de la commande</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      commande.
+    </para>
+    <para>
+      Note : la fonction appelée lorsque la commande est exécutée doit
+      renvoyer une des valeurs suivantes :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+<screen>
+int cmd_test (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, argv[0], NULL,
+                   "commande test, pseudo: %s",
+                   (argv[2]) ? argv[2] : "aucun");
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *cmd_handler;
+cmd_handler = plugin->cmd_handler_add (plugin, "test", "Commande test",
+                                       "[pesudo]", "pseudo: un pseudo du canal",
+                                       "%n", &amp;cmd_test, NULL, NULL);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_timer_handler_add">
+    <title>timer_handler_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_handler *timer_handler_add (t_weechat_plugin
+        *plugin, int intervalle, t_plugin_handler_func *fonction,
+        char *handler_args, void *handler_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un gestionnaire de temps, qui appelle périodiquement une
+      fonction.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>intervalle</option> : intervalle (en secondes)
+            entre deux appels de la fonction.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              int ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Le paramètre argc vaut 0 et argv vaut NULL.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      temps.
+    </para>
+    <para>
+      Note : la fonction appelée doit renvoyer une des valeurs
+      suivantes :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+<screen>
+int mon_timer (t_weechat_plugin *plugin, int argc, char **argv,
+               char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, NULL, NULL, "mon timer");
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *timer_handler;
+timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_keyboard_handler_add">
+    <title>keyboard_handler_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_handler *keyboard_handler_add (t_weechat_plugin
+        *plugin, t_plugin_handler_func *fonction,
+        char *handler_args, void *handler_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un gestionnaire de clavier, appelé dès qu'une touche est
+      pressée.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              int ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Le paramètre argc vaut 3 et les arguments suivants sont
+            passés dans le tableau argv :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  argv[0] = touche appuyée (nom d'une fonction interne
+                  ou bien '*' suivi du code d'une touche)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  argv[1] = la ligne de commande avant l'action de la
+                  touche
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  argv[2] = la ligne de commande après l'action de la
+                  touche
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      clavier.
+    </para>
+    <para>
+      Note : la fonction appelée doit renvoyer une des valeurs
+      suivantes :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+<screen>
+int mon_keyb (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+{
+    if (argc == 2)
+    {
+        plugin->print (plugin, NULL, NULL, "touche appuyée: %s", argv[0]);
+        if (argv[1] &amp;&amp; (argv[1][0] == '1'))
+            plugin->print (plugin, NULL, NULL, "le texte d'entrée a changé");
+        else
+            plugin->print (plugin, NULL, NULL, "le texte d'entrée n'a pas changé");
+    }
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *keyb_handler;
+keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_event_handler_add">
+    <title>event_handler_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_handler *event_handler_add (t_weechat_plugin
+        *plugin, char *evenement, t_plugin_handler_func *fonction,
+        char *handler_args, void *handler_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un gestionnaire d'évènement, appelé dès qu'un évènement se
+      produit.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>évènement</option> : évènement (voir le tableau
+            ci-dessous)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              int ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Les paramètres passés à la fonction dépendent de l'évènement
+            (voir le tableau ci-dessous).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Liste des évènements :
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Evènement</entry>
+              <entry>Description</entry>
+              <entry>Paramètres</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><literal>buffer_open</literal></entry>
+              <entry>un tampon a été ouvert</entry>
+              <entry>
+                argc = 1, argv = { numéro de tampon }
+              </entry>
+            </row>
+            <row>
+              <entry><literal>buffer_close</literal></entry>
+              <entry>un tampon a été fermé</entry>
+              <entry>
+                argc = 1, argv = { numéro de tampon }
+              </entry>
+            </row>
+            <row>
+              <entry><literal>buffer_move</literal></entry>
+              <entry>un tampon a été déplacé</entry>
+              <entry>
+                argc = 2, argv = { nouveau numéro de tampon, ancien
+                numéro }
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau gestionnaire
+      d'évènement.
+    </para>
+    <para>
+      Note : la fonction appelée doit renvoyer une des valeurs
+      suivantes :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Exemple :
+<screen>
+int mon_evenement (t_weechat_plugin *plugin, int argc, char **argv,
+                   char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, NULL, NULL, "mon_evenement");
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *event_handler;
+event_handler = plugin->event_handler_add (plugin, "buffer_open",
+                                           &amp;mon_evenement);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_handler_remove">
+    <title>handler_remove</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void handler_remove (t_weechat_plugin *plugin,
+        t_plugin_handler *handler)
+      </command>
+    </para>
+    <para>
+      Supprime un gestionnaire de commande ou message.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>handler</option> : le gestionnaire à supprimer
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->handler_remove (plugin, mon_handler);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_handler_remove_all">
+    <title>handler_remove_all</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void handler_remove_all (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Supprime tous les gestionnaires d'une extension.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->handler_remove_all (plugin);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_modifier_add">
+    <title>modifier_add</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_modifier *modifier_add (t_weechat_plugin *plugin,
+        char *type, char *message, t_plugin_modifier_func *fonction,
+        char *modifier_args, void *modifier_pointer)
+      </command>
+    </para>
+    <para>
+      Ajoute un modifieur de message.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>type</option> : type de modifieur :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>irc_in</literal></entry>
+                    <entry>appelé pour chaque message IRC reçu</entry>
+                  </row>
+                  <row>
+                    <entry><literal>irc_user</literal></entry>
+                    <entry>
+                      appelé pour chaque message (ou commande) envoyé par
+                      l'utilisateur (avant traitement et affichage par
+                      WeeChat)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>irc_out</literal></entry>
+                    <entry>
+                      appelé pour chaque message sortant juste avant
+                      envoi au serveur IRC (y compris pour les messages
+                      envoyés automatiquement et de manière transparente
+                      par WeeChat)
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>message</option> : nom du message IRC pour lequel la
+            fonction est appelée (utilisé uniquement pour les types
+            "irc_in" et "irc_out").
+            Pour connaître la liste des messages IRC disponibles, merci
+            de consulter les <acronym>RFC</acronym>s
+            <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+            et
+            <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+            La valeur spéciale "*" signifie tous les messages (pas de
+            filtre).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>fonction</option> : fonction appelée
+          </para>
+          <para>
+            Elle a le prototype suivant :
+            <command>
+              char *ma_fonction (t_weechat_plugin *plugin,
+              int argc, char **argv,
+              char *modifier_args, void *modifier_pointer)
+            </command>
+          </para>
+          <para>
+            Le paramètre argc vaut 2 et les arguments suivants sont
+            passés dans le tableau argv :
+            <itemizedlist>
+              <listitem>
+                <para>argv[0] = nom du serveur</para>
+              </listitem>
+              <listitem>
+                <para>argv[1] = message</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>modifier_args</option> : paramètres passés à la
+            fonction appelée
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>modifier_pointer</option> : pointeur passé à la
+            fonction appelée
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : le pointeur vers le nouveau modifieur de message.
+    </para>
+    <para>
+      Note : la fonction doit retourner une chaîne modifiée, ou NULL si
+      elle ne souhaite pas modifier le message.
+      Si elle retourne une chaine vide, alors le message est supprimé et
+      ne sera pas traité du tout par WeeChat (soyez prudent en supprimant
+      des messages !).
+      La chaîne renvoyée doit avoir été allouée par malloc() et sera
+      libérée (par appel à free()) automatiquement par WeeChat après
+      utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+char *adder (t_weechat_plugin *plugin, int argc, char **argv,
+             char *modifier_args, void *modifier_pointer)
+{
+    char *string;
+    string = malloc (strlen (argv[1]) + 16);
+    strcpy (string, argv[1]);
+    strcat (string, "test");
+    return string;
+}
+...
+t_plugin_modifier *modifier;
+modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
+                                 &amp;adder, NULL, NULL);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_modifier_remove">
+    <title>modifier_remove</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void modifier_remove (t_weechat_plugin *plugin,
+        t_plugin_modifier *modifier)
+      </command>
+    </para>
+    <para>
+      Supprime un modifieur de message.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>modifier</option> : le modifieur à supprimer
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->modifier_remove (plugin, mon_modifier);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_modifier_remove_all">
+    <title>modifier_remove_all</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void modifier_remove_all (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Supprime tous les modifieurs d'une extension.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->modifier_remove_all (plugin);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_exec_command">
+    <title>exec_command</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void exec_command (t_weechat_plugin
+        *plugin, char *serveur, char *canal, char *commande)
+      </command>
+    </para>
+    <para>
+      Execute une commande WeeChat ou envoie un message à un canal.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur où
+            exécuter la commande (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>canal</option> : nom du canal où exécuter la
+            commande (peut être NULL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>commande</option> : la commande à exécuter
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemples :
+<screen>
+plugin->exec_command (plugin, NULL, NULL, "/help nick");
+plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_info">
+    <title>get_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        char *get_info (t_weechat_plugin *plugin,
+        char *info, char *serveur)
+      </command>
+    </para>
+    <para>
+      Renvoie une information sur WeeChat ou un canal.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>info</option> : nom de l'info à obtenir :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Info</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>version</literal></entry>
+                    <entry>version de WeeChat</entry>
+                  </row>
+                  <row>
+                    <entry><literal>nick</literal></entry>
+                    <entry>pesudo</entry>
+                  </row>
+                  <row>
+                    <entry><literal>channel</literal></entry>
+                    <entry>
+                      nom du canal (NULL pour un serveur ou un privé)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>server</literal></entry>
+                    <entry>nom du serveur</entry>
+                  </row>
+                  <row>
+                    <entry><literal>type</literal></entry>
+                    <entry>
+                      type de tampon: 0=standard, 1=DCC,
+                      2=données IRC brutes
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>away</literal></entry>
+                    <entry>drapeau "away"</entry>
+                  </row>
+                  <row>
+                    <entry><literal>inactivity</literal></entry>
+                    <entry>
+                      nombre de secondes écoulées depuis que la dernière
+                      touche a été appuyée
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>input</literal></entry>
+                    <entry>
+                      contenu de la ligne de commande de la fenêtre
+                      courante
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>input_mask</literal></entry>
+                    <entry>
+                      contenu du masque de couleur de la ligne de
+                      commande
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>input_pos</literal></entry>
+                    <entry>
+                      position du curseur dans la ligne de commande
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_dir</literal></entry>
+                    <entry>
+                      répertoire de base de WeeChat
+                      (par défaut: ~/.weechat/)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_libdir</literal></entry>
+                    <entry>répertoire "lib" système de WeeChat</entry>
+                  </row>
+                  <row>
+                    <entry><literal>weechat_sharedir</literal></entry>
+                    <entry>répertoire "share" système de WeeChat</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur où
+            récupérer l'information (si nécessaire)
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : l'information recherchée, NULL si non trouvée.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free" après utilisation.
+    </para>
+    <para>
+      Exemples :
+<screen>
+char *version = plugin->get_info (plugin, "version", NULL);
+char *nick = plugin->get_info (plugin, "nick", "freenode");
+char *inactivity = plugin->get_info (plugin, "inactivity", NULL);
+
+plugin->print (plugin, NULL, NULL,
+               "WeeChat version %s, vous êtes %s sur freenode "
+               "(inactif depuis %s secondes)",
+               version, nick, inactivity);
+
+if (version)
+    free (version);
+if (nick)
+    free (nick);
+if (inactivity)
+    free (inactivity);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_dcc_info">
+    <title>get_dcc_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_info_dcc *get_dcc_info (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Renvoie la liste des DCC en cours ou terminés.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la liste chaînée des DCC.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>server</literal></entry>
+              <entry>le serveur IRC</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>channel</literal></entry>
+              <entry>le canal IRC</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>type</literal></entry>
+              <entry>
+                le type de DCC :
+                0 = discussion reçue,
+                1 = discussion envoyée,
+                2 = fichier reçu,
+                3 = fichier envoyé
+              </entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>status</literal></entry>
+              <entry>
+                le statut du DCC :
+                0 = en attente,
+                1 = en cours de connexion,
+                2 = actif,
+                3 = terminé,
+                4 = échoué,
+                5 = interrompu par l'utilisateur
+              </entry>
+            </row>
+            <row>
+              <entry>time_t</entry>
+              <entry><literal>start_time</literal></entry>
+              <entry>la date et heure de création du DCC</entry>
+            </row>
+            <row>
+              <entry>time_t</entry>
+              <entry><literal>start_transfer</literal></entry>
+              <entry>la date et heure de démarrage du transfert</entry>
+            </row>
+            <row>
+              <entry>unsigned long</entry>
+              <entry><literal>addr</literal></entry>
+              <entry>adresse IP de l'utilisateur distant</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>port</literal></entry>
+              <entry>port utilisé pour le DCC</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick</literal></entry>
+              <entry>pseudo de l'utilisateur distant</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>filename</literal></entry>
+              <entry>nom de fichier</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>local_filename</literal></entry>
+              <entry>nom de fichier local</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>filename_suffix</literal></entry>
+              <entry>suffixe si renommage de fichier</entry>
+            </row>
+            <row>
+              <entry>unsigned long</entry>
+              <entry><literal>size</literal></entry>
+              <entry>taille du fichier</entry>
+            </row>
+            <row>
+              <entry>unsigned long</entry>
+              <entry><literal>pos</literal></entry>
+              <entry>position actuelle dans le fichier</entry>
+            </row>
+            <row>
+              <entry>unsigned long</entry>
+              <entry><literal>start_resume</literal></entry>
+              <entry>position de démarrage après une interruption</entry>
+            </row>
+            <row>
+              <entry>unsigned long</entry>
+              <entry><literal>bytes_per_sec</literal></entry>
+              <entry>
+                nombre d'octets transmis par seconde depuis le début
+                du transfert
+              </entry>
+            </row>
+            <row>
+              <entry>t_plugin_dcc_info *</entry>
+              <entry><literal>prev_dcc</literal></entry>
+              <entry>
+                pointeur vers l'info DCC précédente
+              </entry>
+            </row>
+            <row>
+              <entry>t_plugin_dcc_info *</entry>
+              <entry><literal>next_dcc</literal></entry>
+              <entry>
+                pointeur vers l'info DCC suivante
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_dcc_info" après utilisation.
+    </para>
+    <para>
+      Exemples :
+<screen>
+t_plugin_dcc_info *dcc_info = plugin->get_dcc_info (plugin);
+for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+{
+    plugin->print_server (plugin, "DCC type=%d, avec: %s",
+                          ptr_dcc->type, ptr_dcc->nick);
+}
+if (dcc_info)
+    plugin->free_dcc_info (plugin, dcc_info);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_dcc_info">
+    <title>free_dcc_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void free_dcc_info (t_weechat_plugin *plugin,
+        t_plugin_dcc_info *dcc_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de DCC.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>dcc_info</option> : pointeur vers la liste DCC
+            renvoyée par la fonction "get_dcc_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_dcc_info (plugin, dcc_info);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_server_info">
+    <title>get_server_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_server_info *get_server_info (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Renvoie la liste des serveurs IRC (connectés ou non).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur retournée : la liste chaînée des serveurs IRC.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>name</literal></entry>
+              <entry>nom interne du serveur</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>autoconnect</literal></entry>
+              <entry>1 si auto-connexion au démarrage, 0 sinon</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>autoreconnect</literal></entry>
+              <entry>
+                1 si auto-reconnexion quand déconnecté,
+                0 sinon
+              </entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>autoreconnect_delay</literal></entry>
+              <entry>délai avant de tenter une reconnexion</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>command_line</literal></entry>
+              <entry>
+                1 si le serveur vient de la ligne de commande
+                (donc temporaire), 0 sinon
+              </entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>address</literal></entry>
+              <entry>adresse du serveur (nom ou IP)</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>port</literal></entry>
+              <entry>port</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>ipv6</literal></entry>
+              <entry>connexion IPv6</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>ssl</literal></entry>
+              <entry>connexion SSL</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>password</literal></entry>
+              <entry>mot de passe pour le serveur</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick1</literal></entry>
+              <entry>premier pseudo</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick2</literal></entry>
+              <entry>pseudo alternatif</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick3</literal></entry>
+              <entry>second pseudo alternatif</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>username</literal></entry>
+              <entry>nom d'utilisateur</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>real name</literal></entry>
+              <entry>nom réel</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>command</literal></entry>
+              <entry>commande exécutée une fois connecté</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>command_delay</literal></entry>
+              <entry>délai après exécution de la commande</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>autojoin</literal></entry>
+              <entry>canaux joints automatiquement</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>autorejoin</literal></entry>
+              <entry>
+                1 si les canaux sont rejoints après un "kick",
+                0 sinon
+              </entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>notify_levels</literal></entry>
+              <entry>niveaux de notification des canaux</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>charset_decode_iso</literal></entry>
+              <entry>
+                jeux de caractères de décodage ISO pour les canaux
+              </entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>charset_decode_utf</literal></entry>
+              <entry>
+                jeux de caractères de décodage UTF pour les canaux
+              </entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>charset_encode</literal></entry>
+              <entry>
+                jeux de caractères d'encodage pour les canaux
+              </entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>is_connected</literal></entry>
+              <entry>1 si connecté au serveur, 0 sinon</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>ssl_connected</literal></entry>
+              <entry>1 si connecté via SSL, 0 sinon</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick</literal></entry>
+              <entry>pseudo courant</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>is_away</literal></entry>
+              <entry>1 si absent, 0 sinon</entry>
+            </row>
+            <row>
+              <entry>time_t</entry>
+              <entry><literal>away_time</literal></entry>
+              <entry>
+                date/heure à laquelle l'utilisateur a été marqué absent
+              </entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>lag</literal></entry>
+              <entry>lag (en millisecondes)</entry>
+            </row>
+            <row>
+              <entry>t_plugin_server_info *</entry>
+              <entry><literal>prev_server</literal></entry>
+              <entry>pointeur vers les infos du serveur précédent</entry>
+            </row>
+            <row>
+              <entry>t_plugin_server_info *</entry>
+              <entry><literal>next_server</literal></entry>
+              <entry>pointeur vers les infos du serveur suivant</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_server_info" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_server_info *server_info, *ptr_server_info;
+server_info = plugin->get_server_info (plugin);
+if (server_info)
+{
+    for (ptr_server_info = server_info; ptr_server_info;
+         ptr_server_info = ptr_server_info->next_server)
+    {
+        plugin->print (plugin, NULL, NULL,
+                       "serveur: %s, addresse: %s, port: %d %s",
+                       ptr_server_info->name,
+                       ptr_server_info->address,
+                       ptr_server_info->port,
+                       (ptr_server_info->is_connected) ? "(connecté)" : "");
+    }
+    plugin->free_server_info (plugin, server_info);
+}
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_server_info">
+    <title>free_server_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void free_server_info (t_weechat_plugin *plugin,
+        t_plugin_server_info *server_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de serveurs.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>server_info</option> : pointeur vers la liste de
+            serveurs retournée par la fonction "get_server_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_server_info (plugin, server_info);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_channel_info">
+    <title>get_channel_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_channel_info *get_channel_info (t_weechat_plugin *plugin,
+        char *serveur)
+      </command>
+    </para>
+    <para>
+      Renvoie la liste des canaux IRC pour un serveur.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la liste chaînée des canaux IRC du serveur.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Field</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>int</entry>
+              <entry><literal>type</literal></entry>
+              <entry>0 pour un canal, 1 pour un privé</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>name</literal></entry>
+              <entry>nom du canal</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>topic</literal></entry>
+              <entry>titre du canal</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>modes</literal></entry>
+              <entry>modes du canal</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>limit</literal></entry>
+              <entry>limite d'utilisateurs</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>key</literal></entry>
+              <entry>clé du canal</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>nicks_count</literal></entry>
+              <entry>nombre de pseudos présents sur le canal</entry>
+            </row>
+            <row>
+              <entry>t_plugin_channel_info *</entry>
+              <entry><literal>prev_channel</literal></entry>
+              <entry>pointeur vers les infos du canal précédent</entry>
+            </row>
+            <row>
+              <entry>t_plugin_channel_info *</entry>
+              <entry><literal>next_channel</literal></entry>
+              <entry>pointeur vers les infos du canal suivant</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_channel_info" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_channel_info *channel_info, *ptr_chan_info;
+channel_info = plugin->get_channel_info (plugin, "freenode");
+if (channel_info)
+{
+    for (ptr_chan_info = channel_info; ptr_chan_info;
+         ptr_chan_info = ptr_chan_info->next_channel)
+    {
+        plugin->print (plugin, NULL, NULL,
+                       "  %s (type %d)",
+                       ptr_chan_info->name,
+                       ptr_chan_info->type);
+    }
+    plugin->free_channel_info (plugin, channel_info);
+}
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_channel_info">
+    <title>free_channel_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void free_channel_info (t_weechat_plugin *plugin,
+        t_plugin_channel_info *channel_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de canaux.
+    </para>
+    <para>
+      Arguments:
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>channel_info</option> : pointeur vers la liste de
+            canaux retournée par la fonction "get_channel_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_channel_info (plugin, channel_info);</screen>
+    </para>
+  </section>
+
+  <section id="secAPI_get_nick_info">
+    <title>get_nick_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_nick_info *get_nick_info (t_weechat_plugin *plugin,
+        char *serveur, char *canal)
+      </command>
+    </para>
+    <para>
+      Renvoie la liste des pseudos pour un canal.
+    </para>
+    <para>
+      Arguments:
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>canal</option> : nom du canal
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la liste chaînée des pseudos présents
+      sur le canal.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick</literal></entry>
+              <entry>pseudo</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>host</literal></entry>
+              <entry>nom de machine</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>flags</literal></entry>
+              <entry>
+                propriétés du pseudo, "ou" binaire entre plusieurs
+                valeurs (1 =propriétaire du canal, 2 = administrateur
+                du canal, 4 = op, 8 = demi-op, 16 = voix, 32 = absent)
+              </entry>
+            </row>
+            <row>
+              <entry>t_plugin_nick_info *</entry>
+              <entry><literal>prev_nick</literal></entry>
+              <entry>pointeur vers les infos du pseudo précédent</entry>
+            </row>
+            <row>
+              <entry>t_plugin_nick_info *</entry>
+              <entry><literal>next_nick</literal></entry>
+              <entry>pointeur vers les infos du pseudo précédent</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_nick_info" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_nick_info *nick_info, *ptr_nick_info;
+nick_info = plugin->get_nick_info (plugin, "freenode", "#weechat");
+if (nick_info)
+{
+    for (ptr_nick_info = nick_info; ptr_nick_info;
+         ptr_nick_info = ptr_nick_info->next_nick)
+    {
+        plugin->print (plugin, NULL, NULL,
+                       "  %s (flags: %d)",
+                       ptr_nick_info->nick,
+                       ptr_nick_info->flags);
+    }
+    plugin->free_nick_info (plugin, nick_info);
+}
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_nick_info">
+    <title>free_nick_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void free_nick_info (t_weechat_plugin *plugin,
+        t_plugin_nick_info *nick_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de pseudos.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>nick_info</option> : pointeur vers la liste de
+            pseudos retournée par la fonction "get_nick_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_nick_info (plugin, nick_info);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_config">
+    <title>get_config</title>
+    
+    <para>
+      Prototype :
+      <command>
+        char *get_config (t_weechat_plugin *plugin, char *option)
+      </command>
+    </para>
+    <para>
+      Renvoie la valeur d'une option de configuration WeeChat.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>option</option> : nom de l'option à lire
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free" après utilisation.
+    </para>
+    <para>
+      Exemples :
+<screen>
+char *value1 = plugin->get_config (plugin, "look_set_title");
+char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_set_config">
+    <title>set_config</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int set_config (t_weechat_plugin *plugin,
+        char *option, char *valeur)
+      </command>
+    </para>
+    <para>
+      Modifie la valeur d'une option de configuration WeeChat.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>option</option> : nom de l'option à mettre à jour
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>valeur</option> : nouvelle valeur pour l'option
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+      une erreur s'est produite.
+    </para>
+    <para>
+      Exemple :
+<screen>
+plugin->set_config (plugin, "look_nicklist", "off");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_plugin_config">
+    <title>get_plugin_config</title>
+    
+    <para>
+      Prototype :
+      <command>
+        char *get_plugin_config (t_weechat_plugin *plugin, char *option)
+      </command>
+    </para>
+    <para>
+      Renvoie la valeur d'une option de l'extension.
+      L'option est lue depuis le fichier
+      "<literal>~/.weechat/plugins.rc</literal>" et est
+      sous cette forme : "<literal>extension.option=valeur</literal>"
+      (NB : le nom de l'extension est ajouté automatiquement).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>option</option> : nom de l'option à lire
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+char *value = plugin->get_plugin_config (plugin, "ma_variable");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_set_plugin_config">
+    <title>set_plugin_config</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int set_plugin_config (t_weechat_plugin *plugin,
+        char *option, char *valeur)
+      </command>
+    </para>
+    <para>
+      Modifie la valeur d'une option de l'extension.
+      L'option est écrite dans le fichier
+      "<literal>~/.weechat/plugins.rc</literal>" et est
+      sous cette forme : "<literal>extension.option=valeur</literal>"
+      (NB : le nom de l'extension est ajouté automatiquement).
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>option</option> : nom de l'option à mettre à jour
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>valeur</option> : nouvelle valeur pour l'option
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+      une erreur s'est produite.
+    </para>
+    <para>
+      Exemple :
+<screen>
+plugin->set_plugin_config (plugin, "ma_variable", "valeur");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_irc_color">
+    <title>get_irc_color</title>
+    
+    <para>
+      Prototype :
+      <command>
+        int get_irc_color (t_weechat_plugin *plugin,
+        char *nom_couleur)
+      </command>
+    </para>
+    <para>
+      Renvoie le numéro d'une couleur IRC avec son nom.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>nom_couleur</option> : nom de la couleur
+            Les couleure autorisées sont :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Nom couleur</entry>
+                    <entry>Valeur</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>white</entry>
+                    <entry>0</entry>
+                  </row>
+                  <row>
+                    <entry>black</entry>
+                    <entry>1</entry>
+                  </row>
+                  <row>
+                    <entry>blue</entry>
+                    <entry>2</entry>
+                  </row>
+                  <row>
+                    <entry>green</entry>
+                    <entry>3</entry>
+                  </row>
+                  <row>
+                    <entry>lightred</entry>
+                    <entry>4</entry>
+                  </row>
+                  <row>
+                    <entry>red</entry>
+                    <entry>5</entry>
+                  </row>
+                  <row>
+                    <entry>magenta</entry>
+                    <entry>6</entry>
+                  </row>
+                  <row>
+                    <entry>brown</entry>
+                    <entry>7</entry>
+                  </row>
+                  <row>
+                    <entry>yellow</entry>
+                    <entry>8</entry>
+                  </row>
+                  <row>
+                    <entry>lightgreen</entry>
+                    <entry>9</entry>
+                  </row>
+                  <row>
+                    <entry>cyan</entry>
+                    <entry>10</entry>
+                  </row>
+                  <row>
+                    <entry>lightcyan</entry>
+                    <entry>11</entry>
+                  </row>
+                  <row>
+                    <entry>lightblue</entry>
+                    <entry>12</entry>
+                  </row>
+                  <row>
+                    <entry>lightmagenta</entry>
+                    <entry>13</entry>
+                  </row>
+                  <row>
+                    <entry>gray</entry>
+                    <entry>14</entry>
+                  </row>
+                  <row>
+                    <entry>lightgray</entry>
+                    <entry>15</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : numéro de la couleur IRC, -1 si la couleur
+      n'est pas trouvée.
+    </para>
+    <para>
+      Exemple :
+<screen>
+int color_blue = plugin->get_irc_color (plugin, "blue"); /* retourne 2 */
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_input_color">
+    <title>input_color</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void input_color (t_weechat_plugin *plugin,
+        int couleur, int debut, int longueur)
+      </command>
+    </para>
+    <para>
+      Ajoute de la couleur dans la zone de saisie.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>couleur</option> : couleur pour le texte (si &lt; 0,
+            alors la zone de saisie est rafraichie, et il n'y a aucun
+            changement dans son contenu)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>debut</option> : position de début pour la coloration
+            (si &lt; 0, alors le masque est réinitialisé)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>longueur</option> : longueur pour la coloration
+            (si &lt;= 0, alors le masque est réinitialisé)
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+<screen>
+plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_window_info">
+    <title>get_window_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_window_info *get_window_info (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Retourne la liste des fenêtres WeeChat.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : liste chaînée des fenêtres WeeChat.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_x</literal></entry>
+              <entry>position horizontale de la fenêtre</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_y</literal></entry>
+              <entry>position verticale de la fenêtre</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_width</literal></entry>
+              <entry>largeur de la fenêtre</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_height</literal></entry>
+              <entry>hauteur de la fenêtre</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_width_pct</literal></entry>
+              <entry>largeur en % (comparé à la fenêtre parent)</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>win_height_pct</literal></entry>
+              <entry>hauteur en % (comparé à la fenêtre parent)</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>num_buffer</literal></entry>
+              <entry>numéro du tampon affiché</entry>
+            </row>
+            <row>
+              <entry>t_plugin_window_info *</entry>
+              <entry><literal>prev_window</literal></entry>
+              <entry>pointeur vers les infos de la fenêtre précédente</entry>
+            </row>
+            <row>
+              <entry>t_plugin_window_info *</entry>
+              <entry><literal>next_window</literal></entry>
+              <entry>pointeur vers les infos de la fenêtre suivante</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_window_info" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_window_info *window_info, *ptr_window;
+
+window_info = plugin->get_window_info (plugin);
+if (window_info)
+{
+    for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    {
+        plugin->print (plugin, NULL, NULL, "--- info fenêtre ---");
+        plugin->print (plugin, NULL, NULL, "(%d,%d), size: %dx%d, %%size: %d%%x%d%%",
+                       ptr_window->win_x, ptr_window->win_y,
+                       ptr_window->win_width, ptr_window->win_height,
+                       ptr_window->win_width_pct, ptr_window->win_height_pct);
+        plugin->print (plugin, NULL, NULL, "num_buffer: %d", ptr_window->num_buffer);
+    }
+    plugin->free_window_info (plugin, window_info);
+}
+else
+    plugin->print (plugin, NULL, NULL, "pas d'info fenêtre !");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_window_info">
+    <title>free_window_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        void free_window_info (t_weechat_plugin *plugin,
+        t_plugin_window_info *window_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de fenêtres.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>window_info</option> : pointeur vers la liste des
+            infos fenêtres retournée par la fonction "get_window_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_window_info (plugin, window_info);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_buffer_info">
+    <title>get_buffer_info</title>
+    
+    <para>
+      Prototype :
+      <command>
+        t_plugin_buffer_info *get_buffer_info (t_weechat_plugin *plugin)
+      </command>
+    </para>
+    <para>
+      Retourne la liste des tampons WeeChat.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : liste chaînée des tampons WeeChat.
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>int</entry>
+              <entry><literal>type</literal></entry>
+              <entry>
+                type de tampon: 0=standard, 1=DCC,
+                2=données IRC brutes
+              </entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>number</literal></entry>
+              <entry>numéro de tampon</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>num_displayed</literal></entry>
+              <entry>nombre de fenêtres affichant ce tampon</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>server_name</literal></entry>
+              <entry>nom du serveur pour le tampon (peut être NULL)</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>channel_name</literal></entry>
+              <entry>nom du canal pout le tampon (peut être NULL)</entry>
+            </row>
+            <row>
+              <entry>int</entry>
+              <entry><literal>notify_level</literal></entry>
+              <entry>niveau de notification du tampon</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>log_filename</literal></entry>
+              <entry>
+                nom du fichier de log (NULL signifie qu'il n'y a
+                pas de log)
+              </entry>
+            </row>
+            <row>
+              <entry>t_plugin_buffer_info *</entry>
+              <entry><literal>prev_buffer</literal></entry>
+              <entry>pointeur vers les infos du tampon précédent</entry>
+            </row>
+            <row>
+              <entry>t_plugin_buffer_info *</entry>
+              <entry><literal>next_buffer</literal></entry>
+              <entry>pointeur vers les infos du tampon suivant</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_buffer_info" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_buffer_info *buffer_info, *ptr_buffer;
+
+buffer_info = plugin->get_buffer_info (plugin);
+if (buffer_info)
+{
+    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        plugin->print (plugin, NULL, NULL, "--- info tampon ---");
+        plugin->print (plugin, NULL, NULL, "type: %d", ptr_buffer->type);
+        plugin->print (plugin, NULL, NULL, "number: %d", ptr_buffer->number);
+        plugin->print (plugin, NULL, NULL, "num_displayed: %d", ptr_buffer->num_displayed);
+        plugin->print (plugin, NULL, NULL, "server: %s", ptr_buffer->server_name);
+        plugin->print (plugin, NULL, NULL, "channel: %s", ptr_buffer->channel_name);
+        plugin->print (plugin, NULL, NULL, "notify level: %d", ptr_buffer->notify_level);
+        plugin->print (plugin, NULL, NULL, "log filename: %s", ptr_buffer->log_filename);
+    }
+    plugin->free_buffer_info (plugin, buffer_info);
+}
+else
+    plugin->print (plugin, NULL, NULL, "pas d'info tampon !");
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_buffer_info">
+    <title>free_buffer_info</title>
+    
+    <para>
+      Prototype:
+      <command>
+        void free_buffer_info (t_weechat_plugin *plugin,
+        t_plugin_buffer_info *buffer_info)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par une liste de tampons.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>buffer_info</option> : pointeur vers la liste des
+            infos tampons retournée par la fonction "get_buffer_info"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_buffer_info (plugin, buffer_info);</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_get_buffer_data">
+    <title>get_buffer_data</title>
+    
+    <para>
+      Prototype:
+      <command>
+        t_plugin_buffer_data *get_buffer_info (t_weechat_plugin *plugin,
+        char *serveur, char *canal)
+      </command>
+    </para>
+    <para>
+      Renvoie le contenu du tampon.
+    </para>
+    <para>
+      Paramètres :
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>serveur</option> : nom interne du serveur
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>canal</option> : nom du canal
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : contenu du tampon (liste chaînée de lignes).
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Champ</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>time_t</entry>
+              <entry><literal>date</literal></entry>
+              <entry>date et heure</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>nick</literal></entry>
+              <entry>pseudo</entry>
+            </row>
+            <row>
+              <entry>char *</entry>
+              <entry><literal>data</literal></entry>
+              <entry>
+                contenu de la ligne (les codes couleur sont
+                retirés)
+              </entry>
+            </row>
+            <row>
+              <entry>t_plugin_buffer_line *</entry>
+              <entry><literal>prev_line</literal></entry>
+              <entry>pointeur vers la ligne précédente</entry>
+            </row>
+            <row>
+              <entry>t_plugin_buffer_line *</entry>
+              <entry><literal>next_line</literal></entry>
+              <entry>pointeur vers la ligne suivante</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      Note : le résultat doit être libéré par un appel à la fonction
+      "free_buffer_data" après utilisation.
+    </para>
+    <para>
+      Exemple :
+<screen>
+t_plugin_buffer_line *buffer_line, *ptr_line;
+char text_time[256];
+
+buffer_line = plugin->get_buffer_data (plugin);
+if (buffer_line)
+{
+    for (ptr_line = buffer_line; ptr_line; ptr_line = ptr_line->next_line)
+    {
+        strftime (text_time, sizeof (text_time), "%x %X", localtime (&amp;(ptr_line->date)));
+        plugin->print (plugin, NULL, NULL, "date: %s, pseudo: %s, données: %s",
+                       text_time, ptr_line->nick, ptr_line->data);
+    }
+    plugin->free_buffer_data (plugin, buffer_line);
+}
+</screen>
+    </para>
+  </section>
+  
+  <section id="secAPI_free_buffer_data">
+    <title>free_buffer_data</title>
+    
+    <para>
+      Prototype:
+      <command>
+        void free_buffer_data (t_weechat_plugin *plugin,
+        t_plugin_buffer_line *buffer_line)
+      </command>
+    </para>
+    <para>
+      Libère la mémoire utilisée par les lignes d'un tampon.
+    </para>
+    <para>
+      Arguments:
+      <itemizedlist>
+        <listitem>
+          <para>
+            <option>plugin</option> : pointeur vers la structure
+            de l'extension
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <option>buffer_line</option> : pointeur vers la liste des
+            lignes du tampon retournée par la fonction "get_buffer_data"
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Valeur renvoyée : aucune.
+    </para>
+    <para>
+      Exemple :
+      <screen>plugin->free_buffer_data (plugin, buffer_line);</screen>
+    </para>
+  </section>
+  
+</section>

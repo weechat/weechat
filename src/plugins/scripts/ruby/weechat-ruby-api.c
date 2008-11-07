@@ -1924,8 +1924,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
 static VALUE
 weechat_ruby_api_config_color (VALUE class, VALUE option)
 {
-    char *c_option;
-    int value;
+    char *c_option, *result;
     
     /* make C compiler happy */
     (void) class;
@@ -1948,9 +1947,9 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     
     c_option = STR2CSTR (option);
     
-    value = weechat_config_color (script_str2ptr (c_option));
+    result = weechat_config_color (script_str2ptr (c_option));
     
-    RUBY_RETURN_INT(value);
+    RUBY_RETURN_STRING(result);
 }
 
 /*
