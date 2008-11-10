@@ -38,21 +38,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             Debian (ou toute distribution compatible Debian) :
-            <userinput>apt-get install weechat</userinput>
+            <screen><userinput>apt-get install weechat</userinput></screen>
           </para>
         </listitem>
         <listitem>
           <para>
             Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
-            <userinput>
-              rpm -i /chemin/vers/weechat-x.y.z-1.i386.rpm
-            </userinput>
+            <screen><userinput>rpm -i /chemin/vers/weechat-x.y.z-1.i386.rpm</userinput></screen>
           </para>
         </listitem>
         <listitem>
           <para>
             Gentoo :
-            <userinput>emerge weechat</userinput>
+            <screen><userinput>emerge weechat</userinput></screen>
           </para>
         </listitem>
       </itemizedlist>

@@ -328,18 +328,24 @@ struct t_weechat_plugin
                                                     char **argv_eol),
                                     void *callback_data);
     struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
-                                  long interval, int align_second,
+                                  long interval,
+                                  int align_second,
                                   int max_calls,
                                   int (*callback)(void *data),
                                   void *callback_data);
     struct t_hook *(*hook_fd) (struct t_weechat_plugin *plugin,
-                               int fd, int flag_read, int flag_write,
+                               int fd,
+                               int flag_read,
+                               int flag_write,
                                int flag_exception,
                                int (*callback)(void *data),
                                void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
-                                    const char *address, int port,
-                                    int sock, int ipv6, void *gnutls_sess,
+                                    const char *address,
+                                    int port,
+                                    int sock,
+                                    int ipv6,
+                                    void *gnutls_sess,
                                     const char *local_hostname,
                                     int (*callback)(void *data,
                                                     int status,
@@ -347,7 +353,8 @@ struct t_weechat_plugin
                                     void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
-                                  const char *tags, const char *message,
+                                  const char *tags,
+                                  const char *message,
                                   int strip_colors,
                                   int (*callback)(void *data,
                                                   struct t_gui_buffer *buffer,
@@ -380,7 +387,8 @@ struct t_weechat_plugin
                                                        struct t_gui_completion *completion),
                                        void *callback_data);
     void (*hook_completion_list_add) (struct t_gui_completion *completion,
-                                      const char *word, int nick_completion,
+                                      const char *word,
+                                      int nick_completion,
                                       const char *where);
     struct t_hook *(*hook_modifier) (struct t_weechat_plugin *plugin,
                                      const char *modifier,

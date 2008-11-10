@@ -448,8 +448,11 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
       <para>
         Prototype:
 <programlisting>
-int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
-                                 const char *chars_ignored, int case_sensitive);
+int weechat_strcmp_ignore_chars (
+    const char *string1,
+    const char *string2,
+    const char *chars_ignored,
+    int case_sensitive);
 </programlisting>
       </para>
       <para>
@@ -535,8 +538,10 @@ int weechat_strcasestr (const char *string, const char *search);
       <para>
         Prototype:
 <programlisting>
-int weechat_string_match (const char *string, const char *mask,
-                          int case_sensitive);
+int weechat_string_match (
+    const char *string,
+    const char *mask,
+    int case_sensitive);
 </programlisting>
       </para>
       <para>
@@ -584,7 +589,7 @@ int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
         Prototype:
 <programlisting>
 char *weechat_string_replace (const char *string, const char *search,
-                              const char *replace);
+    const char *replace);
 </programlisting>
       </para>
       <para>
@@ -672,8 +677,11 @@ char *weechat_string_remove_quotes (const char *string, const char *quotes);
       <para>
         Prototype:
 <programlisting>
-char *weechat_string_strip (const char *string, int left, int right,
-                            const char *chars);
+char *weechat_string_strip (
+    const char *string,
+    int left,
+    int right,
+    const char *chars);
 </programlisting>
       </para>
       <para>
@@ -724,8 +732,9 @@ char *weechat_string_strip (const char *string, int left, int right,
       <para>
         Prototype:
 <programlisting>
-char *weechat_string_has_highlight (const char *string,
-                                    const char highlight_words);
+char *weechat_string_has_highlight (
+    const char *string,
+    const char highlight_words);
 </programlisting>
       </para>
       <para>
@@ -794,9 +803,10 @@ char *weechat_string_mask_to_regex (const char *mask);
       <para>
         Prototype:
 <programlisting>
-char **weechat_string_explode (const char *string,
-                               const char *separators, int keep_eol,
-                               int num_items_max, int *num_items);
+char **weechat_string_explode (
+    const char *string,
+    const char *separators, int keep_eol,
+    int num_items_max, int *num_items);
 </programlisting>
       </para>
       <para>
@@ -915,8 +925,9 @@ weechat_string_free_exploded (, argv);
       <para>
         Prototype:
 <programlisting>
-char **weechat_string_build_with_exploded (char **exploded_string,
-                                           const char *separator);
+char **weechat_string_build_with_exploded (
+    char **exploded_string,
+    const char *separator);
 </programlisting>
       </para>
       <para>
@@ -1662,8 +1673,10 @@ int weechat_mkdir_parents (char *directory, int mode);
       <para>
         Prototype:
 <programlisting>
-void weechat_exec_on_files (const char *directory, void *data,
-                            int (*callback)(void *data, const char *filename));
+void weechat_exec_on_files (
+    const char *directory,
+    void *data,
+    int (*callback)(void *data, const char *filename));
 </programlisting>
       </para>
       <para>
@@ -1686,7 +1699,30 @@ void weechat_exec_on_files (const char *directory, void *data,
           <listitem>
             <para>
               <option>callback</option>: function called for each file
-              found
+              found, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>char *</entry>
+                      <entry>filename</entry>
+                      <entry>filename found</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
         </itemizedlist>
@@ -1866,8 +1902,10 @@ struct t_weelist *weechat_list_new ();
       <para>
         Prototype:
 <programlisting>
-struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
-                                         const char *data, const char *where);
+struct t_weelist_item *weechat_list_add (
+    struct t_weelist *weelist,
+    const char *data,
+    const char *where);
 </programlisting>
       </para>
       <para>
@@ -1910,8 +1948,9 @@ struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
       <para>
         Prototype:
 <programlisting>
-struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
-                                            const char *data);
+struct t_weelist_item *weechat_list_search (
+    struct t_weelist *weelist,
+    const char *data);
 </programlisting>
       </para>
       <para>
@@ -1947,8 +1986,9 @@ struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
       <para>
         Prototype:
 <programlisting>
-struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
-                                                const char *data);
+struct t_weelist_item *weechat_list_casesearch (
+    struct t_weelist *weelist,
+    const char *data);
 </programlisting>
       </para>
       <para>
@@ -1984,8 +2024,9 @@ struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
       <para>
         Prototype:
 <programlisting>
-struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
-                                         int position);
+struct t_weelist_item *weechat_list_get (
+    struct t_weelist *weelist,
+    int position);
 </programlisting>
       </para>
       <para>
@@ -2181,8 +2222,9 @@ char *weechat_list_size (struct t_weelist *weelist);
       <para>
         Prototype:
 <programlisting>
-void weechat_list_remove (struct t_weelist *weelist,
-                          struct t_weelist_item *item);
+void weechat_list_remove (
+    struct t_weelist *weelist,
+    struct t_weelist_item *item);
 </programlisting>
       </para>
       <para>
@@ -2282,7 +2324,8 @@ void weechat_list_free (struct t_weelist *weelist);
       <para>
         Prototype:
 <programlisting>
-struct t_config_file *weechat_config_new (const char *name,
+struct t_config_file *weechat_config_new (
+    const char *name,
     int (*callback_reload)(void *data,
                            struct t_config_file *config_file),
     void *callback_reload_data);
@@ -2304,7 +2347,30 @@ struct t_config_file *weechat_config_new (const char *name,
             <para>
               <option>callback_reload</option>: callback called when
               configuration file is reloaded with /reload (optional, may be
-              NULL)
+              NULL), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2354,7 +2420,8 @@ struct t_config_file *config_file = weechat_config_new ("test",
       <para>
         Prototype:
 <programlisting>
-struct t_config_section *weechat_config_new_section (struct t_config_file *config_file,
+struct t_config_section *weechat_config_new_section (
+    struct t_config_file *config_file,
     const char *name,
     int user_can_add_options,
     int user_can_delete_options,
@@ -2418,7 +2485,46 @@ struct t_config_section *weechat_config_new_section (struct t_config_file *confi
             <para>
               <option>callback_read</option>: callback called when an option
               in section is read from disk (should be NULL for most cases,
-              except if options in your section need custom function)
+              except if options in your section need custom function),
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_section *</entry>
+                      <entry>section</entry>
+                      <entry>section pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>option_name</entry>
+                      <entry>name of option</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>value</entry>
+                      <entry>value</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2432,7 +2538,40 @@ struct t_config_section *weechat_config_new_section (struct t_config_file *confi
             <para>
               <option>callback_write</option>: callback called when section
               is written in file (should be NULL for most cases, except if your
-              section needs to be written by a custom function)
+              section needs to be written by a custom function), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_section *</entry>
+                      <entry>section</entry>
+                      <entry>section pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>option_name</entry>
+                      <entry>name of option</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2445,7 +2584,35 @@ struct t_config_section *weechat_config_new_section (struct t_config_file *confi
           <listitem>
             <para>
               <option>callback_write_default</option>: callback called when
-              default values for section must be written in file
+              default values for section must be written in file, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                    <row>
+                      <entry>char *</entry>
+                      <entry>section_name</entry>
+                      <entry>name of section</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2459,7 +2626,45 @@ struct t_config_section *weechat_config_new_section (struct t_config_file *confi
             <para>
               <option>callback_create_option</option>: callback called when a
               new option is created in section (NULL if section does not allow
-              new options to be created)
+              new options to be created), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_section *</entry>
+                      <entry>section</entry>
+                      <entry>section pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>option_name</entry>
+                      <entry>name of option</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>value</entry>
+                      <entry>value</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2473,7 +2678,40 @@ struct t_config_section *weechat_config_new_section (struct t_config_file *confi
             <para>
               <option>callback_delete_option</option>: callback called when an
               option is deleted (NULL if section does not allow options to be
-              deleted)
+              deleted), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_file *</entry>
+                      <entry>config_file</entry>
+                      <entry>configuration file pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_section *</entry>
+                      <entry>section</entry>
+                      <entry>section pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_option *option</entry>
+                      <entry>option</entry>
+                      <entry>option pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2568,8 +2806,9 @@ struct t_config_section *new_section2 =
       <para>
         Prototype:
 <programlisting>
-struct t_config_section *weechat_config_search_section (struct t_config_file *config_file,
-                                                        const char *section_name);
+struct t_config_section *weechat_config_search_section (
+    struct t_config_file *config_file,
+    const char *section_name);
 </programlisting>
       </para>
       <para>
@@ -2607,7 +2846,8 @@ struct t_config_section *section = weechat_config_search_section (config_file, "
       <para>
         Prototype:
 <programlisting>
-struct t_config_option *weechat_config_new_option (struct t_config_file *config_file,
+struct t_config_option *weechat_config_new_option (
+    struct t_config_file *config_file,
     struct t_config_section *section,
     const char *name,
     const char *type,
@@ -2619,7 +2859,7 @@ struct t_config_option *weechat_config_new_option (struct t_config_file *config_
     const char *value,
     int (*callback_check_value)(void *data,
                                 struct t_config_option *option,
-    const char *value),
+                                const char *value),
     void *callback_check_value_data,
     int (*callback_change)(void *data,
                            struct t_config_option *option),
@@ -2705,7 +2945,35 @@ struct t_config_option *weechat_config_new_option (struct t_config_file *config_
           <listitem>
             <para>
               <option>callback_check_value</option>: callback called to check
-              new value for an option (optional)
+              new value for an option (optional), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_option *</entry>
+                      <entry>option</entry>
+                      <entry>option pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>value</entry>
+                      <entry>new value for option</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2718,7 +2986,30 @@ struct t_config_option *weechat_config_new_option (struct t_config_file *config_
           <listitem>
             <para>
               <option>callback_change</option>: callback called when value of
-              option has changed (optional)
+              option has changed (optional), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_option *</entry>
+                      <entry>option</entry>
+                      <entry>option pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2731,7 +3022,30 @@ struct t_config_option *weechat_config_new_option (struct t_config_file *config_
           <listitem>
             <para>
               <option>callback_delete</option>: callback called when option
-              will be deleted (optional)
+              will be deleted (optional), arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_config_option *</entry>
+                      <entry>option</entry>
+                      <entry>option pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
@@ -2819,9 +3133,10 @@ struct t_config_option *option5 =
       <para>
         Prototype:
 <programlisting>
-struct t_config_option *weechat_config_search_option (struct t_config_file *config_file,
-                                                      struct t_config_section *section,
-                                                      const char *option_name);
+struct t_config_option *weechat_config_search_option (
+    struct t_config_file *config_file,
+    struct t_config_section *section,
+    const char *option_name);
 </programlisting>
       </para>
       <para>
@@ -2865,10 +3180,11 @@ struct t_config_option *option =
       <para>
         Prototype:
 <programlisting>
-void weechat_config_search_with_string (const char *option_name,
-                                        struct t_config_file **config_file,
-                                        struct t_config_section **section,
-                                        struct t_config_option **option);
+void weechat_config_search_with_string (
+    const char *option_name,
+    struct t_config_file **config_file,
+    struct t_config_section **section,
+    struct t_config_option **option);
 </programlisting>
       </para>
       <para>
@@ -2977,8 +3293,9 @@ else
       <para>
         Prototype:
 <programlisting>
-int weechat_config_option_reset (struct t_config_option *option,
-                                 int run_callback);
+int weechat_config_option_reset (
+    struct t_config_option *option,
+    int run_callback);
 </programlisting>
       </para>
       <para>
@@ -3030,8 +3347,9 @@ switch (weechat_config_option_reset (option, 1))
       <para>
         Prototype:
 <programlisting>
-int weechat_config_option_set (struct t_config_option *option,
-                               const char *value, int run_callback);
+int weechat_config_option_set (
+    struct t_config_option *option,
+    const char *value, int run_callback);
 </programlisting>
       </para>
       <para>
@@ -3139,8 +3457,9 @@ switch (weechat_config_option_unset (option))
       <para>
         Prototype:
 <programlisting>
-void weechat_config_option_rename (struct t_config_option *option,
-                                   const char *new_name);
+void weechat_config_option_rename (
+    struct t_config_option *option,
+    const char *new_name);
 </programlisting>
       </para>
       <para>
@@ -3175,8 +3494,9 @@ weechat_config_option_rename (option, "new_name");
       <para>
         Prototype:
 <programlisting>
-void *weechat_config_option_get_pointer (struct t_config_option *option,
-                                         const char *property);
+void *weechat_config_option_get_pointer (
+    struct t_config_option *option,
+    const char *property);
 </programlisting>
       </para>
       <para>
@@ -3417,9 +3737,10 @@ char *weechat_config_color (struct t_config_option *option);
       <para>
         Prototype:
 <programlisting>
-void weechat_config_write_line (struct t_config_file *config_file,
-                                const char *option_name,
-                                const char *value, ...);
+void weechat_config_write_line (
+    struct t_config_file *config_file,
+    const char *option_name,
+    const char *value, ...);
 </programlisting>
       </para>
       <para>
@@ -3983,8 +4304,9 @@ weechat_printf (buffer, "Hello on this buffer");
       <para>
         Prototype:
 <programlisting>
-void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                          const char *message, ...);
+void weechat_printf_date (
+    struct t_gui_buffer *buffer, time_t date,
+    const char *message, ...);
 </programlisting>
       </para>
       <para>
@@ -4025,8 +4347,10 @@ weechat_printf (NULL, time (NULL) - 120, "Hello, 2 minutes ago");
       <para>
         Prototype:
 <programlisting>
-void weechat_printf_tags (struct t_gui_buffer *buffer, const char *tags,
-                          const char *message, ...);
+void weechat_printf_tags (
+    struct t_gui_buffer *buffer,
+    const char *tags,
+    const char *message, ...);
 </programlisting>
       </para>
       <para>
@@ -4067,8 +4391,11 @@ weechat_printf_tags (NULL, "notify_message", "Hello with a message notify tag");
       <para>
         Prototype:
 <programlisting>
-void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
-                               const char *tags, const char *message, ...);
+void weechat_printf_date_tags (
+    struct t_gui_buffer *buffer,
+    time_t date,
+    const char *tags,
+    const char *message, ...);
 </programlisting>
       </para>
       <para>
@@ -4115,8 +4442,10 @@ weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
       <para>
         Prototype:
 <programlisting>
-void weechat_printf_y (struct t_gui_buffer *buffer, int y,
-                       const char *message, ...);
+void weechat_printf_y (
+    struct t_gui_buffer *buffer,
+    int y,
+    const char *message, ...);
 </programlisting>
       </para>
       <para>
@@ -4148,6 +4477,727 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
         Example:
 <screen>
 weechat_printf_y (buffer, 2, "My message on third line");
+</screen>
+      </para>
+    </section>
+    
+  </section>  
+  
+  <!-- =============================[ hooks ]============================== -->
+  
+  <section id="secPluginCApi_hooks">
+    <title>Hooks</title>
+    
+    <para>
+      Functions to hook/unhook something.
+    </para>
+    
+    <section id="secPluginCApi_weechat_hook_command">
+      <title>weechat_hook_command</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_command (
+    const char *command,
+    const char *description,
+    const char *args,
+    const char *args_description,
+    const char *completion,
+    int (*callback)(void *data,
+                    struct t_gui_buffer *buffer,
+                    int argc, char **argv,
+                    char **argv_eol),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a command.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>command</option>: new command name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>description</option>: description of command (displayed
+              with <command>/help command</command>)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>args</option>: arguments for command (displayed with
+              <command>/help command</command>)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>args_description</option>: description of arguments
+              (displayed with <command>/help command</command>)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>completion</option>: completion template for command:
+              list of completions for each arguments, separated by space. Many
+              completions are possible for one argument, separated by "|".
+              Default completion codes are:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Code</entry>
+                      <entry>Completion</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>%-</entry>
+                      <entry>Stop completion</entry>
+                    </row>
+                    <row>
+                      <entry>%*</entry>
+                      <entry>Repeat last completion</entry>
+                    </row>
+                    <row>
+                      <entry>%b</entry>
+                      <entry>Buffers names</entry>
+                    </row>
+                    <row>
+                      <entry>%c</entry>
+                      <entry>Configuration files</entry>
+                    </row>
+                    <row>
+                      <entry>%f</entry>
+                      <entry>Filename</entry>
+                    </row>
+                    <row>
+                      <entry>%F</entry>
+                      <entry>Filters</entry>
+                    </row>
+                    <row>
+                      <entry>%h</entry>
+                      <entry>Commands hooked</entry>
+                    </row>
+                    <row>
+                      <entry>%i</entry>
+                      <entry>Infos hooked</entry>
+                    </row>
+                    <row>
+                      <entry>%I</entry>
+                      <entry>Infolists hooked</entry>
+                    </row>
+                    <row>
+                      <entry>%n</entry>
+                      <entry>Nick</entry>
+                    </row>
+                    <row>
+                      <entry>%o</entry>
+                      <entry>Configuration option</entry>
+                    </row>
+                    <row>
+                      <entry>%p</entry>
+                      <entry>Plugin name</entry>
+                    </row>
+                    <row>
+                      <entry>%P</entry>
+                      <entry>Plygin commands</entry>
+                    </row>
+                    <row>
+                      <entry>%r</entry>
+                      <entry>Bar names</entry>
+                    </row>
+                    <row>
+                      <entry>%v</entry>
+                      <entry>Value of configuration opeion</entry>
+                    </row>
+                    <row>
+                      <entry>%w</entry>
+                      <entry>WeeChat commands</entry>
+                    </row>
+                    <row>
+                      <entry>%(xxx)</entry>
+                      <entry>Custom completion by plugin (xxx is a completion
+                      code added by a plugin)</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when command is used,
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer where command is executed</entry>
+                    </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>argc</entry>
+                      <entry>argument count</entry>
+                    </row>
+                    <row>
+                      <entry>char **</entry>
+                      <entry>argv</entry>
+                      <entry>arguments</entry>
+                    </row>
+                    <row>
+                      <entry>char **</entry>
+                      <entry>argv_eol</entry>
+                      <entry>arguments (until end of line)</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+            <para>
+              For example, if command called is
+              <command>/command abc def ghi</command>, then argv and argv_eol
+              contain following values:
+              <itemizedlist>
+                <listitem><para>argv[0] == "abc"</para></listitem>
+                <listitem><para>argv[1] == "def"</para></listitem>
+                <listitem><para>argv[2] == "ghi"</para></listitem>
+                <listitem><para>argv_eol[0] == "abc def ghi"</para></listitem>
+                <listitem><para>argv_eol[1] == "def ghi"</para></listitem>
+                <listitem><para>argv_eol[2] == "ghi"</para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+               char **argv, char **argv_eol)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_command = weechat_hook_command ("mycommand",
+    "description of my command",
+    "[command [buffer]]",
+    "command: WeeChat or plugin command\n"
+    " buffer: buffer name",
+    "%w|%p %b", &amp;my_command_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_timer">
+      <title>weechat_hook_timer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_timer (
+    long interval,
+    const char *align_second,
+    const char *max_calls,
+    int (*callback)(void *data),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a timer.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>interval</option>: interval between two calls
+              (milliseconds, so 1000 = 1 second)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>align_second</option>: alignment on a second: align timer
+              on a second. For example, if current time is 09:00, if
+              interval = 60000 (60 seconds), and align_second = 60, then timer
+              is called each minute when second is 00.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>max_calls</option>: number of calls to timer (if 0, then
+              timer has no end)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when time is reached,
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_timer_cb (void *data)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+/* timer called each 20 seconds */
+struct t_hook *my_timer = weechat_hook_timer (20 * 1000, 0, 0,
+                                              &amp;my_timer_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_fd">
+      <title>weechat_hook_fd</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_fd (
+    int fd,
+    int flag_read,
+    int flag_write,
+    int flag_exception,
+    int (*callback)(void *data),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a file descriptor (file or socket).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>fd</option>: file descriptor
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>flag_read</option>: 1 for catching read event, 0 for
+              ignoring it
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>flag_write</option>: 1 for catching write event, 0 for
+              ignoring it
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>flag_exception</option>: 1 for catching exception event,
+              0 for ignoring it
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when a selected event
+              occurs, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_fd_cb (void *data)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+int sock = socket (AF_INET, SOCK_STREAM, 0);
+/* set socket options */
+/* ... */
+/* hook socket */
+struct t_hook *my_fd = weechat_hook_fd (sock,
+                                        1, 0, 0,
+                                        &amp;my_fd_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_connect">
+      <title>weechat_hook_connect</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_connect (
+    const char *address,
+    int port,
+    int sock,
+    int ipv6,
+    void *gnutls_sess,
+    const char *local_hostname,
+    int (*callback)(void *data,
+                    int status,
+                    const char *ip_address),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a connection (background connection to a remote host).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>address</option>: name or IP address to connect to
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>port</option>: port number
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>sock</option>: socket used to connect
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>ipv6</option>: 1 to use IPv6, 0 to use IPv4
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>gnutls_sess</option>: GnuTLS session (optional)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when connection is ok
+              or failed, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>status</entry>
+                      <entry>
+                        constant with connection status:
+                        <itemizedlist>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_OK</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_PROXY_ERROR</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR</para>
+                          </listitem>
+                          <listitem>
+                            <para>WEECHAT_HOOK_CONNECT_MEMORY_ERROR</para>
+                          </listitem>
+                        </itemizedlist>
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_connect_cb (void *data, int status, const char *ip_address)
+{
+    switch (status)
+    {
+        case WEECHAT_HOOK_CONNECT_OK:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_PROXY_ERROR:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
+            /* ... */
+            break;
+        case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
+            /* ... */
+            break;
+    }
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_connect = weechat_hook_fd (sock,
+                                             1, 0, 0,
+                                             &amp;my_connect_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_print">
+      <title>weechat_hook_print</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_print (
+    struct t_gui_buffer *buffer,
+    const char *tags,
+    const char *message,
+    int strip_colors,
+    int (*callback)(void *data,
+                    struct t_gui_buffer *buffer,
+                    time_t date,
+                    int tags_count,
+                    const char **tags,
+                    const char *prefix,
+                    const char *message),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a message printed.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer, if NULL, messages from
+              any buffer are catched
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>tags</option>: only messages with these tags (comma
+              separated list) will be catched (optional)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>message</option>: only messages with this string will be
+              catched (optional)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>strip_colors</option>: colors will be stripped from
+              message displayed, before calling callback
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when message is
+              printed, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer pointer</entry>
+                    </row>
+                    <row>
+                      <entry>time_t</entry>
+                      <entry>date</entry>
+                      <entry>date</entry>
+                    </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>tags_count</entry>
+                      <entry>number of tags for line</entry>
+                    </row>
+                    <row>
+                      <entry>const char **</entry>
+                      <entry>tags</entry>
+                      <entry>tags for line</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>prefix</entry>
+                      <entry>prefix</entry>
+                    </row>
+                    <row>
+                      <entry>char *</entry>
+                      <entry>message</entry>
+                      <entry>message</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
+             int tags_count, const char **tags,
+             const char *prefix, const char *message)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+/* catch all messages, on all buffers, without color */
+struct t_hook *my_print = weechat_hook_print (NULL, NULL, NULL, 1,
+                                              &amp;my_print_cb, NULL);
 </screen>
       </para>
     </section>
