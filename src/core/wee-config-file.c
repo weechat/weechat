@@ -1458,43 +1458,38 @@ config_file_option_color (struct t_config_option *option)
 
 void
 config_file_write_option (struct t_config_file *config_file,
-                          struct t_config_option *option,
-                          int default_value)
+                          struct t_config_option *option)
 {
-    void *value;
-    
     if (!config_file || !config_file->file || !option)
         return;
-    
-    value = (default_value) ? option->default_value : option->value;
     
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
             string_iconv_fprintf (config_file->file, "%s = %s\n",
                                   option->name,
-                                  (*((int *)value)) == CONFIG_BOOLEAN_TRUE ?
+                                  (*((int *)option->value)) == CONFIG_BOOLEAN_TRUE ?
                                   "on" : "off");
             break;
         case CONFIG_OPTION_TYPE_INTEGER:
             if (option->string_values)
                 string_iconv_fprintf (config_file->file, "%s = %s\n",
                                       option->name,
-                                      option->string_values[*((int *)value)]);
+                                      option->string_values[*((int *)option->value)]);
             else
                 string_iconv_fprintf (config_file->file, "%s = %d\n",
                                       option->name,
-                                      *((int *)value));
+                                      *((int *)option->value));
             break;
         case CONFIG_OPTION_TYPE_STRING:
             string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
                                   option->name,
-                                  (char *)value);
+                                  (char *)option->value);
             break;
         case CONFIG_OPTION_TYPE_COLOR:
             string_iconv_fprintf (config_file->file, "%s = %s\n",
                                   option->name,
-                                  gui_color_get_name (*((int *)value)));
+                                  gui_color_get_name (*((int *)option->value)));
             break;
         case CONFIG_NUM_OPTION_TYPES:
             break;
@@ -1622,8 +1617,7 @@ config_file_write_internal (struct t_config_file *config_file,
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                config_file_write_option (config_file, ptr_option,
-                                          default_options);
+                config_file_write_option (config_file, ptr_option);
             }
         }
     }
