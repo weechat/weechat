@@ -626,14 +626,21 @@ int
 gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
                              struct t_gui_line *line)
 {
-    int rc;
+    int rc, i;
     char *msg_no_color;
     
     /* highlights are disabled on this buffer? (special value "-" means that
        buffer does not want any highlight) */
     if (buffer->highlight_words && (strcmp (buffer->highlight_words, "-") == 0))
         return 0;
-
+    
+    /* check if highlight is disabled for line */
+    for (i = 0; i < line->tags_count; i++)
+    {
+        if (strcmp (line->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
+            return 0;
+    }
+    
     /* check that line matches highlight tags, if any (if no tag is specified,
        then any tag is allowed) */
     if (buffer->highlight_tags_count > 0)
