@@ -179,9 +179,22 @@ irc_buffer_merge_servers ()
     
     if (irc_buffer_servers)
     {
-        weechat_buffer_set (irc_buffer_servers, "name", "servers");
+        weechat_buffer_set (irc_buffer_servers,
+                            "name", IRC_BUFFER_ALL_SERVERS_NAME);
+        weechat_buffer_set (irc_buffer_servers,
+                            "short_name", IRC_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (irc_buffer_servers, "key_bind_meta-s",
                             "/command irc /server switch");
+        weechat_buffer_set (irc_buffer_servers,
+                            "localvar_set_server", IRC_BUFFER_ALL_SERVERS_NAME);
+        weechat_buffer_set (irc_buffer_servers,
+                            "localvar_set_channel", IRC_BUFFER_ALL_SERVERS_NAME);
+        weechat_hook_signal_send ("logger_stop",
+                                  WEECHAT_HOOK_SIGNAL_POINTER,
+                                  irc_buffer_servers);
+        weechat_hook_signal_send ("logger_start",
+                                  WEECHAT_HOOK_SIGNAL_POINTER,
+                                  irc_buffer_servers);
         
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -226,6 +239,18 @@ irc_buffer_split_server ()
         snprintf (buffer_name, sizeof (buffer_name),
                   "server.%s", irc_current_server->name);
         weechat_buffer_set (irc_current_server->buffer, "name", buffer_name);
+        weechat_buffer_set (irc_current_server->buffer,
+                            "short_name", irc_current_server->name);
+        weechat_buffer_set (irc_current_server->buffer,
+                            "localvar_set_server", irc_current_server->name);
+        weechat_buffer_set (irc_current_server->buffer,
+                            "localvar_set_channel", irc_current_server->name);
+        weechat_hook_signal_send ("logger_stop",
+                                  WEECHAT_HOOK_SIGNAL_POINTER,
+                                  irc_current_server->buffer);
+        weechat_hook_signal_send ("logger_start",
+                                  WEECHAT_HOOK_SIGNAL_POINTER,
+                                  irc_current_server->buffer);
     }
     
     irc_buffer_servers = NULL;

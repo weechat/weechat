@@ -2108,7 +2108,7 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
     if (all_servers)
     {
         snprintf (buffer_name, sizeof (buffer_name),
-                  "servers");
+                  IRC_BUFFER_ALL_SERVERS_NAME);
     }
     else
     {
@@ -2121,9 +2121,15 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
     if (!server->buffer)
         return NULL;
     
-    weechat_buffer_set (server->buffer, "short_name", server->name);
-    weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
-    weechat_buffer_set (server->buffer, "localvar_set_channel", server->name);
+    weechat_buffer_set (server->buffer, "short_name",
+                        (weechat_config_boolean (irc_config_look_one_server_buffer)) ?
+                        IRC_BUFFER_ALL_SERVERS_NAME : server->name);
+    weechat_buffer_set (server->buffer, "localvar_set_server",
+                        (weechat_config_boolean (irc_config_look_one_server_buffer)) ?
+                        IRC_BUFFER_ALL_SERVERS_NAME : server->name);
+    weechat_buffer_set (server->buffer, "localvar_set_channel",
+                        (weechat_config_boolean (irc_config_look_one_server_buffer)) ?
+                        IRC_BUFFER_ALL_SERVERS_NAME : server->name);
     
     weechat_hook_signal_send ("logger_backlog",
                               WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);

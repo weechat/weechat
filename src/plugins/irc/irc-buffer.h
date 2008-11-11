@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_IRC_BUFFER_H
 #define __WEECHAT_IRC_BUFFER_H 1
 
+#define IRC_BUFFER_ALL_SERVERS_NAME "servers"
+
 struct t_gui_buffer;
 struct t_irc_server;
 struct t_irc_channel;
