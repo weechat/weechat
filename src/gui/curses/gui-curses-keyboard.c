@@ -105,10 +105,14 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* ^Cu           */ "ctrl-Cu",            "/input insert \\x15");
     gui_keyboard_bind (NULL, /* m-left        */ "meta-meta2-D",       "/buffer -1");
     gui_keyboard_bind (NULL, /* m-left (kde)  */ "meta2-1;3D",         "/buffer -1");
+    gui_keyboard_bind (NULL, /* m-up          */ "meta-meta2-A",       "/buffer -1");
     gui_keyboard_bind (NULL, /* F5            */ "meta2-15~",          "/buffer -1");
+    gui_keyboard_bind (NULL, /* ^P            */ "ctrl-P",             "/buffer -1");
     gui_keyboard_bind (NULL, /* m-right       */ "meta-meta2-C",       "/buffer +1");
     gui_keyboard_bind (NULL, /* m-right (kde) */ "meta2-1;3C",         "/buffer +1");
+    gui_keyboard_bind (NULL, /* m-down        */ "meta-meta2-B",       "/buffer +1");
     gui_keyboard_bind (NULL, /* F6            */ "meta2-17~",          "/buffer +1");
+    gui_keyboard_bind (NULL, /* ^N            */ "ctrl-N",             "/buffer +1");
     gui_keyboard_bind (NULL, /* pgup          */ "meta2-5~",           "/window page_up");
     gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "/window page_up");
     gui_keyboard_bind (NULL, /* pgdn          */ "meta2-6~",           "/window page_down");
