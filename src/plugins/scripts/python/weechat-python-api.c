@@ -3335,6 +3335,31 @@ weechat_python_api_buffer_search (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_current_buffer: get current buffer
+ */
+
+static PyObject *
+weechat_python_api_current_buffer (PyObject *self, PyObject *args)
+{
+    char *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    (void) args;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_buffer);
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_buffer_clear: clear a buffer
  */
 
@@ -4778,6 +4803,7 @@ PyMethodDef weechat_python_funcs[] =
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },
     { "buffer_search", &weechat_python_api_buffer_search, METH_VARARGS, "" },
+    { "current_buffer", &weechat_python_api_current_buffer, METH_VARARGS, "" },
     { "buffer_clear", &weechat_python_api_buffer_clear, METH_VARARGS, "" },
     { "buffer_close", &weechat_python_api_buffer_close, METH_VARARGS, "" },
     { "buffer_get_integer", &weechat_python_api_buffer_get_integer, METH_VARARGS, "" },

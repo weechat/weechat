@@ -3580,6 +3580,33 @@ weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_current_buffer: get current buffer
+ */
+
+static int
+weechat_tcl_api_current_buffer (ClientData clientData, Tcl_Interp *interp,
+                                int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    (void) objc;
+    (void) objv;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
+	TCL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_buffer);
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_buffer_clear: clear a buffer
  */
 
@@ -5230,6 +5257,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_buffer_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::buffer_search",
                           weechat_tcl_api_buffer_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::current_buffer",
+                          weechat_tcl_api_current_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::buffer_clear",
                           weechat_tcl_api_buffer_clear, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::buffer_close",

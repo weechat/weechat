@@ -3737,6 +3737,29 @@ weechat_lua_api_buffer_search (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_current_buffer: get current buffer
+ */
+
+static int
+weechat_lua_api_current_buffer (lua_State *L)
+{
+    char *result;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_buffer);
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_buffer_clear: clear a buffer
  */
 
@@ -5758,6 +5781,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },
     { "buffer_search", &weechat_lua_api_buffer_search },
+    { "current_buffer", &weechat_lua_api_current_buffer },
     { "buffer_clear", &weechat_lua_api_buffer_clear },
     { "buffer_close", &weechat_lua_api_buffer_close },
     { "buffer_get_integer", &weechat_lua_api_buffer_get_integer },
