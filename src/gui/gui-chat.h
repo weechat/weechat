@@ -31,6 +31,8 @@ struct t_gui_line;
 #define gui_chat_printf(buffer, argz...)                        \
     gui_chat_printf_date_tags(buffer, 0, NULL, ##argz)
 
+#define GUI_CHAT_TAG_NO_HIGHLIGHT "no_highlight"
+
 enum t_gui_prefix
 {
     GUI_CHAT_PREFIX_ERROR = 0,
