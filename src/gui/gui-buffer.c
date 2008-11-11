@@ -371,7 +371,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
             gui_current_window->first_line_displayed = 1;
             gui_current_window->start_line = NULL;
             gui_current_window->start_line_pos = 0;
-            gui_window_calculate_pos_size (gui_current_window);
             gui_window_switch_to_buffer (gui_current_window, new_buffer, 0);
         }
         

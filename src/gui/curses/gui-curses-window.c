@@ -364,9 +364,13 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 {
     struct t_gui_bar_window *ptr_bar_win;
     int add_top, add_bottom, add_left, add_right;
-    
-    if (!gui_ok)
+
+    if ((window->win_width < GUI_WINDOW_MIN_WIDTH)
+        || (window->win_height < GUI_WINDOW_MIN_HEIGHT))
+    {
+        gui_ok = 0;
         return;
+    }
     
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
@@ -385,6 +389,9 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
     window->win_chat_height = window->win_height - add_top - add_bottom;
     window->win_chat_cursor_x = window->win_x + add_left;
     window->win_chat_cursor_y = window->win_y + add_top;
+
+    if ((window->win_chat_width <= 1) || (window->win_chat_height <= 0))
+        gui_ok = 0;
 }
 
 /*
@@ -487,30 +494,33 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
     
     gui_window_calculate_pos_size (window);
-    
-    /* create bar windows */
-    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
-         ptr_bar_win = ptr_bar_win->next_bar_window)
+
+    if (gui_ok)
     {
-        gui_bar_window_create_win (ptr_bar_win);
+        /* create bar windows */
+        for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            gui_bar_window_create_win (ptr_bar_win);
+        }
+        
+        /* destroy Curses windows */
+        gui_window_objects_free (window, 0, 0);
+        
+        /* create Curses windows */
+        if (GUI_CURSES(window)->win_chat)
+            delwin (GUI_CURSES(window)->win_chat);
+        GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
+                                               window->win_chat_width,
+                                               window->win_chat_y,
+                                               window->win_chat_x);
     }
-    
-    /* destroy Curses windows */
-    gui_window_objects_free (window, 0, 0);
-    
-    /* create Curses windows */
-    if (GUI_CURSES(window)->win_chat)
-        delwin (GUI_CURSES(window)->win_chat);
-    GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
-                                           window->win_chat_width,
-                                           window->win_chat_y,
-                                           window->win_chat_x);
     
     buffer->num_displayed++;
     
     gui_hotlist_remove_buffer (buffer);
-
-    if (buffer != old_buffer)
+    
+    if (gui_ok && (buffer != old_buffer))
     {
         gui_bar_window_remove_unused_bars (window);
         gui_bar_window_add_missing_bars (window);
