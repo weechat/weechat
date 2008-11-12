@@ -117,11 +117,13 @@ weechat_perl_exec (struct t_plugin_script *script,
     void *ret_value;
     int *ret_i, mem_err, length;
     SV *ret_s;
-    
-    perl_current_script = script;
+    struct t_plugin_script *old_perl_current_script;
     
     /* this code is placed here to conform ISO C90 */
     dSP;
+    
+    old_perl_current_script = perl_current_script;
+    perl_current_script = script;
     
 #ifdef MULTIPLICITY
     (void) length;
@@ -133,7 +135,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     if (!func)
         return NULL;
     snprintf (func, length, "%s::%s", (char *) script->interpreter, function);
-#endif    
+#endif
     
     ENTER;
     SAVETMPS;
@@ -195,7 +197,15 @@ weechat_perl_exec (struct t_plugin_script *script,
     PUTBACK;
     FREETMPS;
     LEAVE;
-
+    
+    if (old_perl_current_script)
+    {
+        perl_current_script = old_perl_current_script;
+#ifdef MULTIPLICITY
+        PERL_SET_CONTEXT (perl_current_script->interpreter);
+#endif    
+    }
+    
 #ifndef MULTIPLICITY
     free (func);
 #endif
@@ -220,7 +230,7 @@ int
 weechat_perl_load (const char *filename)
 {
     STRLEN len;
-    struct t_plugin_script tempscript;
+    struct t_plugin_script temp_script;
     int *eval;
     struct stat buf;
     char *perl_argv[2];
@@ -230,6 +240,16 @@ weechat_perl_load (const char *filename)
 #else
     char pkgname[64];
 #endif
+    
+    temp_script.filename = NULL;
+    temp_script.interpreter = NULL;
+    temp_script.name = NULL;
+    temp_script.author = NULL;
+    temp_script.version = NULL;
+    temp_script.license = NULL;
+    temp_script.description = NULL;
+    temp_script.shutdown_func = NULL;
+    temp_script.charset = NULL;
     
     if (stat (filename, &buf) != 0)
     {
@@ -261,7 +281,7 @@ weechat_perl_load (const char *filename)
     
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
-    tempscript.interpreter = (PerlInterpreter *) perl_current_interpreter;
+    temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
 		perl_args_count, perl_args, NULL);
     
@@ -271,12 +291,12 @@ weechat_perl_load (const char *filename)
 #else
     snprintf (pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
-    tempscript.interpreter = "WeechatPerlScriptLoader";
+    temp_script.interpreter = "WeechatPerlScriptLoader";
     perl_argv[0] = (char *)filename;
     perl_argv[1] = pkgname;
     perl_argv[2] = NULL;
 #endif
-    eval = weechat_perl_exec (&tempscript,
+    eval = weechat_perl_exec (&temp_script,
 			      WEECHAT_SCRIPT_EXEC_INT,
 			      "weechat_perl_load_eval_file",
                               perl_argv);
@@ -332,7 +352,7 @@ weechat_perl_load (const char *filename)
 	perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif
-	if (perl_current_script && (perl_current_script != &tempscript))
+	if (perl_current_script && (perl_current_script != &temp_script))
         {
             script_remove (weechat_perl_plugin, &perl_scripts,
                            perl_current_script);
@@ -608,16 +628,19 @@ weechat_perl_buffer_closed_cb (void *data, const char *signal, const char *type_
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+#ifdef PERL_SYS_INIT3
+    int a;
+    char **perl_args_local;
+    char *perl_env[] = {};
+#endif
+    
     /* make C compiler happy */
     (void) argc;
     (void) argv;
     
 #ifdef PERL_SYS_INIT3
-    int a = perl_args_count;
-    char **perl_args_local = perl_args;
-    char *perl_env[] = {};
-    (void) a;
-    (void) perl_args_local;
+    a = perl_args_count;
+    perl_args_local = perl_args;
     (void) perl_env;
     PERL_SYS_INIT3 (&a, (char ***)&perl_args_local, (char ***)&perl_env);
 #endif
