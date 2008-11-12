@@ -4605,7 +4605,7 @@ struct t_hook *weechat_hook_command (
                     </row>
                     <row>
                       <entry>%P</entry>
-                      <entry>Plygin commands</entry>
+                      <entry>Plugin commands</entry>
                     </row>
                     <row>
                       <entry>%r</entry>
@@ -4613,7 +4613,7 @@ struct t_hook *weechat_hook_command (
                     </row>
                     <row>
                       <entry>%v</entry>
-                      <entry>Value of configuration opeion</entry>
+                      <entry>Value of configuration option</entry>
                     </row>
                     <row>
                       <entry>%w</entry>
