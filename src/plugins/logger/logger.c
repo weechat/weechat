@@ -130,8 +130,13 @@ logger_build_option_name (struct t_gui_buffer *buffer)
 int
 logger_get_level_for_buffer (struct t_gui_buffer *buffer)
 {
-    char *name, *option_name, *ptr_end;
+    char *no_log, *name, *option_name, *ptr_end;
     struct t_config_option *ptr_option;
+    
+    /* no log for buffer if local variable "no_log" is defined for buffer */
+    no_log = weechat_buffer_get_string (buffer, "localvar_no_log");
+    if (no_log && no_log[0])
+        return 0;
     
     name = logger_build_option_name (buffer);
     if (!name)
@@ -352,6 +357,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     time_t seconds;
     struct tm *date_tmp;
     char buf_time[256];
+    int log_level;
     
     if (!logger_buf_write)
         logger_buf_write = malloc (LOGGER_BUF_WRITE_SIZE);
@@ -362,6 +368,12 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     
     if (!logger_buffer->log_file)
     {
+        log_level = logger_get_level_for_buffer (logger_buffer->buffer);
+        if (log_level == 0)
+        {
+            logger_buffer_free (logger_buffer);
+            return;
+        }
         if (!logger_create_directory ())
         {
             weechat_printf (NULL,
