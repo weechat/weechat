@@ -269,9 +269,9 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
             {
                 ptr_next_cmd = ptr_cmd;
                 ptr_next_cmd++;
-
-                args_replaced = (argc > 1) ?
-                    alias_replace_args (*ptr_cmd, argv_eol[1]) : NULL;
+                
+                args_replaced = alias_replace_args (*ptr_cmd,
+                                                    (argc > 1) ? argv_eol[1] : "");
                 if (args_replaced)
                 {
                     some_args_replaced = 1;
