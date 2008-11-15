@@ -198,8 +198,8 @@ struct t_hook_modifier
     char *modifier;                     /* name of modifier                 */
 };
 
-typedef char *(t_hook_callback_info)(void *data, const char *info_name,
-                                     const char *arguments);
+typedef const char *(t_hook_callback_info)(void *data, const char *info_name,
+                                           const char *arguments);
 
 struct t_hook_info
 {
@@ -305,9 +305,9 @@ extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
                                  const char *description,
                                  t_hook_callback_info *callback,
                                  void *callback_data);
-extern char *hook_info_get (struct t_weechat_plugin *plugin,
-                            const char *info_name,
-                            const char *arguments);
+extern const char *hook_info_get (struct t_weechat_plugin *plugin,
+                                  const char *info_name,
+                                  const char *arguments);
 extern struct t_hook *hook_infolist (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
                                      const char *description,

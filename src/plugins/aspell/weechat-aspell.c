@@ -158,7 +158,8 @@ struct t_aspell_code countries_avail[] =
 char *
 weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
 {
-    char *plugin_name, *name, *option_name;
+    const char *plugin_name, *name;
+    char *option_name;
     int length;
     
     if (!buffer)
@@ -183,7 +184,7 @@ weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
  *                          one to find dict (from specific to general dict)
  */
 
-char *
+const char *
 weechat_aspell_get_dict (struct t_gui_buffer *buffer)
 {
     char *name, *option_name, *ptr_end;
@@ -307,7 +308,8 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
 void
 weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
 {
-    char *dict_list, **argv;
+    const char *dict_list;
+    char **argv;
     int argc, i;
     
     if (buffer)
@@ -713,7 +715,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                             const char *modifier_data, const char *string)
 {
     struct t_gui_buffer *buffer;
-    char *result, *ptr_string, *pos_space, *color_normal, *color_error;
+    char *result, *ptr_string, *pos_space;
+    const char *color_normal, *color_error;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error;
     

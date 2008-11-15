@@ -58,7 +58,7 @@ int
 fifo_create ()
 {
     int rc, filename_length;
-    char *fifo_option, *weechat_home;
+    const char *fifo_option, *weechat_home;
     
     rc = 0;
     

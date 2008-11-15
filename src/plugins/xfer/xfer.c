@@ -125,7 +125,8 @@ xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 void
 xfer_create_directories ()
 {
-    char *weechat_dir, *dir1, *dir2;
+    const char *weechat_dir;
+    char *dir1, *dir2;
     
     /* create download directory */
     weechat_dir = weechat_info_get ("weechat_dir", "");
@@ -655,10 +656,11 @@ int
 xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal_data)
 {
     struct t_infolist *infolist;
-    char *plugin_name, *plugin_id, *str_type, *str_protocol;
-    char *remote_nick, *local_nick, *filename;
+    const char *plugin_name, *plugin_id, *str_type, *str_protocol;
+    const char *remote_nick, *local_nick, *filename;
     int type, protocol;
-    char *weechat_dir, *dir1, *dir2, *filename2, *short_filename, *pos;
+    const char *weechat_dir;
+    char *dir1, *dir2, *filename2, *short_filename, *pos;
     int spaces, args, port_start, port_end;
     struct stat st;
     int sock, port;
@@ -1010,7 +1012,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
 {
     struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
-    char *plugin_name, *plugin_id, *filename, *str_start_resume;
+    const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
     unsigned long start_resume;
     
@@ -1090,7 +1092,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
 {
     struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
-    char *plugin_name, *plugin_id, *filename, *str_start_resume;
+    const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
     unsigned long start_resume;
     

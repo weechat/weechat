@@ -23,27 +23,28 @@
 /* strings */
 extern void plugin_api_charset_set (struct t_weechat_plugin *plugin,
                                     const char *charset);
-extern char *plugin_api_gettext (const char *string);
-extern char *plugin_api_ngettext (const char *single, const char *plural,
-                                  int count);
+extern const char *plugin_api_gettext (const char *string);
+extern const char *plugin_api_ngettext (const char *single, const char *plural,
+                                        int count);
 
 /* config */
 extern struct t_config_option *plugin_api_config_get (const char *option_name);
-extern char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
+extern const char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                                            const char *option_name);
 extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
                                          const char *option_name, const char *value);
 
 /* display */
-extern char *plugin_api_prefix (const char *prefix);
-extern char *plugin_api_color (const char *color_name);
+extern const char *plugin_api_prefix (const char *prefix);
+extern const char *plugin_api_color (const char *color_name);
 
 /* command */
 extern void plugin_api_command (struct t_weechat_plugin *plugin,
                                 struct t_gui_buffer *buffer, const char *command);
 
 /* infos */
-extern char *plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info);
+extern const char *plugin_api_info_get (struct t_weechat_plugin *plugin,
+                                        const char *info);
 
 /* infolists */
 extern struct t_infolist *plugin_api_infolist_get (const char *name,
@@ -52,11 +53,11 @@ extern struct t_infolist *plugin_api_infolist_get (const char *name,
 extern int plugin_api_infolist_next (struct t_infolist *infolist);
 extern int plugin_api_infolist_prev (struct t_infolist *infolist);
 extern void plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist);
-extern char *plugin_api_infolist_fields (struct t_infolist *infolist);
+extern const char *plugin_api_infolist_fields (struct t_infolist *infolist);
 extern int plugin_api_infolist_integer (struct t_infolist *infolist,
                                         const char *var);
-extern char *plugin_api_infolist_string (struct t_infolist *infolist,
-                                         const char *var);
+extern const char *plugin_api_infolist_string (struct t_infolist *infolist,
+                                               const char *var);
 extern void *plugin_api_infolist_pointer (struct t_infolist *infolist,
                                           const char *var);
 extern void *plugin_api_infolist_buffer (struct t_infolist *infolist,

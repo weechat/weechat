@@ -331,7 +331,7 @@ infolist_reset_item_cursor (struct t_infolist *infolist)
  * infolist_fields: get list of fields for current infolist item
  */
 
-char *
+const char *
 infolist_fields (struct t_infolist *infolist)
 {
     struct t_infolist_var *ptr_var;
@@ -417,7 +417,7 @@ infolist_integer (struct t_infolist *infolist, const char *var)
  * infolist_string: get a string variable value in current list item
  */
 
-char *
+const char *
 infolist_string (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;

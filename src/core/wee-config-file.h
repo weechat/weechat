@@ -228,8 +228,8 @@ extern int config_file_option_set_with_string (const char *option_name, const ch
 extern int config_file_option_unset_with_string (const char *option_name);
 extern int config_file_option_boolean (struct t_config_option *option);
 extern int config_file_option_integer (struct t_config_option *option);
-extern char *config_file_option_string (struct t_config_option *option);
-extern char *config_file_option_color (struct t_config_option *option);
+extern const char *config_file_option_string (struct t_config_option *option);
+extern const char *config_file_option_color (struct t_config_option *option);
 
 extern void config_file_write_line (struct t_config_file *config_file,
                                     const char *option_name, const char *value, ...);

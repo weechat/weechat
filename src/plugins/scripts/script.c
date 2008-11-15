@@ -44,7 +44,7 @@ int script_option_check_license = 0;
 void
 script_config_read (struct t_weechat_plugin *weechat_plugin)
 {
-    char *string;
+    const char *string;
     
     string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
     if (!string)
@@ -210,7 +210,8 @@ void
 script_auto_load (struct t_weechat_plugin *weechat_plugin,
                   void (*callback)(void *data, const char *filename))
 {
-    char *dir_home, *dir_name;
+    const char *dir_home;
+    char *dir_name;
     int dir_length;
     
     /* build directory, adding WeeChat home */
@@ -258,7 +259,8 @@ char *
 script_search_full_name (struct t_weechat_plugin *weechat_plugin,
                          const char *filename)
 {
-    char *final_name, *dir_home, *dir_system;
+    char *final_name;
+    const char *dir_home, *dir_system;
     int length;
     struct stat st;
     

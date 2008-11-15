@@ -293,7 +293,7 @@ weelist_prev (struct t_weelist_item *item)
  * weelist_string: get string pointer to item data
  */
 
-char *
+const char *
 weelist_string (struct t_weelist_item *item)
 {
     if (item)

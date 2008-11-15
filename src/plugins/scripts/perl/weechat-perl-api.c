@@ -130,7 +130,7 @@ static XS (XS_weechat_api_register)
 
 static XS (XS_weechat_api_plugin_get_name)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -251,7 +251,7 @@ static XS (XS_weechat_api_iconv_from_internal)
 
 static XS (XS_weechat_api_gettext)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -280,7 +280,8 @@ static XS (XS_weechat_api_gettext)
 
 static XS (XS_weechat_api_ngettext)
 {
-    char *result, *single, *plural;
+    char *single, *plural;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -644,7 +645,7 @@ static XS (XS_weechat_api_list_prev)
 
 static XS (XS_weechat_api_list_string)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1554,7 +1555,7 @@ static XS (XS_weechat_api_config_integer)
 
 static XS (XS_weechat_api_config_string)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1583,7 +1584,7 @@ static XS (XS_weechat_api_config_string)
 
 static XS (XS_weechat_api_config_color)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1791,7 +1792,7 @@ static XS (XS_weechat_api_config_get)
 
 static XS (XS_weechat_api_config_get_plugin)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1857,7 +1858,7 @@ static XS (XS_weechat_api_config_set_plugin)
 
 static XS (XS_weechat_api_prefix)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1886,7 +1887,7 @@ static XS (XS_weechat_api_prefix)
 
 static XS (XS_weechat_api_color)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2838,7 +2839,7 @@ static XS (XS_weechat_api_hook_modifier_exec)
  * weechat_perl_api_hook_info_cb: callback for info hooked
  */
 
-char *
+const char *
 weechat_perl_api_hook_info_cb (void *data, const char *info_name,
                                const char *arguments)
 {
@@ -2851,10 +2852,10 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
     perl_argv[1] = (char *)arguments;
     perl_argv[2] = NULL;
     
-    return (char *)weechat_perl_exec (script_callback->script,
-                                      WEECHAT_SCRIPT_EXEC_STRING,
-                                      script_callback->function,
-                                      perl_argv);
+    return (const char *)weechat_perl_exec (script_callback->script,
+                                            WEECHAT_SCRIPT_EXEC_STRING,
+                                            script_callback->function,
+                                            perl_argv);
 }
 
 /*
@@ -3272,7 +3273,8 @@ static XS (XS_weechat_api_buffer_get_integer)
 
 static XS (XS_weechat_api_buffer_get_string)
 {
-    char *result, *buffer, *property;
+    char *buffer, *property;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3359,6 +3361,102 @@ static XS (XS_weechat_api_buffer_set)
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
     PERL_RETURN_OK;
+}
+
+/*
+ * weechat::window_get_integer: get a window property as integer
+ */
+
+static XS (XS_weechat_api_window_get_integer)
+{
+    char *window, *property;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+	PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    window = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na); 
+    value = weechat_window_get_integer (script_str2ptr (window), property);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::window_get_string: get a window property as string
+ */
+
+static XS (XS_weechat_api_window_get_string)
+{
+    char *window, *property;
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    window = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na); 
+    result = weechat_window_get_string (script_str2ptr (window), property);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::window_get_pointer: get a window property as pointer
+ */
+
+static XS (XS_weechat_api_window_get_pointer)
+{
+    char *result, *window, *property;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    window = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na); 
+    result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
+                                                         property));
+    
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3981,7 +4079,7 @@ static XS (XS_weechat_api_command)
 
 static XS (XS_weechat_api_info_get)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -4265,7 +4363,7 @@ static XS (XS_weechat_api_infolist_prev)
 
 static XS (XS_weechat_api_infolist_fields)
 {
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -4327,7 +4425,7 @@ static XS (XS_weechat_api_infolist_integer)
 static XS (XS_weechat_api_infolist_string)
 {
     char *infolist, *variable;
-    char *result;
+    const char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -4534,6 +4632,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_get_string", XS_weechat_api_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_api_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_api_buffer_set, "weechat");
+    newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
+    newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
+    newXS ("weechat::window_get_pointer", XS_weechat_api_window_get_pointer, "weechat");
     newXS ("weechat::nicklist_add_group", XS_weechat_api_nicklist_add_group, "weechat");
     newXS ("weechat::nicklist_search_group", XS_weechat_api_nicklist_search_group, "weechat");
     newXS ("weechat::nicklist_add_nick", XS_weechat_api_nicklist_add_nick, "weechat");

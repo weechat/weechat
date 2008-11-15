@@ -1470,12 +1470,12 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
  * hook_info_get: get info via info hook
  */
 
-char *
+const char *
 hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
                const char *arguments)
 {
     struct t_hook *ptr_hook, *next_hook;
-    char *value;
+    const char *value;
     
     /* make C compiler happy */
     (void) plugin;

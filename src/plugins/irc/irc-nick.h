@@ -51,7 +51,7 @@ struct t_irc_nick
     char *host;                     /* full hostname                         */
     int flags;                      /* chanowner/chanadmin (unrealircd),     */
                                     /* op, halfop, voice, away               */
-    char *color;                    /* color for nickname in chat window     */
+    const char *color;              /* color for nickname in chat window     */
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };

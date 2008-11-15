@@ -57,7 +57,7 @@ void weechat_plugin_get_name (struct t_weechat_plugin *plugin);
       </para>
       <para>
         Example:
-        <screen>char *name = weechat_plugin_get_name (plugin);</screen>
+        <screen>const char *name = weechat_plugin_get_name (plugin);</screen>
       </para>
     </section>
     
@@ -108,7 +108,7 @@ void weechat_charset_set (const char *charset);
       <para>
         Prototype:
 <programlisting>
-void weechat_iconv_to_internal (const char *charset, const char *string);
+char *weechat_iconv_to_internal (const char *charset, const char *string);
 </programlisting>
       </para>
       <para>
@@ -149,7 +149,7 @@ void weechat_iconv_to_internal (const char *charset, const char *string);
       <para>
         Prototype:
 <programlisting>
-void weechat_iconv_from_internal (const char *charset, const char *string);
+char *weechat_iconv_from_internal (const char *charset, const char *string);
 </programlisting>
       </para>
       <para>
@@ -190,7 +190,7 @@ void weechat_iconv_from_internal (const char *charset, const char *string);
       <para>
         Prototype:
 <programlisting>
-char *weechat_gettext (const char *string);
+const char *weechat_gettext (const char *string);
 </programlisting>
       </para>
       <para>
@@ -221,7 +221,7 @@ char *weechat_gettext (const char *string);
       <para>
         Prototype:
 <programlisting>
-char *weechat_ngettext (const char *string, const char *plural, int count);
+const char *weechat_ngettext (const char *string, const char *plural, int count);
 </programlisting>
       </para>
       <para>
@@ -305,7 +305,7 @@ char *weechat_strndup (const char *string, int length);
       <para>
         Prototype:
 <programlisting>
-char *weechat_string_tolower (const char *string);
+void weechat_string_tolower (const char *string);
 </programlisting>
       </para>
       <para>
@@ -336,7 +336,7 @@ char *weechat_string_tolower (const char *string);
       <para>
         Prototype:
 <programlisting>
-char *weechat_string_toupper (const char *string);
+void weechat_string_toupper (const char *string);
 </programlisting>
       </para>
       <para>
@@ -502,7 +502,7 @@ int weechat_strcmp_ignore_chars (
       <para>
         Prototype:
 <programlisting>
-int weechat_strcasestr (const char *string, const char *search);
+char *weechat_strcasestr (const char *string, const char *search);
 </programlisting>
       </para>
       <para>
@@ -732,7 +732,7 @@ char *weechat_string_strip (
       <para>
         Prototype:
 <programlisting>
-char *weechat_string_has_highlight (
+int weechat_string_has_highlight (
     const char *string,
     const char highlight_words);
 </programlisting>
@@ -925,7 +925,7 @@ weechat_string_free_exploded (, argv);
       <para>
         Prototype:
 <programlisting>
-char **weechat_string_build_with_exploded (
+char *weechat_string_build_with_exploded (
     char **exploded_string,
     const char *separator);
 </programlisting>
@@ -2196,7 +2196,7 @@ struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
       <para>
         Prototype:
 <programlisting>
-char *weechat_list_string (struct t_weelist_item *item);
+const char *weechat_list_string (struct t_weelist_item *item);
 </programlisting>
       </para>
       <para>
@@ -3711,7 +3711,7 @@ int weechat_config_integer (struct t_config_option *option);
       <para>
         Prototype:
 <programlisting>
-char *weechat_config_string (struct t_config_option *option);
+const char *weechat_config_string (struct t_config_option *option);
 </programlisting>
       </para>
       <para>
@@ -3742,7 +3742,7 @@ char *weechat_config_string (struct t_config_option *option);
       <para>
         Prototype:
 <programlisting>
-char *weechat_config_color (struct t_config_option *option);
+const char *weechat_config_color (struct t_config_option *option);
 </programlisting>
       </para>
       <para>
@@ -4109,7 +4109,7 @@ struct t_config_option *option = weechat_config_get ("weechat.look.item_time_for
       <para>
         Prototype:
 <programlisting>
-char *weechat_config_get_plugin (const char *option_name);
+const char *weechat_config_get_plugin (const char *option_name);
 </programlisting>
       </para>
       <para>
@@ -4191,7 +4191,7 @@ weechat_config_set_plugin ("option", "test_value");
       <para>
         Prototype:
 <programlisting>
-char *weechat_prefix (const char *prefix);
+const char *weechat_prefix (const char *prefix);
 </programlisting>
       </para>
       <para>
@@ -4264,7 +4264,7 @@ weechat_printf (NULL, "%sThis is an error...",
       <para>
         Prototype:
 <programlisting>
-char *weechat_color (const char *color_name);
+const char *weechat_color (const char *color_name);
 </programlisting>
       </para>
       <para>

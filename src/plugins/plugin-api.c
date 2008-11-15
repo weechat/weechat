@@ -70,7 +70,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
  * plugin_api_gettext: translate a string using gettext
  */
 
-char *
+const char *
 plugin_api_gettext (const char *string)
 {
     return _(string);
@@ -80,7 +80,7 @@ plugin_api_gettext (const char *string)
  * plugin_api_ngettext: translate a string using gettext
  */
 
-char *
+const char *
 plugin_api_ngettext (const char *single, const char *plural, int count)
 {
     return NG_(single, plural, count);
@@ -104,7 +104,7 @@ plugin_api_config_get (const char *option_name)
  * plugin_api_config_get_plugin: get value of a plugin config option
  */
 
-char *
+const char *
 plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                               const char *option_name)
 {
@@ -142,7 +142,7 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
  * plugin_api_prefix: return a prefix for display with printf
  */
 
-char *
+const char *
 plugin_api_prefix (const char *prefix)
 {
     if (!prefix)
@@ -166,7 +166,7 @@ plugin_api_prefix (const char *prefix)
  * plugin_api_color: return a WeeChat color for display with printf
  */
 
-char *
+const char *
 plugin_api_color (const char *color_name)
 {
     int num_color;
@@ -207,7 +207,7 @@ plugin_api_command (struct t_weechat_plugin *plugin,
  * plugin_api_info_get_inernal: get info about WeeChat
  */
 
-char *
+const char *
 plugin_api_info_get_internal (void *data, const char *info_name,
                               const char *arguments)
 {
@@ -580,7 +580,7 @@ plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist)
  * plugin_api_infolist_fields: get list of fields for current list item
  */
 
-char *
+const char *
 plugin_api_infolist_fields (struct t_infolist *infolist)
 {
     if (!infolist || !infolist_valid (infolist))
@@ -606,7 +606,7 @@ plugin_api_infolist_integer (struct t_infolist *infolist, const char *var)
  * plugin_api_infolist_string: get a string variable value in current list item
  */
 
-char *
+const char *
 plugin_api_infolist_string (struct t_infolist *infolist, const char *var)
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)

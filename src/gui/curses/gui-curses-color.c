@@ -262,7 +262,7 @@ gui_color_get_number ()
  * gui_color_get_name: get color name
  */
 
-char *
+const char *
 gui_color_get_name (int num_color)
 {
     return gui_weechat_colors[num_color].string;

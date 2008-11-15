@@ -77,7 +77,7 @@ gui_color_search_config_int (const char *color_name)
  *                              return color configuration name, NULL if not found
  */
 
-char *
+const char *
 gui_color_search_config_str (int color_number)
 {
     struct t_config_section *ptr_section;
@@ -103,7 +103,7 @@ gui_color_search_config_str (int color_number)
  * gui_color_get_custom: get a custom color with a name (GUI dependent)
  */
 
-char *
+const char *
 gui_color_get_custom (const char *color_name)
 {
     int fg, bg;

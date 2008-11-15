@@ -198,8 +198,8 @@ extern void gui_buffer_set_plugin_for_upgrade (char *name,
                                                struct t_weechat_plugin *plugin);
 extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,
                                    const char *property);
-extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
-                                    const char *property);
+extern const char *gui_buffer_get_string (struct t_gui_buffer *buffer,
+                                          const char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,
                                      const char *property);
 extern void gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer,

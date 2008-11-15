@@ -103,8 +103,8 @@ extern struct t_gui_window *gui_window_new (struct t_gui_window *parent,
 extern int gui_window_valid (struct t_gui_window *window);
 extern int gui_window_get_integer (struct t_gui_window *window,
                                    const char *property);
-extern char *gui_window_get_string (struct t_gui_window *window,
-                                    const char *property);
+extern const char *gui_window_get_string (struct t_gui_window *window,
+                                          const char *property);
 extern void *gui_window_get_pointer (struct t_gui_window *window,
                                      const char *property);
 extern void gui_window_set_layout_plugin_name (struct t_gui_window *window,

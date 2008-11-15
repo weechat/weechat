@@ -415,7 +415,8 @@ irc_config_reload_servers_from_config ()
     struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
     struct t_config_option *ptr_option;
-    char *full_name, *option_name, *server_name, *pos_option;
+    const char *full_name, *option_name;
+    char *server_name, *pos_option;
     int i, index_option;
     
     infolist = weechat_infolist_get ("option", NULL, "irc.server.*");

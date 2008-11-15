@@ -60,7 +60,7 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
  * irc_nick_find_color: find a color for a nick (according to nick letters)
  */
 
-char *
+const char *
 irc_nick_find_color (struct t_irc_nick *nick)
 {
     int i, color;

@@ -700,8 +700,9 @@ gui_completion_list_add_plugin_commands (struct t_gui_completion *completion)
 void
 gui_completion_list_add_option_value (struct t_gui_completion *completion)
 {
-    char *pos_space, *option_full_name, *color_name, *pos_section, *pos_option;
+    char *pos_space, *option_full_name, *pos_section, *pos_option;
     char *file, *section, *value_string;
+    const char *color_name;
     int length, i, num_colors;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section, *section_found;

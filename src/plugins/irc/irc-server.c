@@ -884,7 +884,8 @@ irc_server_duplicate (struct t_irc_server *server, const char *new_server_name)
 {
     struct t_irc_server *new_server;
     int length, index_option;
-    char *mask, *option_name, *pos_option;
+    char *mask, *pos_option;
+    const char *option_name;
     struct t_config_option *ptr_option;
     struct t_infolist *infolist;
     
@@ -962,7 +963,8 @@ int
 irc_server_rename (struct t_irc_server *server, const char *new_server_name)
 {
     int length;
-    char *mask, *option_name, *pos_option, *new_option_name, *buffer_name;
+    char *mask, *pos_option, *new_option_name, *buffer_name;
+    const char *option_name;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     struct t_irc_channel *ptr_channel;
@@ -2157,7 +2159,7 @@ int
 irc_server_connect (struct t_irc_server *server, int disable_autojoin)
 {
     int set;
-    char *config_proxy_type, *config_proxy_address;
+    const char *config_proxy_type, *config_proxy_address;
     int config_proxy_use, config_proxy_ipv6, config_proxy_port;
 
     if (!server->addresses || !server->addresses[0])
@@ -2678,7 +2680,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
-    char *plugin_name, *plugin_id, *type, *filename;
+    const char *plugin_name, *plugin_id, *type, *filename;
     int spaces_in_name;
     
     /* make C compiler happy */
@@ -2751,7 +2753,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
-    char *plugin_name, *plugin_id, *filename;
+    const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
     /* make C compiler happy */
@@ -2808,7 +2810,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
-    char *plugin_name, *plugin_id, *filename;
+    const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
     /* make C compiler happy */

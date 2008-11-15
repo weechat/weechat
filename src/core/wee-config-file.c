@@ -1412,7 +1412,7 @@ config_file_option_integer (struct t_config_option *option)
  * config_file_option_string: return string value of an option
  */
 
-char *
+const char *
 config_file_option_string (struct t_config_option *option)
 {
     if (!option)
@@ -1443,7 +1443,7 @@ config_file_option_string (struct t_config_option *option)
  * config_file_option_color: return color value of an option
  */
 
-char *
+const char *
 config_file_option_color (struct t_config_option *option)
 {
     if (!option)
@@ -2412,7 +2412,7 @@ config_file_print_stdout (struct t_config_file *config_file)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char *color_name;
+    const char *color_name;
     int i;
     
     for (ptr_section = config_file->sections; ptr_section;

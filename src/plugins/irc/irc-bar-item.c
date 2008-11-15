@@ -42,7 +42,8 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
                            int max_width, int max_height)
 {
     struct t_gui_buffer *buffer;
-    char *title, *title_color;
+    const char *title;
+    char *title_color;
     
     /* make C compiler happy */
     (void) data;
@@ -78,7 +79,8 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                           struct t_gui_window *window,
                           int max_width, int max_height)
 {
-    char buf[512], buf_name[256], modes[128], away[128], *name;
+    char buf[512], buf_name[256], modes[128], away[128];
+    const char *name;
     int number, part_from_channel;
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;

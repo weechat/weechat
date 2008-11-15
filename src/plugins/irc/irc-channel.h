@@ -72,7 +72,8 @@ extern struct t_irc_channel *irc_channel_new (struct t_irc_server *server,
                                               int channel_type,
                                               const char *channel_name,
                                               int switch_to_channel);
-extern void irc_channel_set_topic (struct t_irc_channel *channel, char *topic);
+extern void irc_channel_set_topic (struct t_irc_channel *channel,
+                                   const char *topic);
 extern void irc_channel_free (struct t_irc_server *server,
                               struct t_irc_channel *channel);
 extern void irc_channel_free_all (struct t_irc_server *server);

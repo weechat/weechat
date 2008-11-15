@@ -88,10 +88,10 @@ extern int infolist_valid (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_next (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_prev (struct t_infolist *infolist);
 extern void infolist_reset_item_cursor (struct t_infolist *infolist);
-extern char *infolist_fields (struct t_infolist *infolist);
+extern const char *infolist_fields (struct t_infolist *infolist);
 extern int infolist_integer (struct t_infolist *infolist,
                              const char *var);
-extern char *infolist_string (struct t_infolist *infolist,
+extern const char *infolist_string (struct t_infolist *infolist,
                               const char *var);
 extern void *infolist_pointer (struct t_infolist *infolist,
                                const char *var);

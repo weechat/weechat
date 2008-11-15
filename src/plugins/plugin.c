@@ -114,7 +114,7 @@ plugin_search (const char *name)
  * plugin_get_name: get name of plugin with a pointer
  */
 
-char *
+const char *
 plugin_get_name (struct t_weechat_plugin *plugin)
 {
     static char *plugin_core = PLUGIN_CORE;

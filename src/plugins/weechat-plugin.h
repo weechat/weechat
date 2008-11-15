@@ -122,14 +122,14 @@ struct t_weechat_plugin
        existing plugins */
     
     /* plugins */
-    char *(*plugin_get_name) (struct t_weechat_plugin *plugin);
+    const char *(*plugin_get_name) (struct t_weechat_plugin *plugin);
     
     /* strings */
     void (*charset_set) (struct t_weechat_plugin *plugin, const char *charset);
     char *(*iconv_to_internal) (const char *charset, const char *string);
     char *(*iconv_from_internal) (const char *charset, const char *string);
-    char *(*gettext) (const char *string);
-    char *(*ngettext) (const char *single, const char *plural, int count);
+    const char *(*gettext) (const char *string);
+    const char *(*ngettext) (const char *single, const char *plural, int count);
     char *(*strndup) (const char *string, int length);
     void (*string_tolower) (char *string);
     void (*string_toupper) (char *string);
@@ -199,7 +199,7 @@ struct t_weechat_plugin
     void (*list_set) (struct t_weelist_item *item, const char *value);
     struct t_weelist_item *(*list_next) (struct t_weelist_item *item);
     struct t_weelist_item *(*list_prev) (struct t_weelist_item *item);
-    char *(*list_string) (struct t_weelist_item *item);
+    const char *(*list_string) (struct t_weelist_item *item);
     int (*list_size) (struct t_weelist *weelist);
     void (*list_remove) (struct t_weelist *weelist,
                          struct t_weelist_item *item);
@@ -288,8 +288,8 @@ struct t_weechat_plugin
                                         const char *property);
     int (*config_boolean) (struct t_config_option *option);
     int (*config_integer) (struct t_config_option *option);
-    char *(*config_string) (struct t_config_option *option);
-    char *(*config_color) (struct t_config_option *option);
+    const char *(*config_string) (struct t_config_option *option);
+    const char *(*config_color) (struct t_config_option *option);
     void (*config_write_line) (struct t_config_file *config_file,
                                const char *option_name,
                                const char *value, ...);
@@ -302,14 +302,14 @@ struct t_weechat_plugin
                                  struct t_config_section *section);
     void (*config_free) (struct t_config_file *config_file);
     struct t_config_option *(*config_get) (const char *option_name);
-    char *(*config_get_plugin) (struct t_weechat_plugin *plugin,
-                                const char *option_name);
+    const char *(*config_get_plugin) (struct t_weechat_plugin *plugin,
+                                      const char *option_name);
     int (*config_set_plugin) (struct t_weechat_plugin *plugin,
                               const char *option_name, const char *value);
     
     /* display */
-    char *(*prefix) (const char *prefix);
-    char *(*color) (const char *color_name);
+    const char *(*prefix) (const char *prefix);
+    const char *(*color) (const char *color_name);
     void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
                               const char *tags, const char *message, ...);
     void (*printf_y) (struct t_gui_buffer *buffer, int y,
@@ -405,9 +405,9 @@ struct t_weechat_plugin
     struct t_hook *(*hook_info) (struct t_weechat_plugin *plugin,
                                  const char *info_name,
                                  const char *description,
-                                 char *(*callback)(void *data,
-                                                   const char *info_name,
-                                                   const char *arguments),
+                                 const char *(*callback)(void *data,
+                                                         const char *info_name,
+                                                         const char *arguments),
                                  void *callback_data);
     struct t_hook *(*hook_infolist) (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
@@ -435,8 +435,8 @@ struct t_weechat_plugin
     void (*buffer_close) (struct t_gui_buffer *buffer, int switch_to_another);
     int (*buffer_get_integer) (struct t_gui_buffer *buffer,
                                const char *property);
-    char *(*buffer_get_string) (struct t_gui_buffer *buffer,
-                                const char *property);
+    const char *(*buffer_get_string) (struct t_gui_buffer *buffer,
+                                      const char *property);
     void *(*buffer_get_pointer) (struct t_gui_buffer *buffer,
                                  const char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
@@ -449,8 +449,8 @@ struct t_weechat_plugin
     /* windows */
     int (*window_get_integer) (struct t_gui_window *window,
                                const char *property);
-    char *(*window_get_string) (struct t_gui_window *window,
-                                const char *property);
+    const char *(*window_get_string) (struct t_gui_window *window,
+                                      const char *property);
     void *(*window_get_pointer) (struct t_gui_window *window,
                                  const char *property);
     
@@ -522,8 +522,9 @@ struct t_weechat_plugin
     int (*network_connect_to) (int sock, unsigned long address, int port);
     
     /* infos */
-    char *(*info_get) (struct t_weechat_plugin *plugin, const char *info_name,
-                       const char *arguments);
+    const char *(*info_get) (struct t_weechat_plugin *plugin,
+                             const char *info_name,
+                             const char *arguments);
     
     /* infolists */
     struct t_infolist *(*infolist_new) ();
@@ -551,9 +552,9 @@ struct t_weechat_plugin
     int (*infolist_next) (struct t_infolist *infolist);
     int (*infolist_prev) (struct t_infolist *infolist);
     void (*infolist_reset_item_cursor) (struct t_infolist *infolist);
-    char *(*infolist_fields) (struct t_infolist *infolist);
+    const char *(*infolist_fields) (struct t_infolist *infolist);
     int (*infolist_integer) (struct t_infolist *infolist, const char *var);
-    char *(*infolist_string) (struct t_infolist *infolist, const char *var);
+    const char *(*infolist_string) (struct t_infolist *infolist, const char *var);
     void *(*infolist_pointer) (struct t_infolist *infolist, const char *var);
     void *(*infolist_buffer) (struct t_infolist *infolist, const char *var,
                               int *size);

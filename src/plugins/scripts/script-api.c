@@ -980,9 +980,9 @@ script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
                       struct t_plugin_script *script,
                       const char *info_name,
                       const char *description,
-                      char *(*callback)(void *data,
-                                        const char *info_name,
-                                        const char *arguments),
+                      const char *(*callback)(void *data,
+                                              const char *info_name,
+                                              const char *arguments),
                       const char *function)
 {
     struct t_script_callback *new_script_callback;
@@ -1316,12 +1316,13 @@ script_api_command (struct t_weechat_plugin *weechat_plugin,
  *                               format in file is: plugin.script.option = value
  */
 
-char *
+const char *
 script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               const char *option)
 {
-    char *option_fullname, *return_value;
+    char *option_fullname;
+    const char *return_value;
     
     option_fullname = malloc ((strlen (script->name) +
                                strlen (option) + 2));

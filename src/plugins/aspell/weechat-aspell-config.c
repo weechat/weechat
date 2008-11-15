@@ -57,7 +57,7 @@ void
 weechat_aspell_config_change_commands (void *data,
                                        struct t_config_option *option)
 {
-    char *value;
+    const char *value;
     int i;
     
     /* make C compiler happy */

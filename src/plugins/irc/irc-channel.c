@@ -178,7 +178,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
  */
 
 void
-irc_channel_set_topic (struct t_irc_channel *channel, char *topic)
+irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
 {
     if (channel->topic)
         free (channel->topic);

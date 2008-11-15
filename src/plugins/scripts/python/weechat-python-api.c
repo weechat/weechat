@@ -123,7 +123,8 @@ weechat_python_api_register (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_plugin_get_name (PyObject *self, PyObject *args)
 {
-    char *plugin, *result;
+    char *plugin;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -253,7 +254,8 @@ weechat_python_api_iconv_from_internal (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_gettext (PyObject *self, PyObject *args)
 {
-    char *string, *result;
+    char *string;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -284,7 +286,8 @@ weechat_python_api_gettext (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_ngettext (PyObject *self, PyObject *args)
 {
-    char *single, *plural, *result;
+    char *single, *plural;
+    const char *result;
     int count;
     
     /* make C compiler happy */
@@ -681,7 +684,8 @@ weechat_python_api_list_prev (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_list_string (PyObject *self, PyObject *args)
 {
-    char *item, *result;
+    char *item;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1641,7 +1645,8 @@ weechat_python_api_config_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_string (PyObject *self, PyObject *args)
 {
-    char *option, *result;
+    char *option;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1672,7 +1677,8 @@ weechat_python_api_config_string (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_color (PyObject *self, PyObject *args)
 {
-    char *option, *result;
+    char *option;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1900,7 +1906,8 @@ weechat_python_api_config_get (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
 {
-    char *option, *result;
+    char *option;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1969,7 +1976,8 @@ weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_prefix (PyObject *self, PyObject *args)
 {
-    char *prefix, *result;
+    char *prefix;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -2000,7 +2008,8 @@ weechat_python_api_prefix (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_color (PyObject *self, PyObject *args)
 {
-    char *color, *result;
+    char *color;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -3009,7 +3018,7 @@ weechat_python_api_hook_modifier_exec (PyObject *self, PyObject *args)
  * weechat_python_api_hook_info_cb: callback for info hooked
  */
 
-char *
+const char *
 weechat_python_api_hook_info_cb (void *data, const char *info_name,
                                  const char *arguments)
 {
@@ -3022,10 +3031,10 @@ weechat_python_api_hook_info_cb (void *data, const char *info_name,
     python_argv[1] = (char *)arguments;
     python_argv[2] = NULL;
     
-    return (char *)weechat_python_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_STRING,
-                                        script_callback->function,
-                                        python_argv);
+    return (const char *)weechat_python_exec (script_callback->script,
+                                              WEECHAT_SCRIPT_EXEC_STRING,
+                                              script_callback->function,
+                                              python_argv);
 }
 
 /*
@@ -3466,7 +3475,8 @@ weechat_python_api_buffer_get_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
 {
-    char *buffer, *property, *result;
+    char *buffer, *property;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -3558,6 +3568,106 @@ weechat_python_api_buffer_set (PyObject *self, PyObject *args)
                         value);
     
     PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_window_get_integer get a window property as integer
+ */
+
+static PyObject *
+weechat_python_api_window_get_integer (PyObject *self, PyObject *args)
+{
+    char *window, *property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &window, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    value = weechat_window_get_integer (script_str2ptr (window), property);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_window_get_string: get a window property as string
+ */
+
+static PyObject *
+weechat_python_api_window_get_string (PyObject *self, PyObject *args)
+{
+    char *window, *property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &window, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_window_get_string (script_str2ptr (window), property);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_window_get_pointer: get a window property as pointer
+ */
+
+static PyObject *
+weechat_python_api_window_get_pointer (PyObject *self, PyObject *args)
+{
+    char *window, *property, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &window, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
+                                                         property));
+    
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4229,7 +4339,8 @@ weechat_python_api_command (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_info_get (PyObject *self, PyObject *args)
 {
-    char *info_name, *arguments, *result;
+    char *info_name, *arguments;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -4535,7 +4646,8 @@ weechat_python_api_infolist_prev (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_fields (PyObject *self, PyObject *args)
 {
-    char *infolist, *result;
+    char *infolist;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -4600,7 +4712,8 @@ weechat_python_api_infolist_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_string (PyObject *self, PyObject *args)
 {
-    char *infolist, *variable, *result;
+    char *infolist, *variable;
+    const char *result;
     
     /* make C compiler happy */
     (void) self;
@@ -4654,8 +4767,8 @@ weechat_python_api_infolist_pointer (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_infolist_string (script_str2ptr (infolist),
-                                                      variable));
+    result = script_ptr2str (weechat_infolist_pointer (script_str2ptr (infolist),
+                                                       variable));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4810,6 +4923,9 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },
+    { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
+    { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },
+    { "window_get_pointer", &weechat_python_api_window_get_pointer, METH_VARARGS, "" },
     { "nicklist_add_group", &weechat_python_api_nicklist_add_group, METH_VARARGS, "" },
     { "nicklist_search_group", &weechat_python_api_nicklist_search_group, METH_VARARGS, "" },
     { "nicklist_add_nick", &weechat_python_api_nicklist_add_nick, METH_VARARGS, "" },

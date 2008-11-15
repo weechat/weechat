@@ -116,7 +116,8 @@ upgrade_file_write_time (struct t_upgrade_file *upgrade_file, time_t date)
  */
 
 int
-upgrade_file_write_string (struct t_upgrade_file *upgrade_file, char *string)
+upgrade_file_write_string (struct t_upgrade_file *upgrade_file,
+                           const char *string)
 {
     int length;
     
@@ -239,7 +240,8 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                            struct t_infolist *infolist)
 {
     int i, argc, length;
-    char *fields, **argv;
+    char **argv;
+    const char *fields;
     void *buf;
     
     /* write all infolist variables */

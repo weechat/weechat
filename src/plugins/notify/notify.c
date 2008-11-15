@@ -76,7 +76,8 @@ notify_search (const char *notify_name)
 char *
 notify_build_option_name (struct t_gui_buffer *buffer)
 {
-    char *option_name, *plugin_name, *name;
+    const char *plugin_name, *name;
+    char *option_name;
     int length;
     
     plugin_name = weechat_buffer_get_string (buffer, "plugin");

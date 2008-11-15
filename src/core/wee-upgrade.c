@@ -279,8 +279,8 @@ int
 upgrade_weechat_read_cb (int object_id,
                          struct t_infolist *infolist)
 {
-    char *type, *name, *prefix, *group_name, option_name[64], *key;
-    char *option_key, *var_name, *option_var;
+    const char *key, *var_name, *type, *name, *prefix, *group_name;
+    char option_name[64], *option_key, *option_var;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *new_line;

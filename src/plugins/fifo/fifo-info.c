@@ -29,7 +29,7 @@
  * fifo_info_get_info_cb: callback called when fifo info is asked
  */
 
-char *
+const char *
 fifo_info_get_info_cb (void *data, const char *info_name,
                        const char *arguments)
 {

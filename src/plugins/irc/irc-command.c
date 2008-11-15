@@ -790,7 +790,8 @@ int
 irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    char *channel_name, *pos_args, *ptr_arg, *buf, *version;
+    char *channel_name, *pos_args, *buf;
+    const char *version, *ptr_arg;
     char **channels;
     int i, num_channels;
     
@@ -1139,8 +1140,8 @@ irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 {
-    const char *ptr_arg;
-    char *buf, *version;
+    const char *ptr_arg, *version;
+    char *buf;
     
     if (!server)
         return;
@@ -2379,7 +2380,8 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
                           const char *part_message)
 {
     const char *ptr_arg;
-    char *buf, *version;
+    char *buf;
+    const char *version;
     
     ptr_arg = (part_message) ? part_message :
         (weechat_config_string (irc_config_network_default_msg_part)

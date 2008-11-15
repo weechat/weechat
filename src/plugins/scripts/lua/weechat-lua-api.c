@@ -140,8 +140,7 @@ weechat_lua_api_register (lua_State *L)
 static int
 weechat_lua_api_plugin_get_name (lua_State *L)
 {
-    const char *plugin;
-    char *result;
+    const char *plugin, *result;
     int n;
     
     /* make C compiler happy */
@@ -293,8 +292,7 @@ weechat_lua_api_iconv_from_internal (lua_State *L)
 static int
 weechat_lua_api_gettext (lua_State *L)
 {
-    const char *string;
-    char *result;
+    const char *string, *result;
     int n;
     
     /* make C compiler happy */
@@ -330,8 +328,7 @@ weechat_lua_api_gettext (lua_State *L)
 static int
 weechat_lua_api_ngettext (lua_State *L)
 {
-    const char *single, *plural;
-    char *result;
+    const char *single, *plural, *result;
     int n, count;
     
     /* make C compiler happy */
@@ -788,8 +785,7 @@ weechat_lua_api_list_prev (lua_State *L)
 static int
 weechat_lua_api_list_string (lua_State *L)
 {
-    const char *item;
-    char *result;
+    const char *item, *result;
     int n;
     
     /* make C compiler happy */
@@ -1848,8 +1844,7 @@ weechat_lua_api_config_integer (lua_State *L)
 static int
 weechat_lua_api_config_string (lua_State *L)
 {
-    const char *option;
-    char *result;
+    const char *option, *result;
     int n;
     
     /* make C compiler happy */
@@ -1885,8 +1880,7 @@ weechat_lua_api_config_string (lua_State *L)
 static int
 weechat_lua_api_config_color (lua_State *L)
 {
-    const char *option;
-    char *result;
+    const char *option, *result;
     int n;
     
     /* make C compiler happy */
@@ -2148,8 +2142,7 @@ weechat_lua_api_config_get (lua_State *L)
 static int
 weechat_lua_api_config_get_plugin (lua_State *L)
 {
-    const char *option;
-    char *result;
+    const char *option, *result;
     int n;
     
     /* make C compiler happy */
@@ -2229,8 +2222,7 @@ weechat_lua_api_config_set_plugin (lua_State *L)
 static int
 weechat_lua_api_prefix (lua_State *L)
 {
-    const char *prefix;
-    char *result;
+    const char *prefix, *result;
     int n;
     
     /* make C compiler happy */
@@ -2266,8 +2258,7 @@ weechat_lua_api_prefix (lua_State *L)
 static int
 weechat_lua_api_color (lua_State *L)
 {
-    const char *color;
-    char *result;
+    const char *color, *result;
     int n;
     
     /* make C compiler happy */
@@ -3382,7 +3373,7 @@ weechat_lua_api_hook_modifier_exec (lua_State *L)
  * weechat_lua_api_hook_info_cb: callback for info hooked
  */
 
-char *
+const char *
 weechat_lua_api_hook_info_cb (void *data, const char *info_name,
                               const char *arguments)
 {
@@ -3395,10 +3386,10 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
     lua_argv[1] = (char *)arguments;
     lua_argv[2] = NULL;
     
-    return (char *)weechat_lua_exec (script_callback->script,
-                                     WEECHAT_SCRIPT_EXEC_STRING,
-                                     script_callback->function,
-                                     lua_argv);
+    return (const char *)weechat_lua_exec (script_callback->script,
+                                           WEECHAT_SCRIPT_EXEC_STRING,
+                                           script_callback->function,
+                                           lua_argv);
 }
 
 /*
@@ -3882,8 +3873,7 @@ weechat_lua_api_buffer_get_integer (lua_State *L)
 static int
 weechat_lua_api_buffer_get_string (lua_State *L)
 {
-    const char *buffer, *property;
-    char *result;
+    const char *buffer, *property, *result;
     int n;
     
     /* make C compiler happy */
@@ -3949,8 +3939,8 @@ weechat_lua_api_buffer_get_pointer (lua_State *L)
     buffer = lua_tostring (lua_current_interpreter, -2);
     property = lua_tostring (lua_current_interpreter, -1);
     
-    result = script_ptr2str (weechat_buffer_get_string (script_str2ptr (buffer),
-                                                        property));
+    result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+                                                         property));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3992,6 +3982,124 @@ weechat_lua_api_buffer_set (lua_State *L)
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
     LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_window_get_integer: get a window property as integer
+ */
+
+static int
+weechat_lua_api_window_get_integer (lua_State *L)
+{
+    const char *window, *property;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+        LUA_RETURN_INT(-1);
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        LUA_RETURN_INT(-1);
+    }
+    
+    window = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_window_get_integer (script_str2ptr (window),
+                                        property);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_window_get_string: get a window property as string
+ */
+
+static int
+weechat_lua_api_window_get_string (lua_State *L)
+{
+    const char *window, *property, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    window = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_window_get_string (script_str2ptr (window),
+                                        property);
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_window_get_pointer: get a window property as pointer
+ */
+
+static int
+weechat_lua_api_window_get_pointer (lua_State *L)
+{
+    const char *window, *property;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    window = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    window = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
+                                                         property));
+    
+    LUA_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4773,8 +4881,7 @@ weechat_lua_api_command (lua_State *L)
 static int
 weechat_lua_api_info_get (lua_State *L)
 {
-    const char *info_name, *arguments;
-    char *result;
+    const char *info_name, *arguments, *result;
     int n;
     
     /* make C compiler happy */
@@ -5125,8 +5232,7 @@ weechat_lua_api_infolist_prev (lua_State *L)
 static int
 weechat_lua_api_infolist_fields (lua_State *L)
 {
-    const char *infolist;
-    char *result;
+    const char *infolist, *result;
     int n;
     
     /* make C compiler happy */
@@ -5201,8 +5307,7 @@ weechat_lua_api_infolist_integer (lua_State *L)
 static int
 weechat_lua_api_infolist_string (lua_State *L)
 {
-    const char *infolist, *variable;
-    char *result;
+    const char *infolist, *variable, *result;
     int n;
     
     /* make C compiler happy */
@@ -5788,6 +5893,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },
+    { "window_get_integer", &weechat_lua_api_window_get_integer },
+    { "window_get_string", &weechat_lua_api_window_get_string },
+    { "window_get_pointer", &weechat_lua_api_window_get_pointer },
     { "nicklist_add_group", &weechat_lua_api_nicklist_add_group },
     { "nicklist_search_group", &weechat_lua_api_nicklist_search_group },
     { "nicklist_add_nick", &weechat_lua_api_nicklist_add_nick },

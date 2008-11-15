@@ -65,7 +65,8 @@ int
 logger_create_directory ()
 {
     int rc;
-    char *dir1, *dir2, *weechat_dir;
+    char *dir1, *dir2;
+    const char *weechat_dir;
     
     rc = 1;
     
@@ -104,7 +105,8 @@ logger_create_directory ()
 char *
 logger_build_option_name (struct t_gui_buffer *buffer)
 {
-    char *plugin_name, *name, *option_name;
+    const char *plugin_name, *name;
+    char *option_name;
     int length;
     
     if (!buffer)
@@ -130,7 +132,8 @@ logger_build_option_name (struct t_gui_buffer *buffer)
 int
 logger_get_level_for_buffer (struct t_gui_buffer *buffer)
 {
-    char *no_log, *name, *option_name, *ptr_end;
+    const char *no_log;
+    char *name, *option_name, *ptr_end;
     struct t_config_option *ptr_option;
     
     /* no log for buffer if local variable "no_log" is defined for buffer */
@@ -184,7 +187,7 @@ logger_get_level_for_buffer (struct t_gui_buffer *buffer)
  *                             one to find mask (from specific to general mask)
  */
 
-char *
+const char *
 logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 {
     char *name, *option_name, *ptr_end;
@@ -242,7 +245,9 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    char *res, *mask, *mask_decoded, *dir_separator, *weechat_dir;
+    char *res, *mask_decoded;
+    const char *mask;
+    const char *dir_separator, *weechat_dir;
     char *log_path, *log_path2, *pos_last_sep;
     int length;
     
@@ -353,10 +358,10 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                    const char *format, ...)
 {
     va_list argptr;
-    char *charset, *message;
+    char *message, buf_time[256];
+    const char *charset;
     time_t seconds;
     struct tm *date_tmp;
-    char buf_time[256];
     int log_level;
     
     if (!logger_buf_write)

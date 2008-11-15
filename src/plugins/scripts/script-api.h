@@ -180,9 +180,9 @@ extern struct t_hook *script_api_hook_info (struct t_weechat_plugin *weechat_plu
                                             struct t_plugin_script *script,
                                             const char *info_name,
                                             const char *description,
-                                            char *(*callback)(void *data,
-                                                              const char *info_name,
-                                                              const char *arguments),
+                                            const char *(*callback)(void *data,
+                                                                    const char *info_name,
+                                                                    const char *arguments),
                                             const char *function);
 extern struct t_hook *script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
                                                 struct t_plugin_script *script,
@@ -227,9 +227,9 @@ extern void script_api_command (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 struct t_gui_buffer *buffer,
                                 const char *command);
-extern char *script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
-                                           struct t_plugin_script *script,
-                                           const char *option);
+extern const char *script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
+                                                 struct t_plugin_script *script,
+                                                 const char *option);
 extern int script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
                                          struct t_plugin_script *script,
                                          const char *option, const char *value);

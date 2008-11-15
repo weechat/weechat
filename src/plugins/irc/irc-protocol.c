@@ -1119,7 +1119,8 @@ irc_protocol_reply_version (struct t_irc_server *server,
                             struct t_irc_channel *channel, const char *nick,
                             const char *message, const char *str_version)
 {
-    char *pos, *version, *date;
+    char *pos;
+    const char *version, *date;
     struct t_gui_buffer *ptr_buffer;
     
     ptr_buffer = (channel) ? channel->buffer : server->buffer;
@@ -3654,7 +3655,8 @@ int
 irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
-    char *pos_channel, *pos_nick, *color;
+    char *pos_channel, *pos_nick;
+    const char *color;
     int args, i, prefix_found;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
     int has_voice, is_chanuser;
@@ -3785,7 +3787,8 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
-    char *string, *prefix;
+    char *string;
+    const char *prefix;
     
     /* 366 message looks like:
        :server 366 mynick #channel :End of /NAMES list.

@@ -539,7 +539,7 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
  * gui_buffer_get_string: get a buffer property as string
  */
 
-char *
+const char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
     struct t_gui_buffer_local_var *ptr_local_var;

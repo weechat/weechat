@@ -2411,7 +2411,7 @@ void
 command_set_display_option (struct t_config_option *option,
                             const char *message)
 {
-    char *color_name;
+    const char *color_name;
     
     switch (option->type)
     {

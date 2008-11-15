@@ -178,7 +178,8 @@ demo_buffer_set_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 void
 demo_infolist_print (struct t_infolist *infolist, const char *item_name)
 {
-    char *fields, **argv;
+    const char *fields;
+    char **argv;
     void *pointer;
     int i, j, argc, size;
     time_t time;

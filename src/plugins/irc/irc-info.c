@@ -59,7 +59,7 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
  * irc_info_get_info_cb: callback called when IRC info is asked
  */
 
-char *
+const char *
 irc_info_get_info_cb (void *data, const char *info_name,
                       const char *arguments)
 {

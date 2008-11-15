@@ -50,8 +50,8 @@ struct t_config_option *charset_default_encode = NULL;
 struct t_config_section *charset_config_section_decode = NULL;
 struct t_config_section *charset_config_section_encode = NULL;
 
-char *charset_terminal = NULL;
-char *charset_internal = NULL;
+const char *charset_terminal = NULL;
+const char *charset_internal = NULL;
 
 
 /*
@@ -250,7 +250,7 @@ charset_check (const char *charset)
  *              to find charset (from specific to general charset)
  */
 
-char *
+const char *
 charset_get (struct t_config_section *section, const char *name,
              struct t_config_option *default_charset)
 {
@@ -306,7 +306,7 @@ char *
 charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
                    const char *string)
 {
-    char *charset;
+    const char *charset;
     
     /* make C compiler happy */
     (void) data;
@@ -335,7 +335,7 @@ char *
 charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
                    const char *string)
 {
-    char *charset;
+    const char *charset;
     
     /* make C compiler happy */
     (void) data;
@@ -389,7 +389,8 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_config_section *ptr_section;
     int length;
-    char *ptr_charset, *option_name, *plugin_name, *name;
+    char *ptr_charset, *option_name;
+    const char *plugin_name, *name;
     
     /* make C compiler happy */
     (void) data;

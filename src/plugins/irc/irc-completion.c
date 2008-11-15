@@ -187,7 +187,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                                  struct t_gui_completion *completion)
 {
     struct t_irc_nick *ptr_nick;
-    char *nick;
+    const char *nick;
     int list_size, i;
     
     IRC_GET_SERVER_CHANNEL(buffer);

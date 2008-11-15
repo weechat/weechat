@@ -123,7 +123,7 @@ char *
 irc_buffer_get_server_prefix (struct t_irc_server *server, char *prefix_code)
 {
     static char buf[256];
-    char *prefix;
+    const char *prefix;
     
     prefix = (prefix_code && prefix_code[0]) ?
         weechat_prefix (prefix_code) : NULL;

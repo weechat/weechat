@@ -184,7 +184,7 @@ void
 gui_layout_buffer_apply ()
 {
     struct t_gui_buffer *ptr_buffer;
-    char *plugin_name;
+    const char *plugin_name;
     
     if (gui_layout_buffers)
     {
@@ -408,7 +408,7 @@ void
 gui_layout_window_check_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_win;
-    char *plugin_name;
+    const char *plugin_name;
     
     plugin_name = plugin_get_name (buffer->plugin);
     
@@ -436,7 +436,7 @@ gui_layout_window_check_all_buffers ()
 {
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
-    char *plugin_name;
+    const char *plugin_name;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {

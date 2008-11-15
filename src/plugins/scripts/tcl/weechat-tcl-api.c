@@ -229,9 +229,10 @@ weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
                                  int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result, *plugin;
+    char *plugin;
+    const char *result;
     int i; 
-
+    
     /* make C compiler happy */
     (void) clientData;
     
@@ -365,9 +366,9 @@ weechat_tcl_api_gettext (ClientData clientData, Tcl_Interp *interp,
                          int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result;
+    const char *result;
     int i; 
-
+    
     /* make C compiler happy */
     (void) clientData;
     
@@ -397,7 +398,8 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
                           int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result, *single, *plural;
+    char *single, *plural;
+    const char *result;
     int i, count;
     
     /* make C compiler happy */
@@ -828,9 +830,9 @@ weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
                              int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result;
+    const char *result;
     int i; 
-
+    
     /* make C compiler happy */
     (void) clientData;
     
@@ -1823,7 +1825,7 @@ weechat_tcl_api_config_string (ClientData clientData, Tcl_Interp *interp,
                                int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -1855,7 +1857,7 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -2084,7 +2086,7 @@ weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
                                    int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -2156,7 +2158,7 @@ weechat_tcl_api_prefix (ClientData clientData, Tcl_Interp *interp,
                         int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -2188,7 +2190,7 @@ weechat_tcl_api_color (ClientData clientData, Tcl_Interp *interp,
                        int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -3248,7 +3250,7 @@ weechat_tcl_api_hook_modifier_exec (ClientData clientData, Tcl_Interp *interp,
  * weechat_tcl_api_hook_info_cb: callback for info hooked
  */
 
-char *
+const char *
 weechat_tcl_api_hook_info_cb (void *data, const char *info_name,
                                const char *arguments)
 {
@@ -3261,10 +3263,10 @@ weechat_tcl_api_hook_info_cb (void *data, const char *info_name,
     tcl_argv[1] = (char *)arguments;
     tcl_argv[2] = NULL;
     
-    return (char *)weechat_tcl_exec (script_callback->script,
-                                      WEECHAT_SCRIPT_EXEC_STRING,
-                                      script_callback->function,
-                                      tcl_argv);
+    return (const char *)weechat_tcl_exec (script_callback->script,
+                                           WEECHAT_SCRIPT_EXEC_STRING,
+                                           script_callback->function,
+                                           tcl_argv);
 }
 
 /*
@@ -3722,7 +3724,8 @@ weechat_tcl_api_buffer_get_string (ClientData clientData, Tcl_Interp *interp,
                                    int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result, *buffer, *property;
+    char *buffer, *property;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -3757,7 +3760,7 @@ weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
                                     int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result, *buffer, *property;
+    char *buffer, *property, *result;
     int i;
     
     /* make C compiler happy */
@@ -3818,6 +3821,114 @@ weechat_tcl_api_buffer_set (ClientData clientData, Tcl_Interp *interp,
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
     TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_window_get_integer: get a window property as integer
+ */
+
+static int
+weechat_tcl_api_window_get_integer (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *window, *property;
+    int result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+	TCL_RETURN_INT(-1);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        TCL_RETURN_INT(-1);
+    }
+    
+    window = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_window_get_integer (script_str2ptr (window), property);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_window_get_string: get a window property as string
+ */
+
+static int
+weechat_tcl_api_window_get_string (ClientData clientData, Tcl_Interp *interp,
+                                   int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *window, *property;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+	TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    window = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_window_get_string (script_str2ptr (window), property);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_window_get_pointer: get a window property as pointer
+ */
+
+static int
+weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *window, *property, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+	TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    window = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
+                                                         property));
+    
+    TCL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4507,7 +4618,7 @@ weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
                           int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -4661,9 +4772,9 @@ weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *int
         TCL_RETURN_INT(0);
     }
     
-    result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
-                                                              Tcl_GetStringFromObj (objv[2], &i), /* name */
-                                                              script_str2ptr (Tcl_GetStringFromObj (objv[3], &i)))); /* value */
+    result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+                                                               Tcl_GetStringFromObj (objv[2], &i), /* name */
+                                                               script_str2ptr (Tcl_GetStringFromObj (objv[3], &i)))); /* value */
     
     TCL_RETURN_STRING_FREE(result);
 }
@@ -4818,7 +4929,7 @@ weechat_tcl_api_infolist_fields (ClientData clientData, Tcl_Interp *interp,
                                  int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -4886,7 +4997,8 @@ weechat_tcl_api_infolist_string (ClientData clientData, Tcl_Interp *interp,
                                  int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *infolist, *variable, *result;
+    char *infolist, *variable;
+    const char *result;
     int i;
     
     /* make C compiler happy */
@@ -5271,6 +5383,12 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_buffer_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::buffer_set",
                           weechat_tcl_api_buffer_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::window_get_integer",
+                          weechat_tcl_api_window_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::window_get_string",
+                          weechat_tcl_api_window_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::window_get_pointer",
+                          weechat_tcl_api_window_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::nicklist_add_group",
                           weechat_tcl_api_nicklist_add_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::nicklist_search_group",

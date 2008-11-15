@@ -300,7 +300,7 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
  * gui_window_get_string: get a window property as string
  */
 
-char *
+const char *
 gui_window_get_string (struct t_gui_window *window, const char *property)
 {
     if (window && property)

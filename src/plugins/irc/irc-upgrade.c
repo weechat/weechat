@@ -170,7 +170,8 @@ irc_upgrade_read_cb (int object_id,
                      struct t_infolist *infolist)
 {
     int flags, sock, size, index;
-    char *str, *buf, *buffer_name, option_name[64], *nick;
+    char *buf, option_name[64];
+    const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
     

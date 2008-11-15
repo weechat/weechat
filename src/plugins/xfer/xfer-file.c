@@ -76,7 +76,8 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
-    char *weechat_home, *dir1, *dir2, *filename2, *dir_separator;
+    const char *weechat_home, *dir_separator;
+    char *dir1, *dir2, *filename2;
     
     if (!XFER_IS_FILE(xfer->type))
         return;

@@ -263,7 +263,8 @@ weechat_python_load (const char *filename)
     PyThreadState *python_current_interpreter;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
     PyObject *python_path, *path;
-    char *w_home, *p_home;
+    const char *weechat_home;
+    char *p_home;
     int len;
     
     if ((fp = fopen (filename, "r")) == NULL)
@@ -315,14 +316,14 @@ weechat_python_load (const char *filename)
 
     /* adding $weechat_dir/python in $PYTHONPATH */    
     python_path = PySys_GetObject ("path");
-    w_home = weechat_info_get ("weechat_dir", "");
-    if (w_home)
+    weechat_home = weechat_info_get ("weechat_dir", "");
+    if (weechat_home)
     {
-        len = strlen (w_home) + 1 + strlen(PYTHON_PLUGIN_NAME) + 1;
+        len = strlen (weechat_home) + 1 + strlen(PYTHON_PLUGIN_NAME) + 1;
         p_home = malloc (len);
         if (p_home)
         {
-            snprintf (p_home, len, "%s/python", w_home);
+            snprintf (p_home, len, "%s/python", weechat_home);
             path = PyString_FromString (p_home);
             if (path != NULL)
             {
