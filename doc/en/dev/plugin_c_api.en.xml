@@ -5136,19 +5136,19 @@ struct t_hook *weechat_hook_print (
           <listitem>
             <para>
               <option>buffer</option>: buffer pointer, if NULL, messages from
-              any buffer are catched
+              any buffer are caught
             </para>
           </listitem>
           <listitem>
             <para>
               <option>tags</option>: only messages with these tags (comma
-              separated list) will be catched (optional)
+              separated list) will be caught (optional)
             </para>
           </listitem>
           <listitem>
             <para>
               <option>message</option>: only messages with this string will be
-              catched (optional)
+              caught (optional)
             </para>
           </listitem>
           <listitem>
