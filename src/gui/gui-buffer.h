@@ -128,6 +128,8 @@ struct t_gui_buffer
                           const char *input_data);
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
+    int input_get_unknown_commands;    /* 1 if unknown commands are sent to */
+                                       /* input_callback                    */
     char *input_buffer;                /* input buffer                      */
     int input_buffer_alloc;            /* input buffer: allocated size      */
     int input_buffer_size;             /* buffer size in bytes              */

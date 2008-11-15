@@ -57,8 +57,27 @@ input_is_command (const char *line)
 }
 
 /*
- * input_exec_command: executes a command (WeeChat internal or a
- *                     plugin command)
+ * input_exec_data: send data to buffer input callbackr
+ */
+
+void
+input_exec_data (struct t_gui_buffer *buffer, const char *data)
+{
+    if (buffer->input_callback)
+    {
+        (void)(buffer->input_callback) (buffer->input_callback_data,
+                                        buffer,
+                                        data);
+    }
+    else
+        gui_chat_printf (buffer,
+                         _("%sYou can not write text in this "
+                           "buffer"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+}
+
+/*
+ * input_exec_command: execute a command (WeeChat internal or a plugin command)
  *                     if only_builtin == 1, then try only
  *                     WeeChat commands (not plugins neither aliases)
  *                     returns: 1 if command was executed succesfully
@@ -120,11 +139,20 @@ input_exec_command (struct t_gui_buffer *buffer,
                              command + 1);
             break;
         default: /* no command hooked */
-            gui_chat_printf (NULL,
-                             _("%sError: unknown command \"%s\" (type /help "
-                               "for help)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             command + 1);
+            /* if unknown commands are accepted by this buffer, just send
+               input text as data to buffer, otherwise display error */
+            if (buffer->input_get_unknown_commands)
+            {
+                input_exec_data (buffer, string);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unknown command \"%s\" (type /help "
+                                   "for help)"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 command + 1);
+            }
             break;
     }
     free (command);
@@ -175,20 +203,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
             }
             else
             {
-                if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
-                    ptr_data++;
-                
-                if (buffer->input_callback)
-                {
-                    (void)(buffer->input_callback) (buffer->input_callback_data,
-                                                    buffer,
-                                                    ptr_data);
-                }
-                else
-                    gui_chat_printf (buffer,
-                                     _("%sYou can not write text in this "
-                                       "buffer"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                input_exec_data (buffer, ptr_data);
             }
 
             if (pos)

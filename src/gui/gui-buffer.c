@@ -316,6 +316,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input = 1;
         new_buffer->input_callback = input_callback;
         new_buffer->input_callback_data = input_callback_data;
+        new_buffer->input_get_unknown_commands = 0;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
         new_buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
         new_buffer->input_buffer[0] = '\0';
@@ -750,6 +751,18 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_buffer_set_input_get_unknown_commands: set "input_get_unknown_commands"
+ *                                            flag for a buffer
+ */
+
+void
+gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
+                                           int input_get_unknown_commands)
+{
+    buffer->input_get_unknown_commands = (input_get_unknown_commands) ? 1 : 0;
+}
+
+/*
  * gui_buffer_set_unread: set unread marker for a buffer
  */
 
@@ -891,6 +904,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_input_insert_string (buffer, value, 0);
         gui_input_text_changed_signal ();
         gui_buffer_ask_input_refresh (buffer, 1);
+    }
+    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_buffer_set_input_get_unknown_commands (buffer, number);
     }
     else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
     {
@@ -1483,7 +1503,27 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "input_string", buffer->input_buffer))
+    if (!infolist_new_var_integer (ptr_item, "input_get_unknown_commands", buffer->input_get_unknown_commands))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "input_buffer", buffer->input_buffer))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_buffer_alloc", buffer->input_buffer_alloc))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_buffer_size", buffer->input_buffer_size))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_buffer_length", buffer->input_buffer_length))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_buffer_pos", buffer->input_buffer_pos))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_buffer_1st_display", buffer->input_buffer_1st_display))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "text_search", buffer->text_search))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "text_search_exact", buffer->text_search_exact))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "text_search_found", buffer->text_search_found))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "text_search_input", buffer->text_search_input))
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_words", buffer->highlight_words))
         return 0;
@@ -1700,6 +1740,7 @@ gui_buffer_print_log ()
         log_printf ("  input. . . . . . . . . : %d",    ptr_buffer->input);
         log_printf ("  input_callback . . . . : 0x%lx", ptr_buffer->input_callback);
         log_printf ("  input_callback_data. . : 0x%lx", ptr_buffer->input_callback_data);
+        log_printf ("  input_get_unknown_cmd. : %d",    ptr_buffer->input_get_unknown_commands);
         log_printf ("  input_buffer . . . . . : '%s'",  ptr_buffer->input_buffer);
         log_printf ("  input_buffer_alloc . . : %d",    ptr_buffer->input_buffer_alloc);
         log_printf ("  input_buffer_size. . . : %d",    ptr_buffer->input_buffer_size);

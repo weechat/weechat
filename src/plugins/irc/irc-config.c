@@ -239,6 +239,63 @@ irc_config_change_network_away_check (void *data,
 }
 
 /*
+ * irc_config_change_network_send_unknown_commands: called when "send_unknown_commands"
+ *                                                  is changed
+ */
+
+void
+irc_config_change_network_send_unknown_commands (void *data,
+                                                 struct t_config_option *option)
+{
+    char value[2];
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    strcpy (value,
+            (weechat_config_boolean (irc_config_network_send_unknown_commands)) ?
+            "1" : "0");
+    
+    if (weechat_config_boolean (irc_config_look_one_server_buffer))
+    {
+        if (irc_buffer_servers)
+        {
+            weechat_buffer_set (irc_buffer_servers,
+                                "input_get_unknown_commands", value);
+        }
+    }
+    else
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->buffer)
+            {
+                weechat_buffer_set (ptr_server->buffer,
+                                    "input_get_unknown_commands", value);
+            }
+        }
+    }
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->buffer)
+            {
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "input_get_unknown_commands", value);
+            }
+        }
+    }
+}
+
+/*
  * irc_config_server_default_change_cb: callback called when a default server
  *                                      option is modified
  */
@@ -1129,7 +1186,8 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "send_unknown_commands", "boolean",
         N_("send unknown commands to IRC server"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, NULL, NULL,
+        &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
     
     /* filters */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",

@@ -143,6 +143,7 @@ int
 irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
                    const char *input_data)
 {
+    const char *ptr_data;
     char *data_with_colors, *msg;
     
     /* make C compiler happy */
@@ -150,12 +151,24 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     
     IRC_GET_SERVER_CHANNEL(buffer);
     
+    /* if send unknown commands is enabled and that input data is a command,
+       then send this command to IRC server */
+    if (weechat_config_boolean (irc_config_network_send_unknown_commands)
+        && (input_data[0] == '/') && (input_data[1] != '/'))
+    {
+        if (ptr_server)
+            irc_server_sendf (ptr_server, input_data + 1);
+        return WEECHAT_RC_OK;
+    }
+    
     if (ptr_channel)
     {
-        data_with_colors = irc_color_encode (input_data,
+        ptr_data = ((input_data[0] == '/') && (input_data[1] == '/')) ?
+            input_data + 1 : input_data;
+        data_with_colors = irc_color_encode (ptr_data,
                                              weechat_config_boolean (irc_config_network_colors_send));
 
-        msg = strdup ((data_with_colors) ? data_with_colors : input_data);
+        msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
         if (msg)
         {
             irc_input_send_user_message (buffer, msg);

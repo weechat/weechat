@@ -325,16 +325,57 @@ upgrade_weechat_read_cb (int object_id,
                     {
                         if (infolist_integer (infolist, "current_buffer"))
                             upgrade_set_current_buffer = upgrade_current_buffer;
+                        upgrade_current_buffer->plugin_name_for_upgrade =
+                            strdup (infolist_string (infolist, "plugin_name"));
                         upgrade_current_buffer->short_name =
                             (infolist_string (infolist, "short_name")) ?
                             strdup (infolist_string (infolist, "short_name")) :
                             strdup (infolist_string (infolist, "name"));
-                        upgrade_current_buffer->plugin_name_for_upgrade =
-                            strdup (infolist_string (infolist, "plugin_name"));
+                        upgrade_current_buffer->type =
+                            infolist_integer (infolist, "type");
+                        upgrade_current_buffer->notify =
+                            infolist_integer (infolist, "notify");
                         upgrade_current_buffer->nicklist_case_sensitive =
                             infolist_integer (infolist, "nicklist_case_sensitive");
                         upgrade_current_buffer->nicklist_display_groups =
                             infolist_integer (infolist, "nicklist_display_groups");
+                        upgrade_current_buffer->title =
+                            (infolist_string (infolist, "title")) ?
+                            strdup (infolist_string (infolist, "title")) : NULL;
+                        upgrade_current_buffer->input =
+                            infolist_integer (infolist, "input");
+                        upgrade_current_buffer->input_get_unknown_commands =
+                            infolist_integer (infolist, "input_get_unknown_commands");
+                        if (infolist_integer (infolist, "input_buffer_alloc") > 0)
+                        {
+                            upgrade_current_buffer->input_buffer =
+                                malloc (infolist_integer (infolist, "input_buffer_alloc"));
+                            if (upgrade_current_buffer->input_buffer)
+                            {
+                                upgrade_current_buffer->input_buffer_size =
+                                    infolist_integer (infolist, "input_buffer_size");
+                                upgrade_current_buffer->input_buffer_length =
+                                    infolist_integer (infolist, "input_buffer_length");
+                                upgrade_current_buffer->input_buffer_pos =
+                                    infolist_integer (infolist, "input_buffer_pos");
+                                upgrade_current_buffer->input_buffer_1st_display =
+                                    infolist_integer (infolist, "input_buffer_1st_display");
+                                if (infolist_string (infolist, "input_buffer"))
+                                    strcpy (upgrade_current_buffer->input_buffer,
+                                            infolist_string (infolist, "input_buffer"));
+                                else
+                                    upgrade_current_buffer->input_buffer[0] = '\0';
+                            }
+                        }
+                        upgrade_current_buffer->text_search =
+                            infolist_integer (infolist, "text_search");
+                        upgrade_current_buffer->text_search_exact =
+                            infolist_integer (infolist, "text_search_exact");
+                        upgrade_current_buffer->text_search_found =
+                            infolist_integer (infolist, "text_search_found");
+                        if (infolist_string (infolist, "text_search_input"))
+                            upgrade_current_buffer->text_search_input =
+                                strdup (infolist_string (infolist, "text_search_input"));
                         gui_buffer_set_highlight_words (upgrade_current_buffer,
                                                         infolist_string (infolist, "highlight_words"));
                         gui_buffer_set_highlight_tags (upgrade_current_buffer,
