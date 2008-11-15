@@ -461,7 +461,6 @@ char *
 utf8_strndup (const char *string, int max_chars)
 {
     const char *end;
-    char *result;
     
     if (!string || (max_chars < 0))
         return NULL;
