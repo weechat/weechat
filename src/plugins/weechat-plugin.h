@@ -171,6 +171,7 @@ struct t_weechat_plugin
     char *(*utf8_add_offset) (const char *string, int offset);
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
+    char *(*utf8_strndup) (const char *string, int max_chars);
     
     /* directories */
     int (*mkdir_home) (const char *directory, int mode);

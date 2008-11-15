@@ -360,6 +360,7 @@ plugin_load (const char *filename)
         new_plugin->utf8_add_offset = &utf8_add_offset;
         new_plugin->utf8_real_pos = &utf8_real_pos;
         new_plugin->utf8_pos = &utf8_pos;
+        new_plugin->utf8_strndup = &utf8_strndup;
         
         new_plugin->mkdir_home = &util_mkdir_home;
         new_plugin->mkdir = &util_mkdir;

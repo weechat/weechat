@@ -1545,6 +1545,42 @@ char *weechat_utf8_pos (const char *string, int real_pos);
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_utf8_strndup">
+      <title>weechat_utf8_strndup</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+char *weechat_utf8_strndup (const char *string, int max_chars);
+</programlisting>
+      </para>
+      <para>
+        Return duplicate string, with max N chars.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>max_chars</option>: max chars
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: duplicated string, NULL if error.
+      </para>
+      <para>
+        Example:
+        <screen>char *string = weechat_utf8_strndup ("chêne", 3); /* returns "chê" */</screen>
+      </para>
+    </section>
+    
   </section>
   
   <!-- ===========================[ directories ]========================== -->

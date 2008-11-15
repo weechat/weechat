@@ -452,3 +452,26 @@ utf8_pos (const char *string, int real_pos)
     }
     return count;
 }
+
+/*
+ * utf8_strndup: return duplicate string, with max N UTF-8 chars
+ */
+
+char *
+utf8_strndup (const char *string, int max_chars)
+{
+    const char *end;
+    char *result;
+    
+    if (!string || (max_chars < 0))
+        return NULL;
+    
+    if (max_chars == 0)
+        return strdup ("");
+    
+    end = utf8_add_offset (string, max_chars);
+    if (!end || (end == string))
+        return strdup (string);
+
+    return string_strndup (string, end - string);
+}
