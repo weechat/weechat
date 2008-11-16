@@ -1023,8 +1023,9 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 {
     va_list argptr;
     time_t date_printed;
-    int display_time;
+    int display_time, length, at_least_one_message_printed;
     char *pos, *pos_prefix, *pos_tab, *pos_end;
+    char *modifier_data, *new_msg, *ptr_msg;
     struct t_gui_line *ptr_line;
     
     if (!gui_buffer_valid (buffer))
@@ -1066,60 +1067,94 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (gui_init_ok)
         ptr_line = buffer->last_line;
     
+    at_least_one_message_printed = 0;
+    
     pos = gui_chat_buffer;
     while (pos)
     {
-        pos_prefix = NULL;
-        display_time = 1;
-        
-        /* if two first chars are tab, then do not display time */
-        if ((pos[0] == '\t') && (pos[1] == '\t'))
-        {
-            display_time = 0;
-            pos += 2;
-        }
-        else
-        {
-            /* if tab found, use prefix (before tab) */
-            pos_tab = strchr (pos, '\t');
-            if (pos_tab)
-            {
-                pos_tab[0] = '\0';
-                pos_prefix = pos;
-                pos = pos_tab + 1;
-            }
-        }
-
         /* display until next end of line */
         pos_end = strchr (pos, '\n');
         if (pos_end)
             pos_end[0] = '\0';
-
-        if (gui_init_ok)
+        
+        /* call modifier for message printed ("weechat_print") */
+        new_msg = NULL;
+        length = strlen (plugin_get_name (buffer->plugin)) + 1 +
+            strlen (buffer->name) + 1 + ((tags) ? strlen (tags) : 0) + 1;
+        modifier_data = malloc (length);
+        if (modifier_data)
         {
-            gui_chat_line_add (buffer, (display_time) ? date : 0,
-                               (display_time) ? date_printed : 0,
-                               tags, pos_prefix, pos);
-            if (buffer->last_line)
+            snprintf (modifier_data, length, "%s;%s;%s",
+                      plugin_get_name (buffer->plugin),
+                      buffer->name,
+                      (tags) ? tags : "");
+            new_msg = hook_modifier_exec (NULL,
+                                          "weechat_print",
+                                          modifier_data,
+                                          pos);
+            /* no changes in new message */
+            if (new_msg && (strcmp (message, new_msg) == 0))
             {
-                hook_print_exec (buffer, buffer->last_line->date,
-                                 buffer->last_line->tags_count,
-                                 (const char **)buffer->last_line->tags_array,
-                                 buffer->last_line->prefix,
-                                 buffer->last_line->message);
+                free (new_msg);
+                new_msg = NULL;
             }
         }
-        else
+        
+        /* message not dropped? */
+        if (!new_msg || new_msg[0])
         {
-            if (pos_prefix)
-                string_iconv_fprintf (stdout, "%s ", pos_prefix);
-            string_iconv_fprintf (stdout, "%s\n", pos);
+            pos_prefix = NULL;
+            display_time = 1;
+            ptr_msg = (new_msg) ? new_msg : pos;
+            
+            /* if two first chars are tab, then do not display time */
+            if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+            {
+                display_time = 0;
+                ptr_msg += 2;
+            }
+            else
+            {
+                /* if tab found, use prefix (before tab) */
+                pos_tab = strchr (ptr_msg, '\t');
+                if (pos_tab)
+                {
+                    pos_tab[0] = '\0';
+                    pos_prefix = ptr_msg;
+                    ptr_msg = pos_tab + 1;
+                }
+            }
+            
+            if (gui_init_ok)
+            {
+                gui_chat_line_add (buffer, (display_time) ? date : 0,
+                                   (display_time) ? date_printed : 0,
+                                   tags, pos_prefix, ptr_msg);
+                if (buffer->last_line)
+                {
+                    hook_print_exec (buffer, buffer->last_line->date,
+                                     buffer->last_line->tags_count,
+                                     (const char **)buffer->last_line->tags_array,
+                                     buffer->last_line->prefix,
+                                     buffer->last_line->message);
+                }
+                at_least_one_message_printed = 1;
+            }
+            else
+            {
+                if (pos_prefix)
+                    string_iconv_fprintf (stdout, "%s ", pos_prefix);
+                string_iconv_fprintf (stdout, "%s\n", ptr_msg);
+            }
         }
+        
+        if (new_msg)
+            free (new_msg);
         
         pos = (pos_end && pos_end[1]) ? pos_end + 1 : NULL;
     }
     
-    if (gui_init_ok)
+    if (gui_init_ok && at_least_one_message_printed)
         gui_buffer_ask_chat_refresh (buffer, 1);
 }
 
