@@ -118,6 +118,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     int *ret_i, mem_err, length;
     SV *ret_s;
     struct t_plugin_script *old_perl_current_script;
+    void *old_context;
     
     /* this code is placed here to conform ISO C90 */
     dSP;
@@ -128,6 +129,7 @@ weechat_perl_exec (struct t_plugin_script *script,
 #ifdef MULTIPLICITY
     (void) length;
     func = (char *) function;
+    old_context = PERL_GET_CONTEXT;
     PERL_SET_CONTEXT (script->interpreter);
 #else
     length = strlen (script->interpreter) + strlen (function) + 3;
@@ -199,14 +201,10 @@ weechat_perl_exec (struct t_plugin_script *script,
     LEAVE;
     
     if (old_perl_current_script)
-    {
         perl_current_script = old_perl_current_script;
 #ifdef MULTIPLICITY
-        PERL_SET_CONTEXT (perl_current_script->interpreter);
-#endif    
-    }
-    
-#ifndef MULTIPLICITY
+    PERL_SET_CONTEXT (old_context);
+#else
     free (func);
 #endif
 
