@@ -2391,6 +2391,10 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
         }
     }
     
+    /* send signal "irc_server_connected" with server name */
+    weechat_hook_signal_send ("irc_server_connected",
+                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
+    
     /* execute command when connected */
     if (server->command && server->command[0])
     {

@@ -2339,6 +2339,10 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
                                                  irc_server_connect_cb,
                                                  server);
     
+    /* send signal "irc_server_connecting" with server name */
+    weechat_hook_signal_send ("irc_server_connecting",
+                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
+    
     return 1;
 }
 
@@ -2441,6 +2445,10 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
     /* discard current nick if no reconnection asked */
     if (!reconnect && server->nick)
         irc_server_set_nick (server, NULL);
+
+    /* send signal "irc_server_disconnected" with server name */
+    weechat_hook_signal_send ("irc_server_disconnected",
+                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
 }
 
 /*
