@@ -1079,24 +1079,27 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         
         /* call modifier for message printed ("weechat_print") */
         new_msg = NULL;
-        length = strlen (plugin_get_name (buffer->plugin)) + 1 +
-            strlen (buffer->name) + 1 + ((tags) ? strlen (tags) : 0) + 1;
-        modifier_data = malloc (length);
-        if (modifier_data)
+        if (buffer)
         {
-            snprintf (modifier_data, length, "%s;%s;%s",
-                      plugin_get_name (buffer->plugin),
-                      buffer->name,
-                      (tags) ? tags : "");
-            new_msg = hook_modifier_exec (NULL,
-                                          "weechat_print",
-                                          modifier_data,
-                                          pos);
-            /* no changes in new message */
-            if (new_msg && (strcmp (message, new_msg) == 0))
+            length = strlen (plugin_get_name (buffer->plugin)) + 1 +
+                strlen (buffer->name) + 1 + ((tags) ? strlen (tags) : 0) + 1;
+            modifier_data = malloc (length);
+            if (modifier_data)
             {
-                free (new_msg);
-                new_msg = NULL;
+                snprintf (modifier_data, length, "%s;%s;%s",
+                          plugin_get_name (buffer->plugin),
+                          buffer->name,
+                          (tags) ? tags : "");
+                new_msg = hook_modifier_exec (NULL,
+                                              "weechat_print",
+                                              modifier_data,
+                                              pos);
+                /* no changes in new message */
+                if (new_msg && (strcmp (message, new_msg) == 0))
+                {
+                    free (new_msg);
+                    new_msg = NULL;
+                }
             }
         }
         
