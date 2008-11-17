@@ -252,7 +252,7 @@ network_pass_socks4proxy (int sock, const char *address, int port)
 {
     /* 
      * socks4 protocol is explained here: 
-     *  http://archive.socks.permeo.com/protocol/socks4.protocol
+     * http://en.wikipedia.org/wiki/SOCKS
      *
      */
     
@@ -261,7 +261,7 @@ network_pass_socks4proxy (int sock, const char *address, int port)
         char version;           /* 1 byte  */ /* socks version : 4 or 5 */
         char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
         unsigned short port;    /* 2 bytes */ /* destination port */
-        unsigned long address;  /* 4 bytes */ /* destination address */
+        unsigned int address;   /* 4 bytes */ /* destination address */
         char user[64];          /* username (64 characters seems to be enought) */
     } socks4;
     unsigned char buffer[24];
@@ -583,6 +583,8 @@ network_connect_child (struct t_hook *hook_connect)
             freeaddrinfo (res);
             return;
         }
+
+	status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
     }
     else
     {
