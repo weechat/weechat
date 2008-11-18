@@ -381,16 +381,13 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
-    if (!ptr_server)
-        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
     
-    weechat_buffer_set (NULL, "hotlist", "-");
-    
     if ((argc >= 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
     {
+        weechat_buffer_set (NULL, "hotlist", "-");
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -398,11 +395,17 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
                 irc_command_away_server (ptr_server,
                                          (argc > 2) ? argv_eol[2] : NULL);
         }
+        weechat_buffer_set (NULL, "hotlist", "+");
     }
     else
+    {
+        if (!ptr_server)
+            return WEECHAT_RC_ERROR;
+        
+        weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_away_server (ptr_server, argv_eol[1]);
-    
-    weechat_buffer_set (NULL, "hotlist", "+");
+        weechat_buffer_set (NULL, "hotlist", "+");
+    }
     
     return WEECHAT_RC_OK;
 }
