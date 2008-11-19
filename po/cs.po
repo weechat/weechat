@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-06 12:49+0100\n"
+"POT-Creation-Date: 2008-11-19 14:48+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1280,14 +1280,6 @@ msgid "text color for '+' when scrolling bars"
 msgstr "barva pro '+' při procházení tématu"
 
 #, fuzzy
-msgid "text color for title bar"
-msgstr "barva pro title bar"
-
-#, fuzzy
-msgid "background color for title bar"
-msgstr "pozadí pro title bar"
-
-#, fuzzy
 msgid "text color for chat"
 msgstr "barva pro text rozhovoru"
 
@@ -1428,18 +1420,6 @@ msgid "background color for marker on lines where text sought is found"
 msgstr "barva pro vstupní text"
 
 #, fuzzy
-msgid "text color for status bar"
-msgstr "barva status baru"
-
-#, fuzzy
-msgid "background color for status bar"
-msgstr "barva status baru"
-
-#, fuzzy
-msgid "text color for status bar delimiters"
-msgstr "barva děličů status barů"
-
-#, fuzzy
 msgid "text color for current buffer number in status bar"
 msgstr "barva pro aktuální kanál v stavovém řádku"
 
@@ -1468,28 +1448,8 @@ msgid "text color for buffer with new data (status bar)"
 msgstr "barva okna s novými daty (status bar)"
 
 #, fuzzy
-msgid "text color for input line"
-msgstr "barva pro vstupní text"
-
-#, fuzzy
-msgid "background color for input line"
-msgstr "barva pro vstupní text"
-
-#, fuzzy
-msgid "text color for server name in input line"
-msgstr "barva pro jeméno serveru"
-
-#, fuzzy
-msgid "text color for channel name in input line"
-msgstr "barva kanálu v akcích"
-
-#, fuzzy
 msgid "text color for nick name in input line"
 msgstr "barva přezdívek"
-
-#, fuzzy
-msgid "text color for delimiters in input line"
-msgstr "barva děličů v infobaru"
 
 #, fuzzy
 msgid "text color for unsucessful text search in input line"
@@ -1498,14 +1458,6 @@ msgstr "barva děličů v infobaru"
 #, fuzzy
 msgid "text color for actions in input line"
 msgstr "barva akcí ve vstupním okně"
-
-#, fuzzy
-msgid "text color for nicklist"
-msgstr "barva přezdívky"
-
-#, fuzzy
-msgid "background color for nicklist"
-msgstr "pozadí přezdívek"
 
 #, fuzzy
 msgid "text color for groups in nicklist"
@@ -1755,16 +1707,16 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%sYou can not write text in this buffer"
+msgstr "%s nemohu zavřít jediný buffer\n"
+
+#, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr "%s nekorektní hodnota pro volbu \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s alias nebo příkaz \"%s\" nenalezen\n"
-
-#, fuzzy, c-format
-msgid "%sYou can not write text in this buffer"
-msgstr "%s nemohu zavřít jediný buffer\n"
 
 #, fuzzy
 msgid ""
@@ -3440,6 +3392,10 @@ msgstr ""
 msgid "display notices as private messages"
 msgstr "zobrazit upozornění jako soukromé zprávy"
 
+#, fuzzy
+msgid "color for nick in input bar"
+msgstr "barva přezdívek"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -4924,6 +4880,54 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "text color for title bar"
+#~ msgstr "barva pro title bar"
+
+#, fuzzy
+#~ msgid "background color for title bar"
+#~ msgstr "pozadí pro title bar"
+
+#, fuzzy
+#~ msgid "text color for status bar"
+#~ msgstr "barva status baru"
+
+#, fuzzy
+#~ msgid "background color for status bar"
+#~ msgstr "barva status baru"
+
+#, fuzzy
+#~ msgid "text color for status bar delimiters"
+#~ msgstr "barva děličů status barů"
+
+#, fuzzy
+#~ msgid "text color for input line"
+#~ msgstr "barva pro vstupní text"
+
+#, fuzzy
+#~ msgid "background color for input line"
+#~ msgstr "barva pro vstupní text"
+
+#, fuzzy
+#~ msgid "text color for server name in input line"
+#~ msgstr "barva pro jeméno serveru"
+
+#, fuzzy
+#~ msgid "text color for channel name in input line"
+#~ msgstr "barva kanálu v akcích"
+
+#, fuzzy
+#~ msgid "text color for delimiters in input line"
+#~ msgstr "barva děličů v infobaru"
+
+#, fuzzy
+#~ msgid "text color for nicklist"
+#~ msgstr "barva přezdívky"
+
+#, fuzzy
+#~ msgid "background color for nicklist"
+#~ msgstr "pozadí přezdívek"
 
 #, fuzzy
 #~ msgid "debug: \"%s\" => %d"

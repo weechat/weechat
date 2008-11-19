@@ -757,7 +757,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     /* save last modifier string received */
     aspell_last_modifier_string = strdup (string);
     
-    color_normal = weechat_color (weechat_config_string (weechat_config_get ("weechat.color.input")));
+    color_normal = weechat_color ("bar_fg");
     length_color_normal = strlen (color_normal);
     color_error = weechat_color (weechat_config_string (weechat_aspell_config_look_color));
     length_color_error = strlen (color_error);

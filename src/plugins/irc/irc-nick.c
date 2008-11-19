@@ -219,7 +219,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                    ptr_nick->name,
                                    (is_away) ?
-                                   "weechat.color.nicklist_away" : "weechat.color.nicklist",
+                                   "weechat.color.nicklist_away" : "bar_fg",
                                    prefix, str_prefix_color, 1);
         
         return ptr_nick;
@@ -268,7 +268,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                new_nick->name,
                                (is_away) ?
-                               "weechat.color.nicklist_away" : "weechat.color.nicklist",
+                               "weechat.color.nicklist_away" : "bar_fg",
                                prefix, str_prefix_color, 1);
     
     /* all is ok, return address of new nick */
@@ -320,7 +320,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
               "weechat.color.nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
-                               nick->name, "weechat.color.nicklist",
+                               nick->name, "bar_fg",
                                prefix, str_prefix_color, 1);
 }
 
@@ -356,7 +356,7 @@ irc_nick_set (struct t_irc_channel *channel,
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
                                (nick->flags & IRC_NICK_AWAY) ?
-                               "weechat.color.nicklist_away" : "weechat.color.nicklist",
+                               "weechat.color.nicklist_away" : "bar_fg",
                                prefix, str_prefix_color, 1);
 }
 

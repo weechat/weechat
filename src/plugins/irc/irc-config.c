@@ -65,6 +65,10 @@ struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_notice_as_pv;
 
+/* IRC config, color section */
+
+struct t_config_option *irc_config_color_input_nick;
+
 /* IRC config, network section */
 
 struct t_config_option *irc_config_network_default_msg_part;
@@ -205,6 +209,22 @@ irc_config_change_look_highlight_tags (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_color_input_nick: called when the color of input nick is
+ *                                     changed
+ */
+
+void
+irc_config_change_color_input_nick (void *data,
+                                    struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("input_prompt");
 }
 
 /*
@@ -1109,6 +1129,25 @@ irc_config_init ()
         "notice_as_pv", "boolean",
         N_("display notices as private messages"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    
+    /* color */
+    ptr_section = weechat_config_new_section (irc_config_file, "color",
+                                              0, 0,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (irc_config_file);
+        return 0;
+    }
+    
+    irc_config_color_input_nick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "input_nick", "color",
+        N_("color for nick in input bar"),
+        NULL, -1, 0, "lightcyan", NULL, NULL, NULL,
+        &irc_config_change_color_input_nick, NULL, NULL, NULL);
     
     /* network */
     ptr_section = weechat_config_new_section (irc_config_file, "network",

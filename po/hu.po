@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-06 12:49+0100\n"
+"POT-Creation-Date: 2008-11-19 14:48+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1316,14 +1316,6 @@ msgid "text color for '+' when scrolling bars"
 msgstr "a '+' jel színe téma görgetésekor"
 
 #, fuzzy
-msgid "text color for title bar"
-msgstr "címsor színe"
-
-#, fuzzy
-msgid "background color for title bar"
-msgstr "címsor háttere"
-
-#, fuzzy
 msgid "text color for chat"
 msgstr "üzenetek színe"
 
@@ -1464,18 +1456,6 @@ msgid "background color for marker on lines where text sought is found"
 msgstr "szövegbeviteli mező színe"
 
 #, fuzzy
-msgid "text color for status bar"
-msgstr "státuszsor színe"
-
-#, fuzzy
-msgid "background color for status bar"
-msgstr "státuszsor színe"
-
-#, fuzzy
-msgid "text color for status bar delimiters"
-msgstr "státuszsor határolójel színe"
-
-#, fuzzy
 msgid "text color for current buffer number in status bar"
 msgstr "aktuális szoba színe a státuszsorban"
 
@@ -1504,28 +1484,8 @@ msgid "text color for buffer with new data (status bar)"
 msgstr "új adatot tartalmazó ablak színe (státuszsor)"
 
 #, fuzzy
-msgid "text color for input line"
-msgstr "szövegbeviteli mező színe"
-
-#, fuzzy
-msgid "background color for input line"
-msgstr "szövegbeviteli mező színe"
-
-#, fuzzy
-msgid "text color for server name in input line"
-msgstr "szerver nevének színe"
-
-#, fuzzy
-msgid "text color for channel name in input line"
-msgstr "szobanevek színe az eseményekben"
-
-#, fuzzy
 msgid "text color for nick name in input line"
 msgstr "nevek színe"
-
-#, fuzzy
-msgid "text color for delimiters in input line"
-msgstr "információs pult határolóinak színe"
 
 #, fuzzy
 msgid "text color for unsucessful text search in input line"
@@ -1534,14 +1494,6 @@ msgstr "információs pult határolóinak színe"
 #, fuzzy
 msgid "text color for actions in input line"
 msgstr "kilépési nyíl színe"
-
-#, fuzzy
-msgid "text color for nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "background color for nicklist"
-msgstr "nevek háttere"
 
 #, fuzzy
 msgid "text color for groups in nicklist"
@@ -1783,16 +1735,16 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%sYou can not write text in this buffer"
+msgstr "%s az utolsó puffert nem lehet bezárni\n"
+
+#, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
-
-#, fuzzy, c-format
-msgid "%sYou can not write text in this buffer"
-msgstr "%s az utolsó puffert nem lehet bezárni\n"
 
 #, fuzzy
 msgid ""
@@ -3455,6 +3407,10 @@ msgstr ""
 msgid "display notices as private messages"
 msgstr "figyelmeztetések privát üzenetként való mutatása"
 
+#, fuzzy
+msgid "color for nick in input bar"
+msgstr "nevek színe"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -4913,6 +4869,54 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "text color for title bar"
+#~ msgstr "címsor színe"
+
+#, fuzzy
+#~ msgid "background color for title bar"
+#~ msgstr "címsor háttere"
+
+#, fuzzy
+#~ msgid "text color for status bar"
+#~ msgstr "státuszsor színe"
+
+#, fuzzy
+#~ msgid "background color for status bar"
+#~ msgstr "státuszsor színe"
+
+#, fuzzy
+#~ msgid "text color for status bar delimiters"
+#~ msgstr "státuszsor határolójel színe"
+
+#, fuzzy
+#~ msgid "text color for input line"
+#~ msgstr "szövegbeviteli mező színe"
+
+#, fuzzy
+#~ msgid "background color for input line"
+#~ msgstr "szövegbeviteli mező színe"
+
+#, fuzzy
+#~ msgid "text color for server name in input line"
+#~ msgstr "szerver nevének színe"
+
+#, fuzzy
+#~ msgid "text color for channel name in input line"
+#~ msgstr "szobanevek színe az eseményekben"
+
+#, fuzzy
+#~ msgid "text color for delimiters in input line"
+#~ msgstr "információs pult határolóinak színe"
+
+#, fuzzy
+#~ msgid "text color for nicklist"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "background color for nicklist"
+#~ msgstr "nevek háttere"
 
 #, fuzzy
 #~ msgid "debug: \"%s\" => %d"

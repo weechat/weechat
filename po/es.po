@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-06 12:49+0100\n"
+"POT-Creation-Date: 2008-11-19 14:48+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1289,14 +1289,6 @@ msgid "text color for '+' when scrolling bars"
 msgstr "color para '+' al desplazar nicks"
 
 #, fuzzy
-msgid "text color for title bar"
-msgstr "color para la barra de tÃ­tulo"
-
-#, fuzzy
-msgid "background color for title bar"
-msgstr "color de fondo para la barra de tÃ­tulo"
-
-#, fuzzy
 msgid "text color for chat"
 msgstr "color para el texto de conversaciÃ³n"
 
@@ -1437,18 +1429,6 @@ msgid "background color for marker on lines where text sought is found"
 msgstr "color para el texto de entrada"
 
 #, fuzzy
-msgid "text color for status bar"
-msgstr "color para la barra de estado"
-
-#, fuzzy
-msgid "background color for status bar"
-msgstr "color para la barra de estado"
-
-#, fuzzy
-msgid "text color for status bar delimiters"
-msgstr "color para los delimitadores de la barra de estado"
-
-#, fuzzy
 msgid "text color for current buffer number in status bar"
 msgstr "color para el canal actual en la barra de estado"
 
@@ -1478,28 +1458,8 @@ msgid "text color for buffer with new data (status bar)"
 msgstr "color para una ventana con nuevos datos (barra de estado)"
 
 #, fuzzy
-msgid "text color for input line"
-msgstr "color para el texto de entrada"
-
-#, fuzzy
-msgid "background color for input line"
-msgstr "color para el texto de entrada"
-
-#, fuzzy
-msgid "text color for server name in input line"
-msgstr "color para el nombre del servidor"
-
-#, fuzzy
-msgid "text color for channel name in input line"
-msgstr "color para los nombres de canal en las acciones"
-
-#, fuzzy
 msgid "text color for nick name in input line"
 msgstr "color para los nombres de usuario"
-
-#, fuzzy
-msgid "text color for delimiters in input line"
-msgstr "color para los delimitadores de la barra de informaciÃ³n"
 
 #, fuzzy
 msgid "text color for unsucessful text search in input line"
@@ -1508,14 +1468,6 @@ msgstr "color para los delimitadores de la barra de informaciÃ³n"
 #, fuzzy
 msgid "text color for actions in input line"
 msgstr "color para la hora en la ventana de conversaciÃ³n"
-
-#, fuzzy
-msgid "text color for nicklist"
-msgstr "color para el nombre de usuario"
-
-#, fuzzy
-msgid "background color for nicklist"
-msgstr "color de fondo para los nombres de usuario"
 
 #, fuzzy
 msgid "text color for groups in nicklist"
@@ -1759,16 +1711,16 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%sYou can not write text in this buffer"
+msgstr "%s no es posible cerrar el Ãºnico bÃºfer\n"
+
+#, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr "%s valor incorrecto para la opciÃ³n \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
-
-#, fuzzy, c-format
-msgid "%sYou can not write text in this buffer"
-msgstr "%s no es posible cerrar el Ãºnico bÃºfer\n"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
@@ -3414,6 +3366,10 @@ msgstr ""
 msgid "display notices as private messages"
 msgstr "mostrar noticias como mensajes privados"
 
+#, fuzzy
+msgid "color for nick in input bar"
+msgstr "color para los nombres de usuario"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -4895,6 +4851,54 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "text color for title bar"
+#~ msgstr "color para la barra de tÃ­tulo"
+
+#, fuzzy
+#~ msgid "background color for title bar"
+#~ msgstr "color de fondo para la barra de tÃ­tulo"
+
+#, fuzzy
+#~ msgid "text color for status bar"
+#~ msgstr "color para la barra de estado"
+
+#, fuzzy
+#~ msgid "background color for status bar"
+#~ msgstr "color para la barra de estado"
+
+#, fuzzy
+#~ msgid "text color for status bar delimiters"
+#~ msgstr "color para los delimitadores de la barra de estado"
+
+#, fuzzy
+#~ msgid "text color for input line"
+#~ msgstr "color para el texto de entrada"
+
+#, fuzzy
+#~ msgid "background color for input line"
+#~ msgstr "color para el texto de entrada"
+
+#, fuzzy
+#~ msgid "text color for server name in input line"
+#~ msgstr "color para el nombre del servidor"
+
+#, fuzzy
+#~ msgid "text color for channel name in input line"
+#~ msgstr "color para los nombres de canal en las acciones"
+
+#, fuzzy
+#~ msgid "text color for delimiters in input line"
+#~ msgstr "color para los delimitadores de la barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "text color for nicklist"
+#~ msgstr "color para el nombre de usuario"
+
+#, fuzzy
+#~ msgid "background color for nicklist"
+#~ msgstr "color de fondo para los nombres de usuario"
 
 #, fuzzy
 #~ msgid "debug: \"%s\" => %d"

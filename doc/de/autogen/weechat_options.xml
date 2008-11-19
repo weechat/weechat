@@ -366,16 +366,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input</command>: text color for input line
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.input_actions</command>: text color for actions in input line
 <itemizedlist>
   <listitem>
@@ -383,36 +373,6 @@
   </listitem>
   <listitem>
     <para>values: a color name (default value: lightgreen)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_bg</command>: background color for input line
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_channel</command>: text color for channel name in input line
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: white)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_delimiters</command>: text color for delimiters in input line
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: cyan)</para>
   </listitem>
 </itemizedlist>
 
@@ -426,16 +386,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_server</command>: text color for server name in input line
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: brown)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.input_text_not_found</command>: text color for unsucessful text search in input line
 <itemizedlist>
   <listitem>
@@ -446,16 +396,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist</command>: text color for nicklist
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.nicklist_away</command>: text color for away nicknames
 <itemizedlist>
   <listitem>
@@ -463,16 +403,6 @@
   </listitem>
   <listitem>
     <para>values: a color name (default value: cyan)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.nicklist_bg</command>: background color for nicklist
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
   </listitem>
 </itemizedlist>
 
@@ -566,26 +496,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status</command>: text color for status bar
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.status_bg</command>: background color for status bar
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: blue)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_data_highlight</command>: text color for buffer with highlight (status bar)
 <itemizedlist>
   <listitem>
@@ -626,16 +536,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_delimiters</command>: text color for status bar delimiters
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: cyan)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_more</command>: text color for buffer with new data (status bar)
 <itemizedlist>
   <listitem>
@@ -663,26 +563,6 @@
   </listitem>
   <listitem>
     <para>values: a color name (default value: yellow)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.title</command>: text color for title bar
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.title_bg</command>: background color for title bar
-<itemizedlist>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name (default value: blue)</para>
   </listitem>
 </itemizedlist>
 

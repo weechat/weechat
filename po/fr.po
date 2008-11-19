@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-06 12:49+0100\n"
-"PO-Revision-Date: 2008-11-06 13:10+0100\n"
+"POT-Creation-Date: 2008-11-19 14:48+0100\n"
+"PO-Revision-Date: 2008-11-19 14:48+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1362,12 +1362,6 @@ msgstr "couleur du fond pour les séparateurs de fenêtres (quand divisé)"
 msgid "text color for '+' when scrolling bars"
 msgstr "couleur du texte pour les '+' lors du défilement des barres"
 
-msgid "text color for title bar"
-msgstr "couleur du texte pour la barre de titre"
-
-msgid "background color for title bar"
-msgstr "couleur du fond pour la barre de titre"
-
 msgid "text color for chat"
 msgstr "couleur du texte pour la discussion"
 
@@ -1477,15 +1471,6 @@ msgstr ""
 "couleur du fond pour le marqueur sur les lignes où le texte demandé est "
 "trouvé"
 
-msgid "text color for status bar"
-msgstr "couleur du texte pour la barre de statut"
-
-msgid "background color for status bar"
-msgstr "couleur du fond pour la barre de statut"
-
-msgid "text color for status bar delimiters"
-msgstr "couleur du texte pour les délimiteurs de la barre de statut"
-
 msgid "text color for current buffer number in status bar"
 msgstr ""
 "couleur du texte pour le numéro du tampon courant dans la barre de statut"
@@ -1513,23 +1498,8 @@ msgid "text color for buffer with new data (status bar)"
 msgstr ""
 "couleur du texte pour un tampon avec des nouvelles données (barre de statut)"
 
-msgid "text color for input line"
-msgstr "couleur du texte pour la ligne de saisie"
-
-msgid "background color for input line"
-msgstr "couleur du fond pour la ligne de saisie"
-
-msgid "text color for server name in input line"
-msgstr "couleur du texte pour le nom du serveur dans la ligne de saisie"
-
-msgid "text color for channel name in input line"
-msgstr "couleur du texte pour le canal dans la ligne de saisie"
-
 msgid "text color for nick name in input line"
 msgstr "couleur du texte pour le pseudo dans la ligne de saisie"
-
-msgid "text color for delimiters in input line"
-msgstr "couleur du texte pour les délimiteurs dans la ligne de saisie"
 
 msgid "text color for unsucessful text search in input line"
 msgstr ""
@@ -1538,12 +1508,6 @@ msgstr ""
 
 msgid "text color for actions in input line"
 msgstr "couleur du texte pour les actions dans la ligne de saisie"
-
-msgid "text color for nicklist"
-msgstr "couleur du texte pour la liste des pseudos"
-
-msgid "background color for nicklist"
-msgstr "couleur du fond pour la liste des pseudos"
 
 msgid "text color for groups in nicklist"
 msgstr "couleur du texte pour les groupes dans la liste des pseudos"
@@ -1784,16 +1748,16 @@ msgstr ""
 "tous les minuteurs"
 
 #, c-format
+msgid "%sYou can not write text in this buffer"
+msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
+
+#, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr "%sErreur: trop d'appels à la commande \"%s\" (boucle)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%sErreur: commande \"%s\" inconnue (tapez /help pour l'aide)"
-
-#, c-format
-msgid "%sYou can not write text in this buffer"
-msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
@@ -3490,6 +3454,9 @@ msgstr "délai pour filtrer les messages join/part/quit (en minutes)"
 msgid "display notices as private messages"
 msgstr "afficher les notices comme des messages privés"
 
+msgid "color for nick in input bar"
+msgstr "couleur du pseudo dans la barre de saisie"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -4987,3 +4954,39 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "text color for title bar"
+#~ msgstr "couleur du texte pour la barre de titre"
+
+#~ msgid "background color for title bar"
+#~ msgstr "couleur du fond pour la barre de titre"
+
+#~ msgid "text color for status bar"
+#~ msgstr "couleur du texte pour la barre de statut"
+
+#~ msgid "background color for status bar"
+#~ msgstr "couleur du fond pour la barre de statut"
+
+#~ msgid "text color for status bar delimiters"
+#~ msgstr "couleur du texte pour les délimiteurs de la barre de statut"
+
+#~ msgid "text color for input line"
+#~ msgstr "couleur du texte pour la ligne de saisie"
+
+#~ msgid "background color for input line"
+#~ msgstr "couleur du fond pour la ligne de saisie"
+
+#~ msgid "text color for server name in input line"
+#~ msgstr "couleur du texte pour le nom du serveur dans la ligne de saisie"
+
+#~ msgid "text color for channel name in input line"
+#~ msgstr "couleur du texte pour le canal dans la ligne de saisie"
+
+#~ msgid "text color for delimiters in input line"
+#~ msgstr "couleur du texte pour les délimiteurs dans la ligne de saisie"
+
+#~ msgid "text color for nicklist"
+#~ msgstr "couleur du texte pour la liste des pseudos"
+
+#~ msgid "background color for nicklist"
+#~ msgstr "couleur du fond pour la liste des pseudos"

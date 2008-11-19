@@ -713,7 +713,7 @@ gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
                   (window->buffer->text_search_found
                    || !window->buffer->input_buffer
                    || !window->buffer->input_buffer[0]) ?
-                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input))) :
+                  GUI_COLOR_CUSTOM_BAR_FG :
                   gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
                   ptr_message);
     }
@@ -1188,19 +1188,33 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                             strcat (buf, " ");
                         }
                     }
-                    config_file_search_with_string (ptr_nick->prefix_color,
-                                                    NULL, NULL, &ptr_option,
-                                                    NULL);
-                    if (ptr_option)
-                        strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    if (strchr (ptr_nick->prefix_color, '.'))
+                    {
+                        config_file_search_with_string (ptr_nick->prefix_color,
+                                                        NULL, NULL, &ptr_option,
+                                                        NULL);
+                        if (ptr_option)
+                            strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    }
+                    else
+                    {
+                        strcat (buf, gui_color_get_custom (ptr_nick->prefix_color));
+                    }
                     str_prefix[0] = ptr_nick->prefix;
                     str_prefix[1] = '\0';
                     strcat (buf, str_prefix);
-                    config_file_search_with_string (ptr_nick->color,
-                                                    NULL, NULL, &ptr_option,
-                                                    NULL);
-                    if (ptr_option)
-                        strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    if (strchr (ptr_nick->color, '.'))
+                    {
+                        config_file_search_with_string (ptr_nick->color,
+                                                        NULL, NULL, &ptr_option,
+                                                        NULL);
+                        if (ptr_option)
+                            strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    }
+                    else
+                    {
+                        strcat (buf, gui_color_get_custom (ptr_nick->color));
+                    }
                     strcat (buf, ptr_nick->name);
                 }
                 else

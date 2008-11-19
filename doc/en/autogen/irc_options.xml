@@ -6,6 +6,16 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
+<command>irc.color.input_nick</command>: color for nick in input bar
+<itemizedlist>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name (default value: lightcyan)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.display_away</command>: display message when (un)marking as away
 <itemizedlist>
   <listitem>

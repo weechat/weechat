@@ -76,6 +76,8 @@ extern struct t_config_option *irc_config_look_smart_filter;
 extern struct t_config_option *irc_config_look_smart_filter_delay;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 
+extern struct t_config_option *irc_config_color_input_nick;
+
 extern struct t_config_option *irc_config_network_default_msg_part;
 extern struct t_config_option *irc_config_network_default_msg_quit;
 extern struct t_config_option *irc_config_network_away_check;

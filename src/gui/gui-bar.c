@@ -1697,9 +1697,9 @@ gui_bar_create_default_input ()
                                  "vertical",   /* filling_left_right */
                                  "1",          /* size */
                                  "0",          /* size_max */
-                                 gui_color_get_name (CONFIG_COLOR(config_color_input)),
-                                 gui_color_get_name (CONFIG_COLOR(config_color_input_delimiters)),
-                                 gui_color_get_name (CONFIG_COLOR(config_color_input_bg)),
+                                 "default",    /* color fg */
+                                 "cyan",       /* color delim */
+                                 "default",    /* color bg */
                                  "0",          /* separators */
                                  buf))         /* items */
                 {
@@ -1736,9 +1736,9 @@ gui_bar_create_default_title ()
                          "vertical"  , /* filling_left_right */
                          "1",          /* size */
                          "0",          /* size_max */
-                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_title_bg)),
+                         "default",    /* color fg */
+                         "cyan",       /* color delim */
+                         "blue",       /* color bg */
                          "0",          /* separators */
                          gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE])) /* items */
         {
@@ -1797,9 +1797,9 @@ gui_bar_create_default_status ()
                              "vertical",   /* filling_left_right */
                              "1",          /* size */
                              "0",          /* size_max */
-                             gui_color_get_name (CONFIG_COLOR(config_color_status)),
-                             gui_color_get_name (CONFIG_COLOR(config_color_status_delimiters)),
-                             gui_color_get_name (CONFIG_COLOR(config_color_status_bg)),
+                             "default",    /* color fg */
+                             "cyan",       /* color delim */
+                             "blue",       /* color bg */
                              "0",          /* separators */
                              buf))         /* items */
             {
@@ -1835,10 +1835,10 @@ gui_bar_create_default_nicklist ()
                          "vertical",   /* filling_left_right */
                          "0",          /* size */
                          "0",          /* size_max */
-                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist_bg)),
-                         "1",        /* separators */
+                         "default",    /* color fg */
+                         "cyan",       /* color delim */
+                         "default",    /* color bg */
+                         "1",          /* separators */
                          gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST])) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),

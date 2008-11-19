@@ -366,16 +366,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input</command>: couleur du texte pour la ligne de saisie
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.input_actions</command>: couleur du texte pour les actions dans la ligne de saisie
 <itemizedlist>
   <listitem>
@@ -383,36 +373,6 @@
   </listitem>
   <listitem>
     <para>valeurs: un nom de couleur (valeur par défaut: lightgreen)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_bg</command>: couleur du fond pour la ligne de saisie
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_channel</command>: couleur du texte pour le canal dans la ligne de saisie
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: white)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.input_delimiters</command>: couleur du texte pour les délimiteurs dans la ligne de saisie
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
 </itemizedlist>
 
@@ -426,16 +386,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.input_server</command>: couleur du texte pour le nom du serveur dans la ligne de saisie
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: brown)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.input_text_not_found</command>: couleur du texte pour la recherche infructueuse de texte dans la ligne de saisie
 <itemizedlist>
   <listitem>
@@ -446,16 +396,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.nicklist</command>: couleur du texte pour la liste des pseudos
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.nicklist_away</command>: couleur du texte pour les pseudos absents
 <itemizedlist>
   <listitem>
@@ -463,16 +403,6 @@
   </listitem>
   <listitem>
     <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.nicklist_bg</command>: couleur du fond pour la liste des pseudos
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
   </listitem>
 </itemizedlist>
 
@@ -566,26 +496,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status</command>: couleur du texte pour la barre de statut
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.status_bg</command>: couleur du fond pour la barre de statut
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_data_highlight</command>: couleur du texte pour un tampon avec un highlight (barre de statut)
 <itemizedlist>
   <listitem>
@@ -626,16 +536,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_delimiters</command>: couleur du texte pour les délimiteurs de la barre de statut
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_more</command>: couleur du texte pour un tampon avec des nouvelles données (barre de statut)
 <itemizedlist>
   <listitem>
@@ -663,26 +563,6 @@
   </listitem>
   <listitem>
     <para>valeurs: un nom de couleur (valeur par défaut: yellow)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.title</command>: couleur du texte pour la barre de titre
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.color.title_bg</command>: couleur du fond pour la barre de titre
-<itemizedlist>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: blue)</para>
   </listitem>
 </itemizedlist>
 
