@@ -1103,52 +1103,48 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             }
         }
         
-        /* message not dropped? */
-        if (!new_msg || new_msg[0])
+        pos_prefix = NULL;
+        display_time = 1;
+        ptr_msg = (new_msg) ? new_msg : pos;
+        
+        /* if two first chars are tab, then do not display time */
+        if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
         {
-            pos_prefix = NULL;
-            display_time = 1;
-            ptr_msg = (new_msg) ? new_msg : pos;
-            
-            /* if two first chars are tab, then do not display time */
-            if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+            display_time = 0;
+            ptr_msg += 2;
+        }
+        else
+        {
+            /* if tab found, use prefix (before tab) */
+            pos_tab = strchr (ptr_msg, '\t');
+            if (pos_tab)
             {
-                display_time = 0;
-                ptr_msg += 2;
+                pos_tab[0] = '\0';
+                pos_prefix = ptr_msg;
+                ptr_msg = pos_tab + 1;
             }
-            else
+        }
+        
+        if (gui_init_ok)
+        {
+            gui_chat_line_add (buffer, (display_time) ? date : 0,
+                               (display_time) ? date_printed : 0,
+                               tags, pos_prefix, ptr_msg);
+            if (buffer->last_line)
             {
-                /* if tab found, use prefix (before tab) */
-                pos_tab = strchr (ptr_msg, '\t');
-                if (pos_tab)
-                {
-                    pos_tab[0] = '\0';
-                    pos_prefix = ptr_msg;
-                    ptr_msg = pos_tab + 1;
-                }
+                hook_print_exec (buffer, buffer->last_line->date,
+                                 buffer->last_line->tags_count,
+                                 (const char **)buffer->last_line->tags_array,
+                                 buffer->last_line->prefix,
+                                 buffer->last_line->message);
             }
-            
-            if (gui_init_ok)
-            {
-                gui_chat_line_add (buffer, (display_time) ? date : 0,
-                                   (display_time) ? date_printed : 0,
-                                   tags, pos_prefix, ptr_msg);
-                if (buffer->last_line)
-                {
-                    hook_print_exec (buffer, buffer->last_line->date,
-                                     buffer->last_line->tags_count,
-                                     (const char **)buffer->last_line->tags_array,
-                                     buffer->last_line->prefix,
-                                     buffer->last_line->message);
-                }
-                at_least_one_message_printed = 1;
-            }
-            else
-            {
-                if (pos_prefix)
-                    string_iconv_fprintf (stdout, "%s ", pos_prefix);
-                string_iconv_fprintf (stdout, "%s\n", ptr_msg);
-            }
+            at_least_one_message_printed = 1;
+        }
+        else
+        {
+            if (pos_prefix)
+                string_iconv_fprintf (stdout, "%s ", pos_prefix);
+            string_iconv_fprintf (stdout, "%s\n", ptr_msg);
         }
         
         if (new_msg)
