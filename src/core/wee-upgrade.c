@@ -151,7 +151,8 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
             ptr_infolist = infolist_new ();
             if (!ptr_infolist)
                 return 0;
-            if (!gui_buffer_line_add_to_infolist (ptr_infolist, ptr_line))
+            if (!gui_buffer_line_add_to_infolist (ptr_infolist,
+                                                  ptr_buffer, ptr_line))
             {
                 infolist_free (ptr_infolist);
                 return 0;
@@ -442,6 +443,8 @@ upgrade_weechat_read_cb (int object_id,
                     {
                         new_line->highlight = infolist_integer (infolist, "highlight");
                     }
+                    if (infolist_integer (infolist, "last_read_line"))
+                        upgrade_current_buffer->last_read_line = new_line;
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_NICKLIST:

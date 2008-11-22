@@ -1565,6 +1565,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 
 int
 gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
+                                 struct t_gui_buffer *buffer,
                                  struct t_gui_line *line)
 {
     struct t_infolist_item *ptr_item;
@@ -1621,6 +1622,9 @@ gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "prefix", line->prefix))
         return 0;
     if (!infolist_new_var_string (ptr_item, "message", line->message))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "last_read_line",
+                                   (buffer->last_read_line == line) ? 1 : 0))
         return 0;
     
     return 1;

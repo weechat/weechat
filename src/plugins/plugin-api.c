@@ -353,7 +353,8 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             for (ptr_line = ((struct t_gui_buffer *)pointer)->lines; ptr_line;
                  ptr_line = ptr_line->next_line)
             {
-                if (!gui_buffer_line_add_to_infolist (ptr_infolist, ptr_line))
+                if (!gui_buffer_line_add_to_infolist (ptr_infolist,
+                                                      pointer, ptr_line))
                 {
                     infolist_free (ptr_infolist);
                     return NULL;

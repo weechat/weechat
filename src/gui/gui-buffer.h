@@ -245,6 +245,7 @@ extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);
 extern int gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
+                                            struct t_gui_buffer *buffer,
                                             struct t_gui_line *line);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
