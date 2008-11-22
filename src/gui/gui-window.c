@@ -494,7 +494,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     
     if (window->buffer->lines)
     {
-        direction = -1;
+        direction = 1;
         number = 0;
         time_letter = ' ';
         
