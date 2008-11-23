@@ -457,10 +457,10 @@ xfer_alloc ()
 
 struct t_xfer *
 xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
-          enum t_xfer_protocol protocol, const char *remote_nick, const char *local_nick,
-          const char *filename,
-          unsigned long size, unsigned long address, int port, int sock,
-          const char *local_filename)
+          enum t_xfer_protocol protocol, const char *remote_nick,
+          const char *local_nick, const char *filename,
+          unsigned long size, const char *proxy, unsigned long address,
+          int port, int sock, const char *local_filename)
 {
     struct t_xfer *new_xfer;
     
@@ -491,6 +491,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
     else
         new_xfer->filename = strdup (_("xfer chat"));
     new_xfer->size = size;
+    new_xfer->proxy = (proxy) ? strdup (proxy) : NULL;
     new_xfer->address = address;
     new_xfer->port = port;
     
@@ -657,7 +658,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
 {
     struct t_infolist *infolist;
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
-    const char *remote_nick, *local_nick, *filename;
+    const char *remote_nick, *local_nick, *filename, *proxy;
     int type, protocol;
     const char *weechat_dir;
     char *dir1, *dir2, *filename2, *short_filename, *pos;
@@ -708,6 +709,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     remote_nick = weechat_infolist_string (infolist, "remote_nick");
     local_nick = weechat_infolist_string (infolist, "local_nick");
     filename = weechat_infolist_string (infolist, "filename");
+    proxy = weechat_infolist_string (infolist, "proxy");
     protocol = XFER_NO_PROTOCOL;
     
     if (!plugin_name || !plugin_id || !str_type || !remote_nick || !local_nick)
@@ -835,7 +837,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         /* get local IP address */
         sscanf (weechat_infolist_string (infolist, "address"), "%lu", &local_addr);
         
-        /* look up the IP address from dcc_own_ip, if set */
+        /* look up the IP address from network_own_ip, if set */
         if (weechat_config_string(xfer_config_network_own_ip)
             && weechat_config_string(xfer_config_network_own_ip)[0])
         {
@@ -970,11 +972,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     if (XFER_IS_FILE(type))
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
                              remote_nick, local_nick, short_filename,
-                             file_size, local_addr, port, sock, filename2);
+                             file_size, proxy, local_addr, port, sock,
+                             filename2);
     else
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
-                             remote_nick, local_nick, NULL, 0, local_addr,
-                             port, sock, NULL);
+                             remote_nick, local_nick, NULL, 0, proxy,
+                             local_addr, port, sock, NULL);
     
     if (!ptr_xfer)
     {
@@ -1207,6 +1210,8 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
     snprintf (value, sizeof (value), "%lu", xfer->size);
     if (!weechat_infolist_new_var_string (ptr_item, "size", value))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "proxy", xfer->proxy))
+        return 0;
     snprintf (value, sizeof (value), "%lu", xfer->address);
     if (!weechat_infolist_new_var_string (ptr_item, "address", value))
         return 0;
@@ -1295,6 +1300,7 @@ xfer_print_log ()
         weechat_log_printf ("  local_nick. . . . . : '%s'",  ptr_xfer->local_nick);
         weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_xfer->filename);
         weechat_log_printf ("  size. . . . . . . . : %lu",   ptr_xfer->size);
+        weechat_log_printf ("  proxy . . . . . . . : '%s'",  ptr_xfer->proxy);
         weechat_log_printf ("  address . . . . . . : %lu",   ptr_xfer->address);
         weechat_log_printf ("  port. . . . . . . . : %d",    ptr_xfer->port);
         

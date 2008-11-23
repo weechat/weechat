@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-22 16:29+0100\n"
+"POT-Creation-Date: 2008-11-23 22:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -499,6 +499,46 @@ msgstr ""
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr ""
 
+msgid "List of proxies:"
+msgstr ""
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr ""
+
+msgid "No proxy defined"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Proxy \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr ""
+
+msgid "All proxies have been deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr ""
+
+msgid "Proxy deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr ""
+
 #, c-format
 msgid "Options reloaded from %s"
 msgstr ""
@@ -611,7 +651,8 @@ msgstr ""
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname option value] | [hide|show "
-"barname] | [scroll barname buffer scroll_value] | [list] | [listitems]"
+"barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | "
+"[listitems]"
 msgstr ""
 
 msgid ""
@@ -839,6 +880,41 @@ msgid ""
 "  unload: unload one or all plugins\n"
 "\n"
 "Without argument, this command lists loaded plugins."
+msgstr ""
+
+msgid "manage proxies"
+msgstr ""
+
+msgid ""
+"[add proxyname type address port [username [password]]] | [del proxyname|-"
+"all] | [set proxyname option value] | [list]"
+msgstr ""
+
+msgid ""
+"          add: add a new proxy\n"
+"    proxyname: name of proxy (must be unique)\n"
+"         type: http, socks4 or socks5\n"
+"      address: IP or hostname\n"
+"         port: port\n"
+"     username: username (optional)\n"
+"     password: password (optional)\n"
+"          del: delete a proxy (or all proxies with -all)\n"
+"          set: set a value for a proxy property\n"
+"       option: option to change (for options list, look at /set weechat."
+"proxy.<proxyname>.*)\n"
+"        value: new value for option\n"
+"         list: list all proxies\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
 msgstr ""
 
 msgid "quit WeeChat"
@@ -1324,27 +1400,6 @@ msgid ""
 "unlimited)"
 msgstr ""
 
-msgid "use a proxy server"
-msgstr ""
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr ""
-
-msgid "connect to proxy using ipv6"
-msgstr ""
-
-msgid "proxy server address (IP or hostname)"
-msgstr ""
-
-msgid "port for connecting to proxy server"
-msgstr ""
-
-msgid "username for proxy server"
-msgstr ""
-
-msgid "password for proxy server"
-msgstr ""
-
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1486,6 +1541,24 @@ msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
+msgstr ""
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr ""
+
+msgid "connect to proxy using ipv6"
+msgstr ""
+
+msgid "proxy server address (IP or hostname)"
+msgstr ""
+
+msgid "port for connecting to proxy server"
+msgstr ""
+
+msgid "username for proxy server"
+msgstr ""
+
+msgid "password for proxy server"
 msgstr ""
 
 #, c-format
@@ -2816,6 +2889,9 @@ msgstr ""
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 
+msgid "proxy used for this server (optional)"
+msgstr ""
+
 msgid "list of IP/port or hostname/port for server (separated by comma)"
 msgstr ""
 
@@ -3394,6 +3470,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory"
+msgstr ""
+
+#, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
 msgstr ""
 
 #, c-format

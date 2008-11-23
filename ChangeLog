@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-10-30
+ChangeLog - 2008-11-23
 
 
 Version 0.2.7 (under dev!):
+   * add support for more than one proxy, with proxy selection for each IRC
+     server (task #6859)
    * add smart join/part/quit message filter in IRC plugin (task #8503)
    * add color decoding in title for IRC channels (task #6030)
    * fix lock with SSL servers when connection fails, and when disconnecting

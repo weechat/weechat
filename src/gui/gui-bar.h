@@ -45,7 +45,7 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_COLOR_BG,
     GUI_BAR_OPTION_SEPARATOR,
     GUI_BAR_OPTION_ITEMS,
-    /* number of bar types */
+    /* number of bar options */
     GUI_BAR_NUM_OPTIONS,
 };
 
@@ -98,15 +98,15 @@ struct t_gui_bar
     struct t_config_option *items;      /* bar items                        */
     
     /* internal vars */
-    int conditions_count;              /* number of conditions              */
-    char **conditions_array;           /* exploded bar conditions           */
-    int items_count;                   /* number of bar items               */
-    char **items_array;                /* exploded bar items                */
+    int conditions_count;               /* number of conditions             */
+    char **conditions_array;            /* exploded bar conditions          */
+    int items_count;                    /* number of bar items              */
+    char **items_array;                 /* exploded bar items               */
     struct t_gui_bar_window *bar_window; /* pointer to bar window           */
-                                       /* (for type root only)              */
-    int bar_refresh_needed;            /* refresh for bar is needed?        */
-    struct t_gui_bar *prev_bar;        /* link to previous bar              */
-    struct t_gui_bar *next_bar;        /* link to next bar                  */
+                                        /* (for type root only)             */
+    int bar_refresh_needed;             /* refresh for bar is needed?       */
+    struct t_gui_bar *prev_bar;         /* link to previous bar             */
+    struct t_gui_bar *next_bar;         /* link to next bar                 */
 };
 
 /* variables */

@@ -2752,7 +2752,7 @@ weechat_lua_api_hook_connect_cb (void *data, int status, const char *ip_address)
 static int
 weechat_lua_api_hook_connect (lua_State *L)
 {
-    const char *address, *local_hostname, *function;
+    const char *proxy, *address, *local_hostname, *function;
     int n, port, sock, ipv6;
     char *result;
     
@@ -2764,7 +2764,8 @@ weechat_lua_api_hook_connect (lua_State *L)
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
         LUA_RETURN_EMPTY;
     }
-
+    
+    proxy = NULL;
     address = NULL;
     port = 0;
     sock = 0;
@@ -2773,13 +2774,14 @@ weechat_lua_api_hook_connect (lua_State *L)
     function = NULL;
     
     n = lua_gettop (lua_current_interpreter);
-
-    if (n < 6)
+    
+    if (n < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         LUA_RETURN_EMPTY;
     }
-
+    
+    proxy = lua_tostring (lua_current_interpreter, -7);
     address = lua_tostring (lua_current_interpreter, -6);
     port = lua_tonumber (lua_current_interpreter, -5);
     sock = lua_tonumber (lua_current_interpreter, -4);
@@ -2789,6 +2791,7 @@ weechat_lua_api_hook_connect (lua_State *L)
     
     result = script_ptr2str (script_api_hook_connect (weechat_lua_plugin,
                                                       lua_current_script,
+                                                      proxy,
                                                       address,
                                                       port,
                                                       sock,

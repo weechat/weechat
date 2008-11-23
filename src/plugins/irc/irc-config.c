@@ -36,12 +36,12 @@
 
 
 char *irc_config_server_option_string[IRC_CONFIG_NUM_SERVER_OPTIONS] =
-{ "autoconnect", "autoreconnect", "autoreconnect_delay", "addresses", "ipv6",
-  "ssl", "password", "nicks", "username", "realname", "local_hostname",
+{ "autoconnect", "autoreconnect", "autoreconnect_delay", "proxy", "addresses",
+  "ipv6", "ssl", "password", "nicks", "username", "realname", "local_hostname",
   "command", "command_delay", "autojoin", "autorejoin"
 };
 char *irc_config_server_option_default[IRC_CONFIG_NUM_SERVER_OPTIONS] =
-{ "off", "on", "30", "", "off", "off", "", "", "", "", "", "", "0", "",
+{ "off", "on", "30", "", "", "off", "off", "", "", "", "", "", "", "0", "",
   "off", ""
 };
 
@@ -705,6 +705,17 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "integer",
                 N_("delay (in seconds) before trying again to reconnect to server"),
                 NULL, 0, 65535,
+                irc_config_server_option_default[index_option], value,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                callback_delete, callback_delete_data);
+            break;
+        case IRC_CONFIG_SERVER_PROXY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("proxy used for this server (optional)"),
+                NULL, 0, 0,
                 irc_config_server_option_default[index_option], value,
                 NULL, NULL,
                 callback_change, callback_change_data,

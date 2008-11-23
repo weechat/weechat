@@ -39,6 +39,7 @@
 #include "wee-log.h"
 #include "wee-util.h"
 #include "wee-list.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-buffer.h"
@@ -55,6 +56,7 @@
 
 struct t_config_file *weechat_config_file = NULL;
 struct t_config_section *weechat_config_section_debug = NULL;
+struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 
 /* config, startup section */
@@ -161,16 +163,6 @@ struct t_config_option *config_completion_partial_completion_count;
 struct t_config_option *config_history_max_lines;
 struct t_config_option *config_history_max_commands;
 struct t_config_option *config_history_display_default;
-
-/* config, proxy section */
-
-struct t_config_option *config_proxy_use;
-struct t_config_option *config_proxy_type;
-struct t_config_option *config_proxy_ipv6;
-struct t_config_option *config_proxy_address;
-struct t_config_option *config_proxy_port;
-struct t_config_option *config_proxy_username;
-struct t_config_option *config_proxy_password;
 
 /* config, plugin section */
 
@@ -451,6 +443,9 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     gui_keyboard_free_all (&gui_keys, &last_gui_key);
     gui_keyboard_default_bindings ();
     
+    /* remove all proxies */
+    proxy_free_all ();
+    
     /* remove all bars */
     gui_bar_free_all ();
     
@@ -465,6 +460,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
+        proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
     }
@@ -615,6 +611,75 @@ config_weechat_debug_set (const char *plugin_name, const char *value)
                                                weechat_config_section_debug,
                                                plugin_name,
                                                value);
+}
+
+/*
+ * config_weechat_proxy_read: read proxy option in config file
+ */
+
+int
+config_weechat_proxy_read (void *data, struct t_config_file *config_file,
+                           struct t_config_section *section,
+                           const char *option_name, const char *value)
+{
+    char *pos_option, *proxy_name;
+    struct t_proxy *ptr_temp_proxy;
+    int index_option;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    if (option_name)
+    {
+        pos_option = strchr (option_name, '.');
+        if (pos_option)
+        {
+            proxy_name = string_strndup (option_name, pos_option - option_name);
+            if (proxy_name)
+            {
+                pos_option++;
+                for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
+                     ptr_temp_proxy = ptr_temp_proxy->next_proxy)
+                {
+                    if (strcmp (ptr_temp_proxy->name, proxy_name) == 0)
+                        break;
+                }
+                if (!ptr_temp_proxy)
+                {
+                    /* create new temp proxy */
+                    ptr_temp_proxy = proxy_alloc (proxy_name);
+                    if (ptr_temp_proxy)
+                    {
+                        /* add new temp proxy at end of queue */
+                        ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
+                        ptr_temp_proxy->next_proxy = NULL;
+                        
+                        if (!weechat_temp_proxies)
+                            weechat_temp_proxies = ptr_temp_proxy;
+                        else
+                            last_weechat_temp_proxy->next_proxy = ptr_temp_proxy;
+                        last_weechat_temp_proxy = ptr_temp_proxy;
+                    }
+                }
+                
+                if (ptr_temp_proxy)
+                {
+                    index_option = proxy_search_option (pos_option);
+                    if (index_option >= 0)
+                    {
+                        proxy_create_option_temp (ptr_temp_proxy, index_option,
+                                                  value);
+                    }
+                }
+                
+                free (proxy_name);
+            }
+        }
+    }
+    
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
 /*
@@ -1657,54 +1722,21 @@ config_weechat_init ()
         N_("maximum number of commands to display by default in "
            "history listing (0 = unlimited)"),
         NULL, 0, INT_MAX, "5", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-    /* proxy */
+    
+    /* proxies */
     ptr_section = config_file_new_section (weechat_config_file, "proxy",
                                            0, 0,
+                                           &config_weechat_proxy_read, NULL,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL, NULL, NULL);
+                                           NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
         return 0;
     }
     
-    config_proxy_use = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "use", "boolean",
-        N_("use a proxy server"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_type = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "type", "integer",
-        N_("proxy type (http (default), socks4, socks5)"),
-        "http|socks4|socks5", 0, 0, "http", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_ipv6 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "ipv6", "boolean",
-        N_("connect to proxy using ipv6"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_address = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "address", "string",
-        N_("proxy server address (IP or hostname)"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_port = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "port", "integer",
-        N_("port for connecting to proxy server"),
-        NULL, 0, 65535, "3128", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_username = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "username", "string",
-        N_("username for proxy server"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_proxy_password = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "password", "string",
-        N_("password for proxy server"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            
+    weechat_config_section_proxy = ptr_section;
+    
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",
                                            0, 0,
@@ -1826,6 +1858,7 @@ config_weechat_read ()
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         config_change_day_change (NULL, NULL);
+        proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
     }

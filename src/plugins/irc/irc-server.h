@@ -63,6 +63,7 @@ struct t_irc_server
     int autoconnect;                /* = 1 if auto connect at startup        */
     int autoreconnect;              /* = 1 if auto reco when disconnected    */
     int autoreconnect_delay;        /* delay before trying again reconnect   */
+    char *proxy;                    /* proxy used for this server (optional) */
     char *addresses;                /* server addresses (IP/name with port)  */
     int ipv6;                       /* use IPv6 protocol                     */
     int ssl;                        /* SSL protocol                          */
@@ -157,6 +158,7 @@ extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_new (const char *name, int autoconnect,
                                             int autoreconnect,
                                             int autoreconnect_delay,
+                                            const char *proxy,
                                             const char *addresses,
                                             int ipv6,
                                             int ssl,

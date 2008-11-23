@@ -37,8 +37,9 @@
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-log.h"
-#include "wee-upgrade.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
+#include "wee-upgrade.h"
 #include "wee-utf8.h"
 #include "wee-list.h"
 #include "../gui/gui-bar.h"
@@ -150,7 +151,6 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
     
     /* list of bars */
     if ((argc == 1)
@@ -2218,6 +2218,201 @@ command_plugin (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_proxy_list: list proxies
+ */
+
+void
+command_proxy_list ()
+{
+    struct t_proxy *ptr_proxy;
+    
+    if (weechat_proxies)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("List of proxies:"));
+        for (ptr_proxy = weechat_proxies; ptr_proxy;
+             ptr_proxy = ptr_proxy->next_proxy)
+        {
+            gui_chat_printf (NULL,
+                             _("  %s%s%s: %s, %s/%d (%s), username: %s, "
+                               "password: %s"),
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             ptr_proxy->name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             proxy_type_string[CONFIG_INTEGER(ptr_proxy->type)],
+                             CONFIG_STRING(ptr_proxy->address),
+                             CONFIG_INTEGER(ptr_proxy->port),
+                             (CONFIG_INTEGER(ptr_proxy->ipv6)) ? "IPv6" : "IPv4",
+                             (CONFIG_STRING(ptr_proxy->username) &&
+                              CONFIG_STRING(ptr_proxy->username)[0]) ?
+                             CONFIG_STRING(ptr_proxy->username) : _("(none)"),
+                             (CONFIG_STRING(ptr_proxy->password) &&
+                              CONFIG_STRING(ptr_proxy->password)[0]) ?
+                             CONFIG_STRING(ptr_proxy->password) : _("(none)"));
+        }
+    }
+    else
+        gui_chat_printf (NULL, _("No proxy defined"));
+}
+
+/*
+ * command_proxy: manage proxies
+ */
+
+int
+command_proxy (void *data, struct t_gui_buffer *buffer,
+               int argc, char **argv, char **argv_eol)
+{
+    int type;
+    long number;
+    char *error;
+    struct t_proxy *ptr_proxy;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    /* list of bars */
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        command_proxy_list ();
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add a new proxy */
+    if (string_strcasecmp (argv[1], "add") == 0)
+    {
+        if (argc < 6)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "proxy");
+            return WEECHAT_RC_ERROR;
+        }
+        type = proxy_search_type (argv[3]);
+        if (type < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: wrong type \"%s\" for proxy "
+                               "\"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        error = NULL;
+        number = strtol (argv[5], &error, 10);
+        if (error && !error[0])
+        {
+            /* create proxy */
+            if (proxy_new (argv[2], argv[3], "off", argv[4], argv[5],
+                           (argc >= 7) ? argv[6] : NULL,
+                           (argc >= 8) ? argv_eol[7] : NULL))
+            {
+                gui_chat_printf (NULL, _("Proxy \"%s\" created"),
+                                 argv[2]);
+            }
+            else
+            {
+                gui_chat_printf (NULL, _("%sError: failed to create proxy "
+                                         "\"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+            }
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: wrong port \"%s\" for proxy "
+                               "\"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[5], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* delete a proxy */
+    if (string_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "proxy");
+            return WEECHAT_RC_ERROR;
+        }
+        if (string_strcasecmp (argv[2], "-all") == 0)
+        {
+            proxy_free_all ();
+            gui_chat_printf (NULL, _("All proxies have been deleted"));
+        }
+        else
+        {
+            ptr_proxy = proxy_search (argv[2]);
+            if (!ptr_proxy)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unknown proxy \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+            proxy_free (ptr_proxy);
+            gui_chat_printf (NULL, _("Proxy deleted"));
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* set a proxy property */
+    if (string_strcasecmp (argv[1], "set") == 0)
+    {
+        if (argc < 5)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "proxy");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_proxy = proxy_search (argv[2]);
+        if (!ptr_proxy)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown proxy \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        if (!proxy_set (ptr_proxy, argv[3], argv_eol[4]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to set option \"%s\" for "
+                               "proxy \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "proxy");
+    return WEECHAT_RC_ERROR;
+}
+
+/*
  * command_quit: quit WeeChat
  */
 
@@ -3119,7 +3314,7 @@ command_init ()
                      "separator item1,item2,...] | [default] | "
                      "[del barname|-all] | [set barname option value] | "
                      "[hide|show barname] | [scroll barname buffer "
-                     "scroll_value] | [list] | [listitems]"),
+                     "scroll_value] | [list] | [listfull] | [listitems]"),
                   N_("          add: add a new bar\n"
                      "      barname: name of bar (must be unique)\n"
                      "         type:   root: outside windows),\n"
@@ -3339,6 +3534,36 @@ command_init ()
                      "Without argument, this command lists loaded plugins."),
                   "list|listfull|load|autoload|reload|unload %f|%p",
                   &command_plugin, NULL);
+    hook_command (NULL, "proxy",
+                  N_("manage proxies"),
+                  N_("[add proxyname type address port [username "
+                     "[password]]] | [del proxyname|-all] | [set "
+                     "proxyname option value] | [list]"),
+                  N_("          add: add a new proxy\n"
+                     "    proxyname: name of proxy (must be unique)\n"
+                     "         type: http, socks4 or socks5\n"
+                     "      address: IP or hostname\n"
+                     "         port: port\n"
+                     "     username: username (optional)\n"
+                     "     password: password (optional)\n"
+                     "          del: delete a proxy (or all proxies with -all)\n"
+                     "          set: set a value for a proxy property\n"
+                     "       option: option to change (for options list, look "
+                     "at /set weechat.proxy.<proxyname>.*)\n"
+                     "        value: new value for option\n"
+                     "         list: list all proxies\n\n"
+                     "Examples:\n"
+                     "  create a http proxy, running on local host, port 8888:\n"
+                     "    /proxy add local http 127.0.0.1 8888\n"
+                     "  create a http proxy using IPv6 protocol:\n"
+                     "    /proxy add local http 127.0.0.1 8888\n"
+                     "    /proxy set local ipv6 on\n"
+                     "  create a socks5 proxy with username/password:\n"
+                     "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+                     "  delete a proxy:\n"
+                     "    /proxy del myproxy"),
+                  "add|del|set|list %y name|type|ipv6|address|port|username|password",
+                  &command_proxy, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
                   "", "",

@@ -2816,11 +2816,11 @@ weechat_ruby_api_hook_connect_cb (void *data, int status,
  */
 
 static VALUE
-weechat_ruby_api_hook_connect (VALUE class, VALUE address, VALUE port,
-                               VALUE sock, VALUE ipv6, VALUE local_hostname,
-                               VALUE function)
+weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
+                               VALUE port, VALUE sock, VALUE ipv6,
+                               VALUE local_hostname, VALUE function)
 {
-    char *c_address, *c_local_hostname, *c_function, *result;
+    char *c_proxy, *c_address, *c_local_hostname, *c_function, *result;
     int c_port, c_sock, c_ipv6;
     VALUE return_value;
     
@@ -2832,7 +2832,8 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE address, VALUE port,
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
         RUBY_RETURN_EMPTY;
     }
-
+    
+    c_proxy = NULL;
     c_address = NULL;
     c_port = 0;
     c_sock = 0;
@@ -2840,20 +2841,22 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE address, VALUE port,
     c_local_hostname = NULL;
     c_function = NULL;
     
-    if (NIL_P (address) || NIL_P (port) || NIL_P (sock) || NIL_P (ipv6)
-        || NIL_P (local_hostname) || NIL_P (function))
+    if (NIL_P (proxy) || NIL_P (address) || NIL_P (port) || NIL_P (sock)
+        || NIL_P (ipv6) || NIL_P (local_hostname) || NIL_P (function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         RUBY_RETURN_EMPTY;
     }
-
+    
+    Check_Type (proxy, T_STRING);
     Check_Type (address, T_STRING);
     Check_Type (port, T_FIXNUM);
     Check_Type (sock, T_FIXNUM);
     Check_Type (ipv6, T_FIXNUM);
     Check_Type (local_hostname, T_STRING);
     Check_Type (function, T_STRING);
-
+    
+    c_proxy = STR2CSTR (proxy);
     c_address = STR2CSTR (address);
     c_port = FIX2INT (port);
     c_sock = FIX2INT (sock);
@@ -2863,6 +2866,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE address, VALUE port,
     
     result = script_ptr2str (script_api_hook_connect (weechat_ruby_plugin,
                                                       ruby_current_script,
+                                                      c_proxy,
                                                       c_address,
                                                       c_port,
                                                       c_sock,
@@ -5633,7 +5637,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_command", &weechat_ruby_api_hook_command, 6);
     rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 4);
     rb_define_module_function (ruby_mWeechat, "hook_fd", &weechat_ruby_api_hook_fd, 5);
-    rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 6);
+    rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 7);
     rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 5);
     rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 2);
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);

@@ -22,10 +22,30 @@
 
 struct t_hook;
 
+struct t_network_socks4
+{
+    char version;         /* 1 byte : socks version: 4 or 5                 */
+    char method;          /* 1 byte : socks method: connect (1) or bind (2) */
+    unsigned short port;  /* 2 bytes: destination port                      */
+    unsigned int address; /* 4 bytes: destination address                   */
+    char user[128];       /* username                                       */
+};
+
+struct t_network_socks5
+{
+    char version;         /* 1 byte: socks version : 4 or 5                 */
+    char nmethods;        /* 1 byte: size in byte(s) of field 'method',     */
+                          /*              here 1 byte                       */
+    char method;          /* 1 byte: socks method : noauth (0),             */
+                          /*              auth(user/pass) (2), ...          */
+};
+
 extern void network_init ();
 extern void network_end ();
-extern int network_pass_proxy (int sock, const char *address, int port);
-extern int network_connect_to (int sock, unsigned long address, int port);
-extern void network_connect_with_fork (struct t_hook *);
+extern int network_pass_proxy (const char *proxy, int sock,
+                               const char *address, int port);
+extern int network_connect_to (const char *proxy, int sock,
+                               unsigned long address, int port);
+extern void network_connect_with_fork (struct t_hook *hook_connect);
 
 #endif /* wee-network.h */

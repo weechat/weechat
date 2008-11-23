@@ -2663,7 +2663,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *address, *local_hostname, *result;
+    char *proxy, *address, *local_hostname, *result;
     int i, port, sock, ipv6;
     
     /* make C compiler happy */
@@ -2675,25 +2675,27 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_EMPTY;
     }
     
-    if (objc < 6)
+    if (objc < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         TCL_RETURN_EMPTY;
     }
     
-    if ((Tcl_GetIntFromObj (interp, objv[2], &port) != TCL_OK)
-        || (Tcl_GetIntFromObj (interp, objv[3], &sock) != TCL_OK)
-        || (Tcl_GetIntFromObj (interp, objv[4], &ipv6) != TCL_OK))
+    if ((Tcl_GetIntFromObj (interp, objv[3], &port) != TCL_OK)
+        || (Tcl_GetIntFromObj (interp, objv[4], &sock) != TCL_OK)
+        || (Tcl_GetIntFromObj (interp, objv[5], &ipv6) != TCL_OK))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         TCL_RETURN_EMPTY;
     }
     
-    address = Tcl_GetStringFromObj (objv[1], &i);
-    local_hostname = Tcl_GetStringFromObj (objv[5], &i);
+    proxy = Tcl_GetStringFromObj (objv[1], &i);
+    address = Tcl_GetStringFromObj (objv[2], &i);
+    local_hostname = Tcl_GetStringFromObj (objv[6], &i);
     
     result = script_ptr2str (script_api_hook_connect (weechat_tcl_plugin,
                                                       tcl_current_script,
+                                                      proxy,
                                                       address,
                                                       port,
                                                       sock,
@@ -2701,7 +2703,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                                                       NULL, /* gnutls session */
                                                       local_hostname,
                                                       &weechat_tcl_api_hook_connect_cb,
-                                                      Tcl_GetStringFromObj (objv[6], &i))); /* tcl function */
+                                                      Tcl_GetStringFromObj (objv[7], &i))); /* tcl function */
     
     TCL_RETURN_STRING_FREE(result);
 }

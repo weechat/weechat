@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-22 16:29+0100\n"
+"POT-Creation-Date: 2008-11-23 22:44+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -575,6 +575,50 @@ msgstr "  (nem található bővítőmodul)\n"
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
+#, fuzzy
+msgid "List of proxies:"
+msgstr "Aliaszok listája:\n"
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr ""
+
+#, fuzzy
+msgid "No proxy defined"
+msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "Proxy \"%s\" created"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy
+msgid "All proxies have been deleted"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+msgid "Proxy deleted"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
 msgstr "Modul beállítások elmentve\n"
@@ -697,7 +741,8 @@ msgstr "pufferek kezelése"
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname option value] | [hide|show "
-"barname] | [scroll barname buffer scroll_value] | [list] | [listitems]"
+"barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | "
+"[listitems]"
 msgstr ""
 
 msgid ""
@@ -992,6 +1037,42 @@ msgstr ""
 "unload: megadott vagy összes modul eltávolítása\n"
 "\n"
 "Paraméter nélkül a /plugin parancs listázza a betöltött modulokat."
+
+#, fuzzy
+msgid "manage proxies"
+msgstr "pufferek kezelése"
+
+msgid ""
+"[add proxyname type address port [username [password]]] | [del proxyname|-"
+"all] | [set proxyname option value] | [list]"
+msgstr ""
+
+msgid ""
+"          add: add a new proxy\n"
+"    proxyname: name of proxy (must be unique)\n"
+"         type: http, socks4 or socks5\n"
+"      address: IP or hostname\n"
+"         port: port\n"
+"     username: username (optional)\n"
+"     password: password (optional)\n"
+"          del: delete a proxy (or all proxies with -all)\n"
+"          set: set a value for a proxy property\n"
+"       option: option to change (for options list, look at /set weechat."
+"proxy.<proxyname>.*)\n"
+"        value: new value for option\n"
+"         list: list all proxies\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
+msgstr ""
 
 msgid "quit WeeChat"
 msgstr ""
@@ -1600,29 +1681,6 @@ msgstr ""
 "korlátlan)"
 
 #, fuzzy
-msgid "use a proxy server"
-msgstr "felhasználónév a proxy szerverhez"
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr "proxy típus (http (alapértelmezett), socks4, socks5)"
-
-#, fuzzy
-msgid "connect to proxy using ipv6"
-msgstr "csatlakozás a proxyhoz ipv6 használatával"
-
-msgid "proxy server address (IP or hostname)"
-msgstr "proxy szerver címe (IP-cím vagy gépnév)"
-
-msgid "port for connecting to proxy server"
-msgstr "proxy szerverhez való csatlakozáskor használt port"
-
-msgid "username for proxy server"
-msgstr "felhasználónév a proxy szerverhez"
-
-msgid "password for proxy server"
-msgstr "jelszó a proxy szerverhez"
-
-#, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1777,6 +1835,25 @@ msgstr ""
 "%s nem sikerült létrehozni/hozzáírni a naplófájlhoz (weechat.log)\n"
 "Ha egy másik WeeChat folyamat használja ezt a fájlt, próbálja másik\n"
 "saját könyvtárral futtatni a WeeChat-et a \"--dir\" opció segítségével!\n"
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr "proxy típus (http (alapértelmezett), socks4, socks5)"
+
+#, fuzzy
+msgid "connect to proxy using ipv6"
+msgstr "csatlakozás a proxyhoz ipv6 használatával"
+
+msgid "proxy server address (IP or hostname)"
+msgstr "proxy szerver címe (IP-cím vagy gépnév)"
+
+msgid "port for connecting to proxy server"
+msgstr "proxy szerverhez való csatlakozáskor használt port"
+
+msgid "username for proxy server"
+msgstr "felhasználónév a proxy szerverhez"
+
+msgid "password for proxy server"
+msgstr "jelszó a proxy szerverhez"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -3324,6 +3401,9 @@ msgstr "automatikus újracsatlakozás a szerverhez, ha lekapcsolódik"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
 
+msgid "proxy used for this server (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of IP/port or hostname/port for server (separated by comma)"
 msgstr "felhasználónév az IRC szerveren"
@@ -3942,6 +4022,14 @@ msgstr "%s gnutls kézfogás sikertelen\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory"
 msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
@@ -4891,6 +4979,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "use a proxy server"
+#~ msgstr "felhasználónév a proxy szerverhez"
 
 #, fuzzy
 #~ msgid "text color for title bar"

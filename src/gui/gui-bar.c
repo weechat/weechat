@@ -61,7 +61,7 @@ struct t_gui_bar *last_gui_temp_bar = NULL;
 /*
  * gui_bar_search_option search a bar option name
  *                       return index of option in array
- *                       "gui_bar_option_str", or -1 if not found
+ *                       "gui_bar_option_string", or -1 if not found
  */
 
 int
@@ -92,9 +92,12 @@ gui_bar_search_type (const char *type)
 {
     int i;
     
+    if (!type)
+        return -1;
+    
     for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (type, gui_bar_type_string[i]) == 0)
+        if (string_strcasecmp (gui_bar_type_string[i], type) == 0)
             return i;
     }
     
@@ -112,9 +115,12 @@ gui_bar_search_position (const char *position)
 {
     int i;
     
+    if (!position)
+        return -1;
+    
     for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
     {
-        if (string_strcasecmp (position, gui_bar_position_string[i]) == 0)
+        if (string_strcasecmp (gui_bar_position_string[i], position) == 0)
             return i;
     }
     
@@ -877,7 +883,7 @@ gui_bar_set_size_max (struct t_gui_bar *bar, const char *size)
 }
 
 /*
- * gui_bar_set: set a property for bar
+ * gui_bar_set: set a property for a bar
  *              return: 1 if ok, 0 if error
  */
 

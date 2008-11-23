@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show barname] | [scroll barname buffer scroll_value] | [list] | [listitems]</command>
+<command>/bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | [listitems]</command>
 <programlisting>
 manage bars
 
@@ -189,6 +189,35 @@ autoload: autoload plugins in system or user directory
 Without argument, this command lists loaded plugins.
 </programlisting>
 
+<command>/proxy  [add proxyname type address port [username [password]]] | [del proxyname|-all] | [set proxyname option value] | [list]</command>
+<programlisting>
+manage proxies
+
+          add: add a new proxy
+    proxyname: name of proxy (must be unique)
+         type: http, socks4 or socks5
+      address: IP or hostname
+         port: port
+     username: username (optional)
+     password: password (optional)
+          del: delete a proxy (or all proxies with -all)
+          set: set a value for a proxy property
+       option: option to change (for options list, look at /set weechat.proxy.&lt;proxyname&gt;.*)
+        value: new value for option
+         list: list all proxies
+
+Examples:
+  create a http proxy, running on local host, port 8888:
+    /proxy add local http 127.0.0.1 8888
+  create a http proxy using IPv6 protocol:
+    /proxy add local http 127.0.0.1 8888
+    /proxy set local ipv6 on
+  create a socks5 proxy with username/password:
+    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
+  delete a proxy:
+    /proxy del myproxy
+</programlisting>
+
 <command>/quit</command>
 <programlisting>
 quit WeeChat
@@ -245,23 +274,39 @@ show WeeChat uptime
 -o: send uptime on current channel as an IRC message
 </programlisting>
 
-<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]</command>
+<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight ]</command>
 <programlisting>
 manage windows
 
   list: list open windows (no parameter implies this list)
-    -1: jump to previous window
-    +1: jump to next window
-    b#: jump to next window displaying buffer number #
-    up: switch to window above current one
-  down: switch to window below current one
-  left: switch to window on the left
- right: switch to window on the right
-splith: split current window horizontally
-splitv: split current window vertically
-resize: resize window size, new size is &lt;pct&gt; percentage of parent window
- merge: merge window with another (all = keep only one window)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is &lt;pct&gt; percentage of parent window
+        merge: merge window with another (all = keep only one window)
+
+      page_up: scroll one page up
+    page_down: scroll one page down
+       scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+      refresh: refresh screen
 
 For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+
+Examples:
+  jump to window displaying buffer #1: /window b1  scroll 2 lines up: /window scroll -2
+  scroll 2 days up: /window scroll -2d
+  scroll to beginning of current day: /window scroll -d
 </programlisting>
 

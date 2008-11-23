@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-22 16:29+0100\n"
-"PO-Revision-Date: 2008-11-22 16:30+0100\n"
+"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"PO-Revision-Date: 2008-11-23 22:46+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -524,6 +524,46 @@ msgstr "  (aucune extension)"
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%sErreur: nombre de paramètres erroné pour la commande \"%s\""
 
+msgid "List of proxies:"
+msgstr "Liste des proxies:"
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr "  %s%s%s: %s, %s/%d (%s), utlisateur: %s, mot de passe: %s"
+
+msgid "No proxy defined"
+msgstr "Pas de proxy défini"
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr "%sErreur: type erroné \"%s\" pour le proxy \"%s\""
+
+#, c-format
+msgid "Proxy \"%s\" created"
+msgstr "Proxy \"%s\" créé"
+
+#, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr "%sErreur: impossible de créer le proxy \"%s\""
+
+#, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr "%sErreur: port \"%s\" erroné pour le proxy \"%s\""
+
+msgid "All proxies have been deleted"
+msgstr "Tous les proxies ont été supprimés"
+
+#, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr "%sErreur: proxy \"%s\" inconnu"
+
+msgid "Proxy deleted"
+msgstr "Proxy supprimé"
+
+#, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr "%sErreur: impossible de modifier l'option \"%s\" pour le proxy \"%s\""
+
 #, c-format
 msgid "Options reloaded from %s"
 msgstr "Options rechargées depuis %s"
@@ -640,12 +680,13 @@ msgstr "gestion des barres"
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname option value] | [hide|show "
-"barname] | [scroll barname buffer scroll_value] | [list] | [listitems]"
+"barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | "
+"[listitems]"
 msgstr ""
 "[add nombarre type[,cond1,cond2,...] position taille separateur objet1,"
 "objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] "
 "| [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | "
-"[listitems]"
+"[listfull] | [listitems]"
 
 msgid ""
 "          add: add a new bar\n"
@@ -712,13 +753,13 @@ msgstr ""
 "   objet1,...: objets pour cette barre\n"
 "      default: créer les barres par défaut\n"
 "          del: supprime une barre (ou toutes les barres avec -all)\n"
-"          set: changer la valeur d'une propriété de la barre\n"
+"          set: change la valeur d'une propriété de la barre\n"
 "       option: option à modifier (pour la liste des options, voir /set "
 "weechat.bar.<nombarre>.*\n"
 "       valeur: nouvelle valeur pour l'option\n"
-"         hide: cacher la barre\n"
-"         show: montrer une barre cachée\n"
-"       scroll: faire défiler la barre vers le haut/bas\n"
+"         hide: cache la barre\n"
+"         show: montre une barre cachée\n"
+"       scroll: défilement de la barre vers le haut/bas\n"
 "       tampon: catégorie et nom du tampon ('*' signifie le tampon courant, "
 "vous devez utiliser '*' pour les barres de type root)\n"
 "valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', "
@@ -1020,6 +1061,67 @@ msgstr ""
 "  unload: décharger une ou plusieurs exteneions\n"
 "\n"
 "Sans paramètre, cette commande liste les extensions chargées."
+
+msgid "manage proxies"
+msgstr "gestion des proxies"
+
+msgid ""
+"[add proxyname type address port [username [password]]] | [del proxyname|-"
+"all] | [set proxyname option value] | [list]"
+msgstr ""
+"[add nomproxy type addresse port [utilisateur [motdepasse]]] | [del "
+"nomproxy|-all] | [set nomproxy option valeur] | [list]"
+
+msgid ""
+"          add: add a new proxy\n"
+"    proxyname: name of proxy (must be unique)\n"
+"         type: http, socks4 or socks5\n"
+"      address: IP or hostname\n"
+"         port: port\n"
+"     username: username (optional)\n"
+"     password: password (optional)\n"
+"          del: delete a proxy (or all proxies with -all)\n"
+"          set: set a value for a proxy property\n"
+"       option: option to change (for options list, look at /set weechat."
+"proxy.<proxyname>.*)\n"
+"        value: new value for option\n"
+"         list: list all proxies\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
+msgstr ""
+"          add: ajoute un nouveau proxy\n"
+"     nomproxy: nom du proxy (doit être unique)\n"
+"         type: http, socks4 ou socks5\n"
+"     addresse: IP ou nom de machine\n"
+"         port: port\n"
+"  utilisateur: nom d'utilisateur (optionnel)\n"
+"   motdepasse: mot de passe (optionnel)\n"
+"          del: supprime un proxy (ou tous les proxies avec -all)\n"
+"          set: change la valeur d'une propriété d'un proxy\n"
+"       option: option à modifier (pour la liste des options, voir /set "
+"weechat.proxy.<proxyname>.*)\n"
+"       valeur: nouvelle valeur pour l'option\n"
+"         list: liste de tous les proxies\n"
+"\n"
+"Exemples:\n"
+"  créer un proxy http, tournant en local, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  créer un proxy http en utilisant le protocole IPv6:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  créer un proxy socks5 avec un utilisateur/mot de passe:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  supprimer un proxy:\n"
+"    /proxy del myproxy"
 
 msgid "quit WeeChat"
 msgstr "quitter WeeChat"
@@ -1629,27 +1731,6 @@ msgstr ""
 "nombre maximum de commandes à afficher par défaut dans le listing "
 "d'historique (0 = sans limite)"
 
-msgid "use a proxy server"
-msgstr "utiliser un serveur proxy"
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr "type de proxy (http (défaut), socks4, socks5)"
-
-msgid "connect to proxy using ipv6"
-msgstr "se connecter au proxy en ipv6"
-
-msgid "proxy server address (IP or hostname)"
-msgstr "adresse du serveur proxy (IP ou nom de machine)"
-
-msgid "port for connecting to proxy server"
-msgstr "port pour se connecter au serveur proxy"
-
-msgid "username for proxy server"
-msgstr "nom d'utilisateur pour le serveur proxy"
-
-msgid "password for proxy server"
-msgstr "mot de passe pour le serveur proxy"
-
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1810,6 +1891,24 @@ msgstr ""
 "avec\n"
 "un autre répertoire de base en utilisant l'option de ligne de commande \"--"
 "dir\".\n"
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr "type de proxy (http (défaut), socks4, socks5)"
+
+msgid "connect to proxy using ipv6"
+msgstr "se connecter au proxy en ipv6"
+
+msgid "proxy server address (IP or hostname)"
+msgstr "adresse du serveur proxy (IP ou nom de machine)"
+
+msgid "port for connecting to proxy server"
+msgstr "port pour se connecter au serveur proxy"
+
+msgid "username for proxy server"
+msgstr "nom d'utilisateur pour le serveur proxy"
+
+msgid "password for proxy server"
+msgstr "mot de passe pour le serveur proxy"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -3385,6 +3484,9 @@ msgstr "reconnexion automatique au serveur après une déconnexion"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "délai (en secondes) avant de tenter une reconnexion au serveur"
 
+msgid "proxy used for this server (optional)"
+msgstr "proxy utilisé pour ce serveur (optionnel)"
+
 msgid "list of IP/port or hostname/port for server (separated by comma)"
 msgstr "liste d'IP/port ou nom/port pour le serveur (séparés par des virgules)"
 
@@ -4021,6 +4123,16 @@ msgstr "%s%s: la poignée de main de GnuTLS a échoué"
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: pas assez de mémoire"
+
+#, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr ""
+"%s%s: proxy \"%s\" non trouvé pour le serveur \"%s\", connexion impossible"
+
+#, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgstr ""
+"%s%s: options de proxy manquantes, vérifiez les options pour le proxy \"%s\""
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
@@ -4996,8 +5108,11 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
 
+#~ msgid "use a proxy server"
+#~ msgstr "utiliser un serveur proxy"
+
 #~ msgid "text color for title bar"
-#~ msgstr "couleur du texte pour la barre de titre"
+#~ msgstr "create a socks5 proxy with username/password:"
 
 #~ msgid "background color for title bar"
 #~ msgstr "couleur du fond pour la barre de titre"

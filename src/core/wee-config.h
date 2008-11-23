@@ -65,14 +65,8 @@ enum t_config_look_save_layout_on_exit
     CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL,
 };
 
-enum t_config_proxy_type
-{
-    CONFIG_PROXY_TYPE_HTTP = 0,
-    CONFIG_PROXY_TYPE_SOCKS4,
-    CONFIG_PROXY_TYPE_SOCKS5,
-};
-
 extern struct t_config_file *weechat_config_file;
+extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
 
 extern struct t_config_option *config_startup_command_after_plugins;
@@ -169,14 +163,6 @@ extern struct t_config_option *config_completion_partial_completion_count;
 extern struct t_config_option *config_history_max_lines;
 extern struct t_config_option *config_history_max_commands;
 extern struct t_config_option *config_history_display_default;
-
-extern struct t_config_option *config_proxy_use;
-extern struct t_config_option *config_proxy_type;
-extern struct t_config_option *config_proxy_ipv6;
-extern struct t_config_option *config_proxy_address;
-extern struct t_config_option *config_proxy_port;
-extern struct t_config_option *config_proxy_username;
-extern struct t_config_option *config_proxy_password;
 
 extern struct t_config_option *config_plugin_autoload;
 extern struct t_config_option *config_plugin_debug;

@@ -27,6 +27,7 @@ wee-input.c wee-input.h
 wee-list.c wee-list.h
 wee-log.c wee-log.h
 wee-network.c wee-network.h
+wee-proxy.c wee-proxy.h
 wee-string.c wee-string.h
 wee-upgrade.c wee-upgrade.h
 wee-upgrade-file.c wee-upgrade-file.h

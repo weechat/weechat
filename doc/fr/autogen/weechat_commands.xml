@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listitems]</command>
+<command>/bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listfull] | [listitems]</command>
 <programlisting>
 gestion des barres
 
@@ -26,12 +26,12 @@ gestion des barres
    objet1,...: objets pour cette barre
       default: créer les barres par défaut
           del: supprime une barre (ou toutes les barres avec -all)
-          set: changer la valeur d'une propriété de la barre
+          set: change la valeur d'une propriété de la barre
        option: option à modifier (pour la liste des options, voir /set weechat.bar.&lt;nombarre&gt;.*
        valeur: nouvelle valeur pour l'option
-         hide: cacher la barre
-         show: montrer une barre cachée
-       scroll: faire défiler la barre vers le haut/bas
+         hide: cache la barre
+         show: montre une barre cachée
+       scroll: défilement de la barre vers le haut/bas
        tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
 valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
          list: liste toutes les barres
@@ -187,6 +187,35 @@ autoload: charger automatiquement les extensions dans un répertoire système ou
 Sans paramètre, cette commande liste les extensions chargées.
 </programlisting>
 
+<command>/proxy  [add nomproxy type addresse port [utilisateur [motdepasse]]] | [del nomproxy|-all] | [set nomproxy option valeur] | [list]</command>
+<programlisting>
+gestion des proxies
+
+          add: ajoute un nouveau proxy
+     nomproxy: nom du proxy (doit être unique)
+         type: http, socks4 ou socks5
+     addresse: IP ou nom de machine
+         port: port
+  utilisateur: nom d'utilisateur (optionnel)
+   motdepasse: mot de passe (optionnel)
+          del: supprime un proxy (ou tous les proxies avec -all)
+          set: change la valeur d'une propriété d'un proxy
+       option: option à modifier (pour la liste des options, voir /set weechat.proxy.&lt;proxyname&gt;.*)
+       valeur: nouvelle valeur pour l'option
+         list: liste de tous les proxies
+
+Exemples:
+  créer un proxy http, tournant en local, port 8888:
+    /proxy add local http 127.0.0.1 8888
+  créer un proxy http en utilisant le protocole IPv6:
+    /proxy add local http 127.0.0.1 8888
+    /proxy set local ipv6 on
+  créer un proxy socks5 avec un utilisateur/mot de passe:
+    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
+  supprimer un proxy:
+    /proxy del myproxy
+</programlisting>
+
 <command>/quit</command>
 <programlisting>
 quitter WeeChat
@@ -243,23 +272,39 @@ montrer l'uptime de WeeChat
 -o: envoyer l'uptime sur le canal courant en tant que message IRC
 </programlisting>
 
-<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]</command>
+<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight]</command>
 <programlisting>
 gestion des fenêtres
 
-  list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
-    -1: saute à la fenêtre précédente
-    +1: saute à la fenêtre suivante
-    b#: saute à la fenêtre affichant le tampon #
-    up: saute à la fenêtre au dessus
-  down: saute à la fenêtre au dessous
-  left: saute à la fenêtre à gauche
- right: saute à la fenêtre à droite
-splith: éclate la fenêtre en deux horizontalement
-splitv: éclate la fenêtre en deux verticalement
-resize: redimensionne une fenêtre, la nouvelle taille est &lt;pct&gt; pourcentage de la fenêtre parent
- merge: fusionne la fenêtre avec une autre
+         list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
+           -1: saute à la fenêtre précédente
+           +1: saute à la fenêtre suivante
+           b#: saute à la fenêtre affichant le tampon #
+           up: saute à la fenêtre au dessus
+         down: saute à la fenêtre au dessous
+         left: saute à la fenêtre à gauche
+        right: saute à la fenêtre à droite
+       splith: éclate la fenêtre en deux horizontalement
+       splitv: éclate la fenêtre en deux verticalement
+       resize: redimensionne une fenêtre, la nouvelle taille est &lt;pct&gt; pourcentage de la fenêtre parent
+        merge: fusionne la fenêtre avec une autre
+      page_up: défilement d'une page vers le haut
+    page_down: défilement d'une page vers le bas
+       scroll: défilement d'un nombre de lignes (+/-N) ou avec du temps: s=secondes, m=minutes, h=heures, d=jours, M=mois, y=année
+    scroll_up: défilement de quelques lignes vers le haut
+  scroll_down: défilement de quelques lignes vers le bas
+   scroll_top: défilement jusqu'au début du tampon
+scroll_bottom: défilement jusqu'au bas du tampon
+scroll_previous_highlight: défilement jusqu'au highlight précédent
+scroll_next_highlight: défilement jusqu'au highlight suivant
+      refresh: redessine l'écran
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
+
+Exemples :
+  sauter à la fenêtre affichant le tampon 1: /window b1
+  défilement de 2 lignes vers le haut: /window scroll -2
+  défilement de 2 jours vers le haut:  /window scroll -2d
+  défilement jusqu'au début du jour courant: /window scroll -d
 </programlisting>
 

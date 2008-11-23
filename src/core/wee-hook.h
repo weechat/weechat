@@ -128,6 +128,7 @@ typedef int (t_hook_callback_connect)(void *data, int status,
 struct t_hook_connect
 {
     t_hook_callback_connect *callback; /* connect callback                  */
+    char *proxy;                       /* proxy (optional)                  */
     char *address;                     /* peer address                      */
     int port;                          /* peer port                         */
     int sock;                          /* socket (created by caller)        */
@@ -256,8 +257,9 @@ extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
 extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
-                                    const char *address, int port,
-                                    int sock, int ipv6, void *gnutls_session,
+                                    const char *proxy, const char *address,
+                                    int port, int sock, int ipv6,
+                                    void *gnutls_session,
                                     const char *local_hostname,
                                     t_hook_callback_connect *callback,
                                     void *callback_data);

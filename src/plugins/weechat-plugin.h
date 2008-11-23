@@ -342,6 +342,7 @@ struct t_weechat_plugin
                                int (*callback)(void *data),
                                void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
+                                    const char *proxy,
                                     const char *address,
                                     int port,
                                     int sock,
@@ -518,8 +519,10 @@ struct t_weechat_plugin
                      struct t_gui_buffer *buffer, const char *command);
 
     /* network */
-    int (*network_pass_proxy) (int sock, const char *address, int port);
-    int (*network_connect_to) (int sock, unsigned long address, int port);
+    int (*network_pass_proxy) (const char *proxy, int sock,
+                               const char *address, int port);
+    int (*network_connect_to) (const char *proxy, int sock,
+                               unsigned long address, int port);
     
     /* infos */
     const char *(*info_get) (struct t_weechat_plugin *plugin,
@@ -870,11 +873,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_fd(weechat_plugin, __fd, __flag_read,          \
                             __flag_write, __flag_exception, __callback, \
                             __data)
-#define weechat_hook_connect(__address, __port, __sock, __ipv6,         \
-                             __gnutls_sess, __local_hostname,           \
+#define weechat_hook_connect(__proxy, __address, __port, __sock,        \
+                             __ipv6, __gnutls_sess, __local_hostname,   \
                              __callback, __data)                        \
-    weechat_plugin->hook_connect(weechat_plugin, __address, __port,     \
-                                 __sock, __ipv6, __gnutls_sess,         \
+    weechat_plugin->hook_connect(weechat_plugin, __proxy, __address,    \
+                                 __port, __sock, __ipv6, __gnutls_sess, \
                                  __local_hostname, __callback, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \
                            __callback, __data)                          \
@@ -1014,10 +1017,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->command(weechat_plugin, __buffer, __command)
 
 /* network */
-#define weechat_network_pass_proxy(__sock, __address, __port)           \
-    weechat_plugin->network_pass_proxy(__sock, __address, __port)
-#define weechat_network_connect_to(__sock, __address, __port)           \
-    weechat_plugin->network_connect_to(__sock, __address, __port)
+#define weechat_network_pass_proxy(__proxy, __sock, __address, __port)  \
+    weechat_plugin->network_pass_proxy(__proxy, __sock, __address,      \
+                                       __port)
+#define weechat_network_connect_to(__proxy, __sock, __address, __port)  \
+    weechat_plugin->network_connect_to(__proxy, __sock, __address,      \
+                                       __port)
 
 /* infos */
 #define weechat_info_get(__info_name, __arguments)                      \

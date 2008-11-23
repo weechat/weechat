@@ -492,7 +492,8 @@ xfer_network_connect (struct t_xfer *xfer)
     {
         if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
             return 0;
-        weechat_network_connect_to (xfer->sock, xfer->address, xfer->port);
+        weechat_network_connect_to (xfer->proxy, xfer->sock, xfer->address,
+                                    xfer->port);
         
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-22 16:29+0100\n"
+"POT-Creation-Date: 2008-11-23 22:44+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -519,6 +519,50 @@ msgstr "  (není plugin)"
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%sChyba: špatný počet parametrů pro příkaz \"%s\""
 
+#, fuzzy
+msgid "List of proxies:"
+msgstr "Seznam položek polí:"
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr ""
+
+#, fuzzy
+msgid "No proxy defined"
+msgstr "Žádné pole nejsou definovány"
+
+#, fuzzy, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr "%sChyba: špatný typ \"%s\" pro pole \"%s\""
+
+#, fuzzy, c-format
+msgid "Proxy \"%s\" created"
+msgstr "Pole \"%s\" vytvořeno"
+
+#, fuzzy, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr "%sChyba: selhalo vytvoření pole \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr "%sChyba: špatná pozice \"%s\" pro pole \"%s\""
+
+#, fuzzy
+msgid "All proxies have been deleted"
+msgstr "Všechny pole byly smazány"
+
+#, fuzzy, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr "%sChyba: neznámé pole \"%s\""
+
+#, fuzzy
+msgid "Proxy deleted"
+msgstr "Pole bylo smazáno"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro pole \"%s\""
+
 #, c-format
 msgid "Options reloaded from %s"
 msgstr "Volby načteny z %s"
@@ -635,7 +679,8 @@ msgstr "řídit pole"
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname option value] | [hide|show "
-"barname] | [scroll barname buffer scroll_value] | [list] | [listitems]"
+"barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | "
+"[listitems]"
 msgstr ""
 
 msgid ""
@@ -946,6 +991,42 @@ msgstr ""
 "  unload: odebere všechny pluginy\n"
 "\n"
 "Zavolání příkazu /plugin bez parametrů vypíše načtené pluginy."
+
+#, fuzzy
+msgid "manage proxies"
+msgstr "řídit pole"
+
+msgid ""
+"[add proxyname type address port [username [password]]] | [del proxyname|-"
+"all] | [set proxyname option value] | [list]"
+msgstr ""
+
+msgid ""
+"          add: add a new proxy\n"
+"    proxyname: name of proxy (must be unique)\n"
+"         type: http, socks4 or socks5\n"
+"      address: IP or hostname\n"
+"         port: port\n"
+"     username: username (optional)\n"
+"     password: password (optional)\n"
+"          del: delete a proxy (or all proxies with -all)\n"
+"          set: set a value for a proxy property\n"
+"       option: option to change (for options list, look at /set weechat."
+"proxy.<proxyname>.*)\n"
+"        value: new value for option\n"
+"         list: list all proxies\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
+msgstr ""
 
 msgid "quit WeeChat"
 msgstr "ukončit WeeChat"
@@ -1568,29 +1649,6 @@ msgstr ""
 "nekonečno)"
 
 #, fuzzy
-msgid "use a proxy server"
-msgstr "uživatelské jméno pro proxy server"
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr "typ proxy (http (výchozí), socks4, socks5)"
-
-#, fuzzy
-msgid "connect to proxy using ipv6"
-msgstr "připojit na proxy v ipv6"
-
-msgid "proxy server address (IP or hostname)"
-msgstr "adresa proxy serveru (IP nebo jméno hosta)"
-
-msgid "port for connecting to proxy server"
-msgstr "port pro připojení na proxy server"
-
-msgid "username for proxy server"
-msgstr "uživatelské jméno pro proxy server"
-
-msgid "password for proxy server"
-msgstr "heslo pro proxy server"
-
-#, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1749,6 +1807,25 @@ msgstr ""
 "%s nemohu vytvořit/přidávat do logovacího souboru (weechat.log)\n"
 "Pokud používá tento soubor jiný proces WeeChat, skuste WeeChat pustit\n"
 "s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr "typ proxy (http (výchozí), socks4, socks5)"
+
+#, fuzzy
+msgid "connect to proxy using ipv6"
+msgstr "připojit na proxy v ipv6"
+
+msgid "proxy server address (IP or hostname)"
+msgstr "adresa proxy serveru (IP nebo jméno hosta)"
+
+msgid "port for connecting to proxy server"
+msgstr "port pro připojení na proxy server"
+
+msgid "username for proxy server"
+msgstr "uživatelské jméno pro proxy server"
+
+msgid "password for proxy server"
+msgstr "heslo pro proxy server"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -3308,6 +3385,9 @@ msgstr "automaticky znovu připojit server, když je odpojen"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "doba (v sekundách) před novým zkušením znovupřipojení na server"
 
+msgid "proxy used for this server (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of IP/port or hostname/port for server (separated by comma)"
 msgstr "přezdívka použitá na IRC serveru"
@@ -3942,6 +4022,14 @@ msgstr "%s handshake s gnutls selhal\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory"
 msgstr "Nedostatek paměti pro nový řádek\n"
+
+#, fuzzy, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro pole \"%s\""
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
@@ -4902,6 +4990,10 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "use a proxy server"
+#~ msgstr "uživatelské jméno pro proxy server"
 
 #, fuzzy
 #~ msgid "text color for title bar"

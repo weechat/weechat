@@ -41,6 +41,7 @@
 #include "wee-network.h"
 #include "wee-hook.h"
 #include "wee-config.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
 #include "../plugins/plugin.h"
 
@@ -154,19 +155,20 @@ network_base64encode (const char *from, char *to)
  */
 
 int
-network_pass_httpproxy (int sock, const char *address, int port)
+network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
+                        int port)
 {
     char buffer[256], authbuf[128], authbuf_base64[196];
     int n, m;
     
-    if (CONFIG_STRING(config_proxy_username)
-        && CONFIG_STRING(config_proxy_username)[0])
+    if (CONFIG_STRING(proxy->username)
+        && CONFIG_STRING(proxy->username)[0])
     {
         /* authentification */
         snprintf (authbuf, sizeof (authbuf), "%s:%s",
-                  CONFIG_STRING(config_proxy_username),
-                  (CONFIG_STRING(config_proxy_password)) ?
-                  CONFIG_STRING(config_proxy_password) : "");
+                  CONFIG_STRING(proxy->username),
+                  (CONFIG_STRING(proxy->password)) ?
+                  CONFIG_STRING(proxy->password) : "");
         network_base64encode (authbuf, authbuf_base64);
         n = snprintf (buffer, sizeof (buffer),
                       "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
@@ -248,22 +250,12 @@ network_resolve (const char *hostname, char *ip, int *version)
  */
 
 int
-network_pass_socks4proxy (int sock, const char *address, int port)
+network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
+                          int port)
 {
-    /* 
-     * socks4 protocol is explained here: 
-     * http://en.wikipedia.org/wiki/SOCKS
-     *
-     */
+    /* socks4 protocol is explained here: http://en.wikipedia.org/wiki/SOCKS */
     
-    struct s_socks4
-    {
-        char version;           /* 1 byte  */ /* socks version : 4 or 5 */
-        char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
-        unsigned short port;    /* 2 bytes */ /* destination port */
-        unsigned int address;   /* 4 bytes */ /* destination address */
-        char user[64];          /* username (64 characters seems to be enought) */
-    } socks4;
+    struct t_network_socks4 socks4;
     unsigned char buffer[24];
     char ip_addr[NI_MAXHOST];
     
@@ -272,7 +264,7 @@ network_pass_socks4proxy (int sock, const char *address, int port)
     socks4.port = htons (port);
     network_resolve (address, ip_addr, NULL);
     socks4.address = inet_addr (ip_addr);
-    strncpy (socks4.user, CONFIG_STRING(config_proxy_username),
+    strncpy (socks4.user, CONFIG_STRING(proxy->username),
              sizeof (socks4.user) - 1);
     
     send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
@@ -294,19 +286,15 @@ network_pass_socks4proxy (int sock, const char *address, int port)
  */
 
 int
-network_pass_socks5proxy (int sock, const char *address, int port)
+network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
+                          int port)
 {
     /* 
      * socks5 protocol is explained in RFC 1928
      * socks5 authentication with username/pass is explained in RFC 1929
      */
     
-    struct s_sock5
-    {
-        char version;   /* 1 byte      */ /* socks version : 4 or 5 */
-        char nmethods;  /* 1 byte      */ /* size in byte(s) of field 'method', here 1 byte */
-        char method;    /* 1-255 bytes */ /* socks method : noauth (0), auth(user/pass) (2), ... */
-    } socks5;
+    struct t_network_socks5 socks5;
     unsigned char buffer[288];
     int username_len, password_len, addr_len, addr_buffer_len;
     unsigned char *addr_buffer;
@@ -314,8 +302,8 @@ network_pass_socks5proxy (int sock, const char *address, int port)
     socks5.version = 5;
     socks5.nmethods = 1;
     
-    if (CONFIG_STRING(config_proxy_username)
-        && CONFIG_STRING(config_proxy_username)[0])
+    if (CONFIG_STRING(proxy->username)
+        && CONFIG_STRING(proxy->username)[0])
         socks5.method = 2; /* with authentication */
     else
         socks5.method = 0; /* without authentication */
@@ -325,8 +313,8 @@ network_pass_socks5proxy (int sock, const char *address, int port)
     if (recv (sock, buffer, 2, 0) != 2)
         return 0;
     
-    if (CONFIG_STRING(config_proxy_username)
-        && CONFIG_STRING(config_proxy_username)[0])
+    if (CONFIG_STRING(proxy->username)
+        && CONFIG_STRING(proxy->username)[0])
     {
         /* with authentication */
         /*   -> socks server must respond with :
@@ -338,16 +326,16 @@ network_pass_socks5proxy (int sock, const char *address, int port)
             return 0;
         
         /* authentication as in RFC 1929 */
-        username_len = strlen (CONFIG_STRING(config_proxy_username));
-        password_len = strlen (CONFIG_STRING(config_proxy_password));
+        username_len = strlen (CONFIG_STRING(proxy->username));
+        password_len = strlen (CONFIG_STRING(proxy->password));
         
         /* make username/password buffer */
         buffer[0] = 1;
         buffer[1] = (unsigned char) username_len;
-        memcpy(buffer + 2, CONFIG_STRING(config_proxy_username), username_len);
+        memcpy(buffer + 2, CONFIG_STRING(proxy->username), username_len);
         buffer[2 + username_len] = (unsigned char) password_len;
         memcpy (buffer + 3 + username_len,
-                CONFIG_STRING(config_proxy_password), password_len);
+                CONFIG_STRING(proxy->password), password_len);
         
         send (sock, buffer, 3 + username_len + password_len, 0);
         
@@ -440,23 +428,26 @@ network_pass_socks5proxy (int sock, const char *address, int port)
  */
 
 int
-network_pass_proxy (int sock, const char *address, int port)
+network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 {
     int rc;
+    struct t_proxy *ptr_proxy;
     
     rc = 0;
-    if (CONFIG_BOOLEAN(config_proxy_use))
+    
+    ptr_proxy = proxy_search (proxy);
+    if (ptr_proxy)
     {
-        switch (CONFIG_INTEGER(config_proxy_type))
+        switch (CONFIG_INTEGER(ptr_proxy->type))
         {
-            case CONFIG_PROXY_TYPE_HTTP:
-                rc = network_pass_httpproxy (sock, address, port);
+            case PROXY_TYPE_HTTP:
+                rc = network_pass_httpproxy (ptr_proxy, sock, address, port);
                 break;
-            case CONFIG_PROXY_TYPE_SOCKS4:
-                rc = network_pass_socks4proxy (sock, address, port);
+            case PROXY_TYPE_SOCKS4:
+                rc = network_pass_socks4proxy (ptr_proxy, sock, address, port);
                 break;
-            case CONFIG_PROXY_TYPE_SOCKS5:
-                rc = network_pass_socks5proxy (sock, address, port);
+            case PROXY_TYPE_SOCKS5:
+                rc = network_pass_socks5proxy (ptr_proxy, sock, address, port);
                 break;
         }
     }
@@ -470,30 +461,40 @@ network_pass_proxy (int sock, const char *address, int port)
  */
 
 int
-network_connect_to (int sock, unsigned long address, int port)
+network_connect_to (const char *proxy, int sock,
+                    unsigned long address, int port)
 {
+    struct t_proxy *ptr_proxy;
     struct sockaddr_in addr;
     struct hostent *hostent;
     char *ip4;
     int ret;
     
-    if (CONFIG_BOOLEAN(config_proxy_use))
+    ptr_proxy = NULL;
+    if (proxy && proxy[0])
+    {
+        ptr_proxy = proxy_search (proxy);
+        if (!ptr_proxy)
+            return 0;
+    }
+    
+    if (ptr_proxy)
     {
         memset (&addr, 0, sizeof (addr));
         addr.sin_addr.s_addr = htonl (address);
         ip4 = inet_ntoa(addr.sin_addr);
         
         memset (&addr, 0, sizeof (addr));
-        addr.sin_port = htons (CONFIG_INTEGER(config_proxy_port));
+        addr.sin_port = htons (CONFIG_INTEGER(ptr_proxy->port));
         addr.sin_family = AF_INET;
-        hostent = gethostbyname (CONFIG_STRING(config_proxy_address));
+        hostent = gethostbyname (CONFIG_STRING(ptr_proxy->address));
         if (!hostent)
             return 0;
         memcpy(&(addr.sin_addr), *(hostent->h_addr_list), sizeof(struct in_addr));
         ret = connect (sock, (struct sockaddr *) &addr, sizeof (addr));
         if ((ret == -1) && (errno != EINPROGRESS))
             return 0;
-        if (!network_pass_proxy (sock, ip4, port))
+        if (!network_pass_proxy (proxy, sock, ip4, port))
             return 0;
     }
     else
@@ -516,6 +517,7 @@ network_connect_to (int sock, unsigned long address, int port)
 void
 network_connect_child (struct t_hook *hook_connect)
 {
+    struct t_proxy *ptr_proxy;
     struct addrinfo hints, *res, *res_local, *ptr_res;
     char status_str[2], *ptr_address, *status_ok_with_address;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
@@ -527,13 +529,27 @@ network_connect_child (struct t_hook *hook_connect)
     
     status_str[1] = '\0';
     
-    if (CONFIG_BOOLEAN(config_proxy_use))
+    ptr_proxy = NULL;
+    if (HOOK_CONNECT(hook_connect, proxy)
+        && HOOK_CONNECT(hook_connect, proxy)[0])
+    {
+        ptr_proxy = proxy_search (HOOK_CONNECT(hook_connect, proxy));
+        if (!ptr_proxy)
+        {
+            /* proxy not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            return;
+        }
+    }
+    
+    if (ptr_proxy)
     {
         /* get info about peer */
         memset (&hints, 0, sizeof (hints));
-        hints.ai_family = (CONFIG_BOOLEAN(config_proxy_ipv6)) ? AF_INET6 : AF_INET;
+        hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->ipv6)) ? AF_INET6 : AF_INET;
         hints.ai_socktype = SOCK_STREAM;
-        if (getaddrinfo (CONFIG_STRING(config_proxy_address), NULL, &hints, &res) !=0)
+        if (getaddrinfo (CONFIG_STRING(ptr_proxy->address), NULL, &hints, &res) !=0)
         {
             /* address not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
@@ -547,8 +563,8 @@ network_connect_child (struct t_hook *hook_connect)
             write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
             return;
         }
-        if ((CONFIG_BOOLEAN(config_proxy_ipv6) && (res->ai_family != AF_INET6))
-            || ((!CONFIG_BOOLEAN(config_proxy_ipv6) && (res->ai_family != AF_INET))))
+        if ((CONFIG_BOOLEAN(ptr_proxy->ipv6) && (res->ai_family != AF_INET6))
+            || ((!CONFIG_BOOLEAN(ptr_proxy->ipv6) && (res->ai_family != AF_INET))))
         {
             /* IP address not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
@@ -557,10 +573,10 @@ network_connect_child (struct t_hook *hook_connect)
             return;
         }
         
-        if (CONFIG_BOOLEAN(config_proxy_ipv6))
-            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (CONFIG_INTEGER(config_proxy_port));
+        if (CONFIG_BOOLEAN(ptr_proxy->ipv6))
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (CONFIG_INTEGER(ptr_proxy->port));
         else
-            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(config_proxy_port));
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(ptr_proxy->port));
         
         /* connect to peer */
         if (connect (HOOK_CONNECT(hook_connect, sock),
@@ -573,7 +589,8 @@ network_connect_child (struct t_hook *hook_connect)
             return;
         }
         
-        if (!network_pass_proxy (HOOK_CONNECT(hook_connect, sock),
+        if (!network_pass_proxy (HOOK_CONNECT(hook_connect, proxy),
+                                 HOOK_CONNECT(hook_connect, sock),
                                  HOOK_CONNECT(hook_connect, address),
                                  HOOK_CONNECT(hook_connect, port)))
         {
@@ -583,7 +600,7 @@ network_connect_child (struct t_hook *hook_connect)
             freeaddrinfo (res);
             return;
         }
-
+        
 	status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
     }
     else

@@ -33,10 +33,11 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-list.h"
 #include "../core/wee-log.h"
+#include "../core/wee-proxy.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
-#include "../core/wee-list.h"
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
 #include "gui-completion.h"
@@ -321,7 +322,7 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
 }
 
 /*
- * gui_completion_list_add_bars_names: add buffers names to completion list
+ * gui_completion_list_add_bars_names: add bars names to completion list
  */
 
 void
@@ -883,6 +884,23 @@ gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_proxies_names: add proxies names to completion list
+ */
+
+void
+gui_completion_list_add_proxies_names (struct t_gui_completion *completion)
+{
+    struct t_proxy *ptr_proxy;
+    
+    for (ptr_proxy = weechat_proxies; ptr_proxy;
+         ptr_proxy = ptr_proxy->next_proxy)
+    {
+        gui_completion_list_add (completion, ptr_proxy->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
  * gui_completion_custom: custom completion by a plugin
  */
 
@@ -982,6 +1000,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'w': /* WeeChat commands */
                             gui_completion_list_add_weechat_cmd (completion);
+                            break;
+                        case 'y': /* proxy names */
+                            gui_completion_list_add_proxies_names (completion);
                             break;
                         case '(': /* custom completion by a plugin */
                             pos++;

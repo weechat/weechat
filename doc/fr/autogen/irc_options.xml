@@ -376,6 +376,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.server_default.proxy</command>: proxy utilisé pour ce serveur (optionnel)
+<itemizedlist>
+  <listitem>
+    <para>type: chaîne</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: toute chaîne (valeur par défaut: '')</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.server_default.realname</command>: nom réel pour le serveur IRC
 <itemizedlist>
   <listitem>

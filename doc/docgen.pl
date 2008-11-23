@@ -78,6 +78,7 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "irc\\.server\\..*",
                       "logger\\.level\\..*",
                       "logger\\.mask\\..*",
+                      "weechat\\.proxy\\..*",
                       "weechat\\.bar\\..*",
                       "weechat\\.debug\\..*",
                       );

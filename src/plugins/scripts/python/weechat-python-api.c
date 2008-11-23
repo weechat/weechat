@@ -2453,7 +2453,7 @@ weechat_python_api_hook_connect_cb (void *data, int status,
 static PyObject *
 weechat_python_api_hook_connect (PyObject *self, PyObject *args)
 {
-    char *address, *local_hostname, *function, *result;
+    char *proxy, *address, *local_hostname, *function, *result;
     int port, sock, ipv6;
     PyObject *object;
     
@@ -2465,7 +2465,8 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
         PYTHON_RETURN_EMPTY;
     }
-
+    
+    proxy = NULL;
     address = NULL;
     port = 0;
     sock = 0;
@@ -2473,8 +2474,8 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
     local_hostname = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "siiiss", &address, &port, &sock, &ipv6,
-                           &local_hostname, &function))
+    if (!PyArg_ParseTuple (args, "ssiiiss", &proxy, &address, &port, &sock,
+                           &ipv6, &local_hostname, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         PYTHON_RETURN_EMPTY;
@@ -2482,6 +2483,7 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
     
     result = script_ptr2str (script_api_hook_connect (weechat_python_plugin,
                                                       python_current_script,
+                                                      proxy,
                                                       address,
                                                       port,
                                                       sock,

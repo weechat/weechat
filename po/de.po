@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-22 16:29+0100\n"
+"POT-Creation-Date: 2008-11-23 22:44+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -574,6 +574,50 @@ msgstr "  (kein Plugin)\n"
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
+#, fuzzy
+msgid "List of proxies:"
+msgstr "Liste der Aliases:\n"
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr ""
+
+#, fuzzy
+msgid "No proxy defined"
+msgstr "Keine Aliases definiert.\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "Proxy \"%s\" created"
+msgstr "Alias \"%s\" => \"%s\" angelegt\n"
+
+#, fuzzy, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+
+#, fuzzy
+msgid "All proxies have been deleted"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+
+#, fuzzy
+msgid "Proxy deleted"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
 msgstr "Plugin-Optionen gesichert\n"
@@ -697,7 +741,8 @@ msgstr "Puffer verwalten"
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname option value] | [hide|show "
-"barname] | [scroll barname buffer scroll_value] | [list] | [listitems]"
+"barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | "
+"[listitems]"
 msgstr ""
 
 msgid ""
@@ -977,6 +1022,42 @@ msgstr ""
 "  unload: entlade eines oder alle Plugins\n"
 "\n"
 "Ohne Argument, listet /plugin alle geladenen Plugins auf."
+
+#, fuzzy
+msgid "manage proxies"
+msgstr "Puffer verwalten"
+
+msgid ""
+"[add proxyname type address port [username [password]]] | [del proxyname|-"
+"all] | [set proxyname option value] | [list]"
+msgstr ""
+
+msgid ""
+"          add: add a new proxy\n"
+"    proxyname: name of proxy (must be unique)\n"
+"         type: http, socks4 or socks5\n"
+"      address: IP or hostname\n"
+"         port: port\n"
+"     username: username (optional)\n"
+"     password: password (optional)\n"
+"          del: delete a proxy (or all proxies with -all)\n"
+"          set: set a value for a proxy property\n"
+"       option: option to change (for options list, look at /set weechat."
+"proxy.<proxyname>.*)\n"
+"        value: new value for option\n"
+"         list: list all proxies\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
+msgstr ""
 
 msgid "quit WeeChat"
 msgstr ""
@@ -1587,29 +1668,6 @@ msgid ""
 msgstr "maximale Anzahl der angezeigten Befehle im Verlauf (0: unbegrenzt)"
 
 #, fuzzy
-msgid "use a proxy server"
-msgstr "Benutzername für die Proxyverbindung"
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr "Proxytyp (http (Standard), socks4, socks5)"
-
-#, fuzzy
-msgid "connect to proxy using ipv6"
-msgstr "Verbindung zum Proxy über IPv6 aufbauen"
-
-msgid "proxy server address (IP or hostname)"
-msgstr "Adresse des Proxyservers (IP oder Hostname)"
-
-msgid "port for connecting to proxy server"
-msgstr "Port, auf dem der Proxyserver läuft"
-
-msgid "username for proxy server"
-msgstr "Benutzername für die Proxyverbindung"
-
-msgid "password for proxy server"
-msgstr "Passwort für die Proxyverbindung"
-
-#, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1768,6 +1826,25 @@ msgstr ""
 "WeeChat\n"
 "durch das Benutzen der \"--dir\" Kommandozeilenoption mit einem anderen Home-"
 "Verzeichnis zu starten.\n"
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr "Proxytyp (http (Standard), socks4, socks5)"
+
+#, fuzzy
+msgid "connect to proxy using ipv6"
+msgstr "Verbindung zum Proxy über IPv6 aufbauen"
+
+msgid "proxy server address (IP or hostname)"
+msgstr "Adresse des Proxyservers (IP oder Hostname)"
+
+msgid "port for connecting to proxy server"
+msgstr "Port, auf dem der Proxyserver läuft"
+
+msgid "username for proxy server"
+msgstr "Benutzername für die Proxyverbindung"
+
+msgid "password for proxy server"
+msgstr "Passwort für die Proxyverbindung"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -3289,6 +3366,9 @@ msgstr ""
 "Zeit in Sekunden, die gewartet wird, bevor ein Verbindungsneuaufbau versucht "
 "wird"
 
+msgid "proxy used for this server (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of IP/port or hostname/port for server (separated by comma)"
 msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
@@ -3919,6 +3999,14 @@ msgstr "%s gnutls-Handshake schlug fehl\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory"
 msgstr "Nicht genügend Speicher für neue Zeile\n"
+
+#, fuzzy, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
@@ -4868,6 +4956,10 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "use a proxy server"
+#~ msgstr "Benutzername für die Proxyverbindung"
 
 #, fuzzy
 #~ msgid "text color for title bar"

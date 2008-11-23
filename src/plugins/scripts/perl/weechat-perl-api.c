@@ -2299,7 +2299,7 @@ weechat_perl_api_hook_connect_cb (void *data, int status,
 
 static XS (XS_weechat_api_hook_connect)
 {
-    char *address, *local_hostname, *result;
+    char *proxy, *address, *local_hostname, *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2311,25 +2311,27 @@ static XS (XS_weechat_api_hook_connect)
         PERL_RETURN_EMPTY;
     }
     
-    if (items < 6)
+    if (items < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         PERL_RETURN_EMPTY;
     }
     
-    address = SvPV (ST (0), PL_na);
-    local_hostname = SvPV (ST (4), PL_na);
+    proxy = SvPV (ST (0), PL_na);
+    address = SvPV (ST (1), PL_na);
+    local_hostname = SvPV (ST (5), PL_na);
     
     result = script_ptr2str (script_api_hook_connect (weechat_perl_plugin,
                                                       perl_current_script,
+                                                      proxy,
                                                       address,
-                                                      SvIV (ST (1)), /* port */
-                                                      SvIV (ST (2)), /* sock */
-                                                      SvIV (ST (3)), /* ipv6 */
+                                                      SvIV (ST (2)), /* port */
+                                                      SvIV (ST (3)), /* sock */
+                                                      SvIV (ST (4)), /* ipv6 */
                                                       NULL, /* gnutls session */
                                                       local_hostname,
                                                       &weechat_perl_api_hook_connect_cb,
-                                                      SvPV (ST (5), PL_na))); /* perl function */
+                                                      SvPV (ST (6), PL_na))); /* perl function */
     
     PERL_RETURN_STRING_FREE(result);
 }

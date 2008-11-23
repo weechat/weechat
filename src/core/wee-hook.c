@@ -919,8 +919,9 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
  */
 
 struct t_hook *
-hook_connect (struct t_weechat_plugin *plugin, const char *address, int port,
-              int sock, int ipv6, void *gnutls_sess, const char *local_hostname,
+hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
+              const char *address, int port, int sock, int ipv6,
+              void *gnutls_sess, const char *local_hostname,
               t_hook_callback_connect *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -948,6 +949,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *address, int port,
     
     new_hook->hook_data = new_hook_connect;
     new_hook_connect->callback = callback;
+    new_hook_connect->proxy = (proxy) ? strdup (proxy) : NULL;
     new_hook_connect->address = strdup (address);
     new_hook_connect->port = port;
     new_hook_connect->sock = sock;

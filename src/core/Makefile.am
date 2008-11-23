@@ -42,12 +42,14 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-log.h \
                              wee-network.c \
                              wee-network.h \
+                             wee-proxy.c \
+                             wee-proxy.h \
+                             wee-string.c \
+                             wee-string.h \
                              wee-upgrade.c \
                              wee-upgrade.h \
                              wee-upgrade-file.c \
                              wee-upgrade-file.h \
-                             wee-string.c \
-                             wee-string.h \
                              wee-utf8.c \
                              wee-utf8.h \
                              wee-util.c \

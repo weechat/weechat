@@ -115,6 +115,7 @@ struct t_xfer
     char *local_nick;                  /* local nick                        */
     char *filename;                    /* filename                          */
     unsigned long size;                /* file size                         */
+    char *proxy;                       /* proxy to use (optional)           */
     unsigned long address;             /* local or remote IP address        */
     int port;                          /* remote port                       */
     

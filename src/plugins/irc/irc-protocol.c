@@ -1573,6 +1573,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         weechat_infolist_new_var_string (item, "local_nick", server->nick);
                         weechat_infolist_new_var_string (item, "filename", pos_file);
                         weechat_infolist_new_var_string (item, "size", pos_size);
+                        weechat_infolist_new_var_string (item, "proxy", server->proxy);
                         weechat_infolist_new_var_string (item, "address", pos_addr);
                         weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                         weechat_hook_signal_send ("xfer_add",
@@ -1905,6 +1906,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         weechat_infolist_new_var_string (item, "type", "chat_recv");
                         weechat_infolist_new_var_string (item, "remote_nick", nick);
                         weechat_infolist_new_var_string (item, "local_nick", server->nick);
+                        weechat_infolist_new_var_string (item, "proxy", server->proxy);
                         weechat_infolist_new_var_string (item, "address", pos_addr);
                         weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                         weechat_hook_signal_send ("xfer_add",
