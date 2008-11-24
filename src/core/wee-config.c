@@ -322,37 +322,6 @@ config_change_color (void *data, struct t_config_option *option)
 }
 
 /*
- * config_change_nicks_colors: called when number of nicks color changed
- */
-
-void
-config_change_nicks_colors (void *data, struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    /* TODO: change nicks colors */
-    /*
-    struct t_gui_buffer *ptr_buffer;
-    struct t_gui_nick *ptr_nick;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->nicks)
-        {
-            for (ptr_nick = ptr_buffer->nicks; ptr_nick;
-                 ptr_nick = ptr_nick->next_nick)
-            {
-                gui_nick_find_color (ptr_nick);
-            }   
-        }
-    }
-    */
-}
-
-/*
  * config_day_change_timer_cb: timer callback for displaying
  *                             "Day changed to xxx" message
  */
@@ -1099,7 +1068,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "color_nicks_number", "integer",
         N_("number of colors to use for nicks colors"),
-        NULL, 1, 10, "10", NULL, NULL, NULL, &config_change_nicks_colors, NULL, NULL, NULL);
+        NULL, 1, 10, "10", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_real_white = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_real_white", "boolean",

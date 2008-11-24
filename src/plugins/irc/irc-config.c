@@ -31,6 +31,7 @@
 #include "irc-config.h"
 #include "irc-buffer.h"
 #include "irc-ignore.h"
+#include "irc-nick.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 
@@ -87,6 +88,8 @@ struct t_config_option *irc_config_network_send_unknown_commands;
 
 struct t_config_option *irc_config_server_default[IRC_CONFIG_NUM_SERVER_OPTIONS];
 
+struct t_hook *hook_config_color_nicks_number = NULL;
+
 
 /*
  * irc_config_search_server_option: search a server option name
@@ -137,6 +140,42 @@ irc_config_get_server_from_option_name (const char *name)
     }
     
     return ptr_server;
+}
+
+/*
+ * irc_config_change_look_color_nicks_number: called when the
+ *                                            "weechat.look.color_nicks_number"
+ *                                            option is changed
+ */
+
+int
+irc_config_change_look_color_nicks_number (void *data, const char *option,
+                                           const char *value)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    (void) value;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                ptr_nick->color = irc_nick_find_color (ptr_nick);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1285,6 +1324,9 @@ irc_config_init ()
     
     irc_config_section_server = ptr_section;
     
+    hook_config_color_nicks_number = weechat_hook_config ("weechat.look.color_nicks_number",
+                                                          &irc_config_change_look_color_nicks_number, NULL);
+    
     return 1;
 }
 
@@ -1324,4 +1366,10 @@ void
 irc_config_free ()
 {
     weechat_config_free (irc_config_file);
+
+    if (hook_config_color_nicks_number)
+    {
+        weechat_unhook (hook_config_color_nicks_number);
+        hook_config_color_nicks_number = NULL;
+    }
 }
