@@ -533,6 +533,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         ptr_bar_win->bar->bar_refresh_needed = 1;
     }
     
+    if (window->buffer->type == GUI_BUFFER_TYPE_FREE)
+    {
+        window->scroll = 0;
+        window->scroll_lines_after = 0;
+    }
+    
     window->refresh_needed = 1;
     
     hook_signal_send ("buffer_switch",

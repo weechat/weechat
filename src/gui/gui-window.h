@@ -64,7 +64,7 @@ struct t_gui_window
     int scroll_lines_after;            /* number of lines after last line   */
                                        /* displayed (with scrolling)        */
     int scroll_reset_allowed;          /* reset scroll allowed (when using  */
-                                       /* keys like page_up/down, end, ..   */
+                                       /* keys like page_up/down, end, ..)  */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
     
     struct t_gui_window *prev_window;  /* link to previous window           */
