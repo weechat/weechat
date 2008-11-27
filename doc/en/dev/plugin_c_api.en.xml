@@ -1752,7 +1752,7 @@ void weechat_exec_on_files (
                       <entry>pointer</entry>
                     </row>
                     <row>
-                      <entry>char *</entry>
+                      <entry>const char *</entry>
                       <entry>filename</entry>
                       <entry>filename found</entry>
                     </row>
@@ -2642,7 +2642,7 @@ struct t_config_section *weechat_config_new_section (
                       <entry>configuration file pointer</entry>
                     </row>
                     <row>
-                      <entry>char *</entry>
+                      <entry>const char *</entry>
                       <entry>section_name</entry>
                       <entry>name of section</entry>
                     </row>
@@ -4731,6 +4731,9 @@ struct t_hook *weechat_hook_command (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
         Example:
 <screen>
 int
@@ -4741,12 +4744,13 @@ my_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_command = weechat_hook_command ("mycommand",
-    "description of my command",
-    "[command [buffer]]",
-    "command: WeeChat or plugin command\n"
-    " buffer: buffer name",
-    "%w|%p %b", &amp;my_command_cb, NULL);
+struct t_hook *my_command_hook =
+    weechat_hook_command ("mycommand",
+                          "description of my command",
+                          "[command [buffer]]",
+                          "command: WeeChat or plugin command\n"
+                          " buffer: buffer name",
+                          "%w|%p %b", &amp;my_command_cb, NULL);
 </screen>
       </para>
     </section>
@@ -4824,6 +4828,9 @@ struct t_hook *weechat_hook_timer (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
         Example:
 <screen>
 int
@@ -4834,8 +4841,8 @@ my_timer_cb (void *data)
 }
 
 /* timer called each 20 seconds */
-struct t_hook *my_timer = weechat_hook_timer (20 * 1000, 0, 0,
-                                              &amp;my_timer_cb, NULL);
+struct t_hook *my_timer_hook =
+    weechat_hook_timer (20 * 1000, 0, 0, &amp;my_timer_cb, NULL);
 </screen>
       </para>
     </section>
@@ -4917,6 +4924,9 @@ struct t_hook *weechat_hook_fd (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
         Example:
 <screen>
 int
@@ -4930,9 +4940,8 @@ int sock = socket (AF_INET, SOCK_STREAM, 0);
 /* set socket options */
 /* ... */
 /* hook socket */
-struct t_hook *my_fd = weechat_hook_fd (sock,
-                                        1, 0, 0,
-                                        &amp;my_fd_cb, NULL);
+struct t_hook *my_fd_hook =
+    weechat_hook_fd (sock, 1, 0, 0, &amp;my_fd_cb, NULL);
 </screen>
       </para>
     </section>
@@ -5061,6 +5070,9 @@ struct t_hook *weechat_hook_connect (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
         Example:
 <screen>
 int
@@ -5099,9 +5111,8 @@ my_connect_cb (void *data, int status, const char *ip_address)
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_connect = weechat_hook_fd (sock,
-                                             1, 0, 0,
-                                             &amp;my_connect_cb, NULL);
+struct t_hook *my_connect_hook =
+    weechat_hook_fd (sock, 1, 0, 0, &amp;my_connect_cb, NULL);
 </screen>
       </para>
     </section>
@@ -5202,7 +5213,7 @@ struct t_hook *weechat_hook_print (
                       <entry>prefix</entry>
                     </row>
                     <row>
-                      <entry>char *</entry>
+                      <entry>const char *</entry>
                       <entry>message</entry>
                       <entry>message</entry>
                     </row>
@@ -5220,6 +5231,9 @@ struct t_hook *weechat_hook_print (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
         Example:
 <screen>
 int
@@ -5232,8 +5246,819 @@ my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 }
 
 /* catch all messages, on all buffers, without color */
-struct t_hook *my_print = weechat_hook_print (NULL, NULL, NULL, 1,
-                                              &amp;my_print_cb, NULL);
+struct t_hook *my_print_hook =
+    weechat_hook_print (NULL, NULL, NULL, 1, &amp;my_print_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_signal">
+      <title>weechat_hook_signal</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_signal (
+    const char *signal,
+    int (*callback)(void *data,
+                    const char *signal,
+                    const char *type_data,
+                    void *signal_data),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a signal.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>signal</option>: signal to catch
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when signal is
+              received, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>signal</entry>
+                      <entry>signal received</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>type_data</entry>
+                      <entry>
+                        type of data sent with signal:
+                        WEECHAT_HOOK_SIGNAL_STRING, WEECHAT_HOOK_SIGNAL_INT
+                        or WEECHAT_HOOK_SIGNAL_POINTER
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>signal_data</entry>
+                      <entry>data sent with signal</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_signal_cb (void *data, const char *signal, const char *type_data,
+              void *signal_data)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+/* catch signal "quit", sent by WeeChat when /quit command is executed */
+struct t_hook *my_signal_hook =
+    weechat_hook_signal ("quit", &amp;my_signal_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_signal_send">
+      <title>weechat_hook_signal_send</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_hook_signal_send (
+    const char *signal,
+    const chat *type_data,
+    void *signal_data);
+</programlisting>
+      </para>
+      <para>
+        Send a signal.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>signal</option>: signal to send
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>type_data</option>: type of data sent with signal
+              (see <xref linkend="secPluginCApi_weechat_hook_signal" />)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>signal_data</option>: data sent with signal
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_config">
+      <title>weechat_hook_config</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_config (
+    const char *option,
+    int (*callback)(void *data,
+                    const char *option,
+                    const char *value),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a configuration option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option, format is full name, as used
+              with /set command (for example: 
+              <literal>weechat.look.item_time_format</literal>)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when configuration
+              option is changed, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>option</entry>
+                      <entry>name of option</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>value</entry>
+                      <entry>new value for option</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_config_cb (void *data, const char *option, const char *value)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+/* catch changes to option "weechat.look.item_time_format" */
+struct t_hook *my_config_hook =
+    weechat_hook_config ("weechat.look.item_time_format",
+                         &amp;my_config_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_completion">
+      <title>weechat_hook_completion</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_completion (
+    const char *completion_item,
+    int (*callback)(void *data,
+                    const char *completion_item,
+                    struct t_gui_buffer *buffer,
+                    struct t_gui_completion *completion),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a completion.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>completion_item</option>: name of completion item,
+              after you can use <literal>%(name)</literal> in a command hooked
+              (argument "<literal>completion</literal>", see
+              <xref linkend="secPluginCApi_weechat_hook_command" />)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when completion item
+              is used (user is completing something using this item),
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>completion_item</entry>
+                      <entry>name of completion item</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer where completion was done</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_completion *</entry>
+                      <entry>completion</entry>
+                      <entry>
+                        structure used to add words for completion
+                        (see
+                        <xref linkend="secPluginCApi_weechat_hook_completion_list_add" />)
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_completion_cb (void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_completion_hook =
+    weechat_hook_completion ("myitem",
+                             &amp;my_completion_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_completion_list_add">
+      <title>weechat_hook_completion_list_add</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_hook_completion_list_add (
+    struct t_gui_completion *completion,
+    const char *word,
+    int nick_completion,
+    const char *where);
+</programlisting>
+      </para>
+      <para>
+        Add a word for a completion.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>completion</option>: completion pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>word</option>: word to add
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>nick_completion</option>: 1 if word is a nick, 0 if word
+              is not a nick
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>where</option>: position where word will be inserted in
+              list: WEECHAT_LIST_POS_SORT, WEECHAT_LIST_POS_BEGINNING or
+              WEECHAT_LIST_POS_END
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_completion_cb (void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    weechat_hook_completion_list_add (completion, "word1",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "test_word2",
+                                      0, WEECHAT_LIST_POS_SORT);
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_completion_hook =
+    weechat_hook_completion ("myitem",
+                             &amp;my_completion_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_modifier">
+      <title>weechat_hook_modifier</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_modifier (
+    const char *modifier,
+    char *(*callback)(void *data,
+                      const char *modifier,
+                      const char *modifier_data,
+                      const char *string),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a modifier.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>modifier</option>: modifier name (you should look at
+              core and plugins doc to find name of existing modifiers)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when modifier is
+              received, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>modifier</entry>
+                      <entry>name of modifier</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>modifier_data</entry>
+                      <entry>modifier data</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>string</entry>
+                      <entry>
+                        string to modify (function must return copy of this
+                        string, no changes are allowed in this string)
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+char *
+my_modifier_cb (void *data, const char *modifier,
+                const char *modifier_data,
+                const char *string)
+{
+    char *result;
+    int length;
+    
+    if (!string)
+        return NULL;
+    
+    length = strlen (string) + 4;
+    result = malloc (length);
+    if (result)
+    {
+        /* add "xxx" to any message printed */
+        snprintf (result, length, "%s xxx", string);
+    }
+    
+    return result;
+}
+
+struct t_hook *my_modifier_hook =
+    weechat_hook_modifier ("weechat_print",
+                           &amp;my_modifier_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_modifier_exec">
+      <title>weechat_hook_modifier_exec</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+char *weechat_hook_modifier_exec (
+    const char *modifier,
+    const char *modifier_data,
+    const char *string);
+</programlisting>
+      </para>
+      <para>
+        Execute modifier(s).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>modifier</option>: modifier name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>modifier_data</option>: modifier data
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string</option>: string to modify
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string modified, NULL if no changes in string were
+        made by modifier(s).
+      </para>
+      <para>
+        Example:
+<screen>
+    char *new_string =
+        weechat_hook_modifier_exec ("my_modifier", my_data, my_string);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_info">
+      <title>weechat_hook_info</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_info (
+    const char *info_name,
+    const char *description,
+    const char *(*callback)(void *data,
+                            const char *info_name,
+                            const char *arguments),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook an information: callback will return pointer to info asked.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>info_name</option>: name of info
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>description</option>: description
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when info is asked,
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>info_name</entry>
+                      <entry>name of info to return</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>arguments</entry>
+                      <entry>additional arguments, depending on info</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+const char *
+my_info_cb (void *data, const char *info_name, const char *arguments)
+{
+    /* ... */
+    return pointer_to_string;
+}
+
+/* add info "my_info" */
+struct t_hook *my_info =
+    weechat_hook_info ("my_info", "Some info about something",
+                       &amp;my_info_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_infolist">
+      <title>weechat_hook_infolist</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_infolist (
+    const char *infolist_name,
+    const char *description,
+    const char *(*callback)(void *data,
+                            const char *infolist_name,
+                            void *pointer,
+                            const char *arguments),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook an infolist: callback will return pointer to infolist asked.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist_name</option>: name of infolist
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>description</option>: description
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when infolist is asked,
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>infolist_name</entry>
+                      <entry>name of infolist to return</entry>
+                    </row>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>pointer</entry>
+                      <entry>
+                        pointer to an item infolist must return (to get only
+                        one item in infolist)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>arguments</entry>
+                      <entry>additional arguments, depending on infolist</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist *
+my_infolist_cb (void *data, const char *infolist_name, void *pointer,
+                const char *arguments)
+{
+    /* ... build infolist ... */
+    return my_infolist;
+}
+
+/* add info "my_infolist" */
+struct t_hook *my_infolist =
+    weechat_hook_infolist ("my_infolist", "Infolist with some data",
+                           &amp;my_infolist_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_unhook">
+      <title>weechat_unhook</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_unhook (struct t_hook *hook);
+</programlisting>
+      </para>
+      <para>
+        Unhook something hooked.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>hook</option>: something hooked with weechat_hook_xxxx()
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_hook *my_hook = weechat_hook_command (...);
+/* ... */
+weechat_unhook (my_hook);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_unhook_all">
+      <title>weechat_unhook_all</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_unhook_all ();
+</programlisting>
+      </para>
+      <para>
+        Unhook everything that has been hooked by current plugin.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_unhook_all ();
 </screen>
       </para>
     </section>
@@ -5249,9 +6074,270 @@ struct t_hook *my_print = weechat_hook_print (NULL, NULL, NULL, 1,
       Functions to create/query/close buffers.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_buffer_new">
+      <title>weechat_buffer_new</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_buffer *weechat_buffer_new (
+    const char *name,
+    int (*input_callback)(void *data,
+                          struct t_gui_buffer *buffer,
+                          const char *input_data),
+    void *input_callback_data,
+    int (*close_callback)(void *data,
+                          struct t_gui_buffer *buffer),
+    void *close_callback_data);
+</programlisting>
+      </para>
+      <para>
+        Open a new buffer.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: name of buffer (must be unique)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>input_callback</option>: function called when input text
+              is entered on buffer, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>input_data</entry>
+                      <entry>input data</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>input_callback_data</option>: pointer given to input
+              callback when it is called by WeeeChat
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>close_callback</option>: function called when buffer is
+              closed, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>close_callback_data</option>: pointer given to close
+              callback when it is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new buffer, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
+{
+    weechat_printf (buffer, "Text: %s", input_data);
+    return WEECHAT_RC_OK;
+}
+
+int
+my_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    weechat_printf (NULL, "Buffer '%s' will be closed!",
+                    weechat_buffer_get_string (buffer, "name"));
+    return WEECHAT_RC_OK;
+}
+
+struct t_gui_buffer *my_buffer =
+    weechat_buffer_new ("my_buffer",
+                        &amp;my_input_cb, NULL, &amp;my_close_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_current_buffer">
+      <title>weechat_current_buffer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_buffer *weechat_current_buffer ();
+</programlisting>
+      </para>
+      <para>
+        Return pointer to current buffer (buffer displayed by current window).
+      </para>
+      <para>
+        Return value: pointer to current buffer.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_buffer *current_buffer = weechat_current_buffer ();
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_search">
+      <title>weechat_buffer_search</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_buffer *weechat_buffer_search (const char *plugin, const char *name);
+</programlisting>
+      </para>
+      <para>
+        Search a buffer by plugin and/or buffer name.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>plugin</option>: name of plugin
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: name of buffer. If it is NULL or empty
+              string, then current buffer is returned (buffer displayed by
+              current window).
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to buffer found, NULL if not found.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_buffer *weechat_buffer = weechat_buffer_search ("core", "weechat");
+struct t_gui_buffer *my_buffer = weechat_buffer_search ("myplugin", "my_buffer");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_clear">
+      <title>weechat_buffer_clear</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_buffer_clear (struct t_gui_buffer *buffer);
+</programlisting>
+      </para>
+      <para>
+        Clear content of a buffer.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_buffer *my_buffer = weechat_buffer_search ("myplugin", "my_buffer");
+if (my_buffer)
+{
+    weechat_buffer_clear (my_buffer);
+}
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_close">
+      <title>weechat_buffer_close</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_buffer_close (struct t_gui_buffer *buffer)
+</programlisting>
+      </para>
+      <para>
+        Close a buffer.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_buffer *my_buffer =
+    weechat_buffer_new ("my_buffer",
+                        &amp;my_input_cb, NULL, &amp;my_close_cb, NULL);
+/* ... */
+weechat_buffer_close (my_buffer);
+</screen>
+      </para>
+    </section>
     
   </section>
   
