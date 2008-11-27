@@ -3895,11 +3895,9 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
  */
 
 static VALUE
-weechat_ruby_api_buffer_close (VALUE class, VALUE buffer,
-                               VALUE switch_to_another)
+weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
 {
     char *c_buffer;
-    int c_switch_to_another;
     
     /* make C compiler happy */
     (void) class;
@@ -3911,24 +3909,20 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer,
     }
     
     c_buffer = NULL;
-    c_switch_to_another = 0;
     
-    if (NIL_P (buffer) || NIL_P (switch_to_another))
+    if (NIL_P (buffer))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         RUBY_RETURN_ERROR;
     }
     
     Check_Type (buffer, T_STRING);
-    Check_Type (switch_to_another, T_FIXNUM);
     
     c_buffer = STR2CSTR (buffer);
-    c_switch_to_another = FIX2INT (switch_to_another);
     
     script_api_buffer_close (weechat_ruby_plugin,
                              ruby_current_script,
-                             script_str2ptr (c_buffer),
-                             c_switch_to_another);
+                             script_str2ptr (c_buffer));
     
     RUBY_RETURN_OK;
 }

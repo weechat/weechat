@@ -3223,7 +3223,7 @@ static XS (XS_weechat_api_buffer_close)
 	PERL_RETURN_ERROR;
     }
     
-    if (items < 2)
+    if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         PERL_RETURN_ERROR;
@@ -3231,8 +3231,7 @@ static XS (XS_weechat_api_buffer_close)
     
     script_api_buffer_close (weechat_perl_plugin,
                              perl_current_script,
-                             script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
-                             SvIV (ST (1))); /* switch_to_another */
+                             script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
     
     PERL_RETURN_OK;
 }

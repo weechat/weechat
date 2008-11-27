@@ -609,9 +609,7 @@ xfer_free (struct t_xfer *xfer)
         return;
     
     if (xfer->buffer)
-    {
-        weechat_buffer_close (xfer->buffer, 1);
-    }
+        weechat_buffer_close (xfer->buffer);
     
     /* remove xfer from list */
     if (last_xfer == xfer)

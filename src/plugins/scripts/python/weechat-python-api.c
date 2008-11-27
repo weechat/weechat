@@ -3409,7 +3409,6 @@ static PyObject *
 weechat_python_api_buffer_close (PyObject *self, PyObject *args)
 {
     char *buffer;
-    int switch_to_another;
     
     /* make C compiler happy */
     (void) self;
@@ -3421,9 +3420,8 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
     }
     
     buffer = NULL;
-    switch_to_another = 0;
     
-    if (!PyArg_ParseTuple (args, "si", &buffer, &switch_to_another))
+    if (!PyArg_ParseTuple (args, "s", &buffer))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         PYTHON_RETURN_ERROR;
@@ -3431,8 +3429,7 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
     
     script_api_buffer_close (weechat_python_plugin,
                              python_current_script,
-                             script_str2ptr (buffer),
-                             switch_to_another);
+                             script_str2ptr (buffer));
     
     PYTHON_RETURN_OK;
 }

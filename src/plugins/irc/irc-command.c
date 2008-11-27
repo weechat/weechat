@@ -2460,7 +2460,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
         }
         if (!ptr_channel->nicks)
         {
-            weechat_buffer_close (ptr_channel->buffer, 1);
+            weechat_buffer_close (ptr_channel->buffer);
             return WEECHAT_RC_OK;
         }
         channel_name = ptr_channel->name;

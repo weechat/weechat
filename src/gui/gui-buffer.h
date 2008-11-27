@@ -235,8 +235,7 @@ extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer)
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
-extern void gui_buffer_close (struct t_gui_buffer *buffer,
-                              int switch_to_another);
+extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_previous (struct t_gui_window *window);
 extern void gui_buffer_switch_next (struct t_gui_window *window);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,

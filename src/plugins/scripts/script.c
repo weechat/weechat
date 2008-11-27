@@ -486,7 +486,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
                 if (next_script_callback->buffer != ptr_script_callback->buffer)
                     break;
             }
-            weechat_buffer_close (ptr_script_callback->buffer, 1);
+            weechat_buffer_close (ptr_script_callback->buffer);
         }
         
         ptr_script_callback = next_script_callback;

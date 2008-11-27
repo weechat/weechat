@@ -3797,7 +3797,7 @@ static int
 weechat_lua_api_buffer_close (lua_State *L)
 {
     const char *buffer;
-    int n, switch_to_another;
+    int n;
     
     /* make C compiler happy */
     (void) L;
@@ -3809,23 +3809,20 @@ weechat_lua_api_buffer_close (lua_State *L)
     }
     
     buffer = NULL;
-    switch_to_another = 0;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         LUA_RETURN_ERROR;
     }
     
-    buffer = lua_tostring (lua_current_interpreter, -2);
-    switch_to_another = lua_tonumber (lua_current_interpreter, -1);
+    buffer = lua_tostring (lua_current_interpreter, -1);
     
     script_api_buffer_close (weechat_lua_plugin,
                              lua_current_script,
-                             script_str2ptr (buffer),
-                             switch_to_another);
+                             script_str2ptr (buffer));
     
     LUA_RETURN_OK;
 }

@@ -3650,7 +3650,7 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    int i,switch_to_another;
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -3661,22 +3661,15 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_ERROR;
     }
     
-    if (objc < 3)
+    if (objc < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         TCL_RETURN_ERROR;
     }
-   
-    if (Tcl_GetIntFromObj (interp, objv[2], &switch_to_another) != TCL_OK)
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
-        TCL_RETURN_ERROR;
-    }
-
+    
     script_api_buffer_close (weechat_tcl_plugin,
                              tcl_current_script,
-                             script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)), /* buffer */
-                             switch_to_another); /* switch_to_another */
+                             script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* buffer */
     
     TCL_RETURN_OK;
 }

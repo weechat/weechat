@@ -433,7 +433,7 @@ struct t_weechat_plugin
                                         void *close_callback_data);
     struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
     void (*buffer_clear) (struct t_gui_buffer *buffer);
-    void (*buffer_close) (struct t_gui_buffer *buffer, int switch_to_another);
+    void (*buffer_close) (struct t_gui_buffer *buffer);
     int (*buffer_get_integer) (struct t_gui_buffer *buffer,
                                const char *property);
     const char *(*buffer_get_string) (struct t_gui_buffer *buffer,
@@ -934,8 +934,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->buffer_search(NULL, NULL)
 #define weechat_buffer_clear(__buffer)                                  \
     weechat_plugin->buffer_clear(__buffer)
-#define weechat_buffer_close(__buffer, __switch_to_another)             \
-    weechat_plugin->buffer_close(__buffer, __switch_to_another)
+#define weechat_buffer_close(__buffer)                                  \
+    weechat_plugin->buffer_close(__buffer)
 #define weechat_buffer_get_integer(__buffer, __property)                \
     weechat_plugin->buffer_get_integer(__buffer, __property)
 #define weechat_buffer_get_string(__buffer, __property)                 \

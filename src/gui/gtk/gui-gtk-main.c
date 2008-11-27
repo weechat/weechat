@@ -238,7 +238,7 @@ gui_main_end (int clean_exit)
         /* delete all buffers */
         while (gui_buffers)
         {
-            gui_buffer_close (gui_buffers, 0);
+            gui_buffer_close (gui_buffers);
         }
         
         /* delete global history */

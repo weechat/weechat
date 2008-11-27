@@ -299,7 +299,7 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     /* quit xfer buffer (close it) */
     else if (weechat_strcasecmp (input_data, "q") == 0)
     {
-        weechat_buffer_close (buffer, 1);
+        weechat_buffer_close (buffer);
     }
     /* remove xfer */
     else if (weechat_strcasecmp (input_data, "r") == 0)

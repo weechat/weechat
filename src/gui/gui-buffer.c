@@ -1198,7 +1198,7 @@ gui_buffer_clear_all ()
  */
 
 void
-gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
+gui_buffer_close (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
@@ -1211,7 +1211,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
         (void)(buffer->close_callback) (buffer->close_callback_data, buffer);
     }
     
-    if (switch_to_another)
+    if (!weechat_quit)
     {
         for (ptr_window = gui_windows; ptr_window;
              ptr_window = ptr_window->next_window)

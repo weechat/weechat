@@ -204,7 +204,7 @@ irc_buffer_merge_servers ()
             {
                 ptr_buffer = ptr_server->buffer;
                 ptr_server->buffer = irc_buffer_servers;
-                weechat_buffer_close (ptr_buffer, 1);
+                weechat_buffer_close (ptr_buffer);
             }
         }
     }
@@ -290,7 +290,7 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             while (ptr_channel)
             {
                 next_channel = ptr_channel->next_channel;
-                weechat_buffer_close (ptr_channel->buffer, 1);
+                weechat_buffer_close (ptr_channel->buffer);
                 ptr_channel = next_channel;
             }
             irc_server_disconnect (ptr_server, 0);

@@ -210,8 +210,7 @@ extern struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weec
                                                    const char *function_close);
 extern void script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *script,
-                                     struct t_gui_buffer *buffer,
-                                     int switch_to_another);
+                                     struct t_gui_buffer *buffer);
 extern struct t_gui_bar_item *script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                                                        struct t_plugin_script *script,
                                                        const char *name,

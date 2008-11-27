@@ -1198,15 +1198,14 @@ script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
 void
 script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
                          struct t_plugin_script *script,
-                         struct t_gui_buffer *buffer,
-                         int switch_to_another)
+                         struct t_gui_buffer *buffer)
 {
     struct t_script_callback *ptr_script_callback, *next_callback;
     
     if (!weechat_plugin || !script || !buffer)
         return;
     
-    weechat_buffer_close (buffer, switch_to_another);
+    weechat_buffer_close (buffer);
     
     ptr_script_callback = script->callbacks;
     while (ptr_script_callback)

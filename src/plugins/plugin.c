@@ -700,7 +700,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
         next_buffer = ptr_buffer->next_buffer;
         
         if (ptr_buffer->plugin == plugin)
-            gui_buffer_close (ptr_buffer, 1);
+            gui_buffer_close (ptr_buffer);
         
         ptr_buffer = next_buffer;
     }
