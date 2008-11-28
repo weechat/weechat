@@ -6339,6 +6339,549 @@ weechat_buffer_close (my_buffer);
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_buffer_get_integer">
+      <title>weechat_buffer_get_integer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_buffer_integer (struct t_gui_buffer *buffer, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get integer value of a buffer property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>number</entry>
+                      <entry>number of buffer (1 to # open buffers)</entry>
+                    </row>
+                    <row>
+                      <entry>notify</entry>
+                      <entry>notify level on buffer</entry>
+                    </row>
+                    <row>
+                      <entry>lines_hidden</entry>
+                      <entry>
+                        1 if at least one line is hidden on buffer
+                        (filtered), or 0 if all lines are displayed
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: integer value of property.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "my buffer number is: %d",
+                weechat_buffer_get_integer (my_buffer, "number"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_get_string">
+      <title>weechat_buffer_get_string</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_buffer_get_string (struct t_gui_buffer *buffer, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get string value of a buffer property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>plugin</entry>
+                      <entry>
+                        name of plugin which created this buffer ("core" for
+                        WeeChat main buffer)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>name</entry>
+                      <entry>name of buffer</entry>
+                    </row>
+                    <row>
+                      <entry>short_name</entry>
+                      <entry>short name of buffer</entry>
+                    </row>
+                    <row>
+                      <entry>tilte</entry>
+                      <entry>title of buffer</entry>
+                    </row>
+                    <row>
+                      <entry>localvar_xxx</entry>
+                      <entry>
+                        get content of local varialbe "xxx" (replace
+                        "xxx" by the name of variable you want to read)
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string value of property.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "name / short name of buffer are: %s / %s",
+                weechat_buffer_get_string (my_buffer, "name"),
+                weechat_buffer_get_string (my_buffer, "short_name"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_get_pointer">
+      <title>weechat_buffer_get_pointer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_buffer_pointer (struct t_gui_buffer *buffer, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get pointer value of a buffer property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>plugin</entry>
+                      <entry>plugin pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer value of property.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "plugin pointer of my buffer: %lx",
+                weechat_buffer_get_pointer (my_buffer, "plugin"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_set">
+      <title>weechat_buffer_set</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
+                         const char *value);
+</programlisting>
+      </para>
+      <para>
+        Set string value of a buffer property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Value</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>hotlist</entry>
+                      <entry>
+                        "+", "-",  WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+                        WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT
+                      </entry>
+                      <entry>
+                        <para>
+                          "+": enable hotlist (global setting, buffer pointer
+                          is not used)
+                        </para>
+                        <para>
+                          "-": disable hotlist (global setting, buffer pointer
+                          is not used); when hotlist is disabled, messages
+                          printed in buffers does not change hotlist (but
+                          content of current hotlist is not cleared)
+                        </para>
+                        <para>
+                          priority: add buffer to hotlist with this priority
+                        </para>
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>unread</entry>
+                      <entry>N/A</entry>
+                      <entry>
+                        set unread marker on current line for buffer
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>display</entry>
+                      <entry>N/A</entry>
+                      <entry>swtich to this buffer in current window</entry>
+                    </row>
+                    <row>
+                      <entry>name</entry>
+                      <entry>any string</entry>
+                      <entry>set new name for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>short_name</entry>
+                      <entry>any string</entry>
+                      <entry>set new short name for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>type</entry>
+                      <entry>"formated" or "free"</entry>
+                      <entry>
+                        set type for buffer: "formated" (for printing
+                        chat messages), or "free" for free content
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>notify</entry>
+                      <entry>"0", "1", "2", "3"</entry>
+                      <entry>
+                        set notify level for buffer: "0" = never add to hotlist,
+                        "1" = add for highlights only, "2" = add for highlights
+                        and messages, "3" = add for ell messages
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>title</entry>
+                      <entry>any string</entry>
+                      <entry>set new title for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>nicklist</entry>
+                      <entry>"0" or "1"</entry>
+                      <entry>
+                        "0" to remove nicklist for buffer, "1" to add
+                        nicklist for buffer
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>nicklist_case_sensitive</entry>
+                      <entry>"0" or "1"</entry>
+                      <entry>
+                        "0" to have case insensitive nicklist, "1" to have
+                        case sensitive nicklist
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>nicklist_display_groups</entry>
+                      <entry>"0" or "1"</entry>
+                      <entry>
+                        "0" to hide nicklist groups, "1" to display nicklist
+                        groups
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>highlight_words</entry>
+                      <entry>"-" or comma separated list of words</entry>
+                      <entry>
+                        "-" is a special value to disable any highlight on this
+                        buffer, or comma separated list of words to higlkight
+                        in this buffer, for example: "abc,def,ghi"
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>highlight_tags</entry>
+                      <entry>comma separated list of tags</entry>
+                      <entry>
+                        comma separated list of tags to highlight in this
+                        buffer
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>key_bind_xxx</entry>
+                      <entry>any string</entry>
+                      <entry>
+                        bind a new key, specific to this buffer (replace "xxx"
+                        by the key, for example "meta-I" to bind alt+i) ; the
+                        value is text or command to execute
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>key_bind_xxx</entry>
+                      <entry>N/A</entry>
+                      <entry>
+                        unbind a key (which was bound with above property)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>input</entry>
+                      <entry>any string</entry>
+                      <entry>set new value for buffer input</entry>
+                    </row>
+                    <row>
+                      <entry>input_get_unknown_commands</entry>
+                      <entry>"0" or "1"</entry>
+                      <entry>
+                        "0" to disable unknown commands on this buffer
+                        (default behaviour), "1" to get unknown commands,
+                        for example if user type "/unknowncmd", buffer will
+                        receive it (no error about unknown command)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>localvar_set_xxx</entry>
+                      <entry>any string</entry>
+                      <entry>
+                        set new value for a local variable (replace "xxx" by
+                        variable name) ; variable is created if it does not
+                        exist
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>localvar_del_xxx</entry>
+                      <entry>any string</entry>
+                      <entry>
+                        remove a local variable (replace "xxx" by variable name)
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+/* disable hotlist (for all buffers) */
+weechat_buffer_set (NULL, "hotlist", "-");
+
+/* enable again hotlist */
+weechat_buffer_set (NULL, "hotlist", "+");
+
+/* change buffer name */
+weechat_buffer_set (my_buffer, "name", "my_new_name");
+
+/* add new local variable "toto" with value "my_value" */
+weechat_buffer_set (my_buffer, "localvar_set_toto", "my_value");
+
+/* remove local variable "toto" */
+weechat_buffer_set (my_buffer, "localvar_del_toto", NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_set_pointer">
+      <title>weechat_buffer_set_pointer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
+                                 void *pointer);
+</programlisting>
+      </para>
+      <para>
+        Set pointer value of a buffer property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Value</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>close_callback</entry>
+                      <entry>close callback function</entry>
+                      <entry>close callback function</entry>
+                    </row>
+                    <row>
+                      <entry>close_callback_data</entry>
+                      <entry>close callback data pointer</entry>
+                      <entry>close callback data pointer</entry>
+                    </row>
+                    <row>
+                      <entry>input_callback</entry>
+                      <entry>input callback function</entry>
+                      <entry>input callback function</entry>
+                    </row>
+                    <row>
+                      <entry>input_callback_data</entry>
+                      <entry>input callback data pointer</entry>
+                      <entry>input callback data pointer</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+weechat_buffer_set_pointer (NULL, "close_callback", &amp;my_close_cb);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_buffer_string_replace_local_var">
+      <title>weechat_buffer_string_replace_local_var</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+char *weechat_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
+                                               const char *string);
+</programlisting>
+      </para>
+      <para>
+        Replace local variables in a string by their value, using buffer local
+        variables.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string</option>: string with text and local variables
+              using format "$var"
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string with value for local variables.
+      </para>
+      <note>
+        <para>
+          Result has to be free by a call to "free" after use.
+        </para>
+      </note>
+      <para>
+        Example:
+<screen>
+weechat_buffer_set (my_buffer, "localvar_set_toto", "my_value");
+
+char *str = weechat_buffer_string_replace_local_var (my_buffer,
+                                                     "test with $toto");
+/* str contains "test with my_value" */
+/* ... */
+free (str);
+</screen>
+      </para>
+    </section>
+    
   </section>
   
   <!-- ============================[ nicklist ]============================ -->
