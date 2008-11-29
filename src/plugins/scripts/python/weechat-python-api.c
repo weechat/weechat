@@ -2504,10 +2504,11 @@ int
 weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                   time_t date,
                                   int tags_count, const char **tags,
+                                  int displayed, int highlight,
                                   const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[6];
+    char *python_argv[8];
     static char timebuffer[64];
     int *rc, ret;
     
@@ -2521,9 +2522,11 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     python_argv[0] = script_ptr2str (buffer);
     python_argv[1] = timebuffer;
     python_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    python_argv[3] = (char *)prefix;
-    python_argv[4] = (char *)message;
-    python_argv[5] = NULL;
+    python_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+    python_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+    python_argv[5] = (char *)prefix;
+    python_argv[6] = (char *)message;
+    python_argv[7] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,
@@ -2541,6 +2544,10 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         free (python_argv[0]);
     if (python_argv[2])
         free (python_argv[2]);
+    if (python_argv[3])
+        free (python_argv[3]);
+    if (python_argv[4])
+        free (python_argv[4]);
     
     return ret;
 }

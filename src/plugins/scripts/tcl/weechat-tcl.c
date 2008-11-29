@@ -82,7 +82,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
     
     if (argv) 
     {
-	for (i = 0; argv[i] && (i<6); i++)
+	for (i = 0; argv[i]; i++)
 	{
             Tcl_DStringAppend (&ds, " \"", -1);
             Tcl_DStringAppend (&ds, argv[i], -1);

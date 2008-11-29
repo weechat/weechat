@@ -143,6 +143,8 @@ extern struct t_hook *script_api_hook_print (struct t_weechat_plugin *weechat_pl
                                                              time_t date,
                                                              int tags_count,
                                                              const char **tags,
+                                                             int displayed,
+                                                             int highlight,
                                                              const char *prefix,
                                                              const char *message),
                                              const char *function);

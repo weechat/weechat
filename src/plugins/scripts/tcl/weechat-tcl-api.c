@@ -2716,10 +2716,11 @@ int
 weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                time_t date,
                                int tags_count, const char **tags,
+                               int displayed, int highlight,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[6];
+    char *tcl_argv[8];
     static char timebuffer[64];
     int *rc, ret;
     
@@ -2733,9 +2734,11 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     tcl_argv[0] = script_ptr2str (buffer);
     tcl_argv[1] = timebuffer;
     tcl_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    tcl_argv[3] = (char *)prefix;
-    tcl_argv[4] = (char *)message;
-    tcl_argv[5] = NULL;
+    tcl_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+    tcl_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+    tcl_argv[5] = (char *)prefix;
+    tcl_argv[6] = (char *)message;
+    tcl_argv[7] = NULL;
     
     rc = (int *) weechat_tcl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2753,6 +2756,10 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         free (tcl_argv[0]);
     if (tcl_argv[2])
         free (tcl_argv[2]);
+    if (tcl_argv[3])
+        free (tcl_argv[3]);
+    if (tcl_argv[4])
+        free (tcl_argv[4]);
     
     return ret;
 }

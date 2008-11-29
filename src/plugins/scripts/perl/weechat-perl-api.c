@@ -2344,10 +2344,11 @@ int
 weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                 time_t date,
                                 int tags_count, const char **tags,
+                                int displayed, int highlight,
                                 const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[6];
+    char *perl_argv[8];
     static char timebuffer[64];
     int *rc, ret;
     
@@ -2361,9 +2362,11 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[0] = script_ptr2str (buffer);
     perl_argv[1] = timebuffer;
     perl_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    perl_argv[3] = (char *)prefix;
-    perl_argv[4] = (char *)message;
-    perl_argv[5] = NULL;
+    perl_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+    perl_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+    perl_argv[5] = (char *)prefix;
+    perl_argv[6] = (char *)message;
+    perl_argv[7] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2381,6 +2384,10 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         free (perl_argv[0]);
     if (perl_argv[2])
         free (perl_argv[2]);
+    if (perl_argv[3])
+        free (perl_argv[3]);
+    if (perl_argv[4])
+        free (perl_argv[4]);
     
     return ret;
 }

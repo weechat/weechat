@@ -2812,10 +2812,11 @@ int
 weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                time_t date,
                                int tags_count, const char **tags,
+                               int displayed, int highlight,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[6];
+    char *lua_argv[8];
     static char timebuffer[64];
     int *rc, ret;
     
@@ -2829,9 +2830,11 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     lua_argv[0] = script_ptr2str (buffer);
     lua_argv[1] = timebuffer;
     lua_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    lua_argv[3] = (char *)prefix;
-    lua_argv[4] = (char *)message;
-    lua_argv[5] = NULL;
+    lua_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+    lua_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+    lua_argv[5] = (char *)prefix;
+    lua_argv[6] = (char *)message;
+    lua_argv[7] = NULL;
     
     rc = (int *) weechat_lua_exec (script_callback->script,
                                    WEECHAT_SCRIPT_EXEC_INT,
@@ -2849,6 +2852,10 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         free (lua_argv[0]);
     if (lua_argv[2])
         free (lua_argv[2]);
+    if (lua_argv[3])
+        free (lua_argv[3]);
+    if (lua_argv[4])
+        free (lua_argv[4]);
     
     return ret;
 }

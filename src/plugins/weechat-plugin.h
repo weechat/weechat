@@ -363,6 +363,8 @@ struct t_weechat_plugin
                                                   time_t date,
                                                   int tags_count,
                                                   const char **tags,
+                                                  int displayed,
+                                                  int highlight,
                                                   const char *prefix,
                                                   const char *message),
                                   void *callback_data);

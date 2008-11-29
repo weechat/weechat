@@ -908,6 +908,7 @@ logger_line_log_level (int tags_count, const char **tags)
 int
 logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
                  int tags_count, const char **tags,
+                 int displayed, int highlight,
                  const char *prefix, const char *message)
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -917,6 +918,8 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
     
     /* make C compiler happy */
     (void) data;
+    (void) displayed;
+    (void) highlight;
     
     line_log_level = logger_line_log_level (tags_count, tags);
     

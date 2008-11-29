@@ -1132,11 +1132,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                tags, pos_prefix, ptr_msg);
             if (buffer->last_line)
             {
-                hook_print_exec (buffer, buffer->last_line->date,
-                                 buffer->last_line->tags_count,
-                                 (const char **)buffer->last_line->tags_array,
-                                 buffer->last_line->prefix,
-                                 buffer->last_line->message);
+                hook_print_exec (buffer, buffer->last_line);
             }
             at_least_one_message_printed = 1;
         }

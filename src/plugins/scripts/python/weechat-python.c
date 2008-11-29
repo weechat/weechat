@@ -93,28 +93,47 @@ weechat_python_exec (struct t_plugin_script *script,
                     {
                         if (argv[5])
                         {
-                            rc = PyObject_CallFunction (evFunc, "ssssss", argv[0],
-                                                        argv[1], argv[2], argv[3],
-                                                        argv[4], argv[5]);
+                            if (argv[6])
+                            {
+                                rc = PyObject_CallFunction (evFunc, "sssssss", argv[0],
+                                                            argv[1], argv[2], argv[3],
+                                                            argv[4], argv[5], argv[6]);
+                            }
+                            else
+                            {
+                                rc = PyObject_CallFunction (evFunc, "ssssss", argv[0],
+                                                            argv[1], argv[2], argv[3],
+                                                            argv[4], argv[5]);
+                            }
                         }
                         else
+                        {
                             rc = PyObject_CallFunction (evFunc, "sssss", argv[0],
                                                         argv[1], argv[2], argv[3],
                                                         argv[4]);
+                        }
                     }
                     else
+                    {
                         rc = PyObject_CallFunction (evFunc, "ssss", argv[0],
                                                     argv[1], argv[2], argv[3]);
+                    }
                 }
                 else
+                {
                     rc = PyObject_CallFunction (evFunc, "sss", argv[0],
                                                 argv[1], argv[2]);
+                }
             }
             else
+            {
                 rc = PyObject_CallFunction (evFunc, "ss", argv[0], argv[1]);
+            }
         }
         else
+        {
             rc = PyObject_CallFunction (evFunc, "s", argv[0]);
+        }
     }
     else
         rc = PyObject_CallFunction (evFunc, NULL);

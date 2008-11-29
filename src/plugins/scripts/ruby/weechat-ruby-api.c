@@ -2887,10 +2887,11 @@ int
 weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                 time_t date,
                                 int tags_count, const char **tags,
+                                int displayed, int highlight,
                                 const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[6];
+    char *ruby_argv[8];
     static char timebuffer[64];
     int *rc, ret;
     
@@ -2904,9 +2905,11 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     ruby_argv[0] = script_ptr2str (buffer);
     ruby_argv[1] = timebuffer;
     ruby_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    ruby_argv[3] = (char *)prefix;
-    ruby_argv[4] = (char *)message;
-    ruby_argv[5] = NULL;
+    ruby_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+    ruby_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+    ruby_argv[5] = (char *)prefix;
+    ruby_argv[6] = (char *)message;
+    ruby_argv[7] = NULL;
     
     rc = (int *) weechat_ruby_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2924,6 +2927,10 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         free (ruby_argv[0]);
     if (ruby_argv[2])
         free (ruby_argv[2]);
+    if (ruby_argv[3])
+        free (ruby_argv[3]);
+    if (ruby_argv[4])
+        free (ruby_argv[4]);
     
     return ret;
 }

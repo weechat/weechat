@@ -88,6 +88,16 @@ weechat_lua_exec (struct t_plugin_script *script,
                     {
                         argc = 5;
                         lua_pushstring (lua_current_interpreter, argv[4]);
+                        if (argv[5])
+                        {
+                            argc = 6;
+                            lua_pushstring (lua_current_interpreter, argv[5]);
+                            if (argv[6])
+                            {
+                                argc = 7;
+                                lua_pushstring (lua_current_interpreter, argv[6]);
+                            }
+                        }
                     }
                 }
             }

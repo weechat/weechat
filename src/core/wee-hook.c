@@ -1021,21 +1021,19 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
  */
 
 void
-hook_print_exec (struct t_gui_buffer *buffer, time_t date, int tags_count,
-                 const char **tags_array, const char *prefix,
-                 const char *message)
+hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_hook *ptr_hook, *next_hook;
     char *prefix_no_color, *message_no_color;
     int tags_match, tag_found, i, j;
     
-    if (!message || !message[0])
+    if (!line->message || !line->message[0])
         return;
     
-    prefix_no_color = (prefix) ?
-        (char *)gui_color_decode ((unsigned char *)prefix) : NULL;
+    prefix_no_color = (line->prefix) ?
+        (char *)gui_color_decode ((unsigned char *)line->prefix) : NULL;
     
-    message_no_color = (char *)gui_color_decode ((unsigned char *)message);
+    message_no_color = (char *)gui_color_decode ((unsigned char *)line->message);
     if (!message_no_color)
     {
         free (prefix_no_color);
@@ -1061,17 +1059,17 @@ hook_print_exec (struct t_gui_buffer *buffer, time_t date, int tags_count,
             if (HOOK_PRINT(ptr_hook, tags_array))
             {
                 /* if there are tags in message printed */
-                if (tags_array)
+                if (line->tags_array)
                 {
                     tags_match = 1;
                     for (i = 0; i < HOOK_PRINT(ptr_hook, tags_count); i++)
                     {
                         /* search for tag in message */
                         tag_found = 0;
-                        for (j = 0; j < tags_count; j++)
+                        for (j = 0; j < line->tags_count; j++)
                         {
                             if (string_strcasecmp (HOOK_PRINT(ptr_hook, tags_array)[i],
-                                                   tags_array[j]) != 0)
+                                                   line->tags_array[j]) != 0)
                             {
                                 tag_found = 1;
                                 break;
@@ -1096,10 +1094,11 @@ hook_print_exec (struct t_gui_buffer *buffer, time_t date, int tags_count,
             {
                 ptr_hook->running = 1;
                 (void) (HOOK_PRINT(ptr_hook, callback))
-                    (ptr_hook->callback_data, buffer, date,
-                     tags_count, tags_array,
-                     (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : prefix,
-                     (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : message);
+                    (ptr_hook->callback_data, buffer, line->date,
+                     line->tags_count, (const char **)line->tags_array,
+                     (int)line->displayed, (int)line->highlight,
+                     (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : line->prefix,
+                     (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : line->message);
                 ptr_hook->running = 0;
             }
         }

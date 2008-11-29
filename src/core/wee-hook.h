@@ -25,6 +25,7 @@
 #endif
 
 struct t_gui_buffer;
+struct t_gui_line;
 struct t_gui_completion;
 struct t_weelist;
 struct t_infolist;
@@ -145,7 +146,8 @@ struct t_hook_connect
 
 typedef int (t_hook_callback_print)(void *data, struct t_gui_buffer *buffer,
                                     time_t date, int tags_count,
-                                    const char **tags, const char *prefix,
+                                    const char **tags, int displayed,
+                                    int highlight, const char *prefix,
                                     const char *message);
 
 struct t_hook_print
@@ -270,9 +272,7 @@ extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   t_hook_callback_print *callback,
                                   void *callback_data);
 extern void hook_print_exec (struct t_gui_buffer *buffer,
-                             time_t date, int tags_count,
-                             const char **tags_array, const char *prefix,
-                             const char *message);
+                             struct t_gui_line *line);
 extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    const char *signal,
                                    t_hook_callback_signal *callback,
