@@ -107,7 +107,7 @@ weechat_aspell_config_change_default_dict (void *data,
     (void) data;
     (void) option;
     
-    weechat_aspell_create_spellers (weechat_current_buffer);
+    weechat_aspell_create_spellers (weechat_current_buffer ());
 }
 
 /*
@@ -122,7 +122,7 @@ weechat_aspell_config_dict_change (void *data,
     (void) data;
     (void) option;
     
-    weechat_aspell_create_spellers (weechat_current_buffer);
+    weechat_aspell_create_spellers (weechat_current_buffer ());
 }
 
 /*
@@ -141,7 +141,7 @@ weechat_aspell_config_dict_delete_option (void *data,
     (void) section;
     
     weechat_config_option_free (option);
-    weechat_aspell_create_spellers (weechat_current_buffer);
+    weechat_aspell_create_spellers (weechat_current_buffer ());
     
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -209,7 +209,7 @@ weechat_aspell_config_dict_create_option (void *data,
                         option_name, value);
     }
     else
-        weechat_aspell_create_spellers (weechat_current_buffer);
+        weechat_aspell_create_spellers (weechat_current_buffer ());
     
     return rc;
 }

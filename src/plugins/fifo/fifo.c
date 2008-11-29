@@ -185,7 +185,7 @@ fifo_exec (const char *text)
     if (text2[0] == '*')
     {
         pos_msg = text2 + 1;
-        ptr_buffer = weechat_current_buffer;
+        ptr_buffer = weechat_current_buffer ();
     }
     else
     {

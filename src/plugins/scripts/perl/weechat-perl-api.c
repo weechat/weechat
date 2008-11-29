@@ -3173,7 +3173,7 @@ static XS (XS_weechat_api_current_buffer)
 	PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_current_buffer);
+    result = script_ptr2str (weechat_current_buffer ());
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -3362,6 +3362,30 @@ static XS (XS_weechat_api_buffer_set)
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
     PERL_RETURN_OK;
+}
+
+/*
+ * weechat::current_window: get current window
+ */
+
+static XS (XS_weechat_api_current_window)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) items;
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+	PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_window ());
+    
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4633,6 +4657,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_get_string", XS_weechat_api_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_api_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_api_buffer_set, "weechat");
+    newXS ("weechat::current_window", XS_weechat_api_current_window, "weechat");
     newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
     newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
     newXS ("weechat::window_get_pointer", XS_weechat_api_window_get_pointer, "weechat");

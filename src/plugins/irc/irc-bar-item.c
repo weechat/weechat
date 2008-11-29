@@ -52,7 +52,7 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
     (void) max_height;
     
     if (!window)
-        window = weechat_current_window;
+        window = weechat_current_window ();
     
     buffer = weechat_window_get_pointer (window, "buffer");
     
@@ -93,7 +93,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     (void) max_height;
     
     if (!window)
-        window = weechat_current_window;
+        window = weechat_current_window ();
     
     buf_name[0] = '\0';
     modes[0] = '\0';
@@ -251,7 +251,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     (void) max_height;
     
     if (!window)
-        window = weechat_current_window;
+        window = weechat_current_window ();
     
     buffer = weechat_window_get_pointer (window, "buffer");
     

@@ -291,6 +291,32 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
 {
     if (window && property)
     {
+        if (string_strcasecmp (property, "win_x") == 0)
+            return window->win_x;
+        if (string_strcasecmp (property, "win_y") == 0)
+            return window->win_y;
+        if (string_strcasecmp (property, "win_width") == 0)
+            return window->win_width;
+        if (string_strcasecmp (property, "win_height") == 0)
+            return window->win_height;
+        if (string_strcasecmp (property, "win_width_pct") == 0)
+            return window->win_width_pct;
+        if (string_strcasecmp (property, "win_height_pct") == 0)
+            return window->win_height_pct;
+        if (string_strcasecmp (property, "win_chat_x") == 0)
+            return window->win_chat_x;
+        if (string_strcasecmp (property, "win_chat_y") == 0)
+            return window->win_chat_y;
+        if (string_strcasecmp (property, "win_chat_width") == 0)
+            return window->win_chat_width;
+        if (string_strcasecmp (property, "win_chat_height") == 0)
+            return window->win_chat_height;
+        if (string_strcasecmp (property, "first_line_displayed") == 0)
+            return window->first_line_displayed;
+        if (string_strcasecmp (property, "scroll") == 0)
+            return window->scroll;
+        if (string_strcasecmp (property, "scroll_lines_after") == 0)
+            return window->scroll_lines_after;
     }
     
     return 0;

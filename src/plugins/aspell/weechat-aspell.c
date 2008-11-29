@@ -970,7 +970,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_modifier ("weechat_input_text_display",
                            &weechat_aspell_modifier_cb, NULL);
     
-    weechat_aspell_create_spellers (weechat_current_buffer);
+    weechat_aspell_create_spellers (weechat_current_buffer ());
     
     return WEECHAT_RC_OK;
 }

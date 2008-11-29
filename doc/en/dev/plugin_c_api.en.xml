@@ -6345,7 +6345,7 @@ weechat_buffer_close (my_buffer);
       <para>
         Prototype:
 <programlisting>
-int weechat_buffer_integer (struct t_gui_buffer *buffer, const char *property);
+int weechat_buffer_get_integer (struct t_gui_buffer *buffer, const char *property);
 </programlisting>
       </para>
       <para>
@@ -6878,6 +6878,262 @@ char *str = weechat_buffer_string_replace_local_var (my_buffer,
 /* str contains "test with my_value" */
 /* ... */
 free (str);
+</screen>
+      </para>
+    </section>
+    
+  </section>
+  
+  <!-- ============================[ windows ]============================= -->
+  
+  <section id="secPluginCApi_windows">
+    <title>Windows</title>
+    
+    <para>
+      Functions to query windows.
+    </para>
+    
+    <section id="secPluginCApi_weechat_current_window">
+      <title>weechat_current_windowr</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_window *weechat_current_window ();
+</programlisting>
+      </para>
+      <para>
+        Return pointer to current window.
+      </para>
+      <para>
+        Return value: pointer to current window.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_window *current_window = weechat_current_window ();
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_window_get_integer">
+      <title>weechat_window_get_integer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_window_get_integer (struct t_gui_window *window, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get integer value of a window property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>window</option>: window pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>win_x</entry>
+                      <entry>
+                        X position of window in terminal (0 is first column)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_y</entry>
+                      <entry>
+                        Y position of window in terminal (0 is first column)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_width</entry>
+                      <entry>width of window, in chars</entry>
+                    </row>
+                    <row>
+                      <entry>win_height</entry>
+                      <entry>height of window, in chars</entry>
+                    </row>
+                    <row>
+                      <entry>win_width_pct</entry>
+                      <entry>
+                        percentage size, compared to parent window (if 50,
+                        width is half)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_height_pct</entry>
+                      <entry>
+                        percentage size, compared to parent window (if 50,
+                        height is half)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_chat_x</entry>
+                      <entry>
+                        X position of chat window in terminal (0 is first
+                        column)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_chat_y</entry>
+                      <entry>
+                        Y position of chat window in terminal (0 is first
+                        column)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>win_chat_width</entry>
+                      <entry>width of chat window, in chars</entry>
+                    </row>
+                    <row>
+                      <entry>win_chat_height</entry>
+                      <entry>height of chat window, in chars</entry>
+                    </row>
+                    <row>
+                      <entry>first_line_displayed</entry>
+                      <entry>
+                        1 if first line of buffer is displayed on screen,
+                        otherwise 0
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>scroll</entry>
+                      <entry>
+                        1 if scroll is active on window (last line not
+                        displayed)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>scroll_lines_after</entry>
+                      <entry>
+                        number of lines not displayed after last one displayed
+                        (when scrolling)
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: integer value of property.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
+                weechat_window_get_integer (weechat_current_window, "win_x"),
+                weechat_window_get_integer (weechat_current_window, "win_y"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_window_get_string">
+      <title>weechat_window_get_string</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_window_get_string (struct t_gui_window *window, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get string value of a window property. NOT USED TODAY, reserved for
+        future version.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>window</option>: window pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string value of property.
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_window_get_pointer">
+      <title>weechat_window_get_pointer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void *weechat_window_get_pointer (struct t_gui_window *window, const char *property);
+</programlisting>
+      </para>
+      <para>
+        Get pointer value of a window property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>window</option>: window pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>current</entry>
+                      <entry>current window pointer</entry>
+                    </row>
+                    <row>
+                      <entry>buffer</entry>
+                      <entry>pointer to buffer displayed by window</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer value of property.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "current window pointer is: %lx, buffer displayed is: %lx",
+                weechat_window_get_pointer (NULL, "current"),
+                weechat_window_get_integer (weechat_current_window, "buffer"));
 </screen>
       </para>
     </section>

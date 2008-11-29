@@ -3850,7 +3850,7 @@ weechat_ruby_api_current_buffer (VALUE class)
         RUBY_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_current_buffer);
+    result = script_ptr2str (weechat_current_buffer ());
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4076,6 +4076,30 @@ weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
                         c_value);
     
     RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_current_window: get current window
+ */
+
+static VALUE
+weechat_ruby_api_current_window (VALUE class)
+{
+    char *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_window ());
+    
+    RUBY_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -5653,6 +5677,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "buffer_get_string", &weechat_ruby_api_buffer_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_pointer", &weechat_ruby_api_buffer_get_pointer, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_set", &weechat_ruby_api_buffer_set, 3);
+    rb_define_module_function (ruby_mWeechat, "current_window", &weechat_ruby_api_current_window, 0);
     rb_define_module_function (ruby_mWeechat, "window_get_integer", &weechat_ruby_api_window_get_integer, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_string", &weechat_ruby_api_window_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_pointer", &weechat_ruby_api_window_get_pointer, 2);

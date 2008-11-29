@@ -930,7 +930,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                __close_callback, __close_callback_data)
 #define weechat_buffer_search(__plugin, __name)                         \
     weechat_plugin->buffer_search(__plugin, __name)
-#define weechat_current_buffer                                          \
+#define weechat_current_buffer()                                        \
     weechat_plugin->buffer_search(NULL, NULL)
 #define weechat_buffer_clear(__buffer)                                  \
     weechat_plugin->buffer_clear(__buffer)
@@ -956,7 +956,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->window_get_string(__window, __property)
 #define weechat_window_get_pointer(__window, __property)                \
     weechat_plugin->window_get_pointer(__window, __property)
-#define weechat_current_window                                          \
+#define weechat_current_window()                                        \
     weechat_plugin->window_get_pointer(NULL, "current")
 
 /* nicklist */

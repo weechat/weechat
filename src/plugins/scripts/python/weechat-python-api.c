@@ -3365,7 +3365,7 @@ weechat_python_api_current_buffer (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_current_buffer);
+    result = script_ptr2str (weechat_current_buffer ());
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -3567,6 +3567,31 @@ weechat_python_api_buffer_set (PyObject *self, PyObject *args)
                         value);
     
     PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_current_window: get current window
+ */
+
+static PyObject *
+weechat_python_api_current_window (PyObject *self, PyObject *args)
+{
+    char *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    (void) args;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_window ());
+    
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4922,6 +4947,7 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },
+    { "current_window", &weechat_python_api_current_window, METH_VARARGS, "" },
     { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
     { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },
     { "window_get_pointer", &weechat_python_api_window_get_pointer, METH_VARARGS, "" },

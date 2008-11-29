@@ -3748,7 +3748,7 @@ weechat_lua_api_current_buffer (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_current_buffer);
+    result = script_ptr2str (weechat_current_buffer ());
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3982,6 +3982,29 @@ weechat_lua_api_buffer_set (lua_State *L)
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
     LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_current_window: get current window
+ */
+
+static int
+weechat_lua_api_current_window (lua_State *L)
+{
+    char *result;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+        LUA_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_current_window ());
+    
+    LUA_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -5893,6 +5916,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },
+    { "current_window", &weechat_lua_api_current_window },
     { "window_get_integer", &weechat_lua_api_window_get_integer },
     { "window_get_string", &weechat_lua_api_window_get_string },
     { "window_get_pointer", &weechat_lua_api_window_get_pointer },
