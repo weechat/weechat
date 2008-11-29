@@ -5133,6 +5133,8 @@ struct t_hook *weechat_hook_print (
                     time_t date,
                     int tags_count,
                     const char **tags,
+                    int displayed,
+                    int highlight,
                     const char *prefix,
                     const char *message),
     void *callback_data);
@@ -5208,6 +5210,18 @@ struct t_hook *weechat_hook_print (
                       <entry>tags for line</entry>
                     </row>
                     <row>
+                      <entry>int</entry>
+                      <entry>displayed</entry>
+                      <entry>
+                        1 if line is displayed, 0 if it is filtered
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>highlight</entry>
+                      <entry>1 if line has highlight, otherwise 0</entry>
+                    </row>
+                    <row>
                       <entry>const char *</entry>
                       <entry>prefix</entry>
                       <entry>prefix</entry>
@@ -5239,6 +5253,7 @@ struct t_hook *weechat_hook_print (
 int
 my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
              int tags_count, const char **tags,
+             int displayed, int highlight,
              const char *prefix, const char *message)
 {
     /* ... */
