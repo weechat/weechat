@@ -2905,6 +2905,8 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     ruby_argv[0] = script_ptr2str (buffer);
     ruby_argv[1] = timebuffer;
     ruby_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    if (!ruby_argv[2])
+        ruby_argv[2] = strdup ("");
     ruby_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
     ruby_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
     ruby_argv[5] = (char *)prefix;

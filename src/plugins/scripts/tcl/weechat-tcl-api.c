@@ -2734,6 +2734,8 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     tcl_argv[0] = script_ptr2str (buffer);
     tcl_argv[1] = timebuffer;
     tcl_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    if (!tcl_argv[2])
+        tcl_argv[2] = strdup ("");
     tcl_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
     tcl_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
     tcl_argv[5] = (char *)prefix;

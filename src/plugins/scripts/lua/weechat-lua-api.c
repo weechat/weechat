@@ -2830,6 +2830,8 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     lua_argv[0] = script_ptr2str (buffer);
     lua_argv[1] = timebuffer;
     lua_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    if (!lua_argv[2])
+        lua_argv[2] = strdup ("");
     lua_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
     lua_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
     lua_argv[5] = (char *)prefix;

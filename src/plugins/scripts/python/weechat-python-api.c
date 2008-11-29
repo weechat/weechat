@@ -2522,6 +2522,8 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     python_argv[0] = script_ptr2str (buffer);
     python_argv[1] = timebuffer;
     python_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    if (!python_argv[2])
+        python_argv[2] = strdup ("");
     python_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
     python_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
     python_argv[5] = (char *)prefix;

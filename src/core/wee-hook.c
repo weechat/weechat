@@ -1052,6 +1052,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
             && (!HOOK_PRINT(ptr_hook, buffer)
                 || (buffer == HOOK_PRINT(ptr_hook, buffer)))
             && (!HOOK_PRINT(ptr_hook, message)
+                || !HOOK_PRINT(ptr_hook, message)[0]
                 || string_strcasestr (prefix_no_color, HOOK_PRINT(ptr_hook, message))
                 || string_strcasestr (message_no_color, HOOK_PRINT(ptr_hook, message))))
         {

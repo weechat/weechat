@@ -2362,6 +2362,8 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[0] = script_ptr2str (buffer);
     perl_argv[1] = timebuffer;
     perl_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    if (!perl_argv[2])
+        perl_argv[2] = strdup ("");
     perl_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
     perl_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
     perl_argv[5] = (char *)prefix;
