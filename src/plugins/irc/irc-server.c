@@ -2729,8 +2729,21 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
     {
         if (server->is_connected)
         {
+            /* set away flag for nick on channel */
             if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 irc_channel_set_away (ptr_channel, nick, is_away);
+            
+            /* set/del "away" local variable */
+            if (is_away)
+            {
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_set_away", server->away_message);
+            }
+            else
+            {
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_del_away", "");
+            }
         }
     }
 }
