@@ -7164,9 +7164,361 @@ weechat_printf (NULL, "current window pointer is: %lx, buffer displayed is: %lx"
       Functions for buffer nicklist.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_nicklist_add_group">
+      <title>weechat_nicklist_add_group</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_nick_group *weechat_nicklist_add_group (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick_group *parent_group,
+    const char *name,
+    const char *color,
+    int visible);
+</programlisting>
+      </para>
+      <para>
+        Add a group in a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>parent_group</option>: pointer to parent of group, NULL
+              if group has no parent (nicklist root)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: group name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>visible</option>: 1 if group and sub-groups/nicks are
+              visible, 0 if they are hidden
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>color</option>: color option name
+              ("weechat.color.xxx" or "file.section.option") or color name
+              ("blue", "red",..) or "bar_fg"/"bar_bg"/"bar_delim" (bar
+              foreground/background/delimiter)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <note>
+        <para>
+          The group name can begin with one or more digits, followed by pipe,
+          and then group name. When such string is found at beginning, it's
+          used to sort groups in nicklist. For examples groups "1|test" and
+          "2|abc" will be sorted: "test" first, "abc" second, whereas "test"
+          and "abc" will be sorted: "abc" first, "test" second.
+        </para>
+      </note>
+      <para>
+        Return value: pointer to new group, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_nick_group *my_group =
+    weechat_nicklist_add_group (my_buffer, my_parent_group,
+                                "test_group", "weechat.color.nicklist_group", 1);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_search_group">
+      <title>weechat_nicklist_search_group</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_nick_group *weechat_nicklist_search_group (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick_group *from_group,
+    const char *name);
+</programlisting>
+      </para>
+      <para>
+        Search a group in a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>from_group</option>: search from this group only, if NULL,
+              then search in whole nicklist
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: group name to search
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to group found, NULL if not found.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_nick_group *ptr_group =
+    weechat_nicklist_search_group (my_buffer, NULL, "test_group");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_add_nick">
+      <title>weechat_nicklist_add_nick</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_nick_group *weechat_nicklist_add_nick (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick_group *group,
+    const char *name,
+    const char *color,
+    char prefix,
+    const char *prefix_color,
+    int visible);
+</programlisting>
+      </para>
+      <para>
+        Add a nick in a group.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>group</option>: group pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: nick name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>color</option>: color option name
+              ("weechat.color.xxx" or "file.section.option") or color name
+              ("blue", "red",..) or "bar_fg"/"bar_bg"/"bar_delim" (bar
+              foreground/background/delimiter)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>prefix</option>: prefix displayed before nick
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>prefix_color</option>: color option name
+              ("weechat.color.xxx" or "file.section.option") or color name
+              ("blue", "red",..) or "bar_fg"/"bar_bg"/"bar_delim" (bar
+              foreground/background/delimiter)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>visible</option>: 1 if nick is visible, 0 if it is hidden
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new nick, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_nick *my_nick =
+    weechat_nicklist_add_nick (my_buffer, my_group,
+                               "test_nick",
+                               (nick_away) ? "weechat.color.nicklist_away" : "bar_fg",
+                               '@', "lightgreen",
+                               1);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_search_nick">
+      <title>weechat_nicklist_search_nick</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_nick *weechat_nicklist_search_nick (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick_group *from_group,
+    const char *name);
+</programlisting>
+      </para>
+      <para>
+        Search a nick in a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>from_group</option>: search from this group only, if NULL,
+              then search in whole nicklist
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: nick name to search
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to nick found, NULL if not found.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_nick *ptr_nick =
+    weechat_nicklist_search_nick (my_buffer, NULL, "test_nick");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_remove_group">
+      <title>weechat_nicklist_remove_group</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_nicklist_remove_group (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick_group *group);
+</programlisting>
+      </para>
+      <para>
+        Remove a group from a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>group</option>: group pointer to remove (all
+              sub-groups/nicks will be removed too)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_nicklist_remove_group (my_buffer, my_group);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_remove_nick">
+      <title>weechat_nicklist_remove_nick</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_nicklist_remove_nick (
+    struct t_gui_buffer *buffer,
+    struct t_gui_nick *nick);
+</programlisting>
+      </para>
+      <para>
+        Remove a nick from a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>nick</option>: nick pointer to remove
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_nicklist_remove_nick (my_buffer, my_nick);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_nicklist_remove_all">
+      <title>weechat_nicklist_remove_all</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_nicklist_remove_all (struct t_gui_buffer *buffer);
+</programlisting>
+      </para>
+      <para>
+        Remove all groups/nicks from a nicklist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_nicklist_remove_all (my_buffer);
+</screen>
+      </para>
+    </section>
     
   </section>
   
