@@ -1223,6 +1223,18 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                     {
                         strcat (buf, " ");
                     }
+                    if (strchr (ptr_group->color, '.'))
+                    {
+                        config_file_search_with_string (ptr_group->color,
+                                                        NULL, NULL, &ptr_option,
+                                                        NULL);
+                        if (ptr_option)
+                            strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    }
+                    else
+                    {
+                        strcat (buf, gui_color_get_custom (ptr_group->color));
+                    }
                     strcat (buf, gui_nicklist_get_group_start (ptr_group->name));
                 }
             }

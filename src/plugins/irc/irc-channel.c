@@ -116,15 +116,15 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             weechat_buffer_set (new_buffer, "nicklist", "1");
         weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OP,
-                                    "nicklist_group", 1);
+                                    "weechat.color.nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_HALFOP,
-                                    "nicklist_group", 1);
+                                    "weechat.color.nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_VOICE,
-                                    "nicklist_group", 1);
+                                    "weechat.color.nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANUSER,
-                                    "nicklist_group", 1);
+                                    "weechat.color.nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_NORMAL,
-                                    "nicklist_group", 1);
+                                    "weechat.color.nicklist_group", 1);
     }
     
     /* set highlights settings on channel buffer */
