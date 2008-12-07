@@ -1,4 +1,4 @@
-?package(weechat-curses):needs="text" section="Apps/Net" \
+?package(weechat-curses):needs="text" section="Applications/Network/Communication" \
 		title="weechat-curses" \
 		icon="/usr/share/pixmaps/weechat.xpm" \
 		command="/usr/bin/weechat-curses"

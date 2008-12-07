@@ -1,0 +1,7 @@
+usr/share/locale/
+usr/lib/weechat/plugins/alias.so
+usr/lib/weechat/plugins/xfer.so
+usr/lib/weechat/plugins/notify.so
+usr/lib/weechat/plugins/irc.so
+usr/lib/weechat/plugins/charset.so
+usr/lib/weechat/plugins/logger.so
