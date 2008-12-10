@@ -37,5 +37,5 @@ relay_la_SOURCES = relay.c \
                    relay-upgrade.c \
                    relay-upgrade.h
 
-relau_la_LDFLAGS = -module
+relay_la_LDFLAGS = -module
 relay_la_LIBADD  = $(RELAY_LFLAGS)
