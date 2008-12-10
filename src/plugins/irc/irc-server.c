@@ -2762,6 +2762,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
+    long unsigned int value;
     const char *plugin_name, *plugin_id, *type, *filename;
     int spaces_in_name;
     
@@ -2778,7 +2779,8 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
+            sscanf (plugin_id, "%lx", &value);
+            server = (struct t_irc_server *)value;
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
@@ -2835,6 +2837,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
+    long unsigned int value;
     const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
@@ -2851,7 +2854,8 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
+            sscanf (plugin_id, "%lx", &value);
+            server = (struct t_irc_server *)value;
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
@@ -2892,6 +2896,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
 {
     struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
+    long unsigned int value;
     const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
@@ -2908,7 +2913,8 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
+            sscanf (plugin_id, "%lx", &value);
+            server = (struct t_irc_server *)value;
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
