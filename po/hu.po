@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1854,6 +1854,22 @@ msgstr "felhasználónév a proxy szerverhez"
 
 msgid "password for proxy server"
 msgstr "jelszó a proxy szerverhez"
+
+msgid "bytes"
+msgstr "byte"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+#, fuzzy
+msgid "byte"
+msgstr "byte"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -4369,6 +4385,158 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr "  [R] Eltávolítás"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Régi DCC törlése"
+
+#, fuzzy
+msgid "  [Q] Close this buffer"
+msgstr "  [Q] DCC nézet bezárása"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr "%s%s%s távol: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr "DCC: fájl %s%s%s"
+
+msgid "List of clients for relay"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Kapcsolódás"
+
+#, fuzzy
+msgid "waiting auth"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "auth failed"
+msgstr "Sikertelen"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "csatlakozva"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr "Lekapcsolódott a szerverről!\n"
+
+msgid "Clients for relay:"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+msgid "relay control"
+msgstr ""
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+
+#, fuzzy
+msgid "text color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "background color"
+msgstr "nevek háttere"
+
+#, fuzzy
+msgid "text color of selected client line"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "\"connecting\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"waiting authentication\" status"
+msgstr "\"waiting\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"connected\" status"
+msgstr "\"connecting\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"authentication failed\" status"
+msgstr "\"failed\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"disconnected\" status"
+msgstr "\"connecting\" dcc státusz színe"
+
+#, fuzzy
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+"korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
+"használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
+"port intervallum, pl. 5000-5015, üresen hagyva tetszőleges port)"
+
+#, fuzzy
+msgid "list of relay clients"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4599,37 +4767,11 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
-msgid "bytes"
-msgstr "byte"
-
-msgid "KB"
-msgstr "KB"
-
-msgid "MB"
-msgstr "MB"
-
-msgid "GB"
-msgstr "GB"
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
 msgid "  [A] Accept"
 msgstr "  [A] Elfogadás"
 
 msgid "  [C] Cancel"
 msgstr "  [C] Mégsem"
-
-msgid "  [R] Remove"
-msgstr "  [R] Eltávolítás"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Régi DCC törlése"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] DCC nézet bezárása"
 
 msgid "xfer chat"
 msgstr ""
@@ -4644,10 +4786,6 @@ msgstr "hotlist törlése"
 #, fuzzy
 msgid "waiting"
 msgstr "Várakozás"
-
-#, fuzzy
-msgid "connecting"
-msgstr "Kapcsolódás"
 
 #, fuzzy
 msgid "active"
@@ -4821,9 +4959,12 @@ msgstr "Nincs szerver.\n"
 msgid "xfer control"
 msgstr ""
 
-#, fuzzy
-msgid "Open buffer with xfer list"
-msgstr "Nyitott pufferek:\n"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -4832,24 +4973,12 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
 #, fuzzy
-msgid "text color"
-msgstr "üzenetek színe"
-
-#, fuzzy
-msgid "background color"
-msgstr "nevek háttere"
-
-#, fuzzy
 msgid "text color of selected xfer line"
 msgstr "szerver nevének színe"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
 msgstr "\"waiting\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"connecting\" status"
-msgstr "\"connecting\" dcc státusz színe"
 
 #, fuzzy
 msgid "text color for \"active\" status"
@@ -4979,6 +5108,30 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "timeout for relay request (in seconds)"
+#~ msgstr "dcc kérések időkorlátja (másodpercben)"
+
+#, fuzzy
+#~ msgid "Open buffer with relay clients list"
+#~ msgstr "Nyitott pufferek:\n"
+
+#, fuzzy
+#~ msgid "Open buffer with xfer list"
+#~ msgstr "Nyitott pufferek:\n"
+
+#, fuzzy
+#~ msgid "%s%s: disconnecting client @ %s"
+#~ msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot bind socket"
+#~ msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy
+#~ msgid "  [Q] Close client list"
+#~ msgstr "  [Q] DCC nézet bezárása"
 
 #, fuzzy
 #~ msgid "use a proxy server"
@@ -5134,10 +5287,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-TOVÁBB-"
-
-#, fuzzy
-#~ msgid "%s: disconnected from server"
-#~ msgstr "Lekapcsolódott a szerverről!\n"
 
 #, fuzzy
 #~ msgid "%s: connecting to server %s/%d%s%s..."

@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-11-23
+ChangeLog - 2008-12-10
 
 
 Version 0.2.7 (under dev!):
+   * new relay plugin (network communication between WeeChat and remote
+     application)
    * add support for more than one proxy, with proxy selection for each IRC
      server (task #6859)
    * add smart join/part/quit message filter in IRC plugin (task #8503)
@@ -48,7 +50,7 @@ Version 0.2.7 (under dev!):
    * add /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)
    * new plugins: alias, debug, demo, fifo, irc, logger, notify, tcl, trigger,
-     xfer
+     xfer, relay
    * add hooks: command, timer, file descriptor, connection, print, signal,
      config, completion, modifier, info, infolist
    * new plugin API with many new functions: hooks, buffer management, bars,

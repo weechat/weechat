@@ -54,7 +54,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}
 Suggests: weechat-scripts
 Description: Plugins for WeeChat
  This package provides some plugins to enhance WeeChat. It currently ships
- the following plugins: Perl, Python, Ruby, Lua, Tcl, Aspell and Fifo.
+ the following plugins: Perl, Python, Ruby, Lua, Tcl, Aspell, Relay and Fifo.
 
 Package: weechat-doc
 Section: doc

@@ -722,7 +722,9 @@ char *weechat_string_strip (
       </note>
       <para>
         Example:
-        <screen>char *str = weechat_strip (string, " ", 0, 1); /* remove spaces at end of string */</screen>
+<screen>
+char *str = weechat_string_strip (string, " ", 0, 1); /* remove spaces at end of string */
+</screen>
       </para>
     </section>
     
@@ -857,7 +859,7 @@ char **weechat_string_explode (
       </note>
       <para>
         Examples:
-        <screen>
+<screen>
 char **argv;
 int argc;
 argv = weechat_string_explode ("abc de  fghi", " ", 0, 0, &amp;argc);
@@ -877,7 +879,7 @@ argv = weechat_string_explode ("abc de  fghi", " ", 1, 0, &amp;argc);
             argc == 3
 */
 weechat_string_free_exploded (argv);
-        </screen>
+</screen>
       </para>
     </section>
     
@@ -909,13 +911,13 @@ void weechat_string_free_exploded (char **exploded_string);
       </para>
       <para>
         Example:
-        <screen>
+<screen>
 char *argv;
 int argc;
 argv = weechat_string_explode (string, " ", 0, 0, &amp;argc);
 ...
 weechat_string_free_exploded (, argv);
-        </screen>
+</screen>
       </para>
     </section>
     
@@ -959,13 +961,13 @@ char *weechat_string_build_with_exploded (
       </note>
       <para>
         Example:
-        <screen>
+<screen>
 char **argv;
 int argc;
 argv = weechat_string_explode ("abc def ghi", " ", 0, 0, &amp;argc);
 char *string = weechat_string_build_with_exploded (argv, ";");
 /* string == "abc;def;ghi" */
-        </screen>
+</screen>
       </para>
     </section>
     
@@ -1040,11 +1042,60 @@ void weechat_string_free_splitted_command (char **splitted_command);
       </para>
       <para>
         Example:
-        <screen>
+<screen>
 char **argv = weechat_string_split_command ("/command1;/command2", ';');
 ...
 weechat_string_free_splitted_command (argv);
-        </screen>
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_string_format_size">
+      <title>weechat_string_format_size</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+char *weechat_string_format_size (unsigned long size);
+</programlisting>
+      </para>
+      <para>
+        Build a string with formated size and translated unit.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>size</option>: size
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string with formated size and translated unit.
+      </para>
+      <note>
+        <para>
+          Result has to be free by a call to "free" after use.
+        </para>
+      </note>
+      <para>
+        Example:
+<screen>
+char *str = weechat_string_format_size (0); /* str == "0 byte" (english locale) */
+if (str)
+    free (str);
+char *str = weechat_string_format_size (200); /* str == "200 bytes" (english locale) */
+if (str)
+    free (str);
+char *str = weechat_string_format_size (1536); /* str == "1.5 KB" (english locale) */
+if (str)
+    free (str);
+char *str = weechat_string_format_size (2097152); /* str == "2 MB" (english locale) */
+if (str)
+    free (str);
+</screen>
       </para>
     </section>
     
@@ -1123,10 +1174,10 @@ int weechat_utf8_is_valid (const char *string, char **error);
       </para>
       <para>
         Example:
-        <screen>
+<screen>
 char *error;
 if (weechat_utf8_is_valid (string, &amp;error)) ...
-        </screen>
+</screen>
       </para>
     </section>
     

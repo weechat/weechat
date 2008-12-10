@@ -55,5 +55,6 @@ extern char *string_iconv_to_internal (const char *charset, const char *string);
 extern char *string_iconv_from_internal (const char *charset,
                                          const char *string);
 extern void string_iconv_fprintf (FILE *file, const char *data, ...);
+extern char *string_format_size (unsigned long size);
 
 #endif /* wee-string.h */

@@ -66,10 +66,10 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "aspell"  => "o",  "charset" => "co",
                    "demo"    => "co", "fifo"    => "co",
                    "irc"     => "co", "logger"  => "co",
-                   "notify"  => "co", "perl"    => "",
-                   "python"  => "",   "ruby"    => "",
-                   "lua"     => "",   "tcl"     => "",
-                   "xfer"    => "co");
+                   "notify"  => "co", "relay"   => "co",
+                   "perl"    => "",   "python"  => "",
+                   "ruby"    => "",   "lua"     => "",
+                   "tcl"     => "",   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",

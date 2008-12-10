@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1826,6 +1826,22 @@ msgstr "nombre de usuario para el servidor proxy"
 
 msgid "password for proxy server"
 msgstr "contraseÃ±a para el servidor proxy"
+
+msgid "bytes"
+msgstr "bytes"
+
+msgid "KB"
+msgstr ""
+
+msgid "MB"
+msgstr ""
+
+msgid "GB"
+msgstr ""
+
+#, fuzzy
+msgid "byte"
+msgstr "bytes"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -4344,6 +4360,158 @@ msgstr "Plugin \"%s\" descargado.\n"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%s plugin \"%s\" no encontrado\n"
 
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr "  [R] Eliminar"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Purgar los viejos DCC"
+
+#, fuzzy
+msgid "  [Q] Close this buffer"
+msgstr "  [Q] Cerrar la vista DCC"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr "%s%s%s estÃ¡ ausente: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr "DCC: fichero %s%s%s"
+
+msgid "List of clients for relay"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Conectando"
+
+#, fuzzy
+msgid "waiting auth"
+msgstr "Esperando"
+
+#, fuzzy
+msgid "auth failed"
+msgstr "FallÃ³"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "conectado"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s error enviando datos al servidor IRC\n"
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr "Â¡Desconectado del servidor!\n"
+
+msgid "Clients for relay:"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+msgid "relay control"
+msgstr ""
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+
+#, fuzzy
+msgid "text color"
+msgstr "color para el texto de conversaciÃ³n"
+
+#, fuzzy
+msgid "background color"
+msgstr "color de fondo para los nombres de usuario"
+
+#, fuzzy
+msgid "text color of selected client line"
+msgstr "color para el nombre del servidor"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "color para el estado dcc \"conectando\""
+
+#, fuzzy
+msgid "text color for \"waiting authentication\" status"
+msgstr "color para el estado dcc \"esperando\""
+
+#, fuzzy
+msgid "text color for \"connected\" status"
+msgstr "color para el estado dcc \"conectando\""
+
+#, fuzzy
+msgid "text color for \"authentication failed\" status"
+msgstr "color para el estado dcc \"fallo\""
+
+#, fuzzy
+msgid "text color for \"disconnected\" status"
+msgstr "color para el estado dcc \"conectando\""
+
+#, fuzzy
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+"restringe el dcc de salida a utilizar Ãºnicamente los puertos del rango "
+"especificado (Ãºtil para NAT) (sintaxis: un puerto simple, e.g. 5000, o un "
+"rango de puertos, e.g. 5000-5015, un valor vacÃ­o significa cualquier puerto)"
+
+#, fuzzy
+msgid "list of relay clients"
+msgstr "Lista de alias:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client"
+msgstr "%s no ha sido posible crear el socket\n"
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr "%s no puede encontrar un puerto disponible para el DCC\n"
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4573,37 +4741,11 @@ msgstr "%s no es posible crear el servidor\n"
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
 
-msgid "bytes"
-msgstr "bytes"
-
-msgid "KB"
-msgstr ""
-
-msgid "MB"
-msgstr ""
-
-msgid "GB"
-msgstr ""
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
-
-msgid "  [R] Remove"
-msgstr "  [R] Eliminar"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Purgar los viejos DCC"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Cerrar la vista DCC"
 
 msgid "xfer chat"
 msgstr ""
@@ -4618,10 +4760,6 @@ msgstr "limpiar hotlist"
 #, fuzzy
 msgid "waiting"
 msgstr "Esperando"
-
-#, fuzzy
-msgid "connecting"
-msgstr "Conectando"
 
 #, fuzzy
 msgid "active"
@@ -4795,9 +4933,12 @@ msgstr "NingÃºn servidor.\n"
 msgid "xfer control"
 msgstr ""
 
-#, fuzzy
-msgid "Open buffer with xfer list"
-msgstr "BÃºfers abiertos:\n"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -4806,24 +4947,12 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
 #, fuzzy
-msgid "text color"
-msgstr "color para el texto de conversaciÃ³n"
-
-#, fuzzy
-msgid "background color"
-msgstr "color de fondo para los nombres de usuario"
-
-#, fuzzy
 msgid "text color of selected xfer line"
 msgstr "color para el nombre del servidor"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
 msgstr "color para el estado dcc \"esperando\""
-
-#, fuzzy
-msgid "text color for \"connecting\" status"
-msgstr "color para el estado dcc \"conectando\""
 
 #, fuzzy
 msgid "text color for \"active\" status"
@@ -4961,6 +5090,30 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "timeout for relay request (in seconds)"
+#~ msgstr "tiempo de espera para la peticiÃ³n dcc (en segundos)"
+
+#, fuzzy
+#~ msgid "Open buffer with relay clients list"
+#~ msgstr "BÃºfers abiertos:\n"
+
+#, fuzzy
+#~ msgid "Open buffer with xfer list"
+#~ msgstr "BÃºfers abiertos:\n"
+
+#, fuzzy
+#~ msgid "%s%s: disconnecting client @ %s"
+#~ msgstr "%s: ReconexiÃ³n al servidor en %d segundos\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot bind socket"
+#~ msgstr "%s no ha sido posible crear el socket\n"
+
+#, fuzzy
+#~ msgid "  [Q] Close client list"
+#~ msgstr "  [Q] Cerrar la vista DCC"
 
 #, fuzzy
 #~ msgid "use a proxy server"
@@ -5109,10 +5262,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-MÃS-"
-
-#, fuzzy
-#~ msgid "%s: disconnected from server"
-#~ msgstr "Â¡Desconectado del servidor!\n"
 
 #, fuzzy
 #~ msgid "%s: connecting to server %s/%d%s%s..."

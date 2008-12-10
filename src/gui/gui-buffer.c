@@ -1156,9 +1156,6 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
     if (!buffer)
         return;
     
-    /* remove buffer from hotlist */
-    gui_hotlist_remove_buffer (buffer);
-    
     /* remove all lines */
     gui_chat_line_free_all (buffer);
     

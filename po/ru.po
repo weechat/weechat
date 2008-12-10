@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1857,6 +1857,22 @@ msgstr "имя пользователя, используемое при под�
 
 msgid "password for proxy server"
 msgstr "пароль к proxy серверу"
+
+msgid "bytes"
+msgstr "байтов"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "MB"
+msgstr "МБ"
+
+msgid "GB"
+msgstr "ГБ"
+
+#, fuzzy
+msgid "byte"
+msgstr "байтов"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -4356,6 +4372,158 @@ msgstr "Plugin \"%s\" выгружен.\n"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%s plugin \"%s\" не найден\n"
 
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr "  [R] Удалить"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Очистить список"
+
+#, fuzzy
+msgid "  [Q] Close this buffer"
+msgstr "  [Q] Закрыть окно"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr "%s%s%s отсутствует: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr "DCC: файл %s%s%s"
+
+msgid "List of clients for relay"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Подключение"
+
+#, fuzzy
+msgid "waiting auth"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "auth failed"
+msgstr "Неудача"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "подключен"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr "Отключен от сервера!\n"
+
+msgid "Clients for relay:"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+msgid "relay control"
+msgstr ""
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+
+#, fuzzy
+msgid "text color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "background color"
+msgstr "фон ников"
+
+#, fuzzy
+msgid "text color of selected client line"
+msgstr "цвет названия сервера"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "цвет \"соединения\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"waiting authentication\" status"
+msgstr "цвет \"ожидания\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"connected\" status"
+msgstr "цвет \"соединения\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"authentication failed\" status"
+msgstr "цвет \"неудачных\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"disconnected\" status"
+msgstr "цвет \"соединения\" в окне DCC"
+
+#, fuzzy
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+"привязывает исходящие DCС соединения к определённому интервалу портов "
+"(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
+"портов, например 5000-5015, пустое значение означает любой порт)"
+
+#, fuzzy
+msgid "list of relay clients"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client"
+msgstr "%s невозможно создать сокет\n"
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr "%s не могу найти свободный порт для DCC\n"
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4586,37 +4754,11 @@ msgstr "%s не могу создать сервер\n"
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
-msgid "bytes"
-msgstr "байтов"
-
-msgid "KB"
-msgstr "КБ"
-
-msgid "MB"
-msgstr "МБ"
-
-msgid "GB"
-msgstr "ГБ"
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
 msgid "  [A] Accept"
 msgstr "  [A] Принять"
 
 msgid "  [C] Cancel"
 msgstr "  [C] Отменить"
-
-msgid "  [R] Remove"
-msgstr "  [R] Удалить"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Очистить список"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Закрыть окно"
 
 msgid "xfer chat"
 msgstr ""
@@ -4631,10 +4773,6 @@ msgstr "очистить хотлист"
 #, fuzzy
 msgid "waiting"
 msgstr "Ожидание"
-
-#, fuzzy
-msgid "connecting"
-msgstr "Подключение"
 
 #, fuzzy
 msgid "active"
@@ -4801,9 +4939,12 @@ msgstr "Нет сервера.\n"
 msgid "xfer control"
 msgstr ""
 
-#, fuzzy
-msgid "Open buffer with xfer list"
-msgstr "Открытые буферы:\n"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -4812,24 +4953,12 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
 #, fuzzy
-msgid "text color"
-msgstr "цвет чата"
-
-#, fuzzy
-msgid "background color"
-msgstr "фон ников"
-
-#, fuzzy
 msgid "text color of selected xfer line"
 msgstr "цвет названия сервера"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
 msgstr "цвет \"ожидания\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"connecting\" status"
-msgstr "цвет \"соединения\" в окне DCC"
 
 #, fuzzy
 msgid "text color for \"active\" status"
@@ -4961,6 +5090,30 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "timeout for relay request (in seconds)"
+#~ msgstr "таймаут запросов dcc-соединений (в секундах)"
+
+#, fuzzy
+#~ msgid "Open buffer with relay clients list"
+#~ msgstr "Открытые буферы:\n"
+
+#, fuzzy
+#~ msgid "Open buffer with xfer list"
+#~ msgstr "Открытые буферы:\n"
+
+#, fuzzy
+#~ msgid "%s%s: disconnecting client @ %s"
+#~ msgstr "%s: Повторное подключение к серверу через %d секунд\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot bind socket"
+#~ msgstr "%s невозможно создать сокет\n"
+
+#, fuzzy
+#~ msgid "  [Q] Close client list"
+#~ msgstr "  [Q] Закрыть окно"
 
 #, fuzzy
 #~ msgid "use a proxy server"
@@ -5116,10 +5269,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-ДАЛЬШЕ-"
-
-#, fuzzy
-#~ msgid "%s: disconnected from server"
-#~ msgstr "Отключен от сервера!\n"
 
 #, fuzzy
 #~ msgid "%s: connecting to server %s/%d%s%s..."

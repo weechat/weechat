@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1559,6 +1559,21 @@ msgid "username for proxy server"
 msgstr ""
 
 msgid "password for proxy server"
+msgstr ""
+
+msgid "bytes"
+msgstr ""
+
+msgid "KB"
+msgstr ""
+
+msgid "MB"
+msgstr ""
+
+msgid "GB"
+msgstr ""
+
+msgid "byte"
 msgstr ""
 
 #, c-format
@@ -3781,6 +3796,139 @@ msgstr ""
 msgid "%sError: plugin \"%s\" not found"
 msgstr ""
 
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr ""
+
+msgid "  [P] Purge finished"
+msgstr ""
+
+msgid "  [Q] Close this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr ""
+
+msgid "List of clients for relay"
+msgstr ""
+
+msgid "connecting"
+msgstr ""
+
+msgid "waiting auth"
+msgstr ""
+
+msgid "auth failed"
+msgstr ""
+
+msgid "disconnected"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr ""
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr ""
+
+#, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr ""
+
+#, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr ""
+
+msgid "Clients for relay:"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+msgid "relay control"
+msgstr ""
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+
+msgid "text color"
+msgstr ""
+
+msgid "background color"
+msgstr ""
+
+msgid "text color of selected client line"
+msgstr ""
+
+msgid "text color for \"connecting\" status"
+msgstr ""
+
+msgid "text color for \"waiting authentication\" status"
+msgstr ""
+
+msgid "text color for \"connected\" status"
+msgstr ""
+
+msgid "text color for \"authentication failed\" status"
+msgstr ""
+
+msgid "text color for \"disconnected\" status"
+msgstr ""
+
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+
+msgid "list of relay clients"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot accept client"
+msgstr ""
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr ""
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4004,34 +4152,10 @@ msgstr ""
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr ""
 
-msgid "bytes"
-msgstr ""
-
-msgid "KB"
-msgstr ""
-
-msgid "MB"
-msgstr ""
-
-msgid "GB"
-msgstr ""
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
 msgid "  [A] Accept"
 msgstr ""
 
 msgid "  [C] Cancel"
-msgstr ""
-
-msgid "  [R] Remove"
-msgstr ""
-
-msgid "  [P] Purge finished"
-msgstr ""
-
-msgid "  [Q] Close xfer list"
 msgstr ""
 
 msgid "xfer chat"
@@ -4044,9 +4168,6 @@ msgid "Xfer list"
 msgstr ""
 
 msgid "waiting"
-msgstr ""
-
-msgid "connecting"
 msgstr ""
 
 msgid "active"
@@ -4200,7 +4321,11 @@ msgstr ""
 msgid "xfer control"
 msgstr ""
 
-msgid "Open buffer with xfer list"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
 msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"
@@ -4209,19 +4334,10 @@ msgstr ""
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
-msgid "text color"
-msgstr ""
-
-msgid "background color"
-msgstr ""
-
 msgid "text color of selected xfer line"
 msgstr ""
 
 msgid "text color for \"waiting\" status"
-msgstr ""
-
-msgid "text color for \"connecting\" status"
 msgstr ""
 
 msgid "text color for \"active\" status"

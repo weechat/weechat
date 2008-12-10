@@ -155,6 +155,7 @@ struct t_weechat_plugin
                                          const char *separator);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_splitted_command) (char **splitted_command);
+    char *(*string_format_size) (unsigned long size);
     
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -651,6 +652,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_split_command(__command, __separator)
 #define weechat_string_free_splitted_command(__splitted_command)        \
     weechat_plugin->string_free_splitted_command(__splitted_command)
+#define weechat_string_format_size(__size)                              \
+    weechat_plugin->string_format_size(__size)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \

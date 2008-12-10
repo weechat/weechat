@@ -1,7 +1,8 @@
+usr/lib/weechat/plugins/aspell.so
 usr/lib/weechat/plugins/fifo.so
+usr/lib/weechat/plugins/relay.so
 usr/lib/weechat/plugins/perl.so
 usr/lib/weechat/plugins/python.so
 usr/lib/weechat/plugins/ruby.so
 usr/lib/weechat/plugins/lua.so
-usr/lib/weechat/plugins/aspell.so
 usr/lib/weechat/plugins/tcl.so

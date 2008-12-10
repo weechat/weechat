@@ -1277,7 +1277,7 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
 }
 
 /*
- * xfer_print_log: print DCC infos in log (usually for crash dump)
+ * xfer_print_log: print xfer infos in log (usually for crash dump)
  */
 
 void
@@ -1294,6 +1294,9 @@ xfer_print_log ()
         weechat_log_printf ("  type. . . . . . . . : %d (%s)",
                             ptr_xfer->type,
                             xfer_type_string[ptr_xfer->type]);
+        weechat_log_printf ("  protocol. . . . . . : %d (%s)",
+                            ptr_xfer->protocol,
+                            xfer_protocol_string[ptr_xfer->protocol]);
         weechat_log_printf ("  remote_nick . . . . : '%s'",  ptr_xfer->remote_nick);
         weechat_log_printf ("  local_nick. . . . . : '%s'",  ptr_xfer->local_nick);
         weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_xfer->filename);
@@ -1314,6 +1317,8 @@ xfer_print_log ()
         weechat_log_printf ("  child_pid . . . . . : %d",    ptr_xfer->child_pid);
         weechat_log_printf ("  child_read. . . . . : %d",    ptr_xfer->child_read);
         weechat_log_printf ("  child_write . . . . : %d",    ptr_xfer->child_write);
+        weechat_log_printf ("  hook_fd . . . . . . : 0x%lx", ptr_xfer->hook_fd);
+        weechat_log_printf ("  hook_timer. . . . . : 0x%lx", ptr_xfer->hook_timer);
         weechat_log_printf ("  unterminated_message: '%s'",  ptr_xfer->unterminated_message);
         weechat_log_printf ("  file. . . . . . . . : %d",    ptr_xfer->file);
         weechat_log_printf ("  local_filename. . . : '%s'",  ptr_xfer->local_filename);
@@ -1380,7 +1385,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     xfer_create_directories ();
     
     xfer_command_init ();
-    
+
+    weechat_hook_signal ("upgrade", &xfer_signal_upgrade_cb, NULL);
     weechat_hook_signal ("xfer_add", &xfer_add_cb, NULL);
     weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
     weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);

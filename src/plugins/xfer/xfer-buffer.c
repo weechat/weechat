@@ -42,14 +42,10 @@ void
 xfer_buffer_refresh (const char *hotlist)
 {
     struct t_xfer *ptr_xfer, *xfer_selected;
-    char str_color[256], suffix[32], status[64], date[128], *progress_bar;
-    char format[128], format_per_sec[128], bytes_per_sec[256], eta[128];
-    int i, length, line, progress_bar_size, num_bars, num_unit;
-    int num_unit_per_sec;
+    char str_color[256], suffix[32], status[64], date[128], eta[128];
+    char *progress_bar, *str_pos, *str_total, *str_bytes_per_sec;
+    int i, length, line, progress_bar_size, num_bars;
     unsigned long pct_complete;
-    char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
-    char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };
-    float unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
     struct tm *date_tmp;
     
     if (xfer_buffer)
@@ -77,7 +73,7 @@ xfer_buffer_refresh (const char *hotlist)
                               /* purge old */
                               _("  [P] Purge finished"),
                               /* quit */
-                              _("  [Q] Close xfer list"));
+                              _("  [Q] Close this buffer"));
         }
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
@@ -170,14 +166,6 @@ xfer_buffer_refresh (const char *hotlist)
                 }
                 
                 /* computes percentage */
-                if (ptr_xfer->size < 1024*10)
-                    num_unit = 0;
-                else if (ptr_xfer->size < 1024*1024)
-                    num_unit = 1;
-                else if (ptr_xfer->size < 1024*1024*1024)
-                    num_unit = 2;
-                else
-                    num_unit = 3;
                 if (ptr_xfer->size == 0)
                 {
                     if (ptr_xfer->status == XFER_STATUS_DONE)
@@ -188,28 +176,10 @@ xfer_buffer_refresh (const char *hotlist)
                 else
                     pct_complete = (unsigned long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
                 
-                snprintf (format, sizeof (format),
-                          "%%s%%s%%s %%s%%s%%s%%s%%3lu%%%%   %s %%s / %s %%s  (%%s%%s)",
-                          unit_format[num_unit],
-                          unit_format[num_unit]);
-                
-                /* bytes per second */
-                bytes_per_sec[0] = '\0';
-                if (ptr_xfer->bytes_per_sec < 1024*10)
-                    num_unit_per_sec = 0;
-                else if (ptr_xfer->bytes_per_sec < 1024*1024)
-                    num_unit_per_sec = 1;
-                else if (ptr_xfer->bytes_per_sec < 1024*1024*1024)
-                    num_unit_per_sec = 2;
-                else
-                    num_unit_per_sec = 3;
-                snprintf (format_per_sec, sizeof (format_per_sec),
-                          "%s %%s/s",
-                          unit_format[num_unit_per_sec]);
-                snprintf (bytes_per_sec, sizeof (bytes_per_sec),
-                          format_per_sec,
-                          ((float)ptr_xfer->bytes_per_sec) / ((float)(unit_divide[num_unit_per_sec])),
-                          _(unit_name[num_unit_per_sec]));
+                /* position, total and bytes per second */
+                str_pos = weechat_string_format_size (ptr_xfer->pos);
+                str_total = weechat_string_format_size (ptr_xfer->size);
+                str_bytes_per_sec = weechat_string_format_size (ptr_xfer->bytes_per_sec);
                 
                 /* ETA */
                 eta[0] = '\0';
@@ -225,23 +195,25 @@ xfer_buffer_refresh (const char *hotlist)
                 
                 /* display second line for file with status, progress bar and estimated time */
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
-                                  format,
+                                  "%s%s%s %s%s%s%s%3lu%%   %s / %s  (%s%s/s)",
                                   weechat_color(str_color),
-                                  (line == xfer_buffer_selected_line) ?
-                                  "*** " : "    ",
-                                  (XFER_IS_SEND(ptr_xfer->type)) ?
-                                  "<<--" : "-->>",
+                                  (line == xfer_buffer_selected_line) ? "*** " : "    ",
+                                  (XFER_IS_SEND(ptr_xfer->type)) ? "<<--" : "-->>",
                                   weechat_color(weechat_config_string (xfer_config_color_status[ptr_xfer->status])),
                                   status,
                                   weechat_color (str_color),
                                   (progress_bar) ? progress_bar : "",
                                   pct_complete,
-                                  ((float)(ptr_xfer->pos)) / unit_divide[num_unit],
-                                  _(unit_name[num_unit]),
-                                  ((float)(ptr_xfer->size)) / unit_divide[num_unit],
-                                  _(unit_name[num_unit]),
+                                  (str_pos) ? str_pos : "?",
+                                  (str_total) ? str_total : "?",
                                   eta,
-                                  bytes_per_sec);
+                                  str_bytes_per_sec);
+                if (str_pos)
+                    free (str_pos);
+                if (str_total)
+                    free (str_total);
+                if (str_bytes_per_sec)
+                    free (str_bytes_per_sec);
             }
             line++;
         }

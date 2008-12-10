@@ -58,6 +58,10 @@ if PLUGIN_NOTIFY
 notify_dir = notify
 endif
 
+if PLUGIN_RELAY
+relay_dir = relay
+endif
+
 if PLUGIN_PERL
 script_dir = scripts
 endif
@@ -87,5 +91,5 @@ xfer_dir = xfer
 endif
 
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
-            $(irc_dir) $(logger_dir) $(notify_dir) $(script_dir) \
+            $(irc_dir) $(logger_dir) $(notify_dir) $(relay_dir) $(script_dir) \
             $(trigger_dir) $(xfer_dir)

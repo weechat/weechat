@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1826,6 +1826,22 @@ msgstr "uživatelské jméno pro proxy server"
 
 msgid "password for proxy server"
 msgstr "heslo pro proxy server"
+
+msgid "bytes"
+msgstr "bajtů"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+#, fuzzy
+msgid "byte"
+msgstr "bajtů"
 
 #, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -4367,6 +4383,161 @@ msgstr "Plugin \"%s\" odebrán.\n"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%s plugin \"%s\" nenalezen\n"
 
+msgid "Actions (letter+enter):"
+msgstr "Akce (písmeno+enter):"
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr "  [R] Odebrat"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Pročistit staré DCC"
+
+#, fuzzy
+msgid "  [Q] Close this buffer"
+msgstr "  [Q] Zavřít DCC pohled"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr "%s%s%s je pryč: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr "DCC: soubor %s%s%s"
+
+msgid "List of clients for relay"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Připojuji"
+
+#, fuzzy
+msgid "waiting auth"
+msgstr "Čekám"
+
+#, fuzzy
+msgid "auth failed"
+msgstr "Selhal"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "připojen"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s chyba při zasílání dat na IRC server\n"
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr "%s nedostatek paměti pro nové DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr "Nemůžu zapsat log soubor \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr "Odpojen od serveru!\n"
+
+msgid "Clients for relay:"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+#, fuzzy
+msgid "relay control"
+msgstr "ovládání xfer"
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+#, fuzzy
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+"automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
+
+#, fuzzy
+msgid "text color"
+msgstr "barva pro text rozhovoru"
+
+#, fuzzy
+msgid "background color"
+msgstr "pozadí přezdívek"
+
+#, fuzzy
+msgid "text color of selected client line"
+msgstr "barva pro jeméno serveru"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "barva pro \"connecting\" status dcc"
+
+#, fuzzy
+msgid "text color for \"waiting authentication\" status"
+msgstr "barva pro \"waiting\" status dcc"
+
+#, fuzzy
+msgid "text color for \"connected\" status"
+msgstr "barva pro \"connecting\" status dcc"
+
+#, fuzzy
+msgid "text color for \"authentication failed\" status"
+msgstr "barva pro \"failed\" status dcc"
+
+#, fuzzy
+msgid "text color for \"disconnected\" status"
+msgstr "barva pro \"connecting\" status dcc"
+
+#, fuzzy
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+"omezit odchozí dcc pro používaní portů pouze v zadaném rozsahu (užitečné pro "
+"NAT) (syntaxe: samostatný port, např. 5000 nebo rozsah portů např. 5000-"
+"5015, prázdná hodnota znamená jakýkoliv port)"
+
+#, fuzzy
+msgid "list of relay clients"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client"
+msgstr "%s nemohu vytvořit soket\n"
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr "%s nemůžu najít dostupný port pro DCC\n"
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4605,37 +4776,11 @@ msgstr "%s nemohu vytvořit server\n"
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr "Nemůžu zapsat log soubor \"%s\"\n"
 
-msgid "bytes"
-msgstr "bajtů"
-
-msgid "KB"
-msgstr "KB"
-
-msgid "MB"
-msgstr "MB"
-
-msgid "GB"
-msgstr "GB"
-
-msgid "Actions (letter+enter):"
-msgstr "Akce (písmeno+enter):"
-
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
 msgid "  [C] Cancel"
 msgstr "  [C] Storno"
-
-msgid "  [R] Remove"
-msgstr "  [R] Odebrat"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Pročistit staré DCC"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Zavřít DCC pohled"
 
 msgid "xfer chat"
 msgstr "xfer chat"
@@ -4650,10 +4795,6 @@ msgstr "vyčisti hotlist"
 #, fuzzy
 msgid "waiting"
 msgstr "Čekám"
-
-#, fuzzy
-msgid "connecting"
-msgstr "Připojuji"
 
 #, fuzzy
 msgid "active"
@@ -4827,8 +4968,12 @@ msgstr "Žádný xfer"
 msgid "xfer control"
 msgstr "ovládání xfer"
 
-msgid "Open buffer with xfer list"
-msgstr "Otevřené buffery s xfer seznamem"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -4838,24 +4983,12 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr "velikost ukazatele průběhu ve znacích (0 pro vypnutí ukazatele)"
 
 #, fuzzy
-msgid "text color"
-msgstr "barva pro text rozhovoru"
-
-#, fuzzy
-msgid "background color"
-msgstr "pozadí přezdívek"
-
-#, fuzzy
 msgid "text color of selected xfer line"
 msgstr "barva pro jeméno serveru"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
 msgstr "barva pro \"waiting\" status dcc"
-
-#, fuzzy
-msgid "text color for \"connecting\" status"
-msgstr "barva pro \"connecting\" status dcc"
 
 #, fuzzy
 msgid "text color for \"active\" status"
@@ -4990,6 +5123,29 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "timeout for relay request (in seconds)"
+#~ msgstr "časový limit pro dcc požadavek (v sekundách)"
+
+#, fuzzy
+#~ msgid "Open buffer with relay clients list"
+#~ msgstr "Otevřené buffery s xfer seznamem"
+
+#~ msgid "Open buffer with xfer list"
+#~ msgstr "Otevřené buffery s xfer seznamem"
+
+#, fuzzy
+#~ msgid "%s%s: disconnecting client @ %s"
+#~ msgstr "%s: Navazuji nové spojení se serverem za %d sekund\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot bind socket"
+#~ msgstr "%s nemohu vytvořit soket\n"
+
+#, fuzzy
+#~ msgid "  [Q] Close client list"
+#~ msgstr "  [Q] Zavřít DCC pohled"
 
 #, fuzzy
 #~ msgid "use a proxy server"
@@ -5152,10 +5308,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 #, fuzzy
 #~ msgid "Saved buffers layout:"
 #~ msgstr "Seznam bufferů:"
-
-#, fuzzy
-#~ msgid "%s: disconnected from server"
-#~ msgstr "Odpojen od serveru!\n"
 
 #, fuzzy
 #~ msgid "%s: connecting to server %s/%d%s%s..."

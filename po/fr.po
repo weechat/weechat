@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-23 22:44+0100\n"
-"PO-Revision-Date: 2008-11-23 22:46+0100\n"
+"POT-Creation-Date: 2008-12-10 17:02+0100\n"
+"PO-Revision-Date: 2008-12-10 17:02+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1909,6 +1909,21 @@ msgstr "nom d'utilisateur pour le serveur proxy"
 
 msgid "password for proxy server"
 msgstr "mot de passe pour le serveur proxy"
+
+msgid "bytes"
+msgstr "octets"
+
+msgid "KB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "byte"
+msgstr "octet"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -4506,6 +4521,151 @@ msgstr "Extension \"%s\" déchargée"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sErreur: extension \"%s\" non trouvée"
 
+msgid "Actions (letter+enter):"
+msgstr "Actions (lettre+entrée):"
+
+msgid "  [D] Disconnect"
+msgstr "  [D] Déconnecter"
+
+msgid "  [R] Remove"
+msgstr "  [R] Retirer"
+
+msgid "  [P] Purge finished"
+msgstr "  [P] Purger terminés"
+
+msgid "  [Q] Close this buffer"
+msgstr "  [Q] Fermer ce tampon"
+
+#, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgstr "%s%s[%s%s%s%s] %s (démarré le: %s)"
+
+#, c-format
+msgid "%s%-26s received: %s, sent: %s"
+msgstr "%s%-26s reçu: %s, envoyé: %s"
+
+msgid "List of clients for relay"
+msgstr "Liste des clients pour le relai"
+
+msgid "connecting"
+msgstr "connexion"
+
+msgid "waiting auth"
+msgstr "attente auth"
+
+msgid "auth failed"
+msgstr "échec auth"
+
+msgid "disconnected"
+msgstr "déconnecté"
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: erreur d'envoi de données au client %s"
+
+#, c-format
+msgid "%s: new client @ %s"
+msgstr "%s: nouveau client @ %s"
+
+#, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr "%s%s: pas assez de mémoire pour un nouveau client"
+
+#, c-format
+msgid "%s%s: authentication failed with client @ %s"
+msgstr "%s%s: l'authentification a échoué avec le client @ %s"
+
+#, c-format
+msgid "%s: disconnected from client @ %s"
+msgstr "%s: déconnecté du client @ %s"
+
+msgid "Clients for relay:"
+msgstr "Clients pour le relai:"
+
+#, c-format
+msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgstr ""
+"%3d. %s, démarré le: %s, dernière activité: %s, octets: %lu reçus, %lu "
+"envoyés"
+
+#, c-format
+msgid "%3d. %s, started on: %s"
+msgstr "%3d. %s, démarré le: %s"
+
+msgid "No client for relay"
+msgstr "Pas de client pour le relai"
+
+msgid "relay control"
+msgstr "contrôle du relai"
+
+msgid ""
+"    list: list relay clients\n"
+"listfull: list relay clients (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+"    list: liste les clients pour le relai\n"
+"listfull: liste les clients pour le relai (verbeux)\n"
+"\n"
+"Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
+"pour le relai."
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+"ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau "
+"client est ajouté à la liste"
+
+msgid "text color"
+msgstr "couleur du texte"
+
+msgid "background color"
+msgstr "couleur du fond"
+
+msgid "text color of selected client line"
+msgstr "couleur du texte pour la ligne client sélectionnée"
+
+msgid "text color for \"connecting\" status"
+msgstr "couleur du texte pour le statut \"connexion\""
+
+msgid "text color for \"waiting authentication\" status"
+msgstr "couleur du texte pour le statut \"attente auth\""
+
+msgid "text color for \"connected\" status"
+msgstr "couleur du texte pour le statut \"connecté\""
+
+msgid "text color for \"authentication failed\" status"
+msgstr "couleur du texte pour le statut \"échec auth\""
+
+msgid "text color for \"disconnected\" status"
+msgstr "couleur du texte pour le statut \"déconnecté\""
+
+msgid ""
+"port number (or range of ports) that relay plugin listens on (syntax: a "
+"single port, ie. 5000 or a port range, ie. 5000-5015)"
+msgstr ""
+"numéro de port (ou intervalle de ports) sur lesquels écoute l'extension "
+"relay (syntaxe: un port simple, par exemple 5000, un intervalle de ports, "
+"par exemple 5000-5015)"
+
+msgid "list of relay clients"
+msgstr "liste des clients pour le relai"
+
+#, c-format
+msgid "%s%s: cannot accept client"
+msgstr "%s%s: impossible d'accepter le client"
+
+#, c-format
+msgid "%s%s: option \"listen_port_range\" is not defined"
+msgstr "%s%s: l'option \"listen_port_range\" n'est pas définie"
+
+#, c-format
+msgid "%s%s: cannot find available port for listening"
+msgstr "%s%s: impossible de trouver un port disponible pour écouter"
+
+#, c-format
+msgid "%s: listening on port %d"
+msgstr "%s: écoute sur le port %d"
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4746,35 +4906,11 @@ msgstr "%s%s: impossible de créer l'interpréteur"
 msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr "%s%s: erreur d'analyse du fichier \"%s\": %s"
 
-msgid "bytes"
-msgstr "octets"
-
-msgid "KB"
-msgstr "Ko"
-
-msgid "MB"
-msgstr "Mo"
-
-msgid "GB"
-msgstr "Go"
-
-msgid "Actions (letter+enter):"
-msgstr "Actions (lettre+entrée):"
-
 msgid "  [A] Accept"
 msgstr "  [A] Accepter"
 
 msgid "  [C] Cancel"
 msgstr "  [C] Annuler"
-
-msgid "  [R] Remove"
-msgstr "  [R] Retirer"
-
-msgid "  [P] Purge finished"
-msgstr "  [P] Purger terminés"
-
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Fermer la liste xfer"
 
 msgid "xfer chat"
 msgstr "discussion xfer"
@@ -4787,9 +4923,6 @@ msgstr "Liste Xfer"
 
 msgid "waiting"
 msgstr "attente"
-
-msgid "connecting"
-msgstr "connexion"
 
 msgid "active"
 msgstr "actif"
@@ -4953,8 +5086,16 @@ msgstr "Pas de xfer"
 msgid "xfer control"
 msgstr "contrôle xfer"
 
-msgid "Open buffer with xfer list"
-msgstr "Ouverture du tampon avec la liste des xfers"
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
+"    list: liste les xfer\n"
+"listfull: liste les xfer (verbeux)\n"
+"\n"
+"Sans paramètre, cette commande ouvre le tampon avec la liste des xfer."
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -4966,20 +5107,11 @@ msgstr ""
 "taille de la barre de progression, en caractères (si 0, la barre de "
 "progression est désactivée)"
 
-msgid "text color"
-msgstr "couleur du texte"
-
-msgid "background color"
-msgstr "couleur du fond"
-
 msgid "text color of selected xfer line"
 msgstr "couleur du texte pour la ligne xfer sélectionnée"
 
 msgid "text color for \"waiting\" status"
 msgstr "couleur du texte pour le statut \"en attente\""
-
-msgid "text color for \"connecting\" status"
-msgstr "couleur du texte pour le statut \"connexion\""
 
 msgid "text color for \"active\" status"
 msgstr "couleur du texte pour le statut \"actif\""
@@ -5107,42 +5239,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "use a proxy server"
-#~ msgstr "utiliser un serveur proxy"
-
-#~ msgid "text color for title bar"
-#~ msgstr "create a socks5 proxy with username/password:"
-
-#~ msgid "background color for title bar"
-#~ msgstr "couleur du fond pour la barre de titre"
-
-#~ msgid "text color for status bar"
-#~ msgstr "couleur du texte pour la barre de statut"
-
-#~ msgid "background color for status bar"
-#~ msgstr "couleur du fond pour la barre de statut"
-
-#~ msgid "text color for status bar delimiters"
-#~ msgstr "couleur du texte pour les délimiteurs de la barre de statut"
-
-#~ msgid "text color for input line"
-#~ msgstr "couleur du texte pour la ligne de saisie"
-
-#~ msgid "background color for input line"
-#~ msgstr "couleur du fond pour la ligne de saisie"
-
-#~ msgid "text color for server name in input line"
-#~ msgstr "couleur du texte pour le nom du serveur dans la ligne de saisie"
-
-#~ msgid "text color for channel name in input line"
-#~ msgstr "couleur du texte pour le canal dans la ligne de saisie"
-
-#~ msgid "text color for delimiters in input line"
-#~ msgstr "couleur du texte pour les délimiteurs dans la ligne de saisie"
-
-#~ msgid "text color for nicklist"
-#~ msgstr "couleur du texte pour la liste des pseudos"
-
-#~ msgid "background color for nicklist"
-#~ msgstr "couleur du fond pour la liste des pseudos"

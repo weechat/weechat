@@ -189,7 +189,7 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * xfer_command: xfer command
+ * xfer_command_init: add /xfer command
  */
 
 void
@@ -197,7 +197,10 @@ xfer_command_init ()
 {
     weechat_hook_command ("xfer",
                           N_("xfer control"),
-                          "",
-                          N_("Open buffer with xfer list"),
+                          "[list | listfull]",
+                          N_("    list: list xfer\n"
+                             "listfull: list xfer (verbose)\n\n"
+                             "Without argument, this command opens buffer "
+                             "with xfer list."),
                           "list|listfull", &xfer_command_xfer, NULL);
 }

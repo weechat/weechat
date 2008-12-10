@@ -346,6 +346,7 @@ plugin_load (const char *filename)
         new_plugin->string_build_with_exploded = &string_build_with_exploded;
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_splitted_command = &string_free_splitted_command;
+        new_plugin->string_format_size = &string_format_size;
         
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;
@@ -829,9 +830,6 @@ plugin_reload_name (const char *name)
         if (filename)
         {
             plugin_unload (ptr_plugin);
-            gui_chat_printf (NULL,
-                             _("Plugin \"%s\" unloaded"),
-                             name);
             plugin_load (filename);
             free (filename);
         }

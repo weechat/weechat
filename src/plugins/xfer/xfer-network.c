@@ -213,7 +213,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
     xfer->child_pid = pid;
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
-                                     xfer_network_child_read_cb,
+                                     &xfer_network_child_read_cb,
                                      xfer);
 }
 
@@ -268,7 +268,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
     xfer->child_pid = pid;
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
-                                     xfer_network_child_read_cb,
+                                     &xfer_network_child_read_cb,
                                      xfer);
 }
 
