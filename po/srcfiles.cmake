@@ -35,14 +35,14 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-utf8.h
 ./src/core/wee-util.c
 ./src/core/wee-util.h
-./src/gui/curses/gui-curses-bar.c
+./src/gui/curses/gui-curses-bar-window.c
 ./src/gui/curses/gui-curses-chat.c
 ./src/gui/curses/gui-curses-color.c
 ./src/gui/curses/gui-curses.h
 ./src/gui/curses/gui-curses-keyboard.c
 ./src/gui/curses/gui-curses-main.c
 ./src/gui/curses/gui-curses-window.c
-./src/gui/gtk/gui-gtk-bar.c
+./src/gui/gtk/gui-gtk-bar-window.c
 ./src/gui/gtk/gui-gtk-chat.c
 ./src/gui/gtk/gui-gtk-color.c
 ./src/gui/gtk/gui-gtk.h
@@ -53,6 +53,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c
 ./src/gui/gui-bar-item.h
+./src/gui/gui-bar-window.c
+./src/gui/gui-bar-window.h
 ./src/gui/gui-buffer.c
 ./src/gui/gui-buffer.h
 ./src/gui/gui-chat.c

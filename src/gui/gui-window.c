@@ -42,6 +42,7 @@
 #include "../plugins/plugin.h"
 #include "gui-window.h"
 #include "gui-bar.h"
+#include "gui-bar-window.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-filter.h"
@@ -215,6 +216,10 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->win_chat_height = 0;
         new_window->win_chat_cursor_x = 0;
         new_window->win_chat_cursor_y = 0;
+
+        /* bar windows */
+        new_window->bar_windows = NULL;
+        new_window->last_bar_window = NULL;
         
         /* refresh */
         new_window->refresh_needed = 0;
@@ -407,8 +412,14 @@ gui_window_free (struct t_gui_window *window)
     /* free data */
     if (window->gui_objects)
     {
-        gui_window_objects_free (window, 1, 1);
+        gui_window_objects_free (window, 1);
         free (window->gui_objects);
+    }
+    
+    /* remove bar windows */
+    while (window->bar_windows)
+    {
+        gui_bar_window_free (window->bar_windows, window);
     }
     
     /* remove window from windows list */
@@ -973,6 +984,7 @@ void
 gui_window_print_log ()
 {
     struct t_gui_window *ptr_window;
+    struct t_gui_bar_window *ptr_bar_win;
     
     log_printf ("");
     log_printf ("current window = 0x%lx", gui_current_window);
@@ -995,6 +1007,7 @@ gui_window_print_log ()
         log_printf ("  win_chat_cursor_y . : %d",    ptr_window->win_chat_cursor_y);
         log_printf ("  refresh_needed. . . : %d",    ptr_window->refresh_needed);
         log_printf ("  gui_objects . . . . : 0x%lx", ptr_window->gui_objects);
+        gui_window_objects_print_log (ptr_window);
         log_printf ("  buffer. . . . . . . : 0x%lx", ptr_window->buffer);
         log_printf ("  layout_plugin_name. : '%s'",  ptr_window->layout_plugin_name);
         log_printf ("  layout_buffer_name. : '%s'",  ptr_window->layout_buffer_name);
@@ -1007,6 +1020,11 @@ gui_window_print_log ()
         log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);
-        gui_window_objects_print_log (ptr_window);
+        
+        for (ptr_bar_win = ptr_window->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            gui_bar_window_print_log (ptr_bar_win);
+        }
     }
 }

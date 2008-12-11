@@ -17,6 +17,7 @@
 SET(LIB_GUI_COMMON_SRC
 gui-bar.c gui-bar.h
 gui-bar-item.c gui-bar-item.h
+gui-bar-window.c gui-bar-window.h
 gui-buffer.c gui-buffer.h
 gui-chat.c gui-chat.h
 gui-color.c gui-color.h

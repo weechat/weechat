@@ -28,7 +28,7 @@ weechat_gtk_LDADD = ./../../core/lib_weechat_core.a \
                     $(GTK_LFLAGS) \
                     $(GNUTLS_LFLAGS)
 
-weechat_gtk_SOURCES = gui-gtk-bar.c \
+weechat_gtk_SOURCES = gui-gtk-bar-window.c \
                       gui-gtk-chat.c \
                       gui-gtk-color.c \
                       gui-gtk-keyboard.c \

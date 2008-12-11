@@ -18,8 +18,14 @@ if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-SET(WEECHAT_CURSES_SRC gui-curses-bar.c gui-curses-chat.c gui-curses-color.c
-gui-curses-keyboard.c gui-curses-main.c gui-curses-window.c gui-curses.h)
+SET(WEECHAT_CURSES_SRC
+gui-curses.h
+gui-curses-bar-window.c
+gui-curses-chat.c
+gui-curses-color.c
+gui-curses-keyboard.c
+gui-curses-main.c
+gui-curses-window.c)
 
 SET(EXECUTABLE weechat-curses)
 

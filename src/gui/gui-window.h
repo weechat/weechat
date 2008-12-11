@@ -20,6 +20,12 @@
 #ifndef __WEECHAT_GUI_WINDOW_H
 #define __WEECHAT_GUI_WINDOW_H 1
 
+#define GUI_WINDOW_MIN_WIDTH          10
+#define GUI_WINDOW_MIN_HEIGHT         5
+
+#define GUI_WINDOW_CHAT_MIN_WIDTH     5
+#define GUI_WINDOW_CHAT_MIN_HEIGHT    2
+
 struct t_infolist;
 
 extern int gui_init_ok;
@@ -43,12 +49,16 @@ struct t_gui_window
     int win_chat_cursor_x;             /* position of cursor in chat window */
     int win_chat_cursor_y;             /* position of cursor in chat window */
     
+    /* bar windows */
+    struct t_gui_bar_window *bar_windows;     /* bar windows                */
+    struct t_gui_bar_window *last_bar_window; /* last bar window            */
+    
     /* refresh */
     int refresh_needed;                /* 1 if refresh needed for window    */
     
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
-
+    
     /* buffer and layout infos */
     struct t_gui_buffer *buffer;       /* buffer currently displayed        */
     char *layout_plugin_name;          /* plugin and buffer that should be  */
@@ -135,8 +145,7 @@ extern int gui_window_get_width ();
 extern int gui_window_get_height ();
 extern int gui_window_objects_init (struct t_gui_window *window);
 extern void gui_window_objects_free (struct t_gui_window *window,
-                                     int free_separator,
-                                     int free_bar_windows);
+                                     int free_separator);
 extern void gui_window_calculate_pos_size (struct t_gui_window *window);
 extern void gui_window_switch_to_buffer (struct t_gui_window *window,
                                          struct t_gui_buffer *buffer,

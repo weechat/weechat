@@ -66,16 +66,14 @@ gui_window_get_height ()
 int
 gui_window_objects_init (struct t_gui_window *window)
 {
-    struct t_gui_gtk_objects *new_objects;
+    struct t_gui_window_gtk_objects *new_objects;
     
     if ((new_objects = malloc (sizeof (*new_objects))))
     {
         window->gui_objects = new_objects;
-        GUI_GTK(window)->textview_chat = NULL;
-        GUI_GTK(window)->textbuffer_chat = NULL;
-        GUI_GTK(window)->texttag_chat = NULL;
-        GUI_GTK(window)->bar_windows = NULL;
-        GUI_GTK(window)->last_bar_window = NULL;
+        GUI_WINDOW_OBJECTS(window)->textview_chat = NULL;
+        GUI_WINDOW_OBJECTS(window)->textbuffer_chat = NULL;
+        GUI_WINDOW_OBJECTS(window)->texttag_chat = NULL;
         return 1;
     }
     return 0;
@@ -86,13 +84,11 @@ gui_window_objects_init (struct t_gui_window *window)
  */
 
 void
-gui_window_objects_free (struct t_gui_window *window, int free_separator,
-                         int free_bar_windows)
+gui_window_objects_free (struct t_gui_window *window, int free_separator)
 {
     /* TODO: write this function for Gtk */
     (void) window;
     (void) free_separator;
-    (void) free_bar_windows;
 }
 
 /*
@@ -219,21 +215,21 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     window->buffer = buffer;
     gui_window_calculate_pos_size (window);
     
-    if (!GUI_GTK(window)->textview_chat)
+    if (!GUI_WINDOW_OBJECTS(window)->textview_chat)
     {
-        GUI_GTK(window)->textview_chat = gtk_text_view_new ();
-        gtk_widget_show (GUI_GTK(window)->textview_chat);
-        gtk_container_add (GTK_CONTAINER (gui_gtk_scrolledwindow_chat), GUI_GTK(window)->textview_chat);
-        gtk_widget_set_size_request (GUI_GTK(window)->textview_chat, 300, -1);
-        gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_GTK(window)->textview_chat), FALSE);
-        gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_GTK(window)->textview_chat), FALSE);
+        GUI_WINDOW_OBJECTS(window)->textview_chat = gtk_text_view_new ();
+        gtk_widget_show (GUI_WINDOW_OBJECTS(window)->textview_chat);
+        gtk_container_add (GTK_CONTAINER (gui_gtk_scrolledwindow_chat), GUI_WINDOW_OBJECTS(window)->textview_chat);
+        gtk_widget_set_size_request (GUI_WINDOW_OBJECTS(window)->textview_chat, 300, -1);
+        gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), FALSE);
+        gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), FALSE);
         
-        GUI_GTK(window)->textbuffer_chat = gtk_text_buffer_new (NULL);
-        gtk_text_view_set_buffer (GTK_TEXT_VIEW (GUI_GTK(window)->textview_chat), GUI_GTK(window)->textbuffer_chat);
+        GUI_WINDOW_OBJECTS(window)->textbuffer_chat = gtk_text_buffer_new (NULL);
+        gtk_text_view_set_buffer (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), GUI_WINDOW_OBJECTS(window)->textbuffer_chat);
         
-        /*GUI_GTK(window)->texttag_chat = gtk_text_buffer_create_tag(GUI_GTK(window)->textbuffer_chat, "courier", "font_family", "lucida");*/
-        gtk_text_buffer_get_bounds (GUI_GTK(window)->textbuffer_chat, &start, &end);
-        gtk_text_buffer_apply_tag (GUI_GTK(window)->textbuffer_chat, GUI_GTK(window)->texttag_chat, &start, &end);
+        /*GUI_WINDOW_OBJECTS(window)->texttag_chat = gtk_text_buffer_create_tag(GUI_WINDOW_OBJECTS(window)->textbuffer_chat, "courier", "font_family", "lucida");*/
+        gtk_text_buffer_get_bounds (GUI_WINDOW_OBJECTS(window)->textbuffer_chat, &start, &end);
+        gtk_text_buffer_apply_tag (GUI_WINDOW_OBJECTS(window)->textbuffer_chat, GUI_WINDOW_OBJECTS(window)->texttag_chat, &start, &end);
     }
     
     window->start_line = NULL;
@@ -811,27 +807,14 @@ gui_window_title_reset ()
 void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
-    struct t_gui_bar_window *ptr_bar_win;
-    
-    log_printf ("  textview_chat . . . : 0x%lx", GUI_GTK(window)->textview_chat);
-    log_printf ("  textbuffer_chat . . : 0x%lx", GUI_GTK(window)->textbuffer_chat);
-    log_printf ("  texttag_chat. . . . : 0x%lx", GUI_GTK(window)->texttag_chat);
-    log_printf ("  bar_windows . . . . : 0x%lx", GUI_GTK(window)->bar_windows);
-    log_printf ("  last_bar_windows. . : 0x%lx", GUI_GTK(window)->last_bar_window);
-    log_printf ("  current_style_fg. . : %d",    GUI_GTK(window)->current_style_fg);
-    log_printf ("  current_style_bg. . : %d",    GUI_GTK(window)->current_style_bg);
-    log_printf ("  current_style_attr. : %d",    GUI_GTK(window)->current_style_attr);
-    log_printf ("  current_color_attr. : %d",    GUI_GTK(window)->current_color_attr);
-    
-    for (ptr_bar_win = GUI_GTK(window)->bar_windows; ptr_bar_win;
-         ptr_bar_win = ptr_bar_win->next_bar_window)
-    {
-        log_printf ("");
-        log_printf ("  [window bar (addr:0x%lx)]",   ptr_bar_win);
-        log_printf ("    bar . . . . . . . : 0x%lx", ptr_bar_win->bar);
-        log_printf ("    x . . . . . . . . : %d",    ptr_bar_win->x);
-        log_printf ("    y . . . . . . . . : %d",    ptr_bar_win->y);
-        log_printf ("    width . . . . . . : %d",    ptr_bar_win->width);
-        log_printf ("    height. . . . . . : %d",    ptr_bar_win->height);
-    }
+    log_printf ("  window specific objects for Gtk:");
+    log_printf ("    textview_chat . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->textview_chat);
+    log_printf ("    textbuffer_chat . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->textbuffer_chat);
+    log_printf ("    texttag_chat. . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->texttag_chat);
+    log_printf ("    bar_windows . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->bar_windows);
+    log_printf ("    last_bar_windows. . : 0x%lx", GUI_WINDOW_OBJECTS(window)->last_bar_window);
+    log_printf ("    current_style_fg. . : %d",    GUI_WINDOW_OBJECTS(window)->current_style_fg);
+    log_printf ("    current_style_bg. . : %d",    GUI_WINDOW_OBJECTS(window)->current_style_bg);
+    log_printf ("    current_style_attr. : %d",    GUI_WINDOW_OBJECTS(window)->current_style_attr);
+    log_printf ("    current_color_attr. : %d",    GUI_WINDOW_OBJECTS(window)->current_color_attr);
 }

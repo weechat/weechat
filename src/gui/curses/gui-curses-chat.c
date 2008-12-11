@@ -100,10 +100,10 @@ gui_chat_display_new_line (struct t_gui_window *window, int num_lines, int count
         if ((!simulate)
             && (window->win_chat_cursor_x <= gui_chat_get_real_width (window) - 1))
         {
-            wmove (GUI_CURSES(window)->win_chat,
+            wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
                    window->win_chat_cursor_y,
                    window->win_chat_cursor_x);
-            wclrtoeol (GUI_CURSES(window)->win_chat);
+            wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
         }
         window->win_chat_cursor_y++;
     }
@@ -123,24 +123,24 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
     
     if (!simulate)
     {
-        gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+        gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                       GUI_COLOR_CHAT_READ_MARKER);
         switch (CONFIG_INTEGER(config_look_read_marker))
         {
             case CONFIG_LOOK_READ_MARKER_LINE:
-                mvwhline (GUI_CURSES(window)->win_chat,
+                mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
                           window->win_chat_cursor_y, window->win_chat_cursor_x,
                           ACS_HLINE,
                           window->win_chat_width);
                 break;
             case CONFIG_LOOK_READ_MARKER_DOTTED_LINE:
-                wmove (GUI_CURSES(window)->win_chat,
+                wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
                        window->win_chat_cursor_y, window->win_chat_cursor_x);
-                wclrtoeol (GUI_CURSES(window)->win_chat);
+                wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
                 for (i = 0; i < window->win_chat_width; i++)
                 {
                     if (i % 2 != 0)
-                        mvwhline (GUI_CURSES(window)->win_chat,
+                        mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
                                   window->win_chat_cursor_y, i,
                                   ACS_HLINE, 1);
                 }
@@ -172,7 +172,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
             case GUI_COLOR_RESET_CHAR:
                 string++;
                 if (apply_style)
-                    gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+                    gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
                 break;
             case GUI_COLOR_COLOR_CHAR:
                 string++;
@@ -187,7 +187,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_fg[1] = string[2];
                                 str_fg[2] = '\0';
                                 sscanf (str_fg, "%d", &fg);
-                                gui_window_set_custom_color_fg (GUI_CURSES(window)->win_chat,
+                                gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                                 fg);
                             }
                             string += 3;
@@ -202,7 +202,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_bg[1] = string[2];
                                 str_bg[2] = '\0';
                                 sscanf (str_bg, "%d", &bg);
-                                gui_window_set_custom_color_bg (GUI_CURSES(window)->win_chat,
+                                gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                                 bg);
                             }
                             string += 3;
@@ -222,7 +222,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_bg[2] = '\0';
                                 sscanf (str_fg, "%d", &fg);
                                 sscanf (str_bg, "%d", &bg);
-                                gui_window_set_custom_color_fg_bg (GUI_CURSES(window)->win_chat,
+                                gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                                    fg, bg);
                             }
                             string += 6;
@@ -251,7 +251,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_fg[1] = string[1];
                                 str_fg[2] = '\0';
                                 sscanf (str_fg, "%d", &weechat_color);
-                                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                               weechat_color);
                             }
                             string += 2;
@@ -266,13 +266,13 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_set_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                         A_BOLD);
                         break;
                     case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_set_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                         A_REVERSE);
                         break;
                     case GUI_COLOR_ATTR_ITALIC_CHAR:
@@ -282,7 +282,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_set_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                         A_UNDERLINE);
                         break;
                 }
@@ -294,13 +294,13 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_remove_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                            A_BOLD);
                         break;
                     case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_remove_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                            A_REVERSE);
                         break;
                     case GUI_COLOR_ATTR_ITALIC_CHAR:
@@ -310,7 +310,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
-                            gui_window_remove_color_style (GUI_CURSES(window)->win_chat,
+                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                            A_UNDERLINE);
                         break;
                 }
@@ -340,7 +340,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
     int chars_displayed, size_on_screen;
     
     if (display)
-        wmove (GUI_CURSES(window)->win_chat,
+        wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
                window->win_chat_cursor_y,
                window->win_chat_cursor_x);
     
@@ -370,7 +370,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                 if (size_on_screen > 0)
                 {
                     output = string_iconv_from_internal (NULL, utf_char);
-                    wprintw (GUI_CURSES(window)->win_chat,
+                    wprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
                              "%s", (output) ? output : utf_char);
                     if (output)
                         free (output);
@@ -384,7 +384,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                         return chars_displayed;
                     chars_displayed++;
                 }
-                wprintw (GUI_CURSES(window)->win_chat, ".");
+                wprintw (GUI_WINDOW_OBJECTS(window)->win_chat, ".");
             }
         }
         
@@ -440,10 +440,10 @@ gui_chat_display_word (struct t_gui_window *window,
         {
             if (!simulate)
             {
-                wmove (GUI_CURSES(window)->win_chat,
+                wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
                        window->win_chat_cursor_y,
                        window->win_chat_cursor_x);
-                wclrtoeol (GUI_CURSES(window)->win_chat);
+                wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
             }
             window->win_chat_cursor_x += length_align;
             if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
@@ -452,8 +452,8 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 if (!simulate)
                 {
-                    wattr_get (GUI_CURSES(window)->win_chat, &attrs, &pair, NULL);
-                    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                    wattr_get (GUI_WINDOW_OBJECTS(window)->win_chat, &attrs, &pair, NULL);
+                    gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
                     gui_chat_display_word_raw (window,
                                                CONFIG_STRING(config_look_prefix_suffix),
@@ -464,7 +464,7 @@ gui_chat_display_word (struct t_gui_window *window,
                     gui_chat_display_word_raw (window, str_space, 0, 1);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 if (!simulate)
-                    wattr_set (GUI_CURSES(window)->win_chat, attrs, pair, NULL);
+                    wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
             }
         }
         
@@ -537,7 +537,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     if (line->str_time && line->str_time[0])
     {
         if (!simulate)
-            gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
         
         gui_chat_display_word (window, line, line->str_time,
                                NULL, 1, num_lines, count, lines_displayed,
@@ -549,7 +549,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     else
     {
         if (!simulate)
-            gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
         
         gui_chat_display_word (window, line, str_space,
                                NULL, 1, num_lines, count, lines_displayed,
@@ -562,7 +562,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
     {
         if (!simulate)
-            gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
         
         if (CONFIG_INTEGER(config_look_prefix_align_max) > 0)
         {
@@ -591,7 +591,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             prefix_highlighted = (char *)gui_color_decode ((unsigned char *)line->prefix);
             if (!simulate)
             {
-                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_HIGHLIGHT);
             }
         } 
@@ -622,7 +622,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             free (prefix_highlighted);
         
         if (!simulate)
-            gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
         
         if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
         {
@@ -638,7 +638,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         {
             if (!simulate)
             {
-                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
             }
             gui_chat_display_word (window, line, str_plus,
@@ -660,7 +660,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         {
             if (!simulate)
             {
-                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_SUFFIX);
             }
             gui_chat_display_word (window, line,
@@ -735,7 +735,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     
     /* reset color & style for a new line */
     if (!simulate)
-        gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
     
     if (!line->message || !line->message[0])
     {
@@ -841,9 +841,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             if (gui_chat_line_search (line, window->buffer->input_buffer,
                                       window->buffer->text_search_exact))
             {
-                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_TEXT_FOUND);
-                mvwprintw (GUI_CURSES(window)->win_chat,
+                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
                            read_marker_y, read_marker_x,
                            "*");
             }
@@ -855,9 +855,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 && window->buffer->last_read_line
                 && (window->buffer->last_read_line == gui_chat_get_prev_line_displayed (line)))
             {
-                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_READ_MARKER);
-                mvwprintw (GUI_CURSES(window)->win_chat,
+                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
                            read_marker_y, read_marker_x,
                            "*");
             }
@@ -877,20 +877,20 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
     /* reset color & style for a new line */
-    gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
+    gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
     
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
     
-    wmove (GUI_CURSES(window)->win_chat,
+    wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
            window->win_chat_cursor_y,
            window->win_chat_cursor_x);
-    wclrtoeol (GUI_CURSES(window)->win_chat);
+    wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
     
     if (gui_chat_display_word_raw (window, line->message,
                                    window->win_chat_width, 1) < window->win_chat_width)
     {
-        gui_window_clrtoeol_with_current_bg (GUI_CURSES(window)->win_chat);
+        gui_window_clrtoeol_with_current_bg (GUI_WINDOW_OBJECTS(window)->win_chat);
     }
 }
 
@@ -1015,18 +1015,18 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
         {
             if (erase)
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(ptr_win)->win_chat,
                                               GUI_COLOR_CHAT);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
                 {
-                    mvwprintw (GUI_CURSES(ptr_win)->win_chat, i, 0,
+                    mvwprintw (GUI_WINDOW_OBJECTS(ptr_win)->win_chat, i, 0,
                                format_empty, " ");
                 }
             }
             
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
+            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(ptr_win)->win_chat,
                                           GUI_COLOR_CHAT);
             
             ptr_win->win_chat_cursor_x = 0;
@@ -1157,7 +1157,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                 case GUI_BUFFER_NUM_TYPES:
                     break;
             }
-            wnoutrefresh (GUI_CURSES(ptr_win)->win_chat);
+            wnoutrefresh (GUI_WINDOW_OBJECTS(ptr_win)->win_chat);
         }
     }
     

@@ -74,8 +74,8 @@ gui_chat_remove_style (struct t_gui_window *window, int style)
 void
 gui_chat_toggle_style (struct t_gui_window *window, int style)
 {
-    GUI_GTK(window)->current_style_attr ^= style;
-    if (GUI_GTK(window)->current_style_attr & style)
+    GUI_WINDOW_OBJECTS(window)->current_style_attr ^= style;
+    if (GUI_WINDOW_OBJECTS(window)->current_style_attr & style)
         gui_chat_set_style (window, style);
     else
         gui_chat_remove_style (window, style);
@@ -89,10 +89,10 @@ gui_chat_toggle_style (struct t_gui_window *window, int style)
 void
 gui_chat_reset_style (struct t_gui_window *window)
 {
-    GUI_GTK(window)->current_style_fg = -1;
-    GUI_GTK(window)->current_style_bg = -1;
-    GUI_GTK(window)->current_style_attr = 0;
-    GUI_GTK(window)->current_color_attr = 0;
+    GUI_WINDOW_OBJECTS(window)->current_style_fg = -1;
+    GUI_WINDOW_OBJECTS(window)->current_style_bg = -1;
+    GUI_WINDOW_OBJECTS(window)->current_style_attr = 0;
+    GUI_WINDOW_OBJECTS(window)->current_color_attr = 0;
     
     /* TODO: change following function call */
     /*gui_window_set_weechat_color (window->win_chat, COLOR_WIN_CHAT);*/
@@ -107,7 +107,7 @@ gui_chat_reset_style (struct t_gui_window *window)
 void
 gui_chat_set_color_style (struct t_gui_window *window, int style)
 {
-    GUI_GTK(window)->current_color_attr |= style;
+    GUI_WINDOW_OBJECTS(window)->current_color_attr |= style;
     /* TODO: change following function call */
     /*wattron (window->win_chat, style);*/
 }
@@ -119,7 +119,7 @@ gui_chat_set_color_style (struct t_gui_window *window, int style)
 void
 gui_chat_remove_color_style (struct t_gui_window *window, int style)
 {
-    GUI_GTK(window)->current_color_attr &= !style;
+    GUI_WINDOW_OBJECTS(window)->current_color_attr &= !style;
     /* TODO: change following function call */
     /*wattroff (window->win_chat, style);*/
 }
@@ -133,7 +133,7 @@ gui_chat_reset_color_style (struct t_gui_window *window)
 {
     /* TODO: change following function call */
     /*wattroff (window->win_chat, window->current_color_attr);*/
-    GUI_GTK(window)->current_color_attr = 0;
+    GUI_WINDOW_OBJECTS(window)->current_color_attr = 0;
 }
 
 /*
@@ -480,11 +480,11 @@ gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
         message_without_color = gui_color_decode ((unsigned char *)(line->message));
         if (message_without_color)
         {
-            gtk_text_buffer_insert_at_cursor (GUI_GTK(ptr_win)->textbuffer_chat,
+            gtk_text_buffer_insert_at_cursor (GUI_WINDOW_OBJECTS(ptr_win)->textbuffer_chat,
                                               (char *)message_without_color, -1);
-            gtk_text_buffer_insert_at_cursor (GUI_GTK(ptr_win)->textbuffer_chat,
+            gtk_text_buffer_insert_at_cursor (GUI_WINDOW_OBJECTS(ptr_win)->textbuffer_chat,
                                               "\n", -1);
-            gtk_text_buffer_get_bounds (GUI_GTK(ptr_win)->textbuffer_chat,
+            gtk_text_buffer_get_bounds (GUI_WINDOW_OBJECTS(ptr_win)->textbuffer_chat,
                                         &start, &end);
             /* TODO */
             /*gtk_text_buffer_apply_tag (ptr_win->textbuffer_chat, ptr_win->texttag_chat, &start, &end);*/

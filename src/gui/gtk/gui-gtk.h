@@ -53,22 +53,12 @@ struct t_gui_line;
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
 
-#define GUI_GTK(window) ((struct t_gui_gtk_objects *)(window->gui_objects))
+#define GUI_WINDOW_OBJECTS(window)                                      \
+    ((struct t_gui_window_gtk_objects *)(window->gui_objects))
+#define GUI_BAR_WINDOW_OBJECTS(bar_window)                              \
+    ((struct t_gui_bar_window_gtk_objects *)(bar_window->gui_objects))
 
-struct t_gui_bar_window
-{
-    struct t_gui_bar *bar;          /* pointer to bar                       */
-    int x, y;                       /* position of window                   */
-    int width, height;              /* window size                          */
-    int scroll_x, scroll_y;         /* X-Y scroll in bar                    */
-    int current_size;               /* current size (width or height)       */
-    struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
-                                              /* (only for non-root bars)   */
-    struct t_gui_bar_window *next_bar_window; /* link to next bar win       */
-                                              /* (only for non-root bars)   */
-};
-
-struct t_gui_gtk_objects
+struct t_gui_window_gtk_objects
 {
     GtkWidget *textview_chat;       /* textview widget for chat             */
     GtkTextBuffer *textbuffer_chat; /* textbuffer widget for chat           */
@@ -79,6 +69,10 @@ struct t_gui_gtk_objects
     int current_style_bg;           /* current background color             */
     int current_style_attr;         /* current attributes (bold, ..)        */
     int current_color_attr;         /* attr sum of last color(s) used       */
+};
+
+struct t_gui_bar_window_gtk_objects
+{
 };
 
 extern GtkWidget *gui_gtk_main_window;

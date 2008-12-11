@@ -22,6 +22,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-bar.h \
                                    gui-bar-item.c \
                                    gui-bar-item.h \
+                                   gui-bar-window.c \
+                                   gui-bar-window.h \
                                    gui-buffer.c \
                                    gui-buffer.h \
                                    gui-chat.c \

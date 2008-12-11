@@ -34,6 +34,7 @@
 #include "../plugins/plugin.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
+#include "gui-bar-window.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
@@ -126,6 +127,124 @@ gui_bar_search_position (const char *position)
     
     /* position not found */
     return -1;
+}
+
+/*
+ * gui_bar_get_min_width: return minimum width of a bar window displayed for
+ *                        a bar
+ *                        for example, if a bar is displayed in 3 windows,
+ *                        this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_width (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_width;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->width;
+    
+    min_width = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->width < min_width)
+                    min_width = ptr_bar_win->width;
+            }
+        }
+    }
+    
+    if (min_width == INT_MAX)
+        return 0;
+    
+    return min_width;
+}
+
+/*
+ * gui_bar_get_min_height: return minimum height of a bar window displayed for
+ *                         a bar
+ *                         for example, if a bar is displayed in 3 windows,
+ *                         this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_height (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_height;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->height;
+    
+    min_height = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->height < min_height)
+                    min_height = ptr_bar_win->height;
+            }
+        }
+    }
+    
+    if (min_height == INT_MAX)
+        return 0;
+    
+    return min_height;
+}
+
+/*
+ * gui_bar_check_size_add: check if "add_size" is ok for bar
+ *                         return 1 if new size is ok
+ *                                0 if new size is too big
+ */
+
+int
+gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
+{
+    struct t_gui_window *ptr_win;
+    int sub_width, sub_height;
+    
+    sub_width = 0;
+    sub_height = 0;
+    
+    switch (CONFIG_INTEGER(bar->position))
+    {
+        case GUI_BAR_POSITION_BOTTOM:
+        case GUI_BAR_POSITION_TOP:
+            sub_height = add_size;
+            break;
+        case GUI_BAR_POSITION_LEFT:
+        case GUI_BAR_POSITION_RIGHT:
+            sub_width = add_size;
+            break;
+        case GUI_BAR_NUM_POSITIONS:
+            break;
+    }
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+            || (gui_bar_window_search_bar (ptr_win, bar)))
+        {
+            if ((ptr_win->win_chat_width - sub_width < GUI_WINDOW_CHAT_MIN_WIDTH)
+                || (ptr_win->win_chat_height - sub_height < GUI_WINDOW_CHAT_MIN_HEIGHT))
+                return 0;
+        }
+    }
+    
+    /* new size ok */
+    return 1;
 }
 
 /*
@@ -354,6 +473,43 @@ gui_bar_refresh (struct t_gui_bar *bar)
                 ptr_win->refresh_needed = 1;
         }
     }
+}
+
+/*
+ * gui_bar_draw: draw a bar
+ */
+
+void
+gui_bar_draw (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    
+    if (CONFIG_BOOLEAN(bar->hidden))
+        return;
+    
+    if (bar->bar_window)
+    {
+        /* root bar */
+        gui_bar_window_draw (bar->bar_window, NULL);
+    }
+    else
+    {
+        /* bar on each window */
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+                 ptr_bar_win = ptr_bar_win->next_bar_window)
+            {
+                if (ptr_bar_win->bar == bar)
+                {
+                    gui_bar_window_draw (ptr_bar_win, ptr_win);
+                }
+            }
+        }
+    }
+    
+    bar->bar_refresh_needed = 0;
 }
 
 /*
@@ -1883,6 +2039,116 @@ gui_bar_update (const char *name)
 }
 
 /*
+ * gui_bar_scroll: scroll a bar for a buffer
+ *                 return 1 if scroll is ok, 0 if error
+ */
+
+int
+gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
+                const char *scroll)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    long number;
+    char *str, *error;
+    int length, add_x, add, percent, scroll_beginning, scroll_end;
+    
+    add_x = 0;
+    str = NULL;
+    number = 0;
+    add = 0;
+    percent = 0;
+    scroll_beginning = 0;
+    scroll_end = 0;
+    
+    if ((scroll[0] == 'x') || (scroll[0] == 'X'))
+    {
+        add_x = 1;
+        scroll++;
+    }
+    else if ((scroll[0] == 'y') || (scroll[0] == 'Y'))
+    {
+        scroll++;
+    }
+    else
+        return 0;
+    
+    if ((scroll[0] == 'b') || (scroll[0] == 'B'))
+    {
+        scroll_beginning = 1;
+    }
+    else if ((scroll[0] == 'e') || (scroll[0] == 'E'))
+    {
+        scroll_end = 1;
+    }
+    else
+    {
+        if (scroll[0] == '+')
+        {
+            add = 1;
+            scroll++;
+        }
+        else if (scroll[0] == '-')
+        {
+            scroll++;
+        }
+        else
+            return 0;
+        
+        length = strlen (scroll);
+        if (length == 0)
+            return 0;
+    
+        if (scroll[length - 1] == '%')
+        {
+            str = string_strndup (scroll, length - 1);
+            percent = 1;
+        }
+        else
+            str = strdup (scroll);
+        if (!str)
+            return 0;
+        
+        error = NULL;
+        number = strtol (str, &error, 10);
+        
+        if (!error || error[0] || (number <= 0))
+        {
+            free (str);
+            return 0;
+        }
+    }
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        gui_bar_window_scroll (bar->bar_window, NULL,
+                               add_x, scroll_beginning, scroll_end,
+                               add, percent, number);
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (ptr_win->buffer == buffer)
+            {
+                for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+                     ptr_bar_win = ptr_bar_win->next_bar_window)
+                {
+                    if (ptr_bar_win->bar == bar)
+                    {
+                        gui_bar_window_scroll (ptr_bar_win, ptr_win,
+                                               add_x, scroll_beginning, scroll_end,
+                                               add, percent, number);
+                    }
+                }
+            }
+        }
+    }
+    
+    free (str);
+    
+    return 1;
+}
+
+/*
  * gui_bar_free: delete a bar
  */
 
@@ -1981,6 +2247,31 @@ gui_bar_free_all_plugin (struct t_weechat_plugin *plugin)
             gui_bar_free (ptr_bar);
         
         ptr_bar = next_bar;
+    }
+}
+
+/*
+ * gui_bar_free_bar_windows: free bar windows for a bar
+ */
+
+void
+gui_bar_free_bar_windows (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_bar_win = ptr_win->bar_windows;
+        while (ptr_bar_win)
+        {
+            next_bar_win = ptr_bar_win->next_bar_window;
+            
+            if (ptr_bar_win->bar == bar)
+                gui_bar_window_free (ptr_bar_win, ptr_win);
+            
+            ptr_bar_win = next_bar_win;
+        }
     }
 }
 

@@ -29,40 +29,26 @@
 #endif
 
 struct t_gui_buffer;
-
-#define GUI_WINDOW_MIN_WIDTH          10
-#define GUI_WINDOW_MIN_HEIGHT         5
-
-#define GUI_WINDOW_CHAT_MIN_WIDTH     5
-#define GUI_WINDOW_CHAT_MIN_HEIGHT    2
+struct t_gui_window;
+struct t_gui_bar_window;
 
 #define GUI_CURSES_NUM_WEECHAT_COLORS 15
 
-#define GUI_CURSES(window) ((struct t_gui_curses_objects *)(window->gui_objects))
+#define GUI_WINDOW_OBJECTS(window)                                      \
+    ((struct t_gui_window_curses_objects *)(window->gui_objects))
+#define GUI_BAR_WINDOW_OBJECTS(bar_window)                              \
+    ((struct t_gui_bar_window_curses_objects *)(bar_window->gui_objects))
 
-struct t_gui_bar_window
-{
-    struct t_gui_bar *bar;          /* pointer to bar                       */
-    int x, y;                       /* position of window                   */
-    int width, height;              /* window size                          */
-    int scroll_x, scroll_y;         /* X-Y scroll in bar                    */
-    int cursor_x, cursor_y;         /* use to move cursor on screen (for    */
-                                    /* input_text item)                     */
-    WINDOW *win_bar;                /* bar Curses window                    */
-    int current_size;               /* current size (width or height)       */
-    WINDOW *win_separator;          /* separator (optional)                 */
-    struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
-                                              /* (only for non-root bars)   */
-    struct t_gui_bar_window *next_bar_window; /* link to next bar win       */
-                                              /* (only for non-root bars)   */
-};
-
-struct t_gui_curses_objects
+struct t_gui_window_curses_objects
 {
     WINDOW *win_chat;               /* chat window (example: channel)       */
     WINDOW *win_separator;          /* separation between 2 splited (V) win */
-    struct t_gui_bar_window *bar_windows;     /* bar windows                */
-    struct t_gui_bar_window *last_bar_window; /* last bar window            */
+};
+
+struct t_gui_bar_window_curses_objects
+{
+    WINDOW *win_bar;                /* bar Curses window                    */
+    WINDOW *win_separator;          /* separator (optional)                 */
 };
 
 extern struct t_gui_color gui_weechat_colors[];

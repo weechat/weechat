@@ -41,6 +41,7 @@
 #include "../gui-main.h"
 #include "../gui-bar.h"
 #include "../gui-bar-item.h"
+#include "../gui-bar-window.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
@@ -93,7 +94,7 @@ gui_main_init ()
     raw ();
     
     gui_color_init ();
-
+    
     /* build prefixes according to config */
     gui_chat_prefix_build ();
     
@@ -139,7 +140,7 @@ gui_main_init ()
             if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT) && (!ptr_bar->bar_window))
                 gui_bar_window_new (ptr_bar, NULL);
         }
-        for (ptr_bar_win = GUI_CURSES(gui_windows)->bar_windows;
+        for (ptr_bar_win = gui_windows->bar_windows;
              ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
         {
             gui_bar_window_calculate_pos_size (ptr_bar_win, gui_windows);

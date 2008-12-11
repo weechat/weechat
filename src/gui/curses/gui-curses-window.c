@@ -35,6 +35,7 @@
 #include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
+#include "../gui-bar-window.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
@@ -78,16 +79,14 @@ gui_window_get_height ()
 int
 gui_window_objects_init (struct t_gui_window *window)
 {
-    struct t_gui_curses_objects *new_objects;
+    struct t_gui_window_curses_objects *new_objects;
     
     new_objects = malloc (sizeof (*new_objects));
     if (new_objects)
     {
         window->gui_objects = new_objects;
-        GUI_CURSES(window)->win_chat = NULL;
-        GUI_CURSES(window)->win_separator = NULL;
-        GUI_CURSES(window)->bar_windows = NULL;
-        GUI_CURSES(window)->last_bar_window = NULL;
+        GUI_WINDOW_OBJECTS(window)->win_chat = NULL;
+        GUI_WINDOW_OBJECTS(window)->win_separator = NULL;
         return 1;
     }
     return 0;
@@ -98,25 +97,17 @@ gui_window_objects_init (struct t_gui_window *window)
  */
 
 void
-gui_window_objects_free (struct t_gui_window *window, int free_separator,
-                         int free_bar_windows)
+gui_window_objects_free (struct t_gui_window *window, int free_separator)
 {
-    if (GUI_CURSES(window)->win_chat)
+    if (GUI_WINDOW_OBJECTS(window)->win_chat)
     {
-        delwin (GUI_CURSES(window)->win_chat);
-        GUI_CURSES(window)->win_chat = NULL;
+        delwin (GUI_WINDOW_OBJECTS(window)->win_chat);
+        GUI_WINDOW_OBJECTS(window)->win_chat = NULL;
     }
-    if (free_separator && GUI_CURSES(window)->win_separator)
+    if (free_separator && GUI_WINDOW_OBJECTS(window)->win_separator)
     {
-        delwin (GUI_CURSES(window)->win_separator);
-        GUI_CURSES(window)->win_separator = NULL;
-    }
-    if (free_bar_windows)
-    {
-        while (GUI_CURSES(window)->bar_windows)
-        {
-            gui_bar_window_free (GUI_CURSES(window)->bar_windows, window);
-        }
+        delwin (GUI_WINDOW_OBJECTS(window)->win_separator);
+        GUI_WINDOW_OBJECTS(window)->win_separator = NULL;
     }
 }
 
@@ -372,7 +363,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
         return;
     }
     
-    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+    for (ptr_bar_win = window->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
     {
         gui_bar_window_calculate_pos_size (ptr_bar_win, window);
@@ -401,20 +392,20 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 void
 gui_window_draw_separator (struct t_gui_window *window)
 {
-    if (GUI_CURSES(window)->win_separator)
-        delwin (GUI_CURSES(window)->win_separator);
+    if (GUI_WINDOW_OBJECTS(window)->win_separator)
+        delwin (GUI_WINDOW_OBJECTS(window)->win_separator);
     
     if (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT))
     {
-        GUI_CURSES(window)->win_separator = newwin (window->win_height,
-                                                    1,
-                                                    window->win_y,
-                                                    window->win_x - 1);
-        gui_window_set_weechat_color (GUI_CURSES(window)->win_separator,
+        GUI_WINDOW_OBJECTS(window)->win_separator = newwin (window->win_height,
+                                                            1,
+                                                            window->win_y,
+                                                            window->win_x - 1);
+        gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator,
                                       GUI_COLOR_SEPARATOR);
-        mvwvline (GUI_CURSES(window)->win_separator, 0, 0, ACS_VLINE,
+        mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator, 0, 0, ACS_VLINE,
                   window->win_height);
-        wnoutrefresh (GUI_CURSES(window)->win_separator);
+        wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator);
         refresh ();
     }
 }
@@ -487,33 +478,33 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     window->buffer = buffer;
     
-    if (old_buffer == buffer)
+    if (gui_ok && (old_buffer == buffer))
     {
         gui_bar_window_remove_unused_bars (window);
         gui_bar_window_add_missing_bars (window);
     }
     
     gui_window_calculate_pos_size (window);
-
+    
     if (gui_ok)
     {
         /* create bar windows */
-        for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+        for (ptr_bar_win = window->bar_windows; ptr_bar_win;
              ptr_bar_win = ptr_bar_win->next_bar_window)
         {
             gui_bar_window_create_win (ptr_bar_win);
         }
         
         /* destroy Curses windows */
-        gui_window_objects_free (window, 0, 0);
+        gui_window_objects_free (window, 0);
         
         /* create Curses windows */
-        if (GUI_CURSES(window)->win_chat)
-            delwin (GUI_CURSES(window)->win_chat);
-        GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
-                                               window->win_chat_width,
-                                               window->win_chat_y,
-                                               window->win_chat_x);
+        if (GUI_WINDOW_OBJECTS(window)->win_chat)
+            delwin (GUI_WINDOW_OBJECTS(window)->win_chat);
+        GUI_WINDOW_OBJECTS(window)->win_chat = newwin (window->win_chat_height,
+                                                       window->win_chat_width,
+                                                       window->win_chat_y,
+                                                       window->win_chat_x);
     }
     
     buffer->num_displayed++;
@@ -527,7 +518,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
     
     /* redraw bars in window */
-    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+    for (ptr_bar_win = window->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
     {
         ptr_bar_win->bar->bar_refresh_needed = 1;
@@ -573,8 +564,6 @@ gui_window_switch (struct t_gui_window *window)
     
     gui_window_switch_to_buffer (gui_current_window,
                                  gui_current_window->buffer, 1);
-    
-    gui_current_window->refresh_needed = 1;
 }
 
 /*
@@ -1187,7 +1176,6 @@ gui_window_merge_all (struct t_gui_window *window)
         
         gui_current_window = window;
         gui_window_switch_to_buffer (window, window->buffer, 1);
-        window->refresh_needed = 1;
     }
 }
 
@@ -1459,18 +1447,7 @@ gui_window_title_reset ()
 void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
-    struct t_gui_bar_window *ptr_bar_win;
-    
-    log_printf ("");
-    log_printf ("  window specific objects:");
-    log_printf ("  win_chat. . . . . . : 0x%lx", GUI_CURSES(window)->win_chat);
-    log_printf ("  win_separator . . . : 0x%lx", GUI_CURSES(window)->win_separator);
-    log_printf ("  bar_windows . . . . : 0x%lx", GUI_CURSES(window)->bar_windows);
-    log_printf ("  last_bar_windows. . : 0x%lx", GUI_CURSES(window)->last_bar_window);
-    
-    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
-         ptr_bar_win = ptr_bar_win->next_bar_window)
-    {
-        gui_bar_window_print_log (ptr_bar_win);
-    }
+    log_printf ("  window specific objects for Curses:");
+    log_printf ("    win_chat. . . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_chat);
+    log_printf ("    win_separator . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_separator);
 }
