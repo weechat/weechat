@@ -118,7 +118,9 @@ weechat_perl_exec (struct t_plugin_script *script,
     int *ret_i, mem_err, length;
     SV *ret_s;
     struct t_plugin_script *old_perl_current_script;
+#ifdef MULTIPLICITY
     void *old_context;
+#endif
     
     /* this code is placed here to conform ISO C90 */
     dSP;

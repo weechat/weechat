@@ -4113,6 +4113,7 @@ static XS (XS_weechat_api_command)
 
 static XS (XS_weechat_api_info_get)
 {
+    char *info_name, *arguments;
     const char *result;
     dXSARGS;
     
@@ -4131,8 +4132,10 @@ static XS (XS_weechat_api_info_get)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_info_get (SvPV (ST (0), PL_na),
-                               SvPV (ST (1), PL_na));
+    info_name = SvPV (ST (0), PL_na);
+    arguments = SvPV (ST (1), PL_na);
+    
+    result = weechat_info_get (info_name, arguments);
     
     PERL_RETURN_STRING(result);
 }
