@@ -340,13 +340,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>F5 / Alt + left arrow</entry>
+              <entry>Alt + left arrow / Alt + up arrow / Ctrl + P / F5</entry>
               <entry>
                 Switch to previous buffer
               </entry>
             </row>
             <row>
-              <entry>F6 / Alt + right arrow</entry>
+              <entry>Alt + right arrow / Alt + down arrow / Ctrl + N / F6</entry>
               <entry>
                 Switch to next buffer
               </entry>

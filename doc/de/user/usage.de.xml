@@ -357,13 +357,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>F5 / Alt + Links</entry>
+              <entry>Alt + Links / Alt + Hoch / Ctrl + P / F5</entry>
               <entry>
                 Gehe zum vorherigen Puffer
               </entry>
             </row>
             <row>
-              <entry>F6 / Alt + Rechts</entry>
+              <entry>Alt + Rechts / Alt + Runter / Ctrl + N / F6</entry>
               <entry>
                 Gehe zum nächsten Puffer
               </entry>

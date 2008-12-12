@@ -363,13 +363,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>F5 / Alt + flèche gauche</entry>
+              <entry>Alt + flèche gauche / Alt + flèche haut / Ctrl + P / F5</entry>
               <entry>
                 Aller au tampon précédent
               </entry>
             </row>
             <row>
-              <entry>F6 / Alt + flèche droite</entry>
+              <entry>Alt + flèche droite / Alt + flèche bas / Ctrl + N / F6</entry>
               <entry>
                 Aller au tampon suivant
               </entry>
