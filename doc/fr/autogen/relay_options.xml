@@ -86,7 +86,7 @@
   </listitem>
 </itemizedlist>
 
-<command>relay.look.auto_open_buffer</command>: ouvrir automatiquement le tampon des clients lorsqu'un nouveau client est ajouté à la liste
+<command>relay.look.auto_open_buffer</command>: ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau client est ajouté à la liste
 <itemizedlist>
   <listitem>
     <para>type: booléen</para>
@@ -103,16 +103,6 @@
   </listitem>
   <listitem>
     <para>valeurs: toute chaîne (valeur par défaut: '22373-22400')</para>
-  </listitem>
-</itemizedlist>
-
-<command>relay.network.timeout</command>: délai d'attente pour la requête relai (en secondes)
-<itemizedlist>
-  <listitem>
-    <para>type: entier</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: 5 .. 2147483647 (valeur par défaut: 300)</para>
   </listitem>
 </itemizedlist>
 

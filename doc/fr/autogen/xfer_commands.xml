@@ -6,10 +6,13 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/xfer</command>
+<command>/xfer  [list | listfull]</command>
 <programlisting>
 contrôle xfer
 
-Ouverture du tampon avec la liste des xfers
+    list: liste les xfer
+listfull: liste les xfer (verbeux)
+
+Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
 </programlisting>
 

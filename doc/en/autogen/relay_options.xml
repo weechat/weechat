@@ -106,13 +106,3 @@
   </listitem>
 </itemizedlist>
 
-<command>relay.network.timeout</command>: timeout for relay request (in seconds)
-<itemizedlist>
-  <listitem>
-    <para>type: integer</para>
-  </listitem>
-  <listitem>
-    <para>values: 5 .. 2147483647 (default value: 300)</para>
-  </listitem>
-</itemizedlist>
-

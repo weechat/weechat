@@ -6,10 +6,13 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/relay</command>
+<command>/relay  [list | listfull]</command>
 <programlisting>
 contrôle du relai
 
-Ouverture du tampon avec la liste des clients pour le relai
+    list: liste les clients pour le relai
+listfull: liste les clients pour le relai (verbeux)
+
+Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 </programlisting>
 

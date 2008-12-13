@@ -6,10 +6,13 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/relay</command>
+<command>/relay  [list | listfull]</command>
 <programlisting>
 relay control
 
-Open buffer with relay clients list
+    list: list relay clients
+listfull: list relay clients (verbose)
+
+Without argument, this command opens buffer with list of relay clients.
 </programlisting>
 
