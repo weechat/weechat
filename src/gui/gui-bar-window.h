@@ -32,7 +32,8 @@ struct t_gui_bar_window
     int cursor_x, cursor_y;         /* use to move cursor on screen (for    */
                                     /* input_text item)                     */
     int current_size;               /* current size (width or height)       */
-    char *content;                  /* bar window content (data displayed)  */
+    int items_count;                /* number of items                      */
+    char **items_content;           /* content for each item of bar         */
     void *gui_objects;              /* pointer to a GUI specific struct     */
     struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
                                               /* (only for non-root bars)   */
@@ -42,6 +43,12 @@ struct t_gui_bar_window
 
 /* functions */
 
+extern int gui_bar_window_valid (struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
+                                               struct t_gui_window *window);
+extern void gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
+                                               struct t_gui_window *window,
+                                               int item_index);
 extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
                                                            struct t_gui_bar *bar);
 extern int gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window);
@@ -53,11 +60,16 @@ extern int gui_bar_window_new (struct t_gui_bar *bar,
                                struct t_gui_window *window);
 extern void gui_bar_window_free (struct t_gui_bar_window *bar_window,
                                  struct t_gui_window *window);
+extern int gui_bar_window_remove_unused_bars (struct t_gui_window *window);
+extern int gui_bar_window_add_missing_bars (struct t_gui_window *window);
 extern void gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
                                    struct t_gui_window *window,
                                    int add_x, int scroll_beginning,
                                    int scroll_end, int add, int percent,
                                    int value);
+extern int gui_bar_window_add_to_infolist (struct t_infolist *infolist,
+                                           struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_print_log (struct t_gui_bar_window *bar_window);
 
 /* functions (GUI dependent) */
 

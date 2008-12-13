@@ -980,7 +980,7 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
     if ((height1 >= GUI_WINDOW_MIN_HEIGHT) && (height2 >= GUI_WINDOW_MIN_HEIGHT)
         && (percentage > 0) && (percentage <= 100))
     {
-        new_window = gui_window_new (window,
+        new_window = gui_window_new (window, window->buffer,
                                      window->win_x, window->win_y,
                                      window->win_width, height1,
                                      100, percentage);
@@ -992,7 +992,6 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
             window->win_height_pct = 100 - percentage;
             
             /* assign same buffer for new window (top window) */
-            new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
             gui_window_switch_to_buffer (window, window->buffer, 1);
@@ -1025,7 +1024,7 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
     if ((width1 >= GUI_WINDOW_MIN_WIDTH) && (width2 >= GUI_WINDOW_MIN_WIDTH)
         && (percentage > 0) && (percentage <= 100))
     {
-        new_window = gui_window_new (window,
+        new_window = gui_window_new (window, window->buffer,
                                      window->win_x + width1 + 1, window->win_y,
                                      width2, window->win_height,
                                      percentage, 100);
@@ -1036,7 +1035,6 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
             window->win_width_pct = 100 - percentage;
             
             /* assign same buffer for new window (right window) */
-            new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
             gui_window_switch_to_buffer (window, window->buffer, 1);

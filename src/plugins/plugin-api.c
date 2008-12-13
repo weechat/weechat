@@ -38,6 +38,9 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-string.h"
+#include "../gui/gui-bar.h"
+#include "../gui/gui-bar-item.h"
+#include "../gui/gui-bar-window.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -288,6 +291,9 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                                   void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_bar_item *ptr_bar_item;
+    struct t_gui_bar_window *ptr_bar_window;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_filter *ptr_filter;
@@ -300,8 +306,128 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
-    if (string_strcasecmp (infolist_name, "buffer") == 0)
+
+    if (string_strcasecmp (infolist_name, "bar") == 0)
+    {
+        /* invalid bar pointer ? */
+        if (pointer && (!gui_bar_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one bar */
+                if (!gui_bar_add_to_infolist (ptr_infolist, pointer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all bars */
+                for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+                {
+                    if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "bar_item") == 0)
+    {
+        /* invalid bar item pointer ? */
+        if (pointer && (!gui_bar_item_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one bar item */
+                if (!gui_bar_item_add_to_infolist (ptr_infolist, pointer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all bar items */
+                for (ptr_bar_item = gui_bar_items; ptr_bar_item;
+                     ptr_bar_item = ptr_bar_item->next_item)
+                {
+                    if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "bar_window") == 0)
+    {
+        /* invalid bar window pointer ? */
+        if (pointer && (!gui_bar_window_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one bar window */
+                if (!gui_bar_window_add_to_infolist (ptr_infolist, pointer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all bar windows (from root and window bars) */
+                for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+                {
+                    if (ptr_bar->bar_window)
+                    {
+                        if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar->bar_window))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
+                    }
+                }
+                for (ptr_window = gui_windows; ptr_window;
+                     ptr_window = ptr_window->next_window)
+                {
+                    for (ptr_bar_window = ptr_window->bar_windows;
+                         ptr_bar_window;
+                         ptr_bar_window = ptr_bar_window->next_bar_window)
+                    {
+                        if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar_window))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "buffer") == 0)
     {
         /* invalid buffer pointer ? */
         if (pointer && (!gui_buffer_valid (pointer)))
@@ -380,6 +506,36 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             return ptr_infolist;
         }
     }
+    else if (string_strcasecmp (infolist_name, "hook") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (!hook_add_to_infolist (ptr_infolist, arguments))
+            {
+                infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "hotlist") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
+        }
+    }
     else if (string_strcasecmp (infolist_name, "nicklist") == 0)
     {
         /* invalid buffer pointer ? */
@@ -395,6 +551,54 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                 return NULL;
             }
             return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "option") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (!config_file_add_to_infolist (ptr_infolist, arguments))
+            {
+                infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "plugin") == 0)
+    {
+        /* invalid plugin pointer ? */
+        if (pointer && (!plugin_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one plugin */
+                if (!plugin_add_to_infolist (ptr_infolist, pointer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all plugins */
+                for (ptr_plugin = weechat_plugins; ptr_plugin;
+                     ptr_plugin = ptr_plugin->next_plugin)
+                {
+                    if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
         }
     }
     else if (string_strcasecmp (infolist_name, "window") == 0)
@@ -448,84 +652,6 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                     }
                     return ptr_infolist;
                 }
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "hotlist") == 0)
-    {
-        ptr_infolist = infolist_new ();
-        if (ptr_infolist)
-        {
-            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "option") == 0)
-    {
-        ptr_infolist = infolist_new ();
-        if (ptr_infolist)
-        {
-            if (!config_file_add_to_infolist (ptr_infolist, arguments))
-            {
-                infolist_free (ptr_infolist);
-                return NULL;
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "hook") == 0)
-    {
-        ptr_infolist = infolist_new ();
-        if (ptr_infolist)
-        {
-            if (!hook_add_to_infolist (ptr_infolist, arguments))
-            {
-                infolist_free (ptr_infolist);
-                return NULL;
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "plugin") == 0)
-    {
-        /* invalid plugin pointer ? */
-        if (pointer && (!plugin_valid (pointer)))
-            return NULL;
-        
-        ptr_infolist = infolist_new ();
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one plugin */
-                if (!plugin_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all plugins */
-                for (ptr_plugin = weechat_plugins; ptr_plugin;
-                     ptr_plugin = ptr_plugin->next_plugin)
-                {
-                    if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
-                    {
-                        infolist_free (ptr_infolist);
-                        return NULL;
-                    }
-                }
-                return ptr_infolist;
             }
         }
     }
@@ -699,22 +825,28 @@ plugin_api_init ()
                &plugin_api_info_get_internal, NULL);
     
     /* WeeChat core infolist hooks */
+    hook_infolist (NULL, "bar", N_("list of bars"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "bar_item", N_("list of bar items"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "bar_window", N_("list of bar windows"),
+                   &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer", N_("list of buffers"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "filter", N_("list of filters"),
                    &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "window", N_("list of windows"),
+    hook_infolist (NULL, "hook", N_("list of hooks"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
                    &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
+                   &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "option", N_("list of options"),
                    &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "hook", N_("list of hooks"),
-                   &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "plugin", N_("list of plugins"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "window", N_("list of windows"),
                    &plugin_api_infolist_get_internal, NULL);
 }

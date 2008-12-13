@@ -112,33 +112,37 @@ gui_main_init ()
     /* init bar items */
     gui_bar_item_init ();
     
-    /* create new window/buffer */
-    if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
-    {
-        gui_current_window = gui_windows;
-        ptr_buffer = gui_buffer_new (NULL, "weechat", NULL, NULL, NULL, NULL);
-        if (ptr_buffer)
-        {
-            gui_init_ok = 1;
-            gui_buffer_set_title (ptr_buffer,
-                                  "WeeChat " WEECHAT_COPYRIGHT_DATE
-                                  " - " WEECHAT_WEBSITE);
-        }
-        else
-            gui_init_ok = 0;
-        
-        if (CONFIG_BOOLEAN(config_look_set_title))
-            gui_window_title_set ();
-    }
+    gui_init_ok = 0;
     
-    if (gui_init_ok)
+    /* create core buffer */
+    ptr_buffer = gui_buffer_new (NULL, "weechat", NULL, NULL, NULL, NULL);
+    if (ptr_buffer)
     {
+        gui_init_ok = 1;
+        
+        /* set title for core buffer */
+        gui_buffer_set_title (ptr_buffer,
+                              "WeeChat " WEECHAT_COPYRIGHT_DATE
+                              " - " WEECHAT_WEBSITE);
+        
+        /* create main window (using full space) */
+        if (gui_window_new (NULL, ptr_buffer, 0, 0, COLS, LINES, 100, 100))
+        {
+            gui_current_window = gui_windows;
+            
+            if (CONFIG_BOOLEAN(config_look_set_title))
+                gui_window_title_set ();
+        }
+        
         /* create bar windows for root bars (they were read from config,
            but no window was created (GUI was not initialized) */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT) && (!ptr_bar->bar_window))
+            if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
+                && (!ptr_bar->bar_window))
+            {
                 gui_bar_window_new (ptr_bar, NULL);
+            }
         }
         for (ptr_bar_win = gui_windows->bar_windows;
              ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)

@@ -175,9 +175,9 @@ char *
 script_ptr2str (void *pointer)
 {
     char pointer_str[128];
-
+    
     if (!pointer)
-        return strdup ("");
+        return strdup ("0x0");
     
     snprintf (pointer_str, sizeof (pointer_str),
               "0x%lx", (long unsigned int)pointer);

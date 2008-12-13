@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-10 17:02+0100\n"
+"POT-Creation-Date: 2008-12-12 16:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,7 @@ msgid "auto"
 msgstr ""
 
 #, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
 msgstr ""
 
 msgid ", with separator"
@@ -3726,6 +3726,15 @@ msgstr ""
 msgid "1 if filters are enabled"
 msgstr ""
 
+msgid "list of bars"
+msgstr ""
+
+msgid "list of bar items"
+msgstr ""
+
+msgid "list of bar windows"
+msgstr ""
+
 msgid "list of buffers"
 msgstr ""
 
@@ -3735,22 +3744,22 @@ msgstr ""
 msgid "list of filters"
 msgstr ""
 
-msgid "nicks in nicklist for a buffer"
-msgstr ""
-
-msgid "list of windows"
+msgid "list of hooks"
 msgstr ""
 
 msgid "list of buffers in hotlist"
 msgstr ""
 
+msgid "nicks in nicklist for a buffer"
+msgstr ""
+
 msgid "list of options"
 msgstr ""
 
-msgid "list of hooks"
+msgid "list of plugins"
 msgstr ""
 
-msgid "list of plugins"
+msgid "list of windows"
 msgstr ""
 
 #, c-format

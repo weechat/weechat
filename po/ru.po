@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-10 17:02+0100\n"
+"POT-Creation-Date: 2008-12-12 16:40+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -115,7 +115,7 @@ msgid "auto"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
 msgstr "%sна %s%s%s/%s%s%s:%s игнорирует %s%s%s с %s%s\n"
 
 #, fuzzy
@@ -4288,6 +4288,18 @@ msgid "1 if filters are enabled"
 msgstr "команда users отключена"
 
 #, fuzzy
+msgid "list of bars"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "list of bar items"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "list of bar windows"
+msgstr "Список игнорирования:\n"
+
+#, fuzzy
 msgid "list of buffers"
 msgstr "Список сокращений:\n"
 
@@ -4300,28 +4312,28 @@ msgid "list of filters"
 msgstr "Список сокращений:\n"
 
 #, fuzzy
-msgid "nicks in nicklist for a buffer"
-msgstr "некорректная длина буфера"
-
-#, fuzzy
-msgid "list of windows"
-msgstr "Список игнорирования:\n"
+msgid "list of hooks"
+msgstr "Список сокращений:\n"
 
 #, fuzzy
 msgid "list of buffers in hotlist"
 msgstr "максимальная длина имён в хотлисте"
 
 #, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "некорректная длина буфера"
+
+#, fuzzy
 msgid "list of options"
 msgstr "настроить параметры конфигурации"
 
 #, fuzzy
-msgid "list of hooks"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
 msgid "list of plugins"
 msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "list of windows"
+msgstr "Список игнорирования:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

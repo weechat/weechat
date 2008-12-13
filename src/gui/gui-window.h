@@ -107,7 +107,8 @@ extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                                           struct t_gui_window *window);
 extern void gui_window_tree_free (struct t_gui_window_tree **tree);
-extern struct t_gui_window *gui_window_new (struct t_gui_window *parent,
+extern struct t_gui_window *gui_window_new (struct t_gui_window *parent_window,
+                                            struct t_gui_buffer *buffer,
                                             int x, int y, int width, int height,
                                             int width_pct, int height_pct);
 extern int gui_window_valid (struct t_gui_window *window);

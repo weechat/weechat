@@ -101,16 +101,14 @@ command_bar_list (int full)
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
-                                 _("    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: "
-                                   "%s)"),
+                                 _("    priority: %d, fg: %s, bg: %s, items: %s%s"),
                                  CONFIG_INTEGER(ptr_bar->priority),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)),
                                  (CONFIG_STRING(ptr_bar->items) && CONFIG_STRING(ptr_bar->items)[0]) ?
                                  CONFIG_STRING(ptr_bar->items) : "-",
                                  (CONFIG_INTEGER(ptr_bar->separator)) ?
-                                 _(", with separator") : "",
-                                 (ptr_bar->plugin) ? ptr_bar->plugin->name : "-");
+                                 _(", with separator") : "");
             }
             else
             {
@@ -246,7 +244,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         if (error && !error[0])
         {
             /* create bar */
-            if (gui_bar_new (NULL, argv[2], "0", "0", str_type,
+            if (gui_bar_new (argv[2], "0", "0", str_type,
                              (pos_condition) ? pos_condition : "",
                              argv[4],
                              "horizontal", "vertical",

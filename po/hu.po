@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-10 17:02+0100\n"
+"POT-Creation-Date: 2008-12-12 16:40+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -119,7 +119,7 @@ msgid "auto"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
 msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
 
 #, fuzzy
@@ -4301,6 +4301,18 @@ msgid "1 if filters are enabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy
+msgid "list of bars"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "list of bar items"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "list of bar windows"
+msgstr "Mellőzések listája:\n"
+
+#, fuzzy
 msgid "list of buffers"
 msgstr "Aliaszok listája:\n"
 
@@ -4313,28 +4325,28 @@ msgid "list of filters"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy
-msgid "nicks in nicklist for a buffer"
-msgstr "érvénytelen pufferhossz"
-
-#, fuzzy
-msgid "list of windows"
-msgstr "Mellőzések listája:\n"
+msgid "list of hooks"
+msgstr "Aliaszok listája:\n"
 
 #, fuzzy
 msgid "list of buffers in hotlist"
 msgstr "kiemelendő szavak listája"
 
 #, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "érvénytelen pufferhossz"
+
+#, fuzzy
 msgid "list of options"
 msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy
-msgid "list of hooks"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
 msgid "list of plugins"
 msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "list of windows"
+msgstr "Mellőzések listája:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

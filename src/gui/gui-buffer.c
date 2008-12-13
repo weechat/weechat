@@ -257,6 +257,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
+    int first_buffer_creation;
     
     if (!name)
         return NULL;
@@ -363,24 +364,18 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         gui_buffer_local_var_add (new_buffer, "name", name);
         
         /* add buffer to buffers list */
+        first_buffer_creation = (gui_buffers == NULL);
         gui_buffer_insert (new_buffer);
-        
-        /* first buffer creation ? */
-        if (!gui_current_window->buffer)
-        {
-            gui_current_window->buffer = new_buffer;
-            gui_current_window->first_line_displayed = 1;
-            gui_current_window->start_line = NULL;
-            gui_current_window->start_line_pos = 0;
-            gui_window_switch_to_buffer (gui_current_window, new_buffer, 0);
-        }
         
         /* check if this buffer should be assigned to a window,
            according to windows layout saved */
         gui_layout_window_check_buffer (new_buffer);
-        
-        hook_signal_send ("buffer_open",
-                          WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+
+        if (!first_buffer_creation)
+        {
+            hook_signal_send ("buffer_open",
+                              WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+        }
     }
     else
         return NULL;

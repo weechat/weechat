@@ -29,12 +29,54 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "gui-bar-window.h"
 #include "gui-bar.h"
+#include "gui-bar-item.h"
+#include "gui-color.h"
 #include "gui-window.h"
 
+
+/*
+ * gui_bar_window_valid: check if a bar window pointer exists
+ *                       return 1 if bar window exists
+ *                              0 if bar window is not found
+ */
+
+int
+gui_bar_window_valid (struct t_gui_bar_window *bar_window)
+{
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_window *ptr_window;
+    struct t_gui_bar_window *ptr_bar_window;
+    
+    if (!bar_window)
+        return 0;
+    
+    /* check root bars */
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->bar_window && (ptr_bar->bar_window == bar_window))
+            return 1;
+    }
+    
+    /* check window bars */
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        for (ptr_bar_window = ptr_window->bar_windows; ptr_bar_window;
+             ptr_bar_window = ptr_bar_window->next_bar_window)
+        {
+            if (ptr_bar_window == bar_window)
+                return 1;
+        }
+    }
+    
+    /* bar window not found */
+    return 0;
+}
 
 /*
  * gui_bar_window_search_bar: search a reference to a bar in a window
@@ -190,6 +232,97 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
+ * gui_bar_window_content_alloc: allocate content for a bar window
+ */
+
+void
+gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
+{
+    int i;
+
+    bar_window->items_count = bar_window->bar->items_count;
+    bar_window->items_content = malloc((bar_window->items_count) *
+                                       sizeof (bar_window->items_content[0]));
+    if (bar_window->items_content)
+    {
+        for (i = 0; i < bar_window->items_count; i++)
+        {
+            bar_window->items_content[i] = NULL;
+        }
+    }
+    else
+        bar_window->items_count = 0;
+}
+
+/*
+ * gui_bar_window_content_free: free content of a bar window
+ */
+
+void
+gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
+{
+    int i;
+    
+    if (bar_window->items_content)
+    {
+        for (i = 0; i < bar_window->items_count; i++)
+        {
+            if (bar_window->items_content[i])
+                free (bar_window->items_content[i]);
+        }
+        free (bar_window->items_content);
+        bar_window->items_content = NULL;
+    }
+}
+
+/*
+ * gui_bar_window_content_build_item: build content of an item for a bar window,
+ *                                    by calling callback for each item, then
+ *                                    concat values (according to bar position
+ *                                    and filling)
+ */
+
+void
+gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
+                                   struct t_gui_window *window,
+                                   int item_index)
+{
+    log_printf ("bar_window: build item '%s'", bar_window->bar->items_array[item_index]);
+    if (bar_window->items_content[item_index])
+        free (bar_window->items_content[item_index]);
+    
+    bar_window->items_content[item_index] =
+        gui_bar_item_get_value (bar_window->bar->items_array[item_index],
+                                bar_window->bar, window,
+                                0, 0, 0);
+}
+
+/*
+ * gui_bar_window_content_build: build content of a bar window, by calling
+ *                               callback for each item, then concat values
+ *                               (according to bar position and filling)
+ */
+
+void
+gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
+                              struct t_gui_window *window)
+{
+    int i;
+    
+    if (bar_window->items_count != bar_window->bar->items_count)
+    {
+        gui_bar_window_content_free (bar_window);
+        gui_bar_window_content_alloc (bar_window);
+    }
+    
+    for (i = 0; i < bar_window->items_count; i++)
+    {
+        gui_bar_window_content_build_item (bar_window, window, i);
+        
+    }
+}
+
+/*
  * gui_bar_window_new: create a new "window bar" for a bar, in screen or a window
  *                     if window is not NULL, bar window will be in this window
  *                     return 1 if ok, 0 if error
@@ -262,8 +395,10 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->cursor_y = -1;
         new_bar_window->current_size = (CONFIG_INTEGER(bar->size) == 0) ?
             1 : CONFIG_INTEGER(bar->size);
-        new_bar_window->content = NULL;
+        new_bar_window->items_content = NULL;
+        new_bar_window->items_count = 0;
         gui_bar_window_objects_init (new_bar_window);
+        gui_bar_window_content_build (new_bar_window, window);
         
         if (gui_init_ok)
         {
@@ -404,8 +539,7 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
     }
     
     /* free data */
-    if (bar_window->content)
-        free (bar_window->content);
+    gui_bar_window_content_free (bar_window);
     gui_bar_window_objects_free (bar_window);
     free (bar_window->gui_objects);
     
@@ -548,14 +682,71 @@ gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * gui_bar_window_add_to_infolist: add a bar window in an infolist
+ *                                 return 1 if ok, 0 if error
+ */
+
+int
+gui_bar_window_add_to_infolist (struct t_infolist *infolist,
+                                struct t_gui_bar_window *bar_window)
+{
+    struct t_infolist_item *ptr_item;
+    int i;
+    char option_name[64];
+    
+    if (!infolist || !bar_window)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_pointer (ptr_item, "bar", bar_window->bar))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "x", bar_window->x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "y", bar_window->y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "width", bar_window->width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "height", bar_window->height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "scroll_x", bar_window->scroll_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "scroll_y", bar_window->scroll_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "cursor_x", bar_window->cursor_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "cursor_y", bar_window->cursor_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "current_size", bar_window->current_size))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "items_count", bar_window->current_size))
+        return 0;
+    for (i = 0; i < bar_window->items_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name), "items_content_%05d", i + 1);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      bar_window->items_content[i]))
+            return 0;
+    }
+    if (!infolist_new_var_pointer (ptr_item, "gui_objects", bar_window->gui_objects))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * gui_bar_window_print_log: print bar window infos in log (usually for crash dump)
  */
 
 void
 gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
 {
+    int i;
+    
     log_printf ("");
-    log_printf ("  [window bar (addr:0x%lx)]",   bar_window);
+    log_printf ("  [window bar (addr:0x%lx)]",     bar_window);
     log_printf ("    bar . . . . . . . : 0x%lx ('%s')",
                 bar_window->bar,
                 (bar_window->bar) ? bar_window->bar->name : "");
@@ -568,6 +759,15 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    cursor_x. . . . . . : %d",    bar_window->cursor_x);
     log_printf ("    cursor_y. . . . . . : %d",    bar_window->cursor_y);
     log_printf ("    current_size. . . . : %d",    bar_window->current_size);
+    log_printf ("    items_count . . . . : %d",    bar_window->items_count);
+    for (i = 0; i < bar_window->items_count; i++)
+    {
+        log_printf ("    items_content[%03d]. : '%s' (item: '%s')",
+                    i,
+                    bar_window->items_content[i],
+                    (bar_window->bar->items_count >= i + 1) ?
+                    bar_window->bar->items_array[i] : "?");
+    }
     log_printf ("    gui_objects . . . . : 0x%lx", bar_window->gui_objects);
     gui_bar_window_objects_print_log (bar_window);
     log_printf ("    prev_bar_window . . : 0x%lx", bar_window->prev_bar_window);

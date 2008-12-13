@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-10 17:02+0100\n"
-"PO-Revision-Date: 2008-12-10 17:02+0100\n"
+"POT-Creation-Date: 2008-12-12 16:40+0100\n"
+"PO-Revision-Date: 2008-12-12 16:41+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -114,8 +114,8 @@ msgid "auto"
 msgstr "auto"
 
 #, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
-msgstr "    priorité: %d, fg: %s, bg: %s, objets: %s%s (extension: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+msgstr "    priorité: %d, fg: %s, bg: %s, objets: %s%s"
 
 msgid ", with separator"
 msgstr ", avec séparateur"
@@ -4442,6 +4442,15 @@ msgstr "inactivité du clavier (secondes)"
 msgid "1 if filters are enabled"
 msgstr "1 si les filtres sont activés"
 
+msgid "list of bars"
+msgstr "liste des barres"
+
+msgid "list of bar items"
+msgstr "liste des objets de barres"
+
+msgid "list of bar windows"
+msgstr "liste des fenêtres de barre"
+
 msgid "list of buffers"
 msgstr "liste des tampons"
 
@@ -4451,23 +4460,23 @@ msgstr "lignes d'un tampon"
 msgid "list of filters"
 msgstr "liste des filtres"
 
-msgid "nicks in nicklist for a buffer"
-msgstr "pseudos dans la liste des pseudos pour un tampon"
-
-msgid "list of windows"
-msgstr "liste des fenêtres"
+msgid "list of hooks"
+msgstr "liste des hooks"
 
 msgid "list of buffers in hotlist"
 msgstr "liste des tampons dans la hotlist"
 
+msgid "nicks in nicklist for a buffer"
+msgstr "pseudos dans la liste des pseudos pour un tampon"
+
 msgid "list of options"
 msgstr "liste des options"
 
-msgid "list of hooks"
-msgstr "liste des hooks"
-
 msgid "list of plugins"
 msgstr "liste des extensions"
+
+msgid "list of windows"
+msgstr "liste des fenêtres"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

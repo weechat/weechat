@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-10 17:02+0100\n"
+"POT-Creation-Date: 2008-12-12 16:40+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -111,8 +111,8 @@ msgstr "šířka"
 msgid "auto"
 msgstr "auto"
 
-#, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
+#, fuzzy, c-format
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
 msgstr "    priorita: %d, popředí: %s, pozadí: %s, položky: %s%s (plugin: %s)"
 
 msgid ", with separator"
@@ -4300,6 +4300,18 @@ msgid "1 if filters are enabled"
 msgstr "uživatel byl zablokován"
 
 #, fuzzy
+msgid "list of bars"
+msgstr "Seznam polí:"
+
+#, fuzzy
+msgid "list of bar items"
+msgstr "Seznam položek polí:"
+
+#, fuzzy
+msgid "list of bar windows"
+msgstr "Seznam položek polí:"
+
+#, fuzzy
 msgid "list of buffers"
 msgstr "Seznam pro aliasy:\n"
 
@@ -4312,27 +4324,27 @@ msgid "list of filters"
 msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy
-msgid "nicks in nicklist for a buffer"
-msgstr "nevalidní délka pro buffer"
-
-msgid "list of windows"
-msgstr ""
+msgid "list of hooks"
+msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy
 msgid "list of buffers in hotlist"
 msgstr "zobrazit historii příkazů bufferu"
 
 #, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "nevalidní délka pro buffer"
+
+#, fuzzy
 msgid "list of options"
 msgstr "nastaví konfigurační možnosti"
 
 #, fuzzy
-msgid "list of hooks"
-msgstr "Seznam pro aliasy:\n"
-
-#, fuzzy
 msgid "list of plugins"
 msgstr "nastaví konfigurační možnosti"
+
+msgid "list of windows"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

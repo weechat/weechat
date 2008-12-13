@@ -29,6 +29,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../plugins/plugin.h"
@@ -58,6 +59,30 @@ struct t_gui_bar *last_gui_bar = NULL;     /* last bar                      */
 struct t_gui_bar *gui_temp_bars = NULL;    /* bars used when reading config */
 struct t_gui_bar *last_gui_temp_bar = NULL;
 
+
+/*
+ * gui_bar_valid: check if a bar pointer exists
+ *                return 1 if bar exists
+ *                       0 if bar is not found
+ */
+
+int
+gui_bar_valid (struct t_gui_bar *bar)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    if (!bar)
+        return 0;
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar == bar)
+            return 1;
+    }
+    
+    /* bar not found */
+    return 0;
+}
 
 /*
  * gui_bar_search_option search a bar option name
@@ -263,6 +288,31 @@ gui_bar_get_option_filling (struct t_gui_bar *bar)
         return bar->filling_top_bottom;
     
     return bar->filling_left_right;
+}
+
+/*
+ * gui_bar_get_item_index: return index of item in bar (position of item in
+ *                         items list)
+ *                         return -1 if item is not in bar
+ */
+
+int
+gui_bar_get_item_index (struct t_gui_bar *bar, const char *item_name)
+{
+    int i;
+    
+    if (!bar || !item_name || !item_name[0])
+        return -1;
+    
+    for (i = 0; i < bar->items_count; i++)
+    {
+        /* skip non letters chars at beginning (prefix) */
+        if (gui_bar_item_string_is_item (bar->items_array[i], item_name))
+            return i;
+    }
+    
+    /* item is not in bar */
+    return -1;
 }
 
 /*
@@ -1367,7 +1417,6 @@ gui_bar_alloc (const char *name)
     new_bar = malloc (sizeof (*new_bar));
     if (new_bar)
     {
-        new_bar->plugin = NULL;
         new_bar->name = strdup (name);
         new_bar->hidden = NULL;
         new_bar->priority = NULL;
@@ -1401,7 +1450,7 @@ gui_bar_alloc (const char *name)
  */
 
 struct t_gui_bar *
-gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
+gui_bar_new_with_options (const char *name,
                           struct t_config_option *hidden,
                           struct t_config_option *priority,
                           struct t_config_option *type,
@@ -1424,7 +1473,6 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
     new_bar = gui_bar_alloc (name);
     if (new_bar)
     {
-        new_bar->plugin = plugin;
         new_bar->hidden = hidden;
         new_bar->priority = priority;
         new_bar->type = type;
@@ -1493,9 +1541,8 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
  */
 
 struct t_gui_bar *
-gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
-             const char *hidden, const char *priority, const char *type,
-             const char *conditions, const char *position,
+gui_bar_new (const char *name, const char *hidden, const char *priority,
+             const char *type, const char *conditions, const char *position,
              const char *filling_top_bottom, const char *filling_left_right,
              const char *size, const char *size_max,
              const char *color_fg, const char *color_delim,
@@ -1554,7 +1601,7 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
                                                "on" : "off");
     option_items = gui_bar_create_option (name, GUI_BAR_OPTION_ITEMS,
                                           items);
-    new_bar = gui_bar_new_with_options (plugin, name, option_hidden,
+    new_bar = gui_bar_new_with_options (name, option_hidden,
                                         option_priority, option_type,
                                         option_conditions, option_position,
                                         option_filling_top_bottom,
@@ -1686,8 +1733,7 @@ gui_bar_use_temp_bars ()
             && ptr_temp_bar->color_bg && ptr_temp_bar->separator
             && ptr_temp_bar->items)
         {
-            gui_bar_new_with_options (NULL,
-                                      ptr_temp_bar->name,
+            gui_bar_new_with_options (ptr_temp_bar->name,
                                       ptr_temp_bar->hidden,
                                       ptr_temp_bar->priority,
                                       ptr_temp_bar->type,
@@ -1849,7 +1895,7 @@ gui_bar_create_default_input ()
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
-                if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_INPUT,
+                if (gui_bar_new (GUI_BAR_DEFAULT_NAME_INPUT,
                                  "0",          /* hidden */
                                  "1000",       /* priority */
                                  "window",     /* type */
@@ -1888,7 +1934,7 @@ gui_bar_create_default_title ()
     if (!ptr_bar)
     {
         /* create title bar */
-        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_TITLE,
+        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_TITLE,
                          "0",          /* hidden */
                          "500",        /* priority */
                          "window",     /* type */
@@ -1949,7 +1995,7 @@ gui_bar_create_default_status ()
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
-            if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_STATUS,
+            if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,
                              "0",          /* hidden */
                              "500",        /* priority */
                              "window",     /* type */
@@ -1987,7 +2033,7 @@ gui_bar_create_default_nicklist ()
     if (!ptr_bar)
     {
         /* create nicklist bar */
-        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_NICKLIST,
+        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_NICKLIST,
                          "0",          /* hidden */
                          "200",        /* priority */
                          "window",     /* type */
@@ -2230,27 +2276,6 @@ gui_bar_free_all ()
 }
 
 /*
- * gui_bar_free_all_plugin: delete all bars for a plugin
- */
-
-void
-gui_bar_free_all_plugin (struct t_weechat_plugin *plugin)
-{
-    struct t_gui_bar *ptr_bar, *next_bar;
-
-    ptr_bar = gui_bars;
-    while (ptr_bar)
-    {
-        next_bar = ptr_bar->next_bar;
-        
-        if (ptr_bar->plugin == plugin)
-            gui_bar_free (ptr_bar);
-        
-        ptr_bar = next_bar;
-    }
-}
-
-/*
  * gui_bar_free_bar_windows: free bar windows for a bar
  */
 
@@ -2276,6 +2301,80 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_add_to_infolist: add a bar in an infolist
+ *                          return 1 if ok, 0 if error
+ */
+
+int
+gui_bar_add_to_infolist (struct t_infolist *infolist,
+                         struct t_gui_bar *bar)
+{
+    struct t_infolist_item *ptr_item;
+    int i;
+    char option_name[64];
+    
+    if (!infolist || !bar)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_integer (ptr_item, "hidden", CONFIG_INTEGER(bar->hidden)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "priority", CONFIG_INTEGER(bar->priority)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_INTEGER(bar->type)))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "conditions", CONFIG_STRING(bar->conditions)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "conditions_count", bar->conditions_count))
+        return 0;
+    for (i = 0; i < bar->conditions_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name),
+                  "conditions_array_%05d", i + 1);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      bar->conditions_array[i]))
+            return 0;
+    }
+    if (!infolist_new_var_integer (ptr_item, "position", CONFIG_INTEGER(bar->position)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "filling_top_bottom", CONFIG_INTEGER(bar->filling_top_bottom)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "filling_left_right", CONFIG_INTEGER(bar->filling_left_right)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "size", CONFIG_INTEGER(bar->size)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "size_max", CONFIG_INTEGER(bar->size_max)))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "color_fg", gui_color_get_name (CONFIG_COLOR(bar->color_fg))))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "color_delim", gui_color_get_name (CONFIG_COLOR(bar->color_delim))))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "color_bg", gui_color_get_name (CONFIG_COLOR(bar->color_bg))))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "separator", CONFIG_INTEGER(bar->separator)))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "items", CONFIG_STRING(bar->items)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "items_count", bar->items_count))
+        return 0;
+    for (i = 0; i < bar->items_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name),
+                  "items_array_%05d", i + 1);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      bar->items_array[i]))
+            return 0;
+    }
+    if (!infolist_new_var_pointer (ptr_item, "bar_window", bar->bar_window))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * gui_bar_print_log: print bar infos in log (usually for crash dump)
  */
 
@@ -2288,8 +2387,6 @@ gui_bar_print_log ()
     {
         log_printf ("");
         log_printf ("[bar (addr:0x%lx)]", ptr_bar);
-        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
-                    ptr_bar->plugin, plugin_get_name (ptr_bar->plugin));
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_bar->name);
         log_printf ("  hidden . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->hidden));
         log_printf ("  priority . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->priority));

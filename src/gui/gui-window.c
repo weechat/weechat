@@ -129,7 +129,8 @@ gui_window_tree_free (struct t_gui_window_tree **tree)
  */
 
 struct t_gui_window *
-gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height,
+gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
+                int x, int y, int width, int height,
                 int width_pct, int height_pct)
 {
     struct t_gui_window *new_window;
@@ -141,7 +142,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
                 x, y, width, height);
 #endif
     
-    if (parent)
+    if (parent_window)
     {
         child1 = malloc (sizeof (*child1));
         if (!child1)
@@ -152,7 +153,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
             free (child1);
             return NULL;
         }
-        ptr_tree = parent->ptr_tree;
+        ptr_tree = parent_window->ptr_tree;
         
         if (width_pct == 100)
         {
@@ -168,7 +169,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         /* parent window leaf becomes node and we add 2 leafs below
            (#1 is parent win, #2 is new win) */
         
-        parent->ptr_tree = child1;
+        parent_window->ptr_tree = child1;
         child1->parent_node = ptr_tree;
         child1->child1 = NULL;
         child1->child2 = NULL;
@@ -225,7 +226,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->refresh_needed = 0;
         
         /* buffer and layout infos */
-        new_window->buffer = NULL;
+        new_window->buffer = buffer;
         new_window->layout_plugin_name = NULL;
         new_window->layout_buffer_name = NULL;
         

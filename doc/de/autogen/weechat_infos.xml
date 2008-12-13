@@ -63,6 +63,21 @@
 </row>
 <row>
   <entry>infolist</entry>
+  <entry>bar</entry>
+  <entry>list of bars</entry>
+</row>
+<row>
+  <entry>infolist</entry>
+  <entry>bar_item</entry>
+  <entry>list of bar items</entry>
+</row>
+<row>
+  <entry>infolist</entry>
+  <entry>bar_window</entry>
+  <entry>list of bar windows</entry>
+</row>
+<row>
+  <entry>infolist</entry>
   <entry>buffer</entry>
   <entry>list of buffers</entry>
 </row>

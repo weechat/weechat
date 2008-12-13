@@ -78,7 +78,6 @@ enum t_gui_bar_filling
 struct t_gui_bar
 {
     /* user choices */
-    struct t_weechat_plugin *plugin;    /* plugin                           */
     char *name;                         /* bar name                         */
     struct t_config_option *hidden;     /* true if bar is hidden            */
     struct t_config_option *priority;   /* bar priority                     */
@@ -121,10 +120,13 @@ extern struct t_gui_bar *last_gui_temp_bar;
 
 /* functions */
 
+extern int gui_bar_valid (struct t_gui_bar *bar);
 extern int gui_bar_search_option (const char *option_name);
 extern int gui_bar_search_type (const char *type);
 extern int gui_bar_search_position (const char *position);
 extern struct t_config_option *gui_bar_get_option_filling (struct t_gui_bar *bar);
+extern int gui_bar_get_item_index (struct t_gui_bar *bar,
+                                   const char *item_name);
 extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
                                                 struct t_gui_window *window);
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
@@ -136,8 +138,7 @@ extern int gui_bar_set (struct t_gui_bar *bar, const char *property, const char 
 extern void gui_bar_create_option_temp (struct t_gui_bar *temp_bar,
                                         int index_option, const char *value);
 extern struct t_gui_bar *gui_bar_alloc (const char *name);
-extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
-                                      const char *name,
+extern struct t_gui_bar *gui_bar_new (const char *name,
                                       const char *hidden,
                                       const char *priority,
                                       const char *type,
@@ -163,9 +164,9 @@ extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
                            const char *scroll);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();
-extern void gui_bar_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void gui_bar_free_bar_windows (struct t_gui_bar *bar);
-extern void gui_bar_window_print_log (struct t_gui_bar_window *bar_window);
+extern int gui_bar_add_to_infolist (struct t_infolist *infolist,
+                                    struct t_gui_bar *bar);
 extern void gui_bar_print_log ();
 
 #endif /* gui-bar.h */

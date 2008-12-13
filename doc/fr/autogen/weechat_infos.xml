@@ -63,6 +63,21 @@
 </row>
 <row>
   <entry>infolist</entry>
+  <entry>bar</entry>
+  <entry>liste des barres</entry>
+</row>
+<row>
+  <entry>infolist</entry>
+  <entry>bar_item</entry>
+  <entry>liste des objets de barres</entry>
+</row>
+<row>
+  <entry>infolist</entry>
+  <entry>bar_window</entry>
+  <entry>liste des fenêtres de barre</entry>
+</row>
+<row>
+  <entry>infolist</entry>
   <entry>buffer</entry>
   <entry>liste des tampons</entry>
 </row>

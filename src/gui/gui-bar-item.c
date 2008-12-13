@@ -30,12 +30,14 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-bar-item.h"
 #include "gui-bar.h"
+#include "gui-bar-window.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
@@ -58,6 +60,31 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
 
+
+/*
+ * gui_bar_item_valid: check if a bar item pointer exists
+ *                     return 1 if bar item exists
+ *                            0 if bar item is not found
+ */
+
+int
+gui_bar_item_valid (struct t_gui_bar_item *bar_item)
+{
+    struct t_gui_bar_item *ptr_bar_item;
+    
+    if (!bar_item)
+        return 0;
+    
+    for (ptr_bar_item = gui_bar_items; ptr_bar_item;
+         ptr_bar_item = ptr_bar_item->next_item)
+    {
+        if (ptr_bar_item == bar_item)
+            return 1;
+    }
+    
+    /* bar item not found */
+    return 0;
+}
 
 /*
  * gui_bar_item_search: search a bar item
@@ -187,29 +214,6 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
         return item_found_without_plugin;
     
     return item_found_plugin;
-}
-
-/*
- * gui_bar_contains_item: return 1 if a bar contains item, O otherwise
- */
-
-int
-gui_bar_contains_item (struct t_gui_bar *bar, const char *item_name)
-{
-    int i;
-    
-    if (!bar || !item_name || !item_name[0])
-        return 0;
-    
-    for (i = 0; i < bar->items_count; i++)
-    {
-        /* skip non letters chars at beginning (prefix) */
-        if (gui_bar_item_string_is_item (bar->items_array[i], item_name))
-            return 1;
-    }
-    
-    /* item is not in bar */
-    return 0;
 }
 
 /*
@@ -396,7 +400,8 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     item_value = NULL;
     if (item_name)
     {
-        ptr_item = gui_bar_item_search_with_plugin ((window) ? window->buffer->plugin : NULL,
+        ptr_item = gui_bar_item_search_with_plugin ((window && window->buffer) ?
+                                                    window->buffer->plugin : NULL,
                                                     0,
                                                     item_name);
         if (ptr_item)
@@ -550,13 +555,43 @@ void
 gui_bar_item_update (const char *item_name)
 {
     struct t_gui_bar *ptr_bar;
+    struct t_gui_window *ptr_window;
+    struct t_gui_bar_window *ptr_bar_window;
+    int item_index;
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (!CONFIG_BOOLEAN(ptr_bar->hidden)
-            && gui_bar_contains_item (ptr_bar, item_name))
+        if (!CONFIG_BOOLEAN(ptr_bar->hidden))
         {
-            gui_bar_ask_refresh (ptr_bar);
+            item_index = gui_bar_get_item_index (ptr_bar, item_name);
+            if (item_index >= 0)
+            {
+                if (ptr_bar->bar_window)
+                {
+                    gui_bar_window_content_build_item (ptr_bar->bar_window,
+                                                       NULL,
+                                                       item_index);
+                }
+                else
+                {
+                    for (ptr_window = gui_windows; ptr_window;
+                         ptr_window = ptr_window->next_window)
+                    {
+                        for (ptr_bar_window = ptr_window->bar_windows;
+                             ptr_bar_window;
+                             ptr_bar_window = ptr_bar_window->next_bar_window)
+                        {
+                            if (ptr_bar_window->bar == ptr_bar)
+                            {
+                                gui_bar_window_content_build_item (ptr_bar_window,
+                                                                   ptr_window,
+                                                                   item_index);
+                            }
+                        }
+                    }
+                }
+                gui_bar_ask_refresh (ptr_bar);
+            }
         }
     }
 }
@@ -1465,6 +1500,36 @@ gui_bar_item_end ()
     
     /* remove bar items */
     gui_bar_item_free_all ();
+}
+
+/*
+ * gui_bar_item_add_to_infolist: add a bar item in an infolist
+ *                               return 1 if ok, 0 if error
+ */
+
+int
+gui_bar_item_add_to_infolist (struct t_infolist *infolist,
+                              struct t_gui_bar_item *bar_item)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !bar_item)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_pointer (ptr_item, "plugin", bar_item->plugin))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "name", bar_item->name))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "build_callback", bar_item->build_callback))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "build_callback_data", bar_item->build_callback_data))
+        return 0;
+    
+    return 1;
 }
 
 /*

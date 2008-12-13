@@ -496,8 +496,7 @@ struct t_weechat_plugin
     void (*bar_item_update) (const char *name);
     void (*bar_item_remove) (struct t_gui_bar_item *item);
     struct t_gui_bar *(*bar_search) (const char *name);
-    struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin,
-                                  const char *name,
+    struct t_gui_bar *(*bar_new) (const char *name,
                                   const char *hidden,
                                   const char *priority,
                                   const char *type,
@@ -1004,12 +1003,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                         __filling_left_right, __size, __size_max,       \
                         __color_fg, __color_delim, __color_bg,          \
                         __separator, __items)                           \
-    weechat_plugin->bar_new(weechat_plugin, __name, __hidden,           \
-                            __priority, __type, __condition,            \
-                            __position, __filling_top_bottom,           \
-                            __filling_left_right, __size, __size_max,   \
-                            __color_fg, __color_delim, __color_bg,      \
-                            __separator, __items)
+    weechat_plugin->bar_new(__name, __hidden, __priority, __type,       \
+                            __condition, __position,                    \
+                            __filling_top_bottom, __filling_left_right, \
+                            __size, __size_max, __color_fg,             \
+                            __color_delim, __color_bg, __separator,     \
+                            __items)
 #define weechat_bar_set(__bar, __property, __value)                     \
     weechat_plugin->bar_set(__bar, __property, __value)
 #define weechat_bar_update(__name)                                      \
