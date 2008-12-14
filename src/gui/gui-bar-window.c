@@ -287,7 +287,6 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
                                    struct t_gui_window *window,
                                    int item_index)
 {
-    log_printf ("bar_window: build item '%s'", bar_window->bar->items_array[item_index]);
     if (bar_window->items_content[item_index])
         free (bar_window->items_content[item_index]);
     
