@@ -835,6 +835,10 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         /* get local IP address */
         sscanf (weechat_infolist_string (infolist, "address"), "%lu", &local_addr);
         
+        memset (&addr, 0, sizeof (struct sockaddr_in));
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = htonl (local_addr);
+        
         /* look up the IP address from network_own_ip, if set */
         if (weechat_config_string(xfer_config_network_own_ip)
             && weechat_config_string(xfer_config_network_own_ip)[0])
@@ -844,6 +848,15 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
             {
                 memcpy (&tmpaddr, host->h_addr_list[0], sizeof(struct in_addr));
                 local_addr = ntohl (tmpaddr.s_addr);
+
+                sock = weechat_infolist_integer (infolist, "socket");
+                if (sock > 0)
+                {
+                    memset (&addr, 0, sizeof (struct sockaddr_in));
+                    length = sizeof (addr);        
+                    getsockname (sock, (struct sockaddr *) &addr, &length);
+                    addr.sin_family = AF_INET;
+                }
             }
             else
             {
@@ -868,11 +881,6 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         }
         
         /* look for port */
-        
-        memset (&addr, 0, sizeof (struct sockaddr_in));
-        addr.sin_family = AF_INET;
-        addr.sin_addr.s_addr = htonl (local_addr);
-        
         port = 0;
         
         if (weechat_config_string (xfer_config_network_port_range)

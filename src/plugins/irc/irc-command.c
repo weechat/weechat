@@ -946,6 +946,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
                     weechat_infolist_new_var_string (item, "address", str_address);
+                    weechat_infolist_new_var_integer (item, "socket", ptr_server->sock);
                     weechat_hook_signal_send ("xfer_add",
                                               WEECHAT_HOOK_SIGNAL_POINTER,
                                               infolist);
