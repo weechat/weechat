@@ -237,6 +237,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                             CONFIG_INTEGER(bar_window->bar->color_bg));
                             string += 2;
                             break;
+                        case GUI_COLOR_BAR_START_INPUT_CHAR:
+                            string += 2;
+                            break;
                         case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                             /* move cursor to current position on screen */
                             getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
@@ -298,7 +301,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 {
                     if (*x + size_on_screen > bar_window->width)
                     {
-                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
+                        if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_VERTICAL)
                             return 0;
                         if (*y >= bar_window->height - 1)
                             return 0;
@@ -335,11 +338,14 @@ void
 gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                      struct t_gui_window *window)
 {
-    int x, y, i, items_count, num_lines, line;
-    char *content, *item_value, *item_value2, **items;
-    char space_with_reinit_color[32];
-    int length_reinit_color, content_length, length, length_on_screen;
-    int max_length, optimal_number_of_lines, chars_available;
+    int x, y, items_count, num_lines, line;
+    enum t_gui_bar_filling filling;
+    char *content, **items;
+    char space_with_reinit_color[32], str_start_input[16], str_cursor[16];
+    char *pos_start_input, *pos_cursor, *buf, *new_start_input;
+    int length_reinit_color, length_on_screen, chars_available;
+    int length_screen_before_cursor, length_screen_after_cursor;
+    int total_length_screen, diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed;
     
     if (!gui_init_ok)
@@ -354,66 +360,38 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
               CONFIG_COLOR(bar_window->bar->color_bg));
     length_reinit_color = strlen (space_with_reinit_color);
     
+    snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_START_INPUT_CHAR);
+    
+    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+    
     /* these values will be overwritten later (by gui_bar_window_print_string)
        if cursor has to move somewhere in bar window */
     bar_window->cursor_x = -1;
     bar_window->cursor_y = -1;
     
-    if (CONFIG_INTEGER(bar_window->bar->size) == 0)
+    filling = gui_bar_get_filling (bar_window->bar);
+    
+    content = gui_bar_window_content_get_with_filling (bar_window);
+    if (content)
     {
-        content = NULL;
-        content_length = 1;
-        for (i = 0; i < bar_window->bar->items_count; i++)
+        items = string_explode (content, "\n", 0, 0, &items_count);
+        if (items_count == 0)
         {
-            item_value = gui_bar_item_get_value (bar_window->bar->items_array[i],
-                                                 bar_window->bar, window,
-                                                 0, 0, 0);
-            if (item_value)
-            {
-                if (item_value[0])
-                {
-                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
-                    {
-                        item_value2 = string_replace (item_value, "\n",
-                                                      space_with_reinit_color);
-                    }
-                    else
-                        item_value2 = NULL;
-                    if (!content)
-                    {
-                        content_length += strlen ((item_value2) ?
-                                                  item_value2 : item_value);
-                        content = strdup ((item_value2) ?
-                                          item_value2 : item_value);
-                    }
-                    else
-                    {
-                        content_length += length_reinit_color +
-                            strlen ((item_value2) ? item_value2 : item_value);
-                        content = realloc (content, content_length);
-                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
-                            strcat (content, space_with_reinit_color);
-                        else
-                            strcat (content, "\n");
-                        strcat (content,
-                                (item_value2) ? item_value2 : item_value);
-                    }
-                    if (item_value2)
-                        free (item_value2);
-                }
-                free (item_value);
-            }
-        }
-        if (content)
-        {
-            items = string_explode (content, "\n", 0, 0, &items_count);
-            if (items_count == 0)
-            {
+            if (CONFIG_INTEGER(bar_window->bar->size) == 0)
                 gui_bar_window_set_current_size (bar_window->bar, 1);
-                gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                  CONFIG_COLOR(bar_window->bar->color_bg));
-            }
-            else
+            gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                              CONFIG_COLOR(bar_window->bar->color_bg));
+        }
+        else
+        {
+            /* bar with auto size ? then compute new size, according to content */
+            if (CONFIG_INTEGER(bar_window->bar->size) == 0)
             {
                 /* search longer line and optimal number of lines */
                 max_length = 0;
@@ -422,11 +400,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     length_on_screen = gui_chat_strlen_screen (items[line]);
                     
-                    length = strlen (items[line]);
-                    if ((length >= 3)
-                        && (items[line][length - 3] == GUI_COLOR_COLOR_CHAR)
-                        && (items[line][length - 2] == GUI_COLOR_BAR_CHAR)
-                        && (items[line][length - 1] == GUI_COLOR_BAR_MOVE_CURSOR_CHAR))
+                    pos_cursor = strstr (items[line], str_cursor);
+                    if (pos_cursor && (gui_chat_strlen_screen (pos_cursor) == 0))
                         length_on_screen++;
                     
                     if (length_on_screen > max_length)
@@ -447,7 +422,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     case GUI_BAR_POSITION_BOTTOM:
                     case GUI_BAR_POSITION_TOP:
-                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
+                        if (filling == GUI_BAR_FILLING_HORIZONTAL)
                             num_lines = optimal_number_of_lines;
                         else
                             num_lines = items_count;
@@ -462,190 +437,132 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     case GUI_BAR_NUM_POSITIONS:
                         break;
                 }
-                gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                  CONFIG_COLOR(bar_window->bar->color_bg));
-                x = 0;
-                y = 0;
-                some_data_not_displayed = 0;
-                if ((bar_window->scroll_y > 0)
-                    && (bar_window->scroll_y >= items_count))
+            }
+            
+            gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                              CONFIG_COLOR(bar_window->bar->color_bg));
+            x = 0;
+            y = 0;
+            some_data_not_displayed = 0;
+            if ((bar_window->scroll_y > 0)
+                && (bar_window->scroll_y >= items_count))
+            {
+                bar_window->scroll_y = items_count - bar_window->height;
+                if (bar_window->scroll_y < 0)
+                    bar_window->scroll_y = 0;
+            }
+            for (line = 0;
+                 (line < items_count) && (y < bar_window->height);
+                 line++)
+            {
+                pos_start_input = strstr (items[line], str_start_input);
+                if (pos_start_input)
                 {
-                    bar_window->scroll_y = items_count - bar_window->height;
-                    if (bar_window->scroll_y < 0)
-                        bar_window->scroll_y = 0;
-                }
-                for (line = 0;
-                     (line < items_count) && (y < bar_window->height);
-                     line++)
-                {
-                    if ((bar_window->scroll_y == 0)
-                        || (line >= bar_window->scroll_y))
+                    pos_cursor = strstr (items[line], str_cursor);
+                    if (pos_cursor && (pos_cursor > pos_start_input))
                     {
-                        if (!gui_bar_window_print_string (bar_window, &x, &y,
-                                                          items[line], 1))
+                        pos_start_input += strlen (str_start_input);
+                        
+                        chars_available =
+                            ((bar_window->height - y - 1) * bar_window->width) + /* next lines */
+                            (bar_window->width - x - 1); /* chars on current line */
+                        
+                        length_screen_before_cursor = -1;
+                        length_screen_after_cursor = -1;
+                        if (pos_cursor && (pos_cursor > items[line]))
                         {
-                            some_data_not_displayed = 1;
-                        }
-                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
-                        {
-                            while (x < bar_window->width)
+                            buf = string_strndup (items[line], pos_cursor - items[line]);
+                            if (buf)
                             {
-                                gui_bar_window_print_string (bar_window,
-                                                             &x, &y,
-                                                             " ", 0);
+                                length_screen_before_cursor = gui_chat_strlen_screen (buf);
+                                length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor);
+                                free (buf);
                             }
-                            x = 0;
-                            y++;
                         }
-                        else
+                        if ((length_screen_before_cursor < 0) || (length_screen_after_cursor < 0))
                         {
-                            gui_bar_window_print_string (bar_window, &x, &y,
-                                                         space_with_reinit_color, 0);
+                            length_screen_before_cursor = gui_chat_strlen_screen (items[line]);
+                            length_screen_after_cursor = 0;
+                        }
+                        
+                        total_length_screen = length_screen_before_cursor + length_screen_after_cursor;
+                        
+                        diff = length_screen_before_cursor - chars_available;
+                        if (diff > 0)
+                        {
+                            new_start_input = gui_chat_string_add_offset (pos_start_input, diff);
+                            if (pos_cursor && (new_start_input > pos_cursor))
+                                new_start_input = pos_cursor;
+                            memmove (pos_start_input, new_start_input, strlen (new_start_input) + 1);
                         }
                     }
                 }
-                if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
-                    && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
+                
+                if ((bar_window->scroll_y == 0)
+                    || (line >= bar_window->scroll_y))
                 {
-                    x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
-                    if (x < 0)
+                    if (!gui_bar_window_print_string (bar_window, &x, &y,
+                                                      items[line], 1))
+                    {
+                        some_data_not_displayed = 1;
+                    }
+                    if (filling != GUI_BAR_FILLING_HORIZONTAL)
+                    {
+                        while (x < bar_window->width)
+                        {
+                            gui_bar_window_print_string (bar_window,
+                                                         &x, &y,
+                                                         " ", 0);
+                        }
                         x = 0;
-                    y = 0;
-                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       CONFIG_COLOR(config_color_bar_more),
-                                                       CONFIG_INTEGER(bar_window->bar->color_bg));
-                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x, "--");
-                }
-                if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
-                    && (some_data_not_displayed || (line < items_count)))
-                {
-                    x = bar_window->width - 2;
-                    if (x < 0)
-                        x = 0;
-                    y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
-                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       CONFIG_COLOR(config_color_bar_more),
-                                                       CONFIG_INTEGER(bar_window->bar->color_bg));
-                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x, "++");
+                        y++;
+                    }
+                    else
+                    {
+                        gui_bar_window_print_string (bar_window, &x, &y,
+                                                     space_with_reinit_color, 0);
+                    }
                 }
             }
-            if (items)
-                string_free_exploded (items);
-            free (content);
+            if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
+            {
+                x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
+                if (x < 0)
+                    x = 0;
+                y = 0;
+                gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                   CONFIG_COLOR(config_color_bar_more),
+                                                   CONFIG_INTEGER(bar_window->bar->color_bg));
+                mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                           y, x, "--");
+            }
+            if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                && (some_data_not_displayed || (line < items_count)))
+            {
+                x = bar_window->width - 2;
+                if (x < 0)
+                    x = 0;
+                y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
+                gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                   CONFIG_COLOR(config_color_bar_more),
+                                                   CONFIG_INTEGER(bar_window->bar->color_bg));
+                mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                           y, x, "++");
+            }
         }
-        else
-        {
-            gui_bar_window_set_current_size (bar_window->bar, 1);
-            gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                              CONFIG_COLOR(bar_window->bar->color_bg));
-        }
+        if (items)
+            string_free_exploded (items);
+        free (content);
     }
     else
     {
+        if (CONFIG_INTEGER(bar_window->bar->size) == 0)
+            gui_bar_window_set_current_size (bar_window->bar, 1);
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                           CONFIG_COLOR(bar_window->bar->color_bg));
-        
-        x = 0;
-        y = 0;
-        
-        for (i = 0; i < bar_window->bar->items_count; i++)
-        {
-            chars_available =
-                ((bar_window->height - y - 1) * bar_window->width) + /* next lines */
-                (bar_window->width - x - 1); /* chars on current line */
-            
-            item_value = gui_bar_item_get_value (bar_window->bar->items_array[i],
-                                                 bar_window->bar, window,
-                                                 bar_window->width,
-                                                 bar_window->height,
-                                                 chars_available);
-            if (item_value)
-            {
-                if (item_value[0])
-                {
-                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
-                    {
-                        item_value2 = string_replace (item_value, "\n",
-                                                      space_with_reinit_color);
-                    }
-                    else
-                        item_value2 = NULL;
-                    items = string_explode ((item_value2) ?
-                                            item_value2 : item_value,
-                                            "\n", 0, 0,
-                                            &items_count);
-                    some_data_not_displayed = 0;
-                    if ((bar_window->scroll_y > 0)
-                        && (bar_window->scroll_y >= items_count))
-                    {
-                        bar_window->scroll_y = items_count - bar_window->height;
-                        if (bar_window->scroll_y < 0)
-                            bar_window->scroll_y = 0;
-                    }
-                    for (line = 0;
-                         (line < items_count) && (y < bar_window->height);
-                         line++)
-                    {
-                        if ((bar_window->scroll_y == 0)
-                            || (line >= bar_window->scroll_y))
-                        {
-                            if (!gui_bar_window_print_string (bar_window, &x, &y,
-                                                              items[line], 1))
-                            {
-                                some_data_not_displayed = 1;
-                            }
-                            if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
-                            {
-                                while (x < bar_window->width)
-                                {
-                                    gui_bar_window_print_string (bar_window,
-                                                                 &x, &y,
-                                                                 " ", 0);
-                                }
-                                x = 0;
-                                y++;
-                            }
-                            else
-                            {
-                                gui_bar_window_print_string (bar_window, &x, &y,
-                                                             space_with_reinit_color, 0);
-                            }
-                        }
-                    }
-                    if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
-                        && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
-                    {
-                        x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
-                        if (x < 0)
-                            x = 0;
-                        y = 0;
-                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                           CONFIG_COLOR(config_color_bar_more),
-                                                           CONFIG_INTEGER(bar_window->bar->color_bg));
-                        mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x, "--");
-                    }
-                    if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
-                        && (some_data_not_displayed || (line < items_count)))
-                    {
-                        x = bar_window->width - 2;
-                        if (x < 0)
-                            x = 0;
-                        y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
-                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                           CONFIG_COLOR(config_color_bar_more),
-                                                           CONFIG_INTEGER(bar_window->bar->color_bg));
-                        mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x, "++");
-                    }
-                    if (item_value2)
-                        free (item_value2);
-                    if (items)
-                        string_free_exploded (items);
-                }
-                free (item_value);
-            }
-        }
     }
-
+    
     /* move cursor if it was asked in an item content (input_text does that
        to move cursor in user input text) */
     if (window && (gui_current_window == window)

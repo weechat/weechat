@@ -1267,7 +1267,7 @@ config_weechat_init ()
     config_color_separator = config_file_new_option (
         weechat_config_file, ptr_section,
         "separator", "color",
-        N_("background color for window separators (when splited)"),
+        N_("background color for window separators (when splitted)"),
         NULL, GUI_COLOR_SEPARATOR, 0, "blue", NULL,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* bar colors */

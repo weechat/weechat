@@ -51,7 +51,7 @@ char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
 char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
 { "bottom", "top", "left", "right" };
 char *gui_bar_filling_string[GUI_BAR_NUM_FILLING] =
-{ "horizontal", "vertical" };
+{ "horizontal", "vertical", "columns_horizontal", "columns_vertical" };
 
 struct t_gui_bar *gui_bars = NULL;         /* first bar                     */
 struct t_gui_bar *last_gui_bar = NULL;     /* last bar                      */
@@ -237,7 +237,7 @@ gui_bar_get_min_height (struct t_gui_bar *bar)
 int
 gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
 {
-    struct t_gui_window *ptr_win;
+    struct t_gui_window *ptr_window;
     int sub_width, sub_height;
     
     sub_width = 0;
@@ -257,13 +257,14 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
             break;
     }
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
     {
         if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
-            || (gui_bar_window_search_bar (ptr_win, bar)))
+            || (gui_bar_window_search_bar (ptr_window, bar)))
         {
-            if ((ptr_win->win_chat_width - sub_width < GUI_WINDOW_CHAT_MIN_WIDTH)
-                || (ptr_win->win_chat_height - sub_height < GUI_WINDOW_CHAT_MIN_HEIGHT))
+            if ((ptr_window->win_chat_width - sub_width < GUI_WINDOW_CHAT_MIN_WIDTH)
+                || (ptr_window->win_chat_height - sub_height < GUI_WINDOW_CHAT_MIN_HEIGHT))
                 return 0;
         }
     }
@@ -273,21 +274,18 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
 }
 
 /*
- * gui_bar_get_option_filling: return pointer to filling option
- *                             if position is top/bottom, then return pointer
- *                             on option "filling_top_bottom"
- *                             if position is left/right, then return pointer
- *                             on option "filling_left_right"
+ * gui_bar_get_filling: return filling option for bar, according to filling
+ *                      for current bar position
  */
 
-struct t_config_option *
-gui_bar_get_option_filling (struct t_gui_bar *bar)
+enum t_gui_bar_filling
+gui_bar_get_filling (struct t_gui_bar *bar)
 {
     if ((CONFIG_INTEGER(bar->position) == GUI_BAR_POSITION_BOTTOM)
         || (CONFIG_INTEGER(bar->position) == GUI_BAR_POSITION_TOP))
-        return bar->filling_top_bottom;
+        return CONFIG_INTEGER(bar->filling_top_bottom);
     
-    return bar->filling_left_right;
+    return CONFIG_INTEGER(bar->filling_left_right);
 }
 
 /*
@@ -1253,7 +1251,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     N_("bar filling direction (\"horizontal\" (from left to "
                        "right) or \"vertical\" (from top to bottom)) when bar "
                        "position is top or bottom"),
-                    "horizontal|vertical", 0, 0, value, NULL,
+                    "horizontal|vertical|columns_horizontal|columns_vertical",
+                    0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
@@ -1263,7 +1262,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     N_("bar filling direction (\"horizontal\" (from left to "
                        "right) or \"vertical\" (from top to bottom)) when bar "
                        "position is left or right"),
-                    "horizontal|vertical", 0, 0, value, NULL,
+                    "horizontal|vertical|columns_horizontal|columns_vertical",
+                    0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_SIZE:

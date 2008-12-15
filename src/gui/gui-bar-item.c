@@ -254,96 +254,6 @@ gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
 }
 
 /*
- * gui_bar_item_input_text_update_for_display: update input text item for
- *                                             display:
- *                                             - scroll if needed, to see only
- *                                               the end of input
- *                                             - insert "move cursor" id to
- *                                               move cursor to good position
- */
-
-char *
-gui_bar_item_input_text_update_for_display (const char *item_content,
-                                            struct t_gui_window *window,
-                                            int chars_available)
-{
-    char *buf, str_cursor[16];
-    const char *pos_cursor, *ptr_start;
-    int diff, buf_pos;
-    int length, length_screen_before_cursor, length_screen_after_cursor;
-    int total_length_screen;
-    
-    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_BAR_CHAR,
-              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
-    
-    ptr_start = item_content;
-    
-    pos_cursor = gui_chat_string_add_offset (item_content,
-                                             window->buffer->input_buffer_pos);
-    
-    /* if bar size is fixed (chars_available > 0), then truncate it at
-       beginning if needed */
-    if (chars_available > 0)
-    {
-        length_screen_before_cursor = -1;
-        length_screen_after_cursor = -1;
-        if (pos_cursor && (pos_cursor > item_content))
-        {
-            buf = string_strndup (item_content, pos_cursor - item_content);
-            if (buf)
-            {
-                length_screen_before_cursor = gui_chat_strlen_screen (buf);
-                length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor);
-                free (buf);
-            }
-        }
-        if ((length_screen_before_cursor < 0) || (length_screen_after_cursor < 0))
-        {
-            length_screen_before_cursor = gui_chat_strlen_screen (item_content);
-            length_screen_after_cursor = 0;
-        }
-        
-        total_length_screen = length_screen_before_cursor + length_screen_after_cursor;
-        
-        diff = length_screen_before_cursor - chars_available;
-        if (diff > 0)
-        {
-            ptr_start = gui_chat_string_add_offset (item_content, diff);
-            if (pos_cursor && (ptr_start > pos_cursor))
-                ptr_start = pos_cursor;
-        }
-    }
-    
-    /* insert "move cursor" id in string and return it */
-    length = 16 + strlen (ptr_start);
-    buf = malloc (length);
-    if (buf)
-    {
-        buf[0] = '\0';
-        buf_pos = 0;
-        
-        if (!pos_cursor)
-            pos_cursor = ptr_start;
-        
-        /* add beginning of buffer */
-        if (pos_cursor != ptr_start)
-        {
-            memmove (buf, ptr_start, pos_cursor - ptr_start);
-            buf_pos = buf_pos + (pos_cursor - ptr_start);
-        }
-        /* add "move cursor here" identifier in string */
-        snprintf (buf + buf_pos, length - buf_pos, "%s",
-                  str_cursor);
-        /* add end of buffer */
-        strcat (buf, pos_cursor);
-    }
-    
-    return buf;
-}
-
-/*
  * gui_bar_item_get_value: return value of a bar item
  *                         first look for prefix/suffix in name, then run item
  *                         callback (if found) and concatene strings
@@ -355,13 +265,11 @@ gui_bar_item_input_text_update_for_display (const char *item_content,
 
 char *
 gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
-                        struct t_gui_window *window,
-                        int width, int height,
-                        int chars_available)
+                        struct t_gui_window *window)
 {
     const char *ptr, *start, *end;
     char *prefix, *item_name, *suffix;
-    char *item_value, *item_value2, delimiter_color[32], bar_color[32];
+    char *item_value, delimiter_color[32], bar_color[32];
     char *result;
     int valid_char, length;
     struct t_gui_bar_item *ptr_item;
@@ -404,35 +312,10 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
                                                     window->buffer->plugin : NULL,
                                                     0,
                                                     item_name);
-        if (ptr_item)
+        if (ptr_item && ptr_item->build_callback)
         {
-            if  (ptr_item->build_callback)
-            {
-                item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
-                                                         ptr_item, window,
-                                                         width,
-                                                         height);
-                if (window
-                    && (strncmp (item_name,
-                                 gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
-                                 strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT])) == 0))
-                {
-                    if (prefix)
-                        chars_available -= gui_chat_strlen_screen (prefix);
-                    
-                    item_value2 = gui_bar_item_input_text_update_for_display (
-                        (item_value) ? item_value : "",
-                        window,
-                        chars_available);
-                    
-                    if (item_value2)
-                    {
-                        if (item_value)
-                            free (item_value);
-                        item_value = item_value2;
-                    }
-                }
-            }
+            item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
+                                                     ptr_item, window);
         }
         if (!item_value || !item_value[0])
         {
@@ -509,8 +392,7 @@ struct t_gui_bar_item *
 gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
                   char *(*build_callback)(void *data,
                                           struct t_gui_bar_item *item,
-                                          struct t_gui_window *window,
-                                          int max_width, int max_height),
+                                          struct t_gui_window *window),
                   void *build_callback_data)
 {
     struct t_gui_bar_item *new_bar_item;
@@ -660,8 +542,7 @@ gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin)
 
 char *
 gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
-                                  struct t_gui_window *window,
-                                  int max_width, int max_height)
+                                  struct t_gui_window *window)
 {
     char *text_paste_pending = N_("%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No");
     char *ptr_message, *buf;
@@ -670,8 +551,6 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         return NULL;
@@ -699,15 +578,12 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     /* make C compiler happy */
     (void) data;
     (void) item;
     (void) window;
-    (void) max_width;
-    (void) max_height;
     
     return NULL;
 }
@@ -718,8 +594,7 @@ gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     char *text_search = N_("Text search");
     char *text_search_exact = N_("Text search (exact)");
@@ -729,8 +604,6 @@ gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -762,16 +635,15 @@ gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
-                                 struct t_gui_window *window,
-                                 int max_width, int max_height)
+                                 struct t_gui_window *window)
 {
-    char *new_input, str_buffer[128];
+    char *ptr_input, str_buffer[128], str_start_input[16], str_cursor[16], *buf;
+    const char *pos_cursor;
+    int length, buf_pos;
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -779,16 +651,59 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     snprintf (str_buffer, sizeof (str_buffer),
               "0x%lx", (long unsigned int)(window->buffer));
     
-    new_input = hook_modifier_exec (NULL,
+    ptr_input = hook_modifier_exec (NULL,
                                     "weechat_input_text_display",
                                     str_buffer,
                                     (window->buffer->input_buffer) ?
                                     window->buffer->input_buffer : "");
-    if (new_input)
-        return new_input;
+    if (!ptr_input)
+    {
+        ptr_input = (window->buffer->input_buffer) ?
+            strdup (window->buffer->input_buffer) : NULL;
+    }
+
+    if (!ptr_input)
+        return NULL;
     
-    return (window->buffer->input_buffer) ?
-        strdup (window->buffer->input_buffer) : NULL;
+    /* insert "move cursor" id in string */
+    snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_START_INPUT_CHAR);
+    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+    pos_cursor = gui_chat_string_add_offset (ptr_input,
+                                             window->buffer->input_buffer_pos);
+    length = strlen (str_start_input)+ strlen (ptr_input) +
+        strlen (str_cursor) + 1;
+    buf = malloc (length);
+    if (buf)
+    {
+        snprintf (buf, length, "%s", str_start_input);
+        buf_pos = strlen (buf);
+        
+        if (!pos_cursor)
+            pos_cursor = ptr_input;
+        
+        /* add beginning of buffer */
+        if (pos_cursor != ptr_input)
+        {
+            memmove (buf + buf_pos, ptr_input, pos_cursor - ptr_input);
+            buf_pos += (pos_cursor - ptr_input);
+        }
+        /* add "move cursor here" identifier in string */
+        snprintf (buf + buf_pos, length - buf_pos, "%s",
+                  str_cursor);
+        /* add end of buffer */
+        strcat (buf, pos_cursor);
+        
+        free (ptr_input);
+        ptr_input = buf;
+    }
+    
+    return ptr_input;
 }
 
 /*
@@ -797,8 +712,7 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           int max_width, int max_height)
+                           struct t_gui_window *window)
 {
     time_t date;
     struct tm *local_time;
@@ -808,8 +722,6 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) window;
-    (void) max_width;
-    (void) max_height;
     
     date = time (NULL);
     local_time = localtime (&date);
@@ -827,8 +739,7 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     char buf[32];
     
@@ -836,8 +747,6 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) window;
-    (void) max_width;
-    (void) max_height;
     
     snprintf (buf, sizeof (buf), "%d",
               (last_gui_buffer) ? last_gui_buffer->number : 0);
@@ -851,16 +760,13 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    int max_width, int max_height)
+                                    struct t_gui_window *window)
 {
     const char *plugin_name;
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -875,16 +781,13 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
-                                  struct t_gui_window *window,
-                                  int max_width, int max_height)
+                                  struct t_gui_window *window)
 {
     char buf[256];
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -905,16 +808,13 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    int max_width, int max_height)
+                                    struct t_gui_window *window)
 {
     char buf[256];
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -938,16 +838,13 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_buffer_nicklist_count (void *data,
                                             struct t_gui_bar_item *item,
-                                            struct t_gui_window *window,
-                                            int max_width, int max_height)
+                                            struct t_gui_window *window)
 {
     char buf[32];
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -967,16 +864,13 @@ gui_bar_item_default_buffer_nicklist_count (void *data,
 
 char *
 gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
-                             struct t_gui_window *window,
-                             int max_width, int max_height)
+                             struct t_gui_window *window)
 {
     char buf[64];
     
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -997,8 +891,7 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
-                              struct t_gui_window *window,
-                              int max_width, int max_height)
+                              struct t_gui_window *window)
 {
     char buf[1024], format[32];
     struct t_gui_hotlist *ptr_hotlist;
@@ -1008,8 +901,6 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) window;
-    (void) max_width;
-    (void) max_height;
     
     if (!gui_hotlist)
         return NULL;
@@ -1083,8 +974,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
-                                 struct t_gui_window *window,
-                                 int max_width, int max_height)
+                                 struct t_gui_window *window)
 {
     int length;
     char *buf, number_str[16];
@@ -1094,8 +984,6 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) window;
-    (void) max_width;
-    (void) max_height;
     
     length = 1;
     for (ptr_item = gui_completion_partial_list; ptr_item;
@@ -1136,14 +1024,11 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;
@@ -1158,8 +1043,7 @@ gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
 
 char *
 gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
-                                      struct t_gui_window *window,
-                                      int max_width, int max_height)
+                                      struct t_gui_window *window)
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
@@ -1170,8 +1054,6 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = gui_current_window;

@@ -451,7 +451,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                              struct t_gui_buffer *buffer,
                              int set_last_read)
 {
-    struct t_gui_bar_window *ptr_bar_win;
+    struct t_gui_bar_window *ptr_bar_window;
     struct t_gui_buffer *old_buffer;
     
     if (!gui_ok)
@@ -489,10 +489,10 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     if (gui_ok)
     {
         /* create bar windows */
-        for (ptr_bar_win = window->bar_windows; ptr_bar_win;
-             ptr_bar_win = ptr_bar_win->next_bar_window)
+        for (ptr_bar_window = window->bar_windows; ptr_bar_window;
+             ptr_bar_window = ptr_bar_window->next_bar_window)
         {
-            gui_bar_window_create_win (ptr_bar_win);
+            gui_bar_window_create_win (ptr_bar_window);
         }
         
         /* destroy Curses windows */
@@ -518,10 +518,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
     
     /* redraw bars in window */
-    for (ptr_bar_win = window->bar_windows; ptr_bar_win;
-         ptr_bar_win = ptr_bar_win->next_bar_window)
+    for (ptr_bar_window = window->bar_windows; ptr_bar_window;
+         ptr_bar_window = ptr_bar_window->next_bar_window)
     {
-        ptr_bar_win->bar->bar_refresh_needed = 1;
+        gui_bar_window_content_build (ptr_bar_window, window);
+        ptr_bar_window->bar->bar_refresh_needed = 1;
     }
     
     if (window->buffer->type == GUI_BUFFER_TYPE_FREE)

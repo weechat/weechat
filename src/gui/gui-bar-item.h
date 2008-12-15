@@ -49,8 +49,7 @@ struct t_gui_bar_item
     char *name;                      /* bar item name                       */
     char *(*build_callback)(void *data,
                             struct t_gui_bar_item *item,
-                            struct t_gui_window *window,
-                            int max_width, int max_height);
+                            struct t_gui_window *window);
                                      /* callback called for building item   */
     void *build_callback_data;       /* data for callback                   */
     struct t_gui_bar_item *prev_item; /* link to previous bar item          */
@@ -79,16 +78,12 @@ extern int gui_bar_item_used_in_a_bar (const char *item_name,
                                        int partial_name);
 extern char *gui_bar_item_get_value (const char *name,
                                      struct t_gui_bar *bar,
-                                     struct t_gui_window *window,
-                                     int width, int height,
-                                     int chars_available);
+                                     struct t_gui_window *window);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
                                                 char *(*build_callback)(void *data,
                                                                         struct t_gui_bar_item *item,
-                                                                        struct t_gui_window *window,
-                                                                        int max_width,
-                                                                        int max_height),
+                                                                        struct t_gui_window *window),
                                                 void *build_callback_data);
 extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);

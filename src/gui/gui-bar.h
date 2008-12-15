@@ -71,6 +71,8 @@ enum t_gui_bar_filling
 {
     GUI_BAR_FILLING_HORIZONTAL = 0,
     GUI_BAR_FILLING_VERTICAL,
+    GUI_BAR_FILLING_COLUMNS_HORIZONTAL,
+    GUI_BAR_FILLING_COLUMNS_VERTICAL,
     /* number of bar positions */
     GUI_BAR_NUM_FILLING,
 };
@@ -124,7 +126,7 @@ extern int gui_bar_valid (struct t_gui_bar *bar);
 extern int gui_bar_search_option (const char *option_name);
 extern int gui_bar_search_type (const char *type);
 extern int gui_bar_search_position (const char *position);
-extern struct t_config_option *gui_bar_get_option_filling (struct t_gui_bar *bar);
+extern enum t_gui_bar_filling gui_bar_get_filling (struct t_gui_bar *bar);
 extern int gui_bar_get_item_index (struct t_gui_bar *bar,
                                    const char *item_name);
 extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,

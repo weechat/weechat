@@ -49,6 +49,9 @@ extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_wind
 extern void gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window,
                                                int item_index);
+extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
+                                          struct t_gui_window *window);
+extern char *gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window);
 extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
                                                            struct t_gui_bar *bar);
 extern int gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window);

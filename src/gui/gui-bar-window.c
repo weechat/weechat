@@ -35,6 +35,7 @@
 #include "gui-bar-window.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
+#include "gui-chat.h"
 #include "gui-color.h"
 #include "gui-window.h"
 
@@ -288,12 +289,19 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
                                    int item_index)
 {
     if (bar_window->items_content[item_index])
+    {
         free (bar_window->items_content[item_index]);
+        bar_window->items_content[item_index] = NULL;
+    }
     
-    bar_window->items_content[item_index] =
-        gui_bar_item_get_value (bar_window->bar->items_array[item_index],
-                                bar_window->bar, window,
-                                0, 0, 0);
+    /* build item, but only if there's a buffer in window */
+    if ((window && window->buffer)
+        || (gui_current_window && gui_current_window->buffer))
+    {
+        bar_window->items_content[item_index] =
+            gui_bar_item_get_value (bar_window->bar->items_array[item_index],
+                                    bar_window->bar, window);
+    }
 }
 
 /*
@@ -319,6 +327,189 @@ gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
         gui_bar_window_content_build_item (bar_window, window, i);
         
     }
+}
+
+/*
+ * gui_bar_window_content_get_with_filling: get content of a bar window,
+ *                                          formated for display, according
+ *                                          to filling for bar position
+ */
+
+char *
+gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
+{
+    enum t_gui_bar_filling filling;
+    char *content, space_with_reinit_color[32], *item_value;
+    int index_content, content_length, length_reinit_color, i, j, k, index;
+    int length, max_length, max_length_screen, total_items, columns, lines;
+    char ***splitted_items, **linear_items;
+    
+    snprintf (space_with_reinit_color,
+              sizeof (space_with_reinit_color),
+              "%c%c%02d,%02d ",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_FG_BG_CHAR,
+              CONFIG_COLOR(bar_window->bar->color_fg),
+              CONFIG_COLOR(bar_window->bar->color_bg));
+    length_reinit_color = strlen (space_with_reinit_color);
+    
+    content = NULL;
+    content_length = 1;
+    filling = gui_bar_get_filling (bar_window->bar);
+    switch (filling)
+    {
+        case GUI_BAR_FILLING_HORIZONTAL: /* items separated by space */
+        case GUI_BAR_FILLING_VERTICAL:   /* items separated by \n */
+            for (i = 0; i < bar_window->items_count; i++)
+            {
+                if (bar_window->items_content[i]
+                    && bar_window->items_content[i][0])
+                {
+                    if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
+                    {
+                        item_value = string_replace (bar_window->items_content[i],
+                                                     "\n",
+                                                     space_with_reinit_color);
+                    }
+                    else
+                        item_value = NULL;
+                    if (!content)
+                    {
+                        content_length += strlen ((item_value) ?
+                                                  item_value : bar_window->items_content[i]);
+                        content = strdup ((item_value) ?
+                                          item_value : bar_window->items_content[i]);
+                    }
+                    else
+                    {
+                        content_length += length_reinit_color +
+                            strlen ((item_value) ? item_value : bar_window->items_content[i]);
+                        content = realloc (content, content_length);
+                        if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
+                            strcat (content, space_with_reinit_color);
+                        else
+                            strcat (content, "\n");
+                        strcat (content,
+                                (item_value) ? item_value : bar_window->items_content[i]);
+                    }
+                    if (item_value)
+                        free (item_value);
+                }
+            }
+            break;
+        case GUI_BAR_FILLING_COLUMNS_HORIZONTAL: /* items in columns, with horizontal filling */
+        case GUI_BAR_FILLING_COLUMNS_VERTICAL:   /* items in columns, with vertical filling */
+            total_items = 0;
+            max_length = 1;
+            max_length_screen = 1;
+            splitted_items = malloc(bar_window->items_count * sizeof(*splitted_items));
+            for (i = 0; i < bar_window->items_count; i++)
+            {
+                if (bar_window->items_content[i]
+                    && bar_window->items_content[i][0])
+                {
+                    splitted_items[i] = string_explode (bar_window->items_content[i],
+                                                        "\n", 0, 0, NULL);
+                    for (j = 0; splitted_items[i][j]; j++)
+                    {
+                        total_items++;
+                        
+                        length = strlen (splitted_items[i][j]);
+                        if (length > max_length)
+                            max_length = length;
+                        
+                        length = gui_chat_strlen_screen (splitted_items[i][j]);
+                        if (length > max_length_screen)
+                            max_length_screen = length;
+                    }
+                }
+                else
+                    splitted_items[i] = NULL;
+            }
+            if ((CONFIG_INTEGER(bar_window->bar->position) == GUI_BAR_POSITION_BOTTOM)
+                || (CONFIG_INTEGER(bar_window->bar->position) == GUI_BAR_POSITION_TOP))
+            {
+                columns = bar_window->width / (max_length_screen + 1);
+                if (columns == 0)
+                    columns = 1;
+                lines = total_items / columns;
+                if (total_items % columns != 0)
+                    lines++;
+            }
+            else
+            {
+                columns = total_items / bar_window->height;
+                if (total_items % bar_window->height != 0)
+                    columns++;
+                lines = bar_window->height;
+            }
+            
+            /* build array with pointers to splitted items */
+            linear_items = malloc (total_items * sizeof (*linear_items));
+            index = 0;
+            for (i = 0; i < bar_window->items_count; i++)
+            {
+                if (splitted_items[i])
+                {
+                    for (j = 0; splitted_items[i][j]; j++)
+                    {
+                        linear_items[index++] = splitted_items[i][j];
+                    }
+                }
+            }
+            
+            /* build content with lines and columns */
+            content = malloc (1 + (lines *
+                                   ((columns * (max_length + length_reinit_color)) + 1)));
+            content[0] = '\0';
+            index_content = 0;
+            for (i = 0; i < lines; i++)
+            {
+                for (j = 0; j < columns; j++)
+                {
+                    if (filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
+                        index = (i * columns) + j;
+                    else
+                        index = (j * lines) + i;
+                    
+                    if (index >= total_items)
+                    {
+                        for (k = 0; k < max_length_screen; k++)
+                        {
+                            content[index_content++] = ' ';
+                        }
+                    }
+                    else
+                    {
+                        strcpy (content + index_content, linear_items[index]);
+                        index_content += strlen (linear_items[index]);
+                        length = max_length_screen -
+                            gui_chat_strlen_screen (linear_items[index]);
+                        for (k = 0; k < length; k++)
+                        {
+                            content[index_content++] = ' ';
+                        }
+                    }
+                    strcpy (content + index_content, space_with_reinit_color);
+                    index_content += length_reinit_color;
+                }
+                content[index_content++] = '\n';
+            }
+            content[index_content] = '\0';
+            
+            free (linear_items);
+            for (i = 0; i < bar_window->items_count; i++)
+            {
+                if (splitted_items[i])
+                    string_free_exploded (splitted_items[i]);
+            }
+            free (splitted_items);
+            break;
+        case GUI_BAR_NUM_FILLING:
+            break;
+    }
+    
+    return content;
 }
 
 /*
@@ -464,15 +655,84 @@ gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window)
 }
 
 /*
+ * gui_bar_window_get_max_size_in_window: return max size for bar window
+ *                                        in a window
+ */
+
+int
+gui_bar_window_get_max_size_in_window (struct t_gui_bar_window *bar_window,
+                                       struct t_gui_window *window)
+{
+    int max_size;
+    
+    max_size = 1;
+    
+    if (bar_window && window)
+    {
+        switch (CONFIG_INTEGER(bar_window->bar->position))
+        {
+            case GUI_BAR_POSITION_BOTTOM:
+            case GUI_BAR_POSITION_TOP:
+                max_size = (window->win_chat_height + bar_window->height) -
+                    GUI_WINDOW_CHAT_MIN_HEIGHT;
+                break;
+            case GUI_BAR_POSITION_LEFT:
+            case GUI_BAR_POSITION_RIGHT:
+                max_size = (window->win_chat_width + bar_window->width) -
+                    GUI_WINDOW_CHAT_MIN_HEIGHT;
+                break;
+            case GUI_BAR_NUM_POSITIONS:
+                break;
+        }
+    }
+    
+    return max_size;
+}
+
+/*
+ * gui_bar_window_get_max_size: return max size for bar window
+ */
+
+int
+gui_bar_window_get_max_size (struct t_gui_bar_window *bar_window,
+                             struct t_gui_window *window)
+{
+    int max_size_found, max_size;
+    struct t_gui_window *ptr_window;
+    
+    if (window)
+    {
+        max_size_found = gui_bar_window_get_max_size_in_window (bar_window,
+                                                                window);
+    }
+    else
+    {
+        max_size_found = INT_MAX;
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
+        {
+            max_size = gui_bar_window_get_max_size_in_window (bar_window,
+                                                              ptr_window);
+            if (max_size < max_size_found)
+                max_size_found = max_size;
+        }
+        if (max_size_found == INT_MAX)
+            max_size_found = 1;
+    }
+    
+    return max_size_found;
+}
+
+/*
  * gui_bar_window_set_current_size: set current size of all bar windows for a bar
  */
 
 void
 gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
 {
-    struct t_gui_window *ptr_win;
-    struct t_gui_bar_window *ptr_bar_win;
-    int new_size;
+    struct t_gui_window *ptr_window;
+    struct t_gui_bar_window *ptr_bar_window;
+    int new_size, max_size;
     
     if (size == 0)
         new_size = 1;
@@ -492,21 +752,27 @@ gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
     {
         if (bar->bar_window->current_size != new_size)
         {
-            bar->bar_window->current_size = new_size;
+            max_size = gui_bar_window_get_max_size (bar->bar_window, NULL);
+            bar->bar_window->current_size = (max_size < new_size) ?
+                max_size : new_size;
             gui_bar_window_recreate_bar_windows (bar);
         }
     }
     else
     {
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
         {
-            for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
-                 ptr_bar_win = ptr_bar_win->next_bar_window)
+            for (ptr_bar_window = ptr_window->bar_windows; ptr_bar_window;
+                 ptr_bar_window = ptr_bar_window->next_bar_window)
             {
-                if ((ptr_bar_win->bar == bar)
-                    && (ptr_bar_win->current_size != new_size))
+                if ((ptr_bar_window->bar == bar)
+                    && (ptr_bar_window->current_size != new_size))
                 {
-                    ptr_bar_win->current_size = new_size;
+                    max_size = gui_bar_window_get_max_size (ptr_bar_window,
+                                                            ptr_window);
+                    ptr_bar_window->current_size = (max_size < new_size) ?
+                        max_size : new_size;
                     gui_bar_window_recreate_bar_windows (bar);
                 }
             }

@@ -38,8 +38,7 @@
 
 char *
 irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           int max_width, int max_height)
+                           struct t_gui_window *window)
 {
     struct t_gui_buffer *buffer;
     const char *title;
@@ -48,8 +47,6 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = weechat_current_window ();
@@ -76,8 +73,7 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
-                          struct t_gui_window *window,
-                          int max_width, int max_height)
+                          struct t_gui_window *window)
 {
     char buf[512], buf_name[256], modes[128], away[128];
     const char *name;
@@ -89,8 +85,6 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = weechat_current_window ();
@@ -196,8 +190,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
-                  struct t_gui_window *window,
-                  int max_width, int max_height)
+                  struct t_gui_window *window)
 {
     char buf[32];
     struct t_gui_buffer *buffer;
@@ -206,9 +199,6 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) window;
-    (void) max_width;
-    (void) max_height;
     
     buffer = weechat_window_get_pointer (window, "buffer");
     
@@ -236,8 +226,7 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           int max_width, int max_height)
+                           struct t_gui_window *window)
 {
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
@@ -247,8 +236,6 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) max_width;
-    (void) max_height;
     
     if (!window)
         window = weechat_current_window ();

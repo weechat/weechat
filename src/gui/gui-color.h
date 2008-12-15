@@ -103,6 +103,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_BAR_DELIM_STR        "D"
 #define GUI_COLOR_BAR_BG_CHAR          'B'
 #define GUI_COLOR_BAR_BG_STR           "B"
+#define GUI_COLOR_BAR_START_INPUT_CHAR '_'
+#define GUI_COLOR_BAR_START_INPUT_STR  "_"
 #define GUI_COLOR_BAR_MOVE_CURSOR_CHAR '#'
 #define GUI_COLOR_BAR_MOVE_CURSOR_STR  "#"
 
