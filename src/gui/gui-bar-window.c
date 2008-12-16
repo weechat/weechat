@@ -490,8 +490,11 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
                             content[index_content++] = ' ';
                         }
                     }
-                    strcpy (content + index_content, space_with_reinit_color);
-                    index_content += length_reinit_color;
+                    if (j < columns - 1)
+                    {
+                        strcpy (content + index_content, space_with_reinit_color);
+                        index_content += length_reinit_color;
+                    }
                 }
                 content[index_content++] = '\n';
             }
