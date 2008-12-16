@@ -2034,19 +2034,19 @@ gui_bar_create_default_nicklist ()
     {
         /* create nicklist bar */
         if (gui_bar_new (GUI_BAR_DEFAULT_NAME_NICKLIST,
-                         "0",          /* hidden */
-                         "200",        /* priority */
-                         "window",     /* type */
-                         "nicklist",   /* conditions */
-                         "right",      /* position */
-                         "horizontal", /* filling_top_bottom */
-                         "vertical",   /* filling_left_right */
-                         "0",          /* size */
-                         "0",          /* size_max */
-                         "default",    /* color fg */
-                         "cyan",       /* color delim */
-                         "default",    /* color bg */
-                         "1",          /* separators */
+                         "0",                /* hidden */
+                         "200",              /* priority */
+                         "window",           /* type */
+                         "nicklist",         /* conditions */
+                         "right",            /* position */
+                         "columns_vertical", /* filling_top_bottom */
+                         "vertical",         /* filling_left_right */
+                         "0",                /* size */
+                         "0",                /* size_max */
+                         "default",          /* color fg */
+                         "cyan",             /* color delim */
+                         "default",          /* color bg */
+                         "1",                /* separators */
                          gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST])) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
