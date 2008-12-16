@@ -486,7 +486,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.separator</command>: background color for window separators (when splited)
+<command>weechat.color.separator</command>: background color for window separators (when splitted)
 <itemizedlist>
   <listitem>
     <para>type: color</para>

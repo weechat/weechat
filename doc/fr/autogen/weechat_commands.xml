@@ -20,7 +20,7 @@ gestion des barres
                nicklist: sue les fenêtres avec liste de pseudos
                sans condition, la barre est toujours affichée
      position: bottom (bas), top (haut), left (gauche) ou right (droite)
-  remplissage: horizontal ou vertical
+  remplissage: horizontal, vertical, columns_horizontal ou columns_vertical
        taille: taille de la barre (en caractères)
    séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
    objet1,...: objets pour cette barre

@@ -20,7 +20,7 @@ manage bars
                nicklist: on windows with nicklist
                without condition, bar is always displayed
      position: bottom, top, left or right
-      filling: horizontal or vertical
+      filling: horizontal, vertical, columns_horizontal or columns_vertical
          size: size of bar (in chars)
     separator: 1 for using separator (line), 0 or nothing means no separator
     item1,...: items for this bar
