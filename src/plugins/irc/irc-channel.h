@@ -27,7 +27,7 @@
 #define IRC_CHANNEL_TYPE_CHANNEL  0
 #define IRC_CHANNEL_TYPE_PRIVATE  1
 
-#define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 32
+#define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 128
 
 struct t_irc_server;
 
@@ -56,7 +56,9 @@ struct t_irc_channel
                                        /* there was some join/part on chan  */
     struct t_irc_nick *nicks;          /* nicks on the channel              */
     struct t_irc_nick *last_nick;      /* last nick on the channel          */
-    struct t_weelist *nicks_speaking;  /* for smart completion              */
+    struct t_weelist *nicks_speaking[2]; /* for smart completion: first     */
+                                       /* list is nick speaking, second is  */
+                                       /* speaking to me (highlight)        */
     struct t_irc_channel_speaking *nicks_speaking_time; /* for smart filter */
                                        /* of join/part/quit messages        */
     struct t_irc_channel_speaking *last_nick_speaking_time;
@@ -90,7 +92,8 @@ extern void irc_channel_check_away (struct t_irc_server *server,
 extern void irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
                                   int is_away);
 extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,
-                                           const char *nick);
+                                           const char *nick,
+                                           int highlight);
 extern void irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
                                               const char *old_nick,
                                               const char *new_nick);

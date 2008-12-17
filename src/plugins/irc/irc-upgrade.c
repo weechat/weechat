@@ -169,7 +169,7 @@ int
 irc_upgrade_read_cb (int object_id,
                      struct t_infolist *infolist)
 {
-    int flags, sock, size, index;
+    int flags, sock, size, i, index;
     char *buf, option_name[64];
     const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
@@ -271,17 +271,21 @@ irc_upgrade_read_cb (int object_id,
                         irc_upgrade_current_channel->cycle = weechat_infolist_integer (infolist, "cycle");
                         irc_upgrade_current_channel->display_creation_date = weechat_infolist_integer (infolist, "display_creation_date");
                         irc_upgrade_current_channel->nick_completion_reset = weechat_infolist_integer (infolist, "nick_completion_reset");
-                        index = 0;
-                        while (1)
+                        for (i = 0; i < 2; i++)
                         {
-                            snprintf (option_name, sizeof (option_name),
-                                      "nick_speaking_%05d", index);
-                            nick = weechat_infolist_string (infolist, option_name);
-                            if (!nick)
-                                break;
-                            irc_channel_nick_speaking_add (irc_upgrade_current_channel,
-                                                           nick);
-                            index++;
+                            index = 0;
+                            while (1)
+                            {
+                                snprintf (option_name, sizeof (option_name),
+                                          "nick_speaking%d_%05d", i, index);
+                                nick = weechat_infolist_string (infolist, option_name);
+                                if (!nick)
+                                    break;
+                                irc_channel_nick_speaking_add (irc_upgrade_current_channel,
+                                                               nick,
+                                                               i);
+                                index++;
+                            }
                         }
                         index = 0;
                         while (1)

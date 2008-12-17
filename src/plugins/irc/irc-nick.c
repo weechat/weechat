@@ -297,12 +297,8 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     
     /* update nicks speaking */
     nick_is_me = (strcmp (nick->name, server->nick) == 0) ? 1 : 0;
-    if (!nick_is_me && channel->nicks_speaking)
-    {
-        weechat_list_set (weechat_list_search (channel->nicks_speaking,
-                                               nick->name),
-                          new_nick);
-    }
+    if (!nick_is_me)
+        irc_channel_nick_speaking_rename (channel, nick->name, new_nick);
     
     /* change nickname */
     if (nick->name)

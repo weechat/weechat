@@ -1230,7 +1230,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                          IRC_COLOR_CHAT,
                                          pos_args);
                     
-                    irc_channel_nick_speaking_add (ptr_channel, nick);
+                    irc_channel_nick_speaking_add (ptr_channel,
+                                                   nick,
+                                                   weechat_string_has_highlight (pos_args,
+                                                                                 server->nick));
                     irc_channel_nick_speaking_time_remove_old (ptr_channel);
                     irc_channel_nick_speaking_time_add (ptr_channel, nick,
                                                         time (NULL));
@@ -1391,7 +1394,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                                          NULL),
                                      pos_args);
                 
-                irc_channel_nick_speaking_add (ptr_channel, nick);
+                irc_channel_nick_speaking_add (ptr_channel,
+                                               nick,
+                                               weechat_string_has_highlight (pos_args,
+                                                                             server->nick));
                 irc_channel_nick_speaking_time_remove_old (ptr_channel);
                 irc_channel_nick_speaking_time_add (ptr_channel, nick,
                                                     time (NULL));

@@ -188,7 +188,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
 {
     struct t_irc_nick *ptr_nick;
     const char *nick;
-    int list_size, i;
+    int list_size, i, j;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     
@@ -210,14 +210,21 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
             /* add nicks speaking recently on this channel */
             if (weechat_config_boolean (irc_config_look_nick_completion_smart))
             {
-                list_size = weechat_list_size (ptr_channel->nicks_speaking);
-                for (i = 0; i < list_size; i++)
+                /* 0 => nick speaking ; 1 => nick speaking to me (with highlight) */
+                for (i = 0; i < 2; i++)
                 {
-                    nick = weechat_list_string (weechat_list_get (ptr_channel->nicks_speaking, i));
-                    if (nick && irc_nick_search (ptr_channel, nick))
+                    if (ptr_channel->nicks_speaking[i])
                     {
-                        weechat_hook_completion_list_add (completion, nick,
-                                                          1, WEECHAT_LIST_POS_BEGINNING);
+                        list_size = weechat_list_size (ptr_channel->nicks_speaking[i]);
+                        for (j = 0; j < list_size; j++)
+                        {
+                            nick = weechat_list_string (weechat_list_get (ptr_channel->nicks_speaking[i], j));
+                            if (nick && irc_nick_search (ptr_channel, nick))
+                            {
+                                weechat_hook_completion_list_add (completion, nick,
+                                                                  1, WEECHAT_LIST_POS_BEGINNING);
+                            }
+                        }
                     }
                 }
             }

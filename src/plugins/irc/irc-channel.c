@@ -152,7 +152,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
     new_channel->buffer = new_buffer;
-    new_channel->nicks_speaking = NULL;
+    new_channel->nicks_speaking[0] = NULL;
+    new_channel->nicks_speaking[1] = NULL;
     new_channel->nicks_speaking_time = NULL;
     new_channel->last_nick_speaking_time = NULL;
     new_channel->buffer_as_string = NULL;
@@ -333,23 +334,30 @@ irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
  */
 
 void
-irc_channel_nick_speaking_add (struct t_irc_channel *channel, const char *nick)
+irc_channel_nick_speaking_add (struct t_irc_channel *channel, const char *nick,
+                               int highlight)
 {
     int size, to_remove, i;
-
-    if (!channel->nicks_speaking)
-        channel->nicks_speaking = weechat_list_new ();
     
-    weechat_list_add (channel->nicks_speaking, nick, WEECHAT_LIST_POS_END);
+    if (highlight < 0)
+        highlight = 0;
+    if (highlight > 1)
+        highlight = 1;
     
-    size = weechat_list_size (channel->nicks_speaking);
+    if (!channel->nicks_speaking[highlight])
+        channel->nicks_speaking[highlight] = weechat_list_new ();
+    
+    weechat_list_add (channel->nicks_speaking[highlight], nick,
+                      WEECHAT_LIST_POS_END);
+    
+    size = weechat_list_size (channel->nicks_speaking[highlight]);
     if (size > IRC_CHANNEL_NICKS_SPEAKING_LIMIT)
     {
         to_remove = size - IRC_CHANNEL_NICKS_SPEAKING_LIMIT;
         for (i = 0; i < to_remove; i++)
         {
-            weechat_list_remove (channel->nicks_speaking,
-                                 weechat_list_get (channel->nicks_speaking, 0));
+            weechat_list_remove (channel->nicks_speaking[highlight],
+                                 weechat_list_get (channel->nicks_speaking[highlight], 0));
         }
     }
 }
@@ -364,12 +372,16 @@ irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
                                   const char *new_nick)
 {
     struct t_weelist_item *ptr_item;
+    int i;
 
-    if (channel->nicks_speaking)
+    for (i = 0; i < 2; i++)
     {
-        ptr_item = weechat_list_search (channel->nicks_speaking, old_nick);
-        if (ptr_item)
-            weechat_list_set (ptr_item, new_nick);
+        if (channel->nicks_speaking[i])
+        {
+            ptr_item = weechat_list_search (channel->nicks_speaking[i], old_nick);
+            if (ptr_item)
+                weechat_list_set (ptr_item, new_nick);
+        }
     }
 }
 
@@ -558,8 +570,10 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     irc_nick_free_all (channel);
     if (channel->away_message)
         free (channel->away_message);
-    if (channel->nicks_speaking)
-        weechat_list_free (channel->nicks_speaking);
+    if (channel->nicks_speaking[0])
+        weechat_list_free (channel->nicks_speaking[0]);
+    if (channel->nicks_speaking[1])
+        weechat_list_free (channel->nicks_speaking[1]);
     irc_channel_nick_speaking_time_free_all (channel);
     if (channel->buffer_as_string)
         free (channel->buffer_as_string);
@@ -594,7 +608,7 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     struct t_weelist_item *ptr_list_item;
     struct t_irc_channel_speaking *ptr_nick;
     char option_name[64];
-    int i;
+    int i, index;
     
     if (!infolist || !channel)
         return 0;
@@ -637,18 +651,22 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "nick_completion_reset", channel->nick_completion_reset))
         return 0;
-    if (channel->nicks_speaking)
+    for (i = 0; i < 2; i++)
     {
-        i = 0;
-        for (ptr_list_item = weechat_list_get (channel->nicks_speaking, 0);
-             ptr_list_item;
-             ptr_list_item = weechat_list_next (ptr_list_item))
+        if (channel->nicks_speaking[i])
         {
-            snprintf (option_name, sizeof (option_name), "nick_speaking_%05d", i);
-            if (!weechat_infolist_new_var_string (ptr_item, option_name,
-                                                  weechat_list_string (ptr_list_item)))
-                return 0;
-            i++;
+            index = 0;
+            for (ptr_list_item = weechat_list_get (channel->nicks_speaking[i], 0);
+                 ptr_list_item;
+                 ptr_list_item = weechat_list_next (ptr_list_item))
+            {
+                snprintf (option_name, sizeof (option_name),
+                          "nick_speaking%d_%05d", i, index);
+                if (!weechat_infolist_new_var_string (ptr_item, option_name,
+                                                      weechat_list_string (ptr_list_item)))
+                    return 0;
+                index++;
+            }
         }
     }
     if (channel->nicks_speaking_time)
@@ -683,7 +701,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
 {
     struct t_weelist_item *ptr_item;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    int i;
+    int i, index;
     struct t_irc_nick *ptr_nick;
     
     weechat_log_printf ("");
@@ -705,16 +723,19 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       last_nick_speaking_time. : 0x%lx", channel->last_nick_speaking_time);
     weechat_log_printf ("       prev_channel . . . . . . : 0x%lx", channel->prev_channel);
     weechat_log_printf ("       next_channel . . . . . . : 0x%lx", channel->next_channel);
-    if (channel->nicks_speaking)
+    for (i = 0; i < 2; i++)
     {
-        weechat_log_printf ("");
-        i = 0;
-        for (ptr_item = weechat_list_get (channel->nicks_speaking, 0);
-             ptr_item; ptr_item = weechat_list_next (ptr_item))
+        if (channel->nicks_speaking[i])
         {
-            weechat_log_printf ("         nick speaking %d: '%s'",
-                                i, weechat_list_string (ptr_item));
-            i++;
+            weechat_log_printf ("");
+            index = 0;
+            for (ptr_item = weechat_list_get (channel->nicks_speaking[i], 0);
+                 ptr_item; ptr_item = weechat_list_next (ptr_item))
+            {
+                weechat_log_printf ("         nick speaking[%d][%d]: '%s'",
+                                    i, index, weechat_list_string (ptr_item));
+                index++;
+            }
         }
     }
     if (channel->nicks_speaking_time)
