@@ -207,6 +207,8 @@ irc_buffer_merge_servers ()
                 weechat_buffer_close (ptr_buffer);
             }
         }
+        
+        irc_server_set_buffer_title (irc_current_server);
     }
 }
 

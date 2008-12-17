@@ -202,7 +202,8 @@ irc_upgrade_read_cb (int object_id,
                                 irc_current_server = irc_upgrade_current_server;
                         }
                     }
-                    irc_upgrade_current_server->current_address = weechat_infolist_integer (infolist, "current_address");
+                    irc_upgrade_current_server->index_current_address =
+                        weechat_infolist_integer (infolist, "index_current_address");
                     
                     sock = weechat_infolist_integer (infolist, "sock");
                     if (sock >= 0)

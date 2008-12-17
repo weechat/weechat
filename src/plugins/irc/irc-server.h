@@ -82,7 +82,8 @@ struct t_irc_server
     int addresses_count;            /* number of addresses                   */
     char **addresses_array;         /* exploded addresses                    */
     int *ports_array;               /* ports for addresses                   */
-    int current_address;            /* current address index in array        */
+    int index_current_address;      /* current address index in array        */
+    char *current_ip;               /* current IP address                    */
     int sock;                       /* socket for server (IPv4 or IPv6)      */
     struct t_hook *hook_connect;    /* connection hook                       */
     struct t_hook *hook_fd;         /* hook for server socket                */
@@ -179,6 +180,7 @@ extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *full_message);
 extern void irc_server_sendf (struct t_irc_server *server, const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
+extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,
                                                       int all_servers);
 extern int irc_server_connect (struct t_irc_server *server,

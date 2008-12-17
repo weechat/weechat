@@ -2389,6 +2389,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
     server->is_connected = 1;
     server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
+    irc_server_set_buffer_title (server);
     
     /* set away message if user was away (before disconnection for example) */
     if (server->away_message && server->away_message[0])
