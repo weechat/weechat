@@ -1378,7 +1378,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "chat_nick_other", "color",
         N_("text color for other nick in private buffer"),
-        NULL, GUI_COLOR_CHAT_NICK_OTHER, 0, "default", NULL,
+        NULL, GUI_COLOR_CHAT_NICK_OTHER, 0, "cyan", NULL,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[0] = config_file_new_option (
         weechat_config_file, ptr_section,

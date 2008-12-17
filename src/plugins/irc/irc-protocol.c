@@ -1220,12 +1220,14 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     if (pos_end_01)
                         pos_end_01[0] = '\0';
                     
+                    ptr_nick = irc_nick_search (ptr_channel, nick);
+                    
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             "irc_action,notify_message"),
                                          "%s%s%s %s%s",
                                          weechat_prefix ("action"),
-                                         IRC_COLOR_CHAT_NICK,
+                                         (ptr_nick) ? ptr_nick->color : IRC_COLOR_CHAT_NICK,
                                          nick,
                                          IRC_COLOR_CHAT,
                                          pos_args);
@@ -1968,7 +1970,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                                         "irc_action,notify_private"),
                                      "%s%s%s %s%s",
                                      weechat_prefix ("action"),
-                                     IRC_COLOR_CHAT_NICK,
+                                     IRC_COLOR_CHAT_NICK_OTHER,
                                      nick,
                                      IRC_COLOR_CHAT,
                                      pos_args);
