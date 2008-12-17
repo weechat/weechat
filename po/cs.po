@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-16 11:32+0100\n"
+"POT-Creation-Date: 2008-12-17 18:53+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -638,15 +638,25 @@ msgstr "Volba odebrána: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d volba/volby resetovány, %d volba/volby smazány"
 
-msgid "Upgrading WeeChat..."
-msgstr "Upgraduji WeeChat..."
+#, c-format
+msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Upgrading WeeChat with binary file: \"%s\"..."
+msgstr "%s nemohu vytvořit soubor \"%s\"\n"
 
 #, c-format
 msgid "%sError: unable to save session in file"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
-#, c-format
-msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+#, fuzzy, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
 
 #, c-format
@@ -5137,6 +5147,13 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy
+#~ msgid "%sBinary file not found: \"%s\""
+#~ msgstr "%s plugin \"%s\" nenalezen\n"
+
+#~ msgid "Upgrading WeeChat..."
+#~ msgstr "Upgraduji WeeChat..."
+
+#, fuzzy
 #~ msgid "timeout for relay request (in seconds)"
 #~ msgstr "časový limit pro dcc požadavek (v sekundách)"
 
@@ -5256,10 +5273,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%sError: filter not \"%s\" found"
-#~ msgstr "%s plugin \"%s\" nenalezen\n"
-
-#, fuzzy
-#~ msgid "%sError: filter not found"
 #~ msgstr "%s plugin \"%s\" nenalezen\n"
 
 #, fuzzy

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-16 11:32+0100\n"
+"POT-Creation-Date: 2008-12-17 18:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -612,7 +612,17 @@ msgstr ""
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
-msgid "Upgrading WeeChat..."
+#, c-format
+msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
+msgstr ""
+
+#, c-format
+msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr ""
 
 #, c-format
@@ -620,7 +630,7 @@ msgid "%sError: unable to save session in file"
 msgstr ""
 
 #, c-format
-msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
 #, c-format

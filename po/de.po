@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-16 11:32+0100\n"
+"POT-Creation-Date: 2008-12-17 18:53+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -695,8 +695,17 @@ msgstr "Sie sind nicht im Channel"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
-#, fuzzy
-msgid "Upgrading WeeChat..."
+#, c-format
+msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualisiere WeeChat...\n"
 
 #, fuzzy, c-format
@@ -704,7 +713,7 @@ msgid "%sError: unable to save session in file"
 msgstr "%s kann die Sitzung nicht in eine Datei speichern\n"
 
 #, fuzzy, c-format
-msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s Ausführung schlug fehl (Programm: \"%s\"), WeeChat wird beendet\n"
 
 #, c-format
@@ -5100,6 +5109,14 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
+#~ msgid "%sBinary file not found: \"%s\""
+#~ msgstr "%s Plugin \"%s\" nicht gefunden\n"
+
+#, fuzzy
+#~ msgid "Upgrading WeeChat..."
+#~ msgstr "Aktualisiere WeeChat...\n"
+
+#, fuzzy
 #~ msgid "timeout for relay request (in seconds)"
 #~ msgstr "DCC-Timeout in Sekunden"
 
@@ -5221,10 +5238,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
 #~ msgid "%sError: filter not \"%s\" found"
-#~ msgstr "%s Plugin \"%s\" nicht gefunden\n"
-
-#, fuzzy
-#~ msgid "%sError: filter not found"
 #~ msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
 #, fuzzy

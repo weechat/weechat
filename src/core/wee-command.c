@@ -28,6 +28,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "weechat.h"
 #include "wee-command.h"
@@ -215,7 +217,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             gui_chat_printf (NULL,
                              _("%sNot enough memory"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_ERROR; 
+            return WEECHAT_RC_ERROR;
         }
         type = gui_bar_search_type (str_type);
         if (type < 0)
@@ -2927,18 +2929,59 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
 {
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
+    struct stat stat_buf;
+    int rc;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
     (void) argv;
-    (void) argv_eol;
     
-    ptr_binary = (argc > 1) ? argv_eol[1] : weechat_argv0;
+    if (argc > 1)
+    {
+        ptr_binary = string_replace (argv_eol[1], "~", getenv ("HOME"));
+
+        if (ptr_binary)
+        {
+            /* check if weechat binary is here and executable by user */
+            rc = stat (ptr_binary, &stat_buf);
+            if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
+            {
+                gui_chat_printf (NULL,
+                                 _("%sCan't upgrade: WeeChat binary \"%s\" "
+                                   "does not exist"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 ptr_binary);
+                free (ptr_binary);
+                return WEECHAT_RC_ERROR;
+            }
+            if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
+                && (!(stat_buf.st_mode & S_IXOTH)))
+            {
+                gui_chat_printf (NULL,
+                                 _("%sCan't upgrade: WeeChat binary \"%s\" "
+                                   "does not have execute permissions"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 ptr_binary);
+                free (ptr_binary);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+    }
+    else
+        ptr_binary = strdup (weechat_argv0);
+    
+    if (!ptr_binary)
+    {
+        gui_chat_printf (NULL,
+                         _("%sNot enough memory"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_ERROR;
+    }
     
     gui_chat_printf (NULL,
-                     _("Upgrading WeeChat..."));
+                     _("Upgrading WeeChat with binary file: \"%s\"..."),
+                     ptr_binary);
     
     /* send "upgrade" signal to plugins */
     hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, NULL);
@@ -2948,10 +2991,11 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
         gui_chat_printf (NULL,
                          _("%sError: unable to save session in file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        free (ptr_binary);
         return WEECHAT_RC_ERROR;
     }
     
-    exec_args[0] = strdup (ptr_binary);
+    exec_args[0] = ptr_binary;
     exec_args[3] = strdup (weechat_home);
     
     /* save layout, unload plugins, save config, then upgrade */
@@ -2965,11 +3009,11 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     execvp (exec_args[0], exec_args);
     
     /* this code should not be reached if execvp is ok */
-    plugin_init (1, 0, NULL);
-    
+    string_iconv_fprintf (stderr, "\n\n*****\n");
     string_iconv_fprintf (stderr,
-                            _("Error: exec failed (program: \"%s\"), exiting WeeChat"),
-                            exec_args[0]);
+                          _("***** Error: exec failed (program: \"%s\"), exiting WeeChat"),
+                          exec_args[0]);
+    string_iconv_fprintf (stderr, "\n*****\n\n");
     
     free (exec_args[0]);
     free (exec_args[3]);

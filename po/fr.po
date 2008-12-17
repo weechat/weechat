@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-16 11:32+0100\n"
-"PO-Revision-Date: 2008-12-16 11:33+0100\n"
+"POT-Creation-Date: 2008-12-17 18:53+0100\n"
+"PO-Revision-Date: 2008-12-17 18:54+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -639,16 +639,28 @@ msgstr "Option supprimée: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
 
-msgid "Upgrading WeeChat..."
-msgstr "Mise à jour de WeeChat..."
+#, c-format
+msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
+msgstr "%sImpossible de mettre à jour: le binaire WeeChat \"%s\" n'existe pas"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
+msgstr ""
+"%sImpossible de mettre à jour: le binaire WeeChat \"%s\" n'a pas les droits "
+"d'exécution"
+
+#, c-format
+msgid "Upgrading WeeChat with binary file: \"%s\"..."
+msgstr "Mise à jour de WeeChat avec le fichier binaire: \"%s\"..."
 
 #, c-format
 msgid "%sError: unable to save session in file"
 msgstr "%sErreur: impossible de sauvegarder la session dans le ficheir"
 
 #, c-format
-msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "Error: exec a échoué (programme: \"%s\"), sortie de WeeChat"
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Error: exec a échoué (programme: \"%s\"), sortie de WeeChat"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -5248,3 +5260,9 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "%sBinary file not found: \"%s\""
+#~ msgstr "%sFichier binaire non trouvé: \"%s\""
+
+#~ msgid "Upgrading WeeChat..."
+#~ msgstr "Mise à jour de WeeChat..."
