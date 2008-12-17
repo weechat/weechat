@@ -1200,7 +1200,7 @@ irc_server_parse_message (const char *message, char **nick, char **host,
     {
         pos2 = strchr (message, '!');
         pos = strchr (message, ' ');
-        if (pos2)
+        if (pos2 && (!pos || pos > pos2))
         {
             if (nick)
                 *nick = weechat_strndup (message + 1, pos2 - (message + 1));
@@ -1670,11 +1670,22 @@ irc_server_msgq_flush ()
                         ptr_chan_nick = (channel) ? channel : nick;
                         if (ptr_chan_nick)
                         {
-                            snprintf (modifier_data, sizeof (modifier_data),
-                                      "%s.%s.%s",
-                                      weechat_plugin->name,
-                                      irc_recv_msgq->server->name,
-                                      ptr_chan_nick);
+                            /* message with no target (nick or channel) ? */
+                            if (nick && host && (strcmp (nick, host) == 0))
+                            {
+                                snprintf (modifier_data, sizeof (modifier_data),
+                                          "%s.server.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name);
+                            }
+                            else
+                            {
+                                snprintf (modifier_data, sizeof (modifier_data),
+                                          "%s.%s.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name,
+                                          ptr_chan_nick);
+                            }
                         }
                         else
                         {
