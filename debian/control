@@ -42,7 +42,7 @@ Description: Fast, light and extensible IRC client
 
 Package: weechat-core
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Conflicts: weechat-common, weechat-plugins (<< 0.2.7)
 Description: Core files for WeeChat
  This package provides core plugins and locales files for WeeChat. It currently
