@@ -493,6 +493,38 @@ gui_bar_search_with_option_name (const char *option_name)
 }
 
 /*
+ * gui_bar_content_build_bar_windows: rebuild content of bar windows for a bar
+ */
+
+void
+gui_bar_content_build_bar_windows (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_window;
+    struct t_gui_bar_window *ptr_bar_window;
+    
+    if (!bar)
+        return;
+    
+    if (bar->bar_window)
+    {
+        gui_bar_window_content_build (bar->bar_window, NULL);
+    }
+    else
+    {
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
+        {
+            for (ptr_bar_window = ptr_window->bar_windows; ptr_bar_window;
+                 ptr_bar_window = ptr_bar_window->next_bar_window)
+            {
+                if (ptr_bar_window->bar == bar)
+                    gui_bar_window_content_build (ptr_bar_window, ptr_window);
+            }
+        }
+    }
+}
+
+/*
  * gui_bar_ask_refresh: ask refresh for bar
  */
 
@@ -912,7 +944,10 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
         }
 
         if (!CONFIG_BOOLEAN(ptr_bar->hidden))
-            gui_bar_draw (ptr_bar);
+        {
+            gui_bar_content_build_bar_windows (ptr_bar);
+            gui_bar_ask_refresh (ptr_bar);
+        }
     }
 }
 
