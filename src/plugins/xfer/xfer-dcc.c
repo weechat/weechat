@@ -186,7 +186,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         if (num_read == -1)
         {
             /* socket is temporarily not available (sender is not fast ?!) */
-            if (errno == EAGAIN)
+            if ((errno == EAGAIN) || (errno == EINTR))
                 usleep (1000);
             else
             {
