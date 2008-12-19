@@ -41,6 +41,7 @@ struct t_config_option *weechat_aspell_config_look_color;
 struct t_config_option *weechat_aspell_config_check_commands;
 struct t_config_option *weechat_aspell_config_check_default_dict;
 struct t_config_option *weechat_aspell_config_check_word_min_length;
+struct t_config_option *weechat_aspell_config_check_during_search;
 
 
 char **weechat_aspell_commands_to_check = NULL;
@@ -308,6 +309,11 @@ weechat_aspell_config_init ()
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
         NULL, 0, INT_MAX, "2", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_check_during_search = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "during_search", "boolean",
+        N_("check words during text search in buffer"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* dict */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",

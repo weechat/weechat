@@ -734,6 +734,10 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     if (!weechat_aspell_spellers)
         return NULL;
     
+    if (weechat_buffer_get_integer (buffer, "text_search")
+        && !weechat_config_boolean (weechat_aspell_config_check_during_search))
+        return NULL;
+    
     /* for performance: return last stirng built if input string is the
        same (for example user just change cursor position, or input text is
        refreshed with same content */

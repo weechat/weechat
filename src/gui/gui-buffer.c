@@ -525,6 +525,12 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->notify;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines_hidden;
+        else if (string_strcasecmp (property, "text_search") == 0)
+            return buffer->text_search;
+        else if (string_strcasecmp (property, "text_search_exact") == 0)
+            return buffer->text_search_exact;
+        else if (string_strcasecmp (property, "text_search_found") == 0)
+            return buffer->text_search_found;
     }
     
     return 0;
