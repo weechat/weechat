@@ -377,7 +377,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     
     filling = gui_bar_get_filling (bar_window->bar);
     
-    content = gui_bar_window_content_get_with_filling (bar_window);
+    content = gui_bar_window_content_get_with_filling (bar_window, window);
     if (content)
     {
         items = string_explode (content, "\n", 0, 0, &items_count);

@@ -453,10 +453,7 @@ gui_bar_item_update (const char *item_name)
             {
                 if (ptr_bar->bar_window)
                 {
-                    gui_bar_window_content_build_item (ptr_bar->bar_window,
-                                                       NULL,
-                                                       index_item,
-                                                       index_subitem);
+                    ptr_bar->bar_window->items_refresh_needed[index_item][index_subitem] = 1;
                 }
                 else
                 {
@@ -469,10 +466,7 @@ gui_bar_item_update (const char *item_name)
                         {
                             if (ptr_bar_window->bar == ptr_bar)
                             {
-                                gui_bar_window_content_build_item (ptr_bar_window,
-                                                                   ptr_window,
-                                                                   index_item,
-                                                                   index_subitem);
+                                ptr_bar_window->items_refresh_needed[index_item][index_subitem] = 1;
                             }
                         }
                     }

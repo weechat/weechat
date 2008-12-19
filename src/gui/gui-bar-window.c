@@ -246,6 +246,8 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
                                          sizeof (*bar_window->items_subcount));
     bar_window->items_content = malloc ((bar_window->items_count) *
                                         sizeof (*bar_window->items_content));
+    bar_window->items_refresh_needed = malloc (bar_window->items_count *
+                                               sizeof (*bar_window->items_refresh_needed));
     if (bar_window->items_content)
     {
         for (i = 0; i < bar_window->items_count; i++)
@@ -253,12 +255,14 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
             bar_window->items_subcount[i] = bar_window->bar->items_subcount[i];
             bar_window->items_content[i] = malloc (bar_window->items_subcount[i] *
                                                    sizeof (**bar_window->items_content));
-            if (bar_window->items_content[i])
+            bar_window->items_refresh_needed[i] = malloc (bar_window->items_subcount[i] *
+                                                          sizeof (**bar_window->items_refresh_needed));
+            for (j = 0; j < bar_window->items_subcount[i]; j++)
             {
-                for (j = 0; j < bar_window->items_subcount[i]; j++)
-                {
+                if (bar_window->items_content[i])
                     bar_window->items_content[i][j] = NULL;
-                }
+                if (bar_window->items_refresh_needed[i])
+                    bar_window->items_refresh_needed[i][j] = 1;
             }
         }
     }
@@ -277,18 +281,21 @@ gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
     {
         for (i = 0; i < bar_window->items_count; i++)
         {
-            if (bar_window->items_content[i])
+            for (j = 0; j < bar_window->items_subcount[i]; j++)
             {
-                for (j = 0; j < bar_window->items_subcount[i]; j++)
+                if (bar_window->items_content[i]
+                    && bar_window->items_content[i][j])
                 {
-                    if (bar_window->items_content[i][j])
-                        free (bar_window->items_content[i][j]);
+                    free (bar_window->items_content[i][j]);
                 }
-                free (bar_window->items_content[i]);
             }
+            free (bar_window->items_content[i]);
+            free (bar_window->items_refresh_needed[i]);
         }
         free (bar_window->items_content);
         bar_window->items_content = NULL;
+        free (bar_window->items_refresh_needed);
+        bar_window->items_refresh_needed = NULL;
     }
 }
 
@@ -317,6 +324,7 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
         bar_window->items_content[index_item][index_subitem] =
             gui_bar_item_get_value (bar_window->bar->items_array[index_item][index_subitem],
                                     bar_window->bar, window);
+        bar_window->items_refresh_needed[index_item][index_subitem] = 0;
     }
 }
 
@@ -345,20 +353,42 @@ gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * gui_bar_window_content_get: get item or subitem content (first rebuild
+ *                             content if refresh is needed)
+ */
+
+char *
+gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
+                            struct t_gui_window *window,
+                            int index_item, int index_subitem)
+{
+    /* rebuild content if refresh is needed */
+    if (bar_window->items_refresh_needed[index_item][index_subitem])
+    {
+        gui_bar_window_content_build_item (bar_window, window,
+                                           index_item, index_subitem);
+    }
+    
+    /* return content */
+    return bar_window->items_content[index_item][index_subitem];
+}
+
+/*
  * gui_bar_window_content_get_with_filling: get content of a bar window,
  *                                          formated for display, according
  *                                          to filling for bar position
  */
 
 char *
-gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
+gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
+                                         struct t_gui_window *window)
 {
     enum t_gui_bar_filling filling;
-    char *content, reinit_color[32], reinit_color_space[32], *item_value;
+    char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
+    char *item_value, ****splitted_items, **linear_items;
     int index_content, content_length, i, sub, j, k, index;
     int length_reinit_color, length_reinit_color_space;
     int length, max_length, max_length_screen, total_items, columns, lines;
-    char ****splitted_items, **linear_items;
     
     snprintf (reinit_color, sizeof (reinit_color),
               "%c%c%02d,%02d",
@@ -387,13 +417,13 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
             {
                 for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                 {
-                    if (bar_window->items_content[i][sub]
-                        && bar_window->items_content[i][sub][0])
+                    ptr_content = gui_bar_window_content_get (bar_window, window,
+                                                              i, sub);
+                    if (ptr_content && ptr_content[0])
                     {
                         if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
                         {
-                            item_value = string_replace (bar_window->items_content[i][sub],
-                                                         "\n",
+                            item_value = string_replace (ptr_content, "\n",
                                                          reinit_color_space);
                         }
                         else
@@ -401,14 +431,13 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
                         if (!content)
                         {
                             content_length += strlen ((item_value) ?
-                                                      item_value : bar_window->items_content[i][sub]);
-                            content = strdup ((item_value) ?
-                                              item_value : bar_window->items_content[i][sub]);
+                                                      item_value : ptr_content);
+                            content = strdup ((item_value) ? item_value : ptr_content);
                         }
                         else
                         {
                             content_length += length_reinit_color_space +
-                                strlen ((item_value) ? item_value : bar_window->items_content[i][sub]);
+                                strlen ((item_value) ? item_value : ptr_content);
                             content = realloc (content, content_length);
                             if (sub == 0)
                             {
@@ -423,7 +452,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
                                 strcat (content, reinit_color);
                             }
                             strcat (content,
-                                    (item_value) ? item_value : bar_window->items_content[i][sub]);
+                                    (item_value) ? item_value : ptr_content);
                         }
                         if (item_value)
                             free (item_value);
@@ -444,10 +473,11 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window)
                     splitted_items[i] = malloc (bar_window->items_subcount[i] * sizeof (**splitted_items));
                     for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                     {
-                        if (bar_window->items_content[i][sub]
-                            && bar_window->items_content[i][sub][0])
+                        ptr_content = gui_bar_window_content_get (bar_window, window,
+                                                                  i, sub);
+                        if (ptr_content && ptr_content[0])
                         {
-                            splitted_items[i][sub] = string_explode (bar_window->items_content[i][sub],
+                            splitted_items[i][sub] = string_explode (ptr_content,
                                                                      "\n", 0, 0, NULL);
                             for (j = 0; splitted_items[i][sub][j]; j++)
                             {
@@ -647,6 +677,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->items_count = 0;
         new_bar_window->items_subcount = NULL;
         new_bar_window->items_content = NULL;
+        new_bar_window->items_refresh_needed = NULL;
         gui_bar_window_objects_init (new_bar_window);
         gui_bar_window_content_build (new_bar_window, window);
         

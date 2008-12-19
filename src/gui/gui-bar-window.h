@@ -35,6 +35,7 @@ struct t_gui_bar_window
     int items_count;                /* number of bar items                  */
     int *items_subcount;            /* number of sub items                  */
     char ***items_content;          /* content for each item/sub item of bar*/
+    int **items_refresh_needed;     /* refresh needed for (sub)item?        */
     void *gui_objects;              /* pointer to a GUI specific struct     */
     struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
                                               /* (only for non-root bars)   */
@@ -47,12 +48,10 @@ struct t_gui_bar_window
 extern int gui_bar_window_valid (struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
-extern void gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
-                                               struct t_gui_window *window,
-                                               int index_item, int index_subitem);
 extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
                                           struct t_gui_window *window);
-extern char *gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window);
+extern char *gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
+                                                      struct t_gui_window *window);
 extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
                                                            struct t_gui_bar *bar);
 extern int gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window);
