@@ -341,30 +341,6 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
         }
     }
     
-    if (!irc_ignore_check (server, ptr_channel, nick, host))
-    {
-        local_join = (strcmp (nick, server->nick) == 0);
-        ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
-            irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
-        weechat_printf_tags (ptr_channel->buffer,
-                             irc_protocol_tags (command,
-                                                (local_join
-                                                 || !weechat_config_boolean (irc_config_look_smart_filter)
-                                                 || ptr_nick_speaking) ?
-                                                NULL : "irc_smart_filter"),
-                             _("%s%s%s %s(%s%s%s)%s has joined %s%s"),
-                             weechat_prefix ("join"),
-                             IRC_COLOR_CHAT_NICK,
-                             nick,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT_HOST,
-                             address,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
-                             IRC_COLOR_CHAT_CHANNEL,
-                             pos_channel);
-    }
-    
     /* remove topic and display channel creation date if joining new channel */
     if (!ptr_channel->nicks)
     {
@@ -379,6 +355,30 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     if (ptr_nick)
         ptr_nick->host = strdup (address);
     
+    if (!irc_ignore_check (server, ptr_channel, nick, host))
+    {
+        local_join = (strcmp (nick, server->nick) == 0);
+        ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+            irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+        weechat_printf_tags (ptr_channel->buffer,
+                             irc_protocol_tags (command,
+                                                (local_join
+                                                 || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                 || ptr_nick_speaking) ?
+                                                NULL : "irc_smart_filter"),
+                             _("%s%s%s %s(%s%s%s)%s has joined %s%s"),
+                             weechat_prefix ("join"),
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             nick,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             address,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_MESSAGE_JOIN,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             pos_channel);
+    }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -392,7 +392,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
 {
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
     
     /* KICK message looks like:
        :nick1!user@host KICK #channel nick2 :kick reason
@@ -416,23 +416,22 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
         return WEECHAT_RC_ERROR;
     }
     
+    ptr_nick = irc_nick_search (ptr_channel, nick);
+    ptr_nick_kicked = irc_nick_search (ptr_channel, argv[3]);
+    
     if (!irc_ignore_check (server, ptr_channel, nick, host))
     {
         if (pos_comment)
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command, NULL),
-                                 _("%s%s%s%s has kicked %s%s%s from %s%s "
-                                   "%s(%s%s%s)"),
+                                 _("%s%s%s%s has kicked %s%s %s(%s%s%s)"),
                                  weechat_prefix ("quit"),
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick,
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_MESSAGE_QUIT,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
                                  argv[3],
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_CHANNEL,
-                                 argv[2],
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_CHAT,
                                  pos_comment,
@@ -442,16 +441,13 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command, NULL),
-                                 _("%s%s%s%s has kicked %s%s%s from %s%s"),
+                                 _("%s%s%s%s has kicked %s%s"),
                                  weechat_prefix ("quit"),
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick,
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_NICK,
-                                 argv[3],
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_CHANNEL,
-                                 argv[2]);
+                                 IRC_COLOR_MESSAGE_QUIT,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
+                                 argv[3]);
         }
     }
     
@@ -467,9 +463,8 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
     {
         /* someone was kicked from channel (but not me) => remove only this
            nick */
-        ptr_nick = irc_nick_search (ptr_channel, argv[3]);
-        if (ptr_nick)
-            irc_nick_free (ptr_channel, ptr_nick);
+        if (ptr_nick_kicked)
+            irc_nick_free (ptr_channel, ptr_nick_kicked);
     }
     
     return WEECHAT_RC_OK;
@@ -485,7 +480,7 @@ irc_protocol_cmd_kill (struct t_irc_server *server, const char *command,
 {
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_nick, *ptr_nick_killed;
     
     /* KILL message looks like:
        :nick1!user@host KILL mynick :kill reason
@@ -501,15 +496,19 @@ irc_protocol_cmd_kill (struct t_irc_server *server, const char *command,
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        ptr_nick = irc_nick_search (ptr_channel, nick);
+        ptr_nick_killed = irc_nick_search (ptr_channel, argv[2]);
+            
         if (!irc_ignore_check (server, ptr_channel, nick, host))
         {
             if (pos_comment)
             {
                 weechat_printf_tags (ptr_channel->buffer,
                                      irc_protocol_tags (command, NULL),
-                                     _("%sYou were killed by %s%s %s(%s%s%s)"),
+                                     _("%s%sYou were killed by %s%s %s(%s%s%s)"),
                                      weechat_prefix ("quit"),
-                                     IRC_COLOR_CHAT_NICK,
+                                     IRC_COLOR_MESSAGE_QUIT,
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
                                      IRC_COLOR_CHAT_DELIMITERS,
                                      IRC_COLOR_CHAT,
@@ -520,9 +519,10 @@ irc_protocol_cmd_kill (struct t_irc_server *server, const char *command,
             {
                 weechat_printf_tags (ptr_channel->buffer,
                                      irc_protocol_tags (command, NULL),
-                                     _("%sYou were killed by %s%s"),
+                                     _("%s%sYou were killed by %s%s"),
                                      weechat_prefix ("quit"),
-                                     IRC_COLOR_CHAT_NICK,
+                                     IRC_COLOR_MESSAGE_QUIT,
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick);
             }
         }
@@ -537,9 +537,8 @@ irc_protocol_cmd_kill (struct t_irc_server *server, const char *command,
         {
             /* someone was killed on channel (but not me) => remove only this
                nick */
-            ptr_nick = irc_nick_search (ptr_channel, argv[2]);
-            if (ptr_nick)
-                irc_nick_free (ptr_channel, ptr_nick);
+            if (ptr_nick_killed)
+                irc_nick_free (ptr_channel, ptr_nick_killed);
         }
     }
     
@@ -556,6 +555,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
 {
     char *pos_modes;
     struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* MODE message looks like:
        :nick!user@host MODE #test +o nick
@@ -575,6 +575,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
             irc_mode_channel_set (server, ptr_channel, pos_modes);
             irc_server_sendf (server, "MODE %s", ptr_channel->name);
         }
+        ptr_nick = irc_nick_search (ptr_channel, nick);
         if (!irc_ignore_check (server, ptr_channel, nick, host))
         {
             weechat_printf_tags ((ptr_channel) ?
@@ -589,7 +590,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
                                  pos_modes,
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick);
         }
     }
@@ -625,7 +626,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    char *new_nick;
+    char *new_nick, *old_color;
     int local_nick;
     
     /* NICK message looks like:
@@ -668,6 +669,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                     weechat_buffer_set (NULL, "hotlist", "-");
                     
                     /* change nick and display message on all channels */
+                    old_color = strdup (ptr_nick->color);
                     irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
                     if (local_nick)
                     {
@@ -676,7 +678,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                                              _("%sYou are now known as "
                                                "%s%s"),
                                              weechat_prefix ("network"),
-                                             IRC_COLOR_CHAT_NICK,
+                                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                              new_nick);
                     }
                     else
@@ -688,10 +690,11 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                                                  _("%s%s%s%s is now known as "
                                                    "%s%s"),
                                                  weechat_prefix ("network"),
-                                                 IRC_COLOR_CHAT_NICK,
+                                                 weechat_config_boolean(irc_config_look_color_nicks_in_server_messages) ?
+                                                 old_color : IRC_COLOR_CHAT_NICK,
                                                  nick,
                                                  IRC_COLOR_CHAT,
-                                                 IRC_COLOR_CHAT_NICK,
+                                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                                  new_nick);
                         }
                         irc_channel_nick_speaking_rename (ptr_channel,
@@ -699,6 +702,9 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                         irc_channel_nick_speaking_time_rename (ptr_channel,
                                                                nick, new_nick);
                     }
+                    
+                    if (old_color)
+                        free (old_color);
                     
                     /* enable hotlist */
                     weechat_buffer_set (NULL, "hotlist", "+");
@@ -725,6 +731,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
     struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     int notify_private;
     
     /* NOTICE message looks like:
@@ -821,13 +828,14 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
         {
             /* notice for channel */
             ptr_channel = irc_channel_search (server, pos_target);
+            ptr_nick = irc_nick_search (ptr_channel, nick);
             weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                  irc_protocol_tags (command, NULL),
                                  "%sNotice%s(%s%s%s)%s: %s",
                                  (ptr_channel) ?
                                  weechat_prefix ("network") : irc_buffer_get_server_prefix (server, "network"),
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  (nick && nick[0]) ? nick : "?",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_CHAT,
@@ -976,13 +984,13 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                                          _("%s%s%s %s(%s%s%s)%s has left %s%s "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_CHAT_NICK,
+                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
                                          address,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_CHANNEL,
                                          ptr_channel->name,
                                          IRC_COLOR_CHAT_DELIMITERS,
@@ -1001,13 +1009,13 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                                          _("%s%s%s %s(%s%s%s)%s has left "
                                            "%s%s"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_CHAT_NICK,
+                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
                                          address,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_CHANNEL,
                                          ptr_channel->name);
                 }
@@ -2125,9 +2133,6 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
         
         if (ptr_nick || (strcmp (ptr_channel->name, nick) == 0))
         {
-            if (ptr_nick)
-                irc_nick_free (ptr_channel, ptr_nick);
-            
             /* display quit message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
@@ -2145,13 +2150,13 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                          _("%s%s%s %s(%s%s%s)%s has quit "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_CHAT_NICK,
+                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
                                          address,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT,
                                          pos_comment,
@@ -2167,15 +2172,17 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has quit"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_CHAT_NICK,
+                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
                                          address,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT);
+                                         IRC_COLOR_MESSAGE_QUIT);
                 }
             }
+            if (ptr_nick)
+                irc_nick_free (ptr_channel, ptr_nick);
         }
     }
     
@@ -2261,6 +2268,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
 {
     char *pos_topic, *topic_color;
     struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
     
     /* TOPIC message looks like:
@@ -2283,8 +2291,9 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
     
     ptr_channel = irc_channel_search (server, argv[2]);
+    ptr_nick = irc_nick_search (ptr_channel, nick);
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-
+    
     if (!irc_ignore_check (server, ptr_channel, nick, host))
     {
         if (pos_topic && pos_topic[0])
@@ -2297,7 +2306,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
                                    "\"%s%s\""),
                                  (ptr_buffer == server->buffer) ?
                                  irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick,
                                  IRC_COLOR_CHAT,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -2315,7 +2324,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
                                  _("%s%s%s%s has unset topic for %s%s"),
                                  (ptr_buffer == server->buffer) ?
                                  irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
-                                 IRC_COLOR_CHAT_NICK,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick,
                                  IRC_COLOR_CHAT,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -3277,6 +3286,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     time_t datetime;
     
     /* 333 message looks like:
@@ -3286,6 +3296,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
     IRC_PROTOCOL_MIN_ARGS(6);
     
     ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_nick = irc_nick_search (ptr_channel, argv[4]);
     datetime = (time_t)(atol ((argv_eol[5][0] == ':') ?
                               argv_eol[5] + 1 : argv_eol[5]));
     if (ptr_channel && ptr_channel->nicks)
@@ -3294,7 +3305,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                              irc_protocol_tags (command, "irc_numeric"),
                              _("%sTopic set by %s%s%s on %s"),
                              weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_NICK,
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                              argv[4],
                              IRC_COLOR_CHAT,
                              ctime (&datetime));
@@ -3308,7 +3319,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT,
-                             IRC_COLOR_CHAT_NICK,
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                              argv[4],
                              IRC_COLOR_CHAT,
                              ctime (&datetime));

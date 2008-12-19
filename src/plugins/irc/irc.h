@@ -63,7 +63,12 @@
 #define IRC_COLOR_BAR_DELIM weechat_color("bar_delim")
 #define IRC_COLOR_STATUS_NUMBER weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_number")))
 #define IRC_COLOR_STATUS_NAME weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_name")))
+#define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
+#define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
 #define IRC_COLOR_INPUT_NICK weechat_color(weechat_config_string(irc_config_color_input_nick))
+#define IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick)                          \
+    ((nick && weechat_config_boolean(irc_config_look_color_nicks_in_server_messages)) ? \
+     nick->color : IRC_COLOR_CHAT_NICK)
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_hook_timer_check_away;

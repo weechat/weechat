@@ -434,7 +434,7 @@ irc_nick_search (struct t_irc_channel *channel, const char *nickname)
 {
     struct t_irc_nick *ptr_nick;
     
-    if (!nickname)
+    if (!channel || !nickname)
         return NULL;
     
     for (ptr_nick = channel->nicks; ptr_nick;

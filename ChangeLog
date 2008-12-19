@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-12-10
+ChangeLog - 2008-12-19
 
 
 Version 0.2.7 (under dev!):
+   * add some colors in IRC messages from server (for text and nicks)
+     (task #8926)
    * new relay plugin (network communication between WeeChat and remote
      application)
    * add support for more than one proxy, with proxy selection for each IRC

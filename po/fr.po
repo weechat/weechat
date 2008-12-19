@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 13:12+0100\n"
-"PO-Revision-Date: 2008-12-19 13:15+0100\n"
+"POT-Creation-Date: 2008-12-19 15:01+0100\n"
+"PO-Revision-Date: 2008-12-19 15:02+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3602,6 +3602,12 @@ msgstr "délai pour filtrer les messages join/part/quit (en minutes)"
 msgid "display notices as private messages"
 msgstr "afficher les notices comme des messages privés"
 
+msgid "color for text in join messages"
+msgstr "couleur pour le texte dans les messages join"
+
+msgid "color for text in part/quit messages"
+msgstr "couleur pour le texte dans les messages part/quit"
+
 msgid "color for nick in input bar"
 msgstr "couleur du pseudo dans la barre de saisie"
 
@@ -3730,20 +3736,20 @@ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s%s: canal \"%s\" non trouvé pour la commande \"%s\""
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
-msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s %s(%s%s%s)"
+msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
+msgstr "%s%s%s%s a expulsé %s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s"
-msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s"
+msgid "%s%s%s%s has kicked %s%s"
+msgstr "%s%s%s%s a expulsé %s%s"
 
 #, c-format
-msgid "%sYou were killed by %s%s %s(%s%s%s)"
-msgstr "%sVous avez été tué par %s%s %s(%s%s%s)"
+msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
+msgstr "%s%sVous avez été tué par %s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%sYou were killed by %s%s"
-msgstr "%sVous avez été tué par %s%s"
+msgid "%s%sYou were killed by %s%s"
+msgstr "%s%sVous avez été tué par %s%s"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"

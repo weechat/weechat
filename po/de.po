@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 13:12+0100\n"
+"POT-Creation-Date: 2008-12-19 15:01+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3479,6 +3479,14 @@ msgid "display notices as private messages"
 msgstr "NOTICEs als Queries anzeigen"
 
 #, fuzzy
+msgid "color for text in join messages"
+msgstr "Farbe eines Fensters mit neuen Messages"
+
+#, fuzzy
+msgid "color for text in part/quit messages"
+msgstr "Standardnachricht beim Beenden"
+
+#, fuzzy
 msgid "color for nick in input bar"
 msgstr "Farbe von Nicknames"
 
@@ -3615,19 +3623,19 @@ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s Channel \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
+msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
 msgstr "%s%s%s hat %s%s%s aus %s%s gekickt"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s"
+msgid "%s%s%s%s has kicked %s%s"
 msgstr "%s%s%s hat %s%s%s aus %s%s gekickt"
 
 #, fuzzy, c-format
-msgid "%sYou were killed by %s%s %s(%s%s%s)"
+msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
 msgstr "%s%s%s hat %s%s%s vom Server getrennt"
 
 #, fuzzy, c-format
-msgid "%sYou were killed by %s%s"
+msgid "%s%sYou were killed by %s%s"
 msgstr "Sie sind nun als %s%s bekannt\n"
 
 #, fuzzy, c-format

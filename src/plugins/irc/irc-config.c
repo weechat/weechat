@@ -52,6 +52,7 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
+struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_one_server_buffer;
 struct t_config_option *irc_config_look_open_near_server;
 struct t_config_option *irc_config_look_nick_prefix;
@@ -68,6 +69,8 @@ struct t_config_option *irc_config_look_notice_as_pv;
 
 /* IRC config, color section */
 
+struct t_config_option *irc_config_color_message_join;
+struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_input_nick;
 
 /* IRC config, network section */
@@ -1106,7 +1109,13 @@ irc_config_init ()
         weechat_config_free (irc_config_file);
         return 0;
     }
-
+    
+    irc_config_look_color_nicks_in_server_messages = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "color_nicks_in_server_messages", "boolean",
+        N_("use nick color in messages from server"),
+        NULL, 0, 0, "on", NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_one_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
         "one_server_buffer", "boolean",
@@ -1192,6 +1201,18 @@ irc_config_init ()
         return 0;
     }
     
+    irc_config_color_message_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_join", "color",
+        N_("color for text in join messages"),
+        NULL, -1, 0, "green", NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_color_message_quit = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_quit", "color",
+        N_("color for text in part/quit messages"),
+        NULL, -1, 0, "red", NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_color_input_nick = weechat_config_new_option (
         irc_config_file, ptr_section,
         "input_nick", "color",
