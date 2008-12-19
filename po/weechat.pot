@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 15:01+0100\n"
+"POT-Creation-Date: 2008-12-19 18:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1875,6 +1875,9 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr ""
 
+msgid "check words during text search in buffer"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
@@ -2948,6 +2951,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
+msgstr ""
+
+msgid "use nick color in messages from server"
 msgstr ""
 
 msgid "use same buffer for all servers"

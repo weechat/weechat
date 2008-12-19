@@ -26,6 +26,16 @@
   </listitem>
 </itemizedlist>
 
+<command>aspell.check.during_search</command>: vérifier les mots pendant la recherche de texte dans le tampon
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>aspell.check.word_min_length</command>: longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)
 <itemizedlist>
   <listitem>

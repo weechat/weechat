@@ -26,6 +26,16 @@
   </listitem>
 </itemizedlist>
 
+<command>aspell.check.during_search</command>: check words during text search in buffer
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>aspell.check.word_min_length</command>: minimum length for a word to be spell checked (use 0 to check all words)
 <itemizedlist>
   <listitem>

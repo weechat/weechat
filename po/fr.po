@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 15:01+0100\n"
-"PO-Revision-Date: 2008-12-19 15:02+0100\n"
+"POT-Creation-Date: 2008-12-19 18:36+0100\n"
+"PO-Revision-Date: 2008-12-19 18:37+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2264,6 +2264,9 @@ msgstr ""
 "longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 "
 "pour vérifier tous les mots)"
 
+msgid "check words during text search in buffer"
+msgstr "vérifier les mots pendant la recherche de texte dans le tampon"
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
@@ -3550,6 +3553,9 @@ msgstr "rejoindre automatiquement les canaux quand mis dehors"
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s%s: erreur de création de l'option serveur \"%s\""
+
+msgid "use nick color in messages from server"
+msgstr "utiliser la couleur du pseudo dans les messages du serveur"
 
 msgid "use same buffer for all servers"
 msgstr "utiliser le même tampon pour tous les serveurs"

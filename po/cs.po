@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 15:01+0100\n"
+"POT-Creation-Date: 2008-12-19 18:36+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2175,6 +2175,9 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr ""
 
+msgid "check words during text search in buffer"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
@@ -3449,6 +3452,10 @@ msgstr "automaticky znovu přijít na kanál po vykopnutí"
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy
+msgid "use nick color in messages from server"
+msgstr "získat lokální čas ze serveru"
 
 msgid "use same buffer for all servers"
 msgstr "pužít stejný buffer pro všechny servery"

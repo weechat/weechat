@@ -16,6 +16,36 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.color.message_join</command>: color for text in join messages
+<itemizedlist>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name (default value: green)</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.color.message_quit</command>: color for text in part/quit messages
+<itemizedlist>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name (default value: red)</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.color_nicks_in_server_messages</command>: use nick color in messages from server
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.display_away</command>: bei Abwesenheit und Rückkehr eine Nachricht anzeigen
 <itemizedlist>
   <listitem>
