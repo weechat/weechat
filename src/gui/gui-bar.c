@@ -289,28 +289,42 @@ gui_bar_get_filling (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_get_item_index: return index of item in bar (position of item in
- *                         items list)
- *                         return -1 if item is not in bar
+ * gui_bar_get_item_index: return index of item and sub item in bar (position
+ *                         of item in items list)
+ *                         for example, if items are:
+ *                            item1,sub1+sub2+sub3,item3
+ *                         index of sub3 is 1, sub index is 2
+ *                         return -1 for index and sub index if item is not
+ *                         found in bar
  */
 
-int
-gui_bar_get_item_index (struct t_gui_bar *bar, const char *item_name)
+void
+gui_bar_get_item_index (struct t_gui_bar *bar, const char *item_name,
+                        int *index_item, int *index_subitem)
 {
-    int i;
+    int i, j;
+    
+    *index_item = -1;
+    *index_subitem = -1;
     
     if (!bar || !item_name || !item_name[0])
-        return -1;
+        return;
     
     for (i = 0; i < bar->items_count; i++)
     {
-        /* skip non letters chars at beginning (prefix) */
-        if (gui_bar_item_string_is_item (bar->items_array[i], item_name))
-            return i;
+        for (j = 0; j < bar->items_subcount[i]; j++)
+        {
+            /* skip non letters chars at beginning (prefix) */
+            if (gui_bar_item_string_is_item (bar->items_array[i][j], item_name))
+            {
+                *index_item = i;
+                *index_subitem = j;
+                return;
+            }
+        }
     }
     
     /* item is not in bar */
-    return -1;
 }
 
 /*
@@ -590,6 +604,62 @@ gui_bar_draw (struct t_gui_bar *bar)
     }
     
     bar->bar_refresh_needed = 0;
+}
+
+/*
+ * gui_bar_free_items_array: free array with items for a bar
+ */
+
+void
+gui_bar_free_items_array (struct t_gui_bar *bar)
+{
+    int i;
+    
+    for (i = 0; i < bar->items_count; i++)
+    {
+        if (bar->items_array[i])
+            string_free_exploded (bar->items_array[i]);
+    }
+    if (bar->items_array)
+    {
+        free (bar->items_array);
+        bar->items_array = NULL;
+    }
+    if (bar->items_subcount)
+    {
+        free (bar->items_subcount);
+        bar->items_subcount = NULL;
+    }
+    bar->items_count = 0;
+}
+
+/*
+ * gui_bar_set_items_array: build array with items for a bar
+ */
+
+void
+gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
+{
+    int i, count;
+    char **tmp_array;
+    
+    gui_bar_free_items_array (bar);
+    
+    if (items && items[0])
+    {
+        tmp_array = string_explode (items, ",", 0, 0, &count);
+        if (count > 0)
+        {
+            bar->items_count = count;
+            bar->items_subcount = malloc (count * sizeof (*bar->items_subcount));
+            bar->items_array = malloc (count * sizeof (*bar->items_array));
+            for (i = 0; i < count; i++)
+            {
+                bar->items_array[i] = string_explode (tmp_array[i], "+", 0, 0,
+                                                      &(bar->items_subcount[i]));
+            }
+        }
+    }
 }
 
 /*
@@ -928,21 +998,8 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        if (ptr_bar->items_array)
-            string_free_exploded (ptr_bar->items_array);
+        gui_bar_set_items_array (ptr_bar, CONFIG_STRING(ptr_bar->items));
         
-        if (CONFIG_STRING(ptr_bar->items) && CONFIG_STRING(ptr_bar->items)[0])
-        {
-            ptr_bar->items_array = string_explode (CONFIG_STRING(ptr_bar->items),
-                                                   ",", 0, 0,
-                                                   &ptr_bar->items_count);
-        }
-        else
-        {
-            ptr_bar->items_count = 0;
-            ptr_bar->items_array = NULL;
-        }
-
         if (!CONFIG_BOOLEAN(ptr_bar->hidden))
         {
             gui_bar_content_build_bar_windows (ptr_bar);
@@ -1533,17 +1590,10 @@ gui_bar_new_with_options (const char *name,
         new_bar->color_bg = color_bg;
         new_bar->separator = separator;
         new_bar->items = items;
-        if (CONFIG_STRING(items) && CONFIG_STRING(items)[0])
-        {
-            new_bar->items_array = string_explode (CONFIG_STRING(items),
-                                                   ",", 0, 0,
-                                                   &new_bar->items_count);
-        }
-        else
-        {
-            new_bar->items_count = 0;
-            new_bar->items_array = NULL;
-        }
+        new_bar->items_count = 0;
+        new_bar->items_subcount = NULL;
+        new_bar->items_array = NULL;
+        gui_bar_set_items_array (new_bar, CONFIG_STRING(items));
         new_bar->bar_window = NULL;
         new_bar->bar_refresh_needed = 1;
         
@@ -2010,20 +2060,25 @@ gui_bar_create_default_status ()
         length = strlen (gui_bar_item_names[GUI_BAR_ITEM_TIME])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER])
+            + 1 /* ":" */
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT])
+            + 3 /* "lag" */
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_HOTLIST])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_COMPLETION])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_SCROLL])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT])
-            + (9 * 4) + 1;
+            + (12 * 4) /* all items delimiters: ",:+[]()" */
+            + 1;
         buf = malloc (length);
         if (buf)
         {
-            snprintf (buf, length, "[%s],[%s],[%s],%s,(%s),[lag],[%s],[%s],%s,%s",
+            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+(%s),[lag],[%s],[%s],%s,%s",
                       gui_bar_item_names[GUI_BAR_ITEM_TIME],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
@@ -2291,8 +2346,7 @@ gui_bar_free (struct t_gui_bar *bar)
         config_file_option_free (bar->items);
     if (bar->conditions_array)
         string_free_exploded (bar->conditions_array);
-    if (bar->items_array)
-        string_free_exploded (bar->items_array);
+    gui_bar_free_items_array (bar);
     
     free (bar);
 }
@@ -2345,7 +2399,7 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
                          struct t_gui_bar *bar)
 {
     struct t_infolist_item *ptr_item;
-    int i;
+    int i, j;
     char option_name[64];
     
     if (!infolist || !bar)
@@ -2397,11 +2451,14 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
         return 0;
     for (i = 0; i < bar->items_count; i++)
     {
-        snprintf (option_name, sizeof (option_name),
-                  "items_array_%05d", i + 1);
-        if (!infolist_new_var_string (ptr_item, option_name,
-                                      bar->items_array[i]))
-            return 0;
+        for (j = 0; j < bar->items_subcount[i]; j++)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "items_array_%05d_%05d", i + 1, j + 1);
+            if (!infolist_new_var_string (ptr_item, option_name,
+                                          bar->items_array[i][j]))
+                return 0;
+        }
     }
     if (!infolist_new_var_pointer (ptr_item, "bar_window", bar->bar_window))
         return 0;
@@ -2417,6 +2474,7 @@ void
 gui_bar_print_log ()
 {
     struct t_gui_bar *ptr_bar;
+    int i, j;
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
@@ -2454,7 +2512,16 @@ gui_bar_print_log ()
         log_printf ("  separator. . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->separator));
         log_printf ("  items. . . . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->items));
         log_printf ("  items_count. . . . . . : %d",    ptr_bar->items_count);
-        log_printf ("  items_array. . . . . . : 0x%lx", ptr_bar->items_array);
+        for (i = 0; i < ptr_bar->items_count; i++)
+        {
+            log_printf ("    items_subcount[%03d]. : %d",
+                        i, ptr_bar->items_subcount[i]);
+            for (j = 0; j < ptr_bar->items_subcount[i]; j++)
+            {
+                log_printf ("    items_array[%03d][%03d]: '%s'",
+                            i, j, ptr_bar->items_array[i][j]);
+            }
+        }
         log_printf ("  bar_window . . . . . . : 0x%lx", ptr_bar->bar_window);
         log_printf ("  prev_bar . . . . . . . : 0x%lx", ptr_bar->prev_bar);
         log_printf ("  next_bar . . . . . . . : 0x%lx", ptr_bar->next_bar);

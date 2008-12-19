@@ -77,7 +77,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
 {
     char buf[512], buf_name[256], modes[128], away[128];
     const char *name;
-    int number, part_from_channel;
+    int part_from_channel;
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
@@ -97,8 +97,6 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        number = weechat_buffer_get_integer (buffer, "number");
-        
         irc_buffer_get_server_channel (buffer, &server, &channel);
         if (server || channel)
         {
@@ -170,10 +168,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 snprintf (buf_name, sizeof (buf_name), "%s", name);
         }
         
-        snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s%s",
-                  IRC_COLOR_STATUS_NUMBER,
-                  number,
-                  IRC_COLOR_BAR_DELIM,
+        snprintf (buf, sizeof (buf), "%s%s%s%s",
                   IRC_COLOR_STATUS_NAME,
                   buf_name,
                   modes,

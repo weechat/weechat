@@ -618,6 +618,6 @@ void
 gui_bar_window_objects_print_log (struct t_gui_bar_window *bar_window)
 {
     log_printf ("    bar window specific objects for Curses:");
-    log_printf ("      win_bar . . . . . . : 0x%lx", GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
-    log_printf ("      win_separator . . . : 0x%lx", GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator);
+    log_printf ("      win_bar. . . . . . . : 0x%lx", GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+    log_printf ("      win_separator. . . . : 0x%lx", GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator);
 }

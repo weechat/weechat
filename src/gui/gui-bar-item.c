@@ -53,9 +53,9 @@ struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
-  "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
-  "buffer_nicklist_count", "scroll", "hotlist", "completion", "buffer_title",
-  "buffer_nicklist"
+  "buffer_count", "buffer_plugin", "buffer_number", "buffer_name",
+  "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist", "completion",
+  "buffer_title", "buffer_nicklist"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -226,7 +226,7 @@ int
 gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
 {
     struct t_gui_bar *ptr_bar;
-    int i, length;
+    int i, j, length;
     const char *ptr_start;
     
     length = strlen (item_name);
@@ -235,15 +235,18 @@ gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
     {
         for (i = 0; i < ptr_bar->items_count; i++)
         {
-            ptr_start = gui_bar_item_string_get_item_start (ptr_bar->items_array[i]);
-            if (ptr_start)
+            for (j = 0; j < ptr_bar->items_subcount[i]; j++)
             {
-                if ((partial_name
-                     && strncmp (ptr_start, item_name, length) == 0)
-                    || (!partial_name
-                        && strcmp (ptr_start, item_name) == 0))
+                ptr_start = gui_bar_item_string_get_item_start (ptr_bar->items_array[i][j]);
+                if (ptr_start)
                 {
-                    return 1;
+                    if ((partial_name
+                         && strncmp (ptr_start, item_name, length) == 0)
+                        || (!partial_name
+                            && strcmp (ptr_start, item_name) == 0))
+                    {
+                        return 1;
+                    }
                 }
             }
         }
@@ -439,20 +442,21 @@ gui_bar_item_update (const char *item_name)
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_window;
     struct t_gui_bar_window *ptr_bar_window;
-    int item_index;
+    int index_item, index_subitem;
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->hidden))
         {
-            item_index = gui_bar_get_item_index (ptr_bar, item_name);
-            if (item_index >= 0)
+            gui_bar_get_item_index (ptr_bar, item_name, &index_item, &index_subitem);
+            if ((index_item >= 0) && (index_subitem >= 0))
             {
                 if (ptr_bar->bar_window)
                 {
                     gui_bar_window_content_build_item (ptr_bar->bar_window,
                                                        NULL,
-                                                       item_index);
+                                                       index_item,
+                                                       index_subitem);
                 }
                 else
                 {
@@ -467,7 +471,8 @@ gui_bar_item_update (const char *item_name)
                             {
                                 gui_bar_window_content_build_item (ptr_bar_window,
                                                                    ptr_window,
-                                                                   item_index);
+                                                                   index_item,
+                                                                   index_subitem);
                             }
                         }
                     }
@@ -776,6 +781,30 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_buffer_number: default item for number of buffer
+ */
+
+char *
+gui_bar_item_default_buffer_number (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window)
+{
+    char buf[64];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    snprintf (buf, sizeof (buf), "%s%d",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_number))),
+              window->buffer->number);
+    
+    return strdup (buf);
+}
+
+/*
  * gui_bar_item_default_buffer_name: default item for name of buffer
  */
 
@@ -792,10 +821,7 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    snprintf (buf, sizeof (buf), "%s%d%s:%s%s",
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_number))),
-              window->buffer->number,
-              GUI_COLOR_CUSTOM_BAR_DELIM,
+    snprintf (buf, sizeof (buf), "%s%s",
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
               window->buffer->name);
     
@@ -1294,6 +1320,15 @@ gui_bar_item_init ()
                       &gui_bar_item_default_buffer_plugin, NULL);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
+    
+    /* buffer number */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
+                      &gui_bar_item_default_buffer_number, NULL);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     
     /* buffer name */
     gui_bar_item_new (NULL,
