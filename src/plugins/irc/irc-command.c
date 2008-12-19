@@ -2779,7 +2779,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
     int i, detailed_list, one_server_found, length;
     int default_autoconnect, default_ipv6, default_ssl;
     struct t_irc_server server_tmp, *ptr_server2, *server_found, *new_server;
-    char *server_name, *mask, value[16];
+    char *server_name, *mask, value[16], charset_modifier[256];
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     
@@ -3179,6 +3179,11 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
             irc_server_set_buffer_title (irc_current_server);
+            snprintf (charset_modifier, sizeof (charset_modifier),
+                      "irc.%s", irc_current_server->name);
+            weechat_buffer_set (irc_current_server->buffer,
+                                "localvar_set_charset_modifier",
+                                charset_modifier);
             weechat_bar_item_update ("buffer_name");
             weechat_bar_item_update ("input_prompt");
         }

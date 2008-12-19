@@ -1346,10 +1346,9 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
         else
         {
             snprintf (modifier_data, sizeof (modifier_data),
-                      "%s.%s.%s",
+                      "%s.%s",
                       weechat_plugin->name,
-                      server->name,
-                      ptr_chan_nick);
+                      server->name);
         }
         msg_encoded = weechat_hook_modifier_exec ("charset_encode",
                                                   modifier_data,
@@ -1671,24 +1670,14 @@ irc_server_msgq_flush ()
                         
                         /* convert charset for message */
                         ptr_chan_nick = (channel) ? channel : nick;
-                        if (ptr_chan_nick)
+                        if (ptr_chan_nick
+                            && (!nick || !host || (strcmp (nick, host) != 0)))
                         {
-                            /* message with no target (nick or channel) ? */
-                            if (nick && host && (strcmp (nick, host) == 0))
-                            {
-                                snprintf (modifier_data, sizeof (modifier_data),
-                                          "%s.server.%s",
-                                          weechat_plugin->name,
-                                          irc_recv_msgq->server->name);
-                            }
-                            else
-                            {
-                                snprintf (modifier_data, sizeof (modifier_data),
-                                          "%s.%s.%s",
-                                          weechat_plugin->name,
-                                          irc_recv_msgq->server->name,
-                                          ptr_chan_nick);
-                            }
+                            snprintf (modifier_data, sizeof (modifier_data),
+                                      "%s.%s.%s",
+                                      weechat_plugin->name,
+                                      irc_recv_msgq->server->name,
+                                      ptr_chan_nick);
                         }
                         else
                         {
@@ -2168,7 +2157,7 @@ irc_server_set_buffer_title (struct t_irc_server *server)
 struct t_gui_buffer *
 irc_server_create_buffer (struct t_irc_server *server, int all_servers)
 {
-    char buffer_name[256];
+    char buffer_name[256], charset_modifier[256];
     
     if (all_servers)
     {
@@ -2195,6 +2184,10 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
     weechat_buffer_set (server->buffer, "localvar_set_channel",
                         (weechat_config_boolean (irc_config_look_one_server_buffer)) ?
                         IRC_BUFFER_ALL_SERVERS_NAME : server->name);
+    snprintf (charset_modifier, sizeof (charset_modifier),
+              "irc.%s", server->name);
+    weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
+                        charset_modifier);
     
     weechat_hook_signal_send ("logger_backlog",
                               WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
@@ -2224,7 +2217,7 @@ int
 irc_server_connect (struct t_irc_server *server, int disable_autojoin)
 {
     int set, length;
-    char *option_name;
+    char *option_name, charset_modifier[256];
     struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *str_proxy_type, *str_proxy_address;
     
@@ -2255,6 +2248,12 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
             irc_current_server = server;
             if (!irc_buffer_servers)
                 irc_buffer_servers = server->buffer;
+            
+            snprintf (charset_modifier, sizeof (charset_modifier),
+                      "irc.%s", irc_current_server->name);
+            weechat_buffer_set (irc_buffer_servers,
+                                "localvar_set_charset_modifier",
+                                charset_modifier);
         }
         
         weechat_buffer_set (server->buffer, "display", "1");

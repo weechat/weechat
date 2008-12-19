@@ -156,6 +156,7 @@ irc_buffer_merge_servers ()
     struct t_irc_server *ptr_server;
     struct t_gui_buffer *ptr_buffer;
     int number, number_selected;
+    char charset_modifier[256];
     
     irc_buffer_servers = NULL;
     irc_current_server = NULL;
@@ -189,6 +190,11 @@ irc_buffer_merge_servers ()
                             "localvar_set_server", IRC_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (irc_buffer_servers,
                             "localvar_set_channel", IRC_BUFFER_ALL_SERVERS_NAME);
+        snprintf (charset_modifier, sizeof (charset_modifier),
+                  "irc.%s", irc_current_server->name);
+        weechat_buffer_set (irc_buffer_servers,
+                            "localvar_set_charset_modifier",
+                            charset_modifier);
         weechat_hook_signal_send ("logger_stop",
                                   WEECHAT_HOOK_SIGNAL_POINTER,
                                   irc_buffer_servers);
@@ -220,7 +226,7 @@ void
 irc_buffer_split_server ()
 {
     struct t_irc_server *ptr_server;
-    char buffer_name[256];
+    char buffer_name[256], charset_modifier[256];
     
     if (irc_buffer_servers)
     {
@@ -247,6 +253,11 @@ irc_buffer_split_server ()
                             "localvar_set_server", irc_current_server->name);
         weechat_buffer_set (irc_current_server->buffer,
                             "localvar_set_channel", irc_current_server->name);
+        snprintf (charset_modifier, sizeof (charset_modifier),
+                  "irc.%s", irc_current_server->name);
+        weechat_buffer_set (irc_current_server->buffer,
+                            "localvar_set_charset_modifier",
+                            charset_modifier);
         weechat_hook_signal_send ("logger_stop",
                                   WEECHAT_HOOK_SIGNAL_POINTER,
                                   irc_current_server->buffer);
