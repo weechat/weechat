@@ -82,11 +82,6 @@ struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_item_time_format;
-struct t_config_option *config_look_nicklist;
-struct t_config_option *config_look_nicklist_max_size;
-struct t_config_option *config_look_nicklist_min_size;
-struct t_config_option *config_look_nicklist_position;
-struct t_config_option *config_look_nicklist_separator;
 struct t_config_option *config_look_nickmode;
 struct t_config_option *config_look_nickmode_empty;
 struct t_config_option *config_look_paste_max_lines;
@@ -1132,35 +1127,6 @@ config_weechat_init ()
         "item_time_format", "string",
         N_("time format for \"time\" bar item"),
         NULL, 0, 0, "%H:%M", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_look_nicklist = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist", "boolean",
-        N_("display nicklist (on buffers with nicklist enabled)"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_nicklist_max_size = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_max_size", "integer",
-        N_("max size for nicklist (width or height, depending on "
-           "nicklist_position (0 = no max size; if min = max "
-           "and > 0, then size is fixed))"),
-        NULL, 0, 100, "0", NULL, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_nicklist_min_size = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_min_size", "integer",
-        N_("min size for nicklist (width or height, depending on "
-           "nicklist_position (0 = no min size))"),
-        NULL, 0, 100, "0", NULL, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_nicklist_position = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_position", "integer",
-        N_("nicklist position (top, left, right (default), "
-           "bottom)"),
-        "left|right|top|bottom", 0, 0, "right", NULL, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_nicklist_separator = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_separator", "boolean",
-        N_("separator between chat and nicklist"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_nickmode = config_file_new_option (
         weechat_config_file, ptr_section,
         "nickmode", "boolean",

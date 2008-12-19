@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 10:04+0100\n"
+"POT-Creation-Date: 2008-12-19 13:12+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -718,6 +718,7 @@ msgid ""
 "        value: new value for option\n"
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
+"       toggle: hide/show a bar\n"
 "       scroll: scroll bar up/down\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
@@ -1297,34 +1298,6 @@ msgstr ""
 
 msgid "time format for \"time\" bar item"
 msgstr "formát času pro \"time\" položu pole"
-
-msgid "display nicklist (on buffers with nicklist enabled)"
-msgstr ""
-"zobrazit okno se seznamem přezdívek (pro buffery s povoleným seznamem "
-"přezdívek)"
-
-#, fuzzy
-msgid ""
-"max size for nicklist (width or height, depending on nicklist_position (0 = "
-"no max size; if min = max and > 0, then size is fixed))"
-msgstr ""
-"maximální velikost pro seznam přezdívek (šířka nebo výška, závisí na "
-"look_nicklist_position (0 = není maximální velikost; jestliže min = max a > "
-"0 pak je velikost fixní ))"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"minimální velikost pro seznam přezdívek (šířka nebo výšhak, závisí na "
-"look_nicklist_position (0 = není minimální velikost))"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
-
-msgid "separator between chat and nicklist"
-msgstr "oddělovač mezi rozhovorem a seznamem přezdívek"
 
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "zobrazit mód přezdívky ((částečný)op/voice) před každou přezdívkou"
@@ -5147,6 +5120,34 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "display nicklist (on buffers with nicklist enabled)"
+#~ msgstr ""
+#~ "zobrazit okno se seznamem přezdívek (pro buffery s povoleným seznamem "
+#~ "přezdívek)"
+
+#, fuzzy
+#~ msgid ""
+#~ "max size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no max size; if min = max and > 0, then size is fixed))"
+#~ msgstr ""
+#~ "maximální velikost pro seznam přezdívek (šířka nebo výška, závisí na "
+#~ "look_nicklist_position (0 = není maximální velikost; jestliže min = max a "
+#~ "> 0 pak je velikost fixní ))"
+
+#, fuzzy
+#~ msgid ""
+#~ "min size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no min size))"
+#~ msgstr ""
+#~ "minimální velikost pro seznam přezdívek (šířka nebo výšhak, závisí na "
+#~ "look_nicklist_position (0 = není minimální velikost))"
+
+#~ msgid "nicklist position (top, left, right (default), bottom)"
+#~ msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
+
+#~ msgid "separator between chat and nicklist"
+#~ msgstr "oddělovač mezi rozhovorem a seznamem přezdívek"
 
 #, fuzzy
 #~ msgid "%sBinary file not found: \"%s\""

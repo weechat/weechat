@@ -23,7 +23,7 @@ gestion des barres
   remplissage: horizontal, vertical, columns_horizontal ou columns_vertical
        taille: taille de la barre (en caractères)
    séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
-   objet1,...: objets pour cette barre
+   objet1,...: objets pour cette barre (les objets peuvent être séparés par une virgule (espace entre les objets) ou "+" (objets collés))
       default: créer les barres par défaut
           del: supprime une barre (ou toutes les barres avec -all)
           set: change la valeur d'une propriété de la barre
@@ -31,6 +31,7 @@ gestion des barres
        valeur: nouvelle valeur pour l'option
          hide: cache la barre
          show: montre une barre cachée
+       toggle: cache/montre une barre
        scroll: défilement de la barre vers le haut/bas
        tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
 valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
@@ -39,8 +40,8 @@ valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (
     listitems: liste tous les objets de barre
 
 Exemples :
-  créer une barre avec l'heure et la complétion :
-    /bar add mabarre root bottom 1 0 [time],completion
+  créer une barre avec l'heure, numéro + nom de tampon, et la complétion :
+    /bar add mabarre root bottom 1 0 [time],buffer_number+:+buffer_name,completion
   cacher une barre :
     /bar hide mabarre
   faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon courant:

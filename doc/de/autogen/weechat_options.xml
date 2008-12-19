@@ -212,7 +212,7 @@
     <para>type: color</para>
   </listitem>
   <listitem>
-    <para>values: a color name (default value: default)</para>
+    <para>values: a color name (default value: cyan)</para>
   </listitem>
 </itemizedlist>
 
@@ -803,56 +803,6 @@
   </listitem>
   <listitem>
     <para>values: any string (default value: '%H:%M')</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist</command>: display nicklist (on buffers with nicklist enabled)
-<itemizedlist>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off (default value: on)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_max_size</command>: max size for nicklist (width or height, depending on nicklist_position (0 = no max size; if min = max and &gt; 0, then size is fixed))
-<itemizedlist>
-  <listitem>
-    <para>type: integer</para>
-  </listitem>
-  <listitem>
-    <para>values: 0 .. 100 (default value: 0)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_min_size</command>: min size for nicklist (width or height, depending on nicklist_position (0 = no min size))
-<itemizedlist>
-  <listitem>
-    <para>type: integer</para>
-  </listitem>
-  <listitem>
-    <para>values: 0 .. 100 (default value: 0)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_position</command>: Nicklisten-Position (top, left, right (Standard), bottom)
-<itemizedlist>
-  <listitem>
-    <para>type: integer</para>
-  </listitem>
-  <listitem>
-    <para>values: left, right, top, bottom (default value: right)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_separator</command>: Trennzeichen zwischen Chatfenster und Nickliste
-<itemizedlist>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off (default value: on)</para>
   </listitem>
 </itemizedlist>
 

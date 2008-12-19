@@ -50,8 +50,7 @@
 int
 gui_chat_get_real_width (struct t_gui_window *window)
 {
-    if (window->buffer->nicklist
-        && (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_RIGHT))
+    if (window->win_chat_x + window->win_chat_width < gui_window_get_width ())
         return window->win_chat_width - 1;
     else
         return window->win_chat_width;

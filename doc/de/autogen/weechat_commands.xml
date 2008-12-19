@@ -23,7 +23,7 @@ manage bars
       filling: horizontal, vertical, columns_horizontal or columns_vertical
          size: size of bar (in chars)
     separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
       default: create default bars
           del: delete a bar (or all bars with -all)
           set: set a value for a bar property
@@ -31,6 +31,7 @@ manage bars
         value: new value for option
          hide: hide a bar
          show: show an hidden bar
+       toggle: hide/show a bar
        scroll: scroll bar up/down
        buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
  scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
@@ -39,8 +40,8 @@ manage bars
     listitems: list all bar items
 
 Examples:
-  create a bar with time and completion:
-    /bar add mybar root bottom 1 0 [time],completion
+  create a bar with time, buffer number + name, and completion:
+    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
   hide a bar:
     /bar hide mybar
   scroll nicklist 10 lines down on current buffer:

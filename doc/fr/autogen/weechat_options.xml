@@ -212,7 +212,7 @@
     <para>type: couleur</para>
   </listitem>
   <listitem>
-    <para>valeurs: un nom de couleur (valeur par défaut: default)</para>
+    <para>valeurs: un nom de couleur (valeur par défaut: cyan)</para>
   </listitem>
 </itemizedlist>
 
@@ -803,56 +803,6 @@
   </listitem>
   <listitem>
     <para>valeurs: toute chaîne (valeur par défaut: '%H:%M')</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist</command>: afficher la liste de pseudos (sur les tampons avec la liste de pseudos activée)
-<itemizedlist>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off (valeur par défaut: on)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_max_size</command>: taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille maximum; si min = max et &gt; 0, alors la taille est fixe))
-<itemizedlist>
-  <listitem>
-    <para>type: entier</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: 0 .. 100 (valeur par défaut: 0)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_min_size</command>: taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon nicklist_position (0 = pas de taille minimum))
-<itemizedlist>
-  <listitem>
-    <para>type: entier</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: 0 .. 100 (valeur par défaut: 0)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_position</command>: position de la fenêtre des pseudos (top (haut), left (gauche), right (droite, par défaut), bottom (bas)
-<itemizedlist>
-  <listitem>
-    <para>type: entier</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: left, right, top, bottom (valeur par défaut: right)</para>
-  </listitem>
-</itemizedlist>
-
-<command>weechat.look.nicklist_separator</command>: séparateur entre la discussion et la liste de pseudos
-<itemizedlist>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off (valeur par défaut: on)</para>
   </listitem>
 </itemizedlist>
 

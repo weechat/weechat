@@ -423,6 +423,33 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* toggle a bar visible/hidden */
+    if (string_strcasecmp (argv[1], "toggle") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        gui_bar_set (ptr_bar, "hidden",
+                     CONFIG_BOOLEAN(ptr_bar->hidden) ? "0" : "1");
+        
+        return WEECHAT_RC_OK;
+    }
+    
     /* scroll in a bar */
     if (string_strcasecmp (argv[1], "scroll") == 0)
     {
@@ -3384,6 +3411,7 @@ command_init ()
                      "        value: new value for option\n"
                      "         hide: hide a bar\n"
                      "         show: show an hidden bar\n"
+                     "       toggle: hide/show a bar\n"
                      "       scroll: scroll bar up/down\n"
                      "       buffer: name of buffer to scroll ('*' "
                      "means current buffer, you should use '*' for root bars)\n"
@@ -3405,7 +3433,7 @@ command_init ()
                      "    /bar scroll nicklist #weechat y-100%\n"
                      "  scroll to end of nicklist on current buffer:\n"
                      "    /bar scroll nicklist * ye"),
-                  "add|default|del|set|hide|show|scroll|list|listfull|"
+                  "add|default|del|set|hide|show|toggle|scroll|list|listfull|"
                   "listitems %r name|hidden|priority|conditions|position|"
                   "filling_top_bottom|filling_left_right|size|size_max|"
                   "color_fg|color_delim|color_bg|separator|items",

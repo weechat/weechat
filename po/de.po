@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 10:04+0100\n"
+"POT-Creation-Date: 2008-12-19 13:12+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -779,6 +779,7 @@ msgid ""
 "        value: new value for option\n"
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
+"       toggle: hide/show a bar\n"
 "       scroll: scroll bar up/down\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
@@ -1318,33 +1319,6 @@ msgstr ""
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "Timestamp in der Infobar"
-
-#, fuzzy
-msgid "display nicklist (on buffers with nicklist enabled)"
-msgstr "Nicklisten-Fenster in Channelfenstern anzeigen"
-
-#, fuzzy
-msgid ""
-"max size for nicklist (width or height, depending on nicklist_position (0 = "
-"no max size; if min = max and > 0, then size is fixed))"
-msgstr ""
-"Maximale Größe der Nicklist (Breite oder Höhe, je nach "
-"look_nicklist_position (0: kein Maximum); Wenn min == max > 0, ist die Größe "
-"fest."
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"Minimale Größe der Nicklist (Breite oder Höhe, je nach "
-"look_nicklist_position (0: kein Minimum)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr "Nicklisten-Position (top, left, right (Standard), bottom)"
-
-msgid "separator between chat and nicklist"
-msgstr "Trennzeichen zwischen Chatfenster und Nickliste"
 
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "Nickmode (@%+) vorm Nickname anzeigen"
@@ -5109,6 +5083,33 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "display nicklist (on buffers with nicklist enabled)"
+#~ msgstr "Nicklisten-Fenster in Channelfenstern anzeigen"
+
+#, fuzzy
+#~ msgid ""
+#~ "max size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no max size; if min = max and > 0, then size is fixed))"
+#~ msgstr ""
+#~ "Maximale Größe der Nicklist (Breite oder Höhe, je nach "
+#~ "look_nicklist_position (0: kein Maximum); Wenn min == max > 0, ist die "
+#~ "Größe fest."
+
+#, fuzzy
+#~ msgid ""
+#~ "min size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no min size))"
+#~ msgstr ""
+#~ "Minimale Größe der Nicklist (Breite oder Höhe, je nach "
+#~ "look_nicklist_position (0: kein Minimum)"
+
+#~ msgid "nicklist position (top, left, right (default), bottom)"
+#~ msgstr "Nicklisten-Position (top, left, right (Standard), bottom)"
+
+#~ msgid "separator between chat and nicklist"
+#~ msgstr "Trennzeichen zwischen Chatfenster und Nickliste"
 
 #, fuzzy
 #~ msgid "%sBinary file not found: \"%s\""

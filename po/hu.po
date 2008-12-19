@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 10:04+0100\n"
+"POT-Creation-Date: 2008-12-19 13:12+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -779,6 +779,7 @@ msgid ""
 "        value: new value for option\n"
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
+"       toggle: hide/show a bar\n"
 "       scroll: scroll bar up/down\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
@@ -1327,33 +1328,6 @@ msgstr ""
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "időbélyeg a információs pult idejéhez"
-
-#, fuzzy
-msgid "display nicklist (on buffers with nicklist enabled)"
-msgstr "névlista ablak mutatása (szobaablakban)"
-
-#, fuzzy
-msgid ""
-"max size for nicklist (width or height, depending on nicklist_position (0 = "
-"no max size; if min = max and > 0, then size is fixed))"
-msgstr ""
-"névlista maximális mérete (szélesség vagy magasság a look_nicklist_position "
-"opciónak megfelelően (0 = nincs maximális érték; ha min = max és > 0, akkor "
-"a méret fix))"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"névlista minimális mérete (szélesség vagy magasság a look_nicklist_position "
-"opciónak megfelelően (0 = nincs minimális érték))"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
-
-msgid "separator between chat and nicklist"
-msgstr "a névlista és a beszélgetőablak közti elválasztó"
 
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "a felhasználó módjának ((fél)operátor/voice) mutatása a név előtt"
@@ -5131,6 +5105,33 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "display nicklist (on buffers with nicklist enabled)"
+#~ msgstr "névlista ablak mutatása (szobaablakban)"
+
+#, fuzzy
+#~ msgid ""
+#~ "max size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no max size; if min = max and > 0, then size is fixed))"
+#~ msgstr ""
+#~ "névlista maximális mérete (szélesség vagy magasság a "
+#~ "look_nicklist_position opciónak megfelelően (0 = nincs maximális érték; "
+#~ "ha min = max és > 0, akkor a méret fix))"
+
+#, fuzzy
+#~ msgid ""
+#~ "min size for nicklist (width or height, depending on nicklist_position (0 "
+#~ "= no min size))"
+#~ msgstr ""
+#~ "névlista minimális mérete (szélesség vagy magasság a "
+#~ "look_nicklist_position opciónak megfelelően (0 = nincs minimális érték))"
+
+#~ msgid "nicklist position (top, left, right (default), bottom)"
+#~ msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
+
+#~ msgid "separator between chat and nicklist"
+#~ msgstr "a névlista és a beszélgetőablak közti elválasztó"
 
 #, fuzzy
 #~ msgid "%sBinary file not found: \"%s\""
