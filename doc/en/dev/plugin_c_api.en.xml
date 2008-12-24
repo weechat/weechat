@@ -1779,8 +1779,8 @@ void weechat_exec_on_files (
           </listitem>
           <listitem>
             <para>
-              <option>data</option>: pointer given to callback when calling it
-              found
+              <option>data</option>: pointer given to callback when it is
+              called by WeeChat
             </para>
           </listitem>
           <listitem>
@@ -7582,9 +7582,531 @@ weechat_nicklist_remove_all (my_buffer);
       Functions for bars.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_bar_item_search">
+      <title>weechat_bar_item_search</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_bar_item *weechat_bar_item_search (const char *name);
+</programlisting>
+      </para>
+      <para>
+        Search a bar item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar item name
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to bar item found, NULL if bar item was not found.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_bar_item *bar_item = weechat_bar_item_search ("myitem");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_item_new">
+      <title>weechat_bar_item_new</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_bar_item *weechat_bar_item_new (
+    const char *name,
+    char *(build_callback)(void *data,
+                           struct t_gui_bar_item *item,
+                           struct t_gui_window *window),
+    void *build_callback_data);
+</programlisting>
+      </para>
+      <para>
+        Create a new bar item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar item name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>build_callback</option>: function called when bar item
+              is built: it must return content of bar item
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>build_callback_data</option>: pointer given to build
+              callback, when it is called by Weechat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new bar item, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+char *
+my_build_callback (void *data,
+                   struct t_gui_bar_item *item,
+                   struct t_gui_window *window)
+{
+    return strdup ("my content");
+}
+
+struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
+                                                       &amp;my_build_callback,
+                                                       NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_item_update">
+      <title>weechat_bar_item_update</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_bar_item_update (const char *name);
+</programlisting>
+      </para>
+      <para>
+        Update content of a bar item, by calling its build callback.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar item name
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_bar_item_update ("myitem");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_item_remove">
+      <title>weechat_bar_item_remove</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_bar_item_remove (struct t_gui_bar_item *item);
+</programlisting>
+      </para>
+      <para>
+        Remove a bar item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: bar item pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_bar_item_remove (&amp;my_item);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_search">
+      <title>weechat_bar_search</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_bar_item *weechat_bar_search (const char *name);
+</programlisting>
+      </para>
+      <para>
+        Search a bar.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar name
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to bar found, NULL if bar was not found.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_bar *bar = weechat_bar_search ("mybar");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_new">
+      <title>weechat_bar_new</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_gui_bar *weechat_bar_new (
+    const char *name,
+    const char *hidden,
+    const char *priority,
+    const char *type,
+    const char *condition,
+    const char *position,
+    const char *filling_top_bottom,
+    const char *filling_left_right,
+    const char *size,
+    const char *size_max,
+    const char *color_fg,
+    const char *color_delim,
+    const char *color_bg,
+    const char *separator,
+    const char *items);
+</programlisting>
+      </para>
+      <para>
+        Create a new item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar item name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>hidden</option>: "on" if bar is hidden, "off" is bar is
+              visible
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>priority</option>: bar priority (integer)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>type</option>: "root" (bar displayed once, outside
+              windows), or "window" (bar displayed in each window)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>condition</option>: condition for displaying bar, one of
+              following:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Condition</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>active</entry>
+                      <entry>
+                        bar is displayed in active window only
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>inactive</entry>
+                      <entry>
+                        bar is displayed in inactive window(s) only
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>nicklist</entry>
+                      <entry>bar is displayed in window(s) with nicklist</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>position</option>: "top", "bottom", "left" or "right"
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>filling_top_bottom</option>: filling when bar is in
+              position "top" or "bottom", one of following:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Filling</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>horizontal</entry>
+                      <entry>
+                        items are filled horitontally (space after each item)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>vertical</entry>
+                      <entry>
+                        items are filled verticaly (new line after each item)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>columns_horizontal</entry>
+                      <entry>
+                        items are filled horizontally, displayed with columns
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>columns_vertical</entry>
+                      <entry>
+                        items are filled vertically, displayed with columns
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>filling_left_right</option>: filling when bar is in
+              position "left" or "right", one of following:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Filling</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>horizontal</entry>
+                      <entry>
+                        items are filled horitontally (space after each item)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>vertical</entry>
+                      <entry>
+                        items are filled verticaly (new line after each item)
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>columns_horizontal</entry>
+                      <entry>
+                        items are filled horizontally, displayed with columns
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>columns_vertical</entry>
+                      <entry>
+                        items are filled vertically, displayed with columns
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>size</option>: bar size in chars (0 means automatic
+              size)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>size_max</option>: max size for bar (0 means no max size)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>color_fg</option>: color for text in bar
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>color_delim</option>: color for delimiters in bar
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>color_bg</option>: background color for bar
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>separator</option>: "on" if bar has separator line with
+              other windows/bars, "off" otherwise
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>items</option>: list of items in bar, separated by comma
+              (space between items), or "+" (glued items)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new bar, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_gui_bar *my_bar =
+    weechat_bar_new ("mybar",
+                     "off",
+                     100,
+                     "window",
+                     "",
+                     "top",
+                     "horizontal",
+                     "vertical",
+                     "0",
+                     "5",
+                     "default",
+                     "cyan",
+                     "blue",
+                     "off",
+                     "time,buffer_number+buffer_name");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_set">
+      <title>weechat_bar_set</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_bar_set (struct t_gui_bar *bar,
+                     const char *property,
+                     const char *value);
+</programlisting>
+      </para>
+      <para>
+        Set a new value for a bar property.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>bar</option>: bar pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>property</option>: property name: name, hidden, priority,
+              conditions, position, filling_top_bottom, filling_left_right,
+              size, size_max, color_fg, color_delim, color_bg, separator, items
+              (see <xref linkend="secPluginCApi_weechat_bar_new" />)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>value</option>: new value for property
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if new value was set, 0 if an error occured.
+      </para>
+      <para>
+        Example: <screen>weechat_bar_set (mybar, "position", "bottom");</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_update">
+      <title>weechat_bar_update</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_bar_update (const char *name);
+</programlisting>
+      </para>
+      <para>
+        Refresh content of a bar on screen.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>name</option>: bar name
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example: <screen>weechat_bar_update ("mybar");</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_bar_remove">
+      <title>weechat_bar_remove</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_bar_remove (struct t_gui_bar *bar);
+</programlisting>
+      </para>
+      <para>
+        Remove a bar.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>bar</option>: bar pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example: <screen>weechat_bar_remove (mybar);</screen>
+      </para>
+    </section>
     
   </section>
   
@@ -7597,9 +8119,44 @@ weechat_nicklist_remove_all (my_buffer);
       Functions for executing WeeChat commands.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_command">
+      <title>weechat_command</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_command (struct t_gui_buffer *buffer,
+                      const char *command);
+</programlisting>
+      </para>
+      <para>
+        Execute a command.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>buffer</option>: buffer pointer (command is executed
+              on this buffer, use NULL for WeeChat core buffer)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>command</option>: command to execute (if beginning with a
+              "/"), or text is sent to buffer (without leading "/")
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
+                 "/whois FlashCode");
+</screen>
+      </para>
+    </section>
     
   </section>
   
@@ -7612,9 +8169,131 @@ weechat_nicklist_remove_all (my_buffer);
       Network functions.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_network_pass_proxy">
+      <title>weechat_network_pass_proxy</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_network_pass_proxy (const char *proxy,
+                                int sock,
+                                const char *address,
+                                int port);
+</programlisting>
+      </para>
+      <para>
+        Establish a connection/authentification to a proxy.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>proxy</option>: proxy name to use
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>sock</option>: socket to use
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>address</option>: address (hostname or IP)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>port</option>: port
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if connection is ok, 0 if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_network_pass_proxy ("myproxy", sock, "irc.freenode.net", 6667))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_network_connect_to">
+      <title>weechat_network_network_connect_to</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_network_connect_to (const char *proxy,
+                                int sock,
+                                unsigned long address,
+                                int port);
+</programlisting>
+      </para>
+      <para>
+        Establish a connection to a remote host.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>proxy</option>: proxy name to use
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>sock</option>: socket to use
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>address</option>: address
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>port</option>: port
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if connection is ok, 0 if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct sockaddr_in addr;
+socklen_t length;
+unsigned long address;
+
+memset (&amp;addr, 0, sizeof (struct sockaddr_in));
+length = sizeof (addr);
+getsockname (sock, (struct sockaddr *) &amp;addr, &amp;length);
+addr.sin_family = AF_INET;
+address = ntohl (addr.sin_addr.s_addr);
+
+if (weechat_network_connect_to (NULL, sock, address, 6667))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+</screen>
+      </para>
+    </section>
     
   </section>
   
@@ -7627,9 +8306,122 @@ weechat_nicklist_remove_all (my_buffer);
       Functions to get infos.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_info_get">
+      <title>weechat_into_get</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_info_get (const char *info_name,
+                              const char *arguments);
+</programlisting>
+      </para>
+      <para>
+        Get info from WeeChat or other plugin.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>info_name</option>: info name to read, from WeeChat
+              core or other plugin (see plugin doc for infos returned by
+              each plugin). WeeChat core infos are:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Info</entry>
+                      <entry>Description</entry>
+                      <entry>Example</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>version</entry>
+                      <entry>WeeChat version</entry>
+                      <entry>0.2.7</entry>
+                    </row>
+                    <row>
+                      <entry>date</entry>
+                      <entry>WeeChat compilation date</entry>
+                      <entry>Dec 25 2008</entry>
+                    </row>
+                    <row>
+                      <entry>dir_separator</entry>
+                      <entry>
+                        directory separator: "/" under GNU/Linux, "\" under
+                        MS-Windows
+                      </entry>
+                      <entry>/</entry>
+                    </row>
+                    <row>
+                      <entry>weechat_dir</entry>
+                      <entry>WeeChat home directory</entry>
+                      <entry>/home/login/.weechat</entry>
+                    </row>
+                    <row>
+                      <entry>weechat_libdir</entry>
+                      <entry>WeeChat lib directory</entry>
+                      <entry>/usr/lib/weechat</entry>
+                    </row>
+                    <row>
+                      <entry>weechat_sharedir</entry>
+                      <entry>WeeChat share directory</entry>
+                      <entry>/usr/share/weechat</entry>
+                    </row>
+                    <row>
+                      <entry>weechat_localedir</entry>
+                      <entry>WeeChat locale directory</entry>
+                      <entry>/usr/share/locale</entry>
+                    </row>
+                    <row>
+                      <entry>charset_terminal</entry>
+                      <entry>terminal charset</entry>
+                      <entry>UTF-8</entry>
+                    </row>
+                    <row>
+                      <entry>charset_internal</entry>
+                      <entry>internal WeeChat charset (always "UTF-8")</entry>
+                      <entry>UTF-8</entry>
+                    </row>
+                    <row>
+                      <entry>inactivity</entry>
+                      <entry>keyboard inactivity (in seconds)</entry>
+                      <entry>12</entry>
+                    </row>
+                    <row>
+                      <entry>filters_enabled</entry>
+                      <entry>1 if filters are enabled, otherwise 0</entry>
+                      <entry>1</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>arguments</option>: arguments for info asked (optional,
+              NULL if no argument is needed)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: const string with info asked, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "Current WeeChat version is: %s (compiled on %s)",
+                weechat_info_get ("version", NULL),
+                weechat_info_get ("date", NULL));
+weechat_printf (NULL, "WeeChat home is: %s",
+                weechat_info_get ("weechat_dir"));
+</screen>
+      </para>
+    </section>
     
   </section>
   
