@@ -631,7 +631,8 @@ alias_config_create_option (void *data, struct t_config_file *config_file,
     weechat_config_new_option (
         config_file, section,
         option_name, "string", NULL,
-        NULL, 0, 0, "", value, NULL, NULL,
+        NULL, 0, 0, "", value, 0,
+        NULL, NULL,
         &alias_config_change_cb, NULL,
         &alias_config_delete_cb, NULL);
     
@@ -750,7 +751,8 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             weechat_config_new_option (
                 alias_config_file, alias_config_section_cmd,
                 alias_name, "string", NULL,
-                NULL, 0, 0, "", argv_eol[2], NULL, NULL,
+                NULL, 0, 0, "", argv_eol[2], 0,
+                NULL, NULL,
                 &alias_config_change_cb, NULL,
                 &alias_config_delete_cb, NULL);
             

@@ -60,6 +60,9 @@ struct t_weelist;
 #define WEECHAT_CONFIG_WRITE_ERROR                 -1
 #define WEECHAT_CONFIG_WRITE_MEMORY_ERROR          -2
 
+/* null value for option */
+#define WEECHAT_CONFIG_OPTION_NULL                 "null"
+
 /* return codes for config option set */
 #define WEECHAT_CONFIG_OPTION_SET_OK_CHANGED        2
 #define WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE     1
@@ -254,6 +257,7 @@ struct t_weechat_plugin
                                                   int max,
                                                   const char *default_value,
                                                   const char *value,
+                                                  int null_value_allowed,
                                                   int (*callback_check_value)(void *data,
                                                                               struct t_config_option *option,
                                                                               const char *value),
@@ -282,15 +286,25 @@ struct t_weechat_plugin
                                 int run_callback);
     int (*config_option_set) (struct t_config_option *option,
                               const char *value, int run_callback);
+    int (*config_option_set_null) (struct t_config_option *option,
+                                   int run_callback);
     int (*config_option_unset) (struct t_config_option *option);
     void (*config_option_rename) (struct t_config_option *option,
                                   const char *new_name);
     void *(*config_option_get_pointer) (struct t_config_option *option,
                                         const char *property);
+    int (*config_option_is_null) (struct t_config_option *option);
+    int (*config_option_default_is_null) (struct t_config_option *option);
     int (*config_boolean) (struct t_config_option *option);
+    int (*config_boolean_default) (struct t_config_option *option);
     int (*config_integer) (struct t_config_option *option);
+    int (*config_integer_default) (struct t_config_option *option);
     const char *(*config_string) (struct t_config_option *option);
+    const char *(*config_string_default) (struct t_config_option *option);
     const char *(*config_color) (struct t_config_option *option);
+    const char *(*config_color_default) (struct t_config_option *option);
+    void (*config_write_option) (struct t_config_file *config_file,
+                                 struct t_config_option *option);
     void (*config_write_line) (struct t_config_file *config_file,
                                const char *option_name,
                                const char *value, ...);
@@ -761,6 +775,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_config_new_option(__config, __section, __name, __type,  \
                                   __desc, __string_values, __min,       \
                                   __max, __default, __value,            \
+                                  __null_value_allowed,                 \
                                   __callback_check,                     \
                                   __callback_check_data,                \
                                   __callback_change,                    \
@@ -770,6 +785,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_new_option(__config, __section, __name,      \
                                       __type, __desc, __string_values,  \
                                       __min, __max, __default, __value, \
+                                      __null_value_allowed,             \
                                       __callback_check,                 \
                                       __callback_check_data,            \
                                       __callback_change,                \
@@ -797,20 +813,36 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_config_option_set(__option, __value, __run_callback)    \
     weechat_plugin->config_option_set(__option, __value,                \
                                       __run_callback)
+#define weechat_config_option_set_null(__option, __run_callback)        \
+    weechat_plugin->config_option_set_null(__option, __run_callback)
 #define weechat_config_option_unset(__option)                           \
     weechat_plugin->config_option_unset(__option)
 #define weechat_config_option_rename(__option, __new_name)              \
     weechat_plugin->config_option_rename(__option, __new_name)
 #define weechat_config_option_get_pointer(__option, __property)         \
     weechat_plugin->config_option_get_pointer(__option, __property)
+#define weechat_config_option_is_null(__option)                         \
+    weechat_plugin->config_option_is_null(__option)
+#define weechat_config_option_default_is_null(__option)                 \
+    weechat_plugin->config_option_default_is_null(__option)
 #define weechat_config_boolean(__option)                                \
     weechat_plugin->config_boolean(__option)
+#define weechat_config_boolean_default(__option)                        \
+    weechat_plugin->config_boolean_default(__option)
 #define weechat_config_integer(__option)                                \
     weechat_plugin->config_integer(__option)
+#define weechat_config_integer_default(__option)                        \
+    weechat_plugin->config_integer_default(__option)
 #define weechat_config_string(__option)                                 \
     weechat_plugin->config_string(__option)
+#define weechat_config_string_default(__option)                         \
+    weechat_plugin->config_string_default(__option)
 #define weechat_config_color(__option)                                  \
     weechat_plugin->config_color(__option)
+#define weechat_config_color_default(__option)                          \
+    weechat_plugin->config_color_default(__option)
+#define weechat_config_write_option(__config, __option)                 \
+    weechat_plugin->config_write_option(__config, __option)
 #define weechat_config_write_line(__config, __option, __value...)       \
     weechat_plugin->config_write_line(__config, __option, ##__value)
 #define weechat_config_write(__config)                                  \

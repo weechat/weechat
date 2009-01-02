@@ -242,12 +242,19 @@ file: configuration file to save
 Without argument, all files (WeeChat and plugins) are saved.
 </programlisting>
 
-<command>/set  [option [ = value]]</command>
+<command>/set  [option [value]]</command>
 <programlisting>
 set config options
 
 option: name of an option
- value: value for option
+ value: new value for option
+
+New value can be, according to variable type:
+  boolean: on, off ou toggle
+  integer: number, ++number ou --number  string : any string ("" for empty string)
+  color  : color name, ++number ou --number
+
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 </programlisting>
 
 <command>/unset  [option]</command>

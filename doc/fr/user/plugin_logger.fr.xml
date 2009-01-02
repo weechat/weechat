@@ -119,25 +119,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             afecter le niveau 3 pour le canal IRC #weechat :
-            <screen>/set logger.level.irc.freenode.#weechat = 3</screen>
+            <screen>/set logger.level.irc.freenode.#weechat 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             affecter le niveau 3 pour le tampon serveur freenode :
-            <screen>/set logger.level.irc.server.freenode = 3</screen>
+            <screen>/set logger.level.irc.server.freenode 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             affecter le niveau 3 pour tous les canaux sur le serveur freenode :
-            <screen>/set logger.level.irc.freenode = 3</screen>
+            <screen>/set logger.level.irc.freenode 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             affecter le niveau 2 pour tous les tampons IRC :
-            <screen>/set logger.level.irc = 2</screen>
+            <screen>/set logger.level.irc 2</screen>
           </para>
         </listitem>
       </itemizedlist>
@@ -158,7 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Par exemple, si vous voulez un répertoire par serveur IRC et un fichier
       par canal dedans :
-      <screen>/set logger.mask.irc = "irc/$server/$channel.weechatlog"</screen>
+      <screen>/set logger.mask.irc "irc/$server/$channel.weechatlog"</screen>
       Vous obtiendrez les fichiers suivants :
 <screen>
 ~/.weechat/

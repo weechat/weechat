@@ -26,29 +26,6 @@
 #define IRC_CONFIG_DISPLAY_AWAY_LOCAL   1
 #define IRC_CONFIG_DISPLAY_AWAY_CHANNEL 2
 
-enum t_irc_config_server_option
-{
-    IRC_CONFIG_SERVER_AUTOCONNECT = 0,
-    IRC_CONFIG_SERVER_AUTORECONNECT,
-    IRC_CONFIG_SERVER_AUTORECONNECT_DELAY,
-    IRC_CONFIG_SERVER_PROXY,
-    IRC_CONFIG_SERVER_ADDRESSES,
-    IRC_CONFIG_SERVER_IPV6,
-    IRC_CONFIG_SERVER_SSL,
-    IRC_CONFIG_SERVER_PASSWORD,
-    IRC_CONFIG_SERVER_NICKS,
-    IRC_CONFIG_SERVER_USERNAME,
-    IRC_CONFIG_SERVER_REALNAME,
-    IRC_CONFIG_SERVER_LOCAL_HOSTNAME,
-    IRC_CONFIG_SERVER_COMMAND,
-    IRC_CONFIG_SERVER_COMMAND_DELAY,
-    IRC_CONFIG_SERVER_AUTOJOIN,
-    IRC_CONFIG_SERVER_AUTOREJOIN,
-    IRC_CONFIG_SERVER_NOTIFY_LEVELS,
-    /* number of server options */
-    IRC_CONFIG_NUM_SERVER_OPTIONS,
-};
-
 #define IRC_CONFIG_SERVER_DEFAULT_AUTOCONNECT         0
 #define IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT       1
 #define IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT_DELAY 30
@@ -58,7 +35,6 @@ enum t_irc_config_server_option
 #define IRC_CONFIG_SERVER_DEFAULT_AUTOREJOIN          0
 
 
-extern char *irc_config_server_option_string[];
 extern struct t_config_file *irc_config_file;
 extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
@@ -96,7 +72,6 @@ extern struct t_config_option *irc_config_network_send_unknown_commands;
 
 extern struct t_config_option *irc_config_server_default[];
 
-extern int irc_config_search_server_option (const char *option_name);
 extern void irc_config_server_change_cb (void *data,
                                          struct t_config_option *option);
 extern void irc_config_server_delete_cb (void *data,
@@ -105,14 +80,14 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
                                                       struct t_config_section *section,
                                                       int index_option,
                                                       const char *option_name,
+                                                      const char *default_value,
                                                       const char *value,
+                                                      int null_value_allowed,
                                                       void *callback_change,
-                                                      void *callback_change_data,
-                                                      void *callback_delete,
-                                                      void *callback_delete_data);
+                                                      void *callback_change_data);
 extern int irc_config_init ();
 extern int irc_config_read ();
-extern int irc_config_write ();
+extern int irc_config_write (int write_temp_servers);
 extern void irc_config_free ();
 
 #endif /* irc-config.h */

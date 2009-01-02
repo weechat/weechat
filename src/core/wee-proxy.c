@@ -264,7 +264,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "integer",
                     N_("proxy type (http (default), socks4, socks5)"),
-                    "http|socks4|socks5", 0, 0, value, NULL,
+                    "http|socks4|socks5", 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_OPTION_IPV6:
@@ -272,7 +272,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "boolean",
                     N_("connect to proxy using ipv6"),
-                    NULL, 0, 0, value, NULL,
+                    NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_OPTION_ADDRESS:
@@ -280,7 +280,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "string",
                     N_("proxy server address (IP or hostname)"),
-                    NULL, 0, 0, value, NULL,
+                    NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_OPTION_PORT:
@@ -288,7 +288,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "integer",
                     N_("port for connecting to proxy server"),
-                    NULL, 0, 65535, value, NULL,
+                    NULL, 0, 65535, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_OPTION_USERNAME:
@@ -296,7 +296,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "string",
                     N_("username for proxy server"),
-                    NULL, 0, 0, value, NULL,
+                    NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_OPTION_PASSWORD:
@@ -304,7 +304,7 @@ proxy_create_option (const char *proxy_name, int index_option,
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "string",
                     N_("password for proxy server"),
-                    NULL, 0, 0, value, NULL,
+                    NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
             case PROXY_NUM_OPTIONS:

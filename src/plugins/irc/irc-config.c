@@ -36,16 +36,6 @@
 #include "irc-channel.h"
 
 
-char *irc_config_server_option_string[IRC_CONFIG_NUM_SERVER_OPTIONS] =
-{ "autoconnect", "autoreconnect", "autoreconnect_delay", "proxy", "addresses",
-  "ipv6", "ssl", "password", "nicks", "username", "realname", "local_hostname",
-  "command", "command_delay", "autojoin", "autorejoin"
-};
-char *irc_config_server_option_default[IRC_CONFIG_NUM_SERVER_OPTIONS] =
-{ "off", "on", "30", "", "", "off", "off", "", "", "", "", "", "", "0", "",
-  "off", ""
-};
-
 struct t_config_file *irc_config_file = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
@@ -89,36 +79,12 @@ struct t_config_option *irc_config_network_send_unknown_commands;
 
 /* IRC config, server section */
 
-struct t_config_option *irc_config_server_default[IRC_CONFIG_NUM_SERVER_OPTIONS];
+struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS];
 
 struct t_hook *hook_config_color_nicks_number = NULL;
 
+int irc_config_write_temp_servers = 0;
 
-/*
- * irc_config_search_server_option: search a server option name
- *                                  return index of option in array
- *                                  "irc_config_server_option_str", or -1 if
- *                                  not found
- */
-
-int
-irc_config_search_server_option (const char *option_name)
-{
-    int i;
-    
-    if (!option_name)
-        return -1;
-    
-    for (i = 0; i < IRC_CONFIG_NUM_SERVER_OPTIONS; i++)
-    {
-        if (weechat_strcasecmp (irc_config_server_option_string[i],
-                                option_name) == 0)
-            return i;
-    }
-    
-    /* server option not found */
-    return -1;
-}
 
 struct t_irc_server *
 irc_config_get_server_from_option_name (const char *name)
@@ -365,32 +331,28 @@ irc_config_change_network_send_unknown_commands (void *data,
 void
 irc_config_server_default_change_cb (void *data, struct t_config_option *option)
 {
-    int index_option, length;
-    char *option_full_name;
+    int index_option;
     struct t_irc_server *ptr_server;
-    struct t_config_option *ptr_option;
     
-    index_option = irc_config_search_server_option (data);
+    index_option = irc_server_search_option (data);
     if (index_option >= 0)
     {
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            length = strlen (ptr_server->name) + 1 + strlen (data) + 1;
-            option_full_name = malloc (length);
-            if (option_full_name)
+            if (weechat_config_option_is_null (ptr_server->options[index_option]))
             {
-                ptr_option = weechat_config_search_option (irc_config_file,
-                                                           irc_config_section_server,
-                                                           option_full_name);
-                if (!ptr_option)
+                switch (index_option)
                 {
-                    /* option does not exist for server, so we change value
-                       with default value */
-                    irc_server_set_with_option (ptr_server, index_option,
-                                                option);
+                    case IRC_SERVER_OPTION_ADDRESSES:
+                        irc_server_set_addresses (ptr_server,
+                                                  weechat_config_string (option));
+                        break;
+                    case IRC_SERVER_OPTION_NICKS:
+                        irc_server_set_nicks (ptr_server,
+                                              weechat_config_string (option));
+                        break;
                 }
-                free (option_full_name);
             }
         }
     }
@@ -407,155 +369,28 @@ irc_config_server_change_cb (void *data, struct t_config_option *option)
     char *name;
     struct t_irc_server *ptr_server;
     
-    index_option = irc_config_search_server_option (data);
+    index_option = irc_server_search_option (data);
     if (index_option >= 0)
     {
         name = weechat_config_option_get_pointer (option, "name");
         ptr_server = irc_config_get_server_from_option_name (name);
         if (ptr_server)
         {
-            irc_server_set_with_option (ptr_server, index_option, option);
-        }
-    }
-}
-
-/*
- * irc_config_server_delete_cb: callback called when a server option is deleted
- */
-
-void
-irc_config_server_delete_cb (void *data, struct t_config_option *option)
-{
-    int i, index_option, length;
-    char *name, *mask;
-    struct t_irc_server *ptr_server;
-    struct t_infolist *infolist;
-    
-    index_option = irc_config_search_server_option (data);
-    if (index_option >= 0)
-    {
-        name = weechat_config_option_get_pointer (option, "name");
-        ptr_server = irc_config_get_server_from_option_name (name);
-        if (ptr_server)
-        {
-            irc_server_set_with_option (ptr_server, index_option,
-                                        irc_config_server_default[index_option]);
-            
-            /* look if we should remove server (no more option for server) */
-            if (!ptr_server->is_connected)
+            switch (index_option)
             {
-                length = strlen (ptr_server->name) + 64;
-                mask = malloc (length);
-                if (mask)
-                {
-                    snprintf (mask, length, "irc.server.%s.*",
-                              ptr_server->name);
-                    infolist = weechat_infolist_get ("option", NULL, mask);
-                    i = 0;
-                    while (weechat_infolist_next (infolist))
-                    {
-                        i++;
-                    }
-                    if (i <= 1)
-                        irc_server_free (ptr_server);
-                    weechat_infolist_free (infolist);
-                    free (mask);
-                }
+                case IRC_SERVER_OPTION_ADDRESSES:
+                    irc_server_set_addresses (ptr_server,
+                                              IRC_SERVER_OPTION_STRING(ptr_server,
+                                                                       IRC_SERVER_OPTION_ADDRESSES));
+                    break;
+                case IRC_SERVER_OPTION_NICKS:
+                    irc_server_set_nicks (ptr_server,
+                                          IRC_SERVER_OPTION_STRING(ptr_server,
+                                                                   IRC_SERVER_OPTION_NICKS));
+                    break;
             }
         }
     }
-}
-
-/*
- * irc_config_reload_servers_from_config: create/update servers from options
- *                                        read in config file
- */
-
-void
-irc_config_reload_servers_from_config ()
-{
-    struct t_infolist *infolist;
-    struct t_irc_server *ptr_server;
-    struct t_config_option *ptr_option;
-    const char *full_name, *option_name;
-    char *server_name, *pos_option;
-    int i, index_option;
-    
-    infolist = weechat_infolist_get ("option", NULL, "irc.server.*");
-    while (weechat_infolist_next (infolist))
-    {
-        full_name = weechat_infolist_string (infolist, "full_name");
-        option_name = weechat_infolist_string (infolist, "option_name");
-        if (full_name && option_name)
-        {
-            pos_option = strrchr (option_name, '.');
-            if (pos_option)
-            {
-                server_name = weechat_strndup (option_name,
-                                               pos_option - option_name);
-                if (server_name)
-                {
-                    pos_option++;
-                    ptr_server = irc_server_search (server_name);
-                    if (!ptr_server)
-                    {
-                        /* create server, it's first time we see it */
-                        ptr_server = irc_server_alloc (server_name);
-                        if (!ptr_server)
-                        {
-                            weechat_printf (NULL,
-                                            _("%s%s: error creating server "
-                                              "\"%s\""),
-                                            weechat_prefix ("error"),
-                                            IRC_PLUGIN_NAME, server_name);
-                        }
-                    }
-                    if (ptr_server)
-                    {
-                        index_option = irc_config_search_server_option (pos_option);
-                        if (index_option >= 0)
-                        {
-                            if (!ptr_server->reloaded_from_config)
-                            {
-                                /* it's first time we see server, and we are
-                                   reloading config, then initialize server
-                                   with default values (will be overwritten
-                                   by config later in this function
-                                */
-                                for (i = 0; i < IRC_CONFIG_NUM_SERVER_OPTIONS; i++)
-                                {
-                                    irc_server_set_with_option (ptr_server,
-                                                                i,
-                                                                irc_config_server_default[i]);
-                                }
-                                ptr_server->reloaded_from_config = 1;
-                            }
-                            weechat_config_search_with_string (full_name, NULL,
-                                                               NULL, &ptr_option,
-                                                               NULL);
-                            if (ptr_option)
-                            {
-                                irc_server_set_with_option (ptr_server,
-                                                            index_option,
-                                                            ptr_option);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: error creating option "
-                                          "\"%s\" for server \"%s\" (server "
-                                          "not found)"),
-                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                        pos_option, server_name);
-                    }
-                    free (server_name);
-                }
-            }
-        }
-    }
-    weechat_infolist_free (infolist);
 }
 
 /*
@@ -571,20 +406,16 @@ irc_config_reload (void *data, struct t_config_file *config_file)
     /* make C compiler happy */
     (void) data;
     
-    weechat_config_section_free_options (irc_config_section_server);
-    
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
+        ptr_server->reloading_from_config = 1;
         ptr_server->reloaded_from_config = 0;
     }
     
     irc_ignore_free_all ();
     
     rc = weechat_config_reload (config_file);
-    
-    if (rc == WEECHAT_CONFIG_READ_OK)
-        irc_config_reload_servers_from_config (1);
     
     ptr_server = irc_servers;
     while (ptr_server)
@@ -601,9 +432,6 @@ irc_config_reload (void *data, struct t_config_file *config_file)
                                   "memory because it's currently used"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 ptr_server->name);
-                /* TODO: create options for server in section (options that
-                   are not default one */
-                // ...
             }
             else
                 irc_server_free (ptr_server);
@@ -616,7 +444,7 @@ irc_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * irc_config_ignore_read: read ignore option from config file
+ * irc_config_ignore_read: read ignore option from configuration file
  *                         return 1 if ok, 0 if error
  */
 
@@ -682,20 +510,42 @@ irc_config_ignore_write (void *data, struct t_config_file *config_file,
 }
 
 /*
- * irc_config_server_write_default: write default server section in configuration file
+ * irc_config_server_write_default_cb: write default server section in
+ *                                     configuration file
  */
 
 void
-irc_config_server_write_default (void *data, struct t_config_file *config_file,
-                                 const char *section_name)
+irc_config_server_write_default_cb (void *data,
+                                    struct t_config_file *config_file,
+                                    const char *section_name)
 {
+    int i;
+    char option_name[128];
+    
     /* make C compiler happy */
     (void) data;
     
     weechat_config_write_line (config_file, section_name, NULL);
     
-    weechat_config_write_line (config_file, "freenode.addresses",
-                               "%s", "\"chat.freenode.net/6667\"");
+    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+    {
+        snprintf (option_name, sizeof (option_name),
+                  "freenode.%s",
+                  irc_server_option_string[i]);
+        switch (i)
+        {
+            case IRC_SERVER_OPTION_ADDRESSES:
+                weechat_config_write_line (config_file,
+                                           option_name,
+                                           "%s", "\"chat.freenode.net/6667\"");
+                break;
+            default:
+                weechat_config_write_line (config_file,
+                                           option_name,
+                                           WEECHAT_CONFIG_OPTION_NULL);
+                break;
+        }
+    }
 }
 
 /*
@@ -707,11 +557,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                               struct t_config_section *section,
                               int index_option,
                               const char *option_name,
+                              const char *default_value,
                               const char *value,
+                              int null_value_allowed,
                               void *callback_change,
-                              void *callback_change_data,
-                              void *callback_delete,
-                              void *callback_delete_data)
+                              void *callback_change_data)
 {
     struct t_config_option *new_option;
     
@@ -719,140 +569,152 @@ irc_config_server_new_option (struct t_config_file *config_file,
     
     switch (index_option)
     {
-        case IRC_CONFIG_SERVER_AUTOCONNECT:
+        case IRC_SERVER_OPTION_AUTOCONNECT:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
                 N_("automatically connect to server when WeeChat is starting"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_AUTORECONNECT:
+        case IRC_SERVER_OPTION_AUTORECONNECT:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
                 N_("automatically reconnect to server when disconnected"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_AUTORECONNECT_DELAY:
+        case IRC_SERVER_OPTION_AUTORECONNECT_DELAY:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
                 N_("delay (in seconds) before trying again to reconnect to server"),
                 NULL, 0, 65535,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_PROXY:
+        case IRC_SERVER_OPTION_PROXY:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("proxy used for this server (optional)"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_ADDRESSES:
+        case IRC_SERVER_OPTION_ADDRESSES:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("list of IP/port or hostname/port for server (separated by comma)"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_IPV6:
+        case IRC_SERVER_OPTION_IPV6:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
                 N_("use IPv6 protocol for server communication"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_SSL:
+        case IRC_SERVER_OPTION_SSL:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
                 N_("use SSL for server communication"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_PASSWORD:
+        case IRC_SERVER_OPTION_PASSWORD:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("password for IRC server"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_NICKS:
+        case IRC_SERVER_OPTION_NICKS:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("nicknames to use on IRC server (separated by comma)"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_USERNAME:
+        case IRC_SERVER_OPTION_USERNAME:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("user name to use on IRC server"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_REALNAME:
+        case IRC_SERVER_OPTION_REALNAME:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("real name to use on IRC server"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_LOCAL_HOSTNAME:
+        case IRC_SERVER_OPTION_LOCAL_HOSTNAME:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("custom local hostname/IP for server (optional, if empty "
                    "local hostname is used)"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_COMMAND:
+        case IRC_SERVER_OPTION_COMMAND:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
@@ -860,47 +722,51 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "be separated by ';', use '\\;' for a semicolon, special variables "
                    "$nick, $channel and $server are replaced by their value)"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_COMMAND_DELAY:
+        case IRC_SERVER_OPTION_COMMAND_DELAY:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
                 N_("delay (in seconds) after command was executed (example: give some "
                    "time for authentication)"),
                 NULL, 0, 3600,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_AUTOJOIN:
+        case IRC_SERVER_OPTION_AUTOJOIN:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("comma separated list of channels to join when connected to server "
                    "(example: \"#chan1,#chan2,#chan3 key1,key2\")"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_SERVER_AUTOREJOIN:
+        case IRC_SERVER_OPTION_AUTOREJOIN:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
                 N_("automatically rejoin channels when kicked"),
                 NULL, 0, 0,
-                irc_config_server_option_default[index_option], value,
+                default_value, value,
+                null_value_allowed,
                 NULL, NULL,
                 callback_change, callback_change_data,
-                callback_delete, callback_delete_data);
+                NULL, NULL);
             break;
-        case IRC_CONFIG_NUM_SERVER_OPTIONS:
+        case IRC_SERVER_NUM_OPTIONS:
             break;
     }
     
@@ -908,21 +774,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
 }
 
 /*
- * irc_config_server_create_option: create a server option
+ * irc_config_server_read_cb: read server option in configuration file
  */
 
 int
-irc_config_server_create_option (void *data, struct t_config_file *config_file,
-                                 struct t_config_section *section,
-                                 const char *option_name, const char *value)
+irc_config_server_read_cb (void *data, struct t_config_file *config_file,
+                           struct t_config_section *section,
+                           const char *option_name, const char *value)
 {
-    struct t_config_option *ptr_option;
     struct t_irc_server *ptr_server;
-    int rc, index_option;
+    int index_option, rc, i;
     char *pos_option, *server_name;
     
     /* make C compiler happy */
     (void) data;
+    (void) config_file;
+    (void) section;
     
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
@@ -936,52 +803,34 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
             pos_option++;
             if (server_name)
             {
-                index_option = irc_config_search_server_option (pos_option);
+                index_option = irc_server_search_option (pos_option);
                 if (index_option >= 0)
                 {
                     ptr_server = irc_server_search (server_name);
                     if (!ptr_server)
                         ptr_server = irc_server_alloc (server_name);
-                    if (!ptr_server)
+                    if (ptr_server)
+                    {
+                        if (ptr_server->reloading_from_config
+                            && !ptr_server->reloaded_from_config)
+                        {
+                            for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+                            {
+                                weechat_config_option_set (ptr_server->options[i],
+                                                           NULL, 1);
+                            }
+                            ptr_server->reloaded_from_config = 1;
+                        }
+                        rc = weechat_config_option_set (ptr_server->options[index_option],
+                                                        value, 1);
+                    }
+                    else
                     {
                         weechat_printf (NULL,
                                         _("%s%s: error creating server "
                                           "\"%s\""),
                                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                         server_name);
-                    }
-                    ptr_option = weechat_config_search_option (config_file,
-                                                               section,
-                                                               option_name);
-                    if (ptr_option)
-                    {
-                        rc = weechat_config_option_set (ptr_option, value, 1);
-                    }
-                    else
-                    {
-                        if (value && value[0] && (index_option >= 0))
-                        {
-                            ptr_option = irc_config_server_new_option (config_file,
-                                                                       section,
-                                                                       index_option,
-                                                                       option_name,
-                                                                       value,
-                                                                       &irc_config_server_change_cb,
-                                                                       irc_config_server_option_string[index_option],
-                                                                       &irc_config_server_delete_cb,
-                                                                       irc_config_server_option_string[index_option]);
-                            
-                            if (ptr_option)
-                            {
-                                if (ptr_server)
-                                {
-                                    irc_server_set_with_option (ptr_server,
-                                                                index_option,
-                                                                ptr_option);
-                                }
-                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                            }
-                        }
                     }
                 }
                 free (server_name);
@@ -998,6 +847,36 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
     }
     
     return rc;
+}
+
+/*
+ * irc_config_server_write_cb: write server section in configuration file
+ */
+
+void
+irc_config_server_write_cb (void *data, struct t_config_file *config_file,
+                            const char *section_name)
+{
+    struct t_irc_server *ptr_server;
+    int i;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    weechat_config_write_line (config_file, section_name, NULL);
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (!ptr_server->temp_server || irc_config_write_temp_servers)
+        {
+            for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+            {
+                weechat_config_write_option (config_file,
+                                             ptr_server->options[i]);
+            }
+        }
+    }
 }
 
 /*
@@ -1051,28 +930,34 @@ irc_config_server_create_default_options (struct t_config_section *section)
         realname = strdup ("weechat");
     }
     
-    for (i = 0; i < IRC_CONFIG_NUM_SERVER_OPTIONS; i++)
+    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
         default_value = NULL;
-        if (i == IRC_CONFIG_SERVER_NICKS)
-            default_value = nicks;
-        else if (i == IRC_CONFIG_SERVER_USERNAME)
-            default_value = username;
-        else if (i == IRC_CONFIG_SERVER_REALNAME)
-            default_value = realname;
+        switch (i)
+        {
+            case IRC_SERVER_OPTION_NICKS:
+                default_value = nicks;
+                break;
+            case IRC_SERVER_OPTION_USERNAME:
+                default_value = username;
+                break;
+            case IRC_SERVER_OPTION_REALNAME:
+                default_value = realname;
+                break;
+        }
         if (!default_value)
-            default_value = irc_config_server_option_default[i];
+            default_value = irc_server_option_default[i];
         
         irc_config_server_default[i] = irc_config_server_new_option (
             irc_config_file,
             section,
             i,
-            irc_config_server_option_string[i],
+            irc_server_option_string[i],
+            irc_server_option_default[i],
             default_value,
+            0,
             &irc_config_server_default_change_cb,
-            irc_config_server_option_string[i],
-            NULL,
-            NULL);
+            irc_server_option_string[i]);
     }
     
     if (nicks)
@@ -1114,80 +999,80 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "color_nicks_in_server_messages", "boolean",
         N_("use nick color in messages from server"),
-        NULL, 0, 0, "on", NULL, NULL, NULL,
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_one_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
         "one_server_buffer", "boolean",
         N_("use same buffer for all servers"),
-        NULL, 0, 0, "off", NULL, NULL, NULL,
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_look_one_server_buffer, NULL, NULL, NULL);
     irc_config_look_open_near_server = weechat_config_new_option (
         irc_config_file, ptr_section,
         "open_near_server", "boolean",
         N_("open new channels/privates near server"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_nick_prefix = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_prefix", "string",
         N_("text to display before nick in chat window"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_nick_suffix = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_suffix", "string",
         N_("text to display after nick in chat window"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_nick_completion_smart = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_completion_smart", "boolean",
         N_("smart completion for nicks (completes with last speakers first)"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_away", "integer",
         N_("display message when (un)marking as away"),
-        "off|local|channel", 0, 0, "local", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_channel_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_channel_modes", "boolean",
         N_("display channel modes in \"buffer_name\" bar item"),
-        NULL, 0, 0, "on", NULL, NULL, NULL,
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_look_display_channel_modes, NULL, NULL, NULL);
     irc_config_look_hide_nickserv_pwd = weechat_config_new_option (
         irc_config_file, ptr_section,
         "hide_nickserv_pwd", "boolean",
         N_("hide password displayed by nickserv"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_tags = weechat_config_new_option (
         irc_config_file, ptr_section,
         "highlight_tags", "string",
         N_("comma separated list of tags for messages that may produce "
            "highlight (usually any message from another user, not server "
            "messages,..)"),
-        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, NULL, NULL,
+        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
         &irc_config_change_look_highlight_tags, NULL, NULL, NULL);
     irc_config_look_show_away_once = weechat_config_new_option (
         irc_config_file, ptr_section,
         "show_away_once", "boolean",
         N_("show remote away message only once in private"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter", "boolean",
         N_("filter join/part/quit messages for a nick if not speaking for "
            "some minutes on channel (you must create a filter on tag "
            "\"irc_smart_filter\")"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
         N_("delay for filtering join/part/quit messages (in minutes)"),
-        NULL, 1, 60*24*7, "5", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 1, 60*24*7, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "boolean",
         N_("display notices as private messages"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* color */
     ptr_section = weechat_config_new_section (irc_config_file, "color",
@@ -1205,19 +1090,19 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "message_join", "color",
         N_("color for text in join messages"),
-        NULL, -1, 0, "green", NULL, NULL, NULL,
+        NULL, -1, 0, "green", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_color_message_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_quit", "color",
         N_("color for text in part/quit messages"),
-        NULL, -1, 0, "red", NULL, NULL, NULL,
+        NULL, -1, 0, "red", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_color_input_nick = weechat_config_new_option (
         irc_config_file, ptr_section,
         "input_nick", "color",
         N_("color for nick in input bar"),
-        NULL, -1, 0, "lightcyan", NULL, NULL, NULL,
+        NULL, -1, 0, "lightcyan", NULL, 0, NULL, NULL,
         &irc_config_change_color_input_nick, NULL, NULL, NULL);
     
     /* network */
@@ -1237,70 +1122,70 @@ irc_config_init ()
         "default_msg_part", "string",
         N_("default part message (leaving channel) ('%v' will be replaced by "
            "WeeChat version in string)"),
-        NULL, 0, 0, "WeeChat %v", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_default_msg_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "default_msg_quit", "string",
         N_("default quit message (disconnecting from server) ('%v' will be "
            "replaced by WeeChat version in string)"),
-        NULL, 0, 0, "WeeChat %v", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_away_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "away_check", "integer",
         N_("interval between two checks for away (in minutes, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "0", NULL, NULL, NULL,
+        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL,
         &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_away_check_max_nicks = weechat_config_new_option (
         irc_config_file, ptr_section,
         "away_check_max_nicks", "integer",
         N_("do not check away nicks on channels with high number of nicks "
            "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "0", NULL, NULL, NULL,
+        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL,
         &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_check", "integer",
         N_("interval between two checks for lag (in seconds, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "60", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "60", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_min_show = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_min_show", "integer",
         N_("minimum lag to show (in seconds)"),
-        NULL, 0, INT_MAX, "1", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_disconnect = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_disconnect", "integer",
         N_("disconnect after important lag (in minutes, 0 = never "
            "disconnect)"),
-        NULL, 0, INT_MAX, "5", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_anti_flood = weechat_config_new_option (
         irc_config_file, ptr_section,
         "anti_flood", "integer",
         N_("anti-flood: # seconds between two user messages (0 = no "
            "anti-flood)"),
-        NULL, 0, 5, "2", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 5, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_receive", "boolean",
         N_("when off, colors codes are ignored in incoming messages"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_send = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_send", "boolean",
         N_("allow user to send colors with special codes (^Cb=bold, "
            "^Ccxx=color, ^Ccxx,yy=color+background, ^Cu=underline, "
            "^Cr=reverse)"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,
         "send_unknown_commands", "boolean",
         N_("send unknown commands to IRC server"),
-        NULL, 0, 0, "off", NULL, NULL, NULL,
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
     
-    /* filters */
+    /* ignore */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",
                                               0, 0,
                                               &irc_config_ignore_read, NULL,
@@ -1331,11 +1216,11 @@ irc_config_init ()
     
     /* server */
     ptr_section = weechat_config_new_section (irc_config_file, "server",
-                                              1, 1,
+                                              0, 0,
+                                              &irc_config_server_read_cb, NULL,
+                                              &irc_config_server_write_cb, NULL,
+                                              &irc_config_server_write_default_cb, NULL,
                                               NULL, NULL,
-                                              NULL, NULL,
-                                              &irc_config_server_write_default, NULL,
-                                              &irc_config_server_create_option, NULL,
                                               NULL, NULL);
     if (!ptr_section)
     {
@@ -1374,8 +1259,10 @@ irc_config_read ()
  */
 
 int
-irc_config_write ()
+irc_config_write (int write_temp_servers)
 {
+    irc_config_write_temp_servers = write_temp_servers;
+    
     return weechat_config_write (irc_config_file);
 }
 

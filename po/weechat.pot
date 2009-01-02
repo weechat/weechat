@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 18:36+0100\n"
+"POT-Creation-Date: 2009-01-02 22:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,6 +302,9 @@ msgid "values"
 msgstr ""
 
 msgid "default value"
+msgstr ""
+
+msgid "(undefined)"
 msgstr ""
 
 msgid "current value"
@@ -957,12 +960,21 @@ msgstr ""
 msgid "set config options"
 msgstr ""
 
-msgid "[option [ = value]]"
+msgid "[option [value]]"
 msgstr ""
 
 msgid ""
 "option: name of an option\n"
-" value: value for option"
+" value: new value for option\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off ou toggle\n"
+"  integer: number, ++number ou --number  string : any string (\"\" for empty "
+"string)\n"
+"  color  : color name, ++number ou --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables."
 msgstr ""
 
 msgid "unset/reset config options"
@@ -1430,7 +1442,7 @@ msgid "(default options)"
 msgstr ""
 
 #, c-format
-msgid "%sWarning: config file \"%s\" not found"
+msgid "%sWarning: configuration file \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -1443,10 +1455,6 @@ msgstr ""
 
 #, c-format
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
-msgstr ""
-
-#, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
 msgstr ""
 
 #, c-format
@@ -1463,56 +1471,6 @@ msgstr ""
 
 #, c-format
 msgid "Reloading configuration file %s"
-msgstr ""
-
-msgid "  . type: boolean\n"
-msgstr ""
-
-msgid "  . values: \"on\" or \"off\"\n"
-msgstr ""
-
-#, c-format
-msgid "  . default value: \"%s\"\n"
-msgstr ""
-
-msgid "  . type: string\n"
-msgstr ""
-
-msgid "  . values: "
-msgstr ""
-
-msgid "  . type: integer\n"
-msgstr ""
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr ""
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr ""
-
-msgid "  . values: any string\n"
-msgstr ""
-
-msgid "  . type: char\n"
-msgstr ""
-
-msgid "  . values: any char\n"
-msgstr ""
-
-#, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr ""
-
-msgid "  . type: color\n"
-msgstr ""
-
-msgid "  . values: color (depends on GUI used)\n"
-msgstr ""
-
-#, c-format
-msgid "  . description: %s\n"
 msgstr ""
 
 #, c-format
@@ -2101,7 +2059,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr ""
 
 #, c-format
-msgid "%s: server %s%s%s created"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr ""
 
 #, c-format
@@ -2208,18 +2166,6 @@ msgid "No server found with \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr ""
-
-#, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr ""
 
@@ -2228,7 +2174,31 @@ msgid "%s%s: unable to create server"
 msgstr ""
 
 #, c-format
+msgid "%s: server %s%s%s created"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s is not temporary any more"
 msgstr ""
 
 #, c-format
@@ -2689,7 +2659,8 @@ msgstr ""
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
+"[rename servername newservername] | [keep servername] | [del servername] | "
+"[deloutq] | [switch]"
 msgstr ""
 
 msgid ""
@@ -2705,6 +2676,7 @@ msgid ""
 "       ssl: use SSL protocol\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
@@ -2879,14 +2851,6 @@ msgid "%sirc: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s%s: error creating server \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
-msgstr ""
-
-#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -2947,6 +2911,10 @@ msgid ""
 msgstr ""
 
 msgid "automatically rejoin channels when kicked"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating server \"%s\""
 msgstr ""
 
 #, c-format
@@ -3052,13 +3020,16 @@ msgid "IRC debug messages"
 msgstr ""
 
 #, c-format
-msgid "%sServer: %s%s %s[%s%s%s]"
+msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr ""
 
 msgid "connected"
 msgstr ""
 
 msgid "not connected"
+msgstr ""
+
+msgid " (temporary)"
 msgstr ""
 
 msgid "on"
@@ -3619,11 +3590,11 @@ msgid ""
 "    /logger disable\n"
 "\n"
 "  set level to 3 for all IRC buffers:\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  disable logging for main WeeChat buffer:\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  use a directory per IRC server and a file per channel inside:\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Log levels used by IRC plugin:\n"
 "  1: user message, notice, private\n"

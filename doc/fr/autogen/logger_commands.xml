@@ -23,11 +23,11 @@ Exemples :
   désactiver l'enregistrement pour le tampon courant :
     /logger disable
   définir le niveau à 3 pour les tampons IRC :
-    /set logger.level.irc = 3
+    /set logger.level.irc 3
   désactiver l'enregistrement pour le tampon principal de WeeChat :
-    /set logger.level.core.weechat = 0
+    /set logger.level.core.weechat 0
   utiliser un répertoire par serveur IRC et un fichier par canal dedans :
-    /set logger.mask.irc = $server/$channel.weechatlog
+    /set logger.mask.irc "$server/$channel.weechatlog"
 
 Niveaux de log utilisés par l'extension IRC :
   1: message d'utilisateur, notice, privé

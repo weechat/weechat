@@ -2944,6 +2944,7 @@ struct t_config_option *weechat_config_new_option (
     int max,
     const chat *default_value,
     const char *value,
+    int null_value_allowed,
     int (*callback_check_value)(void *data,
                                 struct t_config_option *option,
                                 const char *value),
@@ -3027,6 +3028,12 @@ struct t_config_option *weechat_config_new_option (
           <listitem>
             <para>
               <option>value</option>: value for option
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>null_value_allowed</option>: 1 if null (undefined value)
+              is allowed for option, otherwise 0
             </para>
           </listitem>
           <listitem>
@@ -3159,6 +3166,7 @@ struct t_config_option *option1 =
                                0, 0, /* min, max */
                                "on", /* default */
                                "on", /* value */
+                               0, /* null value allowed */
                                NULL, NULL, /* check callback */
                                NULL, NULL, /* change callback */
                                NULL, NULL); /* delete callback */
@@ -3171,6 +3179,7 @@ struct t_config_option *option2 =
                                0, 100, /* min, max */
                                "15", /* default */
                                "15", /* value */
+                               0, /* null value allowed */
                                NULL, NULL, /* check callback */
                                NULL, NULL, /* change callback */
                                NULL, NULL); /* delete callback */
@@ -3183,6 +3192,7 @@ struct t_config_option *option3 =
                                0, 0, /* min, max */
                                "bottom", /* default */
                                "bottom", /* value */
+                               0, /* null value allowed */
                                NULL, NULL, /* check callback */
                                NULL, NULL, /* change callback */
                                NULL, NULL); /* delete callback */
@@ -3195,6 +3205,7 @@ struct t_config_option *option4 =
                                0, 0, /* min, max */
                                "test", /* default */
                                "test", /* value */
+                               1, /* null value allowed */
                                NULL, NULL, /* check callback */
                                NULL, NULL, /* change callback */
                                NULL, NULL); /* delete callback */
@@ -3207,6 +3218,7 @@ struct t_config_option *option5 =
                                0, 0, /* min, max */
                                "lightblue", /* default */
                                "lightblue", /* value */
+                               0, /* null value allowed */
                                NULL, NULL, /* check callback */
                                NULL, NULL, /* change callback */
                                NULL, NULL); /* delete callback */
@@ -3487,6 +3499,66 @@ switch (weechat_config_option_set (option, "new_value", 1))
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_config_option_set_null">
+      <title>weechat_config_option_set_null</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_option_set_null (
+    struct t_config_option *option,
+    int run_callback);
+</programlisting>
+      </para>
+      <para>
+        Set null (undefined value) for an option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>run_callback</option>: 1 for calling change callback if
+              option is changed (if it was not null), 0 otherwise
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <note>
+        <para>
+          You can set value to null only if option allows null value
+          (see <xref linkend="secPluginCApi_weechat_config_new_option" />).
+        </para>
+      </note>
+      <para>
+        Return value: WEECHAT_CONFIG_OPTION_SET_OK_CHANGED if option value has
+        been reset, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE if value was not
+        changed, WEECHAT_CONFIG_OPTION_SET_ERROR if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+switch (weechat_config_option_set_null (option, 1))
+{
+    case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+        /* .... */
+        break;
+    case WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+        /* .... */
+        break;
+    case WEECHAT_CONFIG_OPTION_SET_ERROR:
+        /* .... */
+        break;
+}
+</screen>
+      </para>
+    </section>
+    
     <section id="secPluginCApi_weechat_config_option_unset">
       <title>weechat_config_option_unset</title>
       
@@ -3678,9 +3750,49 @@ void *weechat_config_option_get_pointer (
         </itemizedlist>
       </para>
       <para>
+        Return value: pointer to property asked.
+      </para>
+      <para>
         Example:
 <screen>
 char *description = weechat_config_option_get_pointer (option, "description");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_option_is_null">
+      <title>weechat_config_option_is_null</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_option_is_null (struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Check if an option is null (undefined value).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_config_option_is_null (option))
+{
+    /* value is null */
+}
+else
+{
+    /* value is not null */
+}
 </screen>
       </para>
     </section>
@@ -3725,6 +3837,46 @@ else
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_config_boolean_default">
+      <title>weechat_config_boolean_default</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_boolean_default (struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Get default boolean value of option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: default boolean value of option (0 or 1).
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_config_boolean_default (option))
+{
+    /* true */
+}
+else
+{
+    /* false */
+}
+</screen>
+      </para>
+    </section>
+    
     <section id="secPluginCApi_weechat_config_integer">
       <title>weechat_config_integer</title>
       
@@ -3752,7 +3904,38 @@ int weechat_config_integer (struct t_config_option *option);
       </para>
       <para>
         Example:
-        <screen>int value = weechat_config_boolean (option);</screen>
+        <screen>int value = weechat_config_integer (option);</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_integer_default">
+      <title>weechat_config_integer_default</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_integer_default (struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Get default integer value of option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: default integer value of option.
+      </para>
+      <para>
+        Example:
+        <screen>int value = weechat_config_integer (option);</screen>
       </para>
     </section>
     
@@ -3793,6 +3976,37 @@ const char *weechat_config_string (struct t_config_option *option);
       <para>
         Prototype:
 <programlisting>
+const char *weechat_config_string_default (struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Get default string value of option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: default string value of option.
+      </para>
+      <para>
+        Example:
+        <screen>char *value = weechat_config_string_default (option);</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_color">
+      <title>weechat_config_color</title>
+      
+      <para>
+        Prototype:
+<programlisting>
 const char *weechat_config_color (struct t_config_option *option);
 </programlisting>
       </para>
@@ -3815,6 +4029,85 @@ const char *weechat_config_color (struct t_config_option *option);
       <para>
         Example:
         <screen>char *color = weechat_config_color (option);</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_color_default">
+      <title>weechat_config_color_default</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_config_color_default (struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Get default color value of option.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: default color value of option (string with name of color).
+      </para>
+      <para>
+        Example:
+        <screen>char *color = weechat_config_color_default (option);</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_write_option">
+      <title>weechat_config_write_option</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_config_write_option (
+    struct t_config_file *config_file,
+    struct t_config_option *option);
+</programlisting>
+      </para>
+      <para>
+        Write a line in a configuration file with option and its value (this
+        function should be called only in "write" or "write_default" callbacks
+        for a section).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>config_file</option>: configuration file pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>option</option>: option pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_section_write_cb (void *data, struct t_config_file *config_file,
+                     const char *section_name)
+{
+    weechat_config_write_line (config_file, "my_section", NULL);
+    
+    weechat_config_write_option (config_file, option);
+    
+    return WEECHAT_RC_OK;
+}
+</screen>
       </para>
     </section>
     
@@ -3854,6 +4147,12 @@ void weechat_config_write_line (
           </listitem>
         </itemizedlist>
       </para>
+      <note>
+        <para>
+          If value is NULL, then line with section name is written
+          (for example: "[section]").
+        </para>
+      </note>
       <para>
         Example:
 <screen>
@@ -3861,6 +4160,8 @@ int
 my_section_write_cb (void *data, struct t_config_file *config_file,
                      const char *section_name)
 {
+    weechat_config_write_line (config_file, "my_section", NULL);
+    
     weechat_config_write_line (config_file, "option", "%s;%d",
                                "value", 123);
     

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 18:36+0100\n"
-"PO-Revision-Date: 2008-12-19 18:37+0100\n"
+"POT-Creation-Date: 2009-01-02 22:40+0100\n"
+"PO-Revision-Date: 2009-01-02 18:38+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -324,6 +324,9 @@ msgstr "valeurs"
 
 msgid "default value"
 msgstr "valeur par défaut"
+
+msgid "(undefined)"
+msgstr "(non défini)"
 
 msgid "current value"
 msgstr "valeur courante"
@@ -1174,15 +1177,34 @@ msgstr ""
 msgid "set config options"
 msgstr "modifier des options de configuration"
 
-msgid "[option [ = value]]"
-msgstr "[option [ = valeur]]"
+msgid "[option [value]]"
+msgstr "[option [valeur]]"
 
 msgid ""
 "option: name of an option\n"
-" value: value for option"
+" value: new value for option\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off ou toggle\n"
+"  integer: number, ++number ou --number  string : any string (\"\" for empty "
+"string)\n"
+"  color  : color name, ++number ou --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables."
 msgstr ""
 "option: nom d'une option\n"
-"valeur: valeur pour l'option"
+"valeur: nouvelle valeur pour l'option\n"
+"\n"
+"La nouvelle valeur peut être, selon le type de l'option :\n"
+"  booléen: on, off ou toggle\n"
+"  entier : nombre, ++nombre ou --nombre\n"
+"  chaîne : toute chaîne (\"\" pour une chaîne vide)\n"
+"  couleur: nom de couleur, ++nombre ou --nombre\n"
+"\n"
+"Pour tous les types, vous pouvez utiliser null pour supprimer la valeur de "
+"l'option (valeur non définie). Cela ne fonctionne qu'avec certaines options "
+"spéciales des extensions."
 
 msgid "unset/reset config options"
 msgstr "supprimer/réinitialiser des options de configuration"
@@ -1767,8 +1789,8 @@ msgid "(default options)"
 msgstr "(options par défaut)"
 
 #, c-format
-msgid "%sWarning: config file \"%s\" not found"
-msgstr "%sAttention: fichier de configuration \"%s\" non trouvé."
+msgid "%sWarning: configuration file \"%s\" not found"
+msgstr "%sAttention: fichier de configuration \"%s\" non trouvé"
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -1781,10 +1803,6 @@ msgstr "%sAttention: %s, ligne %d: syntaxe invalide, il manque \"]\""
 #, c-format
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sAttention: %s, ligne %d: section inconnue (\"%s\")"
-
-#, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
-msgstr "%sAttention: %s, ligne %d: syntaxe invalide, il manque \"=\""
 
 #, c-format
 msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
@@ -1802,56 +1820,6 @@ msgstr "%sAttention: %s, ligne %d: valeur invalide pour l'option \"%s\""
 #, c-format
 msgid "Reloading configuration file %s"
 msgstr "Rechargement du fichier de configuration %s"
-
-msgid "  . type: boolean\n"
-msgstr "  . type: booléen\n"
-
-msgid "  . values: \"on\" or \"off\"\n"
-msgstr "  . valeurs: \"on\" ou \"off\"\n"
-
-#, c-format
-msgid "  . default value: \"%s\"\n"
-msgstr "  . valeur par défaut: \"%s\"\n"
-
-msgid "  . type: string\n"
-msgstr "  . type: chaîne\n"
-
-msgid "  . values: "
-msgstr "  . valeurs: "
-
-msgid "  . type: integer\n"
-msgstr "  . type: entier\n"
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr "  . valeurs: entre %d et %d\n"
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr "  . valeur par défaut: %d\n"
-
-msgid "  . values: any string\n"
-msgstr "  . valeurs: toute chaîne\n"
-
-msgid "  . type: char\n"
-msgstr "  . type: caractère\n"
-
-msgid "  . values: any char\n"
-msgstr "  . valeurs: tout caractère\n"
-
-#, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr "  . valeurs: toute chaîne (limite: %d caractères)\n"
-
-msgid "  . type: color\n"
-msgstr "  . type: couleur\n"
-
-msgid "  . values: color (depends on GUI used)\n"
-msgstr "  . valeurs: couleur (dépend de l'interface utilisée)\n"
-
-#, c-format
-msgid "  . description: %s\n"
-msgstr "  . description: %s\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -2508,8 +2476,8 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s%s: paramètre manquant pour l'option \"%s\""
 
 #, c-format
-msgid "%s: server %s%s%s created"
-msgstr "%s: serveur %s%s%s créé"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgstr "%s: serveur %s%s%s créé (serveur temporaire, NON SAUVE !)"
 
 #, c-format
 msgid "%s%s: unable to create server \"%s\""
@@ -2618,18 +2586,6 @@ msgid "No server found with \"%s\""
 msgstr "Pas de serveur trouvé avec \"%s\""
 
 #, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s%s: le serveur \"%s\" n'existe pas pour la commande \"%s\""
-
-#, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: le serveur \"%s\" existe déjà pour la commande \"%s\""
-
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "%s: le serveur %s%s%s a été renommé en %s%s"
-
-#, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s%s: le serveur \"%s\" existe déjà, impossible de le créer !"
 
@@ -2638,8 +2594,32 @@ msgid "%s%s: unable to create server"
 msgstr "%s%s: impossible de créer le serveur"
 
 #, c-format
+msgid "%s: server %s%s%s created"
+msgstr "%s: serveur %s%s%s créé"
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s%s: le serveur \"%s\" n'existe pas pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: le serveur \"%s\" existe déjà pour la commande \"%s\""
+
+#, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "%s: le serveur %s%s%s a été copié vers %s%s"
+
+#, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "%s: le serveur %s%s%s a été renommé en %s%s"
+
+#, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr "%s%s: le serveur \"%s\" n'est pas temporaire"
+
+#, c-format
+msgid "%s: server %s%s%s is not temporary any more"
+msgstr "%s: le serveur %s%s%s n'est plus temporaire"
 
 #, c-format
 msgid ""
@@ -3212,12 +3192,13 @@ msgstr "liste, ajoute ou retire des serveurs"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
+"[rename servername newservername] | [keep servername] | [del servername] | "
+"[deloutq] | [switch]"
 msgstr ""
 "[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/"
 "port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur "
-"nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [del "
-"nom_serveur] | [deloutq] | [switch]"
+"nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep "
+"nom_serveur] | [del nom_serveur] | [deloutq] | [switch]"
 
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
@@ -3232,6 +3213,7 @@ msgid ""
 "       ssl: use SSL protocol\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
@@ -3262,6 +3244,8 @@ msgstr ""
 "        ssl: utiliser le protocole SSL\n"
 "       copy: dupliquer un serveur\n"
 "     rename: renommer un serveur\n"
+"       keep: garder le serveur dans le fichier de configuration (pour les "
+"serveurs temporaires seulement)\n"
 "        del: supprimer un serveur\n"
 "    deloutq: supprimer la file d'attente des messages sortants pour tous les "
 "serveurs (tous les messages que WeeChat est actuellement en train "
@@ -3466,16 +3450,6 @@ msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%sirc: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
-msgid "%s%s: error creating server \"%s\""
-msgstr "%s%s: erreur de création du serveur \"%s\""
-
-#, c-format
-msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
-msgstr ""
-"%s%s: erreur de création de l'option \"%s\" pour le serveur \"%s\" (server "
-"non trouvé)"
-
-#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -3549,6 +3523,10 @@ msgstr ""
 
 msgid "automatically rejoin channels when kicked"
 msgstr "rejoindre automatiquement les canaux quand mis dehors"
+
+#, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s%s: erreur de création du serveur \"%s\""
 
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -3676,14 +3654,17 @@ msgid "IRC debug messages"
 msgstr "Messages de debug IRC"
 
 #, c-format
-msgid "%sServer: %s%s %s[%s%s%s]"
-msgstr "%sServeur: %s%s %s[%s%s%s]"
+msgid "%sServer: %s%s %s[%s%s%s]%s%s"
+msgstr "%sServeur: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"
 msgstr "connecté"
 
 msgid "not connected"
 msgstr "non connecté"
+
+msgid " (temporary)"
+msgstr " (temporaire)"
 
 msgid "on"
 msgstr "activé"
@@ -4277,11 +4258,11 @@ msgid ""
 "    /logger disable\n"
 "\n"
 "  set level to 3 for all IRC buffers:\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  disable logging for main WeeChat buffer:\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  use a directory per IRC server and a file per channel inside:\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Log levels used by IRC plugin:\n"
 "  1: user message, notice, private\n"
@@ -4307,11 +4288,11 @@ msgstr ""
 "  désactiver l'enregistrement pour le tampon courant :\n"
 "    /logger disable\n"
 "  définir le niveau à 3 pour les tampons IRC :\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  désactiver l'enregistrement pour le tampon principal de WeeChat :\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  utiliser un répertoire par serveur IRC et un fichier par canal dedans :\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Niveaux de log utilisés par l'extension IRC :\n"
 "  1: message d'utilisateur, notice, privé\n"
@@ -5250,3 +5231,51 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "  . type: boolean\n"
+#~ msgstr "  . type: booléen\n"
+
+#~ msgid "  . values: \"on\" or \"off\"\n"
+#~ msgstr "  . valeurs: \"on\" ou \"off\"\n"
+
+#~ msgid "  . default value: \"%s\"\n"
+#~ msgstr "  . valeur par défaut: \"%s\"\n"
+
+#~ msgid "  . type: string\n"
+#~ msgstr "  . type: chaîne\n"
+
+#~ msgid "  . values: "
+#~ msgstr "  . valeurs: "
+
+#~ msgid "  . type: integer\n"
+#~ msgstr "  . type: entier\n"
+
+#~ msgid "  . values: between %d and %d\n"
+#~ msgstr "  . valeurs: entre %d et %d\n"
+
+#~ msgid "  . default value: %d\n"
+#~ msgstr "  . valeur par défaut: %d\n"
+
+#~ msgid "  . values: any string\n"
+#~ msgstr "  . valeurs: toute chaîne\n"
+
+#~ msgid "  . type: char\n"
+#~ msgstr "  . type: caractère\n"
+
+#~ msgid "  . values: any char\n"
+#~ msgstr "  . valeurs: tout caractère\n"
+
+#~ msgid "  . values: any string (limit: %d chars)\n"
+#~ msgstr "  . valeurs: toute chaîne (limite: %d caractères)\n"
+
+#~ msgid "  . type: color\n"
+#~ msgstr "  . type: couleur\n"
+
+#~ msgid "  . values: color (depends on GUI used)\n"
+#~ msgstr "  . valeurs: couleur (dépend de l'interface utilisée)\n"
+
+#~ msgid "  . description: %s\n"
+#~ msgstr "  . description: %s\n"
+
+#~ msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
+#~ msgstr "%sAttention: %s, ligne %d: syntaxe invalide, il manque \"=\""

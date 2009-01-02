@@ -62,8 +62,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           festzulegen, benutzen Sie den <command>/set</command>" Befehl.
           Zum Beispiel:
 <screen>
-/set charset.default.decode = ISO-8859-15
-/set charset.default.encode = ISO-8859-15
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
 </screen>
           Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim
           ersten Start des Plugins), wird es automatisch auf den
@@ -102,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <!-- TRANSLATION NEEDED -->
           To set charset for all IRC channels (and privates) of an IRC server,
           use following command:
-          <screen>/set charset.decode.irc.freenode = ISO-8859-15</screen>
+          <screen>/set charset.decode.irc.freenode ISO-8859-15</screen>
         </para>
       </listitem>
       <listitem>
@@ -141,7 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             Setze die globalen Dekodier-Einstellungen, z.B.:
-            <screen>/set charset.default.decode = ISO-8859-15</screen>
+            <screen>/set charset.default.decode ISO-8859-15</screen>
           </para>
         </listitem>
       </itemizedlist>

@@ -63,8 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <command>/set</command>.
             For example:
 <screen>
-/set charset.default.decode = ISO-8859-15
-/set charset.default.encode = ISO-8859-15
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
 </screen>
             If global decode charset is not set (for example during first
             load of Charset plugin), it will be automatically set to terminal
@@ -99,7 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             To set charset for all IRC channels (and privates) of an IRC server,
             use following command:
-            <screen>/set charset.decode.irc.freenode = ISO-8859-15</screen>
+            <screen>/set charset.decode.irc.freenode ISO-8859-15</screen>
           </para>
         </listitem>
         <listitem>
@@ -145,7 +145,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             setup global decode value, for example:
-            <screen>/set charset.default.decode = ISO-8859-15</screen>
+            <screen>/set charset.default.decode ISO-8859-15</screen>
           </para>
         </listitem>
       </itemizedlist>

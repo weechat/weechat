@@ -263,7 +263,7 @@ notify_config_create_option (void *data, struct t_config_file *config_file,
                     config_file, section,
                     option_name, "integer", NULL,
                     "none|highlight|message|all",
-                    0, 0, "", value, NULL, NULL, NULL, NULL, NULL, NULL);
+                    0, 0, "", value, 0, NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }

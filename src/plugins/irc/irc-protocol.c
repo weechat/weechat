@@ -456,7 +456,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
         /* my nick was kicked => free all nicks, channel is not active any
            more */
         irc_nick_free_all (ptr_channel);
-        if (server->autorejoin)
+        if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN))
             irc_command_join_server (server, ptr_channel->name);
     }
     else
@@ -1589,7 +1589,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         weechat_infolist_new_var_string (item, "local_nick", server->nick);
                         weechat_infolist_new_var_string (item, "filename", pos_file);
                         weechat_infolist_new_var_string (item, "size", pos_size);
-                        weechat_infolist_new_var_string (item, "proxy", server->proxy);
+                        weechat_infolist_new_var_string (item, "proxy",
+                                                         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                         weechat_infolist_new_var_string (item, "address", pos_addr);
                         weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                         weechat_hook_signal_send ("xfer_add",
@@ -1922,7 +1923,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         weechat_infolist_new_var_string (item, "type", "chat_recv");
                         weechat_infolist_new_var_string (item, "remote_nick", nick);
                         weechat_infolist_new_var_string (item, "local_nick", server->nick);
-                        weechat_infolist_new_var_string (item, "proxy", server->proxy);
+                        weechat_infolist_new_var_string (item, "proxy",
+                                                         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                         weechat_infolist_new_var_string (item, "address", pos_addr);
                         weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                         weechat_hook_signal_send ("xfer_add",
@@ -2382,6 +2384,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
 {
     char **commands, **ptr_cmd, *vars_replaced;
     char *away_msg;
+    const char *ptr_command;
 
     /* 001 message looks like:
        :server 001 mynick :Welcome to the dancer-ircd Network
@@ -2416,10 +2419,11 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
                               WEECHAT_HOOK_SIGNAL_STRING, server->name);
     
     /* execute command when connected */
-    if (server->command && server->command[0])
+    ptr_command = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND);
+    if (ptr_command && ptr_command[0])
     {
 	/* splitting command on ';' which can be escaped with '\;' */ 
-	commands = weechat_string_split_command (server->command, ';');
+	commands = weechat_string_split_command (ptr_command, ';');
 	if (commands)
 	{
 	    for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
@@ -2434,7 +2438,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
 	    weechat_string_free_splitted_command (commands);
 	}
 	
-	if (server->command_delay > 0)
+	if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)
             server->command_time = time (NULL) + 1;
         else
             irc_server_autojoin_channels (server);

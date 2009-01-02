@@ -68,6 +68,7 @@ extern struct t_config_option *script_api_config_new_option (struct t_weechat_pl
                                                              int min, int max,
                                                              const char *default_value,
                                                              const char *value,
+                                                             int null_value_allowed,
                                                              void (*callback_check_value)(void *data,
                                                                                           struct t_config_option *option,
                                                                                           const char *value),

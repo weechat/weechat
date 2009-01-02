@@ -148,7 +148,7 @@ logger_config_level_create_option (void *data,
                     option_name, "integer",
                     _("logging level for this buffer (0 = logging disabled, "
                       "1 = a few messages (most important) .. 9 = all messages)"),
-                      NULL, 0, 9, "9", value, NULL, NULL,
+                      NULL, 0, 9, "9", value, 0, NULL, NULL,
                     &logger_config_level_change, NULL,
                     NULL, NULL);
                 rc = (ptr_option) ?
@@ -275,7 +275,7 @@ logger_config_mask_create_option (void *data,
                     option_name, "string",
                     _("file mask for log file; local buffer variables are "
                       "permitted"),
-                    NULL, 0, 0, "", value, NULL, NULL,
+                    NULL, 0, 0, "", value, 0, NULL, NULL,
                     &logger_config_mask_change, NULL,
                     NULL, NULL);
                 rc = (ptr_option) ?
@@ -339,7 +339,7 @@ logger_config_init ()
         "backlog", "integer",
         N_("maximum number of lines to display from log file when creating "
            "new buffer (0 = no backlog)"),
-        NULL, 0, INT_MAX, "20", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "20", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* file */
     ptr_section = weechat_config_new_section (logger_config_file, "file",
@@ -358,19 +358,19 @@ logger_config_init ()
         "auto_log", "boolean",
         N_("automatically save content of buffers to files (unless a buffer "
            "disables log)"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_name_lower_case = weechat_config_new_option (
         logger_config_file, ptr_section,
         "name_lower_case", "boolean",
         N_("use only lower case for log filenames"),
-        NULL, 0, 0, "on", NULL, NULL, NULL,
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_path = weechat_config_new_option (
         logger_config_file, ptr_section,
         "path", "string",
         N_("path for WeeChat log files ('%h' will be replaced by WeeChat "
            "home, ~/.weechat by default)"),
-        NULL, 0, 0, "%h/logs/", NULL, NULL, NULL,
+        NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_mask = weechat_config_new_option (
         logger_config_file, ptr_section,
@@ -378,20 +378,20 @@ logger_config_init ()
         N_("default file name mask for log files (format is 'directory/to/file' "
            "or 'file', without first '/' because 'path' option is used to "
            "build complete path to file); local buffer variables are permitted"),
-        NULL, 0, 0, "$plugin.$name.weechatlog", NULL, NULL, NULL,
+        NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_info_lines = weechat_config_new_option (
         logger_config_file, ptr_section,
         "info_lines", "boolean",
         N_("write information line in log file when log starts or ends for a "
            "buffer"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_time_format = weechat_config_new_option (
         logger_config_file, ptr_section,
         "time_format", "string",
         N_("timestamp used in log files (see man strftime for date/time "
            "specifiers)"),
-        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* level */
     ptr_section = weechat_config_new_section (logger_config_file, "level",

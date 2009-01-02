@@ -106,7 +106,7 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "auto_open_buffer", "boolean",
         N_("auto open relay buffer when a new client is connecting"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (relay_config_file, "color",
                                               0, 0,
@@ -123,49 +123,49 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "text", "color",
         N_("text color"),
-        NULL, 0, 0, "default", NULL,
+        NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_text_bg = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_bg", "color",
         N_("background color"),
-        NULL, 0, 0, "default", NULL,
+        NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_text_selected = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_selected", "color",
         N_("text color of selected client line"),
-        NULL, 0, 0, "white", NULL,
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_connecting", "color",
         N_("text color for \"connecting\" status"),
-        NULL, 0, 0, "yellow", NULL,
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_waiting_auth", "color",
         N_("text color for \"waiting authentication\" status"),
-        NULL, 0, 0, "brown", NULL,
+        NULL, 0, 0, "brown", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_active", "color",
         N_("text color for \"connected\" status"),
-        NULL, 0, 0, "lightblue", NULL,
+        NULL, 0, 0, "lightblue", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_AUTH_FAILED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_auth_failed", "color",
         N_("text color for \"authentication failed\" status"),
-        NULL, 0, 0, "lightred", NULL,
+        NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_DISCONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_disconnected", "color",
         N_("text color for \"disconnected\" status"),
-        NULL, 0, 0, "lightred", NULL,
+        NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (relay_config_file, "network",
@@ -185,7 +185,7 @@ relay_config_init ()
         N_("port number (or range of ports) that relay plugin listens on "
            "(syntax: a single port, ie. 5000 or a port "
            "range, ie. 5000-5015)"),
-        NULL, 0, 0, "22373-22400", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "22373-22400", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     return 1;
 }

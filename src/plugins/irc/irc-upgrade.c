@@ -184,6 +184,8 @@ irc_upgrade_read_cb (int object_id,
                 irc_upgrade_current_server = irc_server_search (weechat_infolist_string (infolist, "name"));
                 if (irc_upgrade_current_server)
                 {
+                    irc_upgrade_current_server->temp_server =
+                        weechat_infolist_integer (infolist, "temp_server");
                     irc_upgrade_current_server->buffer = NULL;
                     buffer_name = weechat_infolist_string (infolist, "buffer_name");
                     if (buffer_name && buffer_name[0])

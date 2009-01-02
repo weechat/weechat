@@ -358,7 +358,7 @@ den Server dazu bringen, seine Konfigurationsdatei neu zu laden
 den Server dazu bringen, sich selbst neu zu starten
 </programlisting>
 
-<command>/server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [del servername] | [deloutq] | [switch]</command>
+<command>/server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [switch]</command>
 <programlisting>
 Auflisten, Hinzufügen oder Entfernen von Servern
 
@@ -373,6 +373,7 @@ servername: server name, for internal and display use
        ssl: use SSL protocol
       copy: duplicate a server
     rename: rename a server
+      keep: keep server in config file (for temporary servers only)
        del: delete a server
    deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
     switch: switch active server (when one buffer is used for all servers, default key: alt-s on server buffer)

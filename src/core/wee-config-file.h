@@ -119,6 +119,7 @@ struct t_config_option
     int min, max;                          /* min and max for value         */
     void *default_value;                   /* default value                 */
     void *value;                           /* value                         */
+    int null_value_allowed;                /* null value allowed ?          */
     int (*callback_check_value)            /* called to check value before  */
     (void *data,                           /* assiging new value            */
      struct t_config_option *option,
@@ -189,6 +190,7 @@ extern struct t_config_option *config_file_new_option (struct t_config_file *con
                                                        int min, int max,
                                                        const char *default_value,
                                                        const char *value,
+                                                       int null_value_allowed,
                                                        int (*callback_check_value)(void *data,
                                                                                    struct t_config_option *option,
                                                                                    const char *value),
@@ -219,18 +221,27 @@ extern int config_file_option_reset (struct t_config_option *option,
                                      int run_callback);
 extern int config_file_option_set (struct t_config_option *option,
                                    const char *value, int run_callback);
+extern int config_file_option_set_null (struct t_config_option *option,
+                                        int run_callback);
 extern int config_file_option_unset (struct t_config_option *option);
 extern void config_file_option_rename (struct t_config_option *option,
                                        const char *new_name);
 extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              const char *property);
+extern int config_file_option_is_null (struct t_config_option *option);
+extern int config_file_option_default_is_null (struct t_config_option *option);
 extern int config_file_option_set_with_string (const char *option_name, const char *value);
 extern int config_file_option_unset_with_string (const char *option_name);
 extern int config_file_option_boolean (struct t_config_option *option);
+extern int config_file_option_boolean_default (struct t_config_option *option);
 extern int config_file_option_integer (struct t_config_option *option);
+extern int config_file_option_integer_default (struct t_config_option *option);
 extern const char *config_file_option_string (struct t_config_option *option);
+extern const char *config_file_option_string_default (struct t_config_option *option);
 extern const char *config_file_option_color (struct t_config_option *option);
-
+extern const char *config_file_option_color_default (struct t_config_option *option);
+extern void config_file_write_option (struct t_config_file *config_file,
+                                      struct t_config_option *option);
 extern void config_file_write_line (struct t_config_file *config_file,
                                     const char *option_name, const char *value, ...);
 extern int config_file_write (struct t_config_file *config_files);
@@ -245,7 +256,6 @@ extern void config_file_free_all ();
 extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);
 extern int config_file_add_to_infolist (struct t_infolist *infolist,
                                         const char *option_name);
-extern void config_file_print_stdout (struct t_config_file *config_file);
 extern void config_file_print_log ();
 
 #endif /* wee-config-file.h */

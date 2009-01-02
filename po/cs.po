@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 18:36+0100\n"
+"POT-Creation-Date: 2009-01-02 22:40+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -319,6 +319,10 @@ msgid "values"
 msgstr "hodnoty"
 
 msgid "default value"
+msgstr "výchozí hodnota"
+
+#, fuzzy
+msgid "(undefined)"
 msgstr "výchozí hodnota"
 
 msgid "current value"
@@ -1074,15 +1078,23 @@ msgstr ""
 msgid "set config options"
 msgstr "nastaví konfigurační možnosti"
 
-msgid "[option [ = value]]"
+#, fuzzy
+msgid "[option [value]]"
 msgstr "[možnost [ = hodnota]]"
 
 msgid ""
 "option: name of an option\n"
-" value: value for option"
+" value: new value for option\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off ou toggle\n"
+"  integer: number, ++number ou --number  string : any string (\"\" for empty "
+"string)\n"
+"  color  : color name, ++number ou --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables."
 msgstr ""
-"možnost: jméno volby\n"
-"hodnota: hodnota volby"
 
 msgid "unset/reset config options"
 msgstr "odnastavit/resetovat konfigurační možnosti"
@@ -1680,7 +1692,7 @@ msgid "(default options)"
 msgstr "(výchozí volby)"
 
 #, fuzzy, c-format
-msgid "%sWarning: config file \"%s\" not found"
+msgid "%sWarning: configuration file \"%s\" not found"
 msgstr "%s konfigurační soubor \"%s\" nenalezen\n"
 
 #, fuzzy, c-format
@@ -1694,10 +1706,6 @@ msgstr "%s %s, řádek %d: nevalidní syntaxe, chybí \"]\"\n"
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, řádek %d: neznámý identifikátor sekce (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
-msgstr "%s %s, řádek %d: nevalidní syntax, chybí \"=\"\n"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
@@ -1714,58 +1722,6 @@ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 #, fuzzy, c-format
 msgid "Reloading configuration file %s"
 msgstr "Ukládám konfiguraci na disk\n"
-
-msgid "  . type: boolean\n"
-msgstr "  . typ: boolean\n"
-
-#, fuzzy
-msgid "  . values: \"on\" or \"off\"\n"
-msgstr "  . hodnoty: 'on' or 'off'\n"
-
-#, fuzzy, c-format
-msgid "  . default value: \"%s\"\n"
-msgstr "  . výchozí hodnota: '%s'\n"
-
-msgid "  . type: string\n"
-msgstr "  . typ: řetězec\n"
-
-msgid "  . values: "
-msgstr "  . hodnoty: "
-
-msgid "  . type: integer\n"
-msgstr "  . typ: celočíselný\n"
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr "  . hodnoty: mezi %d a %d\n"
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr "  . výchozí hodnota: %d\n"
-
-msgid "  . values: any string\n"
-msgstr "  . hodnoty: typ řetězec (jakýkoliv řetězec)\n"
-
-msgid "  . type: char\n"
-msgstr "  . typ: znak\n"
-
-msgid "  . values: any char\n"
-msgstr "  . hodnoty: jakýkolív znak\n"
-
-#, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr "  . hodnoty: jakýkoliv řetězec (limit: %d znaků)\n"
-
-msgid "  . type: color\n"
-msgstr "  . typ: barva\n"
-
-#, fuzzy
-msgid "  . values: color (depends on GUI used)\n"
-msgstr "  . hodnoty: mezi %d a %d\n"
-
-#, c-format
-msgid "  . description: %s\n"
-msgstr "  . popis: %s\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -2417,7 +2373,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "Server %s%s%s vytvořen\n"
 
 #, fuzzy, c-format
@@ -2528,18 +2484,6 @@ msgid "No server found with \"%s\""
 msgstr "Žádný server s '%s' nenalezen.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s server \"%s\" nenalezen pro příkaz \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s server \"%s\" pro příkaz \"%s\" již existuje\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "Server %s%s%s byl přejmenován na %s%s\n"
-
-#, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s server \"%s\" již existuje, nemohu jej vytvořít!\n"
 
@@ -2548,8 +2492,32 @@ msgid "%s%s: unable to create server"
 msgstr "%s nemohu vytvořit server\n"
 
 #, fuzzy, c-format
+msgid "%s: server %s%s%s created"
+msgstr "Server %s%s%s vytvořen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s server \"%s\" nenalezen pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s server \"%s\" pro příkaz \"%s\" již existuje\n"
+
+#, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s byl zkopírován do %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "Server %s%s%s byl přejmenován na %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr "Server %s%s%s vytvořen\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s is not temporary any more"
+msgstr "Server %s%s%s vytvořen\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -3108,7 +3076,8 @@ msgstr "vypíše, přídá nebo odebere servery"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
+"[rename servername newservername] | [keep servername] | [del servername] | "
+"[deloutq] | [switch]"
 msgstr ""
 "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
 "jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd "
@@ -3132,6 +3101,7 @@ msgid ""
 "       ssl: use SSL protocol\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
@@ -3364,14 +3334,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
-#, fuzzy, c-format
-msgid "%s%s: error creating server \"%s\""
-msgstr "%s nedostatek paměti pro infobar zprávu\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
-msgstr "%s volba nastavení \"%s\" nenalezena\n"
-
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -3448,6 +3410,10 @@ msgstr ""
 
 msgid "automatically rejoin channels when kicked"
 msgstr "automaticky znovu přijít na kanál po vykopnutí"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -3574,7 +3540,7 @@ msgid "IRC debug messages"
 msgstr "vypsat debug zprávy"
 
 #, fuzzy, c-format
-msgid "%sServer: %s%s %s[%s%s%s]"
+msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%sServer: %s%s %s[%s%s%s]\n"
 
 msgid "connected"
@@ -3582,6 +3548,9 @@ msgstr "připojen"
 
 msgid "not connected"
 msgstr "nepřipojen"
+
+msgid " (temporary)"
+msgstr ""
 
 msgid "on"
 msgstr "na"
@@ -4170,11 +4139,11 @@ msgid ""
 "    /logger disable\n"
 "\n"
 "  set level to 3 for all IRC buffers:\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  disable logging for main WeeChat buffer:\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  use a directory per IRC server and a file per channel inside:\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Log levels used by IRC plugin:\n"
 "  1: user message, notice, private\n"
@@ -5135,6 +5104,78 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "  . type: boolean\n"
+#~ msgstr "  . typ: boolean\n"
+
+#, fuzzy
+#~ msgid "  . values: \"on\" or \"off\"\n"
+#~ msgstr "  . hodnoty: 'on' or 'off'\n"
+
+#, fuzzy
+#~ msgid "  . default value: \"%s\"\n"
+#~ msgstr "  . výchozí hodnota: '%s'\n"
+
+#~ msgid "  . type: string\n"
+#~ msgstr "  . typ: řetězec\n"
+
+#~ msgid "  . values: "
+#~ msgstr "  . hodnoty: "
+
+#~ msgid "  . type: integer\n"
+#~ msgstr "  . typ: celočíselný\n"
+
+#~ msgid "  . values: between %d and %d\n"
+#~ msgstr "  . hodnoty: mezi %d a %d\n"
+
+#~ msgid "  . default value: %d\n"
+#~ msgstr "  . výchozí hodnota: %d\n"
+
+#~ msgid "  . values: any string\n"
+#~ msgstr "  . hodnoty: typ řetězec (jakýkoliv řetězec)\n"
+
+#~ msgid "  . type: char\n"
+#~ msgstr "  . typ: znak\n"
+
+#~ msgid "  . values: any char\n"
+#~ msgstr "  . hodnoty: jakýkolív znak\n"
+
+#~ msgid "  . values: any string (limit: %d chars)\n"
+#~ msgstr "  . hodnoty: jakýkoliv řetězec (limit: %d znaků)\n"
+
+#~ msgid "  . type: color\n"
+#~ msgstr "  . typ: barva\n"
+
+#, fuzzy
+#~ msgid "  . values: color (depends on GUI used)\n"
+#~ msgstr "  . hodnoty: mezi %d a %d\n"
+
+#~ msgid "  . description: %s\n"
+#~ msgstr "  . popis: %s\n"
+
+#, fuzzy
+#~ msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
+#~ msgstr "%s %s, řádek %d: nevalidní syntax, chybí \"=\"\n"
+
+#, fuzzy
+#~ msgid "value not defined"
+#~ msgstr "Žádné pole nejsou definovány"
+
+#, fuzzy
+#~ msgid "hidden"
+#~ msgstr "(skrytý)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+#~ msgstr "%s volba nastavení \"%s\" nenalezena\n"
+
+#~ msgid ""
+#~ "option: name of an option\n"
+#~ " value: value for option"
+#~ msgstr ""
+#~ "možnost: jméno volby\n"
+#~ "hodnota: hodnota volby"
 
 #~ msgid "display nicklist (on buffers with nicklist enabled)"
 #~ msgstr ""

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-config-file.c: manages options in config files */
+/* wee-config-file.c: manages options in configuration files */
 
 
 #ifdef HAVE_CONFIG_H
@@ -74,7 +74,7 @@ config_file_search (const char *name)
 }
 
 /*
- * config_file_new: create new config options structure
+ * config_file_new: create new configuration options structure
  */
 
 struct t_config_file *
@@ -90,7 +90,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     if (!name)
         return NULL;
     
-    /* it's NOT authorized to create two config files with same filename */
+    /* it's NOT authorized to create two configuration files with same filename */
     if (config_file_search (name))
         return NULL;
     
@@ -224,7 +224,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
 }
 
 /*
- * config_file_search_section: search a section in a config structure
+ * config_file_search_section: search a section in a configuration structure
  */
 
 struct t_config_section *
@@ -357,6 +357,7 @@ config_file_new_option (struct t_config_file *config_file,
                         const char *string_values, int min, int max,
                         const char *default_value,
                         const char *value,
+                        int null_value_allowed,
                         int (*callback_check_value)(void *data,
                                                     struct t_config_option *option,
                                                     const char *value),
@@ -397,10 +398,15 @@ config_file_new_option (struct t_config_file *config_file,
         return NULL;
     }
     
-    if (default_value && !value)
-        value = default_value;
-    else if (!default_value && value)
-        default_value = value;
+    if (!null_value_allowed)
+    {
+        if (default_value && !value)
+            value = default_value;
+        else if (!default_value && value)
+            default_value = value;
+        if (!default_value || !value)
+            return NULL;
+    }
     
     new_option = malloc (sizeof (*new_option));
     if (new_option)
@@ -410,6 +416,8 @@ config_file_new_option (struct t_config_file *config_file,
         new_option->name = strdup (name);
         new_option->type = var_type;
         new_option->description = (description) ? strdup (description) : NULL;
+        new_option->default_value = NULL;
+        new_option->value = NULL;
         argc = 0;
         switch (var_type)
         {
@@ -417,12 +425,18 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->string_values = NULL;
                 new_option->min = CONFIG_BOOLEAN_FALSE;
                 new_option->max = CONFIG_BOOLEAN_TRUE;
-                int_value = config_file_string_to_boolean (default_value);
-                new_option->default_value = malloc (sizeof (int));
-                *((int *)new_option->default_value) = int_value;
-                int_value = config_file_string_to_boolean (value);
-                new_option->value = malloc (sizeof (int));
-                *((int *)new_option->value) = int_value;
+                if (default_value)
+                {
+                    int_value = config_file_string_to_boolean (default_value);
+                    new_option->default_value = malloc (sizeof (int));
+                    *((int *)new_option->default_value) = int_value;
+                }
+                if (value)
+                {
+                    int_value = config_file_string_to_boolean (value);
+                    new_option->value = malloc (sizeof (int));
+                    *((int *)new_option->value) = int_value;
+                }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 new_option->string_values = (string_values) ?
@@ -431,81 +445,106 @@ config_file_new_option (struct t_config_file *config_file,
                 {
                     new_option->min = 0;
                     new_option->max = (argc == 0) ? 0 : argc - 1;
-                    index_value = 0;
-                    for (i = 0; i < argc; i++)
+                    if (default_value)
                     {
-                        if (string_strcasecmp (new_option->string_values[i],
-                                               default_value) == 0)
+                        index_value = 0;
+                        for (i = 0; i < argc; i++)
                         {
-                            index_value = i;
-                            break;
+                            if (string_strcasecmp (new_option->string_values[i],
+                                                   default_value) == 0)
+                            {
+                                index_value = i;
+                                break;
+                            }
                         }
+                        new_option->default_value = malloc (sizeof (int));
+                        *((int *)new_option->default_value) = index_value;
                     }
-                    new_option->default_value = malloc (sizeof (int));
-                    *((int *)new_option->default_value) = index_value;
-                    index_value = 0;
-                    for (i = 0; i < argc; i++)
+                    if (value)
                     {
-                        if (string_strcasecmp (new_option->string_values[i],
-                                               value) == 0)
+                        index_value = 0;
+                        for (i = 0; i < argc; i++)
                         {
-                            index_value = i;
-                            break;
+                            if (string_strcasecmp (new_option->string_values[i],
+                                                   value) == 0)
+                            {
+                                index_value = i;
+                                break;
+                            }
                         }
+                        new_option->value = malloc (sizeof (int));
+                        *((int *)new_option->value) = index_value;
                     }
-                    new_option->value = malloc (sizeof (int));
-                    *((int *)new_option->value) = index_value;
                 }
                 else
                 {
                     new_option->string_values = NULL;
                     new_option->min = min;
                     new_option->max = max;
-                    error = NULL;
-                    number = strtol (default_value, &error, 10);
-                    if (!error || error[0])
-                        number = 0;
-                    if (number < min)
-                        number = min;
-                    else if (number > max)
-                        number = max;
-                    new_option->default_value = malloc (sizeof (int));
-                    *((int *)new_option->default_value) = number;
-                    error = NULL;
-                    number = strtol (value, &error, 10);
-                    if (!error || error[0])
-                        number = 0;
-                    if (number < min)
-                        number = min;
-                    else if (number > max)
-                        number = max;
-                    new_option->value = malloc (sizeof (int));
-                    *((int *)new_option->value) = number;
+                    if (default_value)
+                    {
+                        error = NULL;
+                        number = strtol (default_value, &error, 10);
+                        if (!error || error[0])
+                            number = 0;
+                        if (number < min)
+                            number = min;
+                        else if (number > max)
+                            number = max;
+                        new_option->default_value = malloc (sizeof (int));
+                        *((int *)new_option->default_value) = number;
+                    }
+                    if (value)
+                    {
+                        error = NULL;
+                        number = strtol (value, &error, 10);
+                        if (!error || error[0])
+                            number = 0;
+                        if (number < min)
+                            number = min;
+                        else if (number > max)
+                            number = max;
+                        new_option->value = malloc (sizeof (int));
+                        *((int *)new_option->value) = number;
+                    }
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
                 new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = max;
-                new_option->default_value = (default_value) ?
-                    strdup (default_value) : NULL;
-                new_option->value = (value) ?
-                    strdup (value) : NULL;
+                if (default_value)
+                {
+                    new_option->default_value = (default_value) ?
+                        strdup (default_value) : NULL;
+                }
+                if (value)
+                {
+                    new_option->value = (value) ?
+                        strdup (value) : NULL;
+                }
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = gui_color_get_number () - 1;
-                new_option->default_value = malloc (sizeof (int));
-                if (!gui_color_assign (new_option->default_value, default_value))
-                    *((int *)new_option->default_value) = 0;
-                new_option->value = malloc (sizeof (int));
-                if (!gui_color_assign (new_option->value, value))
-                    *((int *)new_option->value) = 0;
+                if (default_value)
+                {
+                    new_option->default_value = malloc (sizeof (int));
+                    if (!gui_color_assign (new_option->default_value, default_value))
+                        *((int *)new_option->default_value) = 0;
+                }
+                if (value)
+                {
+                    new_option->value = malloc (sizeof (int));
+                    if (!gui_color_assign (new_option->value, value))
+                        *((int *)new_option->value) = 0;
+                }
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 break;
         }
+        new_option->null_value_allowed = null_value_allowed;
         new_option->callback_check_value = callback_check_value;
         new_option->callback_check_value_data = callback_check_value_data;
         new_option->callback_change = callback_change;
@@ -554,7 +593,7 @@ config_file_option_full_name (struct t_config_option *option)
 }
 
 /*
- * config_file_search_option: search an option in a config or section
+ * config_file_search_option: search an option in a configuration file or section
  */
 
 struct t_config_option *
@@ -593,8 +632,8 @@ config_file_search_option (struct t_config_file *config_file,
 }
 
 /*
- * config_file_search_section_option: search an option in a config or section
- *                                    and return section/option
+ * config_file_search_section_option: search an option in a configuration file
+ *                                    or section and return section/option
  */
 
 void
@@ -813,7 +852,7 @@ config_file_string_to_boolean (const char *text)
 int
 config_file_option_reset (struct t_config_option *option, int run_callback)
 {
-    int rc;
+    int rc, old_value_was_null;
     char value[256], *option_full_name;
     
     if (!option)
@@ -821,43 +860,63 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
     
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     value[0] = '\0';
-    
-    switch (option->type)
+
+    if (option->default_value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_DEFAULT(option))
+        old_value_was_null = (option->value == NULL);
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (!option->value)
+                {
+                    option->value = malloc (sizeof (int));
+                    CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
+                    snprintf (value, sizeof (value), "%s",
+                              CONFIG_BOOLEAN(option) ?
+                              config_boolean_true[0] : config_boolean_false[0]);
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                }
+                else
+                {
+                    if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_DEFAULT(option))
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                    else
+                    {
+                        CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
+                        snprintf (value, sizeof (value), "%s",
+                                  CONFIG_BOOLEAN(option) ?
+                                  config_boolean_true[0] : config_boolean_false[0]);
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                }
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (!option->value)
+                {
+                    option->value = malloc (sizeof (int));
+                    CONFIG_INTEGER(option) = 0;
+                }
+                if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                else
+                {
+                    CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
+                    snprintf (value, sizeof (value), "%d",
+                              CONFIG_INTEGER(option));
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-            else
-            {
-                CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
-                snprintf (value, sizeof (value), "%s",
-                          CONFIG_BOOLEAN(option) ?
-                          config_boolean_true[0] : config_boolean_false[0]);
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-            }
-            break;
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-            else
-            {
-                CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
-                snprintf (value, sizeof (value), "%d",
-                          CONFIG_INTEGER(option));
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-            }
-            break;
-        case CONFIG_OPTION_TYPE_STRING:
-            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-            if ((!option->value && option->default_value)
-                || (option->value && !option->default_value)
-                || (strcmp ((char *)option->value,
-                            (char *)option->default_value) != 0))
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-            if (option->value)
-                free (option->value);
-            if (option->default_value)
-            {
+                if (!option->value
+                    || (strcmp ((char *)option->value,
+                                (char *)option->default_value) != 0))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                if (option->value)
+                {
+                    free (option->value);
+                    option->value = NULL;
+                }
                 option->value = strdup ((char *)option->default_value);
                 if (option->value)
                 {
@@ -866,23 +925,42 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 }
                 else
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-            }
-            else
-                option->value = NULL;
-            break;
-        case CONFIG_OPTION_TYPE_COLOR:
-            if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-            else
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                if (!option->value)
+                {
+                    option->value = malloc (sizeof (int));
+                    CONFIG_INTEGER(option) = 0;
+                }
+                if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                else
+                {
+                    CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
+                    snprintf (value, sizeof (value), "%d",
+                              CONFIG_COLOR(option));
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                }
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+        if (old_value_was_null && option->value)
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    }
+    else
+    {
+        if (option->null_value_allowed)
+        {
+            if (option->value)
             {
-                CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
-                snprintf (value, sizeof (value), "%d",
-                          CONFIG_COLOR(option));
+                free (option->value);
+                option->value = NULL;
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             }
-            break;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
     }
     
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
@@ -909,7 +987,6 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
 
 /*
  * config_file_option_set: set value for an option
- *                         if value is NULL, then default value for option is set
  *                         return one of these values:
  *                           WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
  *                           WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -920,7 +997,7 @@ int
 config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
-    int value_int, i, rc, new_value_ok;
+    int value_int, i, rc, new_value_ok, old_value_was_null;
     long number;
     char *error, *option_full_name;
     
@@ -929,7 +1006,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
     
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
-    if (value && option->callback_check_value)
+    if (option->callback_check_value)
     {
         if (!(int)(option->callback_check_value)
             (option->callback_check_value_data,
@@ -938,37 +1015,58 @@ config_file_option_set (struct t_config_option *option, const char *value,
             return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
     
-    switch (option->type)
+    if (value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (value)
-            {
-                if (string_strcasecmp (value, "toggle") == 0)
+        old_value_was_null = (option->value == NULL);
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (!option->value)
                 {
-                    *((int *)option->value) =
-                        (*((int *)option->value) == CONFIG_BOOLEAN_TRUE) ?
-                        CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                    option->value = malloc (sizeof (int));
+                    if (string_strcasecmp (value, "toggle") == 0)
+                        CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
+                    else
+                    {
+                        if (config_file_string_boolean_is_valid (value))
+                        {
+                            value_int = config_file_string_to_boolean (value);
+                            CONFIG_BOOLEAN(option) = value_int;
+                        }
+                    }
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
                 else
                 {
-                    if (config_file_string_boolean_is_valid (value))
+                    if (string_strcasecmp (value, "toggle") == 0)
                     {
-                        value_int = config_file_string_to_boolean (value);
-                        if (value_int == *((int *)option->value))
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                        else
+                        CONFIG_BOOLEAN(option) =
+                            (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                            CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                    else
+                    {
+                        if (config_file_string_boolean_is_valid (value))
                         {
-                            *((int *)option->value) = value_int;
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            value_int = config_file_string_to_boolean (value);
+                            if (value_int == CONFIG_BOOLEAN(option))
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                            else
+                            {
+                                CONFIG_BOOLEAN(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
                         }
                     }
                 }
-            }
-            break;
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (value)
-            {
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (!option->value)
+                {
+                    option->value = malloc (sizeof (int));
+                    CONFIG_INTEGER(option) = 0;
+                }
                 if (option->string_values)
                 {
                     value_int = -1;
@@ -979,7 +1077,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         if (error && !error[0])
                         {
                             number = number % (option->max + 1);
-                            value_int = (*((int *)option->value) + number) %
+                            value_int = (CONFIG_INTEGER(option) + number) %
                                 (option->max + 1);
                         }
                     }
@@ -990,7 +1088,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         if (error && !error[0])
                         {
                             number = number % (option->max + 1);
-                            value_int = (*((int *)option->value) + (option->max + 1) - number) %
+                            value_int = (CONFIG_INTEGER(option) + (option->max + 1) - number) %
                                 (option->max + 1);
                         }
                     }
@@ -1008,11 +1106,11 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     if (value_int >= 0)
                     {
-                        if (value_int == *((int *)option->value))
+                        if (value_int == CONFIG_INTEGER(option))
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         else
                         {
-                            *((int *)option->value) = value_int;
+                            CONFIG_INTEGER(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                     }
@@ -1026,7 +1124,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            value_int = *((int *)option->value) + number;
+                            value_int = CONFIG_INTEGER(option) + number;
                             if (value_int <= option->max)
                                 new_value_ok = 1;
                         }
@@ -1037,7 +1135,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            value_int = *((int *)option->value) - number;
+                            value_int = CONFIG_INTEGER(option) - number;
                             if (value_int >= option->min)
                                 new_value_ok = 1;
                         }
@@ -1056,83 +1154,100 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     if (new_value_ok)
                     {
-                        if (value_int == *((int *)option->value))
+                        if (value_int == CONFIG_INTEGER(option))
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         else
                         {
-                            *((int *)option->value) = value_int;
+                            CONFIG_INTEGER(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                     }
                 }
-            }
-            break;
-        case CONFIG_OPTION_TYPE_STRING:
-            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-            if ((!option->value && value)
-                || (option->value && !value)
-                || (strcmp ((char *)option->value, value) != 0))
-                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-            if (option->value)
-                free (option->value);
-            if (value)
-            {
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                if (!option->value
+                    || (strcmp (CONFIG_STRING(option), value) != 0))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                if (option->value)
+                {
+                    free (option->value);
+                    option->value = NULL;
+                }
                 option->value = strdup (value);
                 if (!option->value)
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-            }
-            else
-                option->value = NULL;
-            break;
-        case CONFIG_OPTION_TYPE_COLOR:
-            value_int = -1;
-            if (strncmp (value, "++", 2) == 0)
-            {
-                error = NULL;
-                number = strtol (value + 2, &error, 10);
-                if (error && !error[0])
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                if (!option->value)
                 {
-                    number = number % (option->max + 1);
-                    value_int = (*((int *)option->value) + number) %
-                        (option->max + 1);
+                    option->value = malloc (sizeof (int));
+                    CONFIG_COLOR(option) = 0;
                 }
-            }
-            else if (strncmp (value, "--", 2) == 0)
-            {
-                error = NULL;
-                number = strtol (value + 2, &error, 10);
-                if (error && !error[0])
+                value_int = -1;
+                if (strncmp (value, "++", 2) == 0)
                 {
-                    number = number % (option->max + 1);
-                    value_int = (*((int *)option->value) + (option->max + 1) - number) %
-                        (option->max + 1);
+                    error = NULL;
+                    number = strtol (value + 2, &error, 10);
+                    if (error && !error[0])
+                    {
+                        number = number % (option->max + 1);
+                        value_int = (CONFIG_COLOR(option) + number) %
+                            (option->max + 1);
+                    }
                 }
-            }
-            else
-            {
-                gui_color_assign (&value_int, value);
-            }
-            if (value_int >= 0)
-            {
-                if (value_int == *((int *)option->value))
-                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                else if (strncmp (value, "--", 2) == 0)
+                {
+                    error = NULL;
+                    number = strtol (value + 2, &error, 10);
+                    if (error && !error[0])
+                    {
+                        number = number % (option->max + 1);
+                        value_int = (CONFIG_COLOR(option) + (option->max + 1) - number) %
+                            (option->max + 1);
+                    }
+                }
                 else
                 {
-                    *((int *)option->value) = value_int;
-                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    gui_color_assign (&value_int, value);
                 }
-            }
-            break;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+                if (value_int >= 0)
+                {
+                    if (value_int == CONFIG_COLOR(option))
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                    else
+                    {
+                        CONFIG_COLOR(option) = value_int;
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                }
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+        if (old_value_was_null && option->value)
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    }
+    else
+    {
+        if (option->null_value_allowed && option->value)
+        {
+            free (option->value);
+            option->value = NULL;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+        }
+        else
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
     
+    /* run callback if asked and value was changed */ 
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
     
+    /* run config hook(s) */
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (option->config_file && option->section)
@@ -1141,6 +1256,61 @@ config_file_option_set (struct t_config_option *option, const char *value,
             if (option_full_name)
             {
                 hook_config_exec (option_full_name, value);
+                free (option_full_name);
+            }
+        }
+    }
+    
+    return rc;
+}
+
+/*
+ * config_file_option_set_null: set null (undefined) value for an option
+ *                              return one of these values:
+ *                                WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+ *                                WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+ *                                WEECHAT_CONFIG_OPTION_SET_ERROR
+ */
+
+int
+config_file_option_set_null (struct t_config_option *option, int run_callback)
+{
+    int rc;
+    char *option_full_name;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    /* null value is authorized only if it's allowed in option */
+    if (option->null_value_allowed)
+    {
+        /* option was already null: do nothing */
+        if (!option->value)
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        else
+        {
+            /* set option to null */
+            free (option->value);
+            option->value = NULL;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+        }
+    }
+    
+    /* run callback if asked and value was changed */ 
+    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+        && run_callback && option->callback_change)
+    {
+        (void)(option->callback_change)(option->callback_change_data, option);
+    }
+    
+    /* run config hook(s) */
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        if (option->config_file && option->section)
+        {
+            option_full_name = config_file_option_full_name (option);
+            if (option_full_name)
+            {
+                hook_config_exec (option_full_name, NULL);
                 free (option_full_name);
             }
         }
@@ -1226,7 +1396,8 @@ void
 config_file_option_rename (struct t_config_option *option,
                            const char *new_name)
 {
-    if (!new_name || !new_name[0])
+    if (!new_name || !new_name[0]
+        || config_file_search_option (option->config_file, option->section, new_name))
         return;
     
     /* remove option from list */
@@ -1289,6 +1460,34 @@ config_file_option_get_pointer (struct t_config_option *option,
 }
 
 /*
+ * config_file_option_is_null: return 1 if value of option is null
+ *                                    0 if it is not null
+ */
+
+int
+config_file_option_is_null (struct t_config_option *option)
+{
+    if (!option)
+        return 1;
+    
+    return (option->value) ? 0 : 1;
+}
+
+/*
+ * config_file_option_default_is_null: return 1 if default value of option is null
+ *                                            0 if it is not null
+ */
+
+int
+config_file_option_default_is_null (struct t_config_option *option)
+{
+    if (!option)
+        return 1;
+    
+    return (option->default_value) ? 0 : 1;
+}
+
+/*
  * config_file_option_set_with_string: set value for an option (with a string
  *                                     for name of option)
  *                                     return one of these values:
@@ -1315,7 +1514,11 @@ config_file_option_set_with_string (const char *option_name, const char *value)
     if (ptr_config && ptr_section)
     {
         if (ptr_option)
-            rc = config_file_option_set (ptr_option, value, 1);
+        {
+            rc = (value) ?
+                config_file_option_set (ptr_option, value, 1) :
+                config_file_option_set_null (ptr_option, 1);
+        }
         else
         {
             if (ptr_section->user_can_add_options
@@ -1381,6 +1584,22 @@ config_file_option_boolean (struct t_config_option *option)
 }
 
 /*
+ * config_file_option_boolean_default: return default boolean value of an option
+ */
+
+int
+config_file_option_boolean_default (struct t_config_option *option)
+{
+    if (!option)
+        return 0;
+    
+    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
+        return CONFIG_BOOLEAN_DEFAULT(option);
+    else
+        return 0;
+}
+
+/*
  * config_file_option_integer: return integer value of an option
  */
 
@@ -1400,6 +1619,34 @@ config_file_option_integer (struct t_config_option *option)
         case CONFIG_OPTION_TYPE_INTEGER:
         case CONFIG_OPTION_TYPE_COLOR:
             return CONFIG_INTEGER(option);
+        case CONFIG_OPTION_TYPE_STRING:
+            return 0;
+        case CONFIG_NUM_OPTION_TYPES:
+            break;
+    }
+    return 0;
+}
+
+/*
+ * config_file_option_integer_default: return default integer value of an option
+ */
+
+int
+config_file_option_integer_default (struct t_config_option *option)
+{
+    if (!option)
+        return 0;
+    
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            if (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE)
+                return 1;
+            else
+                return 0;
+        case CONFIG_OPTION_TYPE_INTEGER:
+        case CONFIG_OPTION_TYPE_COLOR:
+            return CONFIG_INTEGER_DEFAULT(option);
         case CONFIG_OPTION_TYPE_STRING:
             return 0;
         case CONFIG_NUM_OPTION_TYPES:
@@ -1440,6 +1687,37 @@ config_file_option_string (struct t_config_option *option)
 }
 
 /*
+ * config_file_option_string_default: return default string value of an option
+ */
+
+const char *
+config_file_option_string_default (struct t_config_option *option)
+{
+    if (!option)
+        return NULL;
+    
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            if (CONFIG_BOOLEAN_DEFAULT(option))
+                return config_boolean_true[0];
+            else
+                return config_boolean_false[0];
+        case CONFIG_OPTION_TYPE_INTEGER:
+            if (option->string_values)
+                return option->string_values[CONFIG_INTEGER_DEFAULT(option)];
+            return NULL;
+        case CONFIG_OPTION_TYPE_STRING:
+            return CONFIG_STRING_DEFAULT(option);
+        case CONFIG_OPTION_TYPE_COLOR:
+            return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+        case CONFIG_NUM_OPTION_TYPES:
+            return NULL;
+    }
+    return NULL;
+}
+
+/*
  * config_file_option_color: return color value of an option
  */
 
@@ -1453,7 +1731,20 @@ config_file_option_color (struct t_config_option *option)
 }
 
 /*
- * config_file_write_option: write an option in a config file
+ * config_file_option_color_default: return default color value of an option
+ */
+
+const char *
+config_file_option_color_default (struct t_config_option *option)
+{
+    if (!option)
+        return NULL;
+
+    return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+}
+
+/*
+ * config_file_write_option: write an option in a configuration file
  */
 
 void
@@ -1462,42 +1753,50 @@ config_file_write_option (struct t_config_file *config_file,
 {
     if (!config_file || !config_file->file || !option)
         return;
-    
-    switch (option->type)
+
+    if (option->value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            string_iconv_fprintf (config_file->file, "%s = %s\n",
-                                  option->name,
-                                  (*((int *)option->value)) == CONFIG_BOOLEAN_TRUE ?
-                                  "on" : "off");
-            break;
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (option->string_values)
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
                 string_iconv_fprintf (config_file->file, "%s = %s\n",
                                       option->name,
-                                      option->string_values[*((int *)option->value)]);
-            else
-                string_iconv_fprintf (config_file->file, "%s = %d\n",
+                                      (*((int *)option->value)) == CONFIG_BOOLEAN_TRUE ?
+                                      "on" : "off");
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                    string_iconv_fprintf (config_file->file, "%s = %s\n",
+                                          option->name,
+                                          option->string_values[*((int *)option->value)]);
+                else
+                    string_iconv_fprintf (config_file->file, "%s = %d\n",
+                                          option->name,
+                                          *((int *)option->value));
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
                                       option->name,
-                                      *((int *)option->value));
-            break;
-        case CONFIG_OPTION_TYPE_STRING:
-            string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
-                                  option->name,
-                                  (char *)option->value);
-            break;
-        case CONFIG_OPTION_TYPE_COLOR:
-            string_iconv_fprintf (config_file->file, "%s = %s\n",
-                                  option->name,
-                                  gui_color_get_name (*((int *)option->value)));
-            break;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+                                      (char *)option->value);
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                string_iconv_fprintf (config_file->file, "%s = %s\n",
+                                      option->name,
+                                      gui_color_get_name (*((int *)option->value)));
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+    }
+    else
+    {
+        string_iconv_fprintf (config_file->file, "%s\n",
+                              option->name);
     }
 }
 
 /*
- * config_file_write_line: write a line in a config file
+ * config_file_write_line: write a line in a configuration file
  *                         if value is NULL, then write a section with [ ] around
  */
 
@@ -1670,7 +1969,7 @@ config_file_write (struct t_config_file *config_file)
 int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
-    int filename_length, line_number, rc;
+    int filename_length, line_number, rc, undefined_value;
     char *filename;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -1694,7 +1993,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         if (!config_file->file)
         {
             gui_chat_printf (NULL,
-                             _("%sWarning: config file \"%s\" not found"),
+                             _("%sWarning: configuration file \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename);
             free (filename);
@@ -1760,22 +2059,24 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 }
                 else
                 {
-                    pos = strstr (line, " = ");
-                    if (!pos)
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sWarning: %s, line %d: invalid "
-                                           "syntax, missing \"=\""),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         filename, line_number);
-                    }
-                    else
+                    undefined_value = 1;
+                    
+                    /* remove CR/LF */
+                    pos = strchr (line, '\r');
+                    if (pos != NULL)
+                        pos[0] = '\0';
+                    pos = strchr (line, '\n');
+                    if (pos != NULL)
+                        pos[0] = '\0';
+                    
+                    pos = strstr (line, " =");
+                    if (pos)
                     {
                         pos[0] = '\0';
-                        pos += 3;
+                        pos += 2;
                         
                         /* remove spaces before '=' */
-                        pos2 = pos - 4;
+                        pos2 = pos - 3;
                         while ((pos2 > line) && (pos2[0] == ' '))
                         {
                             pos2[0] = '\0';
@@ -1788,101 +2089,100 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             pos++;
                         }
                         
-                        /* remove CR/LF */
-                        pos2 = strchr (pos, '\r');
-                        if (pos2 != NULL)
-                            pos2[0] = '\0';
-                        pos2 = strchr (pos, '\n');
-                        if (pos2 != NULL)
-                            pos2[0] = '\0';
-                        
-                        /* remove simple or double quotes 
-                           and spaces at the end */
-                        if (strlen(pos) > 1)
+                        if (pos[0]
+                            && string_strcasecmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
                         {
-                            pos2 = pos + strlen (pos) - 1;
-                            while ((pos2 > pos) && (pos2[0] == ' '))
+                            undefined_value = 0;
+                            /* remove simple or double quotes and spaces at the end */
+                            if (strlen(pos) > 1)
                             {
-                                pos2[0] = '\0';
-                                pos2--;
-                            }
-                            pos2 = pos + strlen (pos) - 1;
-                            if (((pos[0] == '\'') &&
-                                 (pos2[0] == '\'')) ||
-                                ((pos[0] == '"') &&
-                                 (pos2[0] == '"')))
-                            {
-                                pos2[0] = '\0';
-                                pos++;
-                            }
-                        }
-                        
-                        if (ptr_section && ptr_section->callback_read)
-                        {
-                            ptr_option = NULL;
-                            rc = (ptr_section->callback_read)
-                                (ptr_section->callback_read_data,
-                                 config_file,
-                                 ptr_section,
-                                 line,
-                                 pos);
-                        }
-                        else
-                        {
-                            rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
-                            ptr_option = config_file_search_option (config_file,
-                                                                    ptr_section,
-                                                                    line);
-                            if (ptr_option)
-                            {
-                                rc = config_file_option_set (ptr_option, pos, 1);
-                                ptr_option->loaded = 1;
-                            }
-                            else
-                            {
-                                if (ptr_section
-                                    && ptr_section->callback_create_option)
+                                pos2 = pos + strlen (pos) - 1;
+                                while ((pos2 > pos) && (pos2[0] == ' '))
                                 {
-                                    rc = (int)(ptr_section->callback_create_option)
-                                        (ptr_section->callback_create_option_data,
-                                         config_file,
-                                         ptr_section,
-                                         line,
-                                         pos);
+                                    pos2[0] = '\0';
+                                    pos2--;
+                                }
+                                pos2 = pos + strlen (pos) - 1;
+                                if (((pos[0] == '\'') &&
+                                     (pos2[0] == '\'')) ||
+                                    ((pos[0] == '"') &&
+                                     (pos2[0] == '"')))
+                                {
+                                    pos2[0] = '\0';
+                                    pos++;
                                 }
                             }
                         }
-                        
-                        switch (rc)
+                    }
+                    
+                    if (ptr_section && ptr_section->callback_read)
+                    {
+                        ptr_option = NULL;
+                        rc = (ptr_section->callback_read)
+                            (ptr_section->callback_read_data,
+                             config_file,
+                             ptr_section,
+                             line,
+                             (undefined_value) ? NULL : pos);
+                    }
+                    else
+                    {
+                        rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
+                        ptr_option = config_file_search_option (config_file,
+                                                                ptr_section,
+                                                                line);
+                        if (ptr_option)
                         {
-                            case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                                if (ptr_section)
-                                    gui_chat_printf (NULL,
-                                                     _("%sWarning: %s, line %d: "
-                                                       "option \"%s\" "
-                                                       "unknown for "
-                                                       "section \"%s\""),
-                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                     filename, line_number,
-                                                     line, ptr_section->name);
-                                else
-                                    gui_chat_printf (NULL,
-                                                     _("%sWarning: %s, line %d: "
-                                                       "unknown option \"%s\" "
-                                                       "(outside a section)"),
-                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                     filename, line_number,
-                                                     line);
-                                break;
-                            case WEECHAT_CONFIG_OPTION_SET_ERROR:
+                            rc = config_file_option_set (ptr_option,
+                                                         (undefined_value) ?
+                                                         NULL : pos,
+                                                         1);
+                            ptr_option->loaded = 1;
+                        }
+                        else
+                        {
+                            if (ptr_section
+                                && ptr_section->callback_create_option)
+                            {
+                                rc = (int)(ptr_section->callback_create_option)
+                                    (ptr_section->callback_create_option_data,
+                                     config_file,
+                                     ptr_section,
+                                     line,
+                                     (undefined_value) ? NULL : pos);
+                            }
+                        }
+                    }
+                    
+                    switch (rc)
+                    {
+                        case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
+                            if (ptr_section)
                                 gui_chat_printf (NULL,
                                                  _("%sWarning: %s, line %d: "
-                                                   "invalid value for option "
-                                                   "\"%s\""),
+                                                   "option \"%s\" "
+                                                   "unknown for "
+                                                   "section \"%s\""),
                                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 filename, line_number, line);
-                                break;
-                        }
+                                                 filename, line_number,
+                                                 line, ptr_section->name);
+                            else
+                                gui_chat_printf (NULL,
+                                                 _("%sWarning: %s, line %d: "
+                                                   "unknown option \"%s\" "
+                                                   "(outside a section)"),
+                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                                 filename, line_number,
+                                                 line);
+                            break;
+                        case WEECHAT_CONFIG_OPTION_SET_ERROR:
+                            gui_chat_printf (NULL,
+                                             _("%sWarning: %s, line %d: "
+                                               "invalid value for option "
+                                               "\"%s\""),
+                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                             filename, line_number, line);
+                            break;
                     }
                 }
             }
@@ -1934,10 +2234,13 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        if (!ptr_section->callback_read)
         {
-            ptr_option->loaded = 0;
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                ptr_option->loaded = 0;
+            }
         }
     }
     
@@ -1948,11 +2251,14 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        if (!ptr_section->callback_read)
         {
-            if (!ptr_option->loaded)
-                config_file_option_reset (ptr_option, 1);
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                if (!ptr_option->loaded)
+                    config_file_option_reset (ptr_option, 1);
+            }
         }
     }
     
@@ -2083,7 +2389,7 @@ config_file_free (struct t_config_file *config_file)
     if (!config_file)
         return;
     
-    /* remove config file */
+    /* remove configuration file */
     if (last_config_file == config_file)
         last_config_file = config_file->prev_config;
     if (config_file->prev_config)
@@ -2147,7 +2453,7 @@ config_file_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * config_file_add_to_infolist: add config options in an infolist
+ * config_file_add_to_infolist: add configuration options in an infolist
  *                              return 1 if ok, 0 if error
  */
 
@@ -2264,6 +2570,22 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                             free (option_full_name);
                             return 0;
                         }
+                        if (!infolist_new_var_integer (ptr_item,
+                                                       "value_is_null",
+                                                       (ptr_option->value) ?
+                                                       0 : 1))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_integer (ptr_item,
+                                                       "default_value_is_null",
+                                                       (ptr_option->default_value) ?
+                                                       0 : 1))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
                         switch (ptr_option->type)
                         {
                             case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -2274,27 +2596,33 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                                     free (option_full_name);
                                     return 0;
                                 }
-                                if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
-                                    snprintf (value, sizeof (value), "on");
-                                else
-                                    snprintf (value, sizeof (value), "off");
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "value",
-                                                              value))
+                                if (ptr_option->value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                        snprintf (value, sizeof (value), "on");
+                                    else
+                                        snprintf (value, sizeof (value), "off");
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "value",
+                                                                  value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
-                                if (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE)
-                                    snprintf (value, sizeof (value), "on");
-                                else
-                                    snprintf (value, sizeof (value), "off");
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "default_value",
-                                                              value))
+                                if (ptr_option->default_value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                        snprintf (value, sizeof (value), "on");
+                                    else
+                                        snprintf (value, sizeof (value), "off");
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "default_value",
+                                                                  value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
                                 break;
                             case CONFIG_OPTION_TYPE_INTEGER:
@@ -2307,40 +2635,52 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                                 }
                                 if (ptr_option->string_values)
                                 {
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "value",
-                                                                  ptr_option->string_values[CONFIG_INTEGER(ptr_option)]))
+                                    if (ptr_option->value)
                                     {
-                                        free (option_full_name);
-                                        return 0;
+                                        if (!infolist_new_var_string (ptr_item,
+                                                                      "value",
+                                                                      ptr_option->string_values[CONFIG_INTEGER(ptr_option)]))
+                                        {
+                                            free (option_full_name);
+                                            return 0;
+                                        }
                                     }
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "default_value",
-                                                                  ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]))
+                                    if (ptr_option->default_value)
                                     {
-                                        free (option_full_name);
-                                        return 0;
+                                        if (!infolist_new_var_string (ptr_item,
+                                                                      "default_value",
+                                                                      ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]))
+                                        {
+                                            free (option_full_name);
+                                            return 0;
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    snprintf (value, sizeof (value), "%d",
-                                              CONFIG_INTEGER(ptr_option));
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "value",
-                                                                  value))
+                                    if (ptr_option->value)
                                     {
-                                        free (option_full_name);
-                                        return 0;
+                                        snprintf (value, sizeof (value), "%d",
+                                                  CONFIG_INTEGER(ptr_option));
+                                        if (!infolist_new_var_string (ptr_item,
+                                                                      "value",
+                                                                      value))
+                                        {
+                                            free (option_full_name);
+                                            return 0;
+                                        }
                                     }
-                                    snprintf (value, sizeof (value), "%d",
-                                              CONFIG_INTEGER_DEFAULT(ptr_option));
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "default_value",
-                                                                  value))
+                                    if (ptr_option->default_value)
                                     {
-                                        free (option_full_name);
-                                        return 0;
+                                        snprintf (value, sizeof (value), "%d",
+                                                  CONFIG_INTEGER_DEFAULT(ptr_option));
+                                        if (!infolist_new_var_string (ptr_item,
+                                                                      "default_value",
+                                                                      value))
+                                        {
+                                            free (option_full_name);
+                                            return 0;
+                                        }
                                     }
                                 }
                                 break;
@@ -2352,19 +2692,25 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                                     free (option_full_name);
                                     return 0;
                                 }
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "value",
-                                                              CONFIG_STRING(ptr_option)))
+                                if (ptr_option->value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "value",
+                                                                  CONFIG_STRING(ptr_option)))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "default_value",
-                                                              CONFIG_STRING_DEFAULT(ptr_option)))
+                                if (ptr_option->default_value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "default_value",
+                                                                  CONFIG_STRING_DEFAULT(ptr_option)))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
                                 break;
                             case CONFIG_OPTION_TYPE_COLOR:
@@ -2375,19 +2721,25 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                                     free (option_full_name);
                                     return 0;
                                 }
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "value",
-                                                              gui_color_get_name (CONFIG_COLOR(ptr_option))))
+                                if (ptr_option->value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "value",
+                                                                  gui_color_get_name (CONFIG_COLOR(ptr_option))))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "default_value",
-                                                              gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option))))
+                                if (ptr_option->value)
                                 {
-                                    free (option_full_name);
-                                    return 0;
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "default_value",
+                                                                  gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option))))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
                                 }
                                 break;
                             case CONFIG_NUM_OPTION_TYPES:
@@ -2404,102 +2756,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * config_file_print_stdout: print options on standard output
- */
-
-void
-config_file_print_stdout (struct t_config_file *config_file)
-{
-    struct t_config_section *ptr_section;
-    struct t_config_option *ptr_option;
-    const char *color_name;
-    int i;
-    
-    for (ptr_section = config_file->sections; ptr_section;
-         ptr_section = ptr_section->next_section)
-    {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
-        {
-            string_iconv_fprintf (stdout,
-                                  "* %s:\n",
-                                  ptr_option->name);
-            switch (ptr_option->type)
-            {
-                case CONFIG_OPTION_TYPE_BOOLEAN:
-                    string_iconv_fprintf (stdout, _("  . type: boolean\n"));
-                    string_iconv_fprintf (stdout, _("  . values: \"on\" or \"off\"\n"));
-                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
-                                          (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                          "on" : "off");
-                    break;
-                case CONFIG_OPTION_TYPE_INTEGER:
-                    if (ptr_option->string_values)
-                    {
-                        string_iconv_fprintf (stdout, _("  . type: string\n"));
-                        string_iconv_fprintf (stdout, _("  . values: "));
-                        i = 0;
-                        while (ptr_option->string_values[i])
-                        {
-                            string_iconv_fprintf (stdout, "\"%s\"",
-                                                  ptr_option->string_values[i]);
-                            if (ptr_option->string_values[i + 1])
-                                string_iconv_fprintf (stdout, ", ");
-                            i++;
-                        }
-                        string_iconv_fprintf (stdout, "\n");
-                        string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
-                                              ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
-                    }
-                    else
-                    {
-                        string_iconv_fprintf (stdout, _("  . type: integer\n"));
-                        string_iconv_fprintf (stdout, _("  . values: between %d and %d\n"),
-                                              ptr_option->min,
-                                              ptr_option->max);
-                        string_iconv_fprintf (stdout, _("  . default value: %d\n"),
-                                              CONFIG_INTEGER_DEFAULT(ptr_option));
-                    }
-                    break;
-                case CONFIG_OPTION_TYPE_STRING:
-                    switch (ptr_option->max)
-                    {
-                        case 0:
-                            string_iconv_fprintf (stdout, _("  . type: string\n"));
-                            string_iconv_fprintf (stdout, _("  . values: any string\n"));
-                            break;
-                        case 1:
-                            string_iconv_fprintf (stdout, _("  . type: char\n"));
-                            string_iconv_fprintf (stdout, _("  . values: any char\n"));
-                            break;
-                        default:
-                            string_iconv_fprintf (stdout, _("  . type: string\n"));
-                            string_iconv_fprintf (stdout, _("  . values: any string (limit: %d chars)\n"),
-                                                  ptr_option->max);
-                            break;
-                    }
-                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
-                                          CONFIG_STRING_DEFAULT(ptr_option));
-                    break;
-                case CONFIG_OPTION_TYPE_COLOR:
-                    color_name = gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option));
-                    string_iconv_fprintf (stdout, _("  . type: color\n"));
-                    string_iconv_fprintf (stdout, _("  . values: color (depends on GUI used)\n"));
-                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
-                                          color_name);
-                    break;
-                case CONFIG_NUM_OPTION_TYPES:
-                    break;
-            }
-            string_iconv_fprintf (stdout, _("  . description: %s\n"),
-                                  _(ptr_option->description));
-            string_iconv_fprintf (stdout, "\n");
-        }
-    }
-}
-
-/*
- * config_file_print_log: print config in log (usually for crash dump)
+ * config_file_print_log: print configuration in log (usually for crash dump)
  */
 
 void
@@ -2565,45 +2822,68 @@ config_file_print_log ()
                 {
                     case CONFIG_OPTION_TYPE_BOOLEAN:
                         log_printf ("        default value. . . . : %s",
-                                    (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                    "on" : "off");
+                                    (ptr_option->default_value) ?
+                                    ((CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                     "on" : "off") : "null");
                         log_printf ("        value (boolean). . . : %s",
-                                    (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                    "on" : "off");
+                                    (ptr_option->value) ?
+                                    ((CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                     "on" : "off") : "null");
                         break;
                     case CONFIG_OPTION_TYPE_INTEGER:
                         if (ptr_option->string_values)
                         {
                             log_printf ("        default value. . . . : '%s'",
-                                        ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
+                                        (ptr_option->default_value) ?
+                                        ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)] : "null");
                             log_printf ("        value (integer/str). : '%s'",
-                                        ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                                        (ptr_option->value) ?
+                                        ptr_option->string_values[CONFIG_INTEGER(ptr_option)] : "null");
                         }
                         else
                         {
-                            log_printf ("        default value. . . . : %d",
-                                        CONFIG_INTEGER_DEFAULT(ptr_option));
-                            log_printf ("        value (integer). . . : %d",
-                                        CONFIG_INTEGER(ptr_option));
+                            if (ptr_option->default_value)
+                                log_printf ("        default value. . . . : %d",
+                                            CONFIG_INTEGER_DEFAULT(ptr_option));
+                            else
+                                log_printf ("        default value. . . . : null");
+                            if (ptr_option->value)
+                                log_printf ("        value (integer). . . : %d",
+                                            CONFIG_INTEGER(ptr_option));
+                            else
+                                log_printf ("        value (integer). . . : null");
                         }
                         break;
                     case CONFIG_OPTION_TYPE_STRING:
-                        log_printf ("        default value. . . . : '%s'",
-                                    CONFIG_STRING_DEFAULT(ptr_option));
-                        log_printf ("        value (string) . . . : '%s'",
-                                    CONFIG_STRING(ptr_option));
+                        if (ptr_option->default_value)
+                            log_printf ("        default value. . . . : '%s'",
+                                        CONFIG_STRING_DEFAULT(ptr_option));
+                        else
+                            log_printf ("        default value. . . . : null");
+                        if (ptr_option->value)
+                            log_printf ("        value (string) . . . : '%s'",
+                                        CONFIG_STRING(ptr_option));
+                        else
+                            log_printf ("        value (string) . . . : null");
                         break;
                     case CONFIG_OPTION_TYPE_COLOR:
-                        log_printf ("        default value. . . . : %d ('%s')",
-                                    CONFIG_COLOR_DEFAULT(ptr_option),
-                                    gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
-                        log_printf ("        value (color). . . . : %d ('%s')",
-                                    CONFIG_COLOR(ptr_option),
-                                    gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                        if (ptr_option->default_value)
+                            log_printf ("        default value. . . . : %d ('%s')",
+                                        CONFIG_COLOR_DEFAULT(ptr_option),
+                                        gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
+                        else
+                            log_printf ("        default value. . . . : null");
+                        if (ptr_option->value)
+                            log_printf ("        value (color). . . . : %d ('%s')",
+                                        CONFIG_COLOR(ptr_option),
+                                        gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                        else
+                            log_printf ("        value (color). . . . : null");
                         break;
                     case CONFIG_NUM_OPTION_TYPES:
                         break;
                 }
+                log_printf ("        null_value_allowed . : %d",    ptr_option->null_value_allowed);
                 log_printf ("        callback_change. . . : 0x%lx", ptr_option->callback_change);
                 log_printf ("        loaded . . . . . . . : %d",    ptr_option->loaded);
                 log_printf ("        prev_option. . . . . : 0x%lx", ptr_option->prev_option);

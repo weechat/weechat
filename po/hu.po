@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 18:36+0100\n"
+"POT-Creation-Date: 2009-01-02 22:40+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -344,6 +344,10 @@ msgstr "  . értékek: "
 
 #, fuzzy
 msgid "default value"
+msgstr "  . alapérték: %d\n"
+
+#, fuzzy
+msgid "(undefined)"
 msgstr "  . alapérték: %d\n"
 
 msgid "current value"
@@ -1115,12 +1119,22 @@ msgstr ""
 msgid "set config options"
 msgstr "konfigurációs paraméterek beállítása"
 
-msgid "[option [ = value]]"
+#, fuzzy
+msgid "[option [value]]"
 msgstr "[opció [ = érték]]"
 
 msgid ""
 "option: name of an option\n"
-" value: value for option"
+" value: new value for option\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off ou toggle\n"
+"  integer: number, ++number ou --number  string : any string (\"\" for empty "
+"string)\n"
+"  color  : color name, ++number ou --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables."
 msgstr ""
 
 #, fuzzy
@@ -1708,7 +1722,7 @@ msgid "(default options)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sWarning: config file \"%s\" not found"
+msgid "%sWarning: configuration file \"%s\" not found"
 msgstr "%s a \"%s\" beállítófájl nem található.\n"
 
 #, fuzzy, c-format
@@ -1722,10 +1736,6 @@ msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
-msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"=\"\n"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
@@ -1742,58 +1752,6 @@ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 #, fuzzy, c-format
 msgid "Reloading configuration file %s"
 msgstr "Beállítások mentése a lemezre\n"
-
-msgid "  . type: boolean\n"
-msgstr "  . típus: logikai\n"
-
-#, fuzzy
-msgid "  . values: \"on\" or \"off\"\n"
-msgstr "  . értékek: 'on' vagy 'off'\n"
-
-#, fuzzy, c-format
-msgid "  . default value: \"%s\"\n"
-msgstr "  . alapérték: '%s'\n"
-
-msgid "  . type: string\n"
-msgstr "  . típus: szöveg\n"
-
-msgid "  . values: "
-msgstr "  . értékek: "
-
-msgid "  . type: integer\n"
-msgstr "  . típus: szám\n"
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr "  . értékek: %d és %d között\n"
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr "  . alapérték: %d\n"
-
-msgid "  . values: any string\n"
-msgstr "  . érték: bármilyen szöveg\n"
-
-msgid "  . type: char\n"
-msgstr "  . típus: karakter\n"
-
-msgid "  . values: any char\n"
-msgstr "  . érték: bármilyen karakter\n"
-
-#, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr "  . érték: bármilyen szöveg (korlát: %d karakter)\n"
-
-msgid "  . type: color\n"
-msgstr "  . típus: szín\n"
-
-#, fuzzy
-msgid "  . values: color (depends on GUI used)\n"
-msgstr "  . értékek: %d és %d között\n"
-
-#, c-format
-msgid "  . description: %s\n"
-msgstr "  . leírás : %s\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -2432,7 +2390,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "A %s%s%s szerver létrehozva\n"
 
 #, fuzzy, c-format
@@ -2541,18 +2499,6 @@ msgid "No server found with \"%s\""
 msgstr "Nem található '%s' szerver.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "A %s%s%s szerver mostantól: %s%s\n"
-
-#, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 
@@ -2561,8 +2507,32 @@ msgid "%s%s: unable to create server"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
+msgid "%s: server %s%s%s created"
+msgstr "A %s%s%s szerver létrehozva\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "A %s%s%s szerver mostantól: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr "A %s%s%s szerver létrehozva\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s is not temporary any more"
+msgstr "A %s%s%s szerver létrehozva\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -3126,7 +3096,8 @@ msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
+"[rename servername newservername] | [keep servername] | [del servername] | "
+"[deloutq] | [switch]"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -3148,6 +3119,7 @@ msgid ""
 "       ssl: use SSL protocol\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
@@ -3382,14 +3354,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
-#, fuzzy, c-format
-msgid "%s%s: error creating server \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
-msgstr "%s a \"%s\" opció nem található\n"
-
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -3465,6 +3429,10 @@ msgstr ""
 
 msgid "automatically rejoin channels when kicked"
 msgstr "automatikus visszalépés a szobába kirúgáskor"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -3583,7 +3551,7 @@ msgid "IRC debug messages"
 msgstr "hibakereső üzenetek megjelenítése"
 
 #, fuzzy, c-format
-msgid "%sServer: %s%s %s[%s%s%s]"
+msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
 msgid "connected"
@@ -3591,6 +3559,9 @@ msgstr "csatlakozva"
 
 msgid "not connected"
 msgstr "nincs csatlakozva"
+
+msgid " (temporary)"
+msgstr ""
 
 msgid "on"
 msgstr "be"
@@ -4173,11 +4144,11 @@ msgid ""
 "    /logger disable\n"
 "\n"
 "  set level to 3 for all IRC buffers:\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  disable logging for main WeeChat buffer:\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  use a directory per IRC server and a file per channel inside:\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Log levels used by IRC plugin:\n"
 "  1: user message, notice, private\n"
@@ -5120,6 +5091,71 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "  . type: boolean\n"
+#~ msgstr "  . típus: logikai\n"
+
+#, fuzzy
+#~ msgid "  . values: \"on\" or \"off\"\n"
+#~ msgstr "  . értékek: 'on' vagy 'off'\n"
+
+#, fuzzy
+#~ msgid "  . default value: \"%s\"\n"
+#~ msgstr "  . alapérték: '%s'\n"
+
+#~ msgid "  . type: string\n"
+#~ msgstr "  . típus: szöveg\n"
+
+#~ msgid "  . values: "
+#~ msgstr "  . értékek: "
+
+#~ msgid "  . type: integer\n"
+#~ msgstr "  . típus: szám\n"
+
+#~ msgid "  . values: between %d and %d\n"
+#~ msgstr "  . értékek: %d és %d között\n"
+
+#~ msgid "  . default value: %d\n"
+#~ msgstr "  . alapérték: %d\n"
+
+#~ msgid "  . values: any string\n"
+#~ msgstr "  . érték: bármilyen szöveg\n"
+
+#~ msgid "  . type: char\n"
+#~ msgstr "  . típus: karakter\n"
+
+#~ msgid "  . values: any char\n"
+#~ msgstr "  . érték: bármilyen karakter\n"
+
+#~ msgid "  . values: any string (limit: %d chars)\n"
+#~ msgstr "  . érték: bármilyen szöveg (korlát: %d karakter)\n"
+
+#~ msgid "  . type: color\n"
+#~ msgstr "  . típus: szín\n"
+
+#, fuzzy
+#~ msgid "  . values: color (depends on GUI used)\n"
+#~ msgstr "  . értékek: %d és %d között\n"
+
+#~ msgid "  . description: %s\n"
+#~ msgstr "  . leírás : %s\n"
+
+#, fuzzy
+#~ msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
+#~ msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"=\"\n"
+
+#, fuzzy
+#~ msgid "value not defined"
+#~ msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+#~ msgid "hidden"
+#~ msgstr "(rejtett)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+#~ msgstr "%s a \"%s\" opció nem található\n"
 
 #, fuzzy
 #~ msgid "display nicklist (on buffers with nicklist enabled)"

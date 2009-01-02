@@ -3,17 +3,17 @@ WeeChat quick start guide (english version)
 
 1. Launch weechat
 
-     Run "weechat-curses" from your shell.
-
      A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
      (it has good UTF-8 support, and no problem with default keyboard bindings).
+
+     Run "weechat-curses" from your shell.
 
 2. Online help / options
 
      WeeChat has help for all commands, just issue /help
      To get help on a command, issue /help command
 
-     To set options, use /set config.section.option = value
+     To set options, use /set config.section.option value
      (where config is configuration name ("weechat" for core, or a plugin
      name), "section" the section of this configuration and "option" the
      option name).
@@ -24,12 +24,14 @@ WeeChat quick start guide (english version)
      You can use /set option with partial name and wildcard "*" at beginning or
      end to display all options containg letters.
      For example:
-       /set            => display all options (WeeChat and plugins)
-       /set weechat.*  => display WeeChat options
-       /set irc.*      => display IRC plugin options
+
+        /set             => display all options (WeeChat and plugins)
+        /set weechat.*   => display WeeChat options
+        /set irc.*       => display IRC plugin options
 
      You can display help for an option with /help, for example:
-       /help weechat.look.highlight
+
+        /help weechat.look.highlight
 
      All settings are saved when WeeChat ends (or with "/save" command to force
      write of options).
@@ -51,10 +53,12 @@ WeeChat quick start guide (english version)
 4. Create an IRC server
 
      You can add an IRC server with /server command, for example:
-       /server add oftc irc.oftc.org 6667
+
+        /server add oftc irc.oftc.org 6667
 
      As usual, help is available if you're lost:
-       /help server
+
+        /help server
 
 5. Set custom IRC server options
 
@@ -62,30 +66,44 @@ WeeChat quick start guide (english version)
      don't specify a specific value for a server option.
      These default options are "irc.server_default.*".
 
+     For each server option, WeeChat uses its value if it is defined (not
+     "null"). Otherwise WeeChat uses default value (irc.server_default.xxx).
+
      For example there's default nicks (based on your un*x login), and you can
      override them for oftc server with following command:
-       /set irc.server.oftc.nicks = "mynick1,mynick2,mynick3,mynick4,mynick5"
+
+        /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
 
      To set username and realname:
-       /set irc.server.oftc.username = "My user name"
-       /set irc.server.oftc.realname = "My real name"
+
+        /set irc.server.oftc.username "My user name"
+        /set irc.server.oftc.realname "My real name"
 
      To enable auto-connect to server at startup:
-       /set irc.server.oftc.autoconnect = on
+
+        /set irc.server.oftc.autoconnect on
 
      To run a command after connection to server, for example to identify
      with nickserv:
-       /set irc.server.oftc.command = "/msg nickserv identify xxxxxx"
+
+        /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+
      Note: many commmands can be separated by ';' (semi-colon)
 
      To auto-join some channels when connecting to server:
-       /set irc.server.oftc.autojoin = "#channel1,#channel2"
+
+        /set irc.server.oftc.autojoin "#channel1,#channel2"
+
+     To remove value of a server option, and use default value instead,
+     for example to use default nicks (irc.server_default.nicks):
+
+        /set irc.server.oftc.nicks null
 
      Other options:
-       You can setup other options with following command:
-         /set irc.server.oftc.xxx = value
-       where "xxx" is option name - you can see all possible options with:
-         /set irc.server_default.*
+       You can setup other options with following command ("xxx" is option
+       name):
+
+         /set irc.server.oftc.xxx value
 
 6. Connect to IRC server and auto-join channels
 
@@ -98,11 +116,17 @@ WeeChat quick start guide (english version)
 7. Join/part IRC channels
 
      Join a channel:
-       /join #channel
+
+        /join #channel
+
      Part a channel:
-       /part [quit message]
+
+        /part [quit message]
+
      Close server or channel buffer:
-       /close [quit message]
+
+        /close [quit message]
+
      (/close is an alias on /buffer close)
 
 8. Buffer/window management
@@ -115,13 +139,16 @@ WeeChat quick start guide (english version)
      with many buffers at same time.
 
      Commands to manage buffers and windows:
-       /buffer
-       /window
+
+        /buffer
+        /window
+
      (I'll not repeat here that you can get help with /help on these commands)
 
      For example, to split verticaly screen into a small window (1/3 width),
      and a large (2/3), use command:
-       /window splitv 33
+
+        /window splitv 33
 
 9. Key bindings
 
@@ -140,11 +167,16 @@ WeeChat quick start guide (english version)
      A useful key is meta-k (alt-k) to find key codes.
 
      For example, to bind meta-y (alt-y) to command "/buffer close":
-       /key (press meta-k) (press meta-y) /buffer close
+
+        /key (press meta-k) (press meta-y) /buffer close
+
      You'll have a command line like:
-       /key meta-y /buffer close
+
+        /key meta-y /buffer close
+
      To remove key:
-       /key unbind meta-y
+
+        /key unbind meta-y
 
 10. Plugins/scripts
 
@@ -153,24 +185,26 @@ WeeChat quick start guide (english version)
      Plugins are automatically loaded when found.
 
      Some plugins let you use scripts in WeeChat (in many languages like Perl,
-     Python, Ruby and Lua). These plugins must be loaded with /plugin command
-     and they provide commands like /perl, used to load scripts.
+     Python, Ruby, Lua and Tcl). These plugins must be loaded with /plugin
+     command and they provide commands like /perl, used to load scripts.
 
      Many external plugins/scripts (from contributors) are available for
      WeeChat, please look at:
-       http://weechat.flashtux.org/plugins.php
+
+        http://weechat.flashtux.org/plugins.php
 
      Please look at WeeChat documentation to load/unload plugins or scripts.
 
 11. More documentation
 
      You can now use WeeChat and read FAQ/documentation for any other question:
-       http://weechat.flashtux.org/faq.php
-       http://weechat.flashtux.org/doc.php
+
+        http://weechat.flashtux.org/faq.php
+        http://weechat.flashtux.org/doc.php
 
      Enjoy WeeChat!
 
 --
-(c) 2006-2008, written by FlashCode <flashcode@flashtux.org>
-Last edited on 2008-11-12.
+(c) 2006-2009, written by FlashCode <flashcode@flashtux.org>
+Last edited on 2009-01-02.
 This document is part of WeeChat and is distributed under GPL 3 licence.

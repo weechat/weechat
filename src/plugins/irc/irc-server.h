@@ -31,6 +31,49 @@
 #define NI_MAXHOST 256
 #endif
 
+enum t_irc_server_option
+{
+    IRC_SERVER_OPTION_ADDRESSES = 0,
+    IRC_SERVER_OPTION_PROXY,
+    IRC_SERVER_OPTION_IPV6,
+    IRC_SERVER_OPTION_SSL,
+    IRC_SERVER_OPTION_PASSWORD,
+    IRC_SERVER_OPTION_AUTOCONNECT,
+    IRC_SERVER_OPTION_AUTORECONNECT,
+    IRC_SERVER_OPTION_AUTORECONNECT_DELAY,
+    IRC_SERVER_OPTION_NICKS,
+    IRC_SERVER_OPTION_USERNAME,
+    IRC_SERVER_OPTION_REALNAME,
+    IRC_SERVER_OPTION_LOCAL_HOSTNAME,
+    IRC_SERVER_OPTION_COMMAND,
+    IRC_SERVER_OPTION_COMMAND_DELAY,
+    IRC_SERVER_OPTION_AUTOJOIN,
+    IRC_SERVER_OPTION_AUTOREJOIN,
+    /* number of server options */
+    IRC_SERVER_NUM_OPTIONS,
+};
+
+#define IRC_SERVER_OPTION_BOOLEAN(__server, __index)                          \
+    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+     weechat_config_boolean(__server->options[__index]) :                     \
+     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+      weechat_config_boolean(irc_config_server_default[__index])              \
+      : weechat_config_boolean_default(irc_config_server_default[__index])))
+
+#define IRC_SERVER_OPTION_INTEGER(__server, __index)                          \
+    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+     weechat_config_integer(__server->options[__index]) :                     \
+     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+      weechat_config_integer(irc_config_server_default[__index])              \
+      : weechat_config_integer_default(irc_config_server_default[__index])))
+
+#define IRC_SERVER_OPTION_STRING(__server, __index)                           \
+    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+     weechat_config_string(__server->options[__index]) :                      \
+     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+      weechat_config_string(irc_config_server_default[__index])               \
+      : weechat_config_string_default(irc_config_server_default[__index])))
+
 #define IRC_SERVER_DEFAULT_PORT          6667
 #define IRC_SERVER_DEFAULT_PREFIXES_LIST "@%+~&!-"
 #define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
@@ -59,25 +102,12 @@ struct t_irc_outqueue
 struct t_irc_server
 {
     /* user choices */
-    char *name;                     /* internal name of server               */
-    int autoconnect;                /* = 1 if auto connect at startup        */
-    int autoreconnect;              /* = 1 if auto reco when disconnected    */
-    int autoreconnect_delay;        /* delay before trying again reconnect   */
-    char *proxy;                    /* proxy used for this server (optional) */
-    char *addresses;                /* server addresses (IP/name with port)  */
-    int ipv6;                       /* use IPv6 protocol                     */
-    int ssl;                        /* SSL protocol                          */
-    char *password;                 /* password for server                   */
-    char *nicks;                    /* nicknames as one string               */
-    char *username;                 /* user name                             */
-    char *realname;                 /* real name                             */
-    char *local_hostname;           /* custom local hostname                 */
-    char *command;                  /* command to run once connected         */
-    int command_delay;              /* delay after execution of command      */
-    char *autojoin;                 /* channels to automatically join        */
-    int autorejoin;                 /* auto rejoin channels when kicked      */
+    char *name;                             /* internal name of server       */
+    struct t_config_option *options[IRC_SERVER_NUM_OPTIONS];
     
     /* internal vars */
+    int temp_server;                /* temporary server (not saved)          */
+    int reloading_from_config;      /* 1 if reloading from config file       */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
     int addresses_count;            /* number of addresses                   */
     char **addresses_array;         /* exploded addresses                    */
@@ -138,21 +168,16 @@ extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 #endif
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
-
+extern char *irc_server_option_string[];
+extern char *irc_server_option_default[];
 
 extern int irc_server_valid (struct t_irc_server *server);
+extern int irc_server_search_option (const char *option_name);
 extern char *irc_server_get_name_without_port (const char *name);
-extern void irc_server_new_option (struct t_irc_server *server,
-                                   int index_option,
-                                   const char *value);
 extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
-extern void irc_server_set_with_option (struct t_irc_server *server,
-                                        int index_option,
-                                        struct t_config_option *option);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
-extern void irc_server_init (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_free_all ();
@@ -172,8 +197,8 @@ extern struct t_irc_server *irc_server_new (const char *name, int autoconnect,
                                             int command_delay,
                                             const char *autojoin,
                                             int autorejoin);
-extern struct t_irc_server *irc_server_duplicate (struct t_irc_server *server,
-                                                  const char *new_name);
+extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
+                                             const char *new_name);
 extern int irc_server_rename (struct t_irc_server *server, const char *new_name);
 extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,

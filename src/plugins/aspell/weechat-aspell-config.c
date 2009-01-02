@@ -191,7 +191,8 @@ weechat_aspell_config_dict_create_option (void *data,
                     config_file, section,
                     option_name, "string",
                     _("comma separated list of dictionaries to use on this buffer"),
-                    NULL, 0, 0, "", value, NULL, NULL,
+                    NULL, 0, 0, "", value, 0,
+                    NULL, NULL,
                     &weechat_aspell_config_dict_change, NULL,
                     NULL, NULL);
                 rc = (ptr_option) ?
@@ -272,7 +273,7 @@ weechat_aspell_config_init ()
         weechat_aspell_config_file, ptr_section,
         "color", "color",
         N_("color used for mispelled words"),
-        NULL, 0, 0, "lightred", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "lightred", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* check */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "check",
@@ -293,7 +294,7 @@ weechat_aspell_config_init ()
            "enabled (spell checking is disabled for all other commands)"),
         NULL, 0, 0,
         "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,"
-        "quit,topic", NULL,
+        "quit,topic", NULL, 0,
         NULL, NULL, &weechat_aspell_config_change_commands, NULL, NULL, NULL);
     weechat_aspell_config_check_default_dict = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
@@ -301,19 +302,19 @@ weechat_aspell_config_init ()
         N_("default dictionary (or comma separated list of dictionaries) to "
            "use when buffer has no dictionary defined (leave blank to disable "
            "aspell on buffers for which you didn't explicitely enabled it)"),
-        NULL, 0, 0, "", NULL,
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, &weechat_aspell_config_change_default_dict, NULL, NULL, NULL);
     weechat_aspell_config_check_word_min_length = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "word_min_length", "integer",
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
-        NULL, 0, INT_MAX, "2", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     weechat_aspell_config_check_during_search = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "during_search", "boolean",
         N_("check words during text search in buffer"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* dict */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",

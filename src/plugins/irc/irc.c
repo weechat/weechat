@@ -193,12 +193,16 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (irc_hook_timer_check_away)
         weechat_unhook (irc_hook_timer_check_away);
     
-    irc_config_write ();
-    
     if (irc_signal_upgrade_received)
+    {
+        irc_config_write (1);
         irc_upgrade_save ();
+    }
     else
+    {
+        irc_config_write (0);
         irc_server_disconnect_all ();
+    }
     
     irc_server_free_all ();
     

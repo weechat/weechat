@@ -1461,7 +1461,7 @@ weechat_lua_api_config_new_option (lua_State *L)
     const char *string_values, *default_value, *value;
     const char *function_check_value, *function_change, *function_delete;
     char *result;
-    int n, min, max;
+    int n, min, max, null_value_allowed;
     
     /* make C compiler happy */
     (void) L;
@@ -1482,28 +1482,30 @@ weechat_lua_api_config_new_option (lua_State *L)
     max = 0;
     default_value = NULL;
     value = NULL;
+    null_value_allowed = 0;
     function_check_value = NULL;
     function_change = NULL;
     function_delete = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 13)
+    if (n < 14)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -13);
-    section = lua_tostring (lua_current_interpreter, -12);
-    name = lua_tostring (lua_current_interpreter, -11);
-    type = lua_tostring (lua_current_interpreter, -10);
-    description = lua_tostring (lua_current_interpreter, -9);
-    string_values = lua_tostring (lua_current_interpreter, -8);
-    min = lua_tonumber (lua_current_interpreter, -7);
-    max = lua_tonumber (lua_current_interpreter, -6);
-    default_value = lua_tostring (lua_current_interpreter, -5);
-    value = lua_tostring (lua_current_interpreter, -4);
+    config_file = lua_tostring (lua_current_interpreter, -14);
+    section = lua_tostring (lua_current_interpreter, -13);
+    name = lua_tostring (lua_current_interpreter, -12);
+    type = lua_tostring (lua_current_interpreter, -11);
+    description = lua_tostring (lua_current_interpreter, -10);
+    string_values = lua_tostring (lua_current_interpreter, -9);
+    min = lua_tonumber (lua_current_interpreter, -8);
+    max = lua_tonumber (lua_current_interpreter, -7);
+    default_value = lua_tostring (lua_current_interpreter, -6);
+    value = lua_tostring (lua_current_interpreter, -5);
+    null_value_allowed = lua_tonumber (lua_current_interpreter, -4);
     function_check_value = lua_tostring (lua_current_interpreter, -3);
     function_change = lua_tostring (lua_current_interpreter, -2);
     function_delete = lua_tostring (lua_current_interpreter, -1);
@@ -1520,6 +1522,7 @@ weechat_lua_api_config_new_option (lua_State *L)
                                                            max,
                                                            default_value,
                                                            value,
+                                                           null_value_allowed,
                                                            &weechat_lua_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_lua_api_config_option_change_cb,
@@ -1664,7 +1667,7 @@ weechat_lua_api_config_option_set (lua_State *L)
     if (!lua_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
-        LUA_RETURN_INT(0);
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = NULL;
@@ -1676,7 +1679,7 @@ weechat_lua_api_config_option_set (lua_State *L)
     if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
-        LUA_RETURN_INT(0);
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = lua_tostring (lua_current_interpreter, -3);
@@ -1686,6 +1689,46 @@ weechat_lua_api_config_option_set (lua_State *L)
     rc = weechat_config_option_set (script_str2ptr (option),
                                     new_value,
                                     run_callback);
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_option_set_null: set null (undefined) value for
+ *                                         option
+ */
+
+static int
+weechat_lua_api_config_option_set_null (lua_State *L)
+{
+    const char *option;
+    int n, run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    option = NULL;
+    run_callback = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set_null");
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -2);
+    run_callback = lua_tonumber (lua_current_interpreter, -1);
+    
+    rc = weechat_config_option_set_null (script_str2ptr (option),
+                                         run_callback);
     
     LUA_RETURN_INT(rc);
 }
@@ -1706,7 +1749,7 @@ weechat_lua_api_config_option_unset (lua_State *L)
     if (!lua_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
-        LUA_RETURN_INT(0);
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     option = NULL;
@@ -1716,7 +1759,7 @@ weechat_lua_api_config_option_unset (lua_State *L)
     if (n < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
-        LUA_RETURN_INT(0);
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     option = lua_tostring (lua_current_interpreter, -1);
@@ -1741,7 +1784,7 @@ weechat_lua_api_config_option_rename (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");;
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
         LUA_RETURN_ERROR;
     }
     
@@ -1763,6 +1806,79 @@ weechat_lua_api_config_option_rename (lua_State *L)
                                   new_name);
     
     LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_config_option_is_null: return 1 if value of option is null
+ */
+
+static int
+weechat_lua_api_config_option_is_null (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
+        LUA_RETURN_INT(1);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_is_null");
+        LUA_RETURN_INT(1);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_option_is_null (script_str2ptr (option));
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_option_default_is_null: return 1 if default value of
+ *                                                option is null
+ */
+
+static int
+weechat_lua_api_config_option_default_is_null (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
+        LUA_RETURN_INT(1);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_default_is_null");
+        LUA_RETURN_INT(1);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_option_default_is_null (script_str2ptr (option));
+    
+    LUA_RETURN_INT(value);
 }
 
 /*
@@ -1907,6 +2023,45 @@ weechat_lua_api_config_color (lua_State *L)
     result = weechat_config_color (script_str2ptr (option));
     
     LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_config_write_option: write an option in configuration file
+ */
+
+static int
+weechat_lua_api_config_write_option (lua_State *L)
+{
+    const char *config_file, *option;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_option");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -2);
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_config_write_option (script_str2ptr (config_file),
+                                 script_str2ptr (option));
+    
+    LUA_RETURN_OK;
 }
 
 /*
@@ -5880,12 +6035,16 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_string_to_boolean", &weechat_lua_api_config_string_to_boolean },
     { "config_option_reset", &weechat_lua_api_config_option_reset },
     { "config_option_set", &weechat_lua_api_config_option_set },
+    { "config_option_set_null", &weechat_lua_api_config_option_set_null },
     { "config_option_unset", &weechat_lua_api_config_option_unset },
     { "config_option_rename", &weechat_lua_api_config_option_rename },
+    { "config_option_is_null", &weechat_lua_api_config_option_is_null },
+    { "config_option_default_is_null", &weechat_lua_api_config_option_default_is_null },
     { "config_boolean", &weechat_lua_api_config_boolean },
     { "config_integer", &weechat_lua_api_config_integer },
     { "config_string", &weechat_lua_api_config_string },
     { "config_color", &weechat_lua_api_config_color },
+    { "config_write_option", &weechat_lua_api_config_write_option },
     { "config_write_line", &weechat_lua_api_config_write_line },
     { "config_write", &weechat_lua_api_config_write },
     { "config_read", &weechat_lua_api_config_read },

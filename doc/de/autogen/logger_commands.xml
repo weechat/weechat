@@ -24,11 +24,11 @@ Examples:
     /logger disable
 
   set level to 3 for all IRC buffers:
-    /set logger.level.irc = 3
+    /set logger.level.irc 3
   disable logging for main WeeChat buffer:
-    /set logger.level.core.weechat = 0
+    /set logger.level.core.weechat 0
   use a directory per IRC server and a file per channel inside:
-    /set logger.mask.irc = $server/$channel.weechatlog
+    /set logger.mask.irc "$server/$channel.weechatlog"
 
 Log levels used by IRC plugin:
   1: user message, notice, private

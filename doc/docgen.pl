@@ -23,7 +23,7 @@
 #     1.  run WeeChat and load this script, with following command:
 #           /perl load ~/src/weechat/doc/docgen.pl
 #     2.  change path to build in your doc/ directory:
-#           /set plugins.var.perl.docgen.path = "~/src/weechat/doc"
+#           /set plugins.var.perl.docgen.path "~/src/weechat/doc"
 #     3.  run docgen command:
 #           /docgen
 # XML files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language)

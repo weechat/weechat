@@ -1316,7 +1316,7 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
     char *config_file, *section, *name, *type, *description, *string_values;
     char *default_value, *value, *result;
     char *function_check_value, *function_change, *function_delete;
-    int min, max;
+    int min, max, null_value_allowed;
     PyObject *object;
     
     /* make C compiler happy */
@@ -1340,10 +1340,11 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
     function_change = NULL;
     function_delete = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssiisssss", &config_file, &section, &name,
+    if (!PyArg_ParseTuple (args, "ssssssiississs", &config_file, &section, &name,
                            &type, &description, &string_values, &min, &max,
-                           &default_value, &value, &function_check_value,
-                           &function_change, &function_delete))
+                           &default_value, &value, &null_value_allowed,
+                           &function_check_value, &function_change,
+                           &function_delete))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         PYTHON_RETURN_EMPTY;
@@ -1361,6 +1362,7 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
                                                            max,
                                                            default_value,
                                                            value,
+                                                           null_value_allowed,
                                                            &weechat_python_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_python_api_config_option_change_cb,
@@ -1489,7 +1491,7 @@ weechat_python_api_config_option_set (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
-        PYTHON_RETURN_INT(0);
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = NULL;
@@ -1499,12 +1501,47 @@ weechat_python_api_config_option_set (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "ssi", &option, &new_value, &run_callback))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
-        PYTHON_RETURN_INT(0);
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     rc = weechat_config_option_set (script_str2ptr (option),
                                     new_value,
                                     run_callback);
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_option_set_null: set null (undefined) value for
+ *                                            option
+ */
+
+static PyObject *
+weechat_python_api_config_option_set_null (PyObject *self, PyObject *args)
+{
+    char *option;
+    int run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    option = NULL;
+    run_callback = 0;
+    
+    if (!PyArg_ParseTuple (args, "si", &option, &run_callback))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set_null");
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    rc = weechat_config_option_set_null (script_str2ptr (option),
+                                         run_callback);
     
     PYTHON_RETURN_INT(rc);
 }
@@ -1525,7 +1562,7 @@ weechat_python_api_config_option_unset (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
-        PYTHON_RETURN_INT(0);
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     option = NULL;
@@ -1533,7 +1570,7 @@ weechat_python_api_config_option_unset (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "s", &option))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
-        PYTHON_RETURN_INT(0);
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     rc = weechat_config_option_unset (script_str2ptr (option));
@@ -1572,6 +1609,71 @@ weechat_python_api_config_option_rename (PyObject *self, PyObject *args)
                                   new_name);
     
     PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_config_option_is_null: return 1 if value of option is null
+ */
+
+static PyObject *
+weechat_python_api_config_option_is_null (PyObject *self, PyObject *args)
+{
+    char *option;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
+        PYTHON_RETURN_INT(1);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_is_null");
+        PYTHON_RETURN_INT(1);
+    }
+    
+    value = weechat_config_option_is_null (script_str2ptr (option));
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_config_option_default_is_null: return 1 if default value
+ *                                                   of option is null
+ */
+
+static PyObject *
+weechat_python_api_config_option_default_is_null (PyObject *self, PyObject *args)
+{
+    char *option;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
+        PYTHON_RETURN_INT(1);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_default_is_null");
+        PYTHON_RETURN_INT(1);
+    }
+    
+    value = weechat_config_option_default_is_null (script_str2ptr (option));
+    
+    PYTHON_RETURN_INT(value);
 }
 
 /*
@@ -1700,6 +1802,39 @@ weechat_python_api_config_color (PyObject *self, PyObject *args)
     result = weechat_config_color (script_str2ptr (option));
     
     PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_config_write_option: write an option in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_write_option (PyObject *self, PyObject *args)
+{
+    char *config_file, *option;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &config_file, &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_option");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_config_write_option (script_str2ptr (config_file),
+                                 script_str2ptr (option));
+    
+    PYTHON_RETURN_OK;
 }
 
 /*
@@ -4911,12 +5046,16 @@ PyMethodDef weechat_python_funcs[] =
     { "config_string_to_boolean", &weechat_python_api_config_string_to_boolean, METH_VARARGS, "" },
     { "config_option_reset", &weechat_python_api_config_option_reset, METH_VARARGS, "" },
     { "config_option_set", &weechat_python_api_config_option_set, METH_VARARGS, "" },
+    { "config_option_set_null", &weechat_python_api_config_option_set_null, METH_VARARGS, "" },
     { "config_option_unset", &weechat_python_api_config_option_unset, METH_VARARGS, "" },
     { "config_option_rename", &weechat_python_api_config_option_rename, METH_VARARGS, "" },
+    { "config_option_is_null", &weechat_python_api_config_option_is_null, METH_VARARGS, "" },
+    { "config_option_default_is_null", &weechat_python_api_config_option_default_is_null, METH_VARARGS, "" },
     { "config_boolean", &weechat_python_api_config_boolean, METH_VARARGS, "" },
     { "config_integer", &weechat_python_api_config_integer, METH_VARARGS, "" },
     { "config_string", &weechat_python_api_config_string, METH_VARARGS, "" },
     { "config_color", &weechat_python_api_config_color, METH_VARARGS, "" },
+    { "config_write_option", &weechat_python_api_config_write_option, METH_VARARGS, "" },
     { "config_write_line", &weechat_python_api_config_write_line, METH_VARARGS, "" },
     { "config_write", &weechat_python_api_config_write, METH_VARARGS, "" },
     { "config_read", &weechat_python_api_config_read, METH_VARARGS, "" },

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-12-19 18:36+0100\n"
+"POT-Creation-Date: 2009-01-02 22:40+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -343,6 +343,10 @@ msgstr "  . Werte: "
 
 #, fuzzy
 msgid "default value"
+msgstr "  . Standardwert: %d\n"
+
+#, fuzzy
+msgid "(undefined)"
 msgstr "  . Standardwert: %d\n"
 
 msgid "current value"
@@ -1100,12 +1104,22 @@ msgstr ""
 msgid "set config options"
 msgstr "Konfigurationsparameter setzen"
 
-msgid "[option [ = value]]"
+#, fuzzy
+msgid "[option [value]]"
 msgstr "[Option [ = Wert]]"
 
 msgid ""
 "option: name of an option\n"
-" value: value for option"
+" value: new value for option\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off ou toggle\n"
+"  integer: number, ++number ou --number  string : any string (\"\" for empty "
+"string)\n"
+"  color  : color name, ++number ou --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables."
 msgstr ""
 
 #, fuzzy
@@ -1695,7 +1709,7 @@ msgid "(default options)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sWarning: config file \"%s\" not found"
+msgid "%sWarning: configuration file \"%s\" not found"
 msgstr "%s Konfigurationsdatei \"%s\" nicht gefunden.\n"
 
 #, fuzzy, c-format
@@ -1709,10 +1723,6 @@ msgstr "%s %s, Zeile %d: Syntaxfehler, \"]\" erwartet\n"
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
-msgstr "%s %s, Zeile %d: Syntaxfehler, \"=\" erwartet\n"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
@@ -1729,60 +1739,6 @@ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 #, fuzzy, c-format
 msgid "Reloading configuration file %s"
 msgstr "Konfiguration wird gespeichert\n"
-
-msgid "  . type: boolean\n"
-msgstr "  . Typ: Boolean\n"
-
-#, fuzzy
-msgid "  . values: \"on\" or \"off\"\n"
-msgstr "  . Werte ('on' oder 'off')\n"
-
-#, fuzzy, c-format
-msgid "  . default value: \"%s\"\n"
-msgstr "  . Standardwert: '%s'\n"
-
-msgid "  . type: string\n"
-msgstr "  . Typ: Zeichenfolge\n"
-
-msgid "  . values: "
-msgstr "  . Werte: "
-
-msgid "  . type: integer\n"
-msgstr "  . Typ: Ganzzahl\n"
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr "  . Werte: zwischen %d und %d\n"
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr "  . Standardwert: %d\n"
-
-msgid "  . values: any string\n"
-msgstr "  . Werte: eine beliebige Zeichenfolge\n"
-
-#, fuzzy
-msgid "  . type: char\n"
-msgstr "  . Typ: Farbe\n"
-
-#, fuzzy
-msgid "  . values: any char\n"
-msgstr "  . Werte: eine beliebige Zeichenfolge\n"
-
-#, fuzzy, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr "  . Werte: eine beliebige Zeichenfolge\n"
-
-msgid "  . type: color\n"
-msgstr "  . Typ: Farbe\n"
-
-#, fuzzy
-msgid "  . values: color (depends on GUI used)\n"
-msgstr "  . Werte: zwischen %d und %d\n"
-
-#, c-format
-msgid "  . description: %s\n"
-msgstr "  . Beschreibung: %s\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -2427,7 +2383,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "Server %s%s%s angelegt\n"
 
 #, fuzzy, c-format
@@ -2538,18 +2494,6 @@ msgid "No server found with \"%s\""
 msgstr "Server '%s' nicht gefunden.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s Server \"%s\" nicht gefunden für den \"%s\"-Befehl\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s Server \"%s\" nicht gefunden für den \"%s\"-Befehl\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "Server %s%s%s wurde gelöscht\n"
-
-#, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr ""
 "%s der Server \"%s\" existiert bereits und kann daher nicht angelegt "
@@ -2560,8 +2504,32 @@ msgid "%s%s: unable to create server"
 msgstr "%s kann den Server nicht anlegen\n"
 
 #, fuzzy, c-format
+msgid "%s: server %s%s%s created"
+msgstr "Server %s%s%s angelegt\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s Server \"%s\" nicht gefunden für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s Server \"%s\" nicht gefunden für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s wurde gelöscht\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "Server %s%s%s wurde gelöscht\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr "Server %s%s%s angelegt\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s is not temporary any more"
+msgstr "Server %s%s%s angelegt\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -3111,7 +3079,8 @@ msgstr "Auflisten, Hinzufügen oder Entfernen von Servern"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
+"[rename servername newservername] | [keep servername] | [del servername] | "
+"[deloutq] | [switch]"
 msgstr ""
 "[Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname "
@@ -3131,6 +3100,7 @@ msgid ""
 "       ssl: use SSL protocol\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
@@ -3345,14 +3315,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
-#, fuzzy, c-format
-msgid "%s%s: error creating server \"%s\""
-msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
-msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
-
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -3430,6 +3392,10 @@ msgstr ""
 
 msgid "automatically rejoin channels when kicked"
 msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -3557,7 +3523,7 @@ msgid "IRC debug messages"
 msgstr "Debugging-Nachricht ausgeben"
 
 #, fuzzy, c-format
-msgid "%sServer: %s%s %s[%s%s%s]"
+msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%sServer: %s%s %s[%s%s%s]\n"
 
 msgid "connected"
@@ -3565,6 +3531,9 @@ msgstr "verbunden"
 
 msgid "not connected"
 msgstr "nicht verbunden"
+
+msgid " (temporary)"
+msgstr ""
 
 msgid "on"
 msgstr "an"
@@ -4146,11 +4115,11 @@ msgid ""
 "    /logger disable\n"
 "\n"
 "  set level to 3 for all IRC buffers:\n"
-"    /set logger.level.irc = 3\n"
+"    /set logger.level.irc 3\n"
 "  disable logging for main WeeChat buffer:\n"
-"    /set logger.level.core.weechat = 0\n"
+"    /set logger.level.core.weechat 0\n"
 "  use a directory per IRC server and a file per channel inside:\n"
-"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Log levels used by IRC plugin:\n"
 "  1: user message, notice, private\n"
@@ -5098,6 +5067,74 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "  . type: boolean\n"
+#~ msgstr "  . Typ: Boolean\n"
+
+#, fuzzy
+#~ msgid "  . values: \"on\" or \"off\"\n"
+#~ msgstr "  . Werte ('on' oder 'off')\n"
+
+#, fuzzy
+#~ msgid "  . default value: \"%s\"\n"
+#~ msgstr "  . Standardwert: '%s'\n"
+
+#~ msgid "  . type: string\n"
+#~ msgstr "  . Typ: Zeichenfolge\n"
+
+#~ msgid "  . values: "
+#~ msgstr "  . Werte: "
+
+#~ msgid "  . type: integer\n"
+#~ msgstr "  . Typ: Ganzzahl\n"
+
+#~ msgid "  . values: between %d and %d\n"
+#~ msgstr "  . Werte: zwischen %d und %d\n"
+
+#~ msgid "  . default value: %d\n"
+#~ msgstr "  . Standardwert: %d\n"
+
+#~ msgid "  . values: any string\n"
+#~ msgstr "  . Werte: eine beliebige Zeichenfolge\n"
+
+#, fuzzy
+#~ msgid "  . type: char\n"
+#~ msgstr "  . Typ: Farbe\n"
+
+#, fuzzy
+#~ msgid "  . values: any char\n"
+#~ msgstr "  . Werte: eine beliebige Zeichenfolge\n"
+
+#, fuzzy
+#~ msgid "  . values: any string (limit: %d chars)\n"
+#~ msgstr "  . Werte: eine beliebige Zeichenfolge\n"
+
+#~ msgid "  . type: color\n"
+#~ msgstr "  . Typ: Farbe\n"
+
+#, fuzzy
+#~ msgid "  . values: color (depends on GUI used)\n"
+#~ msgstr "  . Werte: zwischen %d und %d\n"
+
+#~ msgid "  . description: %s\n"
+#~ msgstr "  . Beschreibung: %s\n"
+
+#, fuzzy
+#~ msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
+#~ msgstr "%s %s, Zeile %d: Syntaxfehler, \"=\" erwartet\n"
+
+#, fuzzy
+#~ msgid "value not defined"
+#~ msgstr "Keine Aliases definiert.\n"
+
+#, fuzzy
+#~ msgid "hidden"
+#~ msgstr "(versteckt)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+#~ msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
 
 #, fuzzy
 #~ msgid "display nicklist (on buffers with nicklist enabled)"

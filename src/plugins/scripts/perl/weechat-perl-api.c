@@ -1260,7 +1260,7 @@ static XS (XS_weechat_api_config_new_option)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 13)
+    if (items < 14)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         PERL_RETURN_EMPTY;
@@ -1274,9 +1274,9 @@ static XS (XS_weechat_api_config_new_option)
     string_values = SvPV (ST (5), PL_na);
     default_value = SvPV (ST (8), PL_na);
     value = SvPV (ST (9), PL_na);
-    function_check_value = SvPV (ST (10), PL_na);
-    function_change = SvPV (ST (11), PL_na);
-    function_delete = SvPV (ST (12), PL_na);
+    function_check_value = SvPV (ST (11), PL_na);
+    function_change = SvPV (ST (12), PL_na);
+    function_delete = SvPV (ST (13), PL_na);
     result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
                                                            perl_current_script,
                                                            script_str2ptr (config_file),
@@ -1289,6 +1289,7 @@ static XS (XS_weechat_api_config_new_option)
                                                            SvIV (ST (7)), /* max */
                                                            default_value,
                                                            value,
+                                                           SvIV (ST (10)), /* null_value_allowed */
                                                            &weechat_perl_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_perl_api_config_option_change_cb,
@@ -1410,13 +1411,13 @@ static XS (XS_weechat_api_config_option_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
-	PERL_RETURN_INT(0);
+	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
-        PERL_RETURN_INT(0);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1424,6 +1425,38 @@ static XS (XS_weechat_api_config_option_set)
     rc = weechat_config_option_set (script_str2ptr (option),
                                     new_value,
                                     SvIV (ST (2))); /* run_callback */
+    
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_option_set_null: set null (undefined) value for option
+ */
+
+static XS (XS_weechat_api_config_option_set_null)
+{
+    int rc;
+    char *option;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
+	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set_null");
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    option = SvPV (ST (0), PL_na);
+    rc = weechat_config_option_set_null (script_str2ptr (option),
+                                         SvIV (ST (1))); /* run_callback */
     
     PERL_RETURN_INT(rc);
 }
@@ -1444,13 +1477,13 @@ static XS (XS_weechat_api_config_option_unset)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
-	PERL_RETURN_INT(0);
+	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
-        PERL_RETURN_INT(0);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1489,6 +1522,65 @@ static XS (XS_weechat_api_config_option_rename)
                                   new_name);
     
     PERL_RETURN_OK;
+}
+
+/*
+ * weechat::config_option_is_null: return 1 if value of option is null
+ */
+
+static XS (XS_weechat_api_config_option_is_null)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
+	PERL_RETURN_INT(1);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_is_null");
+        PERL_RETURN_INT(1);
+    }
+    
+    value = weechat_config_option_is_null (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_option_default_is_null: return 1 if default value of option
+ *                                         is null
+ */
+
+static XS (XS_weechat_api_config_option_default_is_null)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
+	PERL_RETURN_INT(1);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_default_is_null");
+        PERL_RETURN_INT(1);
+    }
+    
+    value = weechat_config_option_default_is_null (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_INT(value);
 }
 
 /*
@@ -1605,6 +1697,38 @@ static XS (XS_weechat_api_config_color)
     result = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
     
     PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::config_write_option: write an option in configuration file
+ */
+
+static XS (XS_weechat_api_config_write_option)
+{
+    char *config_file, *option;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_option");
+        PERL_RETURN_ERROR;
+    }
+    
+    config_file = SvPV (ST (0), PL_na);
+    option = SvPV (ST (1), PL_na);
+    weechat_config_write_option (script_str2ptr (config_file),
+                                 script_str2ptr (option));
+    
+    PERL_RETURN_OK;
 }
 
 /*
@@ -4624,12 +4748,16 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_string_to_boolean", XS_weechat_api_config_string_to_boolean, "weechat");
     newXS ("weechat::config_option_reset", XS_weechat_api_config_option_reset, "weechat");
     newXS ("weechat::config_option_set", XS_weechat_api_config_option_set, "weechat");
+    newXS ("weechat::config_option_set_null", XS_weechat_api_config_option_set_null, "weechat");
     newXS ("weechat::config_option_unset", XS_weechat_api_config_option_unset, "weechat");
     newXS ("weechat::config_option_rename", XS_weechat_api_config_option_rename, "weechat");
+    newXS ("weechat::config_option_is_null", XS_weechat_api_config_option_is_null, "weechat");
+    newXS ("weechat::config_option_default_is_null", XS_weechat_api_config_option_default_is_null, "weechat");
     newXS ("weechat::config_boolean", XS_weechat_api_config_boolean, "weechat");
     newXS ("weechat::config_integer", XS_weechat_api_config_integer, "weechat");
     newXS ("weechat::config_string", XS_weechat_api_config_string, "weechat");
     newXS ("weechat::config_color", XS_weechat_api_config_color, "weechat");
+    newXS ("weechat::config_write_option", XS_weechat_api_config_write_option, "weechat");
     newXS ("weechat::config_write_line", XS_weechat_api_config_write_line, "weechat");
     newXS ("weechat::config_write", XS_weechat_api_config_write, "weechat");
     newXS ("weechat::config_read", XS_weechat_api_config_read, "weechat");

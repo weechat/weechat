@@ -118,25 +118,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             set level 3 for IRC channel #weechat:
-            <screen>/set logger.level.irc.freenode.#weechat = 3</screen>
+            <screen>/set logger.level.irc.freenode.#weechat 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             set level 3 for freenode server buffer:
-            <screen>/set logger.level.irc.server.freenode = 3</screen>
+            <screen>/set logger.level.irc.server.freenode 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             set level 3 for all channels on server freenode:
-            <screen>/set logger.level.irc.freenode = 3</screen>
+            <screen>/set logger.level.irc.freenode 3</screen>
           </para>
         </listitem>
         <listitem>
           <para>
             set level 2 for all IRC buffers:
-            <screen>/set logger.level.irc = 2</screen>
+            <screen>/set logger.level.irc 2</screen>
           </para>
         </listitem>
       </itemizedlist>
@@ -156,7 +156,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       For example if you want one directory by IRC server and one file by
       channel inside:
-      <screen>/set logger.mask.irc = "irc/$server/$channel.weechatlog"</screen>
+      <screen>/set logger.mask.irc "irc/$server/$channel.weechatlog"</screen>
       You'll have following files:
 <screen>
 ~/.weechat/

@@ -760,66 +760,101 @@ gui_completion_list_add_option_value (struct t_gui_completion *completion)
                                                              0, WEECHAT_LIST_POS_SORT);
                                     gui_completion_list_add (completion, "toggle",
                                                              0, WEECHAT_LIST_POS_END);
-                                    if (CONFIG_BOOLEAN(option_found) == CONFIG_BOOLEAN_TRUE)
-                                        gui_completion_list_add (completion, "on",
-                                                                 0, WEECHAT_LIST_POS_BEGINNING);
+                                    if (option_found->value)
+                                    {
+                                        if (CONFIG_BOOLEAN(option_found) == CONFIG_BOOLEAN_TRUE)
+                                            gui_completion_list_add (completion, "on",
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                        else
+                                            gui_completion_list_add (completion, "off",
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                    }
                                     else
-                                        gui_completion_list_add (completion, "off",
+                                    {
+                                        gui_completion_list_add (completion,
+                                                                 WEECHAT_CONFIG_OPTION_NULL,
                                                                  0, WEECHAT_LIST_POS_BEGINNING);
+                                    }
                                     break;
                                 case CONFIG_OPTION_TYPE_INTEGER:
-                                    length = 64;
-                                    value_string = malloc (length);
-                                    if (value_string)
+                                    if (option_found->string_values)
                                     {
-                                        if (option_found->string_values)
+                                        for (i = 0; option_found->string_values[i]; i++)
                                         {
-                                            for (i = 0; option_found->string_values[i]; i++)
-                                            {
-                                                gui_completion_list_add (completion,
-                                                                         option_found->string_values[i],
-                                                                         0, WEECHAT_LIST_POS_SORT);
-                                            }
-                                            gui_completion_list_add (completion, "++1",
-                                                                     0, WEECHAT_LIST_POS_END);
-                                            gui_completion_list_add (completion, "--1",
-                                                                     0, WEECHAT_LIST_POS_END);
-                                            snprintf (value_string, length,
-                                                      "%s",
-                                                      option_found->string_values[CONFIG_INTEGER(option_found)]);
+                                            gui_completion_list_add (completion,
+                                                                     option_found->string_values[i],
+                                                                     0, WEECHAT_LIST_POS_SORT);
+                                        }
+                                        gui_completion_list_add (completion, "++1",
+                                                                 0, WEECHAT_LIST_POS_END);
+                                        gui_completion_list_add (completion, "--1",
+                                                                 0, WEECHAT_LIST_POS_END);
+                                        if (option_found->value)
+                                        {
+                                            gui_completion_list_add (completion,
+                                                                     option_found->string_values[CONFIG_INTEGER(option_found)],
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
                                         }
                                         else
                                         {
-                                            if (CONFIG_INTEGER(option_found) > option_found->min)
-                                                gui_completion_list_add (completion, "--1",
-                                                                         0, WEECHAT_LIST_POS_BEGINNING);
-                                            if (CONFIG_INTEGER(option_found) < option_found->max)
-                                                gui_completion_list_add (completion, "++1",
-                                                                         0, WEECHAT_LIST_POS_BEGINNING);
-                                            snprintf (value_string, length,
-                                                      "%d", CONFIG_INTEGER(option_found));
+                                            gui_completion_list_add (completion,
+                                                                     WEECHAT_CONFIG_OPTION_NULL,
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
                                         }
-                                        gui_completion_list_add (completion,
-                                                                 value_string,
-                                                                 0, WEECHAT_LIST_POS_BEGINNING);
-                                        free (value_string);
+                                    }
+                                    else
+                                    {
+                                        if (option_found->value && CONFIG_INTEGER(option_found) > option_found->min)
+                                            gui_completion_list_add (completion, "--1",
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                        if (option_found->value && CONFIG_INTEGER(option_found) < option_found->max)
+                                            gui_completion_list_add (completion, "++1",
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                        if (option_found->value)
+                                        {
+                                            value_string = malloc (64);
+                                            if (value_string)
+                                            {
+                                                snprintf (value_string, length,
+                                                          "%d", CONFIG_INTEGER(option_found));
+                                                gui_completion_list_add (completion,
+                                                                         value_string,
+                                                                         0, WEECHAT_LIST_POS_BEGINNING);
+                                                free (value_string);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            gui_completion_list_add (completion,
+                                                                     WEECHAT_CONFIG_OPTION_NULL,
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                        }
                                     }
                                     break;
                                 case CONFIG_OPTION_TYPE_STRING:
                                     gui_completion_list_add (completion,
                                                              "\"\"",
                                                              0, WEECHAT_LIST_POS_BEGINNING);
-                                    length = strlen (CONFIG_STRING(option_found)) + 2 + 1;
-                                    value_string = malloc (length);
-                                    if (value_string)
+                                    if (option_found->value)
                                     {
-                                        snprintf (value_string, length,
-                                                  "\"%s\"",
-                                                  CONFIG_STRING(option_found));
+                                        length = strlen (CONFIG_STRING(option_found)) + 2 + 1;
+                                        value_string = malloc (length);
+                                        if (value_string)
+                                        {
+                                            snprintf (value_string, length,
+                                                      "\"%s\"",
+                                                      CONFIG_STRING(option_found));
+                                            gui_completion_list_add (completion,
+                                                                     value_string,
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                            free (value_string);
+                                        }
+                                    }
+                                    else
+                                    {
                                         gui_completion_list_add (completion,
-                                                                 value_string,
+                                                                 WEECHAT_CONFIG_OPTION_NULL,
                                                                  0, WEECHAT_LIST_POS_BEGINNING);
-                                        free (value_string);
                                     }
                                     break;
                                 case CONFIG_OPTION_TYPE_COLOR:
@@ -836,16 +871,33 @@ gui_completion_list_add_option_value (struct t_gui_completion *completion)
                                                              0, WEECHAT_LIST_POS_END);
                                     gui_completion_list_add (completion, "--1",
                                                              0, WEECHAT_LIST_POS_END);
-                                    color_name = gui_color_get_name (CONFIG_INTEGER(option_found));
-                                    if (color_name)
+                                    if (option_found->value)
+                                    {
+                                        color_name = gui_color_get_name (CONFIG_INTEGER(option_found));
+                                        if (color_name)
+                                        {
+                                            gui_completion_list_add (completion,
+                                                                     color_name,
+                                                                     0, WEECHAT_LIST_POS_BEGINNING);
+                                        }
+                                    }
+                                    else
                                     {
                                         gui_completion_list_add (completion,
-                                                                 color_name,
+                                                                 WEECHAT_CONFIG_OPTION_NULL,
                                                                  0, WEECHAT_LIST_POS_BEGINNING);
                                     }
                                     break;
                                 case CONFIG_NUM_OPTION_TYPES:
                                     break;
+                            }
+                            if (option_found->value
+                                && option_found->null_value_allowed)
+                            {
+                                gui_completion_list_add (completion,
+                                                         WEECHAT_CONFIG_OPTION_NULL,
+                                                         0,
+                                                         WEECHAT_LIST_POS_END);
                             }
                         }
                     }
