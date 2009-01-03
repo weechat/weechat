@@ -1,4 +1,4 @@
-WeeChat FAQ, 2008-01-02
+WeeChat FAQ, 2009-01-03
 =======================
 
 Intended audience:
@@ -33,15 +33,17 @@ A:	Curses GUI is built by default.
 
 1.2
 ================================================================================
-Q:	I can't compile WeeChat CVS.
+Q:	I can't compile WeeChat after cloning git repository.
 
-A:	Check that you have latest version of autoconf and automake.
+A:	If you're compiling with autotools (and not cmake), check that you have
+	latest version of autoconf and automake.
 	WeeChat has been developed with autoconf version 2.61 and automake
 	version 1.10.
-	You should have at least these versions in order to compile WeeChat CVS.
-	If you can't or don't want to install these versions, you can download and
-	install "devel package", a package built almost every day, based on CVS.
-	Note that this package may not correspond exactly to CVS base.
+	You should have at least these versions in order to compile WeeChat.
+	If you can't or don't want to install these versions, you can download
+	and install "devel package", a package built almost every day using git
+	repository.
+	Note that this package may not correspond exactly to git base.
 
 
 2.1
@@ -50,17 +52,17 @@ Q:	Why using WeeChat ? X-Chat and Irssi are so good...
 
 A:	Because WeeChat is very light and has new features.
 	Some new features:
-	  * many GUI (Curses, Gtk, wxWidgets, Qt)
+	  * multi-protocols support via plugins (IRC and other soon)
+	  * many deported GUI in addition to Curses (coming soon)
 	  * available in many languages
 	  * nicklist available in all GUI
-	  * extensible with plugins (C, Perl, Python, Ruby, Lua)
+	  * extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl)
 	  * horizontal and vertical window split
 	  * infobar highlight
 	  * FIFO pipe for remote control
-	  * developed from scratch (not based on any other IRC client)
+	  * developed from scratch (not based on any other client)
 	  * multi-platform
 	  * 100% GPL and free
-	This is the "geekest" IRC client ;)
 	
 	More info on this page: http://weechat.flashtux.org/features.php
 
@@ -80,7 +82,7 @@ Q:	I heard about "buffers" and "windows", what's the difference?
 A:	A window is used when you split screen vertically or horizontally.
 	A buffer is a "view" for a window. Each window displays a buffer, and
 	many windows may display same buffer.
-	Examples of buffers: server messages, channel, DCC list, ..
+	Examples of buffers: server messages, channel, xfer control, ..
 
 
 2.4
@@ -98,7 +100,8 @@ A:	For versions < 0.2.3, please upgrade to last stable version.
 	  UTF-8 for terminal charset. If you see ANSI_X3.4-1968 or other values,
 	  probably your locale is wrong.
 	- setup global decode value, for example:
-	  /setp charset.global.decode = ISO-8859-15
+	  with WeeChat <= 0.2.6: /setp charset.global.decode = ISO-8859-15
+	  with WeeChat >= 0.2.7: /set charset.default.decode "ISO-8859-15"
 	- if you are using UTF-8 locale, check that your terminal is UTF-8
 	  ready. Terminal recommended for UTF-8 is rxvt-unicode.
 
@@ -114,53 +117,17 @@ A:	Key bindings are customizable with /key command.
 
 2.6
 ================================================================================
-Q:	How can I load Perl scripts?
-	Are Perl scripts compatible with other IRC clients ?
+Q:	How can I load Perl/Python/Ruby/Lua/Tcl scripts?
+	Are scripts compatible with other IRC clients ?
 
-A:	You can use /perl command to load scripts (default path is
-	~/.weechat/perl).
-	Note that scripts in ~/.weechat/perl/autoload are automatically loaded
-	when WeeChat is starting up.
-	Perl scripts are not compatible with other IRC clients.
+A:	You can use commands /perl, /python, /ruby, /lua and /tcl to load
+	scripts (default path for scripts is ~/.weechat/<language>).
+	Note that scripts in ~/.weechat/<language>/autoload are automatically
+	loaded when WeeChat is starting up.
+	Scripts are not compatible with other IRC clients.
 
 
 2.7
-================================================================================
-Q:	How can I load Python scripts?
-	Are Python scripts compatible with other IRC clients ?
-
-A:	You can use /python command to load scripts (default path is
-	~/.weechat/python).
-	Note that scripts in ~/.weechat/python/autoload are automatically loaded
-	when WeeChat is starting up.
-	Python scripts are not compatible with other IRC clients.
-
-
-2.8
-================================================================================
-Q:	How can I load Ruby scripts?
-	Are Ruby scripts compatible with other IRC clients ?
-
-A:	You can use /ruby command to load scripts (default path is
-	~/.weechat/ruby).
-	Note that scripts in ~/.weechat/ruby/autoload are automatically loaded
-	when WeeChat is starting up.
-	Ruby scripts are not compatible with other IRC clients.
-
-
-2.9
-================================================================================
-Q:	How can I load Lua scripts?
-	Are Lua scripts compatible with other IRC clients ?
-
-A:	You can use /lua command to load scripts (default path is
-	~/.weechat/lua).
-	Note that scripts in ~/.weechat/lua/autoload are automatically loaded
-	when WeeChat is starting up.
-	Lua scripts are not compatible with other IRC clients.
-
-
-2.10
 ================================================================================
 Q:	When I'm using weechat under screen, I have weird chars, when I switch
 	window for example, how to fix that?
@@ -170,7 +137,7 @@ A:	This may be caused by bad value of TERM variable (look at echo $TERM).
 	is ok (like many other values).
 
 
-2.11
+2.8
 ================================================================================
 Q:	I want to change language used by WeeChat for messages, but without
 	exiting WeeChat, is it possible?
@@ -183,24 +150,28 @@ A:	Yes, you have to use python script shell.py (available on WeeChat
 	users, you can issue:  /shell setenv LANG=en_US)
 
 
-2.12
+2.9
 ================================================================================
 Q:	With Curses GUI, how can I copy/paste text without pasting nicklist ?
 
 A:	You can use a terminal with rectangular selection (like rxvt-unicode,
 	konsole, ...).
 	Other solution is to move nicklist to top or bottom, for example:
-	  /set look_nicklist_position = top
+	  with WeeChat <= 0.2.6: /set look_nicklist_position = top
+	  with WeeChat >= 0.2.7: /bar set nicklist position top
 
 
-2.13
+2.10
 ================================================================================
 Q:	How to be warned when someone highlights me on a channel ?
 
 A:	You can use sound.pl script (available on scripts page), and then
 	setup a system command (to play sound, display message, ..) with this
 	command :
-	  /setp perl.sound.cmd_highlight = "/usr/bin/command arguments..."
+	  with WeeChat <= 0.2.6:
+	    /setp perl.sound.cmd_highlight = "/path/command arguments"
+	  with WeeChat >= 0.2.7:
+	    /set plugins.var.perl.sound.cmd_highlight "/path/command arguments"
 
 
 3.1

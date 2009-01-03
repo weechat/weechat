@@ -1,115 +1,117 @@
-WeeChat FAQ, 2008-01-02
+WeeChat FAQ, 2009-01-03
 =======================
 
-Public concerné :
+Public concernÃ© :
 Tous les utilisateurs de WeeChat.
 
 Avant de lire la suite ceci :
-la liste suivante de questions/réponses n'est *pas* exhaustive.
-Il est donc possible que vous ne trouviez pas de question/réponse correspondant
-à votre problème.
-Lisez les quand même SVP, elles peuvent vous aider à corriger votre problème.
-Et même si votre problème est mentionné ci-dessous, il est possible que la
-réponse ne vous aide pas à corriger le problème. Dans ce cas, contactez-nous,
-nous essaierons de vous aider à trouver une solution.
+la liste suivante de questions/rÃ©ponses n'est *pas* exhaustive.
+Il est donc possible que vous ne trouviez pas de question/rÃ©ponse correspondant
+Ã  votre problÃ¨me.
+Lisez les quand mÃªme SVP, elles peuvent vous aider Ã  corriger votre problÃ¨me.
+Et mÃªme si votre problÃ¨me est mentionnÃ© ci-dessous, il est possible que la
+rÃ©ponse ne vous aide pas Ã  corriger le problÃ¨me. Dans ce cas, contactez-nous,
+nous essaierons de vous aider Ã  trouver une solution.
 
 1 - Compilation
 2 - Utilisation de WeeChat
-3 - Développement
+3 - DÃ©veloppement
 
 1.1
 ================================================================================
 Q:	J'ai entendu parler de plusieurs interfaces pour WeeChat.
 	Comment puis-je les compiler/utiliser ?
 
-R:	L'interface Curses est construite par défaut.
-	Pour construire l'interface Gtk, wxWidgets ou Qt, vous devez spécifier des
+R:	L'interface Curses est construite par dÃ©faut.
+	Pour construire l'interface Gtk, wxWidgets ou Qt, vous devez spÃ©cifier des
 	options pour le script ./configure :
 	  --enable-gtk pour activer l'interface Gtk
 	  --enable-wxwidgets pour activer l'interface wxWidgets
 	  --enable-qt  pour activer l'interface Qt
 	Tapez ./configure --help pour voir les options disponibles.
 	ATTENTION : seule l'interface Curses est ok aujourd'hui.
-	Les autres interfaces sont en développement.
+	Les autres interfaces sont en dÃ©veloppement.
 
 
 1.2
 ================================================================================
-Q:	Je ne peux pas compiler le CVS WeeChat.
+Q:	Je ne peux pas compiler WeeChat aprÃ¨s avoir clonÃ© la base git.
 
-R:	Vérifiez que vous avez bien la dernière version d'autoconf et automake.
-	WeeChat a été développé avec autoconf version 2.61 et automake
+R:	Si vous compilez avec les autotools (et non cmake), vÃ©rifiez que vous avez
+	bien la derniÃ¨re version d'autoconf et automake.
+	WeeChat a Ã©tÃ© dÃ©veloppÃ© avec autoconf version 2.61 et automake
 	version 1.10.
-	Vous devez avoir au moins ces versions pour compiler le CVS WeeChat.
+	Vous devez avoir au moins ces versions pour compiler WeeChat.
 	Si vous n'avez pas ou ne souhaitez pas installer ces versions, vous
-	pouvez télécharger et installer le paquet "devel", un paquet construit
-	quasiment tous les jours, basé sur le CVS.
-	Notez que ce paquet peut ne pas correspondre exactement à la base CVS.
+	pouvez tÃ©lÃ©charger et installer le paquet "devel", un paquet construit
+	quasiment tous les jours Ã  partir de la base git.
+	Notez que ce paquet peut ne pas correspondre exactement Ã  la base git.
 
 
 2.1
 ================================================================================
 Q:	Pourquoi utiliser WeeChat ? X-Chat et Irssi sont si bien...
 
-R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
-	Quelques nouvelles fonctionnalités :
-	  * plusieurs interfaces (Curses, Gtk, wxWidgets, Qt)
+R:	Parce que WeeChat est trÃ¨s lÃ©ger et a de nouvelles fonctionnalitÃ©s.
+	Quelques nouvelles fonctionnalitÃ©s :
+	  * support multi-protocoles via extensions (IRC et d'autres bientÃ´t)
+	  * plusieurs interfaces dÃ©portÃ©es en plus de Curses (Ã  venir bientÃ´t)
 	  * disponible en plusieurs langues
 	  * liste des pseudos disponible dans toutes les interfaces
-	  * extensible par des extensions (C, Perl, Python, Ruby, Lua)
-	  * découpage de la fenêtre horizontalement et verticalement
+	  * extensible par des extensions (C, Perl, Python, Ruby, Lua, Tcl)
+	  * dÃ©coupage de la fenÃªtre horizontalement et verticalement
 	  * highlight dans la barre d'infos
-	  * tube FIFO pour contrôle à distance
-	  * développé à partir de zéro (non basé sur un quelconque client IRC)
+	  * tube FIFO pour contrÃ´le Ã  distance
+	  * dÃ©veloppÃ© Ã  partir de zÃ©ro (non basÃ© sur un quelconque client)
 	  * multi-platformes
 	  * 100% GPL et libre
-	C'est le client IRC le plus "geek" ;)
 	
 	Plus d'infos sur cette page: http://weechat.flashtux.org/features.php
 
 
 2.2
 ================================================================================
-Q:	J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
+Q:	J'ai lancÃ© WeeChat, mais je suis perdu, que puis-je faire ?
 
 R:	Pour obtenir de l'aide tapez /help. Pour de l'aide sur une commande,
 	tapez /help commande.
-	Les touches et commandes sont listées dans la documentation.
+	Les touches et commandes sont listÃ©es dans la documentation.
 
 
 2.3
 ================================================================================
 Q:	J'ai entendu parler de "buffers" et "windows", quelle est la
-	différence ?
+	diffÃ©rence ?
 
-R:	Une fenêtre ("window") est utilisée quand vous partagez l'écran
+R:	Une fenÃªtre ("window") est utilisÃ©e quand vous partagez l'Ã©cran
 	verticalement ou horizontalement.
-	Un tampon ("buffer") est une "vue" pour une fenêtre. Chaque fenêtre
-	affiche un tampon, et plusieurs fenêtres peuvent afficher le même
+	Un tampon ("buffer") est une "vue" pour une fenÃªtre. Chaque fenÃªtre
+	affiche un tampon, et plusieurs fenÃªtres peuvent afficher le mÃªme
 	tampon.
-	Exemples de tampons: messages serveur, canal, liste des DCC, etc...
+	Exemples de tampons: messages serveur, canal, contrÃ´le xfer, etc...
 
 
 2.4
 ================================================================================
 Q:	Je ne vois pas bien certains accents dans WeeChat, que faire ?
 
-R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
+R:	Pour les versions < 0.2.3, merci d'installer la derniÃ¨re version stable.
 	Pour les versions >= 0.2.3 :
-	- vérifiez que weechat-curses est lié avec libncursesw (attention:
-	  nécessaire sur beaucoup de distributions, mais pas toutes) :
+	- vÃ©rifiez que weechat-curses est liÃ© avec libncursesw (attention:
+	  nÃ©cessaire sur beaucoup de distributions, mais pas toutes) :
 	  ldd /chemin/vers/weechat-curses
-	- vérifiez que l'extension "Charset" est chargée avec la commande
-	  /plugin (s'il ne l'est pas, vous devez peut-être installer le
+	- vÃ©rifiez que l'extension "Charset" est chargÃ©e avec la commande
+	  /plugin (s'il ne l'est pas, vous devez peut-Ãªtre installer le
 	  paquet "weechat-plugins")
-	- vérifiez la ligne charset (sur le tampon serveur), vous devriez voir
+	- vÃ©rifiez la ligne charset (sur le tampon serveur), vous devriez voir
 	  ISO-XXXXXX ou UTF-8 pour le charset du terminal. Si vous voyez
 	  ANSI_X3.4-1968 ou d'autres valeurs, votre locale est probablement
-	  erronée.
-	- affectez la valeur pour le décodage global, par exemple :
-	  /setp charset.global.decode = ISO-8859-15
-	- si vous utilisez la locale UTF-8, vérifiez que votre terminal est
-	  compatible UTF-8. Un terminal conseillé pour l'UTF-8 est rxvt-unicode.
+	  erronÃ©e.
+	- affectez la valeur pour le dÃ©codage global, par exemple :
+	  avec WeeChat <= 0.2.6: /setp charset.global.decode = ISO-8859-15
+	  avec WeeChat >= 0.2.7: /set charset.default.decode "ISO-8859-15"
+	- si vous utilisez la locale UTF-8, vÃ©rifiez que votre terminal est
+	  compatible UTF-8. Un terminal conseillÃ© pour l'UTF-8 est rxvt-unicode.
 
 
 2.5
@@ -117,75 +119,39 @@ R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
 Q:	Comment puis-je configurer les raccourcis clavier ?
 
 R:	Les raccourcis clavier sont modifiables avec la commande /key.
-	La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code
+	La touche par dÃ©faut Meta-k (souvent Alt-k) permet de capturer le code
 	d'une touche et de l'inclure dans la zone de saisie.
 
 
 2.6
 ================================================================================
-Q:	Comment puis-je charger des scripts Perl ?
-	Les scripts Perl sont-ils compatibles avec d'autres clients IRC ?
+Q:	Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ?
+	Les scripts sont-ils compatibles avec d'autres clients IRC ?
 
-R:	La commande /perl permet de charger les scripts Perl (le chemin par défaut
-	est ~/.weechat/perl).
-	Notez que les scripts dans ~/.weechat/perl/autoload sont automatiquement
-	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Perl ne sont pas compatibles avec d'autres clients IRC.
+R:	Les commandes /perl, /python, /ruby, /lua et /tcl permettent de charger
+	les scripts Perl (le chemin par dÃ©faut est ~/.weechat/<langage>).
+	Notez que les scripts dans ~/.weechat/<langage>/autoload sont
+	automatiquement chargÃ©s par WeeChat lorsqu'il dÃ©marre.
+	Les scripts ne sont pas compatibles avec d'autres clients IRC.
 
 
 2.7
 ================================================================================
-Q:	Comment puis-je charger les scripts Python ?
-	Les scripts Python sont-ils compatibles avec d'autres clients IRC ?
+Q:	Quand j'utilise weechat sous screen, j'ai des caractÃ¨res bizarres
+	notamment en changeant de fenÃªtre, comment corriger Ã§a ?
 
-R:	La commande /python permet de charger les scripts Python (le chemin par
-	défaut est ~/.weechat/python).
-	Notez que les scripts dans ~/.weechat/python/autoload sont automatiquement
-	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Python ne sont pas compatibles avec d'autres clients IRC.
+R:	Cela peut Ãªtre du Ã  la variable TERM qui n'a pas la bonne valeur
+	(regardez echo $TERM). Par exemple "xterm-color" provoque ce genre de
+	problÃ¨mes, utilisez "xterm" qui est ok (comme plein d'autres valeurs).
 
 
 2.8
 ================================================================================
-Q:	Comment puis-je charger des scripts Ruby ?
-	Les scripts Ruby sont-ils compatibles avec d'autres clients IRC ?
-
-R:	La commande /ruby permet de charger les scripts Ruby (le chemin par
-	défaut est ~/.weechat/ruby).
-	Notez que les scripts dans ~/.weechat/ruby/autoload sont automatiquement
-	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Ruby ne sont pas compatibles avec d'autres clients IRC.
-
-
-2.9
-================================================================================
-Q:	Comment puis-je charger des scripts Lua ?
-	Les scripts Lua sont-ils compatibles avec d'autres clients IRC ?
-
-R:	La commande /lua permet de charger les scripts Lua (le chemin par
-	défaut est ~/.weechat/lua).
-	Notez que les scripts dans ~/.weechat/lua/autoload sont automatiquement
-	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Lua ne sont pas compatibles avec d'autres clients IRC.
-
-
-2.10
-================================================================================
-Q:	Quand j'utilise weechat sous screen, j'ai des caractères bizarres
-	notamment en changeant de fenêtre, comment corriger ça ?
-
-R:	Cela peut être du à la variable TERM qui n'a pas la bonne valeur
-	(regardez echo $TERM). Par exemple "xterm-color" provoque ce genre de
-	problèmes, utilisez "xterm" qui est ok (comme plein d'autres valeurs).
-
-
-2.11
-================================================================================
-Q:	Je souhaite changer la langue des messages affichés par WeeChat, mais
+Q:	Je souhaite changer la langue des messages affichÃ©s par WeeChat, mais
 	sans quitter WeeChat, est-ce possible ?
 
 R:	Oui, il faut utiliser le script python shell.py (disponible sur le site
-	de WeeChat) et taper ces commandes une fois le script chargé :
+	de WeeChat) et taper ces commandes une fois le script chargÃ© :
 	  /shell setenv LANG=en_US.UTF-8
 	  /upgrade
 	(pour avoir des messages anglais avec encodage UTF-8 pour le terminal,
@@ -193,40 +159,44 @@ R:	Oui, il faut utiliser le script python shell.py (disponible sur le site
 	/shell setenv LANG=en_US)
 
 
-2.12
+2.9
 ================================================================================
 Q:	Avec l'interface Curses, comment puis-je copier/coller du texte sans
 	coller la liste des pseudos ?
 
-R:	Vous pouvez utiliser un terminal qui propose la sélection rectangulaire
+R:	Vous pouvez utiliser un terminal qui propose la sÃ©lection rectangulaire
 	(comme rxvt-unicode, konsole, etc...).
-	Une autre solution est de déplacer la liste des pseudos en haut ou en
+	Une autre solution est de dÃ©placer la liste des pseudos en haut ou en
 	bas, par exemple :
-	  /set look_nicklist_position = top
+	  avec WeeChat <= 0.2.6: /set look_nicklist_position = top
+	  avec WeeChat >= 0.2.7: /bar set nicklist position top
 
 
-2.13
+2.10
 ================================================================================
-Q:	Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
+Q:	Comment Ãªtre averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
 R:	Vous pouvez utiliser le script sound.pl (disponible sur la page des
-	scripts), puis configurer une commande système (jouant un son, affichant
-	un message à l'écran, etc...) comme ceci :
-	  /setp perl.sound.cmd_highlight = "/usr/bin/commande parametres..."
+	scripts), puis configurer une commande systÃ¨me (jouant un son, affichant
+	un message Ã  l'Ã©cran, etc...) comme ceci :
+	  avec WeeChat <= 0.2.6:
+	    /setp perl.sound.cmd_highlight = "/chemin/commande parametres"
+	  avec WeeChat >= 0.2.7:
+	    /set plugins.var.perl.sound.cmd_highlight "/chemin/commande parametres"
 
 
 3.1
 ================================================================================
 Q:	Comment dois-je reporter les bugs ?
 
-R:	Il y a 3 manières de reporter les bugs :
+R:	Il y a 3 maniÃ¨res de reporter les bugs :
 	  1. vous pouvez nous joindre sur IRC: irc.freenode.net, canal #weechat
-	  2. vous pouvez soumettre votre bug à cette adresse :
+	  2. vous pouvez soumettre votre bug Ã  cette adresse :
 	     http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
-	  3. vous pouvez envoyer votre problème par mail, consultez la page
-	     support pour les mails des développeurs :
+	  3. vous pouvez envoyer votre problÃ¨me par mail, consultez la page
+	     support pour les mails des dÃ©veloppeurs :
 	     http://weechat.flashtux.org/support.php
-	     (vous pouvez souscrire et envoyer à la liste de diffusion
+	     (vous pouvez souscrire et envoyer Ã  la liste de diffusion
 	     "support")
 
 
@@ -234,51 +204,51 @@ R:	Il y a 3 manières de reporter les bugs :
 ================================================================================
 Q:	Comment dois-je soumettre les patches ?
 
-R:	Il y a 3 manières de soumettre les patches :
+R:	Il y a 3 maniÃ¨res de soumettre les patches :
 	  1. vous pouvez nous joindre sur IRC: irc.freenode.net, canal #weechat
-	  2. vous pouvez soumettre votre patch à cette adresse :
+	  2. vous pouvez soumettre votre patch Ã  cette adresse :
 	     http://savannah.nongnu.org/patch/?func=addpatch&group=weechat
 	  3. vous pouvez envoyer votre patch par mail, consultez la page
-	     support pour les mails des développeurs :
+	     support pour les mails des dÃ©veloppeurs :
 	     http://weechat.flashtux.org/support.php
-	     (vous pouvez souscrire et envoyer à la liste de diffusion
+	     (vous pouvez souscrire et envoyer Ã  la liste de diffusion
 	     "support")
 
 
 3.3
 ================================================================================
-Q:	Comment dois-je soumettre les demandes de nouvelles fonctionnalités ?
+Q:	Comment dois-je soumettre les demandes de nouvelles fonctionnalitÃ©s ?
 
-R:	Il y a 2 manières :
+R:	Il y a 2 maniÃ¨res :
 	  1. vous pouvez nous joindre sur IRC: irc.freenode.net, channel #weechat
 	  2. vous pouvez envoyer un mail, consultez la page support pour les
-	     mails des développeurs :
+	     mails des dÃ©veloppeurs :
 	     http://weechat.flashtux.org/support.php
-	     (vous pouvez souscrire et envoyer à la liste de diffusion
+	     (vous pouvez souscrire et envoyer Ã  la liste de diffusion
 	     "support")
 
 
 3.4
 ================================================================================
-Q:	Quelle est la liste des plate-formes supportées par WeeChat ?
+Q:	Quelle est la liste des plate-formes supportÃ©es par WeeChat ?
 
-R:	La liste complète est sur cette page :
+R:	La liste complÃ¨te est sur cette page :
 	http://weechat.flashtux.org/download.php?lang=fr&view=supported_os
 
 
 3.5
 ================================================================================
-Q:	WeeChat sera-t-il porté sur QNX ou d'autres systèmes d'exploitation ?
+Q:	WeeChat sera-t-il portÃ© sur QNX ou d'autres systÃ¨mes d'exploitation ?
 
 R:	Oui. Les futures versions seront disponibles pour ces OS.
-	Nous avons besoin d'aide pour ces systèmes, toute aide est la bienvenue :)
+	Nous avons besoin d'aide pour ces systÃ¨mes, toute aide est la bienvenue :)
 
 
 3.6
 ================================================================================
-Q:	Je souhaiterai aider les développeurs WeeChat. Que puis-je faire ?
+Q:	Je souhaiterai aider les dÃ©veloppeurs WeeChat. Que puis-je faire ?
 
-R:	Il y a plusieurs choses à faire (code, documentation, ...)
+R:	Il y a plusieurs choses Ã  faire (code, documentation, ...)
 	Merci de prendre contact avec nous par IRC ou mail, consultez la page
 	support :
 	http://weechat.flashtux.org/support.php
@@ -286,7 +256,7 @@ R:	Il y a plusieurs choses à faire (code, documentation, ...)
 
 3.7
 ================================================================================
-Q:	Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
+Q:	Puis-je donner de l'argent ou d'autres choses aux dÃ©veloppeurs WeeChat ?
 
-R:	Vous pouvez donner de l'argent pour aider le développement.
-	Plus de détails sur http://weechat.flashtux.org/donate.php
+R:	Vous pouvez donner de l'argent pour aider le dÃ©veloppement.
+	Plus de dÃ©tails sur http://weechat.flashtux.org/donate.php
