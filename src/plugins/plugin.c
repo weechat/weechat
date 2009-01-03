@@ -402,6 +402,7 @@ plugin_load (const char *filename)
         new_plugin->config_option_rename = &config_file_option_rename;
         new_plugin->config_option_get_pointer = &config_file_option_get_pointer;
         new_plugin->config_option_is_null = &config_file_option_is_null;
+        new_plugin->config_option_default_is_null = &config_file_option_default_is_null;
         new_plugin->config_boolean = &config_file_option_boolean;
         new_plugin->config_boolean_default = &config_file_option_boolean_default;
         new_plugin->config_integer = &config_file_option_integer;
