@@ -1,13 +1,13 @@
 # WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2008 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2009 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-02 22:40+0100\n"
-"PO-Revision-Date: 2007-09-06 12:44+0200\n"
+"POT-Creation-Date: 2009-01-03 00:41+0100\n"
+"PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"%s (c) Copyright 2003-2008, compiled on %s %s\n"
+"%s (c) Copyright 2003-2009, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s (c) Copyright 2003-2007, собран %s %s\n"
+"%s (c) Copyright 2003-2009, собран %s %s\n"
 "Разработчик - FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2009 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify

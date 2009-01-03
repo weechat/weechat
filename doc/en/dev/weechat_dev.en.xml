@@ -4,7 +4,7 @@
 
 WeeChat documentation (english version)
 
-Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+Copyright (c) 2003-2009 by FlashCode <flashcode@flashtux.org>
 
 This manual is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     &date.xml;
     
     <copyright>
-      <year>2008</year>
+      <year>2009</year>
       <holder>Sébastien Helleu</holder>
     </copyright>
     
