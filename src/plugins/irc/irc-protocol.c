@@ -251,9 +251,13 @@ irc_protocol_cmd_error (struct t_irc_server *server, const char *command,
     
     weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                          irc_protocol_tags (command, "irc_error"),
-                         "%s%s%s%s",
+                         "%s%s%s%s%s%s",
                          (ptr_channel) ? weechat_prefix ("network") : irc_buffer_get_server_prefix (server, "network"),
+                         (ptr_channel && chan_nick
+                          && (strcmp (chan_nick, ptr_channel->name) == 0)) ?
+                         IRC_COLOR_CHAT_CHANNEL : "",
                          (chan_nick) ? chan_nick : "",
+                         IRC_COLOR_CHAT,
                          (chan_nick) ? ": " : "",
                          args);
     
