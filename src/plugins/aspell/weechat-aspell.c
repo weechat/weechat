@@ -416,7 +416,7 @@ weechat_aspell_speller_list_dicts ()
     weechat_printf (NULL, "");
     weechat_printf (NULL,
                     /* TRANSLATORS: %s is "aspell" */
-                    _( "%s dictionnaries list:"),
+                    _( "%s dictionaries list:"),
                     ASPELL_PLUGIN_NAME);
     
     while ((dict = aspell_dict_info_enumeration_next (el)))
@@ -474,7 +474,7 @@ weechat_aspell_speller_list_dicts ()
 }
 
 /*
- * weechat_aspell_add_word : add a word in personnal dictionary
+ * weechat_aspell_add_word : add a word in personal dictionary
  */
 
 void
@@ -932,7 +932,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
         }
     }
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_ERROR;
 }
 
 /* 
@@ -957,16 +957,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* command /aspell */
     weechat_hook_command ("aspell",
                           N_("aspell plugin configuration"),
-                          N_("[list | enable lang | disable | addword [lang] "
-                             "word]"),
-                          N_("   list: show installed dictionnaries\n"
-                             " enable: enable aspell on current buffer\n"
-                             "disable: disable aspell on current buffer\n"
-                             "addword: add a word in your personnal aspell dictionary\n"
+                          N_("dictlist | enable lang | disable | "
+                             "addword [lang] word"),
+                          N_("dictlist: show installed dictionaries\n"
+                             "  enable: enable aspell on current buffer\n"
+                             " disable: disable aspell on current buffer\n"
+                             " addword: add a word in your personal aspell "
+                             "dictionary\n"
                              "\n"
                              "Input line beginning with a '/' is not checked, "
                              "except for some commands."),
-                          "list|enable|disable|addword",
+                          "dictlist|enable|disable|addword",
                           &weechat_aspell_command_cb, NULL);
     
     /* callback for buffer_switch */

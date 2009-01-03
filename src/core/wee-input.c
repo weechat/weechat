@@ -128,6 +128,10 @@ input_exec_command (struct t_gui_buffer *buffer,
     switch (rc)
     {
         case 0: /* command hooked, KO */
+            gui_chat_printf (NULL,
+                             _("%sError with command \"%s\" (try /help %s)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             command + 1, command + 1);
             break;
         case 1: /* command hooked, OK (executed) */
             break;

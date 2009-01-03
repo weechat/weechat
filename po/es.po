@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-03 00:41+0100\n"
+"POT-Creation-Date: 2009-01-03 13:12+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1734,6 +1734,10 @@ msgid "%sYou can not write text in this buffer"
 msgstr "%s no es posible cerrar el Ãºnico bÃºfer\n"
 
 #, fuzzy, c-format
+msgid "%sError with command \"%s\" (try /help %s)"
+msgstr "%s alias o comando \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr "%s valor incorrecto para la opciÃ³n \"%s\"\n"
 
@@ -2051,7 +2055,7 @@ msgstr "Alias \"%s\" eliminado\n"
 
 #. TRANSLATORS: %s is "aspell"
 #, fuzzy, c-format
-msgid "%s dictionnaries list:"
+msgid "%s dictionaries list:"
 msgstr "fin de la lista /who"
 
 #, c-format
@@ -2080,14 +2084,14 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "Guardar configuraciÃ³n a disco\n"
 
-msgid "[list | enable lang | disable | addword [lang] word]"
+msgid "dictlist | enable lang | disable | addword [lang] word"
 msgstr ""
 
 msgid ""
-"   list: show installed dictionnaries\n"
-" enable: enable aspell on current buffer\n"
-"disable: disable aspell on current buffer\n"
-"addword: add a word in your personnal aspell dictionary\n"
+"dictlist: show installed dictionaries\n"
+"  enable: enable aspell on current buffer\n"
+" disable: disable aspell on current buffer\n"
+" addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
 msgstr ""

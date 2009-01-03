@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-03 00:41+0100\n"
+"POT-Creation-Date: 2009-01-03 13:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1482,6 +1482,10 @@ msgid "%sYou can not write text in this buffer"
 msgstr ""
 
 #, c-format
+msgid "%sError with command \"%s\" (try /help %s)"
+msgstr ""
+
+#, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr ""
 
@@ -1768,7 +1772,7 @@ msgstr ""
 
 #. TRANSLATORS: %s is "aspell"
 #, c-format
-msgid "%s dictionnaries list:"
+msgid "%s dictionaries list:"
 msgstr ""
 
 #, c-format
@@ -1796,14 +1800,14 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr ""
 
-msgid "[list | enable lang | disable | addword [lang] word]"
+msgid "dictlist | enable lang | disable | addword [lang] word"
 msgstr ""
 
 msgid ""
-"   list: show installed dictionnaries\n"
-" enable: enable aspell on current buffer\n"
-"disable: disable aspell on current buffer\n"
-"addword: add a word in your personnal aspell dictionary\n"
+"dictlist: show installed dictionaries\n"
+"  enable: enable aspell on current buffer\n"
+" disable: disable aspell on current buffer\n"
+" addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
 msgstr ""
