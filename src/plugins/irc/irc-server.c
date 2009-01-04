@@ -1982,6 +1982,28 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
 }
 
 /*
+ * irc_server_set_current_server: set new current server (when all servers are
+ *                                in one buffer)
+ */
+
+void
+irc_server_set_current_server (struct t_irc_server *server)
+{
+    char charset_modifier[256];
+    
+    irc_current_server = server;
+    
+    irc_server_set_buffer_title (irc_current_server);
+    snprintf (charset_modifier, sizeof (charset_modifier),
+              "irc.%s", irc_current_server->name);
+    weechat_buffer_set (irc_current_server->buffer,
+                        "localvar_set_charset_modifier",
+                        charset_modifier);
+    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("input_prompt");
+}
+
+/*
  * irc_server_connect: connect to an IRC server
  *                     Return: 1 if ok
  *                             0 if error

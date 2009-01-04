@@ -2430,6 +2430,11 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
 	commands = weechat_string_split_command (ptr_command, ';');
 	if (commands)
 	{
+            if (weechat_config_boolean (irc_config_look_one_server_buffer)
+                && (irc_current_server != server))
+            {
+                irc_server_set_current_server (server);
+            }
 	    for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
             {
                 vars_replaced = irc_protocol_replace_vars (server, NULL,

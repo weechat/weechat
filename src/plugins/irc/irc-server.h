@@ -192,6 +192,7 @@ extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,
                                                       int all_servers);
+extern void irc_server_set_current_server (struct t_irc_server *server);
 extern int irc_server_connect (struct t_irc_server *server,
                                int disable_autojoin);
 extern void irc_server_auto_connect (int auto_connect);
