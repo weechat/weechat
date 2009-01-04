@@ -1366,6 +1366,8 @@ gui_bar_item_init ()
                       &gui_bar_item_default_hotlist, NULL);
     gui_bar_item_hook_signal ("hotlist_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
+    gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
     
     /* completion (possible words when a partial completion occurs) */
     gui_bar_item_new (NULL,
