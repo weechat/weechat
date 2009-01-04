@@ -33,22 +33,22 @@
 
 enum t_irc_server_option
 {
-    IRC_SERVER_OPTION_ADDRESSES = 0,
-    IRC_SERVER_OPTION_PROXY,
-    IRC_SERVER_OPTION_IPV6,
-    IRC_SERVER_OPTION_SSL,
-    IRC_SERVER_OPTION_PASSWORD,
-    IRC_SERVER_OPTION_AUTOCONNECT,
-    IRC_SERVER_OPTION_AUTORECONNECT,
-    IRC_SERVER_OPTION_AUTORECONNECT_DELAY,
-    IRC_SERVER_OPTION_NICKS,
-    IRC_SERVER_OPTION_USERNAME,
-    IRC_SERVER_OPTION_REALNAME,
-    IRC_SERVER_OPTION_LOCAL_HOSTNAME,
-    IRC_SERVER_OPTION_COMMAND,
-    IRC_SERVER_OPTION_COMMAND_DELAY,
-    IRC_SERVER_OPTION_AUTOJOIN,
-    IRC_SERVER_OPTION_AUTOREJOIN,
+    IRC_SERVER_OPTION_ADDRESSES = 0, /* server addresses (IP/name with port) */
+    IRC_SERVER_OPTION_PROXY,         /* proxy used for server (optional)     */
+    IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
+    IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
+    IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
+    IRC_SERVER_OPTION_AUTOCONNECT,   /* autoconnect to server at startup     */
+    IRC_SERVER_OPTION_AUTORECONNECT, /* autoreconnect when disconnected      */
+    IRC_SERVER_OPTION_AUTORECONNECT_DELAY, /* delay before trying again reco */
+    IRC_SERVER_OPTION_NICKS,         /* nicknames (comma separated list)     */
+    IRC_SERVER_OPTION_USERNAME,      /* user name                            */
+    IRC_SERVER_OPTION_REALNAME,      /* real name                            */
+    IRC_SERVER_OPTION_LOCAL_HOSTNAME,/* custom local hostname                */
+    IRC_SERVER_OPTION_COMMAND,       /* command to run once connected        */
+    IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
+    IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
+    IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
