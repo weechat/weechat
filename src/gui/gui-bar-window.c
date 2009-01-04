@@ -120,10 +120,10 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
         if (bar && (ptr_bar_window->bar == bar))
             return total_size;
 
-        if (!CONFIG_BOOLEAN(ptr_bar_window->bar->hidden))
+        if (!CONFIG_BOOLEAN(ptr_bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
-            if ((CONFIG_INTEGER(ptr_bar_window->bar->type) != GUI_BAR_TYPE_ROOT)
-                && (CONFIG_INTEGER(ptr_bar_window->bar->position) == (int)position))
+            if ((CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
+                && (CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_POSITION]) == (int)position))
             {
                 switch (position)
                 {
@@ -138,7 +138,7 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
                     case GUI_BAR_NUM_POSITIONS:
                         break;
                 }
-                if (CONFIG_INTEGER(ptr_bar_window->bar->separator))
+                if (CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
                     total_size++;
             }
         }
@@ -180,7 +180,7 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
         add_right = gui_bar_root_get_size (bar_window->bar, GUI_BAR_POSITION_RIGHT);
     }
     
-    switch (CONFIG_INTEGER(bar_window->bar->position))
+    switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
     {
         case GUI_BAR_POSITION_BOTTOM:
             bar_window->x = x1 + add_left;
@@ -224,7 +224,7 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
-        if (CONFIG_INTEGER(bar->priority) >= CONFIG_INTEGER(ptr_bar_window->bar->priority))
+        if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]) >= CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_PRIORITY]))
             return ptr_bar_window;
     }
     
@@ -394,16 +394,16 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
               "%c%c%02d,%02d",
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->color_fg),
-              CONFIG_COLOR(bar_window->bar->color_bg));
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     length_reinit_color = strlen (reinit_color);
     
     snprintf (reinit_color_space, sizeof (reinit_color_space),
               "%c%c%02d,%02d ",
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->color_fg),
-              CONFIG_COLOR(bar_window->bar->color_bg));
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     length_reinit_color_space = strlen (reinit_color_space);
     
     content = NULL;
@@ -499,8 +499,8 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 else
                     splitted_items[i] = NULL;
             }
-            if ((CONFIG_INTEGER(bar_window->bar->position) == GUI_BAR_POSITION_BOTTOM)
-                || (CONFIG_INTEGER(bar_window->bar->position) == GUI_BAR_POSITION_TOP))
+            if ((CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+                || (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP))
             {
                 columns = bar_window->width / (max_length_screen + 1);
                 if (columns == 0)
@@ -614,7 +614,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
     
     if (window)
     {
-        if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_WINDOW)
+        if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
             && (!gui_bar_check_conditions_for_window (bar, window)))
             return 1;
     }
@@ -672,14 +672,14 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->scroll_y = 0;
         new_bar_window->cursor_x = -1;
         new_bar_window->cursor_y = -1;
-        new_bar_window->current_size = (CONFIG_INTEGER(bar->size) == 0) ?
-            1 : CONFIG_INTEGER(bar->size);
+        new_bar_window->current_size = (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]) == 0) ?
+            1 : CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]);
         new_bar_window->items_count = 0;
         new_bar_window->items_subcount = NULL;
         new_bar_window->items_content = NULL;
         new_bar_window->items_refresh_needed = NULL;
         gui_bar_window_objects_init (new_bar_window);
-        gui_bar_window_content_build (new_bar_window, window);
+        gui_bar_window_content_alloc (new_bar_window);
         
         if (gui_init_ok)
         {
@@ -706,10 +706,10 @@ gui_bar_window_recreate_bar_windows (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
 
-    if (CONFIG_BOOLEAN(bar->hidden))
+    if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
         return;
     
-    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_calculate_pos_size (bar->bar_window, NULL);
         gui_bar_window_create_win (bar->bar_window);
@@ -760,7 +760,7 @@ gui_bar_window_get_max_size_in_window (struct t_gui_bar_window *bar_window,
     
     if (bar_window && window)
     {
-        switch (CONFIG_INTEGER(bar_window->bar->position))
+        switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
         {
             case GUI_BAR_POSITION_BOTTOM:
             case GUI_BAR_POSITION_TOP:
@@ -830,16 +830,16 @@ gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
     else
     {
         new_size = size;
-        if ((size != 0) && (CONFIG_INTEGER(bar->size_max) > 0)
-            && (size > CONFIG_INTEGER(bar->size_max)))
+        if ((size != 0) && (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX]) > 0)
+            && (size > CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX])))
         {
-            new_size = CONFIG_INTEGER(bar->size_max);
+            new_size = CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX]);
             if (new_size < 1)
                 new_size = 1;
         }
     }
     
-    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         if (bar->bar_window->current_size != new_size)
         {
@@ -921,7 +921,7 @@ gui_bar_window_remove_unused_bars (struct t_gui_window *window)
     {
         next_bar_win = ptr_bar_win->next_bar_window;
         
-        if ((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW)
+        if ((CONFIG_INTEGER(ptr_bar_win->bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
             && (!gui_bar_check_conditions_for_window (ptr_bar_win->bar, window)))
         {
             gui_bar_window_free (ptr_bar_win, window);
@@ -950,7 +950,7 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW)
+        if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
             && gui_bar_check_conditions_for_window (ptr_bar, window))
         {
             if (!gui_bar_window_search_bar (window, ptr_bar))

@@ -31,20 +31,20 @@ struct t_gui_buffer;
 
 enum t_gui_bar_option
 {
-    GUI_BAR_OPTION_HIDDEN = 0,
-    GUI_BAR_OPTION_PRIORITY,
-    GUI_BAR_OPTION_TYPE,
-    GUI_BAR_OPTION_CONDITIONS,
-    GUI_BAR_OPTION_POSITION,
-    GUI_BAR_OPTION_FILLING_TOP_BOTTOM,
-    GUI_BAR_OPTION_FILLING_LEFT_RIGHT,
-    GUI_BAR_OPTION_SIZE,
-    GUI_BAR_OPTION_SIZE_MAX,
-    GUI_BAR_OPTION_COLOR_FG,
-    GUI_BAR_OPTION_COLOR_DELIM,
-    GUI_BAR_OPTION_COLOR_BG,
-    GUI_BAR_OPTION_SEPARATOR,
-    GUI_BAR_OPTION_ITEMS,
+    GUI_BAR_OPTION_HIDDEN = 0,          /* true if bar is hidden            */
+    GUI_BAR_OPTION_PRIORITY,            /* bar priority                     */
+    GUI_BAR_OPTION_TYPE,                /* type (root or window)            */
+    GUI_BAR_OPTION_CONDITIONS,          /* conditions for display           */
+    GUI_BAR_OPTION_POSITION,            /* bottom, top, left, right         */
+    GUI_BAR_OPTION_FILLING_TOP_BOTTOM,  /* filling when pos. is top/bottom  */
+    GUI_BAR_OPTION_FILLING_LEFT_RIGHT,  /* filling when pos. is left/right  */
+    GUI_BAR_OPTION_SIZE,                /* size of bar (in chars, 0 = auto) */
+    GUI_BAR_OPTION_SIZE_MAX,            /* max size of bar (0 = no limit)   */
+    GUI_BAR_OPTION_COLOR_FG,            /* default text color for bar       */
+    GUI_BAR_OPTION_COLOR_DELIM,         /* default delimiter color for bar  */
+    GUI_BAR_OPTION_COLOR_BG,            /* default background color for bar */
+    GUI_BAR_OPTION_SEPARATOR,           /* true if separator line displayed */
+    GUI_BAR_OPTION_ITEMS,               /* bar items                        */
     /* number of bar options */
     GUI_BAR_NUM_OPTIONS,
 };
@@ -81,22 +81,7 @@ struct t_gui_bar
 {
     /* user choices */
     char *name;                         /* bar name                         */
-    struct t_config_option *hidden;     /* true if bar is hidden            */
-    struct t_config_option *priority;   /* bar priority                     */
-    struct t_config_option *type;       /* type (root or window)            */
-    struct t_config_option *conditions; /* conditions for display           */
-    struct t_config_option *position;   /* bottom, top, left, right         */
-    struct t_config_option *filling_top_bottom; /* filling when position is */
-                                        /* top/bottom (horizontal/vertical) */
-    struct t_config_option *filling_left_right; /* filling when position is */
-                                        /* left/right (horizontal/vertical) */
-    struct t_config_option *size;       /* size of bar (in chars, 0 = auto) */
-    struct t_config_option *size_max;   /* max size of bar (0 = no limit)   */
-    struct t_config_option *color_fg;   /* default text color for bar       */
-    struct t_config_option *color_delim;/* default delimiter color for bar  */
-    struct t_config_option *color_bg;   /* default background color for bar */
-    struct t_config_option *separator;  /* true if separator line displayed */
-    struct t_config_option *items;      /* bar items                        */
+    struct t_config_option *options[GUI_BAR_NUM_OPTIONS];
     
     /* internal vars */
     int conditions_count;               /* number of conditions             */

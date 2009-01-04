@@ -104,9 +104,9 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
                                                           bar_window->y,
                                                           bar_window->x);
     
-    if (CONFIG_INTEGER(bar_window->bar->separator))
+    if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
     {
-        switch (CONFIG_INTEGER(bar_window->bar->position))
+        switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
         {
             case GUI_BAR_POSITION_BOTTOM:
                 GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = newwin (1,
@@ -162,8 +162,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     if (reset_color_before_display)
     {
         gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                           CONFIG_COLOR(bar_window->bar->color_fg),
-                                           CONFIG_COLOR(bar_window->bar->color_bg));
+                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
     
     x_with_hidden = *x;
@@ -222,19 +222,19 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         case GUI_COLOR_BAR_FG_CHAR:
                             /* bar foreground */
                             gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->color_fg));
+                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                             string += 2;
                             break;
                         case GUI_COLOR_BAR_DELIM_CHAR:
                             /* bar delimiter */
                             gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->color_delim));
+                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
                             string += 2;
                             break;
                         case GUI_COLOR_BAR_BG_CHAR:
                             /* bar background */
                             gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->color_bg));
+                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                             string += 2;
                             break;
                         case GUI_COLOR_BAR_START_INPUT_CHAR:
@@ -356,8 +356,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
               "%c%c%02d,%02d ",
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->color_fg),
-              CONFIG_COLOR(bar_window->bar->color_bg));
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     length_reinit_color = strlen (space_with_reinit_color);
     
     snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
@@ -383,15 +383,15 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         items = string_explode (content, "\n", 0, 0, &items_count);
         if (items_count == 0)
         {
-            if (CONFIG_INTEGER(bar_window->bar->size) == 0)
+            if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
                 gui_bar_window_set_current_size (bar_window->bar, 1);
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                              CONFIG_COLOR(bar_window->bar->color_bg));
+                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
         }
         else
         {
             /* bar with auto size ? then compute new size, according to content */
-            if (CONFIG_INTEGER(bar_window->bar->size) == 0)
+            if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
             {
                 /* search longer line and optimal number of lines */
                 max_length = 0;
@@ -418,7 +418,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 if (max_length == 0)
                     max_length = 1;
                 
-                switch (CONFIG_INTEGER(bar_window->bar->position))
+                switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
                 {
                     case GUI_BAR_POSITION_BOTTOM:
                     case GUI_BAR_POSITION_TOP:
@@ -440,7 +440,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             }
             
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                              CONFIG_COLOR(bar_window->bar->color_bg));
+                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
             x = 0;
             y = 0;
             some_data_not_displayed = 0;
@@ -533,7 +533,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 y = 0;
                 gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                    CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_INTEGER(bar_window->bar->color_bg));
+                                                   CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                            y, x, "--");
             }
@@ -546,7 +546,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
                 gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                    CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_INTEGER(bar_window->bar->color_bg));
+                                                   CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                            y, x, "++");
             }
@@ -557,10 +557,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     }
     else
     {
-        if (CONFIG_INTEGER(bar_window->bar->size) == 0)
+        if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
             gui_bar_window_set_current_size (bar_window->bar, 1);
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                          CONFIG_COLOR(bar_window->bar->color_bg));
+                          CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
     
     /* move cursor if it was asked in an item content (input_text does that
@@ -573,9 +573,9 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     
     wnoutrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
     
-    if (CONFIG_INTEGER(bar_window->bar->separator))
+    if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
     {
-        switch (CONFIG_INTEGER(bar_window->bar->position))
+        switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
         {
             case GUI_BAR_POSITION_BOTTOM:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,

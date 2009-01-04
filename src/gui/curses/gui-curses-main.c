@@ -138,7 +138,7 @@ gui_main_init ()
            but no window was created (GUI was not initialized) */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
+            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
                 && (!ptr_bar->bar_window))
             {
                 gui_bar_window_new (ptr_bar, NULL);

@@ -357,12 +357,12 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
                           "%c%c%02d",
                           GUI_COLOR_COLOR_CHAR,
                           GUI_COLOR_FG_CHAR,
-                          CONFIG_COLOR(bar->color_delim));
+                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
                 snprintf (bar_color, sizeof (bar_color),
                           "%c%c%02d",
                           GUI_COLOR_COLOR_CHAR,
                           GUI_COLOR_FG_CHAR,
-                          CONFIG_COLOR(bar->color_fg));
+                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]));
             }
             snprintf (result, length,
                       "%s%s%s%s%s%s",
@@ -446,7 +446,7 @@ gui_bar_item_update (const char *item_name)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (!CONFIG_BOOLEAN(ptr_bar->hidden))
+        if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
             gui_bar_get_item_index (ptr_bar, item_name, &index_item, &index_subitem);
             if ((index_item >= 0) && (index_subitem >= 0))
