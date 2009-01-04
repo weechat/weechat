@@ -22,4 +22,4 @@
 
 extern void irc_bar_item_init ();
 
-#endif /* irc-bar_item.h */
+#endif /* irc-bar-item.h */

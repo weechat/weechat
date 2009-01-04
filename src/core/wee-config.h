@@ -172,8 +172,6 @@ extern int config_weechat_debug_set (const char *plugin_name,
 extern void config_weechat_debug_set_all ();
 extern int config_weechat_init ();
 extern int config_weechat_read ();
-extern int config_weechat_reload ();
 extern int config_weechat_write ();
-extern void config_weechat_print_stdout ();
 
 #endif /* wee-config.h */

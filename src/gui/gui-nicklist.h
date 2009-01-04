@@ -76,16 +76,10 @@ extern void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group **group,
                                         struct t_gui_nick **nick);
 extern char *gui_nicklist_get_group_start (const char *name);
-extern int gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
-                                        struct t_gui_nick_group *group);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *group);
 extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_buffer *buffer);
 extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
-
-/* nicklist functions (GUI dependent) */
-
-extern int gui_nicklist_draw (struct t_gui_buffer *buffer, int erase);
 
 #endif /* gui-nicklist.h */

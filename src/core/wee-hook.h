@@ -231,9 +231,6 @@ extern struct t_hook *last_weechat_hook[];
 /* hook functions */
 
 extern void hook_init ();
-extern int hook_valid (struct t_hook *hook);
-extern int hook_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                  struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command, const char *description,
                                     const char *args, const char *args_description,

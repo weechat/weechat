@@ -20,7 +20,6 @@
 #ifndef __WEECHAT_XFER_NETWORK_H
 #define __WEECHAT_XFER_NETWORK_H 1
 
-extern int xfer_network_create_pipe (struct t_xfer *xfer);
 extern void xfer_network_write_pipe (struct t_xfer *xfer, int status,
                                      int error);
 extern void xfer_network_connect_init (struct t_xfer *xfer);

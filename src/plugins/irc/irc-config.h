@@ -74,8 +74,6 @@ extern struct t_config_option *irc_config_server_default[];
 
 extern void irc_config_server_change_cb (void *data,
                                          struct t_config_option *option);
-extern void irc_config_server_delete_cb (void *data,
-                                         struct t_config_option *option);
 struct t_config_option *irc_config_server_new_option (struct t_config_file *config_file,
                                                       struct t_config_section *section,
                                                       int index_option,

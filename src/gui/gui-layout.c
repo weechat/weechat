@@ -375,7 +375,7 @@ gui_layout_window_save_tree (struct t_gui_layout_window *parent_layout,
         layout_window = gui_layout_window_add (internal_id++,
                                                parent_layout,
                                                tree->split_pct,
-                                               tree->split_horiz,
+                                               tree->split_horizontal,
                                                NULL,
                                                NULL);
     }
@@ -475,13 +475,13 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
         
         if (layout_window->split_horiz)
         {
-            new_window = gui_window_split_horiz (gui_current_window,
-                                                 layout_window->split_pct);
+            new_window = gui_window_split_horizontal (gui_current_window,
+                                                      layout_window->split_pct);
         }
         else
         {
-            new_window = gui_window_split_vertic (gui_current_window,
-                                                  layout_window->split_pct);
+            new_window = gui_window_split_vertical (gui_current_window,
+                                                    layout_window->split_pct);
         }
         
         if (layout_window->child2)

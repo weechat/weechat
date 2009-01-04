@@ -147,8 +147,6 @@ extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                               int (*callback_reload)(void *data,
                                                                      struct t_config_file *config_file),
                                               void *callback_data);
-extern int config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                         struct t_config_file *config_file);
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,
                                                          int user_can_add_options,
@@ -180,8 +178,6 @@ extern struct t_config_section *config_file_new_section (struct t_config_file *c
                                                          void *callback_delete_option_data);
 extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
                                                             const char *section_name);
-extern int config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                                 struct t_config_section *);
 extern struct t_config_option *config_file_new_option (struct t_config_file *config_file,
                                                        struct t_config_section *section,
                                                        const char *name, const char *type,
@@ -214,8 +210,6 @@ extern void config_file_search_with_string (const char *option_name,
                                             struct t_config_section **section,
                                             struct t_config_option **option,
                                             char **pos_option_name);
-extern int config_file_option_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                                struct t_config_option *option);
 extern int config_file_string_to_boolean (const char *text);
 extern int config_file_option_reset (struct t_config_option *option,
                                      int run_callback);
@@ -231,7 +225,6 @@ extern void *config_file_option_get_pointer (struct t_config_option *option,
 extern int config_file_option_is_null (struct t_config_option *option);
 extern int config_file_option_default_is_null (struct t_config_option *option);
 extern int config_file_option_set_with_string (const char *option_name, const char *value);
-extern int config_file_option_unset_with_string (const char *option_name);
 extern int config_file_option_boolean (struct t_config_option *option);
 extern int config_file_option_boolean_default (struct t_config_option *option);
 extern int config_file_option_integer (struct t_config_option *option);

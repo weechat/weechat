@@ -113,37 +113,6 @@ irc_display_away (struct t_irc_server *server, const char *string1, const char *
 }
 
 /*
- * irc_display_mode: display IRC message for mode change
- */
-
-void
-irc_display_mode (struct t_gui_buffer *buffer,
-                  const char *channel_name, const char *nick_name,
-                  char set_flag, const char *symbol, const char *nick_host,
-                  const char *message, const char *param)
-{
-    weechat_printf (buffer,
-                    "%s[%s%s%s/%s%c%s%s] %s%s %s%s%s%s%s",
-                    IRC_COLOR_CHAT_DELIMITERS,
-                    (channel_name) ?
-                    IRC_COLOR_CHAT_CHANNEL :
-                    IRC_COLOR_CHAT_NICK,
-                    (channel_name) ? channel_name : nick_name,
-                    IRC_COLOR_CHAT,
-                    IRC_COLOR_CHAT_CHANNEL,
-                    set_flag,
-                    symbol,
-                    IRC_COLOR_CHAT_DELIMITERS,
-                    IRC_COLOR_CHAT_NICK,
-                    nick_host,
-                    IRC_COLOR_CHAT,
-                    message,
-                    (param) ? " " : "",
-                    (param) ? IRC_COLOR_CHAT_NICK : "",
-                    (param) ? param : "");
-}
-
-/*
  * irc_display_server: display server description
  */
 

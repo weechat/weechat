@@ -21,17 +21,8 @@
 #define __WEECHAT_IRC_DISPLAY_H 1
 
 extern void irc_display_hide_password (char *string, int look_for_nickserv);
-extern void irc_display_nick (struct t_gui_buffer *buffer,
-                              struct t_irc_nick *nick, const char *nickname,
-                              int type, int display_around,
-                              const char *force_color, int no_nickmode);
 extern void irc_display_away (struct t_irc_server *server, const char *string1,
                               const char *string2);
-extern void irc_display_mode (struct t_gui_buffer *buffer,
-                              const char *channel_name, const char *nick_name,
-                              char set_flag, const char *symbol,
-                              const char *nick_host, const char *message,
-                              const char *param);
 extern void irc_display_server (struct t_irc_server *server, int with_detail);
 
 #endif /* irc-display.h */

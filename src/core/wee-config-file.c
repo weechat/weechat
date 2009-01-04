@@ -128,30 +128,6 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
 }
 
 /*
- * config_file_valid_for_plugin: check if a configuration file pointer exists for a plugin
- *                               return 1 if configuration file exists for plugin
- *                                      0 if configuration file is not found for plugin
- */
-
-int
-config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
-                              struct t_config_file *config_file)
-{
-    struct t_config_file *ptr_config;
-    
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
-    {
-        if ((ptr_config == config_file)
-            && (ptr_config->plugin == plugin))
-            return 1;
-    }
-    
-    /* configuration file not found */
-    return 0;
-}
-
-/*
  * config_file_new_section: create a new section in a config
  */
 
@@ -245,37 +221,6 @@ config_file_search_section (struct t_config_file *config_file,
     
     /* section not found */
     return NULL;
-}
-
-/*
- * config_file_section_valid_for_plugin: check if a section pointer exists for a plugin
- *                                       return 1 if section exists for plugin
- *                                              0 if section is not found for plugin
- */
-
-int
-config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                      struct t_config_section *section)
-{
-    struct t_config_file *ptr_config;
-    struct t_config_section *ptr_section;
-    
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
-    {
-        if (ptr_config->plugin == plugin)
-        {
-            for (ptr_section = ptr_config->sections; ptr_section;
-                 ptr_section = ptr_section->next_section)
-            {
-                if (ptr_section == section)
-                    return 1;
-            }
-        }
-    }
-    
-    /* section not found */
-    return 0;
 }
 
 /*
@@ -753,42 +698,6 @@ config_file_search_with_string (const char *option_name,
         *section = ptr_section;
     if (option)
         *option = ptr_option;
-}
-
-/*
- * config_file_option_valid_for_plugin: check if an option pointer exists for a plugin
- *                                      return 1 if option exists for plugin
- *                                             0 if option is not found for plugin
- */
-
-int
-config_file_option_valid_for_plugin (struct t_weechat_plugin *plugin,
-                                     struct t_config_option *option)
-{
-    struct t_config_file *ptr_config;
-    struct t_config_section *ptr_section;
-    struct t_config_option *ptr_option;
-
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
-    {
-        if (ptr_config->plugin == plugin)
-        {
-            for (ptr_section = ptr_config->sections; ptr_section;
-                 ptr_section = ptr_section->next_section)
-            {
-                for (ptr_option = ptr_section->options; ptr_option;
-                     ptr_option = ptr_option->next_option)
-                {
-                    if (ptr_option == option)
-                        return 1;
-                }
-            }
-        }
-    }
-    
-    /* option not found */
-    return 0;
 }
 
 /*
@@ -1538,31 +1447,6 @@ config_file_option_set_with_string (const char *option_name, const char *value)
             }
         }
     }
-    
-    return rc;
-}
-
-/*
- * config_file_option_unset_with_string: unset/reset option
- *                                       return one of these values:
- *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET
- *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_RESET
- *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
- *                                         WEECHAT_CONFIG_OPTION_UNSET_ERROR
- */
-
-int
-config_file_option_unset_with_string (const char *option_name)
-{
-    struct t_config_option *ptr_option;
-    int rc;
-    
-    rc = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
-    
-    config_file_search_with_string (option_name, NULL, NULL, &ptr_option, NULL);
-    
-    if (ptr_option)
-        rc = config_file_option_unset (ptr_option);
     
     return rc;
 }

@@ -31,6 +31,7 @@
 #include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-hook.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
@@ -91,6 +92,8 @@ debug_dump (int crash)
     hook_print_log ();
     
     config_file_print_log ();
+    
+    proxy_print_log ();
     
     plugin_print_log ();
     

@@ -36,7 +36,6 @@ extern struct t_weechat_plugin *plugin_search (const char *name);
 extern const char *plugin_get_name (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_load (const char *filename);
 extern void plugin_auto_load ();
-extern void plugin_remove (struct t_weechat_plugin *plugin);
 extern void plugin_unload (struct t_weechat_plugin *plugin);
 extern void plugin_unload_name (const char *name);
 extern void plugin_unload_all ();

@@ -233,7 +233,6 @@ gui_input_clipboard_paste ()
                                  gui_input_clipboard, -1);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
         
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
     }
 }
@@ -271,7 +270,6 @@ gui_input_return ()
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_current_window->buffer->ptr_history = NULL;
             gui_input_optimize_size (gui_current_window->buffer);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
             input_data (gui_current_window->buffer, command);
             free (command);
@@ -381,7 +379,6 @@ gui_input_complete (struct t_gui_buffer *buffer)
                     buffer->completion->position++;
             }
         }
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
     }
 }
@@ -444,7 +441,6 @@ gui_input_search_text ()
         {
             gui_current_window->buffer->text_search_exact ^= 1;
             gui_window_search_restart (gui_current_window);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         }
         gui_input_search_signal ();
     }
@@ -477,7 +473,6 @@ gui_input_delete_previous_char ()
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -509,7 +504,6 @@ gui_input_delete_next_char ()
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -569,7 +563,6 @@ gui_input_delete_previous_word ()
             gui_current_window->buffer->input_buffer_pos -= length_deleted;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -609,7 +602,6 @@ gui_input_delete_next_word ()
         gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
     }
 }
@@ -646,7 +638,6 @@ gui_input_delete_beginning_of_line ()
             gui_current_window->buffer->input_buffer_pos = 0;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -679,7 +670,6 @@ gui_input_delete_end_of_line (const char *args)
         gui_current_window->buffer->input_buffer_length = utf8_strlen (gui_current_window->buffer->input_buffer);
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
     }
 }
@@ -699,7 +689,6 @@ gui_input_delete_line ()
         gui_current_window->buffer->input_buffer_pos = 0;
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
     }
 }
@@ -741,7 +730,6 @@ gui_input_transpose_chars ()
             
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -760,7 +748,6 @@ gui_input_move_beginning_of_line ()
         {
             gui_current_window->buffer->input_buffer_pos = 0;
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -781,7 +768,6 @@ gui_input_move_end_of_line ()
             gui_current_window->buffer->input_buffer_pos =
                 gui_current_window->buffer->input_buffer_length;
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -800,7 +786,6 @@ gui_input_move_previous_char ()
         {
             gui_current_window->buffer->input_buffer_pos--;
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -820,7 +805,6 @@ gui_input_move_next_char ()
         {
             gui_current_window->buffer->input_buffer_pos++;
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -862,7 +846,6 @@ gui_input_move_previous_word ()
             else
                 gui_current_window->buffer->input_buffer_pos = 0;
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -908,7 +891,6 @@ gui_input_move_next_word ()
                     utf8_pos (gui_current_window->buffer->input_buffer,
                               utf8_prev_char (gui_current_window->buffer->input_buffer, pos) - gui_current_window->buffer->input_buffer);
             
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -968,7 +950,6 @@ gui_input_history_previous ()
                 gui_current_window->buffer->input_buffer_1st_display = 0;
                 strcpy (gui_current_window->buffer->input_buffer,
                         gui_current_window->buffer->ptr_history->text);
-                gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             }
             gui_input_text_changed_signal ();
         }
@@ -1018,7 +999,6 @@ gui_input_history_next ()
                     strcpy (gui_current_window->buffer->input_buffer,
                             gui_current_window->buffer->ptr_history->text);
                 }
-                gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             }
             else
             {
@@ -1034,7 +1014,6 @@ gui_input_history_next ()
                     gui_current_window->buffer->input_buffer_pos = 0;
                     gui_current_window->buffer->input_buffer_1st_display = 0;
                     gui_input_optimize_size (gui_current_window->buffer);
-                    gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
                 }
             }
             gui_input_text_changed_signal ();
@@ -1079,7 +1058,6 @@ gui_input_history_global_previous ()
             gui_current_window->buffer->input_buffer_1st_display = 0;
             strcpy (gui_current_window->buffer->input_buffer,
                     history_global_ptr->text);
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -1120,7 +1098,6 @@ gui_input_history_global_next ()
                 strcpy (gui_current_window->buffer->input_buffer,
                         history_global_ptr->text);
             }
-            gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
     }
@@ -1281,7 +1258,6 @@ gui_input_insert (const char *args)
     {
         args2 = string_convert_hex_chars (args);
         gui_input_insert_string (gui_current_window->buffer, (args2) ? args2 : args, -1);
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         gui_input_text_changed_signal ();
         if (args2)
             free (args2);

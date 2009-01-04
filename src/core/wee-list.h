@@ -37,7 +37,6 @@ struct t_weelist
 extern struct t_weelist *weelist_new ();
 extern struct t_weelist_item *weelist_add (struct t_weelist *weelist,
                                            const char *data, const char *where);
-extern struct t_weelist *weelist_dup (struct t_weelist *weelist);
 extern struct t_weelist_item *weelist_search (struct t_weelist *weelist,
                                               const char *data);
 extern struct t_weelist_item *weelist_casesearch (struct t_weelist *weelist,

@@ -273,33 +273,6 @@ hook_valid (struct t_hook *hook)
 }
 
 /*
- * hook_valid_for_plugin: check if a hook pointer exists for a plugin
- *                        return 1 if hook exists for plugin
- *                               0 if hook is not found for plugin
- */
-
-int
-hook_valid_for_plugin (struct t_weechat_plugin *plugin, struct t_hook *hook)
-{
-    int type;
-    struct t_hook *ptr_hook;
-
-    for (type = 0; type < HOOK_NUM_TYPES; type++)
-    {
-        for (ptr_hook = weechat_hooks[type]; ptr_hook;
-             ptr_hook = ptr_hook->next_hook)
-        {
-            if (!ptr_hook->deleted && (ptr_hook == hook)
-                && (ptr_hook->plugin == plugin))
-                return 1;
-        }
-    }
-    
-    /* hook not found */
-    return 0;
-}
-
-/*
  * hook_exec_start: code executed before a hook exec
  */
 

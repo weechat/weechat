@@ -33,7 +33,6 @@ extern struct t_gui_history *history_global;
 extern struct t_gui_history *last_history_global;
 extern struct t_gui_history *history_global_ptr;
 
-/* history functions (gui-history.c) */
 extern void gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string);
 extern void gui_history_global_add (const char *string);
 extern void gui_history_global_free ();

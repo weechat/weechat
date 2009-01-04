@@ -60,6 +60,9 @@ struct t_gui_bar *gui_temp_bars = NULL;    /* bars used when reading config */
 struct t_gui_bar *last_gui_temp_bar = NULL;
 
 
+void gui_bar_free_bar_windows (struct t_gui_bar *bar);
+
+
 /*
  * gui_bar_valid: check if a bar pointer exists
  *                return 1 if bar exists

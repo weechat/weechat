@@ -42,14 +42,7 @@ extern const char *plugin_api_color (const char *color_name);
 extern void plugin_api_command (struct t_weechat_plugin *plugin,
                                 struct t_gui_buffer *buffer, const char *command);
 
-/* infos */
-extern const char *plugin_api_info_get (struct t_weechat_plugin *plugin,
-                                        const char *info);
-
-/* infolists */
-extern struct t_infolist *plugin_api_infolist_get (const char *name,
-                                                   void *pointer,
-                                                   const char *arguments);
+/* infolist */
 extern int plugin_api_infolist_next (struct t_infolist *infolist);
 extern int plugin_api_infolist_prev (struct t_infolist *infolist);
 extern void plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist);
@@ -65,6 +58,7 @@ extern void *plugin_api_infolist_buffer (struct t_infolist *infolist,
 extern time_t plugin_api_infolist_time (struct t_infolist *infolist,
                                         const char *var);
 extern void plugin_api_infolist_free (struct t_infolist *infolist);
+
 extern void plugin_api_init ();
 
 #endif /* plugin-api.h */

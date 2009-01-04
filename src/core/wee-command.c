@@ -623,7 +623,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         gui_buffer_close (buffer);
-        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         
         return WEECHAT_RC_OK;
     }
@@ -3330,10 +3329,10 @@ command_window (void *data, struct t_gui_buffer *buffer,
             number = strtol (argv[2], &error, 10);
             if (error && !error[0]
                 && (number > 0) && (number < 100))
-                gui_window_split_horiz (gui_current_window, number);
+                gui_window_split_horizontal (gui_current_window, number);
         }
         else
-            gui_window_split_horiz (gui_current_window, 50);
+            gui_window_split_horizontal (gui_current_window, 50);
 
         return WEECHAT_RC_OK;
     }
@@ -3347,10 +3346,10 @@ command_window (void *data, struct t_gui_buffer *buffer,
             number = strtol (argv[2], &error, 10);
             if (error && !error[0]
                 && (number > 0) && (number < 100))
-                gui_window_split_vertic (gui_current_window, number);
+                gui_window_split_vertical (gui_current_window, number);
         }
         else
-            gui_window_split_vertic (gui_current_window, 50);
+            gui_window_split_vertical (gui_current_window, 50);
 
         return WEECHAT_RC_OK;
     }
@@ -3871,47 +3870,6 @@ command_startup (int plugins_loaded)
                 input_data (weechat_buffer, *ptr_cmd);
             }
             string_free_splitted_command (commands);
-        }
-    }
-}
-
-/*
- * command_print_stdout: print list of commands on standard output
- */
-
-void
-command_print_stdout ()
-{
-    struct t_hook *ptr_hook;
-
-    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
-    {
-        if (!ptr_hook->deleted
-            && HOOK_COMMAND(ptr_hook, command)
-            && HOOK_COMMAND(ptr_hook, command)[0]
-            && !ptr_hook->plugin)
-        {
-            string_iconv_fprintf (stdout, "* %s",
-                                  HOOK_COMMAND(ptr_hook, command));
-            if (HOOK_COMMAND(ptr_hook, args)
-                && HOOK_COMMAND(ptr_hook, args)[0])
-            {
-                string_iconv_fprintf (stdout, "  %s\n\n",
-                                      _(HOOK_COMMAND(ptr_hook, args)));
-            }
-            else
-            {
-                string_iconv_fprintf (stdout, "\n\n");
-            }
-            string_iconv_fprintf (stdout, "%s\n\n",
-                                  _(HOOK_COMMAND(ptr_hook, description)));
-            if (HOOK_COMMAND(ptr_hook, args_description)
-                && HOOK_COMMAND(ptr_hook, args_description)[0])
-            {
-                string_iconv_fprintf (stdout, "%s\n\n",
-                                      _(HOOK_COMMAND(ptr_hook, args_description)));
-            }
         }
     }
 }

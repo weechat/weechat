@@ -42,7 +42,6 @@ extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *,
 extern struct t_logger_buffer *logger_buffer_search_buffer (struct t_gui_buffer *buffer);
 extern struct t_logger_buffer *logger_buffer_search_log_filename (const char *log_filename);
 extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
-extern void logger_buffer_free_all ();
 extern int logger_buffer_add_to_infolist (struct t_infolist *infolist,
                                           struct t_logger_buffer *logger_buffer);
 

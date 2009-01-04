@@ -418,7 +418,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
         }
         else
         {
-            if (tree->split_horiz)
+            if (tree->split_horizontal)
             {
                 size1 = (height * tree->split_pct) / 100;
                 size2 = height - size1;
@@ -461,11 +461,11 @@ gui_window_refresh_windows ()
 }
 
 /*
- * gui_window_split_horiz: split a window horizontally
+ * gui_window_split_horizontal: split a window horizontally
  */
 
 struct t_gui_window *
-gui_window_split_horiz (struct t_gui_window *window, int percentage)
+gui_window_split_horizontal (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int height1, height2;
@@ -506,11 +506,11 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
 }
 
 /*
- * gui_window_split_vertic: split a window vertically
+ * gui_window_split_vertical: split a window vertically
  */
 
 struct t_gui_window *
-gui_window_split_vertic (struct t_gui_window *window, int percentage)
+gui_window_split_vertical (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int width1, width2;

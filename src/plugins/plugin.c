@@ -62,6 +62,9 @@ int plugin_argc;                       /* command line arguments (used only */
 char **plugin_argv;                    /* first time loading plugin)        */
 
 
+void plugin_remove (struct t_weechat_plugin *plugin);
+
+
 /*
  * plugin_valid: check if a plugin pointer exists
  *               return 1 if plugin exists

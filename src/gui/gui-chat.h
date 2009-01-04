@@ -85,8 +85,6 @@ extern struct t_gui_line *gui_chat_line_add (struct t_gui_buffer *buffer,
                                              const char *tags,
                                              const char *prefix,
                                              const char *message);
-extern void gui_chat_line_add_y (struct t_gui_buffer *buffer, int y,
-                                 const char *message);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, const char *tags,
                                        const char *message, ...);

@@ -87,7 +87,7 @@ struct t_gui_window_tree
     
     /* node info */
     int split_pct;                     /* % of split size (child1)          */
-    int split_horiz;                   /* 1 if horizontal, 0 if vertical    */
+    int split_horizontal;              /* 1 if horizontal, 0 if vertical    */
     struct t_gui_window_tree *child1;  /* first child, NULL if a leaf       */
     struct t_gui_window_tree *child2;  /* second child, NULL if a leaf      */
     
@@ -123,8 +123,6 @@ extern void gui_window_set_layout_plugin_name (struct t_gui_window *window,
 extern void gui_window_set_layout_buffer_name (struct t_gui_window *window,
                                                const char *buffer_name);
 extern void gui_window_free (struct t_gui_window *window);
-extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *buffer);
-extern void gui_window_switch_server (struct t_gui_window *window);
 extern void gui_window_switch_previous (struct t_gui_window *window);
 extern void gui_window_switch_next (struct t_gui_window *window);
 extern void gui_window_switch_by_buffer (struct t_gui_window *window,
@@ -158,12 +156,11 @@ extern void gui_window_scroll_up (struct t_gui_window *window);
 extern void gui_window_scroll_down (struct t_gui_window *window);
 extern void gui_window_scroll_top (struct t_gui_window *window);
 extern void gui_window_scroll_bottom (struct t_gui_window *window);
-extern void gui_window_init_subwindows (struct t_gui_window *window);
 extern void gui_window_refresh_windows ();
-extern struct t_gui_window *gui_window_split_horiz (struct t_gui_window *window,
-                                                    int percentage);
-extern struct t_gui_window *gui_window_split_vertic (struct t_gui_window *window,
-                                                     int percentage);
+extern struct t_gui_window *gui_window_split_horizontal (struct t_gui_window *window,
+                                                         int percentage);
+extern struct t_gui_window *gui_window_split_vertical (struct t_gui_window *window,
+                                                       int percentage);
 extern void gui_window_resize (struct t_gui_window *window, int percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);

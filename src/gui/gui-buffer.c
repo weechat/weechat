@@ -62,6 +62,9 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
 
+void gui_buffer_switch_previous (struct t_gui_window *window);
+
+
 /*
  * gui_buffer_find_pos: find position for buffer in list
  */
@@ -325,7 +328,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input_buffer_length = 0;
         new_buffer->input_buffer_pos = 0;
         new_buffer->input_buffer_1st_display = 0;
-        new_buffer->input_refresh_needed = 1;
         
         /* init completion */
         new_completion = malloc (sizeof (*new_completion));
@@ -591,17 +593,6 @@ gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 {
     if (refresh > buffer->chat_refresh_needed)
         buffer->chat_refresh_needed = refresh;
-}
-
-/*
- * gui_buffer_ask_input_refresh: set "input_refresh_needed" flag
- */
-
-void
-gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer, int refresh)
-{
-    if (refresh > buffer->input_refresh_needed)
-        buffer->input_refresh_needed = refresh;
 }
 
 /*
@@ -904,7 +895,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_input_delete_line (buffer);
         gui_input_insert_string (buffer, value, 0);
         gui_input_text_changed_signal ();
-        gui_buffer_ask_input_refresh (buffer, 1);
     }
     else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
     {
@@ -1088,29 +1078,6 @@ gui_buffer_search_by_number (int number)
 }
 
 /*
- * gui_buffer_find_window: find a window displaying buffer
- */
-
-struct t_gui_window *
-gui_buffer_find_window (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *ptr_win;
-    
-    if (gui_current_window->buffer == buffer)
-        return gui_current_window;
-    
-    for (ptr_win = gui_windows; ptr_win;
-         ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-            return ptr_win;
-    }
-    
-    /* no window found */
-    return NULL;
-}
-
-/*
  * gui_buffer_is_scrolled: return 1 if all windows displaying buffer are scrolled
  *                         (user doesn't see end of buffer)
  *                         return 0 if at least one window is NOT scrolled
@@ -1216,7 +1183,24 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         {
             if ((buffer == ptr_window->buffer) &&
                 ((buffer->next_buffer) || (buffer->prev_buffer)))
-                gui_buffer_switch_previous (ptr_window);
+            {
+                /* switch to previous buffer */
+                if (gui_buffers != last_gui_buffer)
+                {
+                    if (ptr_window->buffer->prev_buffer)
+                    {
+                        gui_window_switch_to_buffer (ptr_window,
+                                                     ptr_window->buffer->prev_buffer,
+                                                     1);
+                    }
+                    else
+                    {
+                        gui_window_switch_to_buffer (ptr_window,
+                                                     last_gui_buffer,
+                                                     1);
+                    }
+                }
+            }
         }
     }
     
@@ -1281,46 +1265,6 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     
     free (buffer);
-}
-
-/*
- * gui_buffer_switch_previous: switch to previous buffer
- */
-
-void
-gui_buffer_switch_previous (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    /* if only one buffer then return */
-    if (gui_buffers == last_gui_buffer)
-        return;
-    
-    if (window->buffer->prev_buffer)
-        gui_window_switch_to_buffer (window, window->buffer->prev_buffer, 1);
-    else
-        gui_window_switch_to_buffer (window, last_gui_buffer, 1);
-}
-
-/*
- * gui_buffer_switch_next: switch to next buffer
- */
-
-void
-gui_buffer_switch_next (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    /* if only one buffer then return */
-    if (gui_buffers == last_gui_buffer)
-        return;
-    
-    if (window->buffer->next_buffer)
-        gui_window_switch_to_buffer (window, window->buffer->next_buffer, 1);
-    else
-        gui_window_switch_to_buffer (window, gui_buffers, 1);
 }
 
 /*
@@ -1749,7 +1693,6 @@ gui_buffer_print_log ()
         log_printf ("  input_buffer_length. . : %d",    ptr_buffer->input_buffer_length);
         log_printf ("  input_buffer_pos . . . : %d",    ptr_buffer->input_buffer_pos);
         log_printf ("  input_buffer_1st_disp. : %d",    ptr_buffer->input_buffer_1st_display);
-        log_printf ("  input_refresh_needed . : %d",    ptr_buffer->input_refresh_needed);
         log_printf ("  completion . . . . . . : 0x%lx", ptr_buffer->completion);
         log_printf ("  history. . . . . . . . : 0x%lx", ptr_buffer->history);
         log_printf ("  last_history . . . . . : 0x%lx", ptr_buffer->last_history);

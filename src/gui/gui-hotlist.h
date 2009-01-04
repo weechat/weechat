@@ -47,7 +47,6 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
-extern void gui_hotlist_changed_signal ();
 extern void gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
                              struct timeval *creation_time,
                              int allow_current_buffer);

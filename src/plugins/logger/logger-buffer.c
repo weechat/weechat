@@ -187,19 +187,6 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * logger_buffer_free_all: remove all buffers from list
- */
-
-void
-logger_buffer_free_all ()
-{
-    while (logger_buffers)
-    {
-        logger_buffer_free (logger_buffers);
-    }
-}
-
-/*
  * logger_buffer_add_to_infolist: add a logger buffer in an infolist
  *                                return 1 if ok, 0 if error
  */

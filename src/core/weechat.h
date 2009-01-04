@@ -106,7 +106,6 @@ extern int weechat_quit;
 extern char *weechat_home;
 extern char *weechat_local_charset;
 
-extern void weechat_dump (int crash);
 extern void weechat_shutdown (int return_code, int crash);
 
 #endif /* weechat.h */

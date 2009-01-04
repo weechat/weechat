@@ -74,7 +74,7 @@ gui_window_tree_init (struct t_gui_window *window)
         return 0;
     gui_windows_tree->parent_node = NULL;
     gui_windows_tree->split_pct = 0;
-    gui_windows_tree->split_horiz = 0;
+    gui_windows_tree->split_horizontal = 0;
     gui_windows_tree->child1 = NULL;
     gui_windows_tree->child2 = NULL;
     gui_windows_tree->window = window;
@@ -91,7 +91,7 @@ gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                               struct t_gui_window *window)
 {
     node->split_pct = 0;
-    node->split_horiz = 0;
+    node->split_horizontal = 0;
     if (node->child1)
     {
         free (node->child1);
@@ -157,12 +157,12 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         
         if (width_pct == 100)
         {
-            ptr_tree->split_horiz = 1;
+            ptr_tree->split_horizontal = 1;
             ptr_tree->split_pct = height_pct;
         }
         else
         {
-            ptr_tree->split_horiz = 0;
+            ptr_tree->split_horizontal = 0;
             ptr_tree->split_pct = width_pct;
         }
         
@@ -437,30 +437,6 @@ gui_window_free (struct t_gui_window *window)
         gui_current_window = gui_windows;
     
     free (window);
-}
-
-/*
- * gui_window_search_by_buffer: search a window by buffer
- *                              (return first window displaying this buffer)
- */
-
-struct t_gui_window *
-gui_window_search_by_buffer (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *ptr_window;
-    
-    if (!gui_ok)
-        return NULL;
-    
-    for (ptr_window = gui_windows; ptr_window;
-         ptr_window = ptr_window->next_window)
-    {
-        if (ptr_window->buffer == buffer)
-            return ptr_window;
-    }
-    
-    /* window not found */
-    return NULL;
 }
 
 /*
@@ -756,7 +732,6 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
-                    gui_buffer_ask_input_refresh (window->buffer, 1);
                     return;
                 }
                 ptr_line = ptr_line->prev_line;
@@ -790,7 +765,6 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
-                    gui_buffer_ask_input_refresh (window->buffer, 1);
                     return;
                 }
                 ptr_line = ptr_line->next_line;
@@ -880,7 +854,6 @@ gui_window_search_start (struct t_gui_window *window)
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
     gui_input_delete_line (window->buffer);
-    gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
 /*
@@ -923,7 +896,6 @@ gui_window_search_stop (struct t_gui_window *window)
     window->start_line_pos = 0;
     gui_hotlist_remove_buffer (window->buffer);
     gui_buffer_ask_chat_refresh (window->buffer, 2);
-    gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
 /*

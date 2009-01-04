@@ -73,33 +73,6 @@ gui_color_search_config_int (const char *color_name)
 }
 
 /*
- * gui_color_search_config_str: search a color configuration name with number
- *                              return color configuration name, NULL if not found
- */
-
-const char *
-gui_color_search_config_str (int color_number)
-{
-    struct t_config_section *ptr_section;
-    struct t_config_option *ptr_option;
-    
-    ptr_section = config_file_search_section (weechat_config_file,
-                                              "color");
-    if (ptr_section)
-    {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
-        {
-            if (ptr_option->min == color_number)
-                return ptr_option->name;
-        }
-    }
-    
-    /* color not found */
-    return NULL;
-}
-
-/*
  * gui_color_get_custom: get a custom color with a name (GUI dependent)
  */
 

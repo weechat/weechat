@@ -62,6 +62,11 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 };
 
 
+void irc_server_reconnect (struct t_irc_server *server);
+void irc_server_check_away ();
+void irc_server_free_data (struct t_irc_server *server);
+
+
 /*
  * irc_server_valid: check if a server pointer exists
  *                   return 1 if server exists
@@ -672,71 +677,6 @@ irc_server_free_all ()
         irc_server_free (irc_servers);
 }
 
-/*
- * irc_server_new: creates a new server, and initialize it
- */
-/*
-struct t_irc_server *
-irc_server_new (const char *name, int autoconnect, int autoreconnect,
-                int autoreconnect_delay, const char *proxy,
-                const char *addresses, int ipv6, int ssl,
-                const char *password, const char *nicks,
-                const char *username, const char *realname,
-                const char *local_hostname, const char *command,
-                int command_delay, const char *autojoin, int autorejoin)
-{
-    struct t_irc_server *new_server;
-    
-    if (!name || !addresses)
-        return NULL;
-    
-    if (weechat_irc_plugin->debug)
-    {
-        weechat_log_printf ("Creating new server (name:%s, proxy:%s, "
-                            "addresses:%s, pwd:%s, nicks:%s, username:%s, "
-                            "realname:%s, local_hostname: %s, command:%s, "
-                            "autojoin:%s, autorejoin:%s)",
-                            name, proxy, addresses, (password) ? password : "",
-                            (nicks) ? nicks : "", (username) ? username : "",
-                            (realname) ? realname : "",
-                            (local_hostname) ? local_hostname : "",
-                            (command) ? command : "",
-                            (autojoin) ? autojoin : "",
-                            (autorejoin) ? "on" : "off");
-    }
-
-    new_server = irc_server_alloc (name);
-    if (new_server)
-    {
-        new_server->autoconnect = autoconnect;
-        new_server->autoreconnect = autoreconnect;
-        new_server->autoreconnect_delay = autoreconnect_delay;
-        new_server->proxy = (proxy) ? strdup (proxy) : NULL;
-        irc_server_set_addresses (new_server, addresses);
-        new_server->ipv6 = ipv6;
-        new_server->ssl = ssl;
-        new_server->password = (password) ? strdup (password) : strdup ("");
-        irc_server_set_nicks (new_server,
-                              (nicks) ? nicks : IRC_SERVER_DEFAULT_NICKS);
-        new_server->username =
-            (username) ? strdup (username) : strdup ("weechat");
-        new_server->realname =
-            (realname) ? strdup (realname) : strdup ("realname");
-        new_server->local_hostname =
-            (local_hostname) ? strdup (local_hostname) : NULL;
-        new_server->command =
-            (command) ? strdup (command) : NULL;
-        new_server->command_delay = command_delay;
-        new_server->autojoin =
-            (autojoin) ? strdup (autojoin) : NULL;
-        new_server->autorejoin = autorejoin;
-    }
-    else
-        return NULL;
-    
-    return new_server;
-}
-*/
 /*
  * irc_server_copy: copy a server
  *                  return: pointer to new server, NULL if error
