@@ -271,7 +271,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        weechat_buffer_set (ptr_channel->buffer, "highlight_words", server->nick);
+        weechat_buffer_set (ptr_channel->buffer, "highlight_words", nick);
         weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
     }
     
