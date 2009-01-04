@@ -177,6 +177,7 @@ extern char *irc_server_get_name_without_port (const char *name);
 extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
+extern void irc_server_buffer_set_highlight_words (struct t_gui_buffer *buffer);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);

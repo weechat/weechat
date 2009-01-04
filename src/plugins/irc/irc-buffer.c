@@ -215,6 +215,7 @@ irc_buffer_merge_servers ()
         }
         
         irc_server_set_buffer_title (irc_current_server);
+        irc_server_buffer_set_highlight_words (irc_buffer_servers);
     }
 }
 

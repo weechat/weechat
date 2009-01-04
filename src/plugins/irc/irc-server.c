@@ -211,6 +211,44 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 }
 
 /*
+ * irc_server_buffer_set_highlight_words: set highlight words for buffer with
+ *                                        all servers
+ */
+
+void
+irc_server_buffer_set_highlight_words (struct t_gui_buffer *buffer)
+{
+    struct t_irc_server *ptr_server;
+    int length;
+    char *words;
+    
+    length = 0;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected && ptr_server->nick)
+            length += strlen (ptr_server->nick) + 1;
+    }
+    words = malloc (length + 1);
+    if (words)
+    {
+        words[0] = '\0';
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->is_connected && ptr_server->nick)
+            {
+                if (words[0])
+                    strcat (words, ",");
+                strcat (words, ptr_server->nick);
+            }
+        }
+        weechat_buffer_set (buffer, "highlight_words", words);
+        free (words);
+    }
+}
+
+/*
  * irc_server_set_nick: set nickname for a server
  */
 
@@ -223,13 +261,17 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
     
-    weechat_buffer_set (server->buffer, "highlight_words", nick);
+    if (weechat_config_boolean (irc_config_look_one_server_buffer))
+        irc_server_buffer_set_highlight_words (server->buffer);
+    else
+        weechat_buffer_set (server->buffer, "highlight_words", nick);
     
     /* set local variable "nick" for server and all channels/pv */
     weechat_buffer_set (server->buffer, "localvar_set_nick", nick);
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        weechat_buffer_set (ptr_channel->buffer, "highlight_words", server->nick);
         weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
     }
     
