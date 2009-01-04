@@ -2357,16 +2357,16 @@ command_proxy_list ()
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_proxy->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             proxy_type_string[CONFIG_INTEGER(ptr_proxy->type)],
-                             CONFIG_STRING(ptr_proxy->address),
-                             CONFIG_INTEGER(ptr_proxy->port),
-                             (CONFIG_INTEGER(ptr_proxy->ipv6)) ? "IPv6" : "IPv4",
-                             (CONFIG_STRING(ptr_proxy->username) &&
-                              CONFIG_STRING(ptr_proxy->username)[0]) ?
-                             CONFIG_STRING(ptr_proxy->username) : _("(none)"),
-                             (CONFIG_STRING(ptr_proxy->password) &&
-                              CONFIG_STRING(ptr_proxy->password)[0]) ?
-                             CONFIG_STRING(ptr_proxy->password) : _("(none)"));
+                             proxy_type_string[CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE])],
+                             CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
+                             CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]),
+                             (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6])) ? "IPv6" : "IPv4",
+                             (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]) &&
+                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME])[0]) ?
+                             CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]) : _("(none)"),
+                             (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD]) &&
+                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD])[0]) ?
+                             CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD]) : _("(none)"));
         }
     }
     else

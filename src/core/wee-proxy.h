@@ -22,12 +22,12 @@
 
 enum t_proxy_option
 {
-    PROXY_OPTION_TYPE = 0,
-    PROXY_OPTION_IPV6,
-    PROXY_OPTION_ADDRESS,
-    PROXY_OPTION_PORT,
-    PROXY_OPTION_USERNAME,
-    PROXY_OPTION_PASSWORD,
+    PROXY_OPTION_TYPE = 0,             /* type: http, socks4, socks5        */
+    PROXY_OPTION_IPV6,                 /* ipv6 ? or ipv4 ?                  */
+    PROXY_OPTION_ADDRESS,              /* address (IP or hostname)          */
+    PROXY_OPTION_PORT,                 /* port                              */
+    PROXY_OPTION_USERNAME,             /* username (optional)               */
+    PROXY_OPTION_PASSWORD,             /* password (optional)               */
     /* number of proxy options */
     PROXY_NUM_OPTIONS,
 };
@@ -44,12 +44,7 @@ enum t_proxy_type
 struct t_proxy
 {
     char *name;                         /* proxy name                       */
-    struct t_config_option *type;       /* type: http, socks4, socks5       */
-    struct t_config_option *ipv6;       /* ipv6 ? or ipv4 ?                 */
-    struct t_config_option *address;    /* address (IP or hostname)         */
-    struct t_config_option *port;       /* port                             */
-    struct t_config_option *username;   /* username (optional)              */
-    struct t_config_option *password;   /* password (optional)              */
+    struct t_config_option *options[PROXY_NUM_OPTIONS];
     
     struct t_proxy *prev_proxy;         /* link to previous bar             */
     struct t_proxy *next_proxy;         /* link to next bar                 */

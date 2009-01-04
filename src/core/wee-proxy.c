@@ -35,6 +35,8 @@
 
 char *proxy_option_string[PROXY_NUM_OPTIONS] =
 { "type", "ipv6", "address", "port", "username", "password" };
+char *proxy_option_default[PROXY_NUM_OPTIONS] =
+{ "http", "off", "127.0.0.1", "3128", "", "" };
 char *proxy_type_string[PROXY_NUM_TYPES] =
 { "http", "socks4", "socks5" };
 
@@ -165,17 +167,17 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
     if (option_name)
     {
         snprintf (option_name, length, "%s.type", name);
-        config_file_option_rename (proxy->type, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_TYPE], option_name);
         snprintf (option_name, length, "%s.ipv6", name);
-        config_file_option_rename (proxy->ipv6, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_IPV6], option_name);
         snprintf (option_name, length, "%s.address", name);
-        config_file_option_rename (proxy->address, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_ADDRESS], option_name);
         snprintf (option_name, length, "%s.port", name);
-        config_file_option_rename (proxy->port, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_PORT], option_name);
         snprintf (option_name, length, "%s.username", name);
-        config_file_option_rename (proxy->username, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_USERNAME], option_name);
         snprintf (option_name, length, "%s.password", name);
-        config_file_option_rename (proxy->password, option_name);
+        config_file_option_rename (proxy->options[PROXY_OPTION_PASSWORD], option_name);
         
         if (proxy->name)
             free (proxy->name);
@@ -203,32 +205,32 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
     }
     else if (string_strcasecmp (property, "type") == 0)
     {
-        config_file_option_set (proxy->type, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_TYPE], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "ipv6") == 0)
     {
-        config_file_option_set (proxy->ipv6, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_IPV6], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "address") == 0)
     {
-        config_file_option_set (proxy->address, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_ADDRESS], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "port") == 0)
     {
-        config_file_option_set (proxy->port, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_PORT], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "username") == 0)
     {
-        config_file_option_set (proxy->username, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_USERNAME], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "password") == 0)
     {
-        config_file_option_set (proxy->password, value, 1);
+        config_file_option_set (proxy->options[PROXY_OPTION_PASSWORD], value, 1);
         return 1;
     }
     
@@ -330,30 +332,8 @@ proxy_create_option_temp (struct t_proxy *temp_proxy, int index_option,
     new_option = proxy_create_option (temp_proxy->name,
                                       index_option,
                                       value);
-    if (new_option)
-    {
-        switch (index_option)
-        {
-            case PROXY_OPTION_TYPE:
-                temp_proxy->type = new_option;
-                break;
-            case PROXY_OPTION_IPV6:
-                temp_proxy->ipv6 = new_option;
-                break;
-            case PROXY_OPTION_ADDRESS:
-                temp_proxy->address = new_option;
-                break;
-            case PROXY_OPTION_PORT:
-                temp_proxy->port = new_option;
-                break;
-            case PROXY_OPTION_USERNAME:
-                temp_proxy->username = new_option;
-                break;
-            case PROXY_OPTION_PASSWORD:
-                temp_proxy->password = new_option;
-                break;
-        }
-    }
+    if (new_option && (index_option >= 0))
+        temp_proxy->options[index_option] = new_option;
 }
 
 /*
@@ -364,17 +344,16 @@ struct t_proxy *
 proxy_alloc (const char *name)
 {
     struct t_proxy *new_proxy;
+    int i;
     
     new_proxy = malloc (sizeof (*new_proxy));
     if (new_proxy)
     {
         new_proxy->name = strdup (name);
-        new_proxy->type = NULL;
-        new_proxy->ipv6 = NULL;
-        new_proxy->address = NULL;
-        new_proxy->port = NULL;
-        new_proxy->username = NULL;
-        new_proxy->password = NULL;
+        for (i = 0; i < PROXY_NUM_OPTIONS; i++)
+        {
+            new_proxy->options[i] = NULL;
+        }
         new_proxy->prev_proxy = NULL;
         new_proxy->next_proxy = NULL;
     }
@@ -401,12 +380,12 @@ proxy_new_with_options (const char *name,
     new_proxy = proxy_alloc (name);
     if (new_proxy)
     {
-        new_proxy->type = type;
-        new_proxy->ipv6 = ipv6;
-        new_proxy->address = address;
-        new_proxy->port = port;
-        new_proxy->username = username;
-        new_proxy->password = password;
+        new_proxy->options[PROXY_OPTION_TYPE] = type;
+        new_proxy->options[PROXY_OPTION_IPV6] = ipv6;
+        new_proxy->options[PROXY_OPTION_ADDRESS] = address;
+        new_proxy->options[PROXY_OPTION_PORT] = port;
+        new_proxy->options[PROXY_OPTION_USERNAME] = username;
+        new_proxy->options[PROXY_OPTION_PASSWORD] = password;
         
         /* add proxy to proxies list */
         new_proxy->prev_proxy = last_weechat_proxy;
@@ -488,78 +467,43 @@ void
 proxy_use_temp_proxies ()
 {
     struct t_proxy *ptr_temp_proxy, *next_temp_proxy;
+    int i, num_options_ok;
     
     for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
          ptr_temp_proxy = ptr_temp_proxy->next_proxy)
     {
-        if (!ptr_temp_proxy->type)
-            ptr_temp_proxy->type = proxy_create_option (ptr_temp_proxy->name,
-                                                        PROXY_OPTION_TYPE,
-                                                        "http");
-        if (!ptr_temp_proxy->ipv6)
-            ptr_temp_proxy->ipv6 = proxy_create_option (ptr_temp_proxy->name,
-                                                        PROXY_OPTION_IPV6,
-                                                        "off");
-        if (!ptr_temp_proxy->address)
-            ptr_temp_proxy->address = proxy_create_option (ptr_temp_proxy->name,
-                                                           PROXY_OPTION_ADDRESS,
-                                                           "127.0.0.1");
-        if (!ptr_temp_proxy->port)
-            ptr_temp_proxy->port = proxy_create_option (ptr_temp_proxy->name,
-                                                        PROXY_OPTION_PORT,
-                                                        "3128");
-        if (!ptr_temp_proxy->username)
-            ptr_temp_proxy->username = proxy_create_option (ptr_temp_proxy->name,
-                                                            PROXY_OPTION_USERNAME,
-                                                            "");
-        if (!ptr_temp_proxy->password)
-            ptr_temp_proxy->password = proxy_create_option (ptr_temp_proxy->name,
-                                                            PROXY_OPTION_PASSWORD,
-                                                            "");
+        num_options_ok = 0;
+        for (i = 0; i < PROXY_NUM_OPTIONS; i++)
+        {
+            if (!ptr_temp_proxy->options[i])
+            {
+                ptr_temp_proxy->options[i] = proxy_create_option (ptr_temp_proxy->name,
+                                                                  i,
+                                                                  proxy_option_default[i]);
+            }
+            if (ptr_temp_proxy->options[i])
+                num_options_ok++;
+        }
         
-        if (ptr_temp_proxy->type && ptr_temp_proxy->ipv6
-            && ptr_temp_proxy->address && ptr_temp_proxy->port
-            && ptr_temp_proxy->username && ptr_temp_proxy->password)
+        if (num_options_ok == PROXY_NUM_OPTIONS)
         {
             proxy_new_with_options (ptr_temp_proxy->name,
-                                    ptr_temp_proxy->type,
-                                    ptr_temp_proxy->ipv6,
-                                    ptr_temp_proxy->address,
-                                    ptr_temp_proxy->port,
-                                    ptr_temp_proxy->username,
-                                    ptr_temp_proxy->password);
+                                    ptr_temp_proxy->options[PROXY_OPTION_TYPE],
+                                    ptr_temp_proxy->options[PROXY_OPTION_IPV6],
+                                    ptr_temp_proxy->options[PROXY_OPTION_ADDRESS],
+                                    ptr_temp_proxy->options[PROXY_OPTION_PORT],
+                                    ptr_temp_proxy->options[PROXY_OPTION_USERNAME],
+                                    ptr_temp_proxy->options[PROXY_OPTION_PASSWORD]);
         }
         else
         {
-            if (ptr_temp_proxy->type)
+            for (i = 0; i < PROXY_NUM_OPTIONS; i++)
             {
-                config_file_option_free (ptr_temp_proxy->type);
-                ptr_temp_proxy->type = NULL;
-            }
-            if (ptr_temp_proxy->ipv6)
-            {
-                config_file_option_free (ptr_temp_proxy->ipv6);
-                ptr_temp_proxy->ipv6 = NULL;
-            }
-            if (ptr_temp_proxy->address)
-            {
-                config_file_option_free (ptr_temp_proxy->address);
-                ptr_temp_proxy->address = NULL;
-            }
-            if (ptr_temp_proxy->port)
-            {
-                config_file_option_free (ptr_temp_proxy->port);
-                ptr_temp_proxy->port = NULL;
-            }
-            if (ptr_temp_proxy->username)
-            {
-                config_file_option_free (ptr_temp_proxy->username);
-                ptr_temp_proxy->username = NULL;
-            }
-            if (ptr_temp_proxy->password)
-            {
-                config_file_option_free (ptr_temp_proxy->password);
-                ptr_temp_proxy->password = NULL;
+                if (ptr_temp_proxy->options[i])
+                {
+                    config_file_option_free (ptr_temp_proxy->options[i]);
+                    ptr_temp_proxy->options[i] = NULL;
+                }
             }
         }
     }
@@ -585,6 +529,8 @@ proxy_use_temp_proxies ()
 void
 proxy_free (struct t_proxy *proxy)
 {
+    int i;
+    
     if (!proxy)
         return;
     
@@ -601,18 +547,10 @@ proxy_free (struct t_proxy *proxy)
     /* free data */
     if (proxy->name)
         free (proxy->name);
-    if (proxy->type)
-        config_file_option_free (proxy->type);
-    if (proxy->ipv6)
-        config_file_option_free (proxy->ipv6);
-    if (proxy->address)
-        config_file_option_free (proxy->address);
-    if (proxy->port)
-        config_file_option_free (proxy->port);
-    if (proxy->username)
-        config_file_option_free (proxy->username);
-    if (proxy->password)
-        config_file_option_free (proxy->password);
+    for (i = 0; i < PROXY_NUM_OPTIONS; i++)
+    {
+        config_file_option_free (proxy->options[i]);
+    }
     
     free (proxy);
 }
@@ -646,13 +584,13 @@ proxy_print_log ()
         log_printf ("[proxy (addr:0x%lx)]", ptr_proxy);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_proxy->name);
         log_printf ("  type . . . . . . . . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_proxy->type),
-                    proxy_type_string[CONFIG_INTEGER(ptr_proxy->type)]);
-        log_printf ("  ipv6 . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->ipv6));
-        log_printf ("  address. . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->address));
-        log_printf ("  port . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->port));
-        log_printf ("  username . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->username));
-        log_printf ("  password . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->password));
+                    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE]),
+                    proxy_type_string[CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE])]);
+        log_printf ("  ipv6 . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6]));
+        log_printf ("  address. . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]));
+        log_printf ("  port . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
+        log_printf ("  username . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]));
+        log_printf ("  password . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD]));
         log_printf ("  prev_proxy . . . . . . : 0x%lx", ptr_proxy->prev_proxy);
         log_printf ("  next_proxy . . . . . . : 0x%lx", ptr_proxy->next_proxy);
     }
