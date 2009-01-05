@@ -31,7 +31,8 @@ struct t_irc_server;
 
 
 extern void irc_command_away_server (struct t_irc_server *server,
-                                     const char *arguments);
+                                     const char *arguments,
+                                     int reset_unread_marker);
 extern void irc_command_join_server (struct t_irc_server *server,
                                      const char *arguments);
 extern void irc_command_mode_server (struct t_irc_server *server,

@@ -2413,7 +2413,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
         away_msg = strdup (server->away_message);
         if (away_msg)
         {
-            irc_command_away_server (server, away_msg);
+            irc_command_away_server (server, away_msg, 0);
             free (away_msg);
         }
     }

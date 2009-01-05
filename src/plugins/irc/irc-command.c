@@ -252,7 +252,8 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_away_server (struct t_irc_server *server, const char *arguments)
+irc_command_away_server (struct t_irc_server *server, const char *arguments,
+                         int reset_unread_marker)
 {
     char *string, buffer[4096];
     time_t time_now, elapsed;
@@ -265,10 +266,8 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments)
     {
         if (server->away_message)
             free (server->away_message);
-        server->away_message = malloc (strlen (arguments) + 1);
-        if (server->away_message)
-            strcpy (server->away_message, arguments);
-
+        server->away_message = strdup (arguments);
+        
         /* if server is connected, send away command now */
         if (server->is_connected)
         {
@@ -294,12 +293,15 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments)
             irc_server_set_away (server, server->nick, 1);
 
             /* reset "unread" indicator on server and channels/pv buffers */
-            if (!weechat_config_boolean (irc_config_look_one_server_buffer))
-                weechat_buffer_set (server->buffer, "unread", "");
-            for (ptr_channel = server->channels; ptr_channel;
-                 ptr_channel = ptr_channel->next_channel)
+            if (reset_unread_marker)
             {
-                weechat_buffer_set (ptr_channel->buffer, "unread", "");
+                if (!weechat_config_boolean (irc_config_look_one_server_buffer))
+                    weechat_buffer_set (server->buffer, "unread", "");
+                for (ptr_channel = server->channels; ptr_channel;
+                     ptr_channel = ptr_channel->next_channel)
+                {
+                    weechat_buffer_set (ptr_channel->buffer, "unread", "");
+                }
             }
         }
         else
@@ -393,7 +395,8 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
         {
             if (ptr_server->is_connected)
                 irc_command_away_server (ptr_server,
-                                         (argc > 2) ? argv_eol[2] : NULL);
+                                         (argc > 2) ? argv_eol[2] : NULL,
+                                         1);
         }
         weechat_buffer_set (NULL, "hotlist", "+");
     }
@@ -403,7 +406,7 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_ERROR;
         
         weechat_buffer_set (NULL, "hotlist", "-");
-        irc_command_away_server (ptr_server, argv_eol[1]);
+        irc_command_away_server (ptr_server, argv_eol[1], 1);
         weechat_buffer_set (NULL, "hotlist", "+");
     }
     
