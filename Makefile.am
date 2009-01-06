@@ -20,14 +20,29 @@ endif
 
 SUBDIRS = po $(doc_dir) intl src
 
-EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
-             debian/changelog debian/control \
-             debian/copyright debian/compat \
-             debian/rules debian/weechat-common.docs \
+EXTRA_DIST = config.rpath \
+             BUGS \
+             FAQ \
+             FAQ.fr \
+             debian/NEWS \
+             debian/changelog \
+             debian/compat \
+             debian/control \
+             debian/copyright \
              debian/lintian-override \
-             debian/weechat-common.install debian/weechat-curses.dirs \
-             debian/weechat-curses.install debian/weechat-plugins.install \
-             debian/weechat-curses.menu debian/NEWS debian/weechat.xpm \
-             weechat.spec weechat_icon_32.png
+             debian/rules \
+             debian/watch \
+             debian/weechat-core.install \
+             debian/weechat-curses.dirs \
+             debian/weechat-curses.install \
+             debian/weechat-curses.manpages \
+             debian/weechat-curses.menu \
+             debian/weechat-doc.docs \
+             debian/weechat-doc.install \
+             debian/weechat-plugins.dirs \
+             debian/weechat-plugins.install \
+             debian/weechat.xpm \
+             weechat.spec \
+             weechat_icon_32.png
 
 ACLOCAL_AMFLAGS = -I m4
