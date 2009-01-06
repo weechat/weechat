@@ -716,7 +716,9 @@ irc_server_free_all ()
 {
     /* for each server in memory, remove it */
     while (irc_servers)
+    {
         irc_server_free (irc_servers);
+    }
 }
 
 /*
@@ -2168,7 +2170,7 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
     }
     
 #ifndef HAVE_GNUTLS
-    if (weechat_config_boolean (IRC_SERVER_OPTION(server, IRC_SERVER_OPTION_SSL)))
+    if (weechat_config_boolean (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
     {
         weechat_printf (server->buffer,
                         _("%s%s: cannot connect with SSL since WeeChat "
@@ -2492,6 +2494,8 @@ irc_server_search (const char *server_name)
         if (strcmp (ptr_server->name, server_name) == 0)
             return ptr_server;
     }
+    
+    /* server not found */
     return NULL;
 }
 
