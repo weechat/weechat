@@ -19,7 +19,7 @@
 
 ABOUT-NLS
 autom4te*
-build/*
+build*/*
 config.guess
 config.h*
 config.log
