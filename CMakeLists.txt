@@ -59,11 +59,6 @@ OPTION(DISABLE_TCL           "Disable Tcl scripting language")
 OPTION(ENABLE_TRIGGER        "Enable Trigger plugin")
 OPTION(DISABLE_XFER          "Disable Xfer (file transfert) plugin")
 OPTION(DISABLE_DOC           "Disable Doc")
-OPTION(DISABLE_COMPILE_DEBUG "Disable debug info in object files")
-
-IF(NOT DISABLE_COMPILE_DEBUG)
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
-ENDIF(NOT DISABLE_COMPILE_DEBUG)
 
 ADD_SUBDIRECTORY( po )
 ADD_SUBDIRECTORY( src )
