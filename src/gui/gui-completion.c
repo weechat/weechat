@@ -812,7 +812,8 @@ gui_completion_list_add_option_value (struct t_gui_completion *completion)
                                                                      0, WEECHAT_LIST_POS_BEGINNING);
                                         if (option_found->value)
                                         {
-                                            value_string = malloc (64);
+                                            length = 64;
+                                            value_string = malloc (length);
                                             if (value_string)
                                             {
                                                 snprintf (value_string, length,

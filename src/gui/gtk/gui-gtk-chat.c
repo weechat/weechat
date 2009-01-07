@@ -470,14 +470,16 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
 void
 gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
-    struct t_gui_window *ptr_win;
-    unsigned char *message_without_color;
-    GtkTextIter start, end;
+    //struct t_gui_window *ptr_win;
+    //unsigned char *message_without_color;
+    //GtkTextIter start, end;
 
     (void) buffer;
+    (void) line;
 
-    //ptr_win = gui_buffer_find_window (buffer);
-    //if (ptr_win)
+    /*
+    ptr_win = gui_buffer_find_window (buffer);
+    if (ptr_win)
     {
         message_without_color = gui_color_decode ((unsigned char *)(line->message));
         if (message_without_color)
@@ -488,9 +490,10 @@ gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
                                               "\n", -1);
             gtk_text_buffer_get_bounds (GUI_WINDOW_OBJECTS(ptr_win)->textbuffer_chat,
                                         &start, &end);
-            /* TODO */
-            /*gtk_text_buffer_apply_tag (ptr_win->textbuffer_chat, ptr_win->texttag_chat, &start, &end);*/
+            // TODO
+            //gtk_text_buffer_apply_tag (ptr_win->textbuffer_chat, ptr_win->texttag_chat, &start, &end);
             free (message_without_color);
         }
     }
+    */
 }

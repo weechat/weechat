@@ -2180,7 +2180,7 @@ config_file_option_free (struct t_config_option *option)
     
     if (!option)
         return;
-
+    
     ptr_section = option->section;
     
     /* remove option from section */
@@ -2197,15 +2197,13 @@ config_file_option_free (struct t_config_option *option)
             new_options = option->next_option;
         if (option->next_option)
             (option->next_option)->prev_option = option->prev_option;
+        ptr_section->options = new_options;
     }
     
     /* free data */
     config_file_option_free_data (option);
     
     free (option);
-    
-    if (ptr_section)
-        ptr_section->options = new_options;
 }
 
 /*
