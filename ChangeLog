@@ -51,7 +51,7 @@ Version 0.2.7 (under dev!):
    * improve main loop: higher timout in select(), less CPU usage
    * add /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)
-   * new plugins: alias, debug, demo, fifo, irc, logger, notify, tcl, trigger,
+   * new plugins: alias, demo, fifo, irc, logger, notify, tcl, trigger,
      xfer, relay
    * add hooks: command, timer, file descriptor, connection, print, signal,
      config, completion, modifier, info, infolist
