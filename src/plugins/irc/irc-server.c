@@ -2175,7 +2175,7 @@ irc_server_connect (struct t_irc_server *server)
     }
     
 #ifndef HAVE_GNUTLS
-    if (weechat_config_boolean (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
+    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
     {
         weechat_printf (server->buffer,
                         _("%s%s: cannot connect with SSL because WeeChat "
