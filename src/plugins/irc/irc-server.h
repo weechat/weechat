@@ -54,23 +54,23 @@ enum t_irc_server_option
 };
 
 #define IRC_SERVER_OPTION_BOOLEAN(__server, __index)                          \
-    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
      weechat_config_boolean(__server->options[__index]) :                     \
-     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
       weechat_config_boolean(irc_config_server_default[__index])              \
       : weechat_config_boolean_default(irc_config_server_default[__index])))
 
 #define IRC_SERVER_OPTION_INTEGER(__server, __index)                          \
-    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
      weechat_config_integer(__server->options[__index]) :                     \
-     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
       weechat_config_integer(irc_config_server_default[__index])              \
       : weechat_config_integer_default(irc_config_server_default[__index])))
 
 #define IRC_SERVER_OPTION_STRING(__server, __index)                           \
-    ((!weechat_config_option_is_null (__server->options[__index])) ?          \
+    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
      weechat_config_string(__server->options[__index]) :                      \
-     ((!weechat_config_option_is_null (irc_config_server_default[__index])) ? \
+     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
@@ -147,7 +147,7 @@ struct t_irc_server
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */
-    struct t_irc_channel *last_channel;   /* last opened channal on server   */
+    struct t_irc_channel *last_channel;   /* last opened channel on server   */
     struct t_irc_server *prev_server;     /* link to previous server         */
     struct t_irc_server *next_server;     /* link to next server             */
 };
@@ -194,9 +194,8 @@ extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,
                                                       int all_servers);
 extern void irc_server_set_current_server (struct t_irc_server *server);
-extern int irc_server_connect (struct t_irc_server *server,
-                               int disable_autojoin);
-extern void irc_server_auto_connect (int auto_connect);
+extern int irc_server_connect (struct t_irc_server *server);
+extern void irc_server_auto_connect ();
 extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *arg_server);
 extern int irc_server_timer_cb (void *data);

@@ -96,7 +96,7 @@ fifo_create ()
                                      O_RDONLY | O_NONBLOCK)) != -1)
                 {
                     weechat_printf (NULL,
-                                    _("%s: pipe open"),
+                                    _("%s: pipe opened"),
                                     FIFO_PLUGIN_NAME),
                     rc = 1;
                 }

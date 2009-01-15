@@ -171,7 +171,7 @@ notify_set_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * notify_set_buffer_all: set notify for all open buffers
+ * notify_set_buffer_all: set notify for all opened buffers
  */
 
 void
@@ -337,12 +337,12 @@ notify_config_write ()
 }
 
 /*
- * notify_buffer_open_signal_cb: callback for "buffer_open" signal
+ * notify_buffer_opened_signal_cb: callback for "buffer_opened" signal
  */
 
 int
-notify_buffer_open_signal_cb (void *data, const char *signal,
-                              const char *type_data, void *signal_data)
+notify_buffer_opened_signal_cb (void *data, const char *signal,
+                                const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -475,13 +475,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "reset|none|highlight|message|all",
                           &notify_command_cb, NULL);
 
-    /* callback when a buffer is open */
-    weechat_hook_signal ("buffer_open", &notify_buffer_open_signal_cb, NULL);
+    /* callback when a buffer is opened */
+    weechat_hook_signal ("buffer_opened", &notify_buffer_opened_signal_cb, NULL);
 
     /* callback when a config option is changed */
     weechat_hook_config ("notify.buffer.*", &notify_config_cb, NULL);
     
-    /* set notify for open buffers */
+    /* set notify for opened buffers */
     notify_set_buffer_all ();
     
     return WEECHAT_RC_OK;

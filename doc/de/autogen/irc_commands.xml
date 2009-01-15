@@ -45,7 +45,7 @@ Nickname: zu sperrender User oder Host
 
 <command>/connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
 <programlisting>
-mit Server verbinden
+connect to IRC server(s)
 
       -all: connect to all servers
 servername: internal server name to connect
@@ -104,7 +104,7 @@ Server herunterfahren
 
 <command>/disconnect  [-all | Servername [Servername ...]]</command>
 <programlisting>
-Serververbindung(en) trennen
+disconnect from IRC server(s)
 
       -all: Trenne von allen Servern
 servername: Servername, von dem getrennt werden soll
@@ -360,7 +360,7 @@ den Server dazu bringen, sich selbst neu zu starten
 
 <command>/server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [switch]</command>
 <programlisting>
-Auflisten, Hinzufügen oder Entfernen von Servern
+list, add or remove IRC servers
 
       list: list servers (no parameter implies this list)
   listfull: list servers with detailed info for each server

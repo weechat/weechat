@@ -276,7 +276,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.network.send_unknown_commands</command>: envoie les commandes inconnues au serveur IRC
+<command>irc.network.send_unknown_commands</command>: envoie les commandes inconnues au serveur
 <itemizedlist>
   <listitem>
     <para>type: booléen</para>
@@ -286,7 +286,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.server_default.addresses</command>: liste d'IP/port ou nom/port pour le serveur (séparés par des virgules)
+<command>irc.server_default.addresses</command>: liste de nom/port ou IP/port pour le serveur (séparés par des virgules)
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>
@@ -386,7 +386,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.server_default.nicks</command>: pseudos à utiliser sur le serveur IRC (séparés par des virgules)
+<command>irc.server_default.nicks</command>: pseudos à utiliser sur le serveur (séparés par des virgules)
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>
@@ -396,7 +396,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.server_default.password</command>: mot de passe pour le serveur IRC
+<command>irc.server_default.password</command>: mot de passe pour le serveur
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>
@@ -416,7 +416,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.server_default.realname</command>: nom réel pour le serveur IRC
+<command>irc.server_default.realname</command>: nom réel pour le serveur
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>
@@ -436,7 +436,7 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.server_default.username</command>: nom d'utilisateur pour le serveur IRC
+<command>irc.server_default.username</command>: nom d'utilisateur pour le serveur
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>

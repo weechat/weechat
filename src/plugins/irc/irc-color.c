@@ -268,12 +268,12 @@ irc_color_encode (const char *string, int keep_colors)
     {
         switch (ptr_string[0])
         {
-            case 0x02: // ^B
+            case 0x02: /* ^B */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_BOLD_CHAR;
                 ptr_string++;
                 break;
-            case 0x03: // ^C
+            case 0x03: /* ^C */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_COLOR_CHAR;
                 ptr_string++;
@@ -308,17 +308,17 @@ irc_color_encode (const char *string, int keep_colors)
                     }
                 }
                 break;
-            case 0x0F: // ^O
+            case 0x0F: /* ^O */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_RESET_CHAR;
                 ptr_string++;
                 break;
-            case 0x12: // ^R
+            case 0x12: /* ^R */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
                 ptr_string++;
                 break;
-            case 0x15: // ^U
+            case 0x15: /* ^U */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
                 ptr_string++;

@@ -26,14 +26,6 @@
 #define IRC_CONFIG_DISPLAY_AWAY_LOCAL   1
 #define IRC_CONFIG_DISPLAY_AWAY_CHANNEL 2
 
-#define IRC_CONFIG_SERVER_DEFAULT_AUTOCONNECT         0
-#define IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT       1
-#define IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT_DELAY 30
-#define IRC_CONFIG_SERVER_DEFAULT_IPV6                0
-#define IRC_CONFIG_SERVER_DEFAULT_SSL                 0
-#define IRC_CONFIG_SERVER_DEFAULT_COMMAND_DELAY       1
-#define IRC_CONFIG_SERVER_DEFAULT_AUTOREJOIN          0
-
 
 extern struct t_config_file *irc_config_file;
 extern struct t_config_section *irc_config_section_server_default;

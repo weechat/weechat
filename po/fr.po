@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-03 13:12+0100\n"
-"PO-Revision-Date: 2009-01-03 13:12+0100\n"
+"POT-Creation-Date: 2009-01-15 14:36+0100\n"
+"PO-Revision-Date: 2009-01-15 14:38+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -818,7 +818,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all open buffers\n"
+"  notify: display notify levels for all opened buffers\n"
 "localvar: display local variables for current buffer\n"
 "  scroll: scroll in history (may be relative, and may end by a letter: "
 "s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then "
@@ -1269,7 +1269,7 @@ msgstr ""
 "scroll_next_highlight]"
 
 msgid ""
-"  list: list open windows (no parameter implies this list)\n"
+"  list: list opened windows (no parameter implies this list)\n"
 "           -1: jump to previous window\n"
 "           +1: jump to next window\n"
 "           b#: jump to next window displaying buffer number #\n"
@@ -2391,7 +2391,7 @@ msgstr ""
 "Sans paramètre, cette commande affiche la liste des infolists disponibles"
 
 #, c-format
-msgid "%s: pipe open"
+msgid "%s: pipe opened"
 msgstr "%s: tube ouvert"
 
 #, c-format
@@ -2435,12 +2435,12 @@ msgid "Lag"
 msgstr "Lag"
 
 #, c-format
-msgid "%s%s: error with IRC server from URL (\"%s\"), ignored"
-msgstr "%s%s: erreur avec le serveur IRC de l'URL (\"%s\"), ignoré"
+msgid "%s%s: error with server from URL (\"%s\"), ignored"
+msgstr "%s%s: erreur avec le serveur de l'URL (\"%s\"), ignoré"
 
 #, c-format
 msgid ""
-"%s%s: WARNING: some network connections may still be open and not visible, "
+"%s%s: WARNING: some network connections may still be opened and not visible, "
 "you should restart WeeChat now (with /quit)."
 msgstr ""
 "%s%s: ATTENTION: des connexions réseau peuvent encore être ouvertes et non "
@@ -2704,8 +2704,8 @@ msgstr ""
 " canal: nom du canal pour le bannissement\n"
 "pseudo: pseudo ou hôte pour le bannissement"
 
-msgid "connect to server(s)"
-msgstr "se connecter à un/plusieurs serveur(s)"
+msgid "connect to IRC server(s)"
+msgstr "se connecter à un/plusieurs serveur(s) IRC"
 
 msgid ""
 "[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
@@ -2790,8 +2790,8 @@ msgstr "retire la voix du/des pseudo(s)"
 msgid "shutdown the server"
 msgstr "arrêter le serveur"
 
-msgid "disconnect from server(s)"
-msgstr "se déconnecter d'un/plusieurs serveur(s)"
+msgid "disconnect from IRC server(s)"
+msgstr "se déconnecter d'un/plusieurs serveur(s) IRC"
 
 msgid "[-all | servername [servername ...]]"
 msgstr "[-all | nom_serveur [nom_serveur...]]"
@@ -3190,8 +3190,8 @@ msgstr ""
 "distribution: visibilité du service\n"
 "        type: réservé pour une utilisation future"
 
-msgid "list, add or remove servers"
-msgstr "liste, ajoute ou retire des serveurs"
+msgid "list, add or remove IRC servers"
+msgstr "liste, ajoute ou retire des serveurs IRC"
 
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
@@ -3450,8 +3450,8 @@ msgstr ""
 " cible: la réponse doit correspondre à ce masque"
 
 #, c-format
-msgid "%sirc: too few arguments for \"%s\" command"
-msgstr "%sirc: pas assez de paramètres pour la commande \"%s\""
+msgid "%s%s: too few arguments for \"%s\" command"
+msgstr "%s%s: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
 msgid ""
@@ -3460,6 +3460,22 @@ msgid ""
 msgstr ""
 "%s%s: attention: le serveur \"%s\" n'a pas été trouvé dans le fichier de "
 "configuration, non supprimé en mémoire car il est en cours d'utilisation"
+
+msgid "list of hostname/port or IP/port for server (separated by comma)"
+msgstr ""
+"liste de nom/port ou IP/port pour le serveur (séparés par des virgules)"
+
+msgid "proxy used for this server (optional)"
+msgstr "proxy utilisé pour ce serveur (optionnel)"
+
+msgid "use IPv6 protocol for server communication"
+msgstr "utiliser le protocole IPv6 pour la communication avec le serveur"
+
+msgid "use SSL for server communication"
+msgstr "utiliser SSL pour la communication avec le serveur"
+
+msgid "password for server"
+msgstr "mot de passe pour le serveur"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "connexion automatique au serveur quand WeeChat démarre"
@@ -3470,29 +3486,14 @@ msgstr "reconnexion automatique au serveur après une déconnexion"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "délai (en secondes) avant de tenter une reconnexion au serveur"
 
-msgid "proxy used for this server (optional)"
-msgstr "proxy utilisé pour ce serveur (optionnel)"
+msgid "nicknames to use on server (separated by comma)"
+msgstr "pseudos à utiliser sur le serveur (séparés par des virgules)"
 
-msgid "list of IP/port or hostname/port for server (separated by comma)"
-msgstr "liste d'IP/port ou nom/port pour le serveur (séparés par des virgules)"
+msgid "user name to use on server"
+msgstr "nom d'utilisateur pour le serveur"
 
-msgid "use IPv6 protocol for server communication"
-msgstr "utiliser le protocole IPv6 pour la communication avec le serveur"
-
-msgid "use SSL for server communication"
-msgstr "utiliser SSL pour la communication avec le serveur"
-
-msgid "password for IRC server"
-msgstr "mot de passe pour le serveur IRC"
-
-msgid "nicknames to use on IRC server (separated by comma)"
-msgstr "pseudos à utiliser sur le serveur IRC (séparés par des virgules)"
-
-msgid "user name to use on IRC server"
-msgstr "nom d'utilisateur pour le serveur IRC"
-
-msgid "real name to use on IRC server"
-msgstr "nom réel pour le serveur IRC"
+msgid "real name to use on server"
+msgstr "nom réel pour le serveur"
 
 msgid ""
 "custom local hostname/IP for server (optional, if empty local hostname is "
@@ -3651,8 +3652,8 @@ msgstr ""
 "autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux "
 "(^Cb=gras, ^Cxx=couleur, ^Ccxx,yy=couleur+fond, ^Cu=souligné, ^Cr=inversé)"
 
-msgid "send unknown commands to IRC server"
-msgstr "envoie les commandes inconnues au serveur IRC"
+msgid "send unknown commands to server"
+msgstr "envoie les commandes inconnues au serveur"
 
 msgid "IRC debug messages"
 msgstr "Messages de debug IRC"
@@ -4053,8 +4054,8 @@ msgid "(message dropped)"
 msgstr "(message supprimé)"
 
 #, c-format
-msgid "%s%s: not enough memory for received IRC message"
-msgstr "%s%s: mémoire insuffisante pour un message IRC reçu"
+msgid "%s%s: not enough memory for received message"
+msgstr "%s%s: mémoire insuffisante pour un message reçu"
 
 #, c-format
 msgid "%s%s: cannot read data from socket, disconnecting from server..."
@@ -4104,11 +4105,11 @@ msgstr "%s%s: connexion refusée"
 #, c-format
 msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
-"if used and if IRC server address/port is allowed by proxy)"
+"if used and if server address/port is allowed by proxy)"
 msgstr ""
 "%s%s: le proxy n'a pas pu se connecter au serveur (vérifiez l'utilisateur/"
-"mot de passe si utilisés et si l'adresse/port du serveur IRC sont autorisés "
-"par le proxy)"
+"mot de passe si utilisés et si l'adresse/port du serveur sont autorisés par "
+"le proxy)"
 
 #, c-format
 msgid "%s%s: unable to set local hostname/IP"
@@ -4127,6 +4128,11 @@ msgid "%s%s: not enough memory"
 msgstr "%s%s: pas assez de mémoire"
 
 #, c-format
+msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgstr ""
+"%s%s: adresses non définies pour le serveur \"%s\", connexion impossible"
+
+#, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
 msgstr ""
 "%s%s: proxy \"%s\" non trouvé pour le serveur \"%s\", connexion impossible"
@@ -4137,19 +4143,15 @@ msgstr ""
 "%s%s: options de proxy manquantes, vérifiez les options pour le proxy \"%s\""
 
 #, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr ""
-"%s%s: adresses non définies pour le serveur \"%s\", connexion impossible"
-
-#, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
 msgstr "%s%s: pseudos non définis pour le serveur \"%s\", connexion impossible"
 
 #, c-format
 msgid ""
-"%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
+"%s%s: cannot connect with SSL because WeeChat was not built with GnuTLS "
+"support"
 msgstr ""
-"%s%s: impossible de se connecter en SSL car WeeChat n'a pas été construit "
+"%s%s: impossible de se connecter avec SSL car WeeChat n'a pas été construit "
 "avec le support GnuTLS"
 
 #, c-format
@@ -4183,6 +4185,276 @@ msgstr "%s%s: reconnexion au serveur..."
 #, c-format
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: déconnecté du serveur"
+
+msgid "list, add or remove Jabber servers"
+msgstr "liste, ajoute ou retire des serveurs Jabber"
+
+msgid ""
+"[list [servername]] | [listfull [servername]] | [add servername username "
+"hostname[/port] password [-auto | -noauto] [-ipv6] [-tls] [-sasl]] | [copy "
+"servername newservername] | [rename servername newservername] | [keep "
+"servername] | [del servername] | [switch]"
+msgstr ""
+"[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur "
+"nom_utilisateur nom[/port] mot_de_passe [-temp] [-auto | -noauto] [-ipv6] [-"
+"tls] [-sasl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur "
+"nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [switch]"
+
+msgid ""
+"      list: list servers (no parameter implies this list)\n"
+"  listfull: list servers with detailed info for each server\n"
+"       add: create a new server\n"
+"servername: server name, for internal and display use\n"
+"  username: username to use on server\n"
+"  hostname: name or IP address of server, with optional port (default: "
+"5222)\n"
+"  password: password for username on server\n"
+"      auto: automatically connect to server when WeeChat starts\n"
+"    noauto: do not connect to server when WeeChat starts (default)\n"
+"      ipv6: use IPv6 protocol\n"
+"       tls: use TLS cryptographic protocol\n"
+"      sasl: use SASL for authentication\n"
+"      copy: duplicate a server\n"
+"    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
+"       del: delete a server\n"
+"    switch: switch active server (when one buffer is used for all servers, "
+"default key: alt-s on server buffer)\n"
+"\n"
+"Examples:\n"
+"  /jabber listfull\n"
+"  /jabber add jabberfr user jabber.fr/5222 password -tls\n"
+"  /jabber copy jabberfr jabberfr2\n"
+"  /jabber rename jabberfr jabbfr\n"
+"  /jabber del jabberfr\n"
+"  /jabber switch"
+msgstr ""
+"           list: afficher les serveurs (pas de paramètre implique cette "
+"liste)\n"
+"       listfull: afficher les serveurs avec de l'info détaillée pour chaque\n"
+"            add: créer un nouveau serveur\n"
+"    nom_serveur: nom du serveur, pour usage interne et affichage\n"
+"nom_utilisateur: nom d'utilisateur pour ce serveur\n"
+"            nom: nom ou adresse IP du serveur avec port en option (defaut: "
+"5222)\n"
+"   mot_de_passe: mot de passe pour l'utilisateur sur le serveur\n"
+"           auto: se connecter automatiquement au serveur quand WeeChat "
+"démarre\n"
+"         noauto: ne pas se connecter au serveur quand WeeChat démarre (par "
+"défaut)\n"
+"           ipv6: utiliser le protocole IPv6\n"
+"            tsl: utiliser le protocole de chiffrement TLS\n"
+"           sasl: utiliser SASL pour l'authentification\n"
+"           copy: dupliquer un serveur\n"
+"         rename: renommer un serveur\n"
+"           keep: garder le serveur dans le fichier de configuration (pour "
+"les serveurs temporaires seulement)\n"
+"            del: supprimer un serveur\n"
+"         switch: changer le serveur actif (quand un tampon est utilisé pour "
+"tous les serveurs, touche par défaut: alt-s sur le tampon serveur)\n"
+"\n"
+"Exemples :\n"
+"  /jabber listfull\n"
+"  /jabber add jabberfr user jabber.fr/5222 password -tls\n"
+"  /jabber copy jabberfr jabberfr2\n"
+"  /jabber rename jabberfr jabbfr\n"
+"  /jabber del jabberfr\n"
+"  /jabber switch"
+
+msgid "chat with a buddy"
+msgstr "discuter avec un contact"
+
+msgid "buddy [text]"
+msgstr "contact [texte]"
+
+msgid ""
+"buddy: buddy name for chat\n"
+" text: text to send"
+msgstr ""
+"contact: nom du contact pour la discussion\n"
+"  texte: texte à envoyer"
+
+msgid "connect to Jabber server(s)"
+msgstr "se connecter à un/plusieurs serveur(s) Jabber"
+
+msgid ""
+"[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
+"port] [-ipv6] [-tls] [-sasl]]"
+msgstr ""
+"[-all [-nojoin] | nom_serveur [nom_serveur ...] [-nojoin] | nom/IP [-port "
+"port] [-ipv6] [-tls] [-sasl]]"
+
+msgid ""
+"      -all: connect to all servers\n"
+"servername: internal server name to connect\n"
+"   -nojoin: do not join any MUC (even if autojoin is enabled on server)\n"
+"  hostname: hostname to connect\n"
+"      port: port for server (integer, default is 6667)\n"
+"      ipv6: use IPv6 protocol\n"
+"       tls: use TLS cryptographic protocol\n"
+"      saal: use SASL for authentication"
+msgstr ""
+"       -all: se reconnecter à tous les serveurs\n"
+"nom_serveur: nom du serveur pour se connecter\n"
+"    -nojoin: ne rejoindre aucun MUC (même si l'autojoin est activé pour le "
+"serveur)\n"
+"     nom/IP: nom/IP pour se connecter\n"
+"       port: port pour le serveur (nombre entier, 6667 par défaut)\n"
+"       ipv6: utiliser le protocole IPv6\n"
+"        tls: utiliser le protocole de chiffrement TLS\n"
+"       sasl: utiliser SASL pour l'authentification"
+
+msgid "disconnect from Jabber server(s)"
+msgstr "se déconnecter d'un/plusieurs serveur(s) Jabber"
+
+msgid "hostname/port or IP/port for server"
+msgstr "nom/port ou IP/port pour le serveur"
+
+msgid "use TLS cryptographic protocol for server communication"
+msgstr ""
+"utiliser le protocole de chiffrement TLS pour la communication avec le "
+"serveur"
+
+msgid "use SASL for authentication"
+msgstr "utiliser SASL pour l'authentification"
+
+msgid "resource (for example: Home or Work)"
+msgstr "ressource (pas exemple: Maison ou Travail)"
+
+msgid "password"
+msgstr "mot de passe"
+
+msgid "local alias"
+msgstr "alias local"
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, $muc "
+"and $server are replaced by their value)"
+msgstr ""
+"commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes "
+"doivent être séparées par ';', utilisez '\\;' pour un point-virgule, les "
+"variables spéciales $nick, $muc et $server sont remplacées par leur valeur)"
+
+msgid ""
+"comma separated list of MUCs to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+"liste des MUCs (séparés par des virgules) à rejoindre lorsque connecté au "
+"serveur (exemple: \"#chan1,#chan2,#chan3 key1,key2\")"
+
+msgid "automatically rejoin MUCs when kicked"
+msgstr "rejoindre automatiquement les MUCs quand mis dehors"
+
+msgid "open new MUCs/privates near server"
+msgstr "ouvrir les nouveaux MUCs/privés près du serveur"
+
+msgid "display MUC modes in \"buffer_name\" bar item"
+msgstr "affiche les modes du MUC dans l'objet de barre \"buffer_name\""
+
+msgid ""
+"filter join/part/quit messages for a nick if not speaking for some minutes "
+"on MUC (you must create a filter on tag \"jabber_smart_filter\")"
+msgstr ""
+"filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé "
+"pendant quelques minutes sur le MUC (vous devez créer un filtre sur le tag "
+"\"jabber_smart_filter\")"
+
+msgid ""
+"default part message (leaving MUC) ('%v' will be replaced by WeeChat version "
+"in string)"
+msgstr ""
+"message par défaut pour le part (en quittant un MUC) ('%v' sera remplacé par "
+"la version de WeeChat dans la chaîne)"
+
+msgid "Jabber debug messages"
+msgstr "Messages de debug Jabber"
+
+msgid "MUC"
+msgid_plural "MUCs"
+msgstr[0] "MUC"
+msgstr[1] "MUCs"
+
+msgid "get buffer pointer for a Jabber server/MUC"
+msgstr "retourne le pointeur vers le tampon pour un serveur/MUC Jabber"
+
+msgid "list of Jabber servers"
+msgstr "liste des serveurs Jabber"
+
+msgid "list of MUCs for a Jabber server"
+msgstr "liste des MUCs pour un serveur Jabber"
+
+msgid "list of buddies for a Jabber server or MUC"
+msgstr "liste des contacts pour un serveur ou MUC Jabber"
+
+#, c-format
+msgid "%s: this buffer is not a MUC!"
+msgstr "%s: ce tampon n'est pas un MUC !"
+
+#, c-format
+msgid "%s%s: cannot allocate new MUC"
+msgstr "%s%s: impossible d'allouer un nouveau MUC"
+
+#, c-format
+msgid "%s%s: connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+msgstr "%s%s: connexion au serveur %s/%d%s%s%s via le proxy %s %s/%d%s..."
+
+#, c-format
+msgid "Connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+msgstr "Connexion au serveur %s/%d%s%s%s via le proxy %s %s/%d%s..."
+
+#, c-format
+msgid "%s%s: connecting to server %s/%d%s%s%s..."
+msgstr "%s%s: connexion au serveur %s/%d%s%s%s..."
+
+#, c-format
+msgid "%s%s: username or server not defined for server \"%s\", cannot connect"
+msgstr ""
+"%s%s: nom d'utilisateur ou de serveur non défini pour le serveur \"%s\", "
+"connexion impossible"
+
+#, c-format
+msgid "%s%s: hostname/IP not defined for server \"%s\", cannot connect"
+msgstr "%s%s: nom/IP non défini pour le serveur \"%s\", connexion impossible"
+
+#, c-format
+msgid ""
+"%s%s: cannot connect with TLS because iksemel library was not built with "
+"GnuTLS support"
+msgstr ""
+"%s%s: impossible de se connecter avec TLS car la bibliothèque iksemel n'a "
+"pas été construite avec le support GnuTLS"
+
+#, c-format
+msgid "%s%s: failed to create stream parser"
+msgstr "%s%s: impossible de créer l'analyseur de flux"
+
+#, c-format
+msgid "%s%s: failed to create id"
+msgstr "%s%s: impossible de créer l'id"
+
+#, c-format
+msgid "%s%s: SASL authentication failed (check SASL option and password)"
+msgstr ""
+"%s%s: l'authentification SASL a échoué (vérifiez l'option SASL et le mot de "
+"passe)"
+
+#, c-format
+msgid "%s%s: server disconnected"
+msgstr "%s%s: serveur déconnecté"
+
+#, c-format
+msgid "%s%s: stream error"
+msgstr "%s%s: erreur de flux"
+
+#, c-format
+msgid "%s%s: login ok"
+msgstr "%s%s: login ok"
+
+#, c-format
+msgid "%s%s: authentication failed (check SASL option and password)"
+msgstr ""
+"%s%s: l'authentification a échoué (vérifiez l'option SASL et le mot de passe)"
 
 #, c-format
 msgid ""
@@ -4246,7 +4518,7 @@ msgid "[list | set level | disable]"
 msgstr "[list | set niveau | disable]"
 
 msgid ""
-"   list: show logging status for open buffers\n"
+"   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
 "  level: level for messages to be logged (0 = logging disabled, 1 = a few "
 "messages (most important) .. 9 = all messages)\n"
@@ -5235,51 +5507,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "  . type: boolean\n"
-#~ msgstr "  . type: booléen\n"
-
-#~ msgid "  . values: \"on\" or \"off\"\n"
-#~ msgstr "  . valeurs: \"on\" ou \"off\"\n"
-
-#~ msgid "  . default value: \"%s\"\n"
-#~ msgstr "  . valeur par défaut: \"%s\"\n"
-
-#~ msgid "  . type: string\n"
-#~ msgstr "  . type: chaîne\n"
-
-#~ msgid "  . values: "
-#~ msgstr "  . valeurs: "
-
-#~ msgid "  . type: integer\n"
-#~ msgstr "  . type: entier\n"
-
-#~ msgid "  . values: between %d and %d\n"
-#~ msgstr "  . valeurs: entre %d et %d\n"
-
-#~ msgid "  . default value: %d\n"
-#~ msgstr "  . valeur par défaut: %d\n"
-
-#~ msgid "  . values: any string\n"
-#~ msgstr "  . valeurs: toute chaîne\n"
-
-#~ msgid "  . type: char\n"
-#~ msgstr "  . type: caractère\n"
-
-#~ msgid "  . values: any char\n"
-#~ msgstr "  . valeurs: tout caractère\n"
-
-#~ msgid "  . values: any string (limit: %d chars)\n"
-#~ msgstr "  . valeurs: toute chaîne (limite: %d caractères)\n"
-
-#~ msgid "  . type: color\n"
-#~ msgstr "  . type: couleur\n"
-
-#~ msgid "  . values: color (depends on GUI used)\n"
-#~ msgstr "  . valeurs: couleur (dépend de l'interface utilisée)\n"
-
-#~ msgid "  . description: %s\n"
-#~ msgstr "  . description: %s\n"
-
-#~ msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
-#~ msgstr "%sAttention: %s, ligne %d: syntaxe invalide, il manque \"=\""

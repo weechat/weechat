@@ -53,6 +53,7 @@ AM_GNU_GETTEXT_VERSION([0.15])
 # Checks for libraries
 AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
 AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
+AC_CHECK_LIB(iksemel, iks_stream_new, LIBIKSEMEL_FOUND=1, LIBIKSEMEL_FOUND=0)
 
 # Checks for header files
 AC_HEADER_STDC
@@ -99,6 +100,7 @@ AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
 AH_VERBATIM([PLUGIN_DEMO], [#undef PLUGIN_DEMO])
 AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
 AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
+AH_VERBATIM([PLUGIN_JABBER], [#undef PLUGIN_JABBER])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
 AH_VERBATIM([PLUGIN_NOTIFY], [#undef PLUGIN_NOTIFY])
 AH_VERBATIM([PLUGIN_RELAY], [#undef PLUGIN_RELAY])
@@ -125,6 +127,7 @@ AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (
 AC_ARG_ENABLE(demo,         [  --enable-demo           turn on Demo plugin (default=off)],enable_demo=$enableval,enable_demo=no)
 AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
 AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
+AC_ARG_ENABLE(jabber,       [  --disable-jabber        turn off Jabber plugin (default=compiled)],enable_jabber=$enableval,enable_jabber=yes)
 AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
 AC_ARG_ENABLE(notify,       [  --disable-notify        turn off Notify plugin (default=compiled)],enable_notify=$enableval,enable_notify=yes)
 AC_ARG_ENABLE(relay,        [  --disable-relay         turn off Relay plugin (default=compiled)],enable_relay=$enableval,enable_relay=yes)
@@ -372,6 +375,26 @@ if test "x$enable_irc" = "xyes" ; then
     AC_DEFINE(PLUGIN_IRC)
 else
     not_asked="$not_asked irc"
+fi
+
+# --------------------------------- jabber -------------------------------------
+
+if test "x$enable_jabber" = "xyes" ; then
+    if test "$LIBIKSEMEL_FOUND" = "0" ; then
+        AC_MSG_WARN([[
+*** libiksemel was not found. You may want to get it from http://code.google.com/p/iksemel/
+*** WeeChat will be built without Jabber support.]])
+        enable_jabber="no"
+        not_found="$not_found jabber"
+    else
+        IKSEMEL_CFLAGS=""
+        IKSEMEL_LFLAGS="-liksemel"
+        AC_SUBST(IKSEMEL_CFLAGS)
+        AC_SUBST(IKSEMEL_LFLAGS)
+        AC_DEFINE(PLUGIN_JABBER)
+    fi
+else
+    not_asked="$not_asked jabber"
 fi
 
 # --------------------------------- logger -------------------------------------
@@ -702,7 +725,6 @@ if test "x$enable_tcl" = "xyes" ; then
         enable_tcl="no"
         not_found="$not_found tcl"
     else
-	echo "for grepp"
         TCL_VERSION=`echo 'puts $tcl_version' | $TCL`
         TCL_PATCHLEVEL=`echo 'puts $tcl_patchLevel' | $TCL`
         
@@ -973,6 +995,7 @@ AM_CONDITIONAL(PLUGIN_CHARSET, test "$enable_charset" = "yes")
 AM_CONDITIONAL(PLUGIN_DEMO,    test "$enable_demo" = "yes")
 AM_CONDITIONAL(PLUGIN_FIFO,    test "$enable_fifo" = "yes")
 AM_CONDITIONAL(PLUGIN_IRC,     test "$enable_irc" = "yes")
+AM_CONDITIONAL(PLUGIN_JABBER,  test "$enable_jabber" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,  test "$enable_logger" = "yes")
 AM_CONDITIONAL(PLUGIN_NOTIFY,  test "$enable_notify" = "yes")
 AM_CONDITIONAL(PLUGIN_RELAY,   test "$enable_relay" = "yes")
@@ -1004,6 +1027,7 @@ AC_OUTPUT([Makefile
            src/plugins/demo/Makefile
            src/plugins/fifo/Makefile
            src/plugins/irc/Makefile
+           src/plugins/jabber/Makefile
            src/plugins/logger/Makefile
            src/plugins/notify/Makefile
            src/plugins/relay/Makefile
@@ -1065,6 +1089,9 @@ if test "x$enable_fifo" = "xyes"; then
 fi
 if test "x$enable_irc" = "xyes" ; then
     listplugins="$listplugins irc"
+fi
+if test "x$enable_jabber" = "xyes" ; then
+    listplugins="$listplugins jabber"
 fi
 if test "x$enable_logger" = "xyes"; then
     listplugins="$listplugins logger"

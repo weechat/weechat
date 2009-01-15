@@ -97,6 +97,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>irc: discussion avec le protocole IRC</para>
         </listitem>
         <listitem>
+          <para>jabber: discussion avec le protocole Jabber</para>
+        </listitem>
+        <listitem>
           <para>logger: enregistrement des tampons dans des fichiers</para>
         </listitem>
         <listitem>
@@ -134,6 +137,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   &plugin_fifo.fr.xml;
   
   &plugin_irc.fr.xml;
+  
+  &plugin_jabber.fr.xml;
   
   &plugin_logger.fr.xml;
   

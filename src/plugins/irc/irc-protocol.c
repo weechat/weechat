@@ -49,7 +49,7 @@
  * irc_protocol_get_nick_from_host: get nick from host in an IRC message
  */
 
-char *
+const char *
 irc_protocol_get_nick_from_host (const char *host)
 {
     static char nick[128];
@@ -79,7 +79,7 @@ irc_protocol_get_nick_from_host (const char *host)
  * irc_protocol_get_address_from_host: get address from host in an IRC message
  */
 
-char *
+const char *
 irc_protocol_get_address_from_host (const char *host)
 {
     static char address[256];
@@ -128,7 +128,7 @@ irc_protocol_log_level_for_command (const char *command)
  * irc_protocol_tags: build tags list with IRC command and/or tags
  */
 
-char *
+const char *
 irc_protocol_tags (const char *command, const char *tags)
 {
     static char string[512];

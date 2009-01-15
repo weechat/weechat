@@ -113,7 +113,7 @@ irc_display_away (struct t_irc_server *server, const char *string1, const char *
 }
 
 /*
- * irc_display_server: display server description
+ * irc_display_server: display server infos
  */
 
 void

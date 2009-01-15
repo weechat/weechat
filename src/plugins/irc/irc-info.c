@@ -63,7 +63,8 @@ const char *
 irc_info_get_info_cb (void *data, const char *info_name,
                       const char *arguments)
 {
-    char *pos_comma, *pos_comma2, *server, *channel, *host, *nick;
+    char *pos_comma, *pos_comma2, *server, *channel, *host;
+    const char *nick;
     static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -361,7 +362,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
 void
 irc_info_init ()
 {
-    /* irc info hooks */
+    /* info hooks */
     weechat_hook_info ("irc_is_channel", N_("1 if string is an IRC channel"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
@@ -369,7 +370,7 @@ irc_info_init ()
     weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel"),
                        &irc_info_get_info_cb, NULL);
     
-    /* irc infolist hooks */
+    /* infolist hooks */
     weechat_hook_infolist ("irc_server", N_("list of IRC servers"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),

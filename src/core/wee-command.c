@@ -3547,7 +3547,7 @@ command_init ()
                      "example -1)\n"
                      "   close: close buffer\n"
                      "    list: list buffers (no parameter implies this list)\n"
-                     "  notify: display notify levels for all open buffers\n"
+                     "  notify: display notify levels for all opened buffers\n"
                      "localvar: display local variables for current buffer\n"
                      "  scroll: scroll in history (may be relative, and may "
                      "end by a letter: s=sec, m=min, h=hour, d=day, M=month, "
@@ -3803,7 +3803,7 @@ command_init ()
                      "merge [all] | page_up | page_down | scroll | scroll_up | "
                      "scroll_down | scroll_top | scroll_bottom | "
                      "scroll_previous_highlight | scroll_next_highlight ]"),
-                  N_("  list: list open windows (no parameter implies this "
+                  N_("  list: list opened windows (no parameter implies this "
                      "list)\n"
                      "           -1: jump to previous window\n"
                      "           +1: jump to next window\n"

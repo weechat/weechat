@@ -375,7 +375,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
         if (!first_buffer_creation)
         {
-            hook_signal_send ("buffer_open",
+            hook_signal_send ("buffer_opened",
                               WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
         }
     }

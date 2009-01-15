@@ -569,6 +569,66 @@ irc_config_server_new_option (struct t_config_file *config_file,
     
     switch (index_option)
     {
+        case IRC_SERVER_OPTION_ADDRESSES:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("list of hostname/port or IP/port for server (separated by comma)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_PROXY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("proxy used for this server (optional)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_IPV6:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("use IPv6 protocol for server communication"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SSL:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("use SSL for server communication"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_PASSWORD:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("password for server"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_AUTOCONNECT:
             new_option = weechat_config_new_option (
                 config_file, section,
@@ -605,71 +665,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_PROXY:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "string",
-                N_("proxy used for this server (optional)"),
-                NULL, 0, 0,
-                default_value, value,
-                null_value_allowed,
-                NULL, NULL,
-                callback_change, callback_change_data,
-                NULL, NULL);
-            break;
-        case IRC_SERVER_OPTION_ADDRESSES:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "string",
-                N_("list of IP/port or hostname/port for server (separated by comma)"),
-                NULL, 0, 0,
-                default_value, value,
-                null_value_allowed,
-                NULL, NULL,
-                callback_change, callback_change_data,
-                NULL, NULL);
-            break;
-        case IRC_SERVER_OPTION_IPV6:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "boolean",
-                N_("use IPv6 protocol for server communication"),
-                NULL, 0, 0,
-                default_value, value,
-                null_value_allowed,
-                NULL, NULL,
-                callback_change, callback_change_data,
-                NULL, NULL);
-            break;
-        case IRC_SERVER_OPTION_SSL:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "boolean",
-                N_("use SSL for server communication"),
-                NULL, 0, 0,
-                default_value, value,
-                null_value_allowed,
-                NULL, NULL,
-                callback_change, callback_change_data,
-                NULL, NULL);
-            break;
-        case IRC_SERVER_OPTION_PASSWORD:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "string",
-                N_("password for IRC server"),
-                NULL, 0, 0,
-                default_value, value,
-                null_value_allowed,
-                NULL, NULL,
-                callback_change, callback_change_data,
-                NULL, NULL);
-            break;
         case IRC_SERVER_OPTION_NICKS:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("nicknames to use on IRC server (separated by comma)"),
+                N_("nicknames to use on server (separated by comma)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -681,7 +681,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("user name to use on IRC server"),
+                N_("user name to use on server"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -693,7 +693,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("real name to use on IRC server"),
+                N_("real name to use on server"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1181,7 +1181,7 @@ irc_config_init ()
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,
         "send_unknown_commands", "boolean",
-        N_("send unknown commands to IRC server"),
+        N_("send unknown commands to server"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
     

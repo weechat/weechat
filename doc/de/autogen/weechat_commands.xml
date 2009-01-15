@@ -61,7 +61,7 @@ Puffer verwalten
     move: move buffer in the list (may be relative, for example -1)
    close: close buffer
     list: list buffers (no parameter implies this list)
-  notify: display notify levels for all open buffers
+  notify: display notify levels for all opened buffers
 localvar: display local variables for current buffer
   scroll: scroll in history (may be relative, and may end by a letter: s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll to beginning of this item
 
@@ -286,7 +286,7 @@ zeigt die Uptime von Weechat an
 <programlisting>
 Fenster verwalten
 
-  list: list open windows (no parameter implies this list)
+  list: list opened windows (no parameter implies this list)
            -1: jump to previous window
            +1: jump to next window
            b#: jump to next window displaying buffer number #

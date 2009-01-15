@@ -146,7 +146,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             if (!irc_server_alloc_with_url (argv[i]))
             {
                 weechat_printf (NULL,
-                                _("%s%s: error with IRC server from URL "
+                                _("%s%s: error with server from URL "
                                   "(\"%s\"), ignored"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 argv[i]);
@@ -164,13 +164,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         {
             weechat_printf (NULL,
                             _("%s%s: WARNING: some network connections may "
-                              "still be open and not visible, you should "
+                              "still be opened and not visible, you should "
                               "restart WeeChat now (with /quit)."),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         }
     }
     else
-        irc_server_auto_connect (auto_connect);
+    {
+        if (auto_connect)
+            irc_server_auto_connect ();
+    }
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);

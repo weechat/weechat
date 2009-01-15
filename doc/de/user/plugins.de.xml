@@ -95,6 +95,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>irc: IRC chat protocol</para>
         </listitem>
         <listitem>
+          <para>jabber: Jabber chat protocol</para>
+        </listitem>
+        <listitem>
           <para>logger: log buffers to files</para>
         </listitem>
         <listitem>
@@ -132,6 +135,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   &plugin_fifo.de.xml;
   
   &plugin_irc.de.xml;
+  
+  &plugin_jabber.de.xml;
   
   &plugin_logger.de.xml;
   

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-03 13:12+0100\n"
+"POT-Creation-Date: 2009-01-15 14:36+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -761,7 +761,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all open buffers\n"
+"  notify: display notify levels for all opened buffers\n"
 "localvar: display local variables for current buffer\n"
 "  scroll: scroll in history (may be relative, and may end by a letter: "
 "s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then "
@@ -1156,7 +1156,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"  list: list open windows (no parameter implies this list)\n"
+"  list: list opened windows (no parameter implies this list)\n"
 "           -1: jump to previous window\n"
 "           +1: jump to next window\n"
 "           b#: jump to next window displaying buffer number #\n"
@@ -2290,7 +2290,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s: pipe open"
+msgid "%s: pipe opened"
 msgstr "FIFO roura je otevřena\n"
 
 #, fuzzy, c-format
@@ -2335,12 +2335,12 @@ msgid "Lag"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: error with IRC server from URL (\"%s\"), ignored"
+msgid "%s%s: error with server from URL (\"%s\"), ignored"
 msgstr "%s nevalidní syntaxe pro IRC server ('%s'), ignorován\n"
 
 #, c-format
 msgid ""
-"%s%s: WARNING: some network connections may still be open and not visible, "
+"%s%s: WARNING: some network connections may still be opened and not visible, "
 "you should restart WeeChat now (with /quit)."
 msgstr ""
 
@@ -2602,7 +2602,8 @@ msgstr ""
 "    kanál: kanál pro zakázání\n"
 "přezdívka: uživatel nebo host, který bude zakáhán"
 
-msgid "connect to server(s)"
+#, fuzzy
+msgid "connect to IRC server(s)"
 msgstr "připojit se k serveru/serverům"
 
 msgid ""
@@ -2693,7 +2694,8 @@ msgstr "odebrat hlas z přezdívky (přezdívek)"
 msgid "shutdown the server"
 msgstr "vypnout server"
 
-msgid "disconnect from server(s)"
+#, fuzzy
+msgid "disconnect from IRC server(s)"
 msgstr "odpojit ze serveru/serverů"
 
 msgid "[-all | servername [servername ...]]"
@@ -3073,7 +3075,8 @@ msgstr ""
 "distribuce: viditelnost servisu\n"
 "       typ: rezervováné pro příští použití"
 
-msgid "list, add or remove servers"
+#, fuzzy
+msgid "list, add or remove IRC servers"
 msgstr "vypíše, přídá nebo odebere servery"
 
 #, fuzzy
@@ -3335,7 +3338,7 @@ msgstr ""
 "      cíl: odpověď musí odpovídat této masce"
 
 #, fuzzy, c-format
-msgid "%sirc: too few arguments for \"%s\" command"
+msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
 #, c-format
@@ -3346,6 +3349,23 @@ msgstr ""
 "%s%s: varování: server \"%s\" nenalezen v konfiguračním souboru, nesmazáno z "
 "paměti, protože se stále používá"
 
+#, fuzzy
+msgid "list of hostname/port or IP/port for server (separated by comma)"
+msgstr "přezdívka použitá na IRC serveru"
+
+msgid "proxy used for this server (optional)"
+msgstr ""
+
+msgid "use IPv6 protocol for server communication"
+msgstr "použít protokol IPv6 pro komunikaci se serverem"
+
+msgid "use SSL for server communication"
+msgstr "použít SSL pro komunikaci se serverem"
+
+#, fuzzy
+msgid "password for server"
+msgstr "heslo pro IRC server"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automaticky připojit k serveru, když je WeeChat spouštěn"
 
@@ -3355,30 +3375,16 @@ msgstr "automaticky znovu připojit server, když je odpojen"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "doba (v sekundách) před novým zkušením znovupřipojení na server"
 
-msgid "proxy used for this server (optional)"
-msgstr ""
-
 #, fuzzy
-msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgid "nicknames to use on server (separated by comma)"
 msgstr "přezdívka použitá na IRC serveru"
 
-msgid "use IPv6 protocol for server communication"
-msgstr "použít protokol IPv6 pro komunikaci se serverem"
-
-msgid "use SSL for server communication"
-msgstr "použít SSL pro komunikaci se serverem"
-
-msgid "password for IRC server"
-msgstr "heslo pro IRC server"
-
 #, fuzzy
-msgid "nicknames to use on IRC server (separated by comma)"
-msgstr "přezdívka použitá na IRC serveru"
-
-msgid "user name to use on IRC server"
+msgid "user name to use on server"
 msgstr "uživatelské jméno použité na IRC serveru"
 
-msgid "real name to use on IRC server"
+#, fuzzy
+msgid "real name to use on server"
 msgstr "skutečné jméno použité na IRC serveru"
 
 #, fuzzy
@@ -3536,7 +3542,8 @@ msgstr ""
 "povolit uživateli posílat barvy se speciálními kódy (^Cb=tlustě, "
 "^Ccxx=barva, ^Ccxx,yy=barva+pozadí, ^Cu=podtržené, ^Cr=obrácené)"
 
-msgid "send unknown commands to IRC server"
+#, fuzzy
+msgid "send unknown commands to server"
 msgstr "poslat neznámý příkaz na IRC server"
 
 #, fuzzy
@@ -3941,7 +3948,7 @@ msgid "(message dropped)"
 msgstr "(zpráva zahozena)"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory for received IRC message"
+msgid "%s%s: not enough memory for received message"
 msgstr "%s nedostatek paměti pro získání IRC zprávy\n"
 
 #, fuzzy, c-format
@@ -3991,7 +3998,7 @@ msgstr "%s spojení odmítnuto\n"
 #, fuzzy, c-format
 msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
-"if used and if IRC server address/port is allowed by proxy)"
+"if used and if server address/port is allowed by proxy)"
 msgstr ""
 "%s selhalo zjednání spojení s proxy serverem (zkontrolujte uživatelské jméno "
 "a heslo pokud jsou vyžadovány)\n"
@@ -4012,6 +4019,10 @@ msgstr "%s handshake s gnutls selhal\n"
 msgid "%s%s: not enough memory"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
+#, c-format
+msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgstr "%s%s: adresa pro server \"%s\" není definována, nemohu se připojit"
+
 #, fuzzy, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
 msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
@@ -4020,17 +4031,14 @@ msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
 msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro pole \"%s\""
 
-#, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr "%s%s: adresa pro server \"%s\" není definována, nemohu se připojit"
-
 #, fuzzy, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
 msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
+"%s%s: cannot connect with SSL because WeeChat was not built with GnuTLS "
+"support"
 msgstr ""
 "%s nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s podporou "
 "GNUtls\n"
@@ -4066,6 +4074,287 @@ msgstr "%s: Připojuji se znovu k serveru...\n"
 #, fuzzy, c-format
 msgid "%s%s: disconnected from server"
 msgstr "Odpojen od serveru!\n"
+
+#, fuzzy
+msgid "list, add or remove Jabber servers"
+msgstr "vypíše, přídá nebo odebere servery"
+
+#, fuzzy
+msgid ""
+"[list [servername]] | [listfull [servername]] | [add servername username "
+"hostname[/port] password [-auto | -noauto] [-ipv6] [-tls] [-sasl]] | [copy "
+"servername newservername] | [rename servername newservername] | [keep "
+"servername] | [del servername] | [switch]"
+msgstr ""
+"[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
+"jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd "
+"heslo] [-nick přezdívka1 přezdívka2 přezdívka3] [-username "
+"uživatelské_jméno] [-realname pravé_jméno] [-command příkaz] [-autojoin kanál"
+"[,kanál]] ] | [copy jméno_serveru nové_jméno_serveru] | [rename "
+"jméno_serveru nové_jméno_serveru] | [keep jméno_serveru] | [del "
+"jméno_serveru]"
+
+#, fuzzy
+msgid ""
+"      list: list servers (no parameter implies this list)\n"
+"  listfull: list servers with detailed info for each server\n"
+"       add: create a new server\n"
+"servername: server name, for internal and display use\n"
+"  username: username to use on server\n"
+"  hostname: name or IP address of server, with optional port (default: "
+"5222)\n"
+"  password: password for username on server\n"
+"      auto: automatically connect to server when WeeChat starts\n"
+"    noauto: do not connect to server when WeeChat starts (default)\n"
+"      ipv6: use IPv6 protocol\n"
+"       tls: use TLS cryptographic protocol\n"
+"      sasl: use SASL for authentication\n"
+"      copy: duplicate a server\n"
+"    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
+"       del: delete a server\n"
+"    switch: switch active server (when one buffer is used for all servers, "
+"default key: alt-s on server buffer)\n"
+"\n"
+"Examples:\n"
+"  /jabber listfull\n"
+"  /jabber add jabberfr user jabber.fr/5222 password -tls\n"
+"  /jabber copy jabberfr jabberfr2\n"
+"  /jabber rename jabberfr jabbfr\n"
+"  /jabber del jabberfr\n"
+"  /jabber switch"
+msgstr ""
+"             list: vypsat servery (pokud nejsou uvedeny žádné parametry bude "
+"vypsán tento seznam)\n"
+"         listfull: vypsat servery s detailními informacemi o každém serveru\n"
+"              add: vytvoří nový server\n"
+"    jméno_serveru: jméno serveru pro vnitřní a zobrazovací použití\n"
+"      jméno_hosta: jméno nebo IP adresa serveru\n"
+"             port: port pro server (celé číslo, výchozí je 6667)\n"
+"             temp: vytvořit dočasný server (neukládá se do konfiguračního "
+"souboru)\n"
+"             auto: automatickz pripojit k serveru při startu WeeChat\n"
+"           noauto: nepřipojovat k serveru automatickz při startu WeeChat "
+"(výchozí)\n"
+"             ipv6: používat IPv6 protokol\n"
+"              ssl: používat SSL protokol\n"
+"            heslo: heslo pro server\n"
+"       přezdívka1: první přezdívka pro server\n"
+"       přezdívka2: alternativní přezdívka pro server\n"
+"       přezdívka3: druhá alternativní přezdívka pro server\n"
+"uživatelské_jméno: uživatelské jméno\n"
+"      pravé_jméno: pravé jméno uživatele\n"
+"             copy: zkopírovat server\n"
+"           rename: přejmenovat server\n"
+"             keep: zachovat server v konfiguračním souboru (pouze pro "
+"dočasné servery)\n"
+"              del: smazat server\n"
+"          deloutq: smazat zprávy v odchozích frontách všech serverů (všechny "
+"zprávy, které WeeChat právě posílá)"
+
+msgid "chat with a buddy"
+msgstr ""
+
+#, fuzzy
+msgid "buddy [text]"
+msgstr "text"
+
+#, fuzzy
+msgid ""
+"buddy: buddy name for chat\n"
+" text: text to send"
+msgstr ""
+"služba: jméno služby\n"
+"text: text, který se má poslat"
+
+#, fuzzy
+msgid "connect to Jabber server(s)"
+msgstr "připojit se k serveru/serverům"
+
+#, fuzzy
+msgid ""
+"[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
+"port] [-ipv6] [-tls] [-sasl]]"
+msgstr ""
+"[-all [-nojoin] | jméno_serveru [jméno_serveru ...] [-nojoin] | hostname [-"
+"port port] [-ipv6] [-ssl]]"
+
+#, fuzzy
+msgid ""
+"      -all: connect to all servers\n"
+"servername: internal server name to connect\n"
+"   -nojoin: do not join any MUC (even if autojoin is enabled on server)\n"
+"  hostname: hostname to connect\n"
+"      port: port for server (integer, default is 6667)\n"
+"      ipv6: use IPv6 protocol\n"
+"       tls: use TLS cryptographic protocol\n"
+"      saal: use SASL for authentication"
+msgstr ""
+"         -all: připojit ke všem serverům\n"
+"jméno_serveru: jméno serveru pro přípojení      -nojoin: nepřipojovat se na "
+"kanály (i pokud je na serveru zpanuto automatické připojování)\n"
+"     hostname: hostname pro připojení, vytvoří dočasný server\n"
+"         port: port pro server (celé číslo, výchozí je 6667)\n"
+"         ipv6: použít IPv6 protokol\n"
+"          ssl: použít SSL protokol"
+
+#, fuzzy
+msgid "disconnect from Jabber server(s)"
+msgstr "odpojit ze serveru/serverů"
+
+#, fuzzy
+msgid "hostname/port or IP/port for server"
+msgstr "přezdívka použitá na IRC serveru"
+
+#, fuzzy
+msgid "use TLS cryptographic protocol for server communication"
+msgstr "použít protokol IPv6 pro komunikaci se serverem"
+
+#, fuzzy
+msgid "use SASL for authentication"
+msgstr "použít SSL pro komunikaci se serverem"
+
+msgid "resource (for example: Home or Work)"
+msgstr ""
+
+#, fuzzy
+msgid "password"
+msgstr "uživatel heslo"
+
+#, fuzzy
+msgid "local alias"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, $muc "
+"and $server are replaced by their value)"
+msgstr ""
+"příkaz(y), které provést po přípojení k serveru (více příkazů se odděluje "
+"pomocí ';', použijte '\\;' pro středník, speciální proměnné $nick, $channel "
+"a $server jsou přepsány svou hodnotou)"
+
+#, fuzzy
+msgid ""
+"comma separated list of MUCs to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+"čárkou rozdělený seznam kanálů na které přistoupit po připojení na server "
+"(příklad: \"#kanál1,#kanál2,#kanál3 klíč1,klíč2\")"
+
+#, fuzzy
+msgid "automatically rejoin MUCs when kicked"
+msgstr "automaticky znovu přijít na kanál po vykopnutí"
+
+#, fuzzy
+msgid "open new MUCs/privates near server"
+msgstr "otevřít nový kanál/soukromý rozhovor poblíž serveru"
+
+msgid "display MUC modes in \"buffer_name\" bar item"
+msgstr ""
+
+msgid ""
+"filter join/part/quit messages for a nick if not speaking for some minutes "
+"on MUC (you must create a filter on tag \"jabber_smart_filter\")"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"default part message (leaving MUC) ('%v' will be replaced by WeeChat version "
+"in string)"
+msgstr ""
+"výchozí zpráva při odchodu z kanálu ('%v' bude nahrazeno verzí WeeChat v "
+"řetězci)"
+
+#, fuzzy
+msgid "Jabber debug messages"
+msgstr "vypsat debug zprávy"
+
+msgid "MUC"
+msgid_plural "MUCs"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "get buffer pointer for a Jabber server/MUC"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
+msgid "list of Jabber servers"
+msgstr "heslo pro IRC server"
+
+#, fuzzy
+msgid "list of MUCs for a Jabber server"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
+msgid "list of buddies for a Jabber server or MUC"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy, c-format
+msgid "%s: this buffer is not a MUC!"
+msgstr "Tohe není okno kanálu!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new MUC"
+msgstr "%s nemohu přidělit nový kanál"
+
+#, fuzzy, c-format
+msgid "%s%s: connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+msgstr "%s: připojuji se k serveru %s:%d%s%s přes %s proxy %s:%d%s...\n"
+
+#, fuzzy, c-format
+msgid "Connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+msgstr "Připojuji se k serveru %s:%d%s%s přes %s proxy %s:%d%s...\n"
+
+#, fuzzy, c-format
+msgid "%s%s: connecting to server %s/%d%s%s%s..."
+msgstr "%s: připojuji se k serveru %s:%d%s%s...\n"
+
+#, fuzzy, c-format
+msgid "%s%s: username or server not defined for server \"%s\", cannot connect"
+msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: hostname/IP not defined for server \"%s\", cannot connect"
+msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: cannot connect with TLS because iksemel library was not built with "
+"GnuTLS support"
+msgstr ""
+"%s nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s podporou "
+"GNUtls\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create stream parser"
+msgstr "%s nemohu vytvořit server\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create id"
+msgstr "%s DCC: nemohu vytvořit rouru\n"
+
+#, fuzzy, c-format
+msgid "%s%s: SASL authentication failed (check SASL option and password)"
+msgstr "Nemůžu zapsat log soubor \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server disconnected"
+msgstr "Server %s%s%s vytvořen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: stream error"
+msgstr "%sServer: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: login ok"
+msgstr "%s DCC: nemohu provést fork\n"
+
+#, fuzzy, c-format
+msgid "%s%s: authentication failed (check SASL option and password)"
+msgstr "Nemůžu zapsat log soubor \"%s\"\n"
 
 #, c-format
 msgid ""
@@ -4127,7 +4416,7 @@ msgid "[list | set level | disable]"
 msgstr ""
 
 msgid ""
-"   list: show logging status for open buffers\n"
+"   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
 "  level: level for messages to be logged (0 = logging disabled, 1 = a few "
 "messages (most important) .. 9 = all messages)\n"
@@ -5109,6 +5398,97 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: cannot connect with TLS because WeeChat was not built with GnuTLS "
+#~ "support"
+#~ msgstr ""
+#~ "%s nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s "
+#~ "podporou GNUtls\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS "
+#~ "support"
+#~ msgstr ""
+#~ "%s nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s "
+#~ "podporou GNUtls\n"
+
+#, fuzzy
+#~ msgid "%s%s: authentication failed"
+#~ msgstr "Nemůžu zapsat log soubor \"%s\"\n"
+
+#, fuzzy
+#~ msgid "list of Jabber ignore"
+#~ msgstr "heslo pro IRC server"
+
+#, fuzzy
+#~ msgid "1 if string is a Jabber channel"
+#~ msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+#~ msgid "get nick from Jabber host"
+#~ msgstr "zakázat přezdívky nebo hosty"
+
+#, fuzzy
+#~ msgid "list of nicks for a Jabber channel"
+#~ msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: error sending data to server: null pointer (please report problem "
+#~ "to developers)"
+#~ msgstr ""
+#~ "%s%s: chyba při posílání dat na IRC server: nulový ukazatel (prosím "
+#~ "oznamte problém vývojářům)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: error sending data to server: empty buffer (please report problem "
+#~ "to developers)"
+#~ msgstr ""
+#~ "%s%s: chyba při posílání dat na IRC server: prázdný buffer (prosím "
+#~ "oznamte problém vývojářům)"
+
+#, fuzzy
+#~ msgid "%s%s: error sending data to server (%s)"
+#~ msgstr "%s chyba při zasílání dat na IRC server\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "[list [servername]] | [listfull [servername]] | [add username server[/"
+#~ "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] "
+#~ "| [rename servername newservername] | [keep servername] | [del "
+#~ "servername] | [deloutq] | [switch]"
+#~ msgstr ""
+#~ "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
+#~ "jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd "
+#~ "heslo] [-nick přezdívka1 přezdívka2 přezdívka3] [-username "
+#~ "uživatelské_jméno] [-realname pravé_jméno] [-command příkaz] [-autojoin "
+#~ "kanál[,kanál]] ] | [copy jméno_serveru nové_jméno_serveru] | [rename "
+#~ "jméno_serveru nové_jméno_serveru] | [keep jméno_serveru] | [del "
+#~ "jméno_serveru]"
+
+#, fuzzy
+#~ msgid "nicknames to use on Jabber server (separated by comma)"
+#~ msgstr "přezdívka použitá na IRC serveru"
+
+#, fuzzy
+#~ msgid "user name to use on Jabber server"
+#~ msgstr "uživatelské jméno použité na IRC serveru"
+
+#, fuzzy
+#~ msgid "real name to use on Jabber server"
+#~ msgstr "skutečné jméno použité na IRC serveru"
+
+#, fuzzy
+#~ msgid "send unknown commands to Jabber server"
+#~ msgstr "poslat neznámý příkaz na IRC server"
+
+#, fuzzy
+#~ msgid "password for Jabber server"
+#~ msgstr "heslo pro proxy server"
+
 #~ msgid "  . type: boolean\n"
 #~ msgstr "  . typ: boolean\n"
 
@@ -5298,9 +5678,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 #, fuzzy
 #~ msgid "%s: debug enabled"
 #~ msgstr "FIFO roura je otevřena\n"
-
-#~ msgid "print debug messages"
-#~ msgstr "vypsat debug zprávy"
 
 #, fuzzy
 #~ msgid "dump | buffer | windows | text"

@@ -183,7 +183,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 
 int
 irc_ignore_check (struct t_irc_server *server, struct t_irc_channel *channel,
-                  char *nick, char *host)
+                  const char *nick, const char *host)
 {
     struct t_irc_ignore *ptr_ignore;
     int server_match, channel_match, regex_match;

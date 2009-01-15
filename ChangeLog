@@ -1,63 +1,65 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-12-19
+ChangeLog - 2009-01-15
 
 
 Version 0.2.7 (under dev!):
-   * add some colors in IRC messages from server (for text and nicks)
-     (task #8926)
-   * new relay plugin (network communication between WeeChat and remote
+   * add jabber plugin (jabber/XMPP protocol)
+   * add irc plugin (replaces old IRC code in core)
+   * add relay plugin (network communication between WeeChat and remote
      application)
+   * add logger plugin with new features: backlog, level for messages to log
+     (task #8592), level by buffer (task #6687), filename mask by buffer,
+     option "name_lower_case" (bug #19522)
+   * add some other plugins: alias, demo, fifo, notify, tcl, xfer
+   * add hooks: command, timer, file descriptor, connection, print, signal,
+     config, completion, modifier, info, infolist
+   * new plugin API with many new functions: hooks, buffer management and
+     nicklist, bars, configuration files, network, infos/infolists, lists,
+     upgrade
+   * new display engine, with prefix and message for each line
+   * add new type of buffer, with free content
+   * add tags for lines and custom filtering by tags or regex (task #7674)
+   * add custom bars, with custom items
    * add support for more than one proxy, with proxy selection for each IRC
      server (task #6859)
    * add smart join/part/quit message filter in IRC plugin (task #8503)
+   * add group support in nicklist
+   * improve main loop: higher timout in select(), less CPU usage
+   * add /reload command to reload WeeChat and plugins config files
+     (signal SIGHUP is catched to reload config files)
+   * add new /layout command and save_layout_on_exit config option, to
+     save/restore windows and buffers order (task #5453)
+   * use of many addresses for one IRC server (auto-switch when a connexion
+     fails), nicks are now set with one option "nicks" (task #6088)
+   * fix network connection for hostnames resolving to several IPs: try all
+     IPs in list until one succeeds (bug #21473, debian bug #498610)
+   * add new options for completion, optional stop instead of cycling with
+     words found (task #5909)
+   * add new option scroll_page_percent to choose percent of height to scroll
+     with page_up and page_down keys (task #8702)
+   * add number of lines remaining after last line displayed in "-MORE-"
+     indicator (task #6702)
+   * add speed limit for DCC files sending (task #6178)
+   * new name for configuration files (*.conf instead of *.rc)
+   * improve /set command, new command /unset (task #6085)
+   * add some colors in IRC messages from server (for text and nicks)
+     (task #8926)
    * add color decoding in title for IRC channels (task #6030)
    * fix lock with SSL servers when connection fails, and when disconnecting
      during connection problem (bug #17584)
-   * add new option scroll_page_percent to choose percent of height to scroll
-     with page_up and page_down keys (task #8702)
-   * add new /layout command and save_layout_on_exit config option, to
-     save/restore windows and buffers order (task #5453)
-   * fix network connection for hostnames resolving to several IPs: try all
-     IPs in list until one succeeds (bug #21473, debian bug #498610)
    * fix display bug with some weird UTF-8 chars (bug #19687)
    * fix bug with wide chars in input (bug #16356)
-   * add number of lines remaining after last line displayed in "-MORE-"
-     indicator (task #6702)
-   * add new options for completion, optional stop instead of cycling with
-     words found (task #5909)
-   * add speed limit for DCC files sending (task #6178)
    * add new input action "set_unread_current_buffer" to set unread marker for
      current buffer only (task #7286)
    * add new option "xfer.file.use_nick_in_filename" for Xfer files
      (task #7140)
    * remove key functions, replaced by /input command
    * fix bug with alias, use current buffer to run commands (bug #22876)
-   * add new names for config files (*.conf instead of *.rc)
-   * improve /set command, new command /unset (task #6085)
-   * add new type of buffer, with free content
-   * add tags for lines and custom filtering by tags or regex (task #7674)
-   * add custom bars, with custom items
    * command /whois is now authorized in private without argument (task #7482)
    * remove kernel info in CTCP VERSION reply (IRC plugin) (task #7494)
-   * use of many addresses for one IRC server (auto-switch when a connexion
-     fails), nicks are now set with one option "nicks" (task #6088)
    * fix bug when switching window, scrollback is now preserved (task #7680)
-   * add group support in nicklist
-   * new logger plugin with new features: backlog, level for messages to log
-     (task #8592), level by buffer (task #6687), filename mask by buffer,
-     option "name_lower_case" (bug #19522)
-   * improve main loop: higher timout in select(), less CPU usage
-   * add /reload command to reload WeeChat and plugins config files
-     (signal SIGHUP is catched to reload config files)
-   * new plugins: alias, demo, fifo, irc, logger, notify, tcl, trigger,
-     xfer, relay
-   * add hooks: command, timer, file descriptor, connection, print, signal,
-     config, completion, modifier, info, infolist
-   * new plugin API with many new functions: hooks, buffer management, bars,
-     config files, lists
-   * new display engine, with prefix and message for each line
    * add missing IRC commands (328, 369)
    * fix nick completion bug (missing space after nick)
 

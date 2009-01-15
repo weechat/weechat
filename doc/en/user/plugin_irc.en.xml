@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>IRC plugin</title>
   
   <para>
-    The IRC plugin is designed to chat thru IRC protocols with other people.
+    The IRC plugin is designed to chat thru IRC protocol with other people.
     It is multi-servers, and offers all supported IRC commands including DCC
     chat and file transfer (via xfer plugin, see
     <xref linkend="secPluginXfer" />).

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-command.c: IRC commands managment */
+/* irc-command.c: IRC commands */
 
 
 #include <stdlib.h>
@@ -35,6 +35,7 @@
 #include "irc-buffer.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-input.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -515,7 +516,8 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
                         server->name);
         return 0;
     }
-    if (irc_server_connect (server, no_join))
+    server->disable_autojoin = no_join;
+    if (irc_server_connect (server))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
@@ -1132,7 +1134,7 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 
 /*
  * irc_command_disconnect_one_server: disconnect from a server
- *                                return 0 if error, 1 if ok
+ *                                    return 0 if error, 1 if ok
  */
 
 int
@@ -2526,12 +2528,8 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         {
             string = irc_color_decode (argv_eol[2],
                                        weechat_config_boolean (irc_config_network_colors_receive));
-            weechat_printf (ptr_channel->buffer,
-                            "%s%s",
-                            irc_nick_as_prefix (NULL,
-                                                ptr_server->nick,
-                                                IRC_COLOR_CHAT_NICK_SELF),
-                            (string) ? string : argv_eol[2]);
+            irc_input_user_message_display (ptr_channel->buffer,
+                                            (string) ? string : argv_eol[2]);
             if (string)
                 free (string);
             irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
@@ -2593,7 +2591,8 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     }
     irc_command_quit_server (server, NULL);
     irc_server_disconnect (server, 0);
-    if (irc_server_connect (server, no_join))
+    server->disable_autojoin = no_join;
+    if (irc_server_connect (server))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;    
@@ -2870,7 +2869,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_COLOR_CHAT);
         
         if (IRC_SERVER_OPTION_BOOLEAN(new_server, IRC_SERVER_OPTION_AUTOCONNECT))
-            irc_server_connect (new_server, 0);
+            irc_server_connect (new_server);
         
         return WEECHAT_RC_OK;
     }
@@ -3733,7 +3732,7 @@ irc_command_init ()
                              "nickname: user or host to ban"),
                           "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command ("connect",
-                          N_("connect to server(s)"),
+                          N_("connect to IRC server(s)"),
                           N_("[-all [-nojoin] | servername [servername ...] "
                              "[-nojoin] | hostname [-port port] [-ipv6] "
                              "[-ssl]]"),
@@ -3794,7 +3793,7 @@ irc_command_init ()
                           "",
                           NULL, &irc_command_die, NULL);
     weechat_hook_command ("disconnect",
-                          N_("disconnect from server(s)"),
+                          N_("disconnect from IRC server(s)"),
                           N_("[-all | servername [servername ...]]"),
                           N_("      -all: disconnect from all servers\n"
                              "servername: server name to disconnect"),
@@ -4028,7 +4027,7 @@ irc_command_init ()
                              "        type: reserved for future usage"),
                           NULL, &irc_command_service, NULL);
     weechat_hook_command ("server",
-                          N_("list, add or remove servers"),
+                          N_("list, add or remove IRC servers"),
                           N_("[list [servername]] | [listfull [servername]] | "
                              "[add servername hostname[/port] "
                              "[-auto | -noauto] [-ipv6] [-ssl]] | "

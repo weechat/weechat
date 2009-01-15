@@ -20,10 +20,6 @@
 #ifndef __WEECHAT_IRC_H
 #define __WEECHAT_IRC_H 1
 
-#ifdef HAVE_GNUTLS
-#include <gnutls/gnutls.h>
-#endif
-
 #define weechat_plugin weechat_irc_plugin
 #define IRC_PLUGIN_NAME "irc"
 

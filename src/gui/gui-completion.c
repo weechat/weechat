@@ -427,12 +427,12 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
     
     sprintf (buffer, "%s%s%s", real_prefix, DIR_SEPARATOR, path_d);
     d_name = strdup (buffer);
-    dp = opendir(d_name);
+    dp = opendir (d_name);
     if (dp != NULL)
     {
-	while((entry = readdir(dp)) != NULL) 
+	while ((entry = readdir (dp)) != NULL) 
 	{	
-	    if (strncmp (entry->d_name, path_b, strlen(path_b)) == 0) {
+	    if (strncmp (entry->d_name, path_b, strlen (path_b)) == 0) {
 		
 		if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
 		    continue;

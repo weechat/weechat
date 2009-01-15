@@ -6,14 +6,14 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/aspell  [list | enable lang | disable | addword [lang] word]</command>
+<command>/aspell  dictlist | enable lang | disable | addword [lang] word</command>
 <programlisting>
 aspell plugin configuration
 
-   list: show installed dictionnaries
- enable: enable aspell on current buffer
-disable: disable aspell on current buffer
-addword: add a word in your personnal aspell dictionary
+dictlist: show installed dictionaries
+  enable: enable aspell on current buffer
+ disable: disable aspell on current buffer
+ addword: add a word in your personal aspell dictionary
 
 Input line beginning with a '/' is not checked, except for some commands.
 </programlisting>

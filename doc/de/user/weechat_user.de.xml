@@ -39,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!ENTITY plugin_charset.de.xml SYSTEM "plugin_charset.de.xml">
   <!ENTITY plugin_fifo.de.xml    SYSTEM "plugin_fifo.de.xml">
   <!ENTITY plugin_irc.de.xml     SYSTEM "plugin_irc.de.xml">
+  <!ENTITY plugin_jabber.de.xml  SYSTEM "plugin_jabber.de.xml">
   <!ENTITY plugin_logger.de.xml  SYSTEM "plugin_logger.de.xml">
   <!ENTITY plugin_scripts.de.xml SYSTEM "plugin_scripts.de.xml">
   <!ENTITY plugin_xfer.de.xml    SYSTEM "plugin_xfer.de.xml">

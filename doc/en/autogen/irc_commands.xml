@@ -45,7 +45,7 @@ nickname: user or host to ban
 
 <command>/connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
 <programlisting>
-connect to server(s)
+connect to IRC server(s)
 
       -all: connect to all servers
 servername: internal server name to connect
@@ -104,7 +104,7 @@ shutdown the server
 
 <command>/disconnect  [-all | servername [servername ...]]</command>
 <programlisting>
-disconnect from server(s)
+disconnect from IRC server(s)
 
       -all: disconnect from all servers
 servername: server name to disconnect
@@ -360,7 +360,7 @@ tell the server to restart itself
 
 <command>/server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [switch]</command>
 <programlisting>
-list, add or remove servers
+list, add or remove IRC servers
 
       list: list servers (no parameter implies this list)
   listfull: list servers with detailed info for each server

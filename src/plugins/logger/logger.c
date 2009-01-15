@@ -690,12 +690,12 @@ logger_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * logger_buffer_open_signal_cb: callback for "buffer_open" signal
+ * logger_buffer_opened_signal_cb: callback for "buffer_opened" signal
  */
 
 int
-logger_buffer_open_signal_cb (void *data, const char *signal,
-                              const char *type_data, void *signal_data)
+logger_buffer_opened_signal_cb (void *data, const char *signal,
+                                const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -971,7 +971,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_command ("logger",
                           N_("logger plugin configuration"),
                           N_("[list | set level | disable]"),
-                          N_("   list: show logging status for open buffers\n"
+                          N_("   list: show logging status for opened buffers\n"
                              "    set: set logging level on current buffer\n"
                              "  level: level for messages to be logged (0 = "
                              "logging disabled, 1 = a few messages (most "
@@ -1003,7 +1003,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     logger_start_buffer_all ();
     
-    weechat_hook_signal ("buffer_open", &logger_buffer_open_signal_cb, NULL);
+    weechat_hook_signal ("buffer_opened", &logger_buffer_opened_signal_cb, NULL);
     weechat_hook_signal ("buffer_closing", &logger_buffer_closing_signal_cb, NULL);
     weechat_hook_signal ("buffer_renamed", &logger_buffer_renamed_signal_cb, NULL);
     weechat_hook_signal ("logger_backlog", &logger_backlog_signal_cb, NULL);

@@ -10,7 +10,7 @@
 <programlisting>
 logger plugin configuration
 
-   list: show logging status for open buffers
+   list: show logging status for opened buffers
     set: set logging level on current buffer
   level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
 disable: disable logging on current buffer (set level to 0)

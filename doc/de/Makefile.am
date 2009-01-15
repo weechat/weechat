@@ -28,6 +28,9 @@ BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
                        autogen/irc_commands.xml     \
                        autogen/irc_infos.xml        \
                        autogen/irc_options.xml      \
+                       autogen/jabber_commands.xml  \
+                       autogen/jabber_infos.xml     \
+                       autogen/jabber_options.xml   \
                        autogen/logger_commands.xml  \
                        autogen/logger_infos.xml     \
                        autogen/logger_options.xml   \
@@ -56,6 +59,7 @@ BOOK_USER_INCLUDE    = user/install.$(LANGCODE).xml          \
                        user/plugin_charset.$(LANGCODE).xml   \
                        user/plugin_fifo.$(LANGCODE).xml      \
                        user/plugin_irc.$(LANGCODE).xml       \
+                       user/plugin_jabber.$(LANGCODE).xml    \
                        user/plugin_logger.$(LANGCODE).xml    \
                        user/plugin_scripts.$(LANGCODE).xml   \
                        user/plugin_xfer.$(LANGCODE).xml

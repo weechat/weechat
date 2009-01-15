@@ -34,8 +34,8 @@
 
 /*
  * irc_nick_valid: check if a nick pointer exists for a channel
- *                       return 1 if nick exists
- *                              0 if nick is not found
+ *                 return 1 if nick exists
+ *                        0 if nick is not found
  */
 
 int
@@ -419,7 +419,9 @@ irc_nick_free_all (struct t_irc_channel *channel)
     
     /* remove all nicks for the channel */
     while (channel->nicks)
+    {
         irc_nick_free (channel, channel->nicks);
+    }
     
     /* sould be zero, but prevent any bug :D */
     channel->nicks_count = 0;
@@ -443,6 +445,8 @@ irc_nick_search (struct t_irc_channel *channel, const char *nickname)
         if (weechat_strcasecmp (ptr_nick->name, nickname) == 0)
             return ptr_nick;
     }
+    
+    /* nick not found */
     return NULL;
 }
 

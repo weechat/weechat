@@ -162,7 +162,7 @@ irc_upgrade_set_buffer_callbacks ()
 }
 
 /*
- * irc_upgrade_read_cb: read callback for 
+ * irc_upgrade_read_cb: read callback for upgrade
  */
 
 int

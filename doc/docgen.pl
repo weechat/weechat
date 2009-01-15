@@ -65,11 +65,12 @@ my @locale_list = qw(en_US fr_FR de_DE);
 my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "aspell"  => "o",  "charset" => "co",
                    "demo"    => "co", "fifo"    => "co",
-                   "irc"     => "co", "logger"  => "co",
-                   "notify"  => "co", "relay"   => "co",
-                   "perl"    => "",   "python"  => "",
-                   "ruby"    => "",   "lua"     => "",
-                   "tcl"     => "",   "xfer"    => "co");
+                   "irc"     => "co", "jabber"  => "o",
+                   "logger"  => "co", "notify"  => "co",
+                   "relay"   => "co", "perl"    => "",
+                   "python"  => "",   "ruby"    => "",
+                   "lua"     => "",   "tcl"     => "",
+                   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",

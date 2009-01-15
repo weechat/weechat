@@ -165,7 +165,7 @@ upgrade_file_write_buffer (struct t_upgrade_file *upgrade_file, void *pointer,
 
 /*
  * upgrade_file_create: create an upgrade file
- *                      if write == 1 then it's open in write mode, otherwise
+ *                      if write == 1 then it's opened in write mode, otherwise
  *                      read mode
  */
 

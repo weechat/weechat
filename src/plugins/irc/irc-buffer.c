@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-buffer.c: manages buffers for IRC plugin */
+/* irc-buffer.c: buffer functions for IRC plugin */
 
 
 #include <stdlib.h>
