@@ -49,12 +49,10 @@ struct t_config_option *jabber_config_look_nick_suffix;
 struct t_config_option *jabber_config_look_nick_completion_smart;
 struct t_config_option *jabber_config_look_display_away;
 struct t_config_option *jabber_config_look_display_muc_modes;
-struct t_config_option *jabber_config_look_hide_nickserv_pwd;
 struct t_config_option *jabber_config_look_highlight_tags;
 struct t_config_option *jabber_config_look_show_away_once;
 struct t_config_option *jabber_config_look_smart_filter;
 struct t_config_option *jabber_config_look_smart_filter_delay;
-struct t_config_option *jabber_config_look_notice_as_pv;
 
 /* Jabber config, color section */
 
@@ -786,11 +784,6 @@ jabber_config_init ()
         N_("display MUC modes in \"buffer_name\" bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &jabber_config_change_look_display_muc_modes, NULL, NULL, NULL);
-    jabber_config_look_hide_nickserv_pwd = weechat_config_new_option (
-        jabber_config_file, ptr_section,
-        "hide_nickserv_pwd", "boolean",
-        N_("hide password displayed by nickserv"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     jabber_config_look_highlight_tags = weechat_config_new_option (
         jabber_config_file, ptr_section,
         "highlight_tags", "string",
@@ -816,11 +809,6 @@ jabber_config_init ()
         "smart_filter_delay", "integer",
         N_("delay for filtering join/part/quit messages (in minutes)"),
         NULL, 1, 60*24*7, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    jabber_config_look_notice_as_pv = weechat_config_new_option (
-        jabber_config_file, ptr_section,
-        "notice_as_pv", "boolean",
-        N_("display notices as private messages"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* color */
     ptr_section = weechat_config_new_section (jabber_config_file, "color",

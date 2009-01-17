@@ -39,12 +39,10 @@ extern struct t_config_option *jabber_config_look_nick_suffix;
 extern struct t_config_option *jabber_config_look_nick_completion_smart;
 extern struct t_config_option *jabber_config_look_display_away;
 extern struct t_config_option *jabber_config_look_display_muc_modes;
-extern struct t_config_option *jabber_config_look_hide_nickserv_pwd;
 extern struct t_config_option *jabber_config_look_highlight_tags;
 extern struct t_config_option *jabber_config_look_show_away_once;
 extern struct t_config_option *jabber_config_look_smart_filter;
 extern struct t_config_option *jabber_config_look_smart_filter_delay;
-extern struct t_config_option *jabber_config_look_notice_as_pv;
 
 extern struct t_config_option *jabber_config_color_message_join;
 extern struct t_config_option *jabber_config_color_message_quit;
