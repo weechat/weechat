@@ -37,3 +37,33 @@ Examples:
   /jabber switch
 </programlisting>
 
+<command>/jchat  buddy [text]</command>
+<programlisting>
+chat with a buddy
+
+buddy: buddy name for chat
+ text: text to send
+</programlisting>
+
+<command>/jconnect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-tls] [-sasl]]</command>
+<programlisting>
+connect to Jabber server(s)
+
+      -all: connect to all servers
+servername: internal server name to connect
+   -nojoin: do not join any MUC (even if autojoin is enabled on server)
+  hostname: hostname to connect
+      port: port for server (integer, default is 6667)
+      ipv6: use IPv6 protocol
+       tls: use TLS cryptographic protocol
+      saal: use SASL for authentication
+</programlisting>
+
+<command>/jdisconnect  [-all | servername [servername ...]]</command>
+<programlisting>
+disconnect from Jabber server(s)
+
+      -all: disconnect from all servers
+servername: server name to disconnect
+</programlisting>
+
