@@ -224,7 +224,8 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
-        if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]) >= CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_PRIORITY]))
+        if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]) >=
+            CONFIG_INTEGER(ptr_bar_window->bar->options[GUI_BAR_OPTION_PRIORITY]))
             return ptr_bar_window;
     }
     
@@ -685,8 +686,6 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         {
             gui_bar_window_calculate_pos_size (new_bar_window, window);
             gui_bar_window_create_win (new_bar_window);
-            if (window)
-                window->refresh_needed = 1;
         }
         
         return 1;
@@ -694,43 +693,6 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
     
     /* failed to create bar window */
     return 0;
-}
-
-/*
- * gui_bar_window_recreate_bar_windows: recreate bar windows for all windows
- */
-
-void
-gui_bar_window_recreate_bar_windows (struct t_gui_bar *bar)
-{
-    struct t_gui_window *ptr_win;
-    struct t_gui_bar_window *ptr_bar_win;
-
-    if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
-        return;
-    
-    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
-    {
-        gui_bar_window_calculate_pos_size (bar->bar_window, NULL);
-        gui_bar_window_create_win (bar->bar_window);
-        gui_window_refresh_needed = 1;
-    }
-    else
-    {
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
-                 ptr_bar_win = ptr_bar_win->next_bar_window)
-            {
-                if (ptr_bar_win->bar == bar)
-                {
-                    gui_bar_window_calculate_pos_size (ptr_bar_win, ptr_win);
-                    gui_bar_window_create_win (ptr_bar_win);
-                    ptr_win->refresh_needed = 1;
-                }
-            }
-        }
-    }
 }
 
 /*
@@ -819,10 +781,9 @@ gui_bar_window_get_max_size (struct t_gui_bar_window *bar_window,
  */
 
 void
-gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
+gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window,
+                                 struct t_gui_window *window, int size)
 {
-    struct t_gui_window *ptr_window;
-    struct t_gui_bar_window *ptr_bar_window;
     int new_size, max_size;
     
     if (size == 0)
@@ -830,42 +791,30 @@ gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
     else
     {
         new_size = size;
-        if ((size != 0) && (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX]) > 0)
-            && (size > CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX])))
+        if ((size != 0) && (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE_MAX]) > 0)
+            && (size > CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE_MAX])))
         {
-            new_size = CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE_MAX]);
+            new_size = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE_MAX]);
             if (new_size < 1)
                 new_size = 1;
         }
     }
     
-    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+    if (bar_window->current_size != new_size)
     {
-        if (bar->bar_window->current_size != new_size)
+        max_size = gui_bar_window_get_max_size (bar_window, window);
+        new_size = (max_size < new_size) ? max_size : new_size;
+        if (bar_window->current_size != new_size)
         {
-            max_size = gui_bar_window_get_max_size (bar->bar_window, NULL);
-            bar->bar_window->current_size = (max_size < new_size) ?
-                max_size : new_size;
-            gui_bar_window_recreate_bar_windows (bar);
-        }
-    }
-    else
-    {
-        for (ptr_window = gui_windows; ptr_window;
-             ptr_window = ptr_window->next_window)
-        {
-            for (ptr_bar_window = ptr_window->bar_windows; ptr_bar_window;
-                 ptr_bar_window = ptr_bar_window->next_bar_window)
+            bar_window->current_size = new_size;
+            if (!CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
             {
-                if ((ptr_bar_window->bar == bar)
-                    && (ptr_bar_window->current_size != new_size))
-                {
-                    max_size = gui_bar_window_get_max_size (ptr_bar_window,
-                                                            ptr_window);
-                    ptr_bar_window->current_size = (max_size < new_size) ?
-                        max_size : new_size;
-                    gui_bar_window_recreate_bar_windows (bar);
-                }
+                gui_bar_window_calculate_pos_size (bar_window, window);
+                gui_bar_window_create_win (bar_window);
+                if (window)
+                    window->refresh_needed = 1;
+                else
+                    gui_window_refresh_needed = 1;
             }
         }
     }
@@ -890,8 +839,6 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
             window->bar_windows = bar_window->next_bar_window;
         if (window->last_bar_window == bar_window)
             window->last_bar_window = bar_window->prev_bar_window;
-        
-        window->refresh_needed = 1;
     }
     
     /* free data */

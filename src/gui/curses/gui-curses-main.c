@@ -256,41 +256,41 @@ gui_main_loop ()
             gui_window_refresh_screen ();
             gui_window_refresh_needed = 0;
         }
-        else
+        
+        /* refresh bars if needed */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            /* refresh bars if needed */
-            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            if (ptr_bar->bar_refresh_needed)
+                gui_bar_draw (ptr_bar);
+        }
+        
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (ptr_win->refresh_needed)
             {
-                if (ptr_bar->bar_refresh_needed)
-                    gui_bar_draw (ptr_bar);
+                gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
+                gui_window_redraw_buffer (ptr_win->buffer);
+                ptr_win->refresh_needed = 0;
             }
-            
-            for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        }
+        
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            /* refresh chat if needed */
+            if (ptr_buffer->chat_refresh_needed)
             {
-                if (ptr_win->refresh_needed)
-                {
-                    gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
-                    gui_window_redraw_buffer (ptr_win->buffer);
-                    ptr_win->refresh_needed = 0;
-                }
+                gui_chat_draw (ptr_buffer,
+                               (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
             }
-            
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
+        }
+        
+        /* refresh bars if needed */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->bar_refresh_needed)
             {
-                /* refresh chat if needed */
-                if (ptr_buffer->chat_refresh_needed)
-                {
-                    gui_chat_draw (ptr_buffer,
-                                   (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
-                }
-            }
-            
-            /* refresh bars if needed */
-            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-            {
-                if (ptr_bar->bar_refresh_needed)
-                    gui_bar_draw (ptr_bar);
+                gui_bar_draw (ptr_bar);
             }
         }
         

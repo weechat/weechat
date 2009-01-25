@@ -477,23 +477,25 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
     
     window->buffer = buffer;
+    buffer->num_displayed++;
     
-    if (gui_ok && (old_buffer == buffer))
-    {
-        gui_bar_window_remove_unused_bars (window);
-        gui_bar_window_add_missing_bars (window);
-    }
-    
-    gui_window_calculate_pos_size (window);
+    gui_hotlist_remove_buffer (buffer);
     
     if (gui_ok)
     {
+        gui_bar_window_remove_unused_bars (window);
+        gui_bar_window_add_missing_bars (window);
+        
         /* create bar windows */
         for (ptr_bar_window = window->bar_windows; ptr_bar_window;
              ptr_bar_window = ptr_bar_window->next_bar_window)
         {
+            gui_bar_window_content_build (ptr_bar_window, window);
+            gui_bar_window_calculate_pos_size (ptr_bar_window, window);
             gui_bar_window_create_win (ptr_bar_window);
         }
+        
+        gui_window_calculate_pos_size (window);
         
         /* destroy Curses windows */
         gui_window_objects_free (window, 0);
@@ -505,24 +507,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                                                        window->win_chat_width,
                                                        window->win_chat_y,
                                                        window->win_chat_x);
-    }
-    
-    buffer->num_displayed++;
-    
-    gui_hotlist_remove_buffer (buffer);
-    
-    if (gui_ok && (buffer != old_buffer))
-    {
-        gui_bar_window_remove_unused_bars (window);
-        gui_bar_window_add_missing_bars (window);
-    }
-    
-    /* redraw bars in window */
-    for (ptr_bar_window = window->bar_windows; ptr_bar_window;
-         ptr_bar_window = ptr_bar_window->next_bar_window)
-    {
-        gui_bar_window_content_build (ptr_bar_window, window);
-        ptr_bar_window->bar->bar_refresh_needed = 1;
+        gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
     
     if (window->buffer->type == GUI_BUFFER_TYPE_FREE)
@@ -531,7 +516,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->scroll_lines_after = 0;
     }
     
-    window->refresh_needed = 1;
+    for (ptr_bar_window = window->bar_windows; ptr_bar_window;
+         ptr_bar_window = ptr_bar_window->next_bar_window)
+    {
+        ptr_bar_window->bar->bar_refresh_needed = 1;
+    }
     
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -927,7 +916,7 @@ gui_window_refresh_windows ()
         {
             gui_bar_window_calculate_pos_size (ptr_bar->bar_window, NULL);
             gui_bar_window_create_win (ptr_bar->bar_window);
-            gui_bar_draw (ptr_bar);
+            gui_bar_ask_refresh (ptr_bar);
         }
     }
     
@@ -946,15 +935,7 @@ gui_window_refresh_windows ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
-        gui_window_draw_separator (ptr_win);
-        ptr_win->refresh_needed = 0;
-    }
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        gui_window_redraw_buffer (ptr_buffer);
+        ptr_win->refresh_needed = 1;
     }
     
     gui_current_window = old_current_window;
@@ -995,8 +976,9 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
             /* assign same buffer for new window (top window) */
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer, 1);
-
+            window->refresh_needed = 1;
+            new_window->refresh_needed = 1;
+            
             gui_window_switch (new_window);
         }
     }
@@ -1038,7 +1020,8 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
             /* assign same buffer for new window (right window) */
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer, 1);
+            window->refresh_needed = 1;
+            new_window->refresh_needed = 1;
             
             gui_window_switch (new_window);
             
@@ -1130,7 +1113,6 @@ gui_window_merge (struct t_gui_window *window)
         gui_window_tree_node_to_leaf (parent, window);
         
         gui_window_switch_to_buffer (window, window->buffer, 1);
-        window->refresh_needed = 1;
         return 1;
     }
     return 0;

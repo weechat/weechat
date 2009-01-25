@@ -586,17 +586,51 @@ gui_bar_draw (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
     
-    if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
-        return;
+    if (!CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
+    {    
+        if (bar->bar_window)
+        {
+            /* root bar */
+            gui_bar_window_draw (bar->bar_window, NULL);
+        }
+        else
+        {
+            /* bar on each window */
+            for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+            {
+                for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+                     ptr_bar_win = ptr_bar_win->next_bar_window)
+                {
+                    if (ptr_bar_win->bar == bar)
+                    {
+                        gui_bar_window_draw (ptr_bar_win, ptr_win);
+                    }
+                }
+            }
+        }
+    }
+    bar->bar_refresh_needed = 0;
+}
+
+/*
+ * gui_bar_apply_current_size: apply new size for all bar windows of bar
+ */
+
+void
+gui_bar_apply_current_size (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
     
-    if (bar->bar_window)
+    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
-        /* root bar */
-        gui_bar_window_draw (bar->bar_window, NULL);
+        gui_bar_window_set_current_size (bar->bar_window,
+                                         NULL,
+                                         CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]));
+        gui_window_refresh_needed = 1;
     }
     else
     {
-        /* bar on each window */
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
             for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
@@ -604,13 +638,13 @@ gui_bar_draw (struct t_gui_bar *bar)
             {
                 if (ptr_bar_win->bar == bar)
                 {
-                    gui_bar_window_draw (ptr_bar_win, ptr_win);
+                    gui_bar_window_set_current_size (ptr_bar_win,
+                                                     ptr_win,
+                                                     CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]));
                 }
             }
         }
     }
-    
-    bar->bar_refresh_needed = 0;
 }
 
 /*
@@ -937,9 +971,7 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        gui_bar_window_set_current_size (ptr_bar,
-                                         CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]));
-        gui_window_refresh_needed = 1;
+
     }
 }
 
@@ -1156,7 +1188,7 @@ gui_bar_set_size (struct t_gui_bar *bar, const char *size)
         snprintf (value, sizeof (value), "%d", new_size);
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
 
-        gui_bar_window_set_current_size (bar, new_size);
+        gui_bar_apply_current_size (bar);
     }
 }
 

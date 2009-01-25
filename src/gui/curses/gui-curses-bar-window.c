@@ -384,7 +384,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         if (items_count == 0)
         {
             if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
-                gui_bar_window_set_current_size (bar_window->bar, 1);
+                gui_bar_window_set_current_size (bar_window, window, 1);
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
         }
@@ -426,12 +426,12 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             num_lines = optimal_number_of_lines;
                         else
                             num_lines = items_count;
-                        gui_bar_window_set_current_size (bar_window->bar,
+                        gui_bar_window_set_current_size (bar_window, window,
                                                          num_lines);
                         break;
                     case GUI_BAR_POSITION_LEFT:
                     case GUI_BAR_POSITION_RIGHT:
-                        gui_bar_window_set_current_size (bar_window->bar,
+                        gui_bar_window_set_current_size (bar_window, window,
                                                          max_length);
                         break;
                     case GUI_BAR_NUM_POSITIONS:
@@ -558,7 +558,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     else
     {
         if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
-            gui_bar_window_set_current_size (bar_window->bar, 1);
+            gui_bar_window_set_current_size (bar_window, window, 1);
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
