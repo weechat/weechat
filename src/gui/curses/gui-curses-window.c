@@ -901,7 +901,6 @@ void
 gui_window_refresh_windows ()
 {
     struct t_gui_window *ptr_win, *old_current_window;
-    struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
     int add_bottom, add_top, add_left, add_right;
     
