@@ -23,24 +23,50 @@
 #  IKSEMEL_INCLUDE_PATH = path to where iksemel.h can be found
 #  IKSEMEL_LIBRARY = path to where libiksemel.so* can be found
 
-IF (IKSEMEL_FOUND)
+IF(IKSEMEL_FOUND)
   # Already in cache, be silent
   SET(IKSEMEL_FIND_QUIETLY TRUE)
-ENDIF (IKSEMEL_FOUND)
+ENDIF(IKSEMEL_FOUND)
 
-FIND_PATH(IKSEMEL_INCLUDE_PATH
-  NAMES iksemel.h
-  PATHS /usr/include /usr/local/include /usr/pkg/include
-)
+Include(FindPkgConfig)
 
-FIND_LIBRARY(IKSEMEL_LIBRARY
-  NAMES iksemel
-  PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
-)
+IF(PKG_CONFIG_FOUND)
 
-IF (IKSEMEL_INCLUDE_PATH AND IKSEMEL_LIBRARY)
-   SET(IKSEMEL_FOUND TRUE)
-ENDIF (IKSEMEL_INCLUDE_PATH AND IKSEMEL_LIBRARY)
+  pkg_search_module(IKSEMEL iksemel)
+
+  IF(IKSEMEL_FOUND)
+
+    FIND_PATH(IKSEMEL_INCLUDE_PATH
+      NAMES iksemel.h
+      PATHS ${IKSEMEL_INCLUDE_DIRS}
+    )
+
+    FIND_LIBRARY(IKSEMEL_LIBRARY
+      NAMES iksemel
+      PATHS ${IKSEMEL_LIBRARY_DIRS}
+    )
+
+  ENDIF(IKSEMEL_FOUND)
+
+ELSE(PKG_CONFIG_FOUND)
+
+  FIND_PATH(IKSEMEL_INCLUDE_PATH
+    NAMES iksemel.h
+    PATHS /usr/include /usr/local/include /usr/pkg/include
+  )
+
+  FIND_LIBRARY(IKSEMEL_LIBRARY
+    NAMES iksemel
+    PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+  )
+
+  IF(IKSEMEL_INCLUDE_PATH AND IKSEMEL_LIBRARY)
+
+    SET(IKSEMEL_FOUND TRUE)
+
+  ENDIF(IKSEMEL_INCLUDE_PATH AND IKSEMEL_LIBRARY)
+
+ENDIF(PKG_CONFIG_FOUND)
 
 MARK_AS_ADVANCED(
   IKSEMEL_INCLUDE_PATH
