@@ -523,6 +523,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
     {
         if (string_strcasecmp (property, "number") == 0)
             return buffer->number;
+        else if (string_strcasecmp (property, "num_displayed") == 0)
+            return buffer->num_displayed;
         else if (string_strcasecmp (property, "notify") == 0)
             return buffer->notify;
         else if (string_strcasecmp (property, "lines_hidden") == 0)

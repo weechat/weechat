@@ -292,16 +292,20 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                     free (string);
             }
             irc_server_set_away (server, server->nick, 1);
-
+            
             /* reset "unread" indicator on server and channels/pv buffers */
             if (reset_unread_marker)
             {
                 if (!weechat_config_boolean (irc_config_look_one_server_buffer))
-                    weechat_buffer_set (server->buffer, "unread", "");
+                {
+                    if (weechat_buffer_get_integer (server->buffer, "num_displayed") > 0)
+                        weechat_buffer_set (server->buffer, "unread", "");
+                }
                 for (ptr_channel = server->channels; ptr_channel;
                      ptr_channel = ptr_channel->next_channel)
                 {
-                    weechat_buffer_set (ptr_channel->buffer, "unread", "");
+                    if (weechat_buffer_get_integer (ptr_channel->buffer, "num_displayed") > 0)
+                        weechat_buffer_set (ptr_channel->buffer, "unread", "");
                 }
             }
         }
