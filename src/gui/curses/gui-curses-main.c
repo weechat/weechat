@@ -236,6 +236,8 @@ gui_main_loop ()
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
                                 &gui_keyboard_read_cb, NULL);
     
+    gui_window_refresh_needed = 1;
+    
     while (!weechat_quit)
     {
         /* reload config, if SIGHUP reveived */
