@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_RELAY_NETWORK_H
 #define __WEECHAT_RELAY_NETWORK_H 1
 
+extern int relay_network_sock;
+
 extern int relay_network_init ();
 extern void relay_network_end ();
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-15 14:36+0100\n"
-"PO-Revision-Date: 2009-01-15 14:38+0100\n"
+"POT-Creation-Date: 2009-01-28 10:21+0100\n"
+"PO-Revision-Date: 2009-01-28 10:22+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4434,6 +4434,14 @@ msgid "%s%s: failed to create id"
 msgstr "%s%s: impossible de créer l'id"
 
 #, c-format
+msgid "%s%s: TLS handshake failed"
+msgstr "%s%s: la poignée de main de TLS a échoué"
+
+#, c-format
+msgid "%s%s: I/O error (%d)"
+msgstr "%s%s: erreur I/O (%d)"
+
+#, c-format
 msgid "%s%s: SASL authentication failed (check SASL option and password)"
 msgstr ""
 "%s%s: l'authentification SASL a échoué (vérifiez l'option SASL et le mot de "
@@ -4907,6 +4915,9 @@ msgstr "couleur du texte pour le statut \"échec auth\""
 msgid "text color for \"disconnected\" status"
 msgstr "couleur du texte pour le statut \"déconnecté\""
 
+msgid "enable relay"
+msgstr "activer le relai"
+
 msgid ""
 "port number (or range of ports) that relay plugin listens on (syntax: a "
 "single port, ie. 5000 or a port range, ie. 5000-5015)"
@@ -4917,6 +4928,10 @@ msgstr ""
 
 msgid "list of relay clients"
 msgstr "liste des clients pour le relai"
+
+#, c-format
+msgid "%s: socket closed"
+msgstr "%s: socket fermée"
 
 #, c-format
 msgid "%s%s: cannot accept client"

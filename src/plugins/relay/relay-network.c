@@ -57,6 +57,9 @@ relay_network_close_socket ()
     {
         close (relay_network_sock);
         relay_network_sock = -1;
+        weechat_printf (NULL,
+                        _("%s: socket closed"),
+                        RELAY_PLUGIN_NAME);
     }
 }
 
@@ -115,6 +118,9 @@ relay_network_init ()
     const char *port_range;
     
     relay_network_close_socket ();
+    
+    if (!weechat_config_boolean (relay_config_network_enabled))
+        return 1;
     
     port_range = weechat_config_string (relay_config_network_listen_port_range);
     if (!port_range || !port_range[0])

@@ -27,6 +27,7 @@
 #include "relay-config.h"
 #include "relay-client.h"
 #include "relay-buffer.h"
+#include "relay-network.h"
 
 
 struct t_config_file *relay_config_file = NULL;
@@ -44,6 +45,7 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 
 /* relay config, network section */
 
+struct t_config_option *relay_config_network_enabled;
 struct t_config_option *relay_config_network_listen_port_range;
 
 
@@ -61,6 +63,26 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
     
     if (relay_buffer)
         relay_buffer_refresh (NULL);
+}
+
+/*
+ * relay_config_change_network_enabled_cb: callback called when user
+ *                                         enables/disables relay
+ */
+
+void
+relay_config_change_network_enabled_cb (void *data,
+                                        struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if ((weechat_config_boolean(relay_config_network_enabled) && relay_network_sock < 0)
+        || (!weechat_config_boolean(relay_config_network_enabled) && relay_network_sock >= 0))
+    {
+        relay_network_init ();
+    }
 }
 
 /*
@@ -179,6 +201,12 @@ relay_config_init ()
         return 0;
     }
     
+    relay_config_network_enabled = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "enabled", "boolean",
+        N_("enable relay"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &relay_config_change_network_enabled_cb, NULL, NULL, NULL);
     relay_config_network_listen_port_range = weechat_config_new_option (
         relay_config_file, ptr_section,
         "listen_port_range", "string",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-15 14:36+0100\n"
+"POT-Creation-Date: 2009-01-28 10:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3706,6 +3706,14 @@ msgid "%s%s: failed to create id"
 msgstr ""
 
 #, c-format
+msgid "%s%s: TLS handshake failed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: I/O error (%d)"
+msgstr ""
+
+#, c-format
 msgid "%s%s: SASL authentication failed (check SASL option and password)"
 msgstr ""
 
@@ -4099,12 +4107,19 @@ msgstr ""
 msgid "text color for \"disconnected\" status"
 msgstr ""
 
+msgid "enable relay"
+msgstr ""
+
 msgid ""
 "port number (or range of ports) that relay plugin listens on (syntax: a "
 "single port, ie. 5000 or a port range, ie. 5000-5015)"
 msgstr ""
 
 msgid "list of relay clients"
+msgstr ""
+
+#, c-format
+msgid "%s: socket closed"
 msgstr ""
 
 #, c-format

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-15 14:36+0100\n"
+"POT-Creation-Date: 2009-01-28 10:21+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4347,6 +4347,14 @@ msgid "%s%s: failed to create id"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 
 #, fuzzy, c-format
+msgid "%s%s: TLS handshake failed"
+msgstr "%s gnutls kézfogás sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: I/O error (%d)"
+msgstr "%sSzerver: %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: SASL authentication failed (check SASL option and password)"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
@@ -4788,6 +4796,9 @@ msgstr "\"failed\" dcc státusz színe"
 msgid "text color for \"disconnected\" status"
 msgstr "\"connecting\" dcc státusz színe"
 
+msgid "enable relay"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "port number (or range of ports) that relay plugin listens on (syntax: a "
@@ -4800,6 +4811,10 @@ msgstr ""
 #, fuzzy
 msgid "list of relay clients"
 msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s: socket closed"
+msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot accept client"

@@ -31,6 +31,7 @@ extern struct t_config_option *relay_config_color_text_bg;
 extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_color_status[];
 
+extern struct t_config_option *relay_config_network_enabled;
 extern struct t_config_option *relay_config_network_listen_port_range;
 
 extern int relay_config_init ();
