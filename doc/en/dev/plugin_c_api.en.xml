@@ -2942,7 +2942,7 @@ struct t_config_option *weechat_config_new_option (
     const char *string_values,
     int min,
     int max,
-    const chat *default_value,
+    const char *default_value,
     const char *value,
     int null_value_allowed,
     int (*callback_check_value)(void *data,
@@ -5725,7 +5725,7 @@ struct t_hook *my_signal_hook =
 <programlisting>
 void weechat_hook_signal_send (
     const char *signal,
-    const chat *type_data,
+    const char *type_data,
     void *signal_data);
 </programlisting>
       </para>
