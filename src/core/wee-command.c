@@ -885,7 +885,7 @@ void
 command_filter_display (struct t_gui_filter *filter)
 {
     gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                               _("  %s[%s%s%s]%s buffer: %s%s%s "
+                               _("  %s[%s%s%s]%s buffer: %s%s%s%s%s "
                                  "/ tags: %s / regex: %s %s"),
                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                GUI_COLOR(GUI_COLOR_CHAT),
@@ -893,7 +893,9 @@ command_filter_display (struct t_gui_filter *filter)
                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                GUI_COLOR(GUI_COLOR_CHAT),
                                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                               filter->buffer,
+                               (filter->plugin_name) ? filter->plugin_name : "",
+                               (filter->plugin_name) ? "." : "",
+                               filter->buffer_name,
                                GUI_COLOR(GUI_COLOR_CHAT),
                                filter->tags,
                                filter->regex,
@@ -3597,35 +3599,35 @@ command_init ()
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),
                   N_("[list] | [enable|disable|toggle [name]] | "
-                     "[add name buffer tags regex] | "
+                     "[add name plugin.buffer tags regex] | "
                      "[del name|-all]"),
-                  N_("   list: list all filters\n"
-                     " enable: enable filters (filters are enabled by "
+                  N_("         list: list all filters\n"
+                     "       enable: enable filters (filters are enabled by "
                       "default)\n"
-                     "disable: disable filters\n"
-                     " toggle: toggle filters\n"
-                     "   name: filter name\n"
-                     "    add: add a filter\n"
-                     "    del: delete a filter\n"
-                     "   -all: delete all filters\n"
-                     " buffer: buffer where filter is active: it may be "
-                     "a name or \"*\" for all buffers\n"
-                     "   tags: comma separated list of tags, for "
+                     "      disable: disable filters\n"
+                     "       toggle: toggle filters\n"
+                     "         name: filter name\n"
+                     "          add: add a filter\n"
+                     "          del: delete a filter\n"
+                     "         -all: delete all filters\n"
+                     "plugin.buffer: plugin and buffer where filter is active "
+                     "(\"*\" for all buffers)\n"
+                     "         tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
-                     "  regex: regular expression to search in "
+                     "        regex: regular expression to search in "
                      "line (use \\t to separate prefix from message)\n\n"
                      "Examples:\n"
                      "  use IRC smart filter for join/part/quit messages:\n"
                      "    /filter add irc_smart * irc_smart_filter *\n"
                      "  filter all IRC join/part/quit messages:\n"
                      "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
-                     "  filter nick \"toto\" on channel #weechat:\n"
-                     "    /filter add toto freenode.#weechat * toto\\t\n"
+                     "  filter nick \"toto\" on IRC channel #weechat:\n"
+                     "    /filter add toto irc.freenode.#weechat * toto\\t\n"
                      "  filter lines containing word \"spam\":\n"
                      "    /filter add filterspam * * spam\n"
-                     "  filter lines containing \"weechat sucks\" on channel "
-                     "#weechat:\n"
-                     "    /filter add sucks freenode.#weechat * weechat sucks"),
+                     "  filter lines containing \"weechat sucks\" on IRC "
+                     "channel #weechat:\n"
+                     "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
                   "list|enable|disable|toggle|add|rename|del %F",
                   &command_filter, NULL);
     hook_command (NULL, "help",

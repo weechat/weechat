@@ -900,9 +900,11 @@ config_weechat_filter_write_cb (void *data, struct t_config_file *config_file,
     {
         config_file_write_line (config_file,
                                 ptr_filter->name,
-                                "%s;%s;%s;%s",
+                                "%s;%s%s%s;%s;%s",
                                 (ptr_filter->enabled) ? "on" : "off",
-                                ptr_filter->buffer,
+                                (ptr_filter->plugin_name) ? ptr_filter->plugin_name : "",
+                                (ptr_filter->plugin_name) ? "." : "",
+                                ptr_filter->buffer_name,
                                 ptr_filter->tags,
                                 ptr_filter->regex);
     }
