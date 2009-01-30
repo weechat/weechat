@@ -6970,8 +6970,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                     </row>
                     <row>
                       <entry>display</entry>
-                      <entry>N/A</entry>
-                      <entry>swtich to this buffer in current window</entry>
+                      <entry>"1", "auto"</entry>
+                      <entry>
+                        swtich to this buffer in current window (if value is
+                        "auto", then it's considered as auto-switch and read
+                        marker is not reset for current buffer)
+                      </entry>
                     </row>
                     <row>
                       <entry>name</entry>
