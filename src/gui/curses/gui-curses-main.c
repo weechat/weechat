@@ -205,6 +205,66 @@ gui_main_signal_sigwinch ()
 }
 
 /*
+ * gui_main_refreshs: refreshs for windows, buffers, bars
+ */
+
+void
+gui_main_refreshs ()
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_bar *ptr_bar;
+    
+    /* refresh window if needed */
+    if (gui_window_refresh_needed)
+    {
+        gui_window_refresh_screen ();
+        gui_window_refresh_needed = 0;
+    }
+    
+    /* refresh bars if needed */
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->bar_refresh_needed)
+        {
+            gui_bar_draw (ptr_bar);
+        }
+    }
+    
+    /* refresh windows if needed */
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->refresh_needed)
+        {
+            gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
+            gui_window_redraw_buffer (ptr_win->buffer);
+            ptr_win->refresh_needed = 0;
+        }
+    }
+    
+    /* refresh chat buffers if needed */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->chat_refresh_needed)
+        {
+            gui_chat_draw (ptr_buffer,
+                           (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
+        }
+    }
+    
+    /* refresh bars if needed */
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->bar_refresh_needed)
+        {
+            gui_bar_draw (ptr_bar);
+        }
+    }
+}
+
+/*
  * gui_main_loop: main loop for WeeChat with ncurses GUI
  */
 
@@ -212,9 +272,6 @@ void
 gui_main_loop ()
 {
     struct t_hook *hook_fd_keyboard;
-    struct t_gui_window *ptr_win;
-    struct t_gui_buffer *ptr_buffer;
-    struct t_gui_bar *ptr_bar;
     struct timeval tv_timeout;
     fd_set read_fds, write_fds, except_fds;
     int max_fd;
@@ -252,49 +309,9 @@ gui_main_loop ()
         /* execute hook timers */
         hook_timer_exec ();
         
-        /* refresh window if needed */
+        gui_main_refreshs ();
         if (gui_window_refresh_needed)
-        {
-            gui_window_refresh_screen ();
-            gui_window_refresh_needed = 0;
-        }
-        
-        /* refresh bars if needed */
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            if (ptr_bar->bar_refresh_needed)
-                gui_bar_draw (ptr_bar);
-        }
-        
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            if (ptr_win->refresh_needed)
-            {
-                gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
-                gui_window_redraw_buffer (ptr_win->buffer);
-                ptr_win->refresh_needed = 0;
-            }
-        }
-        
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            /* refresh chat if needed */
-            if (ptr_buffer->chat_refresh_needed)
-            {
-                gui_chat_draw (ptr_buffer,
-                               (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
-            }
-        }
-        
-        /* refresh bars if needed */
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            if (ptr_bar->bar_refresh_needed)
-            {
-                gui_bar_draw (ptr_bar);
-            }
-        }
+            gui_main_refreshs ();
         
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);
