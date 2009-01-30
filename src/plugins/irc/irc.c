@@ -25,6 +25,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-bar-item.h"
+#include "irc-buffer.h"
 #include "irc-command.h"
 #include "irc-completion.h"
 #include "irc-config.h"
@@ -86,6 +87,9 @@ int
 irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                        void *signal_data)
 {
+    struct t_irc_server *ptr_server;
+    int disconnected;
+    
     /* make C compiler happy */
     (void) data;
     (void) signal;
@@ -93,6 +97,40 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     (void) signal_data;
     
     irc_signal_upgrade_received = 1;
+    
+    /* FIXME: it's not possible to upgrade with SSL servers connected (GnuTLS
+       lib can't reload data after upgrade), so we close connection for
+       all SSL servers currently connected */
+    disconnected = 0;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected && ptr_server->ssl_connected)
+        {
+            disconnected++;
+            weechat_printf (ptr_server->buffer,
+                            _("%s%s: disconnecting from server because upgrade "
+                              "can't work for servers connected via SSL"),
+                            irc_buffer_get_server_prefix (ptr_server, "error"),
+                            IRC_PLUGIN_NAME);
+            irc_server_disconnect (ptr_server, 0);
+            /* schedule reconnection: WeeChat will reconnect to this server
+               after restart */
+            ptr_server->index_current_address = 0;
+            ptr_server->reconnect_start = time (NULL) -
+                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY) - 1;
+        }
+    }
+    if (disconnected > 0)
+    {
+        weechat_printf (NULL,
+                        /* TRANSLATORS: %s after %d is "server" or "servers" */
+                        _("%s%s: disconnected from %d %s (SSL connection "
+                          "not supported with upgrade)"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        disconnected,
+                        NG_("server", "servers", disconnected));
+    }
     
     return WEECHAT_RC_OK;
 }

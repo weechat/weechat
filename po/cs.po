@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-28 13:54+0100\n"
+"POT-Creation-Date: 2009-01-30 14:15+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1871,8 +1871,11 @@ msgstr "Obdržen signál %s, ukončuji WeeChat.."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s selhalo uložení konfiguračního souboru\n"
 
+#, fuzzy
 msgid "server"
-msgstr "server"
+msgid_plural "servers"
+msgstr[0] "server"
+msgstr[1] "server"
 
 #, c-format
 msgid ""
@@ -2332,6 +2335,18 @@ msgid "away"
 msgstr ""
 
 msgid "Lag"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via SSL"
+msgstr ""
+
+#. TRANSLATORS: %s after %d is "server" or "servers"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
 #, fuzzy, c-format

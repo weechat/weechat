@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-28 13:54+0100\n"
+"POT-Creation-Date: 2009-01-30 14:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1610,7 +1610,9 @@ msgid "Signal SIGHUP received, reloading configuration files"
 msgstr ""
 
 msgid "server"
-msgstr ""
+msgid_plural "servers"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid ""
@@ -2018,6 +2020,18 @@ msgid "away"
 msgstr ""
 
 msgid "Lag"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via SSL"
+msgstr ""
+
+#. TRANSLATORS: %s after %d is "server" or "servers"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
 #, c-format
