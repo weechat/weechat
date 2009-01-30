@@ -466,7 +466,7 @@ jabber_command_jchat (void *data, struct t_gui_buffer *buffer, int argc,
         {
             ptr_muc = jabber_muc_new (ptr_server,
                                       JABBER_MUC_TYPE_PRIVATE,
-                                      argv[1], 1);
+                                      argv[1], 1, 0);
             if (!ptr_muc)
             {
                 weechat_printf (ptr_server->buffer,

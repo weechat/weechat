@@ -228,7 +228,7 @@ jabber_upgrade_read_cb (int object_id,
                     jabber_upgrade_current_muc = jabber_muc_new (jabber_upgrade_current_server,
                                                                  weechat_infolist_integer (infolist, "type"),
                                                                  weechat_infolist_string (infolist, "name"),
-                                                                 0);
+                                                                 0, 0);
                     if (jabber_upgrade_current_muc)
                     {
                         str = weechat_infolist_string (infolist, "topic");

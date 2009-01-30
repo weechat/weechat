@@ -818,7 +818,12 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "display") == 0)
     {
-        gui_window_switch_to_buffer (gui_current_window, buffer, 0);
+        /* if it is auto-switch to a buffer, then we don't set read marker,
+           otherwise we reset it (if current buffer is not displayed) after
+           switch */
+        gui_window_switch_to_buffer (gui_current_window, buffer,
+                                     (string_strcasecmp (value, "auto") == 0) ?
+                                     0 : 1);
     }
     else if (string_strcasecmp (property, "name") == 0)
     {

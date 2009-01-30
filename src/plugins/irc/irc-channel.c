@@ -67,7 +67,8 @@ irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
 
 struct t_irc_channel *
 irc_channel_new (struct t_irc_server *server, int channel_type,
-                 const char *channel_name, int switch_to_channel)
+                 const char *channel_name, int switch_to_channel,
+                 int auto_switch)
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
@@ -167,7 +168,10 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     server->last_channel = new_channel;
     
     if (switch_to_channel)
-        weechat_buffer_set (new_buffer, "display", "1");
+    {
+        weechat_buffer_set (new_buffer, "display",
+                            (auto_switch) ? "auto" : "1");
+    }
     
     /* all is ok, return address of new channel */
     return new_channel;

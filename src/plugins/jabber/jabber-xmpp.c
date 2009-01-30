@@ -130,7 +130,7 @@ jabber_xmpp_recv_chat_message (struct t_jabber_server *server,
         {
             ptr_muc = jabber_muc_new (server,
                                       JABBER_MUC_TYPE_PRIVATE,
-                                      from, 0);
+                                      from, 0, 0);
             if (!ptr_muc)
             {
                 weechat_printf (server->buffer,

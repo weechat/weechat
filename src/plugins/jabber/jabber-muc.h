@@ -68,7 +68,8 @@ extern int jabber_muc_valid (struct t_jabber_server *server,
 extern struct t_jabber_muc *jabber_muc_new (struct t_jabber_server *server,
                                             int muc_type,
                                             const char *muc_name,
-                                            int switch_to_muc);
+                                            int switch_to_muc,
+                                            int auto_switch);
 extern void jabber_muc_set_topic (struct t_jabber_muc *muc,
                                   const char *topic);
 extern void jabber_muc_free (struct t_jabber_server *server,

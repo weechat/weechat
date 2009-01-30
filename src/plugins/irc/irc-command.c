@@ -2514,7 +2514,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         {
             ptr_channel = irc_channel_new (ptr_server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
-                                           argv[1], 1);
+                                           argv[1], 1, 0);
             if (!ptr_channel)
             {
                 weechat_printf (ptr_server->buffer,

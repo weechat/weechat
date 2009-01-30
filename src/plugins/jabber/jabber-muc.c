@@ -65,7 +65,7 @@ jabber_muc_valid (struct t_jabber_server *server, struct t_jabber_muc *muc)
 
 struct t_jabber_muc *
 jabber_muc_new (struct t_jabber_server *server, int muc_type,
-                const char *muc_name, int switch_to_muc)
+                const char *muc_name, int switch_to_muc, int auto_switch)
 {
     struct t_jabber_muc *new_muc;
     struct t_gui_buffer *new_buffer;
@@ -161,7 +161,10 @@ jabber_muc_new (struct t_jabber_server *server, int muc_type,
     server->last_muc = new_muc;
     
     if (switch_to_muc)
-        weechat_buffer_set (new_buffer, "display", "1");
+    {
+        weechat_buffer_set (new_buffer, "display",
+                            (auto_switch) ? "auto" : "1");
+    }
     
     /* all is ok, return address of new muc */
     return new_muc;

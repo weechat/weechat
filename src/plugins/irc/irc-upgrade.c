@@ -254,7 +254,7 @@ irc_upgrade_read_cb (int object_id,
                     irc_upgrade_current_channel = irc_channel_new (irc_upgrade_current_server,
                                                                    weechat_infolist_integer (infolist, "type"),
                                                                    weechat_infolist_string (infolist, "name"),
-                                                                   0);
+                                                                   0, 0);
                     if (irc_upgrade_current_channel)
                     {
                         str = weechat_infolist_string (infolist, "topic");

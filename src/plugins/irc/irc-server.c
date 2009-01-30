@@ -2094,7 +2094,7 @@ irc_server_connect (struct t_irc_server *server)
                                 charset_modifier);
         }
         
-        weechat_buffer_set (server->buffer, "display", "1");
+        weechat_buffer_set (server->buffer, "display", "auto");
         
         weechat_bar_item_update ("buffer_name");
         

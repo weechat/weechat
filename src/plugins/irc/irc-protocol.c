@@ -334,7 +334,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     if (!ptr_channel)
     {
         ptr_channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
-                                       pos_channel, 1);
+                                       pos_channel, 1, 1);
         if (!ptr_channel)
         {
             weechat_printf (server->buffer,
@@ -864,7 +864,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
-                                                   nick, 0);
+                                                   nick, 0, 0);
                     if (!ptr_channel)
                     {
                         weechat_printf (server->buffer,
@@ -1959,7 +1959,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
-                                                   nick, 0);
+                                                   nick, 0, 0);
                     if (!ptr_channel)
                     {
                         weechat_printf (server->buffer,
@@ -2071,7 +2071,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     {
                         ptr_channel = irc_channel_new (server,
                                                        IRC_CHANNEL_TYPE_PRIVATE,
-                                                       nick, 0);
+                                                       nick, 0, 0);
                         if (!ptr_channel)
                         {
                             weechat_printf (server->buffer,
