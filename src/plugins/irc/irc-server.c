@@ -1912,7 +1912,7 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
             weechat_printf (server->buffer,
-                            _("%s%s: GnuTLS init error"),
+                            _("%s%s: TLS init error"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
             irc_server_close_connection (server);
@@ -1920,7 +1920,7 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
             weechat_printf (server->buffer,
-                            _("%s%s: GnuTLS handshake failed"),
+                            _("%s%s: TLS handshake failed"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
             irc_server_close_connection (server);

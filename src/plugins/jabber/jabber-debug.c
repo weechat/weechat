@@ -93,12 +93,12 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
     weechat_printf (jabber_debug_buffer,
                     "%s%s%s%s%s%s\t%s",
                     (server) ? weechat_color ("chat_server") : "",
+                    (iks_is_secure (server->iks_parser)) ? "[S]" : "",
                     (server) ? server->name : "",
                     (server) ? " " : "",
                     (send) ?
                     weechat_color ("chat_prefix_quit") :
                     weechat_color ("chat_prefix_join"),
-                    (iks_is_secure (server->iks_parser)) ? "* " : "",
                     (send) ?
                     ((modified) ? JABBER_DEBUG_PREFIX_SEND_MOD : JABBER_DEBUG_PREFIX_SEND) :
                     ((modified) ? JABBER_DEBUG_PREFIX_RECV_MOD : JABBER_DEBUG_PREFIX_RECV),

@@ -1004,11 +1004,8 @@ jabber_server_iks_transport_recv (void *socket, char *buffer, size_t buf_len,
 {
     int sock;
     fd_set fds;
-    struct timeval tv;
+    struct timeval tv, *ptr_tv;
     int len;
-    
-    /* make C compiler happy */
-    (void) timeout;
     
     tv.tv_sec = 0;
     tv.tv_usec = 0;
@@ -1016,7 +1013,15 @@ jabber_server_iks_transport_recv (void *socket, char *buffer, size_t buf_len,
     sock = (int) socket;
     FD_ZERO (&fds);
     FD_SET (sock, &fds);
-    if (select (sock + 1, &fds, NULL, NULL, &tv) > 0)
+    tv.tv_sec = timeout;
+    ptr_tv = (timeout != -1) ? &tv : NULL;
+    
+    /* FIXME: force timeout to 1 second, otherwise WeeChat may freeze when
+       iksemel calls this function with -1 (for TLS connection) */
+    tv.tv_sec = 1;
+    ptr_tv = &tv;
+    
+    if (select (sock + 1, &fds, NULL, NULL, ptr_tv) > 0)
     {
         len = recv (sock, buffer, buf_len, 0);
         if (len > 0)
@@ -1578,13 +1583,37 @@ int
 jabber_server_recv_cb (void *arg_server)
 {
     struct t_jabber_server *server;
+    int rc;
     
     server = (struct t_jabber_server *)arg_server;
     
     if (!server)
         return WEECHAT_RC_ERROR;
     
-    iks_recv (server->iks_parser, 0);
+    rc = iks_recv (server->iks_parser, 1);
+    
+    if (rc == IKS_NET_TLSFAIL)
+    {
+        weechat_printf (server->buffer,
+                        _("%s%s: TLS handshake failed"),
+                        jabber_buffer_get_server_prefix (server,
+                                                         "error"),
+                        JABBER_PLUGIN_NAME);
+        jabber_server_disconnect (server, 0);
+        return WEECHAT_RC_ERROR;
+    }
+    
+    if ((rc != IKS_OK) && (rc != IKS_HOOK))
+    {
+        weechat_printf (server->buffer,
+                        _("%s%s: I/O error (%d)"),
+                        jabber_buffer_get_server_prefix (server,
+                                                         "error"),
+                        JABBER_PLUGIN_NAME,
+                        rc);
+        jabber_server_disconnect (server, 0);
+        return WEECHAT_RC_ERROR;
+    }
     
     return WEECHAT_RC_OK;
 }

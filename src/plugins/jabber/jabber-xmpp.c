@@ -274,7 +274,6 @@ jabber_xmpp_iks_stream_hook (void *user_data, int type, iks *node)
                                 jabber_buffer_get_server_prefix (server,
                                                                  "error"),
                                 JABBER_PLUGIN_NAME);
-                
                 jabber_server_disconnect (server, 0);
             }
             else if (strcmp ("success", iks_name (node)) == 0)
