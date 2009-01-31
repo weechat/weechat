@@ -1,11 +1,11 @@
-WeeChat FAQ, 2009-01-03
+WeeChat FAQ, 2009-01-31
 =======================
 
 Public concerné :
-Tous les utilisateurs de WeeChat.
+Utilisateurs de WeeChat >= 0.2.7.
 
 Avant de lire la suite ceci :
-la liste suivante de questions/réponses n'est *pas* exhaustive.
+La liste suivante de questions/réponses n'est *pas* exhaustive.
 Il est donc possible que vous ne trouviez pas de question/réponse correspondant
 à votre problème.
 Lisez les quand même SVP, elles peuvent vous aider à corriger votre problème.
@@ -22,15 +22,9 @@ nous essaierons de vous aider à trouver une solution.
 Q:	J'ai entendu parler de plusieurs interfaces pour WeeChat.
 	Comment puis-je les compiler/utiliser ?
 
-R:	L'interface Curses est construite par défaut.
-	Pour construire l'interface Gtk, wxWidgets ou Qt, vous devez spécifier des
-	options pour le script ./configure :
-	  --enable-gtk pour activer l'interface Gtk
-	  --enable-wxwidgets pour activer l'interface wxWidgets
-	  --enable-qt  pour activer l'interface Qt
-	Tapez ./configure --help pour voir les options disponibles.
-	ATTENTION : seule l'interface Curses est ok aujourd'hui.
-	Les autres interfaces sont en développement.
+R:	Aujourd'hui seule l'interface Curses est disponible.
+	D'autres interfaces seront disponibles en mode distant (actuellement
+	en développement).
 
 
 1.2
@@ -54,14 +48,20 @@ Q:	Pourquoi utiliser WeeChat ? X-Chat et Irssi sont si bien...
 
 R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
 	Quelques nouvelles fonctionnalités :
-	  * support multi-protocoles via extensions (IRC et d'autres bientôt)
+	  * support multi-protocoles via extensions (IRC, Jabber)
 	  * plusieurs interfaces déportées en plus de Curses (à venir bientôt)
 	  * disponible en plusieurs langues
-	  * liste des pseudos disponible dans toutes les interfaces
 	  * extensible par des extensions (C, Perl, Python, Ruby, Lua, Tcl)
+	  * tampons avec contenu libre
+	  * filtrage de l'affichage avec tags et expressions régulières
 	  * découpage de la fenêtre horizontalement et verticalement
+	  * barres personnalisables et extensibles
+	  * liste des pseudos disponible dans toutes les interfaces
 	  * highlight dans la barre d'infos
+	  * recherche incrémentale de texte dans les tampons, saut aux highlights
 	  * tube FIFO pour contrôle à distance
+	  * support aspell
+	  * double encodage (décodage/encodage)
 	  * développé à partir de zéro (non basé sur un quelconque client)
 	  * multi-platformes
 	  * 100% GPL et libre
@@ -76,6 +76,8 @@ Q:	J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 R:	Pour obtenir de l'aide tapez /help. Pour de l'aide sur une commande,
 	tapez /help commande.
 	Les touches et commandes sont listées dans la documentation.
+	Si vous démarrez avec WeeChat, il est recommandé de lire le guide de
+	démarrage rapide (voir la page de doc sur le site).
 
 
 2.3
@@ -116,26 +118,19 @@ R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
 
 2.5
 ================================================================================
-Q:	Comment puis-je configurer les raccourcis clavier ?
+Q:	Des barres telles que le titre et le statut ne sont pas remplies, la
+	couleur de fond s'arrête après le texte, pourquoi ?
 
-R:	Les raccourcis clavier sont modifiables avec la commande /key.
-	La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code
-	d'une touche et de l'inclure dans la zone de saisie.
+R:	Cela peut être du à la variable TERM qui n'a pas la bonne valeur
+	(regardez echo $TERM).
+	Selon la façon de lancer WeeChat, vous devriez avoir :
+	- si WeeChat tourne en local ou sur une machiine distante sans screen :
+	cela dépend du terminal utilisé : "xterm", "rxvt", ..
+	- si WeeChat tourne sous screen, vous devriez avoir "screen".
+	Si besoin, corrigez la variable TERM (export TERM="xxx").
 
 
 2.6
-================================================================================
-Q:	Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ?
-	Les scripts sont-ils compatibles avec d'autres clients IRC ?
-
-R:	Les commandes /perl, /python, /ruby, /lua et /tcl permettent de charger
-	les scripts Perl (le chemin par défaut est ~/.weechat/<langage>).
-	Notez que les scripts dans ~/.weechat/<langage>/autoload sont
-	automatiquement chargés par WeeChat lorsqu'il démarre.
-	Les scripts ne sont pas compatibles avec d'autres clients IRC.
-
-
-2.7
 ================================================================================
 Q:	Quand j'utilise weechat sous screen, j'ai des caractères bizarres
 	notamment en changeant de fenêtre, comment corriger ça ?
@@ -143,9 +138,31 @@ Q:	Quand j'utilise weechat sous screen, j'ai des caractères bizarres
 R:	Cela peut être du à la variable TERM qui n'a pas la bonne valeur
 	(regardez echo $TERM). Par exemple "xterm-color" provoque ce genre de
 	problèmes, utilisez "xterm" qui est ok (comme plein d'autres valeurs).
+	Si besoin, corrigez la variable TERM (export TERM="xxx").
+
+
+2.7
+================================================================================
+Q:	Comment puis-je configurer les raccourcis clavier ?
+
+R:	Les raccourcis clavier sont modifiables avec la commande /key.
+	La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code
+	d'une touche et de l'inclure dans la zone de saisie.
 
 
 2.8
+================================================================================
+Q:	Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ?
+	Les scripts sont-ils compatibles avec d'autres clients IRC ?
+
+R:	Les commandes /perl, /python, /ruby, /lua et /tcl permettent de charger
+	les scripts Perl (le chemin par défaut est ~/.weechat/<langage>/).
+	Notez que les scripts dans ~/.weechat/<langage>/autoload sont
+	automatiquement chargés par WeeChat lorsqu'il démarre.
+	Les scripts ne sont pas compatibles avec d'autres clients IRC.
+
+
+2.9
 ================================================================================
 Q:	Je souhaite changer la langue des messages affichés par WeeChat, mais
 	sans quitter WeeChat, est-ce possible ?
@@ -159,7 +176,7 @@ R:	Oui, il faut utiliser le script python shell.py (disponible sur le site
 	/shell setenv LANG=en_US)
 
 
-2.9
+2.10
 ================================================================================
 Q:	Avec l'interface Curses, comment puis-je copier/coller du texte sans
 	coller la liste des pseudos ?
@@ -172,7 +189,7 @@ R:	Vous pouvez utiliser un terminal qui propose la sélection rectangulaire
 	  avec WeeChat >= 0.2.7: /bar set nicklist position top
 
 
-2.10
+2.11
 ================================================================================
 Q:	Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
@@ -231,17 +248,13 @@ R:	Il y a 2 manières :
 3.4
 ================================================================================
 Q:	Quelle est la liste des plate-formes supportées par WeeChat ?
+	WeeChat sera-t-il porté sur d'autres systèmes d'exploitation ?
 
 R:	La liste complète est sur cette page :
-	http://weechat.flashtux.org/download.php?lang=fr&view=supported_os
-
-
-3.5
-================================================================================
-Q:	WeeChat sera-t-il porté sur QNX ou d'autres systèmes d'exploitation ?
-
-R:	Oui. Les futures versions seront disponibles pour ces OS.
-	Nous avons besoin d'aide pour ces systèmes, toute aide est la bienvenue :)
+	http://weechat.flashtux.org/download.php?view=supported_os
+	Nous faisons le maximum pour supporter le plus de plate-formes possible.
+	Toute aide est la bienvenue pour les systèmes que nous n'avons pas,
+	pous y tester WeeChat.
 
 
 3.6
