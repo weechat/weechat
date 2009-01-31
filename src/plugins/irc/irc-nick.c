@@ -99,7 +99,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
             *prefix_color = 1;
         if (buffer && group)
             *group = weechat_nicklist_search_group (buffer, NULL,
-                                                    IRC_NICK_GROUP_OP);
+                                                    IRC_NICK_GROUP_CHANOWNER);
     }
     else if (nick->flags & IRC_NICK_CHANADMIN)
     {
@@ -109,7 +109,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
             *prefix_color = 1;
         if (buffer && group)
             *group = weechat_nicklist_search_group (buffer, NULL,
-                                                    IRC_NICK_GROUP_OP);
+                                                    IRC_NICK_GROUP_CHANADMIN);
     }
     else if (nick->flags & IRC_NICK_CHANADMIN2)
     {
@@ -119,7 +119,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
             *prefix_color = 1;
         if (buffer && group)
             *group = weechat_nicklist_search_group (buffer, NULL,
-                                                    IRC_NICK_GROUP_OP);
+                                                    IRC_NICK_GROUP_CHANADMIN2);
     }
     else if (nick->flags & IRC_NICK_OP)
     {

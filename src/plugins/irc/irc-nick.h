@@ -36,11 +36,14 @@
     else \
         nick->flags &= 0xFFFF - flag;
 
-#define IRC_NICK_GROUP_OP       "1|op"
-#define IRC_NICK_GROUP_HALFOP   "2|halfop"
-#define IRC_NICK_GROUP_VOICE    "3|voice"
-#define IRC_NICK_GROUP_CHANUSER "4|chanuser"
-#define IRC_NICK_GROUP_NORMAL   "5|normal"
+#define IRC_NICK_GROUP_CHANOWNER  "01|chanowner"
+#define IRC_NICK_GROUP_CHANADMIN  "02|chanadmin"
+#define IRC_NICK_GROUP_CHANADMIN2 "03|chanadmin2"
+#define IRC_NICK_GROUP_OP         "04|op"
+#define IRC_NICK_GROUP_HALFOP     "05|halfop"
+#define IRC_NICK_GROUP_VOICE      "06|voice"
+#define IRC_NICK_GROUP_CHANUSER   "07|chanuser"
+#define IRC_NICK_GROUP_NORMAL     "08|normal"
 
 struct t_irc_server;
 struct t_irc_channel;
