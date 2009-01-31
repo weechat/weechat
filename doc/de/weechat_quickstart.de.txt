@@ -1,35 +1,35 @@
-WeeChat Schnellstarter (deutsche Version)
-======================
+WeeChat Schnellstarter (deutsche Version, fÃ¼r WeeChat <= 0.2.6)
+===============================================================
 
 1. Weechat starten
 
-     Entsprechend dem gewählten User-Interface müssen Du starten:
-     - weechat-curses für das Curses GUI
-     - weechat-gtk für das Gtk GUI (in Entwicklung)
-     - weechat-qt für das Qt GUI (in Planung)
-     - weechat-wxwidgets für das WxWidgets GUI (in Planung)
+     Entsprechend dem gewÃ¤hlten User-Interface mÃ¼ssen Du starten:
+     - weechat-curses fÃ¼r das Curses GUI
+     - weechat-gtk fÃ¼r das Gtk GUI (in Entwicklung)
+     - weechat-qt fÃ¼r das Qt GUI (in Planung)
+     - weechat-wxwidgets fÃ¼r das WxWidgets GUI (in Planung)
 
 2. Online-Hilfe / Optionen
 
-     WeeChat hat eine eingebaute Hilfe für all Kommandos, tippe einfach /help
+     WeeChat hat eine eingebaute Hilfe fÃ¼r all Kommandos, tippe einfach /help
      Um Hilfe zu einem Kommando zu bekommen, tippe /help Kommando
 
-     Um Optionen zu verändern, benutzt du /set Option = Wert
+     Um Optionen zu verÃ¤ndern, benutzt du /set Option = Wert
      Du brauchst /set Option nur mit den Anfangsbuchstaben eingeben 
      (<tab> zeigt alle Optionen mit den gleichen Buchstaben) oder mit dem vollen
-     Namen ohne einen Wert, um eine ausführliche Hilfe zu bekommen.
+     Namen ohne einen Wert, um eine ausfÃ¼hrliche Hilfe zu bekommen.
 
      Wichtig: die Einstellungen werden gespeichert, wenn WeeChat beendet wird
-     (oder mit dem Befehl /save). Verändere die Einstellungen nicht, wenn WeeChat
-     läuft, weil WeeChat diese Datei zu jeder Zeit überschreiben kann und 
-     Änderungen verloren sind. Um irgendeine Einstellung zu verändern, verwendest du
-     das /set Kommando, WeeChat wird die neuen Einstellungen umgehend übernehmen.
+     (oder mit dem Befehl /save). VerÃ¤ndere die Einstellungen nicht, wenn WeeChat
+     lÃ¤uft, weil WeeChat diese Datei zu jeder Zeit Ã¼berschreiben kann und 
+     Ã„nderungen verloren sind. Um irgendeine Einstellung zu verÃ¤ndern, verwendest du
+     das /set Kommando, WeeChat wird die neuen Einstellungen umgehend Ã¼bernehmen.
 
 3. Einen Server-Eintrag anlegen
 
-     Zum Beispiel für irc.quakenet.org, Port 6667:
+     Zum Beispiel fÃ¼r irc.quakenet.org, Port 6667:
        /server add quakenet irc.quakenet.org 6667
-     (/help Server für volle Hilfe zu diesem Kommando)
+     (/help Server fÃ¼r volle Hilfe zu diesem Kommando)
 
 4. Eigene Server-Optionen setzen
 
@@ -64,7 +64,7 @@ WeeChat Schnellstarter (deutsche Version)
        /part [Nachricht]
      Einen Channel verlassen und den Buffer schliessen:
        /close [Nachricht]
-     (/close ist ein Alias für /buffer close)
+     (/close ist ein Alias fÃ¼r /buffer close)
 
 7. Buffer/Fenster Management
 
@@ -76,9 +76,9 @@ WeeChat Schnellstarter (deutsche Version)
 
 8. Tastenkombinationen
 
-     Entsprechend deiner Tastatur und/oder deinen Wünschen, kannst du jede Taste
+     Entsprechend deiner Tastatur und/oder deinen WÃ¼nschen, kannst du jede Taste
      mit "/key" neu zuordnen.
-     Eine nützliche Taste ist meta-k (alt-k), sie zeigt die Tastaturcodes an.
+     Eine nÃ¼tzliche Taste ist meta-k (alt-k), sie zeigt die Tastaturcodes an.
 
      Um zum Beispiel meta-y (alt-y) dem Kommando "/buffer close" zuzuordnen:
        /key (tippe meta-k) (tippe meta-y) /buffer close
@@ -88,11 +88,11 @@ WeeChat Schnellstarter (deutsche Version)
 9. Plugins/Skripte
 
      In einigen Distributionen, wie zum Beispiel Debian, sind Plugins in separaten
-     Paketen verfügbar (wie weechat-plugins). Plugins werden automatisch geladen, 
+     Paketen verfÃ¼gbar (wie weechat-plugins). Plugins werden automatisch geladen, 
      wenn welche gefunden wurden.
-     Viele Plugins/Skripte für WeeChat sind zu finden auf:
+     Viele Plugins/Skripte fÃ¼r WeeChat sind zu finden auf:
        http://weechat.flashtux.org/plugins.php
-     Bitte lies für das Laden/Entladen von Plugins oder Skripten die Dokumentation.
+     Bitte lies fÃ¼r das Laden/Entladen von Plugins oder Skripten die Dokumentation.
 
 
 10. Mehr Dokumentation

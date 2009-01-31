@@ -1,5 +1,5 @@
-Guide de démarrage rapide WeeChat (version française)
-=====================================================
+Guide de démarrage rapide WeeChat (version française, pour WeeChat >= 0.2.7)
+============================================================================
 
 1. Démarrer weechat
 

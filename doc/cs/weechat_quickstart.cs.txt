@@ -1,5 +1,5 @@
-WeeChat (česká verze)
-=========================
+WeeChat (česká verze, WeeChat <= 0.2.6)
+=======================================
 
 1. Spuštění weechat
      Podle požadovaného GUI je třeba spustit:

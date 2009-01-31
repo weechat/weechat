@@ -1,4 +1,4 @@
-Weechat szybki start (wersja polska)
+Weechat szybki start (wersja polska, WeeChat <= 0.2.6)
 
 1. W³±czenie
 

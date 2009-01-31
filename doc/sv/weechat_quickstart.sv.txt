@@ -1,5 +1,5 @@
-Weechat snabbstart guide (svensk version)
-=========================
+Weechat snabbstart guide (svensk version, WeeChat <= 0.2.6)
+===========================================================
 
 1. Starta weechat
 

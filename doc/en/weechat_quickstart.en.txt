@@ -1,5 +1,5 @@
-WeeChat quick start guide (english version)
-===========================================
+WeeChat quick start guide (english version, for WeeChat >= 0.2.7)
+=================================================================
 
 1. Launch weechat
 

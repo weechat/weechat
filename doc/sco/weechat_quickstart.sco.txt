@@ -1,5 +1,5 @@
-WeeChat quik stairt guide (Scots version)
-=========================
+WeeChat quik stairt guide (Scots version, WeeChat <= 0.2.6)
+===========================================================
 
 1. Launch weechat
 
