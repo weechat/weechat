@@ -490,7 +490,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)
                         {
-                            new_start_input = gui_chat_string_add_offset (pos_start_input, diff);
+                            new_start_input = pos_start_input + gui_chat_string_real_pos (pos_start_input, diff);
                             if (pos_cursor && (new_start_input > pos_cursor))
                                 new_start_input = pos_cursor;
                             memmove (pos_start_input, new_start_input, strlen (new_start_input) + 1);
