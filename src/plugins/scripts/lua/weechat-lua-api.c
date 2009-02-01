@@ -2336,7 +2336,7 @@ static int
 weechat_lua_api_config_set_plugin (lua_State *L)
 {
     const char *option, *value;
-    int n;
+    int n, rc;
     
     /* make C compiler happy */
     (void) L;
@@ -2344,7 +2344,7 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     if (!lua_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
-        LUA_RETURN_ERROR;
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = NULL;
@@ -2355,19 +2355,56 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     if (n < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
-        LUA_RETURN_ERROR;
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = lua_tostring (lua_current_interpreter, -2);
     value = lua_tostring (lua_current_interpreter, -1);
     
-    if (script_api_config_set_plugin (weechat_lua_plugin,
-                                      lua_current_script,
-                                      option,
-                                      value))
-        LUA_RETURN_OK;
+    rc = script_api_config_set_plugin (weechat_lua_plugin,
+                                       lua_current_script,
+                                       option,
+                                       value);
     
-    LUA_RETURN_ERROR;
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_unset_plugin: unset plugin option
+ */
+
+static int
+weechat_lua_api_config_unset_plugin (lua_State *L)
+{
+    const char *option;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_unset_plugin");
+        LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = script_api_config_unset_plugin (weechat_lua_plugin,
+                                         lua_current_script,
+                                         option);
+    
+    LUA_RETURN_INT(rc);
 }
 
 /*
@@ -6053,6 +6090,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_get", &weechat_lua_api_config_get },
     { "config_get_plugin", &weechat_lua_api_config_get_plugin },
     { "config_set_plugin", &weechat_lua_api_config_set_plugin },
+    { "config_unset_plugin", &weechat_lua_api_config_unset_plugin },
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },
     { "print", &weechat_lua_api_print },

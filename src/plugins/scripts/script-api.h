@@ -236,5 +236,8 @@ extern const char *script_api_config_get_plugin (struct t_weechat_plugin *weecha
 extern int script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
                                          struct t_plugin_script *script,
                                          const char *option, const char *value);
+extern int script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
+                                           struct t_plugin_script *script,
+                                           const char *option);
 
 #endif /* script-api.h */

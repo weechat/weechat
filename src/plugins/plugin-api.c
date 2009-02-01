@@ -133,12 +133,29 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
                               const char *option_name, const char *value)
 {
     if (!plugin || !option_name)
-        return 0;
+        return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
     
-    if (plugin_config_set (plugin->name, option_name, value))
-        return 1;
+    return plugin_config_set (plugin->name, option_name, value);
+}
+
+/*
+ * plugin_api_config_unset_plugin: unset plugin config option
+ */
+
+int
+plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
+                                const char *option_name)
+{
+    struct t_config_option *ptr_option;
     
-    return 0;
+    if (!plugin || !option_name)
+        return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
+    
+    ptr_option = plugin_config_search (plugin->name, option_name);
+    if (!ptr_option)
+        return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
+    
+    return config_file_option_unset (ptr_option);
 }
 
 /*

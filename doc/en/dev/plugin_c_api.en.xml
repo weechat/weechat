@@ -3287,7 +3287,7 @@ void weechat_config_search_with_string (
 </programlisting>
       </para>
       <para>
-        Search an option in in a configuration file with string.
+        Search an option in a configuration file with string.
       </para>
       <para>
         Arguments:
@@ -4431,7 +4431,7 @@ struct t_config_option *weechat_config_get (const char *option_name);
 </programlisting>
       </para>
       <para>
-        Search an option in in a configuration file with string.
+        Search an option in a configuration file with string.
       </para>
       <para>
         Arguments:
@@ -4502,7 +4502,49 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
 </programlisting>
       </para>
       <para>
-        Set value for option in in plugins configuration file (plugins.conf).
+        Set value for option in plugins configuration file (plugins.conf).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option_name</option>: option name, WeeChat will add
+              prefix "plugins.var.xxxx." (where xxxx is current plugin name).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>value</option>: value for option
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: WEECHAT_CONFIG_OPTION_SET_OK_CHANGED if option value has
+        been reset, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE if value was not
+        changed, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND if option was not
+        found, WEECHAT_CONFIG_OPTION_SET_ERROR if other error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_config_set_plugin ("option", "test_value");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_config_unset_plugin">
+      <title>weechat_config_unset_plugin</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_unset_plugin (const char *option_name);
+</programlisting>
+      </para>
+      <para>
+        Unset option in plugins configuration file (plugins.conf).
       </para>
       <para>
         Arguments:
@@ -4516,12 +4558,16 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
         </itemizedlist>
       </para>
       <para>
-        Return value: 1 if ok, 0 if an error occured.
+        Return value: WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET if option value
+        has not been reset, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET if option
+        value has been reset, WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED if option
+        has been removed, WEECHAT_CONFIG_OPTION_UNSET_ERROR if an error
+        occured.
       </para>
       <para>
         Example:
 <screen>
-weechat_config_set_plugin ("option", "test_value");
+weechat_config_unset_plugin ("option");
 </screen>
       </para>
     </section>

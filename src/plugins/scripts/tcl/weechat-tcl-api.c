@@ -2260,7 +2260,7 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *option, *value;
-    int i;
+    int i, rc;
     
     /* make C compiler happy */
     (void) clientData;
@@ -2268,24 +2268,60 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
-	TCL_RETURN_ERROR;
+	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (objc < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
-        TCL_RETURN_ERROR;
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
-
+    
     option = Tcl_GetStringFromObj (objv[1], &i);
     value = Tcl_GetStringFromObj (objv[2], &i);
-    if (script_api_config_set_plugin (weechat_tcl_plugin,
-                                      tcl_current_script,
-                                      option,
-                                      value))
-        TCL_RETURN_OK;
     
-    TCL_RETURN_ERROR;
+    rc = script_api_config_set_plugin (weechat_tcl_plugin,
+                                       tcl_current_script,
+                                       option,
+                                       value);
+    
+    TCL_RETURN_INT(rc);
+}
+
+/*
+ * weechat_tcl_api_config_set_plugin: unset plugin option
+ */
+
+static int
+weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *option;
+    int i, rc;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
+	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_unset_plugin");
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    option = Tcl_GetStringFromObj (objv[1], &i);
+    
+    rc = script_api_config_unset_plugin (weechat_tcl_plugin,
+                                         tcl_current_script,
+                                         option);
+    
+    TCL_RETURN_INT(rc);
 }
 
 /*
@@ -5499,6 +5535,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_config_get_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::config_set_plugin",
                           weechat_tcl_api_config_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::config_unset_plugin",
+                          weechat_tcl_api_config_unset_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::prefix",
                           weechat_tcl_api_prefix, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::color",

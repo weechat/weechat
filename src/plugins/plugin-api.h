@@ -32,7 +32,10 @@ extern struct t_config_option *plugin_api_config_get (const char *option_name);
 extern const char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                                            const char *option_name);
 extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
-                                         const char *option_name, const char *value);
+                                         const char *option_name,
+                                         const char *value);
+extern int plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
+                                           const char *option_name);
 
 /* display */
 extern const char *plugin_api_prefix (const char *prefix);

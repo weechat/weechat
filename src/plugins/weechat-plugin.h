@@ -321,6 +321,8 @@ struct t_weechat_plugin
                                       const char *option_name);
     int (*config_set_plugin) (struct t_weechat_plugin *plugin,
                               const char *option_name, const char *value);
+    int (*config_unset_plugin) (struct t_weechat_plugin *plugin,
+                                const char *option_name);
     
     /* display */
     const char *(*prefix) (const char *prefix);
@@ -866,6 +868,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_config_set_plugin(__option, __value)                    \
     weechat_plugin->config_set_plugin(weechat_plugin, __option,         \
                                       __value)
+#define weechat_config_unset_plugin(__option)                           \
+    weechat_plugin->config_unset_plugin(weechat_plugin, __option)
 
 /* display */
 #define weechat_prefix(__prefix)                                        \

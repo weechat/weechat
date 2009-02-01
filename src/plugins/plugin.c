@@ -426,6 +426,7 @@ plugin_load (const char *filename)
         new_plugin->config_get = &plugin_api_config_get;
         new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
+        new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
         
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;

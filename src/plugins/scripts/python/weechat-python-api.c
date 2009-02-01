@@ -2076,6 +2076,7 @@ static PyObject *
 weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
 {
     char *option, *value;
+    int rc;
     
     /* make C compiler happy */
     (void) self;
@@ -2083,7 +2084,7 @@ weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
-        PYTHON_RETURN_ERROR;
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     option = NULL;
@@ -2092,16 +2093,49 @@ weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "ss", &option, &value))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
-        PYTHON_RETURN_ERROR;
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
-    if (script_api_config_set_plugin (weechat_python_plugin,
-                                      python_current_script,
-                                      option,
-                                      value))
-        PYTHON_RETURN_OK;
+    rc = script_api_config_set_plugin (weechat_python_plugin,
+                                       python_current_script,
+                                       option,
+                                       value);
     
-    PYTHON_RETURN_ERROR;
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_unset_plugin: unset plugin option
+ */
+
+static PyObject *
+weechat_python_api_config_unset_plugin (PyObject *self, PyObject *args)
+{
+    char *option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_unset_plugin");
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    }
+    
+    rc = script_api_config_unset_plugin (weechat_python_plugin,
+                                         python_current_script,
+                                         option);
+    
+    PYTHON_RETURN_INT(rc);
 }
 
 /*
@@ -5064,6 +5098,7 @@ PyMethodDef weechat_python_funcs[] =
     { "config_get", &weechat_python_api_config_get, METH_VARARGS, "" },
     { "config_get_plugin", &weechat_python_api_config_get_plugin, METH_VARARGS, "" },
     { "config_set_plugin", &weechat_python_api_config_set_plugin, METH_VARARGS, "" },
+    { "config_unset_plugin", &weechat_python_api_config_unset_plugin, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },
