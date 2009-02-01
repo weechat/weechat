@@ -820,6 +820,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line *new_line;
     struct t_gui_window *ptr_win;
     char *message_for_signal;
+    int notify_level;
     
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -885,9 +886,19 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         }
         else
         {
-            gui_hotlist_add (buffer,
-                             gui_chat_line_get_notify_level (new_line),
-                             NULL, 1);
+            notify_level = gui_chat_line_get_notify_level (new_line);
+            if (!weechat_upgrading && (notify_level == GUI_HOTLIST_PRIVATE))
+            {
+                message_for_signal = gui_chat_build_string_prefix_message (new_line);
+                if (message_for_signal)
+                {
+                    hook_signal_send ("weechat_pv",
+                                      WEECHAT_HOOK_SIGNAL_STRING,
+                                      message_for_signal);
+                    free (message_for_signal);
+                }
+            }
+            gui_hotlist_add (buffer, notify_level, NULL, 1);
         }
     }
     else
