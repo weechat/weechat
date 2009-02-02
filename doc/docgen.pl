@@ -225,12 +225,16 @@ sub docgen
     my $old_locale = setlocale(LC_MESSAGES);
     
     # write to doc files, by locale
-    my $num_files_written = 0;
+    my $num_files = 0;
+    my $num_files_updated = 0;
     foreach my $locale (@locale_list)
     {
-        my $num_files_commands_written = 0;
-        my $num_files_options_written = 0;
-        my $num_files_infos_written = 0;
+        my $num_files_commands = 0;
+        my $num_files_commands_updated = 0;
+        my $num_files_options = 0;
+        my $num_files_options_updated = 0;
+        my $num_files_infos = 0;
+        my $num_files_infos_updated = 0;
         
         setlocale(LC_MESSAGES, $locale.".UTF-8");
         my $d = Locale::gettext->domain_raw("weechat");
@@ -244,7 +248,7 @@ sub docgen
             foreach my $plugin (keys %plugin_commands)
             {
                 my $filename = $dir.$plugin."_commands.xml";
-                if (open(FILE, ">".$filename))
+                if (open(FILE, ">".$filename.".tmp"))
                 {
                     print FILE $xml_header;
                     foreach my $command (sort keys %{$plugin_commands{$plugin}})
@@ -265,8 +269,19 @@ sub docgen
                         print FILE "</programlisting>\n\n";
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
-                    $num_files_written++;
-                    $num_files_commands_written++;
+                    my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                    if ($rc != 0)
+                    {
+                        system("mv -f ".$filename.".tmp ".$filename);
+                        $num_files_updated++;
+                        $num_files_commands_updated++;
+                    }
+                    else
+                    {
+                        system("rm ".$filename.".tmp");
+                    }
+                    $num_files++;
+                    $num_files_commands++;
                     close(FILE);
                 }
                 else
@@ -279,7 +294,7 @@ sub docgen
             foreach my $config (keys %plugin_options)
             {
                 my $filename = $dir.$config."_options.xml";
-                if (open(FILE, ">".$filename))
+                if (open(FILE, ">".$filename.".tmp"))
                 {
                     print FILE $xml_header;
                     foreach my $section (sort keys %{$plugin_options{$config}})
@@ -337,8 +352,19 @@ sub docgen
                         }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
-                    $num_files_written++;
-                    $num_files_options_written++;
+                    my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                    if ($rc != 0)
+                    {
+                        system("mv -f ".$filename.".tmp ".$filename);
+                        $num_files_updated++;
+                        $num_files_options_updated++;
+                    }
+                    else
+                    {
+                        system("rm ".$filename.".tmp");
+                    }
+                    $num_files++;
+                    $num_files_options++;
                     close(FILE);
                 }
                 else
@@ -351,7 +377,7 @@ sub docgen
             foreach my $plugin (keys %plugin_infos)
             {
                 my $filename = $dir.$plugin."_infos.xml";
-                if (open(FILE, ">".$filename))
+                if (open(FILE, ">".$filename.".tmp"))
                 {
                     print FILE $xml_header;
                     foreach my $type (sort keys %{$plugin_infos{$plugin}})
@@ -369,8 +395,19 @@ sub docgen
                         }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
-                    $num_files_written++;
-                    $num_files_infos_written++;
+                    my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                    if ($rc != 0)
+                    {
+                        system("mv -f ".$filename.".tmp ".$filename);
+                        $num_files_updated++;
+                        $num_files_infos_updated++;
+                    }
+                    else
+                    {
+                        system("rm ".$filename.".tmp");
+                    }
+                    $num_files++;
+                    $num_files_infos++;
                     close(FILE);
                 }
                 else
@@ -383,20 +420,26 @@ sub docgen
         {
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
-        my $total = $num_files_commands_written + $num_files_options_written
-            + $num_files_infos_written;
-        weechat::print("", "docgen: ".$locale.": ".$total." files written ("
-                       .$num_files_commands_written." cmd, "
-                       .$num_files_options_written." opt, "
-                       .$num_files_infos_written." infos)");
+        my $total_files = $num_files_commands + $num_files_options
+            + $num_files_infos;
+        my $total_files_updated = $num_files_commands_updated + $num_files_options_updated
+            + $num_files_infos_updated;
+        weechat::print("", "docgen: ".$locale.": ".$total_files." files ("
+                       .$num_files_commands." cmd, "
+                       .$num_files_options." opt, "
+                       .$num_files_infos." infos) -- "
+                       .$total_files_updated." updated ("
+                       .$num_files_commands_updated." cmd, "
+                       .$num_files_options_updated." opt, "
+                       .$num_files_infos_updated." infos)");
     }
-    weechat::print("", "docgen: total: ".$num_files_written." files written");
+    weechat::print("", "docgen: total: ".$num_files." files (".$num_files_updated." updated)");
     
     # write "include_autogen.xml" file (with includes for all files built)
-    if ($num_files_written > 0)
+    if ($num_files > 0)
     {
         my $filename = $path."/include_autogen.xml";
-        if (open(FILE, ">".$filename))
+        if (open(FILE, ">".$filename.".tmp"))
         {
             print FILE "<!-- commands -->\n\n";
             foreach my $plugin (sort keys %plugin_commands)
@@ -414,7 +457,16 @@ sub docgen
                 print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
             }
             close(FILE);
-            weechat::print("", "docgen: file ".basename($filename)." written");
+            my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+            if ($rc != 0)
+            {
+                weechat::print("", "docgen: file ".basename($filename)." updated");
+                system("mv -f ".$filename.".tmp ".$filename);
+            }
+            else
+            {
+                system("rm ".$filename.".tmp");
+            }
         }
         else
         {
