@@ -470,9 +470,15 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         if (set_last_read)
         {
             if (window->buffer->num_displayed == 0)
+            {
                 window->buffer->last_read_line = window->buffer->last_line;
+                window->buffer->first_line_not_read = 0;
+            }
             if (buffer->last_read_line == buffer->last_line)
+            {
                 buffer->last_read_line = NULL;
+                buffer->first_line_not_read = 0;
+            }
         }
     }
     

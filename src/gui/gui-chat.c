@@ -692,6 +692,14 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
         }
     }
     
+    /* move read marker if it was on line we are removing */
+    if (buffer->last_read_line == line)
+    {
+        buffer->last_read_line = buffer->last_read_line->prev_line;
+        buffer->first_line_not_read = (buffer->last_read_line) ? 0 : 1;
+        gui_buffer_ask_chat_refresh (buffer, 1);
+    }
+    
     /* free data */
     if (line->str_time)
         free (line->str_time);

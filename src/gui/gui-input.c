@@ -1202,11 +1202,14 @@ gui_input_scroll_unread ()
         if (CONFIG_STRING(config_look_read_marker) &&
             CONFIG_STRING(config_look_read_marker)[0] &&
             (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED) &&
-            gui_current_window->buffer->last_read_line &&
-            gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)
+            (gui_current_window->buffer->first_line_not_read ||
+             (gui_current_window->buffer->last_read_line &&
+              gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)))
         {
-            gui_current_window->start_line =
-                gui_current_window->buffer->last_read_line->next_line;
+            if (gui_current_window->buffer->first_line_not_read)
+                gui_current_window->start_line = gui_current_window->buffer->lines;
+            else
+                gui_current_window->start_line = gui_current_window->buffer->last_read_line->next_line;
             gui_current_window->start_line_pos = 0;
             gui_current_window->first_line_displayed =
                 (gui_current_window->start_line == gui_chat_get_first_line_displayed (gui_current_window->buffer));

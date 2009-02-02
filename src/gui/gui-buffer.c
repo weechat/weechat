@@ -302,6 +302,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->lines = NULL;
         new_buffer->last_line = NULL;
         new_buffer->last_read_line = NULL;
+        new_buffer->first_line_not_read = 0;
         new_buffer->lines_count = 0;
         new_buffer->lines_hidden = 0;
         new_buffer->prefix_max_length = 0;
@@ -771,6 +772,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer)
                    && (buffer->last_read_line != buffer->last_line));
         
         buffer->last_read_line = buffer->last_line;
+        buffer->first_line_not_read = (buffer->last_read_line) ? 0 : 1;
         
         if (refresh)
             gui_buffer_ask_chat_refresh (buffer, 2);
@@ -1442,6 +1444,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->first_line_not_read))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines_hidden))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_case_sensitive", buffer->nicklist_case_sensitive))
@@ -1680,6 +1684,7 @@ gui_buffer_print_log ()
         log_printf ("  lines. . . . . . . . . : 0x%lx", ptr_buffer->lines);
         log_printf ("  last_line. . . . . . . : 0x%lx", ptr_buffer->last_line);
         log_printf ("  last_read_line . . . . : 0x%lx", ptr_buffer->last_read_line);
+        log_printf ("  first_line_not_read. . : %d",    ptr_buffer->first_line_not_read);
         log_printf ("  lines_count. . . . . . : %d",    ptr_buffer->lines_count);
         log_printf ("  lines_hidden . . . . . : %d",    ptr_buffer->lines_hidden);
         log_printf ("  prefix_max_length. . . : %d",    ptr_buffer->prefix_max_length);

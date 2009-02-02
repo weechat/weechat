@@ -343,6 +343,8 @@ upgrade_weechat_read_cb (int object_id,
                         upgrade_current_buffer->title =
                             (infolist_string (infolist, "title")) ?
                             strdup (infolist_string (infolist, "title")) : NULL;
+                        upgrade_current_buffer->first_line_not_read =
+                            infolist_integer (infolist, "first_line_not_read");
                         upgrade_current_buffer->input =
                             infolist_integer (infolist, "input");
                         upgrade_current_buffer->input_get_unknown_commands =

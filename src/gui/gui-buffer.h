@@ -108,6 +108,7 @@ struct t_gui_buffer
     struct t_gui_line *lines;          /* lines of chat window              */
     struct t_gui_line *last_line;      /* last line of chat window          */
     struct t_gui_line *last_read_line; /* last read line before jump        */
+    int first_line_not_read;           /* if 1, marker is before first line */ 
     int lines_count;                   /* number of lines in the buffer     */
     int lines_hidden;                  /* 1 if at least one line is hidden  */
     int prefix_max_length;             /* length for prefix align           */
