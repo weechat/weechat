@@ -96,6 +96,16 @@
   </listitem>
 </itemizedlist>
 
+<command>relay.network.enabled</command>: enable relay
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>relay.network.listen_port_range</command>: port number (or range of ports) that relay plugin listens on (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015)
 <itemizedlist>
   <listitem>

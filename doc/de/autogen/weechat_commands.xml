@@ -102,33 +102,33 @@ windows: display windows tree
    text: send "debug" signal with "text" as argument
 </programlisting>
 
-<command>/filter  [list] | [enable|disable|toggle [name]] | [add name buffer tags regex] | [del name|-all]</command>
+<command>/filter  [list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]</command>
 <programlisting>
 filter messages in buffers, to hide/show them according to tags or regex
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: buffer where filter is active: it may be a name or "*" for all buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line (use \t to separate prefix from message)
+         list: list all filters
+       enable: enable filters (filters are enabled by default)
+      disable: disable filters
+       toggle: toggle filters
+         name: filter name
+          add: add a filter
+          del: delete a filter
+         -all: delete all filters
+plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
+         tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+        regex: regular expression to search in line (use \t to separate prefix from message)
 
 Examples:
   use IRC smart filter for join/part/quit messages:
     /filter add irc_smart * irc_smart_filter *
   filter all IRC join/part/quit messages:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nick "toto" on channel #weechat:
-    /filter add toto freenode.#weechat * toto\t
+  filter nick "toto" on IRC channel #weechat:
+    /filter add toto irc.freenode.#weechat * toto\t
   filter lines containing word "spam":
     /filter add filterspam * * spam
-  filter lines containing "weechat sucks" on channel #weechat:
-    /filter add sucks freenode.#weechat * weechat sucks
+  filter lines containing "weechat sucks" on IRC channel #weechat:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
 </programlisting>
 
 <command>/help  [command | option]</command>

@@ -96,6 +96,16 @@
   </listitem>
 </itemizedlist>
 
+<command>relay.network.enabled</command>: activer le relai
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>relay.network.listen_port_range</command>: numéro de port (ou intervalle de ports) sur lesquels écoute l'extension relay (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015)
 <itemizedlist>
   <listitem>

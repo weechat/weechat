@@ -100,33 +100,33 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
     texte: envoie le signal "debug" avec "texte" comme paramètre
 </programlisting>
 
-<command>/filter  [list] | [enable|disable|toggle [nom]] | [add nom buffer tags regex] | [del nom|-all]</command>
+<command>/filter  [list] | [enable|disable|toggle [nom]] | [add nom extension.tampon tags regex] | [del nom|-all]</command>
 <programlisting>
 filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières
 
-   list: liste tous les filtres
- enable: active les filtres (par défaut les filtres sont activés)
-disable: désactive les filtres
- toggle: active/désactive les filtres
-    nom: nom de filtre
-    add: ajoute un filtre
-    del: supprime un filtre
-   -all: supprime tous les filtres
- buffer: tampon où le filtre est actif: cela peut être un nom ou "*" pour tous les tampons
-   tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
-  regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
+            list: liste tous les filtres
+          enable: active les filtres (par défaut les filtres sont activés)
+         disable: désactive les filtres
+          toggle: active/désactive les filtres
+             nom: nom de filtre
+             add: ajoute un filtre
+             del: supprime un filtre
+            -all: supprime tous les filtres
+extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
+            tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
+           regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
 
 Exemples:
   utiliser le filtre intelligent IRC pour les messages join/part/quit:
     /filter add irc_smart * irc_smart_filter *
   filtrer tous les messages IRC join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filtrer le pseudo "toto" sur le canal #weechat:
-    /filter add toto freenode.#weechat * toto\t
+  filtrer le pseudo "toto" sur le canal IRC #weechat:
+    /filter add toto irc.freenode.#weechat * toto\t
   filtrer les lignes contenant le mot "spam":
     /filter add filtrespam * * spam
-  filtrer les lignes contenant "weechat sucks" sur le canal #weechat:
-    /filter add sucks freenode.#weechat * weechat sucks
+  filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
 </programlisting>
 
 <command>/help  [commande | option]</command>
