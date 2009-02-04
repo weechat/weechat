@@ -4452,23 +4452,16 @@ weechat_tcl_api_bar_item_search (ClientData clientData, Tcl_Interp *interp,
 
 char *
 weechat_tcl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], *ret;
-    static char str_width[32], str_height[32];
+    char *tcl_argv[3], *ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    snprintf (str_width, sizeof (str_width), "%d", max_width);
-    snprintf (str_height, sizeof (str_height), "%d", max_height);
-    
     tcl_argv[0] = script_ptr2str (item);
     tcl_argv[1] = script_ptr2str (window);
-    tcl_argv[2] = str_width;
-    tcl_argv[3] = str_height;
-    tcl_argv[4] = NULL;
+    tcl_argv[2] = NULL;
     
     ret = (char *)weechat_tcl_exec (script_callback->script,
                                      WEECHAT_SCRIPT_EXEC_STRING,
