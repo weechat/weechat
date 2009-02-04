@@ -743,13 +743,9 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 void
 gui_chat_line_free_all (struct t_gui_buffer *buffer)
 {
-    struct t_gui_line *next_line;
-    
     while (buffer->lines)
     {
-        next_line = buffer->lines->next_line;
         gui_chat_line_free (buffer, buffer->lines);
-        buffer->lines = next_line;
     }
 }
 
@@ -1119,6 +1115,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                     free (new_msg);
                     new_msg = NULL;
                 }
+                free (modifier_data);
             }
         }
         

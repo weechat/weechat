@@ -700,6 +700,7 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
                                                       &(bar->items_subcount[i]));
             }
         }
+        string_free_exploded (tmp_array);
     }
 }
 

@@ -293,6 +293,8 @@ gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
             free (bar_window->items_content[i]);
             free (bar_window->items_refresh_needed[i]);
         }
+        free (bar_window->items_subcount);
+        bar_window->items_subcount = NULL;
         free (bar_window->items_content);
         bar_window->items_content = NULL;
         free (bar_window->items_refresh_needed);

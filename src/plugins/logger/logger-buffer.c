@@ -183,6 +183,8 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
     if (logger_buffer->log_filename)
         free (logger_buffer->log_filename);
     
+    free (logger_buffer);
+    
     logger_buffers = new_logger_buffers;
 }
 

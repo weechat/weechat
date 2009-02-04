@@ -500,10 +500,14 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
         free (script->filename);
     if (script->name)
         free (script->name);
-    if (script->description)
-        free (script->description);
+    if (script->author)
+        free (script->author);
     if (script->version)
         free (script->version);
+    if (script->license)
+        free (script->license);
+    if (script->description)
+        free (script->description);
     if (script->shutdown_func)
         free (script->shutdown_func);
     if (script->charset)

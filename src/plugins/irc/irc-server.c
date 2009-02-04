@@ -652,6 +652,8 @@ irc_server_free_data (struct t_irc_server *server)
         if (server->options[i])
             weechat_config_option_free (server->options[i]);
     }
+    if (server->name)
+        free (server->name);
     if (server->addresses_array)
         weechat_string_free_exploded (server->addresses_array);
     if (server->ports_array)

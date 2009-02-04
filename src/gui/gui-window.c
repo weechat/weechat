@@ -423,6 +423,12 @@ gui_window_free (struct t_gui_window *window)
         gui_bar_window_free (window->bar_windows, window);
     }
     
+    /* free other data */
+    if (window->layout_plugin_name)
+        free (window->layout_plugin_name);
+    if (window->layout_buffer_name)
+        free (window->layout_buffer_name);
+    
     /* remove window from windows list */
     if (window->prev_window)
         (window->prev_window)->next_window = window->next_window;

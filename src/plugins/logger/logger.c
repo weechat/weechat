@@ -307,6 +307,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
         free (log_path);
     if (log_path2)
         free (log_path2);
+    free (mask_decoded);
     
     return res;
 }
@@ -487,12 +488,9 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
 void
 logger_stop_all ()
 {
-    struct t_logger_buffer *ptr_logger_buffer;
-    
-    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
-         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    while (logger_buffers)
     {
-        logger_stop (ptr_logger_buffer, 1);
+        logger_stop (logger_buffers, 1);
     }
 }
 
@@ -766,11 +764,12 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         pos_message = strchr (ptr_lines->data, '\t');
         if (pos_message)
         {
+            memset (&tm_line, 0, sizeof (struct tm));
             pos_message[0] = '\0';
             error = strptime (ptr_lines->data,
                               weechat_config_string (logger_config_file_time_format),
                               &tm_line);
-            if (error && !error[0])
+            if (error && !error[0] && (tm_line.tm_year > 0))
                 datetime = mktime (&tm_line);
             pos_message[0] = '\t';
         }

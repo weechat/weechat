@@ -1344,6 +1344,8 @@ jabber_server_free_data (struct t_jabber_server *server)
         if (server->options[i])
             weechat_config_option_free (server->options[i]);
     }
+    if (server->name)
+        free (server->name);
     if (server->address)
         free (server->address);
     if (server->current_ip)

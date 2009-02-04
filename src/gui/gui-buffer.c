@@ -1248,6 +1248,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     if (buffer->highlight_words)
         free (buffer->highlight_words);
+    if (buffer->highlight_tags)
+        free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_exploded (buffer->highlight_tags_array);
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key);

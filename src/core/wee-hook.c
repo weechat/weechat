@@ -1637,8 +1637,12 @@ unhook (struct t_hook *hook)
                 free ((struct t_hook_fd *)hook->hook_data);
                 break;
             case HOOK_TYPE_CONNECT:
+                if (HOOK_CONNECT(hook, proxy))
+                    free (HOOK_CONNECT(hook, proxy));
                 if (HOOK_CONNECT(hook, address))
                     free (HOOK_CONNECT(hook, address));
+                if (HOOK_CONNECT(hook, local_hostname))
+                    free (HOOK_CONNECT(hook, local_hostname));
                 if (HOOK_CONNECT(hook, hook_fd))
                     unhook (HOOK_CONNECT(hook, hook_fd));
                 if (HOOK_CONNECT(hook, child_pid) > 0)
