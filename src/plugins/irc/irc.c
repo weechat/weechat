@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
