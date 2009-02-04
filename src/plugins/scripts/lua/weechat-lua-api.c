@@ -4678,23 +4678,16 @@ weechat_lua_api_bar_item_search (lua_State *L)
 
 char *
 weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   int max_width, int max_height)
+                                   struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], *ret;
-    static char str_width[32], str_height[32];
+    char *lua_argv[3], *ret;
     
     script_callback = (struct t_script_callback *)data;
-
-    snprintf (str_width, sizeof (str_width), "%d", max_width);
-    snprintf (str_height, sizeof (str_height), "%d", max_height);
     
     lua_argv[0] = script_ptr2str (item);
     lua_argv[1] = script_ptr2str (window);
-    lua_argv[2] = str_width;
-    lua_argv[3] = str_height;
-    lua_argv[4] = NULL;
+    lua_argv[2] = NULL;
     
     ret = (char *)weechat_lua_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_STRING,

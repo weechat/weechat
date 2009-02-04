@@ -3929,23 +3929,16 @@ static XS (XS_weechat_api_bar_item_search)
 
 char *
 weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    int max_width, int max_height)
+                                    struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[5], *ret;
-    static char str_width[32], str_height[32];
+    char *perl_argv[3], *ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    snprintf (str_width, sizeof (str_width), "%d", max_width);
-    snprintf (str_height, sizeof (str_height), "%d", max_height);
-    
     perl_argv[0] = script_ptr2str (item);
     perl_argv[1] = script_ptr2str (window);
-    perl_argv[2] = str_width;
-    perl_argv[3] = str_height;
-    perl_argv[4] = NULL;
+    perl_argv[2] = NULL;
     
     ret = (char *)weechat_perl_exec (script_callback->script,
                                      WEECHAT_SCRIPT_EXEC_STRING,

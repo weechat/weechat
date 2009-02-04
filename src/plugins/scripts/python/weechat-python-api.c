@@ -4173,23 +4173,16 @@ weechat_python_api_bar_item_search (PyObject *self, PyObject *args)
 
 char *
 weechat_python_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
-                                      struct t_gui_window *window,
-                                      int max_width, int max_height)
+                                      struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[5], *ret;
-    static char str_width[32], str_height[32];
+    char *python_argv[3], *ret;
     
     script_callback = (struct t_script_callback *)data;
-
-    snprintf (str_width, sizeof (str_width), "%d", max_width);
-    snprintf (str_height, sizeof (str_height), "%d", max_height);
     
     python_argv[0] = script_ptr2str (item);
     python_argv[1] = script_ptr2str (window);
-    python_argv[2] = str_width;
-    python_argv[3] = str_height;
-    python_argv[4] = NULL;
+    python_argv[2] = NULL;
     
     ret = (char *)weechat_python_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_STRING,
