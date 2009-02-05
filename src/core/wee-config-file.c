@@ -232,12 +232,15 @@ struct t_config_option *
 config_file_option_find_pos (struct t_config_section *section, const char *name)
 {
     struct t_config_option *ptr_option;
-    
-    for (ptr_option = section->options; ptr_option;
-         ptr_option = ptr_option->next_option)
+
+    if (section && name)
     {
-        if (string_strcasecmp (name, ptr_option->name) < 0)
-            return ptr_option;
+        for (ptr_option = section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
+        {
+            if (string_strcasecmp (name, ptr_option->name) < 0)
+                return ptr_option;
+        }
     }
     
     /* position not found (we will add to the end of list) */
@@ -254,7 +257,7 @@ config_file_option_insert_in_section (struct t_config_option *option)
 {
     struct t_config_option *pos_option;
     
-    if (!option->section)
+    if (!option || !option->section)
         return;
     
     if (option->section->options)
@@ -521,6 +524,9 @@ config_file_option_full_name (struct t_config_option *option)
 {
     int length_option;
     char *option_full_name;
+    
+    if (!option)
+        return NULL;
     
     length_option = strlen (option->config_file->name) + 1 +
         strlen (option->section->name) + 1 + strlen (option->name) + 1;
@@ -1187,6 +1193,9 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
     int rc;
     char *option_full_name;
     
+    if (!option)
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     /* null value is authorized only if it's allowed in option */
@@ -1242,6 +1251,9 @@ config_file_option_unset (struct t_config_option *option)
 {
     int rc;
     char *option_full_name;
+    
+    if (!option)
+        return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
     
     rc = WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
     
@@ -1305,7 +1317,7 @@ void
 config_file_option_rename (struct t_config_option *option,
                            const char *new_name)
 {
-    if (!new_name || !new_name[0]
+    if (!option || !new_name || !new_name[0]
         || config_file_search_option (option->config_file, option->section, new_name))
         return;
     
@@ -1340,6 +1352,9 @@ void *
 config_file_option_get_pointer (struct t_config_option *option,
                                 const char *property)
 {
+    if (!option || !property)
+        return NULL;
+    
     if (string_strcasecmp (property, "config_file") == 0)
         return option->config_file;
     else if (string_strcasecmp (property, "section") == 0)
