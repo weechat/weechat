@@ -465,6 +465,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             break;
         case GUI_BAR_FILLING_COLUMNS_HORIZONTAL: /* items in columns, with horizontal filling */
         case GUI_BAR_FILLING_COLUMNS_VERTICAL:   /* items in columns, with vertical filling */
+            content = NULL;
             total_items = 0;
             max_length = 1;
             max_length_screen = 1;
@@ -521,68 +522,77 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             }
             
             /* build array with pointers to splitted items */
+            
             linear_items = malloc (total_items * sizeof (*linear_items));
-            index = 0;
-            for (i = 0; i < bar_window->items_count; i++)
+            if (linear_items)
             {
-                if (splitted_items[i])
+                index = 0;
+                for (i = 0; i < bar_window->items_count; i++)
                 {
-                    for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
+                    if (splitted_items[i])
                     {
-                        if (splitted_items[i][sub])
+                        for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                         {
-                            for (j = 0; splitted_items[i][sub][j]; j++)
+                            if (splitted_items[i][sub])
                             {
-                                linear_items[index++] = splitted_items[i][sub][j];
+                                for (j = 0; splitted_items[i][sub][j]; j++)
+                                {
+                                    linear_items[index++] = splitted_items[i][sub][j];
+                                }
                             }
                         }
                     }
                 }
-            }
-            
-            /* build content with lines and columns */
-            content = malloc (1 + (lines *
-                                   ((columns * (max_length + length_reinit_color_space)) + 1)));
-            content[0] = '\0';
-            index_content = 0;
-            for (i = 0; i < lines; i++)
-            {
-                for (j = 0; j < columns; j++)
+                
+                /* build content with lines and columns */
+                content = malloc (1 + (lines *
+                                       ((columns *
+                                         (max_length + max_length_screen + length_reinit_color_space)) + 1)));
+                if (content)
                 {
-                    if (filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
-                        index = (i * columns) + j;
-                    else
-                        index = (j * lines) + i;
-                    
-                    if (index >= total_items)
+                    content[0] = '\0';
+                    index_content = 0;
+                    for (i = 0; i < lines; i++)
                     {
-                        for (k = 0; k < max_length_screen; k++)
+                        for (j = 0; j < columns; j++)
                         {
-                            content[index_content++] = ' ';
+                            if (filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
+                                index = (i * columns) + j;
+                            else
+                                index = (j * lines) + i;
+                            
+                            if (index >= total_items)
+                            {
+                                for (k = 0; k < max_length_screen; k++)
+                                {
+                                    content[index_content++] = ' ';
+                                }
+                            }
+                            else
+                            {
+                                strcpy (content + index_content, linear_items[index]);
+                                index_content += strlen (linear_items[index]);
+                                length = max_length_screen -
+                                    gui_chat_strlen_screen (linear_items[index]);
+                                for (k = 0; k < length; k++)
+                                {
+                                    content[index_content++] = ' ';
+                                }
+                            }
+                            if (j < columns - 1)
+                            {
+                                strcpy (content + index_content, reinit_color_space);
+                                index_content += length_reinit_color_space;
+                            }
                         }
+                        content[index_content++] = '\n';
                     }
-                    else
-                    {
-                        strcpy (content + index_content, linear_items[index]);
-                        index_content += strlen (linear_items[index]);
-                        length = max_length_screen -
-                            gui_chat_strlen_screen (linear_items[index]);
-                        for (k = 0; k < length; k++)
-                        {
-                            content[index_content++] = ' ';
-                        }
-                    }
-                    if (j < columns - 1)
-                    {
-                        strcpy (content + index_content, reinit_color_space);
-                        index_content += length_reinit_color_space;
-                    }
+                    content[index_content] = '\0';
                 }
-                content[index_content++] = '\n';
+                
+                free (linear_items);
             }
-            content[index_content] = '\0';
             
-            free (linear_items);
             for (i = 0; i < bar_window->items_count; i++)
             {
                 if (splitted_items[i])
