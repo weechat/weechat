@@ -56,7 +56,9 @@ void
 jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
                      const char *message)
 {
-    char *buf;
+    char *buf, *buf2;
+    const char *ptr_buf;
+    int pos_buf, pos_buf2, char_size, i;
     
     if (!weechat_jabber_plugin->debug || !message)
         return;
@@ -89,6 +91,32 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
     }
     
     buf = weechat_iconv_to_internal (NULL, message);
+    buf2 = malloc ((strlen (buf) * 3) + 1);
+    if (buf2)
+    {
+        ptr_buf = (buf) ? buf : message;
+        pos_buf = 0;
+        pos_buf2 = 0;
+        while (ptr_buf[pos_buf])
+        {
+            if (ptr_buf[pos_buf] < 32)
+            {
+                buf2[pos_buf2++] = '\\';
+                buf2[pos_buf2++] = (ptr_buf[pos_buf] / 10) + '0';
+                buf2[pos_buf2++] = (ptr_buf[pos_buf] % 10) + '0';
+                pos_buf++;
+            }
+            else
+            {
+                char_size = weechat_utf8_char_size (ptr_buf + pos_buf);
+                for (i = 0; i < char_size; i++)
+                {
+                    buf2[pos_buf2++] = ptr_buf[pos_buf++];
+                }
+            }
+        }
+        buf2[pos_buf2] = '\0';
+    }
     
     weechat_printf (jabber_debug_buffer,
                     "%s%s%s%s%s%s\t%s",
@@ -102,9 +130,11 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
                     (send) ?
                     ((modified) ? JABBER_DEBUG_PREFIX_SEND_MOD : JABBER_DEBUG_PREFIX_SEND) :
                     ((modified) ? JABBER_DEBUG_PREFIX_RECV_MOD : JABBER_DEBUG_PREFIX_RECV),
-                    (buf) ? buf : message);
+                    (buf2) ? buf2 : ((buf) ? buf : message));
     if (buf)
         free (buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*
