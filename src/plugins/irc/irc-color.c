@@ -160,6 +160,8 @@ irc_color_decode (const char *string, int keep_colors)
                                   (bg >= 0) ? irc_color_to_weechat[bg] : "");
                         strcat ((char *)out, weechat_color(str_color));
                     }
+                    else
+                        strcat ((char *)out, weechat_color("reset"));
                 }
                 break;
             default:
