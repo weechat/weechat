@@ -745,7 +745,8 @@ plugin_remove (struct t_weechat_plugin *plugin)
     /* free data */
     if (plugin->filename)
         free (plugin->filename);
-    dlclose (plugin->handle);
+    if (!weechat_plugin_no_dlclose)
+        dlclose (plugin->handle);
     if (plugin->name)
         free (plugin->name);
     if (plugin->description)

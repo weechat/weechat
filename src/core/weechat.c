@@ -79,6 +79,8 @@ char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
+int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
+                                       /* (useful when using valgrind)      */
 
 
 /*
@@ -158,6 +160,7 @@ weechat_parse_args (int argc, char *argv[])
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
     weechat_auto_load_plugins = 1;
+    weechat_plugin_no_dlclose = 0;
     
     for (i = 1; i < argc; i++)
     {
@@ -192,6 +195,14 @@ weechat_parse_args (int argc, char *argv[])
         {
             string_iconv_fprintf (stdout, "\n%s%s", WEECHAT_LICENSE);
             weechat_shutdown (EXIT_SUCCESS, 0);
+        }
+        else if (strcmp (argv[i], "--no-dlclose") == 0)
+        {
+            /* tools like valgrind work better when dlclose() is not done
+               after plugins are unloaded, they can display stack for plugins,
+               otherwise you'll see "???" in stack for functions of unloaded
+               plugins -- this option should not be used for other purposes! */
+            weechat_plugin_no_dlclose = 1;
         }
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))

@@ -105,6 +105,7 @@ extern time_t weechat_start_time;
 extern int weechat_quit;
 extern char *weechat_home;
 extern char *weechat_local_charset;
+extern int weechat_plugin_no_dlclose;
 
 extern void weechat_shutdown (int return_code, int crash);
 
