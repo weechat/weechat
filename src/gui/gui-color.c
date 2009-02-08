@@ -225,15 +225,28 @@ gui_color_decode (const unsigned char *string)
                 string++;
                 switch (string[0])
                 {
-                    case 'F':
-                    case 'B':
+                    case GUI_COLOR_FG_CHAR:
+                    case GUI_COLOR_BG_CHAR:
                         if (string[1] && string[2])
                             string += 3;
                         break;
-                    case '*':
+                    case GUI_COLOR_FG_BG_CHAR:
                         if (string[1] && string[2] && (string[3] == ',')
                             && string[4] && string[5])
                             string += 6;
+                        break;
+                    case GUI_COLOR_BAR_CHAR:
+                        string++;
+                        switch (string[0])
+                        {
+                            case GUI_COLOR_BAR_FG_CHAR:
+                            case GUI_COLOR_BAR_BG_CHAR:
+                            case GUI_COLOR_BAR_DELIM_CHAR:
+                            case GUI_COLOR_BAR_START_INPUT_CHAR:
+                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                                string++;
+                                break;
+                        }
                         break;
                     default:
                         if (isdigit (string[0]) && isdigit (string[1]))
@@ -257,6 +270,7 @@ gui_color_decode (const unsigned char *string)
                 memcpy (out + out_pos, string, length);
                 out_pos += length;
                 string += length;
+                break;
         }
     }
     out[out_pos] = '\0';
