@@ -560,6 +560,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->short_name;
         else if (string_strcasecmp (property, "title") == 0)
             return buffer->title;
+        else if (string_strcasecmp (property, "input") == 0)
+            return buffer->input_buffer;
         else if (string_strncasecmp (property, "localvar_", 9) == 0)
         {
             ptr_local_var = gui_buffer_local_var_search (buffer, property + 9);
