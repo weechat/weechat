@@ -179,6 +179,10 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                             (auto_switch) ? "auto" : "1");
     }
     
+    weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
+                              "irc_channel_opened" : "irc_pv_opened",
+                              WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+    
     /* all is ok, return address of new channel */
     return new_channel;
 }
