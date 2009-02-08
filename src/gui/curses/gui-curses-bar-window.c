@@ -170,161 +170,168 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     
     while (string && string[0])
     {
-        if (string[0] == GUI_COLOR_COLOR_CHAR)
+        switch (string[0])
         {
-            string++;
-            switch (string[0])
-            {
-                case GUI_COLOR_FG_CHAR: /* fg color */
-                    if (string[1] && string[2])
-                    {
-                        str_fg[0] = string[1];
-                        str_fg[1] = string[2];
-                        str_fg[2] = '\0';
-                        sscanf (str_fg, "%d", &fg);
-                        gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                        fg);
-                        string += 3;
-                    }
-                    break;
-                case GUI_COLOR_BG_CHAR: /* bg color */
-                    if (string[1] && string[2])
-                    {
-                        str_bg[0] = string[1];
-                        str_bg[1] = string[2];
-                        str_bg[2] = '\0';
-                        sscanf (str_bg, "%d", &bg);
-                        gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                        bg);
-                        string += 3;
-                    }
-                    break;
-                case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
-                    if (string[1] && string[2] && (string[3] == ',')
-                        && string[4] && string[5])
-                    {
-                        str_fg[0] = string[1];
-                        str_fg[1] = string[2];
-                        str_fg[2] = '\0';
-                        str_bg[0] = string[4];
-                        str_bg[1] = string[5];
-                        str_bg[2] = '\0';
-                        sscanf (str_fg, "%d", &fg);
-                        sscanf (str_bg, "%d", &bg);
-                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                           fg, bg);
-                        string += 6;
-                    }
-                    break;
-                case GUI_COLOR_BAR_CHAR: /* bar color */
-                    switch (string[1])
-                    {
-                        case GUI_COLOR_BAR_FG_CHAR:
-                            /* bar foreground */
-                            gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
-                            string += 2;
-                            break;
-                        case GUI_COLOR_BAR_DELIM_CHAR:
-                            /* bar delimiter */
-                            gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
-                            string += 2;
-                            break;
-                        case GUI_COLOR_BAR_BG_CHAR:
-                            /* bar background */
-                            gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                            string += 2;
-                            break;
-                        case GUI_COLOR_BAR_START_INPUT_CHAR:
-                            string += 2;
-                            break;
-                        case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                            /* move cursor to current position on screen */
-                            getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                   bar_window->cursor_y, bar_window->cursor_x);
-                            bar_window->cursor_x += bar_window->x;
-                            bar_window->cursor_y += bar_window->y;
-                            string += 2;
-                            break;
-                        default:
-                            string++;
-                            break;
-                    }
-                    break;
-                default:
-                    if (isdigit (string[0]) && isdigit (string[1]))
-                    {
-                        str_fg[0] = string[0];
-                        str_fg[1] = string[1];
-                        str_fg[2] = '\0';
-                        sscanf (str_fg, "%d", &weechat_color);
-                        gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                      weechat_color);
-                        string += 2;
-                    }
-                    break;
-            }
-        }
-        else
-        {
-            next_char = utf8_next_char (string);
-            if (!next_char)
-                break;
-            
-            memcpy (utf_char, string, next_char - string);
-            utf_char[next_char - string] = '\0';
-            
-            if ((((unsigned char)utf_char[0]) < 32) && (!utf_char[1]))
-            {
-                low_char = 1;
-                snprintf (utf_char, sizeof (utf_char), "%c",
-                          'A' + ((unsigned char)utf_char[0]) - 1);
-            }
-            else
-            {
-                low_char = 0;
-                if (!gui_window_utf_char_valid (utf_char))
-                    snprintf (utf_char, sizeof (utf_char), ".");
-            }
-            
-            size_on_screen = utf8_char_size_screen (utf_char);
-            if (size_on_screen > 0)
-            {
-                if (x_with_hidden < bar_window->scroll_x)
+            case GUI_COLOR_COLOR_CHAR:
+                string++;
+                switch (string[0])
                 {
-                    /* hidden char (before scroll_x value) */
-                    x_with_hidden++;
+                    case GUI_COLOR_FG_CHAR: /* fg color */
+                        if (string[1] && string[2])
+                        {
+                            str_fg[0] = string[1];
+                            str_fg[1] = string[2];
+                            str_fg[2] = '\0';
+                            sscanf (str_fg, "%d", &fg);
+                            gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                            fg);
+                            string += 3;
+                        }
+                        break;
+                    case GUI_COLOR_BG_CHAR: /* bg color */
+                        if (string[1] && string[2])
+                        {
+                            str_bg[0] = string[1];
+                            str_bg[1] = string[2];
+                            str_bg[2] = '\0';
+                            sscanf (str_bg, "%d", &bg);
+                            gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                            bg);
+                            string += 3;
+                        }
+                        break;
+                    case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
+                        if (string[1] && string[2] && (string[3] == ',')
+                            && string[4] && string[5])
+                        {
+                            str_fg[0] = string[1];
+                            str_fg[1] = string[2];
+                            str_fg[2] = '\0';
+                            str_bg[0] = string[4];
+                            str_bg[1] = string[5];
+                            str_bg[2] = '\0';
+                            sscanf (str_fg, "%d", &fg);
+                            sscanf (str_bg, "%d", &bg);
+                            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                               fg, bg);
+                            string += 6;
+                        }
+                        break;
+                    case GUI_COLOR_BAR_CHAR: /* bar color */
+                        switch (string[1])
+                        {
+                            case GUI_COLOR_BAR_FG_CHAR:
+                                /* bar foreground */
+                                gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                                string += 2;
+                                break;
+                            case GUI_COLOR_BAR_DELIM_CHAR:
+                                /* bar delimiter */
+                                gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
+                                string += 2;
+                                break;
+                            case GUI_COLOR_BAR_BG_CHAR:
+                                /* bar background */
+                                gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                string += 2;
+                                break;
+                            case GUI_COLOR_BAR_START_INPUT_CHAR:
+                                string += 2;
+                                break;
+                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                                /* move cursor to current position on screen */
+                                getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                       bar_window->cursor_y, bar_window->cursor_x);
+                                bar_window->cursor_x += bar_window->x;
+                                bar_window->cursor_y += bar_window->y;
+                                string += 2;
+                                break;
+                            default:
+                                string++;
+                                break;
+                        }
+                        break;
+                    default:
+                        if (isdigit (string[0]) && isdigit (string[1]))
+                        {
+                            str_fg[0] = string[0];
+                            str_fg[1] = string[1];
+                            str_fg[2] = '\0';
+                            sscanf (str_fg, "%d", &weechat_color);
+                            gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                          weechat_color);
+                            string += 2;
+                        }
+                        break;
+                }
+                break;
+            case GUI_COLOR_RESET_CHAR:
+                gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                string++;
+                break;
+            default:
+                next_char = utf8_next_char (string);
+                if (!next_char)
+                    break;
+                
+                memcpy (utf_char, string, next_char - string);
+                utf_char[next_char - string] = '\0';
+                
+                if ((((unsigned char)utf_char[0]) < 32) && (!utf_char[1]))
+                {
+                    low_char = 1;
+                    snprintf (utf_char, sizeof (utf_char), "%c",
+                              'A' + ((unsigned char)utf_char[0]) - 1);
                 }
                 else
                 {
-                    if (*x + size_on_screen > bar_window->width)
-                    {
-                        if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_VERTICAL)
-                            return 0;
-                        if (*y >= bar_window->height - 1)
-                            return 0;
-                        *x = 0;
-                        (*y)++;
-                        wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
-                    }
-                    
-                    output = string_iconv_from_internal (NULL, utf_char);
-                    if (low_char)
-                        wattron (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                    wprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, "%s",
-                             (output) ? output : utf_char);
-                    if (low_char)
-                        wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                    if (output)
-                        free (output);
-                    
-                    *x += size_on_screen;
+                    low_char = 0;
+                    if (!gui_window_utf_char_valid (utf_char))
+                        snprintf (utf_char, sizeof (utf_char), ".");
                 }
-            }
-            
-            string = next_char;
+                
+                size_on_screen = utf8_char_size_screen (utf_char);
+                if (size_on_screen > 0)
+                {
+                    if (x_with_hidden < bar_window->scroll_x)
+                    {
+                        /* hidden char (before scroll_x value) */
+                        x_with_hidden++;
+                    }
+                    else
+                    {
+                        if (*x + size_on_screen > bar_window->width)
+                        {
+                            if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_VERTICAL)
+                                return 0;
+                            if (*y >= bar_window->height - 1)
+                                return 0;
+                            *x = 0;
+                            (*y)++;
+                            wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
+                        }
+                        
+                        output = string_iconv_from_internal (NULL, utf_char);
+                        if (low_char)
+                            wattron (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
+                        wprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, "%s",
+                                 (output) ? output : utf_char);
+                        if (low_char)
+                            wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
+                        if (output)
+                            free (output);
+                        
+                        *x += size_on_screen;
+                    }
+                }
+                string = next_char;
+                break;
         }
     }
     return 1;

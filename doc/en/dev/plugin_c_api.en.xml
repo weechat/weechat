@@ -5153,6 +5153,99 @@ struct t_hook *my_command_hook =
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_hook_command_run">
+      <title>weechat_hook_command_run</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_command_run (
+    const char *command,
+    int (*callback)(void *data,
+                    struct t_gui_buffer *buffer,
+                    const char *command),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a command when WeeChat runs it.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>command</option>: command to hook, may start or end with
+              "*" as joker
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when command is run,
+              arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>struct t_gui_buffer *</entry>
+                      <entry>buffer</entry>
+                      <entry>buffer where command is executed</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>command</entry>
+                      <entry>the command executed, with its arguments</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+                The callback can return WEECHAT_RC_OK or WEECHAT_RC_OK_EAT (ok
+                and "eat" command, will not be executed by WeeChat after
+                callback).
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                   const char *command)
+{
+    weechat_printf (NULL,
+                    "You wanted to complete? I'm eating the completion ahah!");
+    return WEECHAT_RC_OK_EAT;
+}
+
+struct t_hook *my_command_run_hook =
+    weechat_hook_command_run ("/input complete*",
+                              &amp;my_command_run_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
     <section id="secPluginCApi_weechat_hook_timer">
       <title>weechat_hook_timer</title>
       
@@ -6868,6 +6961,10 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer, const char *
                     <row>
                       <entry>tilte</entry>
                       <entry>title of buffer</entry>
+                    </row>
+                    <row>
+                      <entry>input</entry>
+                      <entry>input text</entry>
                     </row>
                     <row>
                       <entry>localvar_xxx</entry>

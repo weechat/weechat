@@ -350,6 +350,7 @@ plugin_load (const char *filename)
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_splitted_command = &string_free_splitted_command;
         new_plugin->string_format_size = &string_format_size;
+        new_plugin->string_remove_color = &string_remove_color;
         
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;
@@ -435,6 +436,7 @@ plugin_load (const char *filename)
         new_plugin->log_printf = &log_printf;
         
         new_plugin->hook_command = &hook_command;
+        new_plugin->hook_command_run = &hook_command_run;
         new_plugin->hook_timer = &hook_timer;
         new_plugin->hook_fd = &hook_fd;
         new_plugin->hook_connect = &hook_connect;

@@ -315,6 +315,38 @@ weechat_python_api_ngettext (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_string_remove_color: remove WeeChat color codes from string
+ */
+
+static PyObject *
+weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
+{
+    char *string, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_remove_color (string);
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2425,6 +2457,79 @@ weechat_python_api_hook_command (PyObject *self, PyObject *args)
                                                       completion,
                                                       &weechat_python_api_hook_command_cb,
                                                       function));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_command_run_cb: callback for command_run hooked
+ */
+
+int
+weechat_python_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                                        const char *command)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[3];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = script_ptr2str (buffer);
+    python_argv[1] = (char *)command;
+    python_argv[2] = NULL;
+    
+    rc = (int *) weechat_python_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_INT,
+                                      script_callback->function,
+                                      python_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (python_argv[0])
+        free (python_argv[0]);
+    
+    return ret;
+}
+
+/*
+ * weechat_python_api_hook_command_run: hook a command_run
+ */
+
+static PyObject *
+weechat_python_api_hook_command_run (PyObject *self, PyObject *args)
+{
+    char *command, *function, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    command = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &command, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_command_run (weechat_python_plugin,
+                                                          python_current_script,
+                                                          command,
+                                                          &weechat_python_api_hook_command_run_cb,
+                                                          function));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -5049,6 +5154,7 @@ PyMethodDef weechat_python_funcs[] =
     { "iconv_from_internal", &weechat_python_api_iconv_from_internal, METH_VARARGS, "" },
     { "gettext", &weechat_python_api_gettext, METH_VARARGS, "" },
     { "ngettext", &weechat_python_api_ngettext, METH_VARARGS, "" },
+    { "string_remove_color", &weechat_python_api_string_remove_color, METH_VARARGS, "" },
     { "mkdir_home", &weechat_python_api_mkdir_home, METH_VARARGS, "" },
     { "mkdir", &weechat_python_api_mkdir, METH_VARARGS, "" },
     { "mkdir_parents", &weechat_python_api_mkdir_parents, METH_VARARGS, "" },
@@ -5099,6 +5205,7 @@ PyMethodDef weechat_python_funcs[] =
     { "prnt_y", &weechat_python_api_prnt_y, METH_VARARGS, "" },
     { "log_print", &weechat_python_api_log_print, METH_VARARGS, "" },
     { "hook_command", &weechat_python_api_hook_command, METH_VARARGS, "" },
+    { "hook_command_run", &weechat_python_api_hook_command_run, METH_VARARGS, "" },
     { "hook_timer", &weechat_python_api_hook_timer, METH_VARARGS, "" },
     { "hook_fd", &weechat_python_api_hook_fd, METH_VARARGS, "" },
     { "hook_connect", &weechat_python_api_hook_connect, METH_VARARGS, "" },

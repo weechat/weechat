@@ -48,6 +48,7 @@ struct t_weelist;
 
 /* return codes for plugin functions */
 #define WEECHAT_RC_OK                               0
+#define WEECHAT_RC_OK_EAT                           1
 #define WEECHAT_RC_ERROR                           -1
 
 /* return codes for config read functions/callbacks */
@@ -159,6 +160,7 @@ struct t_weechat_plugin
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_splitted_command) (char **splitted_command);
     char *(*string_format_size) (unsigned long size);
+    char *(*string_remove_color) (const char *string);
     
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -345,6 +347,12 @@ struct t_weechat_plugin
                                                     int argc, char **argv,
                                                     char **argv_eol),
                                     void *callback_data);
+    struct t_hook *(*hook_command_run) (struct t_weechat_plugin *plugin,
+                                        const char *command,
+                                        int (*callback)(void *data,
+                                                        struct t_gui_buffer *buffer,
+                                                        const char *command),
+                                        void *callback_data);
     struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                                   long interval,
                                   int align_second,
@@ -667,6 +675,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_free_splitted_command(__splitted_command)
 #define weechat_string_format_size(__size)                              \
     weechat_plugin->string_format_size(__size)
+#define weechat_string_remove_color(__string)                           \
+    weechat_plugin->string_remove_color(__string)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
@@ -901,6 +911,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_command(weechat_plugin, __command,             \
                                  __description, __args, __args_desc,    \
                                  __completion, __callback, __data)
+#define weechat_hook_command_run(__command, __callback, __data)         \
+    weechat_plugin->hook_command_run(weechat_plugin, __command,         \
+                                     __callback, __data)
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
     weechat_plugin->hook_timer(weechat_plugin, __interval,              \

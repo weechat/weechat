@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-30 14:55+0100\n"
+"POT-Creation-Date: 2009-02-04 18:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -413,6 +413,9 @@ msgid "  written by \"%s\", license: %s"
 msgstr ""
 
 msgid "    commands hooked:"
+msgstr ""
+
+msgid "    command_run hooked:"
 msgstr ""
 
 msgid "    timers hooked:"

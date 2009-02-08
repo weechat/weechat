@@ -308,6 +308,36 @@ static XS (XS_weechat_api_ngettext)
 }
 
 /*
+ * weechat::string_remove_color: remove WeeChat color codes from string
+ */
+
+static XS (XS_weechat_api_string_remove_color)
+{
+    char *result, *string;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        PERL_RETURN_EMPTY;
+    }
+    
+    string = SvPV (ST (0), PL_na);
+    result = weechat_string_remove_color (string);
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::mkdir_home: create a directory in WeeChat home
  */
 
@@ -2277,6 +2307,77 @@ static XS (XS_weechat_api_hook_command)
                                                       completion,
                                                       &weechat_perl_api_hook_command_cb,
                                                       function));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_hook_command_run_cb: callback for command_run hooked
+ */
+
+int
+weechat_perl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                                      const char *command)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[3];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = script_ptr2str (buffer);
+    perl_argv[1] = (char *)command;
+    perl_argv[2] = NULL;
+    
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (perl_argv[0])
+        free (perl_argv[0]);
+    
+    return ret;
+}
+
+/*
+ * weechat::hook_command_run: hook a command_run
+ */
+
+static XS (XS_weechat_api_hook_command_run)
+{
+    char *result, *command, *function;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        PERL_RETURN_EMPTY;
+    }
+    
+    command = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
+    result = script_ptr2str (script_api_hook_command_run (weechat_perl_plugin,
+                                                          perl_current_script,
+                                                          command,
+                                                          &weechat_perl_api_hook_command_run_cb,
+                                                          function));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -4750,6 +4851,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::iconv_from_internal", XS_weechat_api_iconv_from_internal, "weechat");
     newXS ("weechat::gettext", XS_weechat_api_gettext, "weechat");
     newXS ("weechat::ngettext", XS_weechat_api_ngettext, "weechat");
+    newXS ("weechat::string_remove_color", XS_weechat_api_string_remove_color, "weechat");
     newXS ("weechat::mkdir_home", XS_weechat_api_mkdir_home, "weechat");
     newXS ("weechat::mkdir", XS_weechat_api_mkdir, "weechat");
     newXS ("weechat::mkdir_parents", XS_weechat_api_mkdir_parents, "weechat");
@@ -4800,6 +4902,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::print_y", XS_weechat_api_print_y, "weechat");
     newXS ("weechat::log_print", XS_weechat_api_log_print, "weechat");
     newXS ("weechat::hook_command", XS_weechat_api_hook_command, "weechat");
+    newXS ("weechat::hook_command_run", XS_weechat_api_hook_command_run, "weechat");
     newXS ("weechat::hook_timer", XS_weechat_api_hook_timer, "weechat");
     newXS ("weechat::hook_fd", XS_weechat_api_hook_fd, "weechat");
     newXS ("weechat::hook_connect", XS_weechat_api_hook_connect, "weechat");
@@ -4864,6 +4967,7 @@ weechat_perl_api_init (pTHX)
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK", newSViv (WEECHAT_RC_OK));
+    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_EAT", newSViv (WEECHAT_RC_OK_EAT));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_ERROR", newSViv (WEECHAT_RC_ERROR));
     
     newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_READ_OK", newSViv (WEECHAT_CONFIG_READ_OK));

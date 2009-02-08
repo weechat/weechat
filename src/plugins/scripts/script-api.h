@@ -108,6 +108,13 @@ extern struct t_hook *script_api_hook_command (struct t_weechat_plugin *weechat_
                                                                int argc, char **argv,
                                                                char **argv_eol),
                                                const char *function);
+extern struct t_hook *script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
+                                                   struct t_plugin_script *script,
+                                                   const char *command,
+                                                   int (*callback)(void *data,
+                                                                   struct t_gui_buffer *buffer,
+                                                                   const char *command),
+                                                   const char *function);
 extern struct t_hook *script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                                              struct t_plugin_script *script,
                                              int interval, int align_second,

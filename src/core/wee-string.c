@@ -51,6 +51,7 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
+#include "../gui/gui-color.h"
 
 
 /*
@@ -1279,4 +1280,14 @@ string_format_size (unsigned long size)
               (size <= 1) ? _("byte") : _(unit_name[num_unit]));
     
     return strdup (str_size);
+}
+
+/*
+ * string_remove_color: remove WeeChat color codes in string
+ */
+
+char *
+string_remove_color (const char *string)
+{
+    return (char *)gui_color_decode ((unsigned char *)string);
 }

@@ -432,6 +432,39 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_string_remove_color: remove WeeChat color codes from string
+ */
+
+static int
+weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *result, *string;
+    int i; 
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        TCL_RETURN_EMPTY;
+    }
+    
+    string = Tcl_GetStringFromObj (objv[1], &i);
+    result = weechat_string_remove_color (string);
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2631,6 +2664,80 @@ weechat_tcl_api_hook_command (ClientData clientData, Tcl_Interp *interp,
                                                       completion,
                                                       &weechat_tcl_api_hook_command_cb,
                                                       function));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hook_command_run_cb: callback for command_run hooked
+ */
+
+int
+weechat_tcl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                                     const char *command)
+{
+    struct t_script_callback *script_callback;
+    char *tcl_argv[3];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    tcl_argv[0] = script_ptr2str (buffer);
+    tcl_argv[1] = (char *)command;
+    tcl_argv[2] = NULL;
+    
+    rc = (int *) weechat_tcl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    tcl_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (tcl_argv[0])
+        free (tcl_argv[0]);
+    
+    return ret;
+}
+
+/*
+ * weechat_tcl_api_hook_command_run: hook a command_run
+ */
+
+static int
+weechat_tcl_api_hook_command_run (ClientData clientData, Tcl_Interp *interp,
+                                  int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result, *command, *function;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+	TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        TCL_RETURN_EMPTY;
+    }
+
+    command = Tcl_GetStringFromObj (objv[1], &i);
+    function = Tcl_GetStringFromObj (objv[2], &i);
+    result = script_ptr2str (script_api_hook_command_run (weechat_tcl_plugin,
+                                                          tcl_current_script,
+                                                          command,
+                                                          &weechat_tcl_api_hook_command_run_cb,
+                                                          function));
     
     TCL_RETURN_STRING_FREE(result);
 }
@@ -5353,6 +5460,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
     Tcl_IncrRefCount (objp);
 
     Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetIntObj (objp,WEECHAT_RC_OK_EAT);
+    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK_EAT", Tcl_GetStringFromObj (objp, &i),0);
     Tcl_SetIntObj (objp,WEECHAT_RC_ERROR);
     Tcl_SetVar (interp, "weechat::WEECHAT_RC_ERROR", Tcl_GetStringFromObj (objp, &i),0);
     
@@ -5444,6 +5553,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_gettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::ngettext",
                           weechat_tcl_api_ngettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::string_remove_color",
+                          weechat_tcl_api_string_remove_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::mkdir_home",
                           weechat_tcl_api_mkdir_home, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::mkdir",
@@ -5544,6 +5655,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_log_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::hook_command",
                           weechat_tcl_api_hook_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::hook_command_run",
+                          weechat_tcl_api_hook_command_run, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::hook_timer",
                           weechat_tcl_api_hook_timer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::hook_fd",

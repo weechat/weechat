@@ -35,6 +35,7 @@ struct t_infolist;
 enum t_hook_type
 {
     HOOK_TYPE_COMMAND = 0,             /* new command                       */
+    HOOK_TYPE_COMMAND_RUN,             /* when a command is executed        */
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_CONNECT,                 /* connect to peer with fork         */
@@ -59,6 +60,7 @@ enum t_hook_type
 
 /* macros to access hook specific data */
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
+#define HOOK_COMMAND_RUN(hook, var) (((struct t_hook_command_run *)hook->hook_data)->var)
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 #define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
@@ -99,6 +101,16 @@ struct t_hook_command
     char *args;                        /* (for /help) command arguments     */
     char *args_description;            /* (for /help) args long description */
     char *completion;                  /* template for completion           */
+};
+
+typedef int (t_hook_callback_command_run)(void *data,
+                                          struct t_gui_buffer *buffer,
+                                          const char *command);
+
+struct t_hook_command_run
+{
+    t_hook_callback_command_run *callback; /* command_run callback          */
+    char *command;                     /* name of command (without '/')     */
 };
 
 typedef int (t_hook_callback_timer)(void *data);
@@ -232,13 +244,22 @@ extern struct t_hook *last_weechat_hook[];
 
 extern void hook_init ();
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
-                                    const char *command, const char *description,
-                                    const char *args, const char *args_description,
+                                    const char *command,
+                                    const char *description,
+                                    const char *args,
+                                    const char *args_description,
                                     const char *completion,
                                     t_hook_callback_command *callback,
                                     void *callback_data);
 extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
-                              struct t_weechat_plugin *plugin, const char *string);
+                              struct t_weechat_plugin *plugin,
+                              const char *string);
+extern struct t_hook *hook_command_run (struct t_weechat_plugin *plugin,
+                                        const char *command,
+                                        t_hook_callback_command_run *callback,
+                                        void *callback_data);
+extern int hook_command_run_exec (struct t_gui_buffer *buffer,
+                                  const char *command);
 extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   long interval, int align_second,
                                   int max_calls,
@@ -276,7 +297,8 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    void *callback_data);
 extern void hook_signal_send (const char *signal, const char *type_data,
                               void *signal_data);
-extern struct t_hook *hook_config (struct t_weechat_plugin *, const char *option,
+extern struct t_hook *hook_config (struct t_weechat_plugin *plugin,
+                                   const char *option,
                                    t_hook_callback_config *callback,
                                    void *callback_data);
 extern void hook_config_exec (const char *option, const char *value);

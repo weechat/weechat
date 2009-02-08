@@ -356,6 +356,7 @@ weechat_python_load (const char *filename)
     /* define some constants */
     weechat_dict = PyModule_GetDict(weechat_module);
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK", PyInt_FromLong((long) WEECHAT_RC_OK));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_EAT", PyInt_FromLong((long) WEECHAT_RC_OK_EAT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_ERROR", PyInt_FromLong((long) WEECHAT_RC_ERROR));
     
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_READ_OK", PyInt_FromLong((long) WEECHAT_CONFIG_READ_OK));

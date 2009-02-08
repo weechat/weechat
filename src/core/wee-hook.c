@@ -47,8 +47,8 @@
 
 
 char *hook_type_string[HOOK_NUM_TYPES] =
-{ "command", "timer", "fd", "connect", "print", "signal", "config",
-  "completion", "modifier", "info", "infolist" };
+{ "command", "command_run", "timer", "fd", "connect", "print", "signal",
+  "config", "completion", "modifier", "info", "infolist" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
@@ -328,7 +328,7 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
               const char *completion,
               t_hook_callback_command *callback, void *callback_data)
 {
-    struct t_hook *ptr_hook,*new_hook;
+    struct t_hook *ptr_hook, *new_hook;
     struct t_hook_command *new_hook_command;
 
     if ((string_strcasecmp (command, "builtin") == 0)
@@ -399,10 +399,14 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     char **argv, **argv_eol;
     int argc, rc, command_is_running;
     
-    rc = -1;
-    
     if (!buffer || !string || !string[0])
         return -1;
+    
+    rc = hook_command_run_exec (buffer, string);
+    if (rc == WEECHAT_RC_OK_EAT)
+        return 1;
+    
+    rc = -1;
     
     argv = string_explode (string, " ", 0, 0, &argc);
     if (argc == 0)
@@ -491,6 +495,74 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     hook_exec_end ();
     
     return rc;
+}
+
+/*
+ * hook_command_run: hook a command when it's run by WeeChat
+ */
+
+struct t_hook *
+hook_command_run (struct t_weechat_plugin *plugin, const char *command,
+                  t_hook_callback_command_run *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_command_run *new_hook_command_run;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_command_run = malloc (sizeof (*new_hook_command_run));
+    if (!new_hook_command_run)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND_RUN, callback_data);
+    
+    new_hook->hook_data = new_hook_command_run;
+    new_hook_command_run->callback = callback;
+    new_hook_command_run->command = (command) ?
+        strdup (command) : strdup ("");
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_command_run_exec: execute command_run hook
+ */
+
+int
+hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    int rc;
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND_RUN];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && HOOK_COMMAND_RUN(ptr_hook, command)
+            && (string_match (command, HOOK_COMMAND_RUN(ptr_hook, command), 0)))
+        {
+            ptr_hook->running = 1;
+            rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (ptr_hook->callback_data,
+                                                         buffer,
+                                                         command);
+            ptr_hook->running = 0;
+            if (rc == WEECHAT_RC_OK_EAT)
+                return rc;
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1630,6 +1702,11 @@ unhook (struct t_hook *hook)
                     free (HOOK_COMMAND(hook, completion));
                 free ((struct t_hook_command *)hook->hook_data);
                 break;
+            case HOOK_TYPE_COMMAND_RUN:
+                if (HOOK_COMMAND_RUN(hook, command))
+                    free (HOOK_COMMAND_RUN(hook, command));
+                free ((struct t_hook_command *)hook->hook_data);
+                break;
             case HOOK_TYPE_TIMER:
                 free ((struct t_hook_timer *)hook->hook_data);
                 break;
@@ -1831,6 +1908,15 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                                                   _(HOOK_COMMAND(ptr_hook, args_description)) : ""))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "completion", HOOK_COMMAND(ptr_hook, completion)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_COMMAND_RUN:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_COMMAND_RUN(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "command", HOOK_COMMAND_RUN(ptr_hook, command)))
                         return 0;
                 }
                 break;
@@ -2056,6 +2142,14 @@ hook_print_log ()
                         log_printf ("    args . . . . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, args));
                         log_printf ("    args_description . . : '%s'",  HOOK_COMMAND(ptr_hook, args_description));
                         log_printf ("    completion . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, completion));
+                    }
+                    break;
+                case HOOK_TYPE_COMMAND_RUN:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  command_run data:");
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_COMMAND_RUN(ptr_hook, callback));
+                        log_printf ("    command. . . . . . . : '%s'",  HOOK_COMMAND_RUN(ptr_hook, command));
                     }
                     break;
                 case HOOK_TYPE_TIMER:

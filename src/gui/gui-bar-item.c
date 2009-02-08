@@ -636,9 +636,10 @@ char *
 gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_window *window)
 {
-    char *ptr_input, str_buffer[128], str_start_input[16], str_cursor[16], *buf;
+    char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
+    char str_cursor[16], *buf;
     const char *pos_cursor;
-    int length, buf_pos;
+    int length, length_cursor, length_start_input, buf_pos;
     
     /* make C compiler happy */
     (void) data;
@@ -647,9 +648,22 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
+    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+    length_cursor = strlen (str_cursor);
+    snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_START_INPUT_CHAR);
+    length_start_input = strlen (str_start_input);
+    
+    /* for modifiers */
     snprintf (str_buffer, sizeof (str_buffer),
               "0x%lx", (long unsigned int)(window->buffer));
     
+    /* execute modifier with basic string (without cursor tag) */
     ptr_input = hook_modifier_exec (NULL,
                                     "weechat_input_text_display",
                                     str_buffer,
@@ -660,46 +674,71 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
         ptr_input = (window->buffer->input_buffer) ?
             strdup (window->buffer->input_buffer) : NULL;
     }
-
-    if (!ptr_input)
-        return NULL;
     
     /* insert "move cursor" id in string */
-    snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_BAR_CHAR,
-              GUI_COLOR_BAR_START_INPUT_CHAR);
-    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_BAR_CHAR,
-              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
-    pos_cursor = gui_chat_string_add_offset (ptr_input,
-                                             window->buffer->input_buffer_pos);
-    length = strlen (str_start_input)+ strlen (ptr_input) +
-        strlen (str_cursor) + 1;
-    buf = malloc (length);
-    if (buf)
+    if (ptr_input)
     {
-        snprintf (buf, length, "%s", str_start_input);
-        buf_pos = strlen (buf);
-        
-        if (!pos_cursor)
-            pos_cursor = ptr_input;
-        
-        /* add beginning of buffer */
-        if (pos_cursor != ptr_input)
+        pos_cursor = gui_chat_string_add_offset (ptr_input,
+                                                 window->buffer->input_buffer_pos);
+        length = strlen (ptr_input) + length_cursor + 1;
+        buf = malloc (length);
+        if (buf)
         {
-            memmove (buf + buf_pos, ptr_input, pos_cursor - ptr_input);
-            buf_pos += (pos_cursor - ptr_input);
+            buf_pos = 0;
+            
+            if (!pos_cursor)
+                pos_cursor = ptr_input;
+            
+            /* add beginning of buffer */
+            if (pos_cursor != ptr_input)
+            {
+                memmove (buf + buf_pos, ptr_input, pos_cursor - ptr_input);
+                buf_pos += (pos_cursor - ptr_input);
+            }
+            /* add "move cursor here" identifier in string */
+            snprintf (buf + buf_pos, length - buf_pos, "%s",
+                      str_cursor);
+            /* add end of buffer */
+            strcat (buf, pos_cursor);
+            
+            free (ptr_input);
+            ptr_input = buf;
         }
-        /* add "move cursor here" identifier in string */
-        snprintf (buf + buf_pos, length - buf_pos, "%s",
-                  str_cursor);
-        /* add end of buffer */
-        strcat (buf, pos_cursor);
-        
+    }
+    else
+    {
+        ptr_input = strdup (str_cursor);
+    }
+    
+    /* execute modifier with cursor in string */
+    ptr_input2 = hook_modifier_exec (NULL,
+                                     "weechat_input_text_display_with_cursor",
+                                     str_buffer,
+                                     (ptr_input) ? ptr_input : "");
+    if (ptr_input)
         free (ptr_input);
-        ptr_input = buf;
+    ptr_input = ptr_input2;
+    
+    /* insert "start input" at beginning of string */
+    if (ptr_input)
+    {
+        length = strlen (ptr_input) + length_start_input + 1;
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length, "%s%s", str_start_input, ptr_input);
+            free (ptr_input);
+            ptr_input = buf;
+        }
+    }
+    else
+    {
+        length = length_start_input + length_cursor + 1;
+        ptr_input = malloc (length);
+        if (ptr_input)
+        {
+            snprintf (ptr_input, length, "%s%s", str_start_input, str_cursor);
+        }
     }
     
     return ptr_input;

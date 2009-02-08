@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-01-30 14:55+0100\n"
+"POT-Creation-Date: 2009-02-04 18:41+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -476,6 +476,10 @@ msgstr ""
 
 #, fuzzy
 msgid "    commands hooked:"
+msgstr "     parancskezelők:\n"
+
+#, fuzzy
+msgid "    command_run hooked:"
 msgstr "     parancskezelők:\n"
 
 #, fuzzy

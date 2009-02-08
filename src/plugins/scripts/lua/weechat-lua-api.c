@@ -362,6 +362,43 @@ weechat_lua_api_ngettext (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_string_remove_color: remove WeeChat color codes from string
+ */
+
+static int
+weechat_lua_api_string_remove_color (lua_State *L)
+{
+    const char *string;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        LUA_RETURN_EMPTY;
+    }
+    
+    string = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        LUA_RETURN_EMPTY;
+    }
+    
+    string = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_string_remove_color (string);
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2735,6 +2772,85 @@ weechat_lua_api_hook_command (lua_State *L)
                                                       completion,
                                                       &weechat_lua_api_hook_command_cb,
                                                       function));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_command_run_cb: callback for command_run hooked
+ */
+
+int
+weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                                     const char *command)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[3];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    lua_argv[0] = script_ptr2str (buffer);
+    lua_argv[1] = (char *)command;
+    lua_argv[2] = NULL;
+    
+    rc = (int *) weechat_lua_exec (script_callback->script,
+                                   WEECHAT_SCRIPT_EXEC_INT,
+                                   script_callback->function,
+                                   lua_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (lua_argv[0])
+        free (lua_argv[0]);
+    
+    return ret;
+}
+
+/*
+ * weechat_lua_api_hook_command_run: hook a command_run
+ */
+
+static int
+weechat_lua_api_hook_command_run (lua_State *L)
+{
+    const char *command, *function;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+        LUA_RETURN_EMPTY;
+    }
+    
+    command = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        LUA_RETURN_EMPTY;
+    }
+    
+    command = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_command_run (weechat_lua_plugin,
+                                                          lua_current_script,
+                                                          command,
+                                                          &weechat_lua_api_hook_command_run_cb,
+                                                          function));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -5690,6 +5806,16 @@ weechat_lua_api_constant_weechat_rc_ok (lua_State *L)
 }
 
 static int
+weechat_lua_api_constant_weechat_rc_ok_eat (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_RC_OK_EAT);
+    return 1;
+}
+
+static int
 weechat_lua_api_constant_weechat_rc_error (lua_State *L)
 {
     /* make C compiler happy */
@@ -6041,6 +6167,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "iconv_from_internal", &weechat_lua_api_iconv_from_internal },
     { "gettext", &weechat_lua_api_gettext },
     { "ngettext", &weechat_lua_api_ngettext },
+    { "string_remove_color", &weechat_lua_api_string_remove_color },
     { "mkdir_home", &weechat_lua_api_mkdir_home },
     { "mkdir", &weechat_lua_api_mkdir },
     { "mkdir_parents", &weechat_lua_api_mkdir_parents },
@@ -6091,6 +6218,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "print_y", &weechat_lua_api_print_y },
     { "log_print", &weechat_lua_api_log_print },
     { "hook_command", &weechat_lua_api_hook_command },
+    { "hook_command_run", &weechat_lua_api_hook_command_run },
     { "hook_timer", &weechat_lua_api_hook_timer },
     { "hook_fd", &weechat_lua_api_hook_fd },
     { "hook_connect", &weechat_lua_api_hook_connect },
@@ -6155,6 +6283,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     /* define constants as function which returns values */
     
     { "WEECHAT_RC_OK", &weechat_lua_api_constant_weechat_rc_ok },
+    { "WEECHAT_RC_OK_EAT", &weechat_lua_api_constant_weechat_rc_ok_eat },
     { "WEECHAT_RC_ERROR", &weechat_lua_api_constant_weechat_rc_error },
     
     { "WEECHAT_CONFIG_READ_OK", &weechat_lua_api_constant_weechat_config_read_ok },

@@ -365,6 +365,42 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
 }
 
 /*
+ * weechat_ruby_api_string_remove_color: remove WeeChat color codes from string
+ */
+
+static VALUE
+weechat_ruby_api_string_remove_color (VALUE class, VALUE string)
+{
+    char *c_string, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_string = NULL;
+    
+    if (NIL_P (string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (string, T_STRING);
+    
+    c_string = STR2CSTR (string);
+    
+    result = weechat_string_remove_color (c_string);
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2791,6 +2827,85 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
                                                       c_completion,
                                                       &weechat_ruby_api_hook_command_cb,
                                                       c_function));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_command_run_cb: callback for command_run hooked
+ */
+
+int
+weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+                                      const char *command)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[3];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    ruby_argv[0] = script_ptr2str (buffer);
+    ruby_argv[1] = (char *)command;
+    ruby_argv[2] = NULL;
+    
+    rc = (int *) weechat_ruby_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    ruby_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (ruby_argv[0])
+        free (ruby_argv[0]);
+    
+    return ret;
+}
+
+/*
+ * weechat_ruby_api_hook_command_run: hook a command_run
+ */
+
+static VALUE
+weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function)
+{
+    char *c_command, *c_function, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_command = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (command) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (command, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_command = STR2CSTR (command);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_hook_command_run (weechat_ruby_plugin,
+                                                          ruby_current_script,
+                                                          c_command,
+                                                          &weechat_ruby_api_hook_command_run_cb,
+                                                          c_function));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -5757,6 +5872,7 @@ void
 weechat_ruby_api_init (VALUE ruby_mWeechat)
 {
     rb_define_const(ruby_mWeechat, "WEECHAT_RC_OK", INT2NUM(WEECHAT_RC_OK));
+    rb_define_const(ruby_mWeechat, "WEECHAT_RC_OK_EAT", INT2NUM(WEECHAT_RC_OK_EAT));
     rb_define_const(ruby_mWeechat, "WEECHAT_RC_ERROR", INT2NUM(WEECHAT_RC_ERROR));
     
     rb_define_const(ruby_mWeechat, "WEECHAT_CONFIG_READ_OK", INT2NUM(WEECHAT_CONFIG_READ_OK));
@@ -5804,6 +5920,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "iconv_from_internal", &weechat_ruby_api_iconv_from_internal, 2);
     rb_define_module_function (ruby_mWeechat, "gettext", &weechat_ruby_api_gettext, 1);
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
+    rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 1);
     rb_define_module_function (ruby_mWeechat, "mkdir_home", &weechat_ruby_api_mkdir_home, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir", &weechat_ruby_api_mkdir, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir_parents", &weechat_ruby_api_mkdir_parents, 2);
@@ -5854,6 +5971,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "print_y", &weechat_ruby_api_print_y, 3);
     rb_define_module_function (ruby_mWeechat, "log_print", &weechat_ruby_api_log_print, 1);
     rb_define_module_function (ruby_mWeechat, "hook_command", &weechat_ruby_api_hook_command, 6);
+    rb_define_module_function (ruby_mWeechat, "hook_command_run", &weechat_ruby_api_hook_command_run, 2);
     rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 4);
     rb_define_module_function (ruby_mWeechat, "hook_fd", &weechat_ruby_api_hook_fd, 5);
     rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 7);

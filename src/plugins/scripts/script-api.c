@@ -664,6 +664,45 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_hook_command_run: hook a command_run
+ *                              return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
+                             struct t_plugin_script *script,
+                             const char *command,
+                             int (*callback)(void *data,
+                                             struct t_gui_buffer *buffer,
+                                             const char *command),
+                             const char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+    
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_hook = weechat_hook_command_run (command,
+                                         callback, new_script_callback);
+    if (!new_hook)
+    {
+        script_callback_free_data (new_script_callback);
+        free (new_script_callback);
+        return NULL;
+    }
+    
+    new_script_callback->script = script;
+    new_script_callback->function = strdup (function);
+    new_script_callback->hook = new_hook;
+    
+    script_callback_add (script, new_script_callback);
+    
+    return new_hook;
+}
+
+/*
  * script_api_hook_timer: hook a timer
  *                        return new hook, NULL if error
  */
