@@ -14,6 +14,8 @@ créer un alias pour une commande
   commande: nom de la commande (plusieurs commandes peuvent être séparées par des point-virgules)
 paramètres: paramètres pour la commande
 
+Sans paramètre, cette commande liste tous les alias définis.
+
 Note: dans la commande, les variables spéciales $1, $2,..,$9 sont remplacés par les paramètres donnés par l'utilisateur, et $* est remplacé par tous les paramètres.
 Les variables $nick, $channel et $server sont remplacées par le pseudo/canal/serveur courant.
 </programlisting>

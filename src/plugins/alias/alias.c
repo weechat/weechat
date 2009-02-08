@@ -935,6 +935,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "   command: command name (many commands can be "
                              "separated by semicolons)\n"
                              " arguments: arguments for command\n\n"
+                             "Without argument, this command lists all "
+                             "defined alias.\n\n"
                              "Note: in command, special variables "
                              "$1, $2,..,$9 are replaced by arguments given "
                              "by user, and $* is replaced by all arguments.\n"
