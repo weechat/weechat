@@ -2022,12 +2022,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         ptr_nick = NULL;
                     string = irc_color_decode (argv_eol[2],
                                                weechat_config_boolean (irc_config_network_colors_receive));
-                    weechat_printf (ptr_channel->buffer,
-                                    "%s%s",
-                                    irc_nick_as_prefix ((ptr_nick) ? ptr_nick : NULL,
-                                                        (ptr_nick) ? NULL : ptr_server->nick,
-                                                        IRC_COLOR_CHAT_NICK_SELF),
-                                    (string) ? string : argv_eol[2]);
+                    irc_input_user_message_display (ptr_channel->buffer,
+                                                    (string) ? string : argv_eol[2]);
                     if (string)
                         free (string);
                     
@@ -2048,13 +2044,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                 ptr_nick = NULL;
                             string = irc_color_decode (argv_eol[2],
                                                        weechat_config_boolean (irc_config_network_colors_receive));
-                            weechat_printf (ptr_channel->buffer,
-                                            "%s%s",
-                                            irc_nick_as_prefix ((ptr_nick) ? ptr_nick : NULL,
-                                                                (ptr_nick) ? NULL : ptr_server->nick,
-                                                                IRC_COLOR_CHAT_NICK_SELF),
-                                            (string) ?
-                                            string : argv_eol[2]);
+                            irc_input_user_message_display (ptr_channel->buffer,
+                                                            (string) ? string : argv_eol[2]);
                             if (string)
                                 free (string);
                         }
@@ -2098,10 +2089,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                                               targets[i]);
                             if (ptr_channel)
                             {
-                                weechat_printf (ptr_channel->buffer,
-                                                "%s%s",
-                                                IRC_COLOR_CHAT,
-                                                (string) ? string : argv_eol[2]);
+                                irc_input_user_message_display (ptr_channel->buffer,
+                                                                (string) ? string : argv_eol[2]);
                             }
                             else
                             {
