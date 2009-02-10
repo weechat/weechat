@@ -1987,12 +1987,9 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     char *string;
     
     IRC_GET_SERVER_CHANNEL(buffer);
-    if (!ptr_server || !ptr_server->is_connected)
-        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
-    (void) argv_eol;
     
     if (argc <= 2)
     {
@@ -2005,12 +2002,13 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
-        if (!ptr_server || !ptr_server->is_connected)
-            return WEECHAT_RC_ERROR;
         ptr_channel = NULL;
         arg_target = 3;
         arg_text = 4;
     }
+    
+    if (!ptr_server || !ptr_server->is_connected)
+        return WEECHAT_RC_ERROR;
     
     targets = weechat_string_explode (argv[arg_target], ",", 0, 0,
                                       &num_targets);
@@ -2245,13 +2243,10 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
     int arg_nick, arg_text;
     
     IRC_GET_SERVER(buffer);
-    if (!ptr_server || !ptr_server->is_connected)
-        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
-
+    
     if (argc > 2)
     {
         arg_nick = 1;
@@ -2259,11 +2254,13 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
         {
             ptr_server = irc_server_search (argv[2]);
-            if (!ptr_server || !ptr_server->is_connected)
-                return WEECHAT_RC_ERROR;
             arg_nick = 3;
             arg_text = 4;
         }
+        
+        if (!ptr_server || !ptr_server->is_connected)
+            return WEECHAT_RC_ERROR;
+        
         string = irc_color_decode (argv_eol[arg_text],
                                    weechat_config_boolean (irc_config_network_colors_receive));
         weechat_printf (ptr_server->buffer,
@@ -2511,8 +2508,6 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
     int arg_nick, arg_text;
     
     IRC_GET_SERVER_CHANNEL(buffer);
-    if (!ptr_server || !ptr_server->is_connected)
-        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2524,11 +2519,12 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
         {
             ptr_server = irc_server_search (argv[2]);
-            if (!ptr_server || !ptr_server->is_connected)
-                return WEECHAT_RC_ERROR;
             arg_nick = 3;
             arg_text = 4;
         }
+        
+        if (!ptr_server || !ptr_server->is_connected)
+            return WEECHAT_RC_ERROR;
         
         /* create private window if not already opened */
         ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
@@ -2579,12 +2575,9 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
-    if (!ptr_server || (ptr_server->sock < 0))
-        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
     
     if (argc > 1)
     {
@@ -2597,6 +2590,8 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
+            if (!ptr_server || (ptr_server->sock < 0))
+                return WEECHAT_RC_ERROR;
             irc_server_sendf (ptr_server, "%s", argv_eol[1]);
         }
     }
