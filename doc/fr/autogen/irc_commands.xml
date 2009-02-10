@@ -257,12 +257,13 @@ obtenir le message du jour
 cible: nom du serveur
 </programlisting>
 
-<command>/msg  cible[,cible] texte</command>
+<command>/msg  [-server serveur] cible[,cible] texte</command>
 <programlisting>
 envoyer un message à un pseudo ou canal
 
-cible: pseudo ou canal (peut-être un masque, '*' = canal courant)
-texte: texte à envoyer
+serveur: envoyer à ce serveur (nom interne)
+  cible: pseudo ou canal (peut-être un masque, '*' = canal courant)
+  texte: texte à envoyer
 </programlisting>
 
 <command>/names  [canal[,canal]]</command>
@@ -280,12 +281,13 @@ changer le pseudo courant
 pseudo: nouveau pseudo
 </programlisting>
 
-<command>/notice  pseudo texte</command>
+<command>/notice  [-server serveur] pseudo texte</command>
 <programlisting>
 envoyer un message notice à un utilisateur
 
-pseudo: pseudo cible pour la notice
- texte: texte à envoyer
+serveur: envoyer à ce serveur (nom interne)
+ pseudo: pseudo cible pour la notice
+  texte: texte à envoyer
 </programlisting>
 
 <command>/op  pseudo [pseudo]</command>
@@ -324,18 +326,20 @@ répondre à un message ping
 démon2: faire suivre le message à ce démon
 </programlisting>
 
-<command>/query  pseudo [texte]</command>
+<command>/query  [-server serveur] pseudo [texte]</command>
 <programlisting>
 envoyer un message privé à un pseudo
 
-pseudo: pseudo pour la conversation privée
- texte: texte à envoyer
+serveur: envoyer à ce serveur (nom interne)
+ pseudo: pseudo pour la conversation privée
+  texte: texte à envoyer
 </programlisting>
 
-<command>/quote  données</command>
+<command>/quote  [-server serveur] données</command>
 <programlisting>
 envoyer des données brutes au serveur sans analyse
 
+serveur: envoyer à ce serveur (nom interne)
 données: données brutes à envoyer
 </programlisting>
 

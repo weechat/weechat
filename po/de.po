@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-10 11:58+0100\n"
+"POT-Creation-Date: 2009-02-10 12:42+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2945,12 +2945,15 @@ msgstr "die \"Nachricht von heute\" abfragen"
 msgid "send message to a nick or channel"
 msgstr "Nachricht an Nick/Channel verschicken"
 
-msgid "receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] receiver[,receiver] text"
 msgstr "Empfänger[,Empfänger] Text"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "receiver: nick or channel (may be mask, '*' = current channel)\n"
-"text: text to send"
+"    text: text to send"
 msgstr ""
 "Empfänger: Nick/Channel (darf eine Maske sein, '*' = aktueller Channel)\n"
 "Text: zu sendender Text"
@@ -2980,10 +2983,13 @@ msgstr ""
 msgid "send notice message to user"
 msgstr "NOTICE an einen User verschicken"
 
-msgid "nickname text"
-msgstr "Nickname Text"
+#, fuzzy
+msgid "[-server server] nickname text"
+msgstr "[Server | Nickname]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: user to send notice to\n"
 "    text: text to send"
 msgstr ""
@@ -3045,10 +3051,13 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "private Nachricht an jemanden schicken"
 
-msgid "nickname [text]"
-msgstr "Nickname [Text]"
+#, fuzzy
+msgid "[-server server] nickname [text]"
+msgstr "[Server | Nickname]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: nickname for private conversation\n"
 "    text: text to send"
 msgstr ""
@@ -3058,11 +3067,14 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "Daten direkt an Server senden (siehe RFC 2812)"
 
-msgid "data"
-msgstr "Daten"
+#, fuzzy
+msgid "[-server server] data"
+msgstr "Server1 [Server2]"
 
-msgid "data: raw data to send"
-msgstr "Daten: zu sendende Rohdaten"
+msgid ""
+"server: send to this server (internal name)\n"
+"data: raw data to send"
+msgstr ""
 
 msgid "reconnect to server(s)"
 msgstr "mit einem Server oder mehreren Servern neu verbinden"
@@ -5378,6 +5390,18 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "nickname text"
+#~ msgstr "Nickname Text"
+
+#~ msgid "nickname [text]"
+#~ msgstr "Nickname [Text]"
+
+#~ msgid "data"
+#~ msgstr "Daten"
+
+#~ msgid "data: raw data to send"
+#~ msgstr "Daten: zu sendende Rohdaten"
 
 #, fuzzy
 #~ msgid ""

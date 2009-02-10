@@ -257,12 +257,13 @@ get the "Message Of The Day"
 target: server name
 </programlisting>
 
-<command>/msg  receiver[,receiver] text</command>
+<command>/msg  [-server server] receiver[,receiver] text</command>
 <programlisting>
 send message to a nick or channel
 
+  server: send to this server (internal name)
 receiver: nick or channel (may be mask, '*' = current channel)
-text: text to send
+    text: text to send
 </programlisting>
 
 <command>/names  [channel[,channel]]</command>
@@ -280,10 +281,11 @@ change current nickname
 nickname: new nickname
 </programlisting>
 
-<command>/notice  nickname text</command>
+<command>/notice  [-server server] nickname text</command>
 <programlisting>
 send notice message to user
 
+  server: send to this server (internal name)
 nickname: user to send notice to
     text: text to send
 </programlisting>
@@ -324,18 +326,20 @@ answer to a ping message
 daemon2: forward message to this daemon
 </programlisting>
 
-<command>/query  nickname [text]</command>
+<command>/query  [-server server] nickname [text]</command>
 <programlisting>
 send a private message to a nick
 
+  server: send to this server (internal name)
 nickname: nickname for private conversation
     text: text to send
 </programlisting>
 
-<command>/quote  data</command>
+<command>/quote  [-server server] data</command>
 <programlisting>
 send raw data to server without parsing
 
+server: send to this server (internal name)
 data: raw data to send
 </programlisting>
 

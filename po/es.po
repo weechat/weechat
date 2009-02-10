@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-10 11:58+0100\n"
+"POT-Creation-Date: 2009-02-10 12:42+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2925,12 +2925,15 @@ msgstr "obtener el mensaje del dÃ­a"
 msgid "send message to a nick or channel"
 msgstr "enviar un mensaje a un usuario o canal"
 
-msgid "receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] receiver[,receiver] text"
 msgstr "destinatario[,destinatario] texto"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "receiver: nick or channel (may be mask, '*' = current channel)\n"
-"text: text to send"
+"    text: text to send"
 msgstr ""
 "destinatario: usuario o canal (puede que sea una mÃ¡scara, '*' = canal "
 "actual)\n"
@@ -2962,10 +2965,13 @@ msgstr ""
 msgid "send notice message to user"
 msgstr "enviar mensaje de aviso a usuario"
 
-msgid "nickname text"
-msgstr "usuario texto"
+#, fuzzy
+msgid "[-server server] nickname text"
+msgstr "[servidor | usuario]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: user to send notice to\n"
 "    text: text to send"
 msgstr ""
@@ -3029,10 +3035,13 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "enviar un mensaje privado a un usuario"
 
-msgid "nickname [text]"
-msgstr "usuario [texto]"
+#, fuzzy
+msgid "[-server server] nickname [text]"
+msgstr "[servidor | usuario]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: nickname for private conversation\n"
 "    text: text to send"
 msgstr ""
@@ -3042,11 +3051,14 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "enviar datos en sucio al servidor sin analizar"
 
-msgid "data"
-msgstr "datos"
+#, fuzzy
+msgid "[-server server] data"
+msgstr "servidor1 [servidor2]"
 
-msgid "data: raw data to send"
-msgstr "datos: datos en sucio a enviar"
+msgid ""
+"server: send to this server (internal name)\n"
+"data: raw data to send"
+msgstr ""
 
 #, fuzzy
 msgid "reconnect to server(s)"
@@ -5374,6 +5386,18 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#~ msgid "nickname text"
+#~ msgstr "usuario texto"
+
+#~ msgid "nickname [text]"
+#~ msgstr "usuario [texto]"
+
+#~ msgid "data"
+#~ msgstr "datos"
+
+#~ msgid "data: raw data to send"
+#~ msgstr "datos: datos en sucio a enviar"
 
 #, fuzzy
 #~ msgid ""

@@ -257,12 +257,13 @@ die "Nachricht von heute" abfragen
 Ziel: Servername
 </programlisting>
 
-<command>/msg  Empfänger[,Empfänger] Text</command>
+<command>/msg  [-server server] receiver[,receiver] text</command>
 <programlisting>
 Nachricht an Nick/Channel verschicken
 
-Empfänger: Nick/Channel (darf eine Maske sein, '*' = aktueller Channel)
-Text: zu sendender Text
+  server: send to this server (internal name)
+receiver: nick or channel (may be mask, '*' = current channel)
+    text: text to send
 </programlisting>
 
 <command>/names  [Channel[,Channel]]</command>
@@ -280,12 +281,13 @@ aktuellen Nickname wechseln
 Nickname: neuer Nickname
 </programlisting>
 
-<command>/notice  Nickname Text</command>
+<command>/notice  [-server server] nickname text</command>
 <programlisting>
 NOTICE an einen User verschicken
 
-Nickname: Empfänger der Nachricht
-    Text: zu sendender Text
+  server: send to this server (internal name)
+nickname: user to send notice to
+    text: text to send
 </programlisting>
 
 <command>/op  Nickname [Nickname]</command>
@@ -324,19 +326,21 @@ auf Ping antworten
 Daemon2: Nachricht an diesen Daemon weiterleiten
 </programlisting>
 
-<command>/query  Nickname [Text]</command>
+<command>/query  [-server server] nickname [text]</command>
 <programlisting>
 private Nachricht an jemanden schicken
 
-Nickname: Nickname für privaten Chat
-    Text: zu sendender Text
+  server: send to this server (internal name)
+nickname: nickname for private conversation
+    text: text to send
 </programlisting>
 
-<command>/quote  Daten</command>
+<command>/quote  [-server server] data</command>
 <programlisting>
 Daten direkt an Server senden (siehe RFC 2812)
 
-Daten: zu sendende Rohdaten
+server: send to this server (internal name)
+data: raw data to send
 </programlisting>
 
 <command>/reconnect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>

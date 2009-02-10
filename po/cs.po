@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-10 11:58+0100\n"
+"POT-Creation-Date: 2009-02-10 12:42+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2942,12 +2942,15 @@ msgstr "získat \"Zprávu dne\""
 msgid "send message to a nick or channel"
 msgstr "poslat zprávu přezdívce nebo kanálu"
 
-msgid "receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] receiver[,receiver] text"
 msgstr "příjemce[,příjemce] text"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "receiver: nick or channel (may be mask, '*' = current channel)\n"
-"text: text to send"
+"    text: text to send"
 msgstr ""
 "příjemce: přezdívka nebo kanál (může být maska, '*' = aktuální kanál)\n"
 "text: text, který se má poslat"
@@ -2977,10 +2980,13 @@ msgstr ""
 msgid "send notice message to user"
 msgstr "poslat notifikační zprávu uživateli"
 
-msgid "nickname text"
-msgstr "přezdívka text"
+#, fuzzy
+msgid "[-server server] nickname text"
+msgstr "[server | přezdívka]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: user to send notice to\n"
 "    text: text to send"
 msgstr ""
@@ -3042,10 +3048,13 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "poslat soukromou zprávu přezdívce"
 
-msgid "nickname [text]"
-msgstr "přezdívka [text]"
+#, fuzzy
+msgid "[-server server] nickname [text]"
+msgstr "[server | přezdívka]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: nickname for private conversation\n"
 "    text: text to send"
 msgstr ""
@@ -3055,11 +3064,14 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "poslat čistá data na server bez pársování"
 
-msgid "data"
-msgstr "data"
+#, fuzzy
+msgid "[-server server] data"
+msgstr "server1 [server2]"
 
-msgid "data: raw data to send"
-msgstr "data: čístá data pro server"
+msgid ""
+"server: send to this server (internal name)\n"
+"data: raw data to send"
+msgstr ""
 
 msgid "reconnect to server(s)"
 msgstr "znovu připojit k serveru/serverům"
@@ -5441,6 +5453,18 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "nickname text"
+#~ msgstr "přezdívka text"
+
+#~ msgid "nickname [text]"
+#~ msgstr "přezdívka [text]"
+
+#~ msgid "data"
+#~ msgstr "data"
+
+#~ msgid "data: raw data to send"
+#~ msgstr "data: čístá data pro server"
 
 #, fuzzy
 #~ msgid ""

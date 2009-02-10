@@ -1981,7 +1981,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
     char **targets;
-    int num_targets, i;
+    int num_targets, i, arg_target, arg_text;
     char *msg_pwd_hidden;
     struct t_irc_nick *ptr_nick;
     char *string;
@@ -1993,79 +1993,125 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
     (void) argv_eol;
-
-    if (argc > 2)
+    
+    if (argc <= 2)
     {
-        targets = weechat_string_explode (argv[1], ",", 0, 0,
-                                          &num_targets);
-        if (targets)
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "msg");
+    }
+    
+    arg_target = 1;
+    arg_text = 2;
+    
+    if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
+    {
+        ptr_server = irc_server_search (argv[2]);
+        if (!ptr_server || !ptr_server->is_connected)
+            return WEECHAT_RC_ERROR;
+        ptr_channel = NULL;
+        arg_target = 3;
+        arg_text = 4;
+    }
+    
+    targets = weechat_string_explode (argv[arg_target], ",", 0, 0,
+                                      &num_targets);
+    if (targets)
+    {
+        for (i = 0; i < num_targets; i++)
         {
-            for (i = 0; i < num_targets; i++)
+            if (strcmp (targets[i], "*") == 0)
             {
-                if (strcmp (targets[i], "*") == 0)
+                if (!ptr_channel
+                    || ((ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
+                        && (ptr_channel->type != IRC_CHANNEL_TYPE_PRIVATE)))
                 {
-                    if (!ptr_channel
-                        || ((ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
-                            && (ptr_channel->type != IRC_CHANNEL_TYPE_PRIVATE)))
+                    weechat_printf (ptr_server->buffer,
+                                    _("%s%s: \"%s\" command can only be "
+                                      "executed in a channel or private "
+                                      "buffer"),
+                                    irc_buffer_get_server_prefix (ptr_server,
+                                                                  "error"),
+                                    IRC_PLUGIN_NAME, "msg *");
+                }
+                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                    ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
+                else
+                    ptr_nick = NULL;
+                string = irc_color_decode (argv_eol[arg_text],
+                                           weechat_config_boolean (irc_config_network_colors_receive));
+                irc_input_user_message_display (ptr_channel->buffer,
+                                                (string) ? string : argv_eol[arg_text]);
+                if (string)
+                    free (string);
+                
+                irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
+                                  ptr_channel->name, argv_eol[arg_text]);
+            }
+            else
+            {
+                if (irc_channel_is_channel (targets[i]))
+                {
+                    ptr_channel = irc_channel_search (ptr_server,
+                                                      targets[i]);
+                    if (ptr_channel)
                     {
-                        weechat_printf (ptr_server->buffer,
-                                        _("%s%s: \"%s\" command can only be "
-                                          "executed in a channel or private "
-                                          "buffer"),
-                                        irc_buffer_get_server_prefix (ptr_server,
-                                                                      "error"),
-                                        IRC_PLUGIN_NAME, "msg *");
+                        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                            ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
+                        else
+                            ptr_nick = NULL;
+                        string = irc_color_decode (argv_eol[arg_text],
+                                                   weechat_config_boolean (irc_config_network_colors_receive));
+                        irc_input_user_message_display (ptr_channel->buffer,
+                                                        (string) ? string : argv_eol[arg_text]);
+                        if (string)
+                            free (string);
                     }
-                    if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                        ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-                    else
-                        ptr_nick = NULL;
-                    string = irc_color_decode (argv_eol[2],
-                                               weechat_config_boolean (irc_config_network_colors_receive));
-                    irc_input_user_message_display (ptr_channel->buffer,
-                                                    (string) ? string : argv_eol[2]);
-                    if (string)
-                        free (string);
-                    
                     irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
-                                      ptr_channel->name, argv_eol[2]);
+                                      targets[i], argv_eol[arg_text]);
                 }
                 else
                 {
-                    if (irc_channel_is_channel (targets[i]))
+                    /* message to nickserv with identify ? */
+                    if (weechat_strcasecmp (targets[i], "nickserv") == 0)
                     {
+                        msg_pwd_hidden = strdup (argv_eol[arg_text]);
+                        if (msg_pwd_hidden
+                            && (weechat_config_boolean (irc_config_look_hide_nickserv_pwd)))
+                            irc_display_hide_password (msg_pwd_hidden, 0);
+                        string = irc_color_decode (
+                            (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[arg_text],
+                            weechat_config_boolean (irc_config_network_colors_receive));
+                        weechat_printf (ptr_server->buffer,
+                                        "%s%s-%s%s%s- %s%s",
+                                        irc_buffer_get_server_prefix (ptr_server,
+                                                                      "network"),
+                                        IRC_COLOR_CHAT_DELIMITERS,
+                                        IRC_COLOR_CHAT_NICK,
+                                        targets[i],
+                                        IRC_COLOR_CHAT_DELIMITERS,
+                                        IRC_COLOR_CHAT,
+                                        (string) ?
+                                        string : ((msg_pwd_hidden) ?
+                                                  msg_pwd_hidden : argv_eol[arg_text]));
+                        if (string)
+                            free (string);
+                        if (msg_pwd_hidden)
+                            free (msg_pwd_hidden);
+                    }
+                    else
+                    {
+                        string = irc_color_decode (argv_eol[arg_text],
+                                                   weechat_config_boolean (irc_config_network_colors_receive));
                         ptr_channel = irc_channel_search (ptr_server,
                                                           targets[i]);
                         if (ptr_channel)
                         {
-                            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                                ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-                            else
-                                ptr_nick = NULL;
-                            string = irc_color_decode (argv_eol[2],
-                                                       weechat_config_boolean (irc_config_network_colors_receive));
                             irc_input_user_message_display (ptr_channel->buffer,
-                                                            (string) ? string : argv_eol[2]);
-                            if (string)
-                                free (string);
+                                                            (string) ? string : argv_eol[arg_text]);
                         }
-                        irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
-                                          targets[i], argv_eol[2]);
-                    }
-                    else
-                    {
-                        /* message to nickserv with identify ? */
-                        if (weechat_strcasecmp (targets[i], "nickserv") == 0)
+                        else
                         {
-                            msg_pwd_hidden = strdup (argv_eol[2]);
-                            if (msg_pwd_hidden
-                                && (weechat_config_boolean (irc_config_look_hide_nickserv_pwd)))
-                                irc_display_hide_password (msg_pwd_hidden, 0);
-                            string = irc_color_decode (
-                                (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[2],
-                                weechat_config_boolean (irc_config_network_colors_receive));
                             weechat_printf (ptr_server->buffer,
-                                            "%s%s-%s%s%s- %s%s",
+                                            "%sMSG%s(%s%s%s)%s: %s",
                                             irc_buffer_get_server_prefix (ptr_server,
                                                                           "network"),
                                             IRC_COLOR_CHAT_DELIMITERS,
@@ -2073,52 +2119,17 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                             targets[i],
                                             IRC_COLOR_CHAT_DELIMITERS,
                                             IRC_COLOR_CHAT,
-                                            (string) ?
-                                            string : ((msg_pwd_hidden) ?
-                                                      msg_pwd_hidden : argv_eol[2]));
-                            if (string)
-                                free (string);
-                            if (msg_pwd_hidden)
-                                free (msg_pwd_hidden);
+                                            (string) ? string : argv_eol[arg_text]);
                         }
-                        else
-                        {
-                            string = irc_color_decode (argv_eol[2],
-                                                       weechat_config_boolean (irc_config_network_colors_receive));
-                            ptr_channel = irc_channel_search (ptr_server,
-                                                              targets[i]);
-                            if (ptr_channel)
-                            {
-                                irc_input_user_message_display (ptr_channel->buffer,
-                                                                (string) ? string : argv_eol[2]);
-                            }
-                            else
-                            {
-                                weechat_printf (ptr_server->buffer,
-                                                "%sMSG%s(%s%s%s)%s: %s",
-                                                irc_buffer_get_server_prefix (ptr_server,
-                                                                              "network"),
-                                                IRC_COLOR_CHAT_DELIMITERS,
-                                                IRC_COLOR_CHAT_NICK,
-                                                targets[i],
-                                                IRC_COLOR_CHAT_DELIMITERS,
-                                                IRC_COLOR_CHAT,
-                                                (string) ? string : argv_eol[2]);
-                            }
-                            if (string)
-                                free (string);
-                        }
-                        irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
-                                          targets[i], argv_eol[2]);
+                        if (string)
+                            free (string);
                     }
+                    irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
+                                      targets[i], argv_eol[arg_text]);
                 }
             }
-            weechat_string_free_exploded (targets);
         }
-    }
-    else
-    {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "msg");
+        weechat_string_free_exploded (targets);
     }
     
     return WEECHAT_RC_OK;
@@ -2231,6 +2242,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
     char *string;
+    int arg_nick, arg_text;
     
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2242,19 +2254,29 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 2)
     {
-        string = irc_color_decode (argv_eol[2],
+        arg_nick = 1;
+        arg_text = 2;
+        if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
+        {
+            ptr_server = irc_server_search (argv[2]);
+            if (!ptr_server || !ptr_server->is_connected)
+                return WEECHAT_RC_ERROR;
+            arg_nick = 3;
+            arg_text = 4;
+        }
+        string = irc_color_decode (argv_eol[arg_text],
                                    weechat_config_boolean (irc_config_network_colors_receive));
         weechat_printf (ptr_server->buffer,
                         "%sNotice -> %s%s%s: %s",
                         irc_buffer_get_server_prefix (ptr_server, NULL),
                         IRC_COLOR_CHAT_NICK,
-                        argv[1],
+                        argv[arg_nick],
                         IRC_COLOR_CHAT,
-                        (string) ? string : argv_eol[2]);
+                        (string) ? string : argv_eol[arg_text]);
         if (string)
             free (string);
         irc_server_sendf (ptr_server, "NOTICE %s :%s",
-                          argv[1], argv_eol[2]);
+                          argv[arg_nick], argv_eol[arg_text]);
     }
     else
     {
@@ -2486,6 +2508,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     char *string;
+    int arg_nick, arg_text;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2493,40 +2516,50 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
-
+    
     if (argc > 1)
     {
+        arg_nick = 1;
+        arg_text = 2;
+        if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
+        {
+            ptr_server = irc_server_search (argv[2]);
+            if (!ptr_server || !ptr_server->is_connected)
+                return WEECHAT_RC_ERROR;
+            arg_nick = 3;
+            arg_text = 4;
+        }
+        
         /* create private window if not already opened */
-        ptr_channel = irc_channel_search (ptr_server, argv[1]);
+        ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
         if (!ptr_channel)
         {
             ptr_channel = irc_channel_new (ptr_server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
-                                           argv[1], 1, 0);
+                                           argv[arg_nick], 1, 0);
             if (!ptr_channel)
             {
                 weechat_printf (ptr_server->buffer,
                                 _("%s%s: cannot create new private "
                                   "buffer \"%s\""),
                                 irc_buffer_get_server_prefix (ptr_server, "error"),
-                                IRC_PLUGIN_NAME, argv[1]);
+                                IRC_PLUGIN_NAME, argv[arg_nick]);
                 return WEECHAT_RC_ERROR;
             }
         }
         weechat_buffer_set (ptr_channel->buffer, "display", "1");
         
         /* display text if given */
-        if (argv_eol[2])
+        if (argv_eol[arg_text])
         {
-            string = irc_color_decode (argv_eol[2],
+            string = irc_color_decode (argv_eol[arg_text],
                                        weechat_config_boolean (irc_config_network_colors_receive));
             irc_input_user_message_display (ptr_channel->buffer,
-                                            (string) ? string : argv_eol[2]);
+                                            (string) ? string : argv_eol[arg_text]);
             if (string)
                 free (string);
             irc_server_sendf (ptr_server, "PRIVMSG %s :%s",
-                              argv[1], argv_eol[2]);
+                              argv[arg_nick], argv_eol[arg_text]);
         }
     }
     else
@@ -2546,7 +2579,7 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
-    if (!ptr_server)
+    if (!ptr_server || (ptr_server->sock < 0))
         return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
@@ -2554,7 +2587,19 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
     (void) argv;
     
     if (argc > 1)
-        irc_server_sendf (ptr_server, "%s", argv_eol[1]);
+    {
+        if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
+        {
+            ptr_server = irc_server_search (argv[2]);
+            if (!ptr_server || (ptr_server->sock < 0))
+                return WEECHAT_RC_ERROR;
+            irc_server_sendf (ptr_server, "%s", argv_eol[3]);
+        }
+        else
+        {
+            irc_server_sendf (ptr_server, "%s", argv_eol[1]);
+        }
+    }
     else
     {
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "quote");
@@ -3928,10 +3973,11 @@ irc_command_init ()
                           NULL, &irc_command_motd, NULL);
     weechat_hook_command ("msg",
                           N_("send message to a nick or channel"),
-                          N_("receiver[,receiver] text"),
-                          N_("receiver: nick or channel (may be mask, '*' = "
+                          N_("[-server server] receiver[,receiver] text"),
+                          N_("  server: send to this server (internal name)\n"
+                             "receiver: nick or channel (may be mask, '*' = "
                              "current channel)\n"
-                             "text: text to send"),
+                             "    text: text to send"),
                           NULL, &irc_command_msg, NULL);
     weechat_hook_command ("names",
                           N_("list nicknames on channels"),
@@ -3947,8 +3993,9 @@ irc_command_init ()
                           "-all", &irc_command_nick, NULL);
     weechat_hook_command ("notice",
                           N_("send notice message to user"),
-                          N_("nickname text"),
-                          N_("nickname: user to send notice to\n"
+                          N_("[-server server] nickname text"),
+                          N_("  server: send to this server (internal name)\n"
+                             "nickname: user to send notice to\n"
                              "    text: text to send"),
                           "%n %-", &irc_command_notice, NULL);
     weechat_hook_command ("op",
@@ -3984,14 +4031,16 @@ irc_command_init ()
                           NULL, &irc_command_pong, NULL);
     weechat_hook_command ("query",
                           N_("send a private message to a nick"),
-                          N_("nickname [text]"),
-                          N_("nickname: nickname for private conversation\n"
+                          N_("[-server server] nickname [text]"),
+                          N_("  server: send to this server (internal name)\n"
+                             "nickname: nickname for private conversation\n"
                              "    text: text to send"),
                           "%n %-", &irc_command_query, NULL);
     weechat_hook_command ("quote",
                           N_("send raw data to server without parsing"),
-                          N_("data"),
-                          N_("data: raw data to send"),
+                          N_("[-server server] data"),
+                          N_("server: send to this server (internal name)\n"
+                             "data: raw data to send"),
                           NULL, &irc_command_quote, NULL);
     weechat_hook_command ("reconnect",
                           N_("reconnect to server(s)"),

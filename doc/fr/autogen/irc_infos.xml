@@ -19,7 +19,7 @@
 <row>
   <entry>info</entry>
   <entry>irc_nick</entry>
-  <entry>get current nick on a server</entry>
+  <entry>retourne le pseudo utilisé actuellement sur un serveur</entry>
 </row>
 <row>
   <entry>info</entry>

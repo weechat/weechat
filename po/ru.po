@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-10 11:58+0100\n"
+"POT-Creation-Date: 2009-02-10 12:42+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2961,12 +2961,15 @@ msgstr "получить \"Message Of The Day\""
 msgid "send message to a nick or channel"
 msgstr "отправить сообщение нику или на канал"
 
-msgid "receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] receiver[,receiver] text"
 msgstr "адресат[,адресат] текст"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "receiver: nick or channel (may be mask, '*' = current channel)\n"
-"text: text to send"
+"    text: text to send"
 msgstr ""
 "адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
 "текст: отправляаемый текст"
@@ -2996,10 +2999,13 @@ msgstr ""
 msgid "send notice message to user"
 msgstr "отправить уведомление пользователю"
 
-msgid "nickname text"
-msgstr "ник текст"
+#, fuzzy
+msgid "[-server server] nickname text"
+msgstr "[сервер | ник]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: user to send notice to\n"
 "    text: text to send"
 msgstr ""
@@ -3063,10 +3069,13 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "отправить личное сообщение нику"
 
-msgid "nickname [text]"
-msgstr "ник [текст]"
+#, fuzzy
+msgid "[-server server] nickname [text]"
+msgstr "[сервер | ник]"
 
+#, fuzzy
 msgid ""
+"  server: send to this server (internal name)\n"
 "nickname: nickname for private conversation\n"
 "    text: text to send"
 msgstr ""
@@ -3076,11 +3085,14 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "отправить сырые (raw) данные серверу"
 
-msgid "data"
-msgstr "данные"
+#, fuzzy
+msgid "[-server server] data"
+msgstr "сервер1 [сервер2]"
 
-msgid "data: raw data to send"
-msgstr "данные: отправляемые данные"
+msgid ""
+"server: send to this server (internal name)\n"
+"data: raw data to send"
+msgstr ""
 
 msgid "reconnect to server(s)"
 msgstr "переподключиться к серверу(-ам)"
@@ -5403,6 +5415,18 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid "nickname text"
+#~ msgstr "ник текст"
+
+#~ msgid "nickname [text]"
+#~ msgstr "ник [текст]"
+
+#~ msgid "data"
+#~ msgstr "данные"
+
+#~ msgid "data: raw data to send"
+#~ msgstr "данные: отправляемые данные"
 
 #, fuzzy
 #~ msgid ""
