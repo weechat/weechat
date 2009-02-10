@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-08 23:12+0100\n"
+"POT-Creation-Date: 2009-02-10 11:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3067,6 +3067,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "1 if string is an IRC channel"
+msgstr ""
+
+msgid "get current nick on a server"
 msgstr ""
 
 msgid "get nick from IRC host"

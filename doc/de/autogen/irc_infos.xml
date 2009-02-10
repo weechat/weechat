@@ -18,6 +18,11 @@
 </row>
 <row>
   <entry>info</entry>
+  <entry>irc_nick</entry>
+  <entry>get current nick on a server</entry>
+</row>
+<row>
+  <entry>info</entry>
   <entry>irc_nick_from_host</entry>
   <entry>get nick from IRC host</entry>
 </row>

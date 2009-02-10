@@ -78,6 +78,13 @@ irc_info_get_info_cb (void *data, const char *info_name,
             return str_true;
         return NULL;
     }
+    else if (weechat_strcasecmp (info_name, "irc_nick") == 0)
+    {
+        ptr_server = irc_server_search (arguments);
+        if (ptr_server)
+            return ptr_server->nick;
+        return NULL;
+    }
     else if (weechat_strcasecmp (info_name, "irc_nick_from_host") == 0)
     {
         return irc_protocol_get_nick_from_host (arguments);
@@ -364,6 +371,8 @@ irc_info_init ()
 {
     /* info hooks */
     weechat_hook_info ("irc_is_channel", N_("1 if string is an IRC channel"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_nick", N_("get current nick on a server"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
                        &irc_info_get_info_cb, NULL);

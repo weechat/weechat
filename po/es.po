@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-08 23:12+0100\n"
+"POT-Creation-Date: 2009-02-10 11:58+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3570,6 +3570,10 @@ msgstr[1] "mÃ¡scara de canal incorrecta"
 #, fuzzy
 msgid "1 if string is an IRC channel"
 msgstr "lista de usuarios en el canal"
+
+#, fuzzy
+msgid "get current nick on a server"
+msgstr "cambiar el nombre de usuario actual"
 
 #, fuzzy
 msgid "get nick from IRC host"

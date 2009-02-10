@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-08 23:12+0100\n"
+"POT-Creation-Date: 2009-02-10 11:58+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3582,6 +3582,10 @@ msgstr[1] "ungültige Channelmaske"
 #, fuzzy
 msgid "1 if string is an IRC channel"
 msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "get current nick on a server"
+msgstr "aktuellen Nickname wechseln"
 
 #, fuzzy
 msgid "get nick from IRC host"
