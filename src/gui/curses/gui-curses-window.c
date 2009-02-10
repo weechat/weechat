@@ -513,6 +513,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                                                        window->win_chat_width,
                                                        window->win_chat_y,
                                                        window->win_chat_x);
+        gui_window_draw_separator (window);
         gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
     
