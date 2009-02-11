@@ -709,10 +709,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            if (argv_eol[2])
+            if (argv_eol[3])
             {
                 irc_server_sendf (ptr_server, "PRIVMSG %s :\01%s %s\01",
-                                  argv[1], irc_cmd, argv_eol[2]);
+                                  argv[1], irc_cmd, argv_eol[3]);
                 weechat_printf (ptr_server->buffer,
                                 "%sCTCP%s(%s%s%s)%s: %s%s %s%s",
                                 irc_buffer_get_server_prefix (ptr_server, NULL),
@@ -724,7 +724,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                                 IRC_COLOR_CHAT_CHANNEL,
                                 irc_cmd,
                                 IRC_COLOR_CHAT,
-                                argv_eol[2]);
+                                argv_eol[3]);
             }
             else
             {
@@ -742,7 +742,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                                 irc_cmd);
             }
         }
-
+        
         free (irc_cmd);
     }
     
