@@ -3214,6 +3214,36 @@ irc_protocol_cmd_329 (struct t_irc_server *server, const char *command,
 }
 
 /*
+ * irc_protocol_cmd_330: '330' command (whois, logged in as)
+ */
+
+int
+irc_protocol_cmd_330 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    /* 330 message looks like:
+       :server 330 mynick nick1 nick2 :is logged in as
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(6);
+    
+    weechat_printf_tags (server->buffer,
+                         irc_protocol_tags (command, "irc_numeric"),
+                         "%s%s[%s%s%s] %s%s %s%s",
+                         irc_buffer_get_server_prefix (server, "network"),
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT_NICK,
+                         argv[3],
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT,
+                         (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
+                         IRC_COLOR_CHAT_NICK,
+                         argv[4]);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cmd_331: '331' command received (no topic for channel)
  */
 
@@ -4331,6 +4361,7 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "327", /* whois (host) */ 1, &irc_protocol_cmd_327 },
           { "328", /* channel url */ 1, &irc_protocol_cmd_328 },
           { "329", /* channel creation date */ 1, &irc_protocol_cmd_329 },
+          { "330", /* is logged in as */ 1, &irc_protocol_cmd_330 },
           { "331", /* no topic for channel */ 1, &irc_protocol_cmd_331 },
           { "332", /* topic of channel */ 1, &irc_protocol_cmd_332 },
           { "333", /* infos about topic (nick and date changed) */ 1, &irc_protocol_cmd_333 },
