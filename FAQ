@@ -112,7 +112,7 @@ A:	For versions < 0.2.3, please upgrade to last stable version.
 2.5
 ================================================================================
 Q:	Bars like title and status are not filled, background color stops after
-	after text, why?
+	text, why?
 
 A:	This may be caused by bad value of TERM variable (look at echo $TERM).
 	Depending on where you launch WeeChat, you should have:
