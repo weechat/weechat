@@ -49,6 +49,7 @@ struct t_config_option *jabber_config_look_nick_suffix;
 struct t_config_option *jabber_config_look_nick_completion_smart;
 struct t_config_option *jabber_config_look_display_away;
 struct t_config_option *jabber_config_look_display_muc_modes;
+struct t_config_option *jabber_config_look_display_nick_modes;
 struct t_config_option *jabber_config_look_highlight_tags;
 struct t_config_option *jabber_config_look_show_away_once;
 struct t_config_option *jabber_config_look_smart_filter;
@@ -180,6 +181,22 @@ jabber_config_change_look_display_muc_modes (void *data,
     (void) option;
     
     weechat_bar_item_update ("buffer_name");
+}
+
+/*
+ * jabber_config_change_look_display_nick_modes: called when the "display
+ *                                               nick modes" option is changed
+ */
+
+void
+jabber_config_change_look_display_nick_modes (void *data,
+                                              struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("input_prompt");
 }
 
 /*
@@ -784,6 +801,12 @@ jabber_config_init ()
         N_("display MUC modes in \"buffer_name\" bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &jabber_config_change_look_display_muc_modes, NULL, NULL, NULL);
+    jabber_config_look_display_nick_modes = weechat_config_new_option (
+        jabber_config_file, ptr_section,
+        "display_nick_modes", "boolean",
+        N_("display nick modes in \"input_prompt\" bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &jabber_config_change_look_display_nick_modes, NULL, NULL, NULL);
     jabber_config_look_highlight_tags = weechat_config_new_option (
         jabber_config_file, ptr_section,
         "highlight_tags", "string",

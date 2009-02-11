@@ -249,7 +249,8 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
         buf = malloc (length);
         if (buf)
         {
-            if (server->nick_modes && server->nick_modes[0])
+            if (weechat_config_boolean (irc_config_look_display_nick_modes)
+                && server->nick_modes && server->nick_modes[0])
             {
                 snprintf (buf, length, "%s%s%s(%s%s%s)",
                           IRC_COLOR_INPUT_NICK,

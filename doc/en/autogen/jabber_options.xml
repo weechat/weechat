@@ -66,6 +66,16 @@
   </listitem>
 </itemizedlist>
 
+<command>jabber.look.display_nick_modes</command>: display nick modes in "input_prompt" bar item
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>jabber.look.highlight_tags</command>: comma separated list of tags for messages that may produce highlight (usually any message from another user, not server messages,..)
 <itemizedlist>
   <listitem>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-10 12:42+0100\n"
+"POT-Creation-Date: 2009-02-11 09:56+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3485,6 +3485,9 @@ msgid "display message when (un)marking as away"
 msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
 msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
+msgid "display nick modes in \"input_prompt\" bar item"
 msgstr ""
 
 msgid "hide password displayed by nickserv"

@@ -66,6 +66,16 @@
   </listitem>
 </itemizedlist>
 
+<command>jabber.look.display_nick_modes</command>: affiche les modes du pseudo dans l'objet de barre "input_prompt"
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>jabber.look.highlight_tags</command>: liste des tags pour les messages qui peuvent produire un highlight (séparés par des virgules, typiquement tout message venant d'un autre utilisateur, pas les messages du serveur, ...)
 <itemizedlist>
   <listitem>
