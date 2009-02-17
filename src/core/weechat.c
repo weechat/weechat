@@ -57,6 +57,7 @@
 #include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-network.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
@@ -420,6 +421,7 @@ main (int argc, char *argv[])
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
     gui_main_end (1);                   /* shut down WeeChat GUI            */
+    proxy_free_all ();                  /* free all proxies                 */
     config_file_free_all ();            /* free all configuration files     */
     gui_keyboard_end ();                /* end keyboard                     */
     unhook_all ();                      /* remove all hooks                 */
