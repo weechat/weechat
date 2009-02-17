@@ -100,6 +100,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         }
         
         weechat_buffer_set (new_buffer, "short_name", channel_name);
+        weechat_buffer_set (new_buffer, "localvar_set_type",
+                            (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
         weechat_buffer_set (new_buffer, "localvar_set_nick", server->nick);
         weechat_buffer_set (new_buffer, "localvar_set_server", server->name);
         weechat_buffer_set (new_buffer, "localvar_set_channel", channel_name);

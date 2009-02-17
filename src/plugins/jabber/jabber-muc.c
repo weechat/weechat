@@ -97,6 +97,8 @@ jabber_muc_new (struct t_jabber_server *server, int muc_type,
         }
         
         weechat_buffer_set (new_buffer, "short_name", muc_name);
+        weechat_buffer_set (new_buffer, "localvar_set_type",
+                            (muc_type == JABBER_MUC_TYPE_MUC) ? "channel" : "private");
         weechat_buffer_set (new_buffer, "localvar_set_nick",
                             jabber_server_get_local_name (server));
         weechat_buffer_set (new_buffer, "localvar_set_server", server->name);

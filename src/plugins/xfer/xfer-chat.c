@@ -206,7 +206,7 @@ xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * xfer_chat_open_buffer: create channel for DCC chat
+ * xfer_chat_open_buffer: create buffer for DCC chat
  */
 
 void
@@ -226,6 +226,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         if (xfer->buffer)
         {
             weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
+            weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
             weechat_printf (xfer->buffer,
                             _("Connected to %s (%d.%d.%d.%d) via "
                               "xfer chat"),

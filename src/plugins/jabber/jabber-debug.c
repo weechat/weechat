@@ -81,6 +81,7 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
                                 "title", _("Jabber debug messages"));
             
             weechat_buffer_set (jabber_debug_buffer, "short_name", JABBER_DEBUG_BUFFER_NAME);
+            weechat_buffer_set (jabber_debug_buffer, "localvar_set_type", "debug");
             weechat_buffer_set (jabber_debug_buffer, "localvar_set_server", JABBER_DEBUG_BUFFER_NAME);
             weechat_buffer_set (jabber_debug_buffer, "localvar_set_muc", JABBER_DEBUG_BUFFER_NAME);
             weechat_buffer_set (jabber_debug_buffer, "localvar_set_no_log", "1");
