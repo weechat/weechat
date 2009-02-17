@@ -3828,8 +3828,7 @@ static XS (XS_weechat_api_nicklist_search_group)
 
 static XS (XS_weechat_api_nicklist_add_nick)
 {
-    char *prefix, char_prefix, *result, *buffer, *group, *name, *color;
-    char *prefix_color;
+    char *result, *buffer, *group, *name, *color, *prefix, *prefix_color;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3847,22 +3846,17 @@ static XS (XS_weechat_api_nicklist_add_nick)
         PERL_RETURN_EMPTY;
     }
     
-    prefix = SvPV(ST (4), PL_na);
-    if (prefix && prefix[0])
-        char_prefix = prefix[0];
-    else
-        char_prefix = ' ';
-
     buffer = SvPV (ST (0), PL_na);
     group = SvPV (ST (1), PL_na);
     name = SvPV (ST (2), PL_na);
     color = SvPV (ST (3), PL_na);
+    prefix = SvPV(ST (4), PL_na);
     prefix_color = SvPV (ST (5), PL_na);
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
                                                         script_str2ptr (group),
                                                         name,
                                                         color,
-                                                        char_prefix,
+                                                        prefix,
                                                         prefix_color,
                                                         SvIV (ST (6)))); /* visible */
     

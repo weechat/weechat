@@ -1108,7 +1108,7 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
     struct t_gui_nick *ptr_nick;
     struct t_config_option *ptr_option;
     int i, length;
-    char *buf, str_prefix[2];
+    char *buf;
     
     /* make C compiler happy */
     (void) data;
@@ -1176,9 +1176,8 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                     {
                         strcat (buf, gui_color_get_custom (ptr_nick->prefix_color));
                     }
-                    str_prefix[0] = ptr_nick->prefix;
-                    str_prefix[1] = '\0';
-                    strcat (buf, str_prefix);
+                    if (ptr_nick->prefix)
+                        strcat (buf, ptr_nick->prefix);
                     if (strchr (ptr_nick->color, '.'))
                     {
                         config_file_search_with_string (ptr_nick->color,

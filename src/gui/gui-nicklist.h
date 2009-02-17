@@ -43,7 +43,7 @@ struct t_gui_nick
     struct t_gui_nick_group *group;    /* group which contains nick         */
     char *name;                        /* nick name                         */
     char *color;                       /* color for nick in nicklist        */
-    char prefix;                       /* prefix for nick (for admins, ..)  */
+    char *prefix;                      /* prefix for nick (for admins, ..)  */
     char *prefix_color;                /* color for prefix                  */
     int visible;                       /* 1 if nick is displayed            */
     struct t_gui_nick *prev_nick;      /* link to previous nick             */
@@ -57,15 +57,18 @@ extern struct t_gui_nick_group *gui_nicklist_search_group (struct t_gui_buffer *
                                                            const char *name);
 extern struct t_gui_nick_group *gui_nicklist_add_group (struct t_gui_buffer *buffer,
                                                         struct t_gui_nick_group *parent_group,
-                                                        const char *name, const char *color,
+                                                        const char *name,
+                                                        const char *color,
                                                         int visible);
 extern struct t_gui_nick *gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *from_group,
                                                     const char *name);
 extern struct t_gui_nick *gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                                                  struct t_gui_nick_group *group,
-                                                 const char *name, const char *color,
-                                                 char prefix, const char *prefix_color,
+                                                 const char *name,
+                                                 const char *color,
+                                                 const char *prefix,
+                                                 const char *prefix_color,
                                                  int visible);
 extern void gui_nicklist_remove_group (struct t_gui_buffer *buffer,
                                        struct t_gui_nick_group *group);

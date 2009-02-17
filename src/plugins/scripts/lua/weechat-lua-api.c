@@ -4542,7 +4542,7 @@ static int
 weechat_lua_api_nicklist_add_nick (lua_State *L)
 {
     const char *buffer, *group, *name, *color, *prefix, *prefix_color;
-    char char_prefix, *result;
+    char *result;
     int n, visible;
     
     /* make C compiler happy */
@@ -4578,16 +4578,11 @@ weechat_lua_api_nicklist_add_nick (lua_State *L)
     prefix_color = lua_tostring (lua_current_interpreter, -2);
     visible = lua_tonumber (lua_current_interpreter, -1);
     
-    if (prefix && prefix[0])
-        char_prefix = prefix[0];
-    else
-        char_prefix = ' ';
-    
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
                                                         script_str2ptr (group),
                                                         name,
                                                         color,
-                                                        char_prefix,
+                                                        prefix,
                                                         prefix_color,
                                                         visible));
     

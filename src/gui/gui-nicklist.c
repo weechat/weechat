@@ -304,8 +304,9 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 struct t_gui_nick *
 gui_nicklist_add_nick (struct t_gui_buffer *buffer,
-                       struct t_gui_nick_group *group, const char *name,
-                       const char *color, char prefix, const char *prefix_color,
+                       struct t_gui_nick_group *group,
+                       const char *name, const char *color,
+                       const char *prefix, const char *prefix_color,
                        int visible)
 {
     struct t_gui_nick *new_nick;
@@ -320,7 +321,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     new_nick->group = (group) ? group : buffer->nicklist_root;
     new_nick->name = strdup (name);
     new_nick->color = (color) ? strdup (color) : NULL;
-    new_nick->prefix = prefix;
+    new_nick->prefix = (prefix) ? strdup (prefix) : NULL;
     new_nick->prefix_color = (prefix_color) ? strdup (prefix_color) : NULL;
     new_nick->visible = visible;
     
@@ -360,6 +361,8 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         free (nick->name);
     if (nick->color)
         free (nick->color);
+    if (nick->prefix)
+        free (nick->prefix);
     if (nick->prefix_color)
         free (nick->prefix_color);
     
@@ -619,7 +622,6 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    char prefix[2];
     
     if (!infolist || !buffer)
         return 0;
@@ -646,9 +648,7 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                 return 0;
             if (!infolist_new_var_string (ptr_item, "color", ptr_nick->color))
                 return 0;
-            prefix[0] = ptr_nick->prefix;
-            prefix[1] = '\0';
-            if (!infolist_new_var_string (ptr_item, "prefix", prefix))
+            if (!infolist_new_var_string (ptr_item, "prefix", ptr_nick->prefix))
                 return 0;
             if (!infolist_new_var_string (ptr_item, "prefix_color", ptr_nick->prefix_color))
                 return 0;

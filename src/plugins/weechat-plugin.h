@@ -495,7 +495,7 @@ struct t_weechat_plugin
                                              struct t_gui_nick_group *group,
                                              const char *name,
                                              const char *color,
-                                             char prefix,
+                                             const char *prefix,
                                              const char *prefix_color,
                                              int visible);
     struct t_gui_nick *(*nicklist_search_nick) (struct t_gui_buffer *buffer,

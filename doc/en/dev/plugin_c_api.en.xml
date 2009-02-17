@@ -7796,7 +7796,7 @@ struct t_gui_nick_group *weechat_nicklist_add_nick (
     struct t_gui_nick_group *group,
     const char *name,
     const char *color,
-    char prefix,
+    const char *prefix,
     const char *prefix_color,
     int visible);
 </programlisting>
@@ -7860,7 +7860,7 @@ struct t_gui_nick *my_nick =
     weechat_nicklist_add_nick (my_buffer, my_group,
                                "test_nick",
                                (nick_away) ? "weechat.color.nicklist_away" : "bar_fg",
-                               '@', "lightgreen",
+                               "@", "lightgreen",
                                1);
 </screen>
       </para>

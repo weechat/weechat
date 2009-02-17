@@ -280,7 +280,7 @@ int
 upgrade_weechat_read_cb (int object_id,
                          struct t_infolist *infolist)
 {
-    const char *key, *var_name, *type, *name, *prefix, *group_name;
+    const char *key, *var_name, *type, *name, *group_name;
     char option_name[64], *option_key, *option_var;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
@@ -482,13 +482,12 @@ upgrade_weechat_read_cb (int object_id,
                                 ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
                                                                        NULL,
                                                                        group_name);
-                            prefix = infolist_string (infolist, "prefix");
                             gui_nicklist_add_nick (
                                 upgrade_current_buffer,
                                 ptr_group,
                                 infolist_string (infolist, "name"),
                                 infolist_string (infolist, "color"),
-                                (prefix) ? prefix[0] : ' ',
+                                infolist_string (infolist, "prefix"),
                                 infolist_string (infolist, "prefix_color"),
                                 infolist_integer (infolist, "visible"));
                         }

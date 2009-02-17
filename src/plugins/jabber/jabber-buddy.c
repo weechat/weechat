@@ -106,7 +106,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     if (buddy->flags & JABBER_BUDDY_CHANOWNER)
     {
         if (prefix)
-            *prefix = '~';
+            prefix[0] = '~';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -116,7 +116,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_CHANADMIN)
     {
         if (prefix)
-            *prefix = '&';
+            prefix[0] = '&';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -126,7 +126,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_CHANADMIN2)
     {
         if (prefix)
-            *prefix = '!';
+            prefix[0] = '!';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -136,7 +136,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_OP)
     {
         if (prefix)
-            *prefix = '@';
+            prefix[0] = '@';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -146,7 +146,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_HALFOP)
     {
         if (prefix)
-            *prefix = '%';
+            prefix[0] = '%';
         if (prefix_color)
             *prefix_color = 2;
         if (buffer && group)
@@ -156,7 +156,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_VOICE)
     {
         if (prefix)
-            *prefix = '+';
+            prefix[0] = '+';
         if (prefix_color)
             *prefix_color = 3;
         if (buffer && group)
@@ -166,7 +166,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else if (buddy->flags & JABBER_BUDDY_CHANUSER)
     {
         if (prefix)
-            *prefix = '-';
+            prefix[0] = '-';
         if (prefix_color)
             *prefix_color = 4;
         if (buffer && group)
@@ -176,7 +176,7 @@ jabber_buddy_get_gui_infos (struct t_jabber_buddy *buddy,
     else
     {
         if (prefix)
-            *prefix = ' ';
+            prefix[0] = ' ';
         if (prefix_color)
             *prefix_color = 0;
         if (buffer && group)
@@ -196,7 +196,7 @@ jabber_buddy_new (struct t_jabber_server *server, struct t_jabber_muc *muc,
                   int is_chanuser, int is_away)
 {
     struct t_jabber_buddy *new_buddy, *ptr_buddy;
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     const char *local_name;
     int prefix_color;
     struct t_gui_buffer *ptr_buffer;
@@ -212,7 +212,7 @@ jabber_buddy_new (struct t_jabber_server *server, struct t_jabber_muc *muc,
     if (ptr_buddy)
     {
         /* remove old buddy from buddylist */
-        jabber_buddy_get_gui_infos (ptr_buddy, &prefix,
+        jabber_buddy_get_gui_infos (ptr_buddy, prefix,
                                     &prefix_color, ptr_buffer, &ptr_group);
         weechat_nicklist_remove_nick (ptr_buffer,
                                       weechat_nicklist_search_nick (ptr_buffer,
@@ -230,7 +230,9 @@ jabber_buddy_new (struct t_jabber_server *server, struct t_jabber_muc *muc,
         JABBER_BUDDY_SET_FLAG(ptr_buddy, is_away, JABBER_BUDDY_AWAY);
         
         /* add new buddy in buddylist */
-        jabber_buddy_get_gui_infos (ptr_buddy, &prefix,
+        prefix[0] = ' ';
+        prefix[1] = '\0';
+        jabber_buddy_get_gui_infos (ptr_buddy, prefix,
                                 &prefix_color, ptr_buffer, &ptr_group);
         snprintf (str_prefix_color, sizeof (str_prefix_color),
                   "weechat.color.nicklist_prefix%d",
@@ -295,7 +297,9 @@ jabber_buddy_new (struct t_jabber_server *server, struct t_jabber_muc *muc,
     }
     
     /* add buddy to buffer buddylist */
-    jabber_buddy_get_gui_infos (new_buddy, &prefix, &prefix_color,
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    jabber_buddy_get_gui_infos (new_buddy, prefix, &prefix_color,
                                 ptr_buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
@@ -321,13 +325,13 @@ jabber_buddy_change (struct t_jabber_server *server, struct t_jabber_muc *muc,
     int buddy_is_me, prefix_color;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_nick_group *ptr_group;
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     const char *local_name;
     
     ptr_buffer = (muc) ? muc->buffer : server->buffer;
     
     /* remove buddy from buddylist */
-    jabber_buddy_get_gui_infos (buddy, &prefix, &prefix_color,
+    jabber_buddy_get_gui_infos (buddy, prefix, &prefix_color,
                                 ptr_buffer, &ptr_group);
     weechat_nicklist_remove_nick (ptr_buffer,
                                   weechat_nicklist_search_nick (ptr_buffer,
@@ -350,7 +354,9 @@ jabber_buddy_change (struct t_jabber_server *server, struct t_jabber_muc *muc,
         buddy->color = jabber_buddy_find_color (buddy);
     
     /* add buddy in buddylist */
-    jabber_buddy_get_gui_infos (buddy, &prefix, &prefix_color,
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    jabber_buddy_get_gui_infos (buddy, prefix, &prefix_color,
                                 ptr_buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
@@ -370,7 +376,7 @@ jabber_buddy_set (struct t_jabber_server *server, struct t_jabber_muc *muc,
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_nick_group *ptr_group;
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     int prefix_color;
 
     if (server || muc)
@@ -378,7 +384,7 @@ jabber_buddy_set (struct t_jabber_server *server, struct t_jabber_muc *muc,
         ptr_buffer = (muc) ? muc->buffer : server->buffer;
         
         /* remove buddy from buddylist */
-        jabber_buddy_get_gui_infos (buddy, &prefix, &prefix_color,
+        jabber_buddy_get_gui_infos (buddy, prefix, &prefix_color,
                                     ptr_buffer, &ptr_group);
         weechat_nicklist_remove_nick (ptr_buffer,
                                       weechat_nicklist_search_nick (ptr_buffer,
@@ -389,7 +395,9 @@ jabber_buddy_set (struct t_jabber_server *server, struct t_jabber_muc *muc,
         JABBER_BUDDY_SET_FLAG(buddy, set, flag);
         
         /* add buddy in buddylist */
-        jabber_buddy_get_gui_infos (buddy, &prefix, &prefix_color,
+        prefix[0] = ' ';
+        prefix[1] = '\0';
+        jabber_buddy_get_gui_infos (buddy, prefix, &prefix_color,
                                     ptr_buffer, &ptr_group);
         snprintf (str_prefix_color, sizeof (str_prefix_color),
                   "weechat.color.nicklist_prefix%d",

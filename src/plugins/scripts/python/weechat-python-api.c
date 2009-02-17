@@ -4063,7 +4063,6 @@ static PyObject *
 weechat_python_api_nicklist_add_nick (PyObject *self, PyObject *args)
 {
     char *buffer, *group, *name, *color, *prefix, *prefix_color, *result;
-    char char_prefix;
     int visible;
     PyObject *object;
     
@@ -4091,16 +4090,11 @@ weechat_python_api_nicklist_add_nick (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    if (prefix && prefix[0])
-        char_prefix = prefix[0];
-    else
-        char_prefix = ' ';
-    
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
                                                         script_str2ptr (group),
                                                         name,
                                                         color,
-                                                        char_prefix,
+                                                        prefix,
                                                         prefix_color,
                                                         visible));
     

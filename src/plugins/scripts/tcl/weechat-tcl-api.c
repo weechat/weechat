@@ -4336,9 +4336,8 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
                                    int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *prefix, char_prefix, *result, *buffer, *group, *name, *color;
-    char *prefix_color;
-    int i,visible;
+    char *prefix, *result, *buffer, *group, *name, *color, *prefix_color;
+    int i, visible;
     
     /* make C compiler happy */
     (void) clientData;
@@ -4355,12 +4354,6 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    prefix = Tcl_GetStringFromObj (objv[5], &i);
-    if (prefix && prefix[0])
-        char_prefix = prefix[0];
-    else
-        char_prefix = ' ';
-
     if (Tcl_GetIntFromObj (interp, objv[7], &visible) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_nick");
@@ -4371,12 +4364,13 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
     group = Tcl_GetStringFromObj (objv[2], &i);
     name = Tcl_GetStringFromObj (objv[3], &i);
     color = Tcl_GetStringFromObj (objv[4], &i);
+    prefix = Tcl_GetStringFromObj (objv[5], &i);
     prefix_color = Tcl_GetStringFromObj (objv[6], &i);
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
                                                         script_str2ptr (group),
                                                         name,
                                                         color,
-                                                        char_prefix,
+                                                        prefix,
                                                         prefix_color,
                                                         visible)); /* visible */
     

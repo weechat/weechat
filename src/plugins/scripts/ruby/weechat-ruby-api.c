@@ -4641,8 +4641,8 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
                                     VALUE name, VALUE color, VALUE prefix,
                                     VALUE prefix_color, VALUE visible)
 {
-    char *c_buffer, *c_group, *c_name, *c_color, *c_prefix, char_prefix;
-    char *c_prefix_color, *result;
+    char *c_buffer, *c_group, *c_name, *c_color, *c_prefix, *c_prefix_color;
+    char *result;
     int c_visible;
     VALUE return_value;
     
@@ -4686,16 +4686,11 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     c_prefix_color = STR2CSTR (prefix_color);
     c_visible = FIX2INT (visible);
     
-    if (c_prefix && c_prefix[0])
-        char_prefix = c_prefix[0];
-    else
-        char_prefix = ' ';
-    
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (c_buffer),
                                                         script_str2ptr (c_group),
                                                         c_name,
                                                         c_color,
-                                                        char_prefix,
+                                                        c_prefix,
                                                         c_prefix_color,
                                                         c_visible));
     

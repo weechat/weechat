@@ -94,7 +94,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     if (nick->flags & IRC_NICK_CHANOWNER)
     {
         if (prefix)
-            *prefix = '~';
+            prefix[0] = '~';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -104,7 +104,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_CHANADMIN)
     {
         if (prefix)
-            *prefix = '&';
+            prefix[0] = '&';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -114,7 +114,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_CHANADMIN2)
     {
         if (prefix)
-            *prefix = '!';
+            prefix[0] = '!';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -124,7 +124,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_OP)
     {
         if (prefix)
-            *prefix = '@';
+            prefix[0] = '@';
         if (prefix_color)
             *prefix_color = 1;
         if (buffer && group)
@@ -134,7 +134,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_HALFOP)
     {
         if (prefix)
-            *prefix = '%';
+            prefix[0] = '%';
         if (prefix_color)
             *prefix_color = 2;
         if (buffer && group)
@@ -144,7 +144,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_VOICE)
     {
         if (prefix)
-            *prefix = '+';
+            prefix[0] = '+';
         if (prefix_color)
             *prefix_color = 3;
         if (buffer && group)
@@ -154,7 +154,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else if (nick->flags & IRC_NICK_CHANUSER)
     {
         if (prefix)
-            *prefix = '-';
+            prefix[0] = '-';
         if (prefix_color)
             *prefix_color = 4;
         if (buffer && group)
@@ -164,7 +164,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
     else
     {
         if (prefix)
-            *prefix = ' ';
+            prefix[0] = ' ';
         if (prefix_color)
             *prefix_color = 0;
         if (buffer && group)
@@ -184,7 +184,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               int is_chanuser, int is_away)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     int prefix_color;
     struct t_gui_nick_group *ptr_group;
     
@@ -193,7 +193,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (ptr_nick)
     {
         /* remove old nick from nicklist */
-        irc_nick_get_gui_infos (ptr_nick, &prefix,
+        irc_nick_get_gui_infos (ptr_nick, prefix,
                                 &prefix_color, channel->buffer, &ptr_group);
         weechat_nicklist_remove_nick (channel->buffer,
                                       weechat_nicklist_search_nick (channel->buffer,
@@ -211,7 +211,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         IRC_NICK_SET_FLAG(ptr_nick, is_away, IRC_NICK_AWAY);
         
         /* add new nick in nicklist */
-        irc_nick_get_gui_infos (ptr_nick, &prefix,
+        prefix[0] = ' ';
+        prefix[1] = '\0';
+        irc_nick_get_gui_infos (ptr_nick, prefix,
                                 &prefix_color, channel->buffer, &ptr_group);
         snprintf (str_prefix_color, sizeof (str_prefix_color),
                   "weechat.color.nicklist_prefix%d",
@@ -260,7 +262,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     channel->nick_completion_reset = 1;
     
     /* add nick to buffer nicklist */
-    irc_nick_get_gui_infos (new_nick, &prefix, &prefix_color,
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    irc_nick_get_gui_infos (new_nick, prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
@@ -285,10 +289,10 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
 {
     int nick_is_me, prefix_color;
     struct t_gui_nick_group *ptr_group;
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     
     /* remove nick from nicklist */
-    irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
+    irc_nick_get_gui_infos (nick, prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     weechat_nicklist_remove_nick (channel->buffer,
                                   weechat_nicklist_search_nick (channel->buffer,
@@ -310,7 +314,9 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
         nick->color = irc_nick_find_color (nick);
     
     /* add nick in nicklist */
-    irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    irc_nick_get_gui_infos (nick, prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
@@ -328,12 +334,12 @@ void
 irc_nick_set (struct t_irc_channel *channel,
               struct t_irc_nick *nick, int set, int flag)
 {
-    char prefix, str_prefix_color[64];
+    char prefix[2], str_prefix_color[64];
     int prefix_color;
     struct t_gui_nick_group *ptr_group;
     
     /* remove nick from nicklist */
-    irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
+    irc_nick_get_gui_infos (nick, prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     weechat_nicklist_remove_nick (channel->buffer,
                                   weechat_nicklist_search_nick (channel->buffer,
@@ -344,7 +350,9 @@ irc_nick_set (struct t_irc_channel *channel,
     IRC_NICK_SET_FLAG(nick, set, flag);
     
     /* add nick in nicklist */
-    irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    irc_nick_get_gui_infos (nick, prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
