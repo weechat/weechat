@@ -679,10 +679,13 @@ hook_timer_check_system_clock ()
     diff_time = now - hook_last_system_time;
     if ((diff_time <= -10) || (diff_time >= 10))
     {
-        gui_chat_printf (NULL,
-                         _("System clock skew detected (%+ld seconds), "
-                           "reinitializing all timers"),
-                         diff_time);
+        if (weechat_debug_core >= 1)
+        {
+            gui_chat_printf (NULL,
+                             _("System clock skew detected (%+ld seconds), "
+                               "reinitializing all timers"),
+                             diff_time);
+        }
         
         /* reinitialize all timers */
         for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
