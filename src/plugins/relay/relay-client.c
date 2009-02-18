@@ -203,12 +203,15 @@ relay_client_send_infolist (struct t_relay_client *client,
  */
 
 int
-relay_client_recv_cb (void *arg_client)
+relay_client_recv_cb (void *arg_client, int fd)
 {
     struct t_relay_client *client;
     static char buffer[4096 + 2];
     struct t_infolist *infolist;
     int num_read;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     client = (struct t_relay_client *)arg_client;
     

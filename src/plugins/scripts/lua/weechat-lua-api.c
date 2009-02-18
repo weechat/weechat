@@ -2940,15 +2940,18 @@ weechat_lua_api_hook_timer (lua_State *L)
  */
 
 int
-weechat_lua_api_hook_fd_cb (void *data)
+weechat_lua_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[1];
+    char *lua_argv[2], str_fd[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    lua_argv[0] = NULL;
+    snprintf (str_fd, sizeof (str_fd), "%d", fd);
+    
+    lua_argv[0] = str_fd;
+    lua_argv[1] = NULL;
     
     rc = (int *) weechat_lua_exec (script_callback->script,
                                    WEECHAT_SCRIPT_EXEC_INT,

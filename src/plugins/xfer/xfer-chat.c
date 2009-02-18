@@ -85,12 +85,15 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
  */
 
 int
-xfer_chat_recv_cb (void *arg_xfer)
+xfer_chat_recv_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     xfer = (struct t_xfer *)arg_xfer;
     

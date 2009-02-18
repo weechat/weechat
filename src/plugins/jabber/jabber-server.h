@@ -196,7 +196,7 @@ extern struct t_jabber_server *jabber_server_copy (struct t_jabber_server *serve
                                                    const char *new_name);
 extern int jabber_server_rename (struct t_jabber_server *server,
                                  const char *new_server_name);
-extern int jabber_server_recv_cb (void *arg_server);
+extern int jabber_server_recv_cb (void *arg_server, int fd);
 extern int jabber_server_timer_cb (void *data);
 extern int jabber_server_add_to_infolist (struct t_infolist *infolist,
                                           struct t_jabber_server *server);

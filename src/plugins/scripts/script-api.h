@@ -125,7 +125,7 @@ extern struct t_hook *script_api_hook_fd (struct t_weechat_plugin *weechat_plugi
                                           struct t_plugin_script *script,
                                           int fd, int flag_read,
                                           int flag_write, int flag_exception,
-                                          int (*callback)(void *data),
+                                          int (*callback)(void *data, int fd),
                                           const char *function);
 extern struct t_hook *script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                                                struct t_plugin_script *script,

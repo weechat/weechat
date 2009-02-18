@@ -1551,11 +1551,14 @@ irc_server_msgq_flush ()
  */
 
 int
-irc_server_recv_cb (void *arg_server)
+irc_server_recv_cb (void *arg_server, int fd)
 {
     struct t_irc_server *server;
     static char buffer[4096 + 2];
     int num_read;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     server = (struct t_irc_server *)arg_server;
     

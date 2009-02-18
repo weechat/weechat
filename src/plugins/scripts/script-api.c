@@ -749,7 +749,7 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                     struct t_plugin_script *script,
                     int fd, int flag_read, int flag_write,
                     int flag_exception,
-                    int (*callback)(void *data),
+                    int (*callback)(void *data, int fd),
                     const char *function)
 {
     struct t_script_callback *new_script_callback;

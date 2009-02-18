@@ -68,7 +68,7 @@ relay_network_close_socket ()
  */
 
 int
-relay_network_sock_cb (void *data)
+relay_network_sock_cb (void *data, int fd)
 {
     struct sockaddr_in client_addr;
     unsigned int client_length;
@@ -77,6 +77,7 @@ relay_network_sock_cb (void *data)
     
     /* make C compiler happy */
     (void) data;
+    (void) fd;
     
     client_length = sizeof (client_addr);
     memset (&client_addr, 0, client_length);

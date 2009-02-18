@@ -949,7 +949,8 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
                     && (FD_ISSET(HOOK_FD(ptr_hook, fd), exception_fds)))))
         {
             ptr_hook->running = 1;
-            (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data);
+            (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data,
+                                                  HOOK_FD(ptr_hook, fd));
             ptr_hook->running = 0;
         }
         

@@ -1583,10 +1583,13 @@ jabber_server_send_signal (struct t_jabber_server *server, const char *signal,
  */
 
 int
-jabber_server_recv_cb (void *arg_server)
+jabber_server_recv_cb (void *arg_server, int fd)
 {
     struct t_jabber_server *server;
     int rc;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     server = (struct t_jabber_server *)arg_server;
     

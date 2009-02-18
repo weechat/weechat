@@ -85,12 +85,15 @@ xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
  */
 
 int
-xfer_network_child_read_cb (void *arg_xfer)
+xfer_network_child_read_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
     char bufpipe[1 + 1 + 12 + 1];
     int num_read;
     char *error;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     xfer = (struct t_xfer *)arg_xfer;
     
@@ -305,12 +308,15 @@ xfer_network_child_kill (struct t_xfer *xfer)
  */
 
 int
-xfer_network_fd_cb (void *arg_xfer)
+xfer_network_fd_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
     int sock;
     struct sockaddr_in addr;
     socklen_t length;
+    
+    /* make C compiler happy */
+    (void) fd;
     
     xfer = (struct t_xfer *)arg_xfer;
     

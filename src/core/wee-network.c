@@ -752,7 +752,7 @@ network_connect_child (struct t_hook *hook_connect)
  */
 
 int
-network_connect_child_read_cb (void *arg_hook_connect)
+network_connect_child_read_cb (void *arg_hook_connect, int fd)
 {
     struct t_hook *hook_connect;
     char buffer[1], buf_size_ip[6], *ip_address, *error;
@@ -761,6 +761,9 @@ network_connect_child_read_cb (void *arg_hook_connect)
 #ifdef HAVE_GNUTLS
     int rc;
 #endif
+
+    /* make C compiler happy */
+    (void) fd;
     
     hook_connect = (struct t_hook *)arg_hook_connect;
     
@@ -914,7 +917,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (NULL,
                                                    HOOK_CONNECT(hook_connect, child_read),
                                                    1, 0, 0,
-                                                   network_connect_child_read_cb,
+                                                   &network_connect_child_read_cb,
                                                    hook_connect);
 #endif
 }

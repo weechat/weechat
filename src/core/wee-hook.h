@@ -126,7 +126,7 @@ struct t_hook_timer
     struct timeval next_exec;          /* next scheduled execution          */
 };
 
-typedef int (t_hook_callback_fd)(void *data);
+typedef int (t_hook_callback_fd)(void *data, int fd);
 
 struct t_hook_fd
 {

@@ -326,13 +326,14 @@ gui_keyboard_flush ()
  */
 
 int
-gui_keyboard_read_cb (void *data)
+gui_keyboard_read_cb (void *data, int fd)
 {
     int ret, i, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
     unsigned char buffer[4096];
     
     /* make C compiler happy */
     (void) data;
+    (void) fd;
     
     accept_paste = 0;
     cancel_paste = 0;

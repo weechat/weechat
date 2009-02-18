@@ -2613,15 +2613,18 @@ weechat_python_api_hook_timer (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_fd_cb (void *data)
+weechat_python_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[1];
+    char *python_argv[2], str_fd[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = NULL;
+    snprintf (str_fd, sizeof (str_fd), "%d", fd);
+    
+    python_argv[0] = str_fd;
+    python_argv[1] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,

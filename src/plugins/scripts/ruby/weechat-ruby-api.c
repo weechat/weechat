@@ -3000,15 +3000,18 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
  */
 
 int
-weechat_ruby_api_hook_fd_cb (void *data)
+weechat_ruby_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[1];
+    char *ruby_argv[2], str_fd[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    ruby_argv[0] = NULL;
+    snprintf (str_fd, sizeof (str_fd), "%d", fd);
+    
+    ruby_argv[0] = str_fd;
+    ruby_argv[1] = NULL;
     
     rc = (int *) weechat_ruby_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,

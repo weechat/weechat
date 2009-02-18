@@ -2826,15 +2826,18 @@ weechat_tcl_api_hook_timer (ClientData clientData, Tcl_Interp *interp,
  */
 
 int
-weechat_tcl_api_hook_fd_cb (void *data)
+weechat_tcl_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[1];
+    char *tcl_argv[2], str_fd[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    tcl_argv[0] = NULL;
+    snprintf (str_fd, sizeof (str_fd), "%d", fd);
+    
+    tcl_argv[0] = str_fd;
+    tcl_argv[1] = NULL;
     
     rc = (int *) weechat_tcl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,

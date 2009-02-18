@@ -5349,7 +5349,7 @@ struct t_hook *weechat_hook_fd (
     int flag_read,
     int flag_write,
     int flag_exception,
-    int (*callback)(void *data),
+    int (*callback)(void *data, int fd),
     void *callback_data);
 </programlisting>
       </para>
@@ -5401,6 +5401,11 @@ struct t_hook *weechat_hook_fd (
                       <entry>data</entry>
                       <entry>pointer</entry>
                     </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>fd</entry>
+                      <entry>file descriptor</entry>
+                    </row>
                   </tbody>
                 </tgroup>
               </informaltable>
@@ -5421,7 +5426,7 @@ struct t_hook *weechat_hook_fd (
         Example:
 <screen>
 int
-my_fd_cb (void *data)
+my_fd_cb (void *data, int fd)
 {
     /* ... */
     return WEECHAT_RC_OK;

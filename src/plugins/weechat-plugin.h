@@ -364,7 +364,7 @@ struct t_weechat_plugin
                                int flag_read,
                                int flag_write,
                                int flag_exception,
-                               int (*callback)(void *data),
+                               int (*callback)(void *data, int fd),
                                void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
                                     const char *proxy,
