@@ -35,6 +35,7 @@ extern struct t_config_section *script_api_config_new_section (struct t_weechat_
                                                                int user_can_delete_options,
                                                                void (*callback_read)(void *data,
                                                                                      struct t_config_file *config_file,
+                                                                                     struct t_config_section *section,
                                                                                      const char *option_name,
                                                                                      const char *value),
                                                                const char *function_read,

@@ -1085,10 +1085,11 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function)
 void
 weechat_ruby_api_config_read_cb (void *data,
                                  struct t_config_file *config_file,
+                                 struct t_config_section *section,
                                  const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4];
+    char *ruby_argv[5];
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -1096,9 +1097,10 @@ weechat_ruby_api_config_read_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = (char *)option_name;
-        ruby_argv[2] = (char *)value;
-        ruby_argv[3] = NULL;
+        ruby_argv[1] = script_ptr2str (section);
+        ruby_argv[2] = (char *)option_name;
+        ruby_argv[3] = (char *)value;
+        ruby_argv[4] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1109,6 +1111,8 @@ weechat_ruby_api_config_read_cb (void *data,
             free (rc);
         if (ruby_argv[0])
             free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
     }
 }
 

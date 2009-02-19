@@ -896,10 +896,12 @@ static XS (XS_weechat_api_config_new)
 void
 weechat_perl_api_config_section_read_cb (void *data,
                                          struct t_config_file *config_file,
-                                         const char *option_name, const char *value)
+                                         struct t_config_section *section,
+                                         const char *option_name,
+                                         const char *value)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[4];
+    char *perl_argv[5];
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -907,9 +909,10 @@ weechat_perl_api_config_section_read_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         perl_argv[0] = script_ptr2str (config_file);
-        perl_argv[1] = (char *)option_name;
-        perl_argv[2] = (char *)value;
-        perl_argv[3] = NULL;
+        perl_argv[1] = script_ptr2str (section);
+        perl_argv[2] = (char *)option_name;
+        perl_argv[3] = (char *)value;
+        perl_argv[4] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -920,6 +923,8 @@ weechat_perl_api_config_section_read_cb (void *data,
             free (rc);
         if (perl_argv[0])
             free (perl_argv[0]);
+        if (perl_argv[1])
+            free (perl_argv[1]);
     }
 }
 
