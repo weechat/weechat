@@ -491,6 +491,10 @@ weechat_ruby_unload (struct t_plugin_script *script)
     
     interpreter = script->interpreter;
     
+    if (ruby_current_script == script)
+        ruby_current_script = (ruby_current_script->prev_script) ?
+            ruby_current_script->prev_script : ruby_current_script->next_script;
+    
     script_remove (weechat_ruby_plugin, &ruby_scripts, script);
     
     if (interpreter)

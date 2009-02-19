@@ -432,6 +432,10 @@ weechat_perl_unload (struct t_plugin_script *script)
     
     interpreter = script->interpreter;
     
+    if (perl_current_script == script)
+        perl_current_script = (perl_current_script->prev_script) ?
+            perl_current_script->prev_script : perl_current_script->next_script;
+    
     script_remove (weechat_perl_plugin, &perl_scripts, script);
     
 #ifdef MULTIPLICITY

@@ -505,6 +505,10 @@ weechat_python_unload (struct t_plugin_script *script)
     
     interpreter = script->interpreter;
     
+    if (python_current_script == script)
+        python_current_script = (python_current_script->prev_script) ?
+            python_current_script->prev_script : python_current_script->next_script;
+    
     script_remove (weechat_python_plugin, &python_scripts, script);
     
     PyThreadState_Swap (interpreter);

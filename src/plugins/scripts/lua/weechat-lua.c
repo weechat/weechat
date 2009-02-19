@@ -294,6 +294,10 @@ weechat_lua_unload (struct t_plugin_script *script)
     
     interpreter = script->interpreter;
     
+    if (lua_current_script == script)
+        lua_current_script = (lua_current_script->prev_script) ?
+            lua_current_script->prev_script : lua_current_script->next_script;
+    
     script_remove (weechat_lua_plugin, &lua_scripts, script);
     
     lua_close (script->interpreter);

@@ -235,6 +235,10 @@ weechat_tcl_unload (struct t_plugin_script *script)
     
     interp = (Tcl_Interp*)script->interpreter;
     
+    if (tcl_current_script == script)
+        tcl_current_script = (tcl_current_script->prev_script) ?
+            tcl_current_script->prev_script : tcl_current_script->next_script;
+    
     script_remove (weechat_tcl_plugin, &tcl_scripts, script);
     
     Tcl_DeleteInterp(interp);
