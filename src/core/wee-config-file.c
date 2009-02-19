@@ -1709,19 +1709,22 @@ config_file_write_line (struct t_config_file *config_file,
     if (!config_file || !option_name)
         return;
     
-    if (value)
+    if (value && value[0])
     {
         va_start (argptr, value);
         vsnprintf (buf, sizeof (buf) - 1, value, argptr);
         va_end (argptr);
-        string_iconv_fprintf (config_file->file, "%s = %s\n",
-                              option_name, buf);
+        
+        if (buf[0])
+        {
+            string_iconv_fprintf (config_file->file, "%s = %s\n",
+                                  option_name, buf);
+            return;
+        }
     }
-    else
-    {
-        string_iconv_fprintf (config_file->file, "\n[%s]\n",
-                              option_name);
-    }
+    
+    string_iconv_fprintf (config_file->file, "\n[%s]\n",
+                          option_name);
 }
 
 /*
