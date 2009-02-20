@@ -308,18 +308,28 @@ irc_channel_nick_speaking_add (struct t_irc_channel *channel,
                                const char *nick_name, int highlight)
 {
     int size, to_remove, i;
+    struct t_weelist_item *ptr_item;
     
     if (highlight < 0)
         highlight = 0;
     if (highlight > 1)
         highlight = 1;
     
+    /* create list if it does not exist */
     if (!channel->nicks_speaking[highlight])
         channel->nicks_speaking[highlight] = weechat_list_new ();
     
+    /* remove item if it was already in list */
+    ptr_item = weechat_list_casesearch (channel->nicks_speaking[highlight],
+                                        nick_name);
+    if (ptr_item)
+        weechat_list_remove (channel->nicks_speaking[highlight], ptr_item);
+    
+    /* add nick in list */
     weechat_list_add (channel->nicks_speaking[highlight], nick_name,
                       WEECHAT_LIST_POS_END);
     
+    /* reduce list size if it's too big */
     size = weechat_list_size (channel->nicks_speaking[highlight]);
     if (size > IRC_CHANNEL_NICKS_SPEAKING_LIMIT)
     {

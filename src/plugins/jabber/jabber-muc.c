@@ -253,18 +253,28 @@ jabber_muc_buddy_speaking_add (struct t_jabber_muc *muc, const char *buddy_name,
                                int highlight)
 {
     int size, to_remove, i;
+    struct t_weelist_item *ptr_item;
     
     if (highlight < 0)
         highlight = 0;
     if (highlight > 1)
         highlight = 1;
     
+    /* create list if it does not exist */
     if (!muc->buddies_speaking[highlight])
         muc->buddies_speaking[highlight] = weechat_list_new ();
     
+    /* remove item if it was already in list */
+    ptr_item = weechat_list_casesearch (muc->buddies_speaking[highlight],
+                                        buddy_name);
+    if (ptr_item)
+        weechat_list_remove (muc->buddies_speaking[highlight], ptr_item);
+    
+    /* add buddy in list */
     weechat_list_add (muc->buddies_speaking[highlight], buddy_name,
                       WEECHAT_LIST_POS_END);
     
+    /* reduce list size if it's too big */
     size = weechat_list_size (muc->buddies_speaking[highlight]);
     if (size > JABBER_MUC_BUDDIES_SPEAKING_LIMIT)
     {
