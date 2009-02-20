@@ -1009,7 +1009,7 @@ weechat_ruby_api_config_reload_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = NULL;
@@ -1020,7 +1020,7 @@ weechat_ruby_api_config_reload_cb (void *data,
                                         ruby_argv);
         
         if (!rc)
-            ret = WEECHAT_RC_ERROR;
+            ret = WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
         else
         {
             ret = *rc;
@@ -1032,7 +1032,7 @@ weechat_ruby_api_config_reload_cb (void *data,
         return ret;
     }
     
-    return 0;
+    return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
 /*
@@ -1094,7 +1094,7 @@ weechat_ruby_api_config_read_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
     
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = script_ptr2str (section);
@@ -1140,7 +1140,7 @@ weechat_ruby_api_config_section_write_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = (char *)section_name;
@@ -1174,7 +1174,7 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = (char *)section_name;
@@ -1209,7 +1209,7 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = script_ptr2str (section);
@@ -1223,7 +1223,7 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
                                         ruby_argv);
         
         if (!rc)
-            ret = WEECHAT_RC_ERROR;
+            ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
         else
         {
             ret = *rc;
@@ -1237,7 +1237,7 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
         return ret;
     }
     
-    return 0;
+    return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*
@@ -1256,7 +1256,7 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
     
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (config_file);
         ruby_argv[1] = script_ptr2str (section);
@@ -1269,7 +1269,7 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
                                         ruby_argv);
         
         if (!rc)
-            ret = WEECHAT_RC_ERROR;
+            ret = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
         else
         {
             ret = *rc;
@@ -1285,7 +1285,7 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
         return ret;
     }
     
-    return 0;
+    return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
 
 /*
@@ -1423,18 +1423,18 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
  *                                                value for option
  */
 
-void
+int
 weechat_ruby_api_config_option_check_value_cb (void *data,
                                                struct t_config_option *option,
                                                const char *value)
 {
     struct t_script_callback *script_callback;
     char *ruby_argv[3];
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (option);
         ruby_argv[1] = (char *)value;
@@ -1445,12 +1445,20 @@ weechat_ruby_api_config_option_check_value_cb (void *data,
                                         script_callback->function,
                                         ruby_argv);
         
+        if (!rc)
+            ret = 0;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
         if (ruby_argv[0])
             free (ruby_argv[0]);
         
-        if (rc)
-            free (rc);
+        return ret;
     }
+    
+    return 0;
 }
 
 /*
@@ -1467,7 +1475,7 @@ weechat_ruby_api_config_option_change_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (option);
         ruby_argv[1] = NULL;
@@ -1499,7 +1507,7 @@ weechat_ruby_api_config_option_delete_cb (void *data,
     
     script_callback = (struct t_script_callback *)data;
 
-    if (script_callback->function && script_callback->function[0])
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = script_ptr2str (option);
         ruby_argv[1] = NULL;
@@ -2758,27 +2766,32 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     (void) argv;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = script_ptr2str (buffer);
-    ruby_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
-    ruby_argv[2] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = script_ptr2str (buffer);
+        ruby_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        
+        return ret;
     }
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -2857,27 +2870,32 @@ weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = script_ptr2str (buffer);
-    ruby_argv[1] = (char *)command;
-    ruby_argv[2] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = script_ptr2str (buffer);
+        ruby_argv[1] = (char *)command;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        
+        return ret;
     }
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -2935,23 +2953,28 @@ weechat_ruby_api_hook_timer_cb (void *data)
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
     }
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3020,26 +3043,31 @@ weechat_ruby_api_hook_fd_cb (void *data, int fd)
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    snprintf (str_fd, sizeof (str_fd), "%d", fd);
-    
-    ruby_argv[0] = str_fd;
-    ruby_argv[1] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        snprintf (str_fd, sizeof (str_fd), "%d", fd);
+        
+        ruby_argv[0] = str_fd;
+        ruby_argv[1] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
     }
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3113,27 +3141,32 @@ weechat_ruby_api_hook_connect_cb (void *data, int status,
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    snprintf (str_status, sizeof (str_status), "%d", status);
-    
-    ruby_argv[0] = str_status;
-    ruby_argv[1] = (char *)ip_address;
-    ruby_argv[2] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        snprintf (str_status, sizeof (str_status), "%d", status);
+        
+        ruby_argv[0] = str_status;
+        ruby_argv[1] = (char *)ip_address;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
     }
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3224,42 +3257,47 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     (void) tags_count;
     
     script_callback = (struct t_script_callback *)data;
-    
-    snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
-    
-    ruby_argv[0] = script_ptr2str (buffer);
-    ruby_argv[1] = timebuffer;
-    ruby_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    if (!ruby_argv[2])
-        ruby_argv[2] = strdup ("");
-    ruby_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
-    ruby_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
-    ruby_argv[5] = (char *)prefix;
-    ruby_argv[6] = (char *)message;
-    ruby_argv[7] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
+        
+        ruby_argv[0] = script_ptr2str (buffer);
+        ruby_argv[1] = timebuffer;
+        ruby_argv[2] = weechat_string_build_with_exploded (tags, ",");
+        if (!ruby_argv[2])
+            ruby_argv[2] = strdup ("");
+        ruby_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
+        ruby_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
+        ruby_argv[5] = (char *)prefix;
+        ruby_argv[6] = (char *)message;
+        ruby_argv[7] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
+        if (ruby_argv[3])
+            free (ruby_argv[3]);
+        if (ruby_argv[4])
+            free (ruby_argv[4]);
+        
+        return ret;
     }
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
-    if (ruby_argv[2])
-        free (ruby_argv[2]);
-    if (ruby_argv[3])
-        free (ruby_argv[3]);
-    if (ruby_argv[4])
-        free (ruby_argv[4]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3335,43 +3373,48 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
     
     script_callback = (struct t_script_callback *)data;
 
-    ruby_argv[0] = (char *)signal;
-    free_needed = 0;
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[1] = (signal_data) ? (char *)signal_data : empty_value;
+        ruby_argv[0] = (char *)signal;
+        free_needed = 0;
+        if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+        {
+            ruby_argv[1] = (signal_data) ? (char *)signal_data : empty_value;
+        }
+        else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+        {
+            snprintf (value_str, sizeof (value_str) - 1,
+                      "%d", *((int *)signal_data));
+            ruby_argv[1] = value_str;
+        }
+        else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+        {
+            ruby_argv[1] = script_ptr2str (signal_data);
+            free_needed = 1;
+        }
+        else
+            ruby_argv[1] = NULL;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (free_needed && ruby_argv[1])
+            free (ruby_argv[1]);
+        
+        return ret;
     }
-    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
-    {
-        snprintf (value_str, sizeof (value_str) - 1,
-                  "%d", *((int *)signal_data));
-        ruby_argv[1] = value_str;
-    }
-    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
-    {
-        ruby_argv[1] = script_ptr2str (signal_data);
-        free_needed = 1;
-    }
-    else
-        ruby_argv[1] = NULL;
-    ruby_argv[2] = NULL;
     
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
-    {
-        ret = *rc;
-        free (rc);
-    }
-    if (free_needed && ruby_argv[1])
-        free (ruby_argv[1]);
-    
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3492,24 +3535,29 @@ weechat_ruby_api_hook_config_cb (void *data, const char *option, const char *val
     
     script_callback = (struct t_script_callback *)data;
     
-    ruby_argv[0] = (char *)option;
-    ruby_argv[1] = (char *)value;
-    ruby_argv[2] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = (char *)option;
+        ruby_argv[1] = (char *)value;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
     }
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3569,30 +3617,35 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = (char *)completion_item;
-    ruby_argv[1] = script_ptr2str (buffer);
-    ruby_argv[2] = script_ptr2str (completion);
-    ruby_argv[3] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = (char *)completion_item;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = script_ptr2str (completion);
+        ruby_argv[3] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
+        
+        return ret;
     }
-    if (ruby_argv[1])
-        free (ruby_argv[1]);
-    if (ruby_argv[2])
-        free (ruby_argv[2]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3702,16 +3755,21 @@ weechat_ruby_api_hook_modifier_cb (void *data, const char *modifier,
     char *ruby_argv[4];
     
     script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = (char *)modifier;
+        ruby_argv[1] = (char *)modifier_data;
+        ruby_argv[2] = (char *)string;
+        ruby_argv[3] = NULL;
+        
+        return (char *)weechat_ruby_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_STRING,
+                                          script_callback->function,
+                                          ruby_argv);
+    }
     
-    ruby_argv[0] = (char *)modifier;
-    ruby_argv[1] = (char *)modifier_data;
-    ruby_argv[2] = (char *)string;
-    ruby_argv[3] = NULL;
-    
-    return (char *)weechat_ruby_exec (script_callback->script,
-                                      WEECHAT_SCRIPT_EXEC_STRING,
-                                      script_callback->function,
-                                      ruby_argv);
+    return NULL;
 }
 
 /*
@@ -3812,15 +3870,20 @@ weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
     char *ruby_argv[3];
     
     script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = (char *)info_name;
+        ruby_argv[1] = (char *)arguments;
+        ruby_argv[2] = NULL;
+        
+        return (const char *)weechat_ruby_exec (script_callback->script,
+                                                WEECHAT_SCRIPT_EXEC_STRING,
+                                                script_callback->function,
+                                                ruby_argv);
+    }
     
-    ruby_argv[0] = (char *)info_name;
-    ruby_argv[1] = (char *)arguments;
-    ruby_argv[2] = NULL;
-    
-    return (const char *)weechat_ruby_exec (script_callback->script,
-                                            WEECHAT_SCRIPT_EXEC_STRING,
-                                            script_callback->function,
-                                            ruby_argv);
+    return NULL;
 }
 
 /*
@@ -3884,21 +3947,26 @@ weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
     struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = (char *)infolist_name;
+        ruby_argv[1] = script_ptr2str (pointer);
+        ruby_argv[2] = (char *)arguments;
+        ruby_argv[3] = NULL;
+        
+        result = (struct t_infolist *)weechat_ruby_exec (script_callback->script,
+                                                         WEECHAT_SCRIPT_EXEC_STRING,
+                                                         script_callback->function,
+                                                         ruby_argv);
+        
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        
+        return result;
+    }
     
-    ruby_argv[0] = (char *)infolist_name;
-    ruby_argv[1] = script_ptr2str (pointer);
-    ruby_argv[2] = (char *)arguments;
-    ruby_argv[3] = NULL;
-    
-    result = (struct t_infolist *)weechat_ruby_exec (script_callback->script,
-                                                     WEECHAT_SCRIPT_EXEC_STRING,
-                                                     script_callback->function,
-                                                     ruby_argv);
-    
-    if (ruby_argv[1])
-        free (ruby_argv[1]);
-    
-    return result;
+    return NULL;
 }
 
 /*
@@ -4020,27 +4088,32 @@ weechat_ruby_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = script_ptr2str (buffer);
-    ruby_argv[1] = (char *)input_data;
-    ruby_argv[2] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = script_ptr2str (buffer);
+        ruby_argv[1] = (char *)input_data;
+        ruby_argv[2] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        
+        return ret;
     }
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -4055,26 +4128,31 @@ weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-    
-    ruby_argv[0] = script_ptr2str (buffer);
-    ruby_argv[1] = NULL;
-    
-    rc = (int *) weechat_ruby_exec (script_callback->script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script_callback->function,
-                                    ruby_argv);
-    
-    if (!rc)
-        ret = WEECHAT_RC_ERROR;
-    else
+
+    if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ret = *rc;
-        free (rc);
+        ruby_argv[0] = script_ptr2str (buffer);
+        ruby_argv[1] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        
+        return ret;
     }
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
     
-    return ret;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -4911,22 +4989,27 @@ weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     char *ruby_argv[3], *ret;
     
     script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = script_ptr2str (item);
+        ruby_argv[1] = script_ptr2str (window);
+        ruby_argv[2] = NULL;
+        
+        ret = (char *)weechat_ruby_exec (script_callback->script,
+                                         WEECHAT_SCRIPT_EXEC_STRING,
+                                         script_callback->function,
+                                         ruby_argv);
+        
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        
+        return ret;
+    }
     
-    ruby_argv[0] = script_ptr2str (item);
-    ruby_argv[1] = script_ptr2str (window);
-    ruby_argv[2] = NULL;
-    
-    ret = (char *)weechat_ruby_exec (script_callback->script,
-                                     WEECHAT_SCRIPT_EXEC_STRING,
-                                     script_callback->function,
-                                     ruby_argv);
-    
-    if (ruby_argv[0])
-        free (ruby_argv[0]);
-    if (ruby_argv[1])
-        free (ruby_argv[1]);
-    
-    return ret;
+    return NULL;
 }
 
 /*
