@@ -2309,7 +2309,7 @@ weechat_python_api_prnt_date_tags (PyObject *self, PyObject *args)
     tags = NULL;
     message = NULL;
     
-    if (!PyArg_ParseTuple (args, "siss", &buffer, &time, &tags, &message))
+    if (!PyArg_ParseTuple (args, "siss", &buffer, &date, &tags, &message))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prnt_date_tags");
         PYTHON_RETURN_ERROR;
