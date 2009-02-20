@@ -1085,7 +1085,7 @@ weechat_lua_api_config_new (lua_State *L)
  * weechat_lua_api_config_read_cb: callback for reading option in section
  */
 
-void
+int
 weechat_lua_api_config_read_cb (void *data,
                                 struct t_config_file *config_file,
                                 struct t_config_section *section,
@@ -1093,7 +1093,7 @@ weechat_lua_api_config_read_cb (void *data,
 {
     struct t_script_callback *script_callback;
     char *lua_argv[5];
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -1110,13 +1110,22 @@ weechat_lua_api_config_read_cb (void *data,
                                        script_callback->function,
                                        lua_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (lua_argv[0])
             free (lua_argv[0]);
         if (lua_argv[1])
             free (lua_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*

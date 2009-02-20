@@ -893,7 +893,7 @@ static XS (XS_weechat_api_config_new)
  * weechat_perl_api_config_section_read_cb: callback for reading option in section
  */
 
-void
+int
 weechat_perl_api_config_section_read_cb (void *data,
                                          struct t_config_file *config_file,
                                          struct t_config_section *section,
@@ -902,7 +902,7 @@ weechat_perl_api_config_section_read_cb (void *data,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[5];
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
@@ -919,13 +919,22 @@ weechat_perl_api_config_section_read_cb (void *data,
                                         script_callback->function,
                                         perl_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (perl_argv[0])
             free (perl_argv[0]);
         if (perl_argv[1])
             free (perl_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*

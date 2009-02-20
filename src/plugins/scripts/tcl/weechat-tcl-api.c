@@ -1097,7 +1097,7 @@ weechat_tcl_api_config_new (ClientData clientData, Tcl_Interp *interp,
  *                                         section
  */
 
-void
+int
 weechat_tcl_api_config_section_read_cb (void *data,
                                         struct t_config_file *config_file,
                                         struct t_config_section *section,
@@ -1105,10 +1105,10 @@ weechat_tcl_api_config_section_read_cb (void *data,
 {
     struct t_script_callback *script_callback;
     char *tcl_argv[5];
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback->function && script_callback->function[0])
     {
         tcl_argv[0] = script_ptr2str (config_file);
@@ -1122,13 +1122,22 @@ weechat_tcl_api_config_section_read_cb (void *data,
                                         script_callback->function,
                                         tcl_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (tcl_argv[0])
             free (tcl_argv[0]);
         if (tcl_argv[1])
             free (tcl_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*

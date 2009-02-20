@@ -949,7 +949,7 @@ weechat_python_api_config_new (PyObject *self, PyObject *args)
  * weechat_python_api_config_read_cb: callback for reading option in section
  */
 
-void
+int
 weechat_python_api_config_read_cb (void *data,
                                    struct t_config_file *config_file,
                                    struct t_config_section *section,
@@ -957,10 +957,10 @@ weechat_python_api_config_read_cb (void *data,
 {
     struct t_script_callback *script_callback;
     char *python_argv[5];
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback->function && script_callback->function[0])
     {
         python_argv[0] = script_ptr2str (config_file);
@@ -974,13 +974,25 @@ weechat_python_api_config_read_cb (void *data,
                                           script_callback->function,
                                           python_argv);
         
+        if (!rc)
+            ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
         if (rc)
             free (rc);
         if (python_argv[0])
             free (python_argv[0]);
         if (python_argv[1])
             free (python_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*
