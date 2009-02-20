@@ -60,10 +60,10 @@ weechat_python_exec (struct t_plugin_script *script,
     PyObject *rc;
     void *ret_value;
     int *ret_i;
-    struct t_plugin_script *old_python_current_script;
     
     /* PyEval_AcquireLock (); */
-    PyThreadState_Swap (script->interpreter);
+    if (script->interpreter)
+        PyThreadState_Swap (script->interpreter);
     
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
@@ -77,8 +77,7 @@ weechat_python_exec (struct t_plugin_script *script,
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
 	return NULL;
     }
-
-    old_python_current_script = python_current_script;
+    
     python_current_script = script;
     
     if (argv && argv[0])
@@ -173,9 +172,6 @@ weechat_python_exec (struct t_plugin_script *script,
                                          "a valid value"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-        python_current_script = old_python_current_script;
-        if (python_current_script)
-            PyThreadState_Swap (python_current_script->interpreter);
 	return NULL;
     }
     
@@ -186,9 +182,6 @@ weechat_python_exec (struct t_plugin_script *script,
                                          "function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-        python_current_script = old_python_current_script;
-        if (python_current_script)
-            PyThreadState_Swap (python_current_script->interpreter);
 	return NULL;
     }
     
@@ -196,10 +189,6 @@ weechat_python_exec (struct t_plugin_script *script,
         PyErr_Print ();
     
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
-    
-    python_current_script = old_python_current_script;
-    if (python_current_script)
-        PyThreadState_Swap (python_current_script->interpreter);
     
     return ret_value;
 }
@@ -315,7 +304,7 @@ weechat_python_load (const char *filename)
         return 0;
     }
     
-    /* PyThreadState_Swap (python_current_interpreter); */
+    PyThreadState_Swap (python_current_interpreter);
     
     weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
 
