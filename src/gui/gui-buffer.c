@@ -134,6 +134,9 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
             free (new_local_var->value);
         new_local_var->name = strdup (name);
         new_local_var->value = strdup (value);
+        
+        hook_signal_send ("buffer_localvar_changed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
     else
     {
@@ -150,6 +153,9 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
             else
                 buffer->local_variables = new_local_var;
             buffer->last_local_var = new_local_var;
+            
+            hook_signal_send ("buffer_localvar_added",
+                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
         }
     }
     
@@ -184,6 +190,9 @@ gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
         buffer->last_local_var = local_var->prev_var;
     
     free (local_var);
+
+    hook_signal_send ("buffer_localvar_removed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -652,6 +661,9 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
     
     buffer->type = type;
     gui_buffer_ask_chat_refresh (buffer, 2);
+
+    hook_signal_send ("buffer_type_changed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -664,6 +676,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
     if (buffer->title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
+    
     hook_signal_send ("buffer_title_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
