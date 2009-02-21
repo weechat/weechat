@@ -630,7 +630,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    char *new_nick, *old_color;
+    char *new_nick, *old_color, *buffer_name;
     int local_nick;
     
     /* NICK message looks like:
@@ -659,9 +659,11 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                 {
                     free (ptr_channel->name);
                     ptr_channel->name = strdup (new_nick);
-                    weechat_buffer_set (ptr_channel->buffer, "name", new_nick);
+                    buffer_name = irc_buffer_build_name (server->name, ptr_channel->name);
+                    weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
+                    weechat_buffer_set (ptr_channel->buffer, "short_name", ptr_channel->name);
                     weechat_buffer_set (ptr_channel->buffer,
-                                        "localvar_set_channel", new_nick);
+                                        "localvar_set_channel", ptr_channel->name);
                 }
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
