@@ -59,6 +59,7 @@ struct t_config_file
 
 struct t_config_section
 {
+    struct t_config_file *config_file;     /* configuration file            */
     char *name;                            /* section name                  */
     int user_can_add_options;              /* user can add with /set ?      */
     int user_can_delete_options;           /* user can del with /unset ?    */
@@ -242,8 +243,7 @@ extern int config_file_read (struct t_config_file *config_file);
 extern int config_file_reload (struct t_config_file *config_file);
 extern void config_file_option_free (struct t_config_option *option);
 extern void config_file_section_free_options (struct t_config_section *section);
-extern void config_file_section_free (struct t_config_file *config_file,
-                                      struct t_config_section *section);
+extern void config_file_section_free (struct t_config_section *section);
 extern void config_file_free (struct t_config_file *config_file);
 extern void config_file_free_all ();
 extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);

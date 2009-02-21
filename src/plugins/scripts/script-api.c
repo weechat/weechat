@@ -476,6 +476,92 @@ script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_config_option_free: free an option in configuration file
+ */
+
+void
+script_api_config_option_free (struct t_weechat_plugin *weechat_plugin,
+                               struct t_plugin_script *script,
+                               struct t_config_option *option)
+{
+    struct t_script_callback *ptr_script_callback, *next_callback;
+    
+    if (!weechat_plugin || !script || !option)
+        return;
+    
+    weechat_config_option_free (option);
+    
+    ptr_script_callback = script->callbacks;
+    while (ptr_script_callback)
+    {
+        next_callback = ptr_script_callback->next_callback;
+        
+        if (ptr_script_callback->config_option == option)
+            script_callback_remove (script, ptr_script_callback);
+        
+        ptr_script_callback = next_callback;
+    }
+}
+
+/*
+ * script_api_config_section_free_options: free all options of a section in
+ *                                         configuration file
+ */
+
+void
+script_api_config_section_free_options (struct t_weechat_plugin *weechat_plugin,
+                                        struct t_plugin_script *script,
+                                        struct t_config_section *section)
+{
+    struct t_script_callback *ptr_script_callback, *next_callback;
+    
+    if (!weechat_plugin || !script || !section)
+        return;
+    
+    weechat_config_section_free_options (section);
+    
+    ptr_script_callback = script->callbacks;
+    while (ptr_script_callback)
+    {
+        next_callback = ptr_script_callback->next_callback;
+        
+        if ((ptr_script_callback->config_section == section)
+            && ptr_script_callback->config_option)
+            script_callback_remove (script, ptr_script_callback);
+        
+        ptr_script_callback = next_callback;
+    }
+}
+
+/*
+ * script_api_config_section_free: free a section in configuration file
+ */
+
+void
+script_api_config_section_free (struct t_weechat_plugin *weechat_plugin,
+                                struct t_plugin_script *script,
+                                struct t_config_section *section)
+{
+    struct t_script_callback *ptr_script_callback, *next_callback;
+    
+    if (!weechat_plugin || !script || !section)
+        return;
+    
+    weechat_config_section_free (section);
+    
+    ptr_script_callback = script->callbacks;
+    while (ptr_script_callback)
+    {
+        next_callback = ptr_script_callback->next_callback;
+        
+        if (ptr_script_callback->config_section == section)
+            script_callback_remove (script, ptr_script_callback);
+        
+        ptr_script_callback = next_callback;
+    }
+}
+
+/*
  * script_api_config_free: free configuration file
  */
 

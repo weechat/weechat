@@ -1904,6 +1904,97 @@ static XS (XS_weechat_api_config_reload)
 }
 
 /*
+ * weechat::config_option_free: free an option in configuration file
+ */
+
+static XS (XS_weechat_api_config_option_free)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        PERL_RETURN_ERROR;
+    }
+    
+    script_api_config_option_free (weechat_perl_plugin,
+                                   perl_current_script,
+                                   script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::config_section_free_options: free options of a section in
+ *                                       configuration file
+ */
+
+static XS (XS_weechat_api_config_section_free_options)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        PERL_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free_options (weechat_perl_plugin,
+                                            perl_current_script,
+                                            script_str2ptr (SvPV (ST (0), PL_na))); /* section */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::config_section_free: free section in configuration file
+ */
+
+static XS (XS_weechat_api_config_section_free)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        PERL_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free (weechat_perl_plugin,
+                                    perl_current_script,
+                                    script_str2ptr (SvPV (ST (0), PL_na))); /* section */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::config_free: free configuration file
  */
 
@@ -4984,6 +5075,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_write", XS_weechat_api_config_write, "weechat");
     newXS ("weechat::config_read", XS_weechat_api_config_read, "weechat");
     newXS ("weechat::config_reload", XS_weechat_api_config_reload, "weechat");
+    newXS ("weechat::config_option_free", XS_weechat_api_config_option_free, "weechat");
+    newXS ("weechat::config_section_free_options", XS_weechat_api_config_section_free_options, "weechat");
+    newXS ("weechat::config_section_free", XS_weechat_api_config_section_free, "weechat");
     newXS ("weechat::config_free", XS_weechat_api_config_free, "weechat");
     newXS ("weechat::config_get", XS_weechat_api_config_get, "weechat");
     newXS ("weechat::config_get_plugin", XS_weechat_api_config_get_plugin, "weechat");

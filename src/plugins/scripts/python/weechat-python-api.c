@@ -2023,6 +2023,106 @@ weechat_python_api_config_reload (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_option_free: free an option in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_option_free (PyObject *self, PyObject *args)
+{
+    char *option;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_config_option_free (weechat_python_plugin,
+                                   python_current_script,
+                                   script_str2ptr (option));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_config_section_free_options: free all options of a section
+ *                                                 in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_section_free_options (PyObject *self, PyObject *args)
+{
+    char *section;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    section = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &section))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free_options (weechat_python_plugin,
+                                            python_current_script,
+                                            script_str2ptr (section));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_config_section_free: free section in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_section_free (PyObject *self, PyObject *args)
+{
+    char *section;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    section = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &section))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free (weechat_python_plugin,
+                                    python_current_script,
+                                    script_str2ptr (section));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_config_free: free configuration file
  */
 
@@ -5286,6 +5386,9 @@ PyMethodDef weechat_python_funcs[] =
     { "config_write", &weechat_python_api_config_write, METH_VARARGS, "" },
     { "config_read", &weechat_python_api_config_read, METH_VARARGS, "" },
     { "config_reload", &weechat_python_api_config_reload, METH_VARARGS, "" },
+    { "config_option_free", &weechat_python_api_config_option_free, METH_VARARGS, "" },
+    { "config_section_free_options", &weechat_python_api_config_section_free_options, METH_VARARGS, "" },
+    { "config_section_free", &weechat_python_api_config_section_free, METH_VARARGS, "" },
     { "config_free", &weechat_python_api_config_free, METH_VARARGS, "" },
     { "config_get", &weechat_python_api_config_get, METH_VARARGS, "" },
     { "config_get_plugin", &weechat_python_api_config_get_plugin, METH_VARARGS, "" },

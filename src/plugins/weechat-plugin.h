@@ -315,8 +315,7 @@ struct t_weechat_plugin
     int (*config_reload) (struct t_config_file *config_file);
     void (*config_option_free) (struct t_config_option *option);
     void (*config_section_free_options) (struct t_config_section *section);
-    void (*config_section_free) (struct t_config_file *config_file,
-                                 struct t_config_section *section);
+    void (*config_section_free) (struct t_config_section *section);
     void (*config_free) (struct t_config_file *config_file);
     struct t_config_option *(*config_get) (const char *option_name);
     const char *(*config_get_plugin) (struct t_weechat_plugin *plugin,
@@ -867,8 +866,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_option_free(__option)
 #define weechat_config_section_free_options(__section)                  \
     weechat_plugin->config_section_free_options(__section)
-#define weechat_config_section_free(__config, __section)                \
-    weechat_plugin->config_section_free(__config, __section)
+#define weechat_config_section_free(__section)                          \
+    weechat_plugin->config_section_free(__section)
 #define weechat_config_free(__config)                                   \
     weechat_plugin->config_free(__config)
 #define weechat_config_get(__option)                                    \

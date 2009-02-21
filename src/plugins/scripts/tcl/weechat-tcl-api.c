@@ -2206,6 +2206,106 @@ weechat_tcl_api_config_reload (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_config_option_free: free an option in configuration file
+ */
+
+static int
+weechat_tcl_api_config_option_free (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+	TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        TCL_RETURN_ERROR;
+    }
+    
+    script_api_config_option_free (weechat_tcl_plugin,
+                                   tcl_current_script,
+                                   script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* option */
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_config_section_free_options: free all options of a section
+ *                                              in configuration file
+ */
+
+static int
+weechat_tcl_api_config_section_free_options (ClientData clientData, Tcl_Interp *interp,
+                                             int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+	TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        TCL_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free_options (weechat_tcl_plugin,
+                                            tcl_current_script,
+                                            script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* section */
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_config_section_free: free section in configuration file
+ */
+
+static int
+weechat_tcl_api_config_section_free (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+	TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        TCL_RETURN_ERROR;
+    }
+    
+    script_api_config_section_free (weechat_tcl_plugin,
+                                    tcl_current_script,
+                                    script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* section */
+    
+    TCL_RETURN_OK;
+}
+
+/*
  * weechat_tcl_api_config_free: free configuration file
  */
 
@@ -5724,6 +5824,12 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_config_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::config_reload",
                           weechat_tcl_api_config_reload, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::config_option_free",
+                          weechat_tcl_api_config_option_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::config_section_free_options",
+                          weechat_tcl_api_config_section_free_options, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::config_section_free",
+                          weechat_tcl_api_config_section_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::config_free",
                           weechat_tcl_api_config_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::config_get",

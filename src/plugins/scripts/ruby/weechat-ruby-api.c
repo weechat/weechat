@@ -2327,6 +2327,118 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
 }
 
 /*
+ * weechat_ruby_api_config_option_free: free an option in configuration file
+ */
+
+static VALUE
+weechat_ruby_api_config_option_free (VALUE class, VALUE option)
+{
+    char *c_option;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_option = NULL;
+    
+    if (NIL_P (option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (option, T_STRING);
+    
+    c_option = STR2CSTR (option);
+    
+    script_api_config_option_free (weechat_ruby_plugin,
+                                   ruby_current_script,
+                                   script_str2ptr (c_option));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_config_section_free_options: free all options of a section
+ *                                               in configuration file
+ */
+
+static VALUE
+weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
+{
+    char *c_section;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_section = NULL;
+    
+    if (NIL_P (section))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (section, T_STRING);
+    
+    c_section = STR2CSTR (section);
+    
+    script_api_config_section_free_options (weechat_ruby_plugin,
+                                            ruby_current_script,
+                                            script_str2ptr (c_section));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_config_section_free: free section in configuration file
+ */
+
+static VALUE
+weechat_ruby_api_config_section_free (VALUE class, VALUE section)
+{
+    char *c_section;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_section = NULL;
+    
+    if (NIL_P (section))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (section, T_STRING);
+    
+    c_section = STR2CSTR (section);
+    
+    script_api_config_section_free (weechat_ruby_plugin,
+                                    ruby_current_script,
+                                    script_str2ptr (c_section));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_config_free: free configuration file
  */
 
@@ -6053,6 +6165,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "config_write", &weechat_ruby_api_config_write, 1);
     rb_define_module_function (ruby_mWeechat, "config_read", &weechat_ruby_api_config_read, 1);
     rb_define_module_function (ruby_mWeechat, "config_reload", &weechat_ruby_api_config_reload, 1);
+    rb_define_module_function (ruby_mWeechat, "config_option_free", &weechat_ruby_api_config_option_free, 1);
+    rb_define_module_function (ruby_mWeechat, "config_section_free_options", &weechat_ruby_api_config_section_free_options, 1);
+    rb_define_module_function (ruby_mWeechat, "config_section_free", &weechat_ruby_api_config_section_free, 1);
     rb_define_module_function (ruby_mWeechat, "config_free", &weechat_ruby_api_config_free, 1);
     rb_define_module_function (ruby_mWeechat, "config_get", &weechat_ruby_api_config_get, 1);
     rb_define_module_function (ruby_mWeechat, "config_get_plugin", &weechat_ruby_api_config_get_plugin, 1);

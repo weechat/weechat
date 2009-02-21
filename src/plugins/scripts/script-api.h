@@ -80,6 +80,15 @@ extern struct t_config_option *script_api_config_new_option (struct t_weechat_pl
                                                              void (*callback_delete)(void *data,
                                                                                      struct t_config_option *option),
                                                              const char *function_delete);
+extern void script_api_config_option_free (struct t_weechat_plugin *weechat_plugin,
+                                           struct t_plugin_script *script,
+                                           struct t_config_option *option);
+extern void script_api_config_section_free_options (struct t_weechat_plugin *weechat_plugin,
+                                                    struct t_plugin_script *script,
+                                                    struct t_config_section *section);
+extern void script_api_config_section_free (struct t_weechat_plugin *weechat_plugin,
+                                            struct t_plugin_script *script,
+                                            struct t_config_section *section);
 extern void script_api_config_free (struct t_weechat_plugin *weechat_plugin,
                                     struct t_plugin_script *script,
                                     struct t_config_file *config_file);

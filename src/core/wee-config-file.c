@@ -171,6 +171,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
     new_section = malloc (sizeof (*new_section));
     if (new_section)
     {
+        new_section->config_file = config_file;
         new_section->name = strdup (name);
         new_section->user_can_add_options = user_can_add_options;
         new_section->user_can_delete_options = user_can_delete_options;
@@ -2245,21 +2246,23 @@ config_file_section_free_options (struct t_config_section *section)
  */
 
 void
-config_file_section_free (struct t_config_file *config_file,
-                          struct t_config_section *section)
+config_file_section_free (struct t_config_section *section)
 {
+    struct t_config_file *ptr_config;
     struct t_config_section *new_sections;
     
-    if (!config_file || !section)
+    if (!section)
         return;
     
+    ptr_config = section->config_file;
+    
     /* remove section */
-    if (config_file->last_section == section)
-        config_file->last_section = section->prev_section;
+    if (ptr_config->last_section == section)
+        ptr_config->last_section = section->prev_section;
     if (section->prev_section)
     {
         (section->prev_section)->next_section = section->next_section;
-        new_sections = config_file->sections;
+        new_sections = ptr_config->sections;
     }
     else
         new_sections = section->next_section;
@@ -2274,7 +2277,7 @@ config_file_section_free (struct t_config_file *config_file,
     
     free (section);
     
-    config_file->sections = new_sections;
+    ptr_config->sections = new_sections;
 }
 
 /*
@@ -2306,7 +2309,7 @@ config_file_free (struct t_config_file *config_file)
     /* free data */
     while (config_file->sections)
     {
-        config_file_section_free (config_file, config_file->sections);
+        config_file_section_free (config_file->sections);
     }
     if (config_file->name)
         free (config_file->name);
@@ -2689,6 +2692,7 @@ config_file_print_log ()
         {
             log_printf ("");
             log_printf ("    [section (addr:0x%lx)]", ptr_section);
+            log_printf ("      config_file. . . . . . . . : 0x%lx", ptr_section->config_file);
             log_printf ("      name . . . . . . . . . . . : '%s'",  ptr_section->name);
             log_printf ("      callback_read. . . . . . . : 0x%lx", ptr_section->callback_read);
             log_printf ("      callback_read_data . . . . : 0x%lx", ptr_section->callback_read_data);

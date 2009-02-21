@@ -2274,6 +2274,121 @@ weechat_lua_api_config_reload (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_option_free: free an option in configuration file
+ */
+
+static int
+weechat_lua_api_config_option_free (lua_State *L)
+{
+    const char *option;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_config_option_free (weechat_lua_plugin,
+                                   lua_current_script,
+                                   script_str2ptr (option));
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_config_section_free_options: free all options of a section
+ *                                              in configuration file
+ */
+
+static int
+weechat_lua_api_config_section_free_options (lua_State *L)
+{
+    const char *section;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+        LUA_RETURN_ERROR;
+    }
+    
+    section = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        LUA_RETURN_ERROR;
+    }
+    
+    section = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_config_section_free_options (weechat_lua_plugin,
+                                            lua_current_script,
+                                            script_str2ptr (section));
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_config_section_free: free section in configuration file
+ */
+
+static int
+weechat_lua_api_config_section_free (lua_State *L)
+{
+    const char *section;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    section = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    section = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_config_section_free (weechat_lua_plugin,
+                                    lua_current_script,
+                                    script_str2ptr (section));
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_config_free: free configuration file
  */
 
@@ -6300,6 +6415,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_write", &weechat_lua_api_config_write },
     { "config_read", &weechat_lua_api_config_read },
     { "config_reload", &weechat_lua_api_config_reload },
+    { "config_option_free", &weechat_lua_api_config_option_free },
+    { "config_section_free_options", &weechat_lua_api_config_section_free_options },
+    { "config_section_free", &weechat_lua_api_config_section_free },
     { "config_free", &weechat_lua_api_config_free },
     { "config_get", &weechat_lua_api_config_get },
     { "config_get_plugin", &weechat_lua_api_config_get_plugin },
