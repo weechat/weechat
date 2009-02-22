@@ -124,7 +124,7 @@ irc_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
     
-    upgrade_file = weechat_upgrade_create (IRC_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
     
@@ -166,7 +166,9 @@ irc_upgrade_set_buffer_callbacks ()
  */
 
 int
-irc_upgrade_read_cb (int object_id,
+irc_upgrade_read_cb (void *data,
+                     struct t_upgrade_file *upgrade_file,
+                     int object_id,
                      struct t_infolist *infolist)
 {
     int flags, sock, size, i, index;
@@ -174,6 +176,10 @@ irc_upgrade_read_cb (int object_id,
     const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) upgrade_file;
     
     weechat_infolist_reset_item_cursor (infolist);
     while (weechat_infolist_next (infolist))
@@ -351,8 +357,8 @@ irc_upgrade_load ()
 
     irc_upgrade_set_buffer_callbacks ();
     
-    upgrade_file = weechat_upgrade_create (IRC_UPGRADE_FILENAME, 0);
-    rc = weechat_upgrade_read (upgrade_file, &irc_upgrade_read_cb);
+    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 0);
+    rc = weechat_upgrade_read (upgrade_file, &irc_upgrade_read_cb, NULL);
     
     return rc;
 }

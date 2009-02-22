@@ -5463,6 +5463,192 @@ weechat_python_api_infolist_free (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_upgrade_new: create an upgrade file
+ */
+
+static PyObject *
+weechat_python_api_upgrade_new (PyObject *self, PyObject *args)
+{
+    char *filename, *result;
+    int write;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    filename = NULL;
+    write = 0;
+    
+    if (!PyArg_ParseTuple (args, "si", &filename, &write))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_upgrade_new (filename, write));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_upgrade_write_object: write object in upgrade file
+ */
+
+static PyObject *
+weechat_python_api_upgrade_write_object (PyObject *self, PyObject *args)
+{
+    char *upgrade_file, *infolist;
+    int object_id, rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    upgrade_file = NULL;
+    object_id = 0;
+    infolist = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sis", &upgrade_file, &object_id, &infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
+                                       object_id,
+                                       script_str2ptr (infolist));
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_upgrade_read_cb: callback for reading object in upgrade file
+ */
+
+int
+weechat_python_api_upgrade_read_cb (void *data,
+                                    struct t_upgrade_file *upgrade_file,
+                                    int object_id,
+                                    struct t_infolist *infolist)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[4], str_object_id[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+        
+        python_argv[0] = script_ptr2str (upgrade_file);
+        python_argv[1] = str_object_id;
+        python_argv[2] = script_ptr2str (infolist);
+        python_argv[3] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (python_argv[0])
+            free (python_argv[0]);
+        if (python_argv[2])
+            free (python_argv[2]);
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_python_api_upgrade_read: read upgrade file
+ */
+
+static PyObject *
+weechat_python_api_upgrade_read (PyObject *self, PyObject *args)
+{
+    char *upgrade_file, *function_read;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    upgrade_file = NULL;
+    function_read = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &upgrade_file, &function_read))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    rc = script_api_upgrade_read (weechat_python_plugin,
+                                  python_current_script,
+                                  script_str2ptr (upgrade_file),
+                                  &weechat_python_api_upgrade_read_cb,
+                                  function_read);
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_upgrade_close: close upgrade file
+ */
+
+static PyObject *
+weechat_python_api_upgrade_close (PyObject *self, PyObject *args)
+{
+    char *upgrade_file;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    upgrade_file = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &upgrade_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_upgrade_close (script_str2ptr (upgrade_file));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * Python subroutines
  */
 
@@ -5594,5 +5780,9 @@ PyMethodDef weechat_python_funcs[] =
     { "infolist_pointer", &weechat_python_api_infolist_pointer, METH_VARARGS, "" },
     { "infolist_time", &weechat_python_api_infolist_time, METH_VARARGS, "" },
     { "infolist_free", &weechat_python_api_infolist_free, METH_VARARGS, "" },
+    { "upgrade_new", &weechat_python_api_upgrade_new, METH_VARARGS, "" },
+    { "upgrade_write_object", &weechat_python_api_upgrade_write_object, METH_VARARGS, "" },
+    { "upgrade_read", &weechat_python_api_upgrade_read, METH_VARARGS, "" },
+    { "upgrade_close", &weechat_python_api_upgrade_close, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
 };

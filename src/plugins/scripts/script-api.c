@@ -105,15 +105,15 @@ script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
                                                     struct t_config_section *section,
                                                     const char *option_name,
                                                     const char *value),
-                               char *function_read,
+                               const char *function_read,
                                void (*callback_write)(void *data,
                                                       struct t_config_file *config_file,
                                                       const char *section_name),
-                               char *function_write,
+                               const char *function_write,
                                void (*callback_write_default)(void *data,
                                                               struct t_config_file *config_file,
                                                               const char *section_name),
-                               char *function_write_default,
+                               const char *function_write_default,
                                int (*callback_create_option)(void *data,
                                                              struct t_config_file *config_file,
                                                              struct t_config_section *section,
@@ -1520,4 +1520,43 @@ script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
     free (option_fullname);
     
     return return_code;
+}
+
+/*
+ * script_api_upgrade_read: read upgrade file
+ *                          return 1 if ok, 0 if error
+ */
+
+int
+script_api_upgrade_read (struct t_weechat_plugin *weechat_plugin,
+                         struct t_plugin_script *script,
+                         struct t_upgrade_file *upgrade_file,
+                         int (*callback_read)(void *data,
+                                              struct t_upgrade_file *upgrade_file,
+                                              int object_id,
+                                              struct t_infolist *infolist),
+                         const char *function_read)
+{
+    struct t_script_callback *script_callback;
+    int rc;
+    
+    if (!function_read || !function_read[0])
+        return 0;
+    
+    script_callback = script_callback_alloc ();
+    if (!script_callback)
+        return 0;
+    
+    script_callback->script = script;
+    script_callback->function = strdup (function_read);
+    script_callback->upgrade_file = upgrade_file;
+    script_callback_add (script, script_callback);
+    
+    rc = weechat_upgrade_read (upgrade_file,
+                               callback_read,
+                               script_callback);
+    
+    script_callback_remove (script, script_callback);
+    
+    return rc;
 }

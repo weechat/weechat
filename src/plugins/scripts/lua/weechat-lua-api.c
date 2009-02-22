@@ -6145,6 +6145,213 @@ weechat_lua_api_infolist_free (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_new: create a new configuration file
+ */
+
+static int
+weechat_lua_api_upgrade_new (lua_State *L)
+{
+    const char *filename;
+    char *result;
+    int n, write;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        LUA_RETURN_EMPTY;
+    }
+    
+    filename = NULL;
+    write = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        LUA_RETURN_EMPTY;
+    }
+    
+    filename = lua_tostring (lua_current_interpreter, -2);
+    write = lua_tonumber (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_upgrade_new (filename, write));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_upgrade_write_object: write object in upgrade file
+ */
+
+static int
+weechat_lua_api_upgrade_write_object (lua_State *L)
+{
+    const char *upgrade_file, *infolist;
+    int n, object_id, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        LUA_RETURN_INT(0);
+    }
+    
+    upgrade_file = NULL;
+    object_id = 0;
+    infolist = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        LUA_RETURN_INT(0);
+    }
+    
+    upgrade_file = lua_tostring (lua_current_interpreter, -3);
+    object_id = lua_tonumber (lua_current_interpreter, -2);
+    infolist = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
+                                       object_id,
+                                       script_str2ptr (infolist));
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_upgrade_read_cb: callback for reading object in upgrade file
+ */
+
+int
+weechat_lua_api_upgrade_read_cb (void *data,
+                                 struct t_upgrade_file *upgrade_file,
+                                 int object_id,
+                                 struct t_infolist *infolist)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[4], str_object_id[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+        
+        lua_argv[0] = script_ptr2str (upgrade_file);
+        lua_argv[1] = str_object_id;
+        lua_argv[2] = script_ptr2str (infolist);
+        lua_argv[3] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (lua_argv[0])
+            free (lua_argv[0]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_lua_api_upgrade_read: read upgrade file
+ */
+
+static int
+weechat_lua_api_upgrade_read (lua_State *L)
+{
+    const char *upgrade_file, *function_read;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        LUA_RETURN_EMPTY;
+    }
+    
+    upgrade_file = NULL;
+    function_read = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        LUA_RETURN_EMPTY;
+    }
+    
+    upgrade_file = lua_tostring (lua_current_interpreter, -2);
+    function_read = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = script_api_upgrade_read (weechat_lua_plugin,
+                                  lua_current_script,
+                                  script_str2ptr (upgrade_file),
+                                  &weechat_lua_api_upgrade_read_cb,
+                                  function_read);
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_upgrade_close: close upgrade file
+ */
+
+static int
+weechat_lua_api_upgrade_close (lua_State *L)
+{
+    const char *upgrade_file;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        LUA_RETURN_ERROR;
+    }
+    
+    upgrade_file = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        LUA_RETURN_INT(0);
+    }
+    
+    upgrade_file = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_upgrade_close (script_str2ptr (upgrade_file));
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * Lua constant as functions
  */
 
@@ -6639,6 +6846,10 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "infolist_pointer", &weechat_lua_api_infolist_pointer },
     { "infolist_time", &weechat_lua_api_infolist_time },
     { "infolist_free", &weechat_lua_api_infolist_free },
+    { "upgrade_new", &weechat_lua_api_upgrade_new },
+    { "upgrade_write_object", &weechat_lua_api_upgrade_write_object },
+    { "upgrade_read", &weechat_lua_api_upgrade_read },
+    { "upgrade_close", &weechat_lua_api_upgrade_close },
     
     /* define constants as function which returns values */
     

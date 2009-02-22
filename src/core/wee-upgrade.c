@@ -257,7 +257,7 @@ upgrade_weechat_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
     
-    upgrade_file = upgrade_file_create (WEECHAT_UPGRADE_FILENAME, 1);
+    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
 
@@ -277,7 +277,9 @@ upgrade_weechat_save ()
  */
 
 int
-upgrade_weechat_read_cb (int object_id,
+upgrade_weechat_read_cb (void *data,
+                         struct t_upgrade_file *upgrade_file,
+                         int object_id,
                          struct t_infolist *infolist)
 {
     const char *key, *var_name, *type, *name, *group_name;
@@ -288,6 +290,10 @@ upgrade_weechat_read_cb (int object_id,
     struct timeval creation_time;
     void *buf;
     int size, index, length;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) upgrade_file;
     
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
@@ -534,8 +540,8 @@ upgrade_weechat_load ()
     int rc;
     struct t_upgrade_file *upgrade_file;
     
-    upgrade_file = upgrade_file_create (WEECHAT_UPGRADE_FILENAME, 0);
-    rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb);
+    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
+    rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
     
     if (!hotlist_reset)
         gui_hotlist_clear ();

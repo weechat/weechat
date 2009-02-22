@@ -29,6 +29,7 @@ struct t_script_callback
     struct t_hook *hook;                     /* not NULL for hook           */
     struct t_gui_buffer *buffer;             /* not NULL for buffer         */
     struct t_gui_bar_item *bar_item;         /* not NULL for bar item       */
+    struct t_upgrade_file *upgrade_file;     /* not NULL for upgrade file   */
     struct t_script_callback *prev_callback; /* link to next callback       */
     struct t_script_callback *next_callback; /* link to previous callback   */
 };

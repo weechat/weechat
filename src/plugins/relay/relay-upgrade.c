@@ -50,7 +50,7 @@ relay_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
     
-    upgrade_file = weechat_upgrade_create (RELAY_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
     
@@ -92,12 +92,17 @@ relay_upgrade_set_buffer_callbacks ()
  */
 
 int
-relay_upgrade_read_cb (int object_id,
-                      struct t_infolist *infolist)
+relay_upgrade_read_cb (void *data,
+                       struct t_upgrade_file *upgrade_file,
+                       int object_id,
+                       struct t_infolist *infolist)
 {
     /* TODO: write relay read cb */
+    (void) data;
+    (void) upgrade_file;
     (void) object_id;
     (void) infolist;
+    
     return WEECHAT_RC_OK;
 }
 
@@ -114,8 +119,8 @@ relay_upgrade_load ()
     
     relay_upgrade_set_buffer_callbacks ();
     
-    upgrade_file = weechat_upgrade_create (RELAY_UPGRADE_FILENAME, 0);
-    rc = weechat_upgrade_read (upgrade_file, &relay_upgrade_read_cb);
+    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 0);
+    rc = weechat_upgrade_read (upgrade_file, &relay_upgrade_read_cb, NULL);
     
     return rc;
 }

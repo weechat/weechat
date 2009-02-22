@@ -47,6 +47,7 @@ script_callback_alloc ()
         new_script_callback->hook = NULL;
         new_script_callback->buffer = NULL;
         new_script_callback->bar_item = NULL;
+        new_script_callback->upgrade_file = NULL;
         return new_script_callback;
     }
     
@@ -133,6 +134,7 @@ script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
     weechat_log_printf ("    hook. . . . . . . . : 0x%lx", script_callback->hook);
     weechat_log_printf ("    buffer. . . . . . . : 0x%lx", script_callback->buffer);
     weechat_log_printf ("    bar_item. . . . . . : 0x%lx", script_callback->bar_item);
+    weechat_log_printf ("    upgrade_file. . . . : 0x%lx", script_callback->upgrade_file);
     weechat_log_printf ("    prev_callback . . . : 0x%lx", script_callback->prev_callback);
     weechat_log_printf ("    next_callback . . . : 0x%lx", script_callback->next_callback);
 }

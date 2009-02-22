@@ -512,7 +512,7 @@ plugin_load (const char *filename)
         new_plugin->infolist_time = &plugin_api_infolist_time;
         new_plugin->infolist_free = &plugin_api_infolist_free;
         
-        new_plugin->upgrade_create = &upgrade_file_create;
+        new_plugin->upgrade_new = &upgrade_file_new;
         new_plugin->upgrade_write_object = &upgrade_file_write_object;
         new_plugin->upgrade_read = &upgrade_file_read;
         new_plugin->upgrade_close = &upgrade_file_close;

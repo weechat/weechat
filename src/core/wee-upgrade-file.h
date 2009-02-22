@@ -41,20 +41,26 @@ struct t_upgrade_file
     long last_read_pos;                    /* last read position            */
     int last_read_length;                  /* last read length              */
     int (*callback_read)                   /* callback called when reading  */
-    (int object_id,                        /* file                          */
+    (void *data,                           /* file                          */
+     struct t_upgrade_file *upgrade_file,
+     int object_id,
      struct t_infolist *infolist);
+    void *callback_read_data;              /* data sent to callback         */
     struct t_upgrade_file *prev_upgrade;   /* link to previous upgrade file */
     struct t_upgrade_file *next_upgrade;   /* link to next upgrade file     */
 };
 
-extern struct t_upgrade_file *upgrade_file_create (const char *filename,
-                                                   int write);
+extern struct t_upgrade_file *upgrade_file_new (const char *filename,
+                                                int write);
 extern int upgrade_file_write_object (struct t_upgrade_file *upgrade_file,
                                       int object_id,
                                       struct t_infolist *infolist);
 extern int upgrade_file_read (struct t_upgrade_file *upgrade_file,
-                              int (*callback_read)(int object_id,
-                                                   struct t_infolist *infolist));
+                              int (*callback_read)(void *data,
+                                                   struct t_upgrade_file *upgrade_file,
+                                                   int object_id,
+                                                   struct t_infolist *infolist),
+                              void *callback_read_data);
 extern void upgrade_file_close (struct t_upgrade_file *upgrade_file);
 
 #endif /* wee-upgrade-file.h */

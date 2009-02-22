@@ -254,5 +254,13 @@ extern int script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin
 extern int script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script *script,
                                            const char *option);
+extern int script_api_upgrade_read (struct t_weechat_plugin *weechat_plugin,
+                                    struct t_plugin_script *script,
+                                    struct t_upgrade_file *upgrade_file,
+                                    int (*callback_read)(void *data,
+                                                         struct t_upgrade_file *upgrade_file,
+                                                         int object_id,
+                                                         struct t_infolist *infolist),
+                                    const char *function_read);
 
 #endif /* script-api.h */

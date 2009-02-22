@@ -164,13 +164,13 @@ upgrade_file_write_buffer (struct t_upgrade_file *upgrade_file, void *pointer,
 }
 
 /*
- * upgrade_file_create: create an upgrade file
- *                      if write == 1 then it's opened in write mode, otherwise
- *                      read mode
+ * upgrade_file_new: create an upgrade file
+ *                   if write == 1 then it's opened in write mode, otherwise
+ *                   read mode
  */
 
 struct t_upgrade_file *
-upgrade_file_create (const char *filename, int write)
+upgrade_file_new (const char *filename, int write)
 {
     int length;
     struct t_upgrade_file *new_upgrade_file;
@@ -661,7 +661,10 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
     
     if (upgrade_file->callback_read)
     {
-        if ((int)(upgrade_file->callback_read) (object_id, infolist) == WEECHAT_RC_ERROR)
+        if ((int)(upgrade_file->callback_read) (upgrade_file->callback_read_data,
+                                                upgrade_file,
+                                                object_id,
+                                                infolist) == WEECHAT_RC_ERROR)
             rc = 0;
     }
     
@@ -680,16 +683,21 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
 
 /*
  * upgrade_file_read: read an upgrade file
+ *                    return 1 if ok, 0 if error
  */
 
 int
 upgrade_file_read (struct t_upgrade_file *upgrade_file,
-                   int (*callback_read)(int object_id,
-                                        struct t_infolist *infolist))
+                   int (*callback_read)(void *data,
+                                        struct t_upgrade_file *upgrade_file,
+                                        int object_id,
+                                        struct t_infolist *infolist),
+                   void *callback_read_data)
 {
     char *signature;
     
     upgrade_file->callback_read = callback_read;
+    upgrade_file->callback_read_data = callback_read_data;
     
     signature = NULL;
     if (!upgrade_file_read_string (upgrade_file, &signature))

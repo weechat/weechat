@@ -125,7 +125,7 @@ jabber_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
     
-    upgrade_file = weechat_upgrade_create (JABBER_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (JABBER_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
     
@@ -168,7 +168,9 @@ jabber_upgrade_set_buffer_callbacks ()
  */
 
 int
-jabber_upgrade_read_cb (int object_id,
+jabber_upgrade_read_cb (void *data,
+                        struct t_upgrade_file *upgrade_file,
+                        int object_id,
                         struct t_infolist *infolist)
 {
     int flags, size, i, index;
@@ -176,6 +178,10 @@ jabber_upgrade_read_cb (int object_id,
     const char *buffer_name, *str, *buddy;
     struct t_jabber_buddy *ptr_buddy;
     struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) upgrade_file;
     
     weechat_infolist_reset_item_cursor (infolist);
     while (weechat_infolist_next (infolist))
@@ -322,8 +328,8 @@ jabber_upgrade_load ()
 
     jabber_upgrade_set_buffer_callbacks ();
     
-    upgrade_file = weechat_upgrade_create (JABBER_UPGRADE_FILENAME, 0);
-    rc = weechat_upgrade_read (upgrade_file, &jabber_upgrade_read_cb);
+    upgrade_file = weechat_upgrade_new (JABBER_UPGRADE_FILENAME, 0);
+    rc = weechat_upgrade_read (upgrade_file, &jabber_upgrade_read_cb, NULL);
     
     return rc;
 }

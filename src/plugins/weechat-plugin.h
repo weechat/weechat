@@ -588,14 +588,17 @@ struct t_weechat_plugin
     void (*infolist_free) (struct t_infolist *infolist);
 
     /* upgrade */
-    struct t_upgrade_file *(*upgrade_create) (const char *filename,
-                                              int write);
+    struct t_upgrade_file *(*upgrade_new) (const char *filename,
+                                           int write);
     int (*upgrade_write_object) (struct t_upgrade_file *upgrade_file,
                                  int object_id,
                                  struct t_infolist *infolist);
     int (*upgrade_read) (struct t_upgrade_file *upgrade_file,
-                         int (*callback_read)(int object_id,
-                                              struct t_infolist *infolist));
+                         int (*callback_read)(void *data,
+                                              struct t_upgrade_file *upgrade_file,
+                                              int object_id,
+                                              struct t_infolist *infolist),
+                         void *callback_read_data);
     void (*upgrade_close) (struct t_upgrade_file *upgrade_file);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
@@ -1120,14 +1123,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->infolist_free(__list)
 
 /* upgrade */
-#define weechat_upgrade_create(__filename, __write)                     \
-    weechat_plugin->upgrade_create(__filename, __write)
+#define weechat_upgrade_new(__filename, __write)                        \
+    weechat_plugin->upgrade_new(__filename, __write)
 #define weechat_upgrade_write_object(__upgrade_file, __object_id,       \
                                      __infolist)                        \
     weechat_plugin->upgrade_write_object(__upgrade_file, __object_id,   \
                                          __infolist)
-#define weechat_upgrade_read(__upgrade_file, __callback)                \
-    weechat_plugin->upgrade_read(__upgrade_file, __callback)
+#define weechat_upgrade_read(__upgrade_file, __callback_read,           \
+                             __callback_read_data)                      \
+    weechat_plugin->upgrade_read(__upgrade_file, __callback_read,       \
+                                 __callback_read_data)
 #define weechat_upgrade_close(__upgrade_file)                           \
     weechat_plugin->upgrade_close(__upgrade_file)
 

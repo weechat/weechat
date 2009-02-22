@@ -5324,7 +5324,7 @@ weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *int
     
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolits_new_var_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_integer");
         TCL_RETURN_EMPTY;
     }
     
@@ -5433,7 +5433,7 @@ weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp
     
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolits_new_var_time");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_time");
         TCL_RETURN_EMPTY;
     }
     
@@ -5754,7 +5754,208 @@ weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
     TCL_RETURN_OK;
 }
 
+/*
+ * weechat_tcl_api_upgrade_new: create an upgrade file
+ */
 
+static int
+weechat_tcl_api_upgrade_new (ClientData clientData, Tcl_Interp *interp,
+                             int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *result, *filename;
+    int i, write;
+
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (Tcl_GetIntFromObj (interp, objv[2], &write) != TCL_OK)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        TCL_RETURN_EMPTY;
+    }
+    
+    filename = Tcl_GetStringFromObj (objv[1], &i);
+    result = script_ptr2str (weechat_upgrade_new (filename, write));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_upgrade_write_object: write object in upgrade file
+ */
+
+static int
+weechat_tcl_api_upgrade_write_object (ClientData clientData, Tcl_Interp *interp,
+                                      int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *upgrade_file, *infolist;
+    int rc, i, object_id;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (Tcl_GetIntFromObj (interp, objv[2], &object_id) != TCL_OK)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        TCL_RETURN_EMPTY;
+    }
+    
+    upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
+    infolist = Tcl_GetStringFromObj (objv[3], &i);
+    
+    rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
+                                       object_id,
+                                       script_str2ptr (infolist));
+    
+    TCL_RETURN_INT(rc);
+}
+
+/*
+ * weechat_tcl_api_upgrade_read_cb: callback for reading an object in upgrade file
+ */
+
+int
+weechat_tcl_api_upgrade_read_cb (void *data,
+                                 struct t_upgrade_file *upgrade_file,
+                                 int object_id,
+                                 struct t_infolist *infolist)
+{
+    struct t_script_callback *script_callback;
+    char *tcl_argv[4], str_object_id[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+        
+        tcl_argv[0] = script_ptr2str (upgrade_file);
+        tcl_argv[1] = str_object_id;
+        tcl_argv[2] = script_ptr2str (infolist);
+        tcl_argv[3] = NULL;
+        
+        rc = (int *) weechat_tcl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        tcl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (tcl_argv[0])
+            free (tcl_argv[0]);
+        if (tcl_argv[2])
+            free (tcl_argv[2]);
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_tcl_api_upgrade_read: read upgrade file
+ */
+
+static int
+weechat_tcl_api_upgrade_read (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *upgrade_file, *function_read;
+    int i, rc;
+    
+    /* make C compiler happy */
+    (void) clientData; 
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        TCL_RETURN_EMPTY;
+    }
+   
+    upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
+    function_read = Tcl_GetStringFromObj (objv[2], &i);
+    
+    rc = script_api_upgrade_read (weechat_tcl_plugin,
+                                  tcl_current_script,
+                                  script_str2ptr (upgrade_file),
+                                  &weechat_tcl_api_upgrade_read_cb,
+                                  function_read);
+    
+    TCL_RETURN_INT(rc);
+}
+
+/*
+ * weechat_tcl_api_upgrade_close: close upgrade file
+ */
+
+static int
+weechat_tcl_api_upgrade_close (ClientData clientData, Tcl_Interp *interp,
+                               int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *upgrade_file;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        TCL_RETURN_INT(0);
+    }
+    
+    upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
+    
+    weechat_upgrade_close (script_str2ptr (upgrade_file));
+    
+    TCL_RETURN_OK;
+}
 
 /*
  * weechat_tcl_api_init: initialize subroutines
@@ -6110,4 +6311,12 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
                           weechat_tcl_api_infolist_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::infolist_free",
                           weechat_tcl_api_infolist_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::upgrade_new",
+                          weechat_tcl_api_upgrade_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::upgrade_write_object",
+                          weechat_tcl_api_upgrade_write_object, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::upgrade_read",
+                          weechat_tcl_api_upgrade_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::upgrade_close",
+                          weechat_tcl_api_upgrade_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
 }

@@ -5134,6 +5134,186 @@ static XS (XS_weechat_api_infolist_free)
 }
 
 /*
+ * weechat::upgrade_new: create an upgrade file
+ */
+
+static XS (XS_weechat_api_upgrade_new)
+{
+    char *result, *filename;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        PERL_RETURN_EMPTY;
+    }
+    
+    filename = SvPV (ST (0), PL_na);
+    result = script_ptr2str (weechat_upgrade_new (filename,
+                                                  SvIV (ST (1)))); /* write */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::upgrade_write_object: write object in upgrade file
+ */
+
+static XS (XS_weechat_api_upgrade_write_object)
+{
+    char *upgrade_file, *infolist;
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        PERL_RETURN_INT(0);
+    }
+
+    upgrade_file = SvPV (ST (0), PL_na);
+    infolist = SvPV (ST (2), PL_na);
+    rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
+                                       SvIV (ST (1)), /* object_id */
+                                       script_str2ptr (infolist));
+    
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat_perl_api_upgrade_read_cb: callback for reading object in upgrade file
+ */
+
+int
+weechat_perl_api_upgrade_read_cb (void *data,
+                                  struct t_upgrade_file *upgrade_file,
+                                  int object_id,
+                                  struct t_infolist *infolist)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4], str_object_id[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+        
+        perl_argv[0] = script_ptr2str (upgrade_file);
+        perl_argv[1] = str_object_id;
+        perl_argv[2] = script_ptr2str (infolist);
+        perl_argv[3] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (perl_argv[0])
+            free (perl_argv[0]);
+        if (perl_argv[2])
+            free (perl_argv[2]);
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat::config_upgrade_read: read upgrade file
+ */
+
+static XS (XS_weechat_api_upgrade_read)
+{
+    char *upgrade_file, *function_read;
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        PERL_RETURN_INT(0);
+    }
+    
+    upgrade_file = SvPV (ST (0), PL_na);
+    function_read = SvPV (ST (1), PL_na);
+    rc = script_api_upgrade_read (weechat_perl_plugin,
+                                  perl_current_script,
+                                  script_str2ptr (upgrade_file),
+                                  &weechat_perl_api_upgrade_read_cb,
+                                  function_read);
+    
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::upgrade_close: close upgrade file
+ */
+
+static XS (XS_weechat_api_upgrade_close)
+{
+    char *upgrade_file;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        PERL_RETURN_ERROR;
+    }
+    
+    upgrade_file = SvPV (ST (0), PL_na);
+    
+    weechat_upgrade_close (script_str2ptr (upgrade_file));
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat_perl_api_init: initialize subroutines
  */
 
@@ -5271,6 +5451,10 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::infolist_pointer", XS_weechat_api_infolist_pointer, "weechat");
     newXS ("weechat::infolist_time", XS_weechat_api_infolist_time, "weechat");
     newXS ("weechat::infolist_free", XS_weechat_api_infolist_free, "weechat");
+    newXS ("weechat::upgrade_new", XS_weechat_api_upgrade_new, "weechat");
+    newXS ("weechat::upgrade_write_object", XS_weechat_api_upgrade_write_object, "weechat");
+    newXS ("weechat::upgrade_read", XS_weechat_api_upgrade_read, "weechat");
+    newXS ("weechat::upgrade_close", XS_weechat_api_upgrade_close, "weechat");
     
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);

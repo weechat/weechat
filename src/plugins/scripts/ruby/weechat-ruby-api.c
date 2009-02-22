@@ -6215,6 +6215,213 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
 }
 
 /*
+ * weechat_ruby_api_upgrade_new: create an upgrade file
+ */
+
+static VALUE
+weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
+{
+    char *c_filename, *result;
+    int c_write;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_filename = NULL;
+    c_write = 0;
+    
+    if (NIL_P (filename) || NIL_P (write))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (filename, T_STRING);
+    Check_Type (write, T_FIXNUM);
+    
+    c_filename = STR2CSTR (filename);
+    c_write = FIX2INT (write);
+    
+    result = script_ptr2str (weechat_upgrade_new (c_filename,
+                                                  c_write));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_upgrade_write_object: write object in upgrade file
+ */
+
+static VALUE
+weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
+                                       VALUE object_id, VALUE infolist)
+{
+    char *c_upgrade_file, *c_infolist;
+    int c_object_id, rc;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (upgrade_file) || NIL_P (object_id) || NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (upgrade_file, T_STRING);
+    Check_Type (object_id, T_FIXNUM);
+    Check_Type (infolist, T_STRING);
+    
+    c_upgrade_file = STR2CSTR (upgrade_file);
+    c_object_id = FIX2INT (object_id);
+    c_infolist = STR2CSTR (infolist);
+    
+    rc = weechat_upgrade_write_object (script_str2ptr (c_upgrade_file),
+                                       c_object_id,
+                                       script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_INT(rc);
+}
+
+/*
+ * weechat_ruby_api_upgrade_read_cb: callback for reading object in upgrade file
+ */
+
+int
+weechat_ruby_api_upgrade_read_cb (void *data,
+                                  struct t_upgrade_file *upgrade_file,
+                                  int object_id,
+                                  struct t_infolist *infolist)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[4], str_object_id[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+        
+        ruby_argv[0] = script_ptr2str (upgrade_file);
+        ruby_argv[1] = str_object_id;
+        ruby_argv[2] = script_ptr2str (infolist);
+        ruby_argv[3] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_ruby_api_upgrade_read: read upgrade file
+ */
+
+static VALUE
+weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
+                               VALUE function_read)
+{
+    char *c_upgrade_file, *c_function_read;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        RUBY_RETURN_INT(0);
+    }
+    
+    c_upgrade_file = NULL;
+    c_function_read = NULL;
+    
+    if (NIL_P (upgrade_file) || NIL_P (function_read))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (upgrade_file, T_STRING);
+    Check_Type (function_read, T_STRING);
+    
+    c_upgrade_file = STR2CSTR (upgrade_file);
+    c_function_read = STR2CSTR (function_read);
+    
+    rc = script_api_upgrade_read (weechat_ruby_plugin,
+                                  ruby_current_script,
+                                  script_str2ptr (c_upgrade_file),
+                                  &weechat_ruby_api_upgrade_read_cb,
+                                  c_function_read);
+    
+    RUBY_RETURN_INT(rc);
+}
+
+/*
+ * weechat_ruby_api_upgrade_close: close upgrade file
+ */
+
+static VALUE
+weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
+{
+    char *c_upgrade_file;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (upgrade_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (upgrade_file, T_STRING);
+    
+    c_upgrade_file = STR2CSTR (upgrade_file);
+    
+    weechat_upgrade_close (script_str2ptr (c_upgrade_file));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_init: init Ruby API: add variables and functions
  */
 
@@ -6389,4 +6596,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "infolist_pointer", &weechat_ruby_api_infolist_pointer, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_time", &weechat_ruby_api_infolist_time, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_free", &weechat_ruby_api_infolist_free, 1);
+    rb_define_module_function (ruby_mWeechat, "upgrade_new", &weechat_ruby_api_upgrade_new, 2);
+    rb_define_module_function (ruby_mWeechat, "upgrade_write_object", &weechat_ruby_api_upgrade_write_object, 3);
+    rb_define_module_function (ruby_mWeechat, "upgrade_read", &weechat_ruby_api_upgrade_read, 2);
+    rb_define_module_function (ruby_mWeechat, "upgrade_close", &weechat_ruby_api_upgrade_close, 1);
 }
