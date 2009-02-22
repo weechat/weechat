@@ -3498,7 +3498,7 @@ command_init ()
                   N_("[add barname type[,cond1,cond2,...] position size "
                      "separator item1,item2,...] | [default] | "
                      "[del barname|-all] | [set barname option value] | "
-                     "[hide|show barname] | [scroll barname buffer "
+                     "[hide|show|toggle barname] | [scroll barname buffer "
                      "scroll_value] | [list] | [listfull] | [listitems]"),
                   N_("          add: add a new bar\n"
                      "      barname: name of bar (must be unique)\n"
