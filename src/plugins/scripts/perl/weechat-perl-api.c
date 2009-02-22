@@ -1665,6 +1665,35 @@ static XS (XS_weechat_api_config_boolean)
 }
 
 /*
+ * weechat::config_boolean_default: return default boolean value of option
+ */
+
+static XS (XS_weechat_api_config_boolean_default)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean_default");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean_default");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_boolean_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
  * weechat::config_integer: return integer value of option
  */
 
@@ -1689,6 +1718,35 @@ static XS (XS_weechat_api_config_integer)
     }
     
     value = weechat_config_integer (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_integer_default: return default integer value of option
+ */
+
+static XS (XS_weechat_api_config_integer_default)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer_default");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer_default");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_integer_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -1723,6 +1781,35 @@ static XS (XS_weechat_api_config_string)
 }
 
 /*
+ * weechat::config_string_default: return default string value of option
+ */
+
+static XS (XS_weechat_api_config_string_default)
+{
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_default");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_default");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = weechat_config_string_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
  * weechat::config_color: return color value of option
  */
 
@@ -1747,6 +1834,35 @@ static XS (XS_weechat_api_config_color)
     }
     
     result = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::config_color_default: return default color value of option
+ */
+
+static XS (XS_weechat_api_config_color_default)
+{
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color_default");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color_default");
+        PERL_RETURN_INT(0);
+    }
+    
+    result = weechat_config_color_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
     
     PERL_RETURN_STRING(result);
 }
@@ -5067,9 +5183,13 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_option_is_null", XS_weechat_api_config_option_is_null, "weechat");
     newXS ("weechat::config_option_default_is_null", XS_weechat_api_config_option_default_is_null, "weechat");
     newXS ("weechat::config_boolean", XS_weechat_api_config_boolean, "weechat");
+    newXS ("weechat::config_boolean_default", XS_weechat_api_config_boolean_default, "weechat");
     newXS ("weechat::config_integer", XS_weechat_api_config_integer, "weechat");
+    newXS ("weechat::config_integer_default", XS_weechat_api_config_integer_default, "weechat");
     newXS ("weechat::config_string", XS_weechat_api_config_string, "weechat");
+    newXS ("weechat::config_string_default", XS_weechat_api_config_string_default, "weechat");
     newXS ("weechat::config_color", XS_weechat_api_config_color, "weechat");
+    newXS ("weechat::config_color_default", XS_weechat_api_config_color_default, "weechat");
     newXS ("weechat::config_write_option", XS_weechat_api_config_write_option, "weechat");
     newXS ("weechat::config_write_line", XS_weechat_api_config_write_line, "weechat");
     newXS ("weechat::config_write", XS_weechat_api_config_write, "weechat");

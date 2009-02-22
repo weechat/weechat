@@ -1976,6 +1976,42 @@ weechat_lua_api_config_boolean (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_boolean_default: return default boolean value of option
+ */
+
+static int
+weechat_lua_api_config_boolean_default (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_boolean_default (script_str2ptr (option));
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_config_integer: return integer value of option
  */
 
@@ -2007,6 +2043,42 @@ weechat_lua_api_config_integer (lua_State *L)
     option = lua_tostring (lua_current_interpreter, -1);
     
     value = weechat_config_integer (script_str2ptr (option));
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_integer_default: return default integer value of option
+ */
+
+static int
+weechat_lua_api_config_integer_default (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_integer_default (script_str2ptr (option));
     
     LUA_RETURN_INT(value);
 }
@@ -2048,6 +2120,42 @@ weechat_lua_api_config_string (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_string_default: return default string value of option
+ */
+
+static int
+weechat_lua_api_config_string_default (lua_State *L)
+{
+    const char *option, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_default");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_config_string_default (script_str2ptr (option));
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
  * weechat_lua_api_config_color: return color value of option
  */
 
@@ -2079,6 +2187,42 @@ weechat_lua_api_config_color (lua_State *L)
     option = lua_tostring (lua_current_interpreter, -1);
     
     result = weechat_config_color (script_str2ptr (option));
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_config_color_default: return default color value of option
+ */
+
+static int
+weechat_lua_api_config_color_default (lua_State *L)
+{
+    const char *option, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color_default");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_config_color_default (script_str2ptr (option));
     
     LUA_RETURN_STRING(result);
 }
@@ -6407,9 +6551,13 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_option_is_null", &weechat_lua_api_config_option_is_null },
     { "config_option_default_is_null", &weechat_lua_api_config_option_default_is_null },
     { "config_boolean", &weechat_lua_api_config_boolean },
+    { "config_boolean_default", &weechat_lua_api_config_boolean_default },
     { "config_integer", &weechat_lua_api_config_integer },
+    { "config_integer_default", &weechat_lua_api_config_integer_default },
     { "config_string", &weechat_lua_api_config_string },
+    { "config_string_default", &weechat_lua_api_config_string_default },
     { "config_color", &weechat_lua_api_config_color },
+    { "config_color_default", &weechat_lua_api_config_color_default },
     { "config_write_option", &weechat_lua_api_config_write_option },
     { "config_write_line", &weechat_lua_api_config_write_line },
     { "config_write", &weechat_lua_api_config_write },
