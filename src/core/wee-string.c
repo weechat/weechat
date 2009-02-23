@@ -785,7 +785,7 @@ char **
 string_explode (const char *string, const char *separators, int keep_eol,
                 int num_items_max, int *num_items)
 {
-    int i, n_items;
+    int i, j, n_items;
     char *string2, **array;
     char *ptr, *ptr1, *ptr2;
     
@@ -816,6 +816,8 @@ string_explode (const char *string, const char *separators, int keep_eol,
         n_items = num_items_max;
     
     array = malloc ((n_items + 1) * sizeof (array[0]));
+    if (!array)
+        return NULL;
     
     ptr1 = string2;
     ptr2 = string2;
@@ -857,10 +859,32 @@ string_explode (const char *string, const char *separators, int keep_eol,
                 if (keep_eol)
                 {
                     array[i] = strdup (ptr1);
+                    if (!array[i])
+                    {
+                        for (j = 0; j < n_items; j++)
+                        {
+                            if (array[j])
+                                free (array[j]);
+                        }
+                        free (array);
+                        free (string2);
+                        return NULL;
+                    }
                 }
                 else
                 {
                     array[i] = malloc (ptr2 - ptr1 + 1);
+                    if (!array[i])
+                    {
+                        for (j = 0; j < n_items; j++)
+                        {
+                            if (array[j])
+                                free (array[j]);
+                        }
+                        free (array);
+                        free (string2);
+                        return NULL;
+                    }
                     strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
                 }
@@ -1068,10 +1092,14 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
         else
         {
             inbuf = strdup (string);
+            if (!inbuf)
+                return NULL;
             ptr_inbuf = inbuf;
             inbytesleft = strlen (inbuf);
             outbytesleft = inbytesleft * 4;
             outbuf = malloc (outbytesleft + 2);
+            if (!outbuf)
+                return inbuf;
             ptr_outbuf = outbuf;
             ptr_inbuf_shift = NULL;
             done = 0;
@@ -1162,27 +1190,27 @@ string_iconv_to_internal (const char *charset, const char *string)
         return NULL;
     
     input = strdup (string);
+    if (!input)
+        return NULL;
     
     /* optimize for UTF-8: if charset is NULL => we use term charset =>
        if ths charset is already UTF-8, then no iconv needed */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
     
-    if (input)
-    {
-        if (utf8_has_8bits (input) && utf8_is_valid (input, NULL))
-            return input;
-        
-        output = string_iconv (0,
-                               (charset && charset[0]) ?
-                               charset : weechat_local_charset,
-                               WEECHAT_INTERNAL_CHARSET,
-                               input);
-        utf8_normalize (output, '?');
-        free (input);
-        return output;
-    }
-    return NULL;
+    if (utf8_has_8bits (input) && utf8_is_valid (input, NULL))
+        return input;
+    
+    output = string_iconv (0,
+                           (charset && charset[0]) ?
+                           charset : weechat_local_charset,
+                           WEECHAT_INTERNAL_CHARSET,
+                           input);
+    if (!output)
+        return input;
+    utf8_normalize (output, '?');
+    free (input);
+    return output;
 }
 
 /*
@@ -1200,24 +1228,24 @@ string_iconv_from_internal (const char *charset, const char *string)
         return NULL;
     
     input = strdup (string);
+    if (!input)
+        return NULL;
     
     /* optimize for UTF-8: if charset is NULL => we use term charset =>
        if ths charset is already UTF-8, then no iconv needed */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
     
-    if (input)
-    {
-        utf8_normalize (input, '?');
-        output = string_iconv (1,
-                               WEECHAT_INTERNAL_CHARSET,
-                               (charset && charset[0]) ?
-                               charset : weechat_local_charset,
-                               input);
-        free (input);
-        return output;
-    }
-    return NULL;
+    utf8_normalize (input, '?');
+    output = string_iconv (1,
+                           WEECHAT_INTERNAL_CHARSET,
+                           (charset && charset[0]) ?
+                           charset : weechat_local_charset,
+                           input);
+    if (!output)
+        return input;
+    free (input);
+    return output;
 }
 
 /*

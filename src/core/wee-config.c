@@ -960,13 +960,15 @@ config_weechat_key_write_cb (void *data, struct t_config_file *config_file,
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
-        config_file_write_line (config_file,
-                                (expanded_name) ?
-                                expanded_name : ptr_key->key,
-                                "\"%s\"",
-                                ptr_key->command);
         if (expanded_name)
+        {
+            config_file_write_line (config_file,
+                                    (expanded_name) ?
+                                    expanded_name : ptr_key->key,
+                                    "\"%s\"",
+                                    ptr_key->command);
             free (expanded_name);
+        }
     }
 }
 

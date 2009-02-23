@@ -243,29 +243,74 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     int i, j;
 
     bar_window->items_count = bar_window->bar->items_count;
+    bar_window->items_subcount = NULL;
+    bar_window->items_content = NULL;
+    bar_window->items_refresh_needed = NULL;
     bar_window->items_subcount = malloc (bar_window->items_count *
                                          sizeof (*bar_window->items_subcount));
+    if (!bar_window->items_subcount)
+        goto error;
     bar_window->items_content = malloc ((bar_window->items_count) *
                                         sizeof (*bar_window->items_content));
+    if (!bar_window->items_content)
+        goto error;
     bar_window->items_refresh_needed = malloc (bar_window->items_count *
                                                sizeof (*bar_window->items_refresh_needed));
+    if (!bar_window->items_refresh_needed)
+        goto error;
+    
+    for (i = 0; i < bar_window->items_count; i++)
+    {
+        bar_window->items_content[i] = NULL;
+        bar_window->items_refresh_needed[i] = NULL;
+    }
+    
+    for (i = 0; i < bar_window->items_count; i++)
+    {
+        bar_window->items_subcount[i] = bar_window->bar->items_subcount[i];
+        bar_window->items_content[i] = malloc (bar_window->items_subcount[i] *
+                                               sizeof (**bar_window->items_content));
+        if (!bar_window->items_content[i])
+            goto error;
+        bar_window->items_refresh_needed[i] = malloc (bar_window->items_subcount[i] *
+                                                      sizeof (**bar_window->items_refresh_needed));
+        if (!bar_window->items_refresh_needed[i])
+            goto error;
+        for (j = 0; j < bar_window->items_subcount[i]; j++)
+        {
+            if (bar_window->items_content[i])
+                bar_window->items_content[i][j] = NULL;
+            if (bar_window->items_refresh_needed[i])
+                bar_window->items_refresh_needed[i][j] = 1;
+        }
+    }
+    return;
+    
+error:
+    if (bar_window->items_subcount)
+    {
+        free (bar_window->items_subcount);
+        bar_window->items_subcount = NULL;
+    }
     if (bar_window->items_content)
     {
         for (i = 0; i < bar_window->items_count; i++)
         {
-            bar_window->items_subcount[i] = bar_window->bar->items_subcount[i];
-            bar_window->items_content[i] = malloc (bar_window->items_subcount[i] *
-                                                   sizeof (**bar_window->items_content));
-            bar_window->items_refresh_needed[i] = malloc (bar_window->items_subcount[i] *
-                                                          sizeof (**bar_window->items_refresh_needed));
-            for (j = 0; j < bar_window->items_subcount[i]; j++)
-            {
-                if (bar_window->items_content[i])
-                    bar_window->items_content[i][j] = NULL;
-                if (bar_window->items_refresh_needed[i])
-                    bar_window->items_refresh_needed[i][j] = 1;
-            }
+            if (bar_window->items_content[i])
+                free (bar_window->items_content[i]);
         }
+        free (bar_window->items_content);
+        bar_window->items_content = NULL;
+    }
+    if (bar_window->items_refresh_needed)
+    {
+        for (i = 0; i < bar_window->items_count; i++)
+        {
+            if (bar_window->items_refresh_needed[i])
+                free (bar_window->items_refresh_needed[i]);
+        }
+        free (bar_window->items_refresh_needed);
+        bar_window->items_refresh_needed = NULL;
     }
 }
 
@@ -314,20 +359,23 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
                                    struct t_gui_window *window,
                                    int index_item, int index_subitem)
 {
-    if (bar_window->items_content[index_item][index_subitem])
+    if (bar_window->items_content)
     {
-        free (bar_window->items_content[index_item][index_subitem]);
-        bar_window->items_content[index_item][index_subitem] = NULL;
-    }
-    
-    /* build item, but only if there's a buffer in window */
-    if ((window && window->buffer)
-        || (gui_current_window && gui_current_window->buffer))
-    {
-        bar_window->items_content[index_item][index_subitem] =
-            gui_bar_item_get_value (bar_window->bar->items_array[index_item][index_subitem],
-                                    bar_window->bar, window);
-        bar_window->items_refresh_needed[index_item][index_subitem] = 0;
+        if (bar_window->items_content[index_item][index_subitem])
+        {
+            free (bar_window->items_content[index_item][index_subitem]);
+            bar_window->items_content[index_item][index_subitem] = NULL;
+        }
+        
+        /* build item, but only if there's a buffer in window */
+        if ((window && window->buffer)
+            || (gui_current_window && gui_current_window->buffer))
+        {
+            bar_window->items_content[index_item][index_subitem] =
+                gui_bar_item_get_value (bar_window->bar->items_array[index_item][index_subitem],
+                                        bar_window->bar, window);
+            bar_window->items_refresh_needed[index_item][index_subitem] = 0;
+        }
     }
 }
 
@@ -392,6 +440,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     int index_content, content_length, i, sub, j, k, index;
     int length_reinit_color, length_reinit_color_space;
     int length, max_length, max_length_screen, total_items, columns, lines;
+    
+    if (!bar_window->items_subcount || !bar_window->items_content
+        || !bar_window->items_refresh_needed)
+        return NULL;
     
     snprintf (reinit_color, sizeof (reinit_color),
               "%c%c%02d,%02d",
@@ -1083,13 +1135,20 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     {
         log_printf ("    items_subcount[%03d]. . : %d",
                     i, bar_window->items_subcount[i]);
-        for (j = 0; j < bar_window->items_subcount[i]; j++)
+        if (bar_window->items_content && bar_window->bar->items_array)
         {
-            log_printf ("    items_content[%03d][%03d]: '%s' (item: '%s')",
-                        i, j,
-                        bar_window->items_content[i][j],
-                        (bar_window->items_count >= i + 1) ?
-                        bar_window->bar->items_array[i][j] : "?");
+            for (j = 0; j < bar_window->items_subcount[i]; j++)
+            {
+                log_printf ("    items_content[%03d][%03d]: '%s' (item: '%s')",
+                            i, j,
+                            bar_window->items_content[i][j],
+                            (bar_window->items_count >= i + 1) ?
+                            bar_window->bar->items_array[i][j] : "?");
+            }
+        }
+        else
+        {
+            log_printf ("    items_content. . . . . . : 0x%lx", bar_window->items_content);
         }
     }
     log_printf ("    gui_objects. . . . . . : 0x%lx", bar_window->gui_objects);

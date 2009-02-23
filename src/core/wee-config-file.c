@@ -50,6 +50,9 @@ char *config_boolean_true[] = { "on", "yes", "y", "true", "t", "1", NULL };
 char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
 
 
+void config_file_option_free_data (struct t_config_option *option);
+
+
 /*
  * config_file_search: search a configuration file
  */
@@ -99,6 +102,11 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     {
         new_config_file->plugin = plugin;
         new_config_file->name = strdup (name);
+        if (!new_config_file->name)
+        {
+            free (new_config_file);
+            return NULL;
+        }
         length = strlen (name) + 8 + 1;
         filename = malloc (length);
         if (filename)
@@ -109,6 +117,12 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         }
         else
             new_config_file->filename = strdup (name);
+        if (!new_config_file->filename)
+        {
+            free (new_config_file->name);
+            free (new_config_file);
+            return NULL;
+        }
         new_config_file->file = NULL;
         new_config_file->callback_reload = callback_reload;
         new_config_file->callback_reload_data = callback_reload_data;
@@ -173,6 +187,11 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
     {
         new_section->config_file = config_file;
         new_section->name = strdup (name);
+        if (!new_section->name)
+        {
+            free (new_section);
+            return NULL;
+        }
         new_section->user_can_add_options = user_can_add_options;
         new_section->user_can_delete_options = user_can_delete_options;
         new_section->callback_read = callback_read;
@@ -296,6 +315,43 @@ config_file_option_insert_in_section (struct t_config_option *option)
 }
 
 /*
+ * config_file_option_malloc: allocate memory for new option and fill it with 0/NULL
+ */
+
+struct t_config_option *
+config_file_option_malloc ()
+{
+    struct t_config_option *new_option;
+    
+    new_option = malloc (sizeof (*new_option));
+    if (new_option)
+    {
+        new_option->config_file = NULL;
+        new_option->section = NULL;
+        new_option->name = NULL;
+        new_option->type = 0;
+        new_option->description = NULL;
+        new_option->string_values = NULL;
+        new_option->min = 0;
+        new_option->max = 0;
+        new_option->default_value = NULL;
+        new_option->value = NULL;
+        new_option->null_value_allowed = 0;
+        new_option->callback_check_value = NULL;
+        new_option->callback_check_value_data = NULL;
+        new_option->callback_change = NULL;
+        new_option->callback_change_data = NULL;
+        new_option->callback_delete = NULL;
+        new_option->callback_delete_data = NULL;
+        new_option->loaded = 0;
+        new_option->prev_option = NULL;
+        new_option->next_option = NULL;
+    }
+    
+    return new_option;
+}
+
+/*
  * config_file_new_option: create a new option
  */
 
@@ -357,39 +413,53 @@ config_file_new_option (struct t_config_file *config_file,
             return NULL;
     }
     
-    new_option = malloc (sizeof (*new_option));
+    new_option = config_file_option_malloc ();
     if (new_option)
     {
         new_option->config_file = config_file;
         new_option->section = section;
         new_option->name = strdup (name);
+        if (!new_option->name)
+            goto error;
         new_option->type = var_type;
-        new_option->description = (description) ? strdup (description) : NULL;
-        new_option->default_value = NULL;
-        new_option->value = NULL;
+        if (description)
+        {
+            new_option->description = strdup (description);
+            if (!new_option->description)
+                goto error;
+        }
         argc = 0;
         switch (var_type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                new_option->string_values = NULL;
                 new_option->min = CONFIG_BOOLEAN_FALSE;
                 new_option->max = CONFIG_BOOLEAN_TRUE;
                 if (default_value)
                 {
                     int_value = config_file_string_to_boolean (default_value);
                     new_option->default_value = malloc (sizeof (int));
+                    if (!new_option->default_value)
+                        goto error;
                     *((int *)new_option->default_value) = int_value;
                 }
                 if (value)
                 {
                     int_value = config_file_string_to_boolean (value);
                     new_option->value = malloc (sizeof (int));
+                    if (!new_option->value)
+                        goto error;
                     *((int *)new_option->value) = int_value;
                 }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
-                new_option->string_values = (string_values) ?
-                    string_explode (string_values, "|", 0, 0, &argc) : NULL;
+                if (string_values)
+                {
+                    new_option->string_values = string_explode (string_values,
+                                                                "|", 0, 0,
+                                                                &argc);
+                    if (!new_option->string_values)
+                        goto error;
+                }
                 if (new_option->string_values)
                 {
                     new_option->min = 0;
@@ -407,6 +477,8 @@ config_file_new_option (struct t_config_file *config_file,
                             }
                         }
                         new_option->default_value = malloc (sizeof (int));
+                        if (!new_option->default_value)
+                            goto error;
                         *((int *)new_option->default_value) = index_value;
                     }
                     if (value)
@@ -422,12 +494,13 @@ config_file_new_option (struct t_config_file *config_file,
                             }
                         }
                         new_option->value = malloc (sizeof (int));
+                        if (!new_option->value)
+                            goto error;
                         *((int *)new_option->value) = index_value;
                     }
                 }
                 else
                 {
-                    new_option->string_values = NULL;
                     new_option->min = min;
                     new_option->max = max;
                     if (default_value)
@@ -441,6 +514,8 @@ config_file_new_option (struct t_config_file *config_file,
                         else if (number > max)
                             number = max;
                         new_option->default_value = malloc (sizeof (int));
+                        if (!new_option->default_value)
+                            goto error;
                         *((int *)new_option->default_value) = number;
                     }
                     if (value)
@@ -454,38 +529,44 @@ config_file_new_option (struct t_config_file *config_file,
                         else if (number > max)
                             number = max;
                         new_option->value = malloc (sizeof (int));
+                        if (!new_option->value)
+                            goto error;
                         *((int *)new_option->value) = number;
                     }
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
-                new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = max;
                 if (default_value)
                 {
-                    new_option->default_value = (default_value) ?
-                        strdup (default_value) : NULL;
+                    new_option->default_value = strdup (default_value);
+                    if (!new_option->default_value)
+                        goto error;
                 }
                 if (value)
                 {
-                    new_option->value = (value) ?
-                        strdup (value) : NULL;
+                    new_option->value = strdup (value);
+                    if (!new_option->value)
+                        goto error;
                 }
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
-                new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = gui_color_get_number () - 1;
                 if (default_value)
                 {
                     new_option->default_value = malloc (sizeof (int));
+                    if (!new_option->default_value)
+                        goto error;
                     if (!gui_color_assign (new_option->default_value, default_value))
                         *((int *)new_option->default_value) = 0;
                 }
                 if (value)
                 {
                     new_option->value = malloc (sizeof (int));
+                    if (!new_option->value)
+                        goto error;
                     if (!gui_color_assign (new_option->value, value))
                         *((int *)new_option->value) = 0;
                 }
@@ -514,6 +595,14 @@ config_file_new_option (struct t_config_file *config_file,
     }
     
     return new_option;
+
+error:
+    if (new_option)
+    {
+        config_file_option_free_data (new_option);
+        free (new_option);
+    }
+    return NULL;
 }
 
 /*
@@ -786,11 +875,14 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 if (!option->value)
                 {
                     option->value = malloc (sizeof (int));
-                    CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
-                    snprintf (value, sizeof (value), "%s",
-                              CONFIG_BOOLEAN(option) ?
-                              config_boolean_true[0] : config_boolean_false[0]);
-                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    if (option->value)
+                    {
+                        CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
+                        snprintf (value, sizeof (value), "%s",
+                                  CONFIG_BOOLEAN(option) ?
+                                  config_boolean_true[0] : config_boolean_false[0]);
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
                 }
                 else
                 {
@@ -810,7 +902,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 if (!option->value)
                 {
                     option->value = malloc (sizeof (int));
-                    CONFIG_INTEGER(option) = 0;
+                    if (option->value)
+                        CONFIG_INTEGER(option) = 0;
                 }
                 if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -846,7 +939,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 if (!option->value)
                 {
                     option->value = malloc (sizeof (int));
-                    CONFIG_INTEGER(option) = 0;
+                    if (option->value)
+                        CONFIG_INTEGER(option) = 0;
                 }
                 if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -940,17 +1034,20 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 if (!option->value)
                 {
                     option->value = malloc (sizeof (int));
-                    if (string_strcasecmp (value, "toggle") == 0)
-                        CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
-                    else
+                    if (option->value)
                     {
-                        if (config_file_string_boolean_is_valid (value))
+                        if (string_strcasecmp (value, "toggle") == 0)
+                            CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
+                        else
                         {
-                            value_int = config_file_string_to_boolean (value);
-                            CONFIG_BOOLEAN(option) = value_int;
+                            if (config_file_string_boolean_is_valid (value))
+                            {
+                                value_int = config_file_string_to_boolean (value);
+                                CONFIG_BOOLEAN(option) = value_int;
+                            }
                         }
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                     }
-                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
                 else
                 {
@@ -979,103 +1076,104 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (!option->value)
-                {
                     option->value = malloc (sizeof (int));
-                    CONFIG_INTEGER(option) = 0;
-                }
-                if (option->string_values)
+                if (option->value)
                 {
-                    value_int = -1;
-                    if (strncmp (value, "++", 2) == 0)
+                    CONFIG_INTEGER(option) = 0;
+                    if (option->string_values)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        value_int = -1;
+                        if (strncmp (value, "++", 2) == 0)
                         {
-                            number = number % (option->max + 1);
-                            value_int = (CONFIG_INTEGER(option) + number) %
-                                (option->max + 1);
-                        }
-                    }
-                    else if (strncmp (value, "--", 2) == 0)
-                    {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
-                        {
-                            number = number % (option->max + 1);
-                            value_int = (CONFIG_INTEGER(option) + (option->max + 1) - number) %
-                                (option->max + 1);
-                        }
-                    }
-                    else
-                    {
-                        for (i = 0; option->string_values[i]; i++)
-                        {
-                            if (string_strcasecmp (option->string_values[i],
-                                                   value) == 0)
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
                             {
-                                value_int = i;
-                                break;
+                                number = number % (option->max + 1);
+                                value_int = (CONFIG_INTEGER(option) + number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                number = number % (option->max + 1);
+                                value_int = (CONFIG_INTEGER(option) + (option->max + 1) - number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else
+                        {
+                            for (i = 0; option->string_values[i]; i++)
+                            {
+                                if (string_strcasecmp (option->string_values[i],
+                                                       value) == 0)
+                                {
+                                    value_int = i;
+                                    break;
+                                }
+                            }
+                        }
+                        if (value_int >= 0)
+                        {
+                            if (value_int == CONFIG_INTEGER(option))
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                            else
+                            {
+                                CONFIG_INTEGER(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                             }
                         }
                     }
-                    if (value_int >= 0)
-                    {
-                        if (value_int == CONFIG_INTEGER(option))
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                        else
-                        {
-                            CONFIG_INTEGER(option) = value_int;
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-                        }
-                    }
-                }
-                else
-                {
-                    new_value_ok = 0;
-                    if (strncmp (value, "++", 2) == 0)
-                    {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
-                        {
-                            value_int = CONFIG_INTEGER(option) + number;
-                            if (value_int <= option->max)
-                                new_value_ok = 1;
-                        }
-                    }
-                    else if (strncmp (value, "--", 2) == 0)
-                    {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
-                        {
-                            value_int = CONFIG_INTEGER(option) - number;
-                            if (value_int >= option->min)
-                                new_value_ok = 1;
-                        }
-                    }
                     else
                     {
-                        error = NULL;
-                        number = strtol (value, &error, 10);
-                        if (error && !error[0])
+                        new_value_ok = 0;
+                        if (strncmp (value, "++", 2) == 0)
                         {
-                            value_int = number;
-                            if ((value_int >= option->min)
-                                && (value_int <= option->max))
-                                new_value_ok = 1;
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = CONFIG_INTEGER(option) + number;
+                                if (value_int <= option->max)
+                                    new_value_ok = 1;
+                            }
                         }
-                    }
-                    if (new_value_ok)
-                    {
-                        if (value_int == CONFIG_INTEGER(option))
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = CONFIG_INTEGER(option) - number;
+                                if (value_int >= option->min)
+                                    new_value_ok = 1;
+                            }
+                        }
                         else
                         {
-                            CONFIG_INTEGER(option) = value_int;
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            error = NULL;
+                            number = strtol (value, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = number;
+                                if ((value_int >= option->min)
+                                    && (value_int <= option->max))
+                                    new_value_ok = 1;
+                            }
+                        }
+                        if (new_value_ok)
+                        {
+                            if (value_int == CONFIG_INTEGER(option))
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                            else
+                            {
+                                CONFIG_INTEGER(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
                         }
                     }
                 }
@@ -1096,45 +1194,46 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 if (!option->value)
-                {
                     option->value = malloc (sizeof (int));
+                if (option->value)
+                {
                     CONFIG_COLOR(option) = 0;
-                }
-                value_int = -1;
-                if (strncmp (value, "++", 2) == 0)
-                {
-                    error = NULL;
-                    number = strtol (value + 2, &error, 10);
-                    if (error && !error[0])
+                    value_int = -1;
+                    if (strncmp (value, "++", 2) == 0)
                     {
-                        number = number % (option->max + 1);
-                        value_int = (CONFIG_COLOR(option) + number) %
-                            (option->max + 1);
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            number = number % (option->max + 1);
+                            value_int = (CONFIG_COLOR(option) + number) %
+                                (option->max + 1);
+                        }
                     }
-                }
-                else if (strncmp (value, "--", 2) == 0)
-                {
-                    error = NULL;
-                    number = strtol (value + 2, &error, 10);
-                    if (error && !error[0])
+                    else if (strncmp (value, "--", 2) == 0)
                     {
-                        number = number % (option->max + 1);
-                        value_int = (CONFIG_COLOR(option) + (option->max + 1) - number) %
-                            (option->max + 1);
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            number = number % (option->max + 1);
+                            value_int = (CONFIG_COLOR(option) + (option->max + 1) - number) %
+                                (option->max + 1);
+                        }
                     }
-                }
-                else
-                {
-                    gui_color_assign (&value_int, value);
-                }
-                if (value_int >= 0)
-                {
-                    if (value_int == CONFIG_COLOR(option))
-                        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                     else
                     {
-                        CONFIG_COLOR(option) = value_int;
-                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        gui_color_assign (&value_int, value);
+                    }
+                    if (value_int >= 0)
+                    {
+                        if (value_int == CONFIG_COLOR(option))
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        else
+                        {
+                            CONFIG_COLOR(option) = value_int;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        }
                     }
                 }
                 break;
@@ -1318,31 +1417,37 @@ void
 config_file_option_rename (struct t_config_option *option,
                            const char *new_name)
 {
+    char *str_new_name;
+    
     if (!option || !new_name || !new_name[0]
         || config_file_search_option (option->config_file, option->section, new_name))
         return;
-    
-    /* remove option from list */
-    if (option->section)
-    {
-        if (option->prev_option)
-            (option->prev_option)->next_option = option->next_option;
-        if (option->next_option)
-            (option->next_option)->prev_option = option->prev_option;
-        if (option->section->options == option)
-            (option->section)->options = option->next_option;
-        if (option->section->last_option == option)
-            (option->section)->last_option = option->prev_option;
-    }
-    
-    /* rename option */
-    if (option->name)
-        free (option->name);
-    option->name = strdup (new_name);
 
-    /* re-insert option in section */
-    if (option->section)
-        config_file_option_insert_in_section (option);
+    str_new_name = strdup (new_name);
+    if (str_new_name)
+    {
+        /* remove option from list */
+        if (option->section)
+        {
+            if (option->prev_option)
+                (option->prev_option)->next_option = option->next_option;
+            if (option->next_option)
+                (option->next_option)->prev_option = option->prev_option;
+            if (option->section->options == option)
+                (option->section)->options = option->next_option;
+            if (option->section->last_option == option)
+                (option->section)->last_option = option->prev_option;
+        }
+        
+        /* rename option */
+        if (option->name)
+            free (option->name);
+        option->name = str_new_name;
+        
+        /* re-insert option in section */
+        if (option->section)
+            config_file_option_insert_in_section (option);
+    }
 }
 
 /*

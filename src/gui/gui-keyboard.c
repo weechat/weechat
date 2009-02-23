@@ -179,7 +179,11 @@ gui_keyboard_get_expanded_name (const char *key)
 {
     char *result;
     
-    if ((result = malloc ((strlen (key) * 5) + 1)))
+    if (!key)
+        return NULL;
+    
+    result = malloc ((strlen (key) * 5) + 1);
+    if (result)
     {
         result[0] = '\0';
         while (key[0])
@@ -206,9 +210,7 @@ gui_keyboard_get_expanded_name (const char *key)
             }
         }
     }
-    else
-        return NULL;
-
+    
     return result;
 }
 
@@ -354,7 +356,7 @@ gui_keyboard_search_part (struct t_gui_buffer *buffer, const char *key)
     for (ptr_key = (buffer) ? buffer->keys : gui_keys; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        if (gui_keyboard_cmp (ptr_key->key, key) == 0)
+        if (ptr_key->key && (gui_keyboard_cmp (ptr_key->key, key) == 0))
             return ptr_key;
     }
     
