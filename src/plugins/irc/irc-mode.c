@@ -72,17 +72,22 @@ irc_mode_channel_get_flag (const char *string, const char *pos)
 
 /*
  * irc_mode_channel_set: set channel modes
+ *                       return: 1 if channel modes are updated
+ *                               0 if channel modes are NOT updated
+ *                                 (no update or on nicks only)
  */
 
-void
+int
 irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel, const char *modes)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
-    int argc, current_arg;
+    int channel_modes_updated, argc, current_arg;
     
     if (!server || !channel || !modes)
-        return;
+        return 0;
+    
+    channel_modes_updated = 0;
     
     argc = 0;
     argv = NULL;
@@ -92,7 +97,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = weechat_strndup (modes, pos_args - modes);
         if (!str_modes)
-            return;
+            return 0;
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
@@ -104,7 +109,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = strdup (modes);
         if (!str_modes)
-            return;
+            return 0;
     }
     
     if (str_modes && str_modes[0])
@@ -155,6 +160,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                                 if (ptr_arg)
                                     channel->key = strdup (ptr_arg);
                             }
+                            channel_modes_updated = 1;
                             break;
                         case 'l': /* channel limit */
                             if (set_flag == '-')
@@ -166,6 +172,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                                 if (ptr_arg)
                                     channel->limit = atoi (ptr_arg);
                             }
+                            channel_modes_updated = 1;
                             break;
                         case 'o': /* op */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
@@ -195,19 +202,24 @@ irc_mode_channel_set (struct t_irc_server *server,
                                 irc_mode_channel_set_nick (channel, ptr_arg,
                                                            set_flag, IRC_NICK_VOICE);
                             break;
+                        default:
+                            channel_modes_updated = 1;
+                            break;
                     }
                     break;
             }
             pos--;
         }
     }
-
+    
     if (str_modes)
         free (str_modes);
     if (argv)
         weechat_string_free_exploded (argv);
     
     weechat_bar_item_update ("buffer_name");
+    
+    return channel_modes_updated;
 }
 
 /*
