@@ -1040,16 +1040,26 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
 struct t_gui_buffer *
 gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 {
-    struct t_gui_buffer *ptr_buffer, *buffer_partial_match;
-    int plugin_match;
+    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[3];
+    int plugin_match, length_name;
+    const char *pos;
     
     if (!name || !name[0])
         return gui_current_window->buffer;
     
-    buffer_partial_match = NULL;
+    /* 0: mathces beginning of buffer name, 1: in the middle, 2: the end */
+    buffer_partial_match[0] = NULL;
+    buffer_partial_match[1] = NULL;
+    buffer_partial_match[2] = NULL;
     
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
+    length_name = strlen (name);
+
+    ptr_buffer = gui_current_window->buffer->next_buffer;
+    if (!ptr_buffer)
+        ptr_buffer = gui_buffers;
+    ptr_start_buffer = ptr_buffer;
+    
+    while (ptr_buffer)
     {
         if (ptr_buffer->name)
         {
@@ -1069,16 +1079,56 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             }
             if (plugin_match)
             {
-                if (strcmp (ptr_buffer->name, name) == 0)
-                    return ptr_buffer;
-                if (!buffer_partial_match && strstr (ptr_buffer->name, name))
-                    buffer_partial_match = ptr_buffer;
+                pos = strstr (ptr_buffer->name, name);
+                if (pos)
+                {
+                    if (pos == ptr_buffer->name)
+                    {
+                        if (!pos[length_name])
+                        {
+                            /* matches full name, return it immediately */
+                            return ptr_buffer;
+                        }
+                        /* matches beginning of name */
+                        if (!buffer_partial_match[0])
+                            buffer_partial_match[0] = ptr_buffer;
+                    }
+                    else
+                    {
+                        if (pos[length_name])
+                        {
+                            /* matches middle of buffer name */
+                            if (!buffer_partial_match[1])
+                                buffer_partial_match[1] = ptr_buffer;
+                        }
+                        else
+                        {
+                            /* matches end of buffer name */
+                            if (!buffer_partial_match[2])
+                                buffer_partial_match[2] = ptr_buffer;
+                        }
+                    }
+                }
             }
         }
+        ptr_buffer = ptr_buffer->next_buffer;
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffers;
+        if (ptr_buffer == ptr_start_buffer)
+            break;
     }
     
-    /* return buffer partially matching (may be NULL if no buffer was found */
-    return buffer_partial_match;
+    /* matches end of name? */
+    if (buffer_partial_match[2])
+        return buffer_partial_match[2];
+    
+    /* matches beginning of name? */
+    if (buffer_partial_match[0])
+        return buffer_partial_match[0];
+    
+    /* return buffer partially matching in name
+       (may be NULL if no buffer was found) */
+    return buffer_partial_match[1];
 }
 
 /*
