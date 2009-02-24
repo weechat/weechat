@@ -181,8 +181,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     else
     {
         weechat_printf (buffer,
-                        _("%s: this buffer is not a channel!"),
-                        IRC_PLUGIN_NAME);
+                        _("%s%s: this buffer is not a channel!"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
     }
     
     return WEECHAT_RC_OK;

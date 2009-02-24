@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-22 22:43+0100\n"
-"PO-Revision-Date: 2009-02-22 22:43+0100\n"
+"POT-Creation-Date: 2009-02-24 15:00+0100\n"
+"PO-Revision-Date: 2009-02-24 15:02+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3748,8 +3748,8 @@ msgid "%s%s: you are not connected to server"
 msgstr "%s%s: vous n'êtes pas connecté au serveur"
 
 #, c-format
-msgid "%s: this buffer is not a channel!"
-msgstr "%s: ce tampon n'est pas un canal !"
+msgid "%s%s: this buffer is not a channel!"
+msgstr "%s%s: ce tampon n'est pas un canal !"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s"

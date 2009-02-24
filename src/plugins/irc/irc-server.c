@@ -45,6 +45,7 @@
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-debug.h"
+#include "irc-input.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
 
@@ -1998,7 +1999,7 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
                   "server.%s", server->name);
     }
     server->buffer = weechat_buffer_new (buffer_name,
-                                         NULL, NULL,
+                                         &irc_input_data_cb, NULL,
                                          &irc_buffer_close_cb, NULL);
     if (!server->buffer)
         return NULL;
@@ -2020,6 +2021,9 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
     
     weechat_hook_signal_send ("logger_backlog",
                               WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
+    
+    if (weechat_config_boolean (irc_config_network_send_unknown_commands))
+        weechat_buffer_set (server->buffer, "input_get_unknown_commands", "1");
     
     /* set highlights settings on server buffer */
     if (server->nick)

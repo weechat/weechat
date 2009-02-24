@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-22 22:43+0100\n"
+"POT-Creation-Date: 2009-02-24 15:00+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3658,7 +3658,7 @@ msgid "%s%s: you are not connected to server"
 msgstr "%s nincs csatlakozva szerverhez!\n"
 
 #, fuzzy, c-format
-msgid "%s: this buffer is not a channel!"
+msgid "%s%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
 
 #, fuzzy, c-format
