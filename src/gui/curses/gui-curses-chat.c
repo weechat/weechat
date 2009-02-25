@@ -64,8 +64,17 @@ gui_chat_get_real_width (struct t_gui_window *window)
 int
 gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
+    struct t_gui_line *last_read_line;
+    
     /* marker is not set for buffer? */
     if (!buffer->last_read_line)
+        return 0;
+    
+    last_read_line = buffer->last_read_line;
+    if (!last_read_line->displayed)
+        last_read_line = gui_chat_get_prev_line_displayed (last_read_line);
+    
+    if (!last_read_line)
         return 0;
     
     /* marker is disabled in config? */
@@ -75,7 +84,7 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     
     while (line)
     {
-        if (buffer->last_read_line == line)
+        if (last_read_line == line)
             return 1;
         
         if (line->displayed)
