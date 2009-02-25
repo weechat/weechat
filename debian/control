@@ -5,7 +5,7 @@ Maintainer: Emmanuel Bouthenot <kolter@openics.org>
 Build-Depends-Indep: xsltproc, docbook-xsl, docbook-xml
 Build-Depends: debhelper (>= 5), cdbs (>= 0.4.37), cmake, libncursesw5-dev,
  ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl8.4-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
+ tcl8.5-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
 Standards-Version: 3.8.0
 Homepage: http://weechat.flashtux.org/
 
