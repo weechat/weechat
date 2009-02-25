@@ -59,7 +59,7 @@ int window_current_color_attr;         /* attr sum of last color(s) used    */
 int
 gui_window_get_width ()
 {
-    return COLS;
+    return gui_term_cols;
 }
 
 /*
@@ -69,7 +69,7 @@ gui_window_get_width ()
 int
 gui_window_get_height ()
 {
-    return LINES;
+    return gui_term_lines;
 }
 
 /*
@@ -1328,16 +1328,6 @@ gui_window_switch_right (struct t_gui_window *window)
 void
 gui_window_refresh_screen ()
 {
-    int new_height, new_width;
-    
-    endwin ();
-    refresh ();
-    
-    getmaxyx (stdscr, new_height, new_width);
-    
-    gui_ok = ((new_width >= GUI_WINDOW_MIN_WIDTH)
-              && (new_height >= GUI_WINDOW_MIN_HEIGHT));
-    
     if (gui_ok)
     {
         refresh ();

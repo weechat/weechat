@@ -51,6 +51,7 @@ struct t_gui_bar_window_curses_objects
     WINDOW *win_separator;          /* separator (optional)                 */
 };
 
+extern int gui_term_cols, gui_term_lines;
 extern struct t_gui_color gui_weechat_colors[];
 
 /* color functions */

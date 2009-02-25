@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
+#include <sys/ioctl.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-command.h"
@@ -55,7 +56,8 @@
 
 
 int gui_reload_config = 0;
-
+int gui_term_cols = 0;
+int gui_term_lines = 0;
 
 /*
  * gui_main_pre_init: pre-initialize GUI (called before gui_init)
@@ -85,6 +87,7 @@ gui_main_init ()
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_win;
+    struct winsize size;
     
     initscr ();
     
@@ -98,10 +101,20 @@ gui_main_init ()
     /* build prefixes according to config */
     gui_chat_prefix_build ();
     
-    gui_ok = ((COLS >= GUI_WINDOW_MIN_WIDTH)
-              && (LINES >= GUI_WINDOW_MIN_HEIGHT));
-    
     refresh ();
+    
+    gui_term_cols  = COLS;
+    gui_term_lines = LINES;
+    
+    if (ioctl (fileno (stdout), TIOCGWINSZ, &size) == 0)
+    {
+        resizeterm(size.ws_row, size.ws_col);
+        gui_term_cols = size.ws_col;
+        gui_term_lines = size.ws_row;
+    }
+    
+    gui_ok = ((gui_term_cols >= GUI_WINDOW_MIN_WIDTH)
+              && (gui_term_lines >= GUI_WINDOW_MIN_HEIGHT));
     
     /* init clipboard buffer */
     gui_input_clipboard = NULL;
@@ -126,7 +139,8 @@ gui_main_init ()
                               " - " WEECHAT_WEBSITE);
         
         /* create main window (using full space) */
-        if (gui_window_new (NULL, ptr_buffer, 0, 0, COLS, LINES, 100, 100))
+        if (gui_window_new (NULL, ptr_buffer, 0, 0,
+                            gui_term_cols, gui_term_lines, 100, 100))
         {
             gui_current_window = gui_windows;
             
@@ -201,6 +215,25 @@ gui_main_signal_sighup ()
 void
 gui_main_signal_sigwinch ()
 {
+    struct winsize size;
+    int new_width, new_height;
+    
+    if (ioctl (fileno (stdout), TIOCGWINSZ, &size) == 0)
+    {
+        resizeterm (size.ws_row, size.ws_col);
+        gui_term_cols = size.ws_col;
+        gui_term_lines = size.ws_row;
+        gui_ok = ((gui_term_cols >= GUI_WINDOW_MIN_WIDTH)
+                  && (gui_term_lines >= GUI_WINDOW_MIN_HEIGHT));
+        wrefresh (curscr);
+    }
+    else
+    {
+        getmaxyx (stdscr, new_height, new_width);
+        gui_term_cols = new_width;
+        gui_term_lines = new_height;
+    }
+    
     gui_window_refresh_needed = 1;
 }
 
