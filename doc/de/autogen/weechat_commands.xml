@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | [listitems]</command>
+<command>/bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show|toggle barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | [listitems]</command>
 <programlisting>
 manage bars
 

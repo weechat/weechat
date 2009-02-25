@@ -348,9 +348,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     /* remove topic and display channel creation date if joining new channel */
     if (!ptr_channel->nicks)
     {
-        if (ptr_channel->topic)
-            irc_channel_set_topic (ptr_channel, NULL);
-        
+        irc_channel_set_topic (ptr_channel, NULL);
         ptr_channel->display_creation_date = 1;
     }
     

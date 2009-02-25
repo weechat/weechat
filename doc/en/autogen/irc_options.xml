@@ -186,6 +186,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.topic_strip_colors</command>: strip colors in topic (used only when displaying buffer title)
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.network.anti_flood</command>: anti-flood: # seconds between two user messages (0 = no anti-flood)
 <itemizedlist>
   <listitem>

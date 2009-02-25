@@ -59,8 +59,10 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
         if (!title)
             return NULL;
         
-        title_color = irc_color_decode (title, 1);
-
+        title_color = irc_color_decode (title,
+                                        (weechat_config_boolean (irc_config_look_topic_strip_colors)) ?
+                                         0 : 1);
+        
         return (title_color) ? title_color : strdup (title);
     }
     

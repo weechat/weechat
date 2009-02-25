@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-24 15:00+0100\n"
+"POT-Creation-Date: 2009-02-25 19:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2996,6 +2996,9 @@ msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
 
 msgid "display notices as private messages"
+msgstr ""
+
+msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 
 msgid "color for text in join messages"

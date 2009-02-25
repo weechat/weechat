@@ -186,6 +186,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.topic_strip_colors</command>: supprimer les couleurs dans le titre (utilisé seulement lors de l'affichage du titre du tampon)
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.network.anti_flood</command>: anti-flood: nombre de secondes entre deux messages utilisateur (0 = pas d'anti-flood)
 <itemizedlist>
   <listitem>

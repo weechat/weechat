@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-24 15:00+0100\n"
+"POT-Creation-Date: 2009-02-25 19:14+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3496,6 +3496,9 @@ msgstr ""
 
 msgid "display notices as private messages"
 msgstr "NOTICEs als Queries anzeigen"
+
+msgid "strip colors in topic (used only when displaying buffer title)"
+msgstr ""
 
 #, fuzzy
 msgid "color for text in join messages"

@@ -53,10 +53,11 @@ struct t_config_option *irc_config_look_display_channel_modes;
 struct t_config_option *irc_config_look_display_nick_modes;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
+struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
-struct t_config_option *irc_config_look_notice_as_pv;
+struct t_config_option *irc_config_look_topic_strip_colors;
 
 /* IRC config, color section */
 
@@ -234,6 +235,22 @@ irc_config_change_look_highlight_tags (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_topic_strip_colors: called when the "topic strip colors"
+ *                                            option is changed
+ */
+
+void
+irc_config_change_look_topic_strip_colors (void *data,
+                                           struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("buffer_title");
 }
 
 /*
@@ -1096,6 +1113,12 @@ irc_config_init ()
         "notice_as_pv", "boolean",
         N_("display notices as private messages"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_topic_strip_colors = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "topic_strip_colors", "boolean",
+        N_("strip colors in topic (used only when displaying buffer title)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &irc_config_change_look_topic_strip_colors, NULL, NULL, NULL);
     
     /* color */
     ptr_section = weechat_config_new_section (irc_config_file, "color",

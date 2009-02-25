@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>/bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listfull] | [listitems]</command>
+<command>/bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show|toggle nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listfull] | [listitems]</command>
 <programlisting>
 gestion des barres
 
