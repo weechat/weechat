@@ -183,7 +183,7 @@ jabber_muc_set_topic (struct t_jabber_muc *muc, const char *topic)
         free (muc->topic);
     
     muc->topic = (topic) ? strdup (topic) : NULL;
-    weechat_buffer_set (muc->buffer, "title", muc->topic);
+    weechat_buffer_set (muc->buffer, "title", (muc->topic) ? muc->topic : "");
 }
 
 /*

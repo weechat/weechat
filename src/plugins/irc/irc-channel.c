@@ -200,7 +200,8 @@ irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
         free (channel->topic);
     
     channel->topic = (topic) ? strdup (topic) : NULL;
-    weechat_buffer_set (channel->buffer, "title", channel->topic);
+    weechat_buffer_set (channel->buffer, "title",
+                        (channel->topic) ? channel->topic : "");
 }
 
 /*
