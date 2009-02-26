@@ -1073,7 +1073,7 @@ gui_window_resize (struct t_gui_window *window, int percentage)
                                     1) < 0)
             parent->split_pct = old_split_pct;
         else
-            gui_window_refresh_needed = 1;
+            gui_window_ask_refresh (1);
     }
 }
 
@@ -1322,15 +1322,19 @@ gui_window_switch_right (struct t_gui_window *window)
 
 /*
  * gui_window_refresh_screen: called when term size is modified
- *                            force == 1 when Ctrl+L is pressed
+ *                            full_refresh == 1 when Ctrl+L is pressed
  */
 
 void
-gui_window_refresh_screen ()
+gui_window_refresh_screen (int full_refresh)
 {
     if (gui_ok)
     {
-        refresh ();
+        if (full_refresh)
+        {
+            endwin ();
+            refresh ();
+        }
         gui_window_refresh_windows ();
     }
 }

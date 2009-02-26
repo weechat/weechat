@@ -878,7 +878,7 @@ gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window,
                 if (window)
                     window->refresh_needed = 1;
                 else
-                    gui_window_refresh_needed = 1;
+                    gui_window_ask_refresh (1);
             }
         }
     }

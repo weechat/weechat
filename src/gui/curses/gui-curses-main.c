@@ -234,7 +234,7 @@ gui_main_signal_sigwinch ()
         gui_term_lines = new_height;
     }
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -251,7 +251,7 @@ gui_main_refreshs ()
     /* refresh window if needed */
     if (gui_window_refresh_needed)
     {
-        gui_window_refresh_screen ();
+        gui_window_refresh_screen ((gui_window_refresh_needed > 1) ? 1 : 0);
         gui_window_refresh_needed = 0;
     }
     
@@ -326,7 +326,7 @@ gui_main_loop ()
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
                                 &gui_keyboard_read_cb, NULL);
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
     
     while (!weechat_quit)
     {

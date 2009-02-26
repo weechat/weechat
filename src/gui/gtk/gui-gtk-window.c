@@ -778,8 +778,10 @@ gui_window_switch_right (struct t_gui_window *window)
  */
 
 void
-gui_window_refresh_screen ()
+gui_window_refresh_screen (int full_refresh)
 {
+    (void) full_refresh;
+    
     /* TODO: write this function for Gtk */
 }
 

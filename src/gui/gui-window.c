@@ -54,13 +54,24 @@ int gui_init_ok = 0;                            /* = 1 if GUI is initialized*/
 int gui_ok = 0;                                 /* = 1 if GUI is ok         */
                                                 /* (0 when size too small)  */
 int gui_window_refresh_needed = 0;              /* = 1 if refresh needed    */
-
+                                                /* = 2 for full refresh     */
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
 struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 struct t_gui_window_tree *gui_windows_tree = NULL; /* windows tree          */
 
+
+/*
+ * gui_window_ask_refresh: set "gui_window_refresh_needed" flag
+ */
+
+void
+gui_window_ask_refresh (int refresh)
+{
+    if (refresh > gui_window_refresh_needed)
+        gui_window_refresh_needed = refresh;
+}
 
 /*
  * gui_window_tree_init: create first entry in windows tree

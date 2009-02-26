@@ -103,6 +103,7 @@ extern struct t_gui_window *gui_current_window;
 extern struct t_gui_window_tree *gui_windows_tree;
 
 /* window functions */
+extern void gui_window_ask_refresh (int refresh);
 extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                                           struct t_gui_window *window);
@@ -168,7 +169,7 @@ extern void gui_window_switch_up (struct t_gui_window *window);
 extern void gui_window_switch_down (struct t_gui_window *window);
 extern void gui_window_switch_left (struct t_gui_window *window);
 extern void gui_window_switch_right (struct t_gui_window *window);
-extern void gui_window_refresh_screen ();
+extern void gui_window_refresh_screen (int full_refresh);
 extern void gui_window_title_set ();
 extern void gui_window_title_reset ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);

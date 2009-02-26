@@ -3334,7 +3334,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
     /* refresh screen */
     if (string_strcasecmp (argv[1], "refresh") == 0)
     {
-        gui_window_refresh_needed = 1;
+        gui_window_ask_refresh (2);
         return WEECHAT_RC_OK;
     }
     

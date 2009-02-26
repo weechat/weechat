@@ -565,7 +565,7 @@ gui_bar_refresh (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
-        gui_window_refresh_needed = 1;
+        gui_window_ask_refresh (1);
     else
     {
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
@@ -627,7 +627,7 @@ gui_bar_apply_current_size (struct t_gui_bar *bar)
         gui_bar_window_set_current_size (bar->bar_window,
                                          NULL,
                                          CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]));
-        gui_window_refresh_needed = 1;
+        gui_window_ask_refresh (1);
     }
     else
     {
@@ -759,7 +759,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
         }
     }
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -815,7 +815,7 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
         }
     }
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -850,7 +850,7 @@ gui_bar_config_change_conditions (void *data, struct t_config_option *option)
         }
     }
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -869,7 +869,7 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -888,7 +888,7 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -987,7 +987,7 @@ gui_bar_config_change_size_max (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -1638,7 +1638,7 @@ gui_bar_new_with_options (const char *name,
         {
             /* create only one window for bar */
             gui_bar_window_new (new_bar, NULL);
-            gui_window_refresh_needed = 1;
+            gui_window_ask_refresh (1);
         }
         else
         {
@@ -2214,7 +2214,7 @@ gui_bar_free (struct t_gui_bar *bar)
     if (bar->bar_window)
     {
         gui_bar_window_free (bar->bar_window, NULL);
-        gui_window_refresh_needed = 1;
+        gui_window_ask_refresh (1);
     }
     else
         gui_bar_free_bar_windows (bar);

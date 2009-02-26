@@ -252,7 +252,7 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
     gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
     gui_chat_change_time_format ();
     if (gui_ok)
-        gui_window_refresh_needed = 1;
+        gui_window_ask_refresh (1);
 }
 
 /*
@@ -280,7 +280,7 @@ config_change_read_marker (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    gui_window_refresh_needed = 1;
+    gui_window_ask_refresh (1);
 }
 
 /*
