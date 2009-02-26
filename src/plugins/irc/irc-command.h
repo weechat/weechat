@@ -30,6 +30,25 @@ struct t_irc_server;
                     __command);                                         \
     return WEECHAT_RC_ERROR;
 
+#define IRC_COMMAND_CHECK_SERVER(__command, __check_connection)         \
+    if (!ptr_server)                                                    \
+    {                                                                   \
+        weechat_printf (NULL,                                           \
+                        _("%s%s: command \"%s\" must be executed on "   \
+                          "irc buffer"),                                \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        __command);                                     \
+        return WEECHAT_RC_OK;                                           \
+    }                                                                   \
+    if (__check_connection && !ptr_server->is_connected)                \
+    {                                                                   \
+        weechat_printf (NULL,                                           \
+                        _("%s%s: command \"%s\" must be executed on "   \
+                          "connected irc server"),                      \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        __command);                                     \
+        return WEECHAT_RC_OK;                                           \
+    }
 
 extern void irc_command_away_server (struct t_irc_server *server,
                                      const char *arguments,

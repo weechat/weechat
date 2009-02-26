@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2876,6 +2876,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: too few arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr ""
 
 #, c-format

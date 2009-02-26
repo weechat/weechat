@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
-"PO-Revision-Date: 2009-02-25 19:15+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
+"PO-Revision-Date: 2009-02-26 09:54+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3488,6 +3488,15 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s%s: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr "%s%s: la commande \"%s\" doit être exécutée sur un tampon irc"
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr ""
+"%s%s: la commande \"%s\" doit être exécutée sur un serveur irc connecté"
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -5571,6 +5580,12 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid ""
+#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
+#~ msgstr ""
+#~ "%s%s: la commande \"%s\" doit être exécutée sur un tampon irc (serveur/"
+#~ "canal/pv)"
 
 #~ msgid "nickname text"
 #~ msgstr "pseudo texte"

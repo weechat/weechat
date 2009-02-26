@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3374,6 +3374,14 @@ msgstr ""
 msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -5459,6 +5467,11 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
+#~ msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
 #~ msgid "nickname text"
 #~ msgstr "přezdívka text"

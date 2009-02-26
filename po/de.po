@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3355,6 +3355,14 @@ msgstr ""
 msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -5396,6 +5404,12 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
+#~ msgstr ""
+#~ "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
 
 #~ msgid "nickname text"
 #~ msgstr "Nickname Text"

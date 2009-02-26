@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3387,6 +3387,14 @@ msgstr ""
 msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -5421,6 +5429,11 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
+#~ msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
 #~ msgid "nickname text"
 #~ msgstr "ник текст"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-25 19:14+0100\n"
+"POT-Creation-Date: 2009-02-26 09:53+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3344,6 +3344,14 @@ msgstr ""
 msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -5392,6 +5400,12 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
+#~ msgstr ""
+#~ "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 
 #~ msgid "nickname text"
 #~ msgstr "usuario texto"
