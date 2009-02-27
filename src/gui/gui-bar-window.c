@@ -750,6 +750,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         {
             gui_bar_window_calculate_pos_size (new_bar_window, window);
             gui_bar_window_create_win (new_bar_window);
+            gui_window_ask_refresh (1);
         }
         
         return 1;
@@ -911,6 +912,8 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
     free (bar_window->gui_objects);
     
     free (bar_window);
+    
+    gui_window_ask_refresh (1);
 }
 
 /*
