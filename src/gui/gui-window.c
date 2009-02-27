@@ -148,11 +148,6 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     struct t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     struct t_gui_bar *ptr_bar;
     
-#ifdef DEBUG
-    log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)",
-                x, y, width, height);
-#endif
-    
     if (parent_window)
     {
         child1 = malloc (sizeof (*child1));
