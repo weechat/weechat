@@ -28,7 +28,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
-#include <sys/ioctl.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-command.h"
@@ -87,7 +86,6 @@ gui_main_init ()
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_win;
-    struct winsize size;
     
     initscr ();
     
@@ -106,15 +104,7 @@ gui_main_init ()
     gui_term_cols  = COLS;
     gui_term_lines = LINES;
     
-    if (ioctl (fileno (stdout), TIOCGWINSZ, &size) == 0)
-    {
-        resizeterm(size.ws_row, size.ws_col);
-        gui_term_cols = size.ws_col;
-        gui_term_lines = size.ws_row;
-    }
-    
-    gui_ok = ((gui_term_cols >= GUI_WINDOW_MIN_WIDTH)
-              && (gui_term_lines >= GUI_WINDOW_MIN_HEIGHT));
+    gui_window_read_terminal_size ();
     
     /* init clipboard buffer */
     gui_input_clipboard = NULL;
@@ -215,26 +205,7 @@ gui_main_signal_sighup ()
 void
 gui_main_signal_sigwinch ()
 {
-    struct winsize size;
-    int new_width, new_height;
-    
-    if (ioctl (fileno (stdout), TIOCGWINSZ, &size) == 0)
-    {
-        resizeterm (size.ws_row, size.ws_col);
-        gui_term_cols = size.ws_col;
-        gui_term_lines = size.ws_row;
-        gui_ok = ((gui_term_cols >= GUI_WINDOW_MIN_WIDTH)
-                  && (gui_term_lines >= GUI_WINDOW_MIN_HEIGHT));
-        wrefresh (curscr);
-    }
-    else
-    {
-        getmaxyx (stdscr, new_height, new_width);
-        gui_term_cols = new_width;
-        gui_term_lines = new_height;
-    }
-    
-    gui_window_ask_refresh (1);
+    gui_window_ask_refresh (2);
 }
 
 /*

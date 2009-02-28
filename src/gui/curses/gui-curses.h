@@ -70,6 +70,7 @@ extern void gui_keyboard_default_bindings ();
 extern int gui_keyboard_read_cb (void *data, int fd);
 
 /* window functions */
+extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern int gui_window_utf_char_valid (const char *utf_char);
 extern void gui_window_clear (WINDOW *window, int bg);

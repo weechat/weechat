@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include <sys/ioctl.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -70,6 +71,33 @@ int
 gui_window_get_height ()
 {
     return gui_term_lines;
+}
+
+/*
+ * gui_window_read_terminal_size: read terminal size
+ */
+
+void
+gui_window_read_terminal_size ()
+{
+    struct winsize size;
+    int new_width, new_height;
+    
+    if (ioctl (fileno (stdout), TIOCGWINSZ, &size) == 0)
+    {
+        resizeterm (size.ws_row, size.ws_col);
+        gui_term_cols = size.ws_col;
+        gui_term_lines = size.ws_row;
+    }
+    else
+    {
+        getmaxyx (stdscr, new_height, new_width);
+        gui_term_cols = new_width;
+        gui_term_lines = new_height;
+    }
+    
+    gui_ok = ((gui_term_cols >= GUI_WINDOW_MIN_WIDTH)
+              && (gui_term_lines >= GUI_WINDOW_MIN_HEIGHT));
 }
 
 /*
@@ -1322,21 +1350,21 @@ gui_window_switch_right (struct t_gui_window *window)
 
 /*
  * gui_window_refresh_screen: called when term size is modified
- *                            full_refresh == 1 when Ctrl+L is pressed
+ *                            full_refresh == 1 when Ctrl+L is pressed,
+ *                            or if terminal is resized
  */
 
 void
 gui_window_refresh_screen (int full_refresh)
 {
-    if (gui_ok)
+    if (full_refresh)
     {
-        if (full_refresh)
-        {
-            endwin ();
-            refresh ();
-        }
-        gui_window_refresh_windows ();
+        endwin ();
+        refresh ();
+        gui_window_read_terminal_size ();
     }
+    
+    gui_window_refresh_windows ();
 }
 
 /*
