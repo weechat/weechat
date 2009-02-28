@@ -1362,6 +1362,7 @@ gui_window_refresh_screen (int full_refresh)
         endwin ();
         refresh ();
         gui_window_read_terminal_size ();
+        refresh ();
     }
     
     gui_window_refresh_windows ();
