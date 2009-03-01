@@ -1,257 +1,263 @@
-WeeChat FAQ, 2009-01-31
+WeeChat FAQ, 2009-03-01
 =======================
 
-Intended audience:
-Users of WeeChat >= 0.2.7.
-
-Before reading the following:
-The following Q/A list is *not* exhaustive.
-It is also possible that you won't find any Q/A that matches your problem.
-Please read them anyway, they may provide you help in fixing your problem
-anyway.
-And even if your problem is listed below, it is possible that the answers don't
-help you anymore to solve it. Then, please contact us, we will try to help you
-finding a solution.
-
-1 - Compiling
-2 - Using WeeChat
-3 - Development
-
-1.1
-================================================================================
-Q:	I heard about many GUI for WeeChat. How can I compile/use them?
-
-A:	Today only Curses GUI is available.
-	Other GUI will be available as remote client (currently udner
-	development).
+1 - General
+2 - Compilation / install
+3 - Using WeeChat
+4 - Development
 
 
-1.2
-================================================================================
-Q:	I can't compile WeeChat after cloning git repository.
+------------------------------------------------------------------------------
+1.1: Why choosing WeeChat? X-Chat and Irssi are so good...
 
-A:	If you're compiling with autotools (and not cmake), check that you have
-	latest version of autoconf and automake.
-	WeeChat has been developed with autoconf version 2.61 and automake
-	version 1.10.
-	You should have at least these versions in order to compile WeeChat.
-	If you can't or don't want to install these versions, you can download
-	and install "devel package", a package built almost every day using git
-	repository.
-	Note that this package may not correspond exactly to git base.
-
-
-2.1
-================================================================================
-Q:	Why using WeeChat ? X-Chat and Irssi are so good...
-
-A:	Because WeeChat is very light and has new features.
-	Some new features:
-	  * multi-protocols support via plugins (IRC, Jabber)
-	  * many deported GUI in addition to Curses (coming soon)
-	  * available in many languages
-	  * extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl)
-	  * buffers with free content
-	  * display filtering by tags and regular expressions
-	  * horizontal and vertical window split
-	  * customizable and extensible bars
-	  * nicklist available in all GUI
-	  * infobar highlight
-	  * incremental text search in buffers, jump to highlights
-	  * FIFO pipe for remote control
-	  * aspell support
-	  * double charset (encoding/decoding)
-	  * developed from scratch (not based on any other client)
-	  * multi-platform
-	  * 100% GPL and free
-	
-	More info on this page: http://weechat.flashtux.org/features.php
+Because WeeChat is very light and has new features.
+Some features (version >= 0.2.7):
+   * multi-protocols support via plugins (IRC, Jabber)
+   * many deported GUI in addition to Curses (coming soon)
+   * available in many languages
+   * extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl)
+   * buffers with free content
+   * display filtering by tags and regular expressions
+   * horizontal and vertical window split
+   * customizable and extensible bars
+   * nicklist available in all GUI
+   * incremental text search in buffers, jump to highlights
+   * FIFO pipe for remote control
+   * aspell support
+   * double charset (encoding/decoding)
+   * developed from scratch (not based on any other client)
+   * multi-platform
+   * 100% GPL and free
+More info on this page: http://weechat.flashtux.org/features.php
 
 
-2.2
-================================================================================
-Q:	I've launched WeeChat, but I'm lost, what can I do?
+------------------------------------------------------------------------------
+2.1: I heard about many GUI for WeeChat. How can I compile/use them?
 
-A:	For help you can type /help. For help about a command, type /help command.
-	Keys and commands are listed in documentation.
-	If you're new to WeeChat, it's recommended to read quickstart guide
-	(see doc page on website).
+Today only Curses GUI is available. Other GUI will be available as remote
+client (currently udner development).
 
 
-2.3
-================================================================================
-Q:	I heard about "buffers" and "windows", what's the difference?
+------------------------------------------------------------------------------
+2.2: I can't compile WeeChat after cloning git repository, why?
 
-A:	A window is used when you split screen vertically or horizontally.
-	A buffer is a "view" for a window. Each window displays a buffer, and
-	many windows may display same buffer.
-	Examples of buffers: server messages, channel, xfer control, ..
-
-
-2.4
-================================================================================
-Q:	I don't see some chars with accents, what can I do?
-
-A:	For versions < 0.2.3, please upgrade to last stable version.
-	For versions >= 0.2.3 :
-	- check that weechat-curses is linked to libncursesw (warning: needed
-	  on most distributions but not all) :
-	  ldd /path/to/weechat-curses
-	- check that "Charset" plugin is loaded with /plugin command
-	  (if it is not, then you probably need "weechat-plugins" package)
-	- check charset line (on server buffer), you should see ISO-XXXXXX or
-	  UTF-8 for terminal charset. If you see ANSI_X3.4-1968 or other values,
-	  probably your locale is wrong.
-	- setup global decode value, for example:
-	  with WeeChat <= 0.2.6: /setp charset.global.decode = ISO-8859-15
-	  with WeeChat >= 0.2.7: /set charset.default.decode "ISO-8859-15"
-	- if you are using UTF-8 locale, check that your terminal is UTF-8
-	  ready. Terminal recommended for UTF-8 is rxvt-unicode.
+Recommended way to compile WeeChat is with cmake.
+If you're compiling with autotools (and not cmake), check that you have latest
+version of autoconf and automake (WeeChat is developed with autoconf 2.61 and
+automake 1.10.1).
+Other way is to install "devel package", which needs less dependencies. This
+package is built almost every day using git repository. Note that this package
+may not correspond exactly to git base and that it's less convenient than git
+cloning for installing updates.
 
 
-2.5
-================================================================================
-Q:	Bars like title and status are not filled, background color stops after
-	text, why?
+------------------------------------------------------------------------------
+3.1: I've launched WeeChat, but I'm lost, what can I do?
 
-A:	This may be caused by bad value of TERM variable (look at echo $TERM).
-	Depending on where you launch WeeChat, you should have:
-	- if WeeChat runs locally or on a remote machine without screen, it
-	depends on terminal used: "xterm", "rxvt", ..
-	- if WeeChat runs under screen, you should have "screen".
-	If needed, fix your TERM variable (export TERM="xxx").
+For help you can type /help. For help about a command, type /help command.
+Keys and commands are listed in documentation.
+It's recommended for new users to read quickstart guide (see doc page on
+website).
 
 
-2.6
-================================================================================
-Q:	When I'm using weechat under screen, I have weird chars, when I switch
-	window for example, how to fix that?
+------------------------------------------------------------------------------
+3.2: I heard about "buffers" and "windows", what's the difference?
 
-A:	This may be caused by bad value of TERM variable (look at echo $TERM).
-	For example, "xterm-color" displays such weird chars, use "xterm" which
-	is ok (like many other values).
-	If needed, fix your TERM variable (export TERM="xxx").
+A window is used when you split screen vertically or horizontally.
+A buffer is a "view" for a window. Each window displays a buffer, and many
+windows may display same buffer.
+Examples of buffers: server messages, channel, xfer control, ..
 
 
-2.7
-================================================================================
-Q:	How can I customize key bindings?
+------------------------------------------------------------------------------
+3.3: I don't see some chars with accents, what can I do?
 
-A:	Key bindings are customizable with /key command.
-	Default key Meta-k (usually Alt-k) lets you grab key code and insert it
-	in input zone.
-
-
-2.8
-================================================================================
-Q:	How can I load Perl/Python/Ruby/Lua/Tcl scripts?
-	Are scripts compatible with other IRC clients ?
-
-A:	You can use commands /perl, /python, /ruby, /lua and /tcl to load
-	scripts (default path for scripts is ~/.weechat/<language>/).
-	Note that scripts in ~/.weechat/<language>/autoload are automatically
-	loaded when WeeChat is starting up.
-	Scripts are not compatible with other IRC clients.
-
-
-2.9
-================================================================================
-Q:	I want to change language used by WeeChat for messages, but without
-	exiting WeeChat, is it possible?
-
-A:	Yes, you have to use python script shell.py (available on WeeChat
-	website) and issue these commands when script is loaded:
-	  /shell setenv LANG=en_US.UTF-8
-	  /upgrade
-	(to have english messages with UTF-8 encoding for terminal, for ISO
-	users, you can issue:  /shell setenv LANG=en_US)
+For versions < 0.2.3, please upgrade to last stable version.
+For versions >= 0.2.3:
+- check that weechat-curses is linked to libncursesw (warning: needed on most
+  distributions but not all):
+     ldd /path/to/weechat-curses
+- check that "Charset" plugin is loaded with /plugin command (if it is not,
+  then you probably need "weechat-plugins" package)
+- check charset line (on server buffer), you should see ISO-XXXXXX or UTF-8
+  for terminal charset. If you see ANSI_X3.4-1968 or other values, probably
+  your locale is wrong.
+- setup global decode value, for example:
+  with WeeChat <= 0.2.6:
+     /setp charset.global.decode = ISO-8859-15
+  with WeeChat >= 0.2.7:
+     /set charset.default.decode "ISO-8859-15"
+- if you are using UTF-8 locale, check that your terminal is UTF-8 ready.
+  Terminal recommended for UTF-8 is rxvt-unicode.
 
 
-2.10
-================================================================================
-Q:	With Curses GUI, how can I copy/paste text without pasting nicklist ?
+------------------------------------------------------------------------------
+3.4: Bars like title and status are not filled, background color stops after
+text, why?
 
-A:	You can use a terminal with rectangular selection (like rxvt-unicode,
-	konsole, ...).
-	Other solution is to move nicklist to top or bottom, for example:
-	  with WeeChat <= 0.2.6: /set look_nicklist_position = top
-	  with WeeChat >= 0.2.7: /bar set nicklist position top
-
-
-2.11
-================================================================================
-Q:	How to be warned when someone highlights me on a channel ?
-
-A:	You can use sound.pl script (available on scripts page), and then
-	setup a system command (to play sound, display message, ..) with this
-	command :
-	  with WeeChat <= 0.2.6:
-	    /setp perl.sound.cmd_highlight = "/path/command arguments"
-	  with WeeChat >= 0.2.7:
-	    /set plugins.var.perl.sound.cmd_highlight "/path/command arguments"
+This may be caused by bad value of TERM variable (look at echo $TERM).
+Depending on where you launch WeeChat, you should have:
+- if WeeChat runs locally or on a remote machine without screen, it depends on
+  terminal used: "xterm", "rxvt", ..
+- if WeeChat runs under screen, you should have "screen".
+If needed, fix your TERM variable (export TERM="xxx").
 
 
-3.1
-================================================================================
-Q:	How should I report bugs?
+------------------------------------------------------------------------------
+3.5: When I'm using weechat under screen, I have weird chars, when I switch
+window for example, how to fix that?
 
-A:	There is 3 ways to report bugs:
-	  1. you can join us on IRC: irc.freenode.net, channel #weechat
-	  2. you can submit your bug at this URL:
-	     http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
-	  3. you can mail your problem, look at support page for developer's mails:
-	     http://weechat.flashtux.org/support.php
-	     (you can subscribe and send to "support" mailing list)
+This may be caused by bad value of TERM variable (look at echo $TERM).
+For example, "xterm-color" displays such weird chars, use "xterm" which is ok
+(like many other values).
+If needed, fix your TERM variable (export TERM="xxx").
 
 
-3.2
-================================================================================
-Q:	How should I submit patches?
+------------------------------------------------------------------------------
+3.6: How can I customize key bindings?
 
-A:	There is 3 ways to submit patches:
-	  1. you can join us on IRC: irc.freenode.net, channel #weechat
-	  2. you can submit your patch at this URL:
-	     http://savannah.nongnu.org/patch/?func=addpatch&group=weechat
-	  3. you can mail your patch, look at support page for developer's mails:
-	     http://weechat.flashtux.org/support.php
-	     (you can subscribe and send to "support" mailing list)
+Key bindings are customizable with /key command.
+Default key Meta-k (usually Alt-k) lets you grab key code and insert it in
+command line.
 
 
-3.3
-================================================================================
-Q:	How should I submit new feature request?
+------------------------------------------------------------------------------
+3.7: I'm using OpenBSD and WeeChat does not load any plugin, what's wrong?
 
-A:	There is 2 ways to submit your feature request:
-	  1. you can join us on IRC: irc.freenode.net, channel #weechat
-	  2. you can mail your feature request, look at support page for developer's
-	     mails:
-	     http://weechat.flashtux.org/support.php
-	     (you can subscribe and send to "support" mailing list)
-
-
-3.4
-================================================================================
-Q:	What is the list of supported platforms for WeeChat?
-	Will WeeChat be ported to other operating systems?
-
-A:	Full list is on this page:
-	http://weechat.flashtux.org/download.php?view=supported_os
-	We do our best to run on as many platforms as possible. Help is welcome
-	for some OS we don't have, to test WeeChat.
+Under OpenBSD, plugin filename ends with ".so.0.0" (".so" for Linux).
+You must setup that:
+- with WeeChat <= 0.2.6:
+     /set plugins_extension = ".so.0.0"
+     /plugin autoload
+- with WeeChat >= 0.2.7:
+     /set weechat.plugin.extension ".so.0.0"
+     /plugin autoload
 
 
-3.5
-================================================================================
-Q:	I want to help WeeChat developers. What can I do?
+------------------------------------------------------------------------------
+3.8: How can I load Perl/Python/Ruby/Lua/Tcl scripts? Are scripts compatible
+with other IRC clients?
 
-A:	There's many tasks to do (code, documentation, ...)
-	Please contact us with IRC or mail, look at support page:
-	http://weechat.flashtux.org/support.php
+You can use commands /perl, /python, /ruby, /lua and /tcl to load scripts
+(default path for scripts is ~/.weechat/<language>/).
+Scripts are not compatible with other IRC clients.
+Notes:
+- scripts in ~/.weechat/<language>/autoload are automatically loaded when
+  WeeChat is starting up.
+- plugin "tcl" is available with version 0.2.7 or newer.
 
 
-3.6
-================================================================================
-Q:	Can I give money or other things to WeeChat developers?
+------------------------------------------------------------------------------
+3.9: I want to change language used by WeeChat for messages, but without
+exiting WeeChat, is it possible?
 
-A:	You can give us money to help development.
-	Details on http://weechat.flashtux.org/donate.php
+Yes, you have to use python script shell.py (available on WeeChat website) and
+issue these commands when script is loaded:
+   /shell setenv LANG=en_US.UTF-8
+   /upgrade
+To have english messages with UTF-8 encoding for terminal, for ISO users, you
+can issue:
+   /shell setenv LANG=en_US
+
+
+------------------------------------------------------------------------------
+3.10: With Curses GUI, how can I copy/paste text without pasting nicklist?
+
+You can use a terminal with rectangular selection (like rxvt-unicode,
+konsole, ...). Key is usually ctrl + alt + mouse selection.
+Other solution is to move nicklist to top or bottom, for example:
+- with WeeChat <= 0.2.6:
+     /set look_nicklist_position = top
+- with WeeChat >= 0.2.7:
+     /bar set nicklist position top
+
+
+------------------------------------------------------------------------------
+3.11: How to be warned when someone highlights me on a channel?
+
+You can use sound.pl script (available on scripts page), and then setup a
+system command (to play sound, display message, ..) with this command:
+- with WeeChat <= 0.2.6:
+     /setp perl.sound.cmd_highlight = "/path/command arguments"
+- with WeeChat >= 0.2.7:
+     /set plugins.var.perl.sound.cmd_highlight "/path/command arguments"
+
+
+------------------------------------------------------------------------------
+3.12: How can I filter join/part/quit messages on IRC channels?
+
+According to WeeChat version:
+- with WeeChat <= 0.2.6:
+     /ignore * join #weechat freenode
+     /ignore * part #weechat freenode
+     /ignore * quit #weechat freenode
+     (channel and/or server may be "*")
+     (/help ignore for help)
+- with WeeChat >= 0.2.7:
+     - smart filter (keep join/part/quit from users who spoke recently):
+          /set irc.look.smart_filter on
+          /filter add irc_smart * irc_smart_filter *
+          (/help irc.look.smart_filter and /help filter for help)
+     - global filter (hide ALL join/part/quit):
+          /filter add jpk * irc_join,irc_part,irc_quit *
+          (/help filter for help)
+
+
+------------------------------------------------------------------------------
+4.1: How should I report bugs?
+
+There is 3 ways to report bugs:
+  1. you can join us on IRC: irc.freenode.net, channel #weechat
+  2. you can submit your bug at this URL:
+        http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
+  3. you can mail your problem, look at support page for developer's mails:
+        http://weechat.flashtux.org/support.php
+     (you can subscribe and send to "support" mailing list)
+
+
+------------------------------------------------------------------------------
+4.2: How should I submit patches?
+
+There is 3 ways to submit patches:
+  1. you can join us on IRC: irc.freenode.net, channel #weechat
+  2. you can submit your patch at this URL:
+        http://savannah.nongnu.org/patch/?func=addpatch&group=weechat
+  3. you can mail your patch, look at support page for developer's mails:
+        http://weechat.flashtux.org/support.php
+     (you can subscribe and send to mailing list called "support")
+
+
+------------------------------------------------------------------------------
+4.3: How should I submit new feature request?
+
+There is 2 ways to submit your feature request:
+  1. you can join us on IRC: irc.freenode.net, channel #weechat
+  2. you can mail your feature request, look at support page for developer's
+     mails:
+        http://weechat.flashtux.org/support.php
+     (you can subscribe and send to mailing list called "support")
+
+
+------------------------------------------------------------------------------
+4.4: What is the list of supported platforms for WeeChat? Will it be ported to
+other operating systems?
+
+Full list is on this page:
+   http://weechat.flashtux.org/download.php?view=supported_os
+We do our best to run on as many platforms as possible. Help is welcome for
+some OS we don't have, to test WeeChat.
+
+
+------------------------------------------------------------------------------
+4.5: I want to help WeeChat developers. What can I do?
+
+There's many tasks to do (testing, code, documentation, ...)
+Please contact us with IRC or mail, look at support page:
+   http://weechat.flashtux.org/support.php
+
+
+------------------------------------------------------------------------------
+4.6: Can I give money or other things to WeeChat developers?
+
+You can give us money to help development.
+Details on http://weechat.flashtux.org/donate.php
