@@ -3668,23 +3668,20 @@ irc_protocol_cmd_352 (struct t_irc_server *server, const char *command,
     }
     
     ptr_channel = irc_channel_search (server, argv[3]);
-    if (ptr_channel)
+    if (ptr_channel && (ptr_channel->checking_away > 0))
     {
-        if (ptr_channel->checking_away > 0)
+        ptr_nick = irc_nick_search (ptr_channel, argv[7]);
+        if (ptr_nick)
         {
-            ptr_nick = irc_nick_search (ptr_channel, argv[7]);
-            if (ptr_nick)
-            {
-                if (ptr_nick->host)
-                    free (ptr_nick->host);
-                length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
-                ptr_nick->host = malloc (length);
-                if (ptr_nick->host)
-                    snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
-                if (pos_attr)
-                    irc_nick_set_away (ptr_channel, ptr_nick,
-                                       (pos_attr[0] == 'G') ? 1 : 0);
-            }
+            if (ptr_nick->host)
+                free (ptr_nick->host);
+            length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
+            ptr_nick->host = malloc (length);
+            if (ptr_nick->host)
+                snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
+            if (pos_attr)
+                irc_nick_set_away (ptr_channel, ptr_nick,
+                                   (pos_attr[0] == 'G') ? 1 : 0);
         }
     }
     else
