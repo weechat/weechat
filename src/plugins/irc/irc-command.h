@@ -28,7 +28,7 @@ struct t_irc_server;
                     irc_buffer_get_server_prefix (ptr_server, "error"), \
                     IRC_PLUGIN_NAME,                                    \
                     __command);                                         \
-    return WEECHAT_RC_ERROR;
+    return WEECHAT_RC_OK;
 
 #define IRC_COMMAND_CHECK_SERVER(__command, __check_connection)         \
     if (!ptr_server)                                                    \

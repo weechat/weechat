@@ -1972,7 +1972,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc <= 2)
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "msg");
+        IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
+                                      "msg");
     }
     
     arg_target = 1;
@@ -2252,7 +2253,8 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "notice");
+        IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
+                                      "notice");
     }
     
     return WEECHAT_RC_OK;
@@ -2529,7 +2531,8 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "query");
+        IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
+                                      "query");
     }
     
     return WEECHAT_RC_OK;
@@ -2566,7 +2569,8 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "quote");
+        IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
+                                      "quote");
     }
     
     return WEECHAT_RC_OK;
