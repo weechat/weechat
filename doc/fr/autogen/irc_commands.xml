@@ -224,12 +224,12 @@ envoyer une action CTCP au canal courant
 message: message à envoyer
 </programlisting>
 
-<command>/mode  { canal {[+|-]|o|p|s|i|t|n|b|v} [limite] [utilisateur] [masque de banissement] } | { pseudo {[+|-]|i|w|s|o} }</command>
+<command>/mode  { [canal] {[+|-]|o|p|s|i|t|n|b|v} [limite] [utilisateur] [masque de banissement] } | { pseudo {[+|-]|i|w|s|o} }</command>
 <programlisting>
 changer le mode du canal ou de l'utilisateur
 
 modes de canaux:
-  canal: nom du canal à modifier
+  canal: nom du canal à modifier (par défaut le canal courant)
   o: donner/reprendre le statut privilégié d'opérateur
   p: indicateur de canal privé
   s: indicateur de canal secret

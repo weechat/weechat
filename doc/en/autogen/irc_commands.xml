@@ -224,12 +224,12 @@ send a CTCP action to the current channel
 message: message to send
 </programlisting>
 
-<command>/mode  { channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
+<command>/mode  { [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
 change channel or user mode
 
 channel modes:
-  channel: channel name to modify
+  channel: channel name to modify (default is current one)
   o: give/take channel operator privileges
   p: private channel flag
   s: secret channel flag

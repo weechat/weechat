@@ -3963,7 +3963,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
                              _("normal"),
                              IRC_COLOR_CHAT_DELIMITERS);
         
-        irc_command_mode_server (server, ptr_channel->name);
+        irc_command_mode_server (server, ptr_channel, NULL);
         irc_channel_check_away (server, ptr_channel, 1);
     }
     else

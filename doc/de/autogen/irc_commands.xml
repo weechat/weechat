@@ -224,30 +224,30 @@ eine CTCP ACTION an den aktuellen Channel senden
 zu sendende Nachricht
 </programlisting>
 
-<command>/mode  { Channel {[+|-]|o|p|s|i|t|n|b|v} [Limit] [User] [Bannmaske] } | {Nickname {[+|-]|i|w|s|o} }</command>
+<command>/mode  { [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
 Channel- oder Usermode ändern
 
-Channelmodi:
-  Channel: zu ändernder Channel
-  o: gib/nimm Operatorstatus
-  p: privater Channel
-  s: geheimer Channel
-  i: geschlossener Channel (Zutritt nur mit Einladung)
-  t: nur Operatoren dürfen das Topic setzen
-  n: keine Channelnachrichten von außerhalb des Channels
-  m: moderierter Channel (schreiben nur mit Voice)
-  l: maximale Anzahl an Usern im Channel festlegen
-  b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
-  e: lege Ausnahmemaske fest
-  v: gib/nimm Voice (d.h. Schreibrecht bei moderierten Channels)
-  k: Channelkey/Channelpasswort festlegen
-Usermodi:
-  Nickname: zu ändernder Nickname
-  i: User als unsichtbar kennzeichnen
-  s: User empfängt Server-Nachrichten
-  w: User empfängt WALLOPS
-  o: User ist Channeloperator
+channel modes:
+  channel: channel name to modify (default is current one)
+  o: give/take channel operator privileges
+  p: private channel flag
+  s: secret channel flag
+  i: invite-only channel flag
+  t: topic settable by channel operator only flag
+  n: no messages to channel from clients on the outside
+  m: moderated channel
+  l: set the user limit to channel
+  b: set a ban mask to keep users out
+  e: set exception mask
+  v: give/take the ability to speak on a moderated channel
+  k: set a channel key (password)
+user modes:
+  nickname: nickname to modify
+  i: mark a user as invisible
+  s: mark a user for receive server notices
+  w: user receives wallops
+  o: operator flag
 </programlisting>
 
 <command>/motd  [Ziel]</command>

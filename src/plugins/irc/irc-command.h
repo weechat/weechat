@@ -21,6 +21,7 @@
 #define __WEECHAT_IRC_COMMAND_H 1
 
 struct t_irc_server;
+struct t_irc_channel;
 
 #define IRC_COMMAND_TOO_FEW_ARGUMENTS(__buffer, __command)              \
     weechat_printf (__buffer,                                           \
@@ -56,6 +57,7 @@ extern void irc_command_away_server (struct t_irc_server *server,
 extern void irc_command_join_server (struct t_irc_server *server,
                                      const char *arguments);
 extern void irc_command_mode_server (struct t_irc_server *server,
+                                     struct t_irc_channel *channel,
                                      const char *arguments);
 extern void irc_command_part_channel (struct t_irc_server *server,
                                       const char *channel_name,

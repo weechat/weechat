@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-26 09:53+0100\n"
+"POT-Creation-Date: 2009-03-02 10:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2167,6 +2167,11 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: you must specify channel for \"%s\" command if you're not in a channel"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: \"%s\" command can only be executed in a channel or private buffer"
 msgstr ""
 
@@ -2510,13 +2515,13 @@ msgid "change channel or user mode"
 msgstr ""
 
 msgid ""
-"{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
+"{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
 "{[+|-]|i|w|s|o} }"
 msgstr ""
 
 msgid ""
 "channel modes:\n"
-"  channel: channel name to modify\n"
+"  channel: channel name to modify (default is current one)\n"
 "  o: give/take channel operator privileges\n"
 "  p: private channel flag\n"
 "  s: secret channel flag\n"

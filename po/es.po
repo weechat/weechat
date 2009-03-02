@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-26 09:53+0100\n"
+"POT-Creation-Date: 2009-03-02 10:33+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2466,6 +2466,11 @@ msgstr "%s \"%s\" no es una expresiÃ³n regular vÃ¡lida (%s)\n"
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s no hay suficiente memoria para la expresiÃ³n regular\n"
 
+#, c-format
+msgid ""
+"%s%s: you must specify channel for \"%s\" command if you're not in a channel"
+msgstr ""
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: \"%s\" command can only be executed in a channel or private buffer"
@@ -2869,16 +2874,18 @@ msgstr "enviar una acciÃ³n CTCP al canal actual"
 msgid "change channel or user mode"
 msgstr "cambiar modo del canal o del usuario"
 
+#, fuzzy
 msgid ""
-"{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
+"{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
 "{[+|-]|i|w|s|o} }"
 msgstr ""
 "{ canal {[+|-]|o|p|s|i|t|n|b|v} [limitar] [usuario] [mÃ¡scara de baneo] } | "
 "{ usuario {[+|-]|i|w|s|o} }"
 
+#, fuzzy
 msgid ""
 "channel modes:\n"
-"  channel: channel name to modify\n"
+"  channel: channel name to modify (default is current one)\n"
 "  o: give/take channel operator privileges\n"
 "  p: private channel flag\n"
 "  s: secret channel flag\n"
@@ -5400,6 +5407,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
+#~ msgstr "%s faltan argumentos para el comando \"%s\"\n"
 
 #, fuzzy
 #~ msgid ""

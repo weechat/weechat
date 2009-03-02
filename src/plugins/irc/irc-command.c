@@ -1898,9 +1898,22 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
  */
 
 void
-irc_command_mode_server (struct t_irc_server *server, const char *arguments)
+irc_command_mode_server (struct t_irc_server *server,
+                         struct t_irc_channel *channel, const char *arguments)
 {
-    irc_server_sendf (server, "MODE %s", arguments);
+    if (server && (channel || arguments))
+    {
+        if (channel && arguments)
+        {
+            irc_server_sendf (server, "MODE %s %s",
+                              channel->name, arguments);
+        }
+        else
+        {
+            irc_server_sendf (server, "MODE %s",
+                              (channel) ? channel->name : arguments);
+        }
+    }
 }
 
 /*
@@ -1911,15 +1924,35 @@ int
 irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("mode", 1);
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
     
     if (argc > 1)
-        irc_command_mode_server (ptr_server, argv_eol[1]);
+    {
+        if ((argv[1][0] == '+') || (argv[1][0] == '-')
+            || !irc_channel_is_channel (argv[1]))
+        {
+            /* channel not specified, check we are on channel and use it */
+            if (!ptr_channel)
+            {
+                weechat_printf (ptr_server->buffer,
+                                _("%s%s: you must specify channel for \"%s\" "
+                                  "command if you're not in a channel"),
+                                irc_buffer_get_server_prefix (ptr_server, "error"),
+                                IRC_PLUGIN_NAME, "mode");
+                return WEECHAT_RC_OK;
+            }
+            irc_command_mode_server (ptr_server, ptr_channel, argv_eol[1]);
+        }
+        else
+        {
+            /* user gives channel, use arguments as-is */
+            irc_command_mode_server (ptr_server, NULL, argv_eol[1]);
+        }
+    }
     else
     {
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "mode");
@@ -3888,11 +3921,12 @@ irc_command_init ()
                           NULL, &irc_command_me, NULL);
     weechat_hook_command ("mode",
                           N_("change channel or user mode"),
-                          N_("{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] "
+                          N_("{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] "
                              "[user] [ban mask] } | { nickname "
                              "{[+|-]|i|w|s|o} }"),
                           N_("channel modes:\n"
-                             "  channel: channel name to modify\n"
+                             "  channel: channel name to modify (default is "
+                             "current one)\n"
                              "  o: give/take channel operator privileges\n"
                              "  p: private channel flag\n"
                              "  s: secret channel flag\n"

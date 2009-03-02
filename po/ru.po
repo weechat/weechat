@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-02-26 09:53+0100\n"
+"POT-Creation-Date: 2009-03-02 10:33+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2502,6 +2502,11 @@ msgstr "%s \"%s\" не является регулярным выражение�
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s недостаточно памяти для регулярного выражения\n"
 
+#, c-format
+msgid ""
+"%s%s: you must specify channel for \"%s\" command if you're not in a channel"
+msgstr ""
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: \"%s\" command can only be executed in a channel or private buffer"
@@ -2905,16 +2910,18 @@ msgstr "отправить CTCP-действие на текущий канал"
 msgid "change channel or user mode"
 msgstr "сменить режим канала или пользователя"
 
+#, fuzzy
 msgid ""
-"{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
+"{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
 "{[+|-]|i|w|s|o} }"
 msgstr ""
 "{ канал {[+|-]|o|p|s|i|t|n|b|v} [лимит] [пользователь] [маска бана] } | "
 "{ ник {[+|-]|i|w|s|o} }"
 
+#, fuzzy
 msgid ""
 "channel modes:\n"
-"  channel: channel name to modify\n"
+"  channel: channel name to modify (default is current one)\n"
 "  o: give/take channel operator privileges\n"
 "  p: private channel flag\n"
 "  s: secret channel flag\n"
@@ -5429,6 +5436,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
+#~ msgstr "%s нет аргументов для \"%s\" команды\n"
 
 #, fuzzy
 #~ msgid ""
