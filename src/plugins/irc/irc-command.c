@@ -1932,8 +1932,7 @@ irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        if ((argv[1][0] == '+') || (argv[1][0] == '-')
-            || !irc_channel_is_channel (argv[1]))
+        if ((argv[1][0] == '+') || (argv[1][0] == '-'))
         {
             /* channel not specified, check we are on channel and use it */
             if (!ptr_channel)
