@@ -1059,14 +1059,16 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                                                       (-1) * (ptr_win->win_chat_height - 1));
                     }
                     
+                    count = 0;
+                    
                     if (line_pos > 0)
                     {
                         /* display end of first line at top of screen */
-                        gui_chat_display_line (ptr_win, ptr_line,
-                                               gui_chat_display_line (ptr_win,
-                                                                      ptr_line,
-                                                                      0, 1) -
-                                               line_pos, 0);
+                        count = gui_chat_display_line (ptr_win, ptr_line,
+                                                       gui_chat_display_line (ptr_win,
+                                                                              ptr_line,
+                                                                              0, 1) -
+                                                       line_pos, 0);
                         ptr_line = gui_chat_get_next_line_displayed (ptr_line);
                         ptr_win->first_line_displayed = 0;
                     }
@@ -1075,7 +1077,6 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                             (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
                     
                     /* display lines */
-                    count = 0;
                     while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
                     {
                         count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
@@ -1091,7 +1092,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     /* if so, disable scroll indicator */
                     if (!ptr_line && ptr_win->scroll)
                     {
-                        if (count == gui_chat_display_line (ptr_win, gui_chat_get_last_line_displayed (ptr_win->buffer), 0, 1))
+                        if ((count == gui_chat_display_line (ptr_win, gui_chat_get_last_line_displayed (ptr_win->buffer), 0, 1))
+                            || (count == ptr_win->win_chat_height))
                             ptr_win->scroll = 0;
                     }
                     
