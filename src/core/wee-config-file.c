@@ -28,7 +28,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <time.h>
 
 #include "weechat.h"
 #include "wee-config-file.h"
@@ -1848,7 +1847,6 @@ config_file_write_internal (struct t_config_file *config_file,
 {
     int filename_length, rc;
     char *filename, *filename2;
-    time_t current_time;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     
@@ -1892,12 +1890,10 @@ config_file_write_internal (struct t_config_file *config_file,
                 (default_options) ? _("(default options)") : "");
     
     /* write header with version and date */
-    current_time = time (NULL);
     string_iconv_fprintf (config_file->file, "#\n");
     string_iconv_fprintf (config_file->file,
-                          "# %s -- %s v%s, %s#\n",
-                          config_file->filename, PACKAGE_NAME, PACKAGE_VERSION,
-                          ctime (&current_time));
+                          "# %s -- %s v%s\n#\n",
+                          config_file->filename, PACKAGE_NAME, PACKAGE_VERSION);
     
     /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;
