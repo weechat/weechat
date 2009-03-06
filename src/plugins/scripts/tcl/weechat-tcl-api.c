@@ -39,12 +39,12 @@
         {                                        \
 	    objp = Tcl_DuplicateObj (objp);      \
 	    Tcl_IncrRefCount (objp);             \
-	    Tcl_SetIntObj (objp,1);              \
+	    Tcl_SetIntObj (objp, 1);             \
 	    Tcl_SetObjResult (interp, objp);     \
 	    Tcl_DecrRefCount (objp);             \
 	}                                        \
         else                                     \
-	    Tcl_SetIntObj (objp,1);              \
+	    Tcl_SetIntObj (objp, 1);             \
 	return TCL_OK;                           \
     }
 #define TCL_RETURN_ERROR                          \
@@ -54,12 +54,12 @@
         {                                         \
 	    objp = Tcl_DuplicateObj (objp);       \
 	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetIntObj (objp,0);               \
+	    Tcl_SetIntObj (objp, 0);              \
 	    Tcl_SetObjResult (interp, objp);      \
 	    Tcl_DecrRefCount (objp);              \
 	}                                         \
         else                                      \
-	    Tcl_SetIntObj (objp,0);               \
+	    Tcl_SetIntObj (objp, 0);              \
 	return TCL_ERROR;                         \
     }
 #define TCL_RETURN_EMPTY                          \
@@ -69,12 +69,12 @@
         {                                         \
 	    objp = Tcl_DuplicateObj (objp);       \
 	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetStringObj (objp,"",-1);        \
+	    Tcl_SetStringObj (objp, "", -1);      \
 	    Tcl_SetObjResult (interp, objp);      \
 	    Tcl_DecrRefCount (objp);              \
 	}                                         \
         else                                      \
-	    Tcl_SetStringObj (objp,"",-1);        \
+	    Tcl_SetStringObj (objp, "", -1);      \
 	return TCL_OK;                            \
     }
 #define TCL_RETURN_STRING(__string)                         \
@@ -86,12 +86,12 @@
 	    Tcl_IncrRefCount (objp);                        \
 	    if (__string)                                   \
 	    {                                               \
-		Tcl_SetStringObj (objp,__string,-1);        \
+		Tcl_SetStringObj (objp, __string, -1);      \
                 Tcl_SetObjResult (interp, objp);            \
 		Tcl_DecrRefCount (objp);                    \
 		return TCL_OK;                              \
 	    }                                               \
-	    Tcl_SetStringObj (objp,"",-1);                  \
+	    Tcl_SetStringObj (objp, "", -1);                \
 	    Tcl_SetObjResult (interp, objp);                \
 	    Tcl_DecrRefCount (objp);                        \
 	}                                                   \
@@ -99,10 +99,10 @@
         {                                                   \
 	    if (__string)                                   \
 	    {                                               \
-		Tcl_SetStringObj (objp,__string,-1);        \
+		Tcl_SetStringObj (objp, __string, -1);      \
 		return TCL_OK;                              \
 	    }                                               \
-	    Tcl_SetStringObj (objp,"",-1);                  \
+	    Tcl_SetStringObj (objp, "", -1);                \
 	}                                                   \
 	return TCL_OK;                                      \
     }
@@ -115,13 +115,13 @@
 	    Tcl_IncrRefCount (objp);                        \
 	    if (__string)                                   \
 	    {                                               \
-		Tcl_SetStringObj (objp,__string,-1);        \
+		Tcl_SetStringObj (objp, __string, -1);      \
 		Tcl_SetObjResult (interp, objp);            \
 		Tcl_DecrRefCount (objp);                    \
 		free (__string);                            \
 		return TCL_OK;                              \
 	    }                                               \
-	    Tcl_SetStringObj (objp,"",-1);                  \
+	    Tcl_SetStringObj (objp, "", -1);                \
 	    Tcl_SetObjResult (interp, objp);                \
 	    Tcl_DecrRefCount (objp);                        \
 	}                                                   \
@@ -129,11 +129,11 @@
         {                                                   \
 	    if (__string)                                   \
 	    {                                               \
-		Tcl_SetStringObj (objp,__string,-1);        \
+		Tcl_SetStringObj (objp, __string, -1);      \
 		free(__string);                             \
 		return TCL_OK;                              \
 	    }                                               \
-	    Tcl_SetStringObj (objp,"",-1);                  \
+	    Tcl_SetStringObj (objp, "", -1);                \
 	}                                                   \
 	return TCL_OK;                                      \
     }
@@ -144,12 +144,12 @@
         {                                         \
 	    objp = Tcl_DuplicateObj (objp);       \
 	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetIntObj (objp,__int);           \
+	    Tcl_SetIntObj (objp, __int);          \
 	    Tcl_SetObjResult (interp, objp);      \
 	    Tcl_DecrRefCount (objp);              \
 	}                                         \
         else                                      \
-	    Tcl_SetIntObj (objp,__int);           \
+	    Tcl_SetIntObj (objp, __int);          \
 	return TCL_OK;                            \
     }
 
@@ -1318,7 +1318,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     char *result, *cfg_file, *name, *function_read, *function_write;
     char *function_write_default, *function_create_option;
     char *function_delete_option;
-    int i,can_add,can_delete;
+    int i, can_add, can_delete;
     
     /* make C compiler happy */
     (void) clientData; 
@@ -2716,7 +2716,7 @@ weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *buffer, *tags, *message;
-    int i,tdate;
+    int i, tdate;
     
     /* make C compiler happy */
     (void) clientData;
@@ -2762,7 +2762,7 @@ weechat_tcl_api_print_y (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *buffer, *message;
-    int i,y;
+    int i, y;
     
     /* make C compiler happy */
     (void) clientData;
@@ -3004,17 +3004,21 @@ weechat_tcl_api_hook_command_run (ClientData clientData, Tcl_Interp *interp,
  */
 
 int
-weechat_tcl_api_hook_timer_cb (void *data)
+weechat_tcl_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[1];
+    char *tcl_argv[2], str_remaining_calls[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        tcl_argv[0] = NULL;
+        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
+                  "%d", remaining_calls);
+        
+        tcl_argv[0] = str_remaining_calls;
+        tcl_argv[1] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3045,7 +3049,7 @@ weechat_tcl_api_hook_timer (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *result;
-    int i,interval,align_second,max_calls;
+    int i, interval, align_second, max_calls;
 
     
     /* make C compiler happy */
@@ -3132,7 +3136,7 @@ weechat_tcl_api_hook_fd (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *result;
-    int i,fd,read,write,exception;
+    int i, fd, read, write, exception;
     
     /* make C compiler happy */
     (void) clientData;
@@ -3166,6 +3170,96 @@ weechat_tcl_api_hook_fd (ClientData clientData, Tcl_Interp *interp,
                                                  exception, /* exception */
                                                  &weechat_tcl_api_hook_fd_cb,
                                                  Tcl_GetStringFromObj (objv[5], &i))); /* tcl function */
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hook_process_cb: callback for process hooked
+ */
+
+int
+weechat_tcl_api_hook_process_cb (void *data,
+                                 const char *command, int return_code,
+                                 const char *stdout, const char *stderr)
+{
+    struct t_script_callback *script_callback;
+    char *tcl_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_rc, sizeof (str_rc), "%d", return_code);
+        
+        tcl_argv[0] = (char *)command;
+        tcl_argv[1] = str_rc;
+        tcl_argv[2] = (stdout) ? (char *)stdout : empty_arg;
+        tcl_argv[3] = (stderr) ? (char *)stderr : empty_arg;
+        tcl_argv[4] = NULL;
+        
+        rc = (int *) weechat_tcl_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_tcl_api_hook_process: hook a process
+ */
+
+static int
+weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *command, *function, *result;
+    int i, timeout;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+	TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if ((Tcl_GetIntFromObj (interp, objv[2], &timeout) != TCL_OK))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        TCL_RETURN_EMPTY;
+    }
+    
+    command = Tcl_GetStringFromObj (objv[1], &i);
+    function = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (script_api_hook_process (weechat_tcl_plugin,
+                                                      tcl_current_script,
+                                                      command,
+                                                      timeout,
+                                                      &weechat_tcl_api_hook_process_cb,
+                                                      function));
     
     TCL_RETURN_STRING_FREE(result);
 }
@@ -3220,7 +3314,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *proxy, *address, *local_hostname, *result;
+    char *proxy, *address, *local_hostname, *function, *result;
     int i, port, sock, ipv6;
     
     /* make C compiler happy */
@@ -3232,7 +3326,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_EMPTY;
     }
     
-    if (objc < 7)
+    if (objc < 8)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
         TCL_RETURN_EMPTY;
@@ -3249,6 +3343,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
     proxy = Tcl_GetStringFromObj (objv[1], &i);
     address = Tcl_GetStringFromObj (objv[2], &i);
     local_hostname = Tcl_GetStringFromObj (objv[6], &i);
+    function = Tcl_GetStringFromObj (objv[7], &i);
     
     result = script_ptr2str (script_api_hook_connect (weechat_tcl_plugin,
                                                       tcl_current_script,
@@ -3260,7 +3355,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                                                       NULL, /* gnutls session */
                                                       local_hostname,
                                                       &weechat_tcl_api_hook_connect_cb,
-                                                      Tcl_GetStringFromObj (objv[7], &i))); /* tcl function */
+                                                      function));
     
     TCL_RETURN_STRING_FREE(result);
 }
@@ -3338,7 +3433,7 @@ weechat_tcl_api_hook_print (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *result, *buffer, *tags, *message, *function;
-    int i,strip_colors;
+    int i, strip_colors;
     
     /* make C compiler happy */
     (void) clientData;
@@ -3702,7 +3797,7 @@ weechat_tcl_api_hook_completion_list_add (ClientData clientData, Tcl_Interp *int
 {
     Tcl_Obj *objp;
     char *completion, *word, *where;
-    int i,nick_completion;
+    int i, nick_completion;
     
     /* make C compiler happy */
     (void) clientData;
@@ -4574,7 +4669,7 @@ weechat_tcl_api_nicklist_add_group (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *buffer, *parent_group, *name, *color;
-    int i,visible;
+    int i, visible;
     
     /* make C compiler happy */
     (void) clientData;
@@ -5970,7 +6065,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
     
 #ifdef HAVE_TCL_CREATE_NS
     /* create weechat namespace */
-    Tcl_CreateNamespace (interp, "weechat",(ClientData)0,NULL);
+    Tcl_CreateNamespace (interp, "weechat", (ClientData)0, NULL);
 #endif
 
     /* interface constants */
@@ -5979,344 +6074,351 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
     objp = Tcl_NewIntObj (WEECHAT_RC_OK);
     Tcl_IncrRefCount (objp);
 
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_RC_OK_EAT);
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK_EAT", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_RC_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_ERROR", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_RC_OK_EAT);
+    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK_EAT", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_RC_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_RC_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
     
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_READ_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_OK", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_READ_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_READ_FILE_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_WRITE_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_OK", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_WRITE_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_WRITE_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_SET_OK_CHANGED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_SET_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_UNSET_OK_RESET);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_CONFIG_OPTION_UNSET_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_OK);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_OK", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_MEMORY_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_FILE_NOT_FOUND);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_OK);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_OK", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_MEMORY_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OK_CHANGED);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
     
-    Tcl_SetStringObj (objp,WEECHAT_LIST_POS_SORT,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_SORT", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_LIST_POS_BEGINNING,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_BEGINNING", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_LIST_POS_END,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_END", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_SORT, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_SORT", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_BEGINNING, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_BEGINNING", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_END, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_END", Tcl_GetStringFromObj (objp, &i), 0);
     
-    Tcl_SetStringObj (objp,WEECHAT_HOTLIST_LOW,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_LOW", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_HOTLIST_MESSAGE,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_MESSAGE", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_HOTLIST_PRIVATE,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_PRIVATE", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_HOTLIST_HIGHLIGHT,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_LOW, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_LOW", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_MESSAGE, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_MESSAGE", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_PRIVATE, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_PRIVATE", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_HIGHLIGHT, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", Tcl_GetStringFromObj (objp, &i), 0);
     
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_OK", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_PROXY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetIntObj (objp,WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_PROCESS_RUNNING);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_PROCESS_RUNNING", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_PROCESS_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_PROCESS_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
     
-    Tcl_SetStringObj (objp,WEECHAT_HOOK_SIGNAL_STRING,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_HOOK_SIGNAL_INT,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_INT", Tcl_GetStringFromObj (objp, &i),0);
-    Tcl_SetStringObj (objp,WEECHAT_HOOK_SIGNAL_POINTER,-1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_POINTER", Tcl_GetStringFromObj (objp, &i),0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_OK);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_OK", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_PROXY_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    
+    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_STRING, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_INT, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_INT", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_POINTER, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_POINTER", Tcl_GetStringFromObj (objp, &i), 0);
 
     Tcl_DecrRefCount (objp);
     
     /* interface functions */
-    Tcl_CreateObjCommand (interp,"weechat::register",
+    Tcl_CreateObjCommand (interp, "weechat::register",
                           weechat_tcl_api_register, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::plugin_get_name",
+    Tcl_CreateObjCommand (interp, "weechat::plugin_get_name",
                           weechat_tcl_api_plugin_get_name, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::charset_set",
+    Tcl_CreateObjCommand (interp, "weechat::charset_set",
                           weechat_tcl_api_charset_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::iconv_to_internal",
+    Tcl_CreateObjCommand (interp, "weechat::iconv_to_internal",
                           weechat_tcl_api_iconv_to_internal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::iconv_from_internal",
+    Tcl_CreateObjCommand (interp, "weechat::iconv_from_internal",
                           weechat_tcl_api_iconv_from_internal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::gettext",
+    Tcl_CreateObjCommand (interp, "weechat::gettext",
                           weechat_tcl_api_gettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::ngettext",
+    Tcl_CreateObjCommand (interp, "weechat::ngettext",
                           weechat_tcl_api_ngettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::string_remove_color",
+    Tcl_CreateObjCommand (interp, "weechat::string_remove_color",
                           weechat_tcl_api_string_remove_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::mkdir_home",
+    Tcl_CreateObjCommand (interp, "weechat::mkdir_home",
                           weechat_tcl_api_mkdir_home, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::mkdir",
+    Tcl_CreateObjCommand (interp, "weechat::mkdir",
                           weechat_tcl_api_mkdir, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::mkdir_parents",
+    Tcl_CreateObjCommand (interp, "weechat::mkdir_parents",
                           weechat_tcl_api_mkdir_parents, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_new",
+    Tcl_CreateObjCommand (interp, "weechat::list_new",
                           weechat_tcl_api_list_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_add",
+    Tcl_CreateObjCommand (interp, "weechat::list_add",
                           weechat_tcl_api_list_add, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_search",
+    Tcl_CreateObjCommand (interp, "weechat::list_search",
                           weechat_tcl_api_list_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_casesearch",
+    Tcl_CreateObjCommand (interp, "weechat::list_casesearch",
                           weechat_tcl_api_list_casesearch, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_get",
+    Tcl_CreateObjCommand (interp, "weechat::list_get",
                           weechat_tcl_api_list_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_set",
+    Tcl_CreateObjCommand (interp, "weechat::list_set",
                           weechat_tcl_api_list_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_next",
+    Tcl_CreateObjCommand (interp, "weechat::list_next",
                           weechat_tcl_api_list_next, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_prev",
+    Tcl_CreateObjCommand (interp, "weechat::list_prev",
                           weechat_tcl_api_list_prev, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_string",
+    Tcl_CreateObjCommand (interp, "weechat::list_string",
                           weechat_tcl_api_list_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_size",
+    Tcl_CreateObjCommand (interp, "weechat::list_size",
                           weechat_tcl_api_list_size, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_remove",
+    Tcl_CreateObjCommand (interp, "weechat::list_remove",
                           weechat_tcl_api_list_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_remove_all",
+    Tcl_CreateObjCommand (interp, "weechat::list_remove_all",
                           weechat_tcl_api_list_remove_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::list_free",
+    Tcl_CreateObjCommand (interp, "weechat::list_free",
                           weechat_tcl_api_list_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_new",
+    Tcl_CreateObjCommand (interp, "weechat::config_new",
                           weechat_tcl_api_config_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_new_section",
+    Tcl_CreateObjCommand (interp, "weechat::config_new_section",
                           weechat_tcl_api_config_new_section, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_search_section",
+    Tcl_CreateObjCommand (interp, "weechat::config_search_section",
                           weechat_tcl_api_config_search_section, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_new_option",
+    Tcl_CreateObjCommand (interp, "weechat::config_new_option",
                           weechat_tcl_api_config_new_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_search_option",
+    Tcl_CreateObjCommand (interp, "weechat::config_search_option",
                           weechat_tcl_api_config_search_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_string_to_boolean",
+    Tcl_CreateObjCommand (interp, "weechat::config_string_to_boolean",
                           weechat_tcl_api_config_string_to_boolean, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_reset",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_reset",
                           weechat_tcl_api_config_option_reset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_set",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_set",
                           weechat_tcl_api_config_option_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_set_null",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_set_null",
                           weechat_tcl_api_config_option_set_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_unset",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_unset",
                           weechat_tcl_api_config_option_unset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_rename",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_rename",
                           weechat_tcl_api_config_option_rename, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_is_null",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_is_null",
                           weechat_tcl_api_config_option_is_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_default_is_null",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_default_is_null",
                           weechat_tcl_api_config_option_default_is_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_boolean",
+    Tcl_CreateObjCommand (interp, "weechat::config_boolean",
                           weechat_tcl_api_config_boolean, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_boolean_default",
+    Tcl_CreateObjCommand (interp, "weechat::config_boolean_default",
                           weechat_tcl_api_config_boolean_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_integer",
+    Tcl_CreateObjCommand (interp, "weechat::config_integer",
                           weechat_tcl_api_config_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_integer_default",
+    Tcl_CreateObjCommand (interp, "weechat::config_integer_default",
                           weechat_tcl_api_config_integer_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_string",
+    Tcl_CreateObjCommand (interp, "weechat::config_string",
                           weechat_tcl_api_config_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_string_default",
+    Tcl_CreateObjCommand (interp, "weechat::config_string_default",
                           weechat_tcl_api_config_string_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_color",
+    Tcl_CreateObjCommand (interp, "weechat::config_color",
                           weechat_tcl_api_config_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_color_default",
+    Tcl_CreateObjCommand (interp, "weechat::config_color_default",
                           weechat_tcl_api_config_color_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_write_option",
+    Tcl_CreateObjCommand (interp, "weechat::config_write_option",
                           weechat_tcl_api_config_write_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_write_line",
+    Tcl_CreateObjCommand (interp, "weechat::config_write_line",
                           weechat_tcl_api_config_write_line, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_write",
+    Tcl_CreateObjCommand (interp, "weechat::config_write",
                           weechat_tcl_api_config_write, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_read",
+    Tcl_CreateObjCommand (interp, "weechat::config_read",
                           weechat_tcl_api_config_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_reload",
+    Tcl_CreateObjCommand (interp, "weechat::config_reload",
                           weechat_tcl_api_config_reload, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_option_free",
+    Tcl_CreateObjCommand (interp, "weechat::config_option_free",
                           weechat_tcl_api_config_option_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_section_free_options",
+    Tcl_CreateObjCommand (interp, "weechat::config_section_free_options",
                           weechat_tcl_api_config_section_free_options, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_section_free",
+    Tcl_CreateObjCommand (interp, "weechat::config_section_free",
                           weechat_tcl_api_config_section_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_free",
+    Tcl_CreateObjCommand (interp, "weechat::config_free",
                           weechat_tcl_api_config_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_get",
+    Tcl_CreateObjCommand (interp, "weechat::config_get",
                           weechat_tcl_api_config_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_get_plugin",
+    Tcl_CreateObjCommand (interp, "weechat::config_get_plugin",
                           weechat_tcl_api_config_get_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_set_plugin",
+    Tcl_CreateObjCommand (interp, "weechat::config_set_plugin",
                           weechat_tcl_api_config_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::config_unset_plugin",
+    Tcl_CreateObjCommand (interp, "weechat::config_unset_plugin",
                           weechat_tcl_api_config_unset_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::prefix",
+    Tcl_CreateObjCommand (interp, "weechat::prefix",
                           weechat_tcl_api_prefix, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::color",
+    Tcl_CreateObjCommand (interp, "weechat::color",
                           weechat_tcl_api_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::print",
+    Tcl_CreateObjCommand (interp, "weechat::print",
                           weechat_tcl_api_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::print_date_tags",
+    Tcl_CreateObjCommand (interp, "weechat::print_date_tags",
                           weechat_tcl_api_print_date_tags, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::print_y",
+    Tcl_CreateObjCommand (interp, "weechat::print_y",
                           weechat_tcl_api_print_y, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::log_print",
+    Tcl_CreateObjCommand (interp, "weechat::log_print",
                           weechat_tcl_api_log_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_command",
+    Tcl_CreateObjCommand (interp, "weechat::hook_command",
                           weechat_tcl_api_hook_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_command_run",
+    Tcl_CreateObjCommand (interp, "weechat::hook_command_run",
                           weechat_tcl_api_hook_command_run, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_timer",
+    Tcl_CreateObjCommand (interp, "weechat::hook_timer",
                           weechat_tcl_api_hook_timer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_fd",
+    Tcl_CreateObjCommand (interp, "weechat::hook_fd",
                           weechat_tcl_api_hook_fd, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_connect",
+    Tcl_CreateObjCommand (interp, "weechat::hook_process",
+                          weechat_tcl_api_hook_process, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hook_connect",
                           weechat_tcl_api_hook_connect, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_print",
+    Tcl_CreateObjCommand (interp, "weechat::hook_print",
                           weechat_tcl_api_hook_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_signal",
+    Tcl_CreateObjCommand (interp, "weechat::hook_signal",
                           weechat_tcl_api_hook_signal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_signal_send",
+    Tcl_CreateObjCommand (interp, "weechat::hook_signal_send",
                           weechat_tcl_api_hook_signal_send, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_config",
+    Tcl_CreateObjCommand (interp, "weechat::hook_config",
                           weechat_tcl_api_hook_config, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_completion",
+    Tcl_CreateObjCommand (interp, "weechat::hook_completion",
                           weechat_tcl_api_hook_completion, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_completion_list_add",
+    Tcl_CreateObjCommand (interp, "weechat::hook_completion_list_add",
                           weechat_tcl_api_hook_completion_list_add, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_modifier",
+    Tcl_CreateObjCommand (interp, "weechat::hook_modifier",
                           weechat_tcl_api_hook_modifier, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_modifier_exec",
+    Tcl_CreateObjCommand (interp, "weechat::hook_modifier_exec",
                           weechat_tcl_api_hook_modifier_exec, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_info",
+    Tcl_CreateObjCommand (interp, "weechat::hook_info",
                           weechat_tcl_api_hook_info, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::hook_infolist",
+    Tcl_CreateObjCommand (interp, "weechat::hook_infolist",
                           weechat_tcl_api_hook_infolist, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::unhook",
+    Tcl_CreateObjCommand (interp, "weechat::unhook",
                           weechat_tcl_api_unhook, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::unhook_all",
+    Tcl_CreateObjCommand (interp, "weechat::unhook_all",
                           weechat_tcl_api_unhook_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_new",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_new",
                           weechat_tcl_api_buffer_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_search",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_search",
                           weechat_tcl_api_buffer_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::current_buffer",
+    Tcl_CreateObjCommand (interp, "weechat::current_buffer",
                           weechat_tcl_api_current_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_clear",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_clear",
                           weechat_tcl_api_buffer_clear, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_close",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_close",
                           weechat_tcl_api_buffer_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_get_integer",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_get_integer",
                           weechat_tcl_api_buffer_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_get_string",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_get_string",
                           weechat_tcl_api_buffer_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_get_pointer",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_get_pointer",
                           weechat_tcl_api_buffer_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::buffer_set",
+    Tcl_CreateObjCommand (interp, "weechat::buffer_set",
                           weechat_tcl_api_buffer_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::current_window",
+    Tcl_CreateObjCommand (interp, "weechat::current_window",
                           weechat_tcl_api_current_window, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::window_get_integer",
+    Tcl_CreateObjCommand (interp, "weechat::window_get_integer",
                           weechat_tcl_api_window_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::window_get_string",
+    Tcl_CreateObjCommand (interp, "weechat::window_get_string",
                           weechat_tcl_api_window_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::window_get_pointer",
+    Tcl_CreateObjCommand (interp, "weechat::window_get_pointer",
                           weechat_tcl_api_window_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_add_group",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_add_group",
                           weechat_tcl_api_nicklist_add_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_search_group",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_search_group",
                           weechat_tcl_api_nicklist_search_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_add_nick",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_add_nick",
                           weechat_tcl_api_nicklist_add_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_search_nick",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_search_nick",
                           weechat_tcl_api_nicklist_search_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_remove_group",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_group",
                           weechat_tcl_api_nicklist_remove_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_remove_nick",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_nick",
                           weechat_tcl_api_nicklist_remove_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::nicklist_remove_all",
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_all",
                           weechat_tcl_api_nicklist_remove_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_item_search",
+    Tcl_CreateObjCommand (interp, "weechat::bar_item_search",
                           weechat_tcl_api_bar_item_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_item_new",
+    Tcl_CreateObjCommand (interp, "weechat::bar_item_new",
                           weechat_tcl_api_bar_item_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_item_update",
+    Tcl_CreateObjCommand (interp, "weechat::bar_item_update",
                           weechat_tcl_api_bar_item_update, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_item_remove",
+    Tcl_CreateObjCommand (interp, "weechat::bar_item_remove",
                           weechat_tcl_api_bar_item_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_search",
+    Tcl_CreateObjCommand (interp, "weechat::bar_search",
                           weechat_tcl_api_bar_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_new",
+    Tcl_CreateObjCommand (interp, "weechat::bar_new",
                           weechat_tcl_api_bar_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_set",
+    Tcl_CreateObjCommand (interp, "weechat::bar_set",
                           weechat_tcl_api_bar_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_update",
+    Tcl_CreateObjCommand (interp, "weechat::bar_update",
                           weechat_tcl_api_bar_update, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::bar_remove",
+    Tcl_CreateObjCommand (interp, "weechat::bar_remove",
                           weechat_tcl_api_bar_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::command",
+    Tcl_CreateObjCommand (interp, "weechat::command",
                           weechat_tcl_api_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::info_get",
+    Tcl_CreateObjCommand (interp, "weechat::info_get",
                           weechat_tcl_api_info_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_new",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new",
                           weechat_tcl_api_infolist_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_new_var_integer",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_integer",
                           weechat_tcl_api_infolist_new_var_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_new_var_string",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_string",
                           weechat_tcl_api_infolist_new_var_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_new_var_pointer",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_pointer",
                           weechat_tcl_api_infolist_new_var_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_new_var_time",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_time",
                           weechat_tcl_api_infolist_new_var_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_get",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_get",
                           weechat_tcl_api_infolist_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_next",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_next",
                           weechat_tcl_api_infolist_next, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_prev",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_prev",
                           weechat_tcl_api_infolist_prev, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_fields",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_fields",
                           weechat_tcl_api_infolist_fields, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_integer",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_integer",
                           weechat_tcl_api_infolist_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_string",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_string",
                           weechat_tcl_api_infolist_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_pointer",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_pointer",
                           weechat_tcl_api_infolist_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_time",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_time",
                           weechat_tcl_api_infolist_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::infolist_free",
+    Tcl_CreateObjCommand (interp, "weechat::infolist_free",
                           weechat_tcl_api_infolist_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::upgrade_new",
+    Tcl_CreateObjCommand (interp, "weechat::upgrade_new",
                           weechat_tcl_api_upgrade_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::upgrade_write_object",
+    Tcl_CreateObjCommand (interp, "weechat::upgrade_write_object",
                           weechat_tcl_api_upgrade_write_object, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::upgrade_read",
+    Tcl_CreateObjCommand (interp, "weechat::upgrade_read",
                           weechat_tcl_api_upgrade_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp,"weechat::upgrade_close",
+    Tcl_CreateObjCommand (interp, "weechat::upgrade_close",
                           weechat_tcl_api_upgrade_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
 }

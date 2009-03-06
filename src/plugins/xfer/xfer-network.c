@@ -198,6 +198,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
             /* child process */
         case 0:
             setuid (getuid ());
+            close (xfer->child_read);
             switch (xfer->protocol)
             {
                 case XFER_NO_PROTOCOL:
@@ -214,6 +215,8 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
     
     /* parent process */
     xfer->child_pid = pid;
+    close (xfer->child_write);
+    xfer->child_write = -1;
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
                                      &xfer_network_child_read_cb,
@@ -250,9 +253,10 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
-            /* child process */
+        /* child process */
         case 0:
             setuid (getuid ());
+            close (xfer->child_read);
             switch (xfer->protocol)
             {
                 case XFER_NO_PROTOCOL:
@@ -269,6 +273,8 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
     
     /* parent process */
     xfer->child_pid = pid;
+    close (xfer->child_write);
+    xfer->child_write = -1;
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
                                      &xfer_network_child_read_cb,
@@ -429,9 +435,12 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
  */
 
 int
-xfer_network_timer_cb (void *arg_xfer)
+xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
 {
     struct t_xfer *xfer;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
     
     xfer = (struct t_xfer *)arg_xfer;
     

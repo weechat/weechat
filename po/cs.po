@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-02 10:33+0100\n"
+"POT-Creation-Date: 2009-03-06 18:11+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -477,11 +477,19 @@ msgstr " zápis"
 msgid " exception"
 msgstr " vyjímka"
 
+#, fuzzy
+msgid "    process hooked:"
+msgstr "    napojené tisky:"
+
+#, fuzzy, c-format
+msgid "      command: '%s', child pid: %d"
+msgstr "      signál: %s"
+
 msgid "    connect hooked:"
 msgstr "    napojené spojení:"
 
-#, c-format
-msgid "      socket: %d, address: %s, port: %d"
+#, fuzzy, c-format
+msgid "      socket: %d, address: %s, port: %d, child pid: %d"
 msgstr "      soket: %d, adresa: %s, port: %d"
 
 msgid "    prints hooked:"
@@ -645,6 +653,12 @@ msgstr "Volba odebrána: %s"
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d volba/volby resetovány, %d volba/volby smazány"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process (hook type "
+"'process' or 'connect')"
+msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -1729,6 +1743,10 @@ msgstr "Ukládám konfiguraci na disk\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
 msgstr ""
 
 #, fuzzy, c-format

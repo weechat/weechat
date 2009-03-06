@@ -3202,17 +3202,21 @@ weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function)
  */
 
 int
-weechat_ruby_api_hook_timer_cb (void *data)
+weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[1];
+    char *ruby_argv[2], str_remaining_calls[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = NULL;
+        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
+                  "%d", remaining_calls);
+        
+        ruby_argv[0] = str_remaining_calls;
+        ruby_argv[1] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3380,6 +3384,99 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
                                                  c_exception,
                                                  &weechat_ruby_api_hook_fd_cb,
                                                  c_function));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_process_cb: callback for process hooked
+ */
+
+int
+weechat_ruby_api_hook_process_cb (void *data,
+                                  const char *command, int return_code,
+                                  const char *stdout, const char *stderr)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_rc, sizeof (str_rc), "%d", return_code);
+        
+        ruby_argv[0] = (char *)command;
+        ruby_argv[1] = str_rc;
+        ruby_argv[2] = (stdout) ? (char *)stdout : empty_arg;
+        ruby_argv[3] = (stderr) ? (char *)stderr : empty_arg;
+        ruby_argv[4] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_ruby_api_hook_process: hook a process
+ */
+
+static VALUE
+weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
+                               VALUE function)
+{
+    char *c_command, *c_function, *result;
+    int c_timeout;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_command = NULL;
+    c_timeout = 0;
+    c_function = NULL;
+    
+    if (NIL_P (command) || NIL_P (timeout) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (command, T_STRING);
+    Check_Type (timeout, T_FIXNUM);
+    Check_Type (function, T_STRING);
+    
+    c_command = STR2CSTR (command);
+    c_timeout = FIX2INT (timeout);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_hook_process (weechat_ruby_plugin,
+                                                      ruby_current_script,
+                                                      c_command,
+                                                      c_timeout,
+                                                      &weechat_ruby_api_hook_process_cb,
+                                                      c_function));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -6456,6 +6553,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_const(ruby_mWeechat, "WEECHAT_HOTLIST_PRIVATE", rb_str_new2(WEECHAT_HOTLIST_PRIVATE));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOTLIST_HIGHLIGHT", rb_str_new2(WEECHAT_HOTLIST_HIGHLIGHT));
     
+    rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_PROCESS_RUNNING", INT2NUM(WEECHAT_HOOK_PROCESS_RUNNING));
+    rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_PROCESS_ERROR", INT2NUM(WEECHAT_HOOK_PROCESS_ERROR));
+    
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_OK", INT2NUM(WEECHAT_HOOK_CONNECT_OK));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", INT2NUM(WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", INT2NUM(WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
@@ -6538,6 +6638,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_command_run", &weechat_ruby_api_hook_command_run, 2);
     rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 4);
     rb_define_module_function (ruby_mWeechat, "hook_fd", &weechat_ruby_api_hook_fd, 5);
+    rb_define_module_function (ruby_mWeechat, "hook_process", &weechat_ruby_api_hook_process, 3);
     rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 7);
     rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 5);
     rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 2);

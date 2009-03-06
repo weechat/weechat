@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-02 10:33+0100\n"
+"POT-Creation-Date: 2009-03-06 18:11+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -519,11 +519,19 @@ msgid " exception"
 msgstr "  . descripciÃ³n: %s\n"
 
 #, fuzzy
+msgid "    process hooked:"
+msgstr "     manejadores de temporizaciÃ³n:\n"
+
+#, fuzzy, c-format
+msgid "      command: '%s', child pid: %d"
+msgstr "        IRC(%s)\n"
+
+#, fuzzy
 msgid "    connect hooked:"
 msgstr "     manejadores de comando:\n"
 
 #, c-format
-msgid "      socket: %d, address: %s, port: %d"
+msgid "      socket: %d, address: %s, port: %d, child pid: %d"
 msgstr ""
 
 #, fuzzy
@@ -696,6 +704,12 @@ msgstr "no presente en el canal"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process (hook type "
+"'process' or 'connect')"
 msgstr ""
 
 #, c-format
@@ -1731,6 +1745,10 @@ msgstr "Guardar configuraciÃ³n a disco\n"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
 msgstr ""
 
 #, fuzzy, c-format

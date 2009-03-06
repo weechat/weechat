@@ -1630,7 +1630,7 @@ jabber_server_recv_cb (void *arg_server, int fd)
  */
 
 int
-jabber_server_timer_cb (void *data)
+jabber_server_timer_cb (void *data, int remaining_calls)
 {
     struct t_jabber_server *ptr_server;
     time_t new_time;
@@ -1639,6 +1639,7 @@ jabber_server_timer_cb (void *data)
     
     /* make C compiler happy */
     (void) data;
+    (void) remaining_calls;
     
     new_time = time (NULL);
     

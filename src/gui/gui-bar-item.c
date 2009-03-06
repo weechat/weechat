@@ -1225,12 +1225,15 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
  */
 
 int
-gui_bar_item_timer_cb (void *data)
+gui_bar_item_timer_cb (void *data, int remaining_calls)
 {
     time_t date;
     struct tm *local_time;
     static char item_time_text[128] = { '\0' };
     char new_item_time_text[128];
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
     
     date = time (NULL);
     local_time = localtime (&date);

@@ -87,6 +87,13 @@ struct t_weelist;
 #define WEECHAT_HOTLIST_PRIVATE                     "2"
 #define WEECHAT_HOTLIST_HIGHLIGHT                   "3"
 
+/* process return code (for callback):
+   if >= 0, then process ended and it's return code of command
+   if  < 0, then it's running or error
+*/
+#define WEECHAT_HOOK_PROCESS_RUNNING                -1
+#define WEECHAT_HOOK_PROCESS_ERROR                  -2
+
 /* connect status for connection hooked */
 #define WEECHAT_HOOK_CONNECT_OK                     0
 #define WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND      1
@@ -356,7 +363,8 @@ struct t_weechat_plugin
                                   long interval,
                                   int align_second,
                                   int max_calls,
-                                  int (*callback)(void *data),
+                                  int (*callback)(void *data,
+                                                  int remaining_calls),
                                   void *callback_data);
     struct t_hook *(*hook_fd) (struct t_weechat_plugin *plugin,
                                int fd,
@@ -365,6 +373,15 @@ struct t_weechat_plugin
                                int flag_exception,
                                int (*callback)(void *data, int fd),
                                void *callback_data);
+    struct t_hook *(*hook_process) (struct t_weechat_plugin *plugin,
+                                    const char *command,
+                                    int timeout,
+                                    int (*callback)(void *data,
+                                                    const char *command,
+                                                    int return_code,
+                                                    const char *stdout,
+                                                    const char *stderr),
+                                    void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
                                     const char *proxy,
                                     const char *address,
@@ -926,6 +943,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_fd(weechat_plugin, __fd, __flag_read,          \
                             __flag_write, __flag_exception, __callback, \
                             __data)
+#define weechat_hook_process(__command, __timeout, __callback,          \
+                             __callback_data)                           \
+    weechat_plugin->hook_process(weechat_plugin, __command, __timeout,  \
+                                 __callback, __callback_data)
 #define weechat_hook_connect(__proxy, __address, __port, __sock,        \
                              __ipv6, __gnutls_sess, __local_hostname,   \
                              __callback, __data)                        \

@@ -798,7 +798,7 @@ struct t_hook *
 script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        int interval, int align_second, int max_calls,
-                       int (*callback)(void *data),
+                       int (*callback)(void *data, int remaining_calls),
                        const char *function)
 {
     struct t_script_callback *new_script_callback;
@@ -860,6 +860,48 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
     new_script_callback->hook = new_hook;
     
     script_callback_add (script, new_script_callback);
+    
+    return new_hook;
+}
+
+/*
+ * script_api_hook_connect: hook a connection
+ *                          return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
+                         struct t_plugin_script *script,
+                         const char *command,
+                         int timeout,
+                         int (*callback)(void *data,
+                                         const char *command,
+                                         int return_code,
+                                         const char *stdout,
+                                         const char *stderr),
+                         const char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+    
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_script_callback->script = script;
+    new_script_callback->function = strdup (function);
+    script_callback_add (script, new_script_callback);
+    
+    new_hook = weechat_hook_process (command, timeout, callback,
+                                     new_script_callback);
+    
+    if (!new_hook)
+    {
+        script_callback_remove (script, new_script_callback);
+        return NULL;
+    }
+    
+    new_script_callback->hook = new_hook;
     
     return new_hook;
 }

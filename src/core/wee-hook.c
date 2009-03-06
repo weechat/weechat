@@ -47,13 +47,16 @@
 
 
 char *hook_type_string[HOOK_NUM_TYPES] =
-{ "command", "command_run", "timer", "fd", "connect", "print", "signal",
-  "config", "completion", "modifier", "info", "infolist" };
+{ "command", "command_run", "timer", "fd", "process", "connect", "print",
+  "signal", "config", "completion", "modifier", "info", "infolist" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
 time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
 int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
+
+
+void hook_process_run (struct t_hook *hook_process);
 
 
 /*
@@ -797,7 +800,9 @@ hook_timer_exec ()
         {
             ptr_hook->running = 1;
             (void) (HOOK_TIMER(ptr_hook, callback))
-                (ptr_hook->callback_data);
+                (ptr_hook->callback_data,
+                 (HOOK_TIMER(ptr_hook, remaining_calls) > 0) ?
+                  HOOK_TIMER(ptr_hook, remaining_calls) - 1 : -1);
             ptr_hook->running = 0;
             if (!ptr_hook->deleted)
             {
@@ -961,6 +966,294 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
     }
     
     hook_exec_end ();
+}
+
+/*
+ * hook_process: hook a process (using fork)
+ */
+
+struct t_hook *
+hook_process (struct t_weechat_plugin *plugin,
+              const char *command, int timeout,
+              t_hook_callback_process *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_process *new_hook_process;
+    
+    if (!command || !command[0])
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_process = malloc (sizeof (*new_hook_process));
+    if (!new_hook_process)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_PROCESS, callback_data);
+    
+    new_hook->hook_data = new_hook_process;
+    new_hook_process->callback = callback;
+    new_hook_process->command = strdup (command);
+    new_hook_process->timeout = timeout;
+    new_hook_process->child_stdout_read = -1;
+    new_hook_process->child_stdout_write = -1;
+    new_hook_process->child_stderr_read = -1;
+    new_hook_process->child_stderr_write = -1;
+    new_hook_process->child_pid = 0;
+    new_hook_process->hook_fd_stdout = NULL;
+    new_hook_process->hook_fd_stderr = NULL;
+    new_hook_process->hook_timer = NULL;
+    
+    hook_add_to_list (new_hook);
+    
+    hook_process_run (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_process_child: child process for hook process: execute function and
+ *                     return string result into pipe for WeeChat process
+ */
+
+void
+hook_process_child (struct t_hook *hook_process)
+{
+    char *exec_args[4] = { "sh", "-c", NULL, NULL };
+    
+    /* close stdin, so that process will fail to read stdin (process reading
+       stdin should not be run inside WeeChat!) */
+    close (STDIN_FILENO);
+    
+    /* redirect stdout/stderr to pipe (so that father process can read them) */
+    close (HOOK_PROCESS(hook_process, child_stdout_read));
+    close (HOOK_PROCESS(hook_process, child_stderr_read));
+    if (dup2 (HOOK_PROCESS(hook_process, child_stdout_write),
+              STDOUT_FILENO) < 0)
+    {
+        _exit (EXIT_FAILURE);
+    }
+    if (dup2 (HOOK_PROCESS(hook_process, child_stderr_write),
+              STDERR_FILENO) < 0)
+    {
+        _exit (EXIT_FAILURE);
+    }
+    
+    /* launch command */
+    exec_args[2] = HOOK_PROCESS(hook_process, command);
+    execvp (exec_args[0], exec_args);
+    
+    /* should not be executed if execvp was ok */
+    fprintf (stderr, "Error with command '%s'\n",
+             HOOK_PROCESS(hook_process, command));
+    _exit (EXIT_FAILURE);
+}
+
+/*
+ * hook_process_child_read: read process output (stdout or stderr) from child
+ *                          process
+ */
+
+void
+hook_process_child_read (struct t_hook *hook_process, int fd,
+                         int stdout, struct t_hook **hook_fd)
+{
+    char buffer[4096];
+    int num_read;
+    
+    num_read = read (fd, buffer, sizeof (buffer) - 1);
+    if (num_read > 0)
+    {
+        buffer[num_read] = '\0';
+        (void) (HOOK_PROCESS(hook_process, callback))
+            (hook_process->callback_data,
+             HOOK_PROCESS(hook_process, command),
+             WEECHAT_HOOK_PROCESS_RUNNING,
+             (stdout) ? buffer : NULL,
+             (stdout) ? NULL : buffer);
+    }
+    else if (num_read == 0)
+    {
+        unhook (*hook_fd);
+        *hook_fd = NULL;
+    }
+}
+
+/*
+ * hook_process_child_read_stdout_cb: read process output (stdout) from child
+ *                                    process
+ */
+
+int
+hook_process_child_read_stdout_cb (void *arg_hook_process, int fd)
+{
+    struct t_hook *hook_process;
+    
+    hook_process = (struct t_hook *)arg_hook_process;
+    hook_process_child_read (hook_process, fd, 1,
+                             &(HOOK_PROCESS(hook_process, hook_fd_stdout)));
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * hook_process_child_read_stderr_cb: read process output (stderr) from child
+ *                                    process
+ */
+
+int
+hook_process_child_read_stderr_cb (void *arg_hook_process, int fd)
+{
+    struct t_hook *hook_process;
+    
+    hook_process = (struct t_hook *)arg_hook_process;
+    hook_process_child_read (hook_process, fd, 0,
+                             &(HOOK_PROCESS(hook_process, hook_fd_stderr)));
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * hook_process_timer_cb: timer to check if child is died or not
+ */
+
+int
+hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
+{
+    struct t_hook *hook_process;
+    int status, rc;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
+    
+    hook_process = (struct t_hook *)arg_hook_process;
+    
+    if (remaining_calls == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("End of command '%s', timeout reached (%.1fs)"),
+                         HOOK_PROCESS(hook_process, command),
+                         ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
+        kill (HOOK_PROCESS(hook_process, child_pid), SIGKILL);
+        usleep (1000);
+    }
+    
+    if (waitpid (HOOK_PROCESS(hook_process, child_pid), &status, WNOHANG) > 0)
+    {
+        rc = WEXITSTATUS(status);
+        (void) (HOOK_PROCESS(hook_process, callback))
+                (hook_process->callback_data,
+                 HOOK_PROCESS(hook_process, command),
+                 rc, NULL, NULL);
+        unhook (hook_process);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * hook_process_run: fork, execute process function in child, and read data in
+ *                   current process, with fd hook
+ */
+
+void
+hook_process_run (struct t_hook *hook_process)
+{
+    int pipe_stdout[2], pipe_stderr[2], timeout, max_calls;
+    long interval;
+    pid_t pid;
+    
+    /* create pipe for child process (stdout) */
+    if (pipe (pipe_stdout) < 0)
+    {
+        (void) (HOOK_PROCESS(hook_process, callback))
+            (hook_process->callback_data,
+             HOOK_PROCESS(hook_process, command),
+             WEECHAT_HOOK_PROCESS_ERROR,
+             NULL, NULL);
+        unhook (hook_process);
+        return;
+    }
+    if (pipe (pipe_stderr) < 0)
+    {
+        close (pipe_stdout[0]);
+        close (pipe_stdout[1]);
+        (void) (HOOK_PROCESS(hook_process, callback))
+            (hook_process->callback_data,
+             HOOK_PROCESS(hook_process, command),
+             WEECHAT_HOOK_PROCESS_ERROR,
+             NULL, NULL);
+        unhook (hook_process);
+        return;
+    }
+    
+    HOOK_PROCESS(hook_process, child_stdout_read) = pipe_stdout[0];
+    HOOK_PROCESS(hook_process, child_stdout_write) = pipe_stdout[1];
+    
+    HOOK_PROCESS(hook_process, child_stderr_read) = pipe_stderr[0];
+    HOOK_PROCESS(hook_process, child_stderr_write) = pipe_stderr[1];
+    
+    switch (pid = fork ())
+    {
+        /* fork failed */
+        case -1:
+            (void) (HOOK_PROCESS(hook_process, callback))
+                (hook_process->callback_data,
+                 HOOK_PROCESS(hook_process, command),
+                 WEECHAT_HOOK_PROCESS_ERROR,
+                 NULL, NULL);
+            unhook (hook_process);
+            return;
+        /* child process */
+        case 0:
+            setuid (getuid ());
+            hook_process_child (hook_process);
+            /* never executed */
+            _exit (EXIT_SUCCESS);
+            break;
+    }
+    /* parent process */
+    HOOK_PROCESS(hook_process, child_pid) = pid;
+    close (HOOK_PROCESS(hook_process, child_stdout_write));
+    HOOK_PROCESS(hook_process, child_stdout_write) = -1;
+    close (HOOK_PROCESS(hook_process, child_stderr_write));
+    HOOK_PROCESS(hook_process, child_stderr_write) = -1;
+    HOOK_PROCESS(hook_process, hook_fd_stdout) = hook_fd (hook_process->plugin,
+                                                          HOOK_PROCESS(hook_process, child_stdout_read),
+                                                          1, 0, 0,
+                                                          &hook_process_child_read_stdout_cb,
+                                                          hook_process);
+    
+    HOOK_PROCESS(hook_process, hook_fd_stderr) = hook_fd (hook_process->plugin,
+                                                          HOOK_PROCESS(hook_process, child_stderr_read),
+                                                          1, 0, 0,
+                                                          &hook_process_child_read_stderr_cb,
+                                                          hook_process);
+
+    timeout = HOOK_PROCESS(hook_process, timeout);
+    interval = 100;
+    max_calls = 0;
+    if (timeout > 0)
+    {
+        if (timeout <= 100)
+        {
+            interval = timeout;
+            max_calls = 1;
+        }
+        else
+        {
+            interval = 100;
+            max_calls = timeout / 100;
+            if (timeout % 100 == 0)
+                max_calls++;
+        }
+    }
+    HOOK_PROCESS(hook_process, hook_timer) = hook_timer (hook_process->plugin,
+                                                         interval, 0, max_calls,
+                                                         &hook_process_timer_cb,
+                                                         hook_process);
 }
 
 /*
@@ -1704,18 +1997,37 @@ unhook (struct t_hook *hook)
                     free (HOOK_COMMAND(hook, args_description));
                 if (HOOK_COMMAND(hook, completion))
                     free (HOOK_COMMAND(hook, completion));
-                free ((struct t_hook_command *)hook->hook_data);
                 break;
             case HOOK_TYPE_COMMAND_RUN:
                 if (HOOK_COMMAND_RUN(hook, command))
                     free (HOOK_COMMAND_RUN(hook, command));
-                free ((struct t_hook_command *)hook->hook_data);
                 break;
             case HOOK_TYPE_TIMER:
-                free ((struct t_hook_timer *)hook->hook_data);
                 break;
             case HOOK_TYPE_FD:
-                free ((struct t_hook_fd *)hook->hook_data);
+                break;
+            case HOOK_TYPE_PROCESS:
+                if (HOOK_PROCESS(hook, command))
+                    free (HOOK_PROCESS(hook, command));
+                if (HOOK_PROCESS(hook, hook_fd_stdout))
+                    unhook (HOOK_PROCESS(hook, hook_fd_stdout));
+                if (HOOK_PROCESS(hook, hook_fd_stderr))
+                    unhook (HOOK_PROCESS(hook, hook_fd_stderr));
+                if (HOOK_PROCESS(hook, hook_timer))
+                    unhook (HOOK_PROCESS(hook, hook_timer));
+                if (HOOK_PROCESS(hook, child_pid) > 0)
+                {
+                    kill (HOOK_PROCESS(hook, child_pid), SIGKILL);
+                    waitpid (HOOK_PROCESS(hook, child_pid), NULL, 0);
+                }
+                if (HOOK_PROCESS(hook, child_stdout_read) != -1)
+                    close (HOOK_PROCESS(hook, child_stdout_read));
+                if (HOOK_PROCESS(hook, child_stdout_write) != -1)
+                    close (HOOK_PROCESS(hook, child_stdout_write));
+                if (HOOK_PROCESS(hook, child_stderr_read) != -1)
+                    close (HOOK_PROCESS(hook, child_stderr_read));
+                if (HOOK_PROCESS(hook, child_stderr_write) != -1)
+                    close (HOOK_PROCESS(hook, child_stderr_write));
                 break;
             case HOOK_TYPE_CONNECT:
                 if (HOOK_CONNECT(hook, proxy))
@@ -1735,52 +2047,45 @@ unhook (struct t_hook *hook)
                     close (HOOK_CONNECT(hook, child_read));
                 if (HOOK_CONNECT(hook, child_write) != -1)
                     close (HOOK_CONNECT(hook, child_write));
-                free ((struct t_hook_connect *)hook->hook_data);
                 break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, message))
                     free (HOOK_PRINT(hook, message));
-                free ((struct t_hook_print *)hook->hook_data);
                 break;
             case HOOK_TYPE_SIGNAL:
                 if (HOOK_SIGNAL(hook, signal))
                     free (HOOK_SIGNAL(hook, signal));
-                free ((struct t_hook_signal *)hook->hook_data);
                 break;
             case HOOK_TYPE_CONFIG:
                 if (HOOK_CONFIG(hook, option))
                     free (HOOK_CONFIG(hook, option));
-                free ((struct t_hook_config *)hook->hook_data);
                 break;
             case HOOK_TYPE_COMPLETION:
                 if (HOOK_COMPLETION(hook, completion_item))
                     free (HOOK_COMPLETION(hook, completion_item));
-                free ((struct t_hook_completion *)hook->hook_data);
                 break;
             case HOOK_TYPE_MODIFIER:
                 if (HOOK_MODIFIER(hook, modifier))
                     free (HOOK_MODIFIER(hook, modifier));
-                free ((struct t_hook_modifier *)hook->hook_data);
                 break;
             case HOOK_TYPE_INFO:
                 if (HOOK_INFO(hook, info_name))
                     free (HOOK_INFO(hook, info_name));
                 if (HOOK_INFO(hook, description))
                     free (HOOK_INFO(hook, description));
-                free ((struct t_hook_info *)hook->hook_data);
                 break;
             case HOOK_TYPE_INFOLIST:
                 if (HOOK_INFOLIST(hook, infolist_name))
                     free (HOOK_INFOLIST(hook, infolist_name));
                 if (HOOK_INFOLIST(hook, description))
                     free (HOOK_INFOLIST(hook, description));
-                free ((struct t_hook_infolist *)hook->hook_data);
                 break;
             case HOOK_NUM_TYPES:
                 /* this constant is used to count types only,
                    it is never used as type */
                 break;
         }
+        free (hook->hook_data);
         hook->hook_data = NULL;
     }           
     
@@ -1954,6 +2259,33 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     if (!infolist_new_var_integer (ptr_item, "fd", HOOK_FD(ptr_hook, fd)))
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "flags", HOOK_FD(ptr_hook, flags)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_PROCESS:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_PROCESS(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "command", HOOK_PROCESS(ptr_hook, command)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "timeout", HOOK_PROCESS(ptr_hook, timeout)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_stdout_read", HOOK_PROCESS(ptr_hook, child_stdout_read)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_stdout_write", HOOK_PROCESS(ptr_hook, child_stdout_write)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_stderr_read", HOOK_PROCESS(ptr_hook, child_stderr_read)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_stderr_write", HOOK_PROCESS(ptr_hook, child_stderr_write)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_pid", HOOK_PROCESS(ptr_hook, child_pid)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "hook_fd_stdout", HOOK_PROCESS(ptr_hook, hook_fd_stdout)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "hook_fd_stderr", HOOK_PROCESS(ptr_hook, hook_fd_stderr)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "hook_timer", HOOK_PROCESS(ptr_hook, hook_timer)))
                         return 0;
                 }
                 break;
@@ -2189,6 +2521,23 @@ hook_print_log ()
                         log_printf ("    flags. . . . . . . . : %d",    HOOK_FD(ptr_hook, flags));
                     }
                     break;
+                case HOOK_TYPE_PROCESS:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  process data:");
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_PROCESS(ptr_hook, callback));
+                        log_printf ("    command. . . . . . . : '%s'",  HOOK_PROCESS(ptr_hook, command));
+                        log_printf ("    timeout. . . . . . . : %d",    HOOK_PROCESS(ptr_hook, timeout));
+                        log_printf ("    child_stdout_read. . : %d",    HOOK_PROCESS(ptr_hook, child_stdout_read));
+                        log_printf ("    child_stdout_write . : %d",    HOOK_PROCESS(ptr_hook, child_stdout_write));
+                        log_printf ("    child_stderr_read. . : %d",    HOOK_PROCESS(ptr_hook, child_stderr_read));
+                        log_printf ("    child_stderr_write . : %d",    HOOK_PROCESS(ptr_hook, child_stderr_write));
+                        log_printf ("    child_pid. . . . . . : %d",    HOOK_PROCESS(ptr_hook, child_pid));
+                        log_printf ("    hook_fd_stdout . . . : 0x%lx", HOOK_PROCESS(ptr_hook, hook_fd_stdout));
+                        log_printf ("    hook_fd_stderr . . . : 0x%lx", HOOK_PROCESS(ptr_hook, hook_fd_stderr));
+                        log_printf ("    hook_timer . . . . . : 0x%lx", HOOK_PROCESS(ptr_hook, hook_timer));
+                    }
+                    break;
                 case HOOK_TYPE_CONNECT:
                     if (!ptr_hook->deleted)
                     {
@@ -2204,6 +2553,7 @@ hook_print_log ()
                         log_printf ("    local_hostname . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));
                         log_printf ("    child_write. . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
+                        log_printf ("    child_pid. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_pid));
                         log_printf ("    hook_fd. . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_fd));
                     }
                     break;

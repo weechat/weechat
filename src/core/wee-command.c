@@ -2053,6 +2053,7 @@ command_plugin_list (const char *name, int full)
             plugins_found++;
             
             /* plugin info */
+            gui_chat_printf (NULL, "");
             gui_chat_printf (NULL,
                              "  %s%s%s v%s - %s (%s)",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
@@ -2161,7 +2162,26 @@ command_plugin_list (const char *name, int full)
                                          _(" exception") : "");
                     }
                 }
-
+                
+                /* process hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_PROCESS]; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("    process hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         _("      command: '%s', child "
+                                           "pid: %d"),
+                                         (HOOK_PROCESS(ptr_hook, command)),
+                                         HOOK_PROCESS(ptr_hook, child_pid));
+                    }
+                }
+                
                 /* connect hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks[HOOK_TYPE_CONNECT]; ptr_hook;
@@ -2175,10 +2195,11 @@ command_plugin_list (const char *name, int full)
                         hook_found = 1;
                         gui_chat_printf (NULL,
                                          _("      socket: %d, address: %s, "
-                                           "port: %d"),
+                                           "port: %d, child pid: %d"),
                                          HOOK_CONNECT(ptr_hook, sock),
                                          HOOK_CONNECT(ptr_hook, address),
-                                         HOOK_CONNECT(ptr_hook, port));
+                                         HOOK_CONNECT(ptr_hook, port),
+                                         HOOK_CONNECT(ptr_hook, child_pid));
                     }
                 }
                 
@@ -3079,6 +3100,17 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     (void) data;
     (void) buffer;
     (void) argv;
+
+    /* it's forbidden to upgrade while there are some background process
+       (hook type "process" or "connect") */
+    if (weechat_hooks[HOOK_TYPE_PROCESS] || weechat_hooks[HOOK_TYPE_CONNECT])
+    {
+        gui_chat_printf (NULL,
+                         _("%sCan't upgrade: there is one or more background "
+                           "process (hook type 'process' or 'connect')"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
     
     if (argc > 1)
     {
@@ -3096,7 +3128,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  ptr_binary);
                 free (ptr_binary);
-                return WEECHAT_RC_ERROR;
+                return WEECHAT_RC_OK;
             }
             if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
                 && (!(stat_buf.st_mode & S_IXOTH)))
@@ -3107,7 +3139,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  ptr_binary);
                 free (ptr_binary);
-                return WEECHAT_RC_ERROR;
+                return WEECHAT_RC_OK;
             }
         }
     }
@@ -3119,7 +3151,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
         gui_chat_printf (NULL,
                          _("%sNot enough memory"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     
     gui_chat_printf (NULL,
@@ -3135,7 +3167,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
                          _("%sError: unable to save session in file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         free (ptr_binary);
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     
     exec_args[0] = ptr_binary;

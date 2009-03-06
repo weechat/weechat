@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-02 10:33+0100\n"
-"PO-Revision-Date: 2009-03-02 10:34+0100\n"
+"POT-Creation-Date: 2009-03-06 18:11+0100\n"
+"PO-Revision-Date: 2009-03-06 18:11+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -480,12 +480,19 @@ msgstr " écriture"
 msgid " exception"
 msgstr " exception"
 
+msgid "    process hooked:"
+msgstr "    processus accrochés:"
+
+#, c-format
+msgid "      command: '%s', child pid: %d"
+msgstr "      commande: '%s', pid fils: %d"
+
 msgid "    connect hooked:"
 msgstr "    connexions accrochées:"
 
 #, c-format
-msgid "      socket: %d, address: %s, port: %d"
-msgstr "      socket: %d, addresse: %s, port: %d"
+msgid "      socket: %d, address: %s, port: %d, child pid: %d"
+msgstr "      socket: %d, addresse: %s, port: %d, pid fils: %d"
 
 msgid "    prints hooked:"
 msgstr "    impressions accrochées:"
@@ -644,6 +651,14 @@ msgstr "Option supprimée: %s"
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process (hook type "
+"'process' or 'connect')"
+msgstr ""
+"%sImpossible de mettre à jour: il y a un ou plusieurs processus en tâche de "
+"fond (hook de type 'process' ou 'connect')"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -1829,6 +1844,10 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Décalage de l'horloge système détecté (%+ld secondes), réinitialisation de "
 "tous les minuteurs"
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
+msgstr "Fin de la commande '%s', temps maximum atteint (%.1fs)"
 
 #, c-format
 msgid "%sYou can not write text in this buffer"

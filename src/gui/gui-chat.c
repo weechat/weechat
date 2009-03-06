@@ -1123,21 +1123,29 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         display_time = 1;
         ptr_msg = (new_msg) ? new_msg : pos;
         
-        /* if two first chars are tab, then do not display time */
-        if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+        /* space followed by tab => prefix ignored */
+        if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
         {
-            display_time = 0;
             ptr_msg += 2;
         }
         else
         {
-            /* if tab found, use prefix (before tab) */
-            pos_tab = strchr (ptr_msg, '\t');
-            if (pos_tab)
+            /* if two first chars are tab, then do not display time */
+            if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
             {
-                pos_tab[0] = '\0';
-                pos_prefix = ptr_msg;
-                ptr_msg = pos_tab + 1;
+                display_time = 0;
+                ptr_msg += 2;
+            }
+            else
+            {
+                /* if tab found, use prefix (before tab) */
+                pos_tab = strchr (ptr_msg, '\t');
+                if (pos_tab)
+                {
+                    pos_tab[0] = '\0';
+                    pos_prefix = ptr_msg;
+                    ptr_msg = pos_tab + 1;
+                }
             }
         }
         

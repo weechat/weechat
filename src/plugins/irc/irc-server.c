@@ -1599,7 +1599,7 @@ irc_server_recv_cb (void *arg_server, int fd)
  */
 
 int
-irc_server_timer_cb (void *data)
+irc_server_timer_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
     time_t new_time;
@@ -1608,6 +1608,7 @@ irc_server_timer_cb (void *data)
     
     /* make C compiler happy */
     (void) data;
+    (void) remaining_calls;
     
     new_time = time (NULL);
     
@@ -1677,10 +1678,11 @@ irc_server_timer_cb (void *data)
  */
 
 int
-irc_server_timer_check_away_cb (void *data)
+irc_server_timer_check_away_cb (void *data, int remaining_calls)
 {
     /* make C compiler happy */
     (void) data;
+    (void) remaining_calls;
     
     if (weechat_config_integer (irc_config_network_away_check) > 0)
         irc_server_check_away ();

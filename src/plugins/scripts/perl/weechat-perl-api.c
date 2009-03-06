@@ -2626,17 +2626,21 @@ static XS (XS_weechat_api_hook_command_run)
  */
 
 int
-weechat_perl_api_hook_timer_cb (void *data)
+weechat_perl_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[1];
+    char *perl_argv[2], str_remaining_calls[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        perl_argv[0] = NULL;
+        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
+                  "%d", remaining_calls);
+        
+        perl_argv[0] = str_remaining_calls;
+        perl_argv[1] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -2763,6 +2767,87 @@ static XS (XS_weechat_api_hook_fd)
                                                  SvIV (ST (3)), /* exception */
                                                  &weechat_perl_api_hook_fd_cb,
                                                  SvPV (ST (4), PL_na))); /* perl function */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_hook_process_cb: callback for process hooked
+ */
+
+int
+weechat_perl_api_hook_process_cb (void *data,
+                                  const char *command, int return_code,
+                                  const char *stdout, const char *stderr)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_rc, sizeof (str_rc), "%d", return_code);
+        
+        perl_argv[0] = (char *)command;
+        perl_argv[1] = str_rc;
+        perl_argv[2] = (stdout) ? (char *)stdout : empty_arg;
+        perl_argv[3] = (stderr) ? (char *)stderr : empty_arg;
+        perl_argv[4] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat::hook_process: hook a process
+ */
+
+static XS (XS_weechat_api_hook_process)
+{
+    char *command, *function, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        PERL_RETURN_EMPTY;
+    }
+    
+    command = SvPV (ST (0), PL_na);
+    function = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (script_api_hook_process (weechat_perl_plugin,
+                                                      perl_current_script,
+                                                      command,
+                                                      SvIV (ST (1)), /* timeout */
+                                                      &weechat_perl_api_hook_process_cb,
+                                                      function));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -3315,7 +3400,7 @@ weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
                                           script_callback->function,
                                           perl_argv);
     }
-
+    
     return NULL;
 }
 
@@ -5393,6 +5478,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_command_run", XS_weechat_api_hook_command_run, "weechat");
     newXS ("weechat::hook_timer", XS_weechat_api_hook_timer, "weechat");
     newXS ("weechat::hook_fd", XS_weechat_api_hook_fd, "weechat");
+    newXS ("weechat::hook_process", XS_weechat_api_hook_process, "weechat");
     newXS ("weechat::hook_connect", XS_weechat_api_hook_connect, "weechat");
     newXS ("weechat::hook_print", XS_weechat_api_hook_print, "weechat");
     newXS ("weechat::hook_signal", XS_weechat_api_hook_signal, "weechat");
@@ -5485,7 +5571,10 @@ weechat_perl_api_init (pTHX)
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_MESSAGE", newSVpv (WEECHAT_HOTLIST_MESSAGE, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_PRIVATE", newSVpv (WEECHAT_HOTLIST_PRIVATE, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", newSVpv (WEECHAT_HOTLIST_HIGHLIGHT, PL_na));
-
+    
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_PROCESS_RUNNING", newSViv (WEECHAT_HOOK_PROCESS_RUNNING));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_PROCESS_ERROR", newSViv (WEECHAT_HOOK_PROCESS_ERROR));
+    
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_OK", newSViv (WEECHAT_HOOK_CONNECT_OK));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));

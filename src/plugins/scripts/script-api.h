@@ -129,7 +129,8 @@ extern struct t_hook *script_api_hook_timer (struct t_weechat_plugin *weechat_pl
                                              struct t_plugin_script *script,
                                              int interval, int align_second,
                                              int max_calls,
-                                             int (*callback)(void *data),
+                                             int (*callback)(void *data,
+                                                             int remaining_calls),
                                              const char *function);
 extern struct t_hook *script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                                           struct t_plugin_script *script,
@@ -137,6 +138,16 @@ extern struct t_hook *script_api_hook_fd (struct t_weechat_plugin *weechat_plugi
                                           int flag_write, int flag_exception,
                                           int (*callback)(void *data, int fd),
                                           const char *function);
+extern struct t_hook *script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
+                                               struct t_plugin_script *script,
+                                               const char *command,
+                                               int timeout,
+                                               int (*callback)(void *data,
+                                                               const char *command,
+                                                               int return_code,
+                                                               const char *stdout,
+                                                               const char *stderr),
+                                               const char *function);
 extern struct t_hook *script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                                                struct t_plugin_script *script,
                                                const char *proxy,

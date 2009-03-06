@@ -2798,17 +2798,21 @@ weechat_python_api_hook_command_run (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_timer_cb (void *data)
+weechat_python_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[1];
+    char *python_argv[2], str_remaining_calls[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        python_argv[0] = NULL;
+        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
+                  "%d", remaining_calls);
+        
+        python_argv[0] = str_remaining_calls;
+        python_argv[1] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -2952,6 +2956,90 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
                                                  exception,
                                                  &weechat_python_api_hook_fd_cb,
                                                  function));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_process_cb: callback for process hooked
+ */
+
+int
+weechat_python_api_hook_process_cb (void *data,
+                                    const char *command, int return_code,
+                                    const char *stdout, const char *stderr)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        snprintf (str_rc, sizeof (str_rc), "%d", return_code);
+        
+        python_argv[0] = (char *)command;
+        python_argv[1] = str_rc;
+        python_argv[2] = (stdout) ? (char *)stdout : empty_arg;
+        python_argv[3] = (stderr) ? (char *)stderr : empty_arg;
+        python_argv[4] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_python_api_hook_process: hook a process
+ */
+
+static PyObject *
+weechat_python_api_hook_process (PyObject *self, PyObject *args)
+{
+    char *command, *function, *result;
+    int timeout;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    command = NULL;
+    timeout = 0;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sis", &command, &timeout, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_process (weechat_python_plugin,
+                                                      python_current_script,
+                                                      command,
+                                                      timeout,
+                                                      &weechat_python_api_hook_process_cb,
+                                                      function));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -5722,6 +5810,7 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_command_run", &weechat_python_api_hook_command_run, METH_VARARGS, "" },
     { "hook_timer", &weechat_python_api_hook_timer, METH_VARARGS, "" },
     { "hook_fd", &weechat_python_api_hook_fd, METH_VARARGS, "" },
+    { "hook_process", &weechat_python_api_hook_process, METH_VARARGS, "" },
     { "hook_connect", &weechat_python_api_hook_connect, METH_VARARGS, "" },
     { "hook_print", &weechat_python_api_hook_print, METH_VARARGS, "" },
     { "hook_signal", &weechat_python_api_hook_signal, METH_VARARGS, "" },

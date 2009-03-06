@@ -371,7 +371,10 @@ weechat_python_load (const char *filename)
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_MESSAGE", PyString_FromString(WEECHAT_HOTLIST_MESSAGE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_PRIVATE", PyString_FromString(WEECHAT_HOTLIST_PRIVATE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_HIGHLIGHT", PyString_FromString(WEECHAT_HOTLIST_HIGHLIGHT));
-
+    
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_PROCESS_RUNNING", PyInt_FromLong((long) WEECHAT_HOOK_PROCESS_RUNNING));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_PROCESS_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_PROCESS_ERROR));
+    
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_OK", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_OK));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));

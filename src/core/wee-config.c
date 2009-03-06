@@ -322,7 +322,7 @@ config_change_color (void *data, struct t_config_option *option)
  */
 
 int
-config_day_change_timer_cb (void *data)
+config_day_change_timer_cb (void *data, int remaining_calls)
 {
     struct timeval tv_time;
     struct tm *local_time;
@@ -331,6 +331,7 @@ config_day_change_timer_cb (void *data)
     
     /* make C compiler happy */
     (void) data;
+    (void) remaining_calls;
     
     gettimeofday (&tv_time, NULL);
     local_time = localtime (&tv_time.tv_sec);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-02 10:33+0100\n"
+"POT-Creation-Date: 2009-03-06 18:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -455,11 +455,18 @@ msgstr ""
 msgid " exception"
 msgstr ""
 
+msgid "    process hooked:"
+msgstr ""
+
+#, c-format
+msgid "      command: '%s', child pid: %d"
+msgstr ""
+
 msgid "    connect hooked:"
 msgstr ""
 
 #, c-format
-msgid "      socket: %d, address: %s, port: %d"
+msgid "      socket: %d, address: %s, port: %d, child pid: %d"
 msgstr ""
 
 msgid "    prints hooked:"
@@ -616,6 +623,12 @@ msgstr ""
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process (hook type "
+"'process' or 'connect')"
 msgstr ""
 
 #, c-format
@@ -1478,6 +1491,10 @@ msgstr ""
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
 msgstr ""
 
 #, c-format

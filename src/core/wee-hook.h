@@ -38,6 +38,7 @@ enum t_hook_type
     HOOK_TYPE_COMMAND_RUN,             /* when a command is executed        */
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
+    HOOK_TYPE_PROCESS,                 /* sub-process (fork)                */
     HOOK_TYPE_CONNECT,                 /* connect to peer with fork         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_SIGNAL,                  /* signal                            */
@@ -63,6 +64,7 @@ enum t_hook_type
 #define HOOK_COMMAND_RUN(hook, var) (((struct t_hook_command_run *)hook->hook_data)->var)
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
+#define HOOK_PROCESS(hook, var) (((struct t_hook_process *)hook->hook_data)->var)
 #define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
@@ -88,6 +90,8 @@ struct t_hook
     struct t_hook *next_hook;          /* link to next hook                 */
 };
 
+/* hook command */
+
 typedef int (t_hook_callback_command)(void *data, struct t_gui_buffer *buffer,
                                       int argc, char **argv, char **argv_eol);
 
@@ -103,6 +107,8 @@ struct t_hook_command
     char *completion;                  /* template for completion           */
 };
 
+/* hook command run */
+
 typedef int (t_hook_callback_command_run)(void *data,
                                           struct t_gui_buffer *buffer,
                                           const char *command);
@@ -113,7 +119,9 @@ struct t_hook_command_run
     char *command;                     /* name of command (without '/')     */
 };
 
-typedef int (t_hook_callback_timer)(void *data);
+/* hook timer */
+
+typedef int (t_hook_callback_timer)(void *data, int remaining_calls);
 
 struct t_hook_timer
 {
@@ -126,6 +134,8 @@ struct t_hook_timer
     struct timeval next_exec;          /* next scheduled execution          */
 };
 
+/* hook fd */
+
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
 struct t_hook_fd
@@ -134,6 +144,29 @@ struct t_hook_fd
     int fd;                            /* socket or file descriptor         */
     int flags;                         /* fd flags (read,write,..)          */
 };
+
+/* hook process */
+
+typedef int (t_hook_callback_process)(void *data, const char *command,
+                                      int return_code, const char *stdout,
+                                      const char *stderr);
+
+struct t_hook_process
+{
+    t_hook_callback_process *callback; /* process callback (after child end)*/
+    char *command;                     /* command executed by child         */
+    long timeout;                      /* timeout (ms) (0 = no timeout)     */
+    int child_stdout_read;             /* to read data in pipe from child   */
+    int child_stdout_write;            /* to write data in pipe for child   */
+    int child_stderr_read;             /* to read data in pipe from child   */
+    int child_stderr_write;            /* to write data in pipe for child   */
+    pid_t child_pid;                   /* pid of child process              */
+    struct t_hook *hook_fd_stdout;     /* hook fd for stdout                */
+    struct t_hook *hook_fd_stderr;     /* hook fd for stderr                */
+    struct t_hook *hook_timer;         /* timer to check if child has died  */
+};
+
+/* hook connect */
 
 typedef int (t_hook_callback_connect)(void *data, int status,
                                       const char *ip_address);
@@ -150,11 +183,13 @@ struct t_hook_connect
     gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
 #endif
     char *local_hostname;              /* force local hostname (optional)   */
-    int child_read;                    /* to read into child pipe           */
-    int child_write;                   /* to write into child pipe          */
+    int child_read;                    /* to read data in pipe from child   */
+    int child_write;                   /* to write data in pipe for child   */
     pid_t child_pid;                   /* pid of child process (connecting) */
     struct t_hook *hook_fd;            /* pointer to fd hook                */
 };
+
+/* hook print */
 
 typedef int (t_hook_callback_print)(void *data, struct t_gui_buffer *buffer,
                                     time_t date, int tags_count,
@@ -172,6 +207,8 @@ struct t_hook_print
     int strip_colors;                  /* strip colors in msg for callback? */
 };
 
+/* hook signal */
+
 typedef int (t_hook_callback_signal)(void *data, const char *signal,
                                      const char *type_data, void *signal_data);
 
@@ -182,6 +219,8 @@ struct t_hook_signal
                                        /* with "*", "*" == any signal)      */
 };
 
+/* hook config */
+
 typedef int (t_hook_callback_config)(void *data, const char *option,
                                      const char *value);
 
@@ -191,6 +230,8 @@ struct t_hook_config
     char *option;                      /* config option for hook            */
                                        /* (NULL = hook for all options)     */
 };
+
+/* hook completion */
 
 typedef int (t_hook_callback_completion)(void *data,
                                          const char *completion_item,
@@ -203,6 +244,8 @@ struct t_hook_completion
     char *completion_item;                /* name of completion             */
 };
 
+/* hook modifier */
+
 typedef char *(t_hook_callback_modifier)(void *data, const char *modifier,
                                          const char *modifier_data,
                                          const char *string);
@@ -213,6 +256,8 @@ struct t_hook_modifier
     char *modifier;                     /* name of modifier                 */
 };
 
+/* hook info */
+
 typedef const char *(t_hook_callback_info)(void *data, const char *info_name,
                                            const char *arguments);
 
@@ -222,6 +267,8 @@ struct t_hook_info
     char *info_name;                   /* name of info returned             */
     char *description;                 /* description                       */
 };
+
+/* hook infolist */
 
 typedef struct t_infolist *(t_hook_callback_infolist)(void *data,
                                                       const char *infolist_name,
@@ -276,6 +323,11 @@ extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
                         fd_set *exception_fds);
 extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
+extern struct t_hook *hook_process (struct t_weechat_plugin *plugin,
+                                    const char *command,
+                                    int timeout,
+                                    t_hook_callback_process *callback,
+                                    void *callback_data);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int sock, int ipv6,

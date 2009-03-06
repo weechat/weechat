@@ -5256,7 +5256,7 @@ struct t_hook *weechat_hook_timer (
     long interval,
     const char *align_second,
     const char *max_calls,
-    int (*callback)(void *data),
+    int (*callback)(void *data, int remaining_calls),
     void *callback_data);
 </programlisting>
       </para>
@@ -5305,6 +5305,11 @@ struct t_hook *weechat_hook_timer (
                       <entry>data</entry>
                       <entry>pointer</entry>
                     </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>remaining_calls</entry>
+                      <entry>remaining calls (-1 if timer has no end)</entry>
+                    </row>
                   </tbody>
                 </tgroup>
               </informaltable>
@@ -5325,7 +5330,7 @@ struct t_hook *weechat_hook_timer (
         Example:
 <screen>
 int
-my_timer_cb (void *data)
+my_timer_cb (void *data, int remaining_calls)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -5438,6 +5443,128 @@ int sock = socket (AF_INET, SOCK_STREAM, 0);
 /* hook socket */
 struct t_hook *my_fd_hook =
     weechat_hook_fd (sock, 1, 0, 0, &amp;my_fd_cb, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_hook_process">
+      <title>weechat_hook_process</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_hook *weechat_hook_process (
+    const char *command,
+    int timeout,
+    int (*callback)(void *data,
+                    const char *command,
+                    int return_code,
+                    const char *stdout,
+                    const char *stderr),
+    void *callback_data);
+</programlisting>
+      </para>
+      <para>
+        Hook a process (with fork), and catch output.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>command</option>: command to launch in child process
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>timeout</option>: timeout for command (in milliseconds):
+              after this timeout, child process is killed (0 means no timeout)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called when data from child
+              is available, or when child has ended, arguments:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="2">
+                  <thead>
+                    <row>
+                      <entry>Type</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>void *</entry>
+                      <entry>data</entry>
+                      <entry>pointer</entry>
+                    </row>
+                    <row>
+                      <entry>const char *</entry>
+                      <entry>command</entry>
+                      <entry>command executed by child</entry>
+                    </row>
+                    <row>
+                      <entry>int</entry>
+                      <entry>return_code</entry>
+                      <entry>
+                        if &gt;= 0, it's child (command) return code (it's last
+                        call to this callback), if &lt; 0, it can be
+                        WEECHAT_HOOK_PROCESS_OK_RUNNING (data available, but
+                        child still running) or WEECHAT_HOOK_PROCESS_ERROR
+                        (error when launching command).
+                      </entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback_data</option>: pointer given to callback when it
+              is called by WeeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new hook, NULL if error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_process_cb (void *data, const char *command, int return_code,
+               const char *stdout, const char *stderr)
+{
+    if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
+    {
+        weechat_printf (NULL, "Error with command '%s'", command);
+        return;
+    }
+    
+    if (return_code &gt;= 0)
+    {
+        weechat_printf (NULL, "return_code = %d", return_code);
+    }
+    
+    if (stdout)
+    {
+        weechat_printf (NULL, "stdout: %s", stdout);
+    }
+    
+    if (stderr)
+    {
+        weechat_printf (NULL, "stderr: %s", stderr);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_process_hook =
+    weechat_hook_process ("ls", 5000, &amp;my_process_cb, NULL);
 </screen>
       </para>
     </section>
@@ -5608,7 +5735,7 @@ my_connect_cb (void *data, int status, const char *ip_address)
 }
 
 struct t_hook *my_connect_hook =
-    weechat_hook_fd (sock, 1, 0, 0, &amp;my_connect_cb, NULL);
+    weechat_hook_connect (sock, 1, 0, 0, &amp;my_connect_cb, NULL);
 </screen>
       </para>
     </section>

@@ -909,12 +909,15 @@ network_connect_with_fork (struct t_hook *hook_connect)
         /* child process */
         case 0:
             setuid (getuid ());
+            close (HOOK_CONNECT(hook_connect, child_read));
             network_connect_child (hook_connect);
             _exit (EXIT_SUCCESS);
     }
     /* parent process */
     HOOK_CONNECT(hook_connect, child_pid) = pid;
-    HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (NULL,
+    close (HOOK_CONNECT(hook_connect, child_write));
+    HOOK_CONNECT(hook_connect, child_write) = -1;
+    HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (hook_connect->plugin,
                                                    HOOK_CONNECT(hook_connect, child_read),
                                                    1, 0, 0,
                                                    &network_connect_child_read_cb,
