@@ -54,7 +54,7 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
  * irc_color_decode: replace IRC colors by WeeChat colors
  *                   if keep_colors == 0: remove any color/style in message
  *                   otherwise: keep colors
- *                   Note: after use, string returned has to be free()
+x *                   Note: after use, string returned has to be free()
  */
 
 char *
@@ -63,12 +63,17 @@ irc_color_decode (const char *string, int keep_colors)
     unsigned char *out, *ptr_string;
     int out_length, length, out_pos;
     char str_fg[3], str_bg[3], str_color[128];
-    int fg, bg;
+    int fg, bg, bold, reverse, italic, underline;
     
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
+    
+    bold = 0;
+    reverse = 0;
+    italic = 0;
+    underline = 0;
     
     ptr_string = (unsigned char *)string;
     out[0] = '\0';
@@ -78,12 +83,18 @@ irc_color_decode (const char *string, int keep_colors)
         {
             case IRC_COLOR_BOLD_CHAR:
                 if (keep_colors)
-                    strcat ((char *)out, weechat_color("bold"));
+                    strcat ((char *)out,
+                            weechat_color((bold) ? "-bold" : "bold"));
+                bold ^= 1;
                 ptr_string++;
                 break;
             case IRC_COLOR_RESET_CHAR:
                 if (keep_colors)
                     strcat ((char *)out, weechat_color("reset"));
+                bold = 0;
+                reverse = 0;
+                italic = 0;
+                underline = 0;
                 ptr_string++;
                 break;
             case IRC_COLOR_FIXED_CHAR:
@@ -92,17 +103,23 @@ irc_color_decode (const char *string, int keep_colors)
             case IRC_COLOR_REVERSE_CHAR:
             case IRC_COLOR_REVERSE2_CHAR:
                 if (keep_colors)
-                    strcat ((char *)out, weechat_color("reverse"));
+                    strcat ((char *)out,
+                            weechat_color((reverse) ? "-reverse" : "reverse"));
+                reverse ^= 1;
                 ptr_string++;
                 break;
             case IRC_COLOR_ITALIC_CHAR:
                 if (keep_colors)
-                    strcat ((char *)out, weechat_color("italic"));
+                    strcat ((char *)out,
+                            weechat_color((italic) ? "-italic" : "italic"));
+                italic ^= 1;
                 ptr_string++;
                 break;
             case IRC_COLOR_UNDERLINE_CHAR:
                 if (keep_colors)
-                    strcat ((char *)out, weechat_color("underline"));
+                    strcat ((char *)out,
+                            weechat_color((underline) ? "-underline" : "underline"));
+                underline ^= 1;
                 ptr_string++;
                 break;
             case IRC_COLOR_COLOR_CHAR:

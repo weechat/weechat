@@ -104,11 +104,25 @@ gui_color_get_custom (const char *color_name)
                   GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_BOLD_STR);
     }
+    else if (string_strcasecmp (color_name, "-bold") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_REMOVE_WEECHAT_STR,
+                  GUI_COLOR_ATTR_BOLD_STR);
+    }
     else if (string_strcasecmp (color_name, "reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
                   GUI_COLOR_SET_WEECHAT_STR,
+                  GUI_COLOR_ATTR_REVERSE_STR);
+    }
+    else if (string_strcasecmp (color_name, "-reverse") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_REMOVE_WEECHAT_STR,
                   GUI_COLOR_ATTR_REVERSE_STR);
     }
     else if (string_strcasecmp (color_name, "italic") == 0)
@@ -118,11 +132,25 @@ gui_color_get_custom (const char *color_name)
                   GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_ITALIC_STR);
     }
+    else if (string_strcasecmp (color_name, "-italic") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_REMOVE_WEECHAT_STR,
+                  GUI_COLOR_ATTR_ITALIC_STR);
+    }
     else if (string_strcasecmp (color_name, "underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
                   GUI_COLOR_SET_WEECHAT_STR,
+                  GUI_COLOR_ATTR_UNDERLINE_STR);
+    }
+    else if (string_strcasecmp (color_name, "-underline") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_REMOVE_WEECHAT_STR,
                   GUI_COLOR_ATTR_UNDERLINE_STR);
     }
     else if (string_strcasecmp (color_name, "bar_fg") == 0)

@@ -4674,8 +4674,10 @@ const char *weechat_color (const char *color_name);
           <listitem>
             <para>
               <option>color_name</option>: name of color: may be a WeeChat
-              color name (from weechat.color.xxx), or a color with optional
-              background (separated by comma).
+              color name (from weechat.color.xxx), a color with optional
+              background (separated by comma), attribute ("bold", "-bold",
+              "reverse", "-reverse", "italic", "-italic", "underline",
+              "-underline", ) or a bar color ("bar_fg", "bar_delim", "bar_bg").
             </para>
           </listitem>
         </itemizedlist>
