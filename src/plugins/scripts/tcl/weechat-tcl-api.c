@@ -130,7 +130,7 @@
 	    if (__string)                                   \
 	    {                                               \
 		Tcl_SetStringObj (objp, __string, -1);      \
-		free(__string);                             \
+		free (__string);                            \
 		return TCL_OK;                              \
 	    }                                               \
 	    Tcl_SetStringObj (objp, "", -1);                \
@@ -6056,18 +6056,16 @@ weechat_tcl_api_upgrade_close (ClientData clientData, Tcl_Interp *interp,
  * weechat_tcl_api_init: initialize subroutines
  */
 
-void weechat_tcl_api_init (Tcl_Interp *interp) {
+void weechat_tcl_api_init (Tcl_Interp *interp)
+{
     int i;
     Tcl_Obj *objp;
 
     /* standard initializer */ 
     Tcl_Init (interp);
     
-#ifdef HAVE_TCL_CREATE_NS
-    /* create weechat namespace */
-    Tcl_CreateNamespace (interp, "weechat", (ClientData)0, NULL);
-#endif
-
+    Tcl_Eval (interp,"namespace eval weechat {}"); 
+    
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
     /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj */
