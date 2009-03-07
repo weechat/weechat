@@ -506,6 +506,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
+              <entry>Alt + Z</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Zoom on current window
+              </entry>
+            </row>
+            <row>
               <entry>Alt + =</entry>
               <entry>
                 <!-- TRANSLATION NEEDED -->

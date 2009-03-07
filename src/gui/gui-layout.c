@@ -41,7 +41,14 @@ struct t_gui_layout_buffer *last_gui_layout_buffer = NULL;
 
 struct t_gui_layout_window *gui_layout_windows = NULL;
 
-int internal_id = 0;
+/* used to attribute a unique id for each window in tree */
+int gui_layout_internal_id = 0;
+
+/* internal id of current window, when saving windows layout */
+int gui_layout_internal_id_current_window = 0;
+
+/* pointer to current window, found when applying windows layout */
+struct t_gui_window *gui_layout_ptr_current_window = NULL;
 
 
 /*
@@ -49,7 +56,9 @@ int internal_id = 0;
  */
 
 void
-gui_layout_buffer_remove (struct t_gui_layout_buffer *layout_buffer)
+gui_layout_buffer_remove (struct t_gui_layout_buffer **layout_buffers,
+                          struct t_gui_layout_buffer **last_layout_buffer,
+                          struct t_gui_layout_buffer *layout_buffer)
 {
     /* free data */
     if (layout_buffer->plugin_name)
@@ -62,10 +71,10 @@ gui_layout_buffer_remove (struct t_gui_layout_buffer *layout_buffer)
         (layout_buffer->prev_layout)->next_layout = layout_buffer->next_layout;
     if (layout_buffer->next_layout)
         (layout_buffer->next_layout)->prev_layout = layout_buffer->prev_layout;
-    if (gui_layout_buffers == layout_buffer)
-        gui_layout_buffers = layout_buffer->next_layout;
-    if (last_gui_layout_buffer == layout_buffer)
-        last_gui_layout_buffer = layout_buffer->prev_layout;
+    if (*layout_buffers == layout_buffer)
+        *layout_buffers = layout_buffer->next_layout;
+    if (*last_layout_buffer == layout_buffer)
+        *last_layout_buffer = layout_buffer->prev_layout;
     
     free (layout_buffer);
 }
@@ -75,11 +84,13 @@ gui_layout_buffer_remove (struct t_gui_layout_buffer *layout_buffer)
  */
 
 void
-gui_layout_buffer_remove_all ()
+gui_layout_buffer_remove_all (struct t_gui_layout_buffer **layout_buffers,
+                              struct t_gui_layout_buffer **last_layout_buffer)
 {
-    while (gui_layout_buffers)
+    while (*layout_buffers)
     {
-        gui_layout_buffer_remove (gui_layout_buffers);
+        gui_layout_buffer_remove (layout_buffers, last_layout_buffer,
+                                  *layout_buffers);
     }
 }
 
@@ -88,11 +99,12 @@ gui_layout_buffer_remove_all ()
  */
 
 void
-gui_layout_buffer_reset ()
+gui_layout_buffer_reset (struct t_gui_layout_buffer **layout_buffers,
+                         struct t_gui_layout_buffer **last_layout_buffer)
 {
     struct t_gui_buffer *ptr_buffer;
     
-    gui_layout_buffer_remove_all ();
+    gui_layout_buffer_remove_all (layout_buffers, last_layout_buffer);
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -106,7 +118,9 @@ gui_layout_buffer_reset ()
  */
 
 struct t_gui_layout_buffer *
-gui_layout_buffer_add (const char *plugin_name, const char *buffer_name,
+gui_layout_buffer_add (struct t_gui_layout_buffer **layout_buffers,
+                       struct t_gui_layout_buffer **last_layout_buffer,
+                       const char *plugin_name, const char *buffer_name,
                        int number)
 {
     struct t_gui_layout_buffer *new_layout_buffer;
@@ -120,12 +134,12 @@ gui_layout_buffer_add (const char *plugin_name, const char *buffer_name,
         new_layout_buffer->number = number;
         
         /* add layout buffer to list */
-        new_layout_buffer->prev_layout = last_gui_layout_buffer;
-        if (gui_layout_buffers)
-            last_gui_layout_buffer->next_layout = new_layout_buffer;
+        new_layout_buffer->prev_layout = *last_layout_buffer;
+        if (*layout_buffers)
+            (*last_layout_buffer)->next_layout = new_layout_buffer;
         else
-            gui_layout_buffers = new_layout_buffer;
-        last_gui_layout_buffer = new_layout_buffer;
+            *layout_buffers = new_layout_buffer;
+        *last_layout_buffer = new_layout_buffer;
         new_layout_buffer->next_layout = NULL;
     }
     
@@ -137,16 +151,21 @@ gui_layout_buffer_add (const char *plugin_name, const char *buffer_name,
  */
 
 void
-gui_layout_buffer_save ()
+gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
+                        struct t_gui_layout_buffer **last_layout_buffer)
 {
     struct t_gui_buffer *ptr_buffer;
     
-    gui_layout_buffer_remove_all ();
+    if (!layout_buffers || !last_layout_buffer)
+        return;
+    
+    gui_layout_buffer_remove_all (layout_buffers, last_layout_buffer);
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_layout_buffer_add (plugin_get_name (ptr_buffer->plugin),
+        gui_layout_buffer_add (layout_buffers, last_layout_buffer,
+                               plugin_get_name (ptr_buffer->plugin),
                                ptr_buffer->name,
                                ptr_buffer->number);
     }
@@ -158,11 +177,12 @@ gui_layout_buffer_save ()
  */
 
 int
-gui_layout_buffer_get_number (const char *plugin_name, const char *buffer_name)
+gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
+                              const char *plugin_name, const char *buffer_name)
 {
     struct t_gui_layout_buffer *ptr_layout_buffer;
     
-    for (ptr_layout_buffer = gui_layout_buffers; ptr_layout_buffer;
+    for (ptr_layout_buffer = layout_buffers; ptr_layout_buffer;
          ptr_layout_buffer = ptr_layout_buffer->next_layout)
     {
         if ((string_strcasecmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
@@ -177,22 +197,23 @@ gui_layout_buffer_get_number (const char *plugin_name, const char *buffer_name)
 }
 
 /*
- * gui_layout_buffer_apply: apply current layout for buffers
+ * gui_layout_buffer_apply: apply a layout for buffers
  */
 
 void
-gui_layout_buffer_apply ()
+gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
 {
     struct t_gui_buffer *ptr_buffer;
     const char *plugin_name;
     
-    if (gui_layout_buffers)
+    if (layout_buffers)
     {
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
             plugin_name = plugin_get_name (ptr_buffer->plugin);
-            ptr_buffer->layout_number = gui_layout_buffer_get_number (plugin_name,
+            ptr_buffer->layout_number = gui_layout_buffer_get_number (layout_buffers,
+                                                                      plugin_name,
                                                                       ptr_buffer->name);
             if ((ptr_buffer->layout_number > 0)
                 && (ptr_buffer->layout_number != ptr_buffer->number))
@@ -231,12 +252,12 @@ gui_layout_window_remove (struct t_gui_layout_window *layout_window)
  */
 
 void
-gui_layout_window_remove_all ()
+gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows)
 {
-    if (gui_layout_windows)
+    if (*layout_windows)
     {
-        gui_layout_window_remove (gui_layout_windows);
-        gui_layout_windows = NULL;
+        gui_layout_window_remove (*layout_windows);
+        *layout_windows = NULL;
     }
 }
 
@@ -245,11 +266,11 @@ gui_layout_window_remove_all ()
  */
 
 void
-gui_layout_window_reset ()
+gui_layout_window_reset (struct t_gui_layout_window **layout_windows)
 {
     struct t_gui_window *ptr_win;
     
-    gui_layout_window_remove_all ();
+    gui_layout_window_remove_all (layout_windows);
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -267,28 +288,32 @@ gui_layout_window_reset ()
 }
 
 /*
- * gui_layout_window_search_by_id_tree: search a layout window by internal id
- *                                      in a tree
+ * gui_layout_window_search_by_id: search a layout window by internal id
+ *                                 in a layout
  */
 
 struct t_gui_layout_window *
-gui_layout_window_search_by_id_tree (struct t_gui_layout_window *tree, int id)
+gui_layout_window_search_by_id (struct t_gui_layout_window *layout_windows,
+                                int id)
 {
     struct t_gui_layout_window *res;
     
-    if (tree->internal_id == id)
-        return tree;
+    if (!layout_windows)
+        return NULL;
     
-    if (tree->child1)
+    if (layout_windows->internal_id == id)
+        return layout_windows;
+    
+    if (layout_windows->child1)
     {
-        res = gui_layout_window_search_by_id_tree (tree->child1, id);
+        res = gui_layout_window_search_by_id (layout_windows->child1, id);
         if (res)
             return res;
     }
     
-    if (tree->child2)
+    if (layout_windows->child2)
     {
-        res = gui_layout_window_search_by_id_tree (tree->child2, id);
+        res = gui_layout_window_search_by_id (layout_windows->child2, id);
         if (res)
             return res;
     }
@@ -297,24 +322,12 @@ gui_layout_window_search_by_id_tree (struct t_gui_layout_window *tree, int id)
 }
 
 /*
- * gui_layout_window_search_by_id: search a layout window by internal id
- */
-
-struct t_gui_layout_window *
-gui_layout_window_search_by_id (int id)
-{
-    if (!gui_layout_windows)
-        return NULL;
-    
-    return gui_layout_window_search_by_id_tree (gui_layout_windows, id);
-}
-
-/*
  * gui_layout_window_add: add a window layout
  */
 
 struct t_gui_layout_window *
-gui_layout_window_add (int internal_id,
+gui_layout_window_add (struct t_gui_layout_window **layout_windows,
+                       int internal_id,
                        struct t_gui_layout_window *parent,
                        int split_pct, int split_horiz,
                        const char *plugin_name, const char *buffer_name)
@@ -345,7 +358,7 @@ gui_layout_window_add (int internal_id,
         else
         {
             /* no parent? => it's root! */
-            gui_layout_windows = new_layout_window;
+            *layout_windows = new_layout_window;
         }
     }
     
@@ -357,14 +370,19 @@ gui_layout_window_add (int internal_id,
  */
 
 void
-gui_layout_window_save_tree (struct t_gui_layout_window *parent_layout,
+gui_layout_window_save_tree (struct t_gui_layout_window **layout_windows,
+                             struct t_gui_layout_window *parent_layout,
                              struct t_gui_window_tree *tree)
 {
     struct t_gui_layout_window *layout_window;
     
     if (tree->window)
     {
-        layout_window = gui_layout_window_add (internal_id++,
+        if (tree->window == gui_current_window)
+            gui_layout_internal_id_current_window = gui_layout_internal_id;
+        
+        layout_window = gui_layout_window_add (layout_windows,
+                                               gui_layout_internal_id,
                                                parent_layout,
                                                0, 0,
                                                plugin_get_name (tree->window->buffer->plugin),
@@ -372,7 +390,8 @@ gui_layout_window_save_tree (struct t_gui_layout_window *parent_layout,
     }
     else
     {
-        layout_window = gui_layout_window_add (internal_id++,
+        layout_window = gui_layout_window_add (layout_windows,
+                                               gui_layout_internal_id,
                                                parent_layout,
                                                tree->split_pct,
                                                tree->split_horizontal,
@@ -380,24 +399,33 @@ gui_layout_window_save_tree (struct t_gui_layout_window *parent_layout,
                                                NULL);
     }
     
+    gui_layout_internal_id++;
+    
     if (tree->child1)
-        gui_layout_window_save_tree (layout_window, tree->child1);
+        gui_layout_window_save_tree (layout_windows,
+                                     layout_window, tree->child1);
     
     if (tree->child2)
-        gui_layout_window_save_tree (layout_window, tree->child2);
+        gui_layout_window_save_tree (layout_windows,
+                                     layout_window, tree->child2);
 }
 
 /*
  * gui_layout_window_save: save current layout for windows
+ *                         return internal id of current window
  */
 
-void
-gui_layout_window_save ()
+int
+gui_layout_window_save (struct t_gui_layout_window **layout_windows)
 {
-    gui_layout_window_remove_all ();
+    gui_layout_window_remove_all (layout_windows);
     
-    internal_id = 1;
-    gui_layout_window_save_tree (NULL, gui_windows_tree);
+    gui_layout_internal_id = 1;
+    gui_layout_internal_id_current_window = -1;
+    
+    gui_layout_window_save_tree (layout_windows, NULL, gui_windows_tree);
+    
+    return gui_layout_internal_id_current_window;
 }
 
 /*
@@ -464,7 +492,8 @@ gui_layout_window_check_all_buffers ()
  */
 
 void
-gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
+gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window,
+                              int internal_id_current_window)
 {
     struct t_gui_window *new_window, *old_window;
     
@@ -485,17 +514,22 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
         }
         
         if (layout_window->child2)
-            gui_layout_window_apply_tree (layout_window->child2);
+            gui_layout_window_apply_tree (layout_window->child2,
+                                          internal_id_current_window);
         
         if (old_window != gui_current_window)
             gui_window_switch (old_window);
         
         if (layout_window->child1)
-            gui_layout_window_apply_tree (layout_window->child1);
+            gui_layout_window_apply_tree (layout_window->child1,
+                                          internal_id_current_window);
     }
     else
     {
         /* leaf */
+        if (layout_window->internal_id == internal_id_current_window)
+            gui_layout_ptr_current_window = gui_current_window;
+        
         gui_window_set_layout_plugin_name (gui_current_window,
                                            layout_window->plugin_name);
         gui_window_set_layout_buffer_name (gui_current_window,
@@ -508,21 +542,25 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
  */
 
 void
-gui_layout_window_apply ()
+gui_layout_window_apply (struct t_gui_layout_window *layout_windows,
+                         int internal_id_current_window)
 {
     struct t_gui_window *old_window;
     
-    if (gui_layout_windows)
+    if (layout_windows)
     {
         gui_window_merge_all (gui_current_window);
         
         old_window = gui_current_window;
+        gui_layout_ptr_current_window = NULL;
         
-        gui_layout_window_apply_tree (gui_layout_windows);
+        gui_layout_window_apply_tree (layout_windows,
+                                      internal_id_current_window);
         
         gui_layout_window_check_all_buffers ();
         
-        gui_window_switch (old_window);
+        gui_window_switch ((gui_layout_ptr_current_window) ?
+                           gui_layout_ptr_current_window : old_window);
     }
 }
 
@@ -540,14 +578,14 @@ gui_layout_save_on_exit ()
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE:
             break;
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS:
-            gui_layout_buffer_save ();
+            gui_layout_buffer_save (&gui_layout_buffers, &last_gui_layout_buffer);
             break;
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS:
-            gui_layout_window_save ();
+            gui_layout_window_save (&gui_layout_windows);
             break;
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL:
-            gui_layout_buffer_save ();
-            gui_layout_window_save ();
+            gui_layout_buffer_save (&gui_layout_buffers, &last_gui_layout_buffer);
+            gui_layout_window_save (&gui_layout_windows);
             break;
     }
 }

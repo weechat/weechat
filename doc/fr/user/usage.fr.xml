@@ -511,6 +511,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
+              <entry>Alt + Z</entry>
+              <entry>
+                Zoom sur la fenêtre courante
+              </entry>
+            </row>
+            <row>
               <entry>Alt + =</entry>
               <entry>
                 Active/désactive les filtres

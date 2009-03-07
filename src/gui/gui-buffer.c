@@ -292,7 +292,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->plugin = plugin;
         new_buffer->plugin_name_for_upgrade = NULL;
         /* number will be set later (when inserting buffer in list) */
-        new_buffer->layout_number = gui_layout_buffer_get_number (plugin_get_name (plugin),
+        new_buffer->layout_number = gui_layout_buffer_get_number (gui_layout_buffers,
+                                                                  plugin_get_name (plugin),
                                                                   name);
         new_buffer->name = strdup (name);
         new_buffer->short_name = strdup (name);

@@ -51,32 +51,41 @@ struct t_gui_layout_window
 /* layout variables */
 
 extern struct t_gui_layout_buffer *gui_layout_buffers;
-extern struct t_gui_layout_buffer *gui_layout_last_buffer;
+extern struct t_gui_layout_buffer *last_gui_layout_buffer;
 extern struct t_gui_layout_window *gui_layout_windows;
 
 /* layout functions */
 
-extern void gui_layout_buffer_remove_all ();
-extern void gui_layout_buffer_reset ();
-extern struct t_gui_layout_buffer *gui_layout_buffer_add (const char *plugin_name,
+extern void gui_layout_buffer_remove_all (struct t_gui_layout_buffer **layout_buffers,
+                                          struct t_gui_layout_buffer **last_layout_buffer);
+extern void gui_layout_buffer_reset (struct t_gui_layout_buffer **layout_buffers,
+                                          struct t_gui_layout_buffer **last_layout_buffer);
+extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout_buffer **layout_buffers,
+                                                          struct t_gui_layout_buffer **last_layout_buffer,
+                                                          const char *plugin_name,
                                                           const char *buffer_name,
                                                           int number);
-extern void gui_layout_buffer_save ();
-extern int gui_layout_buffer_get_number (const char *plugin_name,
+extern void gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
+                                    struct t_gui_layout_buffer **last_layout_buffer);
+extern int gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
+                                         const char *plugin_name,
                                          const char *buffer_name);
-extern void gui_layout_buffer_apply ();
+extern void gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers);
 
-extern void gui_layout_window_remove_all ();
-extern void gui_layout_window_reset ();
-extern struct t_gui_layout_window *gui_layout_window_search_by_id (int id);
-extern struct t_gui_layout_window *gui_layout_window_add (int internal_id,
+extern void gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows);
+extern void gui_layout_window_reset (struct t_gui_layout_window **layout_windows);
+extern struct t_gui_layout_window *gui_layout_window_search_by_id (struct t_gui_layout_window *layout_windows,
+                                                                   int id);
+extern struct t_gui_layout_window *gui_layout_window_add (struct t_gui_layout_window **layout_windows,
+                                                          int internal_id,
                                                           struct t_gui_layout_window *parent,
                                                           int split_pct,
                                                           int split_horiz,
                                                           const char *plugin_name,
                                                           const char *buffer_name);
-extern void gui_layout_window_save ();
-extern void gui_layout_window_apply ();
+extern int gui_layout_window_save (struct t_gui_layout_window **layout_windows);
+extern void gui_layout_window_apply (struct t_gui_layout_window *layout_windows,
+                                     int internal_id_current_window);
 extern void gui_layout_window_check_buffer (struct t_gui_buffer *buffer);
 
 extern void gui_layout_save_on_exit ();

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-01-31
+ChangeLog - 2009-03-07
 
 
 Version 0.2.7 (under dev!):
@@ -28,8 +28,10 @@ Version 0.2.7 (under dev!):
      option "name_lower_case" (bug #19522)
    * alias: fix bug with alias, use current buffer to run commands (bug #22876)
    * plugins: add some other plugins: alias, demo, fifo, notify, tcl, xfer
-   * api: add hooks: command, timer, file descriptor, connection, print, signal,
-     config, completion, modifier, info, infolist
+   * scripts: new scripts: buffers.pl, go.py, iset.pl, jabber.py, launcher.pl,
+     mastermind.pl, weetris.pl
+   * api: add hooks: command, timer, file descriptor, process, connection,
+     print, signal, config, completion, modifier, info, infolist
    * api: new plugin API with many new functions: hooks, buffer management and
      nicklist, bars, configuration files, network, infos/infolists, lists,
      upgrade
@@ -37,6 +39,7 @@ Version 0.2.7 (under dev!):
    * gui: add new type of buffer, with free content
    * gui: add tags for lines and custom filtering by tags or regex (task #7674)
    * gui: add custom bars, with custom items
+   * gui: add key to zoom a window (task #7470)
    * gui: add new option scroll_page_percent to choose percent of height to scroll
      with page_up and page_down keys (task #8702)
    * gui: add number of lines remaining after last line displayed in "-MORE-"

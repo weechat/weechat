@@ -1978,13 +1978,13 @@ command_layout (void *data, struct t_gui_buffer *buffer,
     {
         if (flag_buffers)
         {
-            gui_layout_buffer_save ();
+            gui_layout_buffer_save (&gui_layout_buffers, &last_gui_layout_buffer);
             gui_chat_printf (NULL,
                              _("Layout saved for buffers (order of buffers)"));
         }
         if (flag_windows)
         {
-            gui_layout_window_save ();
+            gui_layout_window_save (&gui_layout_windows);
             gui_chat_printf (NULL,
                              _("Layout saved for windows (buffer displayed by "
                                "each window)"));
@@ -1997,9 +1997,9 @@ command_layout (void *data, struct t_gui_buffer *buffer,
     if (string_strcasecmp (argv[1], "apply") == 0)
     {
         if (flag_buffers)
-            gui_layout_buffer_apply ();
+            gui_layout_buffer_apply (gui_layout_buffers);
         if (flag_windows)
-            gui_layout_window_apply ();
+            gui_layout_window_apply (gui_layout_windows, -1);
         
         return WEECHAT_RC_OK;
     }
@@ -2009,13 +2009,13 @@ command_layout (void *data, struct t_gui_buffer *buffer,
     {
         if (flag_buffers)
         {
-            gui_layout_buffer_reset ();
+            gui_layout_buffer_reset (&gui_layout_buffers, &last_gui_layout_buffer);
             gui_chat_printf (NULL,
                              _("Layout reset for buffers"));
         }
         if (flag_windows)
         {
-            gui_layout_window_reset ();
+            gui_layout_window_reset (&gui_layout_windows);
             gui_chat_printf (NULL,
                              _("Layout reset for windows"));
         }
@@ -3509,6 +3509,13 @@ command_window (void *data, struct t_gui_buffer *buffer,
             gui_window_scroll (gui_current_window, argv[2]);
         return WEECHAT_RC_OK;
     }
+
+    /* zoom window */
+    if (string_strcasecmp (argv[1], "zoom") == 0)
+    {
+        gui_window_zoom (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
     
     gui_chat_printf (NULL,
                      _("%sError: unknown option for \"%s\" "
@@ -3849,9 +3856,10 @@ command_init ()
                   N_("manage windows"),
                   N_("[list | -1 | +1 | b# | up | down | left | right | "
                      "splith [pct] | splitv [pct] | resize pct | "
-                     "merge [all] | page_up | page_down | scroll | scroll_up | "
-                     "scroll_down | scroll_top | scroll_bottom | "
-                     "scroll_previous_highlight | scroll_next_highlight ]"),
+                     "merge [all] | page_up | page_down | refresh | scroll | "
+                     "scroll_up | scroll_down | scroll_top | scroll_bottom | "
+                     "scroll_previous_highlight | scroll_next_highlight | "
+                     "zoom]"),
                   N_("  list: list opened windows (no parameter implies this "
                      "list)\n"
                      "           -1: jump to previous window\n"
@@ -3869,6 +3877,7 @@ command_init ()
                      "window)\n\n"
                      "      page_up: scroll one page up\n"
                      "    page_down: scroll one page down\n"
+                     "      refresh: refresh screen\n"
                      "       scroll: scroll number of lines (+/-N) or with time: "
                      "s=seconds, m=minutes, h=hours, d=days, M=months, y=years\n"
                      "    scroll_up: scroll a few lines up\n"
@@ -3877,7 +3886,7 @@ command_init ()
                      "scroll_bottom: scroll to bottom of buffer\n"
                      "scroll_previous_highlight: scroll to previous highlight\n"
                      "scroll_next_highlight: scroll to next highlight\n"
-                     "      refresh: refresh screen\n\n"
+                     "         zoom: zoom on window\n\n"
                      "For splith and splitv, pct is a percentage which "
                      "represents size of new window, computed with current "
                      "window as size reference. For example 25 means create a "
@@ -3888,9 +3897,9 @@ command_init ()
                      "  scroll 2 days up: /window scroll -2d\n"
                      "  scroll to beginning of current day: /window scroll -d"),
                      "list|-1|+1|up|down|left|right|splith|splitv|resize|merge|"
-                  "page_up|page_down|scroll_up|scroll|scroll_down|scroll_top|"
-                  "scroll_bottom|scroll_previous_highlight|"
-                  "scroll_next_highlight|refresh all",
+                  "page_up|page_down|refresh|scroll_up|scroll|scroll_down|"
+                  "scroll_top|scroll_bottom|scroll_previous_highlight|"
+                  "scroll_next_highlight|zoom all",
                   &command_window, NULL);
 }
 

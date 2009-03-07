@@ -415,8 +415,8 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     gui_bar_free_all ();
     
     /* remove layout */
-    gui_layout_buffer_reset ();
-    gui_layout_window_reset ();
+    gui_layout_buffer_reset (&gui_layout_buffers, &last_gui_layout_buffer);
+    gui_layout_window_reset (&gui_layout_windows);
     
     /* remove all filters */
     gui_filter_free_all ();
@@ -748,7 +748,9 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
                     number1 = strtol (argv[2], &error1, 10);
                     if (error1 && !error1[0])
                     {
-                        gui_layout_buffer_add (argv[0], argv[1], number1);
+                        gui_layout_buffer_add (&gui_layout_buffers,
+                                               &last_gui_layout_buffer,
+                                               argv[0], argv[1], number1);
                     }
                 }
                 string_free_exploded (argv);
@@ -772,8 +774,10 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
                     if (error1 && !error1[0] && error2 && !error2[0]
                         && error3 && !error3[0] && error4 && !error4[0])
                     {
-                        parent = gui_layout_window_search_by_id (number2);
-                        gui_layout_window_add (number1,
+                        parent = gui_layout_window_search_by_id (gui_layout_windows,
+                                                                 number2);
+                        gui_layout_window_add (&gui_layout_windows,
+                                               number1,
                                                parent,
                                                number3,
                                                number4,

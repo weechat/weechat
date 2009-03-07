@@ -135,6 +135,7 @@ extern void gui_window_search_start (struct t_gui_window *window);
 extern void gui_window_search_restart (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window);
 extern int gui_window_search_text (struct t_gui_window *window);
+extern void gui_window_zoom (struct t_gui_window *window);
 extern int gui_window_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_window *window);
 extern void gui_window_print_log ();

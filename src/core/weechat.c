@@ -411,7 +411,7 @@ main (int argc, char *argv[])
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv); 
     command_startup (1);                /* command executed after plugins   */
-    gui_layout_window_apply ();         /* apply saved layout for windows   */
+    gui_layout_window_apply (gui_layout_windows, -1); /* apply saved layout */
     weechat_upgrading = 0;
     
     gui_main_loop ();                   /* WeeChat main loop                */

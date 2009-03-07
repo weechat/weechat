@@ -481,6 +481,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
+              <entry>Alt + Z</entry>
+              <entry>
+                Zoom on current window
+              </entry>
+            </row>
+            <row>
               <entry>Alt + =</entry>
               <entry>
                 Toggle filters on/off

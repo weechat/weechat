@@ -138,6 +138,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-w,m-down    */ "meta-wmeta-meta2-B", "/window down");
     gui_keyboard_bind (NULL, /* m-w,m-left    */ "meta-wmeta-meta2-D", "/window left");
     gui_keyboard_bind (NULL, /* m-w,m-right   */ "meta-wmeta-meta2-C", "/window right");
+    gui_keyboard_bind (NULL, /* m-z           */ "meta-z",             "/window zoom");
     gui_keyboard_bind (NULL, /* m-=           */ "meta-=",             "/filter toggle");
     gui_keyboard_bind (NULL, /* m-0           */ "meta-0",             "/buffer 10");
     gui_keyboard_bind (NULL, /* m-1           */ "meta-1",             "/buffer 1");
