@@ -455,6 +455,7 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
                                          0, WEECHAT_LIST_POS_SORT);
 	    }
 	}
+        closedir (dp);
     }
     
     free (d_name);
