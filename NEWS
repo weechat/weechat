@@ -1,6 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2009-03-14
+
+    WeeChat 0.2.6.1 released.
+
+    This version fixes a major bug: crash with some special chars in IRC
+    messages.
+
 * FlashCode, 2007-09-06
 
     WeeChat 0.2.6 released.
