@@ -855,6 +855,7 @@ void
 irc_server_msgq_add_msg (t_irc_server *server, char *msg)
 {
     t_irc_message *message;
+    char *ptr_data;
     
     if (!server->unterminated_message && !msg[0])
         return;
@@ -891,7 +892,22 @@ irc_server_msgq_add_msg (t_irc_server *server, char *msg)
     else
         message->data = strdup (msg);
     message->next_message = NULL;
-
+    
+    /* remove any WeeChat color code in message
+       (must not be in received message!) */
+    ptr_data = message->data;
+    while (ptr_data && ptr_data[0])
+    {
+        if ((ptr_data[0] == GUI_ATTR_WEECHAT_COLOR_CHAR)
+            || (ptr_data[0] == GUI_ATTR_WEECHAT_SET_CHAR)
+            || (ptr_data[0] == GUI_ATTR_WEECHAT_REMOVE_CHAR)
+            || (ptr_data[0] == GUI_ATTR_WEECHAT_RESET_CHAR))
+        {
+            ptr_data[0] = '?';
+        }
+        ptr_data++;
+    }
+    
     if (irc_msgq_last_msg)
     {
         irc_msgq_last_msg->next_message = message;
