@@ -543,7 +543,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     int i, length_allowed, num_spaces;
     
     /* display time */
-    if (line->str_time && line->str_time[0])
+    if (window->buffer->time_for_each_line && (line->str_time && line->str_time[0]))
     {
         if (!simulate)
             gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
@@ -728,7 +728,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
     
     /* calculate marker position (maybe not used for this line!) */
-    if (line->str_time)
+    if (window->buffer->time_for_each_line && line->str_time)
         read_marker_x = x + gui_chat_strlen_screen (line->str_time);
     else
         read_marker_x = x;

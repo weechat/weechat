@@ -7016,8 +7016,12 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer, const char *propert
                       <entry>number of buffer (1 to # open buffers)</entry>
                     </row>
                     <row>
+                      <entry>num_displayed</entry>
+                      <entry>number of windows displaying buffer</entry>
+                    </row>
+                    <row>
                       <entry>notify</entry>
-                      <entry>notify level on buffer</entry>
+                      <entry>notify level for buffer</entry>
                     </row>
                     <row>
                       <entry>lines_hidden</entry>
@@ -7025,6 +7029,31 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer, const char *propert
                         1 if at least one line is hidden on buffer
                         (filtered), or 0 if all lines are displayed
                       </entry>
+                    </row>
+                    <row>
+                      <entry>prefix_max_length</entry>
+                      <entry>max length for prefix in this buffer</entry>
+                    </row>
+                    <row>
+                      <entry>time_for_each_line</entry>
+                      <entry>
+                        1 if time is displayed for each line in buffer
+                        (default), 0 otherwise
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>text_search</entry>
+                      <entry>
+                        text search type: 0 = disabled, 1 = backward, 2 = forward
+                      </entry>
+                    </row>
+                    <row>
+                      <entry>text_search_exact</entry>
+                      <entry>1 if text search is exact (case sensitive)</entry>
+                    </row>
+                    <row>
+                      <entry>text_search_found</entry>
+                      <entry>1 if text found, 0 otherwise</entry>
                     </row>
                   </tbody>
                 </tgroup>
@@ -7285,6 +7314,14 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                       <entry>title</entry>
                       <entry>any string</entry>
                       <entry>set new title for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>time_for_each_line</entry>
+                      <entry>"0" or "1"</entry>
+                      <entry>
+                        "0" to hide time for all lines in buffer, "1" to
+                        see time for all lines (default for a new buffer)
+                      </entry>
                     </row>
                     <row>
                       <entry>nicklist</entry>

@@ -380,11 +380,13 @@ int
 gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
                          int with_suffix)
 {
-    int length_suffix;
+    int time_length, length_suffix;
+    
+    time_length = (buffer->time_for_each_line) ? gui_chat_time_length : 0;
     
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
-        return gui_chat_time_length + 1 + line->prefix_length + 2;
-
+        return time_length + 1 + line->prefix_length + 2;
+    
     length_suffix = 0;
     if (with_suffix)
     {
@@ -392,7 +394,7 @@ gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
             && CONFIG_STRING(config_look_prefix_suffix)[0])
             length_suffix = gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix)) + 1;
     }
-    return gui_chat_time_length + ((buffer->prefix_max_length > 0) ? 1 : 0) +
+    return time_length + ((buffer->prefix_max_length > 0) ? 1 : 0) +
         + (((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
             && (buffer->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
            CONFIG_INTEGER(config_look_prefix_align_max) : buffer->prefix_max_length)

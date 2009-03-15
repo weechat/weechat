@@ -316,6 +316,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->lines_count = 0;
         new_buffer->lines_hidden = 0;
         new_buffer->prefix_max_length = 0;
+        new_buffer->time_for_each_line = 1;
         new_buffer->chat_refresh_needed = 2;
         
         /* nicklist */
@@ -540,6 +541,10 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->notify;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines_hidden;
+        else if (string_strcasecmp (property, "prefix_max_length") == 0)
+            return buffer->prefix_max_length;
+        else if (string_strcasecmp (property, "time_for_each_line") == 0)
+            return buffer->time_for_each_line;
         else if (string_strcasecmp (property, "text_search") == 0)
             return buffer->text_search;
         else if (string_strcasecmp (property, "text_search_exact") == 0)
@@ -680,6 +685,18 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
     
     hook_signal_send ("buffer_title_changed",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * gui_buffer_set_time_for_each_line: set flag "time for each line" for a buffer
+ */
+
+void
+gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
+                                   int time_for_each_line)
+{
+    buffer->time_for_each_line = (time_for_each_line) ? 1 : 0;
+    gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
 /*
@@ -875,6 +892,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "title") == 0)
     {
         gui_buffer_set_title (buffer, value);
+    }
+    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_buffer_set_time_for_each_line (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist") == 0)
     {
@@ -1517,6 +1541,10 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines_hidden))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "prefix_max_length", buffer->prefix_max_length))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "time_for_each_line", buffer->time_for_each_line))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_case_sensitive", buffer->nicklist_case_sensitive))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_display_groups", buffer->nicklist_display_groups))
@@ -1757,6 +1785,7 @@ gui_buffer_print_log ()
         log_printf ("  lines_count. . . . . . : %d",    ptr_buffer->lines_count);
         log_printf ("  lines_hidden . . . . . : %d",    ptr_buffer->lines_hidden);
         log_printf ("  prefix_max_length. . . : %d",    ptr_buffer->prefix_max_length);
+        log_printf ("  time_for_each_line . . : %d",    ptr_buffer->time_for_each_line);
         log_printf ("  chat_refresh_needed. . : %d",    ptr_buffer->chat_refresh_needed);
         log_printf ("  nicklist . . . . . . . : %d",    ptr_buffer->nicklist);
         log_printf ("  nicklist_case_sensitive: %d",    ptr_buffer->nicklist_case_sensitive);

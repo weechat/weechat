@@ -112,6 +112,7 @@ struct t_gui_buffer
     int lines_count;                   /* number of lines in the buffer     */
     int lines_hidden;                  /* 1 if at least one line is hidden  */
     int prefix_max_length;             /* length for prefix align           */
+    int time_for_each_line;            /* time is displayed for each line?  */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
     
