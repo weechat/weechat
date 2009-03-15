@@ -51,6 +51,7 @@ struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_channel_modes;
 struct t_config_option *irc_config_look_display_nick_modes;
+struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_notice_as_pv;
@@ -1078,6 +1079,12 @@ irc_config_init ()
         N_("display nick modes in \"input_prompt\" bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_look_display_nick_modes, NULL, NULL, NULL);
+    irc_config_look_display_old_topic = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_old_topic", "boolean",
+        N_("display old topic when channel topic is changed"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_hide_nickserv_pwd = weechat_config_new_option (
         irc_config_file, ptr_section,
         "hide_nickserv_pwd", "boolean",

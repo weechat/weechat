@@ -203,7 +203,7 @@ masque_serveur: liste des serveurs correspondant au masque
 
 <command>/list  [canal[,canal] [serveur]]</command>
 <programlisting>
-lister les canaux et leur sujet
+lister les canaux et leur titre
 
 canal: canal à lister (une expression régulière est acceptée)
 serveur: nom du serveur

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-15 11:55+0100\n"
+"POT-Creation-Date: 2009-03-15 12:35+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3510,6 +3510,9 @@ msgstr ""
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr ""
 
+msgid "display old topic when channel topic is changed"
+msgstr ""
+
 msgid "hide password displayed by nickserv"
 msgstr "Von NickServ angezeigte Passwörter verstecken"
 
@@ -3785,7 +3788,11 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s \"%s\"-Befehl empfangen ohne Channel\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+msgstr "%s%s%s setzt das Topic für %s%s%s auf:"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s setzt das Topic für %s%s%s auf:"
 
 #, fuzzy, c-format
@@ -3852,7 +3859,7 @@ msgid "%sNo topic set for channel %s%s"
 msgstr "Kein Topic gesetzt für %s%s\n"
 
 #, fuzzy, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
+msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "Das Topic von %s%s%s lautet: "
 
 #, fuzzy, c-format

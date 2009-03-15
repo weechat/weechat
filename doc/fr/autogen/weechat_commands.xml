@@ -116,6 +116,8 @@ extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les
             tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
            regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
 
+La touche par défaut alt+'=' active/désactive le filtrage.
+
 Exemples:
   utiliser le filtre intelligent IRC pour les messages join/part/quit:
     /filter add irc_smart * irc_smart_filter *
@@ -281,7 +283,7 @@ montrer l'uptime de WeeChat
 -o: envoyer l'uptime sur le canal courant en tant que message IRC
 </programlisting>
 
-<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight]</command>
+<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>
 <programlisting>
 gestion des fenêtres
 
@@ -299,6 +301,7 @@ gestion des fenêtres
         merge: fusionne la fenêtre avec une autre
       page_up: défilement d'une page vers le haut
     page_down: défilement d'une page vers le bas
+      refresh: redessine l'écran
        scroll: défilement d'un nombre de lignes (+/-N) ou avec du temps: s=secondes, m=minutes, h=heures, d=jours, M=mois, y=année
     scroll_up: défilement de quelques lignes vers le haut
   scroll_down: défilement de quelques lignes vers le bas
@@ -306,7 +309,7 @@ gestion des fenêtres
 scroll_bottom: défilement jusqu'au bas du tampon
 scroll_previous_highlight: défilement jusqu'au highlight précédent
 scroll_next_highlight: défilement jusqu'au highlight suivant
-      refresh: redessine l'écran
+         zoom: zoom sur la fenêtre
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
 

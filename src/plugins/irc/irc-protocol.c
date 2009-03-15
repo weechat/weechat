@@ -2272,7 +2272,7 @@ int
 irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
                         int argc, char **argv, char **argv_eol)
 {
-    char *pos_topic, *topic_color;
+    char *pos_topic, *old_topic_color, *topic_color;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
@@ -2306,20 +2306,47 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
         {
             topic_color = irc_color_decode (pos_topic,
                                             weechat_config_boolean (irc_config_network_colors_receive));
-            weechat_printf_tags (ptr_buffer,
-                                 irc_protocol_tags (command, NULL),
-                                 _("%s%s%s%s has changed topic for %s%s%s to: "
-                                   "\"%s%s\""),
-                                 (ptr_buffer == server->buffer) ?
-                                 irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                 nick,
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_CHANNEL,
-                                 argv[2],
-                                 IRC_COLOR_CHAT,
-                                 (topic_color) ? topic_color : pos_topic,
-                                 IRC_COLOR_CHAT);
+            if (weechat_config_boolean (irc_config_look_display_old_topic)
+                && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
+            {
+                old_topic_color = irc_color_decode (ptr_channel->topic,
+                                                    weechat_config_boolean (irc_config_network_colors_receive));
+                weechat_printf_tags (ptr_buffer,
+                                     irc_protocol_tags (command, NULL),
+                                     _("%s%s%s%s has changed topic for %s%s%s "
+                                       "from \"%s%s\" to \"%s%s\""),
+                                     (ptr_buffer == server->buffer) ?
+                                     irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     argv[2],
+                                     IRC_COLOR_CHAT,
+                                     (old_topic_color) ? old_topic_color : ptr_channel->topic,
+                                     IRC_COLOR_CHAT,
+                                     (topic_color) ? topic_color : pos_topic,
+                                     IRC_COLOR_CHAT);
+                if (old_topic_color)
+                    free (old_topic_color);
+            }
+            else
+            {
+                weechat_printf_tags (ptr_buffer,
+                                     irc_protocol_tags (command, NULL),
+                                     _("%s%s%s%s has changed topic for %s%s%s to "
+                                       "\"%s%s\""),
+                                     (ptr_buffer == server->buffer) ?
+                                     irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     argv[2],
+                                     IRC_COLOR_CHAT,
+                                     (topic_color) ? topic_color : pos_topic,
+                                     IRC_COLOR_CHAT);
+            }
             if (topic_color)
                 free (topic_color);
         }
@@ -3308,7 +3335,7 @@ irc_protocol_cmd_332 (struct t_irc_server *server, const char *command,
     
     weechat_printf_tags (ptr_buffer,
                          irc_protocol_tags (command, "irc_numeric"),
-                         _("%sTopic for %s%s%s is: \"%s%s\""),
+                         _("%sTopic for %s%s%s is \"%s%s\""),
                          (ptr_buffer == server->buffer) ?
                          irc_buffer_get_server_prefix (server, "network") : weechat_prefix ("network"),
                          IRC_COLOR_CHAT_CHANNEL,

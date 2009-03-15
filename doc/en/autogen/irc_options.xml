@@ -76,6 +76,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.display_old_topic</command>: display old topic when channel topic is changed
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.hide_nickserv_pwd</command>: hide password displayed by nickserv
 <itemizedlist>
   <listitem>

@@ -118,6 +118,8 @@ plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
          tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
         regex: regular expression to search in line (use \t to separate prefix from message)
 
+The default key alt+'=' toggles filtering on/off.
+
 Examples:
   use IRC smart filter for join/part/quit messages:
     /filter add irc_smart * irc_smart_filter *
@@ -282,7 +284,7 @@ zeigt die Uptime von Weechat an
 -o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel
 </programlisting>
 
-<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight ]</command>
+<command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>
 <programlisting>
 Fenster verwalten
 
@@ -301,6 +303,7 @@ Fenster verwalten
 
       page_up: scroll one page up
     page_down: scroll one page down
+      refresh: refresh screen
        scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
     scroll_up: scroll a few lines up
   scroll_down: scroll a few lines down
@@ -308,7 +311,7 @@ Fenster verwalten
 scroll_bottom: scroll to bottom of buffer
 scroll_previous_highlight: scroll to previous highlight
 scroll_next_highlight: scroll to next highlight
-      refresh: refresh screen
+         zoom: zoom on window
 
 For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 

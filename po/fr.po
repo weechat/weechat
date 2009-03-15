@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-15 11:55+0100\n"
-"PO-Revision-Date: 2009-03-15 11:56+0100\n"
+"POT-Creation-Date: 2009-03-15 12:35+0100\n"
+"PO-Revision-Date: 2009-03-15 12:35+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3003,7 +3003,7 @@ msgstr ""
 "masque_serveur: liste des serveurs correspondant au masque"
 
 msgid "list channels and their topic"
-msgstr "lister les canaux et leur sujet"
+msgstr "lister les canaux et leur titre"
 
 msgid "[channel[,channel] [server]]"
 msgstr "[canal[,canal] [serveur]]"
@@ -3641,6 +3641,9 @@ msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "affiche les modes du pseudo dans l'objet de barre \"input_prompt\""
 
+msgid "display old topic when channel topic is changed"
+msgstr "afficher l'ancien titre lorsque le titre du canal est changé"
+
 msgid "hide password displayed by nickserv"
 msgstr "masquer le mot de passe affiché par nickserv"
 
@@ -3910,8 +3913,12 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: commande \"%s\" reçue sans canal"
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
-msgstr "%s%s%s%s a changé le titre pour %s%s%s en: \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+msgstr "%s%s%s%s a changé le titre pour %s%s%s de \"%s%s\" en \"%s%s\""
+
+#, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
+msgstr "%s%s%s%s a changé le titre pour %s%s%s en \"%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s"
@@ -3979,8 +3986,8 @@ msgid "%sNo topic set for channel %s%s"
 msgstr "%sPas de titre défini pour le canal %s%s"
 
 #, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
-msgstr "%sLe titre pour %s%s%s est: \"%s%s\""
+msgid "%sTopic for %s%s%s is \"%s%s\""
+msgstr "%sLe titre pour %s%s%s est \"%s%s\""
 
 #, c-format
 msgid "%sTopic set by %s%s%s on %s"

@@ -76,6 +76,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.display_old_topic</command>: afficher l'ancien titre lorsque le titre du canal est changé
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.hide_nickserv_pwd</command>: masquer le mot de passe affiché par nickserv
 <itemizedlist>
   <listitem>

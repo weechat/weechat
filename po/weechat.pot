@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-15 11:55+0100\n"
+"POT-Creation-Date: 2009-03-15 12:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3009,6 +3009,9 @@ msgstr ""
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr ""
 
+msgid "display old topic when channel topic is changed"
+msgstr ""
+
 msgid "hide password displayed by nickserv"
 msgstr ""
 
@@ -3255,7 +3258,11 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr ""
 
 #, c-format
@@ -3320,7 +3327,7 @@ msgid "%sNo topic set for channel %s%s"
 msgstr ""
 
 #, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
+msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr ""
 
 #, c-format
