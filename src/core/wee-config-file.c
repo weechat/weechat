@@ -1078,7 +1078,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                 if (option->value)
                 {
-                    CONFIG_INTEGER(option) = 0;
+                    CONFIG_INTEGER(option) = -1;
                     if (option->string_values)
                     {
                         value_int = -1;
