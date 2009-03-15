@@ -8926,7 +8926,7 @@ else
     </para>
     
     <section id="secPluginCApi_weechat_info_get">
-      <title>weechat_into_get</title>
+      <title>weechat_info_get</title>
       
       <para>
         Prototype:
