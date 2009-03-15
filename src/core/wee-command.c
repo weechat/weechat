@@ -3670,6 +3670,7 @@ command_init ()
                      "example: \"irc_join,irc_part,irc_quit\"\n"
                      "        regex: regular expression to search in "
                      "line (use \\t to separate prefix from message)\n\n"
+                     "The default key alt+'=' toggles filtering on/off.\n\n"
                      "Examples:\n"
                      "  use IRC smart filter for join/part/quit messages:\n"
                      "    /filter add irc_smart * irc_smart_filter *\n"
