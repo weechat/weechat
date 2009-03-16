@@ -926,21 +926,29 @@ gui_window_zoom (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-
+    
     if (gui_window_layout_before_zoom)
     {
         /* restore layout as it was before zooming a window */
+        hook_signal_send ("window_unzoom",
+                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
         gui_layout_window_apply (gui_window_layout_before_zoom,
                                  gui_window_layout_id_current_window);
         gui_layout_window_remove_all (&gui_window_layout_before_zoom);
         gui_window_layout_id_current_window = -1;
+        hook_signal_send ("window_unzoomed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
     }
     else
     {
         /* save layout and zoom on current window */
+        hook_signal_send ("window_zoom",
+                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
         gui_window_layout_id_current_window =
             gui_layout_window_save (&gui_window_layout_before_zoom);
         gui_window_merge_all (window);
+        hook_signal_send ("window_zoomed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
     }
 }
 
