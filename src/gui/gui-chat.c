@@ -507,7 +507,7 @@ gui_chat_line_search (struct t_gui_line *line, const char *text,
     
     if (line->prefix)
     {
-        prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+        prefix = gui_color_decode (line->prefix, NULL);
         if (prefix)
         {
             if ((case_sensitive && (strstr (prefix, text)))
@@ -519,7 +519,7 @@ gui_chat_line_search (struct t_gui_line *line, const char *text,
     
     if (!rc)
     {
-        message = (char *)gui_color_decode ((unsigned char *)line->message);
+        message = gui_color_decode (line->message, NULL);
         if (message)
         {
             if ((case_sensitive && (strstr (message, text)))
@@ -555,7 +555,7 @@ gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
 
     if (line->prefix)
     {
-        prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+        prefix = gui_color_decode (line->prefix, NULL);
         if (!prefix
             || (regex_prefix && (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)))
             match_prefix = 0;
@@ -568,7 +568,7 @@ gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
 
     if (line->message)
     {
-        message = (char *)gui_color_decode ((unsigned char *)line->message);
+        message = gui_color_decode (line->message, NULL);
         if (!message
             || (regex_message && (regexec (regex_message, message, 0, NULL, 0) != 0)))
             match_message = 0;
@@ -654,7 +654,7 @@ gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
     }
     
     /* remove color codes from line message */
-    msg_no_color = (char *)gui_color_decode ((unsigned char *)line->message);
+    msg_no_color = gui_color_decode (line->message, NULL);
     if (!msg_no_color)
         return 0;
     
@@ -803,7 +803,7 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
 
     if (string)
     {
-        string_without_colors = (char *)gui_color_decode ((unsigned char *)string);
+        string_without_colors = gui_color_decode (string, NULL);
         if (string_without_colors)
         {
             free (string);

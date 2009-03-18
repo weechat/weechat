@@ -443,7 +443,7 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
                                      int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result, *string;
+    char *result, *replacement, *string;
     int i; 
     
     /* make C compiler happy */
@@ -455,14 +455,15 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    if (objc < 2)
+    if (objc < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
         TCL_RETURN_EMPTY;
     }
     
     string = Tcl_GetStringFromObj (objv[1], &i);
-    result = weechat_string_remove_color (string);
+    replacement = Tcl_GetStringFromObj (objv[2], &i);
+    result = weechat_string_remove_color (string, replacement);
     
     TCL_RETURN_STRING_FREE(result);
 }

@@ -316,7 +316,7 @@ static XS (XS_weechat_api_ngettext)
 
 static XS (XS_weechat_api_string_remove_color)
 {
-    char *result, *string;
+    char *result, *string, *replacement;
     dXSARGS;
     
     /* make C compiler happy */
@@ -328,14 +328,15 @@ static XS (XS_weechat_api_string_remove_color)
         PERL_RETURN_EMPTY;
     }
     
-    if (items < 1)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
         PERL_RETURN_EMPTY;
     }
     
     string = SvPV (ST (0), PL_na);
-    result = weechat_string_remove_color (string);
+    replacement = SvPV (ST (1), PL_na);
+    result = weechat_string_remove_color (string, replacement);
     
     PERL_RETURN_STRING_FREE(result);
 }

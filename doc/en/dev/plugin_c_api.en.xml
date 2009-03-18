@@ -1099,6 +1099,53 @@ if (str)
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_string_remove_color">
+      <title>weechat_string_remove_color</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+char *weechat_string_remove_color (const char *string, const char *replacement);
+</programlisting>
+      </para>
+      <para>
+        Remove WeeChat colors from a string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>replacement</option>: if not NULL and not empty, WeeChat
+              color codes are replaced by first char of this string, otherwise
+              WeeChat color codes and following chars (if related to color) are
+              removed from string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string without color.
+      </para>
+      <note>
+        <para>
+          Result has to be free by a call to "free" after use.
+        </para>
+      </note>
+      <para>
+        Example:
+<screen>
+char *str1 = weechat_string_remove_color (my_string1, NULL); /* remove colors and related chars */
+char *str2 = weechat_string_remove_color (my_string2, "?"); /* replace color codes by "?" */
+</screen>
+      </para>
+    </section>
+    
   </section>
   
   <!-- ==============================[ UTF-8 ]============================= -->

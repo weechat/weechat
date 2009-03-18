@@ -324,7 +324,7 @@ weechat_python_api_ngettext (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
 {
-    char *string, *result;
+    char *string, *replacement, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -337,14 +337,15 @@ weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
     }
     
     string = NULL;
+    replacement = NULL;
     
-    if (!PyArg_ParseTuple (args, "s", &string))
+    if (!PyArg_ParseTuple (args, "ss", &string, &replacement))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
         PYTHON_RETURN_EMPTY;
     }
     
-    result = weechat_string_remove_color (string);
+    result = weechat_string_remove_color (string, replacement);
     
     PYTHON_RETURN_STRING_FREE(result);
 }

@@ -372,9 +372,10 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
  */
 
 static VALUE
-weechat_ruby_api_string_remove_color (VALUE class, VALUE string)
+weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
+                                      VALUE replacement)
 {
-    char *c_string, *result;
+    char *c_string, *c_replacement, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -387,18 +388,21 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string)
     }
     
     c_string = NULL;
+    c_replacement = NULL;
     
-    if (NIL_P (string))
+    if (NIL_P (string) || NIL_P (replacement))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (string, T_STRING);
+    Check_Type (replacement, T_STRING);
     
     c_string = STR2CSTR (string);
+    c_replacement = STR2CSTR (replacement);
     
-    result = weechat_string_remove_color (c_string);
+    result = weechat_string_remove_color (c_string, c_replacement);
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -6580,7 +6584,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "iconv_from_internal", &weechat_ruby_api_iconv_from_internal, 2);
     rb_define_module_function (ruby_mWeechat, "gettext", &weechat_ruby_api_gettext, 1);
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
-    rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 1);
+    rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir_home", &weechat_ruby_api_mkdir_home, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir", &weechat_ruby_api_mkdir, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir_parents", &weechat_ruby_api_mkdir_parents, 2);

@@ -48,6 +48,7 @@
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
@@ -412,7 +413,7 @@ plugin_load (const char *filename)
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_splitted_command = &string_free_splitted_command;
         new_plugin->string_format_size = &string_format_size;
-        new_plugin->string_remove_color = &string_remove_color;
+        new_plugin->string_remove_color = &gui_color_decode;
         
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

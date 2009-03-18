@@ -227,12 +227,18 @@ gui_color_get_custom (const char *color_name)
 
 /*
  * gui_color_decode: parses a message and remove WeeChat color codes
+ *                   if replacement is not NULL and not empty, it is used to
+ *                      replace color codes by first char of replacement (and
+ *                      next chars in string are NOT removed)
+ *                   if replacement is NULL or empty, color codes are removed,
+ *                      with following chars if they are related to color code
  *                   After use, string returned has to be free()
  */
 
-unsigned char *
-gui_color_decode (const unsigned char *string)
+char *
+gui_color_decode (const char *string, const char *replacement)
 {
+    const unsigned char *ptr_string;
     unsigned char *out;
     int out_length, out_pos, length;
     
@@ -244,65 +250,88 @@ gui_color_decode (const unsigned char *string)
     if (!out)
         return NULL;
     
+    ptr_string = (unsigned char *)string;
     out_pos = 0;
-    while (string && string[0] && (out_pos < out_length - 1))
+    while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
     {
-        switch (string[0])
+        switch (ptr_string[0])
         {
             case GUI_COLOR_COLOR_CHAR:
-                string++;
-                switch (string[0])
+                ptr_string++;
+                if (replacement && replacement[0])
                 {
-                    case GUI_COLOR_FG_CHAR:
-                    case GUI_COLOR_BG_CHAR:
-                        if (string[1] && string[2])
-                            string += 3;
-                        break;
-                    case GUI_COLOR_FG_BG_CHAR:
-                        if (string[1] && string[2] && (string[3] == ',')
-                            && string[4] && string[5])
-                            string += 6;
-                        break;
-                    case GUI_COLOR_BAR_CHAR:
-                        string++;
-                        switch (string[0])
-                        {
-                            case GUI_COLOR_BAR_FG_CHAR:
-                            case GUI_COLOR_BAR_BG_CHAR:
-                            case GUI_COLOR_BAR_DELIM_CHAR:
-                            case GUI_COLOR_BAR_START_INPUT_CHAR:
-                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                                string++;
-                                break;
-                        }
-                        break;
-                    default:
-                        if (isdigit (string[0]) && isdigit (string[1]))
-                            string += 2;
-                        break;
+                    out[out_pos] = replacement[0];
+                    out_pos++;
+                }
+                else
+                {
+                    switch (ptr_string[0])
+                    {
+                        case GUI_COLOR_FG_CHAR:
+                        case GUI_COLOR_BG_CHAR:
+                            if (ptr_string[1] && ptr_string[2])
+                                ptr_string += 3;
+                            break;
+                        case GUI_COLOR_FG_BG_CHAR:
+                            if (ptr_string[1] && ptr_string[2] && (ptr_string[3] == ',')
+                                && ptr_string[4] && ptr_string[5])
+                                ptr_string += 6;
+                            break;
+                        case GUI_COLOR_BAR_CHAR:
+                            ptr_string++;
+                            switch (ptr_string[0])
+                            {
+                                case GUI_COLOR_BAR_FG_CHAR:
+                                case GUI_COLOR_BAR_BG_CHAR:
+                                case GUI_COLOR_BAR_DELIM_CHAR:
+                                case GUI_COLOR_BAR_START_INPUT_CHAR:
+                                case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                                    ptr_string++;
+                                    break;
+                            }
+                            break;
+                        default:
+                            if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+                                ptr_string += 2;
+                            break;
+                    }
                 }
                 break;
             case GUI_COLOR_SET_WEECHAT_CHAR:
             case GUI_COLOR_REMOVE_WEECHAT_CHAR:
-                string++;
-                if (string[0])
-                    string++;
+                ptr_string++;
+                if (replacement && replacement[0])
+                {
+                    out[out_pos] = replacement[0];
+                    out_pos++;
+                }
+                else
+                {
+                    if (ptr_string[0])
+                        ptr_string++;
+                }
                 break;
             case GUI_COLOR_RESET_CHAR:
-                string++;
+                ptr_string++;
+                if (replacement && replacement[0])
+                {
+                    out[out_pos] = replacement[0];
+                    out_pos++;
+                }
                 break;
             default:
-                length = utf8_char_size ((char *)string);
+                length = utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, string, length);
+                memcpy (out + out_pos, ptr_string, length);
                 out_pos += length;
-                string += length;
+                ptr_string += length;
                 break;
         }
     }
     out[out_pos] = '\0';
-    return out;
+    
+    return (char *)out;
 }
 
 /*

@@ -371,7 +371,7 @@ weechat_lua_api_ngettext (lua_State *L)
 static int
 weechat_lua_api_string_remove_color (lua_State *L)
 {
-    const char *string;
+    const char *string, *replacement;
     char *result;
     int n;
     
@@ -388,15 +388,16 @@ weechat_lua_api_string_remove_color (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 1)
+    if (n < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
         LUA_RETURN_EMPTY;
     }
     
-    string = lua_tostring (lua_current_interpreter, -1);
+    string = lua_tostring (lua_current_interpreter, -2);
+    replacement = lua_tostring (lua_current_interpreter, -1);
     
-    result = weechat_string_remove_color (string);
+    result = weechat_string_remove_color (string, replacement);
     
     LUA_RETURN_STRING_FREE(result);
 }

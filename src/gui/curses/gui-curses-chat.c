@@ -597,7 +597,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         prefix_highlighted = NULL;
         if (line->highlight)
         {
-            prefix_highlighted = (char *)gui_color_decode ((unsigned char *)line->prefix);
+            prefix_highlighted = gui_color_decode (line->prefix, NULL);
             if (!simulate)
             {
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,

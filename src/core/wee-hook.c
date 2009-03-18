@@ -1372,10 +1372,9 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
     if (!line->message || !line->message[0])
         return;
     
-    prefix_no_color = (line->prefix) ?
-        (char *)gui_color_decode ((unsigned char *)line->prefix) : NULL;
+    prefix_no_color = (line->prefix) ? gui_color_decode (line->prefix, NULL) : NULL;
     
-    message_no_color = (char *)gui_color_decode ((unsigned char *)line->message);
+    message_no_color = gui_color_decode (line->message, NULL);
     if (!message_no_color)
     {
         free (prefix_no_color);

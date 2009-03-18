@@ -1699,7 +1699,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
     {
         /* display line without colors */
         message_without_colors = (ptr_line->message) ?
-            (char *)gui_color_decode ((unsigned char *)ptr_line->message) : NULL;
+            gui_color_decode (ptr_line->message, NULL) : NULL;
         log_printf ("");
         log_printf ("  line %d: %s",
                     num_line,
