@@ -54,12 +54,13 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
  * irc_color_decode: replace IRC colors by WeeChat colors
  *                   if keep_colors == 0: remove any color/style in message
  *                   otherwise: keep colors
-x *                   Note: after use, string returned has to be free()
+ *                   Note: after use, string returned has to be free()
  */
 
 char *
 irc_color_decode (const char *string, int keep_colors)
 {
+    char *string_without_weechat_colors;
     unsigned char *out, *ptr_string;
     int out_length, length, out_pos;
     char str_fg[3], str_bg[3], str_color[128];
@@ -75,7 +76,9 @@ irc_color_decode (const char *string, int keep_colors)
     italic = 0;
     underline = 0;
     
-    ptr_string = (unsigned char *)string;
+    string_without_weechat_colors = weechat_string_remove_color (string, "?");
+    ptr_string = (string_without_weechat_colors) ?
+        (unsigned char *)string_without_weechat_colors : (unsigned char *)string;
     out[0] = '\0';
     while (ptr_string && ptr_string[0])
     {
@@ -192,6 +195,9 @@ irc_color_decode (const char *string, int keep_colors)
                 break;
         }
     }
+    
+    if (string_without_weechat_colors)
+        free (string_without_weechat_colors);
     
     return (char *)out;
 }
