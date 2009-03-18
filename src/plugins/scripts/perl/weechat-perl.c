@@ -40,7 +40,9 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_perl_plugin = NULL;
 
+int perl_quiet = 0;
 struct t_plugin_script *perl_scripts = NULL;
+struct t_plugin_script *last_perl_script = NULL;
 struct t_plugin_script *perl_current_script = NULL;
 const char *perl_current_script_filename = NULL;
 
@@ -259,9 +261,12 @@ weechat_perl_load (const char *filename)
         return 0;
     }
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: loading script \"%s\""),
-                    PERL_PLUGIN_NAME, filename);
+    if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: loading script \"%s\""),
+                        PERL_PLUGIN_NAME, filename);
+    }
     
     perl_current_script = NULL;
     
@@ -354,7 +359,8 @@ weechat_perl_load (const char *filename)
 #endif
 	if (perl_current_script && (perl_current_script != &temp_script))
         {
-            script_remove (weechat_perl_plugin, &perl_scripts,
+            script_remove (weechat_perl_plugin,
+                           &perl_scripts, &last_perl_script,
                            perl_current_script);
         }
 	
@@ -436,7 +442,8 @@ weechat_perl_unload (struct t_plugin_script *script)
         perl_current_script = (perl_current_script->prev_script) ?
             perl_current_script->prev_script : perl_current_script->next_script;
     
-    script_remove (weechat_perl_plugin, &perl_scripts, script);
+    script_remove (weechat_perl_plugin, &perl_scripts, &last_perl_script,
+                   script);
     
 #ifdef MULTIPLICITY
     perl_destruct (interpreter);
@@ -592,8 +599,8 @@ weechat_perl_completion_cb (void *data, const char *completion_item,
  */
 
 int
-weechat_perl_debug_dump_cb (void *data, const char *signal, const char *type_data,
-                            void *signal_data)
+weechat_perl_debug_dump_cb (void *data, const char *signal,
+                            const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -611,8 +618,8 @@ weechat_perl_debug_dump_cb (void *data, const char *signal, const char *type_dat
  */
 
 int
-weechat_perl_buffer_closed_cb (void *data, const char *signal, const char *type_data,
-                               void *signal_data)
+weechat_perl_buffer_closed_cb (void *data, const char *signal,
+                               const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -669,12 +676,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     eval_pv (perl_weechat_code, TRUE);
 #endif
     
+    perl_quiet = 1;
     script_init (weechat_perl_plugin,
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
                  &weechat_perl_debug_dump_cb,
                  &weechat_perl_buffer_closed_cb,
                  &weechat_perl_load_cb);
+    perl_quiet = 0;
+    
+    script_display_short_list (weechat_perl_plugin,
+                               perl_scripts);
     
     /* init ok */
     return WEECHAT_RC_OK;

@@ -42,6 +42,7 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
 
+int fifo_quiet = 0;
 int fifo_fd = -1;
 struct t_hook *fifo_fd_hook = NULL;
 char *fifo_filename;
@@ -95,9 +96,12 @@ fifo_create ()
                 if ((fifo_fd = open (fifo_filename,
                                      O_RDONLY | O_NONBLOCK)) != -1)
                 {
-                    weechat_printf (NULL,
-                                    _("%s: pipe opened"),
-                                    FIFO_PLUGIN_NAME),
+                    if ((weechat_fifo_plugin->debug >= 1) || !fifo_quiet)
+                    {
+                        weechat_printf (NULL,
+                                        _("%s: pipe opened"),
+                                        FIFO_PLUGIN_NAME);
+                    }
                     rc = 1;
                 }
                 else
@@ -366,6 +370,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_plugin = plugin;
     
+    fifo_quiet = 1;
+    
     if (fifo_create ())
         fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
                                         &fifo_read, NULL);
@@ -373,6 +379,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
     
     fifo_info_init ();
+    
+    fifo_quiet = 0;
     
     return WEECHAT_RC_OK;
 }

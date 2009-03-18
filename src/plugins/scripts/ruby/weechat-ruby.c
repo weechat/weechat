@@ -41,7 +41,9 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
+int ruby_quiet = 0;
 struct t_plugin_script *ruby_scripts = NULL;
+struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 const char *ruby_current_script_filename = NULL;
 
@@ -340,9 +342,12 @@ weechat_ruby_load (const char *filename)
         return 0;
     }
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: loading script \"%s\""),
-                    RUBY_PLUGIN_NAME, filename);
+    if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: loading script \"%s\""),
+                        RUBY_PLUGIN_NAME, filename);
+    }
     
     ruby_current_script = NULL;
     
@@ -429,7 +434,8 @@ weechat_ruby_load (const char *filename)
 	
 	if (ruby_current_script != NULL)
         {
-	    script_remove (weechat_ruby_plugin, &ruby_scripts,
+	    script_remove (weechat_ruby_plugin,
+                           &ruby_scripts, &last_ruby_script,
                            ruby_current_script);
         }
         
@@ -495,7 +501,8 @@ weechat_ruby_unload (struct t_plugin_script *script)
         ruby_current_script = (ruby_current_script->prev_script) ?
             ruby_current_script->prev_script : ruby_current_script->next_script;
     
-    script_remove (weechat_ruby_plugin, &ruby_scripts, script);
+    script_remove (weechat_ruby_plugin, &ruby_scripts, &last_ruby_script,
+                   script);
     
     if (interpreter)
 	rb_gc_unregister_address (interpreter);
@@ -646,8 +653,8 @@ weechat_ruby_completion_cb (void *data, const char *completion_item,
  */
 
 int
-weechat_ruby_debug_dump_cb (void *data, const char *signal, const char *type_data,
-                            void *signal_data)
+weechat_ruby_debug_dump_cb (void *data, const char *signal,
+                            const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -665,8 +672,8 @@ weechat_ruby_debug_dump_cb (void *data, const char *signal, const char *type_dat
  */
 
 int
-weechat_ruby_buffer_closed_cb (void *data, const char *signal, const char *type_data,
-                               void *signal_data)
+weechat_ruby_buffer_closed_cb (void *data, const char *signal,
+                               const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -750,10 +757,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     /* redirect stdin and stdout */
     ruby_mWeechatOutputs = rb_define_module("WeechatOutputs");
-    rb_define_singleton_method(ruby_mWeechatOutputs, "write", weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "puts", weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "p", weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "flush", weechat_ruby_output_flush, 0);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "write",
+                               weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "puts",
+                               weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "p",
+                               weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "flush",
+                               weechat_ruby_output_flush, 0);
 
     rb_eval_string_protect(weechat_ruby_code, &ruby_error);
     if (ruby_error)
@@ -770,12 +781,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 	return WEECHAT_RC_ERROR;
     }
     
+    ruby_quiet = 1;
     script_init (weechat_ruby_plugin,
                  &weechat_ruby_command_cb,
                  &weechat_ruby_completion_cb,
                  &weechat_ruby_debug_dump_cb,
                  &weechat_ruby_buffer_closed_cb,
                  &weechat_ruby_load_cb);
+    ruby_quiet = 0;
+    
+    script_display_short_list (weechat_ruby_plugin,
+                               ruby_scripts);
     
     /* init ok */
     return WEECHAT_RC_OK;

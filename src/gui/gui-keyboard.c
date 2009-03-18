@@ -267,6 +267,7 @@ gui_keyboard_insert_sorted (struct t_gui_key **keys, struct t_gui_key **last_key
     }
     else
     {
+        /* first key in list */
         key->prev_key = NULL;
         key->next_key = NULL;
         *keys = key;

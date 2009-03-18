@@ -38,7 +38,9 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_python_plugin = NULL;
 
+int python_quiet;
 struct t_plugin_script *python_scripts = NULL;
+struct t_plugin_script *last_python_script = NULL;
 struct t_plugin_script *python_current_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
@@ -94,21 +96,25 @@ weechat_python_exec (struct t_plugin_script *script,
                         {
                             if (argv[6])
                             {
-                                rc = PyObject_CallFunction (evFunc, "sssssss", argv[0],
-                                                            argv[1], argv[2], argv[3],
-                                                            argv[4], argv[5], argv[6]);
+                                rc = PyObject_CallFunction (evFunc, "sssssss",
+                                                            argv[0], argv[1],
+                                                            argv[2], argv[3],
+                                                            argv[4], argv[5],
+                                                            argv[6]);
                             }
                             else
                             {
-                                rc = PyObject_CallFunction (evFunc, "ssssss", argv[0],
-                                                            argv[1], argv[2], argv[3],
+                                rc = PyObject_CallFunction (evFunc, "ssssss",
+                                                            argv[0], argv[1],
+                                                            argv[2], argv[3],
                                                             argv[4], argv[5]);
                             }
                         }
                         else
                         {
-                            rc = PyObject_CallFunction (evFunc, "sssss", argv[0],
-                                                        argv[1], argv[2], argv[3],
+                            rc = PyObject_CallFunction (evFunc, "sssss",
+                                                        argv[0], argv[1],
+                                                        argv[2], argv[3],
                                                         argv[4]);
                         }
                     }
@@ -283,9 +289,12 @@ weechat_python_load (const char *filename)
         return 0;
     }
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: loading script \"%s\""),
-                    PYTHON_PLUGIN_NAME, filename);
+    if ((weechat_python_plugin->debug >= 1) || !python_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: loading script \"%s\""),
+                        PYTHON_PLUGIN_NAME, filename);
+    }
     
     python_current_script = NULL;
     
@@ -389,7 +398,8 @@ weechat_python_load (const char *filename)
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyString_FromString(WEECHAT_HOOK_SIGNAL_INT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_POINTER", PyString_FromString(WEECHAT_HOOK_SIGNAL_POINTER));
     
-    weechat_outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
+    weechat_outputs = Py_InitModule("weechatOutputs",
+                                    weechat_python_output_funcs);
     if (weechat_outputs == NULL)
     {
         weechat_printf (NULL,
@@ -426,11 +436,14 @@ weechat_python_load (const char *filename)
             PyErr_Print ();
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
-
+        
         /* if script was registered, removing from list */
         if (python_current_script != NULL)
-            script_remove (weechat_python_plugin, &python_scripts,
-                    python_current_script);
+        {
+            script_remove (weechat_python_plugin,
+                           &python_scripts, &last_python_script,
+                           python_current_script);
+        }
         return 0;
     }
 
@@ -501,7 +514,8 @@ weechat_python_unload (struct t_plugin_script *script)
         python_current_script = (python_current_script->prev_script) ?
             python_current_script->prev_script : python_current_script->next_script;
     
-    script_remove (weechat_python_plugin, &python_scripts, script);
+    script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
+                   script);
     
     PyThreadState_Swap (interpreter);
     Py_EndInterpreter (interpreter);
@@ -653,8 +667,8 @@ weechat_python_completion_cb (void *data, const char *completion_item,
  */
 
 int
-weechat_python_debug_dump_cb (void *data, const char *signal, const char *type_data,
-                              void *signal_data)
+weechat_python_debug_dump_cb (void *data, const char *signal,
+                              const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -672,8 +686,8 @@ weechat_python_debug_dump_cb (void *data, const char *signal, const char *type_d
  */
 
 int
-weechat_python_buffer_closed_cb (void *data, const char *signal, const char *type_data,
-                                 void *signal_data)
+weechat_python_buffer_closed_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -725,13 +739,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
-    
+
+    python_quiet = 1;
     script_init (weechat_python_plugin,
                  &weechat_python_command_cb,
                  &weechat_python_completion_cb,
                  &weechat_python_debug_dump_cb,
                  &weechat_python_buffer_closed_cb,
                  &weechat_python_load_cb);
+    python_quiet = 0;
+    
+    script_display_short_list (weechat_python_plugin,
+                               python_scripts);
     
     /* init ok */
     return WEECHAT_RC_OK;

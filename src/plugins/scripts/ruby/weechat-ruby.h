@@ -25,7 +25,9 @@
 
 extern struct t_weechat_plugin *weechat_ruby_plugin;
 
+extern int ruby_quiet;
 extern struct t_plugin_script *ruby_scripts;
+extern struct t_plugin_script *last_ruby_script;
 extern struct t_plugin_script *ruby_current_script;
 extern const char *ruby_current_script_filename;
 

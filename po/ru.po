@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-15 12:35+0100\n"
+"POT-Creation-Date: 2009-03-17 15:38+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -85,7 +85,7 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sWelcome to %s%s%s, %s"
+msgid "Welcome to %s%s%s, %s"
 msgstr "%sДобро пожаловать в %s%s%s, %s\n"
 
 msgid "compiled on"
@@ -2218,8 +2218,8 @@ msgid "%s: %s, \"%s\": removed"
 msgstr "Сокращение \"%s\" удалено\n"
 
 #, fuzzy, c-format
-msgid "%s%s: missing parameters"
-msgstr "%s нет аргумента для параметра \"%s\"\n"
+msgid "%s: terminal: %s, internal: %s"
+msgstr "%s plugin \"%s\" не найден\n"
 
 #, c-format
 msgid "%s%s: wrong charset type (decode or encode expected)"
@@ -2228,10 +2228,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid charset: \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: terminal: %s, internal: %s"
-msgstr "%s plugin \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating configuration file"
@@ -4582,6 +4578,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing parameters"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown notify level \"%s\""

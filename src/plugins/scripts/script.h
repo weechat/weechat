@@ -85,6 +85,7 @@ extern char *script_search_full_name (struct t_weechat_plugin *weechat_plugin,
                                       const char *filename);
 extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script **scripts,
+                                           struct t_plugin_script **last_script,
                                            const char *filename, const char *name,
                                            const char *author, const char *version,
                                            const char *license, const char *description,
@@ -93,6 +94,7 @@ extern void script_remove_buffer_callbacks (struct t_plugin_script *scripts,
                                             struct t_gui_buffer *buffer);
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script **scripts,
+                           struct t_plugin_script **last_script,
                            struct t_plugin_script *script);
 extern void script_completion (struct t_weechat_plugin *weechat_plugin,
                                struct t_gui_completion *completion,
@@ -100,6 +102,8 @@ extern void script_completion (struct t_weechat_plugin *weechat_plugin,
 extern void script_display_list (struct t_weechat_plugin *weechat_plugin,
                                  struct t_plugin_script *scripts,
                                  const char *name, int full);
+extern void script_display_short_list (struct t_weechat_plugin *weechat_plugin,
+                                       struct t_plugin_script *scripts);
 extern void script_print_log (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts);
 

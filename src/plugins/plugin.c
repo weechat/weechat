@@ -55,6 +55,7 @@
 #include "plugin-config.h"
 
 
+int plugin_quiet = 0;
 struct t_weechat_plugin *weechat_plugins = NULL;
 struct t_weechat_plugin *last_weechat_plugin = NULL;
 
@@ -123,6 +124,67 @@ plugin_get_name (struct t_weechat_plugin *plugin)
     static char *plugin_core = PLUGIN_CORE;
     
     return (plugin) ? plugin->name : plugin_core;
+}
+
+/*
+ * plugin_find_pos: find position for a plugin (for sorting plugins list) 
+ */
+
+struct t_weechat_plugin *
+plugin_find_pos (struct t_weechat_plugin *plugin)
+{
+    struct t_weechat_plugin *ptr_plugin;
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        if (string_strcasecmp (plugin->name, ptr_plugin->name) < 0)
+            return ptr_plugin;
+    }
+    return NULL;
+}
+
+/*
+ * plugin_insert_sorted: insert a plugin in list, keeping sort on name
+ */
+
+void
+plugin_insert_sorted (struct t_weechat_plugin *plugin)
+{
+    struct t_weechat_plugin *pos_plugin;
+
+    if (weechat_plugins)
+    {
+        pos_plugin = plugin_find_pos (plugin);
+        
+        if (pos_plugin)
+        {
+            /* insert plugin into the list (before plugin found) */
+            plugin->prev_plugin = pos_plugin->prev_plugin;
+            plugin->next_plugin = pos_plugin;
+            if (pos_plugin->prev_plugin)
+                (pos_plugin->prev_plugin)->next_plugin = plugin;
+            else
+                weechat_plugins = plugin;
+            pos_plugin->prev_plugin = plugin;
+        }
+        else
+        {
+            /* add plugin to the end */
+            plugin->prev_plugin = last_weechat_plugin;
+            plugin->next_plugin = NULL;
+            last_weechat_plugin->next_plugin = plugin;
+            last_weechat_plugin = plugin;
+        }
+    }
+    else
+    {
+        /* first plugin in list */
+        plugin->prev_plugin = NULL;
+        plugin->next_plugin = NULL;
+        weechat_plugins = plugin;
+        last_weechat_plugin = plugin;
+    }
 }
 
 /*
@@ -518,15 +580,8 @@ plugin_load (const char *filename)
         new_plugin->upgrade_read = &upgrade_file_read;
         new_plugin->upgrade_close = &upgrade_file_close;
         
-        /* add new plugin to list */
-        new_plugin->prev_plugin = last_weechat_plugin;
-        new_plugin->next_plugin = NULL;
-        if (weechat_plugins)
-            last_weechat_plugin->next_plugin = new_plugin;
-        else
-            weechat_plugins = new_plugin;
-        last_weechat_plugin = new_plugin;
-
+        plugin_insert_sorted (new_plugin);
+        
         /* associate orphan buffers with this plugin (if asked during upgrade
            process) */
         gui_buffer_set_plugin_for_upgrade (name, new_plugin);
@@ -591,9 +646,12 @@ plugin_load (const char *filename)
         return NULL;
     }
     
-    gui_chat_printf (NULL,
-                     _("Plugin \"%s\" loaded"),
-                     name);
+    if ((weechat_debug_core >= 1) || !plugin_quiet)
+    {
+        gui_chat_printf (NULL,
+                         _("Plugin \"%s\" loaded"),
+                         name);
+    }
     
     free (full_name);
     
@@ -825,7 +883,7 @@ plugin_unload_all ()
 {
     while (weechat_plugins)
     {
-        plugin_unload (last_weechat_plugin);
+        plugin_unload (weechat_plugins);
     }
 }
 
@@ -860,6 +918,49 @@ plugin_reload_name (const char *name)
 }
 
 /*
+ * plugin_display_short_list: print list of plugins on one line
+ */
+
+void
+plugin_display_short_list ()
+{
+    const char *plugins_loaded;
+    char *buf;
+    int length;
+    struct t_weechat_plugin *ptr_plugin;
+    
+    if (weechat_plugins)
+    {
+        plugins_loaded = _("Plugins loaded:");
+        
+        length = strlen (plugins_loaded) + 1;
+        
+        for (ptr_plugin = weechat_plugins; ptr_plugin;
+             ptr_plugin = ptr_plugin->next_plugin)
+        {
+            length += strlen (ptr_plugin->name) + 2;
+        }
+        length++;
+        
+        buf = malloc (length);
+        if (buf)
+        {
+            strcpy (buf, plugins_loaded);
+            strcat (buf, " ");
+            for (ptr_plugin = weechat_plugins; ptr_plugin;
+                 ptr_plugin = ptr_plugin->next_plugin)
+            {
+                strcat (buf, ptr_plugin->name);
+                if (ptr_plugin->next_plugin)
+                    strcat (buf, ", ");
+            }
+            gui_chat_printf (NULL, "%s", buf);
+            free (buf);
+        }
+    }
+}
+
+/*
  * plugin_init: init plugin support
  */
 
@@ -878,7 +979,12 @@ plugin_init (int auto_load, int argc, char *argv[])
     
     /* auto-load plugins if asked */
     if (auto_load)
+    {
+        plugin_quiet = 1;
         plugin_auto_load ();
+        plugin_display_short_list ();
+        plugin_quiet = 0;
+    }
 
     /* discard command arguments for future plugins */
     plugin_argc = 0;

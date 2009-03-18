@@ -43,7 +43,9 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_tcl_plugin = NULL;
 
+int tcl_quiet = 0;
 struct t_plugin_script *tcl_scripts = NULL;
+struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
 const char *tcl_current_script_filename = NULL;
 
@@ -155,9 +157,12 @@ weechat_tcl_load (const char *filename)
         return 0;
     }
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: loading script \"%s\""),
-                    TCL_PLUGIN_NAME, filename);
+    if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: loading script \"%s\""),
+                        TCL_PLUGIN_NAME, filename);
+    }
     
     tcl_current_script = NULL;
     
@@ -239,7 +244,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
         tcl_current_script = (tcl_current_script->prev_script) ?
             tcl_current_script->prev_script : tcl_current_script->next_script;
     
-    script_remove (weechat_tcl_plugin, &tcl_scripts, script);
+    script_remove (weechat_tcl_plugin, &tcl_scripts, &last_tcl_script, script);
     
     Tcl_DeleteInterp(interp);
 }
@@ -389,8 +394,8 @@ weechat_tcl_completion_cb (void *data, const char *completion_item,
  */
 
 int
-weechat_tcl_debug_dump_cb (void *data, const char *signal, const char *type_data,
-                            void *signal_data)
+weechat_tcl_debug_dump_cb (void *data, const char *signal,
+                           const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -408,8 +413,8 @@ weechat_tcl_debug_dump_cb (void *data, const char *signal, const char *type_data
  */
 
 int
-weechat_tcl_buffer_closed_cb (void *data, const char *signal, const char *type_data,
-                               void *signal_data)
+weechat_tcl_buffer_closed_cb (void *data, const char *signal,
+                              const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -435,12 +440,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_tcl_plugin = plugin;
     
+    tcl_quiet = 1;
     script_init (weechat_tcl_plugin,
                  weechat_tcl_command_cb,
                  weechat_tcl_completion_cb,
                  weechat_tcl_debug_dump_cb,
                  weechat_tcl_buffer_closed_cb,
                  weechat_tcl_load_cb);
+    tcl_quiet = 0;
+    
+    script_display_short_list (weechat_tcl_plugin,
+                               tcl_scripts);
     
     /* init ok */
     return WEECHAT_RC_OK;

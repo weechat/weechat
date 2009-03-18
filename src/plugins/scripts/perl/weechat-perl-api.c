@@ -104,17 +104,20 @@ static XS (XS_weechat_api_register)
     
     /* register script */
     perl_current_script = script_add (weechat_perl_plugin,
-                                      &perl_scripts,
+                                      &perl_scripts, &last_perl_script,
                                       (perl_current_script_filename) ?
                                       perl_current_script_filename : "",
                                       name, author, version, license,
                                       description, shutdown_func, charset);
     if (perl_current_script)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: registered script \"%s\", "
-                                         "version %s (%s)"),
-                        PERL_PLUGIN_NAME, name, version, description);
+        if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: registered script \"%s\", "
+                                             "version %s (%s)"),
+                            PERL_PLUGIN_NAME, name, version, description);
+        }
     }
     else
     {

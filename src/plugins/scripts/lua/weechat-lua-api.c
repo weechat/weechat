@@ -107,7 +107,7 @@ weechat_lua_api_register (lua_State *L)
     
     /* register script */
     lua_current_script = script_add (weechat_lua_plugin,
-                                     &lua_scripts,
+                                     &lua_scripts, &last_lua_script,
                                      (lua_current_script_filename) ?
                                      lua_current_script_filename : "",
                                      name,
@@ -119,10 +119,13 @@ weechat_lua_api_register (lua_State *L)
                                      charset);
     if (lua_current_script)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: registered script \"%s\", "
-                                         "version %s (%s)"),
-                        LUA_PLUGIN_NAME, name, version, description);
+        if ((weechat_lua_plugin->debug >= 1) || !lua_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: registered script \"%s\", "
+                                             "version %s (%s)"),
+                            LUA_PLUGIN_NAME, name, version, description);
+        }
     }
     else
     {

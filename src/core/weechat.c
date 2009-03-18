@@ -10,7 +10,7 @@
  * ##                                                                      ##
  * ##                By FlashCode <flashcode@flashtux.org>                 ##
  * ##                                                                      ##
- * ##                     http://weechat.flashtux.org                      ##
+ * ##                    http://weechat.flashtux.org/                      ##
  * ##                                                                      ##
  * ##########################################################################
  *
@@ -299,11 +299,11 @@ weechat_welcome_message ()
     if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
         gui_chat_printf (NULL,
-                         "%s   ___       __         ______________        _____ \n"
-                         "%s   __ |     / /___________  ____/__  /_______ __  /_\n"
-                         "%s   __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
-                         "%s   __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
-                         "%s   ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  ",
+                         "%s  ___       __         ______________        _____ \n"
+                         "%s  __ |     / /___________  ____/__  /_______ __  /_\n"
+                         "%s  __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
+                         "%s  __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
+                         "%s  ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  ",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
@@ -313,9 +313,7 @@ weechat_welcome_message ()
     if (CONFIG_STRING(config_startup_weechat_slogan)
         && CONFIG_STRING(config_startup_weechat_slogan)[0])
     {
-        gui_chat_printf (NULL, _("%sWelcome to %s%s%s, %s"),
-                         (CONFIG_BOOLEAN(config_startup_display_logo)) ?
-                         "      " : "",
+        gui_chat_printf (NULL, _("Welcome to %s%s%s, %s"),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_NAME,
                          GUI_NO_COLOR,
@@ -323,21 +321,24 @@ weechat_welcome_message ()
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
-        gui_chat_printf (NULL, "%s%s%s%s, %s %s %s",
-                         (CONFIG_BOOLEAN(config_startup_display_logo)) ?
-                         "    " : "",
+        gui_chat_printf (NULL, "%sWeeChat %s %s[%s%s %s %s%s]",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         PACKAGE_STRING,
-                         GUI_NO_COLOR,
-                         _("compiled on"), __DATE__, __TIME__);
+                         PACKAGE_VERSION,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                         _("compiled on"),
+                         __DATE__,
+                         __TIME__,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         (CONFIG_STRING(config_startup_weechat_slogan)
          && CONFIG_STRING(config_startup_weechat_slogan)[0]) ||
         CONFIG_BOOLEAN(config_startup_display_version))
+    {
         gui_chat_printf (NULL,
-                         "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK));
+                         "- - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+    }
 }
 
 /*

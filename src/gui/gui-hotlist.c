@@ -238,7 +238,7 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
             new_hotlist->prev_hotlist = pos_hotlist->prev_hotlist;
             new_hotlist->next_hotlist = pos_hotlist;
             if (pos_hotlist->prev_hotlist)
-                pos_hotlist->prev_hotlist->next_hotlist = new_hotlist;
+                (pos_hotlist->prev_hotlist)->next_hotlist = new_hotlist;
             else
                 *hotlist = new_hotlist;
             pos_hotlist->prev_hotlist = new_hotlist;

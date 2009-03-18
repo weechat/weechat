@@ -343,12 +343,78 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_find_pos: find position for a script (for sorting scripts list) 
+ */
+
+struct t_plugin_script *
+script_find_pos (struct t_weechat_plugin *weechat_plugin,
+                 struct t_plugin_script *scripts,
+                 struct t_plugin_script *script)
+{
+    struct t_plugin_script *ptr_script;
+
+    for (ptr_script = scripts; ptr_script; ptr_script = ptr_script->next_script)
+    {
+        if (weechat_strcasecmp (script->name, ptr_script->name) < 0)
+            return ptr_script;
+    }
+    return NULL;
+}
+
+/*
+ * script_insert_sorted: insert a script in list, keeping sort on name
+ */
+
+void
+script_insert_sorted (struct t_weechat_plugin *weechat_plugin,
+                      struct t_plugin_script **scripts,
+                      struct t_plugin_script **last_script,
+                      struct t_plugin_script *script)
+{
+    struct t_plugin_script *pos_script;
+
+    if (*scripts)
+    {
+        pos_script = script_find_pos (weechat_plugin, *scripts, script);
+
+        if (pos_script)
+        {
+            /* insert script into the list (before script found) */
+            script->prev_script = pos_script->prev_script;
+            script->next_script = pos_script;
+            if (pos_script->prev_script)
+                (pos_script->prev_script)->next_script = script;
+            else
+                *scripts = script;
+            pos_script->prev_script = script;
+        }
+        else
+        {
+            /* add script to the end */
+            script->prev_script = *last_script;
+            script->next_script = NULL;
+            (*last_script)->next_script = script;
+            *last_script = script;
+        }
+    }
+    else
+    {
+        /* first script in list */
+        script->prev_script = NULL;
+        script->next_script = NULL;
+        *scripts = script;
+        *last_script = script;
+    }
+}
+
+/*
  * script_add: add a script to list of scripts
  */
 
 struct t_plugin_script *
 script_add (struct t_weechat_plugin *weechat_plugin,
             struct t_plugin_script **scripts,
+            struct t_plugin_script **last_script,
             const char *filename, const char *name, const char *author, const char *version,
             const char *license, const char *description, const char *shutdown_func,
             const char *charset)
@@ -388,15 +454,9 @@ script_add (struct t_weechat_plugin *weechat_plugin,
         new_script->shutdown_func = (shutdown_func) ?
             strdup (shutdown_func) : NULL;
         new_script->charset = (charset) ? strdup (charset) : NULL;
-        
         new_script->callbacks = NULL;
         
-        /* add new script to list */
-        if (*scripts)
-            (*scripts)->prev_script = new_script;
-        new_script->prev_script = NULL;
-        new_script->next_script = *scripts;
-        *scripts = new_script;
+        script_insert_sorted (weechat_plugin, scripts, last_script, new_script);
         
         return new_script;
     }
@@ -443,6 +503,7 @@ script_remove_buffer_callbacks (struct t_plugin_script *scripts,
 void
 script_remove (struct t_weechat_plugin *weechat_plugin,
                struct t_plugin_script **scripts,
+               struct t_plugin_script **last_script,
                struct t_plugin_script *script)
 {
     struct t_script_callback *ptr_script_callback, *next_script_callback;
@@ -456,7 +517,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
             weechat_unhook (ptr_script_callback->hook);
         }
     }
-
+    
     ptr_script_callback = script->callbacks;
     while (ptr_script_callback)
     {
@@ -516,10 +577,12 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
     /* remove script from list */
     if (script->prev_script)
         (script->prev_script)->next_script = script->next_script;
-    else
-        *scripts = script->next_script;
     if (script->next_script)
         (script->next_script)->prev_script = script->prev_script;
+    if (*scripts == script)
+        *scripts = script->next_script;
+    if (*last_script == script)
+        *last_script = script->prev_script;
     
     /* free script */
     free (script);
@@ -589,6 +652,51 @@ script_display_list (struct t_weechat_plugin *weechat_plugin,
     }
     else
         weechat_printf (NULL, _("  (none)"));
+}
+
+/*
+ * script_display_short_list: print list of scripts on one line
+ */
+
+void
+script_display_short_list (struct t_weechat_plugin *weechat_plugin,
+                           struct t_plugin_script *scripts)
+{
+    const char *scripts_loaded;
+    char *buf;
+    int length;
+    struct t_plugin_script *ptr_script;
+    
+    if (scripts)
+    {
+        /* TRANSLATORS: %s is language (for example "perl") */
+        scripts_loaded = _("%s scripts loaded:");
+        
+        length = strlen (scripts_loaded) + strlen (weechat_plugin->name) + 1;
+        
+        for (ptr_script = scripts; ptr_script;
+             ptr_script = ptr_script->next_script)
+        {
+            length += strlen (ptr_script->name) + 2;
+        }
+        length++;
+        
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length, scripts_loaded, weechat_plugin->name);
+            strcat (buf, " ");
+            for (ptr_script = scripts; ptr_script;
+                 ptr_script = ptr_script->next_script)
+            {
+                strcat (buf, ptr_script->name);
+                if (ptr_script->next_script)
+                    strcat (buf, ", ");
+            }
+            weechat_printf (NULL, "%s", buf);
+            free (buf);
+        }
+    }
 }
 
 /*

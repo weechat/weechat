@@ -198,17 +198,20 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
     
     /* register script */
     tcl_current_script = script_add (weechat_tcl_plugin,
-                                     &tcl_scripts,
+                                     &tcl_scripts, &last_tcl_script,
                                      (tcl_current_script_filename) ?
                                      tcl_current_script_filename : "",
                                      name, author, version, license,
                                      description, shutdown_func, charset);
     if (tcl_current_script)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: registered script \"%s\", "
-                                         "version %s (%s)"),
-                        TCL_PLUGIN_NAME, name, version, description);
+        if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: registered script \"%s\", "
+                                             "version %s (%s)"),
+                            TCL_PLUGIN_NAME, name, version, description);
+        }
 	tcl_current_script->interpreter = (void *)interp;
     }
     else

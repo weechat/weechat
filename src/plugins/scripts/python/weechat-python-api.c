@@ -95,17 +95,20 @@ weechat_python_api_register (PyObject *self, PyObject *args)
     
     /* register script */
     python_current_script = script_add (weechat_python_plugin,
-                                        &python_scripts,
+                                        &python_scripts, &last_python_script,
                                         (python_current_script_filename) ?
                                         python_current_script_filename : "",
                                         name, author, version, license,
                                         description, shutdown_func, charset);
     if (python_current_script)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: registered script \"%s\", "
-                                         "version %s (%s)"),
-                        PYTHON_PLUGIN_NAME, name, version, description);
+        if ((weechat_python_plugin->debug >= 1) || !python_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: registered script \"%s\", "
+                                             "version %s (%s)"),
+                            PYTHON_PLUGIN_NAME, name, version, description);
+        }
     }
     else
     {

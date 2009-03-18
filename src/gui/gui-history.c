@@ -78,7 +78,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 		ptr_history = buffer->last_history->prev_history;
                 if (buffer->ptr_history == buffer->last_history)
                     buffer->ptr_history = ptr_history;
-		buffer->last_history->prev_history->next_history = NULL;
+		((buffer->last_history)->prev_history)->next_history = NULL;
 		if (buffer->last_history->text)
 		    free (buffer->last_history->text);
 		free (buffer->last_history);
@@ -128,7 +128,7 @@ gui_history_global_add (const char *string)
 		ptr_history = last_history_global->prev_history;
                 if (history_global_ptr == last_history_global)
                     history_global_ptr = ptr_history;
-		last_history_global->prev_history->next_history = NULL;
+		(last_history_global->prev_history)->next_history = NULL;
 		if (last_history_global->text)
 		    free (last_history_global->text);
 		free (last_history_global);

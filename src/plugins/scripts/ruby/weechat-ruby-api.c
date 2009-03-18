@@ -111,7 +111,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     
     /* register script */
     ruby_current_script = script_add (weechat_ruby_plugin,
-                                      &ruby_scripts,
+                                      &ruby_scripts, &last_ruby_script,
                                       (ruby_current_script_filename) ?
                                       ruby_current_script_filename : "",
                                       c_name, c_author, c_version, c_license,
@@ -120,10 +120,13 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     
     if (ruby_current_script)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: registered script \"%s\", "
-                                         "version %s (%s)"),
-                        RUBY_PLUGIN_NAME, c_name, c_version, c_description);
+        if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: registered script \"%s\", "
+                                             "version %s (%s)"),
+                            RUBY_PLUGIN_NAME, c_name, c_version, c_description);
+        }
     }
     else
     {

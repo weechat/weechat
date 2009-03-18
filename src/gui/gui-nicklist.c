@@ -95,7 +95,7 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
             group->prev_group = pos_group->prev_group;
             group->next_group = pos_group;
             if (pos_group->prev_group)
-                pos_group->prev_group->next_group = group;
+                (pos_group->prev_group)->next_group = group;
             else
                 *groups = group;
             pos_group->prev_group = group;
@@ -243,7 +243,7 @@ gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
             nick->prev_nick = pos_nick->prev_nick;
             nick->next_nick = pos_nick;
             if (pos_nick->prev_nick)
-                pos_nick->prev_nick->next_nick = nick;
+                (pos_nick->prev_nick)->next_nick = nick;
             else
                 group->nicks = nick;
             pos_nick->prev_nick = nick;

@@ -381,6 +381,18 @@ charset_set (struct t_config_section *section, const char *type,
 }
 
 /*
+ * charset_display_charsets: display charsets
+ */
+
+void
+charset_display_charsets ()
+{
+    weechat_printf (NULL,
+                    _("%s: terminal: %s, internal: %s"),
+                    CHARSET_PLUGIN_NAME, charset_terminal, charset_internal);
+}
+
+/*
  * charset_command_cb: callback for /charset command
  */
 
@@ -398,10 +410,8 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc < 2)
     {
-        weechat_printf (NULL,
-                        _("%s%s: missing parameters"),
-                        weechat_prefix ("error"), CHARSET_PLUGIN_NAME);
-        return WEECHAT_RC_ERROR;
+        charset_display_charsets ();
+        return WEECHAT_RC_OK;
     }
     
     ptr_section = NULL;
@@ -504,9 +514,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     charset_internal = weechat_info_get ("charset_internal", "");
     
     /* display message */
-    weechat_printf (NULL,
-                    _("%s: terminal: %s, internal: %s"),
-                    CHARSET_PLUGIN_NAME, charset_terminal, charset_internal);
+    if (weechat_charset_plugin->debug >= 1)
+        charset_display_charsets ();
     
     if (!charset_config_init ())
     {

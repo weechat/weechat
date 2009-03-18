@@ -90,10 +90,10 @@ script_callback_remove (struct t_plugin_script *script,
 {
     /* remove callback from list */
     if (script_callback->prev_callback)
-        script_callback->prev_callback->next_callback =
+        (script_callback->prev_callback)->next_callback =
             script_callback->next_callback;
     if (script_callback->next_callback)
-        script_callback->next_callback->prev_callback =
+        (script_callback->next_callback)->prev_callback =
             script_callback->prev_callback;
     if (script->callbacks == script_callback)
         script->callbacks = script_callback->next_callback;
