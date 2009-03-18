@@ -56,7 +56,8 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
                   const char *message)
 {
     char *buf, *buf2;
-    const char *ptr_buf;
+    const unsigned char *ptr_buf;
+    const char *hexa = "0123456789ABCDEF";
     int pos_buf, pos_buf2, char_size, i;
     
     if (!weechat_irc_plugin->debug || !message)
@@ -93,7 +94,7 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
     buf2 = malloc ((strlen (buf) * 3) + 1);
     if (buf2)
     {
-        ptr_buf = (buf) ? buf : message;
+        ptr_buf = (buf) ? (unsigned char *)buf : (unsigned char *)message;
         pos_buf = 0;
         pos_buf2 = 0;
         while (ptr_buf[pos_buf])
@@ -101,13 +102,13 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
             if (ptr_buf[pos_buf] < 32)
             {
                 buf2[pos_buf2++] = '\\';
-                buf2[pos_buf2++] = (ptr_buf[pos_buf] / 10) + '0';
-                buf2[pos_buf2++] = (ptr_buf[pos_buf] % 10) + '0';
+                buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
+                buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
                 pos_buf++;
             }
             else
             {
-                char_size = weechat_utf8_char_size (ptr_buf + pos_buf);
+                char_size = weechat_utf8_char_size ((const char *)(ptr_buf + pos_buf));
                 for (i = 0; i < char_size; i++)
                 {
                     buf2[pos_buf2++] = ptr_buf[pos_buf++];
