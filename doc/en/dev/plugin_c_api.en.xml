@@ -7579,7 +7579,7 @@ free (str);
     </para>
     
     <section id="secPluginCApi_weechat_current_window">
-      <title>weechat_current_windowr</title>
+      <title>weechat_current_window</title>
       
       <para>
         Prototype:
