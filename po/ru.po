@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-17 15:38+0100\n"
+"POT-Creation-Date: 2009-03-19 10:07+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3161,7 +3161,7 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [switch]"
+"[deloutq] | [raw] | [switch]"
 msgstr ""
 "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
 "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
@@ -3187,6 +3187,7 @@ msgid ""
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
+"       raw: open buffer with raw IRC data\n"
 "    switch: switch active server (when one buffer is used for all servers, "
 "default key: alt-s on server buffer)\n"
 "\n"
@@ -3545,6 +3546,11 @@ msgid ""
 "(usually any message from another user, not server messages,..)"
 msgstr ""
 
+msgid ""
+"number of IRC raw messages to save in memory when raw buffer is closed "
+"(messages will be displayed when opening raw buffer)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr "отображать уведомление об отсутствии единожды в привате"
 
@@ -3623,10 +3629,6 @@ msgstr ""
 #, fuzzy
 msgid "send unknown commands to server"
 msgstr "отсылать неизвестные команды IRC серверу"
-
-#, fuzzy
-msgid "IRC debug messages"
-msgstr "выводить отладочные сообщения"
 
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
@@ -3994,6 +3996,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s \"%s\" команда получена без хоста\n"
+
+#, fuzzy
+msgid "IRC raw messages"
+msgstr "выводить отладочные сообщения"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"

@@ -29,6 +29,7 @@
 #include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-raw.h"
 #include "irc-server.h"
 
 
@@ -285,37 +286,44 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     /* make C compiler happy */
     (void) data;
     
-    if (ptr_channel)
+    if (buffer == irc_raw_buffer)
     {
-        /* send PART for channel if its buffer is closed */
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-            && (ptr_channel->nicks))
-        {
-            irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
-        }
-        irc_channel_free (ptr_server, ptr_channel);
+        irc_raw_buffer = NULL;
     }
     else
     {
-        if (ptr_server)
+        if (ptr_channel)
         {
-            /* send PART on all channels for server, then disconnect from server */
-            ptr_channel = ptr_server->channels;
-            while (ptr_channel)
+            /* send PART for channel if its buffer is closed */
+            if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                && (ptr_channel->nicks))
             {
-                next_channel = ptr_channel->next_channel;
-                weechat_buffer_close (ptr_channel->buffer);
-                ptr_channel = next_channel;
+                irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
             }
-            irc_server_disconnect (ptr_server, 0);
-            ptr_server->buffer = NULL;
+            irc_channel_free (ptr_server, ptr_channel);
         }
+        else
+        {
+            if (ptr_server)
+            {
+                /* send PART on all channels for server, then disconnect from server */
+                ptr_channel = ptr_server->channels;
+                while (ptr_channel)
+                {
+                    next_channel = ptr_channel->next_channel;
+                    weechat_buffer_close (ptr_channel->buffer);
+                    ptr_channel = next_channel;
+                }
+                irc_server_disconnect (ptr_server, 0);
+                ptr_server->buffer = NULL;
+            }
+        }
+        
+        if (irc_buffer_servers == buffer)
+            irc_buffer_servers = NULL;
+        if (ptr_server && (irc_current_server == ptr_server))
+            irc_current_server = NULL;
     }
-
-    if (irc_buffer_servers == buffer)
-        irc_buffer_servers = NULL;
-    if (ptr_server && (irc_current_server == ptr_server))
-        irc_current_server = NULL;
     
     return WEECHAT_RC_OK;
 }

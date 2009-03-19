@@ -41,6 +41,7 @@
 #include "irc-nick.h"
 #include "irc-display.h"
 #include "irc-ignore.h"
+#include "irc-raw.h"
 
 
 /*
@@ -3106,6 +3107,12 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_PLUGIN_NAME);
         return WEECHAT_RC_OK;
     }
+
+    if (weechat_strcasecmp (argv[1], "raw") == 0)
+    {
+        irc_raw_open (1);
+        return WEECHAT_RC_OK;
+    }
     
     if (weechat_strcasecmp (argv[1], "switch") == 0)
     {
@@ -4058,7 +4065,7 @@ irc_command_init ()
                              "[copy servername newservername] | "
                              "[rename servername newservername] | "
                              "[keep servername] | [del servername] | "
-                             "[deloutq] | [switch]"),
+                             "[deloutq] | [raw] | [switch]"),
                           N_("      list: list servers (no parameter implies "
                              "this list)\n"
                              "  listfull: list servers with detailed info for "
@@ -4082,6 +4089,7 @@ irc_command_init ()
                              "   deloutq: delete messages out queue for all "
                              "servers (all messages WeeChat is currently "
                              "sending)\n"
+                             "       raw: open buffer with raw IRC data\n"
                              "    switch: switch active server (when one "
                              "buffer is used for all servers, default key: "
                              "alt-s on server buffer)\n\n"
@@ -4096,8 +4104,8 @@ irc_command_init ()
                              "  /server del freenode\n"
                              "  /server deloutq\n"
                              "  /server switch"),
-                          "add|copy|rename|keep|del|deloutq|list|listfull|switch "
-                          "%(irc_servers) %(irc_servers)",
+                          "add|copy|rename|keep|del|deloutq|list|listfull|"
+                          "raw|switch %(irc_servers) %(irc_servers)",
                           &irc_command_server, NULL);
     weechat_hook_command ("servlist",
                           N_("list services currently connected to the "

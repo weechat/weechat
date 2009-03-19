@@ -93,6 +93,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-a           */ "meta-a",             "/input jump_smart");
     gui_keyboard_bind (NULL, /* m-j,m-l       */ "meta-jmeta-l",       "/input jump_last_buffer");
     gui_keyboard_bind (NULL, /* m-j,m-p       */ "meta-jmeta-p",       "/input jump_previous_buffer");
+    gui_keyboard_bind (NULL, /* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
     gui_keyboard_bind (NULL, /* m-h           */ "meta-h",             "/input hotlist_clear");
     gui_keyboard_bind (NULL, /* m-k           */ "meta-k",             "/input grab_key");
     gui_keyboard_bind (NULL, /* m-u           */ "meta-u",             "/input scroll_unread");

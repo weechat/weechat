@@ -22,6 +22,12 @@
 
 #define IRC_BUFFER_ALL_SERVERS_NAME "servers"
 
+#define IRC_BUFFER_RAW_NAME            "irc_raw"
+#define IRC_BUFFER_RAW_PREFIX_RECV     "-->"
+#define IRC_BUFFER_RAW_PREFIX_RECV_MOD "==>"
+#define IRC_BUFFER_RAW_PREFIX_SEND     "<--"
+#define IRC_BUFFER_RAW_PREFIX_SEND_MOD "<=="
+
 struct t_gui_buffer;
 struct t_irc_server;
 struct t_irc_channel;

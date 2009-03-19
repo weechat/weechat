@@ -55,6 +55,7 @@ struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_notice_as_pv;
+struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
@@ -1098,6 +1099,12 @@ irc_config_init ()
            "messages,..)"),
         NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
         &irc_config_change_look_highlight_tags, NULL, NULL, NULL);
+    irc_config_look_raw_messages = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "raw_messages", "integer",
+        N_("number of IRC raw messages to save in memory when raw data buffer "
+           "is closed (messages will be displayed when opening raw data buffer)"),
+        NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_show_away_once = weechat_config_new_option (
         irc_config_file, ptr_section,
         "show_away_once", "boolean",

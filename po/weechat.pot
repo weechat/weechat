@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-17 15:38+0100\n"
+"POT-Creation-Date: 2009-03-19 10:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2709,7 +2709,7 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [switch]"
+"[deloutq] | [raw] | [switch]"
 msgstr ""
 
 msgid ""
@@ -2729,6 +2729,7 @@ msgid ""
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
+"       raw: open buffer with raw IRC data\n"
 "    switch: switch active server (when one buffer is used for all servers, "
 "default key: alt-s on server buffer)\n"
 "\n"
@@ -3016,6 +3017,11 @@ msgid ""
 "(usually any message from another user, not server messages,..)"
 msgstr ""
 
+msgid ""
+"number of IRC raw messages to save in memory when raw buffer is closed "
+"(messages will be displayed when opening raw buffer)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr ""
 
@@ -3080,9 +3086,6 @@ msgid ""
 msgstr ""
 
 msgid "send unknown commands to server"
-msgstr ""
-
-msgid "IRC debug messages"
 msgstr ""
 
 #, c-format
@@ -3438,6 +3441,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: \"%s\" command received without host"
+msgstr ""
+
+msgid "IRC raw messages"
 msgstr ""
 
 #, c-format

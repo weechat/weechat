@@ -44,10 +44,10 @@
 #include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
-#include "irc-debug.h"
 #include "irc-input.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
+#include "irc-raw.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -959,8 +959,8 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 pos = strchr (server->outqueue->message_before_mod, '\r');
                 if (pos)
                     pos[0] = '\0';
-                irc_debug_printf (server, 1, 0,
-                                  server->outqueue->message_before_mod);
+                irc_raw_print (server, 1, 0,
+                               server->outqueue->message_before_mod);
                 if (pos)
                     pos[0] = '\r';
             }
@@ -969,8 +969,8 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 pos = strchr (server->outqueue->message_after_mod, '\r');
                 if (pos)
                     pos[0] = '\0';
-                irc_debug_printf (server, 1, server->outqueue->modified,
-                                  server->outqueue->message_after_mod);
+                irc_raw_print (server, 1, server->outqueue->modified,
+                               server->outqueue->message_after_mod);
                 if (pos)
                     pos[0] = '\r';
                 
@@ -1204,9 +1204,9 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
             else
             {
                 if (first_message)
-                    irc_debug_printf (server, 1, 0, message);
+                    irc_raw_print (server, 1, 0, message);
                 if (new_msg)
-                    irc_debug_printf (server, 1, 1, ptr_msg);
+                    irc_raw_print (server, 1, 1, ptr_msg);
                 
                 /* send signal with command that will be sent to server */
                 irc_server_send_signal (server, "irc_out",
@@ -1235,7 +1235,7 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
             free (msg_encoded);
     }
     else
-        irc_debug_printf (server, 1, 1, _("(message dropped)"));
+        irc_raw_print (server, 1, 1, _("(message dropped)"));
     
     if (nick)
         free (nick);
@@ -1437,7 +1437,7 @@ irc_server_msgq_flush ()
             
             if (ptr_data[0])
             {
-                irc_debug_printf (irc_recv_msgq->server, 0, 0, ptr_data);
+                irc_raw_print (irc_recv_msgq->server, 0, 0, ptr_data);
                 
                 irc_server_parse_message (ptr_data, NULL, NULL, &command,
                                           NULL, NULL);
@@ -1470,8 +1470,8 @@ irc_server_msgq_flush ()
                             pos[0] = '\0';
                         
                         if (new_msg)
-                            irc_debug_printf (irc_recv_msgq->server, 0, 1,
-                                              ptr_msg);
+                            irc_raw_print (irc_recv_msgq->server, 0, 1,
+                                           ptr_msg);
                         
                         irc_server_parse_message (ptr_msg, &nick, &host,
                                                   &command, &channel,
@@ -1530,8 +1530,8 @@ irc_server_msgq_flush ()
                 }
                 else
                 {
-                    irc_debug_printf (irc_recv_msgq->server, 0, 1,
-                                      _("(message dropped)"));
+                    irc_raw_print (irc_recv_msgq->server, 0, 1,
+                                   _("(message dropped)"));
                 }
                 if (new_msg)
                     free (new_msg);

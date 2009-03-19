@@ -52,6 +52,8 @@ irc_la_SOURCES = irc.c \
                  irc-nick.h \
                  irc-protocol.c \
                  irc-protocol.h \
+                 irc-raw.c \
+                 irc-raw.h \
                  irc-server.c \
                  irc-server.h \
                  irc-upgrade.c \

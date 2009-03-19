@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-17 15:38+0100\n"
+"POT-Creation-Date: 2009-03-19 10:07+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3141,7 +3141,7 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [switch]"
+"[deloutq] | [raw] | [switch]"
 msgstr ""
 "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
 "jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd "
@@ -3169,6 +3169,7 @@ msgid ""
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
+"       raw: open buffer with raw IRC data\n"
 "    switch: switch active server (when one buffer is used for all servers, "
 "default key: alt-s on server buffer)\n"
 "\n"
@@ -3535,6 +3536,11 @@ msgstr ""
 "čárkami oddělený seznam tagů pro zprávy, které mohou vyprodukovat zvýraznění "
 "(obvykle jakákoliv zpráva od jiného uživatele, ne zprávy serveru,...)"
 
+msgid ""
+"number of IRC raw messages to save in memory when raw buffer is closed "
+"(messages will be displayed when opening raw buffer)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr "zobrazit vzdálený zprávu o nepřítomnosti pouze jednou v soukromém okně"
 
@@ -3619,10 +3625,6 @@ msgstr ""
 #, fuzzy
 msgid "send unknown commands to server"
 msgstr "poslat neznámý příkaz na IRC server"
-
-#, fuzzy
-msgid "IRC debug messages"
-msgstr "vypsat debug zprávy"
 
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
@@ -3997,6 +3999,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s \"%s\" příkaz obdržen bez hosta\n"
+
+#, fuzzy
+msgid "IRC raw messages"
+msgstr "vypsat debug zprávy"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"

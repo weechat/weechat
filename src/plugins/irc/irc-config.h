@@ -44,6 +44,7 @@ extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_notice_as_pv;
+extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_show_away_once;
 extern struct t_config_option *irc_config_look_smart_filter;
 extern struct t_config_option *irc_config_look_smart_filter_delay;

@@ -20,17 +20,6 @@
 #ifndef __WEECHAT_IRC_DEBUG_H
 #define __WEECHAT_IRC_DEBUG_H 1
 
-#define IRC_DEBUG_BUFFER_NAME "irc_debug"
-
-#define IRC_DEBUG_PREFIX_RECV     "-->"
-#define IRC_DEBUG_PREFIX_RECV_MOD "==>"
-#define IRC_DEBUG_PREFIX_SEND     "<--"
-#define IRC_DEBUG_PREFIX_SEND_MOD "<=="
-
-struct t_irc_server;
-
-extern void irc_debug_printf (struct t_irc_server *server, int send,
-                              int modified, const char *message);
 extern void irc_debug_init ();
 
 #endif /* irc-debug.h */
