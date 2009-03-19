@@ -1287,6 +1287,7 @@ void
 irc_server_msgq_add_msg (struct t_irc_server *server, const char *msg)
 {
     struct t_irc_message *message;
+    char *data_without_weechat_colors;
     
     if (!server->unterminated_message && !msg[0])
         return;
@@ -1322,6 +1323,15 @@ irc_server_msgq_add_msg (struct t_irc_server *server, const char *msg)
     }
     else
         message->data = strdup (msg);
+    
+    /* replace WeeChat internal color codes by "?" */
+    data_without_weechat_colors = weechat_string_remove_color (message->data, "?");
+    if (data_without_weechat_colors)
+    {
+        free (message->data);
+        message->data = data_without_weechat_colors;
+    }
+    
     message->next_message = NULL;
     
     if (irc_msgq_last_msg)
