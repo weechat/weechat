@@ -4017,8 +4017,8 @@ const char *weechat_config_string (struct t_config_option *option);
       </para>
     </section>
     
-    <section id="secPluginCApi_weechat_config_string">
-      <title>weechat_config_string</title>
+    <section id="secPluginCApi_weechat_config_string_default">
+      <title>weechat_config_string_default</title>
       
       <para>
         Prototype:
