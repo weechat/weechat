@@ -3683,7 +3683,7 @@ command_init ()
                      "  filter lines containing \"weechat sucks\" on IRC "
                      "channel #weechat:\n"
                      "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
-                  "list|enable|disable|toggle|add|rename|del %F",
+                  "list|enable|disable|toggle|add|rename|del %F %B",
                   &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands and options"),

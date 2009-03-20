@@ -5051,6 +5051,10 @@ struct t_hook *weechat_hook_command (
                       <entry>Buffers names</entry>
                     </row>
                     <row>
+                      <entry>%B</entry>
+                      <entry>Buffers names (with plugin name)</entry>
+                    </row>
+                    <row>
                       <entry>%c</entry>
                       <entry>Configuration files</entry>
                     </row>
