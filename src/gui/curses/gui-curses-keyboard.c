@@ -286,6 +286,9 @@ gui_keyboard_flush ()
             /*gui_printf (gui_current_window->buffer,
                           "gui_input_read: key = %s (%d)\n", key_str, key);*/
             
+            hook_signal_send ("key_pressed",
+                              WEECHAT_HOOK_SIGNAL_STRING, key_str);
+            
             if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                 input_old = (gui_current_window->buffer->input_buffer) ?
                     strdup (gui_current_window->buffer->input_buffer) : strdup ("");
