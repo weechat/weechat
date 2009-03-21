@@ -317,12 +317,11 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
                 irc_server_disconnect (ptr_server, 0);
                 ptr_server->buffer = NULL;
             }
+            if (irc_buffer_servers == buffer)
+                irc_buffer_servers = NULL;
+            if (ptr_server && (irc_current_server == ptr_server))
+                irc_current_server = NULL;
         }
-        
-        if (irc_buffer_servers == buffer)
-            irc_buffer_servers = NULL;
-        if (ptr_server && (irc_current_server == ptr_server))
-            irc_current_server = NULL;
     }
     
     return WEECHAT_RC_OK;
