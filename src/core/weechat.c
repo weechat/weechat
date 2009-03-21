@@ -329,7 +329,7 @@ weechat_welcome_message ()
         CONFIG_BOOLEAN(config_startup_display_version))
     {
         gui_chat_printf (NULL,
-                         "- - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+                         "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     }
 }
 

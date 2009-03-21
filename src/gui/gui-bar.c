@@ -1985,7 +1985,7 @@ gui_bar_create_default_status ()
         buf = malloc (length);
         if (buf)
         {
-            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+(%s),[lag],[%s],[%s],%s,%s",
+            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+{%s},[lag],[%s],[%s],%s,%s",
                       gui_bar_item_names[GUI_BAR_ITEM_TIME],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
