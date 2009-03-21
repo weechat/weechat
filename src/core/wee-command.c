@@ -766,7 +766,7 @@ command_command (void *data, struct t_gui_buffer *buffer,
     if (argc > 2)
     {
         ptr_plugin = NULL;
-        if (string_strcasecmp (argv[1], "weechat") != 0)
+        if (string_strcasecmp (argv[1], PLUGIN_CORE) != 0)
         {
             ptr_plugin = plugin_search (argv[1]);
             if (!ptr_plugin)
@@ -1243,22 +1243,16 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 && HOOK_COMMAND(ptr_hook, command)
                 && HOOK_COMMAND(ptr_hook, command)[0])
             {
-                gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
+                gui_chat_printf (NULL, "   %s%s%s%s%s",
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 "(" : "",
                                  HOOK_COMMAND(ptr_hook, command),
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 ")" : "",
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (HOOK_COMMAND(ptr_hook, description)
                                   && HOOK_COMMAND(ptr_hook, description)[0]) ?
                                  " - " : "",
                                  (HOOK_COMMAND(ptr_hook, description)
                                   && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 _(HOOK_COMMAND(ptr_hook, description)) : "",
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 _("  (used by a plugin)") : "");
+                                 _(HOOK_COMMAND(ptr_hook, description)) : "");
             }
         }
         gui_chat_printf (NULL, "");
@@ -1271,22 +1265,16 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 && HOOK_COMMAND(ptr_hook, command)
                 && HOOK_COMMAND(ptr_hook, command)[0])
             {
-                gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
+                gui_chat_printf (NULL, "   %s%s%s%s%s",
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 "(" : "",
                                  HOOK_COMMAND(ptr_hook, command),
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 ")" : "",
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (HOOK_COMMAND(ptr_hook, description)
                                   && HOOK_COMMAND(ptr_hook, description)[0]) ?
                                  " - " : "",
                                  (HOOK_COMMAND(ptr_hook, description)
                                   && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 _(HOOK_COMMAND(ptr_hook, description)) : "",
-                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                 _("  (masked by a plugin)") : "");
+                                 _(HOOK_COMMAND(ptr_hook, description)) : "");
             }
         }
         
@@ -1300,7 +1288,6 @@ command_help (void *data, struct t_gui_buffer *buffer,
         if (!ptr_hook->deleted
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0]
-            && (HOOK_COMMAND(ptr_hook, level) == 0)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    argv[1]) == 0))
         {
@@ -3209,7 +3196,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
 {
     time_t running_time;
     int day, hour, min, sec;
-    char string[256];
+    char string[512];
     
     /* make C compiler happy */
     (void) data;
@@ -3221,7 +3208,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
     min = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
     sec = ((running_time % (60 * 60 * 24)) % (60 * 60)) % 60;
     
-    if ((argc == 2) && (string_strcasecmp (argv[1], "-o") == 0))
+    if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
         snprintf (string, sizeof (string),
                   _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
@@ -3256,6 +3243,81 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          ctime (&weechat_start_time));
     }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_version_display: display WeeChat version
+ */
+
+void
+command_version_display (struct t_gui_buffer *buffer,
+                         int send_to_buffer_as_input)
+{
+    char string[512];
+    
+    if (send_to_buffer_as_input)
+    {
+        snprintf (string, sizeof (string),
+                  "WeeChat %s [%s %s %s]",
+                  PACKAGE_VERSION,
+                  _("compiled on"),
+                  __DATE__,
+                  __TIME__);
+        input_data (buffer, string);
+        if (weechat_upgrade_count > 0)
+        {
+            snprintf (string, sizeof (string),
+                      _("Upgraded %d %s, first start: %s"),
+                      weechat_upgrade_count,
+                      NG_("time", "times", weechat_upgrade_count),
+                      ctime (&weechat_start_time));
+            string[strlen (string) - 1] = '\0';
+            input_data (buffer, string);
+        }
+    }
+    else
+    {
+        gui_chat_printf (NULL, "%sWeeChat %s %s[%s%s %s %s%s]",
+                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                         PACKAGE_VERSION,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                         _("compiled on"),
+                         __DATE__,
+                         __TIME__,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+        if (weechat_upgrade_count > 0)
+        {
+            gui_chat_printf (NULL,
+                             _("Upgraded %d %s, first start: %s"),
+                             weechat_upgrade_count,
+                             /* TRANSLATORS: text is: "upgraded xx times" */
+                             NG_("time", "times", weechat_upgrade_count),
+                             ctime (&weechat_start_time));
+        }
+    }
+}
+
+/*
+ * command_version: display WeeChat version
+ */
+
+int
+command_version (void *data, struct t_gui_buffer *buffer,
+                 int argc, char **argv, char **argv_eol)
+{
+    int send_to_buffer_as_input;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+    
+    send_to_buffer_as_input = ((argc >= 2)
+                               && (string_strcasecmp (argv[1], "-o") == 0));
+    
+    command_version_display (buffer, send_to_buffer_as_input);
     
     return WEECHAT_RC_OK;
 }
@@ -3633,7 +3695,7 @@ command_init ()
                      "command)\n"
                      "command: command to execute (a '/' is automatically "
                      "added if not found at beginning of command)"),
-                  "%p|weechat %P",
+                  "%p|" PLUGIN_CORE " %P",
                   &command_command, NULL);
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
@@ -3850,9 +3912,15 @@ command_init ()
     hook_command (NULL, "uptime",
                   N_("show WeeChat uptime"),
                   N_("[-o]"),
-                  N_("-o: send uptime on current channel as an IRC message"),
+                  N_("-o: send uptime to current buffer as input"),
                   "-o",
                   &command_uptime, NULL);
+    hook_command (NULL, "version",
+                  N_("show WeeChat version and compilation date"),
+                  N_("[-o]"),
+                  N_("-o: send version to current buffer as input"),
+                  "-o",
+                  &command_version, NULL);
     hook_command (NULL, "window",
                   N_("manage windows"),
                   N_("[list | -1 | +1 | b# | up | down | left | right | "

@@ -219,7 +219,6 @@ gui_completion_search_command (struct t_gui_completion *completion)
         if (!ptr_hook->deleted
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0]
-            && (HOOK_COMMAND(ptr_hook, level) == 0)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    completion->base_command) == 0))
             return ptr_hook;
@@ -691,9 +690,9 @@ gui_completion_list_add_plugin_commands (struct t_gui_completion *completion)
         if (plugin_name)
         {
             ptr_plugin = NULL;
-            if (string_strcasecmp (plugin_name, "weechat") != 0)
+            if (string_strcasecmp (plugin_name, PLUGIN_CORE) != 0)
             {
-                /* plugin name is different from "weechat", then search it in
+                /* plugin name is different from "core", then search it in
                    plugin list */
                 ptr_plugin = plugin_search (plugin_name);
                 if (!ptr_plugin)
@@ -1600,8 +1599,7 @@ gui_completion_command (struct t_gui_completion *completion)
         {
             if (!ptr_hook->deleted
                 && HOOK_COMMAND(ptr_hook, command)
-                && HOOK_COMMAND(ptr_hook, command)[0]
-                && (HOOK_COMMAND(ptr_hook, level) == 0))
+                && HOOK_COMMAND(ptr_hook, command)[0])
             {
                 gui_completion_list_add (completion,
                                          HOOK_COMMAND(ptr_hook, command),

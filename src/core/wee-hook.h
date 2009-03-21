@@ -99,8 +99,6 @@ struct t_hook_command
 {
     t_hook_callback_command *callback; /* command callback                  */
     char *command;                     /* name of command (without '/')     */
-    int level;                         /* when many commands with same name */
-                                       /* exist: lower level= high priority */
     char *description;                 /* (for /help) short cmd description */
     char *args;                        /* (for /help) command arguments     */
     char *args_description;            /* (for /help) args long description */

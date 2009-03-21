@@ -304,7 +304,7 @@ hook_exec_end ()
  */
 
 struct t_hook *
-hook_search_command (const char *command)
+hook_search_command (struct t_weechat_plugin *plugin, const char *command)
 {
     struct t_hook *ptr_hook;
     
@@ -312,11 +312,12 @@ hook_search_command (const char *command)
          ptr_hook = ptr_hook->next_hook)
     {
         if (!ptr_hook->deleted
+            && (ptr_hook->plugin == plugin)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
             return ptr_hook;
     }
     
-    /* command hook not found */
+    /* command hook not found for plugin */
     return NULL;
 }
 
@@ -331,24 +332,18 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
               const char *completion,
               t_hook_callback_command *callback, void *callback_data)
 {
-    struct t_hook *ptr_hook, *new_hook;
+    struct t_hook *new_hook;
     struct t_hook_command *new_hook_command;
-
-    if ((string_strcasecmp (command, "builtin") == 0)
-        && hook_search_command (command))
-        return NULL;
-
-    /* increase level for command hooks with same command name
-       so that these commands will not be used any more, until this
-       one is removed */
-    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
+    
+    if (hook_search_command (plugin, command))
     {
-        if (!ptr_hook->deleted
-            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
-        {
-            HOOK_COMMAND(ptr_hook, level)++;
-        }
+        gui_chat_printf (NULL,
+                         _("%sError: another command \"%s\" already exists "
+                           "for plugin \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         command,
+                         plugin_get_name (plugin));
+        return NULL;
     }
     
     new_hook = malloc (sizeof (*new_hook));
@@ -367,7 +362,6 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
     new_hook_command->callback = callback;
     new_hook_command->command = (command) ?
         strdup (command) : strdup ("");
-    new_hook_command->level = 0;
     new_hook_command->description = (description) ?
         strdup (description) : strdup ("");
     new_hook_command->args = (args) ?
@@ -400,7 +394,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_for_plugin, *hook_for_other_plugin;
     char **argv, **argv_eol;
-    int argc, rc, command_is_running;
+    int argc, rc, number_for_other_plugin;
     
     if (!buffer || !string || !string[0])
         return -1;
@@ -423,31 +417,28 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     
     hook_for_plugin = NULL;
     hook_for_other_plugin = NULL;
-    command_is_running = 0;
+    number_for_other_plugin = 0;
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
         if (!ptr_hook->deleted
-            && ((!any_plugin || HOOK_COMMAND(ptr_hook, level) == 0))
             && ((argv[0][0] == '/') && (string_strcasecmp (argv[0] + 1,
                                                            HOOK_COMMAND(ptr_hook, command)) == 0)))
         {
-            if (ptr_hook->running > 0)
-                command_is_running = ptr_hook->running;
-
-            if (ptr_hook->running < HOOK_COMMAND_MAX_CALLS)
+            if (ptr_hook->plugin == plugin)
             {
-                if (ptr_hook->plugin == plugin)
-                {
-                    if (!hook_for_plugin)
-                        hook_for_plugin = ptr_hook;
-                }
-                else
+                if (!hook_for_plugin)
+                    hook_for_plugin = ptr_hook;
+            }
+            else
+            {
+                if (any_plugin)
                 {
                     if (!hook_for_other_plugin)
                         hook_for_other_plugin = ptr_hook;
+                    number_for_other_plugin++;
                 }
             }
         }
@@ -455,20 +446,28 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         ptr_hook = next_hook;
     }
     
-    /* ambiguous: command found for current plugin and other one, we don't know
-       which one to run! */
-    if (any_plugin && hook_for_plugin && hook_for_other_plugin)
+    if (!hook_for_plugin && !hook_for_other_plugin)
     {
-        rc = -2;
+        /* command not found */
+        rc = -1;
     }
     else
     {
-        if (any_plugin || hook_for_plugin)
+        if (!hook_for_plugin && (number_for_other_plugin > 1))
+        {
+            /* ambiguous: no command for current plugin, but more than one
+               command was found for other plugins, we don't know which one to
+               run! */
+            rc = -2;
+        }
+        else
         {
             ptr_hook = (hook_for_plugin) ?
                 hook_for_plugin : hook_for_other_plugin;
             
-            if (ptr_hook)
+            if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
+                rc = -3;
+            else
             {
                 ptr_hook->running++;
                 rc = (int) (HOOK_COMMAND(ptr_hook, callback))
@@ -479,16 +478,6 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 else
                     rc = 1;
             }
-            else
-            {
-                if (command_is_running)
-                    rc = -3;
-            }
-        }
-        else
-        {
-            if (command_is_running)
-                rc = -3;
         }
     }
     
@@ -1948,8 +1937,6 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 void
 unhook (struct t_hook *hook)
 {
-    struct t_hook *ptr_hook;
-    
     /* invalid hook? */
     if (!hook_valid (hook))
         return;
@@ -1972,20 +1959,6 @@ unhook (struct t_hook *hook)
         switch (hook->type)
         {
             case HOOK_TYPE_COMMAND:
-                /* decrease level for command hooks with same command name
-                   and level higher than this one */
-                for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-                     ptr_hook = ptr_hook->next_hook)
-                {
-                    if (!ptr_hook->deleted
-                        && (ptr_hook != hook)
-                        && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                               HOOK_COMMAND(hook, command)) == 0)
-                        && (HOOK_COMMAND(ptr_hook, level) > HOOK_COMMAND(hook, level)))
-                    {
-                        HOOK_COMMAND(ptr_hook, level)--;
-                    }
-                }
                 if (HOOK_COMMAND(hook, command))
                     free (HOOK_COMMAND(hook, command));
                 if (HOOK_COMMAND(hook, description))
@@ -2188,8 +2161,6 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_COMMAND(ptr_hook, callback)))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "command", HOOK_COMMAND(ptr_hook, command)))
-                        return 0;
-                    if (!infolist_new_var_integer (ptr_item, "level", HOOK_COMMAND(ptr_hook, level)))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "description",
                                                   HOOK_COMMAND(ptr_hook, description)))
@@ -2472,7 +2443,6 @@ hook_print_log ()
                         log_printf ("  command data:");
                         log_printf ("    callback . . . . . . : 0x%lx", HOOK_COMMAND(ptr_hook, callback));
                         log_printf ("    command. . . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, command));
-                        log_printf ("    level. . . . . . . . : %d",    HOOK_COMMAND(ptr_hook, level));
                         log_printf ("    description. . . . . : '%s'",  HOOK_COMMAND(ptr_hook, description));
                         log_printf ("    args . . . . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, args));
                         log_printf ("    args_description . . : '%s'",  HOOK_COMMAND(ptr_hook, args_description));

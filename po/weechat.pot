@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,10 +67,7 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr ""
 
 #, c-format
-msgid "Welcome to %s%s%s, %s"
-msgstr ""
-
-msgid "compiled on"
+msgid "Welcome to %sWeeChat%s, %s"
 msgstr ""
 
 msgid "List of bars:"
@@ -273,13 +270,7 @@ msgstr ""
 msgid "%s internal commands:"
 msgstr ""
 
-msgid "  (used by a plugin)"
-msgstr ""
-
 msgid "Other commands:"
-msgstr ""
-
-msgid "  (masked by a plugin)"
 msgstr ""
 
 #, c-format
@@ -662,6 +653,19 @@ msgstr[1] ""
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 
+msgid "compiled on"
+msgstr ""
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Windows list:"
 msgstr ""
 
@@ -1025,7 +1029,13 @@ msgstr ""
 msgid "[-o]"
 msgstr ""
 
-msgid "-o: send uptime on current channel as an IRC message"
+msgid "-o: send uptime to current buffer as input"
+msgstr ""
+
+msgid "show WeeChat version and compilation date"
+msgstr ""
+
+msgid "-o: send version to current buffer as input"
 msgstr ""
 
 msgid "manage windows"
@@ -1490,6 +1500,10 @@ msgid "Reloading configuration file %s"
 msgstr ""
 
 #, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr ""
+
+#, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
@@ -1503,6 +1517,12 @@ msgstr ""
 
 #, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
 msgstr ""
 
 #, c-format
@@ -2898,7 +2918,7 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr ""
 
 #, c-format

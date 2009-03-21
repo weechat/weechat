@@ -135,6 +135,14 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case 1: /* command hooked, OK (executed) */
             break;
+        case -2: /* command is ambigous (exists for other plugins) */
+            gui_chat_printf (NULL,
+                             _("%sError: ambigous command \"%s\": it exists "
+                               "in many plugins and not in \"%s\" plugin"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             command + 1,
+                             plugin_get_name (plugin));
+            break;
         case -3: /* command is running */
             gui_chat_printf (NULL,
                              _("%sError: too much calls to command \"%s\" "
@@ -152,8 +160,8 @@ input_exec_command (struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: unknown command \"%s\" (type /help "
-                                   "for help)"),
+                                 _("%sError: unknown command \"%s\" (type "
+                                   "/help for help)"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  command + 1);
             }
@@ -170,53 +178,36 @@ input_exec_command (struct t_gui_buffer *buffer,
 void
 input_data (struct t_gui_buffer *buffer, const char *data)
 {
-    char *new_data, *pos;
+    char *pos;
     const char *ptr_data;
     
     if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
         return;
-
-    /* TODO: modifier for input */
-    /*new_data = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_USER,
-      "", data);*/
-    new_data = strdup (data);
     
-    /* no changes in new data */
-    if (new_data && (strcmp (data, new_data) == 0))
+    /* use new data (returned by plugin) */
+    ptr_data = data;
+    while (ptr_data && ptr_data[0])
     {
-        free (new_data);
-        new_data = NULL;
-    }
-    
-    /* message not dropped? */
-    if (!new_data || new_data[0])
-    {
-        /* use new data (returned by plugin) */
-        ptr_data = (new_data) ? new_data : data;
+        pos = strchr (ptr_data, '\n');
+        if (pos)
+            pos[0] = '\0';
         
-        while (ptr_data && ptr_data[0])
+        if (input_is_command (ptr_data))
         {
-            pos = strchr (ptr_data, '\n');
-            if (pos)
-                pos[0] = '\0';
-            
-            if (input_is_command (ptr_data))
-            {
-                /* WeeChat or plugin command */
-                (void) input_exec_command (buffer, 1, buffer->plugin, ptr_data);
-            }
-            else
-            {
-                input_exec_data (buffer, ptr_data);
-            }
-
-            if (pos)
-            {
-                pos[0] = '\n';
-                ptr_data = pos + 1;
-            }
-            else
-                ptr_data = NULL;
+            /* WeeChat or plugin command */
+            (void) input_exec_command (buffer, 1, buffer->plugin, ptr_data);
         }
+        else
+        {
+            input_exec_data (buffer, ptr_data);
+        }
+        
+        if (pos)
+        {
+            pos[0] = '\n';
+            ptr_data = pos + 1;
+        }
+        else
+            ptr_data = NULL;
     }
 }

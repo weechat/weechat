@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
-"PO-Revision-Date: 2009-03-21 13:17+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
+"PO-Revision-Date: 2009-03-21 15:57+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,11 +84,8 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur: impossible de créer le répertoire \"%s\"\n"
 
 #, c-format
-msgid "Welcome to %s%s%s, %s"
-msgstr "Bienvenue dans %s%s%s, %s"
-
-msgid "compiled on"
-msgstr "compilé le"
+msgid "Welcome to %sWeeChat%s, %s"
+msgstr "Bienvenue dans %sWeeChat%s, %s"
 
 msgid "List of bars:"
 msgstr "Liste des barres:"
@@ -294,14 +291,8 @@ msgstr "Filtre \"%s\" supprimé"
 msgid "%s internal commands:"
 msgstr "Commandes internes %s:"
 
-msgid "  (used by a plugin)"
-msgstr "  (utilisé par une extension)"
-
 msgid "Other commands:"
 msgstr "Autres commandes:"
-
-msgid "  (masked by a plugin)"
-msgstr "  (masqué par une extension)"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -692,6 +683,19 @@ msgstr[1] "jours"
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "Uptime WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, démarré le %s%s"
+
+msgid "compiled on"
+msgstr "compilé le"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr "Mis à jour %d %s, premier démarrage: %s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "fois"
+msgstr[1] "fois"
 
 msgid "Windows list:"
 msgstr "Liste des fenêtres:"
@@ -1270,8 +1274,14 @@ msgstr "montrer l'uptime de WeeChat"
 msgid "[-o]"
 msgstr "[-o]"
 
-msgid "-o: send uptime on current channel as an IRC message"
-msgstr "-o: envoyer l'uptime sur le canal courant en tant que message IRC"
+msgid "-o: send uptime to current buffer as input"
+msgstr "-o: envoyer l'uptime sur le tampon courant comme entrée"
+
+msgid "show WeeChat version and compilation date"
+msgstr "afficher la version de WeeChat et la date de compilation"
+
+msgid "-o: send version to current buffer as input"
+msgstr "-o: envoyer la version sur le tampon courant comme entrée"
 
 msgid "manage windows"
 msgstr "gestion des fenêtres"
@@ -1843,6 +1853,11 @@ msgid "Reloading configuration file %s"
 msgstr "Rechargement du fichier de configuration %s"
 
 #, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr ""
+"%sErreur: une autre commande \"%s\" existe déjà pour l'extension \"%s\""
+
+#, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Décalage de l'horloge système détecté (%+ld secondes), réinitialisation de "
@@ -1859,6 +1874,14 @@ msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
 #, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
 msgstr "%sErreur avec la commande \"%s\" (essayez /help %s)"
+
+#, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr ""
+"%sErreur: commande \"%s\" ambiguë: elle existe dans plusieurs extensions et "
+"pas dans l'extension \"%s\""
 
 #, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -3515,8 +3538,10 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s%s: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
-msgstr "%s%s: la commande \"%s\" doit être exécutée sur un tampon irc"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgstr ""
+"%s%s: la commande \"%s\" doit être exécutée sur un tampon irc (serveur ou "
+"canal)"
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -5626,3 +5651,9 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "  (used by a plugin)"
+#~ msgstr "  (utilisé par une extension)"
+
+#~ msgid "  (masked by a plugin)"
+#~ msgstr "  (masqué par une extension)"

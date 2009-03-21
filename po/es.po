@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -85,11 +85,8 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "Welcome to %s%s%s, %s"
+msgid "Welcome to %sWeeChat%s, %s"
 msgstr "%sBienvenido a %s%s%s, %s\n"
-
-msgid "compiled on"
-msgstr "compilado en"
 
 #, fuzzy
 msgid "List of bars:"
@@ -304,16 +301,8 @@ msgid "%s internal commands:"
 msgstr "Comandos internos %s :\n"
 
 #, fuzzy
-msgid "  (used by a plugin)"
-msgstr "  (sin plugins)\n"
-
-#, fuzzy
 msgid "Other commands:"
 msgstr "Comandos internos %s :\n"
-
-#, fuzzy
-msgid "  (masked by a plugin)"
-msgstr "  (sin plugins)\n"
 
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
@@ -745,6 +734,20 @@ msgstr ""
 "Tiempo de uso de WeeChat: %s%d %s%s %s%02d%s: %s%02d%s:%s%02d%s, empezÃ³ en %"
 "s%s"
 
+msgid "compiled on"
+msgstr "compilado en"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+#, fuzzy
+msgid "time"
+msgid_plural "times"
+msgstr[0] "Activo"
+msgstr[1] "Activo"
+
 #, fuzzy
 msgid "Windows list:"
 msgstr "fin de la lista /who"
@@ -1158,8 +1161,16 @@ msgstr "muestra el tiempo de uso de WeeChat"
 msgid "[-o]"
 msgstr "[-o]"
 
-msgid "-o: send uptime on current channel as an IRC message"
+#, fuzzy
+msgid "-o: send uptime to current buffer as input"
 msgstr "-o: envÃ­a el tiempo de uso en el canal actual como un mensaje IRC"
+
+#, fuzzy
+msgid "show WeeChat version and compilation date"
+msgstr "Archivo de configuraciÃ³n guardado\n"
+
+msgid "-o: send version to current buffer as input"
+msgstr ""
 
 msgid "manage windows"
 msgstr "gestiÃ³n de ventanas"
@@ -1742,6 +1753,10 @@ msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
 msgid "Reloading configuration file %s"
 msgstr "Guardar configuraciÃ³n a disco\n"
 
+#, fuzzy, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr "el ignore %s ya existe\n"
+
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
@@ -1757,6 +1772,12 @@ msgstr "%s no es posible cerrar el Ãºnico bÃºfer\n"
 #, fuzzy, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr "el ignore %s ya existe\n"
 
 #, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -3366,7 +3387,7 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 
 #, fuzzy, c-format
@@ -5439,18 +5460,25 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "%s%s: command \"%s\" must be executed on irc buffer"
+#~ msgstr ""
+#~ "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
+
+#, fuzzy
+#~ msgid "  (used by a plugin)"
+#~ msgstr "  (sin plugins)\n"
+
+#, fuzzy
+#~ msgid "  (masked by a plugin)"
+#~ msgstr "  (sin plugins)\n"
+
+#, fuzzy
 #~ msgid "plugin:"
 #~ msgstr "  (sin plugins)\n"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s faltan argumentos para el comando \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
-#~ msgstr ""
-#~ "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 
 #~ msgid "nickname text"
 #~ msgstr "usuario texto"

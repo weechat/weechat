@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -85,11 +85,8 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "Welcome to %s%s%s, %s"
+msgid "Welcome to %sWeeChat%s, %s"
 msgstr "%sДобро пожаловать в %s%s%s, %s\n"
-
-msgid "compiled on"
-msgstr "собран:"
 
 #, fuzzy
 msgid "List of bars:"
@@ -305,16 +302,8 @@ msgid "%s internal commands:"
 msgstr "Внутренние команды %s:\n"
 
 #, fuzzy
-msgid "  (used by a plugin)"
-msgstr "  (нет pluginа)\n"
-
-#, fuzzy
 msgid "Other commands:"
 msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "  (masked by a plugin)"
-msgstr "  (нет pluginа)\n"
 
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
@@ -742,6 +731,20 @@ msgstr[1] "дней"
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "WeeChat работает: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, запущен %s%s"
+
+msgid "compiled on"
+msgstr "собран:"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+#, fuzzy
+msgid "time"
+msgid_plural "times"
+msgstr[0] "Активно"
+msgstr[1] "Активно"
 
 #, fuzzy
 msgid "Windows list:"
@@ -1189,8 +1192,16 @@ msgstr "показать uptime WeeChat"
 msgid "[-o]"
 msgstr "[-o]"
 
-msgid "-o: send uptime on current channel as an IRC message"
+#, fuzzy
+msgid "-o: send uptime to current buffer as input"
 msgstr "-o: отправить uptime сообщением в текущий канал"
+
+#, fuzzy
+msgid "show WeeChat version and compilation date"
+msgstr "Конфигурационный файл сохранён\n"
+
+msgid "-o: send version to current buffer as input"
+msgstr ""
 
 msgid "manage windows"
 msgstr "управление окнами"
@@ -1771,6 +1782,10 @@ msgstr "%s %s, строка %d: некорректный параметр \"%s\"
 msgid "Reloading configuration file %s"
 msgstr "Сохраняю конфигурацию\n"
 
+#, fuzzy, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr "%s игнорирование уже существует\n"
+
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
@@ -1786,6 +1801,12 @@ msgstr "%s невозможно закрыть единственный буфе
 #, fuzzy, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -3409,7 +3430,7 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
 #, fuzzy, c-format
@@ -5468,17 +5489,24 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "%s%s: command \"%s\" must be executed on irc buffer"
+#~ msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
+#, fuzzy
+#~ msgid "  (used by a plugin)"
+#~ msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+#~ msgid "  (masked by a plugin)"
+#~ msgstr "  (нет pluginа)\n"
+
+#, fuzzy
 #~ msgid "plugin:"
 #~ msgstr "  (нет pluginа)\n"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s нет аргументов для \"%s\" команды\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
-#~ msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
 #~ msgid "nickname text"
 #~ msgstr "ник текст"

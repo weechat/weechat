@@ -204,6 +204,11 @@ upgrade_weechat_save_uptime (struct t_upgrade_file *upgrade_file)
         infolist_free (ptr_infolist);
         return 0;
     }
+    if (!infolist_new_var_integer (ptr_item, "upgrade_count", weechat_upgrade_count))
+    {
+        infolist_free (ptr_infolist);
+        return 0;
+    }
     
     rc = upgrade_file_write_object (upgrade_file,
                                     UPGRADE_WEECHAT_TYPE_UPTIME,
@@ -504,6 +509,7 @@ upgrade_weechat_read_cb (void *data,
                 break;
             case UPGRADE_WEECHAT_TYPE_UPTIME:
                 weechat_start_time = infolist_time (infolist, "start_time");
+                weechat_upgrade_count = infolist_integer (infolist, "upgrade_count");
                 break;
             case UPGRADE_WEECHAT_TYPE_HOTLIST:
                 if (!hotlist_reset)

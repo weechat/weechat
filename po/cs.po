@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -82,11 +82,8 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nemohu vytvořit adresář \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "Welcome to %s%s%s, %s"
+msgid "Welcome to %sWeeChat%s, %s"
 msgstr "%sVítejte do %s%s%s, %s"
-
-msgid "compiled on"
-msgstr "kompilováno"
 
 msgid "List of bars:"
 msgstr "Seznam polí:"
@@ -290,14 +287,8 @@ msgstr "Filter \"%s\" smazán"
 msgid "%s internal commands:"
 msgstr "%s vnitřní příkazy:"
 
-msgid "  (used by a plugin)"
-msgstr "  (není používáno pluginem)"
-
 msgid "Other commands:"
 msgstr "Další příkazy:"
-
-msgid "  (masked by a plugin)"
-msgstr "  (maskován pluginem)"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -690,6 +681,20 @@ msgstr[1] "dny"
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s"
+
+msgid "compiled on"
+msgstr "kompilováno"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+#, fuzzy
+msgid "time"
+msgid_plural "times"
+msgstr[0] "Aktivní"
+msgstr[1] "Aktivní"
 
 msgid "Windows list:"
 msgstr "Seznam oken:"
@@ -1155,8 +1160,16 @@ msgstr "zobrazit jak dlouho WeeChat běží"
 msgid "[-o]"
 msgstr "[-o]"
 
-msgid "-o: send uptime on current channel as an IRC message"
+#, fuzzy
+msgid "-o: send uptime to current buffer as input"
 msgstr "-o: poslat čas běhu na aktuální kanál jako IRC zprávu"
+
+#, fuzzy
+msgid "show WeeChat version and compilation date"
+msgstr "datum vytvoření kanálu"
+
+msgid "-o: send version to current buffer as input"
+msgstr ""
 
 msgid "manage windows"
 msgstr "spravuje okna"
@@ -1741,6 +1754,10 @@ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 msgid "Reloading configuration file %s"
 msgstr "Ukládám konfiguraci na disk\n"
 
+#, fuzzy, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr "%sChyba: filtr \"%s\" již existuje"
+
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
@@ -1756,6 +1773,12 @@ msgstr "%s nemohu zavřít jediný buffer\n"
 #, fuzzy, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
 msgstr "%s alias nebo příkaz \"%s\" nenalezen\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr "%sChyba: filtr \"%s\" již existuje"
 
 #, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -3397,7 +3420,7 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
 #, fuzzy, c-format
@@ -5506,17 +5529,22 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
+#, fuzzy
+#~ msgid "%s%s: command \"%s\" must be executed on irc buffer"
+#~ msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
+
+#~ msgid "  (used by a plugin)"
+#~ msgstr "  (není používáno pluginem)"
+
+#~ msgid "  (masked by a plugin)"
+#~ msgstr "  (maskován pluginem)"
+
 #~ msgid "plugin:"
 #~ msgstr "plugin:"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
-#~ msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
 #~ msgid "nickname text"
 #~ msgstr "přezdívka text"

@@ -74,6 +74,7 @@ int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
 time_t weechat_start_time = 0;         /* start time (used by /uptime cmd)  */
+int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 int weechat_quit = 0;                  /* = 1 if quit request from user     */
 int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
@@ -313,23 +314,14 @@ weechat_welcome_message ()
     if (CONFIG_STRING(config_startup_weechat_slogan)
         && CONFIG_STRING(config_startup_weechat_slogan)[0])
     {
-        gui_chat_printf (NULL, _("Welcome to %s%s%s, %s"),
+        gui_chat_printf (NULL, _("Welcome to %sWeeChat%s, %s"),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         PACKAGE_NAME,
                          GUI_NO_COLOR,
                          CONFIG_STRING(config_startup_weechat_slogan));
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
-        gui_chat_printf (NULL, "%sWeeChat %s %s[%s%s %s %s%s]",
-                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         PACKAGE_VERSION,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                         _("compiled on"),
-                         __DATE__,
-                         __TIME__,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+        command_version_display (NULL, 0);
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         (CONFIG_STRING(config_startup_weechat_slogan)
@@ -406,7 +398,10 @@ main (int argc, char *argv[])
         exit (EXIT_FAILURE);
     gui_main_init ();                   /* init WeeChat interface           */
     if (weechat_upgrading)
+    {
         upgrade_weechat_load ();        /* upgrade with session file        */
+        weechat_upgrade_count++;        /* increase /upgrade count          */
+    }
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */

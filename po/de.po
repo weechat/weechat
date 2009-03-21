@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-21 13:16+0100\n"
+"POT-Creation-Date: 2009-03-21 15:56+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -88,11 +88,8 @@ msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s kann das Verzeichnis \"%s\" nicht anlegen\n"
 
 #, fuzzy, c-format
-msgid "Welcome to %s%s%s, %s"
+msgid "Welcome to %sWeeChat%s, %s"
 msgstr "%sWillkommen in %s%s%s, %s\n"
-
-msgid "compiled on"
-msgstr "kompiliert am"
 
 #, fuzzy
 msgid "List of bars:"
@@ -308,16 +305,8 @@ msgid "%s internal commands:"
 msgstr "%s interne Befehle:\n"
 
 #, fuzzy
-msgid "  (used by a plugin)"
-msgstr "  (kein Plugin)\n"
-
-#, fuzzy
 msgid "Other commands:"
 msgstr "%s interne Befehle:\n"
-
-#, fuzzy
-msgid "  (masked by a plugin)"
-msgstr "  (kein Plugin)\n"
 
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
@@ -749,6 +738,20 @@ msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 "WeeChat Uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, gestartet am %s%s"
 
+msgid "compiled on"
+msgstr "kompiliert am"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+#, fuzzy
+msgid "time"
+msgid_plural "times"
+msgstr[0] "aktiv"
+msgstr[1] "aktiv"
+
 #, fuzzy
 msgid "Windows list:"
 msgstr "Ende der /who-Liste"
@@ -1177,9 +1180,17 @@ msgstr "zeigt die Uptime von Weechat an"
 msgid "[-o]"
 msgstr "[-o]"
 
-msgid "-o: send uptime on current channel as an IRC message"
+#, fuzzy
+msgid "-o: send uptime to current buffer as input"
 msgstr ""
 "-o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel"
+
+#, fuzzy
+msgid "show WeeChat version and compilation date"
+msgstr "Konfigurationsdatei gesichert\n"
+
+msgid "-o: send version to current buffer as input"
+msgstr ""
 
 msgid "manage windows"
 msgstr "Fenster verwalten"
@@ -1757,6 +1768,10 @@ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 msgid "Reloading configuration file %s"
 msgstr "Konfiguration wird gespeichert\n"
 
+#, fuzzy, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr "%s diese /ignore-Regel existiert bereits\n"
+
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
@@ -1772,6 +1787,12 @@ msgstr "%s der einzige Puffer kann nicht geschlossen werden\n"
 #, fuzzy, c-format
 msgid "%sError with command \"%s\" (try /help %s)"
 msgstr "%s Alias oder Befehl \"%s\" nicht gefunden\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: ambigous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr "%s diese /ignore-Regel existiert bereits\n"
 
 #, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -3377,7 +3398,7 @@ msgid "%s%s: too few arguments for \"%s\" command"
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer"
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
 
 #, fuzzy, c-format
@@ -5443,18 +5464,25 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
+#~ msgid "%s%s: command \"%s\" must be executed on irc buffer"
+#~ msgstr ""
+#~ "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
+
+#, fuzzy
+#~ msgid "  (used by a plugin)"
+#~ msgstr "  (kein Plugin)\n"
+
+#, fuzzy
+#~ msgid "  (masked by a plugin)"
+#~ msgstr "  (kein Plugin)\n"
+
+#, fuzzy
 #~ msgid "plugin:"
 #~ msgstr "  (kein Plugin)\n"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s%s: command \"%s\" must be executed on irc buffer (server/channel/pv)"
-#~ msgstr ""
-#~ "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
 
 #~ msgid "nickname text"
 #~ msgstr "Nickname Text"
