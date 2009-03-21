@@ -115,7 +115,7 @@ gui_keyboard_grab_end ()
             gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
             if (gui_current_window->buffer->completion)
                 gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
         free (expanded_key);
     }

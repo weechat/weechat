@@ -665,7 +665,7 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     
     /* execute modifier with basic string (without cursor tag) */
     ptr_input = hook_modifier_exec (NULL,
-                                    "weechat_input_text_display",
+                                    "input_text_display",
                                     str_buffer,
                                     (window->buffer->input_buffer) ?
                                     window->buffer->input_buffer : "");
@@ -712,7 +712,7 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     
     /* execute modifier with cursor in string */
     ptr_input2 = hook_modifier_exec (NULL,
-                                     "weechat_input_text_display_with_cursor",
+                                     "input_text_display_with_cursor",
                                      str_buffer,
                                      (ptr_input) ? ptr_input : "");
     if (ptr_input)

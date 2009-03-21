@@ -304,7 +304,7 @@ gui_keyboard_flush ()
                                          key_str, -1);
                 if (gui_current_window->buffer->completion)
                     gui_completion_stop (gui_current_window->buffer->completion, 0);
-                gui_input_text_changed_signal ();
+                gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
             }
             
             /* incremental text search in buffer */
@@ -397,7 +397,7 @@ gui_keyboard_read_cb (void *data, int fd)
         else if (cancel_paste)
             gui_keyboard_paste_cancel ();
         else if (text_added_to_buffer)
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
     else
     {

@@ -47,6 +47,54 @@ char *gui_input_clipboard = NULL;      /* clipboard content                 */
 
 
 /*
+ * gui_input_optimize_size: optimize input buffer size by adding
+ *                          or deleting data block (predefined size)
+ */
+
+void
+gui_input_optimize_size (struct t_gui_buffer *buffer)
+{
+    int optimal_size;
+    
+    if (buffer->input)
+    {
+        optimal_size = ((buffer->input_buffer_size / GUI_BUFFER_INPUT_BLOCK_SIZE) *
+                        GUI_BUFFER_INPUT_BLOCK_SIZE) + GUI_BUFFER_INPUT_BLOCK_SIZE;
+        if (buffer->input_buffer_alloc != optimal_size)
+        {
+            buffer->input_buffer_alloc = optimal_size;
+            buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
+        }
+    }
+}
+
+/*
+ * gui_input_replace_input: replace full input by another string, trying to
+ *                          keep cursor position is new string is long enough
+ */
+
+void
+gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
+{
+    int size, length;
+    
+    size = strlen (new_input);
+    length = utf8_strlen (new_input);
+    
+    /* compute new buffer size */
+    buffer->input_buffer_size = size;
+    buffer->input_buffer_length = length;
+    gui_input_optimize_size (buffer);
+    
+    /* copy new string to input */
+    strcpy (buffer->input_buffer, new_input);
+    
+    /* move cursor to the end of new input if it is now after the end */
+    if (buffer->input_buffer_pos > buffer->input_buffer_length)
+        buffer->input_buffer_pos = buffer->input_buffer_length;
+}
+
+/*
  * gui_input_paste_pending_signal: send signal "input_paste_pending"
  */
 
@@ -67,12 +115,30 @@ gui_input_prompt_changed_signal ()
 }
 
 /*
- * gui_input_text_changed_signal: send signal "input_text_changed"
+ * gui_input_text_changed_modifier_and_signal: send modifier and signal
+ *                                             "input_text_changed"
  */
 
 void
-gui_input_text_changed_signal ()
+gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer)
 {
+    char str_buffer[128], *new_input;
+    
+    /* send modifier, and change input if needed */
+    snprintf (str_buffer, sizeof (str_buffer),
+              "0x%lx", (long unsigned int)buffer);
+    new_input = hook_modifier_exec (NULL,
+                                    "input_text_content",
+                                    str_buffer,
+                                    (buffer->input_buffer) ?
+                                    buffer->input_buffer : "");
+    if (new_input && (strcmp (new_input, buffer->input_buffer) != 0))
+    {
+        /* input has been changed by modifier, use it */
+        gui_input_replace_input (buffer, new_input);
+    }
+    
+    /* send signal */
     hook_signal_send ("input_text_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
@@ -94,28 +160,6 @@ void
 gui_input_search_signal ()
 {
     hook_signal_send ("input_search", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-}
-
-/*
- * gui_input_optimize_size: optimize input buffer size by adding
- *                          or deleting data block (predefined size)
- */
-
-void
-gui_input_optimize_size (struct t_gui_buffer *buffer)
-{
-    int optimal_size;
-    
-    if (buffer->input)
-    {
-        optimal_size = ((buffer->input_buffer_size / GUI_BUFFER_INPUT_BLOCK_SIZE) *
-                        GUI_BUFFER_INPUT_BLOCK_SIZE) + GUI_BUFFER_INPUT_BLOCK_SIZE;
-        if (buffer->input_buffer_alloc != optimal_size)
-        {
-            buffer->input_buffer_alloc = optimal_size;
-            buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
-        }
-    }
 }
 
 /*
@@ -147,14 +191,9 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
 {
     int pos_start, size, length;
     char *ptr_start;
-    char *buffer_before_insert, *string2;
     
     if (buffer->input)
     {
-        buffer_before_insert =
-            (buffer->input_buffer) ?
-            strdup (buffer->input_buffer) : strdup ("");
-        
         if (pos == -1)
             pos = buffer->input_buffer_pos;
         
@@ -178,19 +217,6 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         strncpy (ptr_start, string, size);
         
         buffer->input_buffer_pos += length;
-        
-        string2 = malloc (size + 2);
-        if (string2)
-        {
-            snprintf (string2, size + 2, "*%s", string);
-            /* TODO: execute keyboard hooks */
-            /*(void) plugin_keyboard_handler_exec (string2,
-                                                 buffer_before_insert,
-                                                 buffer->input_buffer);*/
-            free (string2);
-        }
-        if (buffer_before_insert)
-            free (buffer_before_insert);
         
         return length;
     }
@@ -233,7 +259,7 @@ gui_input_clipboard_paste ()
                                  gui_input_clipboard, -1);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
         
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -270,7 +296,7 @@ gui_input_return ()
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_current_window->buffer->ptr_history = NULL;
             gui_input_optimize_size (gui_current_window->buffer);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
             input_data (gui_current_window->buffer, command);
             free (command);
         }
@@ -379,7 +405,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
                     buffer->completion->position++;
             }
         }
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (buffer);
     }
 }
 
@@ -400,7 +426,7 @@ gui_input_complete_next ()
                                utf8_real_pos (gui_current_window->buffer->input_buffer,
                                               gui_current_window->buffer->input_buffer_pos));
         gui_input_complete (gui_current_window->buffer);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -421,7 +447,7 @@ gui_input_complete_previous ()
                                utf8_real_pos (gui_current_window->buffer->input_buffer,
                                               gui_current_window->buffer->input_buffer_pos));
         gui_input_complete (gui_current_window->buffer);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -473,7 +499,7 @@ gui_input_delete_previous_char ()
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -504,7 +530,7 @@ gui_input_delete_next_char ()
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -563,7 +589,7 @@ gui_input_delete_previous_word ()
             gui_current_window->buffer->input_buffer_pos -= length_deleted;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -602,7 +628,7 @@ gui_input_delete_next_word ()
         gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -638,7 +664,7 @@ gui_input_delete_beginning_of_line ()
             gui_current_window->buffer->input_buffer_pos = 0;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -670,7 +696,7 @@ gui_input_delete_end_of_line (const char *args)
         gui_current_window->buffer->input_buffer_length = utf8_strlen (gui_current_window->buffer->input_buffer);
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -689,7 +715,7 @@ gui_input_delete_line ()
         gui_current_window->buffer->input_buffer_pos = 0;
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
     }
 }
 
@@ -730,7 +756,7 @@ gui_input_transpose_chars ()
             
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -951,7 +977,7 @@ gui_input_history_previous ()
                 strcpy (gui_current_window->buffer->input_buffer,
                         gui_current_window->buffer->ptr_history->text);
             }
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
         else
         {
@@ -1016,7 +1042,7 @@ gui_input_history_next ()
                     gui_input_optimize_size (gui_current_window->buffer);
                 }
             }
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
         else
         {
@@ -1058,7 +1084,7 @@ gui_input_history_global_previous ()
             gui_current_window->buffer->input_buffer_1st_display = 0;
             strcpy (gui_current_window->buffer->input_buffer,
                     history_global_ptr->text);
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -1098,7 +1124,7 @@ gui_input_history_global_next ()
                 strcpy (gui_current_window->buffer->input_buffer,
                         history_global_ptr->text);
             }
-            gui_input_text_changed_signal ();
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         }
     }
 }
@@ -1261,7 +1287,7 @@ gui_input_insert (const char *args)
     {
         args2 = string_convert_hex_chars (args);
         gui_input_insert_string (gui_current_window->buffer, (args2) ? args2 : args, -1);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
         if (args2)
             free (args2);
     }

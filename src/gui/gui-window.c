@@ -906,7 +906,7 @@ gui_window_search_stop (struct t_gui_window *window)
     {
         gui_input_insert_string (window->buffer,
                                  window->buffer->text_search_input, -1);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (window->buffer);
         free (window->buffer->text_search_input);
         window->buffer->text_search_input = NULL;
     }

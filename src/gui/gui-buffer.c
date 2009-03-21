@@ -944,7 +944,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     {
         gui_input_delete_line (buffer);
         gui_input_insert_string (buffer, value, 0);
-        gui_input_text_changed_signal ();
+        gui_input_text_changed_modifier_and_signal (buffer);
     }
     else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
     {

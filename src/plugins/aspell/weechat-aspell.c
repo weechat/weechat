@@ -975,7 +975,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          &weechat_aspell_buffer_switch_cb, NULL);
     
     /* callback for spell checking input text */
-    weechat_hook_modifier ("weechat_input_text_display",
+    weechat_hook_modifier ("input_text_display",
                            &weechat_aspell_modifier_cb, NULL);
     
     weechat_aspell_create_spellers (weechat_current_buffer ());
