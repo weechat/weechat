@@ -421,7 +421,10 @@ void
 gui_window_draw_separator (struct t_gui_window *window)
 {
     if (GUI_WINDOW_OBJECTS(window)->win_separator)
+    {
         delwin (GUI_WINDOW_OBJECTS(window)->win_separator);
+        GUI_WINDOW_OBJECTS(window)->win_separator = NULL;
+    }
     
     if (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT))
     {
