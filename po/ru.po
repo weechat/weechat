@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-19 10:07+0100\n"
+"POT-Creation-Date: 2009-03-21 13:16+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -314,10 +314,6 @@ msgstr "Внутренние команды %s:\n"
 
 #, fuzzy
 msgid "  (masked by a plugin)"
-msgstr "  (нет pluginа)\n"
-
-#, fuzzy
-msgid "plugin:"
 msgstr "  (нет pluginа)\n"
 
 #, fuzzy, c-format
@@ -3547,8 +3543,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"number of IRC raw messages to save in memory when raw buffer is closed "
-"(messages will be displayed when opening raw buffer)"
+"number of IRC raw messages to save in memory when raw data buffer is closed "
+"(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
 msgid "show remote away message only once in private"
@@ -5470,6 +5466,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "plugin:"
+#~ msgstr "  (нет pluginа)\n"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"

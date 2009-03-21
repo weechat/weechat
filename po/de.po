@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-19 10:07+0100\n"
+"POT-Creation-Date: 2009-03-21 13:16+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -317,10 +317,6 @@ msgstr "%s interne Befehle:\n"
 
 #, fuzzy
 msgid "  (masked by a plugin)"
-msgstr "  (kein Plugin)\n"
-
-#, fuzzy
-msgid "plugin:"
 msgstr "  (kein Plugin)\n"
 
 #, fuzzy, c-format
@@ -3519,8 +3515,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"number of IRC raw messages to save in memory when raw buffer is closed "
-"(messages will be displayed when opening raw buffer)"
+"number of IRC raw messages to save in memory when raw data buffer is closed "
+"(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
 msgid "show remote away message only once in private"
@@ -5445,6 +5441,10 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "plugin:"
+#~ msgstr "  (kein Plugin)\n"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"

@@ -1306,11 +1306,11 @@ command_help (void *data, struct t_gui_buffer *buffer,
         {
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL,
-                             "[%s%s]  %s/%s  %s%s",
-                             (ptr_hook->plugin) ?
-                             _("plugin:") : "weechat",
-                             (ptr_hook->plugin) ?
-                             ptr_hook->plugin->name : "",
+                             "%s[%s%s%s]  %s/%s  %s%s",
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             plugin_get_name (ptr_hook->plugin),
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              HOOK_COMMAND(ptr_hook, command),
                              GUI_COLOR(GUI_COLOR_CHAT),

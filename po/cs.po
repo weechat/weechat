@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-19 10:07+0100\n"
+"POT-Creation-Date: 2009-03-21 13:16+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -298,9 +298,6 @@ msgstr "Další příkazy:"
 
 msgid "  (masked by a plugin)"
 msgstr "  (maskován pluginem)"
-
-msgid "plugin:"
-msgstr "plugin:"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -3537,8 +3534,8 @@ msgstr ""
 "(obvykle jakákoliv zpráva od jiného uživatele, ne zprávy serveru,...)"
 
 msgid ""
-"number of IRC raw messages to save in memory when raw buffer is closed "
-"(messages will be displayed when opening raw buffer)"
+"number of IRC raw messages to save in memory when raw data buffer is closed "
+"(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
 msgid "show remote away message only once in private"
@@ -5508,6 +5505,9 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "plugin:"
+#~ msgstr "plugin:"
 
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
