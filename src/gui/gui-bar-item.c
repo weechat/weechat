@@ -484,6 +484,9 @@ gui_bar_item_update (const char *item_name)
 void
 gui_bar_item_free (struct t_gui_bar_item *item)
 {
+    /* force refresh of bars displaying this bar item */
+    gui_bar_item_update (item->name);
+    
     /* remove bar item from bar items list */
     if (item->prev_item)
         (item->prev_item)->next_item = item->next_item;
