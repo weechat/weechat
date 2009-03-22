@@ -280,7 +280,14 @@ Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été com
 <programlisting>
 montrer l'uptime de WeeChat
 
--o: envoyer l'uptime sur le canal courant en tant que message IRC
+-o: envoyer l'uptime sur le tampon courant comme entrée
+</programlisting>
+
+<command>/version  [-o]</command>
+<programlisting>
+afficher la version de WeeChat et la date de compilation
+
+-o: envoyer la version sur le tampon courant comme entrée
 </programlisting>
 
 <command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>

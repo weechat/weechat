@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* aspell-config.c: aspell configuration options */
+/* weechat-aspell-config.c: aspell configuration options */
 
 
 #include <stdlib.h>
@@ -40,8 +40,9 @@ struct t_config_option *weechat_aspell_config_look_color;
 
 struct t_config_option *weechat_aspell_config_check_commands;
 struct t_config_option *weechat_aspell_config_check_default_dict;
-struct t_config_option *weechat_aspell_config_check_word_min_length;
 struct t_config_option *weechat_aspell_config_check_during_search;
+struct t_config_option *weechat_aspell_config_check_real_time;
+struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 
 char **weechat_aspell_commands_to_check = NULL;
@@ -304,17 +305,23 @@ weechat_aspell_config_init ()
            "aspell on buffers for which you didn't explicitely enabled it)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, &weechat_aspell_config_change_default_dict, NULL, NULL, NULL);
+    weechat_aspell_config_check_during_search = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "during_search", "boolean",
+        N_("check words during text search in buffer"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_check_real_time = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "real_time", "boolean",
+        N_("real-time spell checking of words (slower, disabled by default: "
+           "words are checked only if there's delimiter after)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     weechat_aspell_config_check_word_min_length = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "word_min_length", "integer",
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
         NULL, 0, INT_MAX, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    weechat_aspell_config_check_during_search = weechat_config_new_option (
-        weechat_aspell_config_file, ptr_section,
-        "during_search", "boolean",
-        N_("check words during text search in buffer"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* dict */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",

@@ -16,14 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* aspell.c: aspell plugin for WeeChat */
+/* weechat-aspell.c: aspell plugin for WeeChat */
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
-#include <ctype.h>
+#include <wctype.h>
 
 #include "../weechat-plugin.h"
 #include "weechat-aspell.h"
@@ -551,45 +551,6 @@ weechat_aspell_command_authorized (const char *command)
 }
 
 /*
- * weechat_aspell_string_strip_punctuation: strip punctuation chars at the
- *                                          begining and at the end of a word
- */
-
-char *
-weechat_aspell_string_strip_punctuation (const char *word)
-{
-    const char *ptr_start, *ptr_end;
-    
-    if (!word)
-        return NULL;
-    
-    ptr_start = word;
-    while (ptr_start[0])
-    {
-        if (!ispunct (ptr_start[0]))
-            break;
-        ptr_start++;
-    }
-
-    if (!ptr_start[0])
-        return strdup ("");
-    
-    ptr_end = ptr_start + strlen (ptr_start) - 1;
-    
-    while (ptr_end >= ptr_start)
-    {
-        if (!ispunct (ptr_end[0]))
-            break;
-        ptr_end--;
-    }
-    
-    if (ptr_end < ptr_start)
-        return strdup ("");
-    
-    return weechat_strndup (ptr_start, ptr_end - ptr_start + 1);
-}
-
-/*
  * weechat_aspell_string_is_url: detect if a word is an url
  */
 
@@ -629,17 +590,17 @@ weechat_aspell_string_is_url (const char *word)
 int
 weechat_aspell_string_is_simili_number (const char *word)
 {
-    const char *ptr_word;
+    int utf8_char_int;
     
-    if (!word)
+    if (!word || !word[0])
         return 0;
     
-    ptr_word = word;
-    while (ptr_word[0])
+    while (word && word[0])
     {
-        if (!ispunct (ptr_word[0]) && !isdigit (ptr_word[0]))
+        utf8_char_int = weechat_utf8_char_int (word);
+        if (!iswpunct (utf8_char_int) && !iswdigit (utf8_char_int))
             return 0;
-        ptr_word++;
+        word = weechat_utf8_next_char (word);
     }
     
     /* there's only digit or punctuation */
@@ -654,35 +615,29 @@ weechat_aspell_string_is_simili_number (const char *word)
 int
 weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
 {
-    char *clean_word;
     struct t_aspell_speller *ptr_speller;
     int rc;
-    
-    clean_word = weechat_aspell_string_strip_punctuation (word);
-    
-    if (!clean_word)
-        return 1;
     
     rc = 0;
     
     /* word too small? then do not check word */
     if ((weechat_config_integer (weechat_aspell_config_check_word_min_length) > 0)
-        && ((int)strlen (clean_word) < weechat_config_integer (weechat_aspell_config_check_word_min_length)))
+        && ((int)strlen (word) < weechat_config_integer (weechat_aspell_config_check_word_min_length)))
         rc = 1;
     else
     {
         /* word is URL? then do not check word */
-        if (weechat_aspell_string_is_url (clean_word))
+        if (weechat_aspell_string_is_url (word))
             rc = 1;
         else
         {
             /* word is a number? then do not check word */
-            if (weechat_aspell_string_is_simili_number (clean_word))
+            if (weechat_aspell_string_is_simili_number (word))
                 rc = 1;
             else
             {
                 /* word is a nick of nicklist on this buffer? then do not check word */
-                if (weechat_nicklist_search_nick (buffer, NULL, clean_word))
+                if (weechat_nicklist_search_nick (buffer, NULL, word))
                     rc = 1;
                 else
                 {
@@ -690,7 +645,7 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
                     for (ptr_speller = weechat_aspell_spellers; ptr_speller;
                          ptr_speller = ptr_speller->next_speller)
                     {
-                        if (aspell_speller_check (ptr_speller->speller, clean_word, -1) == 1)
+                        if (aspell_speller_check (ptr_speller->speller, word, -1) == 1)
                         {
                             rc = 1;
                             break;
@@ -700,8 +655,6 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
             }
         }
     }
-    
-    free (clean_word);
     
     return rc;
 }
@@ -716,8 +669,9 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
 {
     long unsigned int value;
     struct t_gui_buffer *buffer;
-    char *result, *ptr_string, *pos_space;
+    char *result, *ptr_string, *pos_space, *ptr_end, save_end;
     const char *color_normal, *color_error;
+    int utf8_char_int, char_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error;
     
@@ -784,13 +738,17 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             && (ptr_string[1] != ' '))
         {
             ptr_string++;
-            pos_space = strchr (ptr_string, ' ');
-            if (!pos_space)
+            pos_space = ptr_string;
+            while (pos_space && pos_space[0] && (pos_space[0] != ' '))
+            {
+                pos_space = weechat_utf8_next_char (pos_space);
+            }
+            if (!pos_space || !pos_space[0])
             {
                 free (result);
                 return NULL;
             }
-
+            
             pos_space[0] = '\0';
             
             /* exit if command is not authorized for spell checking */
@@ -809,24 +767,39 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         
         while (ptr_string[0])
         {
-            while (ptr_string[0] == ' ')
+            /* find start of word */
+            utf8_char_int = weechat_utf8_char_int (ptr_string);
+            while (!iswalnum (utf8_char_int) || iswspace (utf8_char_int))
             {
-                result[index_result++] = ' ';
-                ptr_string++;
+                char_size = weechat_utf8_char_size (ptr_string);
+                memcpy (result + index_result, ptr_string, char_size);
+                index_result += char_size;
+                ptr_string += char_size;
+                if (!ptr_string[0])
+                    break;
+                utf8_char_int = weechat_utf8_char_int (ptr_string);
             }
             if (!ptr_string[0])
                 break;
             
-            pos_space = strchr (ptr_string, ' ');
-            if (pos_space)
+            ptr_end = weechat_utf8_next_char (ptr_string);
+            utf8_char_int = weechat_utf8_char_int (ptr_end);
+            while (iswalnum (utf8_char_int))
             {
-                pos_space[0] = '\0';
-                length_word = pos_space - ptr_string;
+                ptr_end = weechat_utf8_next_char (ptr_end);
+                if (!ptr_end[0])
+                    break;
+                utf8_char_int = weechat_utf8_char_int (ptr_end);
             }
-            else
-                length_word = strlen (ptr_string);
+            save_end = ptr_end[0];
+            ptr_end[0] = '\0';
+            length_word = ptr_end - ptr_string;
             
-            word_ok = weechat_aspell_check_word (buffer, ptr_string);
+            if ((save_end != '\0')
+                || (weechat_config_integer (weechat_aspell_config_check_real_time)))
+                word_ok = weechat_aspell_check_word (buffer, ptr_string);
+            else
+                word_ok = 1;
             
             /* add error color */
             if (!word_ok)
@@ -846,13 +819,11 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 index_result += length_color_normal;
             }
             
-            if (pos_space)
-            {
-                pos_space[0] = ' ';
-                ptr_string = pos_space;
-            }
-            else
+            if (save_end == '\0')
                 break;
+
+            ptr_end[0] = save_end;
+            ptr_string = ptr_end;
         }
         
         result[index_result] = '\0';

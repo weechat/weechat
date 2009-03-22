@@ -281,7 +281,14 @@ This command run again a WeeChat binary, so it should have been compiled or inst
 <programlisting>
 show WeeChat uptime
 
--o: send uptime on current channel as an IRC message
+-o: send uptime to current buffer as input
+</programlisting>
+
+<command>/version  [-o]</command>
+<programlisting>
+show WeeChat version and compilation date
+
+-o: send version to current buffer as input
 </programlisting>
 
 <command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>

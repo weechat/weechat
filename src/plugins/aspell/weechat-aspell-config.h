@@ -27,8 +27,9 @@ extern struct t_config_option *weechat_aspell_config_look_color;
 
 extern struct t_config_option *weechat_aspell_config_check_commands;
 extern struct t_config_option *weechat_aspell_config_check_default_dict;
-extern struct t_config_option *weechat_aspell_config_check_word_min_length;
 extern struct t_config_option *weechat_aspell_config_check_during_search;
+extern struct t_config_option *weechat_aspell_config_check_real_time;
+extern struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 extern char **weechat_aspell_commands_to_check;
 extern int weechat_aspell_count_commands_to_check;
@@ -41,4 +42,4 @@ extern int weechat_aspell_config_read ();
 extern int weechat_aspell_config_write ();
 extern void weechat_aspell_config_free ();
 
-#endif /* aspell-config.h */
+#endif /* weechat-aspell-config.h */

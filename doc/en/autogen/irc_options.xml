@@ -166,6 +166,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.raw_messages</command>: number of IRC raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+<itemizedlist>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 0 .. 65535 (default value: 256)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.show_away_once</command>: show remote away message only once in private
 <itemizedlist>
   <listitem>

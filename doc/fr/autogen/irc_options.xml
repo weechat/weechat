@@ -166,6 +166,16 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.raw_messages</command>: nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)
+<itemizedlist>
+  <listitem>
+    <para>type: entier</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: 0 .. 65535 (valeur par défaut: 256)</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.show_away_once</command>: voir le message d'absence distant une seule fois en privé
 <itemizedlist>
   <listitem>

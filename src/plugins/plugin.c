@@ -420,6 +420,7 @@ plugin_load (const char *filename)
         new_plugin->utf8_normalize = &utf8_normalize;
         new_plugin->utf8_prev_char = &utf8_prev_char;
         new_plugin->utf8_next_char = &utf8_next_char;
+        new_plugin->utf8_char_int = &utf8_char_int;
         new_plugin->utf8_char_size = &utf8_char_size;
         new_plugin->utf8_strlen = &utf8_strlen;
         new_plugin->utf8_strnlen = &utf8_strnlen;

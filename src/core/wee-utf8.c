@@ -226,6 +226,61 @@ utf8_next_char (const char *string)
 }
 
 /*
+ * utf8_char_int: return UTF-8 char as integer
+ */
+
+int
+utf8_char_int (const char *string)
+{
+    const unsigned char *ptr_string;
+    
+    if (!string)
+        return 0;
+    
+    ptr_string = (unsigned char *)string;
+    
+    /* UTF-8, 2 bytes: 110vvvvv 10vvvvvv */
+    if ((ptr_string[0] & 0xE0) == 0xC0)
+    {
+        if (!ptr_string[1])
+            return (int)(ptr_string[0] & 0x1F);
+        return ((int)(ptr_string[0] & 0x1F) << 6) +
+            ((int)(ptr_string[1] & 0x3F));
+    }
+    /* UTF-8, 3 bytes: 1110vvvv 10vvvvvv 10vvvvvv */
+    else if ((ptr_string[0] & 0xF0) == 0xE0)
+    {
+        if (!ptr_string[1])
+            return (int)(ptr_string[0] & 0x0F);
+        if (!ptr_string[2])
+            return (((int)(ptr_string[0] & 0x0F)) << 6) +
+                ((int)(ptr_string[1] & 0x3F));
+        return (((int)(ptr_string[0] & 0x0F)) << 12) +
+            (((int)(ptr_string[1] & 0x3F)) << 6) +
+            ((int)(ptr_string[2] & 0x3F));
+    }
+    /* UTF-8, 4 bytes: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
+    else if ((ptr_string[0] & 0xF8) == 0xF0)
+    {
+        if (!ptr_string[1])
+            return (int)ptr_string[0] & 0x07;
+        if (!ptr_string[2])
+            return (((int)(ptr_string[0] & 0x07)) << 6) +
+                ((int)(ptr_string[1] & 0x3F));
+        if (!ptr_string[3])
+            return (((int)(ptr_string[0] & 0x07)) << 12) +
+                (((int)(ptr_string[1] & 0x3F)) << 6) +
+                ((int)(ptr_string[2] & 0x3F));
+        return (((int)(ptr_string[0] & 0x07)) << 18) +
+            (((int)(ptr_string[1] & 0x3F)) << 12) +
+            (((int)(ptr_string[2] & 0x3F)) << 6) +
+            ((int)(ptr_string[3] & 0x3F));
+    }
+    /* UTF-8, 1 byte: 0vvvvvvv */
+    return (int)ptr_string[0];
+}
+
+/*
  * utf8_char_size: return UTF-8 char size (in bytes)
  */
 

@@ -175,6 +175,7 @@ struct t_weechat_plugin
     void (*utf8_normalize) (const char *string, char replacement);
     char *(*utf8_prev_char) (const char *string_start, const char *string);
     char *(*utf8_next_char) (const char *string);
+    int (*utf8_char_int) (const char *string);
     int (*utf8_char_size) (const char *string);
     int (*utf8_strlen) (const char *string);
     int (*utf8_strnlen) (const char *string, int bytes);
@@ -708,6 +709,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->utf8_prev_char(__start, __string)
 #define weechat_utf8_next_char(__string)                                \
     weechat_plugin->utf8_next_char(__string)
+#define weechat_utf8_char_int(__string)                                 \
+    weechat_plugin->utf8_char_int(__string)
 #define weechat_utf8_char_size(__string)                                \
     weechat_plugin->utf8_char_size(__string)
 #define weechat_utf8_strlen(__string)                                   \

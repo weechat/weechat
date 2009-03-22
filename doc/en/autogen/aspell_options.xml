@@ -36,6 +36,16 @@
   </listitem>
 </itemizedlist>
 
+<command>aspell.check.real_time</command>: real-time spell checking of words (slower, disabled by default: words are checked only if there's delimiter after)
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>aspell.check.word_min_length</command>: minimum length for a word to be spell checked (use 0 to check all words)
 <itemizedlist>
   <listitem>

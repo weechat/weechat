@@ -38,4 +38,4 @@ extern struct t_aspell_code countries_avail[];
 
 extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
 
-#endif /* aspell.h */
+#endif /* weechat-aspell.h */

@@ -36,6 +36,16 @@
   </listitem>
 </itemizedlist>
 
+<command>aspell.check.real_time</command>: vérification orthographique des mots en temps réel (plus lent, désactivé par défaut: les mots sont vérifiés seulement s'il y a un délimiteur après)
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: off)</para>
+  </listitem>
+</itemizedlist>
+
 <command>aspell.check.word_min_length</command>: longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)
 <itemizedlist>
   <listitem>
