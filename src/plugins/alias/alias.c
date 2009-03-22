@@ -603,6 +603,7 @@ alias_config_write_default (void *data,
     weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
     weechat_config_write_line (config_file, "UB", "%s", "\"unban\"");
+    weechat_config_write_line (config_file, "V", "%s", "\"command core version\"");
     weechat_config_write_line (config_file, "W", "%s", "\"who\"");
     weechat_config_write_line (config_file, "WC", "%s", "\"window merge\"");
     weechat_config_write_line (config_file, "WI", "%s", "\"whois\"");
