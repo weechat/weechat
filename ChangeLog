@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-03-07
+ChangeLog - 2009-03-22
 
 
 Version 0.2.7 (under dev!):
@@ -18,6 +18,8 @@ Version 0.2.7 (under dev!):
    * irc: command /whois is now authorized in private without argument (task #7482)
    * irc: remove kernel info in CTCP VERSION reply (task #7494)
    * irc: add missing commands (328, 369)
+   * aspell: improve plugin: use of many dictionaries, global dictionary, real
+     time checking (optional), fix bugs with utf-8
    * xfer: add speed limit for DCC files sending (task #6178)
    * xfer: add new option "xfer.file.use_nick_in_filename" for Xfer files
      (task #7140)
