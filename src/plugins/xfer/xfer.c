@@ -34,6 +34,7 @@
 #include "xfer.h"
 #include "xfer-buffer.h"
 #include "xfer-command.h"
+#include "xfer-completion.h"
 #include "xfer-config.h"
 #include "xfer-file.h"
 #include "xfer-info.h"
@@ -224,6 +225,28 @@ xfer_search_by_number (int number)
         if (i == number)
             return ptr_xfer;
         i++;
+    }
+    
+    /* xfer not found */
+    return NULL;
+}
+
+/*
+ * xfer_search_by_buffer: search a xfer by buffer (for chat only)
+ */
+
+struct t_xfer *
+xfer_search_by_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_xfer *ptr_xfer;
+    
+    if (!buffer)
+        return NULL;
+    
+    for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+    {
+        if (ptr_xfer->buffer == buffer)
+            return ptr_xfer;
     }
     
     /* xfer not found */
@@ -1393,12 +1416,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     xfer_create_directories ();
     
     xfer_command_init ();
-
+    
+    /* hook some signals */
     weechat_hook_signal ("upgrade", &xfer_signal_upgrade_cb, NULL);
     weechat_hook_signal ("xfer_add", &xfer_add_cb, NULL);
     weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
     weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);
     weechat_hook_signal ("debug_dump", &xfer_debug_dump_cb, NULL);
+    
+    /* hook completions */
+    xfer_completion_init ();
     
     xfer_info_init ();
     

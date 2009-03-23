@@ -28,6 +28,8 @@ xfer_la_SOURCES = xfer.c \
                   xfer-chat.h \
                   xfer-command.c \
                   xfer-command.h \
+                  xfer-completion.c \
+                  xfer-completion.h \
                   xfer-config.c \
                   xfer-config.h \
                   xfer-dcc.c \

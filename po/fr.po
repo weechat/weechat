@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-22 16:17+0100\n"
-"PO-Revision-Date: 2009-03-22 16:17+0100\n"
+"POT-Creation-Date: 2009-03-23 11:08+0100\n"
+"PO-Revision-Date: 2009-03-23 11:08+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -5462,6 +5462,10 @@ msgstr "%s%s: abandon du xfer actif: \"%s\" de %s"
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
+
+#, c-format
+msgid "%s%s: can't find xfer for buffer \"%s\""
+msgstr "%s%s: impossible de trouver le xfer pour le tampon \"%s\""
 
 #, c-format
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"

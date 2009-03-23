@@ -240,6 +240,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/xfer/xfer-chat.h
 ./src/plugins/xfer/xfer-command.c
 ./src/plugins/xfer/xfer-command.h
+./src/plugins/xfer/xfer-completion.c
+./src/plugins/xfer/xfer-completion.h
 ./src/plugins/xfer/xfer-config.c
 ./src/plugins/xfer/xfer-config.h
 ./src/plugins/xfer/xfer-dcc.c

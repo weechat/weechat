@@ -136,7 +136,8 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             
             if (ptr_buf)
             {
-                weechat_printf (xfer->buffer, "%s\t%s", xfer->remote_nick, ptr_buf);
+                weechat_printf_tags (xfer->buffer, "notify_message", "%s\t%s",
+                                     xfer->remote_nick, ptr_buf);
             }
             
             ptr_buf = next_ptr_buf;
@@ -163,18 +164,30 @@ int
 xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                            const char *input_data)
 {
-    struct t_xfer *xfer;
+    struct t_xfer *ptr_xfer;
     
-    xfer = (struct t_xfer *)data;
+    /* make C compiler happy */
+    (void) data;
     
-    if (!XFER_HAS_ENDED(xfer->status))
+    ptr_xfer = xfer_search_by_buffer (buffer);
+    
+    if (!ptr_xfer)
     {
-        xfer_chat_sendf (xfer, "%s\n", input_data);
-        if (!XFER_HAS_ENDED(xfer->status))
+        weechat_printf (NULL,
+                        _("%s%s: can't find xfer for buffer \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        weechat_buffer_get_string (buffer, "name"));
+        return WEECHAT_RC_OK;
+    }
+    
+    if (!XFER_HAS_ENDED(ptr_xfer->status))
+    {
+        xfer_chat_sendf (ptr_xfer, "%s\n", input_data);
+        if (!XFER_HAS_ENDED(ptr_xfer->status))
         {
             weechat_printf (buffer,
                             "%s\t%s",
-                            xfer->local_nick,
+                            ptr_xfer->local_nick,
                             input_data);
         }
     }
@@ -190,20 +203,24 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 int
 xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
-    struct t_xfer *xfer;
+    struct t_xfer *ptr_xfer;
     
     /* make C compiler happy */
+    (void) data;
     (void) buffer;
     
-    xfer = (struct t_xfer *)data;
+    ptr_xfer = xfer_search_by_buffer (buffer);
     
-    if (!XFER_HAS_ENDED(xfer->status))
-    {
-        xfer_close (xfer, XFER_STATUS_ABORTED);
-        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    if (ptr_xfer)
+    {    
+        if (!XFER_HAS_ENDED(ptr_xfer->status))
+        {
+            xfer_close (ptr_xfer, XFER_STATUS_ABORTED);
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        }
+        
+        ptr_xfer->buffer = NULL;
     }
-    
-    xfer->buffer = NULL;
     
     return WEECHAT_RC_OK;
 }
@@ -217,28 +234,40 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
 {
     char *name;
     int length;
-
-    length = strlen (xfer->plugin_name) + 1 + strlen (xfer->remote_nick) + 1;
+    
+    length = strlen (xfer->plugin_name) + 8 + strlen (xfer->remote_nick) + 1;
     name = malloc (length);
     if (name)
     {
-        snprintf (name, length, "%s_%s", xfer->plugin_name, xfer->remote_nick);
-        xfer->buffer = weechat_buffer_new (name,
-                                           &xfer_chat_buffer_input_cb, xfer,
-                                           &xfer_chat_buffer_close_cb, xfer);
-        if (xfer->buffer)
+        snprintf (name, length, "%s_dcc_%s",
+                  xfer->plugin_name, xfer->remote_nick);
+        xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
+        if (!xfer->buffer)
         {
-            weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
-            weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
-            weechat_printf (xfer->buffer,
-                            _("Connected to %s (%d.%d.%d.%d) via "
-                              "xfer chat"),
-                            xfer->remote_nick,
-                            xfer->address >> 24,
-                            (xfer->address >> 16) & 0xff,
-                            (xfer->address >> 8) & 0xff,
-                            xfer->address & 0xff);
+            xfer->buffer = weechat_buffer_new (name,
+                                               &xfer_chat_buffer_input_cb, NULL,
+                                               &xfer_chat_buffer_close_cb, NULL);
+            
+            /* failed to create buffer ? then return */
+            if (!xfer->buffer)
+                return;
         }
+        
+        weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
+        weechat_buffer_set (xfer->buffer, "short_name", xfer->remote_nick);
+        weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
+        weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
+        weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
+        weechat_buffer_set (xfer->buffer, "highlight_words", xfer->local_nick);
+        weechat_printf (xfer->buffer,
+                        _("Connected to %s (%d.%d.%d.%d) via "
+                          "xfer chat"),
+                        xfer->remote_nick,
+                        xfer->address >> 24,
+                        (xfer->address >> 16) & 0xff,
+                        (xfer->address >> 8) & 0xff,
+                        xfer->address & 0xff);
+        
         free (name);
     }
 }

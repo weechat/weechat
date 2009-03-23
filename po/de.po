@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-22 16:17+0100\n"
+"POT-Creation-Date: 2009-03-23 11:08+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5271,6 +5271,10 @@ msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 #, fuzzy, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
+
+#, fuzzy, c-format
+msgid "%s%s: can't find xfer for buffer \"%s\""
+msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
 
 #, fuzzy, c-format
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
