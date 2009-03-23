@@ -72,6 +72,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
+    int buffer_created;
     char *buffer_name;
     
     /* alloc memory for new channel */
@@ -84,6 +85,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     }
     
     /* create buffer for channel (or use existing one) */
+    buffer_created = 0;
     buffer_name = irc_buffer_build_name (server->name, channel_name);
     new_buffer = weechat_buffer_search (IRC_PLUGIN_NAME, buffer_name);
     if (new_buffer)
@@ -98,20 +100,24 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             free (new_channel);
             return NULL;
         }
-        
-        weechat_buffer_set (new_buffer, "short_name", channel_name);
-        weechat_buffer_set (new_buffer, "localvar_set_type",
-                            (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
-        weechat_buffer_set (new_buffer, "localvar_set_nick", server->nick);
-        weechat_buffer_set (new_buffer, "localvar_set_server", server->name);
-        weechat_buffer_set (new_buffer, "localvar_set_channel", channel_name);
-        
+        buffer_created = 1;
+    }
+    
+    weechat_buffer_set (new_buffer, "short_name", channel_name);
+    weechat_buffer_set (new_buffer, "localvar_set_type",
+                        (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
+    weechat_buffer_set (new_buffer, "localvar_set_nick", server->nick);
+    weechat_buffer_set (new_buffer, "localvar_set_server", server->name);
+    weechat_buffer_set (new_buffer, "localvar_set_channel", channel_name);
+    
+    if (buffer_created)
+    {
         weechat_hook_signal_send ("logger_backlog",
                                   WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
-
-        if (weechat_config_boolean (irc_config_network_send_unknown_commands))
-            weechat_buffer_set (new_buffer, "input_get_unknown_commands", "1");
     }
+    
+    if (weechat_config_boolean (irc_config_network_send_unknown_commands))
+        weechat_buffer_set (new_buffer, "input_get_unknown_commands", "1");
     
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {

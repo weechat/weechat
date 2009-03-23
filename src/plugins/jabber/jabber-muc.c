@@ -69,6 +69,7 @@ jabber_muc_new (struct t_jabber_server *server, int muc_type,
 {
     struct t_jabber_muc *new_muc;
     struct t_gui_buffer *new_buffer;
+    int buffer_created;
     char *buffer_name;
     
     /* alloc memory for new MUCl */
@@ -81,6 +82,7 @@ jabber_muc_new (struct t_jabber_server *server, int muc_type,
     }
     
     /* create buffer for MUC (or use existing one) */
+    buffer_created = 0;
     buffer_name = jabber_buffer_build_name (server->name, muc_name);
     new_buffer = weechat_buffer_search (JABBER_PLUGIN_NAME, buffer_name);
     if (new_buffer)
@@ -95,15 +97,19 @@ jabber_muc_new (struct t_jabber_server *server, int muc_type,
             free (new_muc);
             return NULL;
         }
-        
-        weechat_buffer_set (new_buffer, "short_name", muc_name);
-        weechat_buffer_set (new_buffer, "localvar_set_type",
-                            (muc_type == JABBER_MUC_TYPE_MUC) ? "channel" : "private");
-        weechat_buffer_set (new_buffer, "localvar_set_nick",
-                            jabber_server_get_local_name (server));
-        weechat_buffer_set (new_buffer, "localvar_set_server", server->name);
-        weechat_buffer_set (new_buffer, "localvar_set_muc", muc_name);
-        
+        buffer_created = 1;
+    }
+    
+    weechat_buffer_set (new_buffer, "short_name", muc_name);
+    weechat_buffer_set (new_buffer, "localvar_set_type",
+                        (muc_type == JABBER_MUC_TYPE_MUC) ? "channel" : "private");
+    weechat_buffer_set (new_buffer, "localvar_set_nick",
+                        jabber_server_get_local_name (server));
+    weechat_buffer_set (new_buffer, "localvar_set_server", server->name);
+    weechat_buffer_set (new_buffer, "localvar_set_muc", muc_name);
+
+    if (buffer_created)
+    {
         weechat_hook_signal_send ("logger_backlog",
                                   WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
     }
