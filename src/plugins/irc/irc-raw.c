@@ -67,7 +67,8 @@ irc_raw_open (int switch_to_buffer)
     
     if (!irc_raw_buffer)
     {
-        irc_raw_buffer = weechat_buffer_search ("irc", IRC_RAW_BUFFER_NAME);
+        irc_raw_buffer = weechat_buffer_search (IRC_PLUGIN_NAME,
+                                                IRC_RAW_BUFFER_NAME);
         if (!irc_raw_buffer)
         {
             irc_raw_buffer = weechat_buffer_new (IRC_RAW_BUFFER_NAME,
@@ -87,7 +88,7 @@ irc_raw_open (int switch_to_buffer)
             weechat_buffer_set (irc_raw_buffer, "localvar_set_channel", IRC_RAW_BUFFER_NAME);
             weechat_buffer_set (irc_raw_buffer, "localvar_set_no_log", "1");
             
-            /* disabled all highlights on this debug buffer */
+            /* disable all highlights on this debug buffer */
             weechat_buffer_set (irc_raw_buffer, "highlight_words", "-");
             
             if (switch_to_buffer)

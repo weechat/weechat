@@ -65,7 +65,7 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
     
     if (!jabber_debug_buffer)
     {
-        jabber_debug_buffer = weechat_buffer_search ("jabber",
+        jabber_debug_buffer = weechat_buffer_search (JABBER_PLUGIN_NAME,
                                                      JABBER_DEBUG_BUFFER_NAME);
         if (!jabber_debug_buffer)
         {
@@ -86,7 +86,7 @@ jabber_debug_printf (struct t_jabber_server *server, int send, int modified,
             weechat_buffer_set (jabber_debug_buffer, "localvar_set_muc", JABBER_DEBUG_BUFFER_NAME);
             weechat_buffer_set (jabber_debug_buffer, "localvar_set_no_log", "1");
             
-            /* disabled all highlights on this debug buffer */
+            /* disable all highlights on this debug buffer */
             weechat_buffer_set (jabber_debug_buffer, "highlight_words", "-");
         }
     }
