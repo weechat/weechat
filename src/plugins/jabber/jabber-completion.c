@@ -257,10 +257,20 @@ jabber_completion_muc_buddies_cb (void *data, const char *completion_item,
                 }
                 break;
             case JABBER_MUC_TYPE_PRIVATE:
+                /* remote buddy */
                 weechat_hook_completion_list_add (completion,
                                                   ptr_muc->name,
                                                   0,
                                                   WEECHAT_LIST_POS_SORT);
+                /* add local name at the end */
+                local_name = jabber_server_get_local_name (ptr_server);
+                if (local_name && local_name[0])
+                {
+                    weechat_hook_completion_list_add (completion,
+                                                      local_name,
+                                                      1,
+                                                      WEECHAT_LIST_POS_END);
+                }
                 break;
         }
         ptr_muc->nick_completion_reset = 0;
