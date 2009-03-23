@@ -27,6 +27,7 @@
 #include "irc.h"
 #include "irc-bar-item.h"
 #include "irc-buffer.h"
+#include "irc-color.h"
 #include "irc-command.h"
 #include "irc-completion.h"
 #include "irc-config.h"
@@ -164,6 +165,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("xfer_send_ready", &irc_server_xfer_send_ready_cb, NULL);
     weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
     weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
+    
+    /* modifiers */
+    weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
+    weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();

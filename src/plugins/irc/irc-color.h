@@ -56,5 +56,8 @@
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern char *irc_color_decode_for_user_entry (const char *string);
 extern char *irc_color_encode (const char *string, int keep_colors);
+extern char *irc_color_modifier_cb (void *data, const char *modifier,
+                                    const char *modifier_data,
+                                    const char *string);
 
 #endif /* irc-color.h */

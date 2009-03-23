@@ -356,3 +356,31 @@ irc_color_encode (const char *string, int keep_colors)
     
     return (char *)out;
 }
+
+/*
+ * irc_color_modifier_cb: callback for modifiers "irc_color_decode" and
+ *                        "irc_color_encode"
+ *                        This modifier can be used by other plugins to
+ *                        decode/encode IRC colors in messages
+ */
+
+char *
+irc_color_modifier_cb (void *data, const char *modifier,
+                       const char *modifier_data, const char *string)
+{
+    int keep_colors;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    keep_colors = (modifier_data && (strcmp (modifier_data, "1") == 0)) ? 1 : 0;
+    
+    if (strcmp (modifier, "irc_color_decode") == 0)
+        return irc_color_decode (string, keep_colors);
+    
+    if (strcmp (modifier, "irc_color_encode") == 0)
+        return irc_color_decode (string, keep_colors);
+    
+    /* unknown modifier */
+    return NULL;
+}

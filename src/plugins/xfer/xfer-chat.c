@@ -90,6 +90,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     struct t_xfer *xfer;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
+    char *ptr_buf_without_weechat_colors, *ptr_buf_color;
     int num_read;
     
     /* make C compiler happy */
@@ -136,8 +137,19 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             
             if (ptr_buf)
             {
+                ptr_buf_without_weechat_colors = weechat_string_remove_color (ptr_buf, "?");
+                ptr_buf_color = weechat_hook_modifier_exec ("irc_color_decode",
+                                                            "1",
+                                                            (ptr_buf_without_weechat_colors) ?
+                                                            ptr_buf_without_weechat_colors : ptr_buf);
                 weechat_printf_tags (xfer->buffer, "notify_message", "%s\t%s",
-                                     xfer->remote_nick, ptr_buf);
+                                     xfer->remote_nick,
+                                     (ptr_buf_color) ?
+                                     ptr_buf_color : ((ptr_buf_without_weechat_colors) ? ptr_buf_without_weechat_colors : ptr_buf));
+                if (ptr_buf_without_weechat_colors)
+                    free (ptr_buf_without_weechat_colors);
+                if (ptr_buf_color)
+                    free (ptr_buf_color);
             }
             
             ptr_buf = next_ptr_buf;
@@ -165,6 +177,7 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                            const char *input_data)
 {
     struct t_xfer *ptr_xfer;
+    char *input_data_color;
     
     /* make C compiler happy */
     (void) data;
@@ -185,10 +198,15 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         xfer_chat_sendf (ptr_xfer, "%s\n", input_data);
         if (!XFER_HAS_ENDED(ptr_xfer->status))
         {
+            input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
+                                                           "1",
+                                                           input_data);
             weechat_printf (buffer,
                             "%s\t%s",
                             ptr_xfer->local_nick,
-                            input_data);
+                            (input_data_color) ? input_data_color : input_data);
+            if (input_data_color)
+                free (input_data_color);
         }
     }
     
