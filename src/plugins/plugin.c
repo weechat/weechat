@@ -146,49 +146,6 @@ plugin_find_pos (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_insert_sorted: insert a plugin in list, keeping sort on name
- */
-
-void
-plugin_insert_sorted (struct t_weechat_plugin *plugin)
-{
-    struct t_weechat_plugin *pos_plugin;
-
-    if (weechat_plugins)
-    {
-        pos_plugin = plugin_find_pos (plugin);
-        
-        if (pos_plugin)
-        {
-            /* insert plugin into the list (before plugin found) */
-            plugin->prev_plugin = pos_plugin->prev_plugin;
-            plugin->next_plugin = pos_plugin;
-            if (pos_plugin->prev_plugin)
-                (pos_plugin->prev_plugin)->next_plugin = plugin;
-            else
-                weechat_plugins = plugin;
-            pos_plugin->prev_plugin = plugin;
-        }
-        else
-        {
-            /* add plugin to the end */
-            plugin->prev_plugin = last_weechat_plugin;
-            plugin->next_plugin = NULL;
-            last_weechat_plugin->next_plugin = plugin;
-            last_weechat_plugin = plugin;
-        }
-    }
-    else
-    {
-        /* first plugin in list */
-        plugin->prev_plugin = NULL;
-        plugin->next_plugin = NULL;
-        weechat_plugins = plugin;
-        last_weechat_plugin = plugin;
-    }
-}
-
-/*
  * plugin_load: load a WeeChat plugin (a dynamic library)
  *              return: pointer to new WeeChat plugin, NULL if error
  */
@@ -582,7 +539,14 @@ plugin_load (const char *filename)
         new_plugin->upgrade_read = &upgrade_file_read;
         new_plugin->upgrade_close = &upgrade_file_close;
         
-        plugin_insert_sorted (new_plugin);
+        /* add new plugin to list */
+        new_plugin->prev_plugin = last_weechat_plugin;
+        new_plugin->next_plugin = NULL;
+        if (weechat_plugins)
+            last_weechat_plugin->next_plugin = new_plugin;
+        else
+            weechat_plugins = new_plugin;
+        last_weechat_plugin = new_plugin;
         
         /* associate orphan buffers with this plugin (if asked during upgrade
            process) */
@@ -885,7 +849,7 @@ plugin_unload_all ()
 {
     while (weechat_plugins)
     {
-        plugin_unload (weechat_plugins);
+        plugin_unload (last_weechat_plugin);
     }
 }
 
@@ -930,34 +894,42 @@ plugin_display_short_list ()
     char *buf;
     int length;
     struct t_weechat_plugin *ptr_plugin;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
     
     if (weechat_plugins)
     {
-        plugins_loaded = _("Plugins loaded:");
-        
-        length = strlen (plugins_loaded) + 1;
-        
-        for (ptr_plugin = weechat_plugins; ptr_plugin;
-             ptr_plugin = ptr_plugin->next_plugin)
+        list = weelist_new ();
+        if (list)
         {
-            length += strlen (ptr_plugin->name) + 2;
-        }
-        length++;
-        
-        buf = malloc (length);
-        if (buf)
-        {
-            strcpy (buf, plugins_loaded);
-            strcat (buf, " ");
+            plugins_loaded = _("Plugins loaded:");
+            
+            length = strlen (plugins_loaded) + 1;
+            
             for (ptr_plugin = weechat_plugins; ptr_plugin;
                  ptr_plugin = ptr_plugin->next_plugin)
             {
-                strcat (buf, ptr_plugin->name);
-                if (ptr_plugin->next_plugin)
-                    strcat (buf, ", ");
+                length += strlen (ptr_plugin->name) + 2;
+                weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT);
             }
-            gui_chat_printf (NULL, "%s", buf);
-            free (buf);
+            length++;
+            
+            buf = malloc (length);
+            if (buf)
+            {
+                strcpy (buf, plugins_loaded);
+                strcat (buf, " ");
+                for (ptr_item = list->items; ptr_item;
+                     ptr_item = ptr_item->next_item)
+                {
+                    strcat (buf, ptr_item->data);
+                    if (ptr_item->next_item)
+                        strcat (buf, ", ");
+                }
+                gui_chat_printf (NULL, "%s", buf);
+                free (buf);
+            }
+            weelist_free (list);
         }
     }
 }
