@@ -33,6 +33,34 @@
 
 
 /*
+ * irc_bar_item_away: bar item with away indicator
+ */
+
+char *
+irc_bar_item_away (void *data, struct t_gui_bar_item *item,
+                   struct t_gui_window *window)
+{
+    struct t_gui_buffer *buffer;
+    struct t_irc_server *server;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    
+    buffer = weechat_window_get_pointer (window, "buffer");
+    
+    if (buffer)
+    {
+        irc_buffer_get_server_channel (buffer, &server, NULL);
+        
+        if (server && server->is_away)
+            return strdup (_("away"));
+    }
+    
+    return NULL;
+}
+
+/*
  * irc_bar_item_buffer_title: bar item with buffer title
  */
 
@@ -77,7 +105,7 @@ char *
 irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                           struct t_gui_window *window)
 {
-    char buf[512], buf_name[256], modes[128], away[128];
+    char buf[512], buf_name[256], modes[128];
     const char *name;
     int part_from_channel;
     struct t_gui_buffer *buffer;
@@ -93,7 +121,6 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     
     buf_name[0] = '\0';
     modes[0] = '\0';
-    away[0] = '\0';
     
     buffer = weechat_window_get_pointer (window, "buffer");
     
@@ -154,14 +181,6 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                     }
                 }
             }
-            if (server && server->is_away)
-            {
-                snprintf (away, sizeof (away), " %s(%s%s%s)",
-                          IRC_COLOR_BAR_DELIM,
-                          IRC_COLOR_BAR_FG,
-                          _("away"),
-                          IRC_COLOR_BAR_DELIM);
-            }
         }
         else
         {
@@ -170,11 +189,10 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 snprintf (buf_name, sizeof (buf_name), "%s", name);
         }
         
-        snprintf (buf, sizeof (buf), "%s%s%s%s",
+        snprintf (buf, sizeof (buf), "%s%s%s",
                   IRC_COLOR_STATUS_NAME,
                   buf_name,
-                  modes,
-                  away);
+                  modes);
         return strdup (buf);
     }
     
@@ -283,6 +301,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 void
 irc_bar_item_init ()
 {
+    weechat_bar_item_new ("away", &irc_bar_item_away, NULL);
     weechat_bar_item_new ("buffer_title", &irc_bar_item_buffer_title, NULL);
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);

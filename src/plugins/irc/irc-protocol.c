@@ -2670,7 +2670,7 @@ irc_protocol_cmd_305 (struct t_irc_server *server, const char *command,
     server->is_away = 0;
     server->away_time = 0;
     
-    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("away");
     
     return WEECHAT_RC_OK;
 }
@@ -2704,7 +2704,7 @@ irc_protocol_cmd_306 (struct t_irc_server *server, const char *command,
     server->is_away = 1;
     server->away_time = time (NULL);
     
-    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("away");
     
     return WEECHAT_RC_OK;
 }
