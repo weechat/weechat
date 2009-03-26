@@ -21,78 +21,86 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<section id="secScriptsPlugins">
-  <title>Skript-Plugins</title>
+<section id="secScriptPluginAPI">
+  <!-- TRANSLATION NEEDED -->
+  <title>Script plugin API</title>
   
   <para>
-    Vier Plugins werden von WeeChat angeboten um Skriptsprachen zu nutzen:
-    Perl, Python, Ruby und Lua.
+    Five plugins are provided with WeeChat to use script languages:
+    Perl, Python, Ruby, Lua and Tcl.
   </para>
   
   <section id="secLoadUnloadScripts">
-    <title>Laden / Entfernen von Skripten</title>
+    <title>Load / unload scripts</title>
     
     <para>
       Scripts are loaded and unloaded with <command>/perl</command>,
-      <command>/python</command>, <command>/ruby</command> and
-      <command>/lua</command> commands
+      <command>/python</command>, <command>/ruby</command>,
+      <command>/lua</command> and <command>/tcl</command> commands
       (type <command>/help</command> in WeeChat for help about commands).
-
-      Skripte werden mit den Kommandos <command>/perl</command>, <command>/python</command>, 
-      <command>/ruby</command> und <command>/lua</command> geladen oder
-      entfernt. (Benutze <command>/help</command> in WeeChat für Hilfe zu
-      den Kommandos).
     </para>
     
     <para>
-      Beispiele:
+      Examples:
       <itemizedlist>
         <listitem>
           <para>
-            Laden eines Perl-Skripts:
+            Load a Perl script:
             <command><userinput>/perl load /tmp/test.pl</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Liste alle geladenen Perl-Skripte auf:
+            List all loaded Perl scripts:
             <command><userinput>/perl</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Laden eines Python-Skripts:
+            Load a Python script:
             <command><userinput>/python load /tmp/test.py</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Liste alle geladenen Python-Skripte auf:
+            List all loaded Python scripts:
             <command><userinput>/python</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Laden eines Ruby-Skripts:
+            Load a Ruby script:
             <command><userinput>/ruby load /tmp/test.rb</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Liste alle geladenen Ruby-Skripte auf:
+            List all loaded Ruby scripts:
             <command><userinput>/ruby</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Laden eines Lua-Skripts:
+            Load a Lua script:
             <command><userinput>/lua load /tmp/test.lua</userinput></command>
           </para>
         </listitem>
         <listitem>
           <para>
-            Liste alle geladenen Lua-Skripte auf:
+            List all loaded Lua scripts:
             <command><userinput>/lua</userinput></command>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Load a Tcl script:
+            <command><userinput>/tcl load /tmp/test.tcl</userinput></command>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            List all loaded Tcl scripts:
+            <command><userinput>/tcl</userinput></command>
           </para>
         </listitem>
       </itemizedlist>
@@ -101,16 +109,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </section>
   
   <section id="secSyntaxByLanguage">
-    <title>Syntax in den Skriptsprachen</title>
+    <title>Syntax by language</title>
     
     <section id="secScriptPerl">
       <title>Perl</title>
       
       <para>
-        In einem WeeChat-PerlSkript ist allen API-Funktionen und Variablen
-        ein "<literal>weechat::</literal>" vorangestellt.  
-        Beispiel:
-<screen>weechat::register("test", "1.0", "end_test", "WeeChat perl script");</screen>
+        In a WeeChat Perl script, all API functions and variables are
+        prefixed by "<literal>weechat::</literal>".
+        Example:
+<screen>
+weechat::register("test", "Author &lt;author\@domain.com&gt;", "1.0",
+                  "GPL3", "Script description", "bye_bye", "");
+</screen>
       </para>
       
     </section>
@@ -119,16 +130,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Python</title>
       
       <para>
-        Ein WeeChat-Pythonskript muss mit einer Importdirektive für WeeChat
-        beginnen:
+        A WeeChat Python script has to start by importing weechat:
         <screen>import weechat</screen>
       </para>
       
       <para>
-        Allen API-Funktionen und Variablen ist ein
-        "<literal>weechat.</literal>" vorangestellt.
-        Beispiel:
-<screen>weechat.register("test", "1.0", "end_test", "WeeChat python script")</screen>
+        All API functions and variables are prefixed by
+        "<literal>weechat.</literal>".
+        Example:
+<screen>
+weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                 "GPL3", "Script description", "bye_bye", "")
+</screen>
       </para>
       
     </section>
@@ -137,28 +150,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Ruby</title>
       
       <para>
-        In einem WeeChat-Rubyskript muss der gesamte Code innerhalb von
-        Funktionen stehen. Für den Hauptteil ist die Funktion
-        "<literal>weechat_init</literal>" zu definieren, die automatisch
-        aufgerufen wird, wenn das Skript in WeeChat geladen wird.
-        Beispiel:
+        In a WeeChat Ruby script, all code has to be in functions.
+        So for main code, you have to define a
+        "<literal>weechat_init</literal>" function, which is automatically
+        called when script is loaded by WeeChat. Example:
 <screen>
 def weechat_init
-    Weechat.register("test", "1.0", "end_test", "WeeChat ruby script")
-    Weechat.add_command_handler("command", "my_command")
-    return Weechat::PLUGIN_RC_OK
-end
-
-def my_command(server, args)
-    Weechat.print("my command")
-    return Weechat::PLUGIN_RC_OK
+    Weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                     "GPL3", "Script description", "bye_bye", "")
+    return Weechat::WEECHAT_RC_OK
 end
 </screen>
       </para>
       
       <para>
-        Allen API-Funktionen ist "<literal>Weechat.</literal>" 
-        und Variablen "<literal>Weechat::</literal>" vorangestellt.
+        All API functions are prefixed by
+        "<literal>Weechat.</literal>" and variables by
+        "<literal>Weechat::</literal>".
       </para>
       
     </section>
@@ -167,16 +175,29 @@ end
       <title>Lua</title>
       
       <para>
-        In einem WeeChat-Luaskript ist allen Funktionen ein
-        "<literal>weechat.</literal>" vorangestellt. Variablen beginnen
-        mit "<literal>weechat.</literal>" und enden mit
-        "<literal>()</literal>".
-        Beispiel:
+        In a WeeChat Lua script, all API functions are prefixed by
+        "<literal>weechat.</literal>".
+        Variables are prefixed by "<literal>weechat.</literal>" and
+        suffixed by "<literal>()</literal>".
+        Example:
 <screen>
-function message_handler(server, args)
-   weechat.print("I am a message handler")
-   return weechat.PLUGIN_RC_OK()
-end
+weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                 "GPL3", "Script description", "bye_bye", "")
+</screen>
+      </para>
+      
+    </section>
+    
+    <section id="secScriptTcl">
+      <title>Tcl</title>
+      
+      <para>
+        In a WeeChat Tcl script, all API functions are prefixed by
+        "<literal>weechat::</literal>".
+        Variables are prefixed by "<literal>$weechat::</literal>".
+        Example:
+<screen>
+weechat::register "test" "Author &lt;author@domain.com&gt;" "1.0" "GPL3" "Script description" "bye_bye" ""
 </screen>
       </para>
       
@@ -185,2698 +206,261 @@ end
   </section>
   
   <section id="secWeeChatScriptsAPI">
-    <title>WeeChat / Skript-API</title>
+    <title>WeeChat / scripts API</title>
     
     <section id="secScript_register">
       <title>register</title>
       
       <para>
-        Perl-Prototyp:
-        <command>
-          weechat::register(name, version, end_function, description,
-          [charset]);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.register(name, version, end_function, description,
-          [charset])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.register(name, version, end_function, description,
-          [charset])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.register(name, version, end_function, description,
-          [charset])
-        </command>
-      </para>
-      <para>
-        Das ist die erste Funktion, die in einem Skript aufgerufen wird.
-        Alle WeeChat-Skripte müssen diese Funktion aufrufen.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>name</option>: eindeutiger Name des Skripts
-              (jedes Skript muss einen eindeutigen Namen besitzen)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>version</option>: Version des Skripts
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>end_function</option>: Funktion, die aufgerufen
-              wird, wenn das Skript entfernt werden soll (optional; ein
-              leerer String bedeutet, dass nichts aufgerufen wird)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>description</option>: eine kurze Beschreibung des
-              Skripts
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>charset</option>: Zeichensatz, der von dem Script
-              benutzt wird, sollten Sie setzen, wenn das Script nicht in
-              UTF-8 geschrieben ist
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 wenn das Skript registriert werden konnte, 0 wenn
-        ein Fehler aufgetaucht ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::register("test", "1.0", "end_test", "Test script!", "ISO-8859-1");
-
-# python
-weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
-
-# ruby
-Weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
-
--- lua
-weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_set_charset">
-      <title>set_charset</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::set_charset(charset);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.set_charset(charset)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.set_charset(charset)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.set_charset(charset)
-        </command>
-      </para>
-      <para>
-        Legt einen neuen Script-Zeichensatz fest.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>charset</option>: neuer Script-Zeichensatz
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0,
-        wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::set_charset("ISO-8859-1");
-
-# python
-weechat.set_charset("ISO-8859-1")
-
-# ruby
-Weechat.set_charset("ISO-8859-1")
-
--- lua
-weechat.set_charset("ISO-8859-1")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_print">
-      <title>print</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::print(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.prnt(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.print(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.print(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Sende eine Nachricht an einen WeeChat-Puffer, identifiziert durch
-        Server und Channel.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>message</option>: Nachricht
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>channel</option>: Name des Channels, zu welchem der
-              Puffer gehört, in dem die
-              Nachricht angezeigt werden soll
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>server</option>: interner Name des Servers, zu
-              welchem der Puffer gehört, in dem die Nachricht angezeigt
-              werden soll
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        <!-- TRANSLATION NEEDED -->
-        To display colored text, see <xref linkend="secAPI_print" />.
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::print("message");
-weechat::print("message", "#weechat");
-weechat::print("message", "#weechat", "freenode");
-weechat::print("test: \x0305 rot \x0F normal");
-
-# python
-weechat.prnt("message")
-weechat.prnt("message", "#weechat")
-weechat.prnt("message", "#weechat", "freenode")
-
-# ruby
-Weechat.print("message")
-Weechat.print("message", "#weechat")
-Weechat.print("message", "#weechat", "freenode")
-
--- lua
-weechat.print("message")
-weechat.print("message", "#weechat")
-weechat.print("message", "#weechat", "freenode")
-</screen>
-      </para>
-    </section>
-    
-    <!-- TRANSLATION NEEDED -->
-    <section id="secScript_print_server">
-      <title>print_server</title>
-      
-      <para>
         Perl prototype:
         <command>
-          weechat::print_server(message)
+          weechat::register(name, author, version, license, description,
+          end_function, charset);
         </command>
       </para>
       <para>
         Python prototype:
         <command>
-          weechat.print_server(message)
+          weechat.register(name, author, version, license, description,
+          end_function, charset)
         </command>
       </para>
       <para>
         Ruby prototype:
         <command>
-          Weechat.print_server(message)
+          Weechat.register(name, author, version, license, description,
+          end_function, charset)
         </command>
       </para>
       <para>
         Lua prototype:
         <command>
-          weechat.print_server(message)
+          weechat.register(name, author, version, license, description,
+          end_function, charset)
         </command>
       </para>
       <para>
-        Display a message on server buffer.
+        Tcl prototype:
+        <command>
+          weechat::register name author version license description
+          end_function charset
+        </command>
+      </para>
+      <para>
+        This is first function to call in script.
+        All WeeChat scripts have to call this function.
       </para>
       <para>
         Arguments:
         <itemizedlist>
           <listitem>
             <para>
-              <option>message</option>: message
+              <option>name</option>: unique name to identify script
+              (each script must have unique name)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>author</option>: string with author (may include name,
+              nick, e-mail, ..)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>version</option>: script version
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>description</option>: short description of script
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>end_function</option>: function called when script is
+              unloaded (optional parameter, empty string means nothing is
+              called at the end)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>charset</option>: charset used by script, you should
+              set this if script is NOT written with UTF-8 (you can use blank
+              value for UTF-8 script, which is default charset)
             </para>
           </listitem>
         </itemizedlist>
       </para>
       <para>
-        To display colored text, see <xref linkend="secAPI_print" />.
-      </para>
-      <para>
-        Return value: 1 if success, 0 if an error occurred.
+        Return value: 1 if script was registered, 0 if an error occured.
       </para>
       <para>
         Examples:
 <screen>
 # perl
-weechat::print_server("message");
-weechat::print_server("test: \x0305 rot \x0F normal");
+weechat::register("test", "Author &lt;author\@domain.com&gt;", "1.0",
+                  "GPL3", "Script description", "bye_bye", "");
 
 # python
-weechat.print_server("message")
+weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                  "GPL3", "Script description", "bye_bye", "")
 
 # ruby
-Weechat.print_server("message")
+Weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                 "GPL3", "Script description", "bye_bye", "")
 
 -- lua
-weechat.print_server("message")
+weechat.register("test", "Author &lt;author@domain.com&gt;", "1.0",
+                 "GPL3", "Script description", "bye_bye", "")
+
+# tcl
+weechat::register "test" "Author &lt;author@domain.com&gt;" "1.0" "GPL3" "Script description" "bye_bye" ""
 </screen>
       </para>
     </section>
     
-    <section id="secScript_log">
-      <title>log</title>
+    <section id="secOther_functions">
+      <title>Other functions</title>
       
       <para>
-        Perl-Prototyp:
-        <command>
-          weechat::log(message, [channel, [server]]);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.log(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.log(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.log(message, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Schreibe eine Nachricht in die Logdatei eines Servers oder Channels.
-      </para>
-      <para>
-        Argumente:
+        Following functions are in script API (for description, see
+        <xref linkend="secPluginCApi" />).
         <itemizedlist>
-          <listitem>
-            <para>
-              <option>message</option>: Nachricht
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>channel</option>: Name des Channels, zu welchem der
-              Puffer der Logdatei gehört
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>server</option>: interner Name des Servers, zu
-              welchem der Puffer der Logdatei gehört
-            </para>
-          </listitem>
+          <listitem><para>plugin_get_name</para></listitem>
+          <listitem><para>set_charset</para></listitem>
+          <listitem><para>plugin_get_name</para></listitem>
+          <listitem><para>charset_set</para></listitem>
+          <listitem><para>iconv_to_internal</para></listitem>
+          <listitem><para>iconv_from_internal</para></listitem>
+          <listitem><para>gettext</para></listitem>
+          <listitem><para>ngettext</para></listitem>
+          <listitem><para>string_remove_color</para></listitem>
+          <listitem><para>mkdir_home</para></listitem>
+          <listitem><para>mkdir</para></listitem>
+          <listitem><para>mkdir_parents</para></listitem>
+          <listitem><para>list_new</para></listitem>
+          <listitem><para>list_add</para></listitem>
+          <listitem><para>list_search</para></listitem>
+          <listitem><para>list_casesearch</para></listitem>
+          <listitem><para>list_get</para></listitem>
+          <listitem><para>list_set</para></listitem>
+          <listitem><para>list_next</para></listitem>
+          <listitem><para>list_prev</para></listitem>
+          <listitem><para>list_string</para></listitem>
+          <listitem><para>list_size</para></listitem>
+          <listitem><para>list_remove</para></listitem>
+          <listitem><para>list_remove_all</para></listitem>
+          <listitem><para>list_free</para></listitem>
+          <listitem><para>config_new</para></listitem>
+          <listitem><para>config_new_section</para></listitem>
+          <listitem><para>config_search_section</para></listitem>
+          <listitem><para>config_new_option</para></listitem>
+          <listitem><para>config_search_option</para></listitem>
+          <listitem><para>config_string_to_boolean</para></listitem>
+          <listitem><para>config_option_reset</para></listitem>
+          <listitem><para>config_option_set</para></listitem>
+          <listitem><para>config_option_set_null</para></listitem>
+          <listitem><para>config_option_unset</para></listitem>
+          <listitem><para>config_option_rename</para></listitem>
+          <listitem><para>config_option_is_null</para></listitem>
+          <listitem><para>config_option_default_is_null</para></listitem>
+          <listitem><para>config_boolean</para></listitem>
+          <listitem><para>config_boolean_default</para></listitem>
+          <listitem><para>config_integer</para></listitem>
+          <listitem><para>config_integer_default</para></listitem>
+          <listitem><para>config_string</para></listitem>
+          <listitem><para>config_string_default</para></listitem>
+          <listitem><para>config_color</para></listitem>
+          <listitem><para>config_color_default</para></listitem>
+          <listitem><para>config_write_option</para></listitem>
+          <listitem><para>config_write_line</para></listitem>
+          <listitem><para>config_write</para></listitem>
+          <listitem><para>config_read</para></listitem>
+          <listitem><para>config_reload</para></listitem>
+          <listitem><para>config_option_free</para></listitem>
+          <listitem><para>config_section_free_options</para></listitem>
+          <listitem><para>config_section_free</para></listitem>
+          <listitem><para>config_free</para></listitem>
+          <listitem><para>config_get</para></listitem>
+          <listitem><para>config_get_plugin</para></listitem>
+          <listitem><para>config_set_plugin</para></listitem>
+          <listitem><para>config_unset_plugin</para></listitem>
+          <listitem><para>prefix</para></listitem>
+          <listitem><para>color</para></listitem>
+          <listitem><para>print</para></listitem>
+          <listitem><para>print_date_tags</para></listitem>
+          <listitem><para>print_y</para></listitem>
+          <listitem><para>log_print</para></listitem>
+          <listitem><para>hook_command</para></listitem>
+          <listitem><para>hook_command_run</para></listitem>
+          <listitem><para>hook_timer</para></listitem>
+          <listitem><para>hook_fd</para></listitem>
+          <listitem><para>hook_process</para></listitem>
+          <listitem><para>hook_connect</para></listitem>
+          <listitem><para>hook_print</para></listitem>
+          <listitem><para>hook_signal</para></listitem>
+          <listitem><para>hook_signal_send</para></listitem>
+          <listitem><para>hook_config</para></listitem>
+          <listitem><para>hook_completion</para></listitem>
+          <listitem><para>hook_completion_list_add</para></listitem>
+          <listitem><para>hook_modifier</para></listitem>
+          <listitem><para>hook_modifier_exec</para></listitem>
+          <listitem><para>hook_info</para></listitem>
+          <listitem><para>hook_infolist</para></listitem>
+          <listitem><para>unhook</para></listitem>
+          <listitem><para>unhook_all</para></listitem>
+          <listitem><para>buffer_new</para></listitem>
+          <listitem><para>buffer_search</para></listitem>
+          <listitem><para>current_buffer</para></listitem>
+          <listitem><para>buffer_clear</para></listitem>
+          <listitem><para>buffer_close</para></listitem>
+          <listitem><para>buffer_get_integer</para></listitem>
+          <listitem><para>buffer_get_string</para></listitem>
+          <listitem><para>buffer_get_pointer</para></listitem>
+          <listitem><para>buffer_set</para></listitem>
+          <listitem><para>current_window</para></listitem>
+          <listitem><para>window_get_integer</para></listitem>
+          <listitem><para>window_get_string</para></listitem>
+          <listitem><para>window_get_pointer</para></listitem>
+          <listitem><para>nicklist_add_group</para></listitem>
+          <listitem><para>nicklist_search_group</para></listitem>
+          <listitem><para>nicklist_add_nick</para></listitem>
+          <listitem><para>nicklist_search_nick</para></listitem>
+          <listitem><para>nicklist_remove_group</para></listitem>
+          <listitem><para>nicklist_remove_nick</para></listitem>
+          <listitem><para>nicklist_remove_all</para></listitem>
+          <listitem><para>bar_item_search</para></listitem>
+          <listitem><para>bar_item_new</para></listitem>
+          <listitem><para>bar_item_update</para></listitem>
+          <listitem><para>bar_item_remove</para></listitem>
+          <listitem><para>bar_search</para></listitem>
+          <listitem><para>bar_new</para></listitem>
+          <listitem><para>bar_set</para></listitem>
+          <listitem><para>bar_update</para></listitem>
+          <listitem><para>bar_remove</para></listitem>
+          <listitem><para>command</para></listitem>
+          <listitem><para>info_get</para></listitem>
+          <listitem><para>infolist_new</para></listitem>
+          <listitem><para>infolist_new_var_integer</para></listitem>
+          <listitem><para>infolist_new_var_string</para></listitem>
+          <listitem><para>infolist_new_var_pointer</para></listitem>
+          <listitem><para>infolist_new_var_time</para></listitem>
+          <listitem><para>infolist_get</para></listitem>
+          <listitem><para>infolist_next</para></listitem>
+          <listitem><para>infolist_prev</para></listitem>
+          <listitem><para>infolist_fields</para></listitem>
+          <listitem><para>infolist_integer</para></listitem>
+          <listitem><para>infolist_string</para></listitem>
+          <listitem><para>infolist_pointer</para></listitem>
+          <listitem><para>infolist_time</para></listitem>
+          <listitem><para>infolist_free</para></listitem>
+          <listitem><para>upgrade_new</para></listitem>
+          <listitem><para>upgrade_write_object</para></listitem>
+          <listitem><para>upgrade_read</para></listitem>
+          <listitem><para>upgrade_close</para></listitem>
         </itemizedlist>
       </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
-      </para>
-      <para>
-        Beispiel:
-<screen>
-# perl
-weechat::log("message", "#weechat", "freenode");
-
-# python
-weechat.log("message", "#weechat", "freenode")
-
-# ruby
-Weechat.log("message", "#weechat", "freenode")
-
--- lua
-weechat.log("message", "#weechat", "freenode")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_add_message_handler">
-      <title>add_message_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_message_handler(message, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_message_handler(message, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_message_handler(message, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_message_handler(message, function)
-        </command>
-      </para>
-      <para>
-        Erzeuge einen Nachrichten-Handler, der bei Empfang einer
-        IRC-Nachricht aufgerufen wird.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>message</option>: Name (Typ) der IRC-Nachricht. Für
-              eine Liste
-              der bekannten Typen von IRC-Nachrichten konsultieren sie
-              bitte die 
-              <acronym>RFC</acronym>s
-              <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
-              und
-              <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-              Mehr noch, sie können spezielle Ereignisse abfangen, indem
-              sie einen speziellen Namen verwenden, der mit 
-              "weechat_" beginnt (siehe
-              <xref linkend="secAPI_msg_handler_add" />).
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion, die bei Empfang einer
-              Nachricht aufgerufen werden soll
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_message_handler ("privmsg", "my_function");
-sub my_function
-{
-    weechat::print("server=$_[0]");
-    ($null, $channel, $message) = split ":",$_[1],3;
-    ($mask, $null, $channel) = split " ", $channel;
-    weechat::print("mask=$mask, channel=$channel, msg=$message");
-    return weechat::PLUGIN_RC_OK;
-}
-
-# python
-weechat.add_message_handler ("privmsg", "my_function")
-def my_function(server, args):
-    weechat.prnt("server="+server)
-    null, channel, message = string.split(args, ":", 2)
-    mask, null, channel = string.split(string.strip(channel), " ", 2)
-    weechat.prnt("mask="+mask+", canal="+channel+", message="+message)
-    return weechat.PLUGIN_RC_OK
-
-# ruby
-Weechat.add_message_handler("privmsg", "my_function")
-def my_function(server, args)
-    Weechat.print("server=#{server}, args=#{args}")
-    return Weechat::PLUGIN_RC_OK
-end
-
--- lua
-weechat.add_message_handler ("privmsg", "my_function")
-function my_function(server, args)
-    weechat.print("server=" .. server .. ", args=" .. args)
-    return weechat.PLUGIN_RC_OK()
-end
-</screen>
-      </para>
-      <para>
-        Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht 
-        empfangen wurde, muss einen der folgenden Werte zurückgeben: 
-        <itemizedlist>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_KO</literal>: Funktion fehlgeschlagen
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK</literal>: Funktion war erfolgreich
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht
-              wird nicht an WeeChat übergeben
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: Die Nachricht
-              wird nicht an andere Plugins
-              weitergegeben
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht
-              wird weder an WeeChat noch an andere Plugins übergeben
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: Funktion
-              erfolgreich vervollständigt und eine Hervorhebung bei den
-              empfangenen Nachrichten eingebaut
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-    </section>
-    
-    <section id="secScript_add_command_handler">
-      <title>add_command_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_command_handler(command, function,
-          [description, arguments, arguments_description,
-          completion_template]);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_command_handler(command, function,
-          [description, arguments, arguments_description,
-          completion_template])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_command_handler(command, function,
-          [description, arguments, arguments_description,
-          completion_template])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_command_handler(command, function,
-          [description, arguments, arguments_description,
-          completion_template])
-        </command>
-      </para>
-      <para>
-        Erzeugt einen Kommando-Handler, der aufgerufen wird, wenn der
-        Anwender das Kommando benutzt (Beispiel: /command).
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>command</option>: 
-              Name des neuen Kommandos, der auch Name eines bereits 
-              existierenden Kommandos sein kann (mit Bedacht zu verwenden, 
-              das ersetzte Kommando ist nicht verfügbar, bis das Plugin
-              entfernt wurde)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion, die aufgerufen wird,
-              wenn das Kommando ausgeführt wird
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>arguments</option>: eine kurze Beschreibung der
-              Argumente des Kommandos (werden angezeigt bei /help command)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>arguments_description</option>: eine ausführliche
-              Beschreibung der Argumente des Kommandos (werden angezeigt
-              bei /help command)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>completion_template</option>: 
-              Vorlage für die Vervollständigung; zum Beispiel bedeutet 
-              "<literal>abc|%w def|%i</literal>", dass das 
-              erste Argument "abc" oder ein WeeChat-Kommando sein kann 
-              und das zweite Argument "def" oder ein IRC-Kommando.
-              (siehe <xref linkend="secAPI_cmd_handler_add" />)
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_command_handler("command", "my_command");
-sub my_command
-{
-    weechat::print("server= $_[0], args: $_[1]");
-    return weechat::PLUGIN_RC_OK;
-}
-
-# python
-weechat.add_command_handler("command", "my_command")
-def my_command(server, args):
-    weechat.prnt("server="+server+", args="+args)
-    return weechat.PLUGIN_RC_OK
-
-# ruby
-Weechat.add_command_handler("command", "my_command")
-def my_command(server, args)
-    Weechat.print("server=#{server}, args=#{args}")
-    return Weechat::PLUGIN_RC_OK
-end
-
--- lua
-weechat.add_command_handler("command", "my_command")
-def my_command(server, args)
-    weechat.print("server="..server..", args="..args)
-    return weechat.PLUGIN_RC_OK()
-end
-</screen>
-      </para>
-      <para>
-        Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht 
-        empfangen wurde, muss einen der folgenden Werte zurückgeben: 
-
-        <itemizedlist>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_KO</literal> : Funktion ist fehlgeschlagen
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK</literal> : Funktion war erfolgreich
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-    </section>
-    
-    <section id="secScript_add_timer_handler">
-      <title>add_timer_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_timer_handler(interval, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_timer_handler(interval, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_timer_handler(interval, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_timer_handler(interval, function)
-        </command>
-      </para>
-      <para>
-        Erzeugt einen zeitgesteuerten Handler, der periodisch eine Funktion
-        aufruft.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>interval</option>: Interval (in Sekunden) zwischen
-              zwei Aufrufen der Funktion.
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion, die aufgerufen wird
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_timer_handler(60, "my_timer");
-sub my_timer
-{
-    weechat::print("this is timer handler");
-    return weechat::PLUGIN_RC_OK;
-}
-
-# python
-weechat.add_timer_handler(60, "my_timer")
-def my_timer():
-    weechat.prnt("this is timer handler")
-    return weechat.PLUGIN_RC_OK
-
-# ruby
-Weechat.add_timer_handler(60, "my_timer")
-def my_timer()
-    Weechat.print("this is timer handler")
-    return Weechat::PLUGIN_RC_OK
-end
-
--- lua
-weechat.add_timer_handler(60, "my_timer")
-function my_timer()
-    weechat.print("this is timer handler")
-    return weechat.PLUGIN_RC_OK()
-end
-</screen>
-      </para>
-      <para>
-        Note: function called has to return one of following values:
-        Hinweis: die Funktion, die aufgerufen wird, muss 
-        einen der folgenden Werte zurückgeben: 
         
-        <itemizedlist>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_KO</literal>: Funktion ist fehlgeschlagen
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK</literal>: Funktion war erfolgreich
-              completed
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-    </section>
-    
-    <section id="secScript_add_keyboard_handler">
-      <title>add_keyboard_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_keyboard_handler(function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Erzeugt einen Keyboard-Handler, der für jeden Tastendruck
-        aufgerufen wird.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion, die aufgerufen wird
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_keyboard_handler("my_keyboard");
-sub my_keyboard
-{
-    my $key = shift;
-    my $input_before = shift;
-    my $input_after = shift;
-    weechat::print("keyboard handler: key = '$key', "
-                   ."input before = '$input_before' "
-                   ."after = '$input_after'");
-    return weechat::PLUGIN_RC_OK;
-}
-
-# python
-weechat.add_keyboard_handler("my_keyboard")
-def my_keyboard(key, input_before, input_after):
-    weechat.prnt("keyboard handler: key = '%s', " \
-                 "input before = '%s' after = '%s'"
-                 %(key, input_before, input_after))
-    return weechat.PLUGIN_RC_OK
-
-# ruby
-Weechat.add_keyboard_handler("my_keyboard")
-def my_keyboard(key, input_before, input_after)
-    Weechat.print("keyboard handler: key = '#{key}', " \
-                  "input before = '#{input_before}' " \
-                  "after = '#{input_after}'")
-    return Weechat::PLUGIN_RC_OK
-end
-
--- lua
-weechat.add_keyboard_handler("my_keyboard")
-function my_keyboard(key, input_before, input_after)
-    weechat.print("keyboard handler: key = '"..key..
-                  "', input before = '"..input_before..
-                  "' after = '"..input_after.."'")
-    return weechat.PLUGIN_RC_OK()
-end
-</screen>
-      </para>
-      <para>
-        Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte
-        zurückgeben:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_KO</literal>: Funktion ist fehlgeschlagen
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK</literal>: Funktion war erfolgreich
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-    </section>
-    
-    <section id="secScript_add_event_handler">
-      <title>add_event_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_event_handler(event, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_event_handler(event, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_event_handler(event, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_event_handler(event, function)
-        </command>
-      </para>
-      <para>
-        Fügt einen Ereignis-Handler hinzu, der beim Auftreten eines
-        Ereignisses aufgerufen wird.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>event</option> : Ereignis
-              (see <xref linkend="secAPI_event_handler_add" />)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: aufgerufene Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewerte: 1 bei Erfolg, 0 bei aufgetretenen Fehlern
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_event_handler("buffer_open", "my_event");
-sub my_event
-{
-    weechat::print("buffer open");
-    return weechat::PLUGIN_RC_OK;
-}
-
-# python
-weechat.add_event_handler("buffer_open", "my_event")
-def my_event():
-    weechat.prnt("buffer open")
-    return weechat.PLUGIN_RC_OK
-
-# ruby
-Weechat.add_event_handler("buffer_open", "my_event")
-def my_event()
-    Weechat.print("buffer open")
-    return Weechat::PLUGIN_RC_OK
-end
-
--- lua
-weechat.add_event_handler("buffer_open", "my_event")
-function my_event()
-    weechat.print("buffer open")
-    return weechat.PLUGIN_RC_OK()
-end
-</screen>
-      </para>
-      <para>
-        Bemerkung: aufgerufene Funktion muss einen der folgenden Werte
-        zurückgeben:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_KO</literal>: Funktion fehlgeschlagen
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <literal>PLUGIN_RC_OK</literal>: Funktion erfolgreich beendet
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-    </section>
-    
-    <section id="secScript_remove_handler">
-      <title>remove_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::remove_handler(name, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.remove_handler(name, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.remove_handler(name, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.remove_handler(name, function)
-        </command>
-      </para>
-      <para>
-        Entfernt einen Nachrichten- oder Kommando-Handler.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>name</option>: Name der IRC-Message oder Kommando
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei Auftreten eines Fehlers
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::remove_handler("command", "my_command");
-
-# python
-weechat.remove_handler("command", "my_command")
-
-# ruby
-Weechat.remove_handler("command", "my_command")
-
--- lua
-weechat.remove_handler("command", "my_command")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_remove_timer_handler">
-      <title>remove_timer_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::remove_timer_handler(function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.remove_timer_handler(function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.remove_timer_handler(function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.remove_timer_handler(function)
-        </command>
-      </para>
-      <para>
-        Entfernt einen zeitgesteuerten Handler.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::remove_timer_handler("my_timer");
-
-# python
-weechat.remove_timer_handler("my_timer")
-
-# ruby
-Weechat.remove_timer_handler("my_timer")
-
--- lua
-weechat.remove_timer_handler("my_timer")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_remove_keyboard_handler">
-      <title>remove_keyboard_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::remove_keyboard_handler(function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.remove_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.remove_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.remove_keyboard_handler(function)
-        </command>
-      </para>
-      <para>
-        Entfernt einen Keyboard-Handler.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::remove_keyboard_handler("my_keyboard");
-
-# python
-weechat.remove_keyboard_handler("my_keyboard")
-
-# ruby
-Weechat.remove_keyboard_handler("my_keyboard")
-
--- lua
-weechat.remove_keyboard_handler("my_keyboard")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScrip_remove_event_handler">
-      <title>remove_event_handler</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::remove_event_handler(function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.remove_event_handler(function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.remove_event_handler(function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.remove_event_handler(function)
-        </command>
-      </para>
-      <para>
-        Entfernt einen Ereignis-Handler.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::remove_event_handler("my_event");
-
-# python
-weechat.remove_event_handler("my_event")
-
-# ruby
-Weechat.remove_event_handler("my_event")
-
--- lua
-weechat.remove_event_handler("my_event")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_add_modifier">
-      <title>add_modifier</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::add_modifier(type, message, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.add_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.add_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.add_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Fügt einen Nachrichtenmodifikator hinzu.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>type</option>: Modifikatorart:
-              <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
-                  <thead>
-                    <row>
-                      <entry>Art</entry>
-                      <entry>Beschreibung</entry>
-                    </row>
-                  </thead>
-                  <tbody>
-                    <row>
-                      <entry><literal>irc_in</literal></entry>
-                      <entry>wird bei eingehenden IRC-Nachrichten aufgerufen</entry>
-                    </row>
-                    <row>
-                      <entry><literal>irc_user</literal></entry>
-                      <entry>
-                        wird bei jeder Benutzernachricht (oder Befehl)
-                        aufgerufen (bevor WeeChat die Nachricht parst)
-                      </entry>
-                    </row>
-                    <row>
-                      <entry><literal>irc_out</literal></entry>
-                      <entry>
-                        wird unmittelbar vor dem Abschicken einer ausgehenden
-                        Nachricht an den IRC-Server aufgerufen (auch bei
-                        Nachrichten, die WeeChat automatisch an den Server
-                        sendet)
-                      </entry>
-                    </row>
-                  </tbody>
-                </tgroup>
-              </informaltable>
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>message</option>:Name der IRC-Nachricht (wird nur bei
-              den Arten "irc_in" and "irc_out" benutzt) Um eine Liste der
-              IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
-              <acronym>RFC</acronym>s
-              <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
-              and
-              <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-              Außerdem gibt es den Wert "*", der alle Nachrichten
-              anspricht (ohne Filter).
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: aufgerufene Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::add_modifier("irc_in", "privmsg", "mod_in");
-weechat::add_modifier("irc_out", "privmsg", "mod_out");
-sub mod_in
-{
-    return "$_[1] [modifier IN]";
-}
-sub mod_out
-{
-    return "$_[1] [modifier OUT]";
-}
-
-# python
-weechat.add_modifier("irc_in", "privmsg", "mod_in")
-weechat.add_modifier("irc_out", "privmsg", "mod_out")
-def mod_in(server, args):
-    return args + " [modifier IN]"
-def mod_out(server, args):
-    return args + " [modifier OUT]"
-
-# ruby
-Weechat.add_modifier("irc_in", "privmsg", "mod_in")
-Weechat.add_modifier("irc_out", "privmsg", "mod_out")
-def mod_in(server, args)
-    return args + " [modifier IN]"
-end
-def mod_out(server, args)
-    return args + " [modifier OUT]"
-end
-
--- lua
-weechat.add_modifier("irc_in", "privmsg", "mod_in")
-weechat.add_modifier("irc_out", "privmsg", "mod_out")
-function mod_in(server, args)
-    return args .. " [modifier IN]"
-end
-function mod_out(server, args)
-    return args .. " [modifier OUT]"
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_remove_modifier">
-      <title>remove_modifier</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::remove_modifier(type, message, function);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.remove_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.remove_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.remove_modifier(type, message, function)
-        </command>
-      </para>
-      <para>
-        Entfernt einen Nachrichtenmodifikator.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>type</option>: Modifikatorart
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>message</option>: Nachrichtenart, die der Modifikator
-              verwaltet
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>function</option>: Funktion
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::remove_modifier("irc_in", "privmsg", "mod_in");
-
-# python
-weechat.remove_modifier("irc_in", "privmsg", "mod_in")
-
-# ruby
-Weechat.remove_modifier("irc_in", "privmsg", "mod_in")
-
--- lua
-weechat.remove_modifier("irc_in", "privmsg", "mod_in")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_command">
-      <title>command</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::command(command, [channel, [server]]);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.command(command, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.command(command, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.command(command, [channel, [server]])
-        </command>
-      </para>
-      <para>
-        Führt ein WeeChat-Kommando aus (oder sendet eine Nachricht an einen
-        Channel).
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>command</option>: Kommando
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>channel</option>: Name des Channels, für den das
-              Kommando ausgeführt werden soll
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>server</option>: interner Name des Servers, für den
-              das Kommando ausgeführt werden soll
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::command("hello everybody!");
-weechat::command("/kick toto please leave this channel", "#weechat");
-weechat::command("/nick newnick", "", "freenode");
-
-# python
-weechat.command("hello everybody!")
-weechat.command("/kick toto please leave this channel", "#weechat")
-weechat.command("/nick newnick", "", "freenode")
-
-# ruby
-Weechat.command("hello everybody!")
-Weechat.command("/kick toto please leave this channel", "#weechat")
-Weechat.command("/nick newnick", "", "freenode")
-
--- lua
-weechat.command("hello everybody!")
-weechat.command("/kick toto please leave this channel", "#weechat")
-weechat.command("/nick newnick", "", "freenode")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_info">
-      <title>get_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_info(name, [server]);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_info(name, [server])
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_info(name, [server])
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_info(name, [server])
-        </command>
-      </para>
-      <para>
-        Gibt ein Info über WweeChat oder einen Channel zurück.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>name</option>: Name (Typ) des Infos, das gelesen
-              werden soll (siehe <xref linkend="secAPI_get_info" />)
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>server</option>: interner Name des Servers
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: angefragte Infos, oder leerer String, wenn ein
-        Fehler aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-$version = get_info("version");
-$nick = get_info("nick", "freenode");
-
-# python
-version = weechat.get_info("version")
-nick = weechat.get_info("nick", "freenode")
-
-# ruby
-version = Weechat.get_info("version")
-nick = Weechat.get_info("nick", "freenode")
-
--- lua
-version = weechat.get_info("version")
-nick = weechat.get_info("nick", "freenode")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_dcc_info">
-      <title>get_dcc_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_dcc_info();
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_dcc_info()
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_dcc_info()
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_dcc_info()
-        </command>
-      </para>
-      <para>
-        Gibt eine Liste der gegenwärtig aktiven oder beendeten DCCs zurück.
-      </para>
-      <para>
-        Rückgabewert: Liste der DCCS
-        (siehe <xref linkend="secAPI_get_dcc_info" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my @dccs = weechat::get_dcc_info();
-if (@dccs)
-{
-    foreach my $dcc (@dccs)
-    {
-        while (my ($key, $value) = each %$dcc)
-        {
-            weechat::print("$key = '$value'");
-        }
-    }
-}
-else
-{
-    weechat::print("no DCC");
-}
-
-# python
-dccs = weechat.get_dcc_info()
-if dccs != None:
-    if dccs == []:
-        weechat.prnt("no DCC")
-    else:
-        for d in dccs:
-            for b in d.keys():
-                weechat.prnt("%s = '%s'" %(b, d[b]))
-else:
-    weechat.prnt("error while getting DCC")
-
-# ruby
-dccs = Weechat.get_dcc_info()
-if dccs != nil   
-    if dccs == []
-        Weechat.print("no DCC")
-    else
-        dccs.each do |m|
-            m.each do |key, value|
-                Weechat.print("#{key} = '#{value}'")
-            end
-        end
-    end
-else
-    Weechat.print("error while getting DCC")
-end
-
--- lua
-dccs = weechat.get_dcc_info()
-if dccs ~= nil then
-    if dccs then
-        dcc, dccinfos = next (dccs, nil)
-        while (dcc) do
-            key, value = next (dccinfos, nil)
-            while (key) do
-                weechat.print(key.." = '"..value.."'")
-                key, value = next (dccinfos, key)
-            end
-            dcc, dccinfos = next (dccs, dcc)
-        end 
-    else
-        weechat.print("no DCC")
-    end
-else
-    weechat.print("error while getting DCC")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_server_info">
-      <title>get_server_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_server_info();
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_server_info()
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_server_info()
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_server_info()
-        </command>
-      </para>
-      <para>
-        Gibt eine Liste der IRC-Server zurück (verbunden oder nicht).
-      </para>
-      <para>
-        Rückgabewert: Liste der Server
-        (siehe <xref linkend="secAPI_get_server_info" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $servers = weechat::get_server_info();
-if ($servers)
-{
-    while (my ($srvname, $srvinfos) = each %$servers)
-    {
-        while ( my ($key, $value) = each %$srvinfos)
-        {
-            weechat::print("$srvname -> $key = '$value'");
-        }
-    }
-}
-else
-{
-    weechat::print("no server");
-}
-
-# python
-servers = weechat.get_server_info()
-if servers != None:
-    if servers == {}:
-        weechat.prnt("no server")
-    else:
-        for s in servers:
-            for i in servers[s]:
-                weechat.prnt("%s -> %s = '%s'" % (s, i, str(servers[s][i])))
-else:
-    weechat.prnt("error while getting servers")
-
-# ruby
-servers = Weechat.get_server_info()
-if servers != nil
-    if servers == []
-        Weechat.print("no server")
-    else
-        servers.each do |n, s|
-            s.each do |key, value|
-                Weechat.print("#{n} -> #{key} = '#{value}'")
-            end
-        end
-    end
-else
-    Weechat.print("error while getting servers")
-end
-
--- lua
-servers = weechat.get_server_info()
-if servers ~= nil then
-    if servers then
-        srv, srvinfos = next (servers, nil)
-        while (srv) do
-            key, value = next (srvinfos, nil)
-            while (key) do
-                weechat.print(srv.." -> "..key.." = '"..value.."'")
-                key, value = next (srvinfos, key)
-            end	
-            srv, srvinfos = next (servers, srv)
-        end
-    else
-        weechat.print("no server")
-    end
-else
-    weechat.print("error while getting servers")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_channel_info">
-      <title>get_channel_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_channel_info(server);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_channel_info(server)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_channel_info(server)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_channel_info(server)
-        </command>
-      </para>
-      <para>
-        Gibt eine Liste der Channels für einen Server zurück.
-      </para>
-      <para>
-        Rückgabewert: Liste der Channel für einen Server
-        (siehe <xref linkend="secAPI_get_channel_info" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $channels = weechat::get_channel_info(weechat::get_info("server"));
-if ($channels)
-{
-    while (my ($channame, $chaninfos) = each %$channels)
-    {
-        while (my ($key, $value) = each %$chaninfos)
-        {
-            weechat::print("$channame -> $key = '$value'");
-        }
-    }
-}
-else
-{
-    weechat::print("no channel");
-}
-
-# python
-chans = weechat.get_channel_info(weechat.get_info("server"))
-if chans != None:
-    if chans == {}:
-        weechat.prnt("no channel")
-    else:
-        for s in chans:
-            for i in chans[s]:
-                weechat.prnt("%s -> %s = '%s'" % (s, i, str(chans[s][i])))
-else:
-    weechat.prnt("error while getting channels")
-
-# ruby
-channels = Weechat.get_channel_info(Weechat.get_info("server"))
-if channels != nil
-    if channels == {}
-        Weechat.print("no channel")
-    else
-        channels.each do |n, c|
-            c.each do |key, value|
-                Weechat.print("#{n} -> #{key} = '#{value}'")
-            end
-        end
-    end
-else
-    Weechat.print("error while getting channels")
-end
-
--- lua
-chans = weechat.get_channel_info(weechat.get_info("server"))
-if chans ~= nil then
-    if chans then
-        chan, chaninfos = next (chans, nil)
-        while (chan) do
-            key, value = next (chaninfos, nil)
-            while (key) do
-                weechat.print(chan.." -> "..key.." = '"..value.."'")
-                key, value = next (chaninfos, key)
-            end
-            chan, chaninfos = next (chans, chan)
-        end
-    else
-        weechat.print("no channel")
-    end
-else
-    weechat.print("error while getting channels")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_nick_info">
-      <title>get_nick_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_nick_info(server, channel);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_nick_info(server, channel)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_nick_info(server, channel)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_nick_info(server, channel)
-        </command>
-      </para>
-      <para>
-        Gibt eine Liste der Nicknamen für einen Channel zurück.
-      </para>
-      <para>
-        Rückgabewert: Liste der Nicknamen eines Channels
-        (siehe <xref linkend="secAPI_get_nick_info" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $nicks = weechat::get_nick_info("freenode", "#weechat");
-if ($nicks)
-{
-    while (my ($nickname, $nickinfos) = each %$nicks)
-    {
-        while ( my ($key, $value) = each %$nickinfos)
-        {
-            weechat::print("$nickname -> $key = '$value'");
-        }
-    }
-}
-else
-{
-    weechat::print("no nick");
-}
-
-# python
-nicks = weechat.get_nick_info("freenode", "#weechat")
-if nicks != None:
-    if nicks == {}:
-        weechat.prnt("no nick")
-    else:
-        for n in nicks:
-            for f in nicks[n]:
-                weechat.prnt("%s -> %s = '%s'" % (n, f, str(nicks[n][f])))
-else:
-    weechat.prnt("error while getting nicks")
-
-# ruby
-nicks = Weechat.get_nick_info("freenode", "#weechat")
-if nicks != nil
-    if nicks == {}
-        Weechat.print("no nick")
-    else
-        nicks.each do |nk, nattr|
-            nattr.each do |key, value|
-                Weechat.print("#{nk} -> #{key} = '#{value}'")
-            end
-        end
-    end
-else
-    Weechat.print("error while getting nicks")
-end
-
--- lua
-nicks = weechat.get_nick_info("freenode", "#weechat")
-if nicks ~= nil then
-    if nicks then	
-        nick, nickinfos = next (nicks, nil)
-        while (nick) do
-            key, value = next (nickinfos, nil)
-            while (key) do
-                weechat.print(nick.." -> "..key.." = '"..value.."'")
-                key, value = next (nickinfos, key)
-            end
-            nick, nickinfos = next (nicks, nick)
-        end
-    else
-        weechat.print("no nick")
-    end
-else
-    weechat.print("error while getting nicks")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_config">
-      <title>get_config</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_config(option);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_config(option)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_config(option)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_config(option)
-        </command>
-      </para>
-      <para>
-        Gibt den Wert einer Option der WeeChat-Konfiguration zurück.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>option</option>: Name der Option
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: Wert der Option, leerer String wenn nichts gefunden
-        wurde.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-$value1 = weechat::get_config("look_nicklist");
-$value2 = weechat::get_config("freenode.server_autojoin");
-
-# python
-value1 = weechat.get_config("look_nicklist")
-value2 = weechat.get_config("freenode.server_autojoin")
-
-# ruby
-value1 = Weechat.get_config("look_nicklist")
-value2 = Weechat.get_config("freenode.server_autojoin")
-
--- lua
-value1 = weechat.get_config("look_nicklist")
-value2 = weechat.get_config("freenode.server_autojoin")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_set_config">
-      <title>set_config</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::set_config(option, value);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.set_config(option, value)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.set_config(option, value)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.set_config(option, value)
-        </command>
-      </para>
-      <para>
-        Setze den Wert einer Option der WeeChat-Konfiguration.
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>option</option>: Name der Option, die gesetzt werden
-              soll
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>value</option>: neuer Wert der Option
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 wenn der Wert gesetzt wurde, 0 wenn ein Fehler
-        aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::set_config("look_nicklist", "off");
-weechat::set_config("freenode.server_autojoin", "#weechat");
-
-# python
-weechat.set_config("look_nicklist", "off")
-weechat.set_config("freenode.server_autojoin", "#weechat")
-
-# ruby
-Weechat.set_config("look_nicklist", "off")
-Weechat.set_config("freenode.server_autojoin", "#weechat")
-
--- lua
-weechat.set_config("look_nicklist", "off")
-weechat.set_config("freenode.server_autojoin", "#weechat")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_plugin_config">
-      <title>get_plugin_config</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_plugin_config(option);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_plugin_config(option)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_plugin_config(option)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_plugin_config(option)
-        </command>
-      </para>
-      <para>
-        Gibt den Wert einer Option eines Plugins zurück. Die Option wird
-        aus der Datei "<literal>~/.weechat/plugins.rc</literal>" gelesen
-        und sieht so aus: "<literal>plugin.option=value</literal>" 
-        (Hinweis: Der Name des Plugins wird automatisch gesetzt).
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>option</option>: Name der zu lesenden Option
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: Wert der Option, leerer String wenn die Option nicht 
-        gefunden wurde.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-$value = weechat::get_plugin_config("my_var");
-
-# python
-value = weechat.get_plugin_config("my_var")
-
-# ruby
-value = Weechat.get_plugin_config("my_var")
-
--- lua
-value = weechat.get_plugin_config("my_var")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_set_plugin_config">
-      <title>set_plugin_config</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::set_plugin_config(option, value);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.set_plugin_config(option, value)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.set_plugin_config(option, value)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.set_plugin_config(option, value)
-        </command>
-      </para>
-      <para>
-        Setzt den Wert einer Option eines Plugins. Die Option bzw. ihr Wert
-        wird in "<literal>~/.weechat/plugins.rc</literal>" geschrieben und 
-        sieht so aus: "<literal>plugin.option=value</literal>" 
-        (Hinweis: der Name des Plugins wird automatisch gesetzt).
-      </para>
-      <para>
-        Argumente:
-        <itemizedlist>
-          <listitem>
-            <para>
-              <option>option</option>: Name der Option, die gesetzt werden
-              soll
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <option>value</option>: Der neue Wert der Option
-            </para>
-          </listitem>
-        </itemizedlist>
-      </para>
-      <para>
-        Rückgabewert: 1 wenn die Option gesetzt wurde, 0 wenn ein Fehler
-        aufgetreten ist.
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-weechat::set_plugin_config("my_var", "value");
-
-# python
-weechat.set_plugin_config("my_var", "value")
-
-# ruby
-Weechat.set_plugin_config("my_var", "value")
-
--- lua
-weechat.set_plugin_config("my_var", "value")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_irc_color">
-      <title>get_irc_color</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_irc_color(color);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_irc_color(color)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_irc_color(color)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_irc_color(color)
-        </command>
-      </para>
-      <para>
-        Hole IRC-Farbindex mit dem Farbnamen.
-      </para>
-      <para>
-        Rückgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde
-        (siehe <xref linkend="secAPI_get_irc_color" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $color_blue = weechat::get_irc_color("blue");
-
-# python
-color_blue = weechat.get_irc_color("blue")
-
-# ruby
-color_blue = Weechat.get_irc_color("blue")
-
--- lua
-color_blue = weechat.get_irc_color("blue")
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_input_color">
-      <title>input_color</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::input_color(color);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.input_color(color)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.input_color(color)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.input_color(color)
-        </command>
-      </para>
-      <para>
-        Erzeugt einen Farbcode im Eingabepuffer.Add color in input buffer.
-      </para>
-      <para>
-        Rückgabewert: keiner.
-      </para>
-      <para>
-        Bespiele:
-<screen>
-# perl
-weechat::input_color(weechat::get_irc_color("blue"), 10, 5);
-
-# python
-weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
-
-# ruby
-Weechat.input_color(Weechat.get_irc_color("blue"), 10, 5)
-
--- lua
-weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_window_info">
-      <title>get_window_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_window_info();
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_window_info()
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_window_info()
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_window_info()
-        </command>
-      </para>
-      <para>
-        Gibt die Liste der WeeChat-Fenster zurück.
-      </para>
-      <para>
-        Rückgabewert: List der WeeChat-Fenster
-        (see <xref linkend="secAPI_get_window_info" />).
-      </para>
-      <para>
-        Besipiele:
-<screen>
-# perl
-my @wf = weechat::get_window_info();
-if (@wf)
-{
-    weechat::print("**** Fenster-Informationen ****");
-    foreach my $w (@wf)
-    {
-        while ( my ($key, $value) = each %$w)
-        {
-            weechat::print(" > $key => $value");
-        }
-        weechat::print("----------------------");
-    }
-}
-else
-{
-    weechat::print("**** Keine Fenster-Informationen ****");
-}
-
-# python
-wf = weechat.get_window_info()
-if wf != None and wf != []:
-    weechat.prnt ("**** Fenster-Informationen ****")
-    for w in wf:
-        for i in w:
-            weechat.prnt (" > %s => %s" % (i, w[i]))
-        weechat.prnt ("----------------------")
-else:
-    weechat.prnt ("**** Keine Fenster-Informationen ****")
-
-# ruby
-wf = Weechat.get_window_info()
-if wf != nil and wf != []   
-    Weechat.print("**** Fenster-Informationen ****")
-    wf.each do |w|
-        w.each do |key, value|
-            Weechat.print(" > #{key} => #{value}")
-        end
-        Weechat.print("----------------------")
-    end
-else
-    Weechat.print("**** Keine Fenster-Informationen ****")
-end
-
--- lua
-wf = weechat.get_window_info()
-if wf then
-    weechat.print ("**** Fenster-Informationen ****")
-    w, winfos = next (wf, nil)
-    while (w) do
-        key, value = next (winfos, nil)
-        while (key) do
-            weechat.print(" > " .. key .. " => " .. value)
-            key, value = next (winfos, key)
-        end
-        weechat.print ("----------------------")
-        w, winfos = next (wf, w)
-    end
-else
-    weechat.print("**** Keine Fenster-Informationen ****")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_buffer_info">
-      <title>get_buffer_info</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_buffer_info();
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_buffer_info()
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_buffer_info()
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_buffer_info()
-        </command>
-      </para>
-      <para>
-        Gibt eine Liste der WeeChat-Puffer.
-      </para>
-      <para>
-        Rückgabewert: Liste der WeeChat-Puffer
-        (siehe <xref linkend="secAPI_get_buffer_info" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $bf = weechat::get_buffer_info();
-if ($bf)
-{
-    while ( my ($nobuf, $binfos) = each %$bf)
-    {
-        while ( my ($key, $value) = each %$binfos)
-        {
-            weechat::print(" > $key => $value");
-        }
-        weechat::print("----------------------");
-    }
-}
-else
-{
-    weechat::print("**** keine Pufferinformationen ****");
-}
-
-# python
-bf = weechat.get_buffer_info()
-if bf != None and bf != {}:
-    for b in bf:
-        weechat.prnt ("**** Informationen für Puffer Nr. %d ****" % b)
-        for c in bf[b]:
-            weechat.prnt (" > %s => %s" % (c, bf[b][c]))
-        weechat.prnt ("----------------------")
-else:
-    weechat.prnt ("**** keine Pufferinformationen ****")
-
-# ruby
-bf = Weechat.get_buffer_info()
-if bf != nil and bf != {}
-    bf.each do |n, c|
-        Weechat.print("**** Informationen für Puffer Nr. #{n} ****")
-        c.each do |key, value|
-            Weechat.print(" > #{key} => #{value}")
-        end
-        Weechat.print("----------------------")
-    end
-else
-    Weechat.print("**** keine Pufferinformationen ****")
-end
-
--- lua
-bf = weechat.get_buffer_info()
-if bf then
-    b, binfos = next (bf, nil)
-    while (b) do
-        weechat.print("**** Informationen für Puffer Nr. " .. b .. " ****")
-        key, value = next (binfos, nil)
-        while (key) do
-            weechat.print(" > " .. key .. " => " .. value)
-            key, value = next (binfos, key)
-        end
-        weechat.print ("----------------------")
-        b, infos = next (bf, b)
-    end
-else
-    weechat.print("**** keine Pufferinformationen ****")
-end
-</screen>
-      </para>
-    </section>
-    
-    <section id="secScript_get_buffer_data">
-      <title>get_buffer_data</title>
-      
-      <para>
-        Perl-Prototyp:
-        <command>
-          weechat::get_buffer_data(server, channel);
-        </command>
-      </para>
-      <para>
-        Python-Prototyp:
-        <command>
-          weechat.get_buffer_data(server, channel)
-        </command>
-      </para>
-      <para>
-        Ruby-Prototyp:
-        <command>
-          Weechat.get_buffer_data(server, channel)
-        </command>
-      </para>
-      <para>
-        Lua-Prototyp:
-        <command>
-          weechat.get_buffer_data(server, channel)
-        </command>
-      </para>
-      <para>
-        Gibt den Inhalt eines Puffers zurück.
-      </para>
-      <para>
-        Rückgabewert: Liste der Pufferzeilen
-        (see <xref linkend="secAPI_get_buffer_data" />).
-      </para>
-      <para>
-        Beispiele:
-<screen>
-# perl
-my $server = weechat::get_info("server");
-my $channel = weechat::get_info("channel");
-my @bc = weechat::get_buffer_data($server, $channel);
-if (@bc)
-{
-    weechat::print("**** Pufferdaten für '$channel'\@'$server' ****");
-    foreach my $l (@bc) {
-        while ( my ($key, $value) = each %$l) {
-            weechat::print(" > $key => $value");
-        }
-        weechat::print("----------------------");
-    }
-}
-else
-{
-    weechat::print("**** keine Pufferdaten ****");
-}
-
-# python
-server = weechat.get_info("server")
-channel = weechat.get_info("channel")
-bc = weechat.get_buffer_data(server, channel)
-if bc != None and bc != []:
-    weechat.prnt ("**** Pufferdaten für '%s'@'%s' ****" % (channel, server))
-    for l in bc:
-        for i in l:
-            weechat.prnt (" > %s => %s" % (i, l[i]))
-        weechat.prnt ("----------------------")
-else:
-    weechat.prnt ("**** keine Pufferdaten ****")
-
-# ruby
-server = Weechat.get_info("server")
-channel = Weechat.get_info("channel")
-bc = Weechat.get_buffer_data(server, channel)
-if bc != nil and bc != []   
-    Weechat.print("**** Pufferdaten für '#{channel}'@'#{server}' ****")
-    bc.each do |l|
-        l.each do |key, value|
-            Weechat.print(" > #{key} => #{value}")
-        end
-        Weechat.print("----------------------")
-    end
-else
-    Weechat.print("**** keine Pufferdaten ****")
-end
-
--- lua
-server = weechat.get_info("server")
-channel = weechat.get_info("channel")
-bc = weechat.get_buffer_data(server, channel)
-if bc then
-    b, bdatas = next (bc, nil)
-    weechat.print("**** Pufferdaten für '" .. channel .. "'@'" .. server .. "' ****")
-    while (b) do 
-        key, value = next (bdatas, nil)
-        while (key) do
-            weechat.print(" > " .. key .. " => " .. value)
-            key, value = next (bdatas, key)
-        end
-        weechat.print ("----------------------")
-        b, bdatas = next (bc, b)
-    end
-else
-    weechat.print("**** keine Pufferdaten ****")
-end
-</screen>
-      </para>
     </section>
     
   </section>

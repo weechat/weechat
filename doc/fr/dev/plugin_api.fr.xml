@@ -26,6 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   &plugin_c_api.fr.xml;
   
-  <!-- &plugin_script_api.fr.xml; -->
+  &plugin_script_api.fr.xml;
   
 </chapter>
