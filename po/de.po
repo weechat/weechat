@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-23 11:08+0100\n"
+"POT-Creation-Date: 2009-03-27 16:41+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1694,6 +1694,9 @@ msgid ""
 "unlimited)"
 msgstr "maximale Anzahl der angezeigten Befehle im Verlauf (0: unbegrenzt)"
 
+msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -1724,6 +1727,14 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "Konfiguration beim Verlassen abspeichern"
+
+#, fuzzy
+msgid "FATAL: error initializing configuration options"
+msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
+
+#, fuzzy, c-format
+msgid "%sError reading configuration"
+msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -2380,12 +2391,12 @@ msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
 msgid "name of FIFO pipe"
 msgstr ""
 
+msgid "away"
+msgstr ""
+
 #, fuzzy
 msgid "servers"
 msgstr "Server"
-
-msgid "away"
-msgstr ""
 
 msgid "Lag"
 msgstr ""
@@ -4067,6 +4078,10 @@ msgid "%s%s: address \"%s\" not found"
 msgstr "%s Adresse \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
+msgid "%s%s: error: %s"
+msgstr "%sServer: %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: proxy IP address not found"
 msgstr "%s Proxy-IP-Adresse nicht gefunden\n"
 
@@ -4906,10 +4921,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "Kann das Logfile nicht schreiben\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error: %s"
-msgstr "%sServer: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not found"

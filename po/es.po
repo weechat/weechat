@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-23 11:08+0100\n"
+"POT-Creation-Date: 2009-03-27 16:41+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1679,6 +1679,9 @@ msgstr ""
 "nÃºmero mÃ¡ximo de comandos para mostrar por defecto en el listado del "
 "historial (0 = ilimitado)"
 
+msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -1709,6 +1712,14 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "guardar configuraciÃ³n a disco"
+
+#, fuzzy
+msgid "FATAL: error initializing configuration options"
+msgstr "pedir al servidor que recargue su archivo de configuraciÃ³n"
+
+#, fuzzy, c-format
+msgid "%sError reading configuration"
+msgstr "pedir al servidor que recargue su archivo de configuraciÃ³n"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -2355,12 +2366,12 @@ msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
 msgid "name of FIFO pipe"
 msgstr ""
 
+msgid "away"
+msgstr ""
+
 #, fuzzy
 msgid "servers"
 msgstr "servidor"
-
-msgid "away"
-msgstr ""
 
 msgid "Lag"
 msgstr ""
@@ -4060,6 +4071,10 @@ msgid "%s%s: address \"%s\" not found"
 msgstr "%s direcciÃ³n \"%s\" no encontrada\n"
 
 #, fuzzy, c-format
+msgid "%s%s: error: %s"
+msgstr "%sServidor: %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: proxy IP address not found"
 msgstr "%s direcciÃ³n proxy IP no encontrada\n"
 
@@ -4898,10 +4913,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error: %s"
-msgstr "%sServidor: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not found"

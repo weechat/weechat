@@ -539,7 +539,8 @@ jabber_server_login (struct t_jabber_server *server)
  */
 
 int
-jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
+jabber_server_connect_cb (void *arg_server, int status, const char *error,
+                          const char *ip_address)
 {
     struct t_jabber_server *server;
     const char *proxy;
@@ -577,6 +578,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME,
                             server->address);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -587,6 +596,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: IP address not found"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -597,6 +614,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: connection refused"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -609,6 +634,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                               "proxy)"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -617,6 +650,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: unable to set local hostname/IP"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -625,6 +666,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: GnuTLS init error"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -633,6 +682,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: GnuTLS handshake failed"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;
@@ -641,6 +698,14 @@ jabber_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: not enough memory"),
                             jabber_buffer_get_server_prefix (server, "error"),
                             JABBER_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                jabber_buffer_get_server_prefix (server, "error"),
+                                JABBER_PLUGIN_NAME,
+                                error);
+            }
             jabber_server_close_connection (server);
             jabber_server_reconnect_schedule (server);
             break;

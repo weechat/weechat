@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-23 11:08+0100\n"
+"POT-Creation-Date: 2009-03-27 16:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1432,6 +1432,9 @@ msgid ""
 "unlimited)"
 msgstr ""
 
+msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
+msgstr ""
+
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -1454,6 +1457,13 @@ msgid ""
 msgstr ""
 
 msgid "save configuration files when unloading plugins"
+msgstr ""
+
+msgid "FATAL: error initializing configuration options"
+msgstr ""
+
+#, c-format
+msgid "%sError reading configuration"
 msgstr ""
 
 #, c-format
@@ -2056,10 +2066,10 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr ""
 
-msgid "servers"
+msgid "away"
 msgstr ""
 
-msgid "away"
+msgid "servers"
 msgstr ""
 
 msgid "Lag"
@@ -3528,6 +3538,10 @@ msgid "%s%s: address \"%s\" not found"
 msgstr ""
 
 #, c-format
+msgid "%s%s: error: %s"
+msgstr ""
+
+#, c-format
 msgid "%s%s: proxy IP address not found"
 msgstr ""
 
@@ -4255,10 +4269,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error: %s"
 msgstr ""
 
 #, c-format

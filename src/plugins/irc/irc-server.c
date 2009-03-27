@@ -1847,7 +1847,8 @@ irc_server_switch_address (struct t_irc_server *server)
  */
 
 int
-irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
+irc_server_connect_cb (void *arg_server, int status, const char *error,
+                       const char *ip_address)
 {
     struct t_irc_server *server;
     const char *proxy;
@@ -1885,6 +1886,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME,
                             server->addresses_array[server->index_current_address]);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
@@ -1895,6 +1904,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: IP address not found"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
@@ -1905,6 +1922,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: connection refused"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
@@ -1917,6 +1942,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                               "proxy)"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
@@ -1925,6 +1958,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: unable to set local hostname/IP"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_reconnect_schedule (server);
             break;
@@ -1933,6 +1974,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: TLS init error"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_reconnect_schedule (server);
             break;
@@ -1941,6 +1990,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: TLS handshake failed"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
@@ -1949,6 +2006,14 @@ irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
                             _("%s%s: not enough memory"),
                             irc_buffer_get_server_prefix (server, "error"),
                             IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                irc_buffer_get_server_prefix (server, "error"),
+                                IRC_PLUGIN_NAME,
+                                error);
+            }
             irc_server_close_connection (server);
             irc_server_reconnect_schedule (server);
             break;

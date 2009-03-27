@@ -3274,10 +3274,10 @@ weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
 
 int
 weechat_tcl_api_hook_connect_cb (void *data, int status,
-                                 const char *ip_address)
+                                 const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], str_status[32], empty_arg[1] = { '\0' };
+    char *tcl_argv[4], str_status[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3288,7 +3288,8 @@ weechat_tcl_api_hook_connect_cb (void *data, int status,
         
         tcl_argv[0] = str_status;
         tcl_argv[1] = (ip_address) ? (char *)ip_address : empty_arg;
-        tcl_argv[2] = NULL;
+        tcl_argv[2] = (error) ? (char *)error : empty_arg;
+        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,

@@ -917,7 +917,9 @@ script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                          const char *proxy, const char *address, int port,
                          int sock, int ipv6, void *gnutls_sess,
                          const char *local_hostname,
-                         int (*callback)(void *data, int status, const char *ip_address),
+                         int (*callback)(void *data, int status,
+                                         const char *error,
+                                         const char *ip_address),
                          const char *function)
 {
     struct t_script_callback *new_script_callback;

@@ -159,6 +159,7 @@ extern struct t_hook *script_api_hook_connect (struct t_weechat_plugin *weechat_
                                                const char *local_hostname,
                                                int (*callback)(void *data,
                                                                int status,
+                                                               const char *error,
                                                                const char *ip_address),
                                                const char *function);
 extern struct t_hook *script_api_hook_print (struct t_weechat_plugin *weechat_plugin,

@@ -159,6 +159,10 @@ struct t_config_option *config_history_max_lines;
 struct t_config_option *config_history_max_commands;
 struct t_config_option *config_history_display_default;
 
+/* config, network section */
+
+struct t_config_option *config_network_gnutls_dh_prime_bits;
+
 /* config, plugin section */
 
 struct t_config_option *config_plugin_autoload;
@@ -978,12 +982,12 @@ config_weechat_key_write_cb (void *data, struct t_config_file *config_file,
 }
 
 /*
- * config_weechat_init: init WeeChat config structure
- *                      return: 1 if ok, 0 if error
+ * config_weechat_init_options: init WeeChat config structure (all core options)
+ *                              return: 1 if ok, 0 if error
  */
 
 int
-config_weechat_init ()
+config_weechat_init_options ()
 {
     struct t_config_section *ptr_section;
     
@@ -1680,6 +1684,24 @@ config_weechat_init ()
     }
     
     weechat_config_section_proxy = ptr_section;
+
+    /* network */
+    ptr_section = config_file_new_section (weechat_config_file, "network",
+                                           0, 0,
+                                           NULL, NULL, NULL, NULL, NULL, NULL,
+                                           NULL, NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    config_network_gnutls_dh_prime_bits = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "gnutls_dh_prime_bitsmax_lines", "integer",
+        N_("minimum size in bits for handshake using Diffie Hellman key "
+           "exchange"),
+        NULL, 0, INT_MAX, "512", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",
@@ -1786,6 +1808,27 @@ config_weechat_init ()
 }
 
 /*
+ * config_weechat_init: init WeeChat config structure
+ *                      return: 1 if ok, 0 if error
+ */
+
+int
+config_weechat_init ()
+{
+    int rc;
+    
+    rc = config_weechat_init_options ();
+    
+    if (!rc)
+    {
+        gui_chat_printf (NULL,
+                         _("FATAL: error initializing configuration options"));
+    }
+    
+    return rc;
+}
+
+/*
  * config_weechat_read: read WeeChat configuration file
  *                      return one of these values:
  *                        WEECHAT_CONFIG_READ_OK
@@ -1805,6 +1848,13 @@ config_weechat_read ()
         proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
+    }
+
+    if (rc != WEECHAT_CONFIG_READ_OK)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError reading configuration"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     }
     
     return rc;
