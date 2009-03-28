@@ -152,7 +152,12 @@ weechat_python_exec (struct t_plugin_script *script,
     if (rc ==  NULL)
 	rc = PyInt_FromLong (0);
     
-    if (PyString_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_STRING))
+    if (PyErr_Occurred())
+    {
+        PyErr_Print ();
+        Py_XDECREF(rc);
+    }
+    else if (PyString_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_STRING))
     {
 	if (PyString_AsString (rc))
 	    ret_value = strdup (PyString_AsString(rc));
@@ -190,9 +195,6 @@ weechat_python_exec (struct t_plugin_script *script,
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
 	return NULL;
     }
-    
-    if (PyErr_Occurred ())
-        PyErr_Print ();
     
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
     
