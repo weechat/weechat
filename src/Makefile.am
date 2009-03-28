@@ -15,3 +15,5 @@
 #
 
 SUBDIRS = core plugins gui
+
+EXTRA_DIST = CMakeLists.txt

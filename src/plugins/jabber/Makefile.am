@@ -53,3 +53,5 @@ jabber_la_SOURCES = jabber.c \
 
 jabber_la_LDFLAGS = -module
 jabber_la_LIBADD  = $(JABBER_LFLAGS) $(GNUTLS_LFLAGS) $(IKSEMEL_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

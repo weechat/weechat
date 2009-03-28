@@ -67,3 +67,5 @@ qt_dir=qt
 endif
 
 SUBDIRS = . $(curses_dir) $(wxwidgets_dir) $(gtk_dir) $(qt_dir)
+
+EXTRA_DIST = CMakeLists.txt

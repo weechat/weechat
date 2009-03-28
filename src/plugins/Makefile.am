@@ -97,3 +97,5 @@ endif
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
             $(irc_dir) $(jabber_dir) $(logger_dir) $(notify_dir) $(relay_dir) \
             $(script_dir) $(trigger_dir) $(xfer_dir)
+
+EXTRA_DIST = CMakeLists.txt

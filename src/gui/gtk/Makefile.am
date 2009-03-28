@@ -36,3 +36,5 @@ weechat_gtk_SOURCES = gui-gtk-bar-window.c \
                       gui-gtk-main.c \
                       gui-gtk-window.c \
                       gui-gtk.h
+
+EXTRA_DIST = CMakeLists.txt

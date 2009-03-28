@@ -54,3 +54,5 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-utf8.h \
                              wee-util.c \
                              wee-util.h
+
+EXTRA_DIST = CMakeLists.txt

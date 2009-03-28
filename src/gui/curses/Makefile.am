@@ -36,3 +36,5 @@ weechat_curses_SOURCES = gui-curses-bar-window.c \
                          gui-curses-main.c \
                          gui-curses-window.c \
                          gui-curses.h
+
+EXTRA_DIST = CMakeLists.txt

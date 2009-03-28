@@ -61,3 +61,5 @@ irc_la_SOURCES = irc.c \
 
 irc_la_LDFLAGS = -module
 irc_la_LIBADD  = $(IRC_LFLAGS) $(GNUTLS_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

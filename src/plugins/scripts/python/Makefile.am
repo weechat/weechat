@@ -26,3 +26,5 @@ python_la_SOURCES = weechat-python.c \
                     weechat-python-api.h
 python_la_LDFLAGS = -module
 python_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(PYTHON_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

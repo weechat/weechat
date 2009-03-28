@@ -32,3 +32,5 @@ logger_la_SOURCES = logger.c \
                     logger-tail.h
 logger_la_LDFLAGS = -module
 logger_la_LIBADD  = $(LOGGER_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

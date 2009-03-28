@@ -46,3 +46,5 @@ tcl_dir = tcl
 endif
 
 SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir)
+
+EXTRA_DIST = CMakeLists.txt

@@ -39,3 +39,5 @@ relay_la_SOURCES = relay.c \
 
 relay_la_LDFLAGS = -module
 relay_la_LIBADD  = $(RELAY_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

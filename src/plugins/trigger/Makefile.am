@@ -28,3 +28,5 @@ trigger_la_SOURCES = trigger.c \
                      trigger-libirc.h
 trigger_la_LDFLAGS = -module
 trigger_la_LIBADD  = $(TRIGGER_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

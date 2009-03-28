@@ -28,3 +28,5 @@ aspell_la_SOURCES = weechat-aspell.c \
                     weechat-aspell-speller.h
 aspell_la_LDFLAGS = -module
 aspell_la_LIBADD  = $(ASPELL_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

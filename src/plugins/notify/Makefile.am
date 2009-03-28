@@ -23,3 +23,5 @@ lib_LTLIBRARIES = notify.la
 notify_la_SOURCES = notify.c
 notify_la_LDFLAGS = -module
 notify_la_LIBADD  = $(NOTIFY_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

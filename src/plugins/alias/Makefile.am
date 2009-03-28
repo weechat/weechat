@@ -26,3 +26,5 @@ alias_la_SOURCES = alias.c \
                    alias-info.h
 alias_la_LDFLAGS = -module
 alias_la_LIBADD  = $(ALIAS_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

@@ -23,3 +23,5 @@ lib_LTLIBRARIES = charset.la
 charset_la_SOURCES = charset.c
 charset_la_LDFLAGS = -module
 charset_la_LIBADD  = $(CHARSET_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

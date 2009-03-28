@@ -26,3 +26,5 @@ fifo_la_SOURCES = fifo.c \
                   fifo-info.h
 fifo_la_LDFLAGS = -module
 fifo_la_LIBADD  = $(FIFO_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

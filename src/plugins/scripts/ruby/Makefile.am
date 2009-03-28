@@ -26,3 +26,5 @@ ruby_la_SOURCES = weechat-ruby.c \
                   weechat-ruby-api.h
 ruby_la_LDFLAGS = -module
 ruby_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(RUBY_LFLAGS)
+
+EXTRA_DIST = CMakeLists.txt

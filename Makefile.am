@@ -20,7 +20,9 @@ endif
 
 SUBDIRS = po $(doc_dir) intl src
 
-EXTRA_DIST = config.rpath \
+EXTRA_DIST = CMakeLists.txt \
+             config.rpath \
+             config.h.cmake \
              BUGS \
              FAQ \
              FAQ.fr \
@@ -42,6 +44,20 @@ EXTRA_DIST = config.rpath \
              debian/weechat-plugins.dirs \
              debian/weechat-plugins.install \
              debian/weechat.xpm \
+             cmake/cmake_uninstall.cmake.in \
+             cmake/FindAspell.cmake \
+             cmake/FindGettext.cmake \
+             cmake/FindGnuTLS.cmake \
+             cmake/FindIconv.cmake \
+             cmake/FindIksemel.cmake \
+             cmake/FindLua.cmake \
+             cmake/FindNcurses.cmake \
+             cmake/FindPerl.cmake \
+             cmake/FindPkgConfig.cmake \
+             cmake/FindPython.cmake \
+             cmake/FindRuby.cmake \
+             cmake/FindTCL.cmake \
+             cmake/makedist.sh.in \
              weechat.spec \
              weechat_icon_32.png
 
