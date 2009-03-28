@@ -649,6 +649,30 @@ weechat_ruby_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_ruby_infolist_cb: callback for infolist
+ */
+
+struct t_infolist *
+weechat_ruby_infolist_cb (void *data, const char *infolist_name,
+                          void *pointer, const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    if (weechat_strcasecmp (infolist_name, "ruby_script") == 0)
+    {
+        return script_infolist_list_scripts (weechat_ruby_plugin,
+                                             ruby_scripts, pointer);
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_ruby_debug_dump_cb: dump Ruby plugin data in WeeChat log file
  */
 
@@ -785,6 +809,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_ruby_plugin,
                  &weechat_ruby_command_cb,
                  &weechat_ruby_completion_cb,
+                 &weechat_ruby_infolist_cb,
                  &weechat_ruby_debug_dump_cb,
                  &weechat_ruby_buffer_closed_cb,
                  &weechat_ruby_load_cb);

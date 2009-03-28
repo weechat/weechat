@@ -87,6 +87,10 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_completion)(void *data, const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion),
+             struct t_infolist *(*callback_infolist)(void *data,
+                                                     const char *infolist_name,
+                                                     void *pointer,
+                                                     const char *arguments),
              int (*callback_signal_debug_dump)(void *data, const char *signal,
                                                const char *type_data,
                                                void *signal_data),
@@ -96,6 +100,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              void (*callback_load_file)(void *data, const char *filename))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
+    char infolist_description[512];
     int length;
     
     /* read script configuration */
@@ -144,14 +149,19 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                           callback_command, NULL);
     if (string)
         free (string);
-
-    /* add completion */
+    
+    /* add completion and infolist */
     length = strlen (weechat_plugin->name) + 16;
     string = malloc (length);
     if (string)
     {
         snprintf (string, length, "%s_script", weechat_plugin->name);
         weechat_hook_completion (string, callback_completion, NULL);
+        snprintf (infolist_description, sizeof (infolist_description),
+                  /* TRANSLATORS: %s is language (for example "perl") */
+                  _("list of %s scripts"), weechat_plugin->name);
+        weechat_hook_infolist (string, infolist_description,
+                               callback_infolist, NULL);
         free (string);
     }
     
@@ -163,6 +173,32 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* autoload scripts */
     script_auto_load (weechat_plugin, callback_load_file);
+}
+
+/*
+ * script_valid: check if a script pointer exists
+ *               return 1 if script exists
+ *                      0 if script is not found
+ */
+
+int
+script_valid (struct t_plugin_script *scripts,
+              struct t_plugin_script *script)
+{
+    struct t_plugin_script *ptr_script;
+    
+    if (!script)
+        return 0;
+    
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        if (ptr_script == script)
+            return 1;
+    }
+    
+    /* script not found */
+    return 0;
 }
 
 /*
@@ -697,6 +733,98 @@ script_display_short_list (struct t_weechat_plugin *weechat_plugin,
             free (buf);
         }
     }
+}
+
+/*
+ * script_add_to_infolist: add a script in an infolist
+ *                         return 1 if ok, 0 if error
+ */
+
+int
+script_add_to_infolist (struct t_weechat_plugin *weechat_plugin,
+                        struct t_infolist *infolist,
+                        struct t_plugin_script *script)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !script)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_pointer (ptr_item, "pointer", script))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "filename", script->filename))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "interpreter", script->interpreter))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "name", script->name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "author", script->author))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "version", script->version))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "license", script->license))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "description", script->description))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "shutdown_func", script->shutdown_func))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "charset", script->charset))
+        return 0;
+    
+    return 1;
+}
+
+/*
+ * script_infolist_list_scripts: build infolist with list of scripts
+ */
+
+struct t_infolist *
+script_infolist_list_scripts (struct t_weechat_plugin *weechat_plugin,
+                              struct t_plugin_script *scripts,
+                              void *pointer)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_plugin_script *ptr_script;
+    
+    if (pointer && !script_valid (scripts, pointer))
+        return NULL;
+    
+    ptr_infolist = weechat_infolist_new ();
+    if (ptr_infolist)
+    {
+        if (pointer)
+        {
+            /* build list with only one script */
+            if (!script_add_to_infolist (weechat_plugin,
+                                         ptr_infolist, pointer))
+            {
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+        else
+        {
+            /* build list with all scripts */
+            for (ptr_script = scripts; ptr_script;
+                 ptr_script = ptr_script->next_script)
+            {
+                if (!script_add_to_infolist (weechat_plugin,
+                                             ptr_infolist, ptr_script))
+                {
+                    weechat_infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
+        }
+    }
+    
+    return NULL;
 }
 
 /*

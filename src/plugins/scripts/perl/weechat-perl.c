@@ -595,6 +595,30 @@ weechat_perl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_perl_infolist_cb: callback for infolist
+ */
+
+struct t_infolist *
+weechat_perl_infolist_cb (void *data, const char *infolist_name,
+                          void *pointer, const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    if (weechat_strcasecmp (infolist_name, "perl_script") == 0)
+    {
+        return script_infolist_list_scripts (weechat_perl_plugin,
+                                             perl_scripts, pointer);
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_perl_debug_dump_cb: dump Perl plugin data in WeeChat log file
  */
 
@@ -680,6 +704,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_perl_plugin,
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
+                 &weechat_perl_infolist_cb,
                  &weechat_perl_debug_dump_cb,
                  &weechat_perl_buffer_closed_cb,
                  &weechat_perl_load_cb);

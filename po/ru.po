@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-27 16:41+0100\n"
+"POT-Creation-Date: 2009-03-28 20:51+0100\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5115,6 +5115,11 @@ msgid ""
 "\n"
 "Without argument, this command lists all loaded scripts."
 msgstr ""
+
+#. TRANSLATORS: %s is language (for example "perl")
+#, fuzzy, c-format
+msgid "list of %s scripts"
+msgstr "Список сокращений:\n"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"

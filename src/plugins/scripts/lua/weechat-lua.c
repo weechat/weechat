@@ -450,6 +450,30 @@ weechat_lua_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_lua_infolist_cb: callback for infolist
+ */
+
+struct t_infolist *
+weechat_lua_infolist_cb (void *data, const char *infolist_name,
+                         void *pointer, const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    if (weechat_strcasecmp (infolist_name, "lua_script") == 0)
+    {
+        return script_infolist_list_scripts (weechat_lua_plugin,
+                                             lua_scripts, pointer);
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_lua_debug_dump_cb: dump Lua plugin data in WeeChat log file
  */
 
@@ -504,6 +528,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_lua_plugin,
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
+                 &weechat_lua_infolist_cb,
                  &weechat_lua_debug_dump_cb,
                  &weechat_lua_buffer_closed_cb,
                  &weechat_lua_load_cb);

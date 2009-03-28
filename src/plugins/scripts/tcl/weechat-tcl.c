@@ -390,6 +390,30 @@ weechat_tcl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_tcl_infolist_cb: callback for infolist
+ */
+
+struct t_infolist *
+weechat_tcl_infolist_cb (void *data, const char *infolist_name,
+                         void *pointer, const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    if (weechat_strcasecmp (infolist_name, "tcl_script") == 0)
+    {
+        return script_infolist_list_scripts (weechat_tcl_plugin,
+                                             tcl_scripts, pointer);
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_tcl_debug_dump_cb: dump Tcl plugin data in WeeChat log file
  */
 
@@ -442,11 +466,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     tcl_quiet = 1;
     script_init (weechat_tcl_plugin,
-                 weechat_tcl_command_cb,
-                 weechat_tcl_completion_cb,
-                 weechat_tcl_debug_dump_cb,
-                 weechat_tcl_buffer_closed_cb,
-                 weechat_tcl_load_cb);
+                 &weechat_tcl_command_cb,
+                 &weechat_tcl_completion_cb,
+                 &weechat_tcl_infolist_cb,
+                 &weechat_tcl_debug_dump_cb,
+                 &weechat_tcl_buffer_closed_cb,
+                 &weechat_tcl_load_cb);
     tcl_quiet = 0;
     
     script_display_short_list (weechat_tcl_plugin,
