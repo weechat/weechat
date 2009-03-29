@@ -35,11 +35,16 @@ BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
                        autogen/logger_infos.xml     \
                        autogen/logger_options.xml   \
                        autogen/lua_commands.xml     \
+                       autogen/lua_infos.xml        \
                        autogen/notify_commands.xml  \
                        autogen/perl_commands.xml    \
+                       autogen/perl_infos.xml       \
                        autogen/python_commands.xml  \
+                       autogen/python_infos.xml     \
                        autogen/ruby_commands.xml    \
+                       autogen/ruby_infos.xml       \
                        autogen/tcl_commands.xml     \
+                       autogen/tcl_infos.xml        \
                        autogen/weechat_commands.xml \
                        autogen/weechat_infos.xml    \
                        autogen/weechat_options.xml  \
