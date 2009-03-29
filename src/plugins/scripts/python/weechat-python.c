@@ -189,8 +189,7 @@ weechat_python_exec (struct t_plugin_script *script,
     if (ret_value == NULL)
     {
 	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: not enough memory in "
-                                         "function \"%s\""),
+                        weechat_gettext ("%s%s: error in function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
 	return NULL;

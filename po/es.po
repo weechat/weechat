@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-29 00:35+0100\n"
+"POT-Creation-Date: 2009-03-29 19:09+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4992,6 +4992,10 @@ msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
 #, fuzzy, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s plugin \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"

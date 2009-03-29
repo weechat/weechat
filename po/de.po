@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-29 00:35+0100\n"
+"POT-Creation-Date: 2009-03-29 19:09+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5000,6 +5000,10 @@ msgstr "Kann das Logfile nicht schreiben\n"
 #, fuzzy, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Kann das Logfile nicht schreiben\n"
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
