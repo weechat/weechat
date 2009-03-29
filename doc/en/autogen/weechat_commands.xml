@@ -52,34 +52,28 @@ Examples:
     /bar scroll nicklist * ye
 </programlisting>
 
-<command>/buffer  [action [args] | number | [[server] [channel]]]</command>
+<command>/buffer  [clear [number | -all] | move number | close | list | notify | localvar | set property value | number | name]</command>
 <programlisting>
 manage buffers
 
-  action: action to do:
    clear: clear buffer content (-all for all buffers, number for a buffer, or nothing for current buffer)
     move: move buffer in the list (may be relative, for example -1)
    close: close buffer
     list: list buffers (no parameter implies this list)
   notify: display notify levels for all opened buffers
 localvar: display local variables for current buffer
-  scroll: scroll in history (may be relative, and may end by a letter: s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll to beginning of this item
-
+     set: set a property for current buffer
   number: jump to buffer by number
 server,
- channel: jump to buffer by server and/or channel name
+    name: jump to buffer by (partial) name
 
 Examples:
 clear current buffer: /buffer clear
    clear all buffers: /buffer clear -all
          move buffer: /buffer move 5
-        close buffer: /buffer close this is part msg
-     scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer scroll -24h
- scroll to beginning
-         of this day: /buffer scroll d
-  scroll 15 min down: /buffer scroll +15m
-   scroll 20 msgs up: /buffer scroll -20
+        close buffer: /buffer close
     jump to #weechat: /buffer #weechat
+ jump to next buffer: /buffer +1
 </programlisting>
 
 <command>/command  plugin command</command>

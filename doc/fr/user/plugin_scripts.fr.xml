@@ -56,4 +56,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
+  <section id="secScriptsInfosHooked">
+    <title>Infos et infolists</title>
+    
+    <para>
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Nom</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            &perl_infos.xml;
+            &python_infos.xml;
+            &ruby_infos.xml;
+            &lua_infos.xml;
+            &tcl_infos.xml;
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+  </section>
+  
 </section>

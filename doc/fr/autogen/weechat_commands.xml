@@ -52,32 +52,27 @@ Exemples :
     /bar scroll nicklist * ye
 </programlisting>
 
-<command>/buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
+<command>/buffer  [clear [nombre | -all] | move nombre | close | list | notify | localvar | set propriété valeur | nombre | nom]</command>
 <programlisting>
 gestion des tampons
 
-  action: action à effectuer:
    clear: efface le contenu du tampon (-all pour tous les tampons, un numéro pour un tampon, ou rien pour le tampon courant)
     move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
    close: ferme le tampon
     list: liste les tampons ouverts (pas de paramètre affiche cette liste)
   notify: affiche les niveaux de notification pour tous les tampons ouverts
 localvar: affiche la liste des variables locales pour le tampon courant
-  scroll: fait défiler l'historique (peut être relatif, et peut se terminer par une lettre: s=sec, m=min, h=heure, d=jour, M=mois, y=année); s'il y a seulement une lettre, alors fait défiler jusqu'au début de cet élément
-
+     set: modifier une propriété du tampon courant
   nombre: saute au tampon qui a ce numéro
-serveur,
-   canal: saute au tampon par serveur et/ou nom de canal
+     nom: saute au tampon par nom (partiel)
 
 Exemples:
-     déplacer tampon: /buffer move 5
-       fermer tampon: /buffer close c'est le message de départ
- défiler 1 jour haut: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer scroll -24h
-    défiler au début
-          de ce jour: /buffer scroll d
-  défiler 15 min bas: /buffer scroll +15m
-défiler 20 msgs haut: /buffer scroll -20
-  aller sur #weechat: /buffer #weechat
+effacer le tampon courant: /buffer clear
+ effacer tous les tampons: /buffer clear -all
+       déplacer le tampon: /buffer move 5
+         fermer le tampon: /buffer close
+       aller sur #weechat: /buffer #weechat
+  aller au tampon suivant: /buffer +1
 </programlisting>
 
 <command>/command  extension commande</command>

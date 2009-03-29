@@ -976,6 +976,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.network.gnutls_dh_prime_bitsmax_lines</command>: minimum size in bits for handshake using Diffie Hellman key exchange
+<itemizedlist>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 0 .. 2147483647 (default value: 512)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.plugin.autoload</command>: comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "perl.so")
 <itemizedlist>
   <listitem>
