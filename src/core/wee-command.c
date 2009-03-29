@@ -3657,9 +3657,9 @@ command_init ()
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
-                  N_("[action [args] | number | [[server] [channel]]]"),
-                  N_("  action: action to do:\n"
-                     "   clear: clear buffer content (-all for all buffers, "
+                  N_("[clear [number | -all] | move number | close | list | "
+                     "notify | localvar | set property value | number | name]"),
+                  N_("   clear: clear buffer content (-all for all buffers, "
                      "number for a buffer, or nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
@@ -3667,26 +3667,18 @@ command_init ()
                      "    list: list buffers (no parameter implies this list)\n"
                      "  notify: display notify levels for all opened buffers\n"
                      "localvar: display local variables for current buffer\n"
-                     "  scroll: scroll in history (may be relative, and may "
-                     "end by a letter: s=sec, m=min, h=hour, d=day, M=month, "
-                     "y=year); if there is only letter, then scroll to "
-                     "beginning of this item\n\n"
+                     "     set: set a property for current buffer\n"
                      "  number: jump to buffer by number\n"
                      "server,\n"
-                     " channel: jump to buffer by server and/or channel name\n\n"
+                     "    name: jump to buffer by (partial) name\n\n"
                      "Examples:\n"
                      "clear current buffer: /buffer clear\n"
                      "   clear all buffers: /buffer clear -all\n"
                      "         move buffer: /buffer move 5\n"
-                     "        close buffer: /buffer close this is part msg\n"
-                     "     scroll 1 day up: /buffer scroll 1d  ==  /buffer "
-                     "scroll -1d  ==  /buffer scroll -24h\n"
-                     " scroll to beginning\n"
-                     "         of this day: /buffer scroll d\n"
-                     "  scroll 15 min down: /buffer scroll +15m\n"
-                     "   scroll 20 msgs up: /buffer scroll -20\n"
-                     "    jump to #weechat: /buffer #weechat"),
-                  "clear|move|close|list|notify|localvar|scroll|set|%b %b",
+                     "        close buffer: /buffer close\n"
+                     "    jump to #weechat: /buffer #weechat\n"
+                     " jump to next buffer: /buffer +1"),
+                  "clear|move|close|list|notify|localvar|set|%b %b",
                   &command_buffer, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
