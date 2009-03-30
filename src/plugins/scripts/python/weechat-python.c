@@ -56,6 +56,8 @@ void *
 weechat_python_exec (struct t_plugin_script *script,
 		     int ret_type, const char *function, char **argv)
 {
+    struct t_plugin_script *old_python_current_script;
+    PyThreadState *old_interpreter;
     PyObject *evMain;
     PyObject *evDict;
     PyObject *evFunc;
@@ -64,8 +66,14 @@ weechat_python_exec (struct t_plugin_script *script,
     int *ret_i;
     
     /* PyEval_AcquireLock (); */
+    
+    old_python_current_script = python_current_script;
+    old_interpreter = NULL;
     if (script->interpreter)
+    {
+        old_interpreter = PyThreadState_Swap (NULL);
         PyThreadState_Swap (script->interpreter);
+    }
     
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
@@ -77,6 +85,8 @@ weechat_python_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s unable to run function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+        if (old_interpreter)
+            PyThreadState_Swap (old_interpreter);
 	return NULL;
     }
     
@@ -172,30 +182,32 @@ weechat_python_exec (struct t_plugin_script *script,
 	ret_i = malloc (sizeof (*ret_i));
 	if (ret_i)
 	    *ret_i = (int) PyInt_AsLong(rc);
-	ret_value = ret_i;
-	
-	Py_XDECREF(rc);
+        ret_value = ret_i;
+        
+        Py_XDECREF(rc);
     }
     else
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"%s\" must return "
                                          "a valid value"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
-	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-	return NULL;
     }
     
     if (ret_value == NULL)
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: error in function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
-	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-	return NULL;
     }
     
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
+    
+    if (old_python_current_script)
+        python_current_script = old_python_current_script;
+    
+    if (old_interpreter)
+        PyThreadState_Swap (old_interpreter);
     
     return ret_value;
 }
@@ -496,6 +508,7 @@ weechat_python_unload (struct t_plugin_script *script)
 {
     int *r;
     void *interpreter;
+    PyThreadState *old_interpreter;
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
@@ -508,7 +521,8 @@ weechat_python_unload (struct t_plugin_script *script)
 	if (r)
 	    free (r);
     }
-    
+
+    old_interpreter = PyThreadState_Swap (NULL);
     interpreter = script->interpreter;
     
     if (python_current_script == script)
@@ -520,6 +534,9 @@ weechat_python_unload (struct t_plugin_script *script)
     
     PyThreadState_Swap (interpreter);
     Py_EndInterpreter (interpreter);
+    
+    if (old_interpreter)
+        PyThreadState_Swap (old_interpreter);
 }
 
 /*
