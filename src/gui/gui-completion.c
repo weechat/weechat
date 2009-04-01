@@ -65,7 +65,6 @@ gui_completion_init (struct t_gui_completion *completion,
     completion->context = GUI_COMPLETION_NULL;
     completion->base_command = NULL;
     completion->base_command_arg = 0;
-    completion->arg_is_nick = 0;
     completion->base_word = NULL;
     completion->base_word_pos = 0;
     completion->position = -1; 
@@ -605,8 +604,6 @@ gui_completion_list_add_nicks (struct t_gui_completion *completion)
                                         &ptr_group, &ptr_nick);
         }
     }
-    
-    completion->arg_is_nick = 1;
 }
 
 /*
@@ -1430,8 +1427,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
  */
 
 void
-gui_completion_complete (struct t_gui_completion *completion,
-                         int nick_completion)
+gui_completion_complete (struct t_gui_completion *completion)
 {
     int length, word_found_seen, other_completion, partial_completion;
     int common_prefix_size, item_is_nick;
@@ -1442,26 +1438,21 @@ gui_completion_complete (struct t_gui_completion *completion,
     other_completion = 0;
     
     partial_completion = completion->force_partial_completion;
-
+    
     if (!partial_completion)
     {
-        if (nick_completion)
+        if (completion->context == GUI_COMPLETION_COMMAND)
         {
-            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_nick);
+            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command);
+        }
+        else if (completion->context == GUI_COMPLETION_COMMAND_ARG)
+        {
+            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command_arg);
         }
         else
-        {
-            if (completion->context == GUI_COMPLETION_COMMAND)
-            {
-                partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command);
-            }
-            else
-            {
-                partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command_arg);
-            }
-        }
+            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_other);
     }
-
+    
     common_prefix_size = 0;
     if (partial_completion
         && completion->completion_list && completion->completion_list->items)
@@ -1585,7 +1576,7 @@ gui_completion_complete (struct t_gui_completion *completion,
         free (completion->word_found);
         completion->word_found = NULL;
         completion->word_found_is_nick = 0;
-        gui_completion_complete (completion, nick_completion);
+        gui_completion_complete (completion);
     }
 }
 
@@ -1614,22 +1605,7 @@ gui_completion_command (struct t_gui_completion *completion)
         }
     }
     
-    gui_completion_complete (completion, 0);
-}
-
-/*
- * gui_completion_nick: complete a nick
- */
-
-void
-gui_completion_nick (struct t_gui_completion *completion)
-{
-    if (!completion->completion_list->items)
-        gui_completion_list_add_nicks (completion);
-    
-    completion->context = GUI_COMPLETION_NICK;
-    
-    gui_completion_complete (completion, 1);
+    gui_completion_complete (completion);
 }
 
 /*
@@ -1645,7 +1621,7 @@ gui_completion_auto (struct t_gui_completion *completion)
     {
         if (!completion->completion_list->items)
             gui_completion_list_add_filename (completion);
-        gui_completion_complete (completion, 0);
+        gui_completion_complete (completion);
         return;
     }
     
@@ -1656,7 +1632,7 @@ gui_completion_auto (struct t_gui_completion *completion)
                                             CONFIG_STRING(config_completion_default_template),
                                             NULL);
     }
-    gui_completion_complete (completion, 0);
+    gui_completion_complete (completion);
 }
 
 /*
@@ -1690,15 +1666,12 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
         case GUI_COMPLETION_NULL:
             /* should never be executed */
             return;
-        case GUI_COMPLETION_NICK:
-            gui_completion_nick (completion);
-            break;
         case GUI_COMPLETION_COMMAND:
             gui_completion_command (completion);
             break;
         case GUI_COMPLETION_COMMAND_ARG:
             if (completion->completion_list->items)
-                gui_completion_complete (completion, completion->arg_is_nick);
+                gui_completion_complete (completion);
             else
             {
                 completion->context = GUI_COMPLETION_AUTO;
@@ -1742,7 +1715,6 @@ gui_completion_print_log (struct t_gui_completion *completion)
     log_printf ("  context . . . . . . . . : %d",    completion->context);
     log_printf ("  base_command. . . . . . : '%s'",  completion->base_command);
     log_printf ("  base_command_arg. . . . : %d",    completion->base_command_arg);
-    log_printf ("  arg_is_nick . . . . . . : %d",    completion->arg_is_nick);
     log_printf ("  base_word . . . . . . . : '%s'",  completion->base_word);
     log_printf ("  base_word_pos . . . . . : %d",    completion->base_word_pos);
     log_printf ("  position. . . . . . . . : %d",    completion->position);

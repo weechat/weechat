@@ -149,9 +149,9 @@ struct t_config_option *config_completion_nick_completor;
 struct t_config_option *config_completion_nick_first_only;
 struct t_config_option *config_completion_nick_ignore_chars;
 struct t_config_option *config_completion_partial_completion_alert;
-struct t_config_option *config_completion_partial_completion_nick;
 struct t_config_option *config_completion_partial_completion_command;
 struct t_config_option *config_completion_partial_completion_command_arg;
+struct t_config_option *config_completion_partial_completion_other;
 struct t_config_option *config_completion_partial_completion_count;
 
 /* config, history section */
@@ -1625,12 +1625,6 @@ config_weechat_init_options ()
         "partial_completion_alert", "boolean",
         N_("alert user when a partial completion occurs"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_completion_partial_completion_nick = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "partial_completion_nick", "boolean",
-        N_("partially complete nicks (stop when many nicks found begin with "
-           "same letters)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_command = config_file_new_option (
         weechat_config_file, ptr_section,
         "partial_completion_command", "boolean",
@@ -1642,6 +1636,12 @@ config_weechat_init_options ()
         "partial_completion_command_arg", "boolean",
         N_("partially complete command arguments (stop when many arguments "
            "found begin with same prefix)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_other = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_other", "boolean",
+        N_("partially complete outside commands (stop when many words found "
+           "begin with same letters)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_count = config_file_new_option (
         weechat_config_file, ptr_section,

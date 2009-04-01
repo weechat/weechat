@@ -21,10 +21,9 @@
 #define __WEECHAT_GUI_COMPLETION_H 1
 
 #define GUI_COMPLETION_NULL         0
-#define GUI_COMPLETION_NICK         1
-#define GUI_COMPLETION_COMMAND      2
-#define GUI_COMPLETION_COMMAND_ARG  3
-#define GUI_COMPLETION_AUTO         4
+#define GUI_COMPLETION_COMMAND      1
+#define GUI_COMPLETION_COMMAND_ARG  2
+#define GUI_COMPLETION_AUTO         3
 
 struct t_gui_completion
 {
@@ -33,7 +32,6 @@ struct t_gui_completion
     int context;                  /* context: null, nick, command, cmd arg   */
     char *base_command;           /* cmd with arg to complete (can be NULL)  */
     int base_command_arg;         /* # arg to complete (if context=cmd arg)  */
-    int arg_is_nick;              /* argument is nick                        */
     char *base_word;              /* word to complete (when Tab was pressed) */
     int base_word_pos;            /* beggining of base word                  */
     int position;                 /* position where Tab was pressed          */

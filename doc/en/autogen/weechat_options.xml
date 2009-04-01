@@ -646,7 +646,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_nick</command>: partially complete nicks (stop when many nicks found begin with same letters)
+<command>weechat.completion.partial_completion_other</command>: partially complete outside commands (stop when many words found begin with same letters)
 <itemizedlist>
   <listitem>
     <para>type: boolean</para>

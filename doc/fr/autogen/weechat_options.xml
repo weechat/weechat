@@ -566,7 +566,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.default_template</command>: modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs pour le modèle)
+<command>weechat.completion.default_template</command>: modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle)
 <itemizedlist>
   <listitem>
     <para>type: chaîne</para>
@@ -646,7 +646,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.completion.partial_completion_nick</command>: complète partiellement les pseudos (stoppe quand plusieurs pseudos trouvés commencent par les mêmes lettres)
+<command>weechat.completion.partial_completion_other</command>: complète partiellement en dehors des commandes (stoppe quand plusieurs mots trouvés commencent par les mêmes lettres)
 <itemizedlist>
   <listitem>
     <para>type: booléen</para>

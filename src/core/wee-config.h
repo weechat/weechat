@@ -151,9 +151,9 @@ extern struct t_config_option *config_completion_nick_completor;
 extern struct t_config_option *config_completion_nick_first_only;
 extern struct t_config_option *config_completion_nick_ignore_chars;
 extern struct t_config_option *config_completion_partial_completion_alert;
-extern struct t_config_option *config_completion_partial_completion_nick;
 extern struct t_config_option *config_completion_partial_completion_command;
 extern struct t_config_option *config_completion_partial_completion_command_arg;
+extern struct t_config_option *config_completion_partial_completion_other;
 extern struct t_config_option *config_completion_partial_completion_count;
 
 extern struct t_config_option *config_history_max_lines;
