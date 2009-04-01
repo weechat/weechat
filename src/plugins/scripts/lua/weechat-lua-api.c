@@ -550,7 +550,7 @@ weechat_lua_api_list_new (lua_State *L)
 static int
 weechat_lua_api_list_add (lua_State *L)
 {
-    const char *weelist, *data, *where;
+    const char *weelist, *data, *where, *user_data;
     char *result;
     int n;
     
@@ -566,22 +566,25 @@ weechat_lua_api_list_add (lua_State *L)
     weelist = NULL;
     data = NULL;
     where = NULL;
+    user_data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
         LUA_RETURN_EMPTY;
     }
     
-    weelist = lua_tostring (lua_current_interpreter, -3);
-    data = lua_tostring (lua_current_interpreter, -2);
-    where = lua_tostring (lua_current_interpreter, -1);
+    weelist = lua_tostring (lua_current_interpreter, -4);
+    data = lua_tostring (lua_current_interpreter, -3);
+    where = lua_tostring (lua_current_interpreter, -2);
+    user_data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
                                                data,
-                                               where));
+                                               where,
+                                               script_str2ptr (user_data)));
     
     LUA_RETURN_STRING_FREE(result);
 }

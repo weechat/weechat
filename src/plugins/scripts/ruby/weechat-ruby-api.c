@@ -556,9 +556,10 @@ weechat_ruby_api_list_new (VALUE class)
  */
 
 static VALUE
-weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where)
+weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
+                           VALUE user_data)
 {
-    char *c_weelist, *c_data, *c_where, *result;
+    char *c_weelist, *c_data, *c_where, *c_user_data, *result;
     
     /* make C compiler happy */
     (void) class;
@@ -572,8 +573,9 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where)
     c_weelist = NULL;
     c_data = NULL;
     c_where = NULL;
+    c_user_data = NULL;
     
-    if (NIL_P (weelist) || NIL_P (data) || NIL_P (where))
+    if (NIL_P (weelist) || NIL_P (data) || NIL_P (where) || NIL_P (user_data))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
         RUBY_RETURN_EMPTY;
@@ -582,14 +584,17 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where)
     Check_Type (weelist, T_STRING);
     Check_Type (data, T_STRING);
     Check_Type (where, T_STRING);
+    Check_Type (user_data, T_STRING);
     
     c_weelist = STR2CSTR (weelist);
     c_data = STR2CSTR (data);
     c_where = STR2CSTR (where);
+    c_user_data = STR2CSTR (user_data);
     
     result = script_ptr2str (weechat_list_add (script_str2ptr(c_weelist),
                                                c_data,
-                                               c_where));
+                                               c_where,
+                                               script_str2ptr (c_user_data)));
     
     RUBY_RETURN_STRING(result);
 }
@@ -6590,7 +6595,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "mkdir", &weechat_ruby_api_mkdir, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir_parents", &weechat_ruby_api_mkdir_parents, 2);
     rb_define_module_function (ruby_mWeechat, "list_new", &weechat_ruby_api_list_new, 0);
-    rb_define_module_function (ruby_mWeechat, "list_add", &weechat_ruby_api_list_add, 3);
+    rb_define_module_function (ruby_mWeechat, "list_add", &weechat_ruby_api_list_add, 4);
     rb_define_module_function (ruby_mWeechat, "list_search", &weechat_ruby_api_list_search, 2);
     rb_define_module_function (ruby_mWeechat, "list_casesearch", &weechat_ruby_api_list_casesearch, 2);
     rb_define_module_function (ruby_mWeechat, "list_get", &weechat_ruby_api_list_get, 2);

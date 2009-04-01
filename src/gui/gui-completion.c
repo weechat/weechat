@@ -77,6 +77,7 @@ gui_completion_init (struct t_gui_completion *completion,
     completion->completion_list = weelist_new ();
     
     completion->word_found = NULL;
+    completion->word_found_is_nick = 0;
     completion->position_replace = 0;
     completion->diff_size = 0;
     completion->diff_length = 0;
@@ -316,7 +317,8 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
         || (!nick_completion && (string_strncasecmp (completion->base_word, word,
                                                      strlen (completion->base_word)) == 0)))
     {
-        weelist_add (completion->completion_list, word, where);
+        weelist_add (completion->completion_list, word, where,
+                     (nick_completion) ? (void *)1 : (void *)0);
     }
 }
 
@@ -1381,7 +1383,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
          ptr_item = ptr_item->next_item)
     {
         weelist_add (weelist_temp, ptr_item->data + common_prefix_size,
-                     WEECHAT_LIST_POS_END);
+                     WEECHAT_LIST_POS_END, NULL);
     }
     
     while (weelist_temp->items)
@@ -1432,7 +1434,7 @@ gui_completion_complete (struct t_gui_completion *completion,
                          int nick_completion)
 {
     int length, word_found_seen, other_completion, partial_completion;
-    int common_prefix_size;
+    int common_prefix_size, item_is_nick;
     struct t_weelist_item *ptr_item, *ptr_item2;
     
     length = strlen (completion->base_word);
@@ -1482,10 +1484,11 @@ gui_completion_complete (struct t_gui_completion *completion,
     
     while (ptr_item)
     {
-        if ((nick_completion
+        item_is_nick = ((int)(ptr_item->user_data) == 1);
+        if ((item_is_nick
              && (gui_completion_nickncmp (completion->base_word, ptr_item->data,
                                           length) == 0))
-            || ((!nick_completion)
+            || ((!item_is_nick)
                 && (string_strncasecmp (completion->base_word, ptr_item->data,
                                         length) == 0)))
         {
@@ -1494,9 +1497,10 @@ gui_completion_complete (struct t_gui_completion *completion,
                 if (completion->word_found)
                     free (completion->word_found);
                 completion->word_found = strdup (ptr_item->data);
+                completion->word_found_is_nick = item_is_nick;
                 
                 /* stop after first nick if user asked that */
-                if (nick_completion
+                if (item_is_nick
                     && CONFIG_BOOLEAN(config_completion_nick_first_only))
                 {
                     gui_completion_stop (completion, 1);
@@ -1510,11 +1514,11 @@ gui_completion_complete (struct t_gui_completion *completion,
                 
                 while (ptr_item2)
                 {
-                    if ((nick_completion
+                    if ((item_is_nick
                          && (gui_completion_nickncmp (completion->base_word,
                                                       ptr_item2->data,
                                                       length) == 0))
-                        || ((!nick_completion)
+                        || ((!item_is_nick)
                             && (string_strncasecmp (completion->base_word,
                                                     ptr_item2->data,
                                                     length) == 0)))
@@ -1540,6 +1544,7 @@ gui_completion_complete (struct t_gui_completion *completion,
                     && (other_completion > 0))
                 {
                     completion->word_found[common_prefix_size] = '\0';
+                    completion->word_found_is_nick = 0;
                     completion->add_space = 0;
                     completion->position = -1;
                     string_tolower (completion->word_found);
@@ -1579,6 +1584,7 @@ gui_completion_complete (struct t_gui_completion *completion,
     {
         free (completion->word_found);
         completion->word_found = NULL;
+        completion->word_found_is_nick = 0;
         gui_completion_complete (completion, nick_completion);
     }
 }
@@ -1643,11 +1649,14 @@ gui_completion_auto (struct t_gui_completion *completion)
         return;
     }
     
-    /* default: nick completion (if there's a nicklist) */
-    if (completion->buffer->nicklist_root)
-        gui_completion_nick (completion);
-    else
-        completion->context = GUI_COMPLETION_NULL;
+    /* use default template completion */
+    if (!completion->completion_list->items)
+    {
+        gui_completion_build_list_template (completion,
+                                            CONFIG_STRING(config_completion_default_template),
+                                            NULL);
+    }
+    gui_completion_complete (completion, 0);
 }
 
 /*
@@ -1668,6 +1677,7 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
         if (completion->word_found)
             free (completion->word_found);
         completion->word_found = NULL;
+        completion->word_found_is_nick = 0;
         gui_completion_find_context (completion, data, size, pos);
         completion->force_partial_completion = (direction < 0);
     }

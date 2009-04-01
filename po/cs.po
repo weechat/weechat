@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-29 19:09+0200\n"
+"POT-Creation-Date: 2009-04-01 18:45+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1618,6 +1618,11 @@ msgstr "barva pro '+' při procházení přezdívek"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "barva děliče přezdívek"
+
+msgid ""
+"default completion template (please see documentation for template codes and "
+"values)"
+msgstr ""
 
 #, fuzzy
 msgid "string inserted after nick completion"

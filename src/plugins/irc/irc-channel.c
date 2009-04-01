@@ -334,7 +334,7 @@ irc_channel_nick_speaking_add (struct t_irc_channel *channel,
     
     /* add nick in list */
     weechat_list_add (channel->nicks_speaking[highlight], nick_name,
-                      WEECHAT_LIST_POS_END);
+                      WEECHAT_LIST_POS_END, NULL);
     
     /* reduce list size if it's too big */
     size = weechat_list_size (channel->nicks_speaking[highlight]);

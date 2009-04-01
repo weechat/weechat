@@ -365,7 +365,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
         
         /* add nick completor if position 0 and completing nick */
         if ((buffer->completion->base_word_pos == 0)
-            && (buffer->completion->context == GUI_COMPLETION_NICK))
+            && buffer->completion->word_found_is_nick)
         {
             if (buffer->completion->add_space)
             {

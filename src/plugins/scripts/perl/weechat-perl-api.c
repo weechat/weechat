@@ -462,7 +462,7 @@ static XS (XS_weechat_api_list_new)
 
 static XS (XS_weechat_api_list_add)
 {
-    char *result, *weelist, *data, *where;
+    char *result, *weelist, *data, *where, *user_data;
     dXSARGS;
     
     /* make C compiler happy */
@@ -474,7 +474,7 @@ static XS (XS_weechat_api_list_add)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 3)
+    if (items < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
         PERL_RETURN_EMPTY;
@@ -483,9 +483,11 @@ static XS (XS_weechat_api_list_add)
     weelist = SvPV (ST (0), PL_na);
     data = SvPV (ST (1), PL_na);
     where = SvPV (ST (2), PL_na);
+    user_data = SvPV (ST (3), PL_na);
     result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
                                                data,
-                                               where));
+                                               where,
+                                               script_str2ptr (user_data)));
     
     PERL_RETURN_STRING_FREE(result);
 }

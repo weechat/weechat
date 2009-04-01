@@ -566,6 +566,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.completion.default_template</command>: modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs pour le modèle)
+<itemizedlist>
+  <listitem>
+    <para>type: chaîne</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: toute chaîne (valeur par défaut: '%n|%(irc_channels)')</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.completion.nick_completor</command>: chaîne affichée après la complétion des pseudos
 <itemizedlist>
   <listitem>

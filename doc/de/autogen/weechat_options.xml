@@ -566,6 +566,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.completion.default_template</command>: default completion template (please see documentation for template codes and values)
+<itemizedlist>
+  <listitem>
+    <para>type: string</para>
+  </listitem>
+  <listitem>
+    <para>values: any string (default value: '%n|%(irc_channels)')</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.completion.nick_completor</command>: string inserted after nick completion
 <itemizedlist>
   <listitem>

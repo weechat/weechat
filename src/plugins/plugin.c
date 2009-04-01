@@ -910,7 +910,7 @@ plugin_display_short_list ()
                  ptr_plugin = ptr_plugin->next_plugin)
             {
                 length += strlen (ptr_plugin->name) + 2;
-                weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT);
+                weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
             }
             length++;
             

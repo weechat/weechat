@@ -203,7 +203,8 @@ struct t_weechat_plugin
     struct t_weelist *(*list_new) ();
     struct t_weelist_item *(*list_add) (struct t_weelist *weelist,
                                         const char *data,
-                                        const char *where);
+                                        const char *where,
+                                        void *user_data);
     struct t_weelist_item *(*list_search) (struct t_weelist *weelist,
                                            const char *data);
     struct t_weelist_item *(*list_casesearch) (struct t_weelist *weelist,
@@ -752,8 +753,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 /* sorted list */
 #define weechat_list_new()                                              \
     weechat_plugin->list_new()
-#define weechat_list_add(__list, __string, __where)                     \
-    weechat_plugin->list_add(__list, __string, __where)
+#define weechat_list_add(__list, __string, __where, __user_data)        \
+    weechat_plugin->list_add(__list, __string, __where, __user_data)
 #define weechat_list_search(__list, __string)                           \
     weechat_plugin->list_search(__list, __string)
 #define weechat_list_casesearch(__list, __string)                       \

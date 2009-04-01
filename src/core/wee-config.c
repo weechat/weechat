@@ -144,6 +144,7 @@ struct t_config_option *config_color_nicklist_separator;
 
 /* config, completion section */
 
+struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_completor;
 struct t_config_option *config_completion_nick_first_only;
 struct t_config_option *config_completion_nick_ignore_chars;
@@ -1597,6 +1598,13 @@ config_weechat_init_options ()
         return 0;
     }
     
+    config_completion_default_template = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "default_template", "string",
+        N_("default completion template (please see documentation for template "
+           "codes and values)"),
+        NULL, 0, 0, "%n|%(irc_channels)", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_completor = config_file_new_option (
         weechat_config_file, ptr_section,
         "nick_completor", "string",

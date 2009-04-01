@@ -146,6 +146,7 @@ extern struct t_config_option *config_color_nicklist_prefix5;
 extern struct t_config_option *config_color_nicklist_more;
 extern struct t_config_option *config_color_nicklist_separator;
 
+extern struct t_config_option *config_completion_default_template;
 extern struct t_config_option *config_completion_nick_completor;
 extern struct t_config_option *config_completion_nick_first_only;
 extern struct t_config_option *config_completion_nick_ignore_chars;

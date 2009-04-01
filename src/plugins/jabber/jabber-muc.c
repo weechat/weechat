@@ -278,7 +278,7 @@ jabber_muc_buddy_speaking_add (struct t_jabber_muc *muc, const char *buddy_name,
     
     /* add buddy in list */
     weechat_list_add (muc->buddies_speaking[highlight], buddy_name,
-                      WEECHAT_LIST_POS_END);
+                      WEECHAT_LIST_POS_END, NULL);
     
     /* reduce list size if it's too big */
     size = weechat_list_size (muc->buddies_speaking[highlight]);

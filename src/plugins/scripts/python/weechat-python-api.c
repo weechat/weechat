@@ -485,7 +485,7 @@ weechat_python_api_list_new (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_list_add (PyObject *self, PyObject *args)
 {
-    char *weelist, *data, *where, *result;
+    char *weelist, *data, *where, *user_data, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -500,8 +500,9 @@ weechat_python_api_list_add (PyObject *self, PyObject *args)
     weelist = NULL;
     data = NULL;
     where = NULL;
+    user_data = NULL;
     
-    if (!PyArg_ParseTuple (args, "sss", &weelist, &data, &where))
+    if (!PyArg_ParseTuple (args, "ssss", &weelist, &data, &where, &user_data))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
         PYTHON_RETURN_EMPTY;
@@ -509,7 +510,8 @@ weechat_python_api_list_add (PyObject *self, PyObject *args)
     
     result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
                                                data,
-                                               where));
+                                               where,
+                                               script_str2ptr (user_data)));
     
     PYTHON_RETURN_STRING_FREE(result);
 }

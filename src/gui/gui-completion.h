@@ -47,6 +47,7 @@ struct t_gui_completion
     
     /* completion found */
     char *word_found;             /* word found (to replace base word)       */
+    int word_found_is_nick;       /* word found is nick?                     */
     int position_replace;         /* position where word has to be replaced  */
     int diff_size;                /* size difference (< 0 = char(s) deleted) */
     int diff_length;              /* length difference (<= diff_size)        */

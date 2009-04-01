@@ -23,6 +23,7 @@
 struct t_weelist_item
 {
     char *data;                        /* item data                         */
+    void *user_data;                   /* pointer to user data              */
     struct t_weelist_item *prev_item;  /* link to previous item             */
     struct t_weelist_item *next_item;  /* link to next item                 */
 };
@@ -36,7 +37,8 @@ struct t_weelist
 
 extern struct t_weelist *weelist_new ();
 extern struct t_weelist_item *weelist_add (struct t_weelist *weelist,
-                                           const char *data, const char *where);
+                                           const char *data, const char *where,
+                                           void *user_data);
 extern struct t_weelist_item *weelist_search (struct t_weelist *weelist,
                                               const char *data);
 extern struct t_weelist_item *weelist_casesearch (struct t_weelist *weelist,

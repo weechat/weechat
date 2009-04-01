@@ -139,7 +139,8 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
  */
 
 struct t_weelist_item *
-weelist_add (struct t_weelist *weelist, const char *data, const char *where)
+weelist_add (struct t_weelist *weelist, const char *data, const char *where,
+             void *user_data)
 {
     struct t_weelist_item *new_item;
     
@@ -150,6 +151,7 @@ weelist_add (struct t_weelist *weelist, const char *data, const char *where)
     if (new_item)
     {
         new_item->data = strdup (data);
+        new_item->user_data = user_data;
         weelist_insert (weelist, new_item, where);
         weelist->size++;
     }

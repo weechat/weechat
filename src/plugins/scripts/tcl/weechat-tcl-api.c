@@ -622,7 +622,7 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
                           int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    char *result, *weelist, *data, *where;
+    char *result, *weelist, *data, *where, *user_data;
     int i; 
 
     /* make C compiler happy */
@@ -635,7 +635,7 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_EMPTY;
     }
     
-    if (objc < 4)
+    if (objc < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
         TCL_RETURN_EMPTY;
@@ -644,9 +644,11 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
     weelist = Tcl_GetStringFromObj (objv[1], &i);
     data = Tcl_GetStringFromObj (objv[2], &i);
     where = Tcl_GetStringFromObj (objv[3], &i);
+    user_data = Tcl_GetStringFromObj (objv[4], &i);
     result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
                                                data,
-                                               where));
+                                               where,
+                                               script_str2ptr (user_data)));
     
     TCL_RETURN_STRING_FREE(result);
 }

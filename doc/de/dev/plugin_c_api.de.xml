@@ -2040,7 +2040,8 @@ struct t_weelist *weechat_list_new ();
 struct t_weelist_item *weechat_list_add (
     struct t_weelist *weelist,
     const char *data,
-    const char *where);
+    const char *where,
+    void *user_data);
 </programlisting>
       </para>
       <para>
@@ -2066,6 +2067,11 @@ struct t_weelist_item *weechat_list_add (
               WEECHAT_LIST_POS_END)
             </para>
           </listitem>
+          <listitem>
+            <para>
+              <option>user_data</option>: any pointer
+            </para>
+          </listitem>
         </itemizedlist>
       </para>
       <para>
@@ -2073,7 +2079,7 @@ struct t_weelist_item *weechat_list_add (
       </para>
       <para>
         Example:
-        <screen>weechat_list_add (list, "my data", WEECHAT_LIST_POS_SORT);</screen>
+        <screen>weechat_list_add (list, "my data", WEECHAT_LIST_POS_SORT, NULL);</screen>
       </para>
     </section>
     
