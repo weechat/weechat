@@ -2041,6 +2041,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                     irc_buffer_get_server_prefix (ptr_server,
                                                                   "error"),
                                     IRC_PLUGIN_NAME, "msg *");
+                    return WEECHAT_RC_OK;
                 }
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                     ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
