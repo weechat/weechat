@@ -243,6 +243,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     int some_args_replaced, length1, length2;
     
     /* make C compiler happy */
+    (void) buffer;
     (void) argc;
     (void) argv;
     
@@ -276,7 +277,10 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 {
                     some_args_replaced = 1;
                     if (*ptr_cmd[0] == '/')
-                        alias_run_command (buffer, args_replaced);
+                    {
+                        alias_run_command (weechat_current_buffer (),
+                                           args_replaced);
+                    }
                     else
                     {
                         alias_command = malloc (1 + strlen(args_replaced) + 1);
@@ -284,7 +288,8 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         {
                             strcpy (alias_command, "/");
                             strcat (alias_command, args_replaced);
-                            alias_run_command (buffer, alias_command);
+                            alias_run_command (weechat_current_buffer (),
+                                               alias_command);
                             free (alias_command);
                         }
                     }
@@ -311,14 +316,18 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                             strcat (alias_command, " ");
                             strcat (alias_command, argv_eol[1]);
                             
-                            alias_run_command (buffer, alias_command);
+                            alias_run_command (weechat_current_buffer (),
+                                               alias_command);
                             free (alias_command);
                         }
                     }
                     else
                     {
                         if (*ptr_cmd[0] == '/')
-                            alias_run_command (buffer, *ptr_cmd);
+                        {
+                            alias_run_command (weechat_current_buffer (),
+                                               *ptr_cmd);
+                        }
                         else
                         {
                             alias_command = malloc (1 + strlen (*ptr_cmd) + 1);
@@ -326,7 +335,8 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                             {
                                 strcpy (alias_command, "/");
                                 strcat (alias_command, *ptr_cmd);
-                                alias_run_command (buffer, alias_command);
+                                alias_run_command (weechat_current_buffer (),
+                                                   alias_command);
                                 free (alias_command);
                             }
                         }
