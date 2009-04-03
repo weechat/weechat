@@ -1,4 +1,4 @@
-WeeChat FAQ, 2009-03-01
+WeeChat FAQ, 2009-04-03
 =======================
 
 1 - General
@@ -201,6 +201,23 @@ According to WeeChat version:
      - global filter (hide ALL join/part/quit):
           /filter add jpk * irc_join,irc_part,irc_quit *
           (/help filter for help)
+
+
+------------------------------------------------------------------------------
+3.13: What is the difference between /ignore and /filter commands?
+
+The /ignore command is an IRC command, so it applies only for IRC buffers
+(servers and channels).
+It lets you ignore some nicks or hostname for a server or channel (command
+will not apply on content of messages).
+Matching messages are deleted by IRC plugin before display (so you'll
+never see them).
+
+The /filter command is a core command, so it applies on any buffer.
+It lets you filter some lines in buffers with tags or regular expression for
+prefix and content of line.
+Filtered lines are only hidden, not deleted, and you can see them if you
+disable filters (by default, key alt + "=" toggle filters).
 
 
 ------------------------------------------------------------------------------
