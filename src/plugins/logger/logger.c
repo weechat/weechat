@@ -751,7 +751,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
     struct t_logger_line *last_lines, *ptr_lines;
     char *pos_message, *error;
-    time_t datetime;
+    time_t datetime, time_now;
     struct tm tm_line;
     int num_lines;
     
@@ -764,7 +764,13 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         pos_message = strchr (ptr_lines->data, '\t');
         if (pos_message)
         {
+            /* initialize structure, because strptime does not do it */
             memset (&tm_line, 0, sizeof (struct tm));
+            /* we get current time to initialize daylight saving time in
+               structure tm_line, otherwise printed time will be shifted
+               and will not use DST used on machine */
+            time_now = time (NULL);
+            localtime_r (&time_now, &tm_line);
             pos_message[0] = '\0';
             error = strptime (ptr_lines->data,
                               weechat_config_string (logger_config_file_time_format),
