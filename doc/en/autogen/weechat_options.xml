@@ -576,6 +576,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.completion.nick_add_space</command>: add space after nick completion (when nick is not first word on command line)
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.completion.nick_completor</command>: string inserted after nick completion
 <itemizedlist>
   <listitem>

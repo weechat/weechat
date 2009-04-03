@@ -1501,6 +1501,11 @@ gui_completion_complete (struct t_gui_completion *completion)
                     free (completion->word_found);
                 completion->word_found = strdup (ptr_item->data);
                 completion->word_found_is_nick = item_is_nick;
+                if (item_is_nick && (completion->base_word_pos > 0)
+                    && !CONFIG_BOOLEAN(config_completion_nick_add_space))
+                {
+                    completion->add_space = 0;
+                }
                 
                 /* stop after first nick if user asked that */
                 if (item_is_nick

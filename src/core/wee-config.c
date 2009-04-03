@@ -145,6 +145,7 @@ struct t_config_option *config_color_nicklist_separator;
 /* config, completion section */
 
 struct t_config_option *config_completion_default_template;
+struct t_config_option *config_completion_nick_add_space;
 struct t_config_option *config_completion_nick_completor;
 struct t_config_option *config_completion_nick_first_only;
 struct t_config_option *config_completion_nick_ignore_chars;
@@ -1605,6 +1606,12 @@ config_weechat_init_options ()
            "codes and values)"),
         NULL, 0, 0, "%n|%(irc_channels)", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_nick_add_space = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_add_space", "boolean",
+        N_("add space after nick completion (when nick is not first word on "
+           "command line)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_completor = config_file_new_option (
         weechat_config_file, ptr_section,
         "nick_completor", "string",

@@ -576,6 +576,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.completion.nick_add_space</command>: ajouter un espace après la complétion du pseudo (quand le pseudo n'est pas le premier mot sur la ligne de commande)
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.completion.nick_completor</command>: chaîne affichée après la complétion des pseudos
 <itemizedlist>
   <listitem>
