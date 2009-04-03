@@ -439,7 +439,7 @@ config_file_new_option (struct t_config_file *config_file,
                     new_option->default_value = malloc (sizeof (int));
                     if (!new_option->default_value)
                         goto error;
-                    *((int *)new_option->default_value) = int_value;
+                    CONFIG_INTEGER_DEFAULT(new_option) = int_value;
                 }
                 if (value)
                 {
@@ -447,7 +447,7 @@ config_file_new_option (struct t_config_file *config_file,
                     new_option->value = malloc (sizeof (int));
                     if (!new_option->value)
                         goto error;
-                    *((int *)new_option->value) = int_value;
+                    CONFIG_INTEGER(new_option) = int_value;
                 }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
@@ -478,7 +478,7 @@ config_file_new_option (struct t_config_file *config_file,
                         new_option->default_value = malloc (sizeof (int));
                         if (!new_option->default_value)
                             goto error;
-                        *((int *)new_option->default_value) = index_value;
+                        CONFIG_INTEGER_DEFAULT(new_option) = index_value;
                     }
                     if (value)
                     {
@@ -495,7 +495,7 @@ config_file_new_option (struct t_config_file *config_file,
                         new_option->value = malloc (sizeof (int));
                         if (!new_option->value)
                             goto error;
-                        *((int *)new_option->value) = index_value;
+                        CONFIG_INTEGER(new_option) = index_value;
                     }
                 }
                 else
@@ -515,7 +515,7 @@ config_file_new_option (struct t_config_file *config_file,
                         new_option->default_value = malloc (sizeof (int));
                         if (!new_option->default_value)
                             goto error;
-                        *((int *)new_option->default_value) = number;
+                        CONFIG_INTEGER_DEFAULT(new_option) = number;
                     }
                     if (value)
                     {
@@ -530,7 +530,7 @@ config_file_new_option (struct t_config_file *config_file,
                         new_option->value = malloc (sizeof (int));
                         if (!new_option->value)
                             goto error;
-                        *((int *)new_option->value) = number;
+                        CONFIG_INTEGER(new_option) = number;
                     }
                 }
                 break;
@@ -559,7 +559,7 @@ config_file_new_option (struct t_config_file *config_file,
                     if (!new_option->default_value)
                         goto error;
                     if (!gui_color_assign (new_option->default_value, default_value))
-                        *((int *)new_option->default_value) = 0;
+                        CONFIG_INTEGER_DEFAULT(new_option) = 0;
                 }
                 if (value)
                 {
@@ -567,7 +567,7 @@ config_file_new_option (struct t_config_file *config_file,
                     if (!new_option->value)
                         goto error;
                     if (!gui_color_assign (new_option->value, value))
-                        *((int *)new_option->value) = 0;
+                        CONFIG_INTEGER(new_option) = 0;
                 }
                 break;
             case CONFIG_NUM_OPTION_TYPES:
@@ -1078,7 +1078,6 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                 if (option->value)
                 {
-                    CONFIG_INTEGER(option) = -1;
                     if (option->string_values)
                     {
                         value_int = -1;
@@ -1765,18 +1764,18 @@ config_file_write_option (struct t_config_file *config_file,
             case CONFIG_OPTION_TYPE_BOOLEAN:
                 string_iconv_fprintf (config_file->file, "%s = %s\n",
                                       option->name,
-                                      (*((int *)option->value)) == CONFIG_BOOLEAN_TRUE ?
+                                      (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
                                       "on" : "off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (option->string_values)
                     string_iconv_fprintf (config_file->file, "%s = %s\n",
                                           option->name,
-                                          option->string_values[*((int *)option->value)]);
+                                          option->string_values[CONFIG_INTEGER(option)]);
                 else
                     string_iconv_fprintf (config_file->file, "%s = %d\n",
                                           option->name,
-                                          *((int *)option->value));
+                                          CONFIG_INTEGER(option));
                 break;
             case CONFIG_OPTION_TYPE_STRING:
                 string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
@@ -1786,7 +1785,7 @@ config_file_write_option (struct t_config_file *config_file,
             case CONFIG_OPTION_TYPE_COLOR:
                 string_iconv_fprintf (config_file->file, "%s = %s\n",
                                       option->name,
-                                      gui_color_get_name (*((int *)option->value)));
+                                      gui_color_get_name (CONFIG_COLOR(option)));
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 break;
