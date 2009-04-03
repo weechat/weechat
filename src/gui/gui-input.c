@@ -363,47 +363,17 @@ gui_input_complete (struct t_gui_buffer *buffer)
             buffer->completion->position = utf8_real_pos (buffer->input_buffer,
                                                       buffer->input_buffer_pos);
         
-        /* add nick completor if position 0 and completing nick */
-        if ((buffer->completion->base_word_pos == 0)
-            && buffer->completion->word_found_is_nick)
+        /* add space if needed after completion */
+        if (buffer->completion->add_space)
         {
-            if (buffer->completion->add_space)
-            {
-                if (strncmp (utf8_add_offset (buffer->input_buffer,
-                                              buffer->input_buffer_pos),
-                             CONFIG_STRING(config_completion_nick_completor),
-                             strlen (CONFIG_STRING(config_completion_nick_completor))) != 0)
-                    gui_input_insert_string (buffer,
-                                             CONFIG_STRING(config_completion_nick_completor),
-                                             buffer->input_buffer_pos);
-                else
-                    buffer->input_buffer_pos += utf8_strlen (CONFIG_STRING(config_completion_nick_completor));
-                if (buffer->completion->position >= 0)
-                    buffer->completion->position += strlen (CONFIG_STRING(config_completion_nick_completor));
-                if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
-                                                        buffer->input_buffer_pos)] != ' ')
-                    gui_input_insert_string (buffer, " ",
-                                             buffer->input_buffer_pos);
-                else
-                    buffer->input_buffer_pos++;
-                if (buffer->completion->position >= 0)
-                    buffer->completion->position++;
-            }
-        }
-        else
-        {
-            /* add space or completor to the end of completion, if needed */
-            if (buffer->completion->add_space)
-            {
-                if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
-                                                                buffer->input_buffer_pos)] != ' ')
-                    gui_input_insert_string (buffer, " ",
-                                             buffer->input_buffer_pos);
-                else
-                    buffer->input_buffer_pos++;
-                if (buffer->completion->position >= 0)
-                    buffer->completion->position++;
-            }
+            if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
+                                                    buffer->input_buffer_pos)] != ' ')
+                gui_input_insert_string (buffer, " ",
+                                         buffer->input_buffer_pos);
+            else
+                buffer->input_buffer_pos++;
+            if (buffer->completion->position >= 0)
+                buffer->completion->position++;
         }
         gui_input_text_changed_modifier_and_signal (buffer);
     }

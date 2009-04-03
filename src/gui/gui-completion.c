@@ -307,6 +307,8 @@ void
 gui_completion_list_add (struct t_gui_completion *completion, const char *word,
                          int nick_completion, const char *where)
 {
+    char buffer[512];
+    
     if (!word || !word[0])
         return;
     
@@ -316,8 +318,18 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
         || (!nick_completion && (string_strncasecmp (completion->base_word, word,
                                                      strlen (completion->base_word)) == 0)))
     {
-        weelist_add (completion->completion_list, word, where,
-                     (nick_completion) ? (void *)1 : (void *)0);
+        if (nick_completion && (completion->base_word_pos == 0))
+        {
+            snprintf (buffer, sizeof (buffer), "%s%s",
+                      word, CONFIG_STRING(config_completion_nick_completor));
+            weelist_add (completion->completion_list, buffer, where,
+                         (nick_completion) ? (void *)1 : (void *)0);
+        }
+        else
+        {
+            weelist_add (completion->completion_list, word, where,
+                         (nick_completion) ? (void *)1 : (void *)0);
+        }
     }
 }
 
@@ -1724,6 +1736,7 @@ gui_completion_print_log (struct t_gui_completion *completion)
     log_printf ("  force_partial_completion: %d",    completion->force_partial_completion);
     log_printf ("  completion_list . . . . : 0x%lx", completion->completion_list);
     log_printf ("  word_found. . . . . . . : '%s'",  completion->word_found);
+    log_printf ("  word_found_is_nick. . . : %d",    completion->word_found_is_nick);
     log_printf ("  position_replace. . . . : %d",    completion->position_replace);
     log_printf ("  diff_size . . . . . . . : %d",    completion->diff_size);
     log_printf ("  diff_length . . . . . . : %d",    completion->diff_length);

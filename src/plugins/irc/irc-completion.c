@@ -242,7 +242,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                 /* remote nick */
                 weechat_hook_completion_list_add (completion,
                                                   ptr_channel->name,
-                                                  0,
+                                                  1,
                                                   WEECHAT_LIST_POS_SORT);
                 /* add self nick at the end */
                 weechat_hook_completion_list_add (completion,
@@ -310,7 +310,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
             case IRC_CHANNEL_TYPE_PRIVATE:
                 weechat_hook_completion_list_add (completion,
                                                   ptr_channel->name,
-                                                  0,
+                                                  1,
                                                   WEECHAT_LIST_POS_SORT);
                 break;
         }
@@ -373,8 +373,11 @@ irc_completion_channels_cb (void *data, const char *completion_item,
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            {
+                weechat_hook_completion_list_add (completion, ptr_channel->name,
+                                                  0, WEECHAT_LIST_POS_SORT);
+            }
         }
     }
     
