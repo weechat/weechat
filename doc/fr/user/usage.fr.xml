@@ -215,6 +215,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
+              <entry>Ctrl + C puis I</entry>
+              <entry>
+                Insérer le code pour mettre le texte en italique.
+              </entry>
+            </row>
+            <row>
               <entry>Ctrl + C puis O</entry>
               <entry>
                 Insérer le code pour réinitaliser la couleur.
@@ -452,6 +458,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J puis Alt + P</entry>
               <entry>
                 Sauter au tampon affiché précédemment
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + J puis Alt + R</entry>
+              <entry>
+                Sauter au tampon des données brutes IRC
               </entry>
             </row>
             <row>

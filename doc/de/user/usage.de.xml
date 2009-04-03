@@ -197,10 +197,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Gehe zum Anfang der Kommandozeile
               </entry>
             </row>
-            <!-- TRANSLATION NEEDED -->
             <row>
               <entry>Strg + C dann B</entry>
               <entry>
+                <!-- TRANSLATION NEEDED -->
                 Insert code for bold text.
               </entry>
             </row>
@@ -208,6 +208,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Strg + C dann C</entry>
               <entry>
                 Insert code for colored text.
+              </entry>
+            </row>
+            <row>
+              <entry>Ctrl + C dann I</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Insert code for italic text.
               </entry>
             </row>
             <row>
@@ -443,10 +450,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Alt + J then Alt + P</entry>
+              <entry>Alt + J dann Alt + P</entry>
               <entry>
                 <!-- TRANSLATION NEEDED -->
                 Switch to buffer previously displayed
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + J dann Alt + R</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Switch to IRC raw buffer
               </entry>
             </row>
             <row>

@@ -196,6 +196,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
+              <entry>Ctrl + C then I</entry>
+              <entry>
+                Insert code for italic text.
+              </entry>
+            </row>
+            <row>
               <entry>Ctrl + C then O</entry>
               <entry>
                 Insert code for color reset.
@@ -423,6 +429,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J then Alt + P</entry>
               <entry>
                 Switch to buffer previously displayed
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + J then Alt + R</entry>
+              <entry>
+                Switch to IRC raw buffer
               </entry>
             </row>
             <row>
