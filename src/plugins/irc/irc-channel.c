@@ -307,20 +307,16 @@ irc_channel_set_away (struct t_irc_channel *channel, const char *nick_name,
 }
 
 /*
- * irc_channel_nick_speaking_add: add a nick speaking on a channel
+ * irc_channel_nick_speaking_add_to_list: add a nick speaking on a channel
  */
 
 void
-irc_channel_nick_speaking_add (struct t_irc_channel *channel,
-                               const char *nick_name, int highlight)
+irc_channel_nick_speaking_add_to_list (struct t_irc_channel *channel,
+                                       const char *nick_name,
+                                       int highlight)
 {
     int size, to_remove, i;
     struct t_weelist_item *ptr_item;
-    
-    if (highlight < 0)
-        highlight = 0;
-    if (highlight > 1)
-        highlight = 1;
     
     /* create list if it does not exist */
     if (!channel->nicks_speaking[highlight])
@@ -347,6 +343,24 @@ irc_channel_nick_speaking_add (struct t_irc_channel *channel,
                                  weechat_list_get (channel->nicks_speaking[highlight], 0));
         }
     }
+}
+
+/*
+ * irc_channel_nick_speaking_add: add a nick speaking on a channel
+ */
+
+void
+irc_channel_nick_speaking_add (struct t_irc_channel *channel,
+                               const char *nick_name, int highlight)
+{
+    if (highlight < 0)
+        highlight = 0;
+    if (highlight > 1)
+        highlight = 1;
+    if (highlight)
+        irc_channel_nick_speaking_add_to_list (channel, nick_name, 1);
+    
+    irc_channel_nick_speaking_add_to_list (channel, nick_name, 0);
 }
 
 /*

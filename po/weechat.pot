@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3025,7 +3025,7 @@ msgstr ""
 msgid "text to display after nick in chat window"
 msgstr ""
 
-msgid "smart completion for nicks (completes with last speakers first)"
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr ""
 
 msgid "display message when (un)marking as away"
@@ -3738,6 +3738,9 @@ msgid "automatically rejoin MUCs when kicked"
 msgstr ""
 
 msgid "open new MUCs/privates near server"
+msgstr ""
+
+msgid "smart completion for nicks (completes with last speakers first)"
 msgstr ""
 
 msgid "display MUC modes in \"buffer_name\" bar item"

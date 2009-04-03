@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3547,7 +3547,8 @@ msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
 msgid "text to display after nick in chat window"
 msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
 
-msgid "smart completion for nicks (completes with last speakers first)"
+#, fuzzy
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"
 
 msgid "display message when (un)marking as away"
@@ -4378,6 +4379,9 @@ msgstr "automaticky znovu přijít na kanál po vykopnutí"
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "otevřít nový kanál/soukromý rozhovor poblíž serveru"
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"
 
 msgid "display MUC modes in \"buffer_name\" bar item"
 msgstr ""
@@ -5557,6 +5561,12 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "smart completion for nicks (completes first with last speakers, "
+#~ "highlights or both)"
+#~ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"
 
 #~ msgid ""
 #~ "partially complete nicks (stop when many nicks found begin with same "

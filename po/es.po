@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3514,7 +3514,7 @@ msgstr "texto a mostrar antes del nick en la ventana de charla"
 msgid "text to display after nick in chat window"
 msgstr "texto a mostrar tras el nick en la ventana de charla"
 
-msgid "smart completion for nicks (completes with last speakers first)"
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr ""
 
 msgid "display message when (un)marking as away"
@@ -4315,6 +4315,9 @@ msgstr "unirse de nuevo automÃ¡ticamente a los canales cuando sea expulsado"
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "abrir nuevos canales/privados cerca del servidor"
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr ""
 
 msgid "display MUC modes in \"buffer_name\" bar item"
 msgstr ""

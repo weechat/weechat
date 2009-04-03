@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3525,7 +3525,8 @@ msgstr "Text, der im Chatfenster vor dem Nickname erscheinen soll"
 msgid "text to display after nick in chat window"
 msgstr "Text, der im Chatfenster nach dem Nickname erscheinen soll"
 
-msgid "smart completion for nicks (completes with last speakers first)"
+#, fuzzy
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr ""
 "Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem "
 "letzten Nick, der einen angesprochen hat)"
@@ -4325,6 +4326,11 @@ msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "öffne neue Channels oder private Nachrichten neben dem Server-Puffer"
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr ""
+"Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem "
+"letzten Nick, der einen angesprochen hat)"
 
 msgid "display MUC modes in \"buffer_name\" bar item"
 msgstr ""
@@ -5490,6 +5496,14 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "smart completion for nicks (completes first with last speakers, "
+#~ "highlights or both)"
+#~ msgstr ""
+#~ "Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit "
+#~ "dem letzten Nick, der einen angesprochen hat)"
 
 #~ msgid "[action [args] | number | [[server] [channel]]]"
 #~ msgstr "[Aktion [Argumente] | Nummer | [[Server] [Channel]]]"

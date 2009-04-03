@@ -106,13 +106,13 @@
   </listitem>
 </itemizedlist>
 
-<command>irc.look.nick_completion_smart</command>: Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem letzten Nick, der einen angesprochen hat)
+<command>irc.look.nick_completion_smart</command>: smart completion for nicks (completes first with last speakers)
 <itemizedlist>
   <listitem>
-    <para>type: boolean</para>
+    <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: on, off (default value: on)</para>
+    <para>values: off, speakers, speakers_highlights (default value: speakers)</para>
   </listitem>
 </itemizedlist>
 

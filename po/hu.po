@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3562,7 +3562,8 @@ msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
 msgid "text to display after nick in chat window"
 msgstr "a név után megjelenítendő szöveg a beszédablakban"
 
-msgid "smart completion for nicks (completes with last speakers first)"
+#, fuzzy
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 
 msgid "display message when (un)marking as away"
@@ -4380,6 +4381,9 @@ msgstr "automatikus visszalépés a szobába kirúgáskor"
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 
 msgid "display MUC modes in \"buffer_name\" bar item"
 msgstr ""
@@ -5544,6 +5548,12 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "smart completion for nicks (completes first with last speakers, "
+#~ "highlights or both)"
+#~ msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 
 #~ msgid "[action [args] | number | [[server] [channel]]]"
 #~ msgstr "[utasítás[argumentumok] | szám | [[szerver] [szoba]]]"

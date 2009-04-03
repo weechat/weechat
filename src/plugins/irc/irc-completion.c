@@ -177,6 +177,36 @@ irc_completion_channel_cb (void *data, const char *completion_item,
 }
 
 /*
+ * irc_completion_channel_nicks_add_speakers: add recent speakers to completion
+ *                                            list
+ */
+
+void
+irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
+                                           struct t_irc_channel *channel,
+                                           int highlight)
+{
+    int list_size, i;
+    const char *nick;
+    
+    if (channel->nicks_speaking[highlight])
+    {
+        list_size = weechat_list_size (channel->nicks_speaking[highlight]);
+        for (i = 0; i < list_size; i++)
+        {
+            nick = weechat_list_string (weechat_list_get (channel->nicks_speaking[highlight], i));
+            if (nick && irc_nick_search (channel, nick))
+            {
+                weechat_hook_completion_list_add (completion,
+                                                  nick,
+                                                  1,
+                                                  WEECHAT_LIST_POS_BEGINNING);
+            }
+        }
+    }
+}
+
+/*
  * irc_completion_channel_nicks_cb: callback for completion with nicks
  *                                  of current channel
  */
@@ -187,8 +217,6 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                                  struct t_gui_completion *completion)
 {
     struct t_irc_nick *ptr_nick;
-    const char *nick;
-    int list_size, i, j;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     
@@ -209,28 +237,15 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                                                       1,
                                                       WEECHAT_LIST_POS_SORT);
                 }
-                /* add nicks speaking recently on this channel */
-                if (weechat_config_boolean (irc_config_look_nick_completion_smart))
+                /* add recent speakers on channel */
+                if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
                 {
-                    /* 0 => nick speaking ; 1 => nick speaking to me (with highlight) */
-                    for (i = 0; i < 2; i++)
-                    {
-                        if (ptr_channel->nicks_speaking[i])
-                        {
-                            list_size = weechat_list_size (ptr_channel->nicks_speaking[i]);
-                            for (j = 0; j < list_size; j++)
-                            {
-                                nick = weechat_list_string (weechat_list_get (ptr_channel->nicks_speaking[i], j));
-                                if (nick && irc_nick_search (ptr_channel, nick))
-                                {
-                                    weechat_hook_completion_list_add (completion,
-                                                                      nick,
-                                                                      1,
-                                                                      WEECHAT_LIST_POS_BEGINNING);
-                                }
-                            }
-                        }
-                    }
+                    irc_completion_channel_nicks_add_speakers (completion, ptr_channel, 0);
+                }
+                /* add nicks whose make highlights on me recently on this channel */
+                if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS)
+                {
+                    irc_completion_channel_nicks_add_speakers (completion, ptr_channel, 1);
                 }
                 /* add self nick at the end */
                 weechat_hook_completion_list_add (completion,

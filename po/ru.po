@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-01 22:41+0200\n"
+"POT-Creation-Date: 2009-04-03 15:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3555,7 +3555,8 @@ msgstr "текст, который отображать до ника в окн�
 msgid "text to display after nick in chat window"
 msgstr "текст, который отображать после ника в окне чата"
 
-msgid "smart completion for nicks (completes with last speakers first)"
+#, fuzzy
+msgid "smart completion for nicks (completes first with last speakers)"
 msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
 msgid "display message when (un)marking as away"
@@ -4363,6 +4364,9 @@ msgstr "автоматически перезаходить на каналы п
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "открывать новые каналы/приваты рядом с сервером"
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
 msgid "display MUC modes in \"buffer_name\" bar item"
 msgstr ""
@@ -5515,6 +5519,12 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "smart completion for nicks (completes first with last speakers, "
+#~ "highlights or both)"
+#~ msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
 #~ msgid "[action [args] | number | [[server] [channel]]]"
 #~ msgstr "[действие [аргументы] | номер | [[сервер] [канал]]]"
