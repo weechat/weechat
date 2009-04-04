@@ -335,6 +335,9 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
     struct t_hook *new_hook;
     struct t_hook_command *new_hook_command;
     
+    if (!callback)
+        return NULL;
+    
     if (hook_search_command (plugin, command))
     {
         gui_chat_printf (NULL,
@@ -500,6 +503,9 @@ hook_command_run (struct t_weechat_plugin *plugin, const char *command,
     struct t_hook *new_hook;
     struct t_hook_command_run *new_hook_command_run;
     
+    if (!callback)
+        return NULL;
+    
     new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
@@ -622,7 +628,7 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     struct t_hook *new_hook;
     struct t_hook_timer *new_hook_timer;
     
-    if (interval <= 0)
+    if ((interval <= 0) || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -848,7 +854,7 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
     struct t_hook *new_hook;
     struct t_hook_fd *new_hook_fd;
     
-    if ((fd < 0) || hook_search_fd (fd))
+    if ((fd < 0) || hook_search_fd (fd) || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -969,7 +975,7 @@ hook_process (struct t_weechat_plugin *plugin,
     struct t_hook *new_hook;
     struct t_hook_process *new_hook_process;
     
-    if (!command || !command[0])
+    if (!command || !command[0] || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1263,7 +1269,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     (void) gnutls_sess;
 #endif
     
-    if ((sock < 0) || !address || (port <= 0))
+    if ((sock < 0) || !address || (port <= 0) || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1313,6 +1319,9 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
 {
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
+    
+    if (!callback)
+        return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
@@ -1453,8 +1462,8 @@ hook_signal (struct t_weechat_plugin *plugin, const char *signal,
 {
     struct t_hook *new_hook;
     struct t_hook_signal *new_hook_signal;
-
-    if (!signal || !signal[0])
+    
+    if (!signal || !signal[0] || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1521,6 +1530,9 @@ hook_config (struct t_weechat_plugin *plugin, const char *option,
     struct t_hook *new_hook;
     struct t_hook_config *new_hook_config;
     
+    if (!callback)
+        return NULL;
+    
     new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
@@ -1586,7 +1598,8 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
     struct t_hook *new_hook;
     struct t_hook_completion *new_hook_completion;
     
-    if (!completion_item || !completion_item[0] || strchr (completion_item, ' '))
+    if (!completion_item || !completion_item[0]
+        || strchr (completion_item, ' ') || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1672,7 +1685,7 @@ hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
     struct t_hook *new_hook;
     struct t_hook_modifier *new_hook_modifier;
     
-    if (!modifier || !modifier[0])
+    if (!modifier || !modifier[0] || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1772,7 +1785,7 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
     struct t_hook *new_hook;
     struct t_hook_info *new_hook_info;
     
-    if (!info_name || !info_name[0])
+    if (!info_name || !info_name[0] || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1857,7 +1870,7 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
     struct t_hook *new_hook;
     struct t_hook_infolist *new_hook_infolist;
     
-    if (!infolist_name || !infolist_name[0])
+    if (!infolist_name || !infolist_name[0] || !callback)
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
