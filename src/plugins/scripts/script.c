@@ -804,12 +804,12 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                     base_name = basename (name);
                     
                     /* unload script, if script is loaded */
-                    ptr_script = script_search_by_full_name (scripts, argv[i]);
+                    ptr_script = script_search_by_full_name (scripts, base_name);
                     if (ptr_script)
                         (*script_unload) (ptr_script);
                     
                     /* remove script file(s) */
-                    script_remove_file (weechat_plugin, argv[i], 0);
+                    script_remove_file (weechat_plugin, base_name, 0);
                     
                     /* move file from install dir to language dir */
                     dir_home = weechat_info_get ("weechat_dir", "");
