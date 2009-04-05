@@ -132,10 +132,14 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer)
                                     str_buffer,
                                     (buffer->input_buffer) ?
                                     buffer->input_buffer : "");
-    if (new_input && (strcmp (new_input, buffer->input_buffer) != 0))
+    if (new_input)
     {
-        /* input has been changed by modifier, use it */
-        gui_input_replace_input (buffer, new_input);
+        if (strcmp (new_input, buffer->input_buffer) != 0)
+        {
+            /* input has been changed by modifier, use it */
+            gui_input_replace_input (buffer, new_input);
+        }
+        free (new_input);
     }
     
     /* send signal */
