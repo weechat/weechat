@@ -451,7 +451,7 @@ config_file_new_option (struct t_config_file *config_file,
                 }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
-                if (string_values)
+                if (string_values && string_values[0])
                 {
                     new_option->string_values = string_explode (string_values,
                                                                 "|", 0, 0,
