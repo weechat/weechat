@@ -49,6 +49,20 @@ struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
 const char *tcl_current_script_filename = NULL;
 
+/* string used to execute action "install":
+   when signal "tcl_install_script" is received, name of string
+   is added to this string, to be installed later by a timer (when nothing is
+   running in script)
+*/
+char *tcl_action_install_list = NULL;
+
+/* string used to execute action "remove":
+   when signal "tcl_remove_script" is received, name of string
+   is added to this string, to be removed later by a timer (when nothing is
+   running in script)
+*/
+char *tcl_action_remove_list = NULL;
+
 Tcl_Interp* cinterp;
 
 
@@ -347,8 +361,8 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Tcl script */
-            path_script = script_search_full_name (weechat_tcl_plugin,
-                                                   argv_eol[2]);
+            path_script = script_search_path (weechat_tcl_plugin,
+                                              argv_eol[2]);
             weechat_tcl_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -414,12 +428,12 @@ weechat_tcl_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_tcl_debug_dump_cb: dump Tcl plugin data in WeeChat log file
+ * weechat_tcl_signal_debug_dump_cb: dump Tcl plugin data in WeeChat log file
  */
 
 int
-weechat_tcl_debug_dump_cb (void *data, const char *signal,
-                           const char *type_data, void *signal_data)
+weechat_tcl_signal_debug_dump_cb (void *data, const char *signal,
+                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -433,12 +447,12 @@ weechat_tcl_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_tcl_buffer_closed_cb: callback called when a buffer is closed
+ * weechat_tcl_signal_buffer_closed_cb: callback called when a buffer is closed
  */
 
 int
-weechat_tcl_buffer_closed_cb (void *data, const char *signal,
-                              const char *type_data, void *signal_data)
+weechat_tcl_signal_buffer_closed_cb (void *data, const char *signal,
+                                     const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -447,6 +461,74 @@ weechat_tcl_buffer_closed_cb (void *data, const char *signal,
     
     if (signal_data)
         script_remove_buffer_callbacks (tcl_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_tcl_timer_action_cb: timer for executing actions
+ */
+
+int
+weechat_tcl_timer_action_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    if (data)
+    {
+        if (data == &tcl_action_install_list)
+        {
+            script_action_install (weechat_tcl_plugin,
+                                   tcl_scripts,
+                                   &weechat_tcl_unload,
+                                   &weechat_tcl_load,
+                                   &tcl_action_install_list);
+        }
+        else if (data == &tcl_action_remove_list)
+        {
+            script_action_remove (weechat_tcl_plugin,
+                                  tcl_scripts,
+                                  &weechat_tcl_unload,
+                                  &tcl_action_remove_list);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_tcl_signal_script_action_cb: callback called when a script action
+ *                                      is asked (install/remove a script)
+ */
+
+int
+weechat_tcl_signal_script_action_cb (void *data, const char *signal,
+                                     const char *type_data,
+                                     void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strcmp (signal, "tcl_script_install") == 0)
+        {
+            script_action_add (&tcl_action_install_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_tcl_timer_action_cb,
+                                &tcl_action_install_list);
+        }
+        else if (strcmp (signal, "tcl_script_remove") == 0)
+        {
+            script_action_add (&tcl_action_remove_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_tcl_timer_action_cb,
+                                &tcl_action_remove_list);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -469,8 +551,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_tcl_command_cb,
                  &weechat_tcl_completion_cb,
                  &weechat_tcl_infolist_cb,
-                 &weechat_tcl_debug_dump_cb,
-                 &weechat_tcl_buffer_closed_cb,
+                 &weechat_tcl_signal_debug_dump_cb,
+                 &weechat_tcl_signal_buffer_closed_cb,
+                 &weechat_tcl_signal_script_action_cb,
                  &weechat_tcl_load_cb);
     tcl_quiet = 0;
     

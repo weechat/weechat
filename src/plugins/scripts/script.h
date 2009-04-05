@@ -77,6 +77,10 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                                                               const char *signal,
                                                               const char *type_data,
                                                               void *signal_data),
+                         int (*callback_signal_script_action)(void *data,
+                                                              const char *signal,
+                                                              const char *type_data,
+                                                              void *signal_data),
                          void (*callback_load_file)(void *data, const char *filename));
 extern int script_valid (struct t_plugin_script *scripts,
                          struct t_plugin_script *script);
@@ -87,8 +91,8 @@ extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script *scripts,
                                               const char *name);
-extern char *script_search_full_name (struct t_weechat_plugin *weechat_plugin,
-                                      const char *filename);
+extern char *script_search_path (struct t_weechat_plugin *weechat_plugin,
+                                 const char *filename);
 extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script **scripts,
                                            struct t_plugin_script **last_script,
@@ -105,6 +109,16 @@ extern void script_remove (struct t_weechat_plugin *weechat_plugin,
 extern void script_completion (struct t_weechat_plugin *weechat_plugin,
                                struct t_gui_completion *completion,
                                struct t_plugin_script *scripts);
+extern void script_action_add (char **action_list, const char *name);
+extern void script_action_install (struct t_weechat_plugin *weechat_plugin,
+                                   struct t_plugin_script *scripts,
+                                   void (*script_unload)(struct t_plugin_script *script),
+                                   int (*script_load)(const char *filename),
+                                   char **list);
+extern void script_action_remove (struct t_weechat_plugin *weechat_plugin,
+                                  struct t_plugin_script *scripts,
+                                  void (*script_unload)(struct t_plugin_script *script),
+                                  char **list);
 extern void script_display_list (struct t_weechat_plugin *weechat_plugin,
                                  struct t_plugin_script *scripts,
                                  const char *name, int full);

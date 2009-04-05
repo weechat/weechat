@@ -20,7 +20,10 @@
 
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
+#include <libgen.h>
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
@@ -95,12 +98,15 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                                const char *type_data,
                                                void *signal_data),
              int (*callback_signal_buffer_closed)(void *data, const char *signal,
-                                               const char *type_data,
-                                               void *signal_data),
+                                                  const char *type_data,
+                                                  void *signal_data),
+             int (*callback_signal_script_action)(void *data, const char *signal,
+                                                  const char *type_data,
+                                                  void *signal_data),
              void (*callback_load_file)(void *data, const char *filename))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
-    char infolist_description[512];
+    char infolist_description[512], signal_name[128];
     int length;
     
     /* read script configuration */
@@ -170,6 +176,14 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* add signal for "buffer_closed" */
     weechat_hook_signal ("buffer_closed", callback_signal_buffer_closed, NULL);
+    
+    /* add signal for a script action (install/remove) */
+    snprintf (signal_name, sizeof (signal_name), "%s_script_install",
+              weechat_plugin->name);
+    weechat_hook_signal (signal_name, callback_signal_script_action, NULL);
+    snprintf (signal_name, sizeof (signal_name), "%s_script_remove",
+              weechat_plugin->name);
+    weechat_hook_signal (signal_name, callback_signal_script_action, NULL);
     
     /* autoload scripts */
     script_auto_load (weechat_plugin, callback_load_file);
@@ -267,7 +281,7 @@ script_auto_load (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_search: search a script in list
+ * script_search: search a script in list (by registered name)
  */
 
 struct t_plugin_script *
@@ -288,12 +302,45 @@ script_search (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_search_full_name: search the full path name of a script
+ * script_search_by_full_name: search a script in list (by full name, for
+ *                             example "weeget.py")
+ */
+
+struct t_plugin_script *
+script_search_by_full_name (struct t_plugin_script *scripts,
+                            const char *full_name)
+{
+    char *full_name_copy, *base_name;
+    struct t_plugin_script *ptr_script;
+    
+    full_name_copy = strdup (full_name);
+    
+    if (full_name_copy)
+    {
+        for (ptr_script = scripts; ptr_script;
+             ptr_script = ptr_script->next_script)
+        {
+            base_name = basename (ptr_script->filename);
+            if (strcmp (base_name, full_name) == 0)
+            {
+                free (full_name_copy);
+                return ptr_script;
+            }
+        }
+        free (full_name_copy);
+    }
+    
+    /* script not found */
+    return NULL;
+}
+
+/*
+ * script_search_path: search path name of a script
  */
 
 char *
-script_search_full_name (struct t_weechat_plugin *weechat_plugin,
-                         const char *filename)
+script_search_path (struct t_weechat_plugin *weechat_plugin,
+                    const char *filename)
 {
     char *final_name;
     const char *dir_home, *dir_system;
@@ -640,6 +687,227 @@ script_completion (struct t_weechat_plugin *weechat_plugin,
     {
         weechat_hook_completion_list_add (completion, ptr_script->name,
                                           0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
+ * script_action_add: add script name for a plugin action
+ */
+
+void
+script_action_add (char **action_list, const char *name)
+{
+    int length;
+
+    length = strlen (name);
+    
+    if (!(*action_list))
+    {
+        *action_list = malloc (length + 1);
+        if (*action_list)
+            strcpy (*action_list, name);
+    }
+    else
+    {
+        *action_list = realloc (*action_list,
+                                strlen (*action_list) + 1 + length + 1);
+        if (*action_list)
+        {
+            strcat (*action_list, ",");
+            strcat (*action_list, name);
+        }
+    }
+}
+
+/*
+ * script_remove_file: remove script file(s) from disk
+ */
+
+void
+script_remove_file (struct t_weechat_plugin *weechat_plugin, const char *name,
+                    int display_error_if_no_script_removed)
+{
+    int num_found, i;
+    char *path_script;
+    
+    num_found = 0;
+    i = 0;
+    while (i < 2)
+    {
+        path_script = script_search_path (weechat_plugin, name);
+        /* script not found? */
+        if (!path_script || (strcmp (path_script, name) == 0))
+            break;
+        num_found++;
+        if (unlink (path_script) == 0)
+        {
+            weechat_printf (NULL, _("%s: script removed: %s"),
+                            weechat_plugin->name,
+                            path_script);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%s%s: failed to remove script: %s "
+                              "(%s)"),
+                            weechat_prefix ("error"),
+                            weechat_plugin->name,
+                            path_script,
+                            strerror (errno));
+            break;
+        }
+        free (path_script);
+        i++;
+    }
+    if ((num_found == 0) && display_error_if_no_script_removed)
+    {
+        weechat_printf (NULL,
+                        _("%s: script \"%s\" not found, nothing "
+                          "was removed"),
+                        weechat_plugin->name,
+                        name);
+    }
+}
+
+/*
+ * script_action_install: install some scripts (using comma separated list)
+ *                        this function does following tasks:
+ *                          1. unload script (if script is loaded)
+ *                          2. remove script file(s)
+ *                          3. move script file from "install" dir to language dir
+ *                          4. make link in autoload dir
+ *                          5. load script
+ */
+
+void
+script_action_install (struct t_weechat_plugin *weechat_plugin,
+                       struct t_plugin_script *scripts,
+                       void (*script_unload)(struct t_plugin_script *script),
+                       int (*script_load)(const char *filename),
+                       char **list)
+{
+    char **argv, *name, *base_name, *new_path, *autoload_path, *symlink_path;
+    const char *dir_home, *dir_separator;
+    int argc, i, length;
+    struct t_plugin_script *ptr_script;
+    
+    if (*list)
+    {
+        argv = weechat_string_explode (*list, ",", 0, 0, &argc);
+        if (argv)
+        {
+            for (i = 0; i < argc; i++)
+            {
+                name = strdup (argv[i]);
+                if (name)
+                {
+                    base_name = basename (name);
+                    
+                    /* unload script, if script is loaded */
+                    ptr_script = script_search_by_full_name (scripts, argv[i]);
+                    if (ptr_script)
+                        (*script_unload) (ptr_script);
+                    
+                    /* remove script file(s) */
+                    script_remove_file (weechat_plugin, argv[i], 0);
+                    
+                    /* move file from install dir to language dir */
+                    dir_home = weechat_info_get ("weechat_dir", "");
+                    length = strlen (dir_home) + strlen (weechat_plugin->name) +
+                        strlen (base_name) + 16;
+                    new_path = malloc (length);
+                    if (new_path)
+                    {
+                        snprintf (new_path, length, "%s/%s/%s",
+                                  dir_home, weechat_plugin->name, base_name);
+                        if (rename (name, new_path) == 0)
+                        {
+                            /* make link in autoload dir */
+                            length = strlen (dir_home) +
+                                strlen (weechat_plugin->name) + 8 +
+                                strlen (base_name) + 16;
+                            autoload_path = malloc (length);
+                            if (autoload_path)
+                            {
+                                snprintf (autoload_path, length,
+                                          "%s/%s/autoload/%s",
+                                          dir_home, weechat_plugin->name,
+                                          base_name);
+                                dir_separator = weechat_info_get ("dir_separator", "");
+                                length = 2 + strlen (dir_separator) +
+                                    strlen (base_name) + 1;
+                                symlink_path = malloc (length);
+                                if (symlink_path)
+                                {
+                                    snprintf (symlink_path, length, "..%s%s",
+                                              dir_separator, base_name);
+                                    symlink (symlink_path, autoload_path);
+                                    free (symlink_path);
+                                }
+                                free (autoload_path);
+                            }
+                            
+                            /* load script */
+                            (*script_load) (new_path);
+                        }
+                        else
+                        {
+                            weechat_printf (NULL,
+                                            _("%s%s: failed to move script %s "
+                                              "to %s (%s)"),
+                                            weechat_prefix ("error"),
+                                            weechat_plugin->name,
+                                            name,
+                                            new_path,
+                                            strerror (errno));
+                        }
+                        free (new_path);
+                    }
+                }
+            }
+            weechat_string_free_exploded (argv);
+        }
+        free (*list);
+        *list = NULL;
+    }
+}
+
+/*
+ * script_action_remove: remove some scripts (using comma separated list)
+ *                       this function does following tasks:
+ *                         1. unload script (if script is loaded)
+ *                         2. remove script file(s)
+ */
+
+void
+script_action_remove (struct t_weechat_plugin *weechat_plugin,
+                      struct t_plugin_script *scripts,
+                      void (*script_unload)(struct t_plugin_script *script),
+                      char **list)
+{
+    char **argv;
+    int argc, i;
+    struct t_plugin_script *ptr_script;
+    
+    if (*list)
+    {
+        argv = weechat_string_explode (*list, ",", 0, 0, &argc);
+        if (argv)
+        {
+            for (i = 0; i < argc; i++)
+            {
+                /* unload script, if script is loaded */
+                ptr_script = script_search_by_full_name (scripts, argv[i]);
+                if (ptr_script)
+                    (*script_unload) (ptr_script);
+                
+                /* remove script file(s) */
+                script_remove_file (weechat_plugin, argv[i], 1);
+            }
+            weechat_string_free_exploded (argv);
+        }
+        free (*list);
+        *list = NULL;
     }
 }
 

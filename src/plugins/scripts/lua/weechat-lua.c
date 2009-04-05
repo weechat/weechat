@@ -49,6 +49,20 @@ struct t_plugin_script *lua_current_script = NULL;
 const char *lua_current_script_filename = NULL;
 lua_State *lua_current_interpreter = NULL;
 
+/* string used to execute action "install":
+   when signal "lua_install_script" is received, name of string
+   is added to this string, to be installed later by a timer (when nothing is
+   running in script)
+*/
+char *lua_action_install_list = NULL;
+
+/* string used to execute action "remove":
+   when signal "lua_remove_script" is received, name of string
+   is added to this string, to be removed later by a timer (when nothing is
+   running in script)
+*/
+char *lua_action_remove_list = NULL;
+
 
 /*
  * weechat_lua_exec: execute a Lua script
@@ -407,8 +421,8 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Lua script */
-            path_script = script_search_full_name (weechat_lua_plugin,
-                                                   argv_eol[2]);
+            path_script = script_search_path (weechat_lua_plugin,
+                                              argv_eol[2]);
             weechat_lua_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -474,12 +488,12 @@ weechat_lua_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_lua_debug_dump_cb: dump Lua plugin data in WeeChat log file
+ * weechat_lua_signal_debug_dump_cb: dump Lua plugin data in WeeChat log file
  */
 
 int
-weechat_lua_debug_dump_cb (void *data, const char *signal,
-                           const char *type_data, void *signal_data)
+weechat_lua_signal_debug_dump_cb (void *data, const char *signal,
+                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -493,12 +507,12 @@ weechat_lua_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_lua_buffer_closed_cb: callback called when a buffer is closed
+ * weechat_lua_signal_buffer_closed_cb: callback called when a buffer is closed
  */
 
 int
-weechat_lua_buffer_closed_cb (void *data, const char *signal,
-                              const char *type_data, void *signal_data)
+weechat_lua_signal_buffer_closed_cb (void *data, const char *signal,
+                                     const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -507,6 +521,74 @@ weechat_lua_buffer_closed_cb (void *data, const char *signal,
     
     if (signal_data)
         script_remove_buffer_callbacks (lua_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_lua_timer_action_cb: timer for executing actions
+ */
+
+int
+weechat_lua_timer_action_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    if (data)
+    {
+        if (data == &lua_action_install_list)
+        {
+            script_action_install (weechat_lua_plugin,
+                                   lua_scripts,
+                                   &weechat_lua_unload,
+                                   &weechat_lua_load,
+                                   &lua_action_install_list);
+        }
+        else if (data == &lua_action_remove_list)
+        {
+            script_action_remove (weechat_lua_plugin,
+                                  lua_scripts,
+                                  &weechat_lua_unload,
+                                  &lua_action_remove_list);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_lua_signal_script_action_cb: callback called when a script action
+ *                                      is asked (install/remove a script)
+ */
+
+int
+weechat_lua_signal_script_action_cb (void *data, const char *signal,
+                                     const char *type_data,
+                                     void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strcmp (signal, "lua_script_install") == 0)
+        {
+            script_action_add (&lua_action_install_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_lua_timer_action_cb,
+                                &lua_action_install_list);
+        }
+        else if (strcmp (signal, "lua_script_remove") == 0)
+        {
+            script_action_add (&lua_action_remove_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_lua_timer_action_cb,
+                                &lua_action_remove_list);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -529,8 +611,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
                  &weechat_lua_infolist_cb,
-                 &weechat_lua_debug_dump_cb,
-                 &weechat_lua_buffer_closed_cb,
+                 &weechat_lua_signal_debug_dump_cb,
+                 &weechat_lua_signal_buffer_closed_cb,
+                 &weechat_lua_signal_script_action_cb,
                  &weechat_lua_load_cb);
     lua_quiet = 0;
     

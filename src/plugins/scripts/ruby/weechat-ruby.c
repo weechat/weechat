@@ -47,6 +47,20 @@ struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 const char *ruby_current_script_filename = NULL;
 
+/* string used to execute action "install":
+   when signal "ruby_install_script" is received, name of string
+   is added to this string, to be installed later by a timer (when nothing is
+   running in script)
+*/
+char *ruby_action_install_list = NULL;
+
+/* string used to execute action "remove":
+   when signal "ruby_remove_script" is received, name of string
+   is added to this string, to be removed later by a timer (when nothing is
+   running in script)
+*/
+char *ruby_action_remove_list = NULL;
+
 VALUE ruby_mWeechat, ruby_mWeechatOutputs;
 
 #define MOD_NAME_PREFIX "WeechatRubyModule"
@@ -606,8 +620,8 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Ruby script */
-            path_script = script_search_full_name (weechat_ruby_plugin,
-                                                   argv_eol[2]);
+            path_script = script_search_path (weechat_ruby_plugin,
+                                              argv_eol[2]);
             weechat_ruby_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -673,12 +687,12 @@ weechat_ruby_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_ruby_debug_dump_cb: dump Ruby plugin data in WeeChat log file
+ * weechat_ruby_signal_debug_dump_cb: dump Ruby plugin data in WeeChat log file
  */
 
 int
-weechat_ruby_debug_dump_cb (void *data, const char *signal,
-                            const char *type_data, void *signal_data)
+weechat_ruby_signal_debug_dump_cb (void *data, const char *signal,
+                                   const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -692,12 +706,12 @@ weechat_ruby_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_ruby_buffer_closed_cb: callback called when a buffer is closed
+ * weechat_ruby_signal_buffer_closed_cb: callback called when a buffer is closed
  */
 
 int
-weechat_ruby_buffer_closed_cb (void *data, const char *signal,
-                               const char *type_data, void *signal_data)
+weechat_ruby_signal_buffer_closed_cb (void *data, const char *signal,
+                                      const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -706,6 +720,74 @@ weechat_ruby_buffer_closed_cb (void *data, const char *signal,
     
     if (signal_data)
         script_remove_buffer_callbacks (ruby_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_ruby_timer_action_cb: timer for executing actions
+ */
+
+int
+weechat_ruby_timer_action_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    if (data)
+    {
+        if (data == &ruby_action_install_list)
+        {
+            script_action_install (weechat_ruby_plugin,
+                                   ruby_scripts,
+                                   &weechat_ruby_unload,
+                                   &weechat_ruby_load,
+                                   &ruby_action_install_list);
+        }
+        else if (data == &ruby_action_remove_list)
+        {
+            script_action_remove (weechat_ruby_plugin,
+                                  ruby_scripts,
+                                  &weechat_ruby_unload,
+                                  &ruby_action_remove_list);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_ruby_signal_script_action_cb: callback called when a script action
+ *                                       is asked (install/remove a script)
+ */
+
+int
+weechat_ruby_signal_script_action_cb (void *data, const char *signal,
+                                      const char *type_data,
+                                      void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strcmp (signal, "ruby_script_install") == 0)
+        {
+            script_action_add (&ruby_action_install_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_ruby_timer_action_cb,
+                                &ruby_action_install_list);
+        }
+        else if (strcmp (signal, "ruby_script_remove") == 0)
+        {
+            script_action_add (&ruby_action_remove_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_ruby_timer_action_cb,
+                                &ruby_action_remove_list);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -810,8 +892,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_ruby_command_cb,
                  &weechat_ruby_completion_cb,
                  &weechat_ruby_infolist_cb,
-                 &weechat_ruby_debug_dump_cb,
-                 &weechat_ruby_buffer_closed_cb,
+                 &weechat_ruby_signal_debug_dump_cb,
+                 &weechat_ruby_signal_buffer_closed_cb,
+                 &weechat_ruby_signal_script_action_cb,
                  &weechat_ruby_load_cb);
     ruby_quiet = 0;
     

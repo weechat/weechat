@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-03 17:50+0200\n"
+"POT-Creation-Date: 2009-04-05 14:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5145,6 +5145,22 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
 msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
+
+#, fuzzy, c-format
+msgid "%s: script removed: %s"
+msgstr "не на канале"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s DCC: не могу создать pipe\n"
 
 #. TRANSLATORS: %s is language (for example "perl")
 #, fuzzy, c-format

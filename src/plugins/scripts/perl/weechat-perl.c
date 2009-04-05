@@ -46,6 +46,20 @@ struct t_plugin_script *last_perl_script = NULL;
 struct t_plugin_script *perl_current_script = NULL;
 const char *perl_current_script_filename = NULL;
 
+/* string used to execute action "install":
+   when signal "perl_install_script" is received, name of string
+   is added to this string, to be installed later by a timer (when nothing is
+   running in script)
+*/
+char *perl_action_install_list = NULL;
+
+/* string used to execute action "remove":
+   when signal "perl_remove_script" is received, name of string
+   is added to this string, to be removed later by a timer (when nothing is
+   running in script)
+*/
+char *perl_action_remove_list = NULL;
+
 #ifdef NO_PERL_MULTIPLICITY
 #undef MULTIPLICITY
 #endif
@@ -552,8 +566,8 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Perl script */
-            path_script = script_search_full_name (weechat_perl_plugin,
-                                                   argv_eol[2]);
+            path_script = script_search_path (weechat_perl_plugin,
+                                              argv_eol[2]);
             weechat_perl_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -619,12 +633,12 @@ weechat_perl_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_perl_debug_dump_cb: dump Perl plugin data in WeeChat log file
+ * weechat_perl_signal_debug_dump_cb: dump Perl plugin data in WeeChat log file
  */
 
 int
-weechat_perl_debug_dump_cb (void *data, const char *signal,
-                            const char *type_data, void *signal_data)
+weechat_perl_signal_debug_dump_cb (void *data, const char *signal,
+                                   const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -638,12 +652,12 @@ weechat_perl_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_perl_buffer_closed_cb: callback called when a buffer is closed
+ * weechat_perl_signal_buffer_closed_cb: callback called when a buffer is closed
  */
 
 int
-weechat_perl_buffer_closed_cb (void *data, const char *signal,
-                               const char *type_data, void *signal_data)
+weechat_perl_signal_buffer_closed_cb (void *data, const char *signal,
+                                      const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -652,6 +666,74 @@ weechat_perl_buffer_closed_cb (void *data, const char *signal,
     
     if (signal_data)
         script_remove_buffer_callbacks (perl_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_perl_timer_action_cb: timer for executing actions
+ */
+
+int
+weechat_perl_timer_action_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    if (data)
+    {
+        if (data == &perl_action_install_list)
+        {
+            script_action_install (weechat_perl_plugin,
+                                   perl_scripts,
+                                   &weechat_perl_unload,
+                                   &weechat_perl_load,
+                                   &perl_action_install_list);
+        }
+        else if (data == &perl_action_remove_list)
+        {
+            script_action_remove (weechat_perl_plugin,
+                                  perl_scripts,
+                                  &weechat_perl_unload,
+                                  &perl_action_remove_list);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_perl_signal_script_action_cb: callback called when a script action
+ *                                       is asked (install/remove a script)
+ */
+
+int
+weechat_perl_signal_script_action_cb (void *data, const char *signal,
+                                      const char *type_data,
+                                      void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strcmp (signal, "perl_script_install") == 0)
+        {
+            script_action_add (&perl_action_install_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_perl_timer_action_cb,
+                                &perl_action_install_list);
+        }
+        else if (strcmp (signal, "perl_script_remove") == 0)
+        {
+            script_action_add (&perl_action_remove_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_perl_timer_action_cb,
+                                &perl_action_remove_list);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -705,8 +787,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
                  &weechat_perl_infolist_cb,
-                 &weechat_perl_debug_dump_cb,
-                 &weechat_perl_buffer_closed_cb,
+                 &weechat_perl_signal_debug_dump_cb,
+                 &weechat_perl_signal_buffer_closed_cb,
+                 &weechat_perl_signal_script_action_cb,
                  &weechat_perl_load_cb);
     perl_quiet = 0;
     

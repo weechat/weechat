@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-03 17:50+0200\n"
-"PO-Revision-Date: 2009-04-03 17:50+0200\n"
+"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"PO-Revision-Date: 2009-04-05 14:09+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -5314,6 +5314,22 @@ msgstr ""
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
 msgstr "%s: erreur de chargement du script \"%s\" (mémoire insuffisante)"
+
+#, c-format
+msgid "%s: script removed: %s"
+msgstr "%s: script supprimé: %s"
+
+#, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s%s: impossible de supprimer le script: %s (%s)"
+
+#, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s: script \"%s\" non trouvé, rien n'a été supprimé"
+
+#, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s%s: impossible de déplacer le script %s vers %s (%s)"
 
 #. TRANSLATORS: %s is language (for example "perl")
 #, c-format

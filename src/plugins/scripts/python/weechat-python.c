@@ -45,6 +45,20 @@ struct t_plugin_script *python_current_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 
+/* string used to execute action "install":
+   when signal "python_install_script" is received, name of string
+   is added to this string, to be installed later by a timer (when nothing is
+   running in script)
+*/
+char *python_action_install_list = NULL;
+
+/* string used to execute action "remove":
+   when signal "python_remove_script" is received, name of string
+   is added to this string, to be removed later by a timer (when nothing is
+   running in script)
+*/
+char *python_action_remove_list = NULL;
+
 char python_buffer_output[128];
 
 
@@ -637,8 +651,8 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Python script */
-            path_script = script_search_full_name (weechat_python_plugin,
-                                                   argv_eol[2]);
+            path_script = script_search_path (weechat_python_plugin,
+                                              argv_eol[2]);
             weechat_python_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -705,12 +719,13 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_python_debug_dump_cb: dump Python plugin data in WeeChat log file
+ * weechat_python_signal_debug_dump_cb: dump Python plugin data in WeeChat log
+ *                                      file
  */
 
 int
-weechat_python_debug_dump_cb (void *data, const char *signal,
-                              const char *type_data, void *signal_data)
+weechat_python_signal_debug_dump_cb (void *data, const char *signal,
+                                     const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -724,12 +739,14 @@ weechat_python_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_python_buffer_closed_cb: callback called when a buffer is closed
+ * weechat_python_signal_buffer_closed_cb: callback called when a buffer is
+ *                                         closed
  */
 
 int
-weechat_python_buffer_closed_cb (void *data, const char *signal,
-                                 const char *type_data, void *signal_data)
+weechat_python_signal_buffer_closed_cb (void *data, const char *signal,
+                                        const char *type_data,
+                                        void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -738,6 +755,74 @@ weechat_python_buffer_closed_cb (void *data, const char *signal,
     
     if (signal_data)
         script_remove_buffer_callbacks (python_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_python_timer_action_cb: timer for executing actions
+ */
+
+int
+weechat_python_timer_action_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    if (data)
+    {
+        if (data == &python_action_install_list)
+        {
+            script_action_install (weechat_python_plugin,
+                                   python_scripts,
+                                   &weechat_python_unload,
+                                   &weechat_python_load,
+                                   &python_action_install_list);
+        }
+        else if (data == &python_action_remove_list)
+        {
+            script_action_remove (weechat_python_plugin,
+                                  python_scripts,
+                                  &weechat_python_unload,
+                                  &python_action_remove_list);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_python_signal_script_action_cb: callback called when a script action
+ *                                         is asked (install/remove a script)
+ */
+
+int
+weechat_python_signal_script_action_cb (void *data, const char *signal,
+                                        const char *type_data,
+                                        void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strcmp (signal, "python_script_install") == 0)
+        {
+            script_action_add (&python_action_install_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_python_timer_action_cb,
+                                &python_action_install_list);
+        }
+        else if (strcmp (signal, "python_script_remove") == 0)
+        {
+            script_action_add (&python_action_remove_list,
+                               (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_python_timer_action_cb,
+                                &python_action_remove_list);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -787,8 +872,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_python_command_cb,
                  &weechat_python_completion_cb,
                  &weechat_python_infolist_cb,
-                 &weechat_python_debug_dump_cb,
-                 &weechat_python_buffer_closed_cb,
+                 &weechat_python_signal_debug_dump_cb,
+                 &weechat_python_signal_buffer_closed_cb,
+                 &weechat_python_signal_script_action_cb,
                  &weechat_python_load_cb);
     python_quiet = 0;
     
@@ -828,6 +914,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
                         weechat_gettext ("%s%s: unable to free interpreter"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
     }
+    
+    /* free some data */
+    if (python_action_install_list)
+        free (python_action_install_list);
+    if (python_action_remove_list)
+        free (python_action_remove_list);
     
     return WEECHAT_RC_OK;
 }

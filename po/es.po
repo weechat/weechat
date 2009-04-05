@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-03 17:50+0200\n"
+"POT-Creation-Date: 2009-04-05 14:08+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5102,6 +5102,22 @@ msgstr ""
 msgid "%s: error loading script \"%s\" (not enough memory)"
 msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
+
+#, fuzzy, c-format
+msgid "%s: script removed: %s"
+msgstr "no presente en el canal"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s servidor \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s no es posible crear el servidor\n"
 
 #. TRANSLATORS: %s is language (for example "perl")
 #, fuzzy, c-format
