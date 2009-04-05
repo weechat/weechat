@@ -863,6 +863,7 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                         }
                         free (new_path);
                     }
+                    free (name);
                 }
             }
             weechat_string_free_exploded (argv);
