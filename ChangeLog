@@ -1,21 +1,21 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-03-22
+ChangeLog - 2009-04-06
 
 
 Version 0.2.7 (under dev!):
-   * jabber: add jabber plugin (jabber/XMPP protocol)
    * irc: add irc plugin (replaces old IRC code in core)
    * irc: add smart join/part/quit message filter (task #8503)
-   * irc: use of many addresses for servers (auto-switch when a connexion fails),
-     nicks are now set with one option "nicks" (task #6088)
+   * irc: use of many addresses for servers (auto-switch when a connexion
+     fails), nicks are now set with one option "nicks" (task #6088)
    * irc: add some colors in messages from server (for text and nicks)
      (task #8926)
    * irc: add color decoding in title for IRC channels (task #6030)
-   * irc: fix lock with SSL servers when connection fails, and when disconnecting
-     during connection problem (bug #17584)
-   * irc: command /whois is now authorized in private without argument (task #7482)
+   * irc: fix lock with SSL servers when connection fails, and when
+     disconnecting during connection problem (bug #17584)
+   * irc: command /whois is now authorized in private without argument
+     (task #7482)
    * irc: remove kernel info in CTCP VERSION reply (task #7494)
    * irc: add missing commands (328, 369)
    * aspell: improve plugin: use of many dictionaries, global dictionary, real
@@ -25,13 +25,15 @@ Version 0.2.7 (under dev!):
      (task #7140)
    * relay: add relay plugin (network communication between WeeChat and remote
      application)
-   * logger: add logger plugin with new features: backlog, level for messages to log
-     (task #8592), level by buffer (task #6687), filename mask by buffer,
-     option "name_lower_case" (bug #19522)
+   * logger: add logger plugin with new features: backlog, level for messages
+     to log (task #8592), level by buffer (task #6687), filename mask by
+     buffer, option "name_lower_case" (bug #19522)
    * alias: fix bug with alias, use current buffer to run commands (bug #22876)
    * plugins: add some other plugins: alias, demo, fifo, notify, tcl, xfer
-   * scripts: new scripts: buffers.pl, go.py, iset.pl, jabber.py, launcher.pl,
-     mastermind.pl, weetris.pl
+   * scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP
+     protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of
+     buffers), iset.pl (set options interactively), weetris.pl (tetris-like
+     game, mastermind.pl, ...
    * api: add hooks: command, timer, file descriptor, process, connection,
      print, signal, config, completion, modifier, info, infolist
    * api: new plugin API with many new functions: hooks, buffer management and
@@ -42,29 +44,30 @@ Version 0.2.7 (under dev!):
    * gui: add tags for lines and custom filtering by tags or regex (task #7674)
    * gui: add custom bars, with custom items
    * gui: add key to zoom a window (task #7470)
-   * gui: add new option scroll_page_percent to choose percent of height to scroll
-     with page_up and page_down keys (task #8702)
+   * gui: add new option scroll_page_percent to choose percent of height to
+     scroll with page_up and page_down keys (task #8702)
    * gui: add number of lines remaining after last line displayed in "-MORE-"
      indicator (task #6702)
    * gui: fix display bug with some weird UTF-8 chars (bug #19687)
    * gui: fix bug with wide chars in input (bug #16356)
-   * gui: fix bug when switching window, scrollback is now preserved (task #7680)
-   * network: add support for more than one proxy, with proxy selection for each IRC
-     server (task #6859)
-   * network: fix network connection for hostnames resolving to several IPs: try all
-     IPs in list until one succeeds (bug #21473, debian bug #498610)
+   * gui: fix bug when switching window, scrollback is now preserved
+     (task #7680)
+   * network: add support for more than one proxy, with proxy selection for
+     each IRC server (task #6859)
+   * network: fix network connection for hostnames resolving to several IPs:
+     try all IPs in list until one succeeds (bug #21473, debian bug #498610)
    * core: add group support in nicklist
    * core: improve main loop: higher timout in select(), less CPU usage
    * core: add /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)
    * core: add new /layout command and save_layout_on_exit config option, to
      save/restore windows and buffers order (task #5453)
-   * core: add new options for completion, optional stop instead of cycling with
-     words found (task #5909)
+   * core: add new options for completion, optional stop instead of cycling
+     with words found (task #5909)
    * core: new name for configuration files (*.conf instead of *.rc)
    * core: improve /set command, new command /unset (task #6085)
-   * core: add new input action "set_unread_current_buffer" to set unread marker for
-     current buffer only (task #7286)
+   * core: add new input action "set_unread_current_buffer" to set unread
+     marker for current buffer only (task #7286)
    * core: remove key functions, replaced by /input command
    * core: fix nick completion bug (missing space after nick)
 
