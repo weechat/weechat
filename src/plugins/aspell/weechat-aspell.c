@@ -769,7 +769,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         {
             /* find start of word */
             utf8_char_int = weechat_utf8_char_int (ptr_string);
-            while (!iswalnum (utf8_char_int) || iswspace (utf8_char_int))
+            while ((!iswalnum (utf8_char_int) && (utf8_char_int != '\''))
+                   || iswspace (utf8_char_int))
             {
                 char_size = weechat_utf8_char_size (ptr_string);
                 memcpy (result + index_result, ptr_string, char_size);
@@ -784,7 +785,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             
             ptr_end = weechat_utf8_next_char (ptr_string);
             utf8_char_int = weechat_utf8_char_int (ptr_end);
-            while (iswalnum (utf8_char_int))
+            while (iswalnum (utf8_char_int) || (utf8_char_int == '\''))
             {
                 ptr_end = weechat_utf8_next_char (ptr_end);
                 if (!ptr_end[0])
