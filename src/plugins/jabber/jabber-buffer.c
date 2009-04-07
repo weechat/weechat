@@ -185,8 +185,6 @@ jabber_buffer_merge_servers ()
                             "name", JABBER_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (jabber_buffer_servers,
                             "short_name", JABBER_BUFFER_ALL_SERVERS_NAME);
-        weechat_buffer_set (jabber_buffer_servers, "key_bind_meta-s",
-                            "/command jabber /jabber switch");
         weechat_buffer_set (jabber_buffer_servers,
                             "localvar_set_server", JABBER_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (jabber_buffer_servers,
@@ -229,11 +227,6 @@ jabber_buffer_split_server ()
 {
     struct t_jabber_server *ptr_server;
     char buffer_name[256], charset_modifier[256];
-    
-    if (jabber_buffer_servers)
-    {
-        weechat_buffer_set (jabber_buffer_servers, "key_unbind_meta-s", "");
-    }
     
     for (ptr_server = jabber_servers; ptr_server;
          ptr_server = ptr_server->next_server)

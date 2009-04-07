@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -344,11 +344,12 @@ msgstr "%sNení dostupná žádná nápověda, \"%s\" není příkaz nebo volba"
 msgid "Buffer command history:"
 msgstr "Historie příkazů bufferu:"
 
-#, c-format
-msgid "New key binding: %s%s => %s%s"
-msgstr "Nová klávesová zkratka: %s%s => %s%s"
+#, fuzzy
+msgid "No key binding defined"
+msgstr "Žádné pole nejsou definovány"
 
-msgid "Key bindings:"
+#, fuzzy, c-format
+msgid "Key bindings (%d):"
 msgstr "Klávesové zkratky:"
 
 msgid "Default key bindings restored"
@@ -359,6 +360,12 @@ msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%sChyba: \"-yes\" argument je požadován pro reset kaláves (bezpečnostní "
 "opatření)"
+
+#, fuzzy, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] "uživatel byl zablokován"
+msgstr[1] "uživatel byl zablokován"
 
 #, c-format
 msgid "Key \"%s\" unbound"
@@ -956,7 +963,7 @@ msgid "bind/unbind keys"
 msgstr "napojit/odpojit klávesy"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[klávesa [funkce/příkaz]] [unbind klávesa] [functions] [call funkce "
 "[\"argumenty\"]] [reset -yes]"
@@ -966,7 +973,8 @@ msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 "  klávesa: zobrazí nebo napojí klávesu na vnitřní funkci nebo příkaz "
 "(začínající \"/\")\n"
@@ -2041,6 +2049,10 @@ msgstr "Nedostatek paměti pro nový řádek\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
+
+#, c-format
+msgid "New key binding: %s%s => %s%s"
+msgstr "Nová klávesová zkratka: %s%s => %s%s"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""

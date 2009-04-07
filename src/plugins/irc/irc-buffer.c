@@ -185,8 +185,6 @@ irc_buffer_merge_servers ()
                             "name", IRC_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (irc_buffer_servers,
                             "short_name", IRC_BUFFER_ALL_SERVERS_NAME);
-        weechat_buffer_set (irc_buffer_servers, "key_bind_meta-s",
-                            "/command irc /server switch");
         weechat_buffer_set (irc_buffer_servers,
                             "localvar_set_server", IRC_BUFFER_ALL_SERVERS_NAME);
         weechat_buffer_set (irc_buffer_servers,
@@ -229,11 +227,6 @@ irc_buffer_split_server ()
 {
     struct t_irc_server *ptr_server;
     char buffer_name[256], charset_modifier[256];
-    
-    if (irc_buffer_servers)
-    {
-        weechat_buffer_set (irc_buffer_servers, "key_unbind_meta-s", "");
-    }
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)

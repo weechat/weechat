@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -369,12 +369,12 @@ msgstr "No hay ayuda disponible, el comando \"%s\" es desconocido\n"
 msgid "Buffer command history:"
 msgstr "mostrar historial de comandos de bÃºfer"
 
-#, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s"
-msgstr "Nueva anclaje de clave:  %s"
-
 #, fuzzy
-msgid "Key bindings:"
+msgid "No key binding defined"
+msgstr "NingÃºn alias definido.\n"
+
+#, fuzzy, c-format
+msgid "Key bindings (%d):"
 msgstr "Anclajes de clave:\n"
 
 #, fuzzy
@@ -386,6 +386,12 @@ msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s \"-yes\" se requiere argumento para resetear las claves (por razones de "
 "seguridad)\n"
+
+#, fuzzy, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] "Sin ignores definidos.\n"
+msgstr[1] "Sin ignores definidos.\n"
 
 #, fuzzy, c-format
 msgid "Key \"%s\" unbound"
@@ -978,7 +984,7 @@ msgid "bind/unbind keys"
 msgstr "atar/desatar claves"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr "[clave funciÃ³n/comando] [desatar clave] [funciones] [reset -yes]"
 
 #, fuzzy
@@ -986,7 +992,8 @@ msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 "    clave: ata esta clave a una funciÃ³n interna o a un comando (comenzando "
 "por \"/ \")\n"
@@ -2029,6 +2036,10 @@ msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s no es posible aÃ±adir un bÃºfer a la lista caliente (hotlist)\n"
+
+#, fuzzy, c-format
+msgid "New key binding: %s%s => %s%s"
+msgstr "Nueva anclaje de clave:  %s"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""

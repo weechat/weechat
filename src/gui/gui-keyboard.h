@@ -36,6 +36,8 @@ struct t_gui_key
 
 extern struct t_gui_key *gui_keys;
 extern struct t_gui_key *last_gui_key;
+extern int gui_keys_count;
+extern int gui_keyboard_verbose;
 extern char gui_key_combo_buffer[];
 extern int gui_key_grab;
 extern int gui_key_grab_count;
@@ -51,6 +53,9 @@ extern void gui_keyboard_grab_init ();
 extern void gui_keyboard_grab_end ();
 extern char *gui_keyboard_get_internal_code (const char *key);
 extern char *gui_keyboard_get_expanded_name (const char *key);
+extern struct t_gui_key *gui_keyboard_new (struct t_gui_buffer *buffer,
+                                           const char *key,
+                                           const char *command);
 extern struct t_gui_key *gui_keyboard_search (struct t_gui_buffer *buffer,
                                               const char *key);
 extern struct t_gui_key *gui_keyboard_bind (struct t_gui_buffer *buffer,

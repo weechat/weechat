@@ -1705,28 +1705,16 @@ command_input (void *data, struct t_gui_buffer *buffer,
  */
 
 void
-command_key_display (struct t_gui_key *key, int new_key)
+command_key_display (struct t_gui_key *key)
 {
     char *expanded_name;
-
+    
     expanded_name = gui_keyboard_get_expanded_name (key->key);
-    if (new_key)
-    {
-        gui_chat_printf (NULL,
-                         _("New key binding: %s%s => %s%s"),
-                         (expanded_name) ? expanded_name : key->key,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         key->command);
-    }
-    else
-    {
-        gui_chat_printf (NULL, "  %20s%s => %s%s",
-                         (expanded_name) ? expanded_name : key->key,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         key->command);
-    }
+    gui_chat_printf (NULL, "  %20s%s => %s%s",
+                     (expanded_name) ? expanded_name : key->key,
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     key->command);
     if (expanded_name)
         free (expanded_name);
 }
@@ -1741,6 +1729,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
 {
     char *internal_code;
     struct t_gui_key *ptr_key;
+    int old_keys_count, keys_added;
     
     /* make C compiler happy */
     (void) data;
@@ -1749,11 +1738,17 @@ command_key (void *data, struct t_gui_buffer *buffer,
     /* display all key bindings */
     if (argc == 1)
     {
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Key bindings:"));
-        for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+        if (gui_keys_count == 0)
+            gui_chat_printf (NULL, _("No key binding defined"));
+        else
         {
-            command_key_display (ptr_key, 0);
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL, _("Key bindings (%d):"),
+                             gui_keys_count);
+            for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+            {
+                command_key_display (ptr_key);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -1764,7 +1759,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
             gui_keyboard_free_all (&gui_keys, &last_gui_key);
-            gui_keyboard_init ();
+            gui_keyboard_default_bindings ();
             gui_chat_printf (NULL,
                              _("Default key bindings restored"));
         }
@@ -1776,6 +1771,21 @@ command_key (void *data, struct t_gui_buffer *buffer,
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add missing keys */
+    if (string_strcasecmp (argv[1], "missing") == 0)
+    {
+        old_keys_count = gui_keys_count;
+        gui_keyboard_verbose = 1;
+        gui_keyboard_default_bindings ();
+        gui_keyboard_verbose = 0;
+        keys_added = (gui_keys_count > old_keys_count) ?
+            gui_keys_count - old_keys_count : 0;
+        gui_chat_printf (NULL,
+                         NG_("%d new key added", "%d new keys added", keys_added),
+                         keys_added);
         return WEECHAT_RC_OK;
     }
     
@@ -1813,7 +1823,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
         {
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL, _("Key:"));
-            command_key_display (ptr_key, 0);
+            command_key_display (ptr_key);
         }
         else
         {
@@ -1824,14 +1834,12 @@ command_key (void *data, struct t_gui_buffer *buffer,
             free (internal_code);
         return WEECHAT_RC_OK;
     }
-
+    
     /* bind new key */
+    gui_keyboard_verbose = 1;
     ptr_key = gui_keyboard_bind (NULL, argv[1], argv_eol[2]);
-    if (ptr_key)
-    {
-        command_key_display (ptr_key, 1);
-    }
-    else
+    gui_keyboard_verbose = 0;
+    if (!ptr_key)
     {
         gui_chat_printf (NULL,
                          _("%sError: unable to bind key \"%s\""),
@@ -3783,12 +3791,14 @@ command_init ()
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("[key [command [args]]] | [unbind key] | [reset -yes]"),
+                  N_("[key [command [args]]] | [unbind key] | [reset -yes] | "
+                     "[missing]"),
                   N_("      key: display or bind this key to a command\n"
                      "   unbind: unbind a key\n"
                      "    reset: restore bindings to the default values and "
-                     "delete ALL personal bindings (use carefully!)"),
-                  "unbind|reset",
+                     "delete ALL personal bindings (use carefully!)\n"
+                     "  missing: add missing keys (using default bindings)"),
+                  "unbind|reset|missing",
                   &command_key, NULL);
     hook_command (NULL, "layout",
                   N_("save/apply/reset layout for buffers and windows"),

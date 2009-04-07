@@ -34,6 +34,8 @@
 #include "../plugins/plugin.h"
 #include "gui-keyboard.h"
 #include "gui-buffer.h"
+#include "gui-chat.h"
+#include "gui-color.h"
 #include "gui-completion.h"
 #include "gui-input.h"
 #include "gui-window.h"
@@ -41,6 +43,9 @@
 
 struct t_gui_key *gui_keys = NULL;     /* key bindings                      */
 struct t_gui_key *last_gui_key = NULL; /* last key binding                  */
+int gui_keys_count = 0;                /* number of defined keys            */
+
+int gui_keyboard_verbose = 0;          /* 1 to see some messages            */
 
 char gui_key_combo_buffer[128];     /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
@@ -67,8 +72,6 @@ gui_keyboard_init ()
     gui_key_combo_buffer[0] = '\0';
     gui_key_grab = 0;
     gui_key_grab_count = 0;
-    
-    gui_keyboard_default_bindings ();
 }
 
 /*
@@ -273,6 +276,8 @@ gui_keyboard_insert_sorted (struct t_gui_key **keys, struct t_gui_key **last_key
         *keys = key;
         *last_key = key;
     }
+    
+    gui_keys_count++;
 }
 
 /*
@@ -286,20 +291,42 @@ gui_keyboard_new (struct t_gui_buffer *buffer, const char *key,
                   const char *command)
 {
     struct t_gui_key *new_key;
-    char *internal_code;
+    char *expanded_name;
     
     if ((new_key = malloc (sizeof (*new_key))))
     {
-        internal_code = gui_keyboard_get_internal_code (key);
-        new_key->key = (internal_code) ? strdup (internal_code) : strdup (key);
-        if (internal_code)
-            free (internal_code);
+        new_key->key = gui_keyboard_get_internal_code (key);
+        if (!new_key->key)
+            new_key->key = strdup (key);
+        if (!new_key->key)
+        {
+            free (new_key);
+            return NULL;
+        }
         new_key->command = (command) ? strdup (command) : NULL;
+        if (!new_key->command)
+        {
+            free (new_key);
+            return NULL;
+        }
         
         if (buffer)
             gui_keyboard_insert_sorted (&buffer->keys, &buffer->last_key, new_key);
         else
             gui_keyboard_insert_sorted (&gui_keys, &last_gui_key, new_key);
+        
+        if (gui_keyboard_verbose)
+        {
+            expanded_name = gui_keyboard_get_expanded_name (new_key->key);
+            gui_chat_printf (NULL,
+                             _("New key binding: %s%s => %s%s"),
+                             (expanded_name) ? expanded_name : new_key->key,
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             new_key->command);
+            if (expanded_name)
+                free (expanded_name);
+        }
     }
     else
         return NULL;
@@ -525,6 +552,8 @@ gui_keyboard_free (struct t_gui_key **keys, struct t_gui_key **last_key,
         *last_key = key->prev_key;
     
     free (key);
+    
+    gui_keys_count--;
 }
 
 /*

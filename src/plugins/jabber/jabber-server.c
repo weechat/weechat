@@ -1172,9 +1172,6 @@ jabber_server_connect (struct t_jabber_server *server)
         weechat_buffer_set (server->buffer, "display", "auto");
         
         weechat_bar_item_update ("buffer_name");
-        
-        weechat_buffer_set (server->buffer, "key_bind_meta-s",
-                            "/command jabber /jabber switch");
     }
 
     if (!server->address)

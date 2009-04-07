@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,11 +326,11 @@ msgstr ""
 msgid "Buffer command history:"
 msgstr ""
 
-#, c-format
-msgid "New key binding: %s%s => %s%s"
+msgid "No key binding defined"
 msgstr ""
 
-msgid "Key bindings:"
+#, c-format
+msgid "Key bindings (%d):"
 msgstr ""
 
 msgid "Default key bindings restored"
@@ -339,6 +339,12 @@ msgstr ""
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
+
+#, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "Key \"%s\" unbound"
@@ -864,14 +870,15 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr ""
 
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 
 msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 
 msgid "save/apply/reset layout for buffers and windows"
@@ -1751,6 +1758,10 @@ msgid "Not enough memory for new line"
 msgstr ""
 
 msgid "Error: not enough memory to add a buffer to hotlist"
+msgstr ""
+
+#, c-format
+msgid "New key binding: %s%s => %s%s"
 msgstr ""
 
 #, c-format

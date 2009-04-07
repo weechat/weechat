@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
-"PO-Revision-Date: 2009-04-05 14:09+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
+"PO-Revision-Date: 2009-04-07 18:01+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -347,12 +347,12 @@ msgstr "%sPas d'aide disponible, \"%s\" n'est pas une commande ou une option"
 msgid "Buffer command history:"
 msgstr "Historique des commandes du tampon:"
 
-#, c-format
-msgid "New key binding: %s%s => %s%s"
-msgstr "Nouvelle touche: %s%s => %s%s"
+msgid "No key binding defined"
+msgstr "Pas d'association de touche définie"
 
-msgid "Key bindings:"
-msgstr "Associations de touches:"
+#, c-format
+msgid "Key bindings (%d):"
+msgstr "Associations de touches (%d):"
 
 msgid "Default key bindings restored"
 msgstr "Touches par défaut restaurées"
@@ -362,6 +362,12 @@ msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%sErreur: le paramètre \"-yes\" est requis pour la réinitialisation des "
 "touches (raison de sécurité)"
+
+#, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] "%d nouvelle touche ajoutée"
+msgstr[1] "%d nouvelles touches ajoutées"
 
 #, c-format
 msgid "Key \"%s\" unbound"
@@ -1023,19 +1029,23 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "associer/libérer des touches"
 
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
-msgstr "[touche [commande [args]]] | [unbind touche] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgstr ""
+"[touche [commande [args]]] | [unbind touche] | [reset -yes] | [missing]"
 
 msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 "   touche: voir ou associer cette touche à une commande\n"
 "   unbind: supprimer l'association à une touche\n"
 "    reset: restaure les touches aux valeurs par défaut et supprime TOUTES "
-"les touches personnelles (utiliser avec précaution !)"
+"les touches personnelles (utiliser avec précaution !)\n"
+"  missing: ajoute les touches manquantes (en utilisant les touches par "
+"défaut)"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "sauve/applique/réinitialise la disposition des tampons et fenêtres"
@@ -2129,6 +2139,10 @@ msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
+
+#, c-format
+msgid "New key binding: %s%s => %s%s"
+msgstr "Nouvelle touche: %s%s => %s%s"
 
 #, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -5705,20 +5719,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid ""
-#~ "smart completion for nicks (completes first with last speakers, "
-#~ "highlights or both)"
-#~ msgstr ""
-#~ "complétion intelligente pour les pseudos (complète d'abord avec les "
-#~ "personnes qui ont parlé récemment)"
-
-#~ msgid ""
-#~ "partially complete nicks (stop when many nicks found begin with same "
-#~ "letters)"
-#~ msgstr ""
-#~ "complète partiellement les pseudos (stoppe quand plusieurs pseudos "
-#~ "trouvés commencent par les mêmes lettres)"
-
-#~ msgid "[action [args] | number | [[server] [channel]]]"
-#~ msgstr "[action [args] | nombre | [[serveur] [canal]]]"

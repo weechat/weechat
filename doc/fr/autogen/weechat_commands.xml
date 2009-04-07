@@ -149,13 +149,14 @@ fonctions pour la ligne de commande
 Cette commande est utilisée par les associations de touches ou les extensions.
 </programlisting>
 
-<command>/key  [touche [commande [args]]] | [unbind touche] | [reset -yes]</command>
+<command>/key  [touche [commande [args]]] | [unbind touche] | [reset -yes] | [missing]</command>
 <programlisting>
 associer/libérer des touches
 
    touche: voir ou associer cette touche à une commande
    unbind: supprimer l'association à une touche
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
+  missing: ajoute les touches manquantes (en utilisant les touches par défaut)
 </programlisting>
 
 <command>/layout  [[save | apply | reset] [buffers | windows]]</command>

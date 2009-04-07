@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -374,12 +374,12 @@ msgstr "Nem érhető el segítség, a \"%s\" ismeretlen parancs\n"
 msgid "Buffer command history:"
 msgstr "a pufferben kiadott parancsok előzményének mutatása"
 
-#, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s"
-msgstr "Új billentyűparancs: %s"
-
 #, fuzzy
-msgid "Key bindings:"
+msgid "No key binding defined"
+msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy, c-format
+msgid "Key bindings (%d):"
 msgstr "Billentyűparancsok:\n"
 
 #, fuzzy
@@ -391,6 +391,12 @@ msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
+
+#, fuzzy, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] "Nincs mellőzés megadva.\n"
+msgstr[1] "Nincs mellőzés megadva.\n"
 
 #, fuzzy, c-format
 msgid "Key \"%s\" unbound"
@@ -998,7 +1004,7 @@ msgid "bind/unbind keys"
 msgstr "billentyűk hozzárendelése/hozzárendelés eltávolítása"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[billentyű [funkció/parancs]] [unbind billentyű] [funkciók] [call funkció "
 "[\"paraméterek\"]] [reset -yes]"
@@ -1008,7 +1014,8 @@ msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 "billentyű: billentyű hozzárendelése valamely belső funkcióhoz vagy \"/\" "
 "jellel kezdődő parancshoz\n"
@@ -2059,6 +2066,10 @@ msgstr "Nincs elég memória az új sorhoz\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
+
+#, fuzzy, c-format
+msgid "New key binding: %s%s => %s%s"
+msgstr "Új billentyűparancs: %s"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""

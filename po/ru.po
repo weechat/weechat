@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-05 14:08+0200\n"
+"POT-Creation-Date: 2009-04-07 18:12+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -370,12 +370,12 @@ msgstr "Справка недоступна, \"%s\" не является ком
 msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
 
-#, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s"
-msgstr "Новая комбинация клавиш:  %s"
-
 #, fuzzy
-msgid "Key bindings:"
+msgid "No key binding defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy, c-format
+msgid "Key bindings (%d):"
 msgstr "Комбинации клавиш:\n"
 
 #, fuzzy
@@ -386,6 +386,12 @@ msgstr "Комбинации клавиш по умолчанию восстан
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
+
+#, fuzzy, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added"
+msgstr[0] "Игнорирования не заданы.\n"
+msgstr[1] "Игнорирования не заданы.\n"
 
 #, fuzzy, c-format
 msgid "Key \"%s\" unbound"
@@ -993,7 +999,7 @@ msgid "bind/unbind keys"
 msgstr "установить/снять клавиши"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[клавиша [функция/команда]] [unbind клавиша] [функции] [call функция "
 "[\"аргументы\"]] [reset -yes]"
@@ -1003,7 +1009,8 @@ msgid ""
 "      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
 "    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
+"bindings (use carefully!)\n"
+"  missing: add missing keys (using default bindings)"
 msgstr ""
 "  клавиша: отобразить или назначить этой клавише функцию или команду "
 "(начинающуюся на \"/\")\n"
@@ -2064,6 +2071,10 @@ msgstr "Недостаточно памяти для новой строчки\n
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
+
+#, fuzzy, c-format
+msgid "New key binding: %s%s => %s%s"
+msgstr "Новая комбинация клавиш:  %s"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""

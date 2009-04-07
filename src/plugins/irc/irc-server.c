@@ -2184,9 +2184,6 @@ irc_server_connect (struct t_irc_server *server)
         weechat_buffer_set (server->buffer, "display", "auto");
         
         weechat_bar_item_update ("buffer_name");
-        
-        weechat_buffer_set (server->buffer, "key_bind_meta-s",
-                            "/command irc /server switch");
     }
     
     if (!server->addresses_array)

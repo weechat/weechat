@@ -395,15 +395,15 @@ config_change_day_change (void *data, struct t_config_option *option)
 }
 
 /*
- * config_weechat_reload: reload WeeChat configuration file
- *                        return one of these values:
- *                          WEECHAT_CONFIG_READ_OK
- *                          WEECHAT_CONFIG_READ_MEMORY_ERROR
- *                          WEECHAT_CONFIG_READ_FILE_NOT_FOUND
+ * config_weechat_reload_cb: reload WeeChat configuration file
+ *                           return one of these values:
+ *                             WEECHAT_CONFIG_READ_OK
+ *                             WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                             WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
-config_weechat_reload (void *data, struct t_config_file *config_file)
+config_weechat_reload_cb (void *data, struct t_config_file *config_file)
 {
     int rc;
     
@@ -412,7 +412,6 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     
     /* remove all keys */
     gui_keyboard_free_all (&gui_keys, &last_gui_key);
-    gui_keyboard_default_bindings ();
     
     /* remove all proxies */
     proxy_free_all ();
@@ -434,6 +433,9 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
         proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
+        /* if no key was found config file, then we use default bindings */
+        if (!gui_keys)
+            gui_keyboard_default_bindings ();
     }
     
     return rc;
@@ -476,12 +478,12 @@ config_weechat_debug_set_all ()
 }
 
 /*
- * config_weechat_debug_change: called when a debug option is changed
+ * config_weechat_debug_change_cb: called when a debug option is changed
  */
 
 void
-config_weechat_debug_change (void *data,
-                             struct t_config_option *option)
+config_weechat_debug_change_cb (void *data,
+                                struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -491,15 +493,15 @@ config_weechat_debug_change (void *data,
 }
 
 /*
- * config_weechat_debug_create_option: create option in "debug" section
+ * config_weechat_debug_create_option_cb: create option in "debug" section
  */
 
 int
-config_weechat_debug_create_option (void *data,
-                                    struct t_config_file *config_file,
-                                    struct t_config_section *section,
-                                    const char *option_name,
-                                    const char *value)
+config_weechat_debug_create_option_cb (void *data,
+                                       struct t_config_file *config_file,
+                                       struct t_config_section *section,
+                                       const char *option_name,
+                                       const char *value)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -532,7 +534,7 @@ config_weechat_debug_create_option (void *data,
                     option_name, "integer",
                     _("debug level for plugin (\"core\" for WeeChat core)"),
                     NULL, 0, 32, "0", value, 0, NULL, NULL,
-                    &config_weechat_debug_change, NULL,
+                    &config_weechat_debug_change_cb, NULL,
                     NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -549,14 +551,14 @@ config_weechat_debug_create_option (void *data,
 }
 
 /*
- * config_weechat_debug_delete_option: delete option in "debug" section
+ * config_weechat_debug_delete_option_cb: delete option in "debug" section
  */
 
 int
-config_weechat_debug_delete_option (void *data,
-                                    struct t_config_file *config_file,
-                                    struct t_config_section *section,
-                                    struct t_config_option *option)
+config_weechat_debug_delete_option_cb (void *data,
+                                       struct t_config_file *config_file,
+                                       struct t_config_section *section,
+                                       struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -577,11 +579,11 @@ config_weechat_debug_delete_option (void *data,
 int
 config_weechat_debug_set (const char *plugin_name, const char *value)
 {
-    return config_weechat_debug_create_option (NULL,
-                                               weechat_config_file,
-                                               weechat_config_section_debug,
-                                               plugin_name,
-                                               value);
+    return config_weechat_debug_create_option_cb (NULL,
+                                                  weechat_config_file,
+                                                  weechat_config_section_debug,
+                                                  plugin_name,
+                                                  value);
 }
 
 /*
@@ -994,7 +996,7 @@ config_weechat_init_options ()
     struct t_config_section *ptr_section;
     
     weechat_config_file = config_file_new (NULL, WEECHAT_CONFIG_NAME,
-                                           &config_weechat_reload, NULL);
+                                           &config_weechat_reload_cb, NULL);
     if (!weechat_config_file)
         return 0;
     
@@ -1003,8 +1005,8 @@ config_weechat_init_options ()
                                            1, 1,
                                            NULL, NULL, NULL, NULL,
                                            NULL, NULL,
-                                           &config_weechat_debug_create_option, NULL,
-                                           &config_weechat_debug_delete_option, NULL);
+                                           &config_weechat_debug_create_option_cb, NULL,
+                                           &config_weechat_debug_delete_option_cb, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1863,8 +1865,11 @@ config_weechat_read ()
         proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
+        /* if no key was found config file, then we use default bindings */
+        if (!gui_keys)
+            gui_keyboard_default_bindings ();
     }
-
+    
     if (rc != WEECHAT_CONFIG_READ_OK)
     {
         gui_chat_printf (NULL,
