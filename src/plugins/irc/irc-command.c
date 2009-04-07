@@ -3148,7 +3148,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     }
                 }
             }
-            irc_server_set_current_server (irc_current_server);
+            if (irc_current_server)
+                irc_server_set_current_server (irc_current_server);
         }
         return WEECHAT_RC_OK;
     }
