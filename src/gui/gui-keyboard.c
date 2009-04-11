@@ -31,6 +31,7 @@
 #include "../core/wee-input.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
+#include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-keyboard.h"
 #include "gui-buffer.h"
@@ -144,17 +145,17 @@ gui_keyboard_get_internal_code (const char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (string_strncasecmp (key, "meta2-", 6) == 0)
+            if (strncmp (key, "meta2-", 6) == 0)
             {
                 strcat (result, "^[[");
                 key += 6;
             }
-            if (string_strncasecmp (key, "meta-", 5) == 0)
+            if (strncmp (key, "meta-", 5) == 0)
             {
                 strcat (result, "^[");
                 key += 5;
             }
-            else if (string_strncasecmp (key, "ctrl-", 5) == 0)
+            else if (strncmp (key, "ctrl-", 5) == 0)
             {
                 strcat (result, "^");
                 key += 5;
@@ -191,12 +192,12 @@ gui_keyboard_get_expanded_name (const char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (string_strncasecmp (key, "^[[", 3) == 0)
+            if (strncmp (key, "^[[", 3) == 0)
             {
                 strcat (result, "meta2-");
                 key += 3;
             }
-            if (string_strncasecmp (key, "^[", 2) == 0)
+            if (strncmp (key, "^[", 2) == 0)
             {
                 strcat (result, "meta-");
                 key += 2;
@@ -228,7 +229,7 @@ gui_keyboard_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
     
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (string_strcasecmp (key->key, ptr_key->key) < 0)
+        if (strcmp (key->key, ptr_key->key) < 0)
             return ptr_key;
     }
     return NULL;
@@ -346,7 +347,7 @@ gui_keyboard_search (struct t_gui_buffer *buffer, const char *key)
     for (ptr_key = (buffer) ? buffer->keys : gui_keys; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        if (string_strcasecmp (ptr_key->key, key) == 0)
+        if (strcmp (ptr_key->key, key) == 0)
             return ptr_key;
     }
     
@@ -361,12 +362,15 @@ gui_keyboard_search (struct t_gui_buffer *buffer, const char *key)
 int
 gui_keyboard_cmp (const char *key, const char *search)
 {
+    int diff;
+    
     while (search[0])
     {
-        if (toupper(key[0]) != toupper(search[0]))
-            return search[0] - key[0];
-        key++;
-        search++;
+        diff = utf8_charcmp (key, search);
+        if (diff != 0)
+            return diff;
+        key = utf8_next_char (key);
+        search = utf8_next_char (search);
     }
     
     return 0;
@@ -483,7 +487,7 @@ gui_keyboard_pressed (const char *key_str)
     /* if key is found, then execute action */
     if (ptr_key)
     {
-        if (string_strcasecmp (ptr_key->key, gui_key_combo_buffer) == 0)
+        if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute function or command */
             buffer_before_key =
