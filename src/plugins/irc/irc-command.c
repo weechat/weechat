@@ -1873,23 +1873,17 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     (void) data;
     (void) argv;
     
-    if (argc > 1)
+    if (!ptr_channel)
     {
-        if (!ptr_channel)
-        {
-            weechat_printf (ptr_server->buffer,
-                            _("%s%s: \"%s\" command can not be executed "
-                              "on a server buffer"),
+        weechat_printf (ptr_server->buffer,
+                        _("%s%s: \"%s\" command can not be executed "
+                          "on a server buffer"),
                             irc_buffer_get_server_prefix (ptr_server, "error"),
-                            IRC_PLUGIN_NAME, "me");
-            return WEECHAT_RC_OK;
-        }
-        irc_command_me_channel (ptr_server, ptr_channel, argv_eol[1]);
+                        IRC_PLUGIN_NAME, "me");
+        return WEECHAT_RC_OK;
     }
-    else
-    {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "me");
-    }
+    irc_command_me_channel (ptr_server, ptr_channel,
+                            (argc > 1) ? argv_eol[1] : NULL);
     
     return WEECHAT_RC_OK;
 }
