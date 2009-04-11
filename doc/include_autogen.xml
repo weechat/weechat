@@ -43,3 +43,7 @@
 <!ENTITY tcl_infos.xml SYSTEM "autogen/tcl_infos.xml">
 <!ENTITY weechat_infos.xml SYSTEM "autogen/weechat_infos.xml">
 <!ENTITY xfer_infos.xml SYSTEM "autogen/xfer_infos.xml">
+
+<!-- completions hooked -->
+
+<!ENTITY completions.xml SYSTEM "autogen/completions.xml">

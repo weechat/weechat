@@ -435,24 +435,24 @@ jabber_completion_msg_part_cb (void *data, const char *completion_item,
 void
 jabber_completion_init ()
 {
-    weechat_hook_completion ("jabber_server",
+    weechat_hook_completion ("jabber_server", "",
                              &jabber_completion_server_cb, NULL);
-    weechat_hook_completion ("jabber_server_local_name",
+    weechat_hook_completion ("jabber_server_local_name", "",
                              &jabber_completion_server_local_name_cb, NULL);
-    weechat_hook_completion ("jabber_server_buddies",
+    weechat_hook_completion ("jabber_server_buddies", "",
                              &jabber_completion_server_buddies_cb, NULL);
-    weechat_hook_completion ("jabber_servers",
+    weechat_hook_completion ("jabber_servers", "",
                              &jabber_completion_servers_cb, NULL);
-    weechat_hook_completion ("jabber_muc",
+    weechat_hook_completion ("jabber_muc", "",
                              &jabber_completion_muc_cb, NULL);
-    weechat_hook_completion ("buddy",
+    weechat_hook_completion ("buddy", "",
                              &jabber_completion_muc_buddies_cb, NULL);
-    weechat_hook_completion ("jabber_muc_buddies_hosts",
+    weechat_hook_completion ("jabber_muc_buddies_hosts", "",
                              &jabber_completion_muc_buddies_hosts_cb, NULL);
-    weechat_hook_completion ("jabber_muc_topic",
+    weechat_hook_completion ("jabber_muc_topic", "",
                              &jabber_completion_muc_topic_cb, NULL);
-    weechat_hook_completion ("jabber_mucs",
+    weechat_hook_completion ("jabber_mucs", "",
                              &jabber_completion_mucs_cb, NULL);
-    weechat_hook_completion ("jabber_msg_part",
+    weechat_hook_completion ("jabber_msg_part", "",
                              &jabber_completion_msg_part_cb, NULL);
 }

@@ -3930,7 +3930,7 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
 static int
 weechat_lua_api_hook_completion (lua_State *L)
 {
-    const char *completion, *function;
+    const char *completion, *description, *function;
     char *result;
     int n;
     
@@ -3944,22 +3944,25 @@ weechat_lua_api_hook_completion (lua_State *L)
     }
     
     completion = NULL;
+    description = NULL;
     function = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         LUA_RETURN_EMPTY;
     }
     
-    completion = lua_tostring (lua_current_interpreter, -2);
+    completion = lua_tostring (lua_current_interpreter, -3);
+    description = lua_tostring (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_completion (weechat_lua_plugin,
                                                          lua_current_script,
                                                          completion,
+                                                         description,
                                                          &weechat_lua_api_hook_completion_cb,
                                                          function));
     

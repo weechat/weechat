@@ -1836,7 +1836,7 @@ void weechat_exec_on_files (
               <option>callback</option>: function called for each file
               found, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2490,7 +2490,7 @@ struct t_config_file *weechat_config_new (
               configuration file is reloaded with /reload (optional, may be
               NULL), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2629,7 +2629,7 @@ struct t_config_section *weechat_config_new_section (
               except if options in your section need custom function),
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2681,7 +2681,7 @@ struct t_config_section *weechat_config_new_section (
               is written in file (should be NULL for most cases, except if your
               section needs to be written by a custom function), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2727,7 +2727,7 @@ struct t_config_section *weechat_config_new_section (
               <option>callback_write_default</option>: callback called when
               default values for section must be written in file, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2769,7 +2769,7 @@ struct t_config_section *weechat_config_new_section (
               new option is created in section (NULL if section does not allow
               new options to be created), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -2821,7 +2821,7 @@ struct t_config_section *weechat_config_new_section (
               option is deleted (NULL if section does not allow options to be
               deleted), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -3095,7 +3095,7 @@ struct t_config_option *weechat_config_new_option (
               <option>callback_check_value</option>: callback called to check
               new value for an option (optional), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -3136,7 +3136,7 @@ struct t_config_option *weechat_config_new_option (
               <option>callback_change</option>: callback called when value of
               option has changed (optional), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -3172,7 +3172,7 @@ struct t_config_option *weechat_config_new_option (
               <option>callback_delete</option>: callback called when option
               will be deleted (optional), arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -3727,7 +3727,7 @@ void *weechat_config_option_get_pointer (
             <para>
               <option>property</option>: property name:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Property</entry>
@@ -4656,7 +4656,7 @@ const char *weechat_prefix (const char *prefix);
             <para>
               <option>prefix</option>: name of prefix:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Prefix</entry>
@@ -5037,11 +5037,26 @@ struct t_hook *weechat_hook_command (
               completions are possible for one argument, separated by "|".
               Default completion codes are:
               <informaltable colsep="0" frame="none">
+                <tgroup cols="3">
+                  <thead>
+                    <row>
+                      <entry>Plugin</entry>
+                      <entry>Code</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    &completions.xml;
+                  </tbody>
+                </tgroup>
+              </informaltable>
+              Special codes:
+              <informaltable colsep="0" frame="none">
                 <tgroup cols="2">
                   <thead>
                     <row>
                       <entry>Code</entry>
-                      <entry>Completion</entry>
+                      <entry>Description</entry>
                     </row>
                   </thead>
                   <tbody>
@@ -5053,71 +5068,6 @@ struct t_hook *weechat_hook_command (
                       <entry>%*</entry>
                       <entry>Repeat last completion</entry>
                     </row>
-                    <row>
-                      <entry>%b</entry>
-                      <entry>Buffers names</entry>
-                    </row>
-                    <row>
-                      <entry>%B</entry>
-                      <entry>Buffers names (with plugin name)</entry>
-                    </row>
-                    <row>
-                      <entry>%c</entry>
-                      <entry>Configuration files</entry>
-                    </row>
-                    <row>
-                      <entry>%f</entry>
-                      <entry>Filename</entry>
-                    </row>
-                    <row>
-                      <entry>%F</entry>
-                      <entry>Filters</entry>
-                    </row>
-                    <row>
-                      <entry>%h</entry>
-                      <entry>Commands hooked</entry>
-                    </row>
-                    <row>
-                      <entry>%i</entry>
-                      <entry>Infos hooked</entry>
-                    </row>
-                    <row>
-                      <entry>%I</entry>
-                      <entry>Infolists hooked</entry>
-                    </row>
-                    <row>
-                      <entry>%n</entry>
-                      <entry>Nick</entry>
-                    </row>
-                    <row>
-                      <entry>%o</entry>
-                      <entry>Configuration option</entry>
-                    </row>
-                    <row>
-                      <entry>%p</entry>
-                      <entry>Plugin name</entry>
-                    </row>
-                    <row>
-                      <entry>%P</entry>
-                      <entry>Plugin commands</entry>
-                    </row>
-                    <row>
-                      <entry>%r</entry>
-                      <entry>Bar names</entry>
-                    </row>
-                    <row>
-                      <entry>%v</entry>
-                      <entry>Value of configuration option</entry>
-                    </row>
-                    <row>
-                      <entry>%w</entry>
-                      <entry>WeeChat commands</entry>
-                    </row>
-                    <row>
-                      <entry>%(xxx)</entry>
-                      <entry>Custom completion by plugin (xxx is a completion
-                      code added by a plugin)</entry>
-                    </row>
                   </tbody>
                 </tgroup>
               </informaltable>
@@ -5128,7 +5078,7 @@ struct t_hook *weechat_hook_command (
               <option>callback</option>: function called when command is used,
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5244,7 +5194,7 @@ struct t_hook *weechat_hook_command_run (
               <option>callback</option>: function called when command is run,
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5351,7 +5301,7 @@ struct t_hook *weechat_hook_timer (
               <option>callback</option>: function called when time is reached,
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5452,7 +5402,7 @@ struct t_hook *weechat_hook_fd (
               <option>callback</option>: function called when a selected event
               occurs, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5546,7 +5496,7 @@ struct t_hook *weechat_hook_process (
               <option>callback</option>: function called when data from child
               is available, or when child has ended, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5684,7 +5634,7 @@ struct t_hook *weechat_hook_connect (
               <option>callback</option>: function called when connection is ok
               or failed, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5858,7 +5808,7 @@ struct t_hook *weechat_hook_print (
               <option>callback</option>: function called when message is
               printed, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -5981,7 +5931,7 @@ struct t_hook *weechat_hook_signal (
               <option>callback</option>: function called when signal is
               received, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6124,7 +6074,7 @@ struct t_hook *weechat_hook_config (
               <option>callback</option>: function called when configuration
               option is changed, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6217,7 +6167,7 @@ struct t_hook *weechat_hook_completion (
               is used (user is completing something using this item),
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6383,7 +6333,7 @@ struct t_hook *weechat_hook_modifier (
               <option>callback</option>: function called when modifier is
               received, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6547,7 +6497,7 @@ struct t_hook *weechat_hook_info (
               <option>callback</option>: function called when info is asked,
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6642,7 +6592,7 @@ struct t_hook *weechat_hook_infolist (
               <option>callback</option>: function called when infolist is asked,
               arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6805,7 +6755,7 @@ struct t_gui_buffer *weechat_buffer_new (
               <option>input_callback</option>: function called when input text
               is entered on buffer, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -6845,7 +6795,7 @@ struct t_gui_buffer *weechat_buffer_new (
               <option>close_callback</option>: function called when buffer is
               closed, arguments:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Type</entry>
@@ -7294,7 +7244,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
             <para>
               <option>property</option>: property name:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Name</entry>
@@ -7522,7 +7472,7 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
             <para>
               <option>property</option>: property name:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Name</entry>
@@ -9005,7 +8955,7 @@ const char *weechat_info_get (const char *info_name,
               core or other plugin (see plugin doc for infos returned by
               each plugin). WeeChat core infos are:
               <informaltable colsep="0" frame="none">
-                <tgroup cols="2">
+                <tgroup cols="3">
                   <thead>
                     <row>
                       <entry>Info</entry>

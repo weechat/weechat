@@ -4020,9 +4020,9 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
 
 static VALUE
 weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
-                                  VALUE function)
+                                  VALUE description, VALUE function)
 {
-    char *c_completion, *c_function, *result;
+    char *c_completion, *c_description, *c_function, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4035,23 +4035,27 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     }
     
     c_completion = NULL;
+    c_description = NULL;
     c_function = NULL;
     
-    if (NIL_P (completion) || NIL_P (function))
+    if (NIL_P (completion) || NIL_P (description) || NIL_P (function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (completion, T_STRING);
+    Check_Type (description, T_STRING);
     Check_Type (function, T_STRING);
     
     c_completion = STR2CSTR (completion);
+    c_description = STR2CSTR (description);
     c_function = STR2CSTR (function);
     
     result = script_ptr2str (script_api_hook_completion (weechat_ruby_plugin,
                                                          ruby_current_script,
                                                          c_completion,
+                                                         c_description,
                                                          &weechat_ruby_api_hook_completion_cb,
                                                          c_function));
     
@@ -6657,7 +6661,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 2);
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
     rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 2);
-    rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 3);
     rb_define_module_function (ruby_mWeechat, "hook_completion_list_add", &weechat_ruby_api_hook_completion_list_add, 4);
     rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
     rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);

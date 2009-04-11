@@ -69,5 +69,6 @@ void
 xfer_completion_init ()
 {
     weechat_hook_completion ("nick",
+                             N_("nicks of DCC chat"),
                              &xfer_completion_nick_cb, NULL);
 }

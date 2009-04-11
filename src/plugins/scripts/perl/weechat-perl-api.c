@@ -3317,7 +3317,7 @@ weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
 
 static XS (XS_weechat_api_hook_completion)
 {
-    char *result, *completion, *function;
+    char *result, *completion, *description, *function;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3329,17 +3329,19 @@ static XS (XS_weechat_api_hook_completion)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 2)
+    if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         PERL_RETURN_EMPTY;
     }
     
     completion = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
+    description = SvPV (ST (1), PL_na);
+    function = SvPV (ST (2), PL_na);
     result = script_ptr2str (script_api_hook_completion (weechat_perl_plugin,
                                                          perl_current_script,
                                                          completion,
+                                                         description,
                                                          &weechat_perl_api_hook_completion_cb,
                                                          function));
     

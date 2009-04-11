@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "script.h"
+#include "script-api.h"
 #include "script-callback.h"
 
 
@@ -1076,6 +1077,7 @@ struct t_hook *
 script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                             struct t_plugin_script *script,
                             const char *completion,
+                            const char *description,
                             int (*callback)(void *data,
                                             const char *completion_item,
                                             struct t_gui_buffer *buffer,
@@ -1089,7 +1091,8 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
     if (!new_script_callback)
         return NULL;
     
-    new_hook = weechat_hook_completion (completion, callback, new_script_callback);
+    new_hook = weechat_hook_completion (completion, description,
+                                        callback, new_script_callback);
     if (!new_hook)
     {
         script_callback_free_data (new_script_callback);

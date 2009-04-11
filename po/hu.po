@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-07 18:12+0200\n"
+"POT-Creation-Date: 2009-04-09 12:57+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -383,6 +383,26 @@ msgid "Key bindings (%d):"
 msgstr "Billentyűparancsok:\n"
 
 #, fuzzy
+msgid "Key:"
+msgstr "Billentyű:\n"
+
+#, fuzzy
+msgid "No key found"
+msgstr "Nem találtam billentyűt.\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
+
+#, fuzzy, c-format
+msgid "Key \"%s\" unbound"
+msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
+
+#, fuzzy
 msgid "Default key bindings restored"
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
@@ -397,26 +417,6 @@ msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] "Nincs mellőzés megadva.\n"
 msgstr[1] "Nincs mellőzés megadva.\n"
-
-#, fuzzy, c-format
-msgid "Key \"%s\" unbound"
-msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
-
-#, fuzzy
-msgid "Key:"
-msgstr "Billentyű:\n"
-
-#, fuzzy
-msgid "No key found"
-msgstr "Nem találtam billentyűt.\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -1004,18 +1004,18 @@ msgid "bind/unbind keys"
 msgstr "billentyűk hozzárendelése/hozzárendelés eltávolítása"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[billentyű [funkció/parancs]] [unbind billentyű] [funkciók] [call funkció "
 "[\"paraméterek\"]] [reset -yes]"
 
 #, fuzzy
 msgid ""
-"      key: display or bind this key to a command\n"
-"   unbind: unbind a key\n"
-"    reset: restore bindings to the default values and delete ALL personal "
+"   bind: bind a command to a key or display command bound to key\n"
+" unbind: remove a key binding\n"
+"  reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"  missing: add missing keys (using default bindings)"
+"missing: add missing keys (using default bindings)"
 msgstr ""
 "billentyű: billentyű hozzárendelése valamely belső funkcióhoz vagy \"/\" "
 "jellel kezdődő parancshoz\n"
@@ -2064,6 +2064,84 @@ msgid "Not enough memory for new line"
 msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy
+msgid "names of buffers"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "numbers of buffers"
+msgstr "puffer betöltése sikertelen"
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+#, fuzzy
+msgid "configuration files"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "filename"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "names of filters"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "commands (weechat and plugins)"
+msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+msgid "names of infos hooked"
+msgstr "     időkezelők:\n"
+
+#, fuzzy
+msgid "names of infolists hooked"
+msgstr "     időkezelők:\n"
+
+#, fuzzy
+msgid "nicks in nicklist of current buffer"
+msgstr "érvénytelen pufferhossz"
+
+#, fuzzy
+msgid "configuration options"
+msgstr "Nem található az opció\n"
+
+#, fuzzy
+msgid "names of plugins"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "commands defined by plugins"
+msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+msgid "names of bars"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "values for a configuration option"
+msgstr "Nem található az opció\n"
+
+#, fuzzy
+msgid "weechat commands"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+msgid "names of proxies"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "options for proxies"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "options for bars"
+msgstr "Aliaszok listája:\n"
+
+msgid "key codes"
+msgstr ""
+
+#, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
 
@@ -2203,6 +2281,9 @@ msgid ""
 " addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "list of supported langs for aspell"
 msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
@@ -3473,6 +3554,48 @@ msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
+
+#, fuzzy
+msgid "current IRC server"
+msgstr "csatlakozás a szerver(ek)hez"
+
+#, fuzzy
+msgid "nick on current IRC server"
+msgstr "csatlakozás a szerver(ek)hez"
+
+#, fuzzy
+msgid "nicks on all channels of current IRC server"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+msgid "IRC servers (internal names)"
+msgstr ""
+
+#, fuzzy
+msgid "current IRC channel"
+msgstr "felhasználó [cél [szoba]]"
+
+#, fuzzy
+msgid "nicks of current IRC channel"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "nicks and hostnames of current IRC channel"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "topic of current IRC channel"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "IRC channels (on all servers)"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+msgid "default part message for IRC channel"
+msgstr "felhasználók listája a szobában"
+
+msgid "numbers for defined ignores"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -5162,6 +5285,10 @@ msgid ""
 "Without argument, this command lists all loaded scripts."
 msgstr ""
 
+#, fuzzy
+msgid "list of scripts"
+msgstr "Aliaszok listája:\n"
+
 #. TRANSLATORS: %s is language (for example "perl")
 #, fuzzy, c-format
 msgid "list of %s scripts"
@@ -5437,6 +5564,10 @@ msgid ""
 "Without argument, this command opens buffer with xfer list."
 msgstr ""
 
+#, fuzzy
+msgid "nicks of DCC chat"
+msgstr "felhasználók listája a szobában"
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
@@ -5581,6 +5712,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid "list of aliases"
+#~ msgstr "Aliaszok listája:\n"
+
+#, fuzzy
 #~ msgid ""
 #~ "smart completion for nicks (completes first with last speakers, "
 #~ "highlights or both)"
@@ -5595,10 +5730,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
 #~ msgid "  (used by a plugin)"
-#~ msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-#~ msgid "  (masked by a plugin)"
 #~ msgstr "  (nem található bővítőmodul)\n"
 
 #, fuzzy

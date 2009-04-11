@@ -3527,7 +3527,7 @@ weechat_python_api_hook_completion_cb (void *data, const char *completion_item,
 static PyObject *
 weechat_python_api_hook_completion (PyObject *self, PyObject *args)
 {
-    char *completion, *function, *result;
+    char *completion, *description, *function, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3540,9 +3540,10 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
     }
     
     completion = NULL;
+    description = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &completion, &function))
+    if (!PyArg_ParseTuple (args, "sss", &completion, &description, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         PYTHON_RETURN_EMPTY;
@@ -3551,6 +3552,7 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
     result = script_ptr2str(script_api_hook_completion (weechat_python_plugin,
                                                         python_current_script,
                                                         completion,
+                                                        description,
                                                         &weechat_python_api_hook_completion_cb,
                                                         function));
     

@@ -819,7 +819,7 @@ jabber_command_init ()
                           N_("buddy [text]"),
                           N_("buddy: buddy name for chat\n"
                              " text: text to send"),
-                          "%n %-", &jabber_command_jchat, NULL);
+                          "%(nicks) %-", &jabber_command_jchat, NULL);
     weechat_hook_command ("jconnect",
                           N_("connect to Jabber server(s)"),
                           N_("[-all [-nojoin] | servername [servername ...] "

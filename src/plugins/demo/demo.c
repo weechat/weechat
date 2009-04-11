@@ -416,7 +416,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "arguments: optional arguments for info\n\n"
                              "Without argument, this command displays list "
                              "of available infos"),
-                          "%i",
+                          "%(infos)",
                           &demo_info_command_cb, NULL);
     
     weechat_hook_command ("demo_infolist",
@@ -426,7 +426,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "arguments: optional arguments for infolist\n\n"
                              "Without argument, this command displays list "
                              "of available infolists"),
-                          "%I",
+                          "%(infolists)",
                           &demo_infolist_command_cb, NULL);
     
     weechat_hook_signal ("*", &demo_signal_cb, NULL);

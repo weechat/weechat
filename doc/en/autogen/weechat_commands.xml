@@ -150,14 +150,14 @@ functions for command line
 Cette commande est utilisée par les associations de touches ou les extensions.
 </programlisting>
 
-<command>/key  [key [command [args]]] | [unbind key] | [reset -yes] | [missing]</command>
+<command>/key  [bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]</command>
 <programlisting>
 bind/unbind keys
 
-      key: display or bind this key to a command
-   unbind: unbind a key
-    reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-  missing: add missing keys (using default bindings)
+   bind: bind a command to a key or display command bound to key
+ unbind: remove a key binding
+  reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+missing: add missing keys (using default bindings)
 </programlisting>
 
 <command>/layout  [[save | apply | reset] [buffers | windows]]</command>

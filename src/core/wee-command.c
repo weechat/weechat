@@ -1753,6 +1753,69 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* bind a key (or display binding) */
+    if (string_strcasecmp (argv[1], "bind") == 0)
+    {
+        if (argc == 3)
+        {
+            ptr_key = NULL;
+            internal_code = gui_keyboard_get_internal_code (argv[2]);
+            if (internal_code)
+                ptr_key = gui_keyboard_search (NULL, internal_code);
+            if (ptr_key)
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, _("Key:"));
+                command_key_display (ptr_key);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("No key found"));
+            }
+            if (internal_code)
+                free (internal_code);
+            return WEECHAT_RC_OK;
+        }
+        
+        /* bind new key */
+        gui_keyboard_verbose = 1;
+        ptr_key = gui_keyboard_bind (NULL, argv[2], argv_eol[3]);
+        gui_keyboard_verbose = 0;
+        if (!ptr_key)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to bind key \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* unbind a key */
+    if (string_strcasecmp (argv[1], "unbind") == 0)
+    {
+        if (argc >= 3)
+        {
+            if (gui_keyboard_unbind (NULL, argv[2]))
+            {
+                gui_chat_printf (NULL,
+                                 _("Key \"%s\" unbound"),
+                                 argv[2]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to unbind key \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+    
     /* reset keys (only with "-yes", for security reason) */
     if (string_strcasecmp (argv[1], "reset") == 0)
     {
@@ -1787,65 +1850,6 @@ command_key (void *data, struct t_gui_buffer *buffer,
                          NG_("%d new key added", "%d new keys added", keys_added),
                          keys_added);
         return WEECHAT_RC_OK;
-    }
-    
-    /* unbind a key */
-    if (string_strcasecmp (argv[1], "unbind") == 0)
-    {
-        if (argc >= 3)
-        {
-            if (gui_keyboard_unbind (NULL, argv[2]))
-            {
-                gui_chat_printf (NULL,
-                                 _("Key \"%s\" unbound"),
-                                 argv[2]);
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: unable to unbind key \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
-        }
-        return WEECHAT_RC_OK;
-    }
-    
-    /* display a key */
-    if (argc == 2)
-    {
-        ptr_key = NULL;
-        internal_code = gui_keyboard_get_internal_code (argv[1]);
-        if (internal_code)
-            ptr_key = gui_keyboard_search (NULL, internal_code);
-        if (ptr_key)
-        {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Key:"));
-            command_key_display (ptr_key);
-        }
-        else
-        {
-            gui_chat_printf (NULL,
-                             _("No key found"));
-        }
-        if (internal_code)
-            free (internal_code);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* bind new key */
-    gui_keyboard_verbose = 1;
-    ptr_key = gui_keyboard_bind (NULL, argv[1], argv_eol[2]);
-    gui_keyboard_verbose = 0;
-    if (!ptr_key)
-    {
-        gui_chat_printf (NULL,
-                         _("%sError: unable to bind key \"%s\""),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         argv[1]);
-        return WEECHAT_RC_ERROR;
     }
     
     return WEECHAT_RC_OK;
@@ -3658,10 +3662,17 @@ command_init ()
                      "    /bar scroll nicklist #weechat y-100%\n"
                      "  scroll to end of nicklist on current buffer:\n"
                      "    /bar scroll nicklist * ye"),
-                  "add|default|del|set|hide|show|toggle|scroll|list|listfull|"
-                  "listitems %r name|hidden|priority|conditions|position|"
-                  "filling_top_bottom|filling_left_right|size|size_max|"
-                  "color_fg|color_delim|color_bg|separator|items",
+                  "add %(bars_names) root|window bottom|top|left|right"
+                  " || default"
+                  " || del %(bars_names)|-all"
+                  " || set %(bars_names) %(bars_options)"
+                  " || hide %(bars_names)"
+                  " || show %(bars_names)"
+                  " || toggle %(bars_names)"
+                  " || scroll %(bars_names) %(buffers_plugins_names)|*"
+                  " || list"
+                  " || listfull"
+                  " || listitems",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
@@ -3686,7 +3697,15 @@ command_init ()
                      "        close buffer: /buffer close\n"
                      "    jump to #weechat: /buffer #weechat\n"
                      " jump to next buffer: /buffer +1"),
-                  "clear|move|close|list|notify|localvar|set|%b %b",
+                  "clear -all|%(buffers_numbers)"
+                  " || move %(buffers_numbers)"
+                  " || close"
+                  " || list"
+                  " || notify"
+                  " || localvar"
+                  " || set"
+                  " || %(buffers_names)"
+                  " || %(buffers_numbers)",
                   &command_buffer, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
@@ -3695,7 +3714,7 @@ command_init ()
                      "command)\n"
                      "command: command to execute (a '/' is automatically "
                      "added if not found at beginning of command)"),
-                  "%p|" PLUGIN_CORE " %P",
+                  "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
                   &command_command, NULL);
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
@@ -3709,7 +3728,7 @@ command_init ()
                      "windows: display windows tree\n"
                      "   text: send \"debug\" signal with \"text\" as "
                      "argument"),
-                  "%p|core|list|dump|buffer|windows",
+                  "%(plugins_names)|core|list|dump|buffer|windows",
                   &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
@@ -3745,14 +3764,19 @@ command_init ()
                      "  filter lines containing \"weechat sucks\" on IRC "
                      "channel #weechat:\n"
                      "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
-                  "list|enable|disable|toggle|add|rename|del %F %B",
+                  "list"
+                  " || enable %(filters_names)"
+                  " || disable %(filters_names)"
+                  " || toggle %(filters_names)"
+                  " || add %(filters_names) %(buffers_plugins_names)|*"
+                  " || del %(filters_names)|-all",
                   &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands and options"),
                   N_("[command | option]"),
                   N_("command: a command name\n"
                      " option: an option name (use /set to see list)"),
-                  "%h|%o",
+                  "%(commands)|%(config_options)",
                   &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),
@@ -3791,14 +3815,18 @@ command_init ()
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("[key [command [args]]] | [unbind key] | [reset -yes] | "
-                     "[missing]"),
-                  N_("      key: display or bind this key to a command\n"
-                     "   unbind: unbind a key\n"
-                     "    reset: restore bindings to the default values and "
+                  N_("[bind key [command [args]]] | [unbind key] | "
+                     "[reset -yes] | [missing]"),
+                  N_("   bind: bind a command to a key or display command "
+                     "bound to key\n"
+                     " unbind: remove a key binding\n"
+                     "  reset: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)\n"
-                     "  missing: add missing keys (using default bindings)"),
-                  "unbind|reset|missing",
+                     "missing: add missing keys (using default bindings)"),
+                  "bind %(keys_codes) %(commands)"
+                  " || unbind %(key_codes)"
+                  " || reset"
+                  " || missing",
                   &command_key, NULL);
     hook_command (NULL, "layout",
                   N_("save/apply/reset layout for buffers and windows"),
@@ -3824,7 +3852,12 @@ command_init ()
                      "all plugins, then autoload plugins)\n"
                      "  unload: unload one or all plugins\n\n"
                      "Without argument, this command lists loaded plugins."),
-                  "list|listfull|load|autoload|reload|unload %f|%p",
+                  "list %(plugins_names)"
+                  " || listfull %(plugins_names)"
+                  " || load %(filename)"
+                  " || autoload"
+                  " || reload %(plugins_names)"
+                  " || unload %(plugins_names)",
                   &command_plugin, NULL);
     hook_command (NULL, "proxy",
                   N_("manage proxies"),
@@ -3854,7 +3887,10 @@ command_init ()
                      "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
                      "  delete a proxy:\n"
                      "    /proxy del myproxy"),
-                  "add|del|set|list %y name|type|ipv6|address|port|username|password",
+                  "add %(proxies_names) http|socks4|socks5"
+                  " || del %(proxies_names)"
+                  " || set %(proxies_names) %(proxies_options)"
+                  " || list ",
                   &command_proxy, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
@@ -3867,7 +3903,7 @@ command_init ()
                   N_("file: configuration file to reload\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "reloaded."),
-                  "%c|%*",
+                  "%(config_files)|%*",
                   &command_reload, NULL);
     hook_command (NULL, "save",
                   N_("save configuration files to disk"),
@@ -3875,7 +3911,7 @@ command_init ()
                   N_("file: configuration file to save\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "saved."),
-                  "%c|%*",
+                  "%(config_files)|%*",
                   &command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),
@@ -3890,7 +3926,7 @@ command_init ()
                      "For all types, you can use null to remove "
                      "option value (undefined value). This works only "
                      "for some special plugin variables."),
-                  "%o %v",
+                  "%(config_options) %(config_option_values)",
                   &command_set, NULL);
     hook_command (NULL, "unset",
                   N_("unset/reset config options"),
@@ -3899,7 +3935,7 @@ command_init ()
                      "to mass-reset options, use carefully!)\n\n"
                      "According to option, it's reset (for standard options) "
                      "or removed (for optional settings, like server values)."),
-                  "%o",
+                  "%(config_options)",
                   &command_unset, NULL);
     hook_command (NULL, "upgrade",
                   N_("upgrade WeeChat without disconnecting from servers"),
@@ -3909,7 +3945,7 @@ command_init ()
                      "This command run again a WeeChat binary, so it should "
                      "have been compiled or installed with a package manager "
                      "before running this command."),
-                  "%f",
+                  "%(filename)",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
                   N_("show WeeChat uptime"),
@@ -3967,10 +4003,11 @@ command_init ()
                      "  scroll 2 lines up: /window scroll -2\n"
                      "  scroll 2 days up: /window scroll -2d\n"
                      "  scroll to beginning of current day: /window scroll -d"),
-                     "list|-1|+1|up|down|left|right|splith|splitv|resize|merge|"
-                  "page_up|page_down|refresh|scroll_up|scroll|scroll_down|"
-                  "scroll_top|scroll_bottom|scroll_previous_highlight|"
-                  "scroll_next_highlight|zoom all",
+                  "list|-1|+1|up|down|left|right|splith|splitv|resize|page_up|"
+                  "page_down|refresh|scroll_up|scroll|scroll_down|scroll_top|"
+                  "scroll_bottom|scroll_previous_highlight|"
+                  "scroll_next_highlight|zoom"
+                  " || merge all",
                   &command_window, NULL);
 }
 

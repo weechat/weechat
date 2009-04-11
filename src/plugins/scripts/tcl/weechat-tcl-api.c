@@ -3765,7 +3765,7 @@ weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
                                  int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result, *completion, *function;
+    char *result, *completion, *description, *function;
     int i;
     
     /* make C compiler happy */
@@ -3777,17 +3777,19 @@ weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_EMPTY;
     }
     
-    if (objc < 3)
+    if (objc < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         TCL_RETURN_EMPTY;
     }
     
     completion = Tcl_GetStringFromObj (objv[1], &i);
-    function = Tcl_GetStringFromObj (objv[2], &i);
+    description = Tcl_GetStringFromObj (objv[2], &i);
+    function = Tcl_GetStringFromObj (objv[3], &i);
     result = script_ptr2str (script_api_hook_completion (weechat_tcl_plugin,
                                                          tcl_current_script,
                                                          completion,
+                                                         description,
                                                          &weechat_tcl_api_hook_completion_cb,
                                                          function));
     

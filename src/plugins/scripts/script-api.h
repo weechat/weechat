@@ -196,6 +196,7 @@ extern struct t_hook *script_api_hook_config (struct t_weechat_plugin *weechat_p
 extern struct t_hook *script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                                                   struct t_plugin_script *script,
                                                   const char *completion,
+                                                  const char *description,
                                                   int (*callback)(void *data,
                                                                   const char *completion_item,
                                                                   struct t_gui_buffer *buffer,

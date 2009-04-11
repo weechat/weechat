@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Documentation generator for WeeChat: build XML include files with commands
-# and options for WeeChat core and plugins.
+# Documentation generator for WeeChat: build XML include files with commands,
+# options, infos and completions for WeeChat core and plugins.
 #
 # Instructions to build config files yourself in WeeChat directories (replace
 # all paths with your path to WeeChat):
@@ -39,7 +39,7 @@ use File::Basename;
 
 my $version = "0.1";
 
-# -------------------------------[ config ]-------------------------------------
+# -------------------------------[ config ]------------------------------------
 
 # default path where doc XML files will be written (should be doc/ in sources
 # package tree)
@@ -82,10 +82,14 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "logger\\.mask\\..*",
                       "weechat\\.proxy\\..*",
                       "weechat\\.bar\\..*",
-                      "weechat\\.debug\\..*",
-                      );
+                      "weechat\\.debug\\..*");
 
-# --------------------------------[ init ]--------------------------------------
+# completions to ignore
+my @ignore_completions_plugins = ("jabber");
+my @ignore_completions_items = ("jabber.*",
+                                "weeget.*");
+
+# -------------------------------[ init ]--------------------------------------
 
 weechat::register("docgen", "FlashCode <flashcode\@flashtux.org>", $version,
                   "GPL", "Doc generator for WeeChat 0.2.7", "", "");
@@ -93,7 +97,7 @@ weechat::hook_command("docgen", "Doc generator", "", "", "", "docgen");
 weechat::config_set_plugin("path", $default_path)
     if (weechat::config_get_plugin("path") eq "");
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # get list of commands in a hash with 3 indexes: plugin, command, xxx
 sub get_commands
@@ -192,6 +196,40 @@ sub get_infos
     return %infos;
 }
 
+# get list of completions hooked by plugins in a hash with 3 indexes: plugin, item, xxx
+sub get_completions
+{
+    my %completions;
+    
+    # get completions hooked
+    my $infolist = weechat::infolist_get("hook", "", "completion");
+    while (weechat::infolist_next($infolist))
+    {
+        my $completion_item = weechat::infolist_string($infolist, "completion_item");
+        my $plugin = weechat::infolist_string($infolist, "plugin_name");
+        $plugin = "weechat" if ($plugin eq "");
+        
+        # check if completion item is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_completions_plugins)
+        {
+            $ignore = 1 if ($plugin =~ /${mask}/);
+        }
+        foreach my $mask (@ignore_completions_items)
+        {
+            $ignore = 1 if ($completion_item =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            $completions{$plugin}{$completion_item}{"description"} = weechat::infolist_string($infolist, "description");
+        }
+    }
+    weechat::infolist_free($infolist);
+    
+    return %completions;
+}
+
 # escape string for XML output
 sub escape
 {
@@ -207,6 +245,7 @@ sub docgen
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
     my %plugin_infos = get_infos();
+    my %plugin_completions = get_completions();
     
     # xml header (comment) for all files
     my $xml_header =
@@ -235,6 +274,8 @@ sub docgen
         my $num_files_options_updated = 0;
         my $num_files_infos = 0;
         my $num_files_infos_updated = 0;
+        my $num_files_completions = 0;
+        my $num_files_completions_updated = 0;
         
         setlocale(LC_MESSAGES, $locale.".UTF-8");
         my $d = Locale::gettext->domain_raw("weechat");
@@ -415,23 +456,65 @@ sub docgen
                     weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
                 }
             }
+            
+            # write completions hooked
+            my $filename = $dir."completions.xml";
+            if (open(FILE, ">".$filename.".tmp"))
+            {
+                print FILE $xml_header;
+                foreach my $plugin (sort keys %plugin_completions)
+                {
+                    foreach my $completion_item (sort keys %{$plugin_completions{$plugin}})
+                    {
+                        my $description = $plugin_completions{$plugin}{$completion_item}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        
+                        print FILE "<row>\n";
+                        print FILE "  <entry>".escape($plugin)."</entry>\n";
+                        print FILE "  <entry>".escape($completion_item)."</entry>\n";
+                        print FILE "  <entry>".escape($description)."</entry>\n";
+                        print FILE "</row>\n";
+                    }
+                }
+                #weechat::print("", "docgen: file ok: '$filename'");
+                my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                if ($rc != 0)
+                {
+                    system("mv -f ".$filename.".tmp ".$filename);
+                    $num_files_updated++;
+                    $num_files_completions_updated++;
+                }
+                else
+                {
+                    system("rm ".$filename.".tmp");
+                }
+                $num_files++;
+                $num_files_completions++;
+                close(FILE);
+            }
+            else
+            {
+                weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+            }
         }
         else
         {
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
         my $total_files = $num_files_commands + $num_files_options
-            + $num_files_infos;
+            + $num_files_infos + $num_files_completions;
         my $total_files_updated = $num_files_commands_updated + $num_files_options_updated
-            + $num_files_infos_updated;
+            + $num_files_infos_updated + $num_files_completions_updated;
         weechat::print("", "docgen: ".$locale.": ".$total_files." files ("
                        .$num_files_commands." cmd, "
                        .$num_files_options." opt, "
-                       .$num_files_infos." infos) -- "
+                       .$num_files_infos." infos, "
+                       .$num_files_completions." complt) -- "
                        .$total_files_updated." updated ("
                        .$num_files_commands_updated." cmd, "
                        .$num_files_options_updated." opt, "
-                       .$num_files_infos_updated." infos)");
+                       .$num_files_infos_updated." infos, "
+                       .$num_files_completions_updated." complt)");
     }
     weechat::print("", "docgen: total: ".$num_files." files (".$num_files_updated." updated)");
     
@@ -456,6 +539,8 @@ sub docgen
             {
                 print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
             }
+            print FILE "\n<!-- completions hooked -->\n\n";
+            print FILE "<!ENTITY completions.xml SYSTEM \"autogen/completions.xml\">\n";
             close(FILE);
             my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
             if ($rc != 0)

@@ -105,7 +105,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                                   void *signal_data),
              void (*callback_load_file)(void *data, const char *filename))
 {
-    char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
+    char *string, *completion = "list|listfull|load|autoload|reload|unload %(filename)";
     char infolist_description[512], signal_name[128];
     int length;
     
@@ -162,7 +162,8 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     if (string)
     {
         snprintf (string, length, "%s_script", weechat_plugin->name);
-        weechat_hook_completion (string, callback_completion, NULL);
+        weechat_hook_completion (string, N_("list of scripts"),
+                                 callback_completion, NULL);
         snprintf (infolist_description, sizeof (infolist_description),
                   /* TRANSLATORS: %s is language (for example "perl") */
                   _("list of %s scripts"), weechat_plugin->name);

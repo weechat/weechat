@@ -953,7 +953,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "by user, and $* is replaced by all arguments.\n"
                              "Variables $nick, $channel and $server are "
                              "replaced by current nick/channel/server."),
-                          "%(alias) %h",
+                          "%(alias) %(commands)",
                           &alias_command_cb, NULL);
     
     weechat_hook_command ("unalias", N_("remove an alias"),
@@ -962,7 +962,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "%(alias)",
                           &unalias_command_cb, NULL);
     
-    weechat_hook_completion ("alias", &alias_completion_cb, NULL);
+    weechat_hook_completion ("alias", N_("list of alias"),
+                             &alias_completion_cb, NULL);
     
     alias_info_init ();
     

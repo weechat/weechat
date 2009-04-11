@@ -23,6 +23,7 @@ BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
                        autogen/aspell_options.xml   \
                        autogen/charset_commands.xml \
                        autogen/charset_options.xml  \
+                       autogen/completions.xml      \
                        autogen/demo_commands.xml    \
                        autogen/fifo_infos.xml       \
                        autogen/irc_commands.xml     \

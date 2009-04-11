@@ -29,6 +29,7 @@
 #include "irc-color.h"
 #include "irc-completion.h"
 #include "irc-config.h"
+#include "irc-ignore.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -425,6 +426,35 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
 }
 
 /*
+ * irc_completion_ignores_numbers_cb: callback for completion with ignores
+ *                                    numbers
+ */
+
+int
+irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    struct t_irc_ignore *ptr_ignore;
+    char str_number[32];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (ptr_ignore = irc_ignore_list; ptr_ignore;
+         ptr_ignore = ptr_ignore->next_ignore)
+    {
+        snprintf (str_number, sizeof (str_number), "%d", ptr_ignore->number);
+        weechat_hook_completion_list_add (completion, str_number,
+                                          0, WEECHAT_LIST_POS_END);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_completion_init: init completion for IRC plugin
  */
 
@@ -432,23 +462,36 @@ void
 irc_completion_init ()
 {
     weechat_hook_completion ("irc_server",
+                             N_("current IRC server"),
                              &irc_completion_server_cb, NULL);
     weechat_hook_completion ("irc_server_nick",
+                             N_("nick on current IRC server"),
                              &irc_completion_server_nick_cb, NULL);
     weechat_hook_completion ("irc_server_nicks",
+                             N_("nicks on all channels of current IRC server"),
                              &irc_completion_server_nicks_cb, NULL);
     weechat_hook_completion ("irc_servers",
+                             N_("IRC servers (internal names)"),
                              &irc_completion_servers_cb, NULL);
     weechat_hook_completion ("irc_channel",
+                             N_("current IRC channel"),
                              &irc_completion_channel_cb, NULL);
     weechat_hook_completion ("nick",
+                             N_("nicks of current IRC channel"),
                              &irc_completion_channel_nicks_cb, NULL);
     weechat_hook_completion ("irc_channel_nicks_hosts",
+                             N_("nicks and hostnames of current IRC channel"),
                              &irc_completion_channel_nicks_hosts_cb, NULL);
     weechat_hook_completion ("irc_channel_topic",
+                             N_("topic of current IRC channel"),
                              &irc_completion_channel_topic_cb, NULL);
     weechat_hook_completion ("irc_channels",
+                             N_("IRC channels (on all servers)"),
                              &irc_completion_channels_cb, NULL);
     weechat_hook_completion ("irc_msg_part",
+                             N_("default part message for IRC channel"),
                              &irc_completion_msg_part_cb, NULL);
+    weechat_hook_completion ("irc_ignores_numbers",
+                             N_("numbers for defined ignores"),
+                             &irc_completion_ignores_numbers_cb, NULL);
 }

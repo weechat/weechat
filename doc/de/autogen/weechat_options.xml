@@ -572,7 +572,7 @@
     <para>type: string</para>
   </listitem>
   <listitem>
-    <para>values: any string (default value: '%n|%(irc_channels)')</para>
+    <para>values: any string (default value: '%(nicks)|%(irc_channels)')</para>
   </listitem>
 </itemizedlist>
 

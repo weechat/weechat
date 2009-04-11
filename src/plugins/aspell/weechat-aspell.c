@@ -909,6 +909,31 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
+/*
+ * weechat_aspell_completion_langs_cb: completion with aspell langs
+ */
+
+int
+weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_gui_completion *completion)
+{
+    int i;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (i = 0; langs_avail[i].code; i++)
+    {
+        weechat_hook_completion_list_add (completion, langs_avail[i].code,
+                                          0, WEECHAT_LIST_POS_SORT);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
 /* 
  * weechat_plugin_init : init aspell plugin
  */
@@ -941,8 +966,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "\n"
                              "Input line beginning with a '/' is not checked, "
                              "except for some commands."),
-                          "dictlist|enable|disable|addword",
+                          "dictlist"
+                          " || enable %(aspell_langs)"
+                          " || disable"
+                          " || addword",
                           &weechat_aspell_command_cb, NULL);
+    weechat_hook_completion ("aspell_langs",
+                             N_("list of supported langs for aspell"),
+                             &weechat_aspell_completion_langs_cb, NULL);
     
     /* callback for buffer_switch */
     weechat_hook_signal ("buffer_switch",

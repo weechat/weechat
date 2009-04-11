@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-07 18:12+0200\n"
+"POT-Creation-Date: 2009-04-09 12:57+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -352,6 +352,24 @@ msgstr "Žádné pole nejsou definovány"
 msgid "Key bindings (%d):"
 msgstr "Klávesové zkratky:"
 
+msgid "Key:"
+msgstr "Klávesa:"
+
+msgid "No key found"
+msgstr "Žádná klávesa nenalezena"
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr "%sChyba: nemohu napojit kalávesu \"%s\""
+
+#, c-format
+msgid "Key \"%s\" unbound"
+msgstr "Klávesa \"%s\" odpojena"
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
+
 msgid "Default key bindings restored"
 msgstr "Výchozí klávesové zkratky obnoveny"
 
@@ -366,24 +384,6 @@ msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] "uživatel byl zablokován"
 msgstr[1] "uživatel byl zablokován"
-
-#, c-format
-msgid "Key \"%s\" unbound"
-msgstr "Klávesa \"%s\" odpojena"
-
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
-
-msgid "Key:"
-msgstr "Klávesa:"
-
-msgid "No key found"
-msgstr "Žádná klávesa nenalezena"
-
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr "%sChyba: nemohu napojit kalávesu \"%s\""
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -963,18 +963,18 @@ msgid "bind/unbind keys"
 msgstr "napojit/odpojit klávesy"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[klávesa [funkce/příkaz]] [unbind klávesa] [functions] [call funkce "
 "[\"argumenty\"]] [reset -yes]"
 
 #, fuzzy
 msgid ""
-"      key: display or bind this key to a command\n"
-"   unbind: unbind a key\n"
-"    reset: restore bindings to the default values and delete ALL personal "
+"   bind: bind a command to a key or display command bound to key\n"
+" unbind: remove a key binding\n"
+"  reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"  missing: add missing keys (using default bindings)"
+"missing: add missing keys (using default bindings)"
 msgstr ""
 "  klávesa: zobrazí nebo napojí klávesu na vnitřní funkci nebo příkaz "
 "(začínající \"/\")\n"
@@ -2047,6 +2047,84 @@ msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
 #, fuzzy
+msgid "names of buffers"
+msgstr "nevalidní délka pro buffer"
+
+#, fuzzy
+msgid "numbers of buffers"
+msgstr "nevalidní délka pro buffer"
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+#, fuzzy
+msgid "configuration files"
+msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
+
+#, fuzzy
+msgid "filename"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy
+msgid "names of filters"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy
+msgid "commands (weechat and plugins)"
+msgstr "Tento příkaz je používán napojenou klávesou nebo pluginy."
+
+#, fuzzy
+msgid "names of infos hooked"
+msgstr "    napojené tisky:"
+
+#, fuzzy
+msgid "names of infolists hooked"
+msgstr "    napojené tisky:"
+
+#, fuzzy
+msgid "nicks in nicklist of current buffer"
+msgstr "nevalidní délka pro buffer"
+
+#, fuzzy
+msgid "configuration options"
+msgstr "Nebyla nalezena žádná volba nastavení"
+
+#, fuzzy
+msgid "names of plugins"
+msgstr "nastaví konfigurační možnosti"
+
+#, fuzzy
+msgid "commands defined by plugins"
+msgstr "Tento příkaz je používán napojenou klávesou nebo pluginy."
+
+#, fuzzy
+msgid "names of bars"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy
+msgid "values for a configuration option"
+msgstr "Nebyla nalezena žádná volba nastavení"
+
+#, fuzzy
+msgid "weechat commands"
+msgstr "Další příkazy:"
+
+#, fuzzy
+msgid "names of proxies"
+msgstr "Seznam položek polí:"
+
+#, fuzzy
+msgid "options for proxies"
+msgstr "Seznam položek polí:"
+
+#, fuzzy
+msgid "options for bars"
+msgstr "Seznam polí:"
+
+msgid "key codes"
+msgstr ""
+
+#, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
 
@@ -2185,6 +2263,9 @@ msgid ""
 " addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "list of supported langs for aspell"
 msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
@@ -3458,6 +3539,48 @@ msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
+
+#, fuzzy
+msgid "current IRC server"
+msgstr "připojit se k serveru/serverům"
+
+#, fuzzy
+msgid "nick on current IRC server"
+msgstr "připojit se k serveru/serverům"
+
+#, fuzzy
+msgid "nicks on all channels of current IRC server"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+msgid "IRC servers (internal names)"
+msgstr ""
+
+#, fuzzy
+msgid "current IRC channel"
+msgstr "aktuální hodnota"
+
+#, fuzzy
+msgid "nicks of current IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+msgid "nicks and hostnames of current IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+msgid "topic of current IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+msgid "IRC channels (on all servers)"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
+msgid "default part message for IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
+msgid "numbers for defined ignores"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -5168,6 +5291,10 @@ msgstr ""
 "\n"
 "Pokud nejsou uvedeny argumenty, jsou vypsány všechny načtené skripty."
 
+#, fuzzy
+msgid "list of scripts"
+msgstr "Seznam položek polí:"
+
 #. TRANSLATORS: %s is language (for example "perl")
 #, fuzzy, c-format
 msgid "list of %s scripts"
@@ -5445,6 +5572,10 @@ msgid ""
 "Without argument, this command opens buffer with xfer list."
 msgstr ""
 
+#, fuzzy
+msgid "nicks of DCC chat"
+msgstr "seznam uživatelů na kanálu"
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
@@ -5593,6 +5724,10 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "list of aliases"
+#~ msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy
 #~ msgid ""

@@ -346,7 +346,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         if (new_completion)
         {
             new_buffer->completion = new_completion;
-            gui_completion_init (new_completion, new_buffer);
+            gui_completion_buffer_init (new_completion, new_buffer);
         }
         
         /* init history */

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-07 18:12+0200\n"
+"POT-Creation-Date: 2009-04-09 12:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -333,6 +333,24 @@ msgstr ""
 msgid "Key bindings (%d):"
 msgstr ""
 
+msgid "Key:"
+msgstr ""
+
+msgid "No key found"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Key \"%s\" unbound"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr ""
+
 msgid "Default key bindings restored"
 msgstr ""
 
@@ -345,24 +363,6 @@ msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] ""
 msgstr[1] ""
-
-#, c-format
-msgid "Key \"%s\" unbound"
-msgstr ""
-
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr ""
-
-msgid "Key:"
-msgstr ""
-
-msgid "No key found"
-msgstr ""
-
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr ""
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -870,15 +870,15 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr ""
 
-msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 
 msgid ""
-"      key: display or bind this key to a command\n"
-"   unbind: unbind a key\n"
-"    reset: restore bindings to the default values and delete ALL personal "
+"   bind: bind a command to a key or display command bound to key\n"
+" unbind: remove a key binding\n"
+"  reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"  missing: add missing keys (using default bindings)"
+"missing: add missing keys (using default bindings)"
 msgstr ""
 
 msgid "save/apply/reset layout for buffers and windows"
@@ -1757,6 +1757,66 @@ msgstr ""
 msgid "Not enough memory for new line"
 msgstr ""
 
+msgid "names of buffers"
+msgstr ""
+
+msgid "numbers of buffers"
+msgstr ""
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+msgid "configuration files"
+msgstr ""
+
+msgid "filename"
+msgstr ""
+
+msgid "names of filters"
+msgstr ""
+
+msgid "commands (weechat and plugins)"
+msgstr ""
+
+msgid "names of infos hooked"
+msgstr ""
+
+msgid "names of infolists hooked"
+msgstr ""
+
+msgid "nicks in nicklist of current buffer"
+msgstr ""
+
+msgid "configuration options"
+msgstr ""
+
+msgid "names of plugins"
+msgstr ""
+
+msgid "commands defined by plugins"
+msgstr ""
+
+msgid "names of bars"
+msgstr ""
+
+msgid "values for a configuration option"
+msgstr ""
+
+msgid "weechat commands"
+msgstr ""
+
+msgid "names of proxies"
+msgstr ""
+
+msgid "options for proxies"
+msgstr ""
+
+msgid "options for bars"
+msgstr ""
+
+msgid "key codes"
+msgstr ""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
@@ -1878,6 +1938,9 @@ msgid ""
 " addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "list of supported langs for aspell"
 msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
@@ -2952,6 +3015,39 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr ""
+
+msgid "current IRC server"
+msgstr ""
+
+msgid "nick on current IRC server"
+msgstr ""
+
+msgid "nicks on all channels of current IRC server"
+msgstr ""
+
+msgid "IRC servers (internal names)"
+msgstr ""
+
+msgid "current IRC channel"
+msgstr ""
+
+msgid "nicks of current IRC channel"
+msgstr ""
+
+msgid "nicks and hostnames of current IRC channel"
+msgstr ""
+
+msgid "topic of current IRC channel"
+msgstr ""
+
+msgid "IRC channels (on all servers)"
+msgstr ""
+
+msgid "default part message for IRC channel"
+msgstr ""
+
+msgid "numbers for defined ignores"
 msgstr ""
 
 #, c-format
@@ -4447,6 +4543,9 @@ msgid ""
 "Without argument, this command lists all loaded scripts."
 msgstr ""
 
+msgid "list of scripts"
+msgstr ""
+
 #. TRANSLATORS: %s is language (for example "perl")
 #, c-format
 msgid "list of %s scripts"
@@ -4696,6 +4795,9 @@ msgid ""
 "listfull: list xfer (verbose)\n"
 "\n"
 "Without argument, this command opens buffer with xfer list."
+msgstr ""
+
+msgid "nicks of DCC chat"
 msgstr ""
 
 msgid "auto open xfer buffer when a new xfer is added to list"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-07 18:12+0200\n"
+"POT-Creation-Date: 2009-04-09 12:57+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -382,6 +382,26 @@ msgid "Key bindings (%d):"
 msgstr "Tastenbelegungen:\n"
 
 #, fuzzy
+msgid "Key:"
+msgstr "Taste:\n"
+
+#, fuzzy
+msgid "No key found"
+msgstr "Keine Taste gefunden.\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
+
+#, fuzzy, c-format
+msgid "Key \"%s\" unbound"
+msgstr "Tastenbelegung \"%s\" gelöscht\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr "%s kann die Tastenbelegung \"%s\" nicht entfernen\n"
+
+#, fuzzy
 msgid "Default key bindings restored"
 msgstr "Standardtastenbelegungen wiederhergestellt\n"
 
@@ -396,26 +416,6 @@ msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] "Keine /ignore-Regeln definiert.\n"
 msgstr[1] "Keine /ignore-Regeln definiert.\n"
-
-#, fuzzy, c-format
-msgid "Key \"%s\" unbound"
-msgstr "Tastenbelegung \"%s\" gelöscht\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr "%s kann die Tastenbelegung \"%s\" nicht entfernen\n"
-
-#, fuzzy
-msgid "Key:"
-msgstr "Taste:\n"
-
-#, fuzzy
-msgid "No key found"
-msgstr "Keine Taste gefunden.\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -988,18 +988,18 @@ msgid "bind/unbind keys"
 msgstr "belegen/freigeben von Tasten"
 
 #, fuzzy
-msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
 "[Taste [Funktion/Befehl]] [unbind Taste] [functions] [call Funktion "
 "[\"Argumente\"]] [reset -yes] "
 
 #, fuzzy
 msgid ""
-"      key: display or bind this key to a command\n"
-"   unbind: unbind a key\n"
-"    reset: restore bindings to the default values and delete ALL personal "
+"   bind: bind a command to a key or display command bound to key\n"
+" unbind: remove a key binding\n"
+"  reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"  missing: add missing keys (using default bindings)"
+"missing: add missing keys (using default bindings)"
 msgstr ""
 "      Taste: diese Taste anzeigen oder mit einer internen Funktion oder "
 "einem Befehl, beginnend mit \"/\", belegen\n"
@@ -2056,6 +2056,84 @@ msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für neue Zeile\n"
 
 #, fuzzy
+msgid "names of buffers"
+msgstr "konnte den Puffer nicht laden"
+
+#, fuzzy
+msgid "numbers of buffers"
+msgstr "konnte den Puffer nicht laden"
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+#, fuzzy
+msgid "configuration files"
+msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
+
+#, fuzzy
+msgid "filename"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy
+msgid "names of filters"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "commands (weechat and plugins)"
+msgstr "  (kein Plugin)\n"
+
+#, fuzzy
+msgid "names of infos hooked"
+msgstr "     Timer-Handler:\n"
+
+#, fuzzy
+msgid "names of infolists hooked"
+msgstr "     Timer-Handler:\n"
+
+#, fuzzy
+msgid "nicks in nicklist of current buffer"
+msgstr "Fehlerhafte Pufferlänge"
+
+#, fuzzy
+msgid "configuration options"
+msgstr "Keine Konfigurationsoption gefunden\n"
+
+#, fuzzy
+msgid "names of plugins"
+msgstr "Konfigurationsparameter setzen"
+
+#, fuzzy
+msgid "commands defined by plugins"
+msgstr "  (kein Plugin)\n"
+
+#, fuzzy
+msgid "names of bars"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "values for a configuration option"
+msgstr "Keine Konfigurationsoption gefunden\n"
+
+#, fuzzy
+msgid "weechat commands"
+msgstr "%s interne Befehle:\n"
+
+#, fuzzy
+msgid "names of proxies"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "options for proxies"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "options for bars"
+msgstr "Liste der Aliases:\n"
+
+msgid "key codes"
+msgstr ""
+
+#, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s Puffer kann nicht zur Hotlist hinzugefügt werden\n"
 
@@ -2194,6 +2272,9 @@ msgid ""
 " addword: add a word in your personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "list of supported langs for aspell"
 msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
@@ -3434,6 +3515,48 @@ msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
+
+#, fuzzy
+msgid "current IRC server"
+msgstr "mit Server verbinden"
+
+#, fuzzy
+msgid "nick on current IRC server"
+msgstr "mit Server verbinden"
+
+#, fuzzy
+msgid "nicks on all channels of current IRC server"
+msgstr "Channels, die bei Verbindung zum Server zu betreten sind"
+
+msgid "IRC servers (internal names)"
+msgstr ""
+
+#, fuzzy
+msgid "current IRC channel"
+msgstr "User [Ziel [Channel]]"
+
+#, fuzzy
+msgid "nicks of current IRC channel"
+msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "nicks and hostnames of current IRC channel"
+msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "topic of current IRC channel"
+msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "IRC channels (on all servers)"
+msgstr "Channels, die bei Verbindung zum Server zu betreten sind"
+
+#, fuzzy
+msgid "default part message for IRC channel"
+msgstr "Liste von Nicks im Channel"
+
+msgid "numbers for defined ignores"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -5107,6 +5230,10 @@ msgid ""
 "Without argument, this command lists all loaded scripts."
 msgstr ""
 
+#, fuzzy
+msgid "list of scripts"
+msgstr "Liste der Aliases:\n"
+
 #. TRANSLATORS: %s is language (for example "perl")
 #, fuzzy, c-format
 msgid "list of %s scripts"
@@ -5380,6 +5507,10 @@ msgid ""
 "Without argument, this command opens buffer with xfer list."
 msgstr ""
 
+#, fuzzy
+msgid "nicks of DCC chat"
+msgstr "Liste von Nicks im Channel"
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
@@ -5529,6 +5660,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
+#~ msgid "list of aliases"
+#~ msgstr "Liste der Aliases:\n"
+
+#, fuzzy
 #~ msgid ""
 #~ "smart completion for nicks (completes first with last speakers, "
 #~ "highlights or both)"
@@ -5546,10 +5681,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
 #~ msgid "  (used by a plugin)"
-#~ msgstr "  (kein Plugin)\n"
-
-#, fuzzy
-#~ msgid "  (masked by a plugin)"
 #~ msgstr "  (kein Plugin)\n"
 
 #, fuzzy

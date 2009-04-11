@@ -1003,7 +1003,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "  3: server message\n"
                              "  4: join/part/quit\n"
                              "  9: all other messages"),
-                          "list|set|disable",
+                          "list"
+                          " || set 1|2|3|4|5|6|7|8|9"
+                          " || disable",
                           &logger_command_cb, NULL);
     
     logger_start_buffer_all ();

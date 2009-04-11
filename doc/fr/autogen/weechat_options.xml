@@ -572,7 +572,7 @@
     <para>type: chaîne</para>
   </listitem>
   <listitem>
-    <para>valeurs: toute chaîne (valeur par défaut: '%n|%(irc_channels)')</para>
+    <para>valeurs: toute chaîne (valeur par défaut: '%(nicks)|%(irc_channels)')</para>
   </listitem>
 </itemizedlist>
 

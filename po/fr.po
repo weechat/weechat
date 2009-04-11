@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-07 18:12+0200\n"
-"PO-Revision-Date: 2009-04-07 18:01+0200\n"
+"POT-Creation-Date: 2009-04-09 12:57+0200\n"
+"PO-Revision-Date: 2009-04-09 12:58+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -354,6 +354,24 @@ msgstr "Pas d'association de touche définie"
 msgid "Key bindings (%d):"
 msgstr "Associations de touches (%d):"
 
+msgid "Key:"
+msgstr "Touche:"
+
+msgid "No key found"
+msgstr "Aucune touche trouvée"
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr "%sErreur: impossible de créer la touche \"%s\""
+
+#, c-format
+msgid "Key \"%s\" unbound"
+msgstr "Touche \"%s\" supprimée"
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr "%sErreur: impossible de supprimer la touche \"%s\""
+
 msgid "Default key bindings restored"
 msgstr "Touches par défaut restaurées"
 
@@ -368,24 +386,6 @@ msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] "%d nouvelle touche ajoutée"
 msgstr[1] "%d nouvelles touches ajoutées"
-
-#, c-format
-msgid "Key \"%s\" unbound"
-msgstr "Touche \"%s\" supprimée"
-
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr "%sErreur: impossible de supprimer la touche \"%s\""
-
-msgid "Key:"
-msgstr "Touche:"
-
-msgid "No key found"
-msgstr "Aucune touche trouvée"
-
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr "%sErreur: impossible de créer la touche \"%s\""
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -1029,23 +1029,23 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "associer/libérer des touches"
 
-msgid "[key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
 msgstr ""
-"[touche [commande [args]]] | [unbind touche] | [reset -yes] | [missing]"
+"[bind touche [commande [args]]] | [unbind touche] | [reset -yes] | [missing]"
 
 msgid ""
-"      key: display or bind this key to a command\n"
-"   unbind: unbind a key\n"
-"    reset: restore bindings to the default values and delete ALL personal "
+"   bind: bind a command to a key or display command bound to key\n"
+" unbind: remove a key binding\n"
+"  reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"  missing: add missing keys (using default bindings)"
+"missing: add missing keys (using default bindings)"
 msgstr ""
-"   touche: voir ou associer cette touche à une commande\n"
-"   unbind: supprimer l'association à une touche\n"
-"    reset: restaure les touches aux valeurs par défaut et supprime TOUTES "
-"les touches personnelles (utiliser avec précaution !)\n"
-"  missing: ajoute les touches manquantes (en utilisant les touches par "
-"défaut)"
+"   bind: associer une commande à une touche ou afficher la commande associée "
+"à la touche\n"
+" unbind: supprimer l'association à une touche\n"
+"  reset: restaure les touches aux valeurs par défaut et supprime TOUTES les "
+"touches personnelles (utiliser avec précaution !)\n"
+"missing: ajoute les touches manquantes (en utilisant les touches par défaut)"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "sauve/applique/réinitialise la disposition des tampons et fenêtres"
@@ -2137,6 +2137,66 @@ msgstr "%sErreur: un tampon avec le même nom (%s) existe déjà"
 msgid "Not enough memory for new line"
 msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
+msgid "names of buffers"
+msgstr "noms des tampons"
+
+msgid "numbers of buffers"
+msgstr "numéros des tampons"
+
+msgid "names of buffers (including plugins names)"
+msgstr "noms des tampons (incluant les noms d'extensions)"
+
+msgid "configuration files"
+msgstr "fichiers de configuration"
+
+msgid "filename"
+msgstr "nom de fichier"
+
+msgid "names of filters"
+msgstr "noms des filtres"
+
+msgid "commands (weechat and plugins)"
+msgstr "commandes (weechat et extensions)"
+
+msgid "names of infos hooked"
+msgstr "noms des infos accrochées"
+
+msgid "names of infolists hooked"
+msgstr "noms des infolistes accrochées"
+
+msgid "nicks in nicklist of current buffer"
+msgstr "pseudos dans la liste des pseudos du tampon courant"
+
+msgid "configuration options"
+msgstr "options de configuration"
+
+msgid "names of plugins"
+msgstr "noms des extensions"
+
+msgid "commands defined by plugins"
+msgstr "commandes définies par les extensions"
+
+msgid "names of bars"
+msgstr "noms des barres"
+
+msgid "values for a configuration option"
+msgstr "valeurs pour une option de configuration"
+
+msgid "weechat commands"
+msgstr "commandes weechat"
+
+msgid "names of proxies"
+msgstr "noms des proxies"
+
+msgid "options for proxies"
+msgstr "options pour les proxies"
+
+msgid "options for bars"
+msgstr "options pour les barres"
+
+msgid "key codes"
+msgstr "codes des touches"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
 
@@ -2281,6 +2341,9 @@ msgstr ""
 "\n"
 "Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour "
 "certaines commandes."
+
+msgid "list of supported langs for aspell"
+msgstr "liste des langues supportées pour aspell"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
@@ -3581,6 +3644,39 @@ msgstr ""
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr ""
 "%s%s: la commande \"%s\" doit être exécutée sur un serveur irc connecté"
+
+msgid "current IRC server"
+msgstr "serveur IRC courant"
+
+msgid "nick on current IRC server"
+msgstr "pseudo sur le serveur IRC courant"
+
+msgid "nicks on all channels of current IRC server"
+msgstr "pseudos sur tous les canaux du serveur IRC courant"
+
+msgid "IRC servers (internal names)"
+msgstr "serveurs IRC (noms internes)"
+
+msgid "current IRC channel"
+msgstr "canal IRC courant"
+
+msgid "nicks of current IRC channel"
+msgstr "pseudos du canal IRC courant"
+
+msgid "nicks and hostnames of current IRC channel"
+msgstr "pseudos et noms d'hôtes du canal IRC courant"
+
+msgid "topic of current IRC channel"
+msgstr "titre du canal IRC courant"
+
+msgid "IRC channels (on all servers)"
+msgstr "canaux IRC (sur tous les serveurs)"
+
+msgid "default part message for IRC channel"
+msgstr "message de fin par défaut pour le canal IRC"
+
+msgid "numbers for defined ignores"
+msgstr "numéros pour les ignores définis"
 
 #, c-format
 msgid ""
@@ -5306,6 +5402,9 @@ msgstr ""
 "\n"
 "Sans argument, cette commande liste tous les scripts chargés."
 
+msgid "list of scripts"
+msgstr "liste des scripts"
+
 #. TRANSLATORS: %s is language (for example "perl")
 #, c-format
 msgid "list of %s scripts"
@@ -5576,6 +5675,9 @@ msgstr ""
 "listfull: liste les xfer (verbeux)\n"
 "\n"
 "Sans paramètre, cette commande ouvre le tampon avec la liste des xfer."
+
+msgid "nicks of DCC chat"
+msgstr "pseudos de la discussion DCC"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""

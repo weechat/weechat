@@ -98,6 +98,7 @@ struct t_gui_bar
 
 /* variables */
 
+extern char *gui_bar_option_string[];
 extern char *gui_bar_type_string[];
 extern char *gui_bar_position_string[];
 extern char *gui_bar_filling_string[];

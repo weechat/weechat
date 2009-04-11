@@ -97,12 +97,26 @@ typedef int (t_hook_callback_command)(void *data, struct t_gui_buffer *buffer,
 
 struct t_hook_command
 {
-    t_hook_callback_command *callback; /* command callback                  */
-    char *command;                     /* name of command (without '/')     */
-    char *description;                 /* (for /help) short cmd description */
-    char *args;                        /* (for /help) command arguments     */
-    char *args_description;            /* (for /help) args long description */
-    char *completion;                  /* template for completion           */
+    t_hook_callback_command *callback;  /* command callback                 */
+    char *command;                      /* name of command (without '/')    */
+    char *description;                  /* (for /help) short cmd description*/
+    char *args;                         /* (for /help) command arguments    */
+    char *args_description;             /* (for /help) args long description*/
+    char *completion;                   /* template for completion          */
+    
+    /* templates */
+    int cplt_num_templates;             /* number of templates for compl.   */
+    char **cplt_templates;              /* completion templates             */
+    char **cplt_templates_static;       /* static part of template (at      */
+                                        /* beginning                        */
+    
+    /* arguments for each template */
+    int *cplt_template_num_args;        /* number of arguments for template */
+    char ***cplt_template_args;         /* arguments for each template      */
+    
+    /* concatenation of arg N for each template */
+    int cplt_template_num_args_concat; /* number of concatened arguments    */
+    char **cplt_template_args_concat;  /* concatened arguments              */
 };
 
 /* hook command run */
@@ -241,6 +255,7 @@ struct t_hook_completion
 {
     t_hook_callback_completion *callback; /* completion callback            */
     char *completion_item;                /* name of completion             */
+    char *description;                    /* description                    */
 };
 
 /* hook modifier */
@@ -355,6 +370,7 @@ extern struct t_hook *hook_config (struct t_weechat_plugin *plugin,
 extern void hook_config_exec (const char *option, const char *value);
 extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
                                        const char *completion_item,
+                                       const char *description,
                                        t_hook_callback_completion *callback,
                                        void *callback_data);
 extern void hook_completion_list_add (struct t_gui_completion *completion,

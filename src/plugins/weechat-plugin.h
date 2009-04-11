@@ -429,6 +429,7 @@ struct t_weechat_plugin
                                    void *callback_data);
     struct t_hook *(*hook_completion) (struct t_weechat_plugin *plugin,
                                        const char *completion_item,
+                                       const char *description,
                                        int (*callback)(void *data,
                                                        const char *completion_item,
                                                        struct t_gui_buffer *buffer,
@@ -972,9 +973,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_hook_config(__option, __callback, __data)               \
     weechat_plugin->hook_config(weechat_plugin, __option, __callback,   \
                                 __data)
-#define weechat_hook_completion(__completion, __callback, __data)       \
+#define weechat_hook_completion(__completion, __description,            \
+                                __callback, __data)                     \
     weechat_plugin->hook_completion(weechat_plugin, __completion,       \
-                                    __callback, __data)
+                                    __description, __callback, __data)
 #define weechat_hook_completion_list_add(__completion, __word,          \
                                          __nick_completion, __where)    \
     weechat_plugin->hook_completion_list_add(__completion, __word,      \
