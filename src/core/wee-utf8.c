@@ -371,6 +371,39 @@ utf8_strlen_screen (const char *string)
 }
 
 /*
+ * utf8_charcmp: compare two utf8 chars (case sensitive)
+ */
+
+int
+utf8_charcmp (const char *string1, const char *string2)
+{
+    int length1, length2, i, diff;
+    
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+    
+    length1 = utf8_char_size (string1);
+    length2 = utf8_char_size (string2);
+    
+    i = 0;
+    while ((i < length1) && (i < length2))
+    {
+        diff = (int)((unsigned char) string1[i]) - (int)((unsigned char) string2[i]);
+        if (diff != 0)
+            return diff;
+        i++;
+    }
+    /* string1 == string2 ? */
+    if ((i == length1) && (i == length2))
+        return 0;
+    /* string1 < string2 ? */
+    if (i == length1)
+        return 1;
+    /* string1 > string2 */
+    return -1;
+}
+
+/*
  * utf8_charcasecmp: compare two utf8 chars (case is ignored)
  */
 
@@ -401,7 +434,7 @@ utf8_charcasecmp (const char *string1, const char *string2)
     i = 1;
     while ((i < length1) && (i < length2))
     {
-        diff = (int)((unsigned char) string1[0]) - (int)((unsigned char) string2[0]);
+        diff = (int)((unsigned char) string1[i]) - (int)((unsigned char) string2[i]);
         if (diff != 0)
             return diff;
         i++;

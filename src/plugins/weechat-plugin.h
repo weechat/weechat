@@ -180,6 +180,7 @@ struct t_weechat_plugin
     int (*utf8_strlen) (const char *string);
     int (*utf8_strnlen) (const char *string, int bytes);
     int (*utf8_strlen_screen) (const char *string);
+    int (*utf8_charcmp) (const char *string1, const char *string2);
     int (*utf8_charcasecmp) (const char *string1, const char *string2);
     int (*utf8_char_size_screen) (const char *string);
     char *(*utf8_add_offset) (const char *string, int offset);
@@ -722,6 +723,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->utf8_strnlen(__string, __bytes)
 #define weechat_utf8_strlen_screen(__string)                            \
     weechat_plugin->utf8_strlen_screen(__string)
+#define weechat_utf8_charcmp(__string1, __string2)                      \
+    weechat_plugin->utf8_charcmp(__string1, __string2)
 #define weechat_utf8_charcasecmp(__string1, __string2)                  \
     weechat_plugin->utf8_charcasecmp(__string1, __string2)
 #define weechat_utf8_char_size_screen(__string)                         \

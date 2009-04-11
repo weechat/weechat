@@ -382,6 +382,7 @@ plugin_load (const char *filename)
         new_plugin->utf8_strlen = &utf8_strlen;
         new_plugin->utf8_strnlen = &utf8_strnlen;
         new_plugin->utf8_strlen_screen = &utf8_strlen_screen;
+        new_plugin->utf8_charcmp = &utf8_charcmp;
         new_plugin->utf8_charcasecmp = &utf8_charcasecmp;
         new_plugin->utf8_char_size_screen = &utf8_char_size_screen;
         new_plugin->utf8_add_offset = &utf8_add_offset;
