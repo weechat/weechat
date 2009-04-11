@@ -3824,7 +3824,7 @@ command_init ()
                      "delete ALL personal bindings (use carefully!)\n"
                      "missing: add missing keys (using default bindings)"),
                   "bind %(keys_codes) %(commands)"
-                  " || unbind %(key_codes)"
+                  " || unbind %(keys_codes)"
                   " || reset"
                   " || missing",
                   &command_key, NULL);
