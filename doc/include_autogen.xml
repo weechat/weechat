@@ -28,21 +28,13 @@
 <!ENTITY weechat_options.xml SYSTEM "autogen/weechat_options.xml">
 <!ENTITY xfer_options.xml SYSTEM "autogen/xfer_options.xml">
 
-<!-- infos/infolists hooked -->
+<!-- infos hooked -->
 
-<!ENTITY alias_infos.xml SYSTEM "autogen/alias_infos.xml">
-<!ENTITY fifo_infos.xml SYSTEM "autogen/fifo_infos.xml">
-<!ENTITY irc_infos.xml SYSTEM "autogen/irc_infos.xml">
-<!ENTITY jabber_infos.xml SYSTEM "autogen/jabber_infos.xml">
-<!ENTITY logger_infos.xml SYSTEM "autogen/logger_infos.xml">
-<!ENTITY lua_infos.xml SYSTEM "autogen/lua_infos.xml">
-<!ENTITY perl_infos.xml SYSTEM "autogen/perl_infos.xml">
-<!ENTITY python_infos.xml SYSTEM "autogen/python_infos.xml">
-<!ENTITY relay_infos.xml SYSTEM "autogen/relay_infos.xml">
-<!ENTITY ruby_infos.xml SYSTEM "autogen/ruby_infos.xml">
-<!ENTITY tcl_infos.xml SYSTEM "autogen/tcl_infos.xml">
-<!ENTITY weechat_infos.xml SYSTEM "autogen/weechat_infos.xml">
-<!ENTITY xfer_infos.xml SYSTEM "autogen/xfer_infos.xml">
+<!ENTITY infos.xml SYSTEM "autogen/infos.xml">
+
+<!-- infolists hooked -->
+
+<!ENTITY infolists.xml SYSTEM "autogen/infolists.xml">
 
 <!-- completions hooked -->
 

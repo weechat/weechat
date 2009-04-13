@@ -18,39 +18,29 @@ LANGCODE = de
 
 BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
                        autogen/alias_commands.xml   \
-                       autogen/alias_infos.xml      \
                        autogen/aspell_commands.xml  \
                        autogen/aspell_options.xml   \
                        autogen/charset_commands.xml \
                        autogen/charset_options.xml  \
                        autogen/completions.xml      \
                        autogen/demo_commands.xml    \
-                       autogen/fifo_infos.xml       \
                        autogen/irc_commands.xml     \
-                       autogen/irc_infos.xml        \
                        autogen/irc_options.xml      \
+                       autogen/infos.xml            \
+                       autogen/infolists.xml        \
                        autogen/jabber_commands.xml  \
-                       autogen/jabber_infos.xml     \
                        autogen/jabber_options.xml   \
                        autogen/logger_commands.xml  \
-                       autogen/logger_infos.xml     \
                        autogen/logger_options.xml   \
                        autogen/lua_commands.xml     \
-                       autogen/lua_infos.xml        \
                        autogen/notify_commands.xml  \
                        autogen/perl_commands.xml    \
-                       autogen/perl_infos.xml       \
                        autogen/python_commands.xml  \
-                       autogen/python_infos.xml     \
                        autogen/ruby_commands.xml    \
-                       autogen/ruby_infos.xml       \
                        autogen/tcl_commands.xml     \
-                       autogen/tcl_infos.xml        \
                        autogen/weechat_commands.xml \
-                       autogen/weechat_infos.xml    \
                        autogen/weechat_options.xml  \
                        autogen/xfer_commands.xml    \
-                       autogen/xfer_infos.xml       \
                        autogen/xfer_options.xml
 
 BOOK_COMMON_INCLUDE  = authors.$(LANGCODE).xml \

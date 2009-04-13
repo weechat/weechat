@@ -166,7 +166,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                  callback_completion, NULL);
         snprintf (infolist_description, sizeof (infolist_description),
                   /* TRANSLATORS: %s is language (for example "perl") */
-                  _("list of %s scripts"), weechat_plugin->name);
+                  N_("list of %s scripts"), weechat_plugin->name);
         weechat_hook_infolist (string, infolist_description,
                                callback_infolist, NULL);
         free (string);

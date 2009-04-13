@@ -71,26 +71,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secIrcInfosHooked">
-    <title>Infos and infolists</title>
-    
-    <para>
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="3">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Name</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            &irc_infos.xml;
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    
-  </section>
-  
 </section>

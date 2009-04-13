@@ -545,7 +545,7 @@ int weechat_string_match (
 </programlisting>
       </para>
       <para>
-        Check if a string matches a mask. Mask may begin or end with "*" (no
+        Check if a string matches a mask. Mask can begin or end with "*" (no
         other "*" are allowed inside mask).
       </para>
       <para>
@@ -2226,7 +2226,7 @@ void weechat_list_set (struct t_weelist_item *item, const char *value);
       </para>
       <para>
         Example:
-        <screen>weechat_list_set (item, "new data");/</screen>
+        <screen>weechat_list_set (item, "new data");</screen>
       </para>
     </section>
     
@@ -2258,7 +2258,7 @@ struct t_weelist_item *weechat_list_next (struct t_weelist_item *item);
       </para>
       <para>
         Example:
-        <screen>struct t_weelist_item *next_item = weechat_list_next_item (item);/</screen>
+        <screen>struct t_weelist_item *next_item = weechat_list_next_item (item);</screen>
       </para>
     </section>
     
@@ -2290,7 +2290,7 @@ struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
       </para>
       <para>
         Example:
-        <screen>struct t_weelist_item *prev_item = weechat_list_prev_item (item);/</screen>
+        <screen>struct t_weelist_item *prev_item = weechat_list_prev_item (item);</screen>
       </para>
     </section>
     
@@ -2321,7 +2321,7 @@ const char *weechat_list_string (struct t_weelist_item *item);
       </para>
       <para>
         Example:
-        <screen>char *value = weechat_list_string (item);/</screen>
+        <screen>char *value = weechat_list_string (item);</screen>
       </para>
     </section>
     
@@ -2352,7 +2352,7 @@ char *weechat_list_size (struct t_weelist *weelist);
       </para>
       <para>
         Example:
-        <screen>int size = weechat_list_size (list);/</screen>
+        <screen>int size = weechat_list_size (list);</screen>
       </para>
     </section>
     
@@ -2387,7 +2387,7 @@ void weechat_list_remove (
       </para>
       <para>
         Example:
-        <screen>weechat_list_remove (list, item);/</screen>
+        <screen>weechat_list_remove (list, item);</screen>
       </para>
     </section>
     
@@ -2415,7 +2415,7 @@ void weechat_list_remove_all (struct t_weelist *weelist);
       </para>
       <para>
         Example:
-        <screen>weechat_list_remove_all (list);/</screen>
+        <screen>weechat_list_remove_all (list);</screen>
       </para>
     </section>
     
@@ -2443,7 +2443,7 @@ void weechat_list_free (struct t_weelist *weelist);
       </para>
       <para>
         Example:
-        <screen>weechat_list_free (list);/</screen>
+        <screen>weechat_list_free (list);</screen>
       </para>
     </section>
     
@@ -2486,7 +2486,7 @@ struct t_config_file *weechat_config_new (
           <listitem>
             <para>
               <option>callback_reload</option>: callback called when
-              configuration file is reloaded with /reload (optional, may be
+              configuration file is reloaded with /reload (optional, can be
               NULL), arguments:
               <informaltable colsep="0" frame="none">
                 <tgroup cols="3">
@@ -4726,7 +4726,7 @@ const char *weechat_color (const char *color_name);
         <itemizedlist>
           <listitem>
             <para>
-              <option>color_name</option>: name of color: may be a WeeChat
+              <option>color_name</option>: name of color: can be a WeeChat
               color name (from weechat.color.xxx), a color with optional
               background (separated by comma), attribute ("bold", "-bold",
               "reverse", "-reverse", "italic", "-italic", "underline",
@@ -8943,84 +8943,25 @@ const char *weechat_info_get (const char *info_name,
 </programlisting>
       </para>
       <para>
-        Get info from WeeChat or other plugin.
+        Get info from WeeChat or a plugin.
       </para>
       <para>
         Arguments:
         <itemizedlist>
           <listitem>
             <para>
-              <option>info_name</option>: info name to read, from WeeChat
-              core or other plugin (see plugin doc for infos returned by
-              each plugin). WeeChat core infos are:
+              <option>info_name</option>: name of info to read:
               <informaltable colsep="0" frame="none">
                 <tgroup cols="3">
                   <thead>
                     <row>
-                      <entry>Info</entry>
+                      <entry>Plugin</entry>
+                      <entry>Name</entry>
                       <entry>Description</entry>
-                      <entry>Example</entry>
                     </row>
                   </thead>
                   <tbody>
-                    <row>
-                      <entry>version</entry>
-                      <entry>WeeChat version</entry>
-                      <entry>0.2.7</entry>
-                    </row>
-                    <row>
-                      <entry>date</entry>
-                      <entry>WeeChat compilation date</entry>
-                      <entry>Dec 25 2008</entry>
-                    </row>
-                    <row>
-                      <entry>dir_separator</entry>
-                      <entry>
-                        directory separator: "/" under GNU/Linux, "\" under
-                        MS-Windows
-                      </entry>
-                      <entry>/</entry>
-                    </row>
-                    <row>
-                      <entry>weechat_dir</entry>
-                      <entry>WeeChat home directory</entry>
-                      <entry>/home/login/.weechat</entry>
-                    </row>
-                    <row>
-                      <entry>weechat_libdir</entry>
-                      <entry>WeeChat lib directory</entry>
-                      <entry>/usr/lib/weechat</entry>
-                    </row>
-                    <row>
-                      <entry>weechat_sharedir</entry>
-                      <entry>WeeChat share directory</entry>
-                      <entry>/usr/share/weechat</entry>
-                    </row>
-                    <row>
-                      <entry>weechat_localedir</entry>
-                      <entry>WeeChat locale directory</entry>
-                      <entry>/usr/share/locale</entry>
-                    </row>
-                    <row>
-                      <entry>charset_terminal</entry>
-                      <entry>terminal charset</entry>
-                      <entry>UTF-8</entry>
-                    </row>
-                    <row>
-                      <entry>charset_internal</entry>
-                      <entry>internal WeeChat charset (always "UTF-8")</entry>
-                      <entry>UTF-8</entry>
-                    </row>
-                    <row>
-                      <entry>inactivity</entry>
-                      <entry>keyboard inactivity (in seconds)</entry>
-                      <entry>12</entry>
-                    </row>
-                    <row>
-                      <entry>filters_enabled</entry>
-                      <entry>1 if filters are enabled, otherwise 0</entry>
-                      <entry>1</entry>
-                    </row>
+                    &infos.xml;
                   </tbody>
                 </tgroup>
               </informaltable>
@@ -9057,12 +8998,793 @@ weechat_printf (NULL, "WeeChat home is: %s",
     <title>Infolists</title>
     
     <para>
-      Functions for infolists.
+      Functions to get infolists.
     </para>
     
     <para>
-      Missing doc!
+      An infolist is a list of "items". Each item contains variables.
+      For example, infolist "irc_server" has N items (N is number of IRC
+      servers defined). For each item, there is variables like "name",
+      "buffer", "is_connected", ...
+      Each variable has a type and a value. Possible types are:
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Type</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>integer</entry>
+              <entry>any integer value</entry>
+            </row>
+            <row>
+              <entry>string</entry>
+              <entry>any string value</entry>
+            </row>
+            <row>
+              <entry>pointer</entry>
+              <entry>any pointer</entry>
+            </row>
+            <row>
+              <entry>buffer</entry>
+              <entry>buffer with fixed length, containing any data</entry>
+            </row>
+            <row>
+              <entry>time</entry>
+              <entry>time value</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
     </para>
+    
+    <section id="secPluginCApi_weechat_infolist_new">
+      <title>weechat_infolist_new</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist *weechat_infolist_new ();
+</programlisting>
+      </para>
+      <para>
+        Create a new infolist.
+      </para>
+      <para>
+        Return value: pointer to new infolist.
+      </para>
+      <para>
+        Example:
+        <screen>struct t_infolist *infolist = weechat_infolist_new ();</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_item">
+      <title>weechat_infolist_new_item</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_item *weechat_infolist_new_item (struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Add an item in an infolist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new item.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist_item *item = weechat_infolist_new_item (infolist);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_var_integer">
+      <title>weechat_infolist_new_var_integer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_var *weechat_infolist_new_var_integer (
+    struct t_infolist_item *item,
+    const char *name,
+    int value);
+</programlisting>
+      </para>
+      <para>
+        Add an integer variable to an infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: infolist item pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: variable name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>value</option>: integer value
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new variable.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist_var *var =
+    weechat_infolist_new_variable_integer (item, "my_integer", 123);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_var_string">
+      <title>weechat_infolist_new_var_string</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_var *weechat_infolist_new_var_string (
+    struct t_infolist_item *item,
+    const char *name,
+    const char *value);
+</programlisting>
+      </para>
+      <para>
+        Add a string variable to an infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: infolist item pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: variable name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>value</option>: string value
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new variable.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist_var *var =
+    weechat_infolist_new_variable_string (item, "my_string", "value here");
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_var_pointer">
+      <title>weechat_infolist_new_var_pointer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_var *weechat_infolist_new_var_pointer (
+    struct t_infolist_item *item,
+    const char *name,
+    void *pointer);
+</programlisting>
+      </para>
+      <para>
+        Add a pointer variable to an infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: infolist item pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: variable name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>pointer</option>: pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new variable.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist_var *var =
+    weechat_infolist_new_variable_pointer (item, "my_pointer", &amp;something);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_var_buffer">
+      <title>weechat_infolist_new_var_buffer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_var *weechat_infolist_new_var_buffer (
+    struct t_infolist_item *item,
+    const char *name,
+    void *pointer,
+    int size);
+</programlisting>
+      </para>
+      <para>
+        Add a buffer variable to an infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: infolist item pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: variable name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>pointer</option>: pointer to buffer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>size</option>: size of buffer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new variable.
+      </para>
+      <para>
+        Example:
+<screen>
+char buffer[256];
+/* ... */
+struct t_infolist_var *var =
+    weechat_infolist_new_variable_buffer (item, "my_buffer",
+                                          &amp;buffer, sizeof (buffer));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_new_var_time">
+      <title>weechat_infolist_new_var_time</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist_var *weechat_infolist_new_var_time (
+    struct t_infolist_item *item,
+    const char *name,
+    time_t time);
+</programlisting>
+      </para>
+      <para>
+        Add a time variable to an infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>item</option>: infolist item pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>name</option>: variable name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>time</option>: time value
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new variable.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist_var *var =
+    weechat_infolist_new_variable_time (item, "my_time", time (NULL));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_get">
+      <title>weechat_infolist_get</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_infolist *weechat_infolist_get (const char *infolist_name,
+                                         void *pointer,
+                                         const char *arguments);
+</programlisting>
+      </para>
+      <para>
+        Get infolist from WeeChat or a plugin.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist_name</option>: name of infolist to read:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="3">
+                  <thead>
+                    <row>
+                      <entry>Plugin</entry>
+                      <entry>Name</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    &infolists.xml;
+                  </tbody>
+                </tgroup>
+              </informaltable>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>pointer</option>: pointer to an item, to get only this
+              item in infolist (optional, can be NULL)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>arguments</option>: name/type of item to retrieve
+              (optional, can be NULL)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to infolist, NULL if an error occured.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_infolist *infolist = weechat_infolist_get ("irc_server", NULL, NULL);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_next">
+      <title>weechat_infolist_next</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_infolist_next (struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Move "cursor" to next item in an infolist. The first call to this
+        function for an infolist moves cursor to first item in infolist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if pointer is now on next item, 0 if end of list was
+        reached.
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_infolist_next (infolist))
+{
+    /* read variables in item... */
+}
+else
+{
+    /* no more item available */
+}
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_prev">
+      <title>weechat_infolist_prev</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_infolist_prev (struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Move "cursor" to previous item in an infolist. The first call to this
+        function for an infolist moves cursor to last item in infolist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if pointer is now on previous item, 0 if beginning of
+        list was reached.
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_infolist_prev (infolist))
+{
+    /* read variables in item... */
+}
+else
+{
+    /* no more item available */
+}
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_reset_item_cursor">
+      <title>weechat_infolist_reset_item_cursor</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_infolist_reset_item_cursor (struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Reset "cursor" for infolist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example: <screen>weechat_infolist_reset_item_cursor (infolist);</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_fields">
+      <title>weechat_infolist_fields</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_infolist_fields (struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Get list of fields for current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string with list of fields for current infolist item.
+        List is comma separated, and contains letter for type, followed by
+        variable name. Types are: "i" (integer), "s" (string), "p" (pointer),
+        "b" (buffer), "t" (time).
+      </para>
+      <para>
+        Example:
+<screen>
+const char *fields = weechat_infolist_fields (infolist);
+/* fields contains something like:
+   "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time" */
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_integer">
+      <title>weechat_infolist_integer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_infolist_integer (struct t_infolist *infolist,
+                              const char *var);
+</programlisting>
+      </para>
+      <para>
+        Get value of integer variable in current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>var</option>: variable name (must be type "integer")
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: integer value of variable.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "integer value = %d",
+                weechat_infolist_integer (infolist, "my_integer"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_string">
+      <title>weechat_infolist_string</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+const char *weechat_infolist_string (struct t_infolist *infolist,
+                                     const char *var);
+</programlisting>
+      </para>
+      <para>
+        Get value of string variable in current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>var</option>: variable name (must be type "string")
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string value of variable.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "string value = %s",
+                weechat_infolist_string (infolist, "my_string"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_pointer">
+      <title>weechat_infolist_pointer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void *weechat_infolist_pointer (struct t_infolist *infolist,
+                                const char *var);
+</programlisting>
+      </para>
+      <para>
+        Get value of pointer variable in current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>var</option>: variable name (must be type "pointer")
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer value of variable.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "pointer value = 0x%lx",
+                weechat_infolist_pointer (infolist, "my_pointer"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_buffer">
+      <title>weechat_infolist_buffer</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void *weechat_infolist_buffer (struct t_infolist *infolist,
+                               const char *var,
+                               int *size);
+</programlisting>
+      </para>
+      <para>
+        Get value of buffer variable in current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>var</option>: variable name (must be type "buffer")
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>size</option>: pointer to integer variable, will be set
+              with buffer size
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: buffer pointer.
+      </para>
+      <para>
+        Example:
+<screen>
+int size;
+void *pointer = weechat_infolist_buffer (infolist, "my_buffer", &amp;size);
+weechat_printf (NULL, "buffer pointer = 0x%lx, size = %d",
+                pointer, size);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_time">
+      <title>weechat_infolist_time</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+time_t weechat_infolist_time (struct t_infolist *infolist,
+                              const char *var);
+</programlisting>
+      </para>
+      <para>
+        Get value of time variable in current infolist item.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>var</option>: variable name (must be type "time")
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: time value of variable.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_printf (NULL, "time value = 0x%ld",
+                weechat_infolist_time (infolist, "my_time"));
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_infolist_free">
+      <title>weechat_infolist_free</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_infolist_free (struct t_weelist *weelist);
+</programlisting>
+      </para>
+      <para>
+        Free an infolist.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>infolist</option>: infolist pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+        <screen>weechat_infolist_free (infolist);</screen>
+      </para>
+    </section>
     
   </section>
   
@@ -9075,3041 +9797,170 @@ weechat_printf (NULL, "WeeChat home is: %s",
       Functions for WeeChat upgrading.
     </para>
     
-    <para>
-      Missing doc!
-    </para>
+    <section id="secPluginCApi_weechat_upgrade_new">
+      <title>weechat_upgrade_new</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_upgrade_file *weechat_upgrade_new (const char *filename,
+                                            int write);
+</programlisting>
+      </para>
+      <para>
+        Create or read a file for upgrade.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>filename</option>: name of file (extension ".upgrade"
+              will be added to this name by WeeChat)
+            </para>
+            <para>
+              <option>write</option>: 1 to create file (write mode, before
+              upgrade), 0 to read file (after upgrade)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to new upgrade file.
+      </para>
+      <para>
+        Example:
+<screen>
+struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file");
+</screen>
+      </para>
+    </section>
     
-  </section>
-  
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
+    <section id="secPluginCApi_weechat_upgrade_write_object">
+      <title>weechat_upgrade_write_object</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_upgrade_file *weechat_upgrade_write_object (
+    struct t_upgrade_file *upgrade_file,
+    int object_id,
+    struct t_infolist *infolist);
+</programlisting>
+      </para>
+      <para>
+        Write an object in upgrade file.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>upgrade_file</option>: upgrade file pointer
+            </para>
+            <para>
+              <option>object_id</option>: id for object
+            </para>
+            <para>
+              <option>infolist</option>: infolist to write in file
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if ok, 0 if error.
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_upgrade_write_object (upgrade_file, 1, &amp;infolist);
+</screen>
+      </para>
+    </section>
+    
+    <section id="secPluginCApi_weechat_upgrade_read">
+      <title>weechat_upgrade_read</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+struct t_upgrade_file *weechat_upgrade_read (
+    struct t_upgrade_file *upgrade_file,
+    int (*callback_read)(void *data,
+                         struct t_upgrade_file *upgrade_file,
+                         int object_id,
+                         struct t_infolist *infolist),
+    void *callback_read_data);
+</programlisting>
+      </para>
+      <para>
+        Read an upgrade file.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>upgrade_file</option>: upgrade file pointer
+            </para>
+            <para>
+              <option>callback_read</option>: callback called for each object
+              read in upgrade file
+            </para>
+            <para>
+              <option>callback_read_data</option>: pointer given to read
+              callback when it is called by WeeChat
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if ok, 0 if error.
+      </para>
+      <para>
+        Example:
+<screen>
+int
+my_upgrade_read_cb (struct t_upgrade_file *upgrade_file,
+                    int object_id,
+                    struct t_infolist *infolist)
+{
+    /* read variables... */
+    return WEECHAT_RC_OK;
+}
 
-  
-    <!--
-            To be continued...
-
-
-  
-  <section id="secAPI_print">
-    <title>print</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void print (t_weechat_plugin *plugin,
-        char *server, char *channel, char *message, ...)
-      </command>
-    </para>
-    <para>
-      Display a message on a WeeChat buffer, identified by server and
-      channel (both may be NULL for current buffer).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal name of server to find
-            buffer for message display (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel</option>: name of channel to find buffer
-            for message display (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>message</option>: message
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      To display colored text, there are following codes:
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Code</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>0x02</entry>
-              <entry>
-                bold text
-              </entry>
-            </row>
-            <row>
-              <entry>0x03 + "xx"</entry>
-              <entry>
-                text color "<literal>xx</literal>"
-                (see <xref linkend="secAPI_get_irc_color" /> for colors)
-              </entry>
-            </row>
-            <row>
-              <entry>0x03 + "xx,yy"</entry>
-              <entry>
-                text color "<literal>xx</literal>"
-                and background "<literal>yy</literal>"
-                (see <xref linkend="secAPI_get_irc_color" /> for colors)
-              </entry>
-            </row>
-            <row>
-              <entry>0x0F</entry>
-              <entry>
-                disable color and attributes
-              </entry>
-            </row>
-            <row>
-              <entry>0x12</entry>
-              <entry>
-                reverse video (revert text color with background)
-              </entry>
-            </row>
-            <row>
-              <entry>0x1F</entry>
-              <entry>
-                underlined text
-              </entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      Note: the same code (without number for 0x03) may be used to stop
-      the attribute.
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Examples:
-<screen>
-plugin->print (plugin, NULL, NULL, "hello");
-plugin->print (plugin, NULL, "#weechat", "hello");
-plugin->print (plugin, "freenode", "#weechat", "hello");
-plugin->print (plugin, NULL, NULL,
-               "test: \x02 bold \x0F\x03%02d blue \x03%02d green",
-               plugin->get_irc_color (plugin, "blue"),
-               plugin->get_irc_color (plugin, "green"));
+weechat_upgrade_read (upgrade_file, &amp;my_upgrade_read_cb, NULL);
 </screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_print_server">
-    <title>print_server</title>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        void print_server (t_weechat_plugin *plugin,
-        char *message, ...)
-      </command>
-    </para>
-    <para>
-      Display a message on current server buffer.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>message</option>: message
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      To display colored text, see <xref linkend="secAPI_print" />.
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example: <screen>plugin->print_server (plugin, "hello");</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_log">
-    <title>log</title>
+    <section id="secPluginCApi_weechat_upgrade_close">
+      <title>weechat_upgrade_close</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_upgrade_close (struct t_upgrade_file *upgrade_file);
+</programlisting>
+      </para>
+      <para>
+        Close an upgrade file.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>upgrade_file</option>: upgrade file pointer
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example: <screen>weechat_upgrade_close (upgrade_file);</screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        void log (t_weechat_plugin *plugin,
-        char *server, char *channel, char *message, ...)
-      </command>
-    </para>
-    <para>
-      Write a message in log file for a server or a channel.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal name of server to find
-            buffer for log (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel</option>: name of channel to find buffer
-            for log (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>message</option>: message
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-<screen>
-plugin->log (plugin, "freenode", "#weechat", "test");
-</screen>
-    </para>
   </section>
-  
-  <section id="secAPI_msg_handler_add">
-    <title>msg_handler_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_handler *msg_handler_add (t_weechat_plugin
-        *plugin, char *message, t_plugin_handler_func *function,
-        char *handler_args, void *handler_pointer)
-      </command>
-    </para>
-    <para>
-      Add an IRC message handler, called when an IRC message is
-      received.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>message</option>: name of IRC message ("*" for all
-            messages).
-            To know list of IRC messages, please consult
-            <acronym>RFC</acronym>s
-            <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
-            and
-            <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-            Moreover you can use a special name, prefixed by "weechat_"
-            to catch special events, as written in table below:
-            <informaltable colsep="0" frame="none">
-              <tgroup cols="2">
-                <thead>
-                  <row>
-                    <entry>Name</entry>
-                    <entry>Description</entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry><literal>weechat_pv</literal></entry>
-                    <entry>private message received</entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_highlight</literal></entry>
-                    <entry>
-                      message with highlight (on a channel or pv)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_ctcp</literal></entry>
-                    <entry>
-                      CTCP message received (VERSION, PING, ..)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_dcc</literal></entry>
-                    <entry>
-                      DCC message received (chat or file)
-                    </entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </informaltable>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called when message
-            is received
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-            </command>
-          </para>
-          <para>
-            Argument argc is set to 3, following values are set in
-            argv array:
-            <itemizedlist>
-              <listitem>
-                <para>argv[0] = server name</para>
-              </listitem>
-              <listitem>
-                <para>argv[1] = IRC message</para>
-              </listitem>
-              <listitem>
-                <para>argv[2] = command arguments</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: pointer to new message handler.
-    </para>
-    <para>
-      Note: function called when message is received has to return
-      one of following values:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_KO</literal>: function failed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK</literal>: function successfully
-            completed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: message
-            will not be sent to WeeChat
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: message
-            will not be sent to other plugins
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: message
-            will not be sent to WeeChat neither other plugins
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: function
-            successfully completed and make "highlight" on received
-            message
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-<screen>
-int msg_kick (t_weechat_plugin *plugin, int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-{
-    plugin->print (plugin, argv[0], NULL, "KICK received");
-    return PLUGIN_RC_OK;
-}
-...
-t_plugin_handler *msg_handler;
-msg_handler = plugin->msg_handler_add (plugin, "KICK",
-                                       &amp;msg_kick, NULL, NULL);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_cmd_handler_add">
-    <title>cmd_handler_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_handler *cmd_handler_add (t_weechat_plugin
-        *plugin, char *command, char *description, char *arguments,
-        char *arguments_description, char *completion_template,
-        t_plugin_handler_func *fonction, char *handler_args,
-        void *handler_pointer)
-      </command>
-    </para>
-    <para>
-      Add a WeeChat command handler, called when user uses command
-      (for example /command).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>command</option>: the new command name, which
-            may be an existing command (be careful, replaced command
-            will not be available until plugin is unloaded)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>description</option>: short command description
-            (displayed by /help command)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>arguments</option>: short description of command
-            arguments (displayed by /help command)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>arguments_description</option>: long description
-            of command arguments (displayed by /help command)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>completion_template</option>: template for
-            completion, like "<literal>abc|%w def|%i</literal>"
-            which means "abc" or a WeeChat command for first argument,
-            "def" or IRC command for second.
-            An empty string lets WeeChat complete any argument with
-            a nick from current channel, NULL or "-" disable completion
-            for all command arguments.
-          </para>
-          <para>
-            Following codes can be used:
-            <informaltable colsep="0" frame="none">
-              <tgroup cols="2">
-                <thead>
-                  <row>
-                    <entry>Code</entry>
-                    <entry>Description</entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry><literal>%-</literal></entry>
-                    <entry>no completion for argument</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%*</literal></entry>
-                    <entry>
-                      repeat last completion for all following arguments
-                      (this code has to be at the end of completion
-                      template, preceded by "|")
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>%a</literal></entry>
-                    <entry>alias</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%A</literal></entry>
-                    <entry>
-                      alias and commands (WeeChat, IRC and plugins)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>%c</literal></entry>
-                    <entry>current channel</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%C</literal></entry>
-                    <entry>all channels (including queries)</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%f</literal></entry>
-                    <entry>file name</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%h</literal></entry>
-                    <entry>plugins commands</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%i</literal></entry>
-                    <entry>IRC commands (sent)</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%I</literal></entry>
-                    <entry>IRC commands (received)</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%k</literal></entry>
-                    <entry>key functions</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%m</literal></entry>
-                    <entry>nick on current server</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%M</literal></entry>
-                    <entry>
-                      nicks on current server (on all open channels)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>%n</literal></entry>
-                    <entry>nicks of current channel</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%N</literal></entry>
-                    <entry>nicks and hostnames of current channel</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%o</literal></entry>
-                    <entry>setup options</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%O</literal></entry>
-                    <entry>plugin options</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%p</literal></entry>
-                    <entry>default "part" message</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%q</literal></entry>
-                    <entry>default "quit" message</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%s</literal></entry>
-                    <entry>current server name</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%S</literal></entry>
-                    <entry>all servers names</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%t</literal></entry>
-                    <entry>topic of current channel</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%v</literal></entry>
-                    <entry>setup option value</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%V</literal></entry>
-                    <entry>plugin option value</entry>
-                  </row>
-                  <row>
-                    <entry><literal>%w</literal></entry>
-                    <entry>WeeChat commands</entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </informaltable>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called when command
-            is executed
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-            </command>
-          </para>
-          <para>
-            Argument argc is set to 3, following values are set in
-            argc array:
-            <itemizedlist>
-              <listitem>
-                <para>argv[0] = server name</para>
-              </listitem>
-              <listitem>
-                <para>argv[1] = command</para>
-              </listitem>
-              <listitem>
-                <para>argv[2] = command arguments</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: pointer to new command handler.
-    </para>
-    <para>
-      Note: function called when command is executed has to return
-      one of following values:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_KO</literal>: function failed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK</literal>: function successfully
-            completed
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-<screen>
-int cmd_test (t_weechat_plugin *plugin, int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-{
-    plugin->print (plugin, argv[0], NULL,
-                   "test command, nick: %s",
-                   (argv[2]) ? argv[2] : "none");
-    return PLUGIN_RC_OK;
-}
-...
-t_plugin_handler *cmd_handler;
-cmd_handler = plugin->cmd_handler_add (plugin, "test", "Test command",
-                                       "[nick]", "nick: nick of channel",
-                                       "%n", &amp;cmd_test, NULL, NULL);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_timer_handler_add">
-    <title>timer_handler_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_handler *timer_handler_add (t_weechat_plugin
-        *plugin, int interval, t_plugin_handler_func *function,
-        char *handler_args, void *handler_pointer)
-      </command>
-    </para>
-    <para>
-      Add a timer handler which periodically calls a function.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>interval</option>: interval (in seconds) between
-            two calls of function.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-            </command>
-          </para>
-          <para>
-            Argument argc is set to 0, and argv is set to NULL.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: pointer to new timer handler.
-    </para>
-    <para>
-      Note: function called has to return one of following values:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_KO</literal>: function failed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK</literal>: function successfully
-            completed
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-<screen>
-int my_timer (t_weechat_plugin *plugin, int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-{
-    plugin->print (plugin, NULL, NULL, "my timer");
-    return PLUGIN_RC_OK;
-}
-...
-t_plugin_handler *timer_handler;
-timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_keyboard_handler_add">
-    <title>keyboard_handler_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_handler *keyboard_handler_add (t_weechat_plugin
-        *plugin, t_plugin_handler_func *function,
-        char *handler_args, void *handler_pointer)
-      </command>
-    </para>
-    <para>
-      Add a keyboard handler, called for any key pressed.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-            </command>
-          </para>
-          <para>
-            Argument argc is set to 3, following values are set in
-            argc array:
-            <itemizedlist>
-              <listitem>
-                <para>
-                  argv[0] = key pressed (name of internal function or
-                  '*' followed by a key code)
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  argv[1] = command line before key action
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  argv[2] = command line after key action
-                </para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: pointer to new message handler.
-    </para>
-    <para>
-      Note: function called has to return one of following values:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_KO</literal>: function failed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK</literal>: function successfully
-            completed
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-<screen>
-int my_keyb (t_weechat_plugin *plugin, int argc, char **argv,
-             char *handler_args, void *handler_pointer)
-{
-    if (argc == 2)
-    {
-        plugin->print (plugin, NULL, NULL, "key pressed: %s", argv[0]);
-        if (argv[1] &amp;&amp; (argv[1][0] == '1'))
-            plugin->print (plugin, NULL, NULL, "input text changed");
-        else
-            plugin->print (plugin, NULL, NULL, "input text not changed");
-    }
-    return PLUGIN_RC_OK;
-}
-...
-t_plugin_handler *keyb_handler;
-keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_event_handler_add">
-    <title>event_handler_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_handler *event_handler_add (t_weechat_plugin
-        *plugin, char *event, t_plugin_handler_func *function,
-        char *handler_args, void *handler_pointer)
-      </command>
-    </para>
-    <para>
-      Add an event handler, called when an event happens.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>event</option> : event (see table below)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-            </command>
-          </para>
-          <para>
-            Arguments depend on event (see table below).
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      List of events:
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="3">
-          <thead>
-            <row>
-              <entry>Event</entry>
-              <entry>Description</entry>
-              <entry>Arguments</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><literal>buffer_open</literal></entry>
-              <entry>a buffer was open</entry>
-              <entry>
-                argc = 1, argv = { buffer number }
-              </entry>
-            </row>
-            <row>
-              <entry><literal>buffer_close</literal></entry>
-              <entry>a buffer was closed</entry>
-              <entry>
-                argc = 1, argv = { buffer number }
-              </entry>
-            </row>
-            <row>
-              <entry><literal>buffer_move</literal></entry>
-              <entry>a buffer was moved</entry>
-              <entry>
-                argc = 2, argv = { new buffer number, old number }
-              </entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Return value: pointer to new event handler.
-    </para>
-    <para>
-      Note: function called has to return one of following values:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_KO</literal>: function failed
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>PLUGIN_RC_OK</literal>: function successfully
-            completed
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-<screen>
-int my_event (t_weechat_plugin *plugin, int argc, char **argv,
-              char *handler_args, void *handler_pointer)
-{
-    plugin->print (plugin, NULL, NULL, "my_event");
-    return PLUGIN_RC_OK;
-}
-...
-t_plugin_handler *event_handler;
-event_handler = plugin->event_handler_add (plugin, "buffer_open",
-                                           &amp;my_event);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_handler_remove">
-    <title>handler_remove</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void handler_remove (t_weechat_plugin *plugin,
-        t_plugin_handler *handler)
-      </command>
-    </para>
-    <para>
-      Remove a command or message handler.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>handler</option>: handler to remove
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->handler_remove (plugin, my_handler);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_handler_remove_all">
-    <title>handler_remove_all</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void handler_remove_all (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Remove all handlers for a plugin.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->handler_remove_all (plugin);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_modifier_add">
-    <title>modifier_add</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_modifier *modifier_add (t_weechat_plugin *plugin,
-        char *type, char *message, t_plugin_modifier_func *function,
-        char *modifier_args, void *modifier_pointer)
-      </command>
-    </para>
-    <para>
-      Add a message modifier.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>type</option>: modifier type:
-            <informaltable colsep="0" frame="none">
-              <tgroup cols="2">
-                <thead>
-                  <row>
-                    <entry>Type</entry>
-                    <entry>Description</entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry><literal>irc_in</literal></entry>
-                    <entry>called for incoming IRC messages</entry>
-                  </row>
-                  <row>
-                    <entry><literal>irc_user</literal></entry>
-                    <entry>
-                      called for each user message (or command) (before
-                      WeeChat parses message)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>irc_out</literal></entry>
-                    <entry>
-                      called for outgoing messages, immediately before
-                      sending  it to IRC server (this includes messages
-                      sent automatically by WeeChat to server)
-                    </entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </informaltable>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>message</option>: name of IRC message (used only for
-            types "irc_in" and "irc_out").
-            To know list of IRC messages, please consult
-            <acronym>RFC</acronym>s
-            <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
-            and
-            <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-            Moreover, special value "*" means all messages (no filter).
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>function</option>: function called
-          </para>
-          <para>
-            It uses following prototype:
-            <command>
-              int my_function (t_weechat_plugin *plugin,
-              int argc, char **argv,
-              char *modifier_args, void *modifier_pointer)
-            </command>
-          </para>
-          <para>
-            Argument argc is set to 2, following values are set in
-            argv array:
-            <itemizedlist>
-              <listitem>
-                <para>argv[0] = server name</para>
-              </listitem>
-              <listitem>
-                <para>argv[1] = message</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>modifier_args</option>: arguments given to function
-            when called
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>modifier_pointer</option>: pointer given to function
-            when called
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: pointer to new message modifier.
-    </para>
-    <para>
-      Note: function has to return modified string, or NULL if no
-      changes are made to message.
-      If function returns empty string, then message is dropped and
-      will not be read at all by WeeChat (be careful when dropping
-      messages!).
-      Returned string must have been allocated by malloc() and will
-      be freed (with call to free()) automatically by WeeChat after use.
-    </para>
-    <para>
-      Example:
-<screen>
-char *adder (t_weechat_plugin *plugin, int argc, char **argv,
-             char *modifier_args, void *modifier_pointer)
-{
-    char *string;
-    string = malloc (strlen (argv[1]) + 16);
-    strcpy (string, argv[1]);
-    strcat (string, "test");
-    return string;
-}
-...
-t_plugin_modifier *modifier;
-modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
-                                 &amp;adder, NULL, NULL);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_modifier_remove">
-    <title>modifier_remove</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void modifier_remove (t_weechat_plugin *plugin,
-        t_plugin_modifier *modifier)
-      </command>
-    </para>
-    <para>
-      Remove a message modifier.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>modifier</option>: modifier to remove
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->modifier_remove (plugin, my_modifier);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_modifier_remove_all">
-    <title>modifier_remove_all</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void modifier_remove_all (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Remove all modifiers for a plugin.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->modifier_remove_all (plugin);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_exec_command">
-    <title>exec_command</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void exec_command (t_weechat_plugin
-        *plugin, char *server, char *channel, char *command)
-      </command>
-    </para>
-    <para>
-      Execute a WeeChat command (or send a message to a channel).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal name of server for
-            executing command (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel</option>: name of channel for executing
-            command (may be NULL)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>command</option>: command
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Examples:
-<screen>
-plugin->exec_command (plugin, NULL, NULL, "/help nick");
-plugin->exec_command (plugin, "freenode", "#weechat", "hello");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_info">
-    <title>get_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        char *get_info (t_weechat_plugin *plugin,
-        char *info, char *server)
-      </command>
-    </para>
-    <para>
-      Return an info about WeeChat or a channel.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>info</option> : name of info to read:
-            <informaltable colsep="0" frame="none">
-              <tgroup cols="2">
-                <thead>
-                  <row>
-                    <entry>Info</entry>
-                    <entry>Description</entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry><literal>version</literal></entry>
-                    <entry>WeeChat's version</entry>
-                  </row>
-                  <row>
-                    <entry><literal>nick</literal></entry>
-                    <entry>nick</entry>
-                  </row>
-                  <row>
-                    <entry><literal>channel</literal></entry>
-                    <entry>
-                      name of channel (NULL for a server or private)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>server</literal></entry>
-                    <entry>name of server</entry>
-                  </row>
-                  <row>
-                    <entry><literal>type</literal></entry>
-                    <entry>
-                      buffer type: 0=standard, 1=DCC, 2=raw IRC data
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>away</literal></entry>
-                    <entry>"away" flag</entry>
-                  </row>
-                  <row>
-                    <entry><literal>inactivity</literal></entry>
-                    <entry>
-                      number of seconds since last key was pressed
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>input</literal></entry>
-                    <entry>
-                      content of command line for current window
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>input_mask</literal></entry>
-                    <entry>
-                      content of color mask for command line
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>input_pos</literal></entry>
-                    <entry>
-                      cursor position in command line
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_dir</literal></entry>
-                    <entry>
-                      WeeChat home directory
-                      (by default: ~/.weechat/)
-                    </entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_libdir</literal></entry>
-                    <entry>WeeChat system lib directory</entry>
-                  </row>
-                  <row>
-                    <entry><literal>weechat_sharedir</literal></entry>
-                    <entry>WeeChat system share directory</entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </informaltable>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal name of server for
-            reading info (if needed)
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: information asked, NULL if not found.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free" function after
-      use.
-    </para>
-    <para>
-      Examples:
-<screen>
-char *version = plugin->get_info (plugin, "version", NULL);
-char *nick = plugin->get_info (plugin, "nick", "freenode");
-char *inactivity = plugin->get_info (plugin, "inactivity", NULL);
-
-plugin->print (plugin, NULL, NULL,
-               "WeeChat version %s, you are %s on freenode "
-               "(inactive for %s seconds)",
-               version, nick, inactivity);
-
-if (version)
-    free (version);
-if (nick)
-    free (nick);
-if (inactivity)
-    free (inactivity);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_dcc_info">
-    <title>get_dcc_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_info_dcc *get_dcc_info (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Return list of DCC currently active or finished.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of DCC.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>server</literal></entry>
-              <entry>IRC server</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>channel</literal></entry>
-              <entry>IRC channel</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>type</literal></entry>
-              <entry>
-                DCC type:
-                0 = chat received,
-                1 = chat sent,
-                2 = file received,
-                3 = file sent
-              </entry>
-            </row>
-            <row>
-              <entry>int*</entry>
-              <entry><literal>status</literal></entry>
-              <entry>
-                DCC status:
-                0 = waiting,
-                1 = connecting,
-                2 = active,
-                3 = finished,
-                4 = failed,
-                5 = interrupted by user
-              </entry>
-            </row>
-            <row>
-              <entry>time_t</entry>
-              <entry><literal>start_time</literal></entry>
-              <entry>date/time of DCC creation</entry>
-            </row>
-            <row>
-              <entry>time_t</entry>
-              <entry><literal>start_transfer</literal></entry>
-              <entry>date/time of DCC transfer start</entry>
-            </row>
-            <row>
-              <entry>unsigned long</entry>
-              <entry><literal>addr</literal></entry>
-              <entry>IP address of remote user</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>port</literal></entry>
-              <entry>port used for DCC</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick</literal></entry>
-              <entry>remote nick</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>filename</literal></entry>
-              <entry>file name</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>local_filename</literal></entry>
-              <entry>local file name</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>filename_suffix</literal></entry>
-              <entry>suffix if renaming file</entry>
-            </row>
-            <row>
-              <entry>unsigned long</entry>
-              <entry><literal>size</literal></entry>
-              <entry>file size</entry>
-            </row>
-            <row>
-              <entry>unsigned long</entry>
-              <entry><literal>pos</literal></entry>
-              <entry>position in file</entry>
-            </row>
-            <row>
-              <entry>unsigned long</entry>
-              <entry><literal>start_resume</literal></entry>
-              <entry>start position after interruption</entry>
-            </row>
-            <row>
-              <entry>unsigned long</entry>
-              <entry><literal>bytes_per_sec</literal></entry>
-              <entry>
-                number of bytes per second since transfer start
-              </entry>
-            </row>
-            <row>
-              <entry>t_plugin_dcc_info *</entry>
-              <entry><literal>prev_dcc</literal></entry>
-              <entry>
-                pointer to previous DCC info
-              </entry>
-            </row>
-            <row>
-              <entry>t_plugin_dcc_info *</entry>
-              <entry><literal>next_dcc</literal></entry>
-              <entry>
-                pointer to next DCC info
-              </entry>
-            </row>
-
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_dcc_info" function
-      after use.
-    </para>
-    <para>
-      Examples:
-<screen>
-t_plugin_dcc_info *dcc_info = plugin->get_dcc_info (plugin);
-for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-{
-    plugin->print_server (plugin, "DCC type=%d, with: %s",
-                          ptr_dcc->type, ptr_dcc->nick);
-}
-if (dcc_info)
-    plugin->free_dcc_info (plugin, dcc_info);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_dcc_info">
-    <title>free_dcc_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_dcc_info (t_weechat_plugin *plugin,
-        t_plugin_dcc_info *dcc_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by a DCC list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>dcc_info</option>: pointer to DCC list returned by
-            "get_dcc_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_dcc_info (plugin, dcc_info);</screen>
-    </para>
-  </section>
-
-  <section id="secAPI_get_server_info">
-    <title>get_server_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_server_info *get_server_info (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Return list of IRC servers (connected or not).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of IRC servers.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>name</literal></entry>
-              <entry>server internal name</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>autoconnect</literal></entry>
-              <entry>1 if autoconnect at start-up, 0 otherwise</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>autoreconnect</literal></entry>
-              <entry>
-                1 if autoreconnect when disconnected,
-                0 otherwise
-              </entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>autoreconnect_delay</literal></entry>
-              <entry>delay before trying again connection</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>command_line</literal></entry>
-              <entry>
-                1 if server was on command line (so it is temporary),
-                0 otherwise
-              </entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>address</literal></entry>
-              <entry>server address (host or IP)</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>port</literal></entry>
-              <entry>port</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>ipv6</literal></entry>
-              <entry>IPv6 connection</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>ssl</literal></entry>
-              <entry>SSL connection</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>password</literal></entry>
-              <entry>server password</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick1</literal></entry>
-              <entry>first nickname</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick2</literal></entry>
-              <entry>alternate nickname</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick3</literal></entry>
-              <entry>second alternate nickname</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>username</literal></entry>
-              <entry>user name</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>real name</literal></entry>
-              <entry>real name</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>command</literal></entry>
-              <entry>command run once connected</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>command_delay</literal></entry>
-              <entry>delay after execution of command</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>autojoin</literal></entry>
-              <entry>channels joined automatically</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>autorejoin</literal></entry>
-              <entry>
-                1 if channels are rejoined when kicked,
-                0 otherwise
-              </entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>notify_levels</literal></entry>
-              <entry>channels notify levels</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>charset_decode_iso</literal></entry>
-              <entry>channels charsets for decoding ISO</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>charset_decode_utf</literal></entry>
-              <entry>channels charsets for decoding UTF</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>charset_encode</literal></entry>
-              <entry>channels charsets for encoding messages</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>is_connected</literal></entry>
-              <entry>1 if connected to server, 0 otherwise</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>ssl_connected</literal></entry>
-              <entry>1 if connected with SSL, 0 otherwise</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick</literal></entry>
-              <entry>current nickname</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>is_away</literal></entry>
-              <entry>1 if away, 0 otherwise</entry>
-            </row>
-            <row>
-              <entry>time_t</entry>
-              <entry><literal>away_time</literal></entry>
-              <entry>time when user is marking as away</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>lag</literal></entry>
-              <entry>lag (in milliseconds)</entry>
-            </row>
-            <row>
-              <entry>t_plugin_server_info *</entry>
-              <entry><literal>prev_server</literal></entry>
-              <entry>pointer to previous server info</entry>
-            </row>
-            <row>
-              <entry>t_plugin_server_info *</entry>
-              <entry><literal>next_server</literal></entry>
-              <entry>pointer to next server info</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_server_info"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_server_info *server_info, *ptr_server_info;
-server_info = plugin->get_server_info (plugin);
-if (server_info)
-{
-    for (ptr_server_info = server_info; ptr_server_info;
-         ptr_server_info = ptr_server_info->next_server)
-    {
-        plugin->print (plugin, NULL, NULL,
-                       "server: %s, address: %s, port: %d %s",
-                       ptr_server_info->name,
-                       ptr_server_info->address,
-                       ptr_server_info->port,
-                       (ptr_server_info->is_connected) ? "(connected)" : "");
-    }
-    plugin->free_server_info (plugin, server_info);
-}
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_server_info">
-    <title>free_server_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_server_info (t_weechat_plugin *plugin,
-        t_plugin_server_info *server_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by server info list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server_info</option>: pointer to server list
-            returned by "get_server_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_server_info (plugin, server_info);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_channel_info">
-    <title>get_channel_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_channel_info *get_channel_info (t_weechat_plugin *plugin,
-        char *server)
-      </command>
-    </para>
-    <para>
-      Return list of IRC channels for a server.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal server name
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of IRC channels for server.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>int</entry>
-              <entry><literal>type</literal></entry>
-              <entry>0 for a channel, 1 for a private</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>name</literal></entry>
-              <entry>name of channel</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>topic</literal></entry>
-              <entry>topic of channel</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>modes</literal></entry>
-              <entry>channel modes</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>limit</literal></entry>
-              <entry>user limit</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>key</literal></entry>
-              <entry>channel key</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>nicks_count</literal></entry>
-              <entry>number of nicks on channel</entry>
-            </row>
-            <row>
-              <entry>t_plugin_channel_info *</entry>
-              <entry><literal>prev_channel</literal></entry>
-              <entry>pointer to previous channel info</entry>
-            </row>
-            <row>
-              <entry>t_plugin_channel_info *</entry>
-              <entry><literal>next_channel</literal></entry>
-              <entry>pointer to next channel info</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_channel_info"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_channel_info *channel_info, *ptr_chan_info;
-channel_info = plugin->get_channel_info (plugin, "freenode");
-if (channel_info)
-{
-    for (ptr_chan_info = channel_info; ptr_chan_info;
-         ptr_chan_info = ptr_chan_info->next_channel)
-    {
-        plugin->print (plugin, NULL, NULL,
-                       "  %s (type %d)",
-                       ptr_chan_info->name,
-                       ptr_chan_info->type);
-    }
-    plugin->free_channel_info (plugin, channel_info);
-}
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_channel_info">
-    <title>free_channel_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_channel_info (t_weechat_plugin *plugin,
-        t_plugin_channel_info *channel_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by channel info list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel_info</option>: pointer to channel info list
-            returned by "get_channel_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_channel_info (plugin, channel_info);</screen>
-    </para>
-  </section>
-
-  <section id="secAPI_get_nick_info">
-    <title>get_nick_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_nick_info *get_nick_info (t_weechat_plugin *plugin,
-        char *server, char *channel)
-      </command>
-    </para>
-    <para>
-      Return list of nicks for a channel.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal server name
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel</option>: channel name
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of nicks on channel.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick</literal></entry>
-              <entry>nick name</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>host</literal></entry>
-              <entry>hostname</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>flags</literal></entry>
-              <entry>
-                nick flags, binary "or" between values (1 = channel
-                owner, 2 = channel admin, 4 = op, 8 = halfop,
-                16 = voice, 32 = away)
-              </entry>
-            </row>
-            <row>
-              <entry>t_plugin_nick_info *</entry>
-              <entry><literal>prev_nick</literal></entry>
-              <entry>pointer to previous nick info</entry>
-            </row>
-            <row>
-              <entry>t_plugin_nick_info *</entry>
-              <entry><literal>next_nick</literal></entry>
-              <entry>pointer to next nick info</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_nick_info"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_nick_info *nick_info, *ptr_nick_info;
-nick_info = plugin->get_nick_info (plugin, "freenode", "#weechat");
-if (nick_info)
-{
-    for (ptr_nick_info = nick_info; ptr_nick_info;
-         ptr_nick_info = ptr_nick_info->next_nick)
-    {
-        plugin->print (plugin, NULL, NULL,
-                       "  %s (flags: %d)",
-                       ptr_nick_info->nick,
-                       ptr_nick_info->flags);
-    }
-    plugin->free_nick_info (plugin, nick_info);
-}
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_nick_info">
-    <title>free_nick_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_nick_info (t_weechat_plugin *plugin,
-        t_plugin_nick_info *nick_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by nick info list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>nick_info</option>: pointer to nick info list
-            returned by "get_nick_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_nick_info (plugin, nick_info);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_config">
-    <title>get_config</title>
-    
-    <para>
-      Prototype:
-      <command>
-        char *get_config (t_weechat_plugin *plugin, char *option)
-      </command>
-    </para>
-    <para>
-      Return value of a WeeChat config option.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>option</option>: name of option to read
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: option value, NULL if not found.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free" function after
-      use.
-    </para>
-    <para>
-      Examples:
-<screen>
-char *value1 = plugin->get_config (plugin, "look_set_title");
-char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_set_config">
-    <title>set_config</title>
-    
-    <para>
-      Prototype:
-      <command>
-        int set_config (t_weechat_plugin *plugin,
-        char *option, char *value)
-      </command>
-    </para>
-    <para>
-      Update value of a WeeChat config option.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>option</option>: name of option to update
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>value</option>: new value for option
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: 1 if option was successfully updated, 0 if an
-      error occurred.
-    </para>
-    <para>
-      Example:
-<screen>
-plugin->set_config (plugin, "look_nicklist", "off");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_plugin_config">
-    <title>get_plugin_config</title>
-    
-    <para>
-      Prototype:
-      <command>
-        char *get_plugin_config (t_weechat_plugin *plugin, char *option)
-      </command>
-    </para>
-    <para>
-      Return value of a plugin option.
-      Option is read from file "<literal>~/.weechat/plugins.rc</literal>"
-      and is like: "<literal>plugin.option=value</literal>"
-      (note: plugin name is automatically added).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>option</option>: name of option to read
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: option value, NULL if not found.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free" function after
-      use.
-    </para>
-    <para>
-      Example:
-<screen>
-char *value = plugin->get_plugin_config (plugin, "my_var");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_set_plugin_config">
-    <title>set_plugin_config</title>
-    
-    <para>
-      Prototype:
-      <command>
-        int set_plugin_config (t_weechat_plugin *plugin,
-        char *option, char *value)
-      </command>
-    </para>
-    <para>
-      Update value of a plugin option.
-      Option is written in file "<literal>~/.weechat/plugins.rc</literal>"
-      and is like: "<literal>plugin.option=value</literal>"
-      (note: plugin name is automatically added).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>option</option>: name of option to update
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>value</option>: new value for option
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: 1 if option was successfully updated, 0 if an
-      error occurred.
-    </para>
-    <para>
-      Example:
-<screen>
-plugin->set_plugin_config (plugin, "my_var", "value");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_irc_color">
-    <title>get_irc_color</title>
-    
-    <para>
-      Prototype:
-      <command>
-        int get_irc_color (t_weechat_plugin *plugin,
-        char *color_name)
-      </command>
-    </para>
-    <para>
-      Get IRC color index with name.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>color_name</option>: color name
-            Allowed colors are:
-            <informaltable colsep="0" frame="none">
-              <tgroup cols="2">
-                <thead>
-                  <row>
-                    <entry>Color name</entry>
-                    <entry>Value</entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry>white</entry>
-                    <entry>0</entry>
-                  </row>
-                  <row>
-                    <entry>black</entry>
-                    <entry>1</entry>
-                  </row>
-                  <row>
-                    <entry>blue</entry>
-                    <entry>2</entry>
-                  </row>
-                  <row>
-                    <entry>green</entry>
-                    <entry>3</entry>
-                  </row>
-                  <row>
-                    <entry>lightred</entry>
-                    <entry>4</entry>
-                  </row>
-                  <row>
-                    <entry>red</entry>
-                    <entry>5</entry>
-                  </row>
-                  <row>
-                    <entry>magenta</entry>
-                    <entry>6</entry>
-                  </row>
-                  <row>
-                    <entry>brown</entry>
-                    <entry>7</entry>
-                  </row>
-                  <row>
-                    <entry>yellow</entry>
-                    <entry>8</entry>
-                  </row>
-                  <row>
-                    <entry>lightgreen</entry>
-                    <entry>9</entry>
-                  </row>
-                  <row>
-                    <entry>cyan</entry>
-                    <entry>10</entry>
-                  </row>
-                  <row>
-                    <entry>lightcyan</entry>
-                    <entry>11</entry>
-                  </row>
-                  <row>
-                    <entry>lightblue</entry>
-                    <entry>12</entry>
-                  </row>
-                  <row>
-                    <entry>lightmagenta</entry>
-                    <entry>13</entry>
-                  </row>
-                  <row>
-                    <entry>gray</entry>
-                    <entry>14</entry>
-                  </row>
-                  <row>
-                    <entry>lightgray</entry>
-                    <entry>15</entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </informaltable>
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: IRC color index, -1 if color is not found.
-    </para>
-    <para>
-      Example:
-<screen>
-int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_input_color">
-    <title>input_color</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void input_color (t_weechat_plugin *plugin,
-        int color, int start, int length)
-      </command>
-    </para>
-    <para>
-      Add color in input buffer.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>color</option>: color for text (if &lt; 0, then input
-            buffer is refresh, and there's no change in input buffer
-            content)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>start</option>: start position for color (if &lt; 0,
-            then mask is reinitialized)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>length</option>: length for color (if &lt;= 0,
-            then mask is reinitialized)
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-<screen>
-plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_window_info">
-    <title>get_window_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_window_info *get_window_info (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Return list of WeeChat windows.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of WeeChat windows.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_x</literal></entry>
-              <entry>horizontal position of window</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_y</literal></entry>
-              <entry>vertical position of window</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_width</literal></entry>
-              <entry>width of window</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_height</literal></entry>
-              <entry>height of window</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_width_pct</literal></entry>
-              <entry>width % (compared to parent window)</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>win_height_pct</literal></entry>
-              <entry>height % (compared to parent window)</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>num_buffer</literal></entry>
-              <entry>number of displayed buffer</entry>
-            </row>
-            <row>
-              <entry>t_plugin_window_info *</entry>
-              <entry><literal>prev_window</literal></entry>
-              <entry>pointer to previous window info</entry>
-            </row>
-            <row>
-              <entry>t_plugin_window_info *</entry>
-              <entry><literal>next_window</literal></entry>
-              <entry>pointer to next window info</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_window_info"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_window_info *window_info, *ptr_window;
-
-window_info = plugin->get_window_info (plugin);
-if (window_info)
-{
-    for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
-    {
-        plugin->print (plugin, NULL, NULL, "window info");
-        plugin->print (plugin, NULL, NULL, "(%d,%d), size: %dx%d, %%size: %d%%x%d%%",
-                       ptr_window->win_x, ptr_window->win_y,
-                       ptr_window->win_width, ptr_window->win_height,
-                       ptr_window->win_width_pct, ptr_window->win_height_pct);
-        plugin->print (plugin, NULL, NULL, "num_buffer: %d", ptr_window->num_buffer);
-    }
-    plugin->free_window_info (plugin, window_info);
-}
-else
-    plugin->print (plugin, NULL, NULL, "no window info!");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_window_info">
-    <title>free_window_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_window_info (t_weechat_plugin *plugin,
-        t_plugin_window_info *window_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by window info list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>window_info</option>: pointer to window info list
-            returned by "get_window_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_window_info (plugin, window_info);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_buffer_info">
-    <title>get_buffer_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_buffer_info *get_buffer_info (t_weechat_plugin *plugin)
-      </command>
-    </para>
-    <para>
-      Return list of WeeChat buffers.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: linked list of WeeChat buffers.
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>int</entry>
-              <entry><literal>type</literal></entry>
-              <entry>buffer type: 0=standard, 1=DCC, 2=raw IRC data</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>number</literal></entry>
-              <entry>buffer number</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>num_displayed</literal></entry>
-              <entry>number of windows displaying buffer</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>server_name</literal></entry>
-              <entry>server name for buffer (may be NULL)</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>channel_name</literal></entry>
-              <entry>channel name for buffer (may be NULL)</entry>
-            </row>
-            <row>
-              <entry>int</entry>
-              <entry><literal>notify_level</literal></entry>
-              <entry>notify level for buffer</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>log_filename</literal></entry>
-              <entry>log filename (NULL means not logging)</entry>
-            </row>
-            <row>
-              <entry>t_plugin_buffer_info *</entry>
-              <entry><literal>prev_buffer</literal></entry>
-              <entry>pointer to previous buffer info</entry>
-            </row>
-            <row>
-              <entry>t_plugin_buffer_info *</entry>
-              <entry><literal>next_buffer</literal></entry>
-              <entry>pointer to next buffer info</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_buffer_info"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_buffer_info *buffer_info, *ptr_buffer;
-
-buffer_info = plugin->get_buffer_info (plugin);
-if (buffer_info)
-{
-    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        plugin->print (plugin, NULL, NULL, "buffer info");
-        plugin->print (plugin, NULL, NULL, "type: %d", ptr_buffer->type);
-        plugin->print (plugin, NULL, NULL, "number: %d", ptr_buffer->number);
-        plugin->print (plugin, NULL, NULL, "num_displayed: %d", ptr_buffer->num_displayed);
-        plugin->print (plugin, NULL, NULL, "server: %s", ptr_buffer->server_name);
-        plugin->print (plugin, NULL, NULL, "channel: %s", ptr_buffer->channel_name);
-        plugin->print (plugin, NULL, NULL, "notify level: %d", ptr_buffer->notify_level);
-        plugin->print (plugin, NULL, NULL, "log filename: %s", ptr_buffer->log_filename);
-    }
-    plugin->free_buffer_info (plugin, buffer_info);
-}
-else
-    plugin->print (plugin, NULL, NULL, "no buffer info!");
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_buffer_info">
-    <title>free_buffer_info</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_buffer_info (t_weechat_plugin *plugin,
-        t_plugin_buffer_info *buffer_info)
-      </command>
-    </para>
-    <para>
-      Free memory used by buffer info list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>buffer_info</option>: pointer to buffer info list
-            returned by "get_buffer_info" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_buffer_info (plugin, buffer_info);</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_get_buffer_data">
-    <title>get_buffer_data</title>
-    
-    <para>
-      Prototype:
-      <command>
-        t_plugin_buffer_data *get_buffer_info (t_weechat_plugin *plugin,
-        char *server, char *channel)
-      </command>
-    </para>
-    <para>
-      Return content of buffer.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>server</option>: internal name of server
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>channel</option>: channel name
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: buffer content (linked list of lines).
-      <informaltable colsep="0" frame="none">
-        <tgroup cols="2">
-          <thead>
-            <row>
-              <entry>Type</entry>
-              <entry>Field</entry>
-              <entry>Description</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>time_t</entry>
-              <entry><literal>date</literal></entry>
-              <entry>date and time</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>nick</literal></entry>
-              <entry>nick</entry>
-            </row>
-            <row>
-              <entry>char *</entry>
-              <entry><literal>data</literal></entry>
-              <entry>line content (color codes are removed)</entry>
-            </row>
-            <row>
-              <entry>t_plugin_buffer_line *</entry>
-              <entry><literal>prev_line</literal></entry>
-              <entry>pointer to previous line</entry>
-            </row>
-            <row>
-              <entry>t_plugin_buffer_line *</entry>
-              <entry><literal>next_line</literal></entry>
-              <entry>pointer to next line</entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_buffer_data"
-      function after use.
-    </para>
-    <para>
-      Example:
-<screen>
-t_plugin_buffer_line *buffer_line, *ptr_line;
-char text_time[256];
-
-buffer_line = plugin->get_buffer_data (plugin);
-if (buffer_line)
-{
-    for (ptr_line = buffer_line; ptr_line; ptr_line = ptr_line->next_line)
-    {
-        strftime (text_time, sizeof (text_time), "%x %X", localtime (&amp;(ptr_line->date)));
-        plugin->print (plugin, NULL, NULL, "date: %s, nick: %s, data: %s",
-                       text_time, ptr_line->nick, ptr_line->data);
-    }
-    plugin->free_buffer_data (plugin, buffer_line);
-}
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_buffer_data">
-    <title>free_buffer_data</title>
-    
-    <para>
-      Prototype:
-      <command>
-        void free_buffer_data (t_weechat_plugin *plugin,
-        t_plugin_buffer_line *buffer_line)
-      </command>
-    </para>
-    <para>
-      Free memory used by buffer line list.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>buffer_line</option>: pointer to buffer line list
-            returned by "get_buffer_data" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-      <screen>plugin->free_buffer_data (plugin, buffer_line);</screen>
-    </para>
-  </section>
-
-  -->
   
 </section>

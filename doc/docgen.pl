@@ -84,6 +84,12 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "weechat\\.bar\\..*",
                       "weechat\\.debug\\..*");
 
+# infos to ignore
+my @ignore_infos_plugins = ("jabber");
+
+# infolists to ignore
+my @ignore_infolists_plugins = ("jabber");
+
 # completions to ignore
 my @ignore_completions_plugins = ("jabber");
 my @ignore_completions_items = ("jabber.*",
@@ -164,7 +170,7 @@ sub get_options
     return %options;
 }
 
-# get list of infos and infolists hooked by plugins in a hash with 4 indexes: plugin, info/infolist, name, xxx
+# get list of infos hooked by plugins in a hash with 3 indexes: plugin, name, xxx
 sub get_infos
 {
     my %infos;
@@ -177,23 +183,51 @@ sub get_infos
         my $plugin = weechat::infolist_string($infolist, "plugin_name");
         $plugin = "weechat" if ($plugin eq "");
         
-        $infos{$plugin}{"info"}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+        # check if infolist is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_infos_plugins)
+        {
+            $ignore = 1 if ($plugin =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            $infos{$plugin}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+        }
     }
     weechat::infolist_free($infolist);
     
+    return %infos;
+}
+
+# get list of infolists hooked by plugins in a hash with 3 indexes: plugin, name, xxx
+sub get_infolists
+{
+    my %infolists;
+    
     # get infolists hooked
-    $infolist = weechat::infolist_get("hook", "", "infolist");
+    my $infolist = weechat::infolist_get("hook", "", "infolist");
     while (weechat::infolist_next($infolist))
     {
         my $infolist_name = weechat::infolist_string($infolist, "infolist_name");
         my $plugin = weechat::infolist_string($infolist, "plugin_name");
         $plugin = "weechat" if ($plugin eq "");
         
-        $infos{$plugin}{"infolist"}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
+        # check if infolist is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_infolists_plugins)
+        {
+            $ignore = 1 if ($plugin =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            $infolists{$plugin}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
+        }
     }
     weechat::infolist_free($infolist);
     
-    return %infos;
+    return %infolists;
 }
 
 # get list of completions hooked by plugins in a hash with 3 indexes: plugin, item, xxx
@@ -245,6 +279,7 @@ sub docgen
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
     my %plugin_infos = get_infos();
+    my %plugin_infolists = get_infolists();
     my %plugin_completions = get_completions();
     
     # xml header (comment) for all files
@@ -266,6 +301,7 @@ sub docgen
     # write to doc files, by locale
     my $num_files = 0;
     my $num_files_updated = 0;
+    my $filename = "";
     foreach my $locale (@locale_list)
     {
         my $num_files_commands = 0;
@@ -274,6 +310,8 @@ sub docgen
         my $num_files_options_updated = 0;
         my $num_files_infos = 0;
         my $num_files_infos_updated = 0;
+        my $num_files_infolists = 0;
+        my $num_files_infolists_updated = 0;
         my $num_files_completions = 0;
         my $num_files_completions_updated = 0;
         
@@ -288,7 +326,7 @@ sub docgen
             # write commands
             foreach my $plugin (keys %plugin_commands)
             {
-                my $filename = $dir.$plugin."_commands.xml";
+                $filename = $dir.$plugin."_commands.xml";
                 if (open(FILE, ">".$filename.".tmp"))
                 {
                     print FILE $xml_header;
@@ -334,7 +372,7 @@ sub docgen
             # write config options
             foreach my $config (keys %plugin_options)
             {
-                my $filename = $dir.$config."_options.xml";
+                $filename = $dir.$config."_options.xml";
                 if (open(FILE, ">".$filename.".tmp"))
                 {
                     print FILE $xml_header;
@@ -414,51 +452,88 @@ sub docgen
                 }
             }
             
-            # write infos/infolists hooked
-            foreach my $plugin (keys %plugin_infos)
+            # write infos hooked
+            $filename = $dir."infos.xml";
+            if (open(FILE, ">".$filename.".tmp"))
             {
-                my $filename = $dir.$plugin."_infos.xml";
-                if (open(FILE, ">".$filename.".tmp"))
+                print FILE $xml_header;
+                foreach my $plugin (sort keys %plugin_infos)
                 {
-                    print FILE $xml_header;
-                    foreach my $type (sort keys %{$plugin_infos{$plugin}})
+                    foreach my $info (sort keys %{$plugin_infos{$plugin}})
                     {
-                        foreach my $info (sort keys %{$plugin_infos{$plugin}{$type}})
-                        {
-                            my $description = $plugin_infos{$plugin}{$type}{$info}{"description"};
-                            $description = $d->get($description) if ($description ne "");
-                            
-                            print FILE "<row>\n";
-                            print FILE "  <entry>".escape($type)."</entry>\n";
-                            print FILE "  <entry>".escape($info)."</entry>\n";
-                            print FILE "  <entry>".escape($description)."</entry>\n";
-                            print FILE "</row>\n";
-                        }
+                        my $description = $plugin_infos{$plugin}{$info}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        
+                        print FILE "<row>\n";
+                        print FILE "  <entry>".escape($plugin)."</entry>\n";
+                        print FILE "  <entry>".escape($info)."</entry>\n";
+                        print FILE "  <entry>".escape($description)."</entry>\n";
+                        print FILE "</row>\n";
                     }
-                    #weechat::print("", "docgen: file ok: '$filename'");
-                    my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
-                    if ($rc != 0)
-                    {
-                        system("mv -f ".$filename.".tmp ".$filename);
-                        $num_files_updated++;
-                        $num_files_infos_updated++;
-                    }
-                    else
-                    {
-                        system("rm ".$filename.".tmp");
-                    }
-                    $num_files++;
-                    $num_files_infos++;
-                    close(FILE);
+                }
+                #weechat::print("", "docgen: file ok: '$filename'");
+                my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                if ($rc != 0)
+                {
+                    system("mv -f ".$filename.".tmp ".$filename);
+                    $num_files_updated++;
+                    $num_files_infos_updated++;
                 }
                 else
                 {
-                    weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+                    system("rm ".$filename.".tmp");
                 }
+                $num_files++;
+                $num_files_infos++;
+                close(FILE);
+            }
+            else
+            {
+                weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+            }
+            
+            # write infolists hooked
+            $filename = $dir."infolists.xml";
+            if (open(FILE, ">".$filename.".tmp"))
+            {
+                print FILE $xml_header;
+                foreach my $plugin (sort keys %plugin_infolists)
+                {
+                    foreach my $infolist (sort keys %{$plugin_infolists{$plugin}})
+                    {
+                        my $description = $plugin_infolists{$plugin}{$infolist}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        
+                        print FILE "<row>\n";
+                        print FILE "  <entry>".escape($plugin)."</entry>\n";
+                        print FILE "  <entry>".escape($infolist)."</entry>\n";
+                        print FILE "  <entry>".escape($description)."</entry>\n";
+                        print FILE "</row>\n";
+                    }
+                }
+                #weechat::print("", "docgen: file ok: '$filename'");
+                my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                if ($rc != 0)
+                {
+                    system("mv -f ".$filename.".tmp ".$filename);
+                    $num_files_updated++;
+                    $num_files_infolists_updated++;
+                }
+                else
+                {
+                    system("rm ".$filename.".tmp");
+                }
+                $num_files++;
+                $num_files_infolists++;
+                close(FILE);
+            }
+            else
+            {
+                weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
             }
             
             # write completions hooked
-            my $filename = $dir."completions.xml";
+            $filename = $dir."completions.xml";
             if (open(FILE, ">".$filename.".tmp"))
             {
                 print FILE $xml_header;
@@ -502,18 +577,21 @@ sub docgen
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
         my $total_files = $num_files_commands + $num_files_options
-            + $num_files_infos + $num_files_completions;
-        my $total_files_updated = $num_files_commands_updated + $num_files_options_updated
-            + $num_files_infos_updated + $num_files_completions_updated;
+            + $num_files_infos + $num_files_infolists + $num_files_completions;
+        my $total_files_updated = $num_files_commands_updated
+            + $num_files_options_updated + $num_files_infos_updated
+            + $num_files_infolists_updated + $num_files_completions_updated;
         weechat::print("", "docgen: ".$locale.": ".$total_files." files ("
                        .$num_files_commands." cmd, "
                        .$num_files_options." opt, "
                        .$num_files_infos." infos, "
+                       .$num_files_infolists." infolists, "
                        .$num_files_completions." complt) -- "
                        .$total_files_updated." updated ("
                        .$num_files_commands_updated." cmd, "
                        .$num_files_options_updated." opt, "
                        .$num_files_infos_updated." infos, "
+                       .$num_files_infolists_updated." infolists, "
                        .$num_files_completions_updated." complt)");
     }
     weechat::print("", "docgen: total: ".$num_files." files (".$num_files_updated." updated)");
@@ -521,7 +599,7 @@ sub docgen
     # write "include_autogen.xml" file (with includes for all files built)
     if ($num_files > 0)
     {
-        my $filename = $path."/include_autogen.xml";
+        $filename = $path."/include_autogen.xml";
         if (open(FILE, ">".$filename.".tmp"))
         {
             print FILE "<!-- commands -->\n\n";
@@ -534,11 +612,10 @@ sub docgen
             {
                 print FILE "<!ENTITY ".$config."_options.xml SYSTEM \"autogen/".$config."_options.xml\">\n";
             }
-            print FILE "\n<!-- infos/infolists hooked -->\n\n";
-            foreach my $plugin (sort keys %plugin_infos)
-            {
-                print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
-            }
+            print FILE "\n<!-- infos hooked -->\n\n";
+            print FILE "<!ENTITY infos.xml SYSTEM \"autogen/infos.xml\">\n";
+            print FILE "\n<!-- infolists hooked -->\n\n";
+            print FILE "<!ENTITY infolists.xml SYSTEM \"autogen/infolists.xml\">\n";
             print FILE "\n<!-- completions hooked -->\n\n";
             print FILE "<!ENTITY completions.xml SYSTEM \"autogen/completions.xml\">\n";
             close(FILE);
