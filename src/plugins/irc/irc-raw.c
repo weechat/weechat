@@ -154,20 +154,68 @@ irc_raw_message_free_all ()
 }
 
 /*
- * irc_raw_message_add: add new message to list
+ * irc_raw_message_remove_old: remove old raw messages if limit has been reached
  */
 
 void
+irc_raw_message_remove_old ()
+{
+    int max_messages;
+    
+    max_messages = weechat_config_integer (irc_config_look_raw_messages);
+    while (irc_raw_messages && (irc_raw_messages_count >= max_messages))
+    {
+        irc_raw_message_free (irc_raw_messages);
+    }
+}
+
+/*
+ * irc_raw_message_add_to_list: add new message to list
+ */
+
+struct t_irc_raw_message *
+irc_raw_message_add_to_list (time_t date, const char *prefix,
+                             const char *message)
+{
+    struct t_irc_raw_message *new_raw_message;
+    
+    irc_raw_message_remove_old ();
+    
+    new_raw_message = malloc (sizeof (*new_raw_message));
+    if (new_raw_message)
+    {
+        new_raw_message->date = date;
+        new_raw_message->prefix = strdup (prefix);
+        new_raw_message->message = strdup (message);
+        
+        /* add message to list */
+        new_raw_message->prev_message = last_irc_raw_message;
+        new_raw_message->next_message = NULL;
+        if (irc_raw_messages)
+            last_irc_raw_message->next_message = new_raw_message;
+        else
+            irc_raw_messages = new_raw_message;
+        last_irc_raw_message = new_raw_message;
+        
+        irc_raw_messages_count++;
+    }
+    
+    return new_raw_message;
+}
+
+/*
+ * irc_raw_message_add: add new message to list
+ */
+
+struct t_irc_raw_message *
 irc_raw_message_add (struct t_irc_server *server, int send, int modified,
                      const char *message)
 {
     char *buf, *buf2, prefix[256];
     const unsigned char *ptr_buf;
     const char *hexa = "0123456789ABCDEF";
-    int pos_buf, pos_buf2, char_size, i, max_messages;
+    int pos_buf, pos_buf2, char_size, i;
     struct t_irc_raw_message *new_raw_message;
-    
-    max_messages = weechat_config_integer (irc_config_look_raw_messages);
     
     buf = weechat_iconv_to_internal (NULL, message);
     buf2 = malloc ((strlen (buf) * 3) + 1);
@@ -196,59 +244,27 @@ irc_raw_message_add (struct t_irc_server *server, int send, int modified,
         }
         buf2[pos_buf2] = '\0';
     }
+    snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
+              (server) ? weechat_color ("chat_server") : "",
+              (server) ? server->name : "",
+              (server) ? " " : "",
+              (send) ?
+              weechat_color ("chat_prefix_quit") :
+              weechat_color ("chat_prefix_join"),
+              (send) ?
+              ((modified) ? IRC_RAW_PREFIX_SEND_MOD : IRC_RAW_PREFIX_SEND) :
+              ((modified) ? IRC_RAW_PREFIX_RECV_MOD : IRC_RAW_PREFIX_RECV));
     
-    new_raw_message = malloc (sizeof (*new_raw_message));
-    if (new_raw_message)
-    {
-        new_raw_message->date = time (NULL);
-        snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
-                  (server) ? weechat_color ("chat_server") : "",
-                  (server) ? server->name : "",
-                  (server) ? " " : "",
-                  (send) ?
-                  weechat_color ("chat_prefix_quit") :
-                  weechat_color ("chat_prefix_join"),
-                  (send) ?
-                  ((modified) ? IRC_RAW_PREFIX_SEND_MOD : IRC_RAW_PREFIX_SEND) :
-                  ((modified) ? IRC_RAW_PREFIX_RECV_MOD : IRC_RAW_PREFIX_RECV));
-        new_raw_message->prefix = strdup (prefix);
-        new_raw_message->message = strdup ((buf2) ? buf2 : ((buf) ? buf : message));
-        new_raw_message->prev_message = NULL;
-        new_raw_message->next_message = NULL;
-        
-        while (irc_raw_messages_count >= max_messages)
-        {
-            irc_raw_message_free (irc_raw_messages);
-        }
-        
-        if (max_messages > 0)
-        {
-            new_raw_message->prev_message = last_irc_raw_message;
-            new_raw_message->next_message = NULL;
-            if (irc_raw_messages)
-                last_irc_raw_message->next_message = new_raw_message;
-            else
-                irc_raw_messages = new_raw_message;
-            last_irc_raw_message = new_raw_message;
-            
-            irc_raw_messages_count++;
-            
-            if (irc_raw_buffer)
-                irc_raw_message_print (new_raw_message);
-        }
-        else
-        {
-            /* don't store message, just print it if raw buffer is opened */
-            if (irc_raw_buffer)
-                irc_raw_message_print (new_raw_message);
-            irc_raw_message_free (new_raw_message);
-        }
-    }
+    new_raw_message = irc_raw_message_add_to_list (time (NULL),
+                                                   prefix,
+                                                   (buf2) ? buf2 : ((buf) ? buf : message));
     
     if (buf)
         free (buf);
     if (buf2)
         free (buf2);
+    
+    return new_raw_message;
 }
 
 /*
@@ -259,11 +275,48 @@ void
 irc_raw_print (struct t_irc_server *server, int send, int modified,
                const char *message)
 {
+    struct t_irc_raw_message *new_raw_message;
+    
     if (!message)
         return;
     
     if (!irc_raw_buffer && (weechat_irc_plugin->debug >= 1))
         irc_raw_open (0);
     
-    irc_raw_message_add (server, send, modified, message);
+    new_raw_message = irc_raw_message_add (server, send, modified, message);
+    if (new_raw_message)
+    {
+        if (irc_raw_buffer)
+            irc_raw_message_print (new_raw_message);
+        if (weechat_config_integer (irc_config_look_raw_messages) == 0)
+            irc_raw_message_free (new_raw_message);
+    }
+}
+
+/*
+ * irc_raw_add_to_infolist: add a raw messagt in an infolist
+ *                          return 1 if ok, 0 if error
+ */
+
+int
+irc_raw_add_to_infolist (struct t_infolist *infolist,
+                         struct t_irc_raw_message *raw_message)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !raw_message)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_time (ptr_item, "date", raw_message->date))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "prefix", raw_message->prefix))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "message", raw_message->message))
+        return 0;
+    
+    return 1;
 }

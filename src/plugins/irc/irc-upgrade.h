@@ -29,6 +29,7 @@ enum t_irc_upgrade_type
     IRC_UPGRADE_TYPE_SERVER = 0,
     IRC_UPGRADE_TYPE_CHANNEL,
     IRC_UPGRADE_TYPE_NICK,
+    IRC_UPGRADE_TYPE_RAW_MESSAGE,
 };
 
 extern int irc_upgrade_save ();

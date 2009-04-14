@@ -38,10 +38,16 @@ struct t_irc_raw_message
 struct t_irc_server;
 
 extern struct t_gui_buffer *irc_raw_buffer;
+extern int irc_raw_messages_count;
+extern struct t_irc_raw_message *irc_raw_messages, *last_irc_raw_message;
 
 extern void irc_raw_open (int switch_to_buffer);
-extern void irc_raw_max_messages (int number);
+extern struct t_irc_raw_message *irc_raw_message_add_to_list (time_t date,
+                                                              const char *prefix,
+                                                              const char *message);
 extern void irc_raw_print (struct t_irc_server *server, int send,
                            int modified, const char *message);
+extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
+                                    struct t_irc_raw_message *raw_message);
 
 #endif /* irc-raw.h */

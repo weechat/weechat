@@ -31,6 +31,7 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-raw.h"
 
 
 struct t_irc_server *irc_upgrade_current_server = NULL;
@@ -48,6 +49,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_raw_message *ptr_raw_message;
     int rc;
     
     for (ptr_server = irc_servers; ptr_server;
@@ -110,6 +112,26 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         }
     }
     
+    /* save raw messages */
+    for (ptr_raw_message = irc_raw_messages; ptr_raw_message;
+         ptr_raw_message = ptr_raw_message->next_message)
+    {
+        infolist = weechat_infolist_new ();
+        if (!infolist)
+            return 0;
+        if (!irc_raw_add_to_infolist (infolist, ptr_raw_message))
+        {
+            weechat_infolist_free (infolist);
+            return 0;
+        }
+        rc = weechat_upgrade_write_object (upgrade_file,
+                                           IRC_UPGRADE_TYPE_RAW_MESSAGE,
+                                           infolist);
+        weechat_infolist_free (infolist);
+        if (!rc)
+            return 0;
+    }
+    
     return 1;
 }
 
@@ -156,6 +178,11 @@ irc_upgrade_set_buffer_callbacks ()
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
                 weechat_buffer_set_pointer (ptr_buffer, "close_callback", &irc_buffer_close_cb);
                 weechat_buffer_set_pointer (ptr_buffer, "input_callback", &irc_input_data_cb);
+                if (strcmp (weechat_infolist_string (infolist, "name"),
+                            IRC_RAW_BUFFER_NAME) == 0)
+                {
+                    irc_raw_buffer = ptr_buffer;
+                }
             }
         }
     }
@@ -337,6 +364,11 @@ irc_upgrade_read_cb (void *data,
                             ptr_nick->host = strdup (str);
                     }
                 }
+                break;
+            case IRC_UPGRADE_TYPE_RAW_MESSAGE:
+                irc_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),
+                                             weechat_infolist_string (infolist, "prefix"),
+                                             weechat_infolist_string (infolist, "message"));
                 break;
         }
     }
