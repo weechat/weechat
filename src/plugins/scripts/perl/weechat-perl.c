@@ -45,6 +45,7 @@ struct t_plugin_script *perl_scripts = NULL;
 struct t_plugin_script *last_perl_script = NULL;
 struct t_plugin_script *perl_current_script = NULL;
 const char *perl_current_script_filename = NULL;
+int perl_quit_or_upgrade = 0;
 
 /* string used to execute action "install":
    when signal "perl_install_script" is received, name of string
@@ -739,6 +740,27 @@ weechat_perl_signal_script_action_cb (void *data, const char *signal,
 }
 
 /*
+ * weechat_perl_signal_quit_upgrade_cb: callback called when exiting or
+ *                                      upgrading WeeChat
+ */
+
+int
+weechat_perl_signal_quit_upgrade_cb (void *data, const char *signal,
+                                     const char *type_data,
+                                     void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    perl_quit_or_upgrade = 1;
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Perl plugin
  */
 
@@ -796,6 +818,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_display_short_list (weechat_perl_plugin,
                                perl_scripts);
     
+    weechat_hook_signal ("quit", &weechat_perl_signal_quit_upgrade_cb, NULL);
+    weechat_hook_signal ("upgrade", &weechat_perl_signal_quit_upgrade_cb, NULL);
+    
     /* init ok */
     return WEECHAT_RC_OK;
 }
@@ -824,7 +849,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 #endif
 
 #ifdef PERL_SYS_TERM
-    PERL_SYS_TERM ();
+    if (perl_quit_or_upgrade)
+        PERL_SYS_TERM ();
 #endif
     
     return WEECHAT_RC_OK;
