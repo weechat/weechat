@@ -39,6 +39,7 @@ extern void utf8_normalize (const char *string, char replacement);
 extern char *utf8_prev_char (const char *string_start, const char *string);
 extern char *utf8_next_char (const char *string);
 extern int utf8_char_int (const char *string);
+extern wint_t utf8_wide_char (const char *string);
 extern int utf8_char_size (const char *string);
 extern int utf8_strlen (const char *string);
 extern int utf8_strnlen (const char *string, int bytes);

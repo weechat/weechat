@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <wctype.h>
 
 #include "weechat.h"
 #include "wee-utf8.h"
@@ -281,6 +282,46 @@ utf8_char_int (const char *string)
 }
 
 /*
+ * utf8_wide_char: get wide char from string (first char)
+ */
+
+wint_t
+utf8_wide_char (const char *string)
+{
+    int char_size;
+    wint_t result;
+    
+    if (!string || !string[0])
+        return WEOF;
+    
+    char_size = utf8_char_size (string);
+    switch (char_size)
+    {
+        case 1:
+            result = (wint_t)string[0];
+            break;
+        case 2:
+            result = ((wint_t)((unsigned char)string[0])) << 8
+                |  ((wint_t)((unsigned char)string[1]));
+            break;
+        case 3:
+            result = ((wint_t)((unsigned char)string[0])) << 16
+                |  ((wint_t)((unsigned char)string[1])) << 8
+                |  ((wint_t)((unsigned char)string[2]));
+            break;
+        case 4:
+            result = ((wint_t)((unsigned char)string[0])) << 24
+                |  ((wint_t)((unsigned char)string[1])) << 16
+                |  ((wint_t)((unsigned char)string[2])) << 8
+                |  ((wint_t)((unsigned char)string[3]));
+            break;
+        default:
+            result = WEOF;
+    }
+    return result;
+}
+
+/*
  * utf8_char_size: return UTF-8 char size (in bytes)
  */
 
@@ -410,18 +451,18 @@ utf8_charcmp (const char *string1, const char *string2)
 int
 utf8_charcasecmp (const char *string1, const char *string2)
 {
-    wchar_t wstring1[2], wstring2[2];
+    wint_t wchar1, wchar2;
     
     if (!string1 || !string2)
         return (string1) ? 1 : ((string2) ? -1 : 0);
     
-    memset (wstring1, 0, sizeof (wstring1));
-    memset (wstring2, 0, sizeof (wstring2));
+    wchar1 = utf8_wide_char (string1);
+    wchar1 = towlower (wchar1);
     
-    mbstowcs (wstring1, string1, 1);
-    mbstowcs (wstring2, string2, 1);
+    wchar2 = utf8_wide_char (string2);
+    wchar2 = towlower (wchar2);
     
-    return wcscasecmp (wstring1, wstring2);
+    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
 }
 
 /*
