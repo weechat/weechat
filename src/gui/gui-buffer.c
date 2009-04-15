@@ -62,9 +62,6 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
 
-void gui_buffer_switch_previous (struct t_gui_window *window);
-
-
 /*
  * gui_buffer_find_pos: find position for buffer in list
  */
@@ -1382,9 +1379,9 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
     if (number < 0)
         return;
     
-    /* buffer is currently displayed ? */
-    if (number == window->buffer->number)
-        return;
+    /* buffer is currently displayed ? then jump to previous buffer */
+    if ((number == window->buffer->number) && gui_previous_buffer)
+        number = gui_previous_buffer->number;
     
     /* search for buffer in the list */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
