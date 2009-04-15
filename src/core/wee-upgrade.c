@@ -24,12 +24,14 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 
 #include "weechat.h"
 #include "wee-upgrade.h"
 #include "wee-infolist.h"
 #include "wee-string.h"
+#include "wee-util.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-history.h"
@@ -561,4 +563,34 @@ upgrade_weechat_load ()
     }
     
     return rc;
+}
+
+/*
+ * upgrade_weechat_remove_file_cb: callback called to remove a .upgrade file
+ */
+
+void
+upgrade_weechat_remove_file_cb (void *data, const char *filename)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (string_match (filename, "*.upgrade", 1))
+    {
+        if (weechat_debug_core >= 2)
+            gui_chat_printf (NULL, _("debug: removing file: %s"), filename);
+        unlink (filename);
+    }
+}
+
+/*
+ * upgrade_weechat_remove_files: remove *.upgrade files after upgrade
+ */
+
+void
+upgrade_weechat_remove_files ()
+{
+    util_exec_on_files (weechat_home,
+                        NULL,
+                        &upgrade_weechat_remove_file_cb);
 }

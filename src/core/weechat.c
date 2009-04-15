@@ -410,6 +410,8 @@ main (int argc, char *argv[])
                  argc, argv); 
     command_startup (1);                /* command executed after plugins   */
     gui_layout_window_apply (gui_layout_windows, -1); /* apply saved layout */
+    if (weechat_upgrading)
+        upgrade_weechat_remove_files ();/* remove .upgrade files            */
     weechat_upgrading = 0;
     
     gui_main_loop ();                   /* WeeChat main loop                */

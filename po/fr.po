@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-09 12:57+0200\n"
-"PO-Revision-Date: 2009-04-09 12:58+0200\n"
+"POT-Creation-Date: 2009-04-15 23:39+0200\n"
+"PO-Revision-Date: 2009-04-15 23:39+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1957,6 +1957,10 @@ msgstr "Go"
 
 msgid "byte"
 msgstr "octet"
+
+#, c-format
+msgid "debug: removing file: %s"
+msgstr "debug: suppression du fichier: %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
