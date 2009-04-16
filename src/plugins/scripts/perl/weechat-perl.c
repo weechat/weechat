@@ -772,11 +772,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     char **perl_args_local;
     char *perl_env[] = {};
 #endif
-    
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-    
 #ifdef PERL_SYS_INIT3
     a = perl_args_count;
     perl_args_local = perl_args;
@@ -806,13 +801,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     perl_quiet = 1;
     script_init (weechat_perl_plugin,
+                 argc,
+                 argv,
+                 &perl_scripts,
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
                  &weechat_perl_infolist_cb,
                  &weechat_perl_signal_debug_dump_cb,
                  &weechat_perl_signal_buffer_closed_cb,
                  &weechat_perl_signal_script_action_cb,
-                 &weechat_perl_load_cb);
+                 &weechat_perl_load_cb,
+                 &weechat_perl_api_buffer_input_data_cb,
+                 &weechat_perl_api_buffer_close_cb);
     perl_quiet = 0;
     
     script_display_short_list (weechat_perl_plugin,

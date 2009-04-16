@@ -834,10 +834,6 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-    
     weechat_python_plugin = plugin;
     
     /* init stdout/stderr buffer */
@@ -869,13 +865,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     python_quiet = 1;
     script_init (weechat_python_plugin,
+                 argc,
+                 argv,
+                 &python_scripts,
                  &weechat_python_command_cb,
                  &weechat_python_completion_cb,
                  &weechat_python_infolist_cb,
                  &weechat_python_signal_debug_dump_cb,
                  &weechat_python_signal_buffer_closed_cb,
                  &weechat_python_signal_script_action_cb,
-                 &weechat_python_load_cb);
+                 &weechat_python_load_cb,
+                 &weechat_python_api_buffer_input_data_cb,
+                 &weechat_python_api_buffer_close_cb);
     python_quiet = 0;
     
     script_display_short_list (weechat_python_plugin,

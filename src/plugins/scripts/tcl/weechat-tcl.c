@@ -540,21 +540,22 @@ weechat_tcl_signal_script_action_cb (void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-    
     weechat_tcl_plugin = plugin;
     
     tcl_quiet = 1;
     script_init (weechat_tcl_plugin,
+                 argc,
+                 argv,
+                 &tcl_scripts,
                  &weechat_tcl_command_cb,
                  &weechat_tcl_completion_cb,
                  &weechat_tcl_infolist_cb,
                  &weechat_tcl_signal_debug_dump_cb,
                  &weechat_tcl_signal_buffer_closed_cb,
                  &weechat_tcl_signal_script_action_cb,
-                 &weechat_tcl_load_cb);
+                 &weechat_tcl_load_cb,
+                 &weechat_tcl_api_buffer_input_data_cb,
+                 &weechat_tcl_api_buffer_close_cb);
     tcl_quiet = 0;
     
     script_display_short_list (weechat_tcl_plugin,

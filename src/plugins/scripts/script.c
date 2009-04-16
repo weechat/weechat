@@ -78,11 +78,97 @@ script_config_cb (void *data, const char *option, const char *value)
 }
 
 /*
+ * script_upgrade_set_buffer_callbacks: restore buffers callbacks (input and
+ *                                      close) for buffers created by script
+ *                                      plugin
+ */
+
+void
+script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
+                                     struct t_plugin_script **scripts,
+                                     int (*callback_buffer_input) (void *data,
+                                                                   struct t_gui_buffer *buffer,
+                                                                   const char *input_data),
+                                     int (*callback_buffer_close) (void *data,
+                                                                   struct t_gui_buffer *buffer))
+{
+    struct t_infolist *infolist;
+    struct t_gui_buffer *ptr_buffer;
+    const char *script_name, *script_input_cb, *script_close_cb;
+    struct t_plugin_script *ptr_script;
+    struct t_script_callback *new_script_callback_input;
+    struct t_script_callback *new_script_callback_close;
+    
+    infolist = weechat_infolist_get ("buffer", NULL, NULL);
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            if (weechat_infolist_pointer (infolist, "plugin") == weechat_plugin)
+            {
+                ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
+                script_name = weechat_buffer_get_string (ptr_buffer, "localvar_script_name");
+                if (script_name && script_name[0])
+                {
+                    ptr_script = script_search (weechat_plugin, *scripts,
+                                                script_name);
+                    if (ptr_script)
+                    {
+                        script_input_cb = weechat_buffer_get_string (ptr_buffer, "localvar_script_input_cb");
+                        script_close_cb = weechat_buffer_get_string (ptr_buffer, "localvar_script_close_cb");
+                        
+                        if (script_input_cb && script_input_cb[0])
+                        {
+                            new_script_callback_input = script_callback_alloc ();
+                            if (new_script_callback_input)
+                            {
+                                new_script_callback_input->script = ptr_script;
+                                new_script_callback_input->function = strdup (script_input_cb);
+                                new_script_callback_input->buffer = ptr_buffer;
+                                script_callback_add (ptr_script,
+                                                     new_script_callback_input);
+                                weechat_buffer_set_pointer (ptr_buffer,
+                                                            "input_callback",
+                                                            callback_buffer_input);
+                                weechat_buffer_set_pointer (ptr_buffer,
+                                                            "input_callback_data",
+                                                            new_script_callback_input);
+                            }
+                        }
+                        if (script_close_cb && script_close_cb[0])
+                        {
+                            new_script_callback_close = script_callback_alloc ();
+                            if (new_script_callback_close)
+                            {
+                                new_script_callback_close->script = ptr_script;
+                                new_script_callback_close->function = strdup (script_close_cb);
+                                new_script_callback_close->buffer = ptr_buffer;
+                                script_callback_add (ptr_script,
+                                                     new_script_callback_close);
+                                weechat_buffer_set_pointer (ptr_buffer,
+                                                            "close_callback",
+                                                            callback_buffer_close);
+                                weechat_buffer_set_pointer (ptr_buffer,
+                                                            "close_callback_data",
+                                                            new_script_callback_close);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
  * script_init: initialize script
  */
 
 void
 script_init (struct t_weechat_plugin *weechat_plugin,
+             int argc,
+             char *argv[],
+             struct t_plugin_script **scripts,
              int (*callback_command)(void *data,
                                      struct t_gui_buffer *buffer,
                                      int argc, char **argv,
@@ -103,11 +189,16 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_signal_script_action)(void *data, const char *signal,
                                                   const char *type_data,
                                                   void *signal_data),
-             void (*callback_load_file)(void *data, const char *filename))
+             void (*callback_load_file)(void *data, const char *filename),
+             int (*callback_buffer_input) (void *data,
+                                           struct t_gui_buffer *buffer,
+                                           const char *input_data),
+             int (*callback_buffer_close) (void *data,
+                                           struct t_gui_buffer *buffer))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %(filename)";
     char infolist_description[512], signal_name[128];
-    int length;
+    int length, i, upgrading;
     
     /* read script configuration */
     script_config_read (weechat_plugin);
@@ -188,6 +279,21 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* autoload scripts */
     script_auto_load (weechat_plugin, callback_load_file);
+    
+    /* actions after upgrade */
+    upgrading = 0;
+    for (i = 0; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
+            upgrading = 1;
+    }
+    if (upgrading)
+    {
+        script_upgrade_set_buffer_callbacks (weechat_plugin,
+                                             scripts,
+                                             callback_buffer_input,
+                                             callback_buffer_close);
+    }
 }
 
 /*

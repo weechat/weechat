@@ -1364,6 +1364,13 @@ script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
         script_callback_add (script, new_script_callback_close);
     }
     
+    weechat_buffer_set (new_buffer, "localvar_set_script_name",
+                        script->name);
+    weechat_buffer_set (new_buffer, "localvar_set_script_input_cb",
+                        function_input);
+    weechat_buffer_set (new_buffer, "localvar_set_script_close_cb",
+                        function_close);
+    
     return new_buffer;
 }
 

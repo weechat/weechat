@@ -20,6 +20,11 @@
 #ifndef __WEECHAT_PERL_API_H
 #define __WEECHAT_PERL_API_H 1
 
+extern int weechat_perl_api_buffer_input_data_cb (void *data,
+                                                  struct t_gui_buffer *buffer,
+                                                  const char *input_data);
+extern int weechat_perl_api_buffer_close_cb (void *data,
+                                             struct t_gui_buffer *buffer);
 extern void weechat_perl_api_init (pTHX);
 
 #endif /* weechat-perl.h */

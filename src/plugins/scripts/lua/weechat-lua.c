@@ -600,21 +600,22 @@ weechat_lua_signal_script_action_cb (void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-    
     weechat_lua_plugin = plugin;
-
+    
     lua_quiet = 1;
     script_init (weechat_lua_plugin,
+                 argc,
+                 argv,
+                 &lua_scripts,
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
                  &weechat_lua_infolist_cb,
                  &weechat_lua_signal_debug_dump_cb,
                  &weechat_lua_signal_buffer_closed_cb,
                  &weechat_lua_signal_script_action_cb,
-                 &weechat_lua_load_cb);
+                 &weechat_lua_load_cb,
+                 &weechat_lua_api_buffer_input_data_cb,
+                 &weechat_lua_api_buffer_close_cb);
     lua_quiet = 0;
     
     script_display_short_list (weechat_lua_plugin,
