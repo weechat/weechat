@@ -379,7 +379,7 @@ irc_color_modifier_cb (void *data, const char *modifier,
         return irc_color_decode (string, keep_colors);
     
     if (strcmp (modifier, "irc_color_encode") == 0)
-        return irc_color_decode (string, keep_colors);
+        return irc_color_encode (string, keep_colors);
     
     /* unknown modifier */
     return NULL;
