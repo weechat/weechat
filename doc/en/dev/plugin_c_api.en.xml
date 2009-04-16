@@ -6323,8 +6323,93 @@ struct t_hook *weechat_hook_modifier (
         <itemizedlist>
           <listitem>
             <para>
-              <option>modifier</option>: modifier name (you should look at
-              core and plugins doc to find name of existing modifiers)
+              <option>modifier</option>: modifier name, list of modifiers used
+              by Weechat or plugins:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="5">
+                  <thead>
+                    <row>
+                      <entry>Plugin</entry>
+                      <entry>Modifier</entry>
+                      <entry>Modifier data</entry>
+                      <entry>String</entry>
+                      <entry>Output</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>charset</entry>
+                      <entry>charset_decode</entry>
+                      <entry>plugin.buffer_name</entry>
+                      <entry>any string</entry>
+                      <entry>string decoded from charset found for plugin/buffer to UTF-8</entry>
+                    </row>
+                    <row>
+                      <entry>charset</entry>
+                      <entry>charset_encode</entry>
+                      <entry>plugin.buffer_name</entry>
+                      <entry>any string</entry>
+                      <entry>string encoded from UTF-8 to charset found for plugin/buffer</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_color_decode</entry>
+                      <entry>"1" to keep colors, "0" to remove colors</entry>
+                      <entry>any string</entry>
+                      <entry>string with WeeChat color codes, or without color</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_color_encode</entry>
+                      <entry>"1" to keep colors, "0" to remove colors</entry>
+                      <entry>any string, with user colors</entry>
+                      <entry>string with IRC color codes, or without color</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_in_xxx (xxx is IRC command name)</entry>
+                      <entry>server name</entry>
+                      <entry>content of message received from IRC server</entry>
+                      <entry>new content of message</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_out_xxx (xxx is IRC command name)</entry>
+                      <entry>server name</entry>
+                      <entry>content of message about to be sent to IRC server</entry>
+                      <entry>new content of message</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_text_content</entry>
+                      <entry>string with buffer pointer ("0x123..")</entry>
+                      <entry>input buffer (from user)</entry>
+                      <entry>new content of input buffer</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_text_display</entry>
+                      <entry>string with buffer pointer ("0x123..")</entry>
+                      <entry>input buffer (from user), without cursor tag</entry>
+                      <entry>new content of input buffer, for display only (input buffer is not changed)</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_text_display_with_cursor</entry>
+                      <entry>string with buffer pointer ("0x123..")</entry>
+                      <entry>input buffer (from user), with cursor tag</entry>
+                      <entry>new content of input buffer, for display only (input buffer is not changed)</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>weechat_print</entry>
+                      <entry>plugin;buffer_name;tags</entry>
+                      <entry>message printed</entry>
+                      <entry>new message printed</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
