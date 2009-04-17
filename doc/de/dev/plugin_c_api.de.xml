@@ -5923,7 +5923,364 @@ struct t_hook *weechat_hook_signal (
         <itemizedlist>
           <listitem>
             <para>
-              <option>signal</option>: signal to catch
+              <option>signal</option>: signal to catch. List of signals sent by
+              WeeChat or plugins:
+              <informaltable colsep="0" frame="none">
+                <tgroup cols="4">
+                  <thead>
+                    <row>
+                      <entry>Plugin</entry>
+                      <entry>Signal</entry>
+                      <entry>Arguments</entry>
+                      <entry>Description</entry>
+                    </row>
+                  </thead>
+                  <tbody>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>xxx,irc_in_yyy (xxx is server name, yyy is command name)</entry>
+                      <entry>string: message</entry>
+                      <entry>irc message from server (before irc plugin uses it)</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>xxx,irc_in2_yyy (xxx is server name, yyy is command name)</entry>
+                      <entry>string: message</entry>
+                      <entry>irc message from server (after irc plugin uses it)</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>xxx,irc_out_yyy (xxx is server name, yyy is command name)</entry>
+                      <entry>string: message</entry>
+                      <entry>irc message sent to server</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_ctcp</entry>
+                      <entry>string: message</entry>
+                      <entry>CTCP received</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_dcc</entry>
+                      <entry>string: message</entry>
+                      <entry>new DCC</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_pv</entry>
+                      <entry>string: message</entry>
+                      <entry>private message received</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_channel_opened</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>channel opened</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_pvl_opened</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>private opened</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_server_connecting</entry>
+                      <entry>string: server name</entry>
+                      <entry>connecting to server</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_server_connecting</entry>
+                      <entry>string: server name</entry>
+                      <entry>connected to server</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_server_disconnected</entry>
+                      <entry>string: server name</entry>
+                      <entry>disconnected from server</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_ignore_removing</entry>
+                      <entry>pointer: ignore</entry>
+                      <entry>removing ignore</entry>
+                    </row>
+                    <row>
+                      <entry>irc</entry>
+                      <entry>irc_ignore_removed</entry>
+                      <entry>pointer: ignore</entry>
+                      <entry>ignore removed</entry>
+                    </row>
+                    <row>
+                      <entry>logger</entry>
+                      <entry>logger_start</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>start logging for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>logger</entry>
+                      <entry>logger_stop</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>stop logging for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>logger</entry>
+                      <entry>logger_backlog</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>display backlog for buffer</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_closing</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>closing buffer</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_closed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>buffer closed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_lines_hidden</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>lines hidden in buffer</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_localvar_added</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>local variable has been added</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_localvar_changed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>local variable has changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_localvar_removed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>local variable has been removed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_moved</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>buffer moved</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_opened</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>buffer opened</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_renamed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>buffer renamed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_switch</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>switching buffer</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_title_changed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>title of buffer changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>buffer_type_changed</entry>
+                      <entry>pointer: buffer</entry>
+                      <entry>type of buffer changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>debug_dump</entry>
+                      <entry>-</entry>
+                      <entry>dump request</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>filter_added</entry>
+                      <entry>pointer: new filter</entry>
+                      <entry>filter added</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>filter_removing</entry>
+                      <entry>pointer: filter</entry>
+                      <entry>removing filter</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>filter_removed</entry>
+                      <entry>pointer: filter</entry>
+                      <entry>filter removed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>filters_enabled</entry>
+                      <entry>-</entry>
+                      <entry>filters enabled</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>filters_disabled</entry>
+                      <entry>-</entry>
+                      <entry>filters disabled</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>hotlist_changed</entry>
+                      <entry>-</entry>
+                      <entry>hotlist changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_paste_pending</entry>
+                      <entry>-</entry>
+                      <entry>paste pending</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_search</entry>
+                      <entry>-</entry>
+                      <entry>input search</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_text_changed</entry>
+                      <entry>-</entry>
+                      <entry>input text changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>input_text_cursor_moved</entry>
+                      <entry>-</entry>
+                      <entry>input text cursor moved</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>key_pressed</entry>
+                      <entry>string: key pressed</entry>
+                      <entry>key pressed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>nicklist_changed</entry>
+                      <entry>-</entry>
+                      <entry>nicklist has changed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>partial_completion</entry>
+                      <entry>-</entry>
+                      <entry>partial completion happened</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>quit</entry>
+                      <entry>arguments for command /quit</entry>
+                      <entry>command /quit issued by user</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>upgrade</entry>
+                      <entry>-</entry>
+                      <entry>command /upgrade issued by user</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>weechat_highlight</entry>
+                      <entry>string: message with prefix</entry>
+                      <entry>highlight displayed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>weechat_pv</entry>
+                      <entry>string: message with prefix</entry>
+                      <entry>private message displayed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>window_scrolled</entry>
+                      <entry>pointer: window</entry>
+                      <entry>scroll in window</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>window_unzooming</entry>
+                      <entry>pointer: current window</entry>
+                      <entry>unzooming window</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>window_unzoomed</entry>
+                      <entry>pointer: current window</entry>
+                      <entry>window unzoomed</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>window_zooming</entry>
+                      <entry>pointer: current window</entry>
+                      <entry>unzooming window</entry>
+                    </row>
+                    <row>
+                      <entry>weechat</entry>
+                      <entry>window_zoomed</entry>
+                      <entry>pointer: current window</entry>
+                      <entry>window unzoomed</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_add</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>new xfer</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_send_ready</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>xfer ready (file or chat, send)</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_accept_resume</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>xfer accepts resume (send)</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_send_accept_resume</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>xfer accepts resume (send)</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_start_resume</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>start resume</entry>
+                    </row>
+                    <row>
+                      <entry>xfer</entry>
+                      <entry>xfer_resume_ready</entry>
+                      <entry>pointer: infolist with xfer info</entry>
+                      <entry>xfer resume ready</entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </informaltable>
             </para>
           </listitem>
           <listitem>
