@@ -9084,7 +9084,7 @@ weechat_printf (NULL, "WeeChat home is: %s",
     <title>Infolists</title>
     
     <para>
-      Functions to get infolists.
+      Infolists functions.
     </para>
     
     <para>
@@ -9850,7 +9850,7 @@ weechat_printf (NULL, "time value = 0x%ld",
       <para>
         Prototype:
 <programlisting>
-void weechat_infolist_free (struct t_weelist *weelist);
+void weechat_infolist_free (struct t_infolist *infolist);
 </programlisting>
       </para>
       <para>
