@@ -105,16 +105,6 @@ gui_input_paste_pending_signal ()
 }
 
 /*
- * gui_input_prompt_changed_signal: send signal "input_prompt_changed"
- */
-
-void
-gui_input_prompt_changed_signal ()
-{
-    hook_signal_send ("input_prompt_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-}
-
-/*
  * gui_input_text_changed_modifier_and_signal: send modifier and signal
  *                                             "input_text_changed"
  */
