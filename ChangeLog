@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-03-14
+ChangeLog - 2009-04-18
 
+
+Version 0.2.6.2 (2009-04-18):
+   * fix bug with charset decoding (for example with iso2022jp)
 
 Version 0.2.6.1 (2009-03-14):
    * fix crash with some special chars in IRC messages (bug #25862)
