@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-03-14 16:25+0100\n"
+"POT-Creation-Date: 2009-04-18 15:27+0200\n"
 "PO-Revision-Date: 2007-09-06 10:01+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -30,79 +30,79 @@ msgstr "%s az új szerver lefoglalása sikertelen\n"
 msgid "%s error sending data to IRC server\n"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
-#: src/irc/irc-server.c:757 src/irc/irc-server.c:1098
+#: src/irc/irc-server.c:757 src/irc/irc-server.c:1097
 msgid "(message dropped)"
 msgstr "(üzenet eldobva)"
 
-#: src/irc/irc-server.c:868 src/irc/irc-server.c:881 src/irc/irc-server.c:943
-#: src/irc/irc-server.c:956
+#: src/irc/irc-server.c:867 src/irc/irc-server.c:880 src/irc/irc-server.c:927
+#: src/irc/irc-server.c:940
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
 
-#: src/irc/irc-server.c:1065
+#: src/irc/irc-server.c:1064
 #, c-format
 msgid "%s Command \"%s\" failed!\n"
 msgstr "%s Parancs \"%s\" sikertelen!\n"
 
-#: src/irc/irc-server.c:1071
+#: src/irc/irc-server.c:1070
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s A futtatandó parancs nem található!\n"
 
-#: src/irc/irc-server.c:1077
+#: src/irc/irc-server.c:1076
 #, c-format
 msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr ""
 "%s Ismeretlen parancs: parancs=\"%s\", hoszt=\"%s\", argumentum=\"%s\"\n"
 
-#: src/irc/irc-server.c:1143
+#: src/irc/irc-server.c:1142
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s nem sikerült adatot olvasni a csatornából, kilépés a szerverről...\n"
 
-#: src/irc/irc-server.c:1226
+#: src/irc/irc-server.c:1225
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
-#: src/irc/irc-server.c:1260
+#: src/irc/irc-server.c:1259
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s gnutls kézfogás sikertelen\n"
 
-#: src/irc/irc-server.c:1277
+#: src/irc/irc-server.c:1276
 #, c-format
 msgid "%s proxy address \"%s\" not found\n"
 msgstr "%s proxy cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1281
+#: src/irc/irc-server.c:1280
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1291
+#: src/irc/irc-server.c:1290
 #, c-format
 msgid "%s proxy IP address not found\n"
 msgstr "%s proxy IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1294
+#: src/irc/irc-server.c:1293
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1303
+#: src/irc/irc-server.c:1302
 #, c-format
 msgid "%s proxy connection refused\n"
 msgstr "%s a proxy kiszolgálóhoz való csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1306
+#: src/irc/irc-server.c:1305
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s a csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1314
+#: src/irc/irc-server.c:1313
 #, c-format
 msgid ""
 "%s proxy fails to establish connection to server (check username/password if "
@@ -111,12 +111,12 @@ msgstr ""
 "%s a proxy kiszolgálónak nem sikerült a szerverhez csatlakoznia (ellenőrizze "
 "a felhasználónevet/jelszót ha be van állítva)\n"
 
-#: src/irc/irc-server.c:1324
+#: src/irc/irc-server.c:1323
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
 msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
 
-#: src/irc/irc-server.c:1842
+#: src/irc/irc-server.c:1841
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -124,61 +124,61 @@ msgstr ""
 "%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
 "támogatás nélkül lett fordítva\n"
 
-#: src/irc/irc-server.c:1851
+#: src/irc/irc-server.c:1850
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
 
-#: src/irc/irc-server.c:1857
+#: src/irc/irc-server.c:1856
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
 
-#: src/irc/irc-server.c:1867
+#: src/irc/irc-server.c:1866
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1871
+#: src/irc/irc-server.c:1870
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1889
+#: src/irc/irc-server.c:1888
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s gnutls inicializációs hiba\n"
 
-#: src/irc/irc-server.c:1905
+#: src/irc/irc-server.c:1904
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s nem sikerült a csövet(pipe) létrehozni\n"
 
-#: src/irc/irc-server.c:1920
+#: src/irc/irc-server.c:1919
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
-#: src/irc/irc-server.c:1931
+#: src/irc/irc-server.c:1930
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1942
+#: src/irc/irc-server.c:1941
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1984
+#: src/irc/irc-server.c:1983
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
-#: src/irc/irc-server.c:2035 src/irc/irc-server.c:2046
+#: src/irc/irc-server.c:2034 src/irc/irc-server.c:2045
 msgid "Disconnected from server!\n"
 msgstr "Lekapcsolódott a szerverről!\n"
 
