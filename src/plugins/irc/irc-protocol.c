@@ -4341,12 +4341,10 @@ irc_protocol_is_numeric_command (const char *str)
 
 void
 irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
-                           const char *host, const char *command,
-                           const char *arguments)
+                           const char *command)
 {
     int i, cmd_found, return_code, argc, decode_color;
-    char *pos, *nick;
-    char *dup_entire_line, *dup_host, *dup_arguments, *irc_message;
+    char *dup_entire_line;
     t_irc_recv_func *cmd_recv_func;
     const char *cmd_name;
     char **argv, **argv_eol;
@@ -4535,16 +4533,6 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
             dup_entire_line = NULL;
         argv = weechat_string_explode (dup_entire_line, " ", 0, 0, &argc);
         argv_eol = weechat_string_explode (dup_entire_line, " ", 1, 0, NULL);
-        dup_host = (host) ? strdup (host) : NULL;
-        dup_arguments = (arguments) ? strdup (arguments) : NULL;
-        
-        pos = (dup_host) ? strchr (dup_host, '!') : NULL;
-        if (pos)
-            pos[0] = '\0';
-        nick = (dup_host) ? strdup (dup_host) : NULL;
-        if (pos)
-            pos[0] = '!';
-        irc_message = strdup (dup_entire_line);
         
         return_code = (int) (cmd_recv_func) (server, cmd_name,
                                              argc, argv, argv_eol);
@@ -4565,16 +4553,8 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
         /* send signal with received command */
         irc_server_send_signal (server, "irc_in2", command, entire_line);
         
-        if (irc_message)
-            free (irc_message);
-        if (nick)
-            free (nick);
         if (dup_entire_line)
             free (dup_entire_line);
-        if (dup_host)
-            free (dup_host);
-        if (dup_arguments)
-            free (dup_arguments);
         if (argv)
             weechat_string_free_exploded (argv);
         if (argv_eol)
