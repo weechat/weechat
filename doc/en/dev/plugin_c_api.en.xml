@@ -5991,7 +5991,7 @@ struct t_hook *weechat_hook_signal (
                     </row>
                     <row>
                       <entry>irc</entry>
-                      <entry>irc_server_connecting</entry>
+                      <entry>irc_server_connected</entry>
                       <entry>string: server name</entry>
                       <entry>connected to server</entry>
                     </row>
