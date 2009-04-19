@@ -1,4 +1,4 @@
-WeeChat FAQ, 2009-04-03
+WeeChat FAQ, 2009-04-19
 =======================
 
 1 - General
@@ -87,8 +87,11 @@ For versions >= 0.2.3:
      /setp charset.global.decode = ISO-8859-15
   with WeeChat >= 0.2.7:
      /set charset.default.decode "ISO-8859-15"
-- if you are using UTF-8 locale, check that your terminal is UTF-8 ready.
-  Terminal recommended for UTF-8 is rxvt-unicode.
+- if you are using UTF-8 locale:
+    - check that your terminal is UTF-8 ready
+      (terminal recommended for UTF-8 is rxvt-unicode)
+    - if you are using screen, check that it is run with UTF-8 mode
+      ("defutf8 on" in ~/.screenrc or "screen -U")
 
 
 ------------------------------------------------------------------------------
