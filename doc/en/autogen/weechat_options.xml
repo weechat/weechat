@@ -826,6 +826,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.look.jump_current_to_previous_buffer</command>: jump to previous buffer displayed when jumping to current buffer number (to easyly switch to another buffer, then come back to current buffer)
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.nickmode</command>: display nick mode ((half)op/voice) before each nick
 <itemizedlist>
   <listitem>

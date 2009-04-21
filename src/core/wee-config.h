@@ -88,6 +88,7 @@ extern struct t_config_option *config_look_hotlist_names_level;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_item_time_format;
+extern struct t_config_option *config_look_jump_current_to_previous_buffer;
 extern struct t_config_option *config_look_nickmode;
 extern struct t_config_option *config_look_nickmode_empty;
 extern struct t_config_option *config_look_paste_max_lines;
