@@ -367,7 +367,7 @@ c_split_multi_command (char *command, char sep)
 }
 
 /*
- * c_free_multi_command : free a list of commands splitted
+ * c_free_multi_command : free a list of commands split
  *                      with split_multi_command
  */
 

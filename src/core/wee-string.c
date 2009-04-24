@@ -1008,20 +1008,20 @@ string_split_command (const char *command, char separator)
 }
 
 /*
- * string_free_splitted_command : free a list of commands splitted
- *                                with string_split_command
+ * string_free_split_command : free a list of commands split
+ *                             with string_split_command
  */
 
 void
-string_free_splitted_command (char **splitted_command)
+string_free_split_command (char **split_command)
 {
     int i;
 
-    if (splitted_command)
+    if (split_command)
     {
-        for (i = 0; splitted_command[i]; i++)
-            free (splitted_command[i]);
-        free (splitted_command);
+        for (i = 0; split_command[i]; i++)
+            free (split_command[i]);
+        free (split_command);
     }
 }
 

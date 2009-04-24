@@ -48,7 +48,7 @@ extern void string_free_exploded (char **exploded_string);
 extern char *string_build_with_exploded (const char **exploded_string,
                                          const char *separator);
 extern char **string_split_command (const char *command, char separator);
-extern void string_free_splitted_command (char **splitted_command);
+extern void string_free_split_command (char **split_command);
 extern char *string_iconv (int from_utf8, const char *from_code,
                            const char *to_code, const char *string);
 extern char *string_iconv_to_internal (const char *charset, const char *string);

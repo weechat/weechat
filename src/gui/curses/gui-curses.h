@@ -42,7 +42,7 @@ struct t_gui_bar_window;
 struct t_gui_window_curses_objects
 {
     WINDOW *win_chat;               /* chat window (example: channel)       */
-    WINDOW *win_separator;          /* separation between 2 splitted (V) win*/
+    WINDOW *win_separator;          /* separation between 2 split (V) win   */
 };
 
 struct t_gui_bar_window_curses_objects

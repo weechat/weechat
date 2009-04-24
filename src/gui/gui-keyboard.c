@@ -504,7 +504,7 @@ gui_keyboard_pressed (const char *key_str)
                         input_data (gui_current_window->buffer,
                                     *ptr_cmd);
                     }
-                    string_free_splitted_command (commands);
+                    string_free_split_command (commands);
                 }
             }
             

@@ -436,7 +436,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
 {
     enum t_gui_bar_filling filling;
     char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
-    char *item_value, ****splitted_items, **linear_items;
+    char *item_value, ****split_items, **linear_items;
     int index_content, content_length, i, sub, j, k, index;
     int length_reinit_color, length_reinit_color_space;
     int length, max_length, max_length_screen, total_items, columns, lines;
@@ -521,39 +521,39 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             total_items = 0;
             max_length = 1;
             max_length_screen = 1;
-            splitted_items = malloc(bar_window->items_count * sizeof(*splitted_items));
+            split_items = malloc(bar_window->items_count * sizeof(*split_items));
             for (i = 0; i < bar_window->items_count; i++)
             {
                 if (bar_window->items_subcount[i] > 0)
                 {
-                    splitted_items[i] = malloc (bar_window->items_subcount[i] * sizeof (**splitted_items));
+                    split_items[i] = malloc (bar_window->items_subcount[i] * sizeof (**split_items));
                     for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                     {
                         ptr_content = gui_bar_window_content_get (bar_window, window,
                                                                   i, sub);
                         if (ptr_content && ptr_content[0])
                         {
-                            splitted_items[i][sub] = string_explode (ptr_content,
-                                                                     "\n", 0, 0, NULL);
-                            for (j = 0; splitted_items[i][sub][j]; j++)
+                            split_items[i][sub] = string_explode (ptr_content,
+                                                                  "\n", 0, 0, NULL);
+                            for (j = 0; split_items[i][sub][j]; j++)
                             {
                                 total_items++;
                                 
-                                length = strlen (splitted_items[i][sub][j]);
+                                length = strlen (split_items[i][sub][j]);
                                 if (length > max_length)
                                     max_length = length;
                                 
-                                length = gui_chat_strlen_screen (splitted_items[i][sub][j]);
+                                length = gui_chat_strlen_screen (split_items[i][sub][j]);
                                 if (length > max_length_screen)
                                     max_length_screen = length;
                             }
                         }
                         else
-                            splitted_items[i] = NULL;
+                            split_items[i] = NULL;
                     }
                 }
                 else
-                    splitted_items[i] = NULL;
+                    split_items[i] = NULL;
             }
             if ((CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
                 || (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP))
@@ -573,7 +573,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 lines = bar_window->height;
             }
             
-            /* build array with pointers to splitted items */
+            /* build array with pointers to split items */
             
             linear_items = malloc (total_items * sizeof (*linear_items));
             if (linear_items)
@@ -581,15 +581,15 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 index = 0;
                 for (i = 0; i < bar_window->items_count; i++)
                 {
-                    if (splitted_items[i])
+                    if (split_items[i])
                     {
                         for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                         {
-                            if (splitted_items[i][sub])
+                            if (split_items[i][sub])
                             {
-                                for (j = 0; splitted_items[i][sub][j]; j++)
+                                for (j = 0; split_items[i][sub][j]; j++)
                                 {
-                                    linear_items[index++] = splitted_items[i][sub][j];
+                                    linear_items[index++] = split_items[i][sub][j];
                                 }
                             }
                         }
@@ -647,17 +647,17 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             
             for (i = 0; i < bar_window->items_count; i++)
             {
-                if (splitted_items[i])
+                if (split_items[i])
                 {
                     for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                     {
-                        if (splitted_items[i][sub])
-                            string_free_exploded (splitted_items[i][sub]);
+                        if (split_items[i][sub])
+                            string_free_exploded (split_items[i][sub]);
                     }
-                    free (splitted_items[i]);
+                    free (split_items[i]);
                 }
             }
-            free (splitted_items);
+            free (split_items);
             break;
         case GUI_BAR_NUM_FILLING:
             break;

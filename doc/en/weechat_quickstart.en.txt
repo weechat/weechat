@@ -155,7 +155,7 @@ WeeChat quick start guide (english version, for WeeChat >= 0.2.7)
      WeeChat uses many keys by default. All these keys are in documentation,
      but you should know at least some vital keys:
      - alt + left/right arrows (or F5/F6): switch to previous/next buffer
-     - F7/F8: switch to previous/next window (when screen is splited)
+     - F7/F8: switch to previous/next window (when screen is split)
      - F9/F10: scroll title bar
      - F11/F12: scroll nicklist
      - tab: complete text in input bar, like in your shell

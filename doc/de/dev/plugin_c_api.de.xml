@@ -1006,7 +1006,7 @@ char **weechat_string_split_command (const char *command, char separator);
       <note>
         <para>
           Result has to be free by a call to
-          "weechat_string_free_splitted_command" after use.
+          "weechat_string_free_split_command" after use.
         </para>
       </note>
       <para>
@@ -1015,24 +1015,24 @@ char **weechat_string_split_command (const char *command, char separator);
       </para>
     </section>
     
-    <section id="secPluginCApi_weechat_string_splitted_command">
-      <title>weechat_string_free_splitted_command</title>
+    <section id="secPluginCApi_weechat_string_split_command">
+      <title>weechat_string_free_split_command</title>
       
       <para>
         Prototype:
 <programlisting>
-void weechat_string_free_splitted_command (char **splitted_command);
+void weechat_string_free_split_command (char **split_command);
 </programlisting>
       </para>
       <para>
-        Free memory used by a splitted command.
+        Free memory used by a split command.
       </para>
       <para>
         Arguments:
         <itemizedlist>
           <listitem>
             <para>
-              <option>splitted_command</option>: command splitted by
+              <option>split_command</option>: command split by
               "weechat_string_split_commaand" function
             </para>
           </listitem>
@@ -1046,7 +1046,7 @@ void weechat_string_free_splitted_command (char **splitted_command);
 <screen>
 char **argv = weechat_string_split_command ("/command1;/command2", ';');
 ...
-weechat_string_free_splitted_command (argv);
+weechat_string_free_split_command (argv);
 </screen>
       </para>
     </section>

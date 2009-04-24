@@ -368,7 +368,7 @@ plugin_load (const char *filename)
         new_plugin->string_free_exploded = &string_free_exploded;
         new_plugin->string_build_with_exploded = &string_build_with_exploded;
         new_plugin->string_split_command = &string_split_command;
-        new_plugin->string_free_splitted_command = &string_free_splitted_command;
+        new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;
         new_plugin->string_remove_color = &gui_color_decode;
         

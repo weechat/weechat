@@ -2473,7 +2473,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
                 if (vars_replaced)
                     free (vars_replaced);
             }
-	    weechat_string_free_splitted_command (commands);
+	    weechat_string_free_split_command (commands);
 	}
 	
 	if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)

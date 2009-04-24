@@ -344,7 +344,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 }
             }
             ptr_alias->running = 0;
-            weechat_string_free_splitted_command (commands);
+            weechat_string_free_split_command (commands);
         }
     }
     return WEECHAT_RC_OK;

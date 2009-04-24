@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-24 17:04+0200\n"
+"POT-Creation-Date: 2009-04-24 17:16+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1448,7 +1448,7 @@ msgstr ""
 "és verziójára"
 
 #, fuzzy
-msgid "background color for window separators (when splitted)"
+msgid "background color for window separators (when split)"
 msgstr "ablakelválasztó színe (ha meg van osztva)"
 
 #, fuzzy
