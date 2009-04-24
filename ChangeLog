@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-04-06
+ChangeLog - 2009-04-24
 
 
 Version 0.2.7 (under dev!):
@@ -29,7 +29,7 @@ Version 0.2.7 (under dev!):
      to log (task #8592), level by buffer (task #6687), filename mask by
      buffer, option "name_lower_case" (bug #19522)
    * alias: fix bug with alias, use current buffer to run commands (bug #22876)
-   * plugins: add some other plugins: alias, demo, fifo, notify, tcl, xfer
+   * plugins: add some other plugins: alias, demo, fifo, tcl, xfer
    * scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP
      protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of
      buffers), iset.pl (set options interactively), weetris.pl (tetris-like
