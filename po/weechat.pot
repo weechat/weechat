@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-21 17:40+0200\n"
+"POT-Creation-Date: 2009-04-24 16:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,14 +177,15 @@ msgid "Buffers list:"
 msgstr ""
 
 #, c-format
+msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr ""
+
+#, c-format
 msgid "%sError: incorrect buffer number"
 msgstr ""
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
-msgstr ""
-
-msgid "Notify levels:"
 msgstr ""
 
 #, c-format
@@ -745,8 +746,8 @@ msgid "manage buffers"
 msgstr ""
 
 msgid ""
-"[clear [number | -all] | move number | close | list | notify | localvar | "
-"set property value | number | name]"
+"[clear [number | -all] | move number | close | list | notify level | "
+"localvar | set property value | number | name]"
 msgstr ""
 
 msgid ""
@@ -755,7 +756,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all opened buffers\n"
+"  notify: set notify level for current buffer\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
 "  number: jump to buffer by number\n"
@@ -1099,6 +1100,9 @@ msgstr ""
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
+msgid "Notify level for buffer"
+msgstr ""
+
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
@@ -1338,6 +1342,9 @@ msgid "text color for marker on lines where text sought is found"
 msgstr ""
 
 msgid "background color for marker on lines where text sought is found"
+msgstr ""
+
+msgid "text color for values"
 msgstr ""
 
 msgid "text color for current buffer number in status bar"
@@ -1757,6 +1764,10 @@ msgid "%s-MORE(%d)-"
 msgstr ""
 
 msgid "Act: "
+msgstr ""
+
+#, c-format
+msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
 
 #, c-format
@@ -4095,36 +4106,6 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 
 msgid "list of logger buffers"
-msgstr ""
-
-#, c-format
-msgid "notify: debug: set notify for buffer %s to %d (%s)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: missing parameters"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown notify level \"%s\""
-msgstr ""
-
-msgid "change notify level for current buffer"
-msgstr ""
-
-msgid "reset | none | highlight | message | all"
-msgstr ""
-
-msgid ""
-"    reset: reset notify level to default value\n"
-"     none: buffer will never be in hotlist\n"
-"highlight: buffer will be in hotlist for highlights only\n"
-"  message: buffer will be in hotlist for highlights and user messages only\n"
-"      all: buffer will be in hotlist for any text printed"
 msgstr ""
 
 msgid "WeeChat version"

@@ -52,7 +52,7 @@ Examples:
     /bar scroll nicklist * ye
 </programlisting>
 
-<command>/buffer  [clear [number | -all] | move number | close | list | notify | localvar | set property value | number | name]</command>
+<command>/buffer  [clear [number | -all] | move number | close | list | notify level | localvar | set property value | number | name]</command>
 <programlisting>
 Puffer verwalten
 
@@ -60,7 +60,7 @@ Puffer verwalten
     move: move buffer in the list (may be relative, for example -1)
    close: close buffer
     list: list buffers (no parameter implies this list)
-  notify: display notify levels for all opened buffers
+  notify: set notify level for current buffer
 localvar: display local variables for current buffer
      set: set a property for current buffer
   number: jump to buffer by number

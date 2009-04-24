@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-21 17:40+0200\n"
-"PO-Revision-Date: 2009-04-21 17:29+0200\n"
+"POT-Creation-Date: 2009-04-24 16:15+0200\n"
+"PO-Revision-Date: 2009-04-24 16:16+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,15 +196,16 @@ msgid "Buffers list:"
 msgstr "Liste des tampons:"
 
 #, c-format
+msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notification: %s)"
+
+#, c-format
 msgid "%sError: incorrect buffer number"
 msgstr "%sErreur: numéro de tampon incorrect"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sErreur: le tampon principal de WeeChat ne peut pas être fermé"
-
-msgid "Notify levels:"
-msgstr "Niveaux de notification:"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -834,11 +835,11 @@ msgid "manage buffers"
 msgstr "gestion des tampons"
 
 msgid ""
-"[clear [number | -all] | move number | close | list | notify | localvar | "
-"set property value | number | name]"
+"[clear [number | -all] | move number | close | list | notify level | "
+"localvar | set property value | number | name]"
 msgstr ""
-"[clear [nombre | -all] | move nombre | close | list | notify | localvar | "
-"set propriété valeur | nombre | nom]"
+"[clear [nombre | -all] | move nombre | close | list | notify niveau | "
+"localvar | set propriété valeur | nombre | nom]"
 
 msgid ""
 "   clear: clear buffer content (-all for all buffers, number for a buffer, "
@@ -846,7 +847,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all opened buffers\n"
+"  notify: set notify level for current buffer\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
 "  number: jump to buffer by number\n"
@@ -867,7 +868,7 @@ msgstr ""
 "1)\n"
 "   close: ferme le tampon\n"
 "    list: liste les tampons ouverts (pas de paramètre affiche cette liste)\n"
-"  notify: affiche les niveaux de notification pour tous les tampons ouverts\n"
+"  notify: définit le niveau de notification pour le tampon courant\n"
 "localvar: affiche la liste des variables locales pour le tampon courant\n"
 "     set: modifier une propriété du tampon courant\n"
 "  nombre: saute au tampon qui a ce numéro\n"
@@ -1384,6 +1385,9 @@ msgstr "\t\tJour changé: %s"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "niveau de debug pour l'extension (\"core\" pour le coeur de WeeChat)"
 
+msgid "Notify level for buffer"
+msgstr "Niveau de notification pour le tampon"
+
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 "commande exécutée quand WeeChat démarre, après le chargement des extensions"
@@ -1661,6 +1665,9 @@ msgid "background color for marker on lines where text sought is found"
 msgstr ""
 "couleur du fond pour le marqueur sur les lignes où le texte demandé est "
 "trouvé"
+
+msgid "text color for values"
+msgstr "couleur du texte pour les valeurs"
 
 msgid "text color for current buffer number in status bar"
 msgstr ""
@@ -2141,6 +2148,10 @@ msgstr "%s-PLUS(%d)-"
 
 msgid "Act: "
 msgstr "Act: "
+
+#, c-format
+msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgstr "Notification changée pour \"%s%s.%s%s\": \"%s%s%s\" à \"%s%s%s\""
 
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
@@ -4918,43 +4929,6 @@ msgstr ""
 
 msgid "list of logger buffers"
 msgstr "liste des enregistreurs de tampons (loggers)"
-
-#, c-format
-msgid "notify: debug: set notify for buffer %s to %d (%s)"
-msgstr "notify: debug: niveau de notification pour le tampon %s mis à %d (%s)"
-
-#, c-format
-msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
-msgstr ""
-"%s%s: impossible de positionner le niveau de notification \"%s\" => \"%s\""
-
-#, c-format
-msgid "%s%s: missing parameters"
-msgstr "%s%s: paramètres manquants"
-
-#, c-format
-msgid "%s%s: unknown notify level \"%s\""
-msgstr "%s%s: niveau de notification inconnu \"%s\""
-
-msgid "change notify level for current buffer"
-msgstr "changer le niveau de notification pour le tampon courant"
-
-msgid "reset | none | highlight | message | all"
-msgstr "reset | none | highlight | message | all"
-
-msgid ""
-"    reset: reset notify level to default value\n"
-"     none: buffer will never be in hotlist\n"
-"highlight: buffer will be in hotlist for highlights only\n"
-"  message: buffer will be in hotlist for highlights and user messages only\n"
-"      all: buffer will be in hotlist for any text printed"
-msgstr ""
-"    reset: réinitialiser le niveau de notification à sa valeur par défaut\n"
-"     none: le tampon ne sera jamais dans la hotlist\n"
-"highlight: le tampon sera dans la hotlist pour les highlights seulement\n"
-"  message: le tampon sera dans la hotlist pour les highlights et les "
-"messages d'utilisateurs seulement\n"
-"      all: le tampon sera dans la hotlist pour tout texte affiché"
 
 msgid "WeeChat version"
 msgstr "version de WeeChat"

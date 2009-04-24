@@ -525,7 +525,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             "  %s[%s%d%s]%s (%s) %s%s%s (notify: %d)",
+                             _("  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
@@ -535,7 +535,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             ptr_buffer->notify);
+                             gui_buffer_notify_string[ptr_buffer->notify]);
         }
         
         return WEECHAT_RC_OK;
@@ -631,21 +631,18 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* display buffer notify */
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
-        /* display notify level for all buffers */
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Notify levels:"));
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
+        if (argc < 3)
         {
             gui_chat_printf (NULL,
-                             "  %d.%s: %d (%s)",
-                             ptr_buffer->number,
-                             ptr_buffer->name,
-                             ptr_buffer->notify,
-                             gui_buffer_notify_string[ptr_buffer->notify]);
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "buffer");
+            return WEECHAT_RC_ERROR;
         }
-        gui_chat_printf (NULL, "");
-        
+        /* set notify level for current buffer */
+        config_weechat_notify_set (gui_current_window->buffer,
+                                   argv_eol[2]);
         return WEECHAT_RC_OK;
     }
     
@@ -1358,7 +1355,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 {
                     gui_chat_printf (NULL, "  %s: %s%s",
                                      _("current value"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                      (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                      "on" : "off");
                 }
@@ -1414,7 +1411,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                             gui_chat_printf (NULL,
                                              "  %s: \"%s%s%s\"",
                                              _("current value"),
-                                             GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                             GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                              ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
                                              GUI_COLOR(GUI_COLOR_CHAT));
                         }
@@ -1451,7 +1448,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                     {
                         gui_chat_printf (NULL, "  %s: %s%d",
                                          _("current value"),
-                                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                          CONFIG_INTEGER(ptr_option));
                     }
                     else
@@ -1502,7 +1499,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 {
                     gui_chat_printf (NULL, "  %s: \"%s%s%s\"",
                                      _("current value"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                      CONFIG_STRING(ptr_option),
                                      GUI_COLOR(GUI_COLOR_CHAT));
                 }
@@ -1534,7 +1531,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 {
                     gui_chat_printf (NULL, "  %s: %s%s",
                                      _("current value"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                      gui_color_get_name (CONFIG_COLOR(ptr_option)));
                 }
                 else
@@ -2774,7 +2771,7 @@ command_set_display_option (struct t_config_option *option,
                                  option->section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                  (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
                                   "on" : "off");
                 break;
@@ -2787,7 +2784,7 @@ command_set_display_option (struct t_config_option *option,
                                      option->section->name,
                                      option->name,
                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                      option->string_values[CONFIG_INTEGER(option)]);
                 }
                 else
@@ -2798,7 +2795,7 @@ command_set_display_option (struct t_config_option *option,
                                      option->section->name,
                                      option->name,
                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                      CONFIG_INTEGER(option));
                 }
                 break;
@@ -2809,7 +2806,7 @@ command_set_display_option (struct t_config_option *option,
                                  option->section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                  CONFIG_STRING(option),
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                 break;
@@ -2821,7 +2818,7 @@ command_set_display_option (struct t_config_option *option,
                                  option->section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                                  (color_name) ? color_name : _("(unknown)"));
                 break;
             case CONFIG_NUM_OPTION_TYPES:
@@ -3295,7 +3292,7 @@ command_version_display (struct t_gui_buffer *buffer,
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_VERSION,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                          _("compiled on"),
                          __DATE__,
                          __TIME__,
@@ -3677,14 +3674,14 @@ command_init ()
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
                   N_("[clear [number | -all] | move number | close | list | "
-                     "notify | localvar | set property value | number | name]"),
+                     "notify level | localvar | set property value | number | name]"),
                   N_("   clear: clear buffer content (-all for all buffers, "
                      "number for a buffer, or nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
                      "   close: close buffer\n"
                      "    list: list buffers (no parameter implies this list)\n"
-                     "  notify: display notify levels for all opened buffers\n"
+                     "  notify: set notify level for current buffer\n"
                      "localvar: display local variables for current buffer\n"
                      "     set: set a property for current buffer\n"
                      "  number: jump to buffer by number\n"
@@ -3701,7 +3698,7 @@ command_init ()
                   " || move %(buffers_numbers)"
                   " || close"
                   " || list"
-                  " || notify"
+                  " || notify reset|none|highlight|message|all"
                   " || localvar"
                   " || set"
                   " || %(buffers_names)"

@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_CONFIG_H
 #define __WEECHAT_CONFIG_H 1
 
+struct t_gui_buffer;
+
 #include "wee-config-file.h"
 
 #define WEECHAT_CONFIG_NAME "weechat"
@@ -68,6 +70,7 @@ enum t_config_look_save_layout_on_exit
 extern struct t_config_file *weechat_config_file;
 extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
+extern struct t_config_section *weechat_config_section_notify;
 
 extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
@@ -127,6 +130,7 @@ extern struct t_config_option *config_color_chat_read_marker;
 extern struct t_config_option *config_color_chat_read_marker_bg;
 extern struct t_config_option *config_color_chat_text_found;
 extern struct t_config_option *config_color_chat_text_found_bg;
+extern struct t_config_option *config_color_chat_value;
 extern struct t_config_option *config_color_status_number;
 extern struct t_config_option *config_color_status_name;
 extern struct t_config_option *config_color_status_data_msg;
@@ -175,6 +179,8 @@ extern struct t_config_option *config_weechat_debug_get (const char *plugin_name
 extern int config_weechat_debug_set (const char *plugin_name,
                                      const char *value);
 extern void config_weechat_debug_set_all ();
+extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
+                                      const char *notify);
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();

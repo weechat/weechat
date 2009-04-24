@@ -102,7 +102,6 @@ AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
 AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_JABBER], [#undef PLUGIN_JABBER])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
-AH_VERBATIM([PLUGIN_NOTIFY], [#undef PLUGIN_NOTIFY])
 AH_VERBATIM([PLUGIN_RELAY], [#undef PLUGIN_RELAY])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
@@ -129,7 +128,6 @@ AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (def
 AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
 AC_ARG_ENABLE(jabber,       [  --disable-jabber        turn off Jabber plugin (default=compiled)],enable_jabber=$enableval,enable_jabber=yes)
 AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
-AC_ARG_ENABLE(notify,       [  --disable-notify        turn off Notify plugin (default=compiled)],enable_notify=$enableval,enable_notify=yes)
 AC_ARG_ENABLE(relay,        [  --disable-relay         turn off Relay plugin (default=compiled)],enable_relay=$enableval,enable_relay=yes)
 AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
 AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
@@ -407,18 +405,6 @@ if test "x$enable_logger" = "xyes" ; then
     AC_DEFINE(PLUGIN_LOGGER)
 else
     not_asked="$not_asked logger"
-fi
-
-# --------------------------------- notify -------------------------------------
-
-if test "x$enable_notify" = "xyes" ; then
-    NOTIFY_CFLAGS=""
-    NOTIFY_LFLAGS=""
-    AC_SUBST(NOTIFY_CFLAGS)
-    AC_SUBST(NOTIFY_LFLAGS)
-    AC_DEFINE(PLUGIN_NOTIFY)
-else
-    not_asked="$not_asked notify"
 fi
 
 # --------------------------------- relay --------------------------------------
@@ -997,7 +983,6 @@ AM_CONDITIONAL(PLUGIN_FIFO,    test "$enable_fifo" = "yes")
 AM_CONDITIONAL(PLUGIN_IRC,     test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_JABBER,  test "$enable_jabber" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,  test "$enable_logger" = "yes")
-AM_CONDITIONAL(PLUGIN_NOTIFY,  test "$enable_notify" = "yes")
 AM_CONDITIONAL(PLUGIN_RELAY,   test "$enable_relay" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,    test "$enable_perl" = "yes")
 AM_CONDITIONAL(PLUGIN_PYTHON,  test "$enable_python" = "yes")
@@ -1029,7 +1014,6 @@ AC_OUTPUT([Makefile
            src/plugins/irc/Makefile
            src/plugins/jabber/Makefile
            src/plugins/logger/Makefile
-           src/plugins/notify/Makefile
            src/plugins/relay/Makefile
            src/plugins/scripts/Makefile
            src/plugins/scripts/perl/Makefile
@@ -1095,9 +1079,6 @@ if test "x$enable_jabber" = "xyes" ; then
 fi
 if test "x$enable_logger" = "xyes"; then
     listplugins="$listplugins logger"
-fi
-if test "x$enable_notify" = "xyes"; then
-    listplugins="$listplugins notify"
 fi
 if test "x$enable_relay" = "xyes"; then
     listplugins="$listplugins relay"

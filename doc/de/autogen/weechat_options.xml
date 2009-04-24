@@ -366,6 +366,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.color.chat_value</command>: text color for values
+<itemizedlist>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name (default value: cyan)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.color.input_actions</command>: text color for actions in input line
 <itemizedlist>
   <listitem>

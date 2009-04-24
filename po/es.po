@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-21 17:40+0200\n"
+"POT-Creation-Date: 2009-04-24 16:15+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -202,15 +202,16 @@ msgid "Buffers list:"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "%s%s %s(%s%s%s)%s ha salido"
+
+#, fuzzy, c-format
 msgid "%sError: incorrect buffer number"
 msgstr "%s nÃºmero de bÃºfer incorrecto\n"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr ""
-
-msgid "Notify levels:"
-msgstr "Niveles de notificaciÃ³n:"
 
 #, fuzzy, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -831,8 +832,8 @@ msgid "manage buffers"
 msgstr "gestionar los bÃºfers"
 
 msgid ""
-"[clear [number | -all] | move number | close | list | notify | localvar | "
-"set property value | number | name]"
+"[clear [number | -all] | move number | close | list | notify level | "
+"localvar | set property value | number | name]"
 msgstr ""
 
 #, fuzzy
@@ -842,7 +843,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all opened buffers\n"
+"  notify: set notify level for current buffer\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
 "  number: jump to buffer by number\n"
@@ -1254,6 +1255,10 @@ msgstr "DÃ­a cambiado a %s\n"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
+#, fuzzy
+msgid "Notify level for buffer"
+msgstr "nombre de canal no encontrado para el bÃºfer"
+
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
@@ -1560,6 +1565,10 @@ msgstr "color para el nombre del servidor"
 #, fuzzy
 msgid "background color for marker on lines where text sought is found"
 msgstr "color para el texto de entrada"
+
+#, fuzzy
+msgid "text color for values"
+msgstr "color para el texto de conversaciÃ³n"
 
 #, fuzzy
 msgid "text color for current buffer number in status bar"
@@ -2031,6 +2040,10 @@ msgstr "-MÃS-"
 
 msgid "Act: "
 msgstr "Act: "
+
+#, fuzzy, c-format
+msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgstr "%s%s%s ha cambiado el tema para %s%s%s a:"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
@@ -4718,38 +4731,6 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "fecha y hora para las bÃºfers"
 
-#, c-format
-msgid "notify: debug: set notify for buffer %s to %d (%s)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
-msgstr ""
-"No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing parameters"
-msgstr "%s falta un argumento para la opciÃ³n --dir\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown notify level \"%s\""
-msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
-
-#, fuzzy
-msgid "change notify level for current buffer"
-msgstr "nombre de canal no encontrado para el bÃºfer"
-
-msgid "reset | none | highlight | message | all"
-msgstr ""
-
-msgid ""
-"    reset: reset notify level to default value\n"
-"     none: buffer will never be in hotlist\n"
-"highlight: buffer will be in hotlist for highlights only\n"
-"  message: buffer will be in hotlist for highlights and user messages only\n"
-"      all: buffer will be in hotlist for any text printed"
-msgstr ""
-
 #, fuzzy
 msgid "WeeChat version"
 msgstr "eslÃ³gan de WeeChat"
@@ -5662,6 +5643,26 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
+#~ msgstr ""
+#~ "No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
+
+#, fuzzy
+#~ msgid "%s%s: missing parameters"
+#~ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown notify level \"%s\""
+#~ msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "change notify level for current buffer"
+#~ msgstr "nombre de canal no encontrado para el bÃºfer"
+
+#~ msgid "Notify levels:"
+#~ msgstr "Niveles de notificaciÃ³n:"
+
+#, fuzzy
 #~ msgid "list of aliases"
 #~ msgstr "Lista de alias:\n"
 
@@ -5971,10 +5972,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #, fuzzy
 #~ msgid "New level for buffer \"%s\" is %d"
 #~ msgstr "fecha y hora para las bÃºfers"
-
-#, fuzzy
-#~ msgid "  %s[%s%d%s]%s (%s) %s%s%s: %s%s%s%s"
-#~ msgstr "%s%s %s(%s%s%s)%s ha salido"
 
 #, fuzzy
 #~ msgid "Notify level: %s => %s"

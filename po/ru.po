@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-21 17:40+0200\n"
+"POT-Creation-Date: 2009-04-24 16:15+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -203,15 +203,16 @@ msgid "Buffers list:"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "%s%s %s(%s%s%s)%s вышел"
+
+#, fuzzy, c-format
 msgid "%sError: incorrect buffer number"
 msgstr "%s неправильный номер буфера\n"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr ""
-
-msgid "Notify levels:"
-msgstr "Уровни уведомления:"
 
 #, fuzzy, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -829,8 +830,8 @@ msgid "manage buffers"
 msgstr "управление буферами"
 
 msgid ""
-"[clear [number | -all] | move number | close | list | notify | localvar | "
-"set property value | number | name]"
+"[clear [number | -all] | move number | close | list | notify level | "
+"localvar | set property value | number | name]"
 msgstr ""
 
 #, fuzzy
@@ -840,7 +841,7 @@ msgid ""
 "    move: move buffer in the list (may be relative, for example -1)\n"
 "   close: close buffer\n"
 "    list: list buffers (no parameter implies this list)\n"
-"  notify: display notify levels for all opened buffers\n"
+"  notify: set notify level for current buffer\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
 "  number: jump to buffer by number\n"
@@ -1287,6 +1288,10 @@ msgstr "Дата сменилась на %s\n"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
+#, fuzzy
+msgid "Notify level for buffer"
+msgstr "не найдено имя канала для буфера"
+
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
@@ -1592,6 +1597,10 @@ msgstr "цвет названия сервера"
 #, fuzzy
 msgid "background color for marker on lines where text sought is found"
 msgstr "цвет вводимого текста"
+
+#, fuzzy
+msgid "text color for values"
+msgstr "цвет чата"
 
 #, fuzzy
 msgid "text color for current buffer number in status bar"
@@ -2067,6 +2076,10 @@ msgstr "-ДАЛЬШЕ-"
 
 msgid "Act: "
 msgstr "Активны: "
+
+#, fuzzy, c-format
+msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgstr "%s%s%s сменил тему %s%s%s на:"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
@@ -4764,37 +4777,6 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "время в буферах"
 
-#, c-format
-msgid "notify: debug: set notify for buffer %s to %d (%s)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing parameters"
-msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown notify level \"%s\""
-msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy
-msgid "change notify level for current buffer"
-msgstr "не найдено имя канала для буфера"
-
-msgid "reset | none | highlight | message | all"
-msgstr ""
-
-msgid ""
-"    reset: reset notify level to default value\n"
-"     none: buffer will never be in hotlist\n"
-"highlight: buffer will be in hotlist for highlights only\n"
-"  message: buffer will be in hotlist for highlights and user messages only\n"
-"      all: buffer will be in hotlist for any text printed"
-msgstr ""
-
 #, fuzzy
 msgid "WeeChat version"
 msgstr "слоган WeeChat"
@@ -5692,6 +5674,25 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy
+#~ msgid "%s%s: missing parameters"
+#~ msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown notify level \"%s\""
+#~ msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy
+#~ msgid "change notify level for current buffer"
+#~ msgstr "не найдено имя канала для буфера"
+
+#~ msgid "Notify levels:"
+#~ msgstr "Уровни уведомления:"
+
+#, fuzzy
 #~ msgid "list of aliases"
 #~ msgstr "Список сокращений:\n"
 
@@ -6006,10 +6007,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy
 #~ msgid "New level for buffer \"%s\" is %d"
 #~ msgstr "время в буферах"
-
-#, fuzzy
-#~ msgid "  %s[%s%d%s]%s (%s) %s%s%s: %s%s%s%s"
-#~ msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy
 #~ msgid "Notify level: %s => %s"

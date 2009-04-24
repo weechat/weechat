@@ -48,6 +48,7 @@
 #define JABBER_COLOR_CHAT_NICK_SELF weechat_color("chat_nick_self")
 #define JABBER_COLOR_CHAT_NICK_OTHER weechat_color("chat_nick_other")
 #define JABBER_COLOR_CHAT_SERVER weechat_color("chat_server")
+#define JABBER_COLOR_CHAT_VALUE weechat_color("chat_value")
 #define JABBER_COLOR_NICKLIST_PREFIX1 weechat_color("nicklist_prefix1")
 #define JABBER_COLOR_NICKLIST_PREFIX2 weechat_color("nicklist_prefix2")
 #define JABBER_COLOR_NICKLIST_PREFIX3 weechat_color("nicklist_prefix3")

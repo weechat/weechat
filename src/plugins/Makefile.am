@@ -58,10 +58,6 @@ if PLUGIN_LOGGER
 logger_dir = logger
 endif
 
-if PLUGIN_NOTIFY
-notify_dir = notify
-endif
-
 if PLUGIN_RELAY
 relay_dir = relay
 endif
@@ -95,7 +91,7 @@ xfer_dir = xfer
 endif
 
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
-            $(irc_dir) $(jabber_dir) $(logger_dir) $(notify_dir) $(relay_dir) \
-            $(script_dir) $(trigger_dir) $(xfer_dir)
+            $(irc_dir) $(jabber_dir) $(logger_dir) $(relay_dir) $(script_dir) \
+            $(trigger_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt

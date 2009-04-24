@@ -8,7 +8,6 @@
 <!ENTITY jabber_commands.xml SYSTEM "autogen/jabber_commands.xml">
 <!ENTITY logger_commands.xml SYSTEM "autogen/logger_commands.xml">
 <!ENTITY lua_commands.xml SYSTEM "autogen/lua_commands.xml">
-<!ENTITY notify_commands.xml SYSTEM "autogen/notify_commands.xml">
 <!ENTITY perl_commands.xml SYSTEM "autogen/perl_commands.xml">
 <!ENTITY python_commands.xml SYSTEM "autogen/python_commands.xml">
 <!ENTITY relay_commands.xml SYSTEM "autogen/relay_commands.xml">

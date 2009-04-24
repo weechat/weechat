@@ -209,6 +209,106 @@ gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_notify_get: read a notify level in config file
+ *                        we first try with all arguments, then remove one by one
+ *                        to find notify level (from specific to general notify)
+ */
+
+int
+gui_buffer_notify_get (struct t_gui_buffer *buffer)
+{
+    const char *plugin_name;
+    char *option_name, *ptr_end;
+    int length;
+    struct t_config_option *ptr_option;
+    
+    plugin_name = plugin_get_name (buffer->plugin);
+    length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
+    option_name = malloc (length);
+    if (option_name)
+    {
+        snprintf (option_name, length, "%s.%s", plugin_name, buffer->name);
+        
+        ptr_end = option_name + strlen (option_name);
+        while (ptr_end >= option_name)
+        {
+            ptr_option = config_file_search_option (weechat_config_file,
+                                                    weechat_config_section_notify,
+                                                    option_name);
+            if (ptr_option)
+            {
+                free (option_name);
+                return CONFIG_INTEGER(ptr_option);
+            }
+            ptr_end--;
+            while ((ptr_end >= option_name) && (ptr_end[0] != '.'))
+            {
+                ptr_end--;
+            }
+            if ((ptr_end >= option_name) && (ptr_end[0] == '.'))
+                ptr_end[0] = '\0';
+        }
+        ptr_option = config_file_search_option (weechat_config_file,
+                                                weechat_config_section_notify,
+                                                option_name);
+        
+        free (option_name);
+        
+        if (ptr_option)
+            return CONFIG_INTEGER(ptr_option);
+    }
+    
+    /* notify level not found */
+    return CONFIG_INTEGER(config_look_buffer_notify_default);
+}
+
+/*
+ * gui_buffer_notify_set: set notify value on a buffer
+ */
+
+void
+gui_buffer_notify_set (struct t_gui_buffer *buffer)
+{
+    int old_notify, new_notify;
+    
+    old_notify = buffer->notify;
+    new_notify = gui_buffer_notify_get (buffer);
+    
+    if (new_notify != old_notify)
+    {
+        buffer->notify = new_notify;
+        gui_chat_printf (NULL,
+                         _("Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""),
+                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                         plugin_get_name (buffer->plugin),
+                         buffer->name,
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                         gui_buffer_notify_string[old_notify],
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                         gui_buffer_notify_string[buffer->notify],
+                         GUI_COLOR(GUI_COLOR_CHAT));
+    }
+}
+
+/*
+ * gui_buffer_notify_set_all: set notify values on all opened buffers
+ */
+
+void
+gui_buffer_notify_set_all ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_buffer_notify_set (ptr_buffer);
+    }
+}
+
+/*
  * gui_buffer_insert: insert buffer in good position in list of buffers
  */
 
@@ -377,6 +477,9 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* add buffer to buffers list */
         first_buffer_creation = (gui_buffers == NULL);
         gui_buffer_insert (new_buffer);
+        
+        /* set notify level */
+        new_buffer->notify = gui_buffer_notify_get (new_buffer);
         
         /* check if this buffer should be assigned to a window,
            according to windows layout saved */

@@ -60,21 +60,21 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_USERNAME));
         else
             weechat_printf (NULL, "  username . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_USERNAME]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_SERVER]))
             weechat_printf (NULL, "  server . . . . . . . :   ('%s')",
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_SERVER));
         else
             weechat_printf (NULL, "  server . . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_SERVER]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_PROXY]))
             weechat_printf (NULL, "  proxy. . . . . . . . :   ('%s')",
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_PROXY));
         else
             weechat_printf (NULL, "  proxy. . . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_PROXY]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_IPV6]))
             weechat_printf (NULL, "  ipv6 . . . . . . . . :   (%s)",
@@ -82,7 +82,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  ipv6 . . . . . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_IPV6]) ?
                             _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_TLS]))
@@ -91,7 +91,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  tls. . . . . . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_TLS]) ?
                             _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_SASL]))
@@ -100,7 +100,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  sasl . . . . . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_SASL]) ?
                             _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_RESOURCE]))
@@ -108,21 +108,21 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_RESOURCE));
         else
             weechat_printf (NULL, "  resource . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_RESOURCE]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_PASSWORD]))
             weechat_printf (NULL, "  password . . . . . . :   %s",
                             _("(hidden)"));
         else
             weechat_printf (NULL, "  password . . . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             _("(hidden)"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_LOCAL_ALIAS]))
             weechat_printf (NULL, "  local_alias. . . . . :   ('%s')",
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_LOCAL_ALIAS));
         else
             weechat_printf (NULL, "  local_alias. . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_LOCAL_ALIAS]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_AUTOCONNECT]))
             weechat_printf (NULL, "  autoconnect. . . . . :   (%s)",
@@ -130,7 +130,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  autoconnect. . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_AUTOCONNECT]) ?
                             _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_AUTORECONNECT]))
@@ -139,7 +139,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  autoreconnect. . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_AUTORECONNECT]) ?
                             _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_AUTORECONNECT_DELAY]))
@@ -148,7 +148,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             NG_("second", "seconds", JABBER_SERVER_OPTION_INTEGER(server, JABBER_SERVER_OPTION_AUTORECONNECT_DELAY)));
         else
             weechat_printf (NULL, "  autoreconnect_delay. : %s%d %s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[JABBER_SERVER_OPTION_AUTORECONNECT_DELAY]),
                             NG_("second", "seconds", weechat_config_integer (server->options[JABBER_SERVER_OPTION_AUTORECONNECT_DELAY])));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_LOCAL_HOSTNAME]))
@@ -156,14 +156,14 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_LOCAL_HOSTNAME));
         else
             weechat_printf (NULL, "  local_hostname . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_LOCAL_HOSTNAME]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_COMMAND]))
             weechat_printf (NULL, "  command. . . . . . . :   ('%s')",
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_COMMAND));
         else
             weechat_printf (NULL, "  command. . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_COMMAND]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_COMMAND_DELAY]))
             weechat_printf (NULL, "  command_delay. . . . :   (%d %s)",
@@ -171,7 +171,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             NG_("second", "seconds", JABBER_SERVER_OPTION_INTEGER(server, JABBER_SERVER_OPTION_COMMAND_DELAY)));
         else
             weechat_printf (NULL, "  command_delay. . . . : %s%d %s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[JABBER_SERVER_OPTION_COMMAND_DELAY]),
                             NG_("second", "seconds", weechat_config_integer (server->options[JABBER_SERVER_OPTION_COMMAND_DELAY])));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_AUTOJOIN]))
@@ -179,7 +179,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             JABBER_SERVER_OPTION_STRING(server, JABBER_SERVER_OPTION_AUTOJOIN));
         else
             weechat_printf (NULL, "  autojoin . . . . . . : %s'%s'",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[JABBER_SERVER_OPTION_AUTOJOIN]));
         if (weechat_config_option_is_null (server->options[JABBER_SERVER_OPTION_AUTOREJOIN]))
             weechat_printf (NULL, "  autorejoin . . . . . :   (%s)",
@@ -187,7 +187,7 @@ jabber_display_server (struct t_jabber_server *server, int with_detail)
                             _("on") : _("off"));
         else
             weechat_printf (NULL, "  autorejoin . . . . . : %s%s",
-                            JABBER_COLOR_CHAT_HOST,
+                            JABBER_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[JABBER_SERVER_OPTION_AUTOREJOIN]) ?
                             _("on") : _("off"));
     }

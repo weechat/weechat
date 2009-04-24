@@ -58,6 +58,7 @@ struct t_config_file *weechat_config_file = NULL;
 struct t_config_section *weechat_config_section_debug = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
+struct t_config_section *weechat_config_section_notify = NULL;
 
 /* config, startup section */
 
@@ -123,6 +124,7 @@ struct t_config_option *config_color_chat_read_marker;
 struct t_config_option *config_color_chat_read_marker_bg;
 struct t_config_option *config_color_chat_text_found;
 struct t_config_option *config_color_chat_text_found_bg;
+struct t_config_option *config_color_chat_value;
 struct t_config_option *config_color_status_number;
 struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_data_msg;
@@ -424,6 +426,9 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
     gui_layout_buffer_reset (&gui_layout_buffers, &last_gui_layout_buffer);
     gui_layout_window_reset (&gui_layout_windows);
     
+    /* remove all notify levels */
+    config_file_section_free_options (weechat_config_section_notify);
+    
     /* remove all filters */
     gui_filter_free_all ();
     
@@ -431,6 +436,7 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
     
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
+        gui_buffer_notify_set_all ();
         proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
@@ -856,6 +862,151 @@ config_weechat_layout_write_cb (void *data, struct t_config_file *config_file,
     
     if (gui_layout_windows)
         config_weechat_layout_write_tree (config_file, gui_layout_windows);
+}
+
+/*
+ * config_weechat_notify_change_cb: callback when notify option is changed
+ */
+
+void
+config_weechat_notify_change_cb (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    gui_buffer_notify_set_all ();
+}
+
+/* 
+ * config_weechat_notify_create_option_cb: callback to create option in "notify"
+ *                                         section
+ */
+
+int
+config_weechat_notify_create_option_cb (void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name,
+                                        const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    if (option_name)
+    {
+        ptr_option = config_file_search_option (config_file, section,
+                                                option_name);
+        if (ptr_option)
+        {
+            if (value && value[0])
+                rc = config_file_option_set (ptr_option, value, 1);
+            else
+            {
+                config_file_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value && value[0])
+            {
+                ptr_option = config_file_new_option (
+                    config_file, section,
+                    option_name, "integer", _("Notify level for buffer"),
+                    "none|highlight|message|all",
+                    0, 0, "", value, 0, NULL, NULL,
+                    &config_weechat_notify_change_cb, NULL,
+                    NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+    
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        gui_buffer_notify_set_all ();
+    
+    return rc;
+}
+
+/*
+ * config_weechat_notify_delete_option_cb: called when a notify option is
+ *                                         deleted
+ */
+
+int
+config_weechat_notify_delete_option_cb (void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    config_file_option_free (option);
+    
+    gui_buffer_notify_set_all ();
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+/*
+ * config_weechat_notify_set: set a notify level for a buffer
+ *                            negative value will reset notify for buffer to
+ *                            default value (and remove buffer from config file)
+ *                            return 1 if ok, 0 if error
+ */
+
+int
+config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
+{
+    const char *plugin_name;
+    char *option_name;
+    int i, value, length;
+    
+    if (!buffer || !notify)
+        return 0;
+    
+    value = -1;
+    for (i = 0; i < GUI_BUFFER_NUM_NOTIFY; i++)
+    {
+        if (strcmp (gui_buffer_notify_string[i], notify) == 0)
+        {
+            value = i;
+            break;
+        }
+    }
+    if ((value < 0) && (strcmp (notify, "reset") != 0))
+        return 0;
+    
+    plugin_name = plugin_get_name (buffer->plugin);
+    length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
+    option_name = malloc (length);
+    if (option_name)
+    {
+        snprintf (option_name, length, "%s.%s", plugin_name, buffer->name);
+        
+        /* create/update option */
+        config_weechat_notify_create_option_cb (NULL,
+                                                weechat_config_file,
+                                                weechat_config_section_notify,
+                                                option_name,
+                                                (value < 0) ?
+                                                NULL : gui_buffer_notify_string[value]);
+        return 1;
+    }
+    
+    return 0;
 }
 
 /*
@@ -1479,6 +1630,12 @@ config_weechat_init_options ()
         N_("background color for marker on lines where text sought is found"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_value = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_value", "color",
+        N_("text color for values"),
+        NULL, GUI_COLOR_CHAT_VALUE, 0, "cyan", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* status window */
     config_color_status_number = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1802,6 +1959,22 @@ config_weechat_init_options ()
         config_file_free (weechat_config_file);
         return 0;
     }
+    
+    /* notify */
+    ptr_section = config_file_new_section (weechat_config_file, "notify",
+                                           1, 1,
+                                           NULL, NULL,
+                                           NULL, NULL,
+                                           NULL, NULL,
+                                           &config_weechat_notify_create_option_cb, NULL,
+                                           &config_weechat_notify_delete_option_cb, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    weechat_config_section_notify = ptr_section;
     
     /* filters */
     ptr_section = config_file_new_section (weechat_config_file, "filter",

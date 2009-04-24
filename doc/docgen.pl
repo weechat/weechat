@@ -66,11 +66,10 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "aspell"  => "o",  "charset" => "co",
                    "demo"    => "co", "fifo"    => "co",
                    "irc"     => "co", "jabber"  => "co",
-                   "logger"  => "co", "notify"  => "co",
-                   "relay"   => "co", "perl"    => "",
-                   "python"  => "",   "ruby"    => "",
-                   "lua"     => "",   "tcl"     => "",
-                   "xfer"    => "co");
+                   "logger"  => "co", "relay"   => "co",
+                   "perl"    => "",   "python"  => "",
+                   "ruby"    => "",   "lua"     => "",
+                   "tcl"     => "",   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",
@@ -82,7 +81,8 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "logger\\.mask\\..*",
                       "weechat\\.proxy\\..*",
                       "weechat\\.bar\\..*",
-                      "weechat\\.debug\\..*");
+                      "weechat\\.debug\\..*",
+                      "weechat\\.notify\\..*");
 
 # infos to ignore
 my @ignore_infos_plugins = ("jabber");

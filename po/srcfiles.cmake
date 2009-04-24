@@ -176,7 +176,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/logger/logger-info.h
 ./src/plugins/logger/logger-tail.c
 ./src/plugins/logger/logger-tail.h
-./src/plugins/notify/notify.c
 ./src/plugins/plugin-api.c
 ./src/plugins/plugin-api.h
 ./src/plugins/plugin.c

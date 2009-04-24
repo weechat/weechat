@@ -52,7 +52,7 @@ Exemples :
     /bar scroll nicklist * ye
 </programlisting>
 
-<command>/buffer  [clear [nombre | -all] | move nombre | close | list | notify | localvar | set propriété valeur | nombre | nom]</command>
+<command>/buffer  [clear [nombre | -all] | move nombre | close | list | notify niveau | localvar | set propriété valeur | nombre | nom]</command>
 <programlisting>
 gestion des tampons
 
@@ -60,7 +60,7 @@ gestion des tampons
     move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
    close: ferme le tampon
     list: liste les tampons ouverts (pas de paramètre affiche cette liste)
-  notify: affiche les niveaux de notification pour tous les tampons ouverts
+  notify: définit le niveau de notification pour le tampon courant
 localvar: affiche la liste des variables locales pour le tampon courant
      set: modifier une propriété du tampon courant
   nombre: saute au tampon qui a ce numéro
