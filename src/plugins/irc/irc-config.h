@@ -22,14 +22,19 @@
 
 #define IRC_CONFIG_NAME "irc"
 
-#define IRC_CONFIG_NICK_COMPLETION_SMART_OFF                 0
-#define IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS            1
-#define IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS 2
+enum t_irc_config_nick_completion
+{
+    IRC_CONFIG_NICK_COMPLETION_SMART_OFF = 0,
+    IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS,
+    IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS,
+};
 
-#define IRC_CONFIG_DISPLAY_AWAY_OFF     0
-#define IRC_CONFIG_DISPLAY_AWAY_LOCAL   1
-#define IRC_CONFIG_DISPLAY_AWAY_CHANNEL 2
-
+enum t_irc_config_display_away
+{
+    IRC_CONFIG_DISPLAY_AWAY_OFF = 0,
+    IRC_CONFIG_DISPLAY_AWAY_LOCAL,
+    IRC_CONFIG_DISPLAY_AWAY_CHANNEL,
+};
 
 extern struct t_config_file *irc_config_file;
 extern struct t_config_section *irc_config_section_server_default;

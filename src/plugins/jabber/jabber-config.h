@@ -22,10 +22,12 @@
 
 #define JABBER_CONFIG_NAME "jabber"
 
-#define JABBER_CONFIG_DISPLAY_AWAY_OFF   0
-#define JABBER_CONFIG_DISPLAY_AWAY_LOCAL 1
-#define JABBER_CONFIG_DISPLAY_AWAY_MUC   2
-
+enum t_jabber_config_display_away
+{
+    JABBER_CONFIG_DISPLAY_AWAY_OFF = 0,
+    JABBER_CONFIG_DISPLAY_AWAY_LOCAL,
+    JABBER_CONFIG_DISPLAY_AWAY_MUC,
+};
 
 extern struct t_config_file *jabber_config_file;
 extern struct t_config_section *jabber_config_section_server_default;
