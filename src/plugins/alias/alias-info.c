@@ -63,14 +63,18 @@ alias_info_get_infolist_cb (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all aliases */
+                /* build list with all aliases matching arguments */
                 for (ptr_alias = alias_list; ptr_alias;
                      ptr_alias = ptr_alias->next_alias)
                 {
-                    if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
+                    if (!arguments || !arguments[0]
+                        || weechat_string_match (ptr_alias->name, arguments, 0))
                     {
-                        weechat_infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
+                        {
+                            weechat_infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;

@@ -672,7 +672,6 @@ weechat_ruby_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
     
     if (!infolist_name || !infolist_name[0])
         return NULL;
@@ -680,7 +679,8 @@ weechat_ruby_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "ruby_script") == 0)
     {
         return script_infolist_list_scripts (weechat_ruby_plugin,
-                                             ruby_scripts, pointer);
+                                             ruby_scripts, pointer,
+                                             arguments);
     }
     
     return NULL;

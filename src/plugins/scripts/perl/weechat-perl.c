@@ -619,7 +619,6 @@ weechat_perl_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
     
     if (!infolist_name || !infolist_name[0])
         return NULL;
@@ -627,7 +626,8 @@ weechat_perl_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "perl_script") == 0)
     {
         return script_infolist_list_scripts (weechat_perl_plugin,
-                                             perl_scripts, pointer);
+                                             perl_scripts, pointer,
+                                             arguments);
     }
     
     return NULL;

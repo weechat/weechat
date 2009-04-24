@@ -210,14 +210,18 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all servers */
+                /* build list with all servers matching arguments */
                 for (ptr_server = irc_servers; ptr_server;
                      ptr_server = ptr_server->next_server)
                 {
-                    if (!irc_server_add_to_infolist (ptr_infolist, ptr_server))
+                    if (!arguments || !arguments[0]
+                        || weechat_string_match (ptr_server->name, arguments, 0))
                     {
-                        weechat_infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!irc_server_add_to_infolist (ptr_infolist, ptr_server))
+                        {
+                            weechat_infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;

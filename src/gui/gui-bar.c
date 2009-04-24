@@ -2303,7 +2303,9 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
+    if (!infolist_new_var_string (ptr_item, "name", bar->name))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "hidden", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_HIDDEN])))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "priority", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY])))

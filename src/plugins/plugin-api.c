@@ -317,6 +317,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_window *ptr_window;
     struct t_gui_hotlist *ptr_hotlist;
     struct t_weechat_plugin *ptr_plugin;
+    char buffer_full_name[1024];
     
     /* make C compiler happy */
     (void) data;
@@ -345,13 +346,17 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all bars */
+                /* build list with all bars matching arguments */
                 for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
                 {
-                    if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
+                    if (!arguments || !arguments[0]
+                        || string_match (ptr_bar->name, arguments, 0))
                     {
-                        infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;
@@ -379,14 +384,18 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all bar items */
+                /* build list with all bar items matching arguments */
                 for (ptr_bar_item = gui_bar_items; ptr_bar_item;
                      ptr_bar_item = ptr_bar_item->next_item)
                 {
-                    if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
+                    if (!arguments || !arguments[0]
+                        || string_match (ptr_bar_item->name, arguments, 0))
                     {
-                        infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;
@@ -465,14 +474,22 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all buffers */
+                /* build list with all buffers matching arguments */
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
-                    if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
+                    snprintf (buffer_full_name, sizeof (buffer_full_name),
+                              "%s.%s",
+                              plugin_get_name (ptr_buffer->plugin),
+                              ptr_buffer->name);
+                    if (!arguments || !arguments[0]
+                        || string_match (buffer_full_name, arguments, 0))
                     {
-                        infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;
@@ -514,10 +531,14 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             for (ptr_filter = gui_filters; ptr_filter;
                  ptr_filter = ptr_filter->next_filter)
             {
-                if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
+                if (!arguments || !arguments[0]
+                    || string_match (ptr_filter->name, arguments, 0))
                 {
-                    infolist_free (ptr_infolist);
-                    return NULL;
+                    if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
                 }
             }
             return ptr_infolist;
@@ -604,14 +625,18 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with all plugins */
+                /* build list with all plugins matching arguments */
                 for (ptr_plugin = weechat_plugins; ptr_plugin;
                      ptr_plugin = ptr_plugin->next_plugin)
                 {
-                    if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
+                    if (!arguments || !arguments[0]
+                        || string_match (ptr_plugin->name, arguments, 0))
                     {
-                        infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
+                        {
+                            infolist_free (ptr_infolist);
+                            return NULL;
+                        }
                     }
                 }
                 return ptr_infolist;

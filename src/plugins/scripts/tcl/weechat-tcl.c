@@ -414,7 +414,6 @@ weechat_tcl_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
     
     if (!infolist_name || !infolist_name[0])
         return NULL;
@@ -422,7 +421,8 @@ weechat_tcl_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "tcl_script") == 0)
     {
         return script_infolist_list_scripts (weechat_tcl_plugin,
-                                             tcl_scripts, pointer);
+                                             tcl_scripts, pointer,
+                                             arguments);
     }
     
     return NULL;

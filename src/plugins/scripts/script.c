@@ -1161,7 +1161,8 @@ script_add_to_infolist (struct t_weechat_plugin *weechat_plugin,
 struct t_infolist *
 script_infolist_list_scripts (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts,
-                              void *pointer)
+                              void *pointer,
+                              const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_plugin_script *ptr_script;
@@ -1185,15 +1186,19 @@ script_infolist_list_scripts (struct t_weechat_plugin *weechat_plugin,
         }
         else
         {
-            /* build list with all scripts */
+            /* build list with all scripts matching arguments */
             for (ptr_script = scripts; ptr_script;
                  ptr_script = ptr_script->next_script)
             {
-                if (!script_add_to_infolist (weechat_plugin,
-                                             ptr_infolist, ptr_script))
+                if (!arguments || !arguments[0]
+                    || weechat_string_match (ptr_script->name, arguments, 0))
                 {
-                    weechat_infolist_free (ptr_infolist);
-                    return NULL;
+                    if (!script_add_to_infolist (weechat_plugin,
+                                                 ptr_infolist, ptr_script))
+                    {
+                        weechat_infolist_free (ptr_infolist);
+                        return NULL;
+                    }
                 }
             }
             return ptr_infolist;

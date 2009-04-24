@@ -505,6 +505,8 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     
     if (!infolist_new_var_integer (ptr_item, "enabled", filter->enabled))
         return 0;
+    if (!infolist_new_var_string (ptr_item, "name", filter->name))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "plugin_name", filter->plugin_name))
         return 0;
     if (!infolist_new_var_string (ptr_item, "buffer_name", filter->buffer_name))

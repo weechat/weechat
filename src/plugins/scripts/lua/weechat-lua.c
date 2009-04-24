@@ -473,7 +473,6 @@ weechat_lua_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
     
     if (!infolist_name || !infolist_name[0])
         return NULL;
@@ -481,7 +480,8 @@ weechat_lua_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "lua_script") == 0)
     {
         return script_infolist_list_scripts (weechat_lua_plugin,
-                                             lua_scripts, pointer);
+                                             lua_scripts, pointer,
+                                             arguments);
     }
     
     return NULL;
