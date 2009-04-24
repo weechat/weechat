@@ -79,14 +79,6 @@ enum t_irc_server_option
 #define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
     "weechat4,weechat5"
 
-#define irc_server_sendf_queued(server, fmt, argz...)   \
-    if (server)                                         \
-    {                                                   \
-        server->queue_msg = 1;                          \
-        irc_server_sendf (server, fmt, ##argz);         \
-        server->queue_msg = 0;                          \
-    }
-
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -140,7 +132,6 @@ struct t_irc_server
     struct timeval lag_check_time;  /* last time lag was checked (ping sent) */
     time_t lag_next_check;          /* time for next check                   */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
-    int queue_msg;                  /* set to 1 when queue (out) is required */
     time_t last_user_message;       /* time of last user message (anti flood)*/
     struct t_irc_outqueue *outqueue;      /* queue for outgoing user msgs    */
     struct t_irc_outqueue *last_outqueue; /* last outgoing user message      */
@@ -188,7 +179,8 @@ extern int irc_server_rename (struct t_irc_server *server, const char *new_name)
 extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,
                                     const char *full_message);
-extern void irc_server_sendf (struct t_irc_server *server, const char *format, ...);
+extern void irc_server_sendf (struct t_irc_server *server, int queue_msg,
+                              const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,

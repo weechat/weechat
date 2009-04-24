@@ -575,7 +575,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
         if (ptr_channel)
         {
             if (irc_mode_channel_set (server, ptr_channel, pos_modes))
-                irc_server_sendf (server, "MODE %s", ptr_channel->name);
+                irc_server_sendf (server, 0, "MODE %s", ptr_channel->name);
         }
         ptr_nick = irc_nick_search (ptr_channel, nick);
         if (!irc_ignore_check (server, ptr_channel, nick, host))
@@ -1079,7 +1079,7 @@ irc_protocol_cmd_ping (struct t_irc_server *server, const char *command,
     /* make C compiler happy */
     (void) argv_eol;
     
-    irc_server_sendf (server, "PONG :%s",
+    irc_server_sendf (server, 0, "PONG :%s",
                       (argv[1][0] == ':') ? argv[1] + 1 : argv[1]);
     
     return WEECHAT_RC_OK;
@@ -1152,7 +1152,7 @@ irc_protocol_reply_version (struct t_irc_server *server,
     date = weechat_info_get ("date", "");
     if (version && date)
     {
-        irc_server_sendf (server,
+        irc_server_sendf (server, 0,
                           "NOTICE %s :%sVERSION WeeChat %s (%s)%s",
                           nick, "\01", version, date, "\01");
         
@@ -1299,10 +1299,12 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     if (pos_args && !pos_args[0])
                         pos_args = NULL;
                     if (pos_args)
-                        irc_server_sendf (server, "NOTICE %s :\01PING %s\01",
+                        irc_server_sendf (server, 0,
+                                          "NOTICE %s :\01PING %s\01",
                                           nick, pos_args);
                     else
-                        irc_server_sendf (server, "NOTICE %s :\01PING\01",
+                        irc_server_sendf (server, 0,
+                                          "NOTICE %s :\01PING\01",
                                           nick);
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command, "irc_ctcp"),
@@ -1459,10 +1461,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 if (pos_args && !pos_args[0])
                     pos_args = NULL;
                 if (pos_args)
-                    irc_server_sendf (server, "NOTICE %s :\01PING %s\01",
+                    irc_server_sendf (server, 0, "NOTICE %s :\01PING %s\01",
                                       nick, pos_args);
                 else
-                    irc_server_sendf (server, "NOTICE %s :\01PING\01",
+                    irc_server_sendf (server, 0, "NOTICE %s :\01PING\01",
                                       nick);
                 weechat_printf_tags (server->buffer,
                                      irc_protocol_tags (command, "irc_ctcp"),
@@ -4184,7 +4186,7 @@ irc_protocol_cmd_432 (struct t_irc_server *server, const char *command,
         
         irc_server_set_nick (server, server->nicks_array[nick_to_use]);
         
-        irc_server_sendf (server, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, "NICK %s", server->nick);
     }
     
     return WEECHAT_RC_OK;
@@ -4240,7 +4242,7 @@ irc_protocol_cmd_433 (struct t_irc_server *server, const char *command,
         
         irc_server_set_nick (server, server->nicks_array[nick_to_use]);
         
-        irc_server_sendf (server, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, "NICK %s", server->nick);
     }
     else
     {

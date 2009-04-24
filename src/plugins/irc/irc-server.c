@@ -356,7 +356,6 @@ irc_server_alloc (const char *name)
     new_server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
     new_server->cmd_list_regexp = NULL;
-    new_server->queue_msg = 0;
     new_server->last_user_message = 0;
     new_server->outqueue = NULL;
     new_server->last_outqueue = NULL;
@@ -1109,18 +1108,22 @@ irc_server_parse_message (const char *message, char **nick, char **host,
 
 /*
  * irc_server_send_one_msg: send one message to IRC server
+ *                          if queue_msg == 1, then messages are in a queue and
+ *                          sent slowly (to be sure there will not be any
+ *                          "excess flood")
  *                          return: 1 if ok, 0 if error
  */
 
 int
-irc_server_send_one_msg (struct t_irc_server *server, const char *message)
+irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
+                         const char *message)
 {
     static char buffer[4096];
     const char *ptr_msg;
     char *new_msg, *pos, *nick, *command, *channel;
     char *ptr_chan_nick, *msg_encoded;
     char str_modifier[64], modifier_data[256];
-    int rc, queue, first_message;
+    int rc, add_to_queue, first_message;
     time_t time_now;
     
     rc = 1;
@@ -1185,17 +1188,17 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
             if (server->last_user_message > time_now)
                 server->last_user_message = time_now;
             
-            queue = 0;
-            if ((server->queue_msg)
-                && ((server->outqueue)
+            add_to_queue = 0;
+            if (queue_msg
+                && (server->outqueue
                     || ((weechat_config_integer (irc_config_network_anti_flood) > 0)
                         && (time_now - server->last_user_message <
                             weechat_config_integer (irc_config_network_anti_flood)))))
-                queue = 1;
+                add_to_queue = 1;
             
-            /* if queue, then only queue message and send nothing now */
-            if (queue)
+            if (add_to_queue)
             {
+                /* queue message (do not send anything now) */
                 irc_server_outqueue_add (server, command,
                                          (new_msg && first_message) ? message : NULL,
                                          buffer,
@@ -1217,7 +1220,7 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
                     rc = 0;
                 else
                 {
-                    if (server->queue_msg)
+                    if (queue_msg)
                         server->last_user_message = time_now;
                 }
             }
@@ -1252,10 +1255,13 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
 /*
  * irc_server_sendf: send formatted data to IRC server
  *                   many messages may be sent, separated by '\n'
+ *                   if queue_msg == 1, then messages are in a queue and sent
+ *                   slowly (to be sure there will not be any "excess flood")
  */
 
 void
-irc_server_sendf (struct t_irc_server *server, const char *format, ...)
+irc_server_sendf (struct t_irc_server *server, int queue_msg,
+                  const char *format, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -1272,7 +1278,7 @@ irc_server_sendf (struct t_irc_server *server, const char *format, ...)
     items = weechat_string_explode (buffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
-        if (!irc_server_send_one_msg (server, items[i]))
+        if (!irc_server_send_one_msg (server, queue_msg, items[i]))
             break;
     }
     if (items)
@@ -1638,7 +1644,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                 if ((ptr_server->lag_check_time.tv_sec == 0)
                     && (new_time >= ptr_server->lag_next_check))
                 {
-                    irc_server_sendf (ptr_server, "PING %s",
+                    irc_server_sendf (ptr_server, 0, "PING %s",
                                       ptr_server->addresses_array[ptr_server->index_current_address]);
                     gettimeofday (&(ptr_server->lag_check_time), NULL);
                 }
@@ -1794,7 +1800,7 @@ irc_server_login (struct t_irc_server *server)
     realname = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME);
     
     if (password && password[0])
-        irc_server_sendf (server, "PASS %s", password);
+        irc_server_sendf (server, 0, "PASS %s", password);
     
     if (!server->nick)
     {
@@ -1803,7 +1809,7 @@ irc_server_login (struct t_irc_server *server)
                              server->nicks_array[0] : "weechat");
     }
     
-    irc_server_sendf (server,
+    irc_server_sendf (server, 0,
                       "NICK %s\n"
                       "USER %s %s %s :%s",
                       server->nick,
@@ -2541,10 +2547,10 @@ irc_server_autojoin_channels (struct t_irc_server *server)
             if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
                 if (ptr_channel->key)
-                    irc_server_sendf (server, "JOIN %s %s",
+                    irc_server_sendf (server, 0, "JOIN %s %s",
                                       ptr_channel->name, ptr_channel->key);
                 else
-                    irc_server_sendf (server, "JOIN %s",
+                    irc_server_sendf (server, 0, "JOIN %s",
                                       ptr_channel->name);
             }
         }
@@ -2794,7 +2800,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     {
                         filename = weechat_infolist_string (infolist, "filename");
                         spaces_in_name = (strchr (filename, ' ') != NULL);
-                        irc_server_sendf (server, 
+                        irc_server_sendf (server, 1, 
                                           "PRIVMSG %s :\01DCC SEND %s%s%s "
                                           "%s %d %s\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
@@ -2807,7 +2813,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     }
                     else if (strcmp (type, "chat_send") == 0)
                     {
-                        irc_server_sendf (server, 
+                        irc_server_sendf (server, 1, 
                                           "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
                                           weechat_infolist_string (infolist, "address"),
@@ -2864,7 +2870,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, 
+                irc_server_sendf (server, 1, 
                                   "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",
@@ -2923,7 +2929,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, 
+                irc_server_sendf (server, 1, 
                                   "PRIVMSG %s :\01DCC ACCEPT %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",
@@ -3060,8 +3066,6 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &(server->lag_check_time), sizeof (struct timeval)))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", server->lag_next_check))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "queue_msg", server->queue_msg))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
         return 0;
@@ -3222,7 +3226,6 @@ irc_server_print_log ()
                             ptr_server->lag_check_time.tv_usec);
         weechat_log_printf ("  lag_next_check . . . : %ld",   ptr_server->lag_next_check);
         weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
-        weechat_log_printf ("  queue_msg. . . . . . : %d",    ptr_server->queue_msg);
         weechat_log_printf ("  last_user_message. . : %ld",   ptr_server->last_user_message);
         weechat_log_printf ("  outqueue . . . . . . : 0x%lx", ptr_server->outqueue);
         weechat_log_printf ("  last_outqueue. . . . : 0x%lx", ptr_server->last_outqueue);
