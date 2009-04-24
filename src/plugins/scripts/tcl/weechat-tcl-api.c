@@ -34,123 +34,123 @@
 
 #define TCL_RETURN_OK                            \
     {                                            \
-	objp = Tcl_GetObjResult (interp);        \
-	if (Tcl_IsShared (objp))                 \
+        objp = Tcl_GetObjResult (interp);        \
+        if (Tcl_IsShared (objp))                 \
         {                                        \
-	    objp = Tcl_DuplicateObj (objp);      \
-	    Tcl_IncrRefCount (objp);             \
-	    Tcl_SetIntObj (objp, 1);             \
-	    Tcl_SetObjResult (interp, objp);     \
-	    Tcl_DecrRefCount (objp);             \
-	}                                        \
+            objp = Tcl_DuplicateObj (objp);      \
+            Tcl_IncrRefCount (objp);             \
+            Tcl_SetIntObj (objp, 1);             \
+            Tcl_SetObjResult (interp, objp);     \
+            Tcl_DecrRefCount (objp);             \
+        }                                        \
         else                                     \
-	    Tcl_SetIntObj (objp, 1);             \
-	return TCL_OK;                           \
+            Tcl_SetIntObj (objp, 1);             \
+        return TCL_OK;                           \
     }
 #define TCL_RETURN_ERROR                          \
     {                                             \
-	objp = Tcl_GetObjResult (interp);         \
-	if (Tcl_IsShared (objp))                  \
+        objp = Tcl_GetObjResult (interp);         \
+        if (Tcl_IsShared (objp))                  \
         {                                         \
-	    objp = Tcl_DuplicateObj (objp);       \
-	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetIntObj (objp, 0);              \
-	    Tcl_SetObjResult (interp, objp);      \
-	    Tcl_DecrRefCount (objp);              \
-	}                                         \
+            objp = Tcl_DuplicateObj (objp);       \
+            Tcl_IncrRefCount (objp);              \
+            Tcl_SetIntObj (objp, 0);              \
+            Tcl_SetObjResult (interp, objp);      \
+            Tcl_DecrRefCount (objp);              \
+        }                                         \
         else                                      \
-	    Tcl_SetIntObj (objp, 0);              \
-	return TCL_ERROR;                         \
+            Tcl_SetIntObj (objp, 0);              \
+        return TCL_ERROR;                         \
     }
 #define TCL_RETURN_EMPTY                          \
     {                                             \
-	objp = Tcl_GetObjResult (interp);         \
-	if (Tcl_IsShared (objp))                  \
+        objp = Tcl_GetObjResult (interp);         \
+        if (Tcl_IsShared (objp))                  \
         {                                         \
-	    objp = Tcl_DuplicateObj (objp);       \
-	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetStringObj (objp, "", -1);      \
-	    Tcl_SetObjResult (interp, objp);      \
-	    Tcl_DecrRefCount (objp);              \
-	}                                         \
+            objp = Tcl_DuplicateObj (objp);       \
+            Tcl_IncrRefCount (objp);              \
+            Tcl_SetStringObj (objp, "", -1);      \
+            Tcl_SetObjResult (interp, objp);      \
+            Tcl_DecrRefCount (objp);              \
+        }                                         \
         else                                      \
-	    Tcl_SetStringObj (objp, "", -1);      \
-	return TCL_OK;                            \
+            Tcl_SetStringObj (objp, "", -1);      \
+        return TCL_OK;                            \
     }
 #define TCL_RETURN_STRING(__string)                         \
     {                                                       \
-	objp = Tcl_GetObjResult (interp);                   \
-	if (Tcl_IsShared (objp))                            \
+        objp = Tcl_GetObjResult (interp);                   \
+        if (Tcl_IsShared (objp))                            \
         {                                                   \
-	    objp = Tcl_DuplicateObj (objp);                 \
-	    Tcl_IncrRefCount (objp);                        \
-	    if (__string)                                   \
-	    {                                               \
-		Tcl_SetStringObj (objp, __string, -1);      \
+            objp = Tcl_DuplicateObj (objp);                 \
+            Tcl_IncrRefCount (objp);                        \
+            if (__string)                                   \
+            {                                               \
+                Tcl_SetStringObj (objp, __string, -1);      \
                 Tcl_SetObjResult (interp, objp);            \
-		Tcl_DecrRefCount (objp);                    \
-		return TCL_OK;                              \
-	    }                                               \
-	    Tcl_SetStringObj (objp, "", -1);                \
-	    Tcl_SetObjResult (interp, objp);                \
-	    Tcl_DecrRefCount (objp);                        \
-	}                                                   \
+                Tcl_DecrRefCount (objp);                    \
+                return TCL_OK;                              \
+            }                                               \
+            Tcl_SetStringObj (objp, "", -1);                \
+            Tcl_SetObjResult (interp, objp);                \
+            Tcl_DecrRefCount (objp);                        \
+        }                                                   \
         else                                                \
         {                                                   \
-	    if (__string)                                   \
-	    {                                               \
-		Tcl_SetStringObj (objp, __string, -1);      \
-		return TCL_OK;                              \
-	    }                                               \
-	    Tcl_SetStringObj (objp, "", -1);                \
-	}                                                   \
-	return TCL_OK;                                      \
+            if (__string)                                   \
+            {                                               \
+                Tcl_SetStringObj (objp, __string, -1);      \
+                return TCL_OK;                              \
+            }                                               \
+            Tcl_SetStringObj (objp, "", -1);                \
+        }                                                   \
+        return TCL_OK;                                      \
     }
 #define TCL_RETURN_STRING_FREE(__string)                    \
     {                                                       \
-	objp = Tcl_GetObjResult (interp);                   \
-	if (Tcl_IsShared (objp))                            \
+        objp = Tcl_GetObjResult (interp);                   \
+        if (Tcl_IsShared (objp))                            \
         {                                                   \
-	    objp = Tcl_DuplicateObj (objp);                 \
-	    Tcl_IncrRefCount (objp);                        \
-	    if (__string)                                   \
-	    {                                               \
-		Tcl_SetStringObj (objp, __string, -1);      \
-		Tcl_SetObjResult (interp, objp);            \
-		Tcl_DecrRefCount (objp);                    \
-		free (__string);                            \
-		return TCL_OK;                              \
-	    }                                               \
-	    Tcl_SetStringObj (objp, "", -1);                \
-	    Tcl_SetObjResult (interp, objp);                \
-	    Tcl_DecrRefCount (objp);                        \
-	}                                                   \
+            objp = Tcl_DuplicateObj (objp);                 \
+            Tcl_IncrRefCount (objp);                        \
+            if (__string)                                   \
+            {                                               \
+                Tcl_SetStringObj (objp, __string, -1);      \
+                Tcl_SetObjResult (interp, objp);            \
+                Tcl_DecrRefCount (objp);                    \
+                free (__string);                            \
+                return TCL_OK;                              \
+            }                                               \
+            Tcl_SetStringObj (objp, "", -1);                \
+            Tcl_SetObjResult (interp, objp);                \
+            Tcl_DecrRefCount (objp);                        \
+        }                                                   \
         else                                                \
         {                                                   \
-	    if (__string)                                   \
-	    {                                               \
-		Tcl_SetStringObj (objp, __string, -1);      \
-		free (__string);                            \
-		return TCL_OK;                              \
-	    }                                               \
-	    Tcl_SetStringObj (objp, "", -1);                \
-	}                                                   \
-	return TCL_OK;                                      \
+            if (__string)                                   \
+            {                                               \
+                Tcl_SetStringObj (objp, __string, -1);      \
+                free (__string);                            \
+                return TCL_OK;                              \
+            }                                               \
+            Tcl_SetStringObj (objp, "", -1);                \
+        }                                                   \
+        return TCL_OK;                                      \
     }
 #define TCL_RETURN_INT(__int)                     \
     {                                             \
-	objp = Tcl_GetObjResult (interp);         \
-	if (Tcl_IsShared (objp))                  \
+        objp = Tcl_GetObjResult (interp);         \
+        if (Tcl_IsShared (objp))                  \
         {                                         \
-	    objp = Tcl_DuplicateObj (objp);       \
-	    Tcl_IncrRefCount (objp);              \
-	    Tcl_SetIntObj (objp, __int);          \
-	    Tcl_SetObjResult (interp, objp);      \
-	    Tcl_DecrRefCount (objp);              \
-	}                                         \
+            objp = Tcl_DuplicateObj (objp);       \
+            Tcl_IncrRefCount (objp);              \
+            Tcl_SetIntObj (objp, __int);          \
+            Tcl_SetObjResult (interp, objp);      \
+            Tcl_DecrRefCount (objp);              \
+        }                                         \
         else                                      \
-	    Tcl_SetIntObj (objp, __int);          \
-	return TCL_OK;                            \
+            Tcl_SetIntObj (objp, __int);          \
+        return TCL_OK;                            \
     }
 
 
@@ -212,7 +212,7 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
                                              "version %s (%s)"),
                             TCL_PLUGIN_NAME, name, version, description);
         }
-	tcl_current_script->interpreter = (void *)interp;
+        tcl_current_script->interpreter = (void *)interp;
     }
     else
     {
@@ -426,7 +426,7 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
     if (Tcl_GetIntFromObj (interp, objv[3], &count) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("ngettext");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
 
     result = weechat_ngettext (single, plural, count);
@@ -497,7 +497,7 @@ weechat_tcl_api_mkdir_home (ClientData clientData, Tcl_Interp *interp,
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_home");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (weechat_mkdir_home (Tcl_GetStringFromObj (objv[1], &i), /* directory */
@@ -536,7 +536,7 @@ weechat_tcl_api_mkdir (ClientData clientData, Tcl_Interp *interp,
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (weechat_mkdir (Tcl_GetStringFromObj (objv[1], &i), /* directory */
@@ -576,7 +576,7 @@ weechat_tcl_api_mkdir_parents (ClientData clientData, Tcl_Interp *interp,
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (weechat_mkdir_parents (Tcl_GetStringFromObj (objv[1], &i), /* directory */
@@ -605,7 +605,7 @@ weechat_tcl_api_list_new (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_new");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_list_new ());
@@ -632,7 +632,7 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_add");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 5)
@@ -671,7 +671,7 @@ weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_search");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -706,7 +706,7 @@ weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_casesearch");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -741,7 +741,7 @@ weechat_tcl_api_list_get (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_get");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -754,7 +754,7 @@ weechat_tcl_api_list_get (ClientData clientData, Tcl_Interp *interp,
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_get");
         TCL_RETURN_EMPTY;
-    }	
+    }
     
     result = script_ptr2str (weechat_list_get (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)), /* weelist */
                                                position));
@@ -780,7 +780,7 @@ weechat_tcl_api_list_set (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_set");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -814,7 +814,7 @@ weechat_tcl_api_list_next (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_next");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -846,7 +846,7 @@ weechat_tcl_api_list_prev (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_prev");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -878,7 +878,7 @@ weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_string");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -910,7 +910,7 @@ weechat_tcl_api_list_size (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_size");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -942,7 +942,7 @@ weechat_tcl_api_list_remove (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -974,7 +974,7 @@ weechat_tcl_api_list_remove_all (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove_all");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -1005,7 +1005,7 @@ weechat_tcl_api_list_free (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_free");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -1078,7 +1078,7 @@ weechat_tcl_api_config_new (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -1172,7 +1172,7 @@ weechat_tcl_api_config_section_write_cb (void *data,
                                         script_callback->function,
                                         tcl_argv);
         
-	if (rc)
+        if (rc)
             free (rc);
         if (tcl_argv[0])
             free (tcl_argv[0]);
@@ -1332,7 +1332,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 10)
@@ -1342,7 +1342,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     }
    
     if ((Tcl_GetIntFromObj (interp, objv[3], &can_add) != TCL_OK)
-	|| (Tcl_GetIntFromObj (interp, objv[4], &can_delete) != TCL_OK))
+        || (Tcl_GetIntFromObj (interp, objv[4], &can_delete) != TCL_OK))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         TCL_RETURN_EMPTY;
@@ -1393,7 +1393,7 @@ weechat_tcl_api_config_search_section (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -1538,7 +1538,7 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 15)
@@ -1551,7 +1551,7 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
         || (Tcl_GetIntFromObj (interp, objv[8], &max) != TCL_OK)
         || (Tcl_GetIntFromObj (interp, objv[11], &null_value_allowed) != TCL_OK))
     {
-	WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         TCL_RETURN_EMPTY;
     }
     
@@ -1609,7 +1609,7 @@ weechat_tcl_api_config_search_option (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -1645,7 +1645,7 @@ weechat_tcl_api_config_string_to_boolean (ClientData clientData, Tcl_Interp *int
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -1678,7 +1678,7 @@ weechat_tcl_api_config_option_reset (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -1719,7 +1719,7 @@ weechat_tcl_api_config_option_set (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
-	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (objc < 4)
@@ -1762,7 +1762,7 @@ weechat_tcl_api_config_option_set_null (ClientData clientData, Tcl_Interp *inter
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
-	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (objc < 3)
@@ -1803,7 +1803,7 @@ weechat_tcl_api_config_option_unset (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
-	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (objc < 2)
@@ -1836,7 +1836,7 @@ weechat_tcl_api_config_option_rename (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -1871,7 +1871,7 @@ weechat_tcl_api_config_option_is_null (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
-	TCL_RETURN_INT(1);
+        TCL_RETURN_INT(1);
     }
     
     if (objc < 2)
@@ -1904,7 +1904,7 @@ weechat_tcl_api_config_option_default_is_null (ClientData clientData,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
-	TCL_RETURN_INT(1);
+        TCL_RETURN_INT(1);
     }
     
     if (objc < 2)
@@ -1935,7 +1935,7 @@ weechat_tcl_api_config_boolean (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -1966,7 +1966,7 @@ weechat_tcl_api_config_boolean_default (ClientData clientData, Tcl_Interp *inter
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean_default");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -1997,7 +1997,7 @@ weechat_tcl_api_config_integer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -2028,7 +2028,7 @@ weechat_tcl_api_config_integer_default (ClientData clientData, Tcl_Interp *inter
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer_default");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -2060,7 +2060,7 @@ weechat_tcl_api_config_string (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -2092,7 +2092,7 @@ weechat_tcl_api_config_string_default (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_default");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -2124,7 +2124,7 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -2156,7 +2156,7 @@ weechat_tcl_api_config_color_default (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color_default");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -2188,7 +2188,7 @@ weechat_tcl_api_config_write_option (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -2223,7 +2223,7 @@ weechat_tcl_api_config_write_line (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 4)
@@ -2259,7 +2259,7 @@ weechat_tcl_api_config_write (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
-	TCL_RETURN_INT(-1);
+        TCL_RETURN_INT(-1);
     }
     
     if (objc < 2)
@@ -2291,7 +2291,7 @@ weechat_tcl_api_config_read (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
-	TCL_RETURN_INT(-1);
+        TCL_RETURN_INT(-1);
     }
     
     if (objc < 2)
@@ -2323,7 +2323,7 @@ weechat_tcl_api_config_reload (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
-	TCL_RETURN_INT(-1);
+        TCL_RETURN_INT(-1);
     }
     
     if (objc < 2)
@@ -2354,7 +2354,7 @@ weechat_tcl_api_config_option_free (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -2388,7 +2388,7 @@ weechat_tcl_api_config_section_free_options (ClientData clientData, Tcl_Interp *
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -2421,7 +2421,7 @@ weechat_tcl_api_config_section_free (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -2454,7 +2454,7 @@ weechat_tcl_api_config_free (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -2488,7 +2488,7 @@ weechat_tcl_api_config_get (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -2520,7 +2520,7 @@ weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -2554,7 +2554,7 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
-	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (objc < 3)
@@ -2592,7 +2592,7 @@ weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
-	TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+        TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (objc < 2)
@@ -2742,7 +2742,7 @@ weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
     if (Tcl_GetIntFromObj (interp, objv[2], &tdate) != TCL_OK)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }   
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
@@ -2789,7 +2789,7 @@ weechat_tcl_api_print_y (ClientData clientData, Tcl_Interp *interp,
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
         TCL_RETURN_ERROR;
-    }	
+    }
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     message = Tcl_GetStringFromObj (objv[3], &i);
@@ -2898,7 +2898,7 @@ weechat_tcl_api_hook_command (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 7)
@@ -2985,7 +2985,7 @@ weechat_tcl_api_hook_command_run (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -3064,7 +3064,7 @@ weechat_tcl_api_hook_timer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_timer");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 5)
@@ -3150,7 +3150,7 @@ weechat_tcl_api_hook_fd (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_fd");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 6)
@@ -3242,7 +3242,7 @@ weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -3330,7 +3330,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 8)
@@ -3448,7 +3448,7 @@ weechat_tcl_api_hook_print (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_print");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 6)
@@ -3556,7 +3556,7 @@ weechat_tcl_api_hook_signal (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -3595,7 +3595,7 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal_send");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 4)
@@ -3615,10 +3615,10 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-	if (Tcl_GetIntFromObj (interp, objv[3], &number) != TCL_OK)
-	{
-	   TCL_RETURN_ERROR; 
-	}
+        if (Tcl_GetIntFromObj (interp, objv[3], &number) != TCL_OK)
+        {
+            TCL_RETURN_ERROR;
+        }
         weechat_hook_signal_send (signal,
                                   type_data,
                                   &number); /* signal_data */
@@ -3691,7 +3691,7 @@ weechat_tcl_api_hook_config (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -3774,7 +3774,7 @@ weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -3814,7 +3814,7 @@ weechat_tcl_api_hook_completion_list_add (ClientData clientData, Tcl_Interp *int
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 5)
@@ -3888,7 +3888,7 @@ weechat_tcl_api_hook_modifier (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -3926,7 +3926,7 @@ weechat_tcl_api_hook_modifier_exec (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -3989,7 +3989,7 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -4064,7 +4064,7 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -4103,7 +4103,7 @@ weechat_tcl_api_unhook (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -4137,7 +4137,7 @@ weechat_tcl_api_unhook_all (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook_all");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     script_api_unhook_all (tcl_current_script);
@@ -4282,7 +4282,7 @@ weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -4317,7 +4317,7 @@ weechat_tcl_api_current_buffer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_current_buffer ());
@@ -4342,7 +4342,7 @@ weechat_tcl_api_buffer_clear (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -4373,7 +4373,7 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_close");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -4408,7 +4408,7 @@ weechat_tcl_api_buffer_get_integer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
-	TCL_RETURN_INT(-1);
+        TCL_RETURN_INT(-1);
     }
     
     if (objc < 3)
@@ -4444,7 +4444,7 @@ weechat_tcl_api_buffer_get_string (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -4479,7 +4479,7 @@ weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -4552,7 +4552,7 @@ weechat_tcl_api_current_window (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_current_window ());
@@ -4579,7 +4579,7 @@ weechat_tcl_api_window_get_integer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
-	TCL_RETURN_INT(-1);
+        TCL_RETURN_INT(-1);
     }
     
     if (objc < 3)
@@ -4615,7 +4615,7 @@ weechat_tcl_api_window_get_string (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -4650,7 +4650,7 @@ weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -4686,7 +4686,7 @@ weechat_tcl_api_nicklist_add_group (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_group");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 6)
@@ -4732,7 +4732,7 @@ weechat_tcl_api_nicklist_search_group (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_group");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -4769,7 +4769,7 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_nick");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 8)
@@ -4819,7 +4819,7 @@ weechat_tcl_api_nicklist_search_nick (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_nick");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -4856,7 +4856,7 @@ weechat_tcl_api_nicklist_remove_group (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_group");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -4891,7 +4891,7 @@ weechat_tcl_api_nicklist_remove_nick (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_nick");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 3)
@@ -4925,7 +4925,7 @@ weechat_tcl_api_nicklist_remove_all (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_all");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -4957,7 +4957,7 @@ weechat_tcl_api_bar_item_search (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_search");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -5024,7 +5024,7 @@ weechat_tcl_api_bar_item_new (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_new");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -5061,7 +5061,7 @@ weechat_tcl_api_bar_item_update (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_update");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -5092,7 +5092,7 @@ weechat_tcl_api_bar_item_remove (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_remove");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -5126,7 +5126,7 @@ weechat_tcl_api_bar_search (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_search");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -5160,7 +5160,7 @@ weechat_tcl_api_bar_new (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_new");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 16)
@@ -5221,7 +5221,7 @@ weechat_tcl_api_bar_set (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 4)
@@ -5256,7 +5256,7 @@ weechat_tcl_api_bar_update (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_update");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -5287,7 +5287,7 @@ weechat_tcl_api_bar_remove (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_remove");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)
@@ -5356,7 +5356,7 @@ weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("info_get");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -5390,7 +5390,7 @@ weechat_tcl_api_infolist_new (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_infolist_new ());
@@ -5417,7 +5417,7 @@ weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *int
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_integer");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -5458,7 +5458,7 @@ weechat_tcl_api_infolist_new_var_string (ClientData clientData, Tcl_Interp *inte
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_string");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -5492,7 +5492,7 @@ weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *int
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_pointer");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -5526,7 +5526,7 @@ weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_time");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -5566,7 +5566,7 @@ weechat_tcl_api_infolist_get (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_get");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 4)
@@ -5602,7 +5602,7 @@ weechat_tcl_api_infolist_next (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_next");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -5634,7 +5634,7 @@ weechat_tcl_api_infolist_prev (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_prev");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 2)
@@ -5667,7 +5667,7 @@ weechat_tcl_api_infolist_fields (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_fields");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 2)
@@ -5700,7 +5700,7 @@ weechat_tcl_api_infolist_integer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_integer");
-	TCL_RETURN_INT(0);
+        TCL_RETURN_INT(0);
     }
     
     if (objc < 3)
@@ -5736,7 +5736,7 @@ weechat_tcl_api_infolist_string (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_string");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -5772,7 +5772,7 @@ weechat_tcl_api_infolist_pointer (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_pointer");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -5808,7 +5808,7 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_time");
-	TCL_RETURN_EMPTY;
+        TCL_RETURN_EMPTY;
     }
     
     if (objc < 3)
@@ -5844,7 +5844,7 @@ weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
     if (!tcl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_free");
-	TCL_RETURN_ERROR;
+        TCL_RETURN_ERROR;
     }
     
     if (objc < 2)

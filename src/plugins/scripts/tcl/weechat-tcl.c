@@ -72,47 +72,47 @@ Tcl_Interp* cinterp;
 
 void *
 weechat_tcl_exec (struct t_plugin_script *script,
-		   int ret_type, const char *function, char **argv)
+                  int ret_type, const char *function, char **argv)
 {
-    int i;
+    int i, llength;
     int *ret_i;
     char *ret_cv;
     void *ret_val;
-    Tcl_DString ds;
-    Tcl_Obj *scptr;
+    Tcl_Obj *cmdlist;
     Tcl_Interp *interp;
     struct t_plugin_script *old_tcl_script;
-
+    
     old_tcl_script = tcl_current_script;
     tcl_current_script = script;
     interp = (Tcl_Interp*)script->interpreter;
 
-    Tcl_DStringInit (&ds);
     if (function && function[0]) 
-	Tcl_DStringAppend (&ds,function, -1);
+    {
+        cmdlist = Tcl_NewListObj(0,NULL);
+        Tcl_IncrRefCount(cmdlist); /* +1 */
+        Tcl_ListObjAppendElement(interp,cmdlist,Tcl_NewStringObj(function,-1));
+    }
     else
     {
-	tcl_current_script = old_tcl_script;
-	return NULL; 
+        tcl_current_script = old_tcl_script;
+        return NULL;
     }
     
-    if (argv) 
+    if (argv)
     {
-	for (i = 0; argv[i]; i++)
-	{
-            Tcl_DStringAppend (&ds, " \"", -1);
-            Tcl_DStringAppend (&ds, argv[i], -1);
-            Tcl_DStringAppend (&ds, "\"", -1);
-	}
+        for (i = 0; argv[i]; i++)
+        {
+            Tcl_ListObjAppendElement(interp,cmdlist,Tcl_NewStringObj(argv[i],-1));
+        }
     }
 
-    scptr = Tcl_NewStringObj (Tcl_DStringValue(&ds), -1);
-    Tcl_IncrRefCount (scptr);
-    Tcl_DStringFree (&ds);
+    if (Tcl_ListObjLength(interp,cmdlist,&llength) != TCL_OK)
+        llength = 0;
 
-    if (Tcl_EvalObjEx (interp, scptr, TCL_EVAL_DIRECT) == TCL_OK)
+    if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
     {
-        Tcl_DecrRefCount (scptr);
+        Tcl_ListObjReplace(interp,cmdlist,0,llength,0,NULL); /* remove elements, decrement their ref count */
+        Tcl_DecrRefCount (cmdlist); /* -1 */
         ret_val = NULL;
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
@@ -126,14 +126,14 @@ weechat_tcl_exec (struct t_plugin_script *script,
                   && Tcl_GetIntFromObj (interp, Tcl_GetObjResult (interp), &i) == TCL_OK)
         {
             ret_i = (int *)malloc (sizeof (*ret_i));
-            if (ret_i)			   
+            if (ret_i)
                 *ret_i = i;
             ret_val = (void *)ret_i;
         }
         
         tcl_current_script = old_tcl_script;
         if (ret_val)
-            return ret_val;	
+            return ret_val;
         
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"%s\" must return a "
@@ -142,7 +142,8 @@ weechat_tcl_exec (struct t_plugin_script *script,
         return NULL;
     }
     
-    Tcl_DecrRefCount(scptr);
+    Tcl_ListObjReplace(interp,cmdlist,0,llength,0,NULL); /* remove elements, decrement their ref count */
+    Tcl_DecrRefCount(cmdlist); /* -1 */
     weechat_printf (NULL,
                     weechat_gettext ("%s%s unable to run function \"%s\": %s"),
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
@@ -181,11 +182,11 @@ weechat_tcl_load (const char *filename)
     tcl_current_script = NULL;
     
     if (!(interp = Tcl_CreateInterp ())) {
-	    weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to create new "
-                                             "interpreter"),
-                            weechat_prefix ("error"), TCL_PLUGIN_NAME);
-	    return 0;
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: unable to create new "
+                                         "interpreter"),
+                        weechat_prefix ("error"), TCL_PLUGIN_NAME);
+        return 0;
     }
     tcl_current_script_filename = filename;
     
@@ -193,22 +194,22 @@ weechat_tcl_load (const char *filename)
 
     if (Tcl_EvalFile (interp, filename) != TCL_OK)
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: error occured while "
                                          "parsing file \"%s\": %s"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
-			Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
-	/* this ok, maybe "register" was called, so not return */
-	/* return 0; */
+                        Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
+        /* this ok, maybe "register" was called, so not return */
+        /* return 0; */
     }
 
     if (!tcl_current_script)
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename);
-	Tcl_DeleteInterp (interp);
+        Tcl_DeleteInterp (interp);
         return 0;
     }
     
