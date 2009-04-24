@@ -33,7 +33,6 @@ BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
                        autogen/logger_commands.xml  \
                        autogen/logger_options.xml   \
                        autogen/lua_commands.xml     \
-                       autogen/notify_commands.xml  \
                        autogen/perl_commands.xml    \
                        autogen/python_commands.xml  \
                        autogen/ruby_commands.xml    \
