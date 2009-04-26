@@ -437,44 +437,49 @@ hook_command_build_completion (struct t_hook_command *hook_command)
        for each argument: these strings will be used when completing argument
        if we can't find which template to use (for example for first argument)
     */
-    hook_command->cplt_template_args_concat = malloc (hook_command->cplt_template_num_args_concat *
-                                                      sizeof (*hook_command->cplt_template_args_concat));
-    list = weelist_new ();
-    for (i = 0; i < hook_command->cplt_template_num_args_concat; i++)
+    if (hook_command->cplt_template_num_args_concat == 0)
+        hook_command->cplt_template_args_concat = NULL;
+    else
     {
-        /* first compute length */
-        length = 1;
-        for (j = 0; j < hook_command->cplt_num_templates; j++)
+        hook_command->cplt_template_args_concat = malloc (hook_command->cplt_template_num_args_concat *
+                                                          sizeof (*hook_command->cplt_template_args_concat));
+        list = weelist_new ();
+        for (i = 0; i < hook_command->cplt_template_num_args_concat; i++)
         {
-            if (i < hook_command->cplt_template_num_args[j])
-                length += strlen (hook_command->cplt_template_args[j][i]) + 1;
-        }
-        /* alloc memory */
-        hook_command->cplt_template_args_concat[i] = malloc (length);
-        if (hook_command->cplt_template_args_concat[i])
-        {
-            /* concatene items with "|" as separator */
-            weelist_remove_all (list);
-            hook_command->cplt_template_args_concat[i][0] = '\0';
+            /* first compute length */
+            length = 1;
             for (j = 0; j < hook_command->cplt_num_templates; j++)
             {
                 if (i < hook_command->cplt_template_num_args[j])
+                    length += strlen (hook_command->cplt_template_args[j][i]) + 1;
+            }
+            /* alloc memory */
+            hook_command->cplt_template_args_concat[i] = malloc (length);
+            if (hook_command->cplt_template_args_concat[i])
+            {
+                /* concatene items with "|" as separator */
+                weelist_remove_all (list);
+                hook_command->cplt_template_args_concat[i][0] = '\0';
+                for (j = 0; j < hook_command->cplt_num_templates; j++)
                 {
-                    items = string_explode (hook_command->cplt_template_args[j][i],
-                                            "|", 0, 0, &num_items);
-                    for (k = 0; k < num_items; k++)
+                    if (i < hook_command->cplt_template_num_args[j])
                     {
-                        if (!weelist_search (list, items[k]))
+                        items = string_explode (hook_command->cplt_template_args[j][i],
+                                                "|", 0, 0, &num_items);
+                        for (k = 0; k < num_items; k++)
                         {
-                            if (hook_command->cplt_template_args_concat[i][0])
-                                strcat (hook_command->cplt_template_args_concat[i], "|");
-                            strcat (hook_command->cplt_template_args_concat[i],
-                                    items[k]);
-                            weelist_add (list, items[k], WEECHAT_LIST_POS_END,
-                                         NULL);
+                            if (!weelist_search (list, items[k]))
+                            {
+                                if (hook_command->cplt_template_args_concat[i][0])
+                                    strcat (hook_command->cplt_template_args_concat[i], "|");
+                                strcat (hook_command->cplt_template_args_concat[i],
+                                        items[k]);
+                                weelist_add (list, items[k], WEECHAT_LIST_POS_END,
+                                             NULL);
+                            }
                         }
+                        string_free_exploded (items);
                     }
-                    string_free_exploded (items);
                 }
             }
         }
