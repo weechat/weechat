@@ -38,11 +38,14 @@
 
 #include "weechat.h"
 #include "wee-log.h"
+#include "wee-debug.h"
 #include "wee-string.h"
 
 
 char *weechat_log_filename = NULL; /* log name (~/.weechat/weechat.log)     */
 FILE *weechat_log_file = NULL;     /* WeeChat log file                      */
+int weechat_log_use_time = 1;      /* 0 to temporary disable time in log,   */
+                                   /* for example when dumping data         */
 
 
 /*
@@ -142,18 +145,23 @@ log_printf (const char *message, ...)
             ptr_buffer[0] = '.';
         ptr_buffer++;
     }
-    
-    seconds = time (NULL);
-    date_tmp = localtime (&seconds);
-    if (date_tmp)
-        string_iconv_fprintf (weechat_log_file,
-                              "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
-                              date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
-                              date_tmp->tm_mday, date_tmp->tm_hour,
-                              date_tmp->tm_min, date_tmp->tm_sec,
-                              buffer);
-    else
+
+    if (!weechat_log_use_time)
         string_iconv_fprintf (weechat_log_file, "%s\n", buffer);
+    else
+    {
+        seconds = time (NULL);
+        date_tmp = localtime (&seconds);
+        if (date_tmp)
+            string_iconv_fprintf (weechat_log_file,
+                                  "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
+                                  date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
+                                  date_tmp->tm_mday, date_tmp->tm_hour,
+                                  date_tmp->tm_min, date_tmp->tm_sec,
+                                  buffer);
+        else
+            string_iconv_fprintf (weechat_log_file, "%s\n", buffer);
+    }
     
     fflush (weechat_log_file);
 }

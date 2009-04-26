@@ -22,6 +22,7 @@
 
 extern char *weechat_log_filename;
 extern FILE *weechat_log_file;
+extern int weechat_log_use_time;
 
 extern void log_init ();
 extern void log_close ();

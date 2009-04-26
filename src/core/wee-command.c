@@ -831,7 +831,10 @@ command_debug (void *data, struct t_gui_buffer *buffer,
     
     if (string_strcasecmp (argv[1], "dump") == 0)
     {
+        log_printf ("Dump request for WeeChat core and plugins");
+        weechat_log_use_time = 0;
         hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        weechat_log_use_time = 1;
     }
     else if (string_strcasecmp (argv[1], "buffer") == 0)
     {

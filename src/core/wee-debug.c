@@ -64,6 +64,7 @@ debug_dump (int crash)
     {
         debug_dump_active = 1;
         log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...");
+        weechat_log_use_time = 0;
     }
     
     log_printf ("");
