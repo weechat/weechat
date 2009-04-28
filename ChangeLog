@@ -68,6 +68,7 @@ Version 0.2.7 (under dev!):
    * core: improve /set command, new command /unset (task #6085)
    * core: add new input action "set_unread_current_buffer" to set unread
      marker for current buffer only (task #7286)
+   * core: add polish translation (thanks to Soltys)
    * core: remove key functions, replaced by /input command
    * core: fix nick completion bug (missing space after nick)
 
