@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-04-24 17:16+0200\n"
-"PO-Revision-Date: 2009-04-27 13:33+0200\n"
+"PO-Revision-Date: 2009-04-29 08:07+0200\n"
 "Last-Translator:  <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "Pasek \"%s\" został ukryty"
 
 #, c-format
 msgid "Bar \"%s\" is now visible"
-msgstr "Pasek \"s\" jest teraz widoczny"
+msgstr "Pasek \"%s\" jest teraz widoczny"
 
 #, c-format
 msgid "%sError: buffer not found for \"%s\" command"
