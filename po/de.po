@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-29 14:30+0200\n"
+"POT-Creation-Date: 2009-05-02 22:43+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4837,6 +4837,14 @@ msgstr "%s kann Plugin \"%s\" nicht laden: %s\n"
 
 #, fuzzy, c-format
 msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%s Symbol \"plugin_name\" in Plugin \"%s\" nicht gefunden, Laden "
+"gescheitert\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%"
+"s\"), failed to load"
 msgstr ""
 "%s Symbol \"plugin_name\" in Plugin \"%s\" nicht gefunden, Laden "
 "gescheitert\n"

@@ -32,9 +32,13 @@ struct t_gui_completion;
 struct t_infolist;
 struct t_weelist;
 
+/* API version (used to check that plugin has same API and can be loaded) */
+#define WEECHAT_PLUGIN_API_VERSION "20090502-01"
+
 /* macros for defining plugin infos */
-#define WEECHAT_PLUGIN_NAME(__name)             \
-    char weechat_plugin_name[] = __name;
+#define WEECHAT_PLUGIN_NAME(__name)                                     \
+    char weechat_plugin_name[] = __name;                                \
+    char weechat_plugin_api_version[] = WEECHAT_PLUGIN_API_VERSION;
 #define WEECHAT_PLUGIN_AUTHOR(__author)         \
     char weechat_plugin_author[] = __author;
 #define WEECHAT_PLUGIN_DESCRIPTION(__desc)      \

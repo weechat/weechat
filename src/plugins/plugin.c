@@ -155,8 +155,8 @@ plugin_load (const char *filename)
 {
     char *ptr_home, *full_name, *full_name2;
     void *handle;
-    char *name, *author, *description, *version, *weechat_version, *license;
-    char *charset;
+    char *name, *api_version, *author, *description, *version;
+    char *weechat_version, *license, *charset;
     t_weechat_init_func *init_func;
     int rc, i, argc;
     char **argv;
@@ -201,6 +201,34 @@ plugin_load (const char *filename)
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_name",
                          full_name);
+        dlclose (handle);
+        free (full_name);
+        return NULL;
+    }
+    
+    /* look for API version */
+    api_version = dlsym (handle, "weechat_plugin_api_version");
+    if (!api_version)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: symbol \"%s\" not found in "
+                           "plugin \"%s\", failed to load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "weechat_plugin_api_version",
+                         full_name);
+        dlclose (handle);
+        free (full_name);
+        return NULL;
+    }
+    if (strcmp (api_version, WEECHAT_PLUGIN_API_VERSION) != 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: API mismatch for plugin \"%s\" (current "
+                           "API: \"%s\", plugin API: \"%s\"), failed to load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         full_name,
+                         WEECHAT_PLUGIN_API_VERSION,
+                         api_version);
         dlclose (handle);
         free (full_name);
         return NULL;
@@ -278,7 +306,6 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-
     if (util_weechat_version_cmp (PACKAGE_VERSION, weechat_version) != 0)
     {
         gui_chat_printf (NULL,
