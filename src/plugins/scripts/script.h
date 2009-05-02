@@ -23,19 +23,23 @@
 #define WEECHAT_SCRIPT_EXEC_INT    1
 #define WEECHAT_SCRIPT_EXEC_STRING 2
 
-#define WEECHAT_SCRIPT_MSG_NOT_INITIALIZED(__function)                  \
+#define WEECHAT_SCRIPT_MSG_NOT_INIT(__current_script,                   \
+                                    __function)                         \
     weechat_printf (NULL,                                               \
                     weechat_gettext("%s%s: unable to call function "    \
                                     "\"%s\", script is not "            \
-                                    "initialized"),                     \
+                                    "initialized (script: %s)"),        \
                     weechat_prefix ("error"), weechat_plugin->name,     \
-                    __function)
-#define WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS(__function)                  \
+                    __function,                                         \
+                    (__current_script) ? __current_script : "-");
+#define WEECHAT_SCRIPT_MSG_WRONG_ARGS(__current_script,                 \
+                                      __function)                       \
     weechat_printf (NULL,                                               \
                     weechat_gettext("%s%s: wrong arguments for "        \
-                                    "function \"%s\""),                 \
+                                    "function \"%s\" (script: %s)"),    \
                     weechat_prefix ("error"), weechat_plugin->name,     \
-                    __function)
+                    __function,                                         \
+                    (__current_script) ? __current_script : "-");
 
 struct t_plugin_script
 {

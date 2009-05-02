@@ -120,11 +120,22 @@ weechat_python_exec (struct t_plugin_script *script,
                         {
                             if (argv[6])
                             {
-                                rc = PyObject_CallFunction (evFunc, "sssssss",
-                                                            argv[0], argv[1],
-                                                            argv[2], argv[3],
-                                                            argv[4], argv[5],
-                                                            argv[6]);
+                                if (argv[7])
+                                {
+                                    rc = PyObject_CallFunction (evFunc, "ssssssss",
+                                                                argv[0], argv[1],
+                                                                argv[2], argv[3],
+                                                                argv[4], argv[5],
+                                                                argv[6], argv[7]);
+                                }
+                                else
+                                {
+                                    rc = PyObject_CallFunction (evFunc, "sssssss",
+                                                                argv[0], argv[1],
+                                                                argv[2], argv[3],
+                                                                argv[4], argv[5],
+                                                                argv[6]);
+                                }
                             }
                             else
                             {

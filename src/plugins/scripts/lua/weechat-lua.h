@@ -23,6 +23,8 @@
 #define weechat_plugin weechat_lua_plugin
 #define LUA_PLUGIN_NAME "lua"
 
+#define LUA_CURRENT_SCRIPT_NAME ((lua_current_script) ? lua_current_script->name : "-")
+
 extern struct t_weechat_plugin *weechat_lua_plugin;
 
 extern int lua_quiet;

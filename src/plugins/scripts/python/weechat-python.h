@@ -23,6 +23,8 @@
 #define weechat_plugin weechat_python_plugin
 #define PYTHON_PLUGIN_NAME "python"
 
+#define PYTHON_CURRENT_SCRIPT_NAME ((python_current_script) ? python_current_script->name : "-")
+
 extern struct t_weechat_plugin *weechat_python_plugin;
 
 extern int python_quiet;

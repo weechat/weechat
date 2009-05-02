@@ -113,6 +113,12 @@ weechat_lua_exec (struct t_plugin_script *script,
                                 argc = 7;
                                 lua_pushstring (lua_current_interpreter,
                                                 argv[6]);
+                                if (argv[7])
+                                {
+                                    argc = 8;
+                                    lua_pushstring (lua_current_interpreter,
+                                                    argv[7]);
+                                }
                             }
                         }
                     }
@@ -145,7 +151,7 @@ weechat_lua_exec (struct t_plugin_script *script,
     }
     else
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS(function);
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, function);
         lua_current_script = old_lua_current_script;
 	return NULL;
     }

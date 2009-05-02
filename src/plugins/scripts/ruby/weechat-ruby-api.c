@@ -78,7 +78,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
         || NIL_P (license) || NIL_P (description) || NIL_P (shutdown_func)
         || NIL_P (charset))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("register");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(ruby_current_script_filename, "register");
         RUBY_RETURN_ERROR;
     }
     
@@ -152,7 +152,7 @@ weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "plugin_get_name");
         RUBY_RETURN_EMPTY;
     }
     
@@ -160,7 +160,7 @@ weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
     
     if (NIL_P (plugin))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "plugin_get_name");
         RUBY_RETURN_EMPTY;
     }
     
@@ -187,7 +187,7 @@ weechat_ruby_api_charset_set (VALUE class, VALUE charset)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("charset_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "charset_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -195,7 +195,7 @@ weechat_ruby_api_charset_set (VALUE class, VALUE charset)
     
     if (NIL_P (charset))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("charset_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "charset_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -223,7 +223,7 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         RUBY_RETURN_EMPTY;
     }
     
@@ -232,7 +232,7 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     
     if (NIL_P (charset) || NIL_P (string))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         RUBY_RETURN_EMPTY;
     }
     
@@ -263,7 +263,7 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         RUBY_RETURN_EMPTY;
     }
     
@@ -272,7 +272,7 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     
     if (NIL_P (charset) || NIL_P (string))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         RUBY_RETURN_EMPTY;
     }
     
@@ -302,7 +302,7 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("gettext");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "gettext");
         RUBY_RETURN_EMPTY;
     }
     
@@ -310,7 +310,7 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
     
     if (NIL_P (string))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("gettext");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "gettext");
         RUBY_RETURN_EMPTY;
     }
     
@@ -340,7 +340,7 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("ngettext");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "ngettext");
         RUBY_RETURN_EMPTY;
     }
     
@@ -350,7 +350,7 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     
     if (NIL_P (single) || NIL_P (plural) || NIL_P (count))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("ngettext");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "ngettext");
         RUBY_RETURN_EMPTY;
     }
     
@@ -383,7 +383,7 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_remove_color");
         RUBY_RETURN_EMPTY;
     }
     
@@ -392,7 +392,7 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
     
     if (NIL_P (string) || NIL_P (replacement))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_remove_color");
         RUBY_RETURN_EMPTY;
     }
     
@@ -422,7 +422,7 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_home");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir_home");
         RUBY_RETURN_ERROR;
     }
     
@@ -431,7 +431,7 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
     
     if (NIL_P (directory) || NIL_P (mode))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_home");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "mkdir_home");
         RUBY_RETURN_ERROR;
     }
     
@@ -462,7 +462,7 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir");
         RUBY_RETURN_ERROR;
     }
     
@@ -471,7 +471,7 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
     
     if (NIL_P (directory) || NIL_P (mode))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "mkdir");
         RUBY_RETURN_ERROR;
     }
     
@@ -503,7 +503,7 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir_parents");
         RUBY_RETURN_ERROR;
     }
     
@@ -512,7 +512,7 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
     
     if (NIL_P (directory) || NIL_P (mode))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "mkdir_parents");
         RUBY_RETURN_ERROR;
     }
     
@@ -542,7 +542,7 @@ weechat_ruby_api_list_new (VALUE class)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -566,7 +566,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_add");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_add");
         RUBY_RETURN_EMPTY;
     }
     
@@ -577,7 +577,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
     
     if (NIL_P (weelist) || NIL_P (data) || NIL_P (where) || NIL_P (user_data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_add");
         RUBY_RETURN_EMPTY;
     }
     
@@ -613,7 +613,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -622,7 +622,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
     
     if (NIL_P (weelist) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -652,7 +652,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_casesearch");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_casesearch");
         RUBY_RETURN_EMPTY;
     }
     
@@ -661,7 +661,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     
     if (NIL_P (weelist) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_casesearch");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_casesearch");
         RUBY_RETURN_EMPTY;
     }
     
@@ -692,7 +692,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_get");
         RUBY_RETURN_EMPTY;
     }
     
@@ -701,7 +701,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     
     if (NIL_P (weelist) || NIL_P (position))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_get");
         RUBY_RETURN_EMPTY;
     }
     
@@ -731,7 +731,7 @@ weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -740,7 +740,7 @@ weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
     
     if (NIL_P (item) || NIL_P (new_value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -770,7 +770,7 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_next");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_next");
         RUBY_RETURN_EMPTY;
     }
     
@@ -778,7 +778,7 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
     
     if (NIL_P (item))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_next");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_next");
         RUBY_RETURN_EMPTY;
     }
     
@@ -805,7 +805,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_prev");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_prev");
         RUBY_RETURN_EMPTY;
     }
     
@@ -813,7 +813,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
     
     if (NIL_P (item))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_prev");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_prev");
         RUBY_RETURN_EMPTY;
     }
     
@@ -841,7 +841,7 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -849,7 +849,7 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     
     if (NIL_P (item))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -877,7 +877,7 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_size");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_size");
         RUBY_RETURN_INT(0);
     }
     
@@ -885,7 +885,7 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
     
     if (NIL_P (weelist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_size");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_size");
         RUBY_RETURN_INT(0);
     }
     
@@ -912,7 +912,7 @@ weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_remove");
         RUBY_RETURN_ERROR;
     }
     
@@ -921,7 +921,7 @@ weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
     
     if (NIL_P (weelist) || NIL_P (item))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_remove");
         RUBY_RETURN_ERROR;
     }
     
@@ -951,7 +951,7 @@ weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_remove_all");
         RUBY_RETURN_ERROR;
     }
     
@@ -959,7 +959,7 @@ weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
     
     if (NIL_P (weelist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_remove_all");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_remove_all");
         RUBY_RETURN_ERROR;
     }
     
@@ -986,7 +986,7 @@ weechat_ruby_api_list_free (VALUE class, VALUE weelist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -994,7 +994,7 @@ weechat_ruby_api_list_free (VALUE class, VALUE weelist)
     
     if (NIL_P (weelist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -1016,15 +1016,16 @@ weechat_ruby_api_config_reload_cb (void *data,
                                    struct t_config_file *config_file)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2];
+    char *ruby_argv[3], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1038,8 +1039,8 @@ weechat_ruby_api_config_reload_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -1052,9 +1053,10 @@ weechat_ruby_api_config_reload_cb (void *data,
  */
 
 static VALUE
-weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function)
+weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
+                             VALUE data)
 {
-    char *c_name, *c_function, *result;
+    char *c_name, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -1062,30 +1064,34 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new");
         RUBY_RETURN_EMPTY;
     }
     
     c_name = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (name) || NIL_P (function))
+    if (NIL_P (name) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_new");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (name, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_name = STR2CSTR (name);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_config_new (weechat_ruby_plugin,
                                                     ruby_current_script,
                                                     c_name,
                                                     &weechat_ruby_api_config_reload_cb,
-                                                    c_function));
+                                                    c_function,
+                                                    c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -1101,18 +1107,19 @@ weechat_ruby_api_config_read_cb (void *data,
                                  const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[5], empty_arg[1] = { '\0' };
+    char *ruby_argv[6], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = script_ptr2str (section);
-        ruby_argv[2] = (option_name) ? (char *)option_name : empty_arg;
-        ruby_argv[3] = (value) ? (char *)value : empty_arg;
-        ruby_argv[4] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = script_ptr2str (section);
+        ruby_argv[3] = (option_name) ? (char *)option_name : empty_arg;
+        ruby_argv[4] = (value) ? (char *)value : empty_arg;
+        ruby_argv[5] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1126,10 +1133,10 @@ weechat_ruby_api_config_read_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
         if (ruby_argv[1])
             free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
         
         return ret;
     }
@@ -1147,16 +1154,17 @@ weechat_ruby_api_config_section_write_cb (void *data,
                                           const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = (section_name) ? (char *)section_name : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = (section_name) ? (char *)section_name : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1165,8 +1173,8 @@ weechat_ruby_api_config_section_write_cb (void *data,
         
         if (rc)
             free (rc);
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
     }
 }
 
@@ -1181,16 +1189,17 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
                                                   const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = (section_name) ? (char *)section_name : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = (section_name) ? (char *)section_name : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1199,8 +1208,8 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
         
         if (rc)
             free (rc);
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
     }
 }
 
@@ -1216,18 +1225,19 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
                                                   const char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[5], empty_arg[1] = { '\0' };
+    char *ruby_argv[6], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = script_ptr2str (section);
-        ruby_argv[2] = (option_name) ? (char *)option_name : empty_arg;
-        ruby_argv[3] = (value) ? (char *)value : empty_arg;
-        ruby_argv[4] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = script_ptr2str (section);
+        ruby_argv[3] = (option_name) ? (char *)option_name : empty_arg;
+        ruby_argv[4] = (value) ? (char *)value : empty_arg;
+        ruby_argv[5] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1241,10 +1251,10 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
         if (ruby_argv[1])
             free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
         
         return ret;
     }
@@ -1263,17 +1273,18 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
                                                   struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4];
+    char *ruby_argv[5], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (config_file);
-        ruby_argv[1] = script_ptr2str (section);
-        ruby_argv[2] = script_ptr2str (option);
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (config_file);
+        ruby_argv[2] = script_ptr2str (section);
+        ruby_argv[3] = script_ptr2str (option);
+        ruby_argv[4] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1287,12 +1298,12 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
         if (ruby_argv[1])
             free (ruby_argv[1]);
         if (ruby_argv[2])
             free (ruby_argv[2]);
+        if (ruby_argv[3])
+            free (ruby_argv[3]);
         
         return ret;
     }
@@ -1309,15 +1320,21 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                      VALUE name, VALUE user_can_add_options,
                                      VALUE user_can_delete_options,
                                      VALUE function_read,
+                                     VALUE data_read,
                                      VALUE function_write,
+                                     VALUE data_write,
                                      VALUE function_write_default,
+                                     VALUE data_write_default,
                                      VALUE function_create_option,
-                                     VALUE function_delete_option)
+                                     VALUE data_create_option,
+                                     VALUE function_delete_option,
+                                     VALUE data_delete_option)
 {
-    char *c_config_file, *c_name, *c_function_read, *c_function_write;
-    char *c_function_write_default, *c_function_create_option;
-    char *c_function_delete_option;
-    char *result;
+    char *c_config_file, *c_name, *c_function_read, *c_data_read;
+    char *c_function_write, *c_data_write, *c_function_write_default;
+    char *c_data_write_default, *c_function_create_option;
+    char *c_data_create_option, *c_function_delete_option;
+    char *c_data_delete_option, *result;
     int c_user_can_add_options, c_user_can_delete_options;
     VALUE return_value;
     
@@ -1326,7 +1343,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new_section");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1335,17 +1352,24 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     c_user_can_add_options = 0;
     c_user_can_delete_options = 0;
     c_function_read = NULL;
+    c_data_read = NULL;
     c_function_write = NULL;
+    c_data_write = NULL;
     c_function_write_default = NULL;
+    c_data_write_default = NULL;
     c_function_create_option = NULL;
+    c_data_create_option = NULL;
     c_function_delete_option = NULL;
+    c_data_delete_option = NULL;
     
     if (NIL_P (config_file) || NIL_P (name) || NIL_P (user_can_add_options)
         || NIL_P (user_can_delete_options) || NIL_P (function_read)
-        || NIL_P (function_write) || NIL_P (function_write_default)
-        || NIL_P (function_create_option) || NIL_P (function_delete_option))
+        || NIL_P (data_read) || NIL_P (function_write) || NIL_P (data_write)
+        || NIL_P (function_write_default) || NIL_P (data_write_default)
+        || NIL_P (function_create_option) || NIL_P (data_create_option)
+        || NIL_P (function_delete_option) || NIL_P (data_delete_option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_new_section");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1354,20 +1378,30 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     Check_Type (user_can_add_options, T_FIXNUM);
     Check_Type (user_can_delete_options, T_FIXNUM);
     Check_Type (function_read, T_STRING);
+    Check_Type (data_read, T_STRING);
     Check_Type (function_write, T_STRING);
+    Check_Type (data_write, T_STRING);
     Check_Type (function_write_default, T_STRING);
+    Check_Type (data_write_default, T_STRING);
     Check_Type (function_create_option, T_STRING);
+    Check_Type (data_create_option, T_STRING);
     Check_Type (function_delete_option, T_STRING);
+    Check_Type (data_delete_option, T_STRING);
     
     c_config_file = STR2CSTR (config_file);
     c_name = STR2CSTR (name);
     c_user_can_add_options = FIX2INT (user_can_add_options);
     c_user_can_delete_options = FIX2INT (user_can_delete_options);
     c_function_read = STR2CSTR (function_read);
+    c_data_read = STR2CSTR (data_read);
     c_function_write = STR2CSTR (function_write);
+    c_data_write = STR2CSTR (data_write);
     c_function_write_default = STR2CSTR (function_write_default);
+    c_data_write_default = STR2CSTR (data_write_default);
     c_function_create_option = STR2CSTR (function_create_option);
+    c_data_create_option = STR2CSTR (data_create_option);
     c_function_delete_option = STR2CSTR (function_delete_option);
+    c_data_delete_option = STR2CSTR (data_delete_option);
     
     result = script_ptr2str (script_api_config_new_section (weechat_ruby_plugin,
                                                             ruby_current_script,
@@ -1377,14 +1411,19 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                                             c_user_can_delete_options,
                                                             &weechat_ruby_api_config_read_cb,
                                                             c_function_read,
+                                                            c_data_read,
                                                             &weechat_ruby_api_config_section_write_cb,
                                                             c_function_write,
+                                                            c_data_write,
                                                             &weechat_ruby_api_config_section_write_default_cb,
                                                             c_function_write_default,
+                                                            c_data_write_default,
                                                             &weechat_ruby_api_config_section_create_option_cb,
                                                             c_function_create_option,
+                                                            c_data_create_option,
                                                             &weechat_ruby_api_config_section_delete_option_cb,
-                                                            c_function_delete_option));
+                                                            c_function_delete_option,
+                                                            c_data_delete_option));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -1405,7 +1444,7 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_search_section");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1414,7 +1453,7 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
     
     if (NIL_P (config_file) || NIL_P (section_name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_section");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_search_section");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1441,16 +1480,17 @@ weechat_ruby_api_config_option_check_value_cb (void *data,
                                                const char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (option);
-        ruby_argv[1] = (value) ? (char *)value : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (option);
+        ruby_argv[2] = (value) ? (char *)value : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1464,8 +1504,8 @@ weechat_ruby_api_config_option_check_value_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -1482,23 +1522,24 @@ weechat_ruby_api_config_option_change_cb (void *data,
                                           struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2];
+    char *ruby_argv[3], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (option);
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (option);
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
                                         ruby_argv);
         
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         if (rc)
             free (rc);
@@ -1514,23 +1555,24 @@ weechat_ruby_api_config_option_delete_cb (void *data,
                                           struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2];
+    char *ruby_argv[3], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (option);
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (option);
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
                                         ruby_argv);
         
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         if (rc)
             free (rc);
@@ -1548,12 +1590,16 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
                                     VALUE min, VALUE max, VALUE default_value,
                                     VALUE value, VALUE null_value_allowed,
                                     VALUE function_check_value,
+                                    VALUE data_check_value,
                                     VALUE function_change,
-                                    VALUE function_delete)
+                                    VALUE data_change,
+                                    VALUE function_delete,
+                                    VALUE data_delete)
 {
     char *c_config_file, *c_section, *c_name, *c_type, *c_description;
     char *c_string_values, *c_default_value, *c_value, *result;
-    char *c_function_check_value, *c_function_change, *c_function_delete;
+    char *c_function_check_value, *c_data_check_value, *c_function_change;
+    char *c_data_change, *c_function_delete, *c_data_delete;
     int c_min, c_max, c_null_value_allowed;
     VALUE return_value;
     
@@ -1562,7 +1608,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new_option");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1578,16 +1624,20 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     c_value = NULL;
     c_null_value_allowed = 0;
     c_function_check_value = NULL;
+    c_data_check_value = NULL;
     c_function_change = NULL;
+    c_data_change = NULL;
     c_function_delete = NULL;
+    c_data_delete = NULL;
     
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (name) || NIL_P (type)
         || NIL_P (description) || NIL_P (string_values)
         || NIL_P (default_value) || NIL_P (value) || NIL_P (null_value_allowed)
-        || NIL_P (function_check_value) || NIL_P (function_change)
-        || NIL_P (function_delete))
+        || NIL_P (function_check_value) || NIL_P (data_check_value)
+        || NIL_P (function_change) || NIL_P (data_change)
+        || NIL_P (function_delete) || NIL_P (data_delete))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_new_option");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1603,8 +1653,11 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (value, T_STRING);
     Check_Type (null_value_allowed, T_FIXNUM);
     Check_Type (function_check_value, T_STRING);
+    Check_Type (data_check_value, T_STRING);
     Check_Type (function_change, T_STRING);
+    Check_Type (data_change, T_STRING);
     Check_Type (function_delete, T_STRING);
+    Check_Type (data_delete, T_STRING);
     
     c_config_file = STR2CSTR (config_file);
     c_section = STR2CSTR (section);
@@ -1618,8 +1671,11 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     c_value = STR2CSTR (value);
     c_null_value_allowed = FIX2INT (null_value_allowed);
     c_function_check_value = STR2CSTR (function_check_value);
+    c_data_check_value = STR2CSTR (data_check_value);
     c_function_change = STR2CSTR (function_change);
+    c_data_change = STR2CSTR (data_change);
     c_function_delete = STR2CSTR (function_delete);
+    c_data_delete = STR2CSTR (data_delete);
     
     result = script_ptr2str (script_api_config_new_option (weechat_ruby_plugin,
                                                            ruby_current_script,
@@ -1636,10 +1692,13 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
                                                            c_null_value_allowed,
                                                            &weechat_ruby_api_config_option_check_value_cb,
                                                            c_function_check_value,
+                                                           c_data_check_value,
                                                            &weechat_ruby_api_config_option_change_cb,
                                                            c_function_change,
+                                                           c_data_change,
                                                            &weechat_ruby_api_config_option_delete_cb,
-                                                           c_function_delete));
+                                                           c_function_delete,
+                                                           c_data_delete));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -1660,7 +1719,7 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_search_option");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1670,7 +1729,7 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (option_name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_search_option");
         RUBY_RETURN_EMPTY;
     }
     
@@ -1704,7 +1763,7 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         RUBY_RETURN_INT(0);
     }
     
@@ -1712,7 +1771,7 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
     
     if (NIL_P (text))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_to_boolean");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         RUBY_RETURN_INT(0);
     }
     
@@ -1741,7 +1800,7 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_reset");
         RUBY_RETURN_INT(0);
     }
     
@@ -1750,7 +1809,7 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
     
     if (NIL_P (option) || NIL_P (run_callback))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_reset");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_reset");
         RUBY_RETURN_INT(0);
     }
     
@@ -1782,7 +1841,7 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_set");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1792,7 +1851,7 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     
     if (NIL_P (option) || NIL_P (new_value) || NIL_P (run_callback))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_set");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1828,7 +1887,7 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_set_null");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1837,7 +1896,7 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
     
     if (NIL_P (option) || NIL_P (run_callback))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_set_null");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1868,7 +1927,7 @@ weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_unset");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -1876,7 +1935,7 @@ weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_unset");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -1904,7 +1963,7 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_rename");
         RUBY_RETURN_ERROR;
     }
     
@@ -1913,7 +1972,7 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
     
     if (NIL_P (option) || NIL_P (new_name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_rename");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_rename");
         RUBY_RETURN_ERROR;
     }
     
@@ -1944,7 +2003,7 @@ weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_is_null");
         RUBY_RETURN_INT(1);
     }
     
@@ -1952,7 +2011,7 @@ weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_is_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_is_null");
         RUBY_RETURN_INT(1);
     }
     
@@ -1980,7 +2039,7 @@ weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         RUBY_RETURN_INT(1);
     }
     
@@ -1988,7 +2047,7 @@ weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_default_is_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         RUBY_RETURN_INT(1);
     }
     
@@ -2016,7 +2075,7 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_boolean");
         RUBY_RETURN_INT(0);
     }
     
@@ -2024,7 +2083,7 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_boolean");
         RUBY_RETURN_INT(0);
     }
     
@@ -2052,7 +2111,7 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_boolean_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2060,7 +2119,7 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_boolean_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2088,7 +2147,7 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_integer");
         RUBY_RETURN_INT(0);
     }
     
@@ -2096,7 +2155,7 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_integer");
         RUBY_RETURN_INT(0);
     }
     
@@ -2124,7 +2183,7 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_integer_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2132,7 +2191,7 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_integer_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2160,7 +2219,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2168,7 +2227,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2196,7 +2255,7 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string_default");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2204,7 +2263,7 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_string_default");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2232,7 +2291,7 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_color");
         RUBY_RETURN_INT(0);
     }
     
@@ -2240,7 +2299,7 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_color");
         RUBY_RETURN_INT(0);
     }
     
@@ -2268,7 +2327,7 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_color_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2276,7 +2335,7 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_color_default");
         RUBY_RETURN_INT(0);
     }
     
@@ -2304,7 +2363,7 @@ weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write_option");
         RUBY_RETURN_ERROR;
     }
     
@@ -2313,7 +2372,7 @@ weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
     
     if (NIL_P (config_file) || NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_write_option");
         RUBY_RETURN_ERROR;
     }
     
@@ -2344,7 +2403,7 @@ weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write_line");
         RUBY_RETURN_ERROR;
     }
     
@@ -2354,7 +2413,7 @@ weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
     
     if (NIL_P (config_file) || NIL_P (option_name) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_line");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_write_line");
         RUBY_RETURN_ERROR;
     }
     
@@ -2389,7 +2448,7 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2397,7 +2456,7 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     
     if (NIL_P (config_file))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_write");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2425,7 +2484,7 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_read");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2433,7 +2492,7 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     
     if (NIL_P (config_file))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_read");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_read");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2461,7 +2520,7 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_reload");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2469,7 +2528,7 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     
     if (NIL_P (config_file))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_reload");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_reload");
         RUBY_RETURN_INT(-1);
     }
     
@@ -2496,7 +2555,7 @@ weechat_ruby_api_config_option_free (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2504,7 +2563,7 @@ weechat_ruby_api_config_option_free (VALUE class, VALUE option)
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_option_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2534,7 +2593,7 @@ weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_section_free_options");
         RUBY_RETURN_ERROR;
     }
     
@@ -2542,7 +2601,7 @@ weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
     
     if (NIL_P (section))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_section_free_options");
         RUBY_RETURN_ERROR;
     }
     
@@ -2571,7 +2630,7 @@ weechat_ruby_api_config_section_free (VALUE class, VALUE section)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_section_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2579,7 +2638,7 @@ weechat_ruby_api_config_section_free (VALUE class, VALUE section)
     
     if (NIL_P (section))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_section_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2608,7 +2667,7 @@ weechat_ruby_api_config_free (VALUE class, VALUE config_file)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2616,7 +2675,7 @@ weechat_ruby_api_config_free (VALUE class, VALUE config_file)
     
     if (NIL_P (config_file))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -2646,13 +2705,13 @@ weechat_ruby_api_config_get (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_get");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_get");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2680,13 +2739,13 @@ weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_get_plugin");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_get_plugin");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2716,13 +2775,13 @@ weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_set_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (NIL_P (option) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_set_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -2755,13 +2814,13 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (NIL_P (option))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_unset_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -2791,7 +2850,7 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prefix");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "prefix");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2799,7 +2858,7 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     
     if (NIL_P (prefix))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prefix");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "prefix");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2827,7 +2886,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "color");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2835,7 +2894,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     
     if (NIL_P (color))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "color");
         RUBY_RETURN_EMPTY;
     }
     
@@ -2865,7 +2924,7 @@ weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
     
     if (NIL_P (buffer) || NIL_P (message))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "print");
         RUBY_RETURN_ERROR;
     }
     
@@ -2900,7 +2959,7 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_date_tags");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "print_date_tags");
         RUBY_RETURN_ERROR;
     }
     
@@ -2911,7 +2970,7 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     
     if (NIL_P (buffer) || NIL_P (date) || NIL_P (tags) || NIL_P (message))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "print_date_tags");
         RUBY_RETURN_ERROR;
     }
     
@@ -2950,7 +3009,7 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_y");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "print_y");
         RUBY_RETURN_ERROR;
     }
     
@@ -2960,7 +3019,7 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
     
     if (NIL_P (buffer) || NIL_P (message))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "print_y");
         RUBY_RETURN_ERROR;
     }
     
@@ -2995,7 +3054,7 @@ weechat_ruby_api_log_print (VALUE class, VALUE message)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("log_print");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "log_print");
         RUBY_RETURN_ERROR;
     }
     
@@ -3003,7 +3062,7 @@ weechat_ruby_api_log_print (VALUE class, VALUE message)
     
     if (NIL_P (message))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("log_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "log_print");
         RUBY_RETURN_ERROR;
     }
     
@@ -3027,7 +3086,7 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
                                   int argc, char **argv, char **argv_eol)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     /* make C compiler happy */
@@ -3037,9 +3096,10 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (buffer);
-        ruby_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3053,8 +3113,8 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -3069,10 +3129,10 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 static VALUE
 weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
                                VALUE args, VALUE args_description,
-                               VALUE completion, VALUE function)
+                               VALUE completion, VALUE function, VALUE data)
 {
     char *c_command, *c_description, *c_args, *c_args_description;
-    char *c_completion, *c_function, *result;
+    char *c_completion, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3080,7 +3140,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_command");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3090,11 +3150,13 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     c_args_description = NULL;
     c_completion = NULL;
     c_function = NULL;
+    c_data = NULL;
     
     if (NIL_P (command) || NIL_P (description) || NIL_P (args)
-        || NIL_P (args_description) || NIL_P (completion) || NIL_P (function))
+        || NIL_P (args_description) || NIL_P (completion) || NIL_P (function)
+        || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_command");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3104,6 +3166,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     Check_Type (args_description, T_STRING);
     Check_Type (completion, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_command = STR2CSTR (command);
     c_description = STR2CSTR (description);
@@ -3111,6 +3174,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     c_args_description = STR2CSTR (args_description);
     c_completion = STR2CSTR (completion);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_command (weechat_ruby_plugin,
                                                       ruby_current_script,
@@ -3120,7 +3184,8 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
                                                       c_args_description,
                                                       c_completion,
                                                       &weechat_ruby_api_hook_command_cb,
-                                                      c_function));
+                                                      c_function,
+                                                      c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3134,16 +3199,17 @@ weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
                                       const char *command)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (buffer);
-        ruby_argv[1] = (command) ? (char *)command : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = (command) ? (char *)command : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3157,8 +3223,8 @@ weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -3171,9 +3237,10 @@ weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 static VALUE
-weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function)
+weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function,
+                                   VALUE data)
 {
-    char *c_command, *c_function, *result;
+    char *c_command, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3181,30 +3248,34 @@ weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_command_run");
         RUBY_RETURN_EMPTY;
     }
     
     c_command = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (command) || NIL_P (function))
+    if (NIL_P (command) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_command_run");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (command, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_command = STR2CSTR (command);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_command_run (weechat_ruby_plugin,
                                                           ruby_current_script,
                                                           c_command,
                                                           &weechat_ruby_api_hook_command_run_cb,
-                                                          c_function));
+                                                          c_function,
+                                                          c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3217,7 +3288,7 @@ int
 weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2], str_remaining_calls[32];
+    char *ruby_argv[3], str_remaining_calls[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3227,8 +3298,9 @@ weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
         snprintf (str_remaining_calls, sizeof (str_remaining_calls),
                   "%d", remaining_calls);
         
-        ruby_argv[0] = str_remaining_calls;
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = str_remaining_calls;
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3255,10 +3327,10 @@ weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
 
 static VALUE
 weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
-                             VALUE max_calls, VALUE function)
+                             VALUE max_calls, VALUE function, VALUE data)
 {
     int c_interval, c_align_second, c_max_calls;
-    char *c_function, *result;
+    char *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3266,7 +3338,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_timer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_timer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3274,11 +3346,12 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     c_align_second = 0;
     c_max_calls = 0;
     c_function = NULL;
+    c_data = NULL;
     
     if (NIL_P (interval) || NIL_P (align_second) || NIL_P (max_calls)
-        || NIL_P (function))
+        || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_timer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_timer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3286,11 +3359,13 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     Check_Type (align_second, T_FIXNUM);
     Check_Type (max_calls, T_FIXNUM);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_interval = FIX2INT (interval);
     c_align_second = FIX2INT (align_second);
     c_max_calls = FIX2INT (max_calls);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_timer (weechat_ruby_plugin,
                                                     ruby_current_script,
@@ -3298,7 +3373,8 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
                                                     c_align_second,
                                                     c_max_calls,
                                                     &weechat_ruby_api_hook_timer_cb,
-                                                    c_function));
+                                                    c_function,
+                                                    c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3311,7 +3387,7 @@ int
 weechat_ruby_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2], str_fd[32];
+    char *ruby_argv[3], str_fd[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3320,8 +3396,9 @@ weechat_ruby_api_hook_fd_cb (void *data, int fd)
     {
         snprintf (str_fd, sizeof (str_fd), "%d", fd);
         
-        ruby_argv[0] = str_fd;
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = str_fd;
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3348,10 +3425,10 @@ weechat_ruby_api_hook_fd_cb (void *data, int fd)
 
 static VALUE
 weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
-                          VALUE exception, VALUE function)
+                          VALUE exception, VALUE function, VALUE data)
 {
     int c_fd, c_read, c_write, c_exception;
-    char *c_function, *result;
+    char *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3359,7 +3436,7 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_fd");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_fd");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3368,11 +3445,12 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     c_write = 0;
     c_exception = 0;
     c_function = NULL;
+    c_data = NULL;
     
     if (NIL_P (fd) || NIL_P (read) || NIL_P (write) || NIL_P (exception)
-        || NIL_P (function))
+        || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_fd");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_fd");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3381,12 +3459,14 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     Check_Type (write, T_FIXNUM);
     Check_Type (exception, T_FIXNUM);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_fd = FIX2INT (fd);
     c_read = FIX2INT (read);
     c_write = FIX2INT (write);
     c_exception = FIX2INT (exception);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_fd (weechat_ruby_plugin,
                                                  ruby_current_script,
@@ -3395,7 +3475,8 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
                                                  c_write,
                                                  c_exception,
                                                  &weechat_ruby_api_hook_fd_cb,
-                                                 c_function));
+                                                 c_function,
+                                                 c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3410,7 +3491,7 @@ weechat_ruby_api_hook_process_cb (void *data,
                                   const char *stdout, const char *stderr)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    char *ruby_argv[6], str_rc[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3419,11 +3500,12 @@ weechat_ruby_api_hook_process_cb (void *data,
     {
         snprintf (str_rc, sizeof (str_rc), "%d", return_code);
         
-        ruby_argv[0] = (command) ? (char *)command : empty_arg;
-        ruby_argv[1] = str_rc;
-        ruby_argv[2] = (stdout) ? (char *)stdout : empty_arg;
-        ruby_argv[3] = (stderr) ? (char *)stderr : empty_arg;
-        ruby_argv[4] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (command) ? (char *)command : empty_arg;
+        ruby_argv[2] = str_rc;
+        ruby_argv[3] = (stdout) ? (char *)stdout : empty_arg;
+        ruby_argv[4] = (stderr) ? (char *)stderr : empty_arg;
+        ruby_argv[5] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3450,9 +3532,9 @@ weechat_ruby_api_hook_process_cb (void *data,
 
 static VALUE
 weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
-                               VALUE function)
+                               VALUE function, VALUE data)
 {
-    char *c_command, *c_function, *result;
+    char *c_command, *c_function, *c_data, *result;
     int c_timeout;
     VALUE return_value;
     
@@ -3461,34 +3543,38 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_process");
         RUBY_RETURN_EMPTY;
     }
     
     c_command = NULL;
     c_timeout = 0;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (command) || NIL_P (timeout) || NIL_P (function))
+    if (NIL_P (command) || NIL_P (timeout) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_process");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (command, T_STRING);
     Check_Type (timeout, T_FIXNUM);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_command = STR2CSTR (command);
     c_timeout = FIX2INT (timeout);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_process (weechat_ruby_plugin,
                                                       ruby_current_script,
                                                       c_command,
                                                       c_timeout,
                                                       &weechat_ruby_api_hook_process_cb,
-                                                      c_function));
+                                                      c_function,
+                                                      c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3502,7 +3588,7 @@ weechat_ruby_api_hook_connect_cb (void *data, int status,
                                   const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], str_status[32], empty_arg[1] = { '\0' };
+    char *ruby_argv[5], str_status[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3511,10 +3597,11 @@ weechat_ruby_api_hook_connect_cb (void *data, int status,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         
-        ruby_argv[0] = str_status;
-        ruby_argv[1] = (ip_address) ? (char *)ip_address : empty_arg;
-        ruby_argv[2] = (error) ? (char *)error : empty_arg;
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = str_status;
+        ruby_argv[2] = (ip_address) ? (char *)ip_address : empty_arg;
+        ruby_argv[3] = (error) ? (char *)error : empty_arg;
+        ruby_argv[4] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3542,9 +3629,10 @@ weechat_ruby_api_hook_connect_cb (void *data, int status,
 static VALUE
 weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
                                VALUE port, VALUE sock, VALUE ipv6,
-                               VALUE local_hostname, VALUE function)
+                               VALUE local_hostname, VALUE function,
+                               VALUE data)
 {
-    char *c_proxy, *c_address, *c_local_hostname, *c_function, *result;
+    char *c_proxy, *c_address, *c_local_hostname, *c_function, *c_data, *result;
     int c_port, c_sock, c_ipv6;
     VALUE return_value;
     
@@ -3553,7 +3641,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_connect");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3564,11 +3652,13 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     c_ipv6 = 0;
     c_local_hostname = NULL;
     c_function = NULL;
+    c_data = NULL;
     
     if (NIL_P (proxy) || NIL_P (address) || NIL_P (port) || NIL_P (sock)
-        || NIL_P (ipv6) || NIL_P (local_hostname) || NIL_P (function))
+        || NIL_P (ipv6) || NIL_P (local_hostname) || NIL_P (function)
+        || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_connect");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3579,6 +3669,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     Check_Type (ipv6, T_FIXNUM);
     Check_Type (local_hostname, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_proxy = STR2CSTR (proxy);
     c_address = STR2CSTR (address);
@@ -3587,6 +3678,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     c_ipv6 = FIX2INT (ipv6);
     c_local_hostname = STR2CSTR (local_hostname);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_connect (weechat_ruby_plugin,
                                                       ruby_current_script,
@@ -3598,7 +3690,8 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
                                                       NULL, /* gnutls session */
                                                       c_local_hostname,
                                                       &weechat_ruby_api_hook_connect_cb,
-                                                      c_function));
+                                                      c_function,
+                                                      c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3615,7 +3708,7 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                 const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[8], empty_arg[1] = { '\0' };
+    char *ruby_argv[9], empty_arg[1] = { '\0' };
     static char timebuffer[64];
     int *rc, ret;
     
@@ -3628,16 +3721,17 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     {
         snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
         
-        ruby_argv[0] = script_ptr2str (buffer);
-        ruby_argv[1] = timebuffer;
-        ruby_argv[2] = weechat_string_build_with_exploded (tags, ",");
-        if (!ruby_argv[2])
-            ruby_argv[2] = strdup ("");
-        ruby_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
-        ruby_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
-        ruby_argv[5] = (prefix) ? (char *)prefix : empty_arg;
-        ruby_argv[6] = (message) ? (char *)message : empty_arg;
-        ruby_argv[7] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = timebuffer;
+        ruby_argv[3] = weechat_string_build_with_exploded (tags, ",");
+        if (!ruby_argv[3])
+            ruby_argv[3] = strdup ("");
+        ruby_argv[4] = (displayed) ? strdup ("1") : strdup ("0");
+        ruby_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
+        ruby_argv[6] = (prefix) ? (char *)prefix : empty_arg;
+        ruby_argv[7] = (message) ? (char *)message : empty_arg;
+        ruby_argv[8] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3651,14 +3745,14 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
-        if (ruby_argv[2])
-            free (ruby_argv[2]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         if (ruby_argv[3])
             free (ruby_argv[3]);
         if (ruby_argv[4])
             free (ruby_argv[4]);
+        if (ruby_argv[5])
+            free (ruby_argv[5]);
         
         return ret;
     }
@@ -3672,9 +3766,10 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 
 static VALUE
 weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
-                             VALUE message, VALUE strip_colors, VALUE function)
+                             VALUE message, VALUE strip_colors, VALUE function,
+                             VALUE data)
 {
-    char *c_buffer, *c_tags, *c_message, *c_function, *result;
+    char *c_buffer, *c_tags, *c_message, *c_function, *c_data, *result;
     int c_strip_colors;
     VALUE return_value;
     
@@ -3683,7 +3778,7 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_print");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_print");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3692,11 +3787,12 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     c_message = NULL;
     c_strip_colors = 0;
     c_function = NULL;
+    c_data = NULL;
     
     if (NIL_P (buffer) || NIL_P (tags) || NIL_P (message)
-        || NIL_P (strip_colors) || NIL_P (function))
+        || NIL_P (strip_colors) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_print");
         RUBY_RETURN_EMPTY;
     }
     
@@ -3705,12 +3801,14 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     Check_Type (message, T_STRING);
     Check_Type (strip_colors, T_FIXNUM);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_buffer = STR2CSTR (buffer);
     c_tags = STR2CSTR (tags);
     c_message = STR2CSTR (message);
     c_strip_colors = FIX2INT (strip_colors);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_print (weechat_ruby_plugin,
                                                     ruby_current_script,
@@ -3719,7 +3817,8 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
                                                     c_message,
                                                     c_strip_colors,
                                                     &weechat_ruby_api_hook_print_cb,
-                                                    c_function));
+                                                    c_function,
+                                                    c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3733,7 +3832,7 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
                                  void *signal_data)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     static char value_str[64];
     int *rc, ret, free_needed;
     
@@ -3741,26 +3840,27 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (char *)signal;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (signal) ? (char *)signal : empty_arg;
         free_needed = 0;
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
         {
-            ruby_argv[1] = (signal_data) ? (char *)signal_data : empty_arg;
+            ruby_argv[2] = (signal_data) ? (char *)signal_data : empty_arg;
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
         {
             snprintf (value_str, sizeof (value_str) - 1,
                       "%d", *((int *)signal_data));
-            ruby_argv[1] = value_str;
+            ruby_argv[2] = value_str;
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
         {
-            ruby_argv[1] = script_ptr2str (signal_data);
+            ruby_argv[2] = script_ptr2str (signal_data);
             free_needed = 1;
         }
         else
-            ruby_argv[1] = empty_arg;
-        ruby_argv[2] = NULL;
+            ruby_argv[2] = empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3774,8 +3874,8 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
             ret = *rc;
             free (rc);
         }
-        if (free_needed && ruby_argv[1])
-            free (ruby_argv[1]);
+        if (free_needed && ruby_argv[2])
+            free (ruby_argv[2]);
         
         return ret;
     }
@@ -3788,9 +3888,10 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
  */
 
 static VALUE
-weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function)
+weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function,
+                              VALUE data)
 {
-    char *c_signal, *c_function, *result;
+    char *c_signal, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3798,30 +3899,34 @@ weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_signal");
         RUBY_RETURN_EMPTY;
     }
     
     c_signal = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (signal) || NIL_P (function))
+    if (NIL_P (signal) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_signal");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (signal, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_signal = STR2CSTR (signal);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_signal (weechat_ruby_plugin,
                                                      ruby_current_script,
                                                      c_signal,
                                                      &weechat_ruby_api_hook_signal_cb,
-                                                     c_function));
+                                                     c_function,
+                                                     c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3842,7 +3947,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal_send");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_signal_send");
         RUBY_RETURN_ERROR;
     }
     
@@ -3852,7 +3957,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     
     if (NIL_P (signal) || NIL_P (type_data) || NIL_P (signal_data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal_send");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_signal_send");
         RUBY_RETURN_ERROR;
     }
     
@@ -3896,16 +4001,17 @@ int
 weechat_ruby_api_hook_config_cb (void *data, const char *option, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (option) ? (char *)option : empty_arg;
-        ruby_argv[1] = (value) ? (char *)value : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (option) ? (char *)option : empty_arg;
+        ruby_argv[2] = (value) ? (char *)value : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -3931,9 +4037,10 @@ weechat_ruby_api_hook_config_cb (void *data, const char *option, const char *val
  */
 
 static VALUE
-weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function)
+weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
+                              VALUE data)
 {
-    char *c_option, *c_function, *result;
+    char *c_option, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3941,30 +4048,34 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_config");
         RUBY_RETURN_EMPTY;
     }
     
     c_option = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (option) || NIL_P (function))
+    if (NIL_P (option) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_config");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (option, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_option = STR2CSTR (option);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_config (weechat_ruby_plugin,
                                                      ruby_current_script,
                                                      c_option,
                                                      &weechat_ruby_api_hook_config_cb,
-                                                     c_function));
+                                                     c_function,
+                                                     c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -3979,17 +4090,18 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
                                      struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], empty_arg[1] = { '\0' };
+    char *ruby_argv[5], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (completion_item) ? (char *)completion_item : empty_arg;
-        ruby_argv[1] = script_ptr2str (buffer);
-        ruby_argv[2] = script_ptr2str (completion);
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        ruby_argv[2] = script_ptr2str (buffer);
+        ruby_argv[3] = script_ptr2str (completion);
+        ruby_argv[4] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -4003,10 +4115,10 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[1])
-            free (ruby_argv[1]);
         if (ruby_argv[2])
             free (ruby_argv[2]);
+        if (ruby_argv[3])
+            free (ruby_argv[3]);
         
         return ret;
     }
@@ -4020,9 +4132,10 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
 
 static VALUE
 weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
-                                  VALUE description, VALUE function)
+                                  VALUE description, VALUE function,
+                                  VALUE data)
 {
-    char *c_completion, *c_description, *c_function, *result;
+    char *c_completion, *c_description, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4030,34 +4143,39 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_completion");
         RUBY_RETURN_EMPTY;
     }
     
     c_completion = NULL;
     c_description = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (completion) || NIL_P (description) || NIL_P (function))
+    if (NIL_P (completion) || NIL_P (description) || NIL_P (function)
+        || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_completion");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (completion, T_STRING);
     Check_Type (description, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_completion = STR2CSTR (completion);
     c_description = STR2CSTR (description);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_completion (weechat_ruby_plugin,
                                                          ruby_current_script,
                                                          c_completion,
                                                          c_description,
                                                          &weechat_ruby_api_hook_completion_cb,
-                                                         c_function));
+                                                         c_function,
+                                                         c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4079,7 +4197,7 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         RUBY_RETURN_ERROR;
     }
     
@@ -4091,7 +4209,7 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
     if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
         || NIL_P (where))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         RUBY_RETURN_ERROR;
     }
     
@@ -4122,16 +4240,17 @@ weechat_ruby_api_hook_modifier_cb (void *data, const char *modifier,
                                    const char *modifier_data,  const char *string)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], empty_arg[1] = { '\0' };
+    char *ruby_argv[5], empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (modifier) ? (char *)modifier : empty_arg;
-        ruby_argv[1] = (modifier_data) ? (char *)modifier_data : empty_arg;
-        ruby_argv[2] = (string) ? (char *)string : empty_arg;
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (modifier) ? (char *)modifier : empty_arg;
+        ruby_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
+        ruby_argv[3] = (string) ? (char *)string : empty_arg;
+        ruby_argv[4] = NULL;
         
         return (char *)weechat_ruby_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_STRING,
@@ -4147,9 +4266,10 @@ weechat_ruby_api_hook_modifier_cb (void *data, const char *modifier,
  */
 
 static VALUE
-weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function)
+weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function,
+                                VALUE data)
 {
-    char *c_modifier, *c_function, *result;
+    char *c_modifier, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4157,30 +4277,34 @@ weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier");
         RUBY_RETURN_EMPTY;
     }
     
     c_modifier = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (modifier) || NIL_P (function))
+    if (NIL_P (modifier) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (modifier, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_modifier = STR2CSTR (modifier);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_modifier (weechat_ruby_plugin,
                                                        ruby_current_script,
                                                        c_modifier,
                                                        &weechat_ruby_api_hook_modifier_cb,
-                                                       c_function));
+                                                       c_function,
+                                                       c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4201,7 +4325,7 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4211,7 +4335,7 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
     
     if (NIL_P (modifier) || NIL_P (modifier_data) || NIL_P (string))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4237,15 +4361,16 @@ weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
                                const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (info_name) ? (char *)info_name : empty_arg;
-        ruby_argv[1] = (arguments) ? (char *)arguments : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (info_name) ? (char *)info_name : empty_arg;
+        ruby_argv[2] = (arguments) ? (char *)arguments : empty_arg;
+        ruby_argv[3] = NULL;
         
         return (const char *)weechat_ruby_exec (script_callback->script,
                                                 WEECHAT_SCRIPT_EXEC_STRING,
@@ -4262,9 +4387,9 @@ weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
 
 static VALUE
 weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
-                            VALUE function)
+                            VALUE function, VALUE data)
 {
-    char *c_info_name, *c_description, *c_function, *result;
+    char *c_info_name, *c_description, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4272,34 +4397,39 @@ weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_info");
         RUBY_RETURN_EMPTY;
     }
     
     c_info_name = NULL;
     c_description = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (info_name) || NIL_P (description) || NIL_P (function))
+    if (NIL_P (info_name) || NIL_P (description) || NIL_P (function)
+        || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_info");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (info_name, T_STRING);
     Check_Type (description, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_info_name = STR2CSTR (info_name);
     c_description = STR2CSTR (description);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_info (weechat_ruby_plugin,
                                                    ruby_current_script,
                                                    c_info_name,
                                                    c_description,
                                                    &weechat_ruby_api_hook_info_cb,
-                                                   c_function));
+                                                   c_function,
+                                                   c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4313,25 +4443,26 @@ weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
                                    void *pointer, const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], empty_arg[1] = { '\0' };
+    char *ruby_argv[5], empty_arg[1] = { '\0' };
     struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = (infolist_name) ? (char *)infolist_name : empty_arg;
-        ruby_argv[1] = script_ptr2str (pointer);
-        ruby_argv[2] = (arguments) ? (char *)arguments : empty_arg;
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
+        ruby_argv[2] = script_ptr2str (pointer);
+        ruby_argv[3] = (arguments) ? (char *)arguments : empty_arg;
+        ruby_argv[4] = NULL;
         
         result = (struct t_infolist *)weechat_ruby_exec (script_callback->script,
                                                          WEECHAT_SCRIPT_EXEC_STRING,
                                                          script_callback->function,
                                                          ruby_argv);
         
-        if (ruby_argv[1])
-            free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
         
         return result;
     }
@@ -4345,9 +4476,10 @@ weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
 
 static VALUE
 weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
-                                VALUE description, VALUE function)
+                                VALUE description, VALUE function,
+                                VALUE data)
 {
-    char *c_infolist_name, *c_description, *c_function, *result;
+    char *c_infolist_name, *c_description, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4355,34 +4487,39 @@ weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_infolist");
         RUBY_RETURN_EMPTY;
     }
     
     c_infolist_name = NULL;
     c_description = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (infolist_name) || NIL_P (description) || NIL_P (function))
+    if (NIL_P (infolist_name) || NIL_P (description) || NIL_P (function)
+        || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_infolist");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (infolist_name, T_STRING);
     Check_Type (description, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_infolist_name = STR2CSTR (infolist_name);
     c_description = STR2CSTR (description);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_hook_infolist (weechat_ruby_plugin,
                                                        ruby_current_script,
                                                        c_infolist_name,
                                                        c_description,
                                                        &weechat_ruby_api_hook_infolist_cb,
-                                                       c_function));
+                                                       c_function,
+                                                       c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4401,7 +4538,7 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "unhook");
         RUBY_RETURN_ERROR;
     }
     
@@ -4409,7 +4546,7 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
     
     if (NIL_P (hook))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("unhook");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "unhook");
         RUBY_RETURN_ERROR;
     }
     
@@ -4436,7 +4573,7 @@ weechat_ruby_api_unhook_all (VALUE class)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "unhook_all");
         RUBY_RETURN_ERROR;
     }
     
@@ -4454,16 +4591,17 @@ weechat_ruby_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
                                        const char *input_data)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], empty_arg[1] = { '\0' };
+    char *ruby_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (buffer);
-        ruby_argv[1] = (input_data) ? (char *)input_data : empty_arg;
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = (input_data) ? (char *)input_data : empty_arg;
+        ruby_argv[3] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -4477,8 +4615,8 @@ weechat_ruby_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -4494,15 +4632,16 @@ int
 weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[2];
+    char *ruby_argv[3], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (buffer);
-        ruby_argv[1] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (buffer);
+        ruby_argv[2] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -4516,8 +4655,8 @@ weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
         
         return ret;
     }
@@ -4531,9 +4670,11 @@ weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 
 static VALUE
 weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
-                             VALUE function_close)
+                             VALUE data_input, VALUE function_close,
+                             VALUE data_close)
 {
-    char *c_name, *c_function_input, *c_function_close, *result;
+    char *c_name, *c_function_input, *c_data_input, *c_function_close;
+    char *c_data_close, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -4541,35 +4682,44 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_new");
         RUBY_RETURN_EMPTY;
     }
     
     c_name = NULL;
     c_function_input = NULL;
+    c_data_input = NULL;
     c_function_close = NULL;
+    c_data_close = NULL;
     
-    if (NIL_P (name) || NIL_P (function_input) || NIL_P (function_close))
+    if (NIL_P (name) || NIL_P (function_input) || NIL_P (data_input)
+        || NIL_P (function_close) || NIL_P (data_close))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_new");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (name, T_STRING);
     Check_Type (function_input, T_STRING);
+    Check_Type (data_input, T_STRING);
     Check_Type (function_close, T_STRING);
+    Check_Type (data_close, T_STRING);
     
     c_name = STR2CSTR (name);
     c_function_input = STR2CSTR (function_input);
+    c_data_input = STR2CSTR (data_input);
     c_function_close = STR2CSTR (function_close);
+    c_data_close = STR2CSTR (data_close);
     
     result = script_ptr2str (script_api_buffer_new (weechat_ruby_plugin,
                                                     ruby_current_script,
                                                     c_name,
                                                     &weechat_ruby_api_buffer_input_data_cb,
                                                     c_function_input,
+                                                    c_data_input,
                                                     &weechat_ruby_api_buffer_close_cb,
-                                                    c_function_close));
+                                                    c_function_close,
+                                                    c_data_close));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4589,7 +4739,7 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_search");
         RUBY_RETURN_EMPTY;
     }
 
@@ -4598,7 +4748,7 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
     
     if (NIL_P (plugin) || NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4628,7 +4778,7 @@ weechat_ruby_api_current_buffer (VALUE class)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "current_buffer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4651,7 +4801,7 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_clear");
         RUBY_RETURN_ERROR;
     }
     
@@ -4659,7 +4809,7 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
     
     if (NIL_P (buffer))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_clear");
         RUBY_RETURN_ERROR;
     }
     
@@ -4686,7 +4836,7 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_close");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_close");
         RUBY_RETURN_ERROR;
     }
     
@@ -4694,7 +4844,7 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
     
     if (NIL_P (buffer))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_close");
         RUBY_RETURN_ERROR;
     }
     
@@ -4724,13 +4874,13 @@ weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         RUBY_RETURN_INT(-1);
     }
     
     if (NIL_P (buffer) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         RUBY_RETURN_INT(-1);
     }
     
@@ -4761,13 +4911,13 @@ weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_string");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (buffer) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4798,13 +4948,13 @@ weechat_ruby_api_buffer_get_pointer (VALUE class, VALUE buffer, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (buffer) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4835,13 +4985,13 @@ weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_set");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (buffer) || NIL_P (property) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -4875,7 +5025,7 @@ weechat_ruby_api_current_window (VALUE class)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "current_window");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4899,13 +5049,13 @@ weechat_ruby_api_window_get_integer (VALUE class, VALUE window, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_integer");
         RUBY_RETURN_INT(-1);
     }
     
     if (NIL_P (window) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "window_get_integer");
         RUBY_RETURN_INT(-1);
     }
     
@@ -4936,13 +5086,13 @@ weechat_ruby_api_window_get_string (VALUE class, VALUE window, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_string");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (window) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "window_get_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -4973,13 +5123,13 @@ weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_pointer");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (window) || NIL_P (property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "window_get_pointer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5013,7 +5163,7 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5026,7 +5176,7 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     if (NIL_P (buffer) || NIL_P (parent_group) || NIL_P (name) || NIL_P (color)
         || NIL_P (visible))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5067,7 +5217,7 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5077,7 +5227,7 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
     
     if (NIL_P (buffer) || NIL_P (from_group) || NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5115,7 +5265,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5130,7 +5280,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (name) || NIL_P (color)
         || NIL_P (prefix) || NIL_P (prefix_color) || NIL_P (visible))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5177,7 +5327,7 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5187,7 +5337,7 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     
     if (NIL_P (buffer) || NIL_P (from_group) || NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5220,13 +5370,13 @@ weechat_ruby_api_nicklist_remove_group (VALUE class, VALUE buffer, VALUE group)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (buffer) || NIL_P (group))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         RUBY_RETURN_ERROR;
     }
     
@@ -5256,13 +5406,13 @@ weechat_ruby_api_nicklist_remove_nick (VALUE class, VALUE buffer, VALUE nick)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (buffer) || NIL_P (nick))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         RUBY_RETURN_ERROR;
     }
     
@@ -5292,13 +5442,13 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (buffer))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         RUBY_RETURN_ERROR;
     }
     
@@ -5326,7 +5476,7 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5334,7 +5484,7 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
     
     if (NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_item_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5356,25 +5506,26 @@ weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[3], *ret;
+    char *ruby_argv[4], empty_arg[1] = { '\0' }, *ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        ruby_argv[0] = script_ptr2str (item);
-        ruby_argv[1] = script_ptr2str (window);
-        ruby_argv[2] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (item);
+        ruby_argv[2] = script_ptr2str (window);
+        ruby_argv[3] = NULL;
         
         ret = (char *)weechat_ruby_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_STRING,
                                          script_callback->function,
                                          ruby_argv);
         
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
         if (ruby_argv[1])
             free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
         
         return ret;
     }
@@ -5387,9 +5538,10 @@ weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
  */
 
 static VALUE
-weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function)
+weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function,
+                               VALUE data)
 {
-    char *c_name, *c_function, *result;
+    char *c_name, *c_function, *c_data, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -5397,30 +5549,34 @@ weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_new");
         RUBY_RETURN_EMPTY;
     }
     
     c_name = NULL;
     c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (name) || NIL_P (function))
+    if (NIL_P (name) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_item_new");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (name, T_STRING);
     Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_name = STR2CSTR (name);
     c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     result = script_ptr2str (script_api_bar_item_new (weechat_ruby_plugin,
                                                       ruby_current_script,
                                                       c_name,
                                                       &weechat_ruby_api_bar_item_build_cb,
-                                                      c_function));
+                                                      c_function,
+                                                      c_data));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -5439,13 +5595,13 @@ weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_update");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_update");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_update");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_item_update");
         RUBY_RETURN_ERROR;
     }
     
@@ -5472,13 +5628,13 @@ weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_remove");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (item))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_item_remove");
         RUBY_RETURN_ERROR;
     }
     
@@ -5508,7 +5664,7 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5516,7 +5672,7 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
     
     if (NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_search");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5552,7 +5708,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5578,7 +5734,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
         || NIL_P (color_fg) || NIL_P (color_delim) || NIL_P (color_bg)
         || NIL_P (separator) || NIL_P (items))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5647,13 +5803,13 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_set");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (bar) || NIL_P (property) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_set");
         RUBY_RETURN_ERROR;
     }
     
@@ -5686,13 +5842,13 @@ weechat_ruby_api_bar_update (VALUE class, VALUE name)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_update");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_update");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (name))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_update");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_update");
         RUBY_RETURN_ERROR;
     }
     
@@ -5719,13 +5875,13 @@ weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_remove");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (bar))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "bar_remove");
         RUBY_RETURN_ERROR;
     }
     
@@ -5752,13 +5908,13 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("command");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "command");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (buffer) || NIL_P (command))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "command");
         RUBY_RETURN_ERROR;
     }
     
@@ -5791,13 +5947,13 @@ weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("info_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "info_get");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (info_name) || NIL_P (arguments))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "info_get");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5827,7 +5983,7 @@ weechat_ruby_api_infolist_new (VALUE class)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5854,13 +6010,13 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5896,13 +6052,13 @@ weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5938,13 +6094,13 @@ weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -5980,13 +6136,13 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_time");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_time");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6021,13 +6177,13 @@ weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_get");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (name) || NIL_P (pointer))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_get");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6061,13 +6217,13 @@ weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_next");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_next");
         RUBY_RETURN_INT(0);
     }
     
     if (NIL_P (infolist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_next");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_next");
         RUBY_RETURN_INT(0);
     }
     
@@ -6095,13 +6251,13 @@ weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_prev");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_prev");
         RUBY_RETURN_INT(0);
     }
     
     if (NIL_P (infolist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_prev");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_prev");
         RUBY_RETURN_INT(0);
     }
     
@@ -6129,13 +6285,13 @@ weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_fields");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_fields");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_fields");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_fields");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6163,13 +6319,13 @@ weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_integer");
         RUBY_RETURN_INT(0);
     }
     
     if (NIL_P (infolist) || NIL_P (variable))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_integer");
         RUBY_RETURN_INT(0);
     }
     
@@ -6199,13 +6355,13 @@ weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_string");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (variable))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_string");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6235,13 +6391,13 @@ weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_pointer");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (variable))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_pointer");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6272,13 +6428,13 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_time");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_time");
         RUBY_RETURN_EMPTY;
     }
     
     if (NIL_P (infolist) || NIL_P (variable))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_time");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_time");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6309,13 +6465,13 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_free");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (infolist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_free");
         RUBY_RETURN_ERROR;
     }
     
@@ -6344,7 +6500,7 @@ weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6353,7 +6509,7 @@ weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
     
     if (NIL_P (filename) || NIL_P (write))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "upgrade_new");
         RUBY_RETURN_EMPTY;
     }
     
@@ -6385,13 +6541,13 @@ weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         RUBY_RETURN_INT(0);
     }
     
     if (NIL_P (upgrade_file) || NIL_P (object_id) || NIL_P (infolist))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         RUBY_RETURN_INT(0);
     }
     
@@ -6421,7 +6577,7 @@ weechat_ruby_api_upgrade_read_cb (void *data,
                                   struct t_infolist *infolist)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], str_object_id[32];
+    char *ruby_argv[5], empty_arg[1] = { '\0' }, str_object_id[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -6430,10 +6586,11 @@ weechat_ruby_api_upgrade_read_cb (void *data,
     {
         snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
         
-        ruby_argv[0] = script_ptr2str (upgrade_file);
-        ruby_argv[1] = str_object_id;
-        ruby_argv[2] = script_ptr2str (infolist);
-        ruby_argv[3] = NULL;
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = script_ptr2str (upgrade_file);
+        ruby_argv[2] = str_object_id;
+        ruby_argv[3] = script_ptr2str (infolist);
+        ruby_argv[4] = NULL;
         
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -6447,10 +6604,10 @@ weechat_ruby_api_upgrade_read_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (ruby_argv[0])
-            free (ruby_argv[0]);
-        if (ruby_argv[2])
-            free (ruby_argv[2]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        if (ruby_argv[3])
+            free (ruby_argv[3]);
         
         return ret;
     }
@@ -6464,9 +6621,9 @@ weechat_ruby_api_upgrade_read_cb (void *data,
 
 static VALUE
 weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
-                               VALUE function_read)
+                               VALUE function, VALUE data)
 {
-    char *c_upgrade_file, *c_function_read;
+    char *c_upgrade_file, *c_function, *c_data;
     int rc;
     
     /* make C compiler happy */
@@ -6474,30 +6631,34 @@ weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_read");
         RUBY_RETURN_INT(0);
     }
     
     c_upgrade_file = NULL;
-    c_function_read = NULL;
+    c_function = NULL;
+    c_data = NULL;
     
-    if (NIL_P (upgrade_file) || NIL_P (function_read))
+    if (NIL_P (upgrade_file) || NIL_P (function) || NIL_P (data))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "upgrade_read");
         RUBY_RETURN_INT(0);
     }
     
     Check_Type (upgrade_file, T_STRING);
-    Check_Type (function_read, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
     
     c_upgrade_file = STR2CSTR (upgrade_file);
-    c_function_read = STR2CSTR (function_read);
+    c_function = STR2CSTR (function);
+    c_data = STR2CSTR (data);
     
     rc = script_api_upgrade_read (weechat_ruby_plugin,
                                   ruby_current_script,
                                   script_str2ptr (c_upgrade_file),
                                   &weechat_ruby_api_upgrade_read_cb,
-                                  c_function_read);
+                                  c_function,
+                                  c_data);
     
     RUBY_RETURN_INT(rc);
 }
@@ -6516,13 +6677,13 @@ weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
     
     if (!ruby_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_close");
         RUBY_RETURN_ERROR;
     }
     
     if (NIL_P (upgrade_file))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "upgrade_close");
         RUBY_RETURN_ERROR;
     }
     
@@ -6611,10 +6772,10 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "list_remove", &weechat_ruby_api_list_remove, 2);
     rb_define_module_function (ruby_mWeechat, "list_remove_all", &weechat_ruby_api_list_remove_all, 1);
     rb_define_module_function (ruby_mWeechat, "list_free", &weechat_ruby_api_list_free, 1);
-    rb_define_module_function (ruby_mWeechat, "config_new", &weechat_ruby_api_config_new, 2);
-    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 9);
+    rb_define_module_function (ruby_mWeechat, "config_new", &weechat_ruby_api_config_new, 3);
+    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 14);
     rb_define_module_function (ruby_mWeechat, "config_search_section", &weechat_ruby_api_config_search_section, 2);
-    rb_define_module_function (ruby_mWeechat, "config_new_option", &weechat_ruby_api_config_new_option, 14);
+    rb_define_module_function (ruby_mWeechat, "config_new_option", &weechat_ruby_api_config_new_option, 17);
     rb_define_module_function (ruby_mWeechat, "config_search_option", &weechat_ruby_api_config_search_option, 3);
     rb_define_module_function (ruby_mWeechat, "config_string_to_boolean", &weechat_ruby_api_config_string_to_boolean, 1);
     rb_define_module_function (ruby_mWeechat, "config_option_reset", &weechat_ruby_api_config_option_reset, 2);
@@ -6651,25 +6812,25 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "print_date_tags", &weechat_ruby_api_print_date_tags, 4);
     rb_define_module_function (ruby_mWeechat, "print_y", &weechat_ruby_api_print_y, 3);
     rb_define_module_function (ruby_mWeechat, "log_print", &weechat_ruby_api_log_print, 1);
-    rb_define_module_function (ruby_mWeechat, "hook_command", &weechat_ruby_api_hook_command, 6);
-    rb_define_module_function (ruby_mWeechat, "hook_command_run", &weechat_ruby_api_hook_command_run, 2);
-    rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 4);
-    rb_define_module_function (ruby_mWeechat, "hook_fd", &weechat_ruby_api_hook_fd, 5);
-    rb_define_module_function (ruby_mWeechat, "hook_process", &weechat_ruby_api_hook_process, 3);
-    rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 7);
-    rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 5);
-    rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_command", &weechat_ruby_api_hook_command, 7);
+    rb_define_module_function (ruby_mWeechat, "hook_command_run", &weechat_ruby_api_hook_command_run, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 5);
+    rb_define_module_function (ruby_mWeechat, "hook_fd", &weechat_ruby_api_hook_fd, 6);
+    rb_define_module_function (ruby_mWeechat, "hook_process", &weechat_ruby_api_hook_process, 4);
+    rb_define_module_function (ruby_mWeechat, "hook_connect", &weechat_ruby_api_hook_connect, 8);
+    rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 6);
+    rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 3);
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
-    rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 2);
-    rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 4);
     rb_define_module_function (ruby_mWeechat, "hook_completion_list_add", &weechat_ruby_api_hook_completion_list_add, 4);
-    rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 3);
     rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);
-    rb_define_module_function (ruby_mWeechat, "hook_info", &weechat_ruby_api_hook_info, 3);
-    rb_define_module_function (ruby_mWeechat, "hook_infolist", &weechat_ruby_api_hook_infolist, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_info", &weechat_ruby_api_hook_info, 4);
+    rb_define_module_function (ruby_mWeechat, "hook_infolist", &weechat_ruby_api_hook_infolist, 4);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
-    rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 3);
+    rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 5);
     rb_define_module_function (ruby_mWeechat, "buffer_search", &weechat_ruby_api_buffer_search, 2);
     rb_define_module_function (ruby_mWeechat, "current_buffer", &weechat_ruby_api_current_buffer, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_clear", &weechat_ruby_api_buffer_clear, 1);
@@ -6690,7 +6851,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_nick", &weechat_ruby_api_nicklist_remove_nick, 2);
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_all", &weechat_ruby_api_nicklist_remove_all, 1);
     rb_define_module_function (ruby_mWeechat, "bar_item_search", &weechat_ruby_api_bar_item_search, 1);
-    rb_define_module_function (ruby_mWeechat, "bar_item_new", &weechat_ruby_api_bar_item_new, 2);
+    rb_define_module_function (ruby_mWeechat, "bar_item_new", &weechat_ruby_api_bar_item_new, 3);
     rb_define_module_function (ruby_mWeechat, "bar_item_update", &weechat_ruby_api_bar_item_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_item_remove", &weechat_ruby_api_bar_item_remove, 1);
     rb_define_module_function (ruby_mWeechat, "bar_search", &weechat_ruby_api_bar_search, 1);
@@ -6716,6 +6877,6 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "infolist_free", &weechat_ruby_api_infolist_free, 1);
     rb_define_module_function (ruby_mWeechat, "upgrade_new", &weechat_ruby_api_upgrade_new, 2);
     rb_define_module_function (ruby_mWeechat, "upgrade_write_object", &weechat_ruby_api_upgrade_write_object, 3);
-    rb_define_module_function (ruby_mWeechat, "upgrade_read", &weechat_ruby_api_upgrade_read, 2);
+    rb_define_module_function (ruby_mWeechat, "upgrade_read", &weechat_ruby_api_upgrade_read, 3);
     rb_define_module_function (ruby_mWeechat, "upgrade_close", &weechat_ruby_api_upgrade_close, 1);
 }

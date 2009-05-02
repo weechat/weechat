@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-24 17:16+0200\n"
+"POT-Creation-Date: 2009-04-29 14:30+0200\n"
 "PO-Revision-Date: 2009-04-29 08:07+0200\n"
 "Last-Translator:  <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -47,8 +47,10 @@ msgid ""
 "                    (look at plugins documentation for more information\n"
 "                    about possible options)\n"
 msgstr ""
-"  -a, --no-connect  wyłącza automatyczne łączenie się z serwerem przy uruchomieniu\n"
-"  -d, --dir <ścierzka>  ustawia katalog domowy  WeeChat (domyślnie: ~/.weechat)\n"
+"  -a, --no-connect  wyłącza automatyczne łączenie się z serwerem przy "
+"uruchomieniu\n"
+"  -d, --dir <ścierzka>  ustawia katalog domowy  WeeChat (domyślnie: ~/."
+"weechat)\n"
 "  -h, --help        ta wiadomość\n"
 "  -k, --keys        wyświetla domyślne skróty klawiszowe WeeChat\n"
 "  -l, --license     wyświetla licencje WeeChat\n"
@@ -57,9 +59,11 @@ msgstr ""
 "  wtyczka:opcje     opcje dla wtyczki\n"
 "                    na przykład, wtyczka irc może połączyć się\n"
 "                    z serwerem dzieki adresowi:\n"
-"                    irc[6][s]://[nick[:haslo]@]irc.przykład.org[/port][//#kanał1][,#kanał2[...]]\n"
+"                    irc[6][s]://[nick[:haslo]@]irc.przykład.org[/port][//"
+"#kanał1][,#kanał2[...]]\n"
 "                    (zajrzyj do dokumentacji wtyczek po więcej informacji\n"
 "                    o dostępnych opcjach)\n"
+
 #. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
@@ -94,8 +98,9 @@ msgstr "Lista pasków:"
 msgid ""
 "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
 "%s"
-msgstr "  %s%s%s: %s%s%s (położenie: %s), %s, wyrównanie: %s(góra/dół)/%s(lewo/prawo), %s: "
-"%s"
+msgstr ""
+"  %s%s%s: %s%s%s (położenie: %s), %s, wyrównanie: %s(góra/dół)/%s(lewo/"
+"prawo), %s: %s"
 
 msgid "(hidden)"
 msgstr "(ukryty)"
@@ -169,7 +174,7 @@ msgstr "Pasek usunięty"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
-msgstr "%sBłąd: nie można ustawić opcji \"%s\" dla paska \"%s\"" 
+msgstr "%sBłąd: nie można ustawić opcji \"%s\" dla paska \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" is now hidden"
@@ -375,7 +380,9 @@ msgstr "Przywrócono domyślne przypisania klawiszy"
 
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
-msgstr "%sBłąd: argument \"-yes\" wymagany do zresetowania ustawień klawiszy (względy bezpieczeństwa) "
+msgstr ""
+"%sBłąd: argument \"-yes\" wymagany do zresetowania ustawień klawiszy "
+"(względy bezpieczeństwa) "
 
 #, c-format
 msgid "%d new key added"
@@ -4618,11 +4625,12 @@ msgid "  (none)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to call function \"%s\", script is not initialized"
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: wrong arguments for function \"%s\""
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr ""
 
 #, c-format

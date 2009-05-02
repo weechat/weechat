@@ -23,6 +23,7 @@ struct t_script_callback
 {
     void *script;                            /* pointer to script           */
     char *function;                          /* script function called      */
+    char *data;                              /* data string for callback    */
     struct t_config_file *config_file;       /* not NULL for config file    */
     struct t_config_section *config_section; /* not NULL for config section */
     struct t_config_option *config_option;   /* not NULL for config option  */
@@ -35,6 +36,10 @@ struct t_script_callback
 };
 
 extern struct t_script_callback *script_callback_alloc ();
+extern void script_callback_init (struct t_script_callback *script_callback,
+                                  struct t_plugin_script *script,
+                                  const char *function,
+                                  const char *data);
 extern void script_callback_add (struct t_plugin_script *script,
                                  struct t_script_callback *callback);
 extern void script_callback_free_data (struct t_script_callback *script_callback);

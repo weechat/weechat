@@ -23,6 +23,8 @@
 #define weechat_plugin weechat_perl_plugin
 #define PERL_PLUGIN_NAME "perl"
 
+#define PERL_CURRENT_SCRIPT_NAME ((perl_current_script) ? perl_current_script->name : "-")
+
 extern struct t_weechat_plugin *weechat_perl_plugin;
 
 extern int perl_quiet;

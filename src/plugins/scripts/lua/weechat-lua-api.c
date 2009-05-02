@@ -83,7 +83,7 @@ weechat_lua_api_register (lua_State *L)
 
     if (n < 7)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("register");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(lua_current_script_filename, "register");
         LUA_RETURN_ERROR;
     }
     
@@ -151,7 +151,7 @@ weechat_lua_api_plugin_get_name (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "plugin_get_name");
         LUA_RETURN_EMPTY;
     }
     
@@ -161,7 +161,7 @@ weechat_lua_api_plugin_get_name (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "plugin_get_name");
         LUA_RETURN_EMPTY;
     }
     
@@ -187,7 +187,7 @@ weechat_lua_api_charset_set (lua_State *L)
      
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("charset_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "charset_set");
         LUA_RETURN_ERROR;
     }
     
@@ -197,7 +197,7 @@ weechat_lua_api_charset_set (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("charset_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "charset_set");
         LUA_RETURN_ERROR;
     }
     
@@ -225,7 +225,7 @@ weechat_lua_api_iconv_to_internal (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         LUA_RETURN_EMPTY;
     }
     
@@ -236,7 +236,7 @@ weechat_lua_api_iconv_to_internal (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         LUA_RETURN_EMPTY;
     }
     
@@ -265,7 +265,7 @@ weechat_lua_api_iconv_from_internal (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         LUA_RETURN_EMPTY;
     }
     
@@ -276,7 +276,7 @@ weechat_lua_api_iconv_from_internal (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         LUA_RETURN_EMPTY;
     }
     
@@ -303,7 +303,7 @@ weechat_lua_api_gettext (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("gettext");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "gettext");
         LUA_RETURN_EMPTY;
     }
     
@@ -313,7 +313,7 @@ weechat_lua_api_gettext (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("gettext");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "gettext");
         LUA_RETURN_EMPTY;
     }
     
@@ -339,7 +339,7 @@ weechat_lua_api_ngettext (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("ngettext");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "ngettext");
         LUA_RETURN_EMPTY;
     }
     
@@ -351,7 +351,7 @@ weechat_lua_api_ngettext (lua_State *L)
 
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("ngettext");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "ngettext");
         LUA_RETURN_EMPTY;
     }
     
@@ -380,7 +380,7 @@ weechat_lua_api_string_remove_color (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("string_remove_color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_remove_color");
         LUA_RETURN_EMPTY;
     }
     
@@ -390,7 +390,7 @@ weechat_lua_api_string_remove_color (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("string_remove_color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "string_remove_color");
         LUA_RETURN_EMPTY;
     }
     
@@ -417,7 +417,7 @@ weechat_lua_api_mkdir_home (lua_State *L)
      
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_home");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir_home");
         LUA_RETURN_ERROR;
     }
     
@@ -428,7 +428,7 @@ weechat_lua_api_mkdir_home (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_home");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "mkdir_home");
         LUA_RETURN_ERROR;
     }
     
@@ -456,7 +456,7 @@ weechat_lua_api_mkdir (lua_State *L)
      
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir");
         LUA_RETURN_ERROR;
     }
     
@@ -467,7 +467,7 @@ weechat_lua_api_mkdir (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "mkdir");
         LUA_RETURN_ERROR;
     }
     
@@ -496,7 +496,7 @@ weechat_lua_api_mkdir_parents (lua_State *L)
      
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir_parents");
         LUA_RETURN_ERROR;
     }
     
@@ -507,7 +507,7 @@ weechat_lua_api_mkdir_parents (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "mkdir_parents");
         LUA_RETURN_ERROR;
     }
     
@@ -534,7 +534,7 @@ weechat_lua_api_list_new (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -559,7 +559,7 @@ weechat_lua_api_list_add (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_add");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_add");
         LUA_RETURN_EMPTY;
     }
     
@@ -572,7 +572,7 @@ weechat_lua_api_list_add (lua_State *L)
     
     if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_add");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_add");
         LUA_RETURN_EMPTY;
     }
     
@@ -605,7 +605,7 @@ weechat_lua_api_list_search (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -616,7 +616,7 @@ weechat_lua_api_list_search (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -645,7 +645,7 @@ weechat_lua_api_list_casesearch (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_casesearch");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_casesearch");
         LUA_RETURN_EMPTY;
     }
     
@@ -656,7 +656,7 @@ weechat_lua_api_list_casesearch (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_casesearch");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_casesearch");
         LUA_RETURN_EMPTY;
     }
     
@@ -685,7 +685,7 @@ weechat_lua_api_list_get (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -696,7 +696,7 @@ weechat_lua_api_list_get (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -724,7 +724,7 @@ weechat_lua_api_list_set (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_set");
         LUA_RETURN_ERROR;
     }
     
@@ -735,7 +735,7 @@ weechat_lua_api_list_set (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_set");
         LUA_RETURN_ERROR;
     }
     
@@ -764,7 +764,7 @@ weechat_lua_api_list_next (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_next");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_next");
         LUA_RETURN_EMPTY;
     }
     
@@ -774,7 +774,7 @@ weechat_lua_api_list_next (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_next");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_next");
         LUA_RETURN_EMPTY;
     }
     
@@ -801,7 +801,7 @@ weechat_lua_api_list_prev (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_prev");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_prev");
         LUA_RETURN_EMPTY;
     }
     
@@ -811,7 +811,7 @@ weechat_lua_api_list_prev (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_prev");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_prev");
         LUA_RETURN_EMPTY;
     }
     
@@ -837,7 +837,7 @@ weechat_lua_api_list_string (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -847,7 +847,7 @@ weechat_lua_api_list_string (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -873,7 +873,7 @@ weechat_lua_api_list_size (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_size");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_size");
         LUA_RETURN_INT(0);
     }
     
@@ -883,7 +883,7 @@ weechat_lua_api_list_size (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_size");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_size");
         LUA_RETURN_INT(0);
     }
     
@@ -909,7 +909,7 @@ weechat_lua_api_list_remove (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -920,7 +920,7 @@ weechat_lua_api_list_remove (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -948,7 +948,7 @@ weechat_lua_api_list_remove_all (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_remove_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_remove_all");
         LUA_RETURN_ERROR;
     }
     
@@ -958,7 +958,7 @@ weechat_lua_api_list_remove_all (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_remove_all");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_remove_all");
         LUA_RETURN_ERROR;
     }
     
@@ -984,7 +984,7 @@ weechat_lua_api_list_free (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("list_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_free");
         LUA_RETURN_ERROR;
     }
     
@@ -994,7 +994,7 @@ weechat_lua_api_list_free (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("list_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_free");
         LUA_RETURN_ERROR;
     }
     
@@ -1014,15 +1014,16 @@ weechat_lua_api_config_reload_cb (void *data,
                                   struct t_config_file *config_file)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2];
+    char *lua_argv[3], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1036,8 +1037,8 @@ weechat_lua_api_config_reload_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -1052,7 +1053,7 @@ weechat_lua_api_config_reload_cb (void *data,
 static int
 weechat_lua_api_config_new (lua_State *L)
 {
-    const char *name, *function;
+    const char *name, *function, *data;
     char *result;
     int n;
     
@@ -1061,29 +1062,32 @@ weechat_lua_api_config_new (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new");
         LUA_RETURN_EMPTY;
     }
     
     name = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    name = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new (weechat_lua_plugin,
                                                     lua_current_script,
                                                     name,
                                                     &weechat_lua_api_config_reload_cb,
-                                                    function));
+                                                    function,
+                                                    data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -1099,18 +1103,19 @@ weechat_lua_api_config_read_cb (void *data,
                                 const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    char *lua_argv[6], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = script_ptr2str (section);
-        lua_argv[2] = (option_name) ? (char *)option_name : empty_arg;
-        lua_argv[3] = (value) ? (char *)value : empty_arg;
-        lua_argv[4] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = script_ptr2str (section);
+        lua_argv[3] = (option_name) ? (char *)option_name : empty_arg;
+        lua_argv[4] = (value) ? (char *)value : empty_arg;
+        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1124,10 +1129,10 @@ weechat_lua_api_config_read_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
         if (lua_argv[1])
             free (lua_argv[1]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
         
         return ret;
     }
@@ -1145,16 +1150,17 @@ weechat_lua_api_config_section_write_cb (void *data,
                                          const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = (section_name) ? (char *)section_name : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = (section_name) ? (char *)section_name : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1163,8 +1169,8 @@ weechat_lua_api_config_section_write_cb (void *data,
         
         if (rc)
             free (rc);
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
     }
 }
 
@@ -1179,16 +1185,17 @@ weechat_lua_api_config_section_write_default_cb (void *data,
                                                  const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = (section_name) ? (char *)section_name : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = (section_name) ? (char *)section_name : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1197,8 +1204,8 @@ weechat_lua_api_config_section_write_default_cb (void *data,
         
         if (rc)
             free (rc);
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
     }
 }
 
@@ -1214,18 +1221,19 @@ weechat_lua_api_config_section_create_option_cb (void *data,
                                                  const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    char *lua_argv[6], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = script_ptr2str (section);
-        lua_argv[2] = (option_name) ? (char *)option_name : empty_arg;
-        lua_argv[3] = (value) ? (char *)value : empty_arg;
-        lua_argv[4] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = script_ptr2str (section);
+        lua_argv[3] = (option_name) ? (char *)option_name : empty_arg;
+        lua_argv[4] = (value) ? (char *)value : empty_arg;
+        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1239,10 +1247,10 @@ weechat_lua_api_config_section_create_option_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
         if (lua_argv[1])
             free (lua_argv[1]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
         
         return ret;
     }
@@ -1261,17 +1269,18 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
                                                  struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4];
+    char *lua_argv[5], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (config_file);
-        lua_argv[1] = script_ptr2str (section);
-        lua_argv[2] = script_ptr2str (option);
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (config_file);
+        lua_argv[2] = script_ptr2str (section);
+        lua_argv[3] = script_ptr2str (option);
+        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1285,12 +1294,12 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
         if (lua_argv[1])
             free (lua_argv[1]);
         if (lua_argv[2])
             free (lua_argv[2]);
+        if (lua_argv[3])
+            free (lua_argv[3]);
         
         return ret;
     }
@@ -1305,9 +1314,11 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
 static int
 weechat_lua_api_config_new_section (lua_State *L)
 {
-    const char *config_file, *name, *function_read, *function_write;
-    const char *function_write_default, *function_create_option;
-    const char *function_delete_option;
+    const char *config_file, *name, *function_read, *data_read;
+    const char *function_write, *data_write, *function_write_default;
+    const char *data_write_default, *function_create_option;
+    const char *data_create_option, *function_delete_option;
+    const char *data_delete_option;
     char *result;
     int n, user_can_add_options, user_can_delete_options;
     
@@ -1316,7 +1327,7 @@ weechat_lua_api_config_new_section (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new_section");
         LUA_RETURN_EMPTY;
     }
     
@@ -1325,28 +1336,38 @@ weechat_lua_api_config_new_section (lua_State *L)
     user_can_add_options = 0;
     user_can_delete_options = 0;
     function_read = NULL;
+    data_read = NULL;
     function_write = NULL;
+    data_write = NULL;
     function_write_default = NULL;
+    data_write_default = NULL;
     function_create_option = NULL;
+    data_create_option = NULL;
     function_delete_option = NULL;
+    data_delete_option = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 9)
+    if (n < 14)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_new_section");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -9);
-    name = lua_tostring (lua_current_interpreter, -8);
-    user_can_add_options = lua_tonumber (lua_current_interpreter, -7);
-    user_can_delete_options = lua_tonumber (lua_current_interpreter, -6);
-    function_read = lua_tostring (lua_current_interpreter, -5);
-    function_write = lua_tostring (lua_current_interpreter, -4);
-    function_write_default = lua_tostring (lua_current_interpreter, -3);
-    function_create_option = lua_tostring (lua_current_interpreter, -2);
-    function_delete_option = lua_tostring (lua_current_interpreter, -1);
+    config_file = lua_tostring (lua_current_interpreter, -14);
+    name = lua_tostring (lua_current_interpreter, -13);
+    user_can_add_options = lua_tonumber (lua_current_interpreter, -12);
+    user_can_delete_options = lua_tonumber (lua_current_interpreter, -11);
+    function_read = lua_tostring (lua_current_interpreter, -10);
+    data_read = lua_tostring (lua_current_interpreter, -9);
+    function_write = lua_tostring (lua_current_interpreter, -8);
+    data_write = lua_tostring (lua_current_interpreter, -7);
+    function_write_default = lua_tostring (lua_current_interpreter, -6);
+    data_write_default = lua_tostring (lua_current_interpreter, -5);
+    function_create_option = lua_tostring (lua_current_interpreter, -4);
+    data_create_option = lua_tostring (lua_current_interpreter, -3);
+    function_delete_option = lua_tostring (lua_current_interpreter, -2);
+    data_delete_option = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new_section (weechat_lua_plugin,
                                                             lua_current_script,
@@ -1356,14 +1377,19 @@ weechat_lua_api_config_new_section (lua_State *L)
                                                             user_can_delete_options,
                                                             &weechat_lua_api_config_read_cb,
                                                             function_read,
+                                                            data_read,
                                                             &weechat_lua_api_config_section_write_cb,
                                                             function_write,
+                                                            data_write,
                                                             &weechat_lua_api_config_section_write_default_cb,
                                                             function_write_default,
+                                                            data_write_default,
                                                             &weechat_lua_api_config_section_create_option_cb,
                                                             function_create_option,
+                                                            data_create_option,
                                                             &weechat_lua_api_config_section_delete_option_cb,
-                                                            function_delete_option));
+                                                            function_delete_option,
+                                                            data_delete_option));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -1384,7 +1410,7 @@ weechat_lua_api_config_search_section (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_search_section");
         LUA_RETURN_EMPTY;
     }
     
@@ -1395,7 +1421,7 @@ weechat_lua_api_config_search_section (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_section");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_search_section");
         LUA_RETURN_EMPTY;
     }
     
@@ -1419,16 +1445,17 @@ weechat_lua_api_config_option_check_value_cb (void *data,
                                               const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (option);
-        lua_argv[1] = (value) ? (char *)value : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (option);
+        lua_argv[2] = (value) ? (char *)value : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1442,8 +1469,8 @@ weechat_lua_api_config_option_check_value_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -1460,23 +1487,24 @@ weechat_lua_api_config_option_change_cb (void *data,
                                          struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2];
+    char *lua_argv[3], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (option);
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (option);
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
                                        lua_argv);
         
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         if (rc)
             free (rc);
@@ -1492,23 +1520,24 @@ weechat_lua_api_config_option_delete_cb (void *data,
                                          struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2];
+    char *lua_argv[3], empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (option);
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (option);
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
                                        lua_argv);
         
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         if (rc)
             free (rc);
@@ -1524,7 +1553,8 @@ weechat_lua_api_config_new_option (lua_State *L)
 {
     const char *config_file, *section, *name, *type, *description;
     const char *string_values, *default_value, *value;
-    const char *function_check_value, *function_change, *function_delete;
+    const char *function_check_value, *data_check_value, *function_change;
+    const char *data_change, *function_delete, *data_delete;
     char *result;
     int n, min, max, null_value_allowed;
     
@@ -1533,7 +1563,7 @@ weechat_lua_api_config_new_option (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new_option");
         LUA_RETURN_EMPTY;
     }
     
@@ -1549,31 +1579,37 @@ weechat_lua_api_config_new_option (lua_State *L)
     value = NULL;
     null_value_allowed = 0;
     function_check_value = NULL;
+    data_check_value = NULL;
     function_change = NULL;
+    data_change = NULL;
     function_delete = NULL;
+    data_delete = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 14)
+    if (n < 17)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_new_option");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -14);
-    section = lua_tostring (lua_current_interpreter, -13);
-    name = lua_tostring (lua_current_interpreter, -12);
-    type = lua_tostring (lua_current_interpreter, -11);
-    description = lua_tostring (lua_current_interpreter, -10);
-    string_values = lua_tostring (lua_current_interpreter, -9);
-    min = lua_tonumber (lua_current_interpreter, -8);
-    max = lua_tonumber (lua_current_interpreter, -7);
-    default_value = lua_tostring (lua_current_interpreter, -6);
-    value = lua_tostring (lua_current_interpreter, -5);
-    null_value_allowed = lua_tonumber (lua_current_interpreter, -4);
-    function_check_value = lua_tostring (lua_current_interpreter, -3);
-    function_change = lua_tostring (lua_current_interpreter, -2);
-    function_delete = lua_tostring (lua_current_interpreter, -1);
+    config_file = lua_tostring (lua_current_interpreter, -17);
+    section = lua_tostring (lua_current_interpreter, -16);
+    name = lua_tostring (lua_current_interpreter, -15);
+    type = lua_tostring (lua_current_interpreter, -14);
+    description = lua_tostring (lua_current_interpreter, -13);
+    string_values = lua_tostring (lua_current_interpreter, -12);
+    min = lua_tonumber (lua_current_interpreter, -11);
+    max = lua_tonumber (lua_current_interpreter, -10);
+    default_value = lua_tostring (lua_current_interpreter, -9);
+    value = lua_tostring (lua_current_interpreter, -8);
+    null_value_allowed = lua_tonumber (lua_current_interpreter, -7);
+    function_check_value = lua_tostring (lua_current_interpreter, -6);
+    data_check_value = lua_tostring (lua_current_interpreter, -5);
+    function_change = lua_tostring (lua_current_interpreter, -4);
+    data_change = lua_tostring (lua_current_interpreter, -3);
+    function_delete = lua_tostring (lua_current_interpreter, -2);
+    data_delete = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new_option (weechat_lua_plugin,
                                                            lua_current_script,
@@ -1590,10 +1626,13 @@ weechat_lua_api_config_new_option (lua_State *L)
                                                            null_value_allowed,
                                                            &weechat_lua_api_config_option_check_value_cb,
                                                            function_check_value,
+                                                           data_check_value,
                                                            &weechat_lua_api_config_option_change_cb,
                                                            function_change,
+                                                           data_change,
                                                            &weechat_lua_api_config_option_delete_cb,
-                                                           function_delete));
+                                                           function_delete,
+                                                           data_delete));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -1614,7 +1653,7 @@ weechat_lua_api_config_search_option (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_search_option");
         LUA_RETURN_EMPTY;
     }
     
@@ -1626,7 +1665,7 @@ weechat_lua_api_config_search_option (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_search_option");
         LUA_RETURN_EMPTY;
     }
     
@@ -1656,7 +1695,7 @@ weechat_lua_api_config_string_to_boolean (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         LUA_RETURN_INT(0);
     }
     
@@ -1666,7 +1705,7 @@ weechat_lua_api_config_string_to_boolean (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_to_boolean");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         LUA_RETURN_INT(0);
     }
     
@@ -1692,7 +1731,7 @@ weechat_lua_api_config_option_reset (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_reset");
         LUA_RETURN_INT(0);
     }
     
@@ -1703,7 +1742,7 @@ weechat_lua_api_config_option_reset (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_reset");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_reset");
         LUA_RETURN_INT(0);
     }
     
@@ -1731,7 +1770,7 @@ weechat_lua_api_config_option_set (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_set");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1743,7 +1782,7 @@ weechat_lua_api_config_option_set (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_set");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1774,7 +1813,7 @@ weechat_lua_api_config_option_set_null (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_set_null");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1785,7 +1824,7 @@ weechat_lua_api_config_option_set_null (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_set_null");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -1813,7 +1852,7 @@ weechat_lua_api_config_option_unset (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_unset");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -1823,7 +1862,7 @@ weechat_lua_api_config_option_unset (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_unset");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -1849,7 +1888,7 @@ weechat_lua_api_config_option_rename (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_rename");
         LUA_RETURN_ERROR;
     }
     
@@ -1860,7 +1899,7 @@ weechat_lua_api_config_option_rename (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_rename");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_rename");
         LUA_RETURN_ERROR;
     }
     
@@ -1888,7 +1927,7 @@ weechat_lua_api_config_option_is_null (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_is_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_is_null");
         LUA_RETURN_INT(1);
     }
     
@@ -1898,7 +1937,7 @@ weechat_lua_api_config_option_is_null (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_is_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_is_null");
         LUA_RETURN_INT(1);
     }
     
@@ -1925,7 +1964,7 @@ weechat_lua_api_config_option_default_is_null (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_default_is_null");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         LUA_RETURN_INT(1);
     }
     
@@ -1935,7 +1974,7 @@ weechat_lua_api_config_option_default_is_null (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_default_is_null");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         LUA_RETURN_INT(1);
     }
     
@@ -1961,7 +2000,7 @@ weechat_lua_api_config_boolean (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_boolean");
         LUA_RETURN_INT(0);
     }
     
@@ -1971,7 +2010,7 @@ weechat_lua_api_config_boolean (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_boolean");
         LUA_RETURN_INT(0);
     }
     
@@ -1997,7 +2036,7 @@ weechat_lua_api_config_boolean_default (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_boolean_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2007,7 +2046,7 @@ weechat_lua_api_config_boolean_default (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_boolean_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2033,7 +2072,7 @@ weechat_lua_api_config_integer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_integer");
         LUA_RETURN_INT(0);
     }
     
@@ -2043,7 +2082,7 @@ weechat_lua_api_config_integer (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_integer");
         LUA_RETURN_INT(0);
     }
     
@@ -2069,7 +2108,7 @@ weechat_lua_api_config_integer_default (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_integer_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2079,7 +2118,7 @@ weechat_lua_api_config_integer_default (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_integer_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2105,7 +2144,7 @@ weechat_lua_api_config_string (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -2115,7 +2154,7 @@ weechat_lua_api_config_string (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_string");
         LUA_RETURN_INT(0);
     }
     
@@ -2141,7 +2180,7 @@ weechat_lua_api_config_string_default (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string_default");
         LUA_RETURN_EMPTY;
     }
     
@@ -2151,7 +2190,7 @@ weechat_lua_api_config_string_default (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_string_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2177,7 +2216,7 @@ weechat_lua_api_config_color (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_color");
         LUA_RETURN_INT(0);
     }
     
@@ -2187,7 +2226,7 @@ weechat_lua_api_config_color (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_color");
         LUA_RETURN_INT(0);
     }
     
@@ -2213,7 +2252,7 @@ weechat_lua_api_config_color_default (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color_default");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_color_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2223,7 +2262,7 @@ weechat_lua_api_config_color_default (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color_default");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_color_default");
         LUA_RETURN_INT(0);
     }
     
@@ -2249,7 +2288,7 @@ weechat_lua_api_config_write_option (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_option");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write_option");
         LUA_RETURN_ERROR;
     }
     
@@ -2260,7 +2299,7 @@ weechat_lua_api_config_write_option (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_option");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_write_option");
         LUA_RETURN_ERROR;
     }
     
@@ -2288,7 +2327,7 @@ weechat_lua_api_config_write_line (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write_line");
         LUA_RETURN_ERROR;
     }
     
@@ -2300,7 +2339,7 @@ weechat_lua_api_config_write_line (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_line");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_write_line");
         LUA_RETURN_ERROR;
     }
     
@@ -2331,7 +2370,7 @@ weechat_lua_api_config_write (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write");
         LUA_RETURN_INT(-1);
     }
     
@@ -2341,7 +2380,7 @@ weechat_lua_api_config_write (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_write");
         LUA_RETURN_INT(-1);
     }
     
@@ -2367,7 +2406,7 @@ weechat_lua_api_config_read (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_read");
         LUA_RETURN_INT(-1);
     }
     
@@ -2377,7 +2416,7 @@ weechat_lua_api_config_read (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_read");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_read");
         LUA_RETURN_INT(-1);
     }
     
@@ -2403,7 +2442,7 @@ weechat_lua_api_config_reload (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_reload");
         LUA_RETURN_INT(-1);
     }
     
@@ -2413,7 +2452,7 @@ weechat_lua_api_config_reload (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_reload");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_reload");
         LUA_RETURN_INT(-1);
     }
     
@@ -2439,7 +2478,7 @@ weechat_lua_api_config_option_free (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2449,7 +2488,7 @@ weechat_lua_api_config_option_free (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_option_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2478,7 +2517,7 @@ weechat_lua_api_config_section_free_options (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free_options");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_section_free_options");
         LUA_RETURN_ERROR;
     }
     
@@ -2488,7 +2527,7 @@ weechat_lua_api_config_section_free_options (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free_options");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_section_free_options");
         LUA_RETURN_ERROR;
     }
     
@@ -2516,7 +2555,7 @@ weechat_lua_api_config_section_free (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_section_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_section_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2526,7 +2565,7 @@ weechat_lua_api_config_section_free (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_section_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_section_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2554,7 +2593,7 @@ weechat_lua_api_config_free (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2564,7 +2603,7 @@ weechat_lua_api_config_free (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_free");
         LUA_RETURN_ERROR;
     }
     
@@ -2593,7 +2632,7 @@ weechat_lua_api_config_get (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -2603,7 +2642,7 @@ weechat_lua_api_config_get (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -2629,7 +2668,7 @@ weechat_lua_api_config_get_plugin (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_get_plugin");
         LUA_RETURN_EMPTY;
     }
     
@@ -2639,7 +2678,7 @@ weechat_lua_api_config_get_plugin (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_get_plugin");
         LUA_RETURN_EMPTY;
     }
     
@@ -2667,7 +2706,7 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_set_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -2678,7 +2717,7 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_set_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
@@ -2708,7 +2747,7 @@ weechat_lua_api_config_unset_plugin (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_unset_plugin");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -2718,7 +2757,7 @@ weechat_lua_api_config_unset_plugin (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_unset_plugin");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
@@ -2746,7 +2785,7 @@ weechat_lua_api_prefix (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prefix");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "prefix");
         LUA_RETURN_EMPTY;
     }
     
@@ -2756,7 +2795,7 @@ weechat_lua_api_prefix (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prefix");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "prefix");
         LUA_RETURN_EMPTY;
     }
     
@@ -2782,7 +2821,7 @@ weechat_lua_api_color (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("color");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "color");
         LUA_RETURN_EMPTY;
     }
     
@@ -2792,7 +2831,7 @@ weechat_lua_api_color (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "color");
         LUA_RETURN_EMPTY;
     }
     
@@ -2823,7 +2862,7 @@ weechat_lua_api_print (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "print");
         LUA_RETURN_ERROR;
     }
     
@@ -2854,7 +2893,7 @@ weechat_lua_api_print_date_tags (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_date_tags");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "print_date_tags");
         LUA_RETURN_ERROR;
     }
     
@@ -2867,7 +2906,7 @@ weechat_lua_api_print_date_tags (lua_State *L)
     
     if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "print_date_tags");
         LUA_RETURN_ERROR;
     }
     
@@ -2901,7 +2940,7 @@ weechat_lua_api_print_y (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_y");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "print_y");
         LUA_RETURN_ERROR;
     }
     
@@ -2913,7 +2952,7 @@ weechat_lua_api_print_y (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "print_y");
         LUA_RETURN_ERROR;
     }
     
@@ -2945,7 +2984,7 @@ weechat_lua_api_log_print (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("log_print");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "log_print");
         LUA_RETURN_ERROR;
     }
     
@@ -2955,7 +2994,7 @@ weechat_lua_api_log_print (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("log_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "log_print");
         LUA_RETURN_ERROR;
     }
 
@@ -2977,7 +3016,7 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
                                  int argc, char **argv, char **argv_eol)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
 
     /* make C compiler happy */
@@ -2987,9 +3026,10 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (buffer);
-        lua_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (buffer);
+        lua_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3003,8 +3043,8 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -3020,7 +3060,7 @@ static int
 weechat_lua_api_hook_command (lua_State *L)
 {
     const char *command, *description, *args, *args_description, *completion;
-    const char *function;
+    const char *function, *data;
     char *result;
     int n;
     
@@ -3029,7 +3069,7 @@ weechat_lua_api_hook_command (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_command");
         LUA_RETURN_EMPTY;
     }
     
@@ -3039,21 +3079,23 @@ weechat_lua_api_hook_command (lua_State *L)
     args_description = NULL;
     completion = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
 
-    if (n < 6)
+    if (n < 7)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_command");
         LUA_RETURN_EMPTY;
     }
     
-    command = lua_tostring (lua_current_interpreter, -6);
-    description = lua_tostring (lua_current_interpreter, -5);
-    args = lua_tostring (lua_current_interpreter, -4);
-    args_description = lua_tostring (lua_current_interpreter, -3);
-    completion = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    command = lua_tostring (lua_current_interpreter, -7);
+    description = lua_tostring (lua_current_interpreter, -6);
+    args = lua_tostring (lua_current_interpreter, -5);
+    args_description = lua_tostring (lua_current_interpreter, -4);
+    completion = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_command (weechat_lua_plugin,
                                                       lua_current_script,
@@ -3063,7 +3105,8 @@ weechat_lua_api_hook_command (lua_State *L)
                                                       args_description,
                                                       completion,
                                                       &weechat_lua_api_hook_command_cb,
-                                                      function));
+                                                      function,
+                                                      data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3077,16 +3120,17 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
                                      const char *command)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (buffer);
-        lua_argv[1] = (command) ? (char *)command : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (buffer);
+        lua_argv[2] = (command) ? (char *)command : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3100,8 +3144,8 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -3116,7 +3160,7 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
 static int
 weechat_lua_api_hook_command_run (lua_State *L)
 {
-    const char *command, *function;
+    const char *command, *function, *data;
     char *result;
     int n;
     
@@ -3125,29 +3169,32 @@ weechat_lua_api_hook_command_run (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command_run");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_command_run");
         LUA_RETURN_EMPTY;
     }
     
     command = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command_run");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_command_run");
         LUA_RETURN_EMPTY;
     }
     
-    command = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    command = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_command_run (weechat_lua_plugin,
                                                           lua_current_script,
                                                           command,
                                                           &weechat_lua_api_hook_command_run_cb,
-                                                          function));
+                                                          function,
+                                                          data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3160,7 +3207,7 @@ int
 weechat_lua_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2], str_remaining_calls[32];
+    char *lua_argv[3], str_remaining_calls[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3170,8 +3217,9 @@ weechat_lua_api_hook_timer_cb (void *data, int remaining_calls)
         snprintf (str_remaining_calls, sizeof (str_remaining_calls),
                   "%d", remaining_calls);
         
-        lua_argv[0] = str_remaining_calls;
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = str_remaining_calls;
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3200,7 +3248,7 @@ static int
 weechat_lua_api_hook_timer (lua_State *L)
 {
     int n, interval, align_second, max_calls;
-    const char *function;
+    const char *function, *data;
     char *result;
     
     /* make C compiler happy */
@@ -3208,7 +3256,7 @@ weechat_lua_api_hook_timer (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_timer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_timer");
         LUA_RETURN_EMPTY;
     }
     
@@ -3216,19 +3264,21 @@ weechat_lua_api_hook_timer (lua_State *L)
     align_second = 0;
     max_calls = 0;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
 
-    if (n < 4)
+    if (n < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_timer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_timer");
         LUA_RETURN_EMPTY;
     }
     
-    interval = lua_tonumber (lua_current_interpreter, -4);
-    align_second = lua_tonumber (lua_current_interpreter, -3);
-    max_calls = lua_tonumber (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    interval = lua_tonumber (lua_current_interpreter, -5);
+    align_second = lua_tonumber (lua_current_interpreter, -4);
+    max_calls = lua_tonumber (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_timer (weechat_lua_plugin,
                                                     lua_current_script,
@@ -3236,7 +3286,8 @@ weechat_lua_api_hook_timer (lua_State *L)
                                                     align_second,
                                                     max_calls,
                                                     &weechat_lua_api_hook_timer_cb,
-                                                    function));
+                                                    function,
+                                                    data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3249,7 +3300,7 @@ int
 weechat_lua_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2], str_fd[32];
+    char *lua_argv[3], str_fd[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3258,8 +3309,9 @@ weechat_lua_api_hook_fd_cb (void *data, int fd)
     {
         snprintf (str_fd, sizeof (str_fd), "%d", fd);
         
-        lua_argv[0] = str_fd;
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = str_fd;
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3288,7 +3340,7 @@ static int
 weechat_lua_api_hook_fd (lua_State *L)
 {
     int n, fd, read, write, exception;
-    const char *function;
+    const char *function, *data;
     char *result;
     
     /* make C compiler happy */
@@ -3296,7 +3348,7 @@ weechat_lua_api_hook_fd (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_fd");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_fd");
         LUA_RETURN_EMPTY;
     }
     
@@ -3305,20 +3357,22 @@ weechat_lua_api_hook_fd (lua_State *L)
     write = 0;
     exception = 0;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
 
-    if (n < 5)
+    if (n < 6)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_fd");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_fd");
         LUA_RETURN_EMPTY;
     }
     
-    fd = lua_tonumber (lua_current_interpreter, -5);
-    read = lua_tonumber (lua_current_interpreter, -4);
-    write = lua_tonumber (lua_current_interpreter, -3);
-    exception = lua_tonumber (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    fd = lua_tonumber (lua_current_interpreter, -6);
+    read = lua_tonumber (lua_current_interpreter, -5);
+    write = lua_tonumber (lua_current_interpreter, -4);
+    exception = lua_tonumber (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_fd (weechat_lua_plugin,
                                                  lua_current_script,
@@ -3327,7 +3381,8 @@ weechat_lua_api_hook_fd (lua_State *L)
                                                  write,
                                                  exception,
                                                  &weechat_lua_api_hook_fd_cb,
-                                                 function));
+                                                 function,
+                                                 data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3342,20 +3397,21 @@ weechat_lua_api_hook_process_cb (void *data,
                                  const char *stdout, const char *stderr)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], str_rc[32], empty_arg[1] = { '\0' };
+    char *lua_argv[6], str_rc[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_rc, sizeof (str_rc), "%d", return_code);
         
-        lua_argv[0] = (command) ? (char *)command : empty_arg;
-        lua_argv[1] = str_rc;
-        lua_argv[2] = (stdout) ? (char *)stdout : empty_arg;
-        lua_argv[3] = (stderr) ? (char *)stderr : empty_arg;
-        lua_argv[4] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (command) ? (char *)command : empty_arg;
+        lua_argv[2] = str_rc;
+        lua_argv[3] = (stdout) ? (char *)stdout : empty_arg;
+        lua_argv[4] = (stderr) ? (char *)stderr : empty_arg;
+        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3383,7 +3439,7 @@ weechat_lua_api_hook_process_cb (void *data,
 static int
 weechat_lua_api_hook_process (lua_State *L)
 {
-    const char *command, *function;
+    const char *command, *function, *data;
     int n, timeout;
     char *result;
     
@@ -3392,7 +3448,7 @@ weechat_lua_api_hook_process (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_process");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_process");
         LUA_RETURN_EMPTY;
     }
     
@@ -3402,22 +3458,24 @@ weechat_lua_api_hook_process (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_process");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_process");
         LUA_RETURN_EMPTY;
     }
     
-    command = lua_tostring (lua_current_interpreter, -3);
-    timeout = lua_tonumber (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    command = lua_tostring (lua_current_interpreter, -4);
+    timeout = lua_tonumber (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_process (weechat_lua_plugin,
                                                       lua_current_script,
                                                       command,
                                                       timeout,
                                                       &weechat_lua_api_hook_process_cb,
-                                                      function));
+                                                      function,
+                                                      data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3431,7 +3489,7 @@ weechat_lua_api_hook_connect_cb (void *data, int status,
                                  const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], str_status[32], empty_arg[1] = { '\0' };
+    char *lua_argv[5], str_status[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3440,10 +3498,11 @@ weechat_lua_api_hook_connect_cb (void *data, int status,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         
-        lua_argv[0] = str_status;
-        lua_argv[1] = (ip_address) ? (char *)ip_address : empty_arg;
-        lua_argv[2] = (error) ? (char *)error : empty_arg;
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = str_status;
+        lua_argv[2] = (ip_address) ? (char *)ip_address : empty_arg;
+        lua_argv[3] = (error) ? (char *)error : empty_arg;
+        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3471,7 +3530,7 @@ weechat_lua_api_hook_connect_cb (void *data, int status,
 static int
 weechat_lua_api_hook_connect (lua_State *L)
 {
-    const char *proxy, *address, *local_hostname, *function;
+    const char *proxy, *address, *local_hostname, *function, *data;
     int n, port, sock, ipv6;
     char *result;
     
@@ -3480,7 +3539,7 @@ weechat_lua_api_hook_connect (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_connect");
         LUA_RETURN_EMPTY;
     }
     
@@ -3491,22 +3550,24 @@ weechat_lua_api_hook_connect (lua_State *L)
     ipv6 = 0;
     local_hostname = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 7)
+    if (n < 8)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_connect");
         LUA_RETURN_EMPTY;
     }
     
-    proxy = lua_tostring (lua_current_interpreter, -7);
-    address = lua_tostring (lua_current_interpreter, -6);
-    port = lua_tonumber (lua_current_interpreter, -5);
-    sock = lua_tonumber (lua_current_interpreter, -4);
-    ipv6 = lua_tonumber (lua_current_interpreter, -3);
-    local_hostname = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    proxy = lua_tostring (lua_current_interpreter, -8);
+    address = lua_tostring (lua_current_interpreter, -7);
+    port = lua_tonumber (lua_current_interpreter, -6);
+    sock = lua_tonumber (lua_current_interpreter, -5);
+    ipv6 = lua_tonumber (lua_current_interpreter, -4);
+    local_hostname = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_connect (weechat_lua_plugin,
                                                       lua_current_script,
@@ -3518,7 +3579,8 @@ weechat_lua_api_hook_connect (lua_State *L)
                                                       NULL, /* gnutls session */
                                                       local_hostname,
                                                       &weechat_lua_api_hook_connect_cb,
-                                                      function));
+                                                      function,
+                                                      data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3535,7 +3597,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[8], empty_arg[1] = { '\0' };
+    char *lua_argv[9], empty_arg[1] = { '\0' };
     static char timebuffer[64];
     int *rc, ret;
     
@@ -3548,16 +3610,17 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     {
         snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
         
-        lua_argv[0] = script_ptr2str (buffer);
-        lua_argv[1] = timebuffer;
-        lua_argv[2] = weechat_string_build_with_exploded (tags, ",");
-        if (!lua_argv[2])
-            lua_argv[2] = strdup ("");
-        lua_argv[3] = (displayed) ? strdup ("1") : strdup ("0");
-        lua_argv[4] = (highlight) ? strdup ("1") : strdup ("0");
-        lua_argv[5] = (prefix) ? (char *)prefix : empty_arg;
-        lua_argv[6] = (message) ? (char *)message : empty_arg;
-        lua_argv[7] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (buffer);
+        lua_argv[2] = timebuffer;
+        lua_argv[3] = weechat_string_build_with_exploded (tags, ",");
+        if (!lua_argv[3])
+            lua_argv[3] = strdup ("");
+        lua_argv[4] = (displayed) ? strdup ("1") : strdup ("0");
+        lua_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
+        lua_argv[6] = (prefix) ? (char *)prefix : empty_arg;
+        lua_argv[7] = (message) ? (char *)message : empty_arg;
+        lua_argv[8] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3571,14 +3634,14 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
-        if (lua_argv[2])
-            free (lua_argv[2]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         if (lua_argv[3])
             free (lua_argv[3]);
         if (lua_argv[4])
             free (lua_argv[4]);
+        if (lua_argv[5])
+            free (lua_argv[5]);
         
         return ret;
     }
@@ -3593,7 +3656,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 static int
 weechat_lua_api_hook_print (lua_State *L)
 {
-    const char *buffer, *tags, *message, *function;
+    const char *buffer, *tags, *message, *function, *data;
     char *result;
     int n, strip_colors;
     
@@ -3602,7 +3665,7 @@ weechat_lua_api_hook_print (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_print");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_print");
         LUA_RETURN_EMPTY;
     }
     
@@ -3611,20 +3674,22 @@ weechat_lua_api_hook_print (lua_State *L)
     message = NULL;
     strip_colors = 0;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 4)
+    if (n < 6)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_print");
         LUA_RETURN_EMPTY;
     }
     
-    buffer = lua_tostring (lua_current_interpreter, -5);
-    tags = lua_tostring (lua_current_interpreter, -4);
-    message = lua_tostring (lua_current_interpreter, -3);
-    strip_colors = lua_tonumber (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    buffer = lua_tostring (lua_current_interpreter, -6);
+    tags = lua_tostring (lua_current_interpreter, -5);
+    message = lua_tostring (lua_current_interpreter, -4);
+    strip_colors = lua_tonumber (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_print (weechat_lua_plugin,
                                                     lua_current_script,
@@ -3633,7 +3698,8 @@ weechat_lua_api_hook_print (lua_State *L)
                                                     message,
                                                     strip_colors,
                                                     &weechat_lua_api_hook_print_cb,
-                                                    function));
+                                                    function,
+                                                    data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3647,7 +3713,7 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
                                 const char *type_data, void *signal_data)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     static char value_str[64];
     int *rc, ret, free_needed;
     
@@ -3655,26 +3721,27 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (signal) ? (char *)signal : empty_arg;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (signal) ? (char *)signal : empty_arg;
         free_needed = 0;
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
         {
-            lua_argv[1] = (signal_data) ? (char *)signal_data : empty_arg;
+            lua_argv[2] = (signal_data) ? (char *)signal_data : empty_arg;
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
         {
             snprintf (value_str, sizeof (value_str) - 1,
                       "%d", *((int *)signal_data));
-            lua_argv[1] = value_str;
+            lua_argv[2] = value_str;
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
         {
-            lua_argv[1] = script_ptr2str (signal_data);
+            lua_argv[2] = script_ptr2str (signal_data);
             free_needed = 1;
         }
         else
-            lua_argv[1] = empty_arg;
-        lua_argv[2] = NULL;
+            lua_argv[2] = empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3688,6 +3755,8 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
             ret = *rc;
             free (rc);
         }
+        if (free_needed && lua_argv[2])
+            free (lua_argv[2]);
         
         return ret;
     }
@@ -3702,7 +3771,7 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
 static int
 weechat_lua_api_hook_signal (lua_State *L)
 {
-    const char *signal, *function;
+    const char *signal, *function, *data;
     char *result;
     int n;
     
@@ -3711,29 +3780,32 @@ weechat_lua_api_hook_signal (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_signal");
         LUA_RETURN_EMPTY;
     }
     
     signal = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_signal");
         LUA_RETURN_EMPTY;
     }
     
-    signal = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    signal = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_signal (weechat_lua_plugin,
                                                      lua_current_script,
                                                      signal,
                                                      &weechat_lua_api_hook_signal_cb,
-                                                     function));
+                                                     function,
+                                                     data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3753,7 +3825,7 @@ weechat_lua_api_hook_signal_send (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal_send");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_signal_send");
         LUA_RETURN_ERROR;
     }
     
@@ -3765,7 +3837,7 @@ weechat_lua_api_hook_signal_send (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal_send");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_signal_send");
         LUA_RETURN_ERROR;
     }
     
@@ -3804,16 +3876,17 @@ weechat_lua_api_hook_config_cb (void *data, const char *option,
                                 const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (option) ? (char *)option : empty_arg;
-        lua_argv[1] = (value) ? (char *)value : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (option) ? (char *)option : empty_arg;
+        lua_argv[2] = (value) ? (char *)value : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3841,7 +3914,7 @@ weechat_lua_api_hook_config_cb (void *data, const char *option,
 static int
 weechat_lua_api_hook_config (lua_State *L)
 {
-    const char *type, *option, *function;
+    const char *type, *option, *function, *data;
     char *result;
     int n;
     
@@ -3850,30 +3923,33 @@ weechat_lua_api_hook_config (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_config");
         LUA_RETURN_EMPTY;
     }
     
     type = NULL;
     option = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_config");
         LUA_RETURN_EMPTY;
     }
     
-    option = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    option = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_config (weechat_lua_plugin,
                                                      lua_current_script,
                                                      option,
                                                      &weechat_lua_api_hook_config_cb,
-                                                     function));
+                                                     function,
+                                                     data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3888,17 +3964,18 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
                                     struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    char *lua_argv[5], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (completion_item) ? (char *)completion_item : empty_arg;
-        lua_argv[1] = script_ptr2str (buffer);
-        lua_argv[2] = script_ptr2str (completion);
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        lua_argv[2] = script_ptr2str (buffer);
+        lua_argv[3] = script_ptr2str (completion);
+        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -3912,10 +3989,10 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[1])
-            free (lua_argv[1]);
         if (lua_argv[2])
             free (lua_argv[2]);
+        if (lua_argv[3])
+            free (lua_argv[3]);
         
         return ret;
     }
@@ -3930,7 +4007,7 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
 static int
 weechat_lua_api_hook_completion (lua_State *L)
 {
-    const char *completion, *description, *function;
+    const char *completion, *description, *function, *data;
     char *result;
     int n;
     
@@ -3939,32 +4016,35 @@ weechat_lua_api_hook_completion (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_completion");
         LUA_RETURN_EMPTY;
     }
     
     completion = NULL;
     description = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_completion");
         LUA_RETURN_EMPTY;
     }
     
-    completion = lua_tostring (lua_current_interpreter, -3);
-    description = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    completion = lua_tostring (lua_current_interpreter, -4);
+    description = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_completion (weechat_lua_plugin,
                                                          lua_current_script,
                                                          completion,
                                                          description,
                                                          &weechat_lua_api_hook_completion_cb,
-                                                         function));
+                                                         function,
+                                                         data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -3984,7 +4064,7 @@ weechat_lua_api_hook_completion_list_add (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         LUA_RETURN_ERROR;
     }
     
@@ -3997,7 +4077,7 @@ weechat_lua_api_hook_completion_list_add (lua_State *L)
     
     if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         LUA_RETURN_ERROR;
     }
     
@@ -4024,16 +4104,17 @@ weechat_lua_api_hook_modifier_cb (void *data, const char *modifier,
                                   const char *string)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    char *lua_argv[5], empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (modifier) ? (char *)modifier : empty_arg;
-        lua_argv[1] = (modifier_data) ? (char *)modifier_data : empty_arg;
-        lua_argv[2] = (string) ? (char *)string : empty_arg;
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (modifier) ? (char *)modifier : empty_arg;
+        lua_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
+        lua_argv[3] = (string) ? (char *)string : empty_arg;
+        lua_argv[4] = NULL;
         
         return (char *)weechat_lua_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_STRING,
@@ -4051,7 +4132,7 @@ weechat_lua_api_hook_modifier_cb (void *data, const char *modifier,
 static int
 weechat_lua_api_hook_modifier (lua_State *L)
 {
-    const char *modifier, *function;
+    const char *modifier, *function, *data;
     char *result;
     int n;
     
@@ -4060,29 +4141,32 @@ weechat_lua_api_hook_modifier (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_modifier");
         LUA_RETURN_EMPTY;
     }
     
     modifier = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_modifier");
         LUA_RETURN_EMPTY;
     }
     
-    modifier = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    modifier = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_modifier (weechat_lua_plugin,
                                                        lua_current_script,
                                                        modifier,
                                                        &weechat_lua_api_hook_modifier_cb,
-                                                       function));
+                                                       function,
+                                                       data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -4103,7 +4187,7 @@ weechat_lua_api_hook_modifier_exec (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         LUA_RETURN_EMPTY;
     }
     
@@ -4115,7 +4199,7 @@ weechat_lua_api_hook_modifier_exec (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         LUA_RETURN_ERROR;
     }
     
@@ -4137,15 +4221,16 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
                               const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (info_name) ? (char *)info_name : empty_arg;
-        lua_argv[1] = (arguments) ? (char *)arguments : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (info_name) ? (char *)info_name : empty_arg;
+        lua_argv[2] = (arguments) ? (char *)arguments : empty_arg;
+        lua_argv[3] = NULL;
         
         return (const char *)weechat_lua_exec (script_callback->script,
                                                WEECHAT_SCRIPT_EXEC_STRING,
@@ -4163,7 +4248,7 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_info (lua_State *L)
 {
-    const char *info_name, *description, *function;
+    const char *info_name, *description, *function, *data;
     char *result;
     int n;
     
@@ -4172,31 +4257,34 @@ weechat_lua_api_hook_info (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_info");
         LUA_RETURN_EMPTY;
     }
     
     info_name = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_info");
         LUA_RETURN_EMPTY;
     }
     
-    info_name = lua_tostring (lua_current_interpreter, -3);
-    description = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    info_name = lua_tostring (lua_current_interpreter, -4);
+    description = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_info (weechat_lua_plugin,
                                                    lua_current_script,
                                                    info_name,
                                                    description,
                                                    &weechat_lua_api_hook_info_cb,
-                                                   function));
+                                                   function,
+                                                   data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -4210,25 +4298,26 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
                                   void *pointer, const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    char *lua_argv[5], empty_arg[1] = { '\0' };
     struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = (info_name) ? (char *)info_name : empty_arg;
-        lua_argv[1] = script_ptr2str (pointer);
-        lua_argv[2] = (arguments) ? (char *)arguments : empty_arg;
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (info_name) ? (char *)info_name : empty_arg;
+        lua_argv[2] = script_ptr2str (pointer);
+        lua_argv[3] = (arguments) ? (char *)arguments : empty_arg;
+        lua_argv[4] = NULL;
         
         result = (struct t_infolist *)weechat_lua_exec (script_callback->script,
                                                         WEECHAT_SCRIPT_EXEC_STRING,
                                                         script_callback->function,
                                                         lua_argv);
         
-        if (lua_argv[1])
-            free (lua_argv[1]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
         
         return result;
     }
@@ -4243,7 +4332,7 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_infolist (lua_State *L)
 {
-    const char *infolist_name, *description, *function;
+    const char *infolist_name, *description, *function, *data;
     char *result;
     int n;
     
@@ -4252,31 +4341,34 @@ weechat_lua_api_hook_infolist (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_infolist");
         LUA_RETURN_EMPTY;
     }
     
     infolist_name = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_infolist");
         LUA_RETURN_EMPTY;
     }
     
-    infolist_name = lua_tostring (lua_current_interpreter, -3);
-    description = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    infolist_name = lua_tostring (lua_current_interpreter, -4);
+    description = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_infolist (weechat_lua_plugin,
                                                        lua_current_script,
                                                        infolist_name,
                                                        description,
                                                        &weechat_lua_api_hook_infolist_cb,
-                                                       function));
+                                                       function,
+                                                       data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -4296,7 +4388,7 @@ weechat_lua_api_unhook (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "unhook");
         LUA_RETURN_ERROR;
     }
     
@@ -4306,7 +4398,7 @@ weechat_lua_api_unhook (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("unhook");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "unhook");
         LUA_RETURN_ERROR;
     }
     
@@ -4331,7 +4423,7 @@ weechat_lua_api_unhook_all (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "unhook_all");
         LUA_RETURN_ERROR;
     }
     
@@ -4349,16 +4441,17 @@ weechat_lua_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
                                       const char *input_data)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    char *lua_argv[4], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (buffer);
-        lua_argv[1] = (input_data) ? (char *)input_data : empty_arg;
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (buffer);
+        lua_argv[2] = (input_data) ? (char *)input_data : empty_arg;
+        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -4372,8 +4465,8 @@ weechat_lua_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -4389,15 +4482,16 @@ int
 weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[2];
+    char *lua_argv[3], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (buffer);
-        lua_argv[1] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (buffer);
+        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -4411,8 +4505,8 @@ weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
         
         return ret;
     }
@@ -4427,7 +4521,8 @@ weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 static int
 weechat_lua_api_buffer_new (lua_State *L)
 {
-    const char *name, *function_input, *function_close;
+    const char *name, *function_input, *data_input, *function_close;
+    const char *data_close;
     char *result;
     int n;
     
@@ -4436,33 +4531,39 @@ weechat_lua_api_buffer_new (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_new");
         LUA_RETURN_EMPTY;
     }
     
     name = NULL;
     function_input = NULL;
+    data_input = NULL;
     function_close = NULL;
+    data_close = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -3);
-    function_input = lua_tostring (lua_current_interpreter, -2);
-    function_close = lua_tostring (lua_current_interpreter, -1);
+    name = lua_tostring (lua_current_interpreter, -5);
+    function_input = lua_tostring (lua_current_interpreter, -4);
+    data_input = lua_tostring (lua_current_interpreter, -3);
+    function_close = lua_tostring (lua_current_interpreter, -2);
+    data_close = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_buffer_new (weechat_lua_plugin,
                                                     lua_current_script,
                                                     name,
                                                     &weechat_lua_api_buffer_input_data_cb,
                                                     function_input,
+                                                    data_input,
                                                     &weechat_lua_api_buffer_close_cb,
-                                                    function_close));
+                                                    function_close,
+                                                    data_close));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -4483,7 +4584,7 @@ weechat_lua_api_buffer_search (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -4494,7 +4595,7 @@ weechat_lua_api_buffer_search (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -4520,7 +4621,7 @@ weechat_lua_api_current_buffer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_buffer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "current_buffer");
         LUA_RETURN_EMPTY;
     }
     
@@ -4544,7 +4645,7 @@ weechat_lua_api_buffer_clear (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_clear");
         LUA_RETURN_ERROR;
     }
     
@@ -4554,7 +4655,7 @@ weechat_lua_api_buffer_clear (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_clear");
         LUA_RETURN_ERROR;
     }
     
@@ -4580,7 +4681,7 @@ weechat_lua_api_buffer_close (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_close");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_close");
         LUA_RETURN_ERROR;
     }
     
@@ -4590,7 +4691,7 @@ weechat_lua_api_buffer_close (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_close");
         LUA_RETURN_ERROR;
     }
     
@@ -4618,7 +4719,7 @@ weechat_lua_api_buffer_get_integer (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         LUA_RETURN_INT(-1);
     }
     
@@ -4629,7 +4730,7 @@ weechat_lua_api_buffer_get_integer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         LUA_RETURN_INT(-1);
     }
     
@@ -4657,7 +4758,7 @@ weechat_lua_api_buffer_get_string (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -4668,7 +4769,7 @@ weechat_lua_api_buffer_get_string (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_get_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -4697,7 +4798,7 @@ weechat_lua_api_buffer_get_pointer (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -4708,7 +4809,7 @@ weechat_lua_api_buffer_get_pointer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -4736,7 +4837,7 @@ weechat_lua_api_buffer_set (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_set");
         LUA_RETURN_ERROR;
     }
     
@@ -4747,7 +4848,7 @@ weechat_lua_api_buffer_set (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_set");
         LUA_RETURN_ERROR;
     }
     
@@ -4774,7 +4875,7 @@ weechat_lua_api_current_window (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("current_window");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "current_window");
         LUA_RETURN_EMPTY;
     }
     
@@ -4798,7 +4899,7 @@ weechat_lua_api_window_get_integer (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_integer");
         LUA_RETURN_INT(-1);
     }
     
@@ -4809,7 +4910,7 @@ weechat_lua_api_window_get_integer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "window_get_integer");
         LUA_RETURN_INT(-1);
     }
     
@@ -4837,7 +4938,7 @@ weechat_lua_api_window_get_string (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -4848,7 +4949,7 @@ weechat_lua_api_window_get_string (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "window_get_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -4877,7 +4978,7 @@ weechat_lua_api_window_get_pointer (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("window_get_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -4888,7 +4989,7 @@ weechat_lua_api_window_get_pointer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("window_get_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "window_get_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -4917,7 +5018,7 @@ weechat_lua_api_nicklist_add_group (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         LUA_RETURN_EMPTY;
     }
     
@@ -4931,7 +5032,7 @@ weechat_lua_api_nicklist_add_group (lua_State *L)
     
     if (n < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         LUA_RETURN_EMPTY;
     }
     
@@ -4966,7 +5067,7 @@ weechat_lua_api_nicklist_search_group (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         LUA_RETURN_EMPTY;
     }
     
@@ -4978,7 +5079,7 @@ weechat_lua_api_nicklist_search_group (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         LUA_RETURN_EMPTY;
     }
     
@@ -5009,7 +5110,7 @@ weechat_lua_api_nicklist_add_nick (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         LUA_RETURN_EMPTY;
     }
     
@@ -5025,7 +5126,7 @@ weechat_lua_api_nicklist_add_nick (lua_State *L)
     
     if (n < 7)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         LUA_RETURN_EMPTY;
     }
     
@@ -5064,7 +5165,7 @@ weechat_lua_api_nicklist_search_nick (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         LUA_RETURN_EMPTY;
     }
     
@@ -5076,7 +5177,7 @@ weechat_lua_api_nicklist_search_nick (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         LUA_RETURN_EMPTY;
     }
     
@@ -5106,7 +5207,7 @@ weechat_lua_api_nicklist_remove_group (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         LUA_RETURN_ERROR;
     }
     
@@ -5117,7 +5218,7 @@ weechat_lua_api_nicklist_remove_group (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         LUA_RETURN_ERROR;
     }
     
@@ -5145,7 +5246,7 @@ weechat_lua_api_nicklist_remove_nick (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         LUA_RETURN_ERROR;
     }
     
@@ -5156,7 +5257,7 @@ weechat_lua_api_nicklist_remove_nick (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         LUA_RETURN_ERROR;
     }
     
@@ -5184,7 +5285,7 @@ weechat_lua_api_nicklist_remove_all (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         LUA_RETURN_ERROR;
     }
     
@@ -5194,7 +5295,7 @@ weechat_lua_api_nicklist_remove_all (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         LUA_RETURN_ERROR;
     }
     
@@ -5221,7 +5322,7 @@ weechat_lua_api_bar_item_search (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -5231,7 +5332,7 @@ weechat_lua_api_bar_item_search (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_item_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -5251,25 +5352,26 @@ weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], *ret;
+    char *lua_argv[4], empty_arg[1] = { '\0' }, *ret;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        lua_argv[0] = script_ptr2str (item);
-        lua_argv[1] = script_ptr2str (window);
-        lua_argv[2] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (item);
+        lua_argv[2] = script_ptr2str (window);
+        lua_argv[3] = NULL;
         
         ret = (char *)weechat_lua_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_STRING,
                                         script_callback->function,
                                         lua_argv);
         
-        if (lua_argv[0])
-            free (lua_argv[0]);
         if (lua_argv[1])
             free (lua_argv[1]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
         
         return ret;
     }
@@ -5284,7 +5386,7 @@ weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
 static int
 weechat_lua_api_bar_item_new (lua_State *L)
 {
-    const char *name, *function;
+    const char *name, *function, *data;
     char *result;
     int n;
     
@@ -5293,29 +5395,32 @@ weechat_lua_api_bar_item_new (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_new");
         LUA_RETURN_EMPTY;
     }
     
     name = NULL;
     function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_item_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -2);
-    function = lua_tostring (lua_current_interpreter, -1);
+    name = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_bar_item_new (weechat_lua_plugin,
                                                       lua_current_script,
                                                       name,
                                                       &weechat_lua_api_bar_item_build_cb,
-                                                      function));
+                                                      function,
+                                                      data));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -5335,7 +5440,7 @@ weechat_lua_api_bar_item_update (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_update");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_update");
         LUA_RETURN_ERROR;
     }
     
@@ -5345,7 +5450,7 @@ weechat_lua_api_bar_item_update (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_update");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_item_update");
         LUA_RETURN_ERROR;
     }
     
@@ -5371,7 +5476,7 @@ weechat_lua_api_bar_item_remove (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -5381,7 +5486,7 @@ weechat_lua_api_bar_item_remove (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_item_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -5410,7 +5515,7 @@ weechat_lua_api_bar_search (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_search");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -5420,7 +5525,7 @@ weechat_lua_api_bar_search (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_search");
         LUA_RETURN_EMPTY;
     }
     
@@ -5449,7 +5554,7 @@ weechat_lua_api_bar_new (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -5473,7 +5578,7 @@ weechat_lua_api_bar_new (lua_State *L)
     
     if (n < 15)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -5527,7 +5632,7 @@ weechat_lua_api_bar_set (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_set");
         LUA_RETURN_ERROR;
     }
     
@@ -5538,7 +5643,7 @@ weechat_lua_api_bar_set (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_set");
         LUA_RETURN_ERROR;
     }
     
@@ -5568,7 +5673,7 @@ weechat_lua_api_bar_update (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_update");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_update");
         LUA_RETURN_ERROR;
     }
     
@@ -5578,7 +5683,7 @@ weechat_lua_api_bar_update (lua_State *L)
 
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_update");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_update");
         LUA_RETURN_ERROR;
     }
     
@@ -5604,7 +5709,7 @@ weechat_lua_api_bar_remove (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -5614,7 +5719,7 @@ weechat_lua_api_bar_remove (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_remove");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "bar_remove");
         LUA_RETURN_ERROR;
     }
     
@@ -5640,7 +5745,7 @@ weechat_lua_api_command (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("command");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "command");
         LUA_RETURN_ERROR;
     }
     
@@ -5651,7 +5756,7 @@ weechat_lua_api_command (lua_State *L)
 
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "command");
         LUA_RETURN_ERROR;
     }
     
@@ -5681,7 +5786,7 @@ weechat_lua_api_info_get (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("info_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "info_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -5692,7 +5797,7 @@ weechat_lua_api_info_get (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "info_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -5718,7 +5823,7 @@ weechat_lua_api_infolist_new (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -5744,7 +5849,7 @@ weechat_lua_api_infolist_new_var_integer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         LUA_RETURN_EMPTY;
     }
     
@@ -5756,7 +5861,7 @@ weechat_lua_api_infolist_new_var_integer (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         LUA_RETURN_EMPTY;
     }
     
@@ -5788,7 +5893,7 @@ weechat_lua_api_infolist_new_var_string (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -5800,7 +5905,7 @@ weechat_lua_api_infolist_new_var_string (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -5832,7 +5937,7 @@ weechat_lua_api_infolist_new_var_pointer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -5844,7 +5949,7 @@ weechat_lua_api_infolist_new_var_pointer (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -5875,7 +5980,7 @@ weechat_lua_api_infolist_new_var_time (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_time");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         LUA_RETURN_EMPTY;
     }
     
@@ -5887,7 +5992,7 @@ weechat_lua_api_infolist_new_var_time (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_time");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         LUA_RETURN_EMPTY;
     }
     
@@ -5918,7 +6023,7 @@ weechat_lua_api_infolist_get (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_get");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -5930,7 +6035,7 @@ weechat_lua_api_infolist_get (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_get");
         LUA_RETURN_EMPTY;
     }
     
@@ -5960,7 +6065,7 @@ weechat_lua_api_infolist_next (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_next");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_next");
         LUA_RETURN_INT(0);
     }
     
@@ -5970,7 +6075,7 @@ weechat_lua_api_infolist_next (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_next");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_next");
         LUA_RETURN_INT(0);
     }
     
@@ -5996,7 +6101,7 @@ weechat_lua_api_infolist_prev (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_prev");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_prev");
         LUA_RETURN_INT(0);
     }
     
@@ -6006,7 +6111,7 @@ weechat_lua_api_infolist_prev (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_prev");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_prev");
         LUA_RETURN_INT(0);
     }
     
@@ -6032,7 +6137,7 @@ weechat_lua_api_infolist_fields (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_fields");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_fields");
         LUA_RETURN_EMPTY;
     }
     
@@ -6042,7 +6147,7 @@ weechat_lua_api_infolist_fields (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_fields");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_fields");
         LUA_RETURN_EMPTY;
     }
     
@@ -6068,7 +6173,7 @@ weechat_lua_api_infolist_integer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_integer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_integer");
         LUA_RETURN_INT(0);
     }
     
@@ -6079,7 +6184,7 @@ weechat_lua_api_infolist_integer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_integer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_integer");
         LUA_RETURN_INT(0);
     }
     
@@ -6107,7 +6212,7 @@ weechat_lua_api_infolist_string (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_string");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -6118,7 +6223,7 @@ weechat_lua_api_infolist_string (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_string");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -6147,7 +6252,7 @@ weechat_lua_api_infolist_pointer (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_pointer");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -6158,7 +6263,7 @@ weechat_lua_api_infolist_pointer (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_pointer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_pointer");
         LUA_RETURN_EMPTY;
     }
     
@@ -6188,7 +6293,7 @@ weechat_lua_api_infolist_time (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_time");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_time");
         LUA_RETURN_EMPTY;
     }
     
@@ -6199,7 +6304,7 @@ weechat_lua_api_infolist_time (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_time");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_time");
         LUA_RETURN_EMPTY;
     }
     
@@ -6229,7 +6334,7 @@ weechat_lua_api_infolist_free (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_free");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_free");
         LUA_RETURN_ERROR;
     }
     
@@ -6239,7 +6344,7 @@ weechat_lua_api_infolist_free (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_free");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_free");
         LUA_RETURN_ERROR;
     }
     
@@ -6266,7 +6371,7 @@ weechat_lua_api_upgrade_new (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_new");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -6277,7 +6382,7 @@ weechat_lua_api_upgrade_new (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "upgrade_new");
         LUA_RETURN_EMPTY;
     }
     
@@ -6304,7 +6409,7 @@ weechat_lua_api_upgrade_write_object (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_write_object");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         LUA_RETURN_INT(0);
     }
     
@@ -6316,7 +6421,7 @@ weechat_lua_api_upgrade_write_object (lua_State *L)
     
     if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_write_object");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         LUA_RETURN_INT(0);
     }
     
@@ -6342,7 +6447,7 @@ weechat_lua_api_upgrade_read_cb (void *data,
                                  struct t_infolist *infolist)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], str_object_id[32];
+    char *lua_argv[5], empty_arg[1] = { '\0' }, str_object_id[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -6351,10 +6456,11 @@ weechat_lua_api_upgrade_read_cb (void *data,
     {
         snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
         
-        lua_argv[0] = script_ptr2str (upgrade_file);
-        lua_argv[1] = str_object_id;
-        lua_argv[2] = script_ptr2str (infolist);
-        lua_argv[3] = NULL;
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = script_ptr2str (upgrade_file);
+        lua_argv[2] = str_object_id;
+        lua_argv[3] = script_ptr2str (infolist);
+        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -6368,10 +6474,10 @@ weechat_lua_api_upgrade_read_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        if (lua_argv[0])
-            free (lua_argv[0]);
-        if (lua_argv[2])
-            free (lua_argv[2]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
+        if (lua_argv[3])
+            free (lua_argv[3]);
         
         return ret;
     }
@@ -6386,7 +6492,7 @@ weechat_lua_api_upgrade_read_cb (void *data,
 static int
 weechat_lua_api_upgrade_read (lua_State *L)
 {
-    const char *upgrade_file, *function_read;
+    const char *upgrade_file, *function, *data;
     int n, rc;
     
     /* make C compiler happy */
@@ -6394,29 +6500,32 @@ weechat_lua_api_upgrade_read (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_read");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_read");
         LUA_RETURN_EMPTY;
     }
     
     upgrade_file = NULL;
-    function_read = NULL;
+    function = NULL;
+    data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_read");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "upgrade_read");
         LUA_RETURN_EMPTY;
     }
     
-    upgrade_file = lua_tostring (lua_current_interpreter, -2);
-    function_read = lua_tostring (lua_current_interpreter, -1);
+    upgrade_file = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
     
     rc = script_api_upgrade_read (weechat_lua_plugin,
                                   lua_current_script,
                                   script_str2ptr (upgrade_file),
                                   &weechat_lua_api_upgrade_read_cb,
-                                  function_read);
+                                  function,
+                                  data);
     
     LUA_RETURN_INT(rc);
 }
@@ -6436,7 +6545,7 @@ weechat_lua_api_upgrade_close (lua_State *L)
     
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("upgrade_close");
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_close");
         LUA_RETURN_ERROR;
     }
     
@@ -6446,7 +6555,7 @@ weechat_lua_api_upgrade_close (lua_State *L)
     
     if (n < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("upgrade_close");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "upgrade_close");
         LUA_RETURN_INT(0);
     }
     

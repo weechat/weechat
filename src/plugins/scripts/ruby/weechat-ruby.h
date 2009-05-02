@@ -23,6 +23,8 @@
 #define weechat_plugin weechat_ruby_plugin
 #define RUBY_PLUGIN_NAME "ruby"
 
+#define RUBY_CURRENT_SCRIPT_NAME ((ruby_current_script) ? ruby_current_script->name : "-")
+
 extern struct t_weechat_plugin *weechat_ruby_plugin;
 
 extern int ruby_quiet;

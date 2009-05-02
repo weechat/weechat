@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "script.h"
@@ -41,6 +42,7 @@ script_callback_alloc ()
     {
         new_script_callback->script = NULL;
         new_script_callback->function = NULL;
+        new_script_callback->data = NULL;
         new_script_callback->config_file = NULL;
         new_script_callback->config_section = NULL;
         new_script_callback->config_option = NULL;
@@ -52,6 +54,24 @@ script_callback_alloc ()
     }
     
     return NULL;
+}
+
+/*
+ * script_callback_init: initialize callback with script, function and data
+ */
+
+void
+script_callback_init (struct t_script_callback *script_callback,
+                      struct t_plugin_script *script,
+                      const char *function,
+                      const char *data)
+{
+    if (script_callback)
+    {
+        script_callback->script = script;
+        script_callback->function = (function) ? strdup (function) : NULL;
+        script_callback->data = (data) ? strdup (data) : NULL;
+    }
 }
 
 /*
@@ -78,6 +98,8 @@ script_callback_free_data (struct t_script_callback *script_callback)
 {
     if (script_callback->function)
         free (script_callback->function);
+        if (script_callback->data)
+        free (script_callback->data);
 }
 
 /*
@@ -128,6 +150,7 @@ script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
     weechat_log_printf ("  [callback (addr:0x%lx)]",       script_callback);
     weechat_log_printf ("    script. . . . . . . : 0x%lx", script_callback->script);
     weechat_log_printf ("    function. . . . . . : '%s'",  script_callback->function);
+    weechat_log_printf ("    data. . . . . . . . : '%s'",  script_callback->data);
     weechat_log_printf ("    config_file . . . . : 0x%lx", script_callback->config_file);
     weechat_log_printf ("    config_section. . . : 0x%lx", script_callback->config_section);
     weechat_log_printf ("    config_option . . . : 0x%lx", script_callback->config_option);

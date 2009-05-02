@@ -148,15 +148,31 @@ weechat_ruby_exec (struct t_plugin_script *script,
                         {
                             if (argv[6])
                             {
-                                rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                         &ruby_error, 7,
-                                                         rb_str_new2(argv[0]),
-                                                         rb_str_new2(argv[1]),
-                                                         rb_str_new2(argv[2]),
-                                                         rb_str_new2(argv[3]),
-                                                         rb_str_new2(argv[4]),
-                                                         rb_str_new2(argv[5]),
-                                                         rb_str_new2(argv[6]));
+                                if (argv[7])
+                                {
+                                    rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                             &ruby_error, 8,
+                                                             rb_str_new2(argv[0]),
+                                                             rb_str_new2(argv[1]),
+                                                             rb_str_new2(argv[2]),
+                                                             rb_str_new2(argv[3]),
+                                                             rb_str_new2(argv[4]),
+                                                             rb_str_new2(argv[5]),
+                                                             rb_str_new2(argv[6]),
+                                                             rb_str_new2(argv[7]));
+                                }
+                                else
+                                {
+                                    rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                             &ruby_error, 7,
+                                                             rb_str_new2(argv[0]),
+                                                             rb_str_new2(argv[1]),
+                                                             rb_str_new2(argv[2]),
+                                                             rb_str_new2(argv[3]),
+                                                             rb_str_new2(argv[4]),
+                                                             rb_str_new2(argv[5]),
+                                                             rb_str_new2(argv[6]));
+                                }
                             }
                             else
                             {

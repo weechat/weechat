@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-24 17:16+0200\n"
+"POT-Creation-Date: 2009-04-29 14:30+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5277,12 +5277,13 @@ msgstr ""
 msgid "  (none)"
 msgstr "(unbekannt)"
 
-#, c-format
-msgid "%s%s: unable to call function \"%s\", script is not initialized"
-msgstr ""
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr "Kann das Logfile nicht schreiben\n"
 
 #, fuzzy, c-format
-msgid "%s%s: wrong arguments for function \"%s\""
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #, fuzzy, c-format

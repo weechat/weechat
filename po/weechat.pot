@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-04-24 17:16+0200\n"
+"POT-Creation-Date: 2009-04-29 14:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4588,11 +4588,12 @@ msgid "  (none)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to call function \"%s\", script is not initialized"
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: wrong arguments for function \"%s\""
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr ""
 
 #, c-format

@@ -94,7 +94,8 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
-    const char *script_name, *script_input_cb, *script_close_cb;
+    const char *script_name, *script_input_cb, *script_input_cb_data;
+    const char *script_close_cb, *script_close_cb_data;
     struct t_plugin_script *ptr_script;
     struct t_script_callback *new_script_callback_input;
     struct t_script_callback *new_script_callback_close;
@@ -122,8 +123,10 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                             new_script_callback_input = script_callback_alloc ();
                             if (new_script_callback_input)
                             {
-                                new_script_callback_input->script = ptr_script;
-                                new_script_callback_input->function = strdup (script_input_cb);
+                                script_callback_init (new_script_callback_input,
+                                                      ptr_script,
+                                                      script_input_cb,
+                                                      script_input_cb_data);
                                 new_script_callback_input->buffer = ptr_buffer;
                                 script_callback_add (ptr_script,
                                                      new_script_callback_input);
@@ -140,8 +143,10 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                             new_script_callback_close = script_callback_alloc ();
                             if (new_script_callback_close)
                             {
-                                new_script_callback_close->script = ptr_script;
-                                new_script_callback_close->function = strdup (script_close_cb);
+                                script_callback_init (new_script_callback_close,
+                                                      ptr_script,
+                                                      script_close_cb,
+                                                      script_close_cb_data);
                                 new_script_callback_close->buffer = ptr_buffer;
                                 script_callback_add (ptr_script,
                                                      new_script_callback_close);
