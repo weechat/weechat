@@ -115,8 +115,14 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                                                 script_name);
                     if (ptr_script)
                     {
-                        script_input_cb = weechat_buffer_get_string (ptr_buffer, "localvar_script_input_cb");
-                        script_close_cb = weechat_buffer_get_string (ptr_buffer, "localvar_script_close_cb");
+                        script_input_cb = weechat_buffer_get_string (ptr_buffer,
+                                                                     "localvar_script_input_cb");
+                        script_input_cb_data = weechat_buffer_get_string (ptr_buffer,
+                                                                          "localvar_script_input_cb_data");
+                        script_close_cb = weechat_buffer_get_string (ptr_buffer,
+                                                                     "localvar_script_close_cb");
+                        script_close_cb_data = weechat_buffer_get_string (ptr_buffer,
+                                                                          "localvar_script_close_cb_data");
                         
                         if (script_input_cb && script_input_cb[0])
                         {
