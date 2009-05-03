@@ -1852,6 +1852,12 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "key");
+    
     return WEECHAT_RC_OK;
 }
 
