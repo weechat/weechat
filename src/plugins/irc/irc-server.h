@@ -172,6 +172,7 @@ extern void irc_server_buffer_set_highlight_words (struct t_gui_buffer *buffer);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
+extern void irc_server_switch_next ();
 extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
                                              const char *new_name);

@@ -3112,39 +3112,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "switch") == 0)
     {
         if (weechat_config_boolean (irc_config_look_one_server_buffer))
-        {
-            if (irc_current_server)
-            {
-                ptr_server2 = irc_current_server->next_server;
-                if (!ptr_server2)
-                    ptr_server2 = irc_servers;
-                while (ptr_server2 != irc_current_server)
-                {
-                    if (ptr_server2->buffer)
-                    {
-                        irc_current_server = ptr_server2;
-                        break;
-                    }
-                    ptr_server2 = ptr_server2->next_server;
-                    if (!ptr_server2)
-                        ptr_server2 = irc_servers;
-                }
-            }
-            else
-            {
-                for (ptr_server2 = irc_servers; ptr_server2;
-                     ptr_server2 = ptr_server2->next_server)
-                {
-                    if (ptr_server2->buffer)
-                    {
-                        irc_current_server = ptr_server2;
-                        break;
-                    }
-                }
-            }
-            if (irc_current_server)
-                irc_server_set_current_server (irc_current_server);
-        }
+            irc_server_switch_next ();
         return WEECHAT_RC_OK;
     }
     

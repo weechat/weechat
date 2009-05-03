@@ -635,6 +635,48 @@ irc_server_outqueue_free_all (struct t_irc_server *server)
 }
 
 /*
+ * irc_server_switch_next: swicth to next server
+ */
+
+void
+irc_server_switch_next ()
+{
+    struct t_irc_server *ptr_server;
+    
+    if (irc_current_server)
+    {
+        ptr_server = irc_current_server->next_server;
+        if (!ptr_server)
+            ptr_server = irc_servers;
+        while (ptr_server != irc_current_server)
+        {
+            if (ptr_server->buffer)
+            {
+                irc_current_server = ptr_server;
+                break;
+            }
+            ptr_server = ptr_server->next_server;
+            if (!ptr_server)
+                ptr_server = irc_servers;
+        }
+    }
+    else
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->buffer)
+            {
+                irc_current_server = ptr_server;
+                break;
+            }
+        }
+    }
+    if (irc_current_server)
+        irc_server_set_current_server (irc_current_server);
+}
+
+/*
  * irc_server_free_data: free server data
  */
 
@@ -691,6 +733,13 @@ irc_server_free (struct t_irc_server *server)
     
     if (!server)
         return;
+    
+    if (irc_current_server == server)
+    {
+        irc_server_switch_next ();
+        if (irc_current_server == server)
+            irc_current_server = NULL;
+    }
     
     /* close all channels/privates */
     irc_channel_free_all (server);
