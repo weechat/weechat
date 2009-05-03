@@ -20,7 +20,7 @@ You can build WeeChat with cmake (recommended way) or autotools.
 
 
 If you want to report bugs/crashs to developers, please:
-- compile with debug info (built type Debug for cmake, default for autotools),
+- compile with debug info (type "Debug" for cmake build, default for autotools),
 - enable core files (for bash shell, add "ulimit -c unlimited" to your ~/.bashrc).
 
 
