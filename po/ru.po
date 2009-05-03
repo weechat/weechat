@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-02 22:43+0200\n"
+"POT-Creation-Date: 2009-05-03 09:40+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3861,6 +3861,9 @@ msgid "get nick from IRC host"
 msgstr "банит ник или хост"
 
 msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+msgid "currently selected server (only if one buffer is used for all servers)"
 msgstr ""
 
 #, fuzzy

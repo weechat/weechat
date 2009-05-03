@@ -18,6 +18,11 @@
 </row>
 <row>
   <entry>irc</entry>
+  <entry>irc_current_server</entry>
+  <entry>serveur actuellement sélectionné (seulement si un tampon est utilisé pour tous les serveurs)</entry>
+</row>
+<row>
+  <entry>irc</entry>
   <entry>irc_is_channel</entry>
   <entry>1 si la chaîne est un canal IRC</entry>
 </row>

@@ -18,6 +18,11 @@
 </row>
 <row>
   <entry>irc</entry>
+  <entry>irc_current_server</entry>
+  <entry>currently selected server (only if one buffer is used for all servers)</entry>
+</row>
+<row>
+  <entry>irc</entry>
   <entry>irc_is_channel</entry>
   <entry>1 if string is an IRC channel</entry>
 </row>
