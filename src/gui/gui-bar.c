@@ -2105,6 +2105,12 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
     char *str, *error;
     int length, add_x, add, percent, scroll_beginning, scroll_end;
     
+    if (!bar)
+        return 0;
+    
+    if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
+        return 1;
+    
     add_x = 0;
     str = NULL;
     number = 0;
