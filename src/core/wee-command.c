@@ -3925,10 +3925,10 @@ command_init ()
                   N_("option: name of an option\n"
                      " value: new value for option\n\n"
                      "New value can be, according to variable type:\n"
-                     "  boolean: on, off ou toggle\n"
-                     "  integer: number, ++number ou --number"
+                     "  boolean: on, off or toggle\n"
+                     "  integer: number, ++number or --number\n"
                      "  string : any string (\"\" for empty string)\n"
-                     "  color  : color name, ++number ou --number\n\n"
+                     "  color  : color name, ++number or --number\n\n"
                      "For all types, you can use null to remove "
                      "option value (undefined value). This works only "
                      "for some special plugin variables."),

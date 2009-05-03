@@ -247,9 +247,10 @@ option: name of an option
  value: new value for option
 
 New value can be, according to variable type:
-  boolean: on, off ou toggle
-  integer: number, ++number ou --number  string : any string ("" for empty string)
-  color  : color name, ++number ou --number
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+  string : any string ("" for empty string)
+  color  : color name, ++number or --number
 
 For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 </programlisting>
