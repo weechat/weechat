@@ -1,4 +1,4 @@
-WeeChat FAQ, 2009-04-19
+WeeChat FAQ, 2009-05-03
 =======================
 
 1 - General
@@ -80,8 +80,8 @@ For versions >= 0.2.3:
 - check that "Charset" plugin is loaded with /plugin command (if it is not,
   then you probably need "weechat-plugins" package)
 - check charset line (on server buffer), you should see ISO-XXXXXX or UTF-8
-  for terminal charset. If you see ANSI_X3.4-1968 or other values, probably
-  your locale is wrong.
+  for terminal charset. If you see ANSI_X3.4-1968 or other values, your locale
+  is probably wrong.
 - setup global decode value, for example:
   with WeeChat <= 0.2.6:
      /setp charset.global.decode = ISO-8859-15
