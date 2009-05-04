@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-03 16:24+0200\n"
+"POT-Creation-Date: 2009-05-04 19:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,14 +151,6 @@ msgstr ""
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
-msgstr ""
-
-#, c-format
-msgid "Bar \"%s\" is now hidden"
-msgstr ""
-
-#, c-format
-msgid "Bar \"%s\" is now visible"
 msgstr ""
 
 #, c-format

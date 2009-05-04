@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-03 16:24+0200\n"
+"POT-Creation-Date: 2009-05-04 19:17+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -177,14 +177,6 @@ msgstr "los usuarios han sido desactivados"
 #, fuzzy, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
 msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
-
-#, c-format
-msgid "Bar \"%s\" is now hidden"
-msgstr ""
-
-#, c-format
-msgid "Bar \"%s\" is now visible"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: buffer not found for \"%s\" command"

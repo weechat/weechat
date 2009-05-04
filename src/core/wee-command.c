@@ -380,13 +380,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
-        {
-            if (gui_bar_set (ptr_bar, "hidden", "1"))
-            {
-                gui_chat_printf (NULL, _("Bar \"%s\" is now hidden"),
-                                 ptr_bar->name);
-            }
-        }
+            gui_bar_set (ptr_bar, "hidden", "1");
         
         return WEECHAT_RC_OK;
     }
@@ -413,13 +407,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
-        {
-            if (gui_bar_set (ptr_bar, "hidden", "0"))
-            {
-                gui_chat_printf (NULL, _("Bar \"%s\" is now visible"),
-                                 ptr_bar->name);
-            }
-        }
+            gui_bar_set (ptr_bar, "hidden", "0");
         
         return WEECHAT_RC_OK;
     }
