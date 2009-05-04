@@ -436,7 +436,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
 {
     enum t_gui_bar_filling filling;
     char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
-    char *item_value, ****split_items, **linear_items;
+    char *item_value, *item_value2, ****split_items, **linear_items;
     int index_content, content_length, i, sub, j, k, index;
     int length_reinit_color, length_reinit_color_space;
     int length, max_length, max_length_screen, total_items, columns, lines;
@@ -480,6 +480,16 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         {
                             item_value = string_replace (ptr_content, "\n",
                                                          reinit_color_space);
+                            if (item_value)
+                            {
+                                item_value2 = string_replace (item_value,
+                                                              "\r", "\n");
+                                if (item_value2)
+                                {
+                                    free (item_value);
+                                    item_value = item_value2;
+                                }
+                            }
                         }
                         else
                             item_value = NULL;

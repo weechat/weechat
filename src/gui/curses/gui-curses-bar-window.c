@@ -513,22 +513,14 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     {
                         some_data_not_displayed = 1;
                     }
-                    if (filling != GUI_BAR_FILLING_HORIZONTAL)
+                    while (x < bar_window->width)
                     {
-                        while (x < bar_window->width)
-                        {
-                            gui_bar_window_print_string (bar_window,
-                                                         &x, &y,
-                                                         " ", 0);
-                        }
-                        x = 0;
-                        y++;
+                        gui_bar_window_print_string (bar_window,
+                                                     &x, &y,
+                                                     " ", 0);
                     }
-                    else
-                    {
-                        gui_bar_window_print_string (bar_window, &x, &y,
-                                                     space_with_reinit_color, 0);
-                    }
+                    x = 0;
+                    y++;
                 }
             }
             if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
