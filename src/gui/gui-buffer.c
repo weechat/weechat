@@ -397,6 +397,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
         new_buffer->num_displayed = 0;
+        new_buffer->print_hooks_enabled = 1;
         
         /* close callback */
         new_buffer->close_callback = close_callback;
@@ -637,6 +638,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->number;
         else if (string_strcasecmp (property, "num_displayed") == 0)
             return buffer->num_displayed;
+        else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+            return buffer->print_hooks_enabled;
         else if (string_strcasecmp (property, "notify") == 0)
             return buffer->notify;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
@@ -960,6 +963,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_window_switch_to_buffer (gui_current_window, buffer,
                                      (string_strcasecmp (value, "auto") == 0) ?
                                      0 : 1);
+    }
+    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            buffer->print_hooks_enabled = (number) ? 1 : 0;
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
@@ -1645,6 +1655,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "print_hooks_enabled", buffer->print_hooks_enabled))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->first_line_not_read))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines_hidden))
@@ -1883,6 +1895,7 @@ gui_buffer_print_log ()
         log_printf ("  type . . . . . . . . . : %d",    ptr_buffer->type);
         log_printf ("  notify . . . . . . . . : %d",    ptr_buffer->notify);
         log_printf ("  num_displayed. . . . . : %d",    ptr_buffer->num_displayed);
+        log_printf ("  print_hooks_enabled. . : %d",    ptr_buffer->print_hooks_enabled);
         log_printf ("  close_callback . . . . : 0x%lx", ptr_buffer->close_callback);
         log_printf ("  close_callback_data. . : 0x%lx", ptr_buffer->close_callback_data);
         log_printf ("  title. . . . . . . . . : '%s'",  ptr_buffer->title);

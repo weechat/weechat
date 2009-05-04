@@ -95,6 +95,7 @@ struct t_gui_buffer
                                        /* 2 = highlight + msg               */
                                        /* 3 = highlight + msg + join/part   */
     int num_displayed;                 /* number of windows displaying buf. */
+    int print_hooks_enabled;           /* 1 if print hooks are enabled      */
     
     /* close callback */
     int (*close_callback)(void *data,  /* called when buffer is closed      */

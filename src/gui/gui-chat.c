@@ -1156,7 +1156,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             gui_chat_line_add (buffer, (display_time) ? date : 0,
                                (display_time) ? date_printed : 0,
                                tags, pos_prefix, ptr_msg);
-            if (buffer->last_line)
+            if (buffer->last_line && buffer->print_hooks_enabled)
             {
                 hook_print_exec (buffer, buffer->last_line);
             }

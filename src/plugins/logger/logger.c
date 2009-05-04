@@ -755,6 +755,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
     struct tm tm_line;
     int num_lines;
     
+    weechat_buffer_set (buffer, "print_hooks_enabled", "0");
     num_lines = 0;
     last_lines = logger_tail_file (filename, lines);
     ptr_lines = last_lines;
@@ -802,6 +803,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
                         num_lines);
         weechat_buffer_set (buffer, "unread", "");
     }
+    weechat_buffer_set (buffer, "print_hooks_enabled", "1");
 }
 
 /*
