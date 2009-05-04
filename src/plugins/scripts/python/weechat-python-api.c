@@ -4974,7 +4974,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     items = NULL;
     
     if (!PyArg_ParseTuple (args, "sssssssssssssss", &name, &hidden, &priority,
-                           &conditions, &type, &position, &filling_top_bottom,
+                           &type, &conditions, &position, &filling_top_bottom,
                            &filling_left_right, &size, &size_max, &color_fg,
                            &color_delim, &color_bg, &separator, &items))
     {
