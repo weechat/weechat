@@ -216,6 +216,11 @@ plugin_load (const char *filename)
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_api_version",
                          full_name);
+        gui_chat_printf (NULL,
+                         _("%sIf plugin \"%s\" is old/obsolete, you can "
+                           "delete this file."),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         name);
         dlclose (handle);
         free (full_name);
         return NULL;
@@ -229,6 +234,11 @@ plugin_load (const char *filename)
                          full_name,
                          WEECHAT_PLUGIN_API_VERSION,
                          api_version);
+        gui_chat_printf (NULL,
+                         _("%sIf plugin \"%s\" is old/obsolete, you can "
+                           "delete this file."),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         name);
         dlclose (handle);
         free (full_name);
         return NULL;
