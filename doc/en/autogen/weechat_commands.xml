@@ -60,7 +60,12 @@ manage buffers
     move: move buffer in the list (may be relative, for example -1)
    close: close buffer
     list: list buffers (no parameter implies this list)
-  notify: set notify level for current buffer
+  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
 localvar: display local variables for current buffer
      set: set a property for current buffer
   number: jump to buffer by number

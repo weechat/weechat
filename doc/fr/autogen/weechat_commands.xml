@@ -60,7 +60,12 @@ gestion des tampons
     move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
    close: ferme le tampon
     list: liste les tampons ouverts (pas de paramètre affiche cette liste)
-  notify: définit le niveau de notification pour le tampon courant
+  notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas :
+               none: jamais
+          highlight: pour les highlights seulement
+            message: pour les messages d'utilisateurs + highlights
+                all: pout tous les messages
+              reset: réinitialise à valeur par défaut (all)
 localvar: affiche la liste des variables locales pour le tampon courant
      set: modifier une propriété du tampon courant
   nombre: saute au tampon qui a ce numéro
