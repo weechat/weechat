@@ -17,6 +17,11 @@ build-stamp: builddir/Makefile
 	$(MAKE) -C builddir
 	touch $@
 
+override_dh_auto_configure:
+	# the package also has autotools buildsys and
+	# debhelper try to use it but that's not needed
+	echo
+
 override_dh_install:
 	$(MAKE) -C builddir DESTDIR=$(CURDIR)/debian/tmp install
 	dh_install
