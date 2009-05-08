@@ -95,3 +95,9 @@ SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
             $(trigger_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
+
+# install plugin header
+
+install-data-hook:
+	$(INSTALL) -d $(includedir)/$(PACKAGE)
+	$(INSTALL_DATA) weechat-plugin.h $(includedir)/$(PACKAGE)

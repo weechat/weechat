@@ -30,6 +30,9 @@ AC_GNU_SOURCE
 AM_PROG_LIBTOOL
 AC_CHECK_PROG(DBLATEX_FOUND, "dblatex", "yes")
 
+# Files to generate
+AC_CONFIG_FILES([weechat.pc])
+
 # Add some flags for some OS
 case "$host_os" in
 freebsd* | openbsd*)

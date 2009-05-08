@@ -59,6 +59,10 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindTCL.cmake \
              cmake/makedist.sh.in \
              weechat.spec \
-             weechat_icon_32.png
+             weechat_icon_32.png \
+             weechat.pc.in
 
 ACLOCAL_AMFLAGS = -I m4
+
+pkgconfigdir   = $(libdir)/pkgconfig
+pkgconfig_DATA = weechat.pc
