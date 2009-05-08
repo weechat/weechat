@@ -4182,7 +4182,7 @@ irc_command_init ()
                           N_("[server] nickname[,nickname]"),
                           N_("  server: server name\n"
                              "nickname: nickname (may be a mask)"),
-                          NULL, &irc_command_whois, NULL);
+                          "%(nicks)", &irc_command_whois, NULL);
     weechat_hook_command ("whowas",
                           N_("ask for information about a nickname which no "
                              "longer exists"),
@@ -4192,5 +4192,5 @@ irc_command_init ()
                              "   count: number of replies to return "
                              "(full search if negative number)\n"
                              "  target: reply should match this mask"),
-                          NULL, &irc_command_whowas, NULL);
+                          "%(nicks)", &irc_command_whowas, NULL);
 }
