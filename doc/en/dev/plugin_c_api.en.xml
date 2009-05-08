@@ -5034,6 +5034,7 @@ struct t_hook *weechat_hook_command (
               <option>completion</option>: completion template for command:
               list of completions for each arguments, separated by space. Many
               completions are possible for one argument, separated by "|".
+              Many templates are possible for same command, separeted by "||".
               Default completion codes are:
               <informaltable colsep="0" frame="none">
                 <tgroup cols="3">
@@ -5059,6 +5060,10 @@ struct t_hook *weechat_hook_command (
                     </row>
                   </thead>
                   <tbody>
+                    <row>
+                      <entry>%%command</entry>
+                      <entry>Reuse completion template from /command</entry>
+                    </row>
                     <row>
                       <entry>%-</entry>
                       <entry>Stop completion</entry>
@@ -5151,13 +5156,29 @@ my_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     return WEECHAT_RC_OK;
 }
 
+/* this is an example, inspired by weechat command /filter */
 struct t_hook *my_command_hook =
-    weechat_hook_command ("mycommand",
-                          "description of my command",
-                          "[command [buffer]]",
-                          "command: WeeChat or plugin command\n"
-                          " buffer: buffer name",
-                          "%w|%p %b", &amp;my_command_cb, NULL);
+    weechat_hook_command (/* command name */
+                          "myfilter",
+                          /* description */
+                          "description of myfilter",
+                          /* args */
+                          "[list] | [enable|disable|toggle [name]] | "
+                          "[add name plugin.buffer tags regex] | "
+                          "[del name|-all]",
+                          /* args description */
+                          "description of arguments...",
+                          /* completion */
+                          "list"
+                          " || enable %(filters_names)"
+                          " || disable %(filters_names)"
+                          " || toggle %(filters_names)"
+                          " || add %(filters_names) %(buffers_plugins_names)|*"
+                          " || del %(filters_names)|-all",
+                          /* callback */
+                          &amp;my_command_cb,
+                          /* callback_data */
+                          NULL);
 </screen>
       </para>
     </section>

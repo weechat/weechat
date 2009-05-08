@@ -378,6 +378,8 @@ alias_new (const char *name, const char *command)
 {
     struct t_alias *new_alias, *ptr_alias, *pos_alias;
     struct t_hook *new_hook;
+    char *str_completion;
+    int length;
     
     if (!name || !name[0] || !command || !command[0])
         return NULL;
@@ -399,8 +401,18 @@ alias_new (const char *name, const char *command)
     new_alias = malloc (sizeof (*new_alias));
     if (new_alias)
     {
-        new_hook = weechat_hook_command (name, "[alias]", NULL, NULL, NULL,
+        length = 2 + strlen (command) + 1;
+        str_completion = malloc (length);
+        if (str_completion)
+        {
+            snprintf (str_completion, length, "%%%%%s",
+                      (command[0] == '/') ? command + 1 : command);
+        }
+        new_hook = weechat_hook_command (name, "[alias]", NULL, NULL,
+                                         (str_completion) ? str_completion : NULL,
                                          alias_cb, new_alias);
+        if (str_completion)
+            free (str_completion);
         if (!new_hook)
         {
             free (new_alias);
