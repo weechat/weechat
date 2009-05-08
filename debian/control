@@ -80,6 +80,16 @@ Description: Fast, light and extensible IRC client - documentation
  .
  This package contains the html documentation for WeeChat.
 
+Package: weechat-dev
+Section: devel
+Architecture: all
+Depends: ${misc:Depends}
+Description: Fast, light and extensible IRC client - developement headers
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package contains the headers needed to build plugins.
+
 Package: weechat-dbg
 Section: debug
 Priority: extra

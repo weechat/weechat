@@ -7,6 +7,7 @@ weechat (0.2.7-1) experimental; urgency=low
     - Add weechat-doc (Documentation)
     - Add weechat-core (locales files, essential plugins)
     - Add weechat-dbg (gdb debugging symbols)
+    - Add weechat-dev (plugins developement files)
   * Adjust Build-Depends for new tcl plugin (update debian/copyright).
   * Remove quilt from Build-Depends (patches merged upstream).
   * Switch packaging from cdbs to plain debhelper.
