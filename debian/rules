@@ -1,28 +1,32 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/cmake.mk
+builddir/Makefile:
+	mkdir -p builddir
+	cd builddir && \
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_C_FLAGS="$(CFLAGS)" \
+		-DCMAKE_LD_FLAGS="-Wl,-z,defs" \
+		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
+		-DCMAKE_SKIP_RPATH=ON \
+		-DCMAKE_VERBOSE_MAKEFILE=ON
 
-DEB_STRIP_EXCLUDE := libperl.a
-DEB_DH_INSTALL_SOURCEDIR := $(CURDIR)/debian/tmp
+build: build-stamp
+build-stamp: builddir/Makefile 
+	dh_testdir
+	$(MAKE) -C builddir
+	touch $@
 
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
+override_dh_install:
+	$(MAKE) -C builddir DESTDIR=$(CURDIR)/debian/tmp install
+	dh_install
 
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	INSTALL_PROGRAM += -s
-endif
+override_dh_strip:
+	dh_strip --dbg-package=weechat-dbg
 
-DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
-ifeq ($(DEB_HOST_ARCH_OS),hurd)
-	DEB_CONFIGURE_SCRIPT_ENV += LDFLAGS="-lpthread"
-endif
+clean:
+	rm -rf builddir
+	dh $@
 
-install/weechat-core::
-	install -D -o root -g root -m 644 debian/weechat.xpm $(CURDIR)/debian/weechat-core/usr/share/pixmaps/weechat.xpm
-
-install/weechat-curses::
-	install -D -o root -g root -m 644 debian/lintian-override $(CURDIR)/debian/weechat-curses/usr/share/lintian/overrides/weechat-curses
+%:
+	dh $@

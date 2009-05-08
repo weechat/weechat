@@ -1,15 +1,19 @@
-weechat (0.2.7-1) unstable; urgency=low
+weechat (0.2.7-1) experimental; urgency=low
 
   * New (major) upstream release.
+    - Fix the excessive number of wakeups (Closes: #461945)
   * Packaging changes:
     - Drop weechat-common
     - Add weechat-doc (Documentation)
     - Add weechat-core (locales files, essential plugins)
     - Add weechat-dbg (gdb debugging symbols)
   * Adjust Build-Depends for new tcl plugin (update debian/copyright).
-  * Remove quilt from Build-Depends (patch merged upstream).
+  * Remove quilt from Build-Depends (patches merged upstream).
+  * Switch packaging from cdbs to plain debhelper.
+  * Update packages descriptions.
+  * Add a lintian-override against manpage line wrapping error.
 
- -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 30 Nov 2008 16:38:56 +0100
+ -- Emmanuel Bouthenot <kolter@openics.org>  Fri, 08 May 2009 13:36:39 +0000
 
 weechat (0.2.6-2) unstable; urgency=low
 

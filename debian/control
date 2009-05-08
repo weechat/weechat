@@ -3,10 +3,10 @@ Section: net
 Priority: optional
 Maintainer: Emmanuel Bouthenot <kolter@openics.org>
 Build-Depends-Indep: xsltproc, docbook-xsl, docbook-xml
-Build-Depends: debhelper (>= 5), cdbs (>= 0.4.37), cmake, libncursesw5-dev,
+Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl8.5-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
-Standards-Version: 3.8.0
+ tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
+Standards-Version: 3.8.1
 Homepage: http://weechat.flashtux.org/
 
 Package: weechat
@@ -28,7 +28,7 @@ Package: weechat-curses
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
 Recommends: weechat-plugins (= ${binary:Version})
-Description: Fast, light and extensible IRC client
+Description: Fast, light and extensible IRC client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
@@ -39,34 +39,55 @@ Description: Fast, light and extensible IRC client
   - double charset support (decode/encode)
   - FIFO pipe for remote control
   - and much more!
+ .
+ This package provides the console client (ncurses).
 
 Package: weechat-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Suggests: weechat-doc (= ${source:Version})
 Conflicts: weechat-common, weechat-plugins (<< 0.2.7)
-Description: Core files for WeeChat
- This package provides core plugins and locales files for WeeChat. It currently
- ships the following plugins: irc, xfer, charset and logger.
+Description: Fast, light and extensible IRC client - core files
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package provides core plugins and locales files for WeeChat. It
+ currently ships the following plugins: xfer, notify, irc, charset and
+ logger. It is useless without weechat-curses.
 
 Package: weechat-plugins
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
 Suggests: weechat-scripts
-Description: Plugins for WeeChat
- This package provides some plugins to enhance WeeChat. It currently ships
- the following plugins: Perl, Python, Ruby, Lua, Tcl, Aspell, Relay and Fifo.
+Description: Fast, light and extensible IRC client - plugins
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package provides some plugins to enhance WeeChat. It currently
+ ships the following plugins:
+  - Perl, Python, Ruby, Lua, and Tcl scripting.
+  - Spell checking (thanks to aspell).
+  - Charsets management
+  - And many others (Relay, Fifo, ...)
 
 Package: weechat-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
-Description: Documentation for WeeChat
+Description: Fast, light and extensible IRC client - documentation
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+ for many operating systems. Everything can be done with a keyboard.
+ .
  This package contains the html documentation for WeeChat.
 
 Package: weechat-dbg
+Section: debug
 Priority: extra
 Architecture: any
 Depends: ${misc:Depends}, weechat-curses (= ${binary:Version}) |
  weechat-core (= ${binary:Version}), weechat-plugins (= ${binary:Version})
-Description: Debugging symbols for WeeChat
+Description: Fast, light and extensible IRC client - debugging symbols
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+ for many operating systems. Everything can be done with a keyboard.
+ .
  This package contains gdb debugging symbols for the WeeChat packages.
