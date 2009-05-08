@@ -149,7 +149,8 @@ int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int *x, int *y,
                              const char *string,
-                             int reset_color_before_display)
+                             int reset_color_before_display,
+                             int hide_chars_if_scrolling)
 {
     int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
@@ -299,7 +300,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 size_on_screen = utf8_char_size_screen (utf_char);
                 if (size_on_screen > 0)
                 {
-                    if (x_with_hidden < bar_window->scroll_x)
+                    if (hide_chars_if_scrolling
+                        && (x_with_hidden < bar_window->scroll_x))
                     {
                         /* hidden char (before scroll_x value) */
                         x_with_hidden++;
@@ -500,7 +502,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     || (line >= bar_window->scroll_y))
                 {
                     if (!gui_bar_window_print_string (bar_window, &x, &y,
-                                                      items[line], 1))
+                                                      items[line], 1, 1))
                     {
                         some_data_not_displayed = 1;
                     }
@@ -508,7 +510,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     {
                         gui_bar_window_print_string (bar_window,
                                                      &x, &y,
-                                                     " ", 0);
+                                                     " ", 0, 0);
                     }
                     x = 0;
                     y++;
