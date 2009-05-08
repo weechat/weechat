@@ -1977,9 +1977,9 @@ gui_bar_create_default_status ()
             + 1 /* ":" */
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
             + 3 /* "lag" */
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_HOTLIST])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_COMPLETION])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_SCROLL])
             + (12 * 4) /* all items delimiters: ",:+[]()" */
@@ -1987,15 +1987,15 @@ gui_bar_create_default_status ()
         buf = malloc (length);
         if (buf)
         {
-            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+{%s},[lag],[%s],[%s],%s,%s",
+            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+{%s}+%s,[lag],[%s],%s,%s",
                       gui_bar_item_names[GUI_BAR_ITEM_TIME],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
-                      gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
+                      gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
             if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,

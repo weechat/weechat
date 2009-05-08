@@ -133,6 +133,7 @@ extern struct t_config_option *config_color_chat_text_found_bg;
 extern struct t_config_option *config_color_chat_value;
 extern struct t_config_option *config_color_status_number;
 extern struct t_config_option *config_color_status_name;
+extern struct t_config_option *config_color_status_filter;
 extern struct t_config_option *config_color_status_data_msg;
 extern struct t_config_option *config_color_status_data_private;
 extern struct t_config_option *config_color_status_data_highlight;

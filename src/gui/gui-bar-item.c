@@ -881,13 +881,12 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    if (!gui_filters_enabled || !gui_filters)
+    if (!gui_filters_enabled || !gui_filters || !window->buffer->lines_hidden)
         return NULL;
     
     snprintf (buf, sizeof (buf),
-              "F%s%s",
-              (window->buffer->lines_hidden) ? "," : "",
-              (window->buffer->lines_hidden) ? _("filtered") : "");
+              "%s*",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_filter))));
     
     return strdup (buf);
 }
