@@ -437,7 +437,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     enum t_gui_bar_filling filling;
     char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
-    int index_content, content_length, i, sub, j, k, index;
+    int index_content, content_length, i, first_sub_item, sub, j, k, index;
     int length_reinit_color, length_reinit_color_space;
     int length, max_length, max_length_screen, total_items, columns, lines;
     
@@ -470,6 +470,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
         case GUI_BAR_FILLING_VERTICAL:   /* items separated by \n */
             for (i = 0; i < bar_window->items_count; i++)
             {
+                first_sub_item = 1;
                 for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                 {
                     ptr_content = gui_bar_window_content_get (bar_window, window,
@@ -504,7 +505,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             content_length += length_reinit_color_space +
                                 strlen ((item_value) ? item_value : ptr_content);
                             content = realloc (content, content_length);
-                            if (sub == 0)
+                            if (first_sub_item)
                             {
                                 /* first sub item: insert space after last item */
                                 if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
@@ -518,6 +519,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             }
                             strcat (content,
                                     (item_value) ? item_value : ptr_content);
+                            first_sub_item = 0;
                         }
                         if (item_value)
                             free (item_value);

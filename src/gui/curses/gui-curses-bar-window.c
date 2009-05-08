@@ -348,24 +348,15 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int x, y, items_count, num_lines, line;
     enum t_gui_bar_filling filling;
     char *content, **items;
-    char space_with_reinit_color[32], str_start_input[16], str_cursor[16];
+    char str_start_input[16], str_cursor[16];
     char *pos_start_input, *pos_cursor, *buf, *new_start_input;
-    int length_reinit_color, length_on_screen, chars_available;
+    int length_on_screen, chars_available;
     int length_screen_before_cursor, length_screen_after_cursor;
     int total_length_screen, diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed;
     
     if (!gui_init_ok)
         return;
-    
-    snprintf (space_with_reinit_color,
-              sizeof (space_with_reinit_color),
-              "%c%c%02d,%02d ",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-    length_reinit_color = strlen (space_with_reinit_color);
     
     snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
               GUI_COLOR_COLOR_CHAR,
