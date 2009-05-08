@@ -472,8 +472,6 @@ weechat_python_load (const char *filename)
 
         if (PyErr_Occurred ())
             PyErr_Print ();
-        Py_EndInterpreter (python_current_interpreter);
-        /* PyEval_ReleaseLock (); */
         
         /* if script was registered, removing from list */
         if (python_current_script != NULL)
@@ -482,6 +480,10 @@ weechat_python_load (const char *filename)
                            &python_scripts, &last_python_script,
                            python_current_script);
         }
+        
+        Py_EndInterpreter (python_current_interpreter);
+        /* PyEval_ReleaseLock (); */
+        
         return 0;
     }
 
