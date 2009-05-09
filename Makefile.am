@@ -31,14 +31,17 @@ EXTRA_DIST = CMakeLists.txt \
              debian/compat \
              debian/control \
              debian/copyright \
-             debian/lintian-override \
              debian/rules \
              debian/watch \
+             debian/weechat-core.docs \
              debian/weechat-core.install \
              debian/weechat-curses.dirs \
              debian/weechat-curses.install \
+             debian/weechat-curses.lintian-overrides \
              debian/weechat-curses.manpages \
              debian/weechat-curses.menu \
+             debian/weechat-dev.dirs \
+             debian/weechat-dev.install \
              debian/weechat-doc.docs \
              debian/weechat-doc.install \
              debian/weechat-plugins.dirs \
