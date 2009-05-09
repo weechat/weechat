@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-05 11:41+0200\n"
-"PO-Revision-Date: 2009-05-05 11:43+0200\n"
+"POT-Creation-Date: 2009-05-09 11:01+0200\n"
+"PO-Revision-Date: 2009-05-09 11:03+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1680,6 +1680,9 @@ msgstr ""
 msgid "text color for current buffer name in status bar"
 msgstr "couleur du texte pour le nom du tampon courant dans la barre de statut"
 
+msgid "text color for filter indicator in status bar"
+msgstr "couleur du texte pour l'indicateur de filtrage dans la barre de statut"
+
 msgid "text color for buffer with new messages (status bar)"
 msgstr ""
 "couleur du texte pour un tampon avec de nouveaux messages (barre de statut)"
@@ -2142,9 +2145,6 @@ msgstr "Recherche texte"
 
 msgid "Text search (exact)"
 msgstr "Recherche texte (exact)"
-
-msgid "filtered"
-msgstr "filtré"
 
 #, c-format
 msgid "%s-MORE(%d)-"
@@ -5832,6 +5832,9 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "filtered"
+#~ msgstr "filtré"
 
 #~ msgid "Bar \"%s\" is now hidden"
 #~ msgstr "La barre \"%s\" est maintenant cachée"

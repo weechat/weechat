@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-05 11:41+0200\n"
+"POT-Creation-Date: 2009-05-09 11:01+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1572,6 +1572,10 @@ msgid "text color for current buffer name in status bar"
 msgstr "barva pro aktuální kanál v stavovém řádku"
 
 #, fuzzy
+msgid "text color for filter indicator in status bar"
+msgstr "barva pro aktuální kanál v stavovém řádku"
+
+#, fuzzy
 msgid "text color for buffer with new messages (status bar)"
 msgstr "barva okna s novými zprávami (status bar)"
 
@@ -2041,10 +2045,6 @@ msgstr "Vyhledávání textu: "
 #, fuzzy
 msgid "Text search (exact)"
 msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
-
-#, fuzzy
-msgid "filtered"
-msgstr "uživatel byl zablokován"
 
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
@@ -5722,6 +5722,10 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "filtered"
+#~ msgstr "uživatel byl zablokován"
 
 #~ msgid "Bar \"%s\" is now hidden"
 #~ msgstr "Pole \"%s\" je nyní schováno"

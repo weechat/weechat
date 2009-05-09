@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-05 11:41+0200\n"
+"POT-Creation-Date: 2009-05-09 11:01+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1577,6 +1577,10 @@ msgid "text color for current buffer name in status bar"
 msgstr "color para el canal actual en la barra de estado"
 
 #, fuzzy
+msgid "text color for filter indicator in status bar"
+msgstr "color para el canal actual en la barra de estado"
+
+#, fuzzy
 msgid "text color for buffer with new messages (status bar)"
 msgstr "color para una ventana con mensajes nuevos (barra de estado)"
 
@@ -2027,10 +2031,6 @@ msgstr ""
 
 msgid "Text search (exact)"
 msgstr ""
-
-#, fuzzy
-msgid "filtered"
-msgstr "los usuarios han sido desactivados"
 
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
@@ -5655,6 +5655,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "filtered"
+#~ msgstr "los usuarios han sido desactivados"
 
 #, fuzzy
 #~ msgid "%s%s: unable to set notify level \"%s\" => \"%s\""

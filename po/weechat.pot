@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-05 11:41+0200\n"
+"POT-Creation-Date: 2009-05-09 11:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1351,6 +1351,9 @@ msgstr ""
 msgid "text color for current buffer name in status bar"
 msgstr ""
 
+msgid "text color for filter indicator in status bar"
+msgstr ""
+
 msgid "text color for buffer with new messages (status bar)"
 msgstr ""
 
@@ -1752,9 +1755,6 @@ msgid "Text search"
 msgstr ""
 
 msgid "Text search (exact)"
-msgstr ""
-
-msgid "filtered"
 msgstr ""
 
 #, c-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-05 11:41+0200\n"
+"POT-Creation-Date: 2009-05-09 11:01+0200\n"
 "PO-Revision-Date: 2009-01-03 00:42+0100\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1596,6 +1596,10 @@ msgid "text color for current buffer name in status bar"
 msgstr "Farbe des aktuellen Channels in der Statuszeile"
 
 #, fuzzy
+msgid "text color for filter indicator in status bar"
+msgstr "Farbe des aktuellen Channels in der Statuszeile"
+
+#, fuzzy
 msgid "text color for buffer with new messages (status bar)"
 msgstr "Farbe eines Fensters mit neuen Messages in der Statuszeile"
 
@@ -2049,10 +2053,6 @@ msgstr "Textsuche"
 #, fuzzy
 msgid "Text search (exact)"
 msgstr "Textsuche (genau)"
-
-#, fuzzy
-msgid "filtered"
-msgstr "/users wurde deaktiviert"
 
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
@@ -5663,6 +5663,10 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "filtered"
+#~ msgstr "/users wurde deaktiviert"
 
 #, fuzzy
 #~ msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
