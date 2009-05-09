@@ -899,6 +899,8 @@ gui_input_history_previous ()
         {
             if (gui_current_window->buffer->ptr_history)
             {
+                if (!gui_current_window->buffer->ptr_history->next_history)
+                    return;
                 gui_current_window->buffer->ptr_history =
                     gui_current_window->buffer->ptr_history->next_history;
                 if (!gui_current_window->buffer->ptr_history)
