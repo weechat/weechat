@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-04-28
+ChangeLog - 2009-05-09
 
 
 Version 0.2.7 (under dev!):
@@ -48,6 +48,7 @@ Version 0.2.7 (under dev!):
      scroll with page_up and page_down keys (task #8702)
    * gui: add number of lines remaining after last line displayed in "-MORE-"
      indicator (task #6702)
+   * gui: fix completion with non-latin nicks (bug #18993)
    * gui: fix display bug with some weird UTF-8 chars (bug #19687)
    * gui: fix bug with wide chars in input (bug #16356)
    * gui: fix bug when switching window, scrollback is now preserved

@@ -182,7 +182,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
     
     while (string1 && string1[0] && string2 && string2[0])
     {
-        /* skip digits */
+        /* skip ignored chars */
         while (string1 && string1[0] && strchr (chars_ignored, string1[0]))
         {
             string1 = utf8_next_char (string1);
@@ -209,7 +209,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
         
-        /* skip digits */
+        /* skip ignored chars */
         while (string1 && string1[0] && strchr (chars_ignored, string1[0]))
         {
             string1 = utf8_next_char (string1);

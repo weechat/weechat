@@ -229,43 +229,58 @@ gui_completion_search_command (const char *command)
 }
 
 /*
- * gui_completion_is_only_alphanum: return 1 if there is only alpha/num chars
- *                                  in a string
+ * gui_completion_nick_has_ignored_chars: return 1 if nick has one or more
+ *                                        ignored chars for nick comparison
  */
 
 int
-gui_completion_is_only_alphanum (const char *string)
+gui_completion_nick_has_ignored_chars (const char *string)
 {
+    int char_size;
+    char utf_char[16];
+    
     while (string[0])
     {
-        if (strchr (CONFIG_STRING(config_completion_nick_ignore_chars),
-                    string[0]))
-            return 0;
-        string++;
+        char_size = utf8_char_size (string);
+        memcpy (utf_char, string, char_size);
+        utf_char[char_size] = '\0';
+        
+        if (strstr (CONFIG_STRING(config_completion_nick_ignore_chars),
+                    utf_char))
+            return 1;
+        
+        string += char_size;
     }
-    return 1;
+    return 0;
 }
 
 /*
- * gui_completion_strdup_alphanum: duplicate alpha/num chars in a string
+ * gui_completion_nick_strdup_ignore_chars: duplicate a nick and ignore some
+ *                                          chars
  */
 
 char *
-gui_completion_strdup_alphanum (const char *string)
+gui_completion_nick_strdup_ignore_chars (const char *string)
 {
-    char *result, *pos;
+    int char_size;
+    char *result, *pos, utf_char[16];
     
     result = malloc (strlen (string) + 1);
     pos = result;
     while (string[0])
     {
-        if (!strchr (CONFIG_STRING(config_completion_nick_ignore_chars),
-                     string[0]))
+        char_size = utf8_char_size (string);
+        memcpy (utf_char, string, char_size);
+        utf_char[char_size] = '\0';
+        
+        if (!strstr (CONFIG_STRING(config_completion_nick_ignore_chars),
+                     utf_char))
         {
-            pos[0] = string[0];
-            pos++;
+            memcpy (pos, utf_char, char_size);
+            pos += char_size;
         }
-        string++;
+        
+        string += char_size;
     }
     pos[0] = '\0';
     return result;
@@ -285,13 +300,14 @@ gui_completion_nickncmp (const char *base_word, const char *nick, int max)
     if (!CONFIG_STRING(config_completion_nick_ignore_chars)
         || !CONFIG_STRING(config_completion_nick_ignore_chars)[0]
         || !base_word || !nick || !base_word[0] || !nick[0]
-        || (!gui_completion_is_only_alphanum (base_word)))
+        || gui_completion_nick_has_ignored_chars (base_word))
         return string_strncasecmp (base_word, nick, max);
     
-    base_word2 = gui_completion_strdup_alphanum (base_word);
-    nick2 = gui_completion_strdup_alphanum (nick);
+    base_word2 = gui_completion_nick_strdup_ignore_chars (base_word);
+    nick2 = gui_completion_nick_strdup_ignore_chars (nick);
     
-    return_cmp = string_strncasecmp (base_word2, nick2, strlen (base_word2));
+    return_cmp = string_strncasecmp (base_word2, nick2,
+                                     utf8_strlen (base_word2));
     
     free (base_word2);
     free (nick2);
