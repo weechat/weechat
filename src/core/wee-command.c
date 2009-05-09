@@ -3706,6 +3706,8 @@ command_init ()
                   " || localvar"
                   " || set"
                   " || %(buffers_names)"
+                  " || %(irc_channels)"
+                  " || %(irc_privates)"
                   " || %(buffers_numbers)",
                   &command_buffer, NULL);
     hook_command (NULL, "command",
