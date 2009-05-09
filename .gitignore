@@ -42,6 +42,7 @@ po/*quot*
 POTFILES
 remove-potcdate.sed
 Rules-quot
+weechat.pc
 doc/de/build/*
 doc/en/build/*
 doc/fr/build/*
