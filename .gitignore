@@ -28,6 +28,7 @@ config.status
 config.sub
 configure
 date.xml
+debian/*.log
 depcomp
 insert-header.sin
 install-sh
