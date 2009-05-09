@@ -5146,6 +5146,39 @@ weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
 }
 
 /*
+ * weechat_ruby_api_window_set_title: set window title
+ */
+
+static VALUE
+weechat_ruby_api_window_set_title (VALUE class, VALUE title)
+{
+    char *c_title;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_set_title");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (title))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "window_set_title");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (title, T_STRING);
+    
+    c_title = STR2CSTR (title);
+    
+    weechat_window_set_title (c_title);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_nicklist_add_group: add a group in nicklist
  */
 
@@ -6843,6 +6876,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "window_get_integer", &weechat_ruby_api_window_get_integer, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_string", &weechat_ruby_api_window_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_pointer", &weechat_ruby_api_window_get_pointer, 2);
+    rb_define_module_function (ruby_mWeechat, "window_set_title", &weechat_ruby_api_window_set_title, 1);
     rb_define_module_function (ruby_mWeechat, "nicklist_add_group", &weechat_ruby_api_nicklist_add_group, 5);
     rb_define_module_function (ruby_mWeechat, "nicklist_search_group", &weechat_ruby_api_nicklist_search_group, 3);
     rb_define_module_function (ruby_mWeechat, "nicklist_add_nick", &weechat_ruby_api_nicklist_add_nick, 7);

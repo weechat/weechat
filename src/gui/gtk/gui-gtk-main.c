@@ -192,7 +192,7 @@ gui_main_init ()
             gui_current_window = gui_windows;
             
             if (CONFIG_BOOLEAN(config_look_set_title))
-                gui_window_title_set ();
+                gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
         }
         
         /* create bar windows for root bars (they were read from config,
@@ -270,7 +270,7 @@ gui_main_end (int clean_exit)
         
         /* reset title */
         if (CONFIG_BOOLEAN(config_look_set_title))
-            gui_window_title_reset ();
+            gui_window_set_title (NULL);
         
         /* end color */
         gui_color_end ();

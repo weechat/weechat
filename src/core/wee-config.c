@@ -214,9 +214,9 @@ config_change_title (void *data, struct t_config_option *option)
     (void) option;
     
     if (CONFIG_BOOLEAN(config_look_set_title))
-	gui_window_title_set ();
+	gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
     else
-	gui_window_title_reset ();
+	gui_window_set_title (NULL);
 }
 
 /*

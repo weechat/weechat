@@ -33,7 +33,7 @@ struct t_infolist;
 struct t_weelist;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20090502-01"
+#define WEECHAT_PLUGIN_API_VERSION "20090510-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -506,6 +506,7 @@ struct t_weechat_plugin
                                       const char *property);
     void *(*window_get_pointer) (struct t_gui_window *window,
                                  const char *property);
+    void (*window_set_title) (const char *title);
     
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
@@ -1046,6 +1047,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->window_get_pointer(__window, __property)
 #define weechat_current_window()                                        \
     weechat_plugin->window_get_pointer(NULL, "current")
+#define weechat_window_set_title(__title)                               \
+    weechat_plugin->window_set_title(__title)
 
 /* nicklist */
 #define weechat_nicklist_add_group(__buffer, __parent_group, __name,    \

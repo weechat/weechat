@@ -171,8 +171,7 @@ extern void gui_window_switch_down (struct t_gui_window *window);
 extern void gui_window_switch_left (struct t_gui_window *window);
 extern void gui_window_switch_right (struct t_gui_window *window);
 extern void gui_window_refresh_screen (int full_refresh);
-extern void gui_window_title_set ();
-extern void gui_window_title_reset ();
+extern void gui_window_set_title (const char *title);
 extern void gui_window_objects_print_log (struct t_gui_window *window);
 
 #endif /* gui-window.h */

@@ -786,23 +786,15 @@ gui_window_refresh_screen (int full_refresh)
 }
 
 /*
- * gui_window_title_set: set terminal title
+ * gui_window_set_title: set terminal title
  */
 
 void
-gui_window_title_set ()
+gui_window_set_title (const char *title)
 {
+    (void) title;
+    
     /* TODO: write this function for Gtk */
-}
-
-/*
- * gui_window_title_reset: reset terminal title
- */
-
-void
-gui_window_title_reset ()
-{
-    /* This function does nothing in Gtk GUI */
 }
 
 /*

@@ -527,6 +527,7 @@ plugin_load (const char *filename)
         new_plugin->window_get_integer = &gui_window_get_integer;
         new_plugin->window_get_string = &gui_window_get_string;
         new_plugin->window_get_pointer = &gui_window_get_pointer;
+        new_plugin->window_set_title = &gui_window_set_title;
         
         new_plugin->nicklist_add_group = &gui_nicklist_add_group;
         new_plugin->nicklist_search_group = &gui_nicklist_search_group;

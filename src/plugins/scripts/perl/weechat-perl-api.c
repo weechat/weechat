@@ -4268,6 +4268,34 @@ static XS (XS_weechat_api_window_get_pointer)
 }
 
 /*
+ * weechat::window_set_title: set window title
+ */
+
+static XS (XS_weechat_api_window_set_title)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_set_title");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "window_set_title");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_window_set_title (SvPV (ST (0), PL_na)); /* title */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::nicklist_add_group: add a group in nicklist
  */
 
@@ -5657,6 +5685,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
     newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
     newXS ("weechat::window_get_pointer", XS_weechat_api_window_get_pointer, "weechat");
+    newXS ("weechat::window_set_title", XS_weechat_api_window_set_title, "weechat");
     newXS ("weechat::nicklist_add_group", XS_weechat_api_nicklist_add_group, "weechat");
     newXS ("weechat::nicklist_search_group", XS_weechat_api_nicklist_search_group, "weechat");
     newXS ("weechat::nicklist_add_nick", XS_weechat_api_nicklist_add_nick, "weechat");

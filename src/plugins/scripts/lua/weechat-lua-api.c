@@ -5003,6 +5003,42 @@ weechat_lua_api_window_get_pointer (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_window_set_title: set window title
+ */
+
+static int
+weechat_lua_api_window_set_title (lua_State *L)
+{
+    const char *title;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_set_title");
+        LUA_RETURN_ERROR;
+    }
+    
+    title = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "window_set_title");
+        LUA_RETURN_ERROR;
+    }
+    
+    title = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_window_set_title (title);
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_nicklist_add_group: add a group in nicklist
  */
 
@@ -7050,6 +7086,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "window_get_integer", &weechat_lua_api_window_get_integer },
     { "window_get_string", &weechat_lua_api_window_get_string },
     { "window_get_pointer", &weechat_lua_api_window_get_pointer },
+    { "window_set_title", &weechat_lua_api_window_set_title },
     { "nicklist_add_group", &weechat_lua_api_nicklist_add_group },
     { "nicklist_search_group", &weechat_lua_api_nicklist_search_group },
     { "nicklist_add_nick", &weechat_lua_api_nicklist_add_nick },

@@ -1372,83 +1372,89 @@ gui_window_refresh_screen (int full_refresh)
 }
 
 /*
- * gui_window_title_set: set terminal title
+ * gui_window_set_title: set terminal title
  */
 
 void
-gui_window_title_set ()
-{
-    char *envterm = getenv ("TERM");
-    
-    if (envterm)
-    {
-	if (strcmp( envterm, "sun-cmd") == 0)
-	    printf ("\033]l%s %s\033\\", PACKAGE_NAME, PACKAGE_VERSION);
-	else if (strcmp(envterm, "hpterm") == 0)
-	    printf ("\033&f0k%dD%s %s",
-                    (int)(strlen(PACKAGE_NAME) + strlen(PACKAGE_VERSION) + 1),
-		    PACKAGE_NAME, PACKAGE_VERSION);
-	/* the following term supports the xterm excapes */
-	else if (strncmp (envterm, "xterm", 5) == 0
-		 || strncmp (envterm, "rxvt", 4) == 0
-		 || strcmp (envterm, "Eterm") == 0
-		 || strcmp (envterm, "aixterm") == 0
-		 || strcmp (envterm, "iris-ansi") == 0
-		 || strcmp (envterm, "dtterm") == 0)
-	    printf ("\33]0;%s %s\7", PACKAGE_NAME, PACKAGE_VERSION);
-	else if (strcmp (envterm, "screen") == 0)
-	{
-	    printf ("\033k%s %s\033\\", PACKAGE_NAME, PACKAGE_VERSION);
-	    /* tryning to set the title of a backgrounded xterm like terminal */
-	    printf ("\33]0;%s %s\7", PACKAGE_NAME, PACKAGE_VERSION);
-	}
-    }
-}
-
-/*
- * gui_window_title_reset: reset terminal title
- */
-
-void
-gui_window_title_reset ()
+gui_window_set_title (const char *title)
 {
     char *shell, *shellname;
     char *envterm = getenv ("TERM");
     char *envshell = getenv ("SHELL");
-
+    
     if (envterm)
     {
-	if (strcmp( envterm, "sun-cmd") == 0)
-	    printf ("\033]l%s\033\\", "Terminal");
-	else if (strcmp( envterm, "hpterm") == 0)
-	    printf ("\033&f0k%dD%s", (int)strlen("Terminal"), "Terminal");
-	/* the following term supports the xterm excapes */
-	else if (strncmp (envterm, "xterm", 5) == 0
-		 || strncmp (envterm, "rxvt", 4) == 0
-		 || strcmp (envterm, "Eterm") == 0
-		 || strcmp( envterm, "aixterm") == 0
-		 || strcmp( envterm, "iris-ansi") == 0
-		 || strcmp( envterm, "dtterm") == 0)
-	    printf ("\33]0;%s\7", "Terminal");
-	else if (strcmp (envterm, "screen") == 0)
-	{
-	    if (envshell)
-	    {
-		shell  = strdup (envshell);
-		if (shell)
-		{
-                    shellname = basename (shell);
-		    printf ("\033k%s\033\\", (shellname) ? shellname : shell);
-		    free (shell);
-		}
-		else
-		    printf ("\033k%s\033\\", envterm);
-	    }
-	    else
-		printf ("\033k%s\033\\", envterm);
-	    /* tryning to reset the title of a backgrounded xterm like terminal */
-	    printf ("\33]0;%s\7", "Terminal");
-	}
+        if (title && title[0])
+        {
+            if (strcmp (envterm, "sun-cmd") == 0)
+            {
+                printf ("\033]l%s\033\\", title);
+            }
+            else if (strcmp (envterm, "hpterm") == 0)
+            {
+                printf ("\033&f0k%dD%s", (int)(strlen(title) + 1), title);
+            }
+            /* the following term supports the xterm excapes */
+            else if ((strncmp (envterm, "xterm", 5) == 0)
+                     || (strncmp (envterm, "rxvt", 4) == 0)
+                     || (strcmp (envterm, "Eterm") == 0)
+                     || (strcmp (envterm, "aixterm") == 0)
+                     || (strcmp (envterm, "iris-ansi") == 0)
+                     || (strcmp (envterm, "dtterm") == 0))
+            {
+                printf ("\33]0;%s\7", title);
+            }
+            else if (strcmp (envterm, "screen") == 0)
+            {
+                printf ("\033k%s\033\\", title);
+                /* tryning to set the title of a backgrounded xterm like terminal */
+                printf ("\33]0;%s\7", title);
+            }
+        }
+        else
+        {
+            if (strcmp (envterm, "sun-cmd") == 0)
+            {
+                printf ("\033]l%s\033\\", "Terminal");
+            }
+            else if (strcmp (envterm, "hpterm") == 0)
+            {
+                printf ("\033&f0k%dD%s", (int)strlen("Terminal"), "Terminal");
+            }
+            /* the following term supports the xterm excapes */
+            else if ((strncmp (envterm, "xterm", 5) == 0)
+                     || (strncmp (envterm, "rxvt", 4) == 0)
+                     || (strcmp (envterm, "Eterm") == 0)
+                     || (strcmp( envterm, "aixterm") == 0)
+                     || (strcmp( envterm, "iris-ansi") == 0)
+                     || (strcmp( envterm, "dtterm") == 0))
+            {
+                printf ("\33]0;%s\7", "Terminal");
+            }
+            else if (strcmp (envterm, "screen") == 0)
+            {
+                if (envshell)
+                {
+                    shell  = strdup (envshell);
+                    if (shell)
+                    {
+                        shellname = basename (shell);
+                        printf ("\033k%s\033\\", (shellname) ? shellname : shell);
+                        free (shell);
+                    }
+                    else
+                    {
+                        printf ("\033k%s\033\\", envterm);
+                    }
+                }
+                else
+                {
+                    printf ("\033k%s\033\\", envterm);
+                }
+                /* tryning to reset the title of a backgrounded xterm like terminal */
+                printf ("\33]0;%s\7", "Terminal");
+            }
+        }
     }
 }
 

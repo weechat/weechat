@@ -103,7 +103,6 @@ extern void gui_keyboard_flush ();
 
 /* window functions */
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
-extern void gui_window_title_set ();
-extern void gui_window_title_reset ();
+extern void gui_window_set_title (const char *title);
 
 #endif /* gui-gtk.h */

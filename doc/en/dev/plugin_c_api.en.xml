@@ -8293,6 +8293,36 @@ weechat_printf (NULL, "current window pointer is: %lx, buffer displayed is: %lx"
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_window_set_title">
+      <title>weechat_window_set_title</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+void weechat_window_set_title (const char *title);
+</programlisting>
+      </para>
+      <para>
+        Set title for window (terminal for Curses interface).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>title</option>: new title (if empty, then title is reset)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+<screen>
+weechat_window_set_title ("new title");
+</screen>
+      </para>
+    </section>
+    
   </section>
   
   <!-- ============================[ nicklist ]============================ -->

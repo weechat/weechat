@@ -4774,6 +4774,40 @@ weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_window_set_title: set window title
+ */
+
+static int
+weechat_tcl_api_window_set_title (ClientData clientData, Tcl_Interp *interp,
+                                  int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *title;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_set_title");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "window_set_title");
+        TCL_RETURN_ERROR;
+    }
+    
+    title = Tcl_GetStringFromObj (objv[1], &i);
+    
+    weechat_window_set_title (title);
+    
+    TCL_RETURN_OK;
+}
+
+/*
  * weechat_tcl_api_nicklist_add_group: add a group in nicklist
  */
 
@@ -6478,6 +6512,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_window_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::window_get_pointer",
                           weechat_tcl_api_window_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::window_set_title",
+                          weechat_tcl_api_window_set_title, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::nicklist_add_group",
                           weechat_tcl_api_nicklist_add_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::nicklist_search_group",

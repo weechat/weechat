@@ -4298,7 +4298,7 @@ weechat_python_api_buffer_get_pointer (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
-        PYTHON_RETURN_ERROR;
+        PYTHON_RETURN_EMPTY;
     }
     
     buffer = NULL;
@@ -4425,7 +4425,7 @@ weechat_python_api_window_get_string (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_get_string");
-        PYTHON_RETURN_ERROR;
+        PYTHON_RETURN_EMPTY;
     }
     
     window = NULL;
@@ -4458,7 +4458,7 @@ weechat_python_api_window_get_pointer (PyObject *self, PyObject *args)
     if (!python_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_get_pointer");
-        PYTHON_RETURN_ERROR;
+        PYTHON_RETURN_EMPTY;
     }
     
     window = NULL;
@@ -4474,6 +4474,37 @@ weechat_python_api_window_get_pointer (PyObject *self, PyObject *args)
                                                          property));
     
     PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_window_set_title: set window title
+ */
+
+static PyObject *
+weechat_python_api_window_set_title (PyObject *self, PyObject *args)
+{
+    char *title;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_set_title");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    title = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &title))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "window_set_title");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_window_set_title (title);
+    
+    PYTHON_RETURN_OK;
 }
 
 /*
@@ -5932,6 +5963,7 @@ PyMethodDef weechat_python_funcs[] =
     { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
     { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },
     { "window_get_pointer", &weechat_python_api_window_get_pointer, METH_VARARGS, "" },
+    { "window_set_title", &weechat_python_api_window_set_title, METH_VARARGS, "" },
     { "nicklist_add_group", &weechat_python_api_nicklist_add_group, METH_VARARGS, "" },
     { "nicklist_search_group", &weechat_python_api_nicklist_search_group, METH_VARARGS, "" },
     { "nicklist_add_nick", &weechat_python_api_nicklist_add_nick, METH_VARARGS, "" },
