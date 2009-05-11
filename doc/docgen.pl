@@ -98,7 +98,7 @@ my @ignore_completions_items = ("jabber.*",
 # -------------------------------[ init ]--------------------------------------
 
 weechat::register("docgen", "FlashCode <flashcode\@flashtux.org>", $version,
-                  "GPL", "Doc generator for WeeChat 0.2.7", "", "");
+                  "GPL", "Doc generator for WeeChat 0.3.x", "", "");
 weechat::hook_command("docgen", "Doc generator", "", "", "", "docgen", "");
 weechat::config_set_plugin("path", $default_path)
     if (weechat::config_get_plugin("path") eq "");

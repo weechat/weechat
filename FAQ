@@ -1,4 +1,4 @@
-WeeChat FAQ, 2009-05-03
+WeeChat FAQ, 2009-05-11
 =======================
 
 1 - General
@@ -11,7 +11,7 @@ WeeChat FAQ, 2009-05-03
 1.1: Why choosing WeeChat? X-Chat and Irssi are so good...
 
 Because WeeChat is very light and has new features.
-Some features (version >= 0.2.7):
+Some features (version >= 0.3.x):
    * multi-protocols support via plugins (IRC, Jabber)
    * many deported GUI in addition to Curses (coming soon)
    * available in many languages
@@ -85,7 +85,7 @@ For versions >= 0.2.3:
 - setup global decode value, for example:
   with WeeChat <= 0.2.6:
      /setp charset.global.decode = ISO-8859-15
-  with WeeChat >= 0.2.7:
+  with WeeChat >= 0.3.x:
      /set charset.default.decode "ISO-8859-15"
 - if you are using UTF-8 locale:
     - check that your terminal is UTF-8 ready
@@ -132,7 +132,7 @@ You must setup that:
 - with WeeChat <= 0.2.6:
      /set plugins_extension = ".so.0.0"
      /plugin autoload
-- with WeeChat >= 0.2.7:
+- with WeeChat >= 0.3.x:
      /set weechat.plugin.extension ".so.0.0"
      /plugin autoload
 
@@ -147,7 +147,7 @@ Scripts are not compatible with other IRC clients.
 Notes:
 - scripts in ~/.weechat/<language>/autoload are automatically loaded when
   WeeChat is starting up.
-- plugin "tcl" is available with version 0.2.7 or newer.
+- plugin "tcl" is available with version >= 0.3.x.
 
 
 ------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ konsole, ...). Key is usually ctrl + alt + mouse selection.
 Other solution is to move nicklist to top or bottom, for example:
 - with WeeChat <= 0.2.6:
      /set look_nicklist_position = top
-- with WeeChat >= 0.2.7:
+- with WeeChat >= 0.3.x:
      /bar set nicklist position top
 
 
@@ -182,7 +182,7 @@ You can use sound.pl script (available on scripts page), and then setup a
 system command (to play sound, display message, ..) with this command:
 - with WeeChat <= 0.2.6:
      /setp perl.sound.cmd_highlight = "/path/command arguments"
-- with WeeChat >= 0.2.7:
+- with WeeChat >= 0.3.x:
      /set plugins.var.perl.sound.cmd_highlight "/path/command arguments"
 
 
@@ -196,7 +196,7 @@ According to WeeChat version:
      /ignore * quit #weechat freenode
      (channel and/or server may be "*")
      (/help ignore for help)
-- with WeeChat >= 0.2.7:
+- with WeeChat >= 0.3.x:
      - smart filter (keep join/part/quit from users who spoke recently):
           /set irc.look.smart_filter on
           /filter add irc_smart * irc_smart_filter *

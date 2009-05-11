@@ -1,4 +1,4 @@
-Guide de démarrage rapide WeeChat (version française, pour WeeChat >= 0.2.7)
+Guide de démarrage rapide WeeChat (version française, pour WeeChat >= 0.3.x)
 ============================================================================
 
 1. Démarrer weechat
@@ -216,5 +216,5 @@ Guide de démarrage rapide WeeChat (version française, pour WeeChat >= 0.2.7)
 
 --
 (c) 2006-2009, écrit par FlashCode <flashcode@flashtux.org>
-Dernière édition le 02/01/2009.
+Dernière édition le 11/05/2009.
 Ce document fait partie de WeeChat et est distribué sous license GPL 3.

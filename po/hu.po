@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.7-dev\n"
+"Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-09 11:01+0200\n"
-"PO-Revision-Date: 2009-01-03 00:42+0100\n"
+"POT-Creation-Date: 2009-05-11 12:44+0200\n"
+"PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3608,6 +3608,10 @@ msgstr "felhasználók listája a szobában"
 
 #, fuzzy
 msgid "IRC channels (on all servers)"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+msgid "IRC privates (on all servers)"
 msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
 
 #, fuzzy

@@ -1,4 +1,4 @@
-WeeChat quick start guide (english version, for WeeChat >= 0.2.7)
+WeeChat quick start guide (english version, for WeeChat >= 0.3.x)
 =================================================================
 
 1. Launch weechat
@@ -206,5 +206,5 @@ WeeChat quick start guide (english version, for WeeChat >= 0.2.7)
 
 --
 (c) 2006-2009, written by FlashCode <flashcode@flashtux.org>
-Last edited on 2009-01-02.
+Last edited on 2009-05-11.
 This document is part of WeeChat and is distributed under GPL 3 licence.

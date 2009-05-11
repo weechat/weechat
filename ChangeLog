@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-05-09
+ChangeLog - 2009-05-11
 
 
-Version 0.2.7 (under dev!):
+Version 0.3.0 (under dev!):
    * irc: add irc plugin (replaces old IRC code in core)
    * irc: add smart join/part/quit message filter (task #8503)
    * irc: use of many addresses for servers (auto-switch when a connexion

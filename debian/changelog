@@ -1,4 +1,4 @@
-weechat (0.2.7-1) experimental; urgency=low
+weechat (0.3.0-1) experimental; urgency=low
 
   * New (major) upstream release.
     - Fix the excessive number of wakeups (Closes: #461945)

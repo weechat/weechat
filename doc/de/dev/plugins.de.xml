@@ -187,7 +187,7 @@ WEECHAT_PLUGIN_NAME("double");
 WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode &lt;flashcode@flashtux.org&gt;");
 WEECHAT_PLUGIN_VERSION("0.1");
-WEECHAT_PLUGIN_WEECHAT_VERSION("0.2.7");
+WEECHAT_PLUGIN_WEECHAT_VERSION("0.3.0");
 WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_plugin = NULL;

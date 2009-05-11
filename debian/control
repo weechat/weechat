@@ -12,8 +12,8 @@ Homepage: http://weechat.flashtux.org/
 Package: weechat
 Architecture: all
 Depends: ${misc:Depends}, weechat-curses (>= ${source:Version})
-Description: Fast, light and extensible IRC client
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
   - nicklist
@@ -28,8 +28,8 @@ Package: weechat-curses
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
 Recommends: weechat-plugins (= ${binary:Version})
-Description: Fast, light and extensible IRC client - console client
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client - console client
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
   - nicklist
@@ -46,9 +46,9 @@ Package: weechat-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Suggests: weechat-doc (= ${source:Version})
-Conflicts: weechat-common, weechat-plugins (<< 0.2.7)
-Description: Fast, light and extensible IRC client - core files
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Conflicts: weechat-common, weechat-plugins (<< 0.3.0)
+Description: Fast, light and extensible chat client - core files
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides core plugins and locales files for WeeChat. It
@@ -59,8 +59,8 @@ Package: weechat-plugins
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
 Suggests: weechat-scripts
-Description: Fast, light and extensible IRC client - plugins
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client - plugins
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides some plugins to enhance WeeChat. It currently
@@ -74,8 +74,8 @@ Package: weechat-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
-Description: Fast, light and extensible IRC client - documentation
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client - documentation
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package contains the html documentation for WeeChat.
@@ -84,8 +84,8 @@ Package: weechat-dev
 Section: devel
 Architecture: all
 Depends: ${misc:Depends}
-Description: Fast, light and extensible IRC client - developement headers
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client - developement headers
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package contains the headers needed to build plugins.
@@ -96,8 +96,8 @@ Priority: extra
 Architecture: any
 Depends: ${misc:Depends}, weechat-curses (= ${binary:Version}) |
  weechat-core (= ${binary:Version}), weechat-plugins (= ${binary:Version})
-Description: Fast, light and extensible IRC client - debugging symbols
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
+Description: Fast, light and extensible chat client - debugging symbols
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package contains gdb debugging symbols for the WeeChat packages.
