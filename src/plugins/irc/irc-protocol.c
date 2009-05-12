@@ -1197,6 +1197,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
 {
     char *pos_args, *pos_end_01, *pos, *pos_message;
     char *dcc_args, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
+    const char *remote_nick;
+    int nick_is_me;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     char plugin_id[128];
@@ -1442,7 +1444,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             
             return WEECHAT_RC_OK;
         }
-            
+        
         /* ping request from another user => answer */
         if (strncmp (pos_args, "\01PING", 5) == 0)
         {
@@ -1951,17 +1953,24 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
         }
         
         /* private message received => display it */
-        ptr_channel = irc_channel_search (server, nick);
+        
+        if (strcmp (server->nick, nick) == 0)
+            remote_nick = argv[2];
+        else
+            remote_nick = nick;
+        nick_is_me = (strcmp (server->nick, nick) == 0);
+        
+        ptr_channel = irc_channel_search (server, remote_nick);
         
         if (strncmp (pos_args, "\01ACTION ", 8) == 0)
         {
-            if (!irc_ignore_check (server, ptr_channel, nick, host))
+            if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
             {
                 if (!ptr_channel)
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
-                                                   nick, 0, 0);
+                                                   remote_nick, 0, 0);
                     if (!ptr_channel)
                     {
                         weechat_printf (server->buffer,
@@ -1969,7 +1978,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                           "private buffer \"%s\""),
                                         irc_buffer_get_server_prefix (server,
                                                                       "error"),
-                                        IRC_PLUGIN_NAME, nick);
+                                        IRC_PLUGIN_NAME, remote_nick);
                         return WEECHAT_RC_ERROR;
                     }
                 }
@@ -1983,10 +1992,13 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 
                 weechat_printf_tags (ptr_channel->buffer,
                                      irc_protocol_tags (command,
+                                                        (nick_is_me) ?
+                                                        "irc_action,notify_private,no_highlight" :
                                                         "irc_action,notify_private"),
                                      "%s%s%s %s%s",
                                      weechat_prefix ("action"),
-                                     IRC_COLOR_CHAT_NICK_OTHER,
+                                     (nick_is_me) ?
+                                     IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER,
                                      nick,
                                      IRC_COLOR_CHAT,
                                      pos_args);
@@ -2005,7 +2017,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             if ((pos_args[0] == '\01')
                 && pos_end_01 && (pos_end_01[1] == '\0'))
             {
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
+                if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
                 {
                     pos_args++;
                     pos_end_01[0] = '\0';
@@ -2067,13 +2079,13 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             else
             {
                 /* private message */
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
+                if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
                 {
                     if (!ptr_channel)
                     {
                         ptr_channel = irc_channel_new (server,
                                                        IRC_CHANNEL_TYPE_PRIVATE,
-                                                       nick, 0, 0);
+                                                       remote_nick, 0, 0);
                         if (!ptr_channel)
                         {
                             weechat_printf (server->buffer,
@@ -2081,18 +2093,22 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                               "private buffer \"%s\""),
                                             irc_buffer_get_server_prefix (server,
                                                                           "error"),
-                                            IRC_PLUGIN_NAME, nick);
+                                            IRC_PLUGIN_NAME, remote_nick);
                             return WEECHAT_RC_ERROR;
                         }
                     }
                     irc_channel_set_topic (ptr_channel, address);
                     
                     weechat_printf_tags (ptr_channel->buffer,
-                                         irc_protocol_tags (command, "notify_private"),
+                                         irc_protocol_tags (command,
+                                                            (nick_is_me) ?
+                                                            "notify_private,no_highlight" :
+                                                            "notify_private"),
                                          "%s%s",
                                          irc_nick_as_prefix (NULL,
                                                              nick,
-                                                             IRC_COLOR_CHAT_NICK_OTHER),
+                                                             (nick_is_me) ?
+                                                             IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER),
                                          pos_args);
                     
                     weechat_hook_signal_send ("irc_pv",
