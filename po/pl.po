@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-11 12:44+0200\n"
+"POT-Creation-Date: 2009-05-12 11:26+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator:  <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4769,7 +4769,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
-"found or not ready for transfert"
+"found or not ready for transfer"
 msgstr ""
 
 #, c-format
@@ -4779,7 +4779,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
-"xfer not found or not ready for transfert"
+"xfer not found or not ready for transfer"
 msgstr ""
 
 #, c-format

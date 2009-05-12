@@ -148,7 +148,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
             case XFER_STATUS_ACTIVE:
                 if (xfer->status == XFER_STATUS_CONNECTING)
                 {
-                    /* connection was successful by child, init transfert times */
+                    /* connection was successful by child, init transfer times */
                     xfer->status = XFER_STATUS_ACTIVE;
                     xfer->start_transfer = time (NULL);
                     xfer->last_check_time = time (NULL);

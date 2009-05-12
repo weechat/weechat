@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer.c: file transfert and direct chat plugin for WeeChat */
+/* xfer.c: file transfer and direct chat plugin for WeeChat */
 
 
 #include <stdlib.h>
@@ -43,7 +43,7 @@
 
 
 WEECHAT_PLUGIN_NAME(XFER_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION("Xfer (file transfert and direct chat) plugin for "
+WEECHAT_PLUGIN_DESCRIPTION("Xfer (file transfer and direct chat) plugin for "
                            "WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -1105,7 +1105,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
         weechat_printf (NULL,
                         _("%s%s: unable to resume file \"%s\" (port: %d, "
                            "start position: %lu): xfer not found or not ready "
-                          "for transfert"),
+                          "for transfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
     }
@@ -1192,7 +1192,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         weechat_printf (NULL,
                         _("%s%s: unable to accept resume file \"%s\" (port: %d, "
                            "start position: %lu): xfer not found or not ready "
-                          "for transfert"),
+                          "for transfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
     }

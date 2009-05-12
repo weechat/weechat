@@ -35,7 +35,7 @@ enum t_xfer_type
     XFER_NUM_TYPES,
 };
 
-/* xfer protocol (for file transfert) */
+/* xfer protocol (for file transfer) */
 
 enum t_xfer_protocol
 {

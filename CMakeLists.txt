@@ -58,7 +58,7 @@ OPTION(DISABLE_RUBY          "Disable Ruby scripting language")
 OPTION(DISABLE_LUA           "Disable Lua scripting language")
 OPTION(DISABLE_TCL           "Disable Tcl scripting language")
 OPTION(ENABLE_TRIGGER        "Enable Trigger plugin")
-OPTION(DISABLE_XFER          "Disable Xfer (file transfert) plugin")
+OPTION(DISABLE_XFER          "Disable Xfer plugin (file transfer and direct chat)")
 OPTION(DISABLE_DOC           "Disable Doc")
 
 ADD_SUBDIRECTORY( po )

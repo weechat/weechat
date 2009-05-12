@@ -118,7 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>tcl: Tcl scripting API</para>
         </listitem>
         <listitem>
-          <para>xfer: file transfert and direct chat</para>
+          <para>xfer: file transfer and direct chat</para>
         </listitem>
       </itemizedlist>
     </para>
