@@ -546,6 +546,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.color.status_filter</command>: couleur du texte pour l'indicateur de filtrage dans la barre de statut
+<itemizedlist>
+  <listitem>
+    <para>type: couleur</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: un nom de couleur (valeur par défaut: green)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.color.status_more</command>: couleur du texte pour un tampon avec des nouvelles données (barre de statut)
 <itemizedlist>
   <listitem>
@@ -836,7 +846,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.jump_current_to_previous_buffer</command>: sauter au tampon affiché précédemment lors du saut vers le numéro de tampon courant (pour facilement basculer à un autre tampon, puis revenir au tampon courant)
+<command>weechat.look.jump_current_to_previous_buffer</command>: sauter au tampon affiché précédemment lors du saut vers le numéro de tampon courant avec /buffer *N (où N est un numéro de tampon), pour facilement basculer à un autre tampon, puis revenir au tampon courant
 <itemizedlist>
   <listitem>
     <para>type: booléen</para>

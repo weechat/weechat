@@ -68,7 +68,10 @@ gestion des tampons
               reset: réinitialise à valeur par défaut (all)
 localvar: affiche la liste des variables locales pour le tampon courant
      set: modifier une propriété du tampon courant
-  nombre: saute au tampon qui a ce numéro
+  nombre: saute au tampon qui a ce numéro, préfixe possible :
+          '+': saut relatif, ajoute le numéro au courant,
+          '-': saut relatif, soustrait le numéro au courant,
+          '*': saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
      nom: saute au tampon par nom (partiel)
 
 Exemples:

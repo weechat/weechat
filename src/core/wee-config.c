@@ -1301,8 +1301,8 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "jump_current_to_previous_buffer", "boolean",
         N_("jump to previous buffer displayed when jumping to current buffer "
-           "number (to easily switch to another buffer, then come back to "
-           "current buffer)"),
+           "number with /buffer *N (where N is a buffer number), to easily "
+           "switch to another buffer, then come back to current buffer"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nickmode = config_file_new_option (
         weechat_config_file, ptr_section,

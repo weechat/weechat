@@ -713,7 +713,31 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         
         return WEECHAT_RC_OK;
     }
-
+    
+    /* smart jump (jump to previous buffer for current number) */
+    if (argv[1][0] == '*')
+    {
+        error = NULL;
+        number = strtol (argv[1] + 1, &error, 10);
+        if (error && !error[0])
+        {
+            /* buffer is currently displayed ? then jump to previous buffer */
+            if ((number == gui_current_window->buffer->number)
+                && (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer))
+                && gui_previous_buffer)
+            {
+                number = gui_previous_buffer->number;
+            }
+            if (number != gui_current_window->buffer->number)
+            {
+                gui_buffer_switch_by_number (gui_current_window,
+                                             (int) number);
+            }
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
     /* jump to buffer by number or name */
     error = NULL;
     number = strtol (argv[1], &error, 10);
@@ -3688,8 +3712,11 @@ command_init ()
                      "              reset: reset to default value (all)\n"
                      "localvar: display local variables for current buffer\n"
                      "     set: set a property for current buffer\n"
-                     "  number: jump to buffer by number\n"
-                     "server,\n"
+                     "  number: jump to buffer by number, possible prefix:\n"
+                     "          '+': relative jump, add number to current\n"
+                     "          '-': relative jump, sub number to current\n"
+                     "          '*': jump to number, using option "
+                     "\"weechat.look.jump_current_to_previous_buffer\"\n"
                      "    name: jump to buffer by (partial) name\n\n"
                      "Examples:\n"
                      "clear current buffer: /buffer clear\n"

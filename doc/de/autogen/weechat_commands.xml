@@ -68,8 +68,10 @@ Puffer verwalten
               reset: reset to default value (all)
 localvar: display local variables for current buffer
      set: set a property for current buffer
-  number: jump to buffer by number
-server,
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
     name: jump to buffer by (partial) name
 
 Examples:

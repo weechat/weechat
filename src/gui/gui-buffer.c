@@ -1489,20 +1489,8 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
     struct t_gui_buffer *ptr_buffer;
     
     /* invalid buffer */
-    if (number < 0)
+    if ((number < 0) || (number == window->buffer->number))
         return;
-    
-    /* buffer is currently displayed ? then jump to previous buffer */
-    if (number == window->buffer->number)
-    {
-        if (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer)
-            && gui_previous_buffer)
-        {
-            number = gui_previous_buffer->number;
-        }
-        else
-            return;
-    }
     
     /* search for buffer in the list */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)

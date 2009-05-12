@@ -164,16 +164,16 @@ gui_keyboard_default_bindings ()
     gui_keyboard_default_bind (/* m-w,m-right   */ "meta-wmeta-meta2-C", "/window right");
     gui_keyboard_default_bind (/* m-z           */ "meta-z",             "/window zoom");
     gui_keyboard_default_bind (/* m-=           */ "meta-=",             "/filter toggle");
-    gui_keyboard_default_bind (/* m-0           */ "meta-0",             "/buffer 10");
-    gui_keyboard_default_bind (/* m-1           */ "meta-1",             "/buffer 1");
-    gui_keyboard_default_bind (/* m-2           */ "meta-2",             "/buffer 2");
-    gui_keyboard_default_bind (/* m-3           */ "meta-3",             "/buffer 3");
-    gui_keyboard_default_bind (/* m-4           */ "meta-4",             "/buffer 4");
-    gui_keyboard_default_bind (/* m-5           */ "meta-5",             "/buffer 5");
-    gui_keyboard_default_bind (/* m-6           */ "meta-6",             "/buffer 6");
-    gui_keyboard_default_bind (/* m-7           */ "meta-7",             "/buffer 7");
-    gui_keyboard_default_bind (/* m-8           */ "meta-8",             "/buffer 8");
-    gui_keyboard_default_bind (/* m-9           */ "meta-9",             "/buffer 9");
+    gui_keyboard_default_bind (/* m-0           */ "meta-0",             "/buffer *10");
+    gui_keyboard_default_bind (/* m-1           */ "meta-1",             "/buffer *1");
+    gui_keyboard_default_bind (/* m-2           */ "meta-2",             "/buffer *2");
+    gui_keyboard_default_bind (/* m-3           */ "meta-3",             "/buffer *3");
+    gui_keyboard_default_bind (/* m-4           */ "meta-4",             "/buffer *4");
+    gui_keyboard_default_bind (/* m-5           */ "meta-5",             "/buffer *5");
+    gui_keyboard_default_bind (/* m-6           */ "meta-6",             "/buffer *6");
+    gui_keyboard_default_bind (/* m-7           */ "meta-7",             "/buffer *7");
+    gui_keyboard_default_bind (/* m-8           */ "meta-8",             "/buffer *8");
+    gui_keyboard_default_bind (/* m-9           */ "meta-9",             "/buffer *9");
     
     /* bind meta-j + {01..99} to switch to buffers # > 10 */
     for (i = 1; i < 100; i++)

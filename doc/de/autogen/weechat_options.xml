@@ -546,6 +546,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.color.status_filter</command>: text color for filter indicator in status bar
+<itemizedlist>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name (default value: green)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.color.status_more</command>: text color for buffer with new data (status bar)
 <itemizedlist>
   <listitem>
@@ -836,7 +846,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.jump_current_to_previous_buffer</command>: jump to previous buffer displayed when jumping to current buffer number (to easily switch to another buffer, then come back to current buffer)
+<command>weechat.look.jump_current_to_previous_buffer</command>: jump to previous buffer displayed when jumping to current buffer number with /buffer *N (where N is a buffer number), to easily switch to another buffer, then come back to current buffer
 <itemizedlist>
   <listitem>
     <para>type: boolean</para>

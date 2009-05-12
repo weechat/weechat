@@ -48,6 +48,11 @@
 </row>
 <row>
   <entry>irc</entry>
+  <entry>irc_privates</entry>
+  <entry>IRC privates (on all servers)</entry>
+</row>
+<row>
+  <entry>irc</entry>
   <entry>irc_server</entry>
   <entry>current IRC server</entry>
 </row>
