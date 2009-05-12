@@ -449,6 +449,8 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
     }
     if (!infolist_new_var_buffer (ptr_item, "creation_time", &(hotlist->creation_time), sizeof (struct timeval)))
         return 0;
+    if (!infolist_new_var_pointer (ptr_item, "buffer_pointer", hotlist->buffer))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "buffer_number", hotlist->buffer->number))
         return 0;
     
