@@ -116,7 +116,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <para>
       Pour récupérer les sources GIT, tapez cette commande :
-<screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
+<screen><prompt>$ </prompt><userinput>git clone git://git.sv.gnu.org/weechat.git</userinput></screen>
     </para>
     
     <para>
