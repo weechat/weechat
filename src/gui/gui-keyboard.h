@@ -74,6 +74,8 @@ extern int gui_keyboard_get_paste_lines ();
 extern void gui_keyboard_paste_accept ();
 extern void gui_keyboard_paste_cancel ();
 extern void gui_keyboard_end ();
+extern int gui_keyboard_add_to_infolist (struct t_infolist *infolist,
+                                         struct t_gui_key *key);
 extern void gui_keyboard_print_log (struct t_gui_buffer *buffer);
 
 /* keyboard functions (GUI dependent) */

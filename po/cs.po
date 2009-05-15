@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-12 17:51+0200\n"
+"POT-Creation-Date: 2009-05-16 00:36+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4873,6 +4873,10 @@ msgstr "Seznam pro aliasy:\n"
 #, fuzzy
 msgid "list of buffers in hotlist"
 msgstr "zobrazit historii příkazů bufferu"
+
+#, fuzzy
+msgid "list of key bindings"
+msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy
 msgid "nicks in nicklist for a buffer"

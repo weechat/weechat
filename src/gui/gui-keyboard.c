@@ -28,6 +28,7 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
@@ -699,6 +700,40 @@ gui_keyboard_end ()
     
     /* free all keys */
     gui_keyboard_free_all (&gui_keys, &last_gui_key);
+}
+
+/*
+ * gui_keyboard_add_to_infolist: add a key in an infolist
+ *                               return 1 if ok, 0 if error
+ */
+
+int
+gui_keyboard_add_to_infolist (struct t_infolist *infolist,
+                              struct t_gui_key *key)
+{
+    struct t_infolist_item *ptr_item;
+    char *expanded_key;
+    
+    if (!infolist || !key)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_string (ptr_item, "key_internal", key->key))
+        return 0;
+    expanded_key = gui_keyboard_get_expanded_name (key->key);
+    if (expanded_key)
+    {
+        if (!infolist_new_var_string (ptr_item, "key", expanded_key))
+            return 0;
+        free (expanded_key);
+    }
+    if (!infolist_new_var_string (ptr_item, "command", key->command))
+        return 0;
+    
+    return 1;
 }
 
 /*

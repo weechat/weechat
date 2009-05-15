@@ -316,6 +316,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_filter *ptr_filter;
     struct t_gui_window *ptr_window;
     struct t_gui_hotlist *ptr_hotlist;
+    struct t_gui_key *ptr_key;
     struct t_weechat_plugin *ptr_plugin;
     char buffer_full_name[1024];
     
@@ -566,6 +567,22 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
                 if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "key") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+            {
+                if (!gui_keyboard_add_to_infolist (ptr_infolist, ptr_key))
                 {
                     infolist_free (ptr_infolist);
                     return NULL;
@@ -882,6 +899,8 @@ plugin_api_init ()
     hook_infolist (NULL, "hook", N_("list of hooks"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "key", N_("list of key bindings"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
                    &plugin_api_infolist_get_internal, NULL);

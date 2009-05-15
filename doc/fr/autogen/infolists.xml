@@ -108,6 +108,11 @@
 </row>
 <row>
   <entry>weechat</entry>
+  <entry>key</entry>
+  <entry>liste des associations de touches</entry>
+</row>
+<row>
+  <entry>weechat</entry>
   <entry>nicklist</entry>
   <entry>pseudos dans la liste des pseudos pour un tampon</entry>
 </row>

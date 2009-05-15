@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-12 17:51+0200\n"
+"POT-Creation-Date: 2009-05-16 00:36+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4823,6 +4823,10 @@ msgstr "Liste der Aliases:\n"
 #, fuzzy
 msgid "list of buffers in hotlist"
 msgstr "Maximale Länge der Namen in der Hotlist"
+
+#, fuzzy
+msgid "list of key bindings"
+msgstr "Liste der /ignore-Regeln:\n"
 
 #, fuzzy
 msgid "nicks in nicklist for a buffer"

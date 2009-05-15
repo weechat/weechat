@@ -108,6 +108,11 @@
 </row>
 <row>
   <entry>weechat</entry>
+  <entry>key</entry>
+  <entry>list of key bindings</entry>
+</row>
+<row>
+  <entry>weechat</entry>
   <entry>nicklist</entry>
   <entry>nicks in nicklist for a buffer</entry>
 </row>
