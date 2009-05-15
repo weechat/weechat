@@ -1,0 +1,140 @@
+WeeChat tester's Guide
+======================
+FlashCode <flashcode@flashtux.org>
+v0.3.0-dev, 2009-05-15
+
+
+[[purpose]]
+Purpose
+-------
+
+Many thankful users ask us how can they help developing WeeChat. The
+easiest (and also most tricky) way to help developing WeeChat is
+testing!
+
+Testing is very important part of software development and should not be
+underestimated. When some features are implemented it should be tested, but for
+some features there are too many use cases or these cases are tricky and
+developers can't try out every case.
+
+For example: notorious charset plugin introduced in WeeChat 0.2.2: noone of us
+(developers, contributors and testers) used channels with national characters
+in their names and when 0.2.2 was released we got flooded by russian users
+blaming us. If we have more testers it should not happen again in future.
+
+Testing stable version of WeeChat is pointless because developers are busy
+implementing new stuff (and fixing old bugs) all the time.
+
+
+[[prepare_system]]
+Prepare your system
+-------------------
+
+It would help us a lot if you enable Linux 'core' files: if WeeChat crashes,
+Linux will write a file called 'core'. This file contains very useful debug
+info, to know exactly where is problem in WeeChat.
+
+If you're using 'bash' shell, add following line to your `~/.bashrc`:
+
+  ulimit -c unlimited
+
+
+[[download]]
+Download devel version
+----------------------
+
+Fresh code (with last bugs and features) is stored in GIT repository.
+
+You may decide to build it manually (recommended way):
+
+* GIT version can be built and installed in parallel to stable version,
+* you don't need root access, you don't need to sacrifice stable version of
+  WeeChat.
+
+[[get_sources]]
+Get and build sources
+~~~~~~~~~~~~~~~~~~~~~
+
+First create a directory, for example 'weechat-git':
+
+---------------------
+$ mkdir ~/weechat-git
+$ cd ~/weechat-git
+---------------------
+
+If you have git installed, you can clone git repository (recommended way):
+
+--------------------------------------------
+$ git clone git://git.sv.gnu.org/weechat.git
+$ cd weechat
+--------------------------------------------
+
+NOTE: Later, you can run "`git pull`" in this directory, to get deltas with
+today's version.
+
+Otherwise you can download and unpack 'devel' package:
+
+-----------------------------------------------------------------
+$ wget http://weechat.flashtux.org/download/weechat-devel.tar.bz2
+$ tar xvjf weechat-devel.tar.bz2
+$ cd weechat-devel
+-----------------------------------------------------------------
+
+To build sources, cmake is recommended:
+
+--------------------------------------------------------------
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=$HOME/weechat-git -DCMAKE_BUILD_TYPE=Debug
+$ make
+$ make install
+--------------------------------------------------------------
+
+If you don't have cmake, it's still possible to use autotools:
+
+----------------------------------------------------------
+$ ./autogen.sh       # (only if you cloned git repository)
+$ ./configure --prefix=$HOME/weechat-git
+$ make
+$ make install
+----------------------------------------------------------
+
+[[install_binary_package]]
+Install binary package
+~~~~~~~~~~~~~~~~~~~~~~
+
+According to your Linux distribution:
+
+* Debian: http://debian.flashtux.org/
+* Gentoo: http://weechat.flashtux.org/download.php
+* ArchLinux: PKGBUILD from http://aur.archlinux.org/
+* other: we don't know! Eheh.
+
+
+[[run]]
+Run WeeChat
+-----------
+
+It's recommended to run WeeChat with another directory (different from stable
+version), with option `--dir`.
+
+Command is:
+
+  ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
+
+If you're still awake you should see familiar interface and brag about
+having newest possible version of WeeChat. ;)
+
+Now if you experience strange behavior (it may have issues or crash or boil
+your beer) don't hesitate to join `#weechat` at `irc.freenode.net` and tell us.
+
+If it doesn't crash - tell us too, we need your feedback!
+
+
+[[links]]
+Useful links
+------------
+
+* GIT repository: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+* Bug tracker: https://savannah.nongnu.org/bugs/?group=weechat
+* WeeChat commits RSS feed: http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

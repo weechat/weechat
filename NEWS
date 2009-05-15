@@ -1,107 +1,93 @@
-WeeChat - Wee Enhanced Environment for Chat
-===========================================
+WeeChat News
+============
 
-* FlashCode, 2009-04-18
-
+FlashCode, 2009-04-18::
     WeeChat 0.2.6.2 released.
-
+    +
     This version fixes a bug with charset decoding (like iso2022jp).
 
-* FlashCode, 2009-03-14
-
+FlashCode, 2009-03-14::
     WeeChat 0.2.6.1 released.
-
+    +
     This version fixes a major bug: crash with some special chars in IRC
     messages.
 
-* FlashCode, 2007-09-06
-
+FlashCode, 2007-09-06::
     WeeChat 0.2.6 released.
 
-* FlashCode, 2007-06-07
-
+FlashCode, 2007-06-07::
     WeeChat 0.2.5 released.
 
-* FlashCode, 2007-03-29
-
+FlashCode, 2007-03-29::
     WeeChat 0.2.4 released.
 
-* FlashCode, 2007-01-10
-
+FlashCode, 2007-01-10::
     WeeChat 0.2.3 released.
-
+    +
     This version fixes several major bugs of version 0.2.2.
     All users of version 0.2.2 should upgrade to this version.
 
-* FlashCode, 2007-01-06
-
+FlashCode, 2007-01-06::
     WeeChat 0.2.2 released.
-
+    +
     Important release notes:
-    
-    - new charset plugin:
-        - for users of any previous version, all your charset settings
-          in weechat.rc will be LOST! You should save your weechat.rc
-          to keep your values and set them again with new "charset" plugin.
-        - for ISO users: history of channels may be without accents
-          (after /upgrade), this is not recoverable, but this is not a bug.
-          All new messages should be ok.
-        - be careful, now default encode is UTF-8 for all channels (before
-          it was terminal charset). If you still want to send messages as
-          ISO-8859-1, you should send either global encode or server specific
-          encode to ISO-8859-1.
-          For global encode:  /setp charset.global.encode = "ISO-8859-1"
-          For server encode: (on server buffer)  /charset encode ISO-8859-1
-    - new keys for topic scroll:
-        - new keys for scrolling topic: F9/F10
-        - key F10 was used for "infobar_clear" in previous WeeChat versions,
-          you have to manually rebind this key (except for new WeeChat users):
-            /key <press alt-k then F10> scroll_topic_right
-          which gives something like this:
-            /key meta2-21~ scroll_topic_right
+    * new charset plugin:
+    ** for users of any previous version, all your charset settings
+       in weechat.rc will be LOST! You should save your weechat.rc
+       to keep your values and set them again with new "charset" plugin.
+    ** for ISO users: history of channels may be without accents
+       (after /upgrade), this is not recoverable, but this is not a bug.
+       All new messages should be ok.
+    ** be careful, now default encode is UTF-8 for all channels (before
+       it was terminal charset). If you still want to send messages as
+       ISO-8859-1, you should send either global encode or server specific
+       encode to ISO-8859-1.
+       For global encode:  /setp charset.global.encode = "ISO-8859-1"
+       For server encode: (on server buffer)  /charset encode ISO-8859-1
+    * new keys for topic scroll:
+    ** new keys for scrolling topic: F9/F10
+    ** key F10 was used for "infobar_clear" in previous WeeChat versions,
+       you have to manually rebind this key (except for new WeeChat users):
+         /key <press alt-k then F10> scroll_topic_right
+       which gives something like this:
+         /key meta2-21~ scroll_topic_right
 
-* FlashCode, 2006-10-01
-
+FlashCode, 2006-10-01::
     WeeChat 0.2.1 released.
 
-* FlashCode, 2006-08-19
-
+FlashCode, 2006-08-19::
     WeeChat 0.2.0 released.
-
+    +
     Important release notes:
-
-    - if you upgraded with /upgrade in WeeChat, you should /disconnect and
+    * if you upgraded with /upgrade in WeeChat, you should /disconnect and
       then /reconnect on each server, to display properly channel/user modes
-    - if you're using plugins, you should remove some old plugins libraries
+    * if you're using plugins, you should remove some old plugins libraries
       in WeeChat system library directory (commonly
-      /usr/local/lib/weechat/plugins): remove lib* files (like libperl.*,
-      libpython.*, ..) and keep only new libraries (perl.*, python.*, ..)
+      /usr/local/lib/weechat/plugins): remove `lib*` files (like `libperl.*`,
+      `libpython.*`, ..) and keep only new libraries (`perl.*`, `python.*`, ..)
 
-* FlashCode, 2006-05-25
-
+FlashCode, 2006-05-25::
     WeeChat 0.1.9 released.
-
+    +
     Important release notes:
-
-    - please close all DCC chat buffers before using /upgrade command,
+    * please close all DCC chat buffers before using /upgrade command,
       otherwise you may experience problems with DCC chats.
-    - some changes in script API: now timer handlers functions takes exactly
+    * some changes in script API: now timer handlers functions takes exactly
       0 (zero) argument (in version 0.1.8, two arguments were mandatory but
       not used: server and args)
 
-* FlashCode, 2006-03-18
-
+FlashCode, 2006-03-18::
     WeeChat 0.1.8 released.
-
+    +
     Important release notes:
-
-    - it is recommended for users of version 0.1.7 (or any older), to
+    * it is recommended for users of version 0.1.7 (or any older), to
       replace values in setup file (~/.weechat/weechat.rc) :
-        - option: log_path: replace "~/.weechat/logs" by "%h/logs"
-        - option: plugins_path: replace "~/.weechat/plugins" by "%h/plugins"
-      "%h" is replaced by WeeChat home (default: ~/.weechat, may be overriden
-      by new command line arg --dir)
-    - after installing 0.1.8 (or with /upgrade), issue both commands (if you
+    ** option: log_path: replace "~/.weechat/logs" by "%h/logs"
+    ** option: plugins_path: replace "~/.weechat/plugins" by "%h/plugins"
+       +
+       "%h" is replaced by WeeChat home (default: ~/.weechat, may be overriden
+       by new command line arg --dir)
+    * after installing 0.1.8 (or with /upgrade), issue both commands (if you
       didn't redefined these keys (alt-home/end):
       /key unbind meta-meta2-1~
       /key unbind meta-meta2-4~
@@ -109,94 +95,72 @@ WeeChat - Wee Enhanced Environment for Chat
       Alt-home/end were used for nicklist scroll, they're now replaced by
       Alt-F11/F12.
 
-* FlashCode, 2006-01-14
-
+FlashCode, 2006-01-14::
     WeeChat 0.1.7 released.
-
+    +
     Important release notes:
-
-    - Ruby script plugin has been added but is experimental in this release.
+    * Ruby script plugin has been added but is experimental in this release.
       You're warned!
-
-    - "/away" command was changed to be RFC 2812 compliant.
+    * "/away" command was changed to be RFC 2812 compliant.
       Now argument is required to set away, and no argument means
       remove away ("back"). Setting "irc_default_msg_away" has been removed.
 
-* FlashCode, 2005-11-11
-
+FlashCode, 2005-11-11::
     WeeChat 0.1.6 released.
-
+    +
     Important release notes:
-
-    - incompatibility with some old scripts: now all handlers have to return
+    * incompatibility with some old scripts: now all handlers have to return
       a code for completion, and to do some actions about message to ignore
       (please look at documentation for detail)
-
-    - on OpenBSD, the new option "plugins_extension" should be set to ".so.0.0"
+    * on OpenBSD, the new option "plugins_extension" should be set to ".so.0.0"
       since the plugins names are ending by ".so.0.0" and not ".so"
-
-    - with new and full UTF-8 support, the option "look_charset_internal"
+    * with new and full UTF-8 support, the option "look_charset_internal"
       should be set to blank for most cases. Forces it only if your locale is
       not properly detected by WeeChat (you can set "UTF-8" or "ISO-8859-15"
       for example, depending on your locale). WeeChat is looking for "UTF-8" in
       your locale name at startup.
 
-* FlashCode, 2005-09-24
-
+FlashCode, 2005-09-24::
     WeeChat 0.1.5 released.
 
-* FlashCode, 2005-07-30
-
+FlashCode, 2005-07-30::
     WeeChat 0.1.4 released.
 
-* FlashCode, 2005-07-02
-
+FlashCode, 2005-07-02::
     WeeChat 0.1.3 released.
 
-* FlashCode, 2005-05-21
-
+FlashCode, 2005-05-21::
     WeeChat 0.1.2 released.
 
-* FlashCode, 2005-03-20
-
+FlashCode, 2005-03-20::
     WeeChat 0.1.1 released.
 
-* FlashCode, 2005-02-12
-
+FlashCode, 2005-02-12::
     WeeChat 0.1.0 released.
 
-* FlashCode, 2005-01-01
-
+FlashCode, 2005-01-01::
     WeeChat 0.0.9 released.
 
-* FlashCode, 2004-10-30
-
+FlashCode, 2004-10-30::
     WeeChat 0.0.8 released.
 
-* FlashCode, 2004-08-08
-
+FlashCode, 2004-08-08::
     WeeChat 0.0.7 released.
 
-* FlashCode, 2004-06-05
-
+FlashCode, 2004-06-05::
     WeeChat 0.0.6 released.
 
-* FlashCode, 2004-02-07
-
+FlashCode, 2004-02-07::
     WeeChat 0.0.5 released.
 
-* FlashCode, 2004-01-01
-
+FlashCode, 2004-01-01::
     WeeChat 0.0.4 released.
 
-* FlashCode, 2003-11-03
-
+FlashCode, 2003-11-03::
     WeeChat 0.0.3 released.
 
-* FlashCode, 2003-10-05
-
+FlashCode, 2003-10-05::
     WeeChat 0.0.2 released.
 
-* FlashCode, 2003-09-27
-
+FlashCode, 2003-09-27::
     WeeChat 0.0.1 released.

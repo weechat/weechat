@@ -1,5 +1,5 @@
-WeeChat - Wee Enhanced Environment for Chat
-===========================================
+WeeChat Readme
+==============
 
 
 WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat
@@ -9,21 +9,25 @@ It is customizable and extensible with scripts.
 
 Features
 --------
-    * chat client with multi-protocols/servers connection
-    * many GUI (curses, Gtk, Qt) (1)
-    * small, fast and very light
-    * customizable and extensible with plugins (C, Perl, Python, Ruby, Lua)
-    * compliant with IRC RFCs 1459, 2810, 2811, 2812 and 2813
-    * developed from scratch
-    * multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other) (2)
-    * free software, released under GPLv3
+
+* chat client with multi-protocols/servers connection
+* many GUI (curses, Gtk, Qt) (1)
+* small, fast and very light
+* customizable and extensible with plugins (C, Perl, Python, Ruby, Lua)
+* compliant with IRC RFCs 1459, 2810, 2811, 2812 and 2813
+* developed from scratch
+* multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other) (2)
+* free software, released under GPLv3
+
+NOTE: (1) only Curses interface is available today
+      +
+      (2) Windows version is under construction
 
 
 Copyright
 ---------
 
 WeeChat (c) Copyright 2003-2009 by FlashCode <flashcode@flashtux.org>
-(see AUTHORS file if you want to contact authors)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,8 +41,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
----
-(1) only Curses interface is available today
-(2) Windows version is under construction

@@ -890,6 +890,25 @@ if test "x$enable_doc" = "xyes" ; then
         AC_SUBST(DOC_XSL_PREFIX)
         msg_doc="html $msg_doc"
     fi
+    
+    # check for asciidoc
+    DOC_ASCIIDOC8=""
+    AC_CHECK_PROGS(ASCIIDOC, [asciidoc])
+    if test -n "$ASCIIDOC"; then
+        AC_MSG_CHECKING([for asciidoc version])
+        asciidoc_version=`$ASCIIDOC --version 2>/dev/null`
+        case "${asciidoc_version}" in
+        asciidoc' '8*)
+                DOC_ASCIIDOC8="yes"
+                AC_MSG_RESULT([${asciidoc_version}])
+                msg_doc="asciidoc $msg_doc"
+                ;;
+        *)
+                AC_MSG_RESULT([${asciidoc_version} (too old)])
+                ;;
+        esac
+    fi
+    AC_SUBST(DOC_ASCIIDOC8)
 else
     not_asked="$not_asked doc"
     msg_doc=""
@@ -1001,11 +1020,6 @@ AC_OUTPUT([Makefile
            doc/en/Makefile
            doc/fr/Makefile
            doc/de/Makefile
-           doc/ru/Makefile
-           doc/pl/Makefile
-           doc/cs/Makefile
-           doc/sco/Makefile
-           doc/sv/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

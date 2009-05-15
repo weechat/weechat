@@ -65,12 +65,14 @@ BOOK_DEV_INCLUDE     = dev/plugins.$(LANGCODE).xml           \
                        dev/plugin_c_api.$(LANGCODE).xml      \
                        dev/plugin_script_api.$(LANGCODE).xml
 
+FAQ = weechat_faq.$(LANGCODE).txt
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
+TESTER = weechat_tester.$(LANGCODE).txt
 
 EXTRA_DIST = $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE)  \
              user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE)      \
              dev/$(BOOK_DEV).xml $(BOOK_DEV_INCLUDE)         \
-             $(QUICKSTART)
+             $(FAQ) $(QUICKSTART) $(TESTER)
 
 if DBLATEX_FOUND
 PDF = user-pdf-stamp dev-pdf-stamp
@@ -80,7 +82,7 @@ docdir = $(datadir)/doc/$(PACKAGE)
 
 all-local: user-html-stamp dev-html-stamp $(PDF)
 
-# user guide, HTML output with chunks (many pages)
+# user's guide, HTML output with chunks (many pages)
 
 user-html: user-html-stamp
 
@@ -99,7 +101,7 @@ user-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER
 	cp ../weechat-doc.css html/user/
 	touch user-html-stamp
 
-# user guide, HTML output, all in one page
+# user's guide, HTML output, all in one page
 
 user-html1: user-html1-stamp
 
@@ -118,7 +120,7 @@ user-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USE
 	cp ../weechat-doc.css html1/user/
 	touch user-html1-stamp
 
-# user guide, PDF output
+# user's guide, PDF output
 
 user-pdf: user-pdf-stamp
 
@@ -136,7 +138,7 @@ user-pdf-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER)
 	cd build/user-pdf/ ; dblatex -o ../../pdf/user/$(BOOK_USER).pdf -P draft.mode=no -c ../../../dblatex.conf $(BOOK_USER).xml || true
 	touch user-pdf-stamp
 
-# dev guide, HTML output with chunks (many pages)
+# developer's guide, HTML output with chunks (many pages)
 
 dev-html: dev-html-stamp
 
@@ -155,7 +157,7 @@ dev-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) dev/$(BOOK_DEV).x
 	cp ../weechat-doc.css html/dev/
 	touch dev-html-stamp
 
-# dev guide, HTML output, all in one page
+# developer's guide, HTML output, all in one page
 
 dev-html1: dev-html1-stamp
 
@@ -174,7 +176,7 @@ dev-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) dev/$(BOOK_DEV).
 	cp ../weechat-doc.css html1/dev/
 	touch dev-html1-stamp
 
-# dev guide, PDF output
+# developer's guide, PDF output
 
 dev-pdf: dev-pdf-stamp
 
@@ -198,7 +200,9 @@ install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/user/ $(DESTDIR)$(docdir)/html/$(LANGCODE)/dev/
 	$(INSTALL_DATA) html/user/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/user/
 	$(INSTALL_DATA) html/dev/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/dev/
+	$(INSTALL_DATA) $(FAQ) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) $(TESTER) $(DESTDIR)$(docdir)/
 if DBLATEX_FOUND
 	$(INSTALL_DATA) pdf/user/$(BOOK_USER).pdf $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) pdf/dev/$(BOOK_DEV).pdf $(DESTDIR)$(docdir)/

@@ -1,735 +1,794 @@
-WeeChat - Wee Enhanced Environment for Chat
-===========================================
+WeeChat ChangeLog
+=================
+FlashCode <flashcode@flashtux.org>
+v0.3.0-dev, 2009-05-15
 
-ChangeLog - 2009-05-11
 
+Version 0.3.0 (under dev!)
+--------------------------
 
-Version 0.3.0 (under dev!):
-   * irc: add irc plugin (replaces old IRC code in core)
-   * irc: add smart join/part/quit message filter (task #8503)
-   * irc: use of many addresses for servers (auto-switch when a connexion
-     fails), nicks are now set with one option "nicks" (task #6088)
-   * irc: add some colors in messages from server (for text and nicks)
-     (task #8926)
-   * irc: add color decoding in title for IRC channels (task #6030)
-   * irc: fix lock with SSL servers when connection fails, and when
-     disconnecting during connection problem (bug #17584)
-   * irc: command /whois is now authorized in private without argument
-     (task #7482)
-   * irc: remove kernel info in CTCP VERSION reply (task #7494)
-   * irc: add missing commands (328, 369)
-   * aspell: improve plugin: use of many dictionaries, global dictionary, real
-     time checking (optional), fix bugs with utf-8
-   * xfer: add speed limit for DCC files sending (task #6178)
-   * xfer: add new option "xfer.file.use_nick_in_filename" for Xfer files
-     (task #7140)
-   * relay: add relay plugin (network communication between WeeChat and remote
-     application)
-   * logger: add logger plugin with new features: backlog, level for messages
-     to log (task #8592), level by buffer (task #6687), filename mask by
-     buffer, option "name_lower_case" (bug #19522)
-   * alias: fix bug with alias, use current buffer to run commands (bug #22876)
-   * plugins: add some other plugins: alias, demo, fifo, tcl, xfer
-   * scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP
-     protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of
-     buffers), iset.pl (set options interactively), weetris.pl (tetris-like
-     game, mastermind.pl, ...
-   * api: add hooks: command, timer, file descriptor, process, connection,
-     print, signal, config, completion, modifier, info, infolist
-   * api: new plugin API with many new functions: hooks, buffer management and
-     nicklist, bars, configuration files, network, infos/infolists, lists,
-     upgrade
-   * gui: new display engine, with prefix and message for each line
-   * gui: add new type of buffer, with free content
-   * gui: add tags for lines and custom filtering by tags or regex (task #7674)
-   * gui: add custom bars, with custom items
-   * gui: add key to zoom a window (task #7470)
-   * gui: add new option scroll_page_percent to choose percent of height to
-     scroll with page_up and page_down keys (task #8702)
-   * gui: add number of lines remaining after last line displayed in "-MORE-"
-     indicator (task #6702)
-   * gui: fix completion with non-latin nicks (bug #18993)
-   * gui: fix display bug with some weird UTF-8 chars (bug #19687)
-   * gui: fix bug with wide chars in input (bug #16356)
-   * gui: fix bug when switching window, scrollback is now preserved
-     (task #7680)
-   * network: add support for more than one proxy, with proxy selection for
-     each IRC server (task #6859)
-   * network: fix network connection for hostnames resolving to several IPs:
-     try all IPs in list until one succeeds (bug #21473, debian bug #498610)
-   * core: add group support in nicklist
-   * core: improve main loop: higher timout in select(), less CPU usage
-   * core: add /reload command to reload WeeChat and plugins config files
-     (signal SIGHUP is catched to reload config files)
-   * core: add new /layout command and save_layout_on_exit config option, to
-     save/restore windows and buffers order (task #5453)
-   * core: add new options for completion, optional stop instead of cycling
-     with words found (task #5909)
-   * core: new name for configuration files (*.conf instead of *.rc)
-   * core: improve /set command, new command /unset (task #6085)
-   * core: add new input action "set_unread_current_buffer" to set unread
-     marker for current buffer only (task #7286)
-   * core: add polish translation (thanks to Soltys)
-   * core: remove key functions, replaced by /input command
-   * core: fix nick completion bug (missing space after nick)
+* irc: add irc plugin (replaces old IRC code in core)
+* irc: add smart join/part/quit message filter (task #8503)
+* irc: use of many addresses for servers (auto-switch when a connexion
+  fails), nicks are now set with one option "nicks" (task #6088)
+* irc: add some colors in messages from server (for text and nicks)
+  (task #8926)
+* irc: add color decoding in title for IRC channels (task #6030)
+* irc: fix lock with SSL servers when connection fails, and when
+  disconnecting during connection problem (bug #17584)
+* irc: command /whois is now authorized in private without argument
+  (task #7482)
+* irc: remove kernel info in CTCP VERSION reply (task #7494)
+* irc: add missing commands (328, 369)
+* aspell: improve plugin: use of many dictionaries, global dictionary, real
+  time checking (optional), fix bugs with utf-8
+* xfer: add speed limit for DCC files sending (task #6178)
+* xfer: add new option "xfer.file.use_nick_in_filename" for Xfer files
+  (task #7140)
+* relay: add relay plugin (network communication between WeeChat and remote
+  application)
+* logger: add logger plugin with new features: backlog, level for messages
+  to log (task #8592), level by buffer (task #6687), filename mask by
+  buffer, option "name_lower_case" (bug #19522)
+* alias: fix bug with alias, use current buffer to run commands (bug #22876)
+* plugins: add some other plugins: alias, demo, fifo, tcl, xfer
+* scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP
+  protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of
+  buffers), iset.pl (set options interactively), weetris.pl (tetris-like
+  game), mastermind.pl, ...
+* api: add hooks: command, timer, file descriptor, process, connection,
+  print, signal, config, completion, modifier, info, infolist
+* api: new plugin API with many new functions: hooks, buffer management and
+  nicklist, bars, configuration files, network, infos/infolists, lists,
+  upgrade
+* gui: new display engine, with prefix and message for each line
+* gui: add new type of buffer, with free content
+* gui: add tags for lines and custom filtering by tags or regex (task #7674)
+* gui: add custom bars, with custom items
+* gui: add key to zoom a window (task #7470)
+* gui: add new option scroll_page_percent to choose percent of height to
+  scroll with page_up and page_down keys (task #8702)
+* gui: add number of lines remaining after last line displayed in "-MORE-"
+  indicator (task #6702)
+* gui: fix completion with non-latin nicks (bug #18993)
+* gui: fix display bug with some weird UTF-8 chars (bug #19687)
+* gui: fix bug with wide chars in input (bug #16356)
+* gui: fix bug when switching window, scrollback is now preserved
+  (task #7680)
+* network: add support for more than one proxy, with proxy selection for
+  each IRC server (task #6859)
+* network: fix network connection for hostnames resolving to several IPs:
+  try all IPs in list until one succeeds (bug #21473, debian #498610)
+* core: add group support in nicklist
+* core: improve main loop: higher timout in select(), less CPU usage
+* core: add /reload command to reload WeeChat and plugins config files
+  (signal SIGHUP is catched to reload config files)
+* core: add new /layout command and save_layout_on_exit config option, to
+  save/restore windows and buffers order (task #5453)
+* core: add new options for completion, optional stop instead of cycling
+  with words found (task #5909)
+* core: new name for configuration files (*.conf instead of *.rc)
+* core: improve /set command, new command /unset (task #6085)
+* core: add new input action "set_unread_current_buffer" to set unread
+  marker for current buffer only (task #7286)
+* core: add polish translation (thanks to Soltys)
+* core: remove key functions, replaced by /input command
+* core: fix nick completion bug (missing space after nick)
 
-Version 0.2.6.2 (2009-04-18):
-   * fix bug with charset decoding (for example with iso2022jp)
+Version 0.2.6.2 (2009-04-18)
+----------------------------
 
-Version 0.2.6.1 (2009-03-14):
-   * fix crash with some special chars in IRC messages (bug #25862)
+* fix bug with charset decoding (for example with iso2022jp) (bug #26228)
 
-Version 0.2.6 (2007-09-06):
-   * fix bug with log of plugin messages (option log_plugin_msg)
-   * add new option "deloutq" to /server command to delete all servers
-     messages out queues (task #7221)
-   * fix display bug with some special chars in messages (some words were
-     truncated on screen) (bug #20944)
-   * fix UTF-8 bug with color encoding/decoding
-   * fix crash when searching text in buffer with ctrl-R (bug #20938)
-   * add string length limit for setup file options
-   * fix bug with flock() when home is on NFS filesystem (bug #20913)
-   * add option to align text of messages (except first lines) (task #7246)
-   * fix user modes in nicklist when ban and nick mode are received in the
-     same MODE message (bug #20870)
-   * fix IRC message 333: silently ignore message if error when parsing it
-   * fix server option "command_delay": does not freeze WeeChat any more
-   * add paste detection, new options look_paste_max_lines and
-     col_input_actions (task #5442)
-   * fix bug with highlight and UTF-8 chars around word (bug #20753)
-   * add swedish quickstart guide
-   * add support of channel mode +u (channel user) (bug #20717)
-   * improve /connect command to connect to a host by creating a temporary
-     server, add option to /server to create temporary server (task #7095)
-   * add "copy", "rename" and "keep" options to /server command
-   * allow clear of multiple selected buffers with /clear (patch #6112)
-   * add key for setting unread marker on all buffers (default:
-     ctrl-S + ctrl-U) (task 7180)
-   * fix nick prefix display on servers that doesn't support all prefixes
-     (bug #20025)
-   * fix terminal encoding detection when NLS is disabled (bug #20646)
-   * fix crash when sending data to channel or pv on disconnected server
-     (bug #20524)
-   * improve command /server ant its output
-   * add 3 default new keys: ctrl-B (left), ctrl-F (right), ctrl-D (delete)
-   * add "buffer_move" event handler to plugins API (task #6708)
-   * add key function "jump_previous_buffer" to jump to buffer previously
-     displayed (new key: alt-J + alt-P) (task #7085)
-   * add "%*" to completion template, to repeat last completion
-   * add "-nojoin" option for /connect and /reconnect commands (task #7074)
-   * fix bugs with IRC color in messages, now color codes are inserted in
-     command line with ^Cc,^Cb,.. instead of %C,%B,.. (bug #20222, task #7060)
-   * fix bug with smart nick completion (last speakers first) when a nick
-     is changed
-   * fix charset bug with channel names in status bar (bug #20400)
-   * add "scroll" option to /buffer command
-   * down key now saves input to history and clears input line (task #7049)
-   * fix log file when channel name contains "/" (bug #20072)
-   * command /away allowed when not connected to server (internally stored
-     and AWAY command is sent when connecting to server) (task #7003)
-   * add argument for /upgrade command (path to binary)
-   * fix bug with /topic when channel not open and topic not defined
-     (bug #20141)
-   * add hotlist sort with new option "look_hotlist_sort" (task #5870)
+Version 0.2.6.1 (2009-03-14)
+----------------------------
 
-Version 0.2.5 (2007-06-07):
-   * fix QUOTE command: now allowed when socket is ok (even if IRC
-     connection to server is not ok) (bug #20113)
-   * add missing IRC commands (327, 378, 379) (bug #20091)
-   * fix hotlist when exiting search mode: current buffer is removed from
-     hotlist
-   * add "%M" for completion with nicks of current server (nicks on open
-     channels) (task #6931)
-   * improve key bindings: now possible to bind a key on many commands,
-     separated by semicolon (task #5444)
-   * improve IRC long message split: use word boundary (task #6685)
-   * remove ":" for unknown IRC commands before arguments (bug #19929)
-   * fix "%C" completion: now completes with all channels of all servers
-   * fix bug with "/buffer query_name", add server and channel completion
-     for /buffer command (bug #19928)
-   * add cmake for weechat compile (patch #5943)
-   * fix IRC mode parsing when receiving modes with arguments (bug #19902)
-   * fix crash with IRC JOIN malformed message (bug #19891)
-   * fix bug with nick prefixes on some IRC servers (bug #19854)
-   * improve setup file save: now writes temporary file, then rename it
-     (task #6847)
-   * fix bug with $nick/$channel/$server variables in commands
-   * forget current nick when user manually disconnects from server
-   * fix nick display in input window
-   * fix bug with erroneous nickname when connecting to server (bug #19812)
-   * fix display bugs in IRC error messages
-   * add protocol priority for gnutls (patch #5915)
-   * add channel admin mode '!' for some IRC servers
-   * fix bug with iso2022jp locale (bug #18719)
-   * fix string format bug when displaying string thru plugin script API
-   * add /reconnect command (task #5448)
-   * add "-all" option for /connect and /disconnect commands (task #6232)
-   * improve nick completion: completion with last speakers first and self
-     nick at the end; add option look_nick_completion_smart, enabled by
-     default (task #5896)
-   * fix nick completion in command arguments (bug #19590)
-   * fix possible crash with nick completion when a nick leaves channel
-     (bug #19589)
-   * add color for input text not found in buffer history
-   * fix USER message when connecting to IRC server (patch #5835)
+* fix crash with some special chars in IRC messages (bug #25862)
 
-Version 0.2.4 (2007-03-29):
-   * fix color bug with IRC messages displayed by plugins (bug #19442)
-   * fix topic charset, now using channel charset if defined (bug #19386)
-   * rename log file for DCC chat (now <server>.dcc.<nick>.weechatlog)
-   * fix crash when closing a pv if a DCC chat is open on same nick
-     (bug #19147)
-   * fix bug with channel topic after reconnection (not erased) (bug #19384)
-   * add current buffer in hotlist when scrolling up in buffer (task #6664)
-   * fix bug with explode_string / free_exploded_string when max_items > 0
-   * add new key (ctrl-R) for interactive and incremental search in buffer
-     history (task #6628)
-   * fix /topic completion when no topic set on current channel (bug #19322)
-   * improve password hiding, code cleanup (bug #19229)
-   * add new return code in plugin API to force highlight (for message
-     handlers only)
-   * fix bug with server buffer when "look_one_server_buffer" is ON and
-     server buffer is moved to any number > 1 (bug #19219)
-   * fix /help command: displays plugin help for redefined commands
-     (bug #19166)
-   * prefix '/' disabled in commands (patch #5769)
-   * fix completion of redefined commands removed by plugins (bug #19176)
-   * fix memory leaks in perl and python plugins (bug #19163)
-   * add "call" option to /key command, add new key function "insert" to
-     insert text on command line (task #6468)
-   * fix permissions on "dcc" and "logs" directories (bug #18978)
-   * add event handler to plugin API
-   * add scots quickstart guide
-   * add numeric argument for /clear command (buffer number) (patch #5372)
-   * fix crash when /away command is issued with no server connection
-     (bug #18839)
-   * fix crash when closing a buffer opened on many windows
-   * fix freeze with SSL server when disconnecting after connection loss
-     (bug #18735)
+Version 0.2.6 (2007-09-06)
+--------------------------
 
-Version 0.2.3 (2007-01-10):
-   * fix display bugs with nicklist at top/bottom when look_nicklist_separator
-     is OFF (bug #18737)
-   * fix iconv problem, causing truncated words when using iso locale
-   * fix topic scroll when topic has multi-bytes chars
-   * fix compilation problem with iconv under FreeBSD
-   * fix bugs with charset: now decodes/encodes nicks and channels in IRC
-     messages (bug #18716)
+* fix bug with log of plugin messages (option log_plugin_msg)
+* add new option "deloutq" to /server command to delete all servers
+  messages out queues (task #7221)
+* fix display bug with some special chars in messages (some words were
+  truncated on screen) (bug #20944)
+* fix UTF-8 bug with color encoding/decoding
+* fix crash when searching text in buffer with ctrl-R (bug #20938)
+* add string length limit for setup file options
+* fix bug with flock() when home is on NFS filesystem (bug #20913)
+* add option to align text of messages (except first lines) (task #7246)
+* fix user modes in nicklist when ban and nick mode are received in the
+  same MODE message (bug #20870)
+* fix IRC message 333: silently ignore message if error when parsing it
+* fix server option "command_delay": does not freeze WeeChat any more
+* add paste detection, new options look_paste_max_lines and
+  col_input_actions (task #5442)
+* fix bug with highlight and UTF-8 chars around word (bug #20753)
+* add swedish quickstart guide
+* add support of channel mode +u (channel user) (bug #20717)
+* improve /connect command to connect to a host by creating a temporary
+  server, add option to /server to create temporary server (task #7095)
+* add "copy", "rename" and "keep" options to /server command
+* allow clear of multiple selected buffers with /clear (patch #6112)
+* add key for setting unread marker on all buffers (default:
+  ctrl-S + ctrl-U) (task 7180)
+* fix nick prefix display on servers that doesn't support all prefixes
+  (bug #20025)
+* fix terminal encoding detection when NLS is disabled (bug #20646)
+* fix crash when sending data to channel or pv on disconnected server
+  (bug #20524)
+* improve command /server ant its output
+* add 3 default new keys: ctrl-B (left), ctrl-F (right), ctrl-D (delete)
+* add "buffer_move" event handler to plugins API (task #6708)
+* add key function "jump_previous_buffer" to jump to buffer previously
+  displayed (new key: alt-J + alt-P) (task #7085)
+* add "%*" to completion template, to repeat last completion
+* add "-nojoin" option for /connect and /reconnect commands (task #7074)
+* fix bugs with IRC color in messages, now color codes are inserted in
+  command line with ctrl-c, ctrl-b.. instead of %C,%B,.. (bug #20222,
+  task #7060)
+* fix bug with smart nick completion (last speakers first) when a nick
+  is changed
+* fix charset bug with channel names in status bar (bug #20400)
+* add "scroll" option to /buffer command
+* down key now saves input to history and clears input line (task #7049)
+* fix log file when channel name contains "/" (bug #20072)
+* command /away allowed when not connected to server (internally stored
+  and AWAY command is sent when connecting to server) (task #7003)
+* add argument for /upgrade command (path to binary)
+* fix bug with /topic when channel not open and topic not defined
+  (bug #20141)
+* add hotlist sort with new option "look_hotlist_sort" (task #5870)
 
-Version 0.2.2 (2007-01-06):
-   * fix bug with status bar (missing refresh) when closing a buffer
-   * fix bug with use of first buffer for a channel if not connected
-     to server (now allowed only for a server buffer)
-   * fix refresh bug with private buffer title
-   * fix bug with nick completion in command args (now uses option
-     look_nick_completion_ignore)
-   * fix display bug with color for first line on screen (bug #17719)
-   * add anti-flood option (irc_anti_flood) (task #5442)
-   * fix bug with "set_config" function in plugins API (bug #18448)
-   * plugins: "add_message_handler" now accepts "*" for all IRC messages
-   * add keys (F9/F10) to scroll topic (task #6030)
-   * add auto completion with channels and filenames (task #5423)
-   * fix memleak in keyboard input
-   * fix refresh bug when changing config options if window is split
-   * add space between chat and nicklist when position is "right" (bug #17852)
-   * add option "look_nicklist_separator" (task #5437)
-   * fix bug with DCC SEND when filename begins with '~'
-   * add "irc_send_unknown_commands" option to send unknown commands to
-     IRC server (OFF by default) (task #5947)
-   * /charset command and charset conversions now made by "charset" plugin
-   * fix display bug in status bar, wrong length when using UTF-8
-   * fix bug with ignore: now any IRC command is allowed
-   * fix crash with Ctrl-T (transpose) and one char on line (bug #18153)
-   * add filename completion (task #5425)
-   * add "modifier" in plugins API
-   * improve /plugin command
-   * fix bug on ignore with "mode" IRC command (bug #18058)
-   * fix crash when loading ruby script if file does not exist, with
-     Ruby >= 1.9 only (bug #18064)
-   * add date in plugin function get_buffer_data()
-   * fix some portability bugs (patch #5271)
-   * fix iconv detection for BSD (patch #5456)
-   * fix typo in configure.in (bash specific test) (patch #5450)
-   * mode changes with /op, /deop, /voice, /devoice, /halfop, /dehalfop are
-     now sent in one mode command to server (task #5968)
-   * add more values for config boolean values: y/true/t/1 and n/false/f/0
-   * fix bug with /alias and arguments (like $1), now text after
-     argument(s) is used (bug #17944)
-   * fix minor display bug with special chars on some arch like PPC
+Version 0.2.5 (2007-06-07)
+--------------------------
 
-Version 0.2.1 (2006-10-01):
-   * fix crash for DCC receiver when resuming a file (bug #17885)
-   * fix DCC error for sender when receiver cancels DCC (bug #17838)
-   * fix random crash with /upgrade command (error when loading buffers)
-   * fix buffer search by server/channel: now if only channel is specified,
-     a channel of another server can be found
-   * fix highlight for DCC, invite and notice: when a window is displaying
-     buffer, there's no highlight
-   * command "/away -all" now allowed when not connected to current server
-   * new signals handled: SIGTERM and SIGHUP (received when terminal is closed):
-     clean WeeChat quit (send quit to irc servers then quit WeeChat)
-   * add some new default key bindings for existing keys (for some OS)
-   * command /key now ok with one arg (key name): display key if found
-   * fix bug with CTCP VERSION sent on channels (bug #17547)
-   * add current channel completion for /ctcp command
-   * fix bugs in get_buffer_data() which breaks the retrieval of buffer
-     content (perl, lua)
-   * fix nicklist display bug when top/bottom (not enough lines) (bug #17537)
-   * fix bug with auto-rejoin of keyed chans (bug #17534)
-   * add default nick completion when line starts with '//' (bug #17535)
-   * values yes/no accepted (as on/off) for config boolean values (task #5454)
-   * add server default notify level (set by /buffer notify on server buffer)
-     (task #5634)
-   * fix crashs with /buffer and /charset commands when not connected to any
-     server (bug #17525)
-   * add special vars $nick/$channel/$server for server_command, alias and
-     plugin command handlers
-   * add arguments $1,$2,..,$9 and $* for alias (task #5831)
-   * add hotlist in session file when using /upgrade command (task #5449)
-   * fix nick refresh problem with unrealircd specific modes: chan owner (~)
-     and chan admin (&) (bug #17340)
+* fix QUOTE command: now allowed when socket is ok (even if IRC
+  connection to server is not ok) (bug #20113)
+* add missing IRC commands (327, 378, 379) (bug #20091)
+* fix hotlist when exiting search mode: current buffer is removed from
+  hotlist
+* add "%M" for completion with nicks of current server (nicks on open
+  channels) (task #6931)
+* improve key bindings: now possible to bind a key on many commands,
+  separated by semicolon (task #5444)
+* improve IRC long message split: use word boundary (task #6685)
+* remove ":" for unknown IRC commands before arguments (bug #19929)
+* fix "%C" completion: now completes with all channels of all servers
+* fix bug with "/buffer query_name", add server and channel completion
+  for /buffer command (bug #19928)
+* add cmake for weechat compile (patch #5943)
+* fix IRC mode parsing when receiving modes with arguments (bug #19902)
+* fix crash with IRC JOIN malformed message (bug #19891)
+* fix bug with nick prefixes on some IRC servers (bug #19854)
+* improve setup file save: now writes temporary file, then rename it
+  (task #6847)
+* fix bug with $nick/$channel/$server variables in commands
+* forget current nick when user manually disconnects from server
+* fix nick display in input window
+* fix bug with erroneous nickname when connecting to server (bug #19812)
+* fix display bugs in IRC error messages
+* add protocol priority for gnutls (patch #5915)
+* add channel admin mode "!" for some IRC servers
+* fix bug with iso2022jp locale (bug #18719)
+* fix string format bug when displaying string thru plugin script API
+* add /reconnect command (task #5448)
+* add "-all" option for /connect and /disconnect commands (task #6232)
+* improve nick completion: completion with last speakers first and self
+  nick at the end; add option look_nick_completion_smart, enabled by
+  default (task #5896)
+* fix nick completion in command arguments (bug #19590)
+* fix possible crash with nick completion when a nick leaves channel
+  (bug #19589)
+* add color for input text not found in buffer history
+* fix USER message when connecting to IRC server (patch #5835)
 
-Version 0.2.0 (2006-08-19):
-   * add 'C'lear option on IRC raw buffer
-   * IRC raw buffer now uses join/part prefix with color to display messages
-   * add send of "quit" message to server when using /disconnect
-   * fix "wallops" command when received, now displayed by WeeChat (bug #17441)
-   * fix /wallops command (now many words are correctly sent)
-   * fix command 348 (channel exception list, received by /mode #chan e)
-   * add missing modes (channel & user), now all modes are allowed (bug #16606)
-   * add "%m" for completion with self nick (on current server)
-   * add missing IRC commands (310, 326, 329, 338)
-   * fix DCC restore after /upgrade (order is now correctly saved)
-   * fix away after server disconnection (now away is set again when
-     reconnecting) (bug #16359)
-   * fix DCC file connection problem (connection from receiver to sender)
-   * improve DCC speed (up to x5 on LAN) by forking for DCC files and a
-     new option "dcc_fast_send" (does not wait for ACK) (task #5758)
-   * fix crash when purging DCC with high number of DCC (> window size)
-   * fix completion for command handlers (now empty completion_template
-     means nick completion, "-" string means no completion at all)
-   * fix nick alignment problem when look_nickmode is off
-   * add generic function for incoming numeric IRC commands (bug #16611)
-   * fix crash when doing "/part something" on a server buffer (bug #17201)
-   * charsets are now checked when set by /charset command
-   * add "look_save_on_exit" option (patch from Emanuele Giaquinta)
-   * fix crash on DCC buffer under Darwin 8 (bug #17115)
-   * add configure option for doc XSL prefix (bug #16991)
-   * fix bug with spaces in script names (bug #16957)
-   * fix random crash when "MODE #chan -l" is received
-   * fix bug in IRC parser (random crash with malformed IRC messages)
-   * fix refresh bugs when terminal is resized: too many refreshs,
-     display bug with split windows
-   * case ignored for channel names in charset options (bug #16858)
-   * fix crash when setting look_one_server_buffer to ON (bug #16932)
-   * add new functions in plugin/script API: get window info,
-     get buffer info, get buffer content
-   * add polish, russian and czech quickstart guide
-   * fix display bug with special char (bug #16732)
-   * add color encoding for some commands like /me
-   * add aspell plugin
-   * rename plugins names (remove "lib" prefix in name)
-   * fix crash when closing DCC/raw buffer if 2 are open (bug #16808)
-   * fix crashes with DCC chat remove/purge on DCC view (bug #16775)
-   * fix bug with connection to bnc (bug #16760)
-   * command /save now writes plugins options (~/.weechat/plugins.rc)
-   * fix crash with "register" function in plugin scripts (bug #16701)
-   * fix random crash at exit (/quit or /upgrade) with split windows
+Version 0.2.4 (2007-03-29)
+--------------------------
 
-Version 0.1.9 (2006-05-25):
-   * fix /squery command (message sent to server, now ok with # args > 2)
-   * fix /alias command (with an alias name, display content)
-   * improve lua plugin detection (bug #16574)
-   * add backtrace when WeeChat crashes, log file automatically renamed
-   * add lock for log file (~/.weechat/weechat.log), only one WeeChat
-     process can use this file (bug #16382)
-   * fix crash with malformed UTF-8 strings
-   * fix crash with ncurses color when too many colors defined in ncurses
-     (bug #16556)
-   * add new key to find previous completion (shift-tab by default)
-   * fix bug with long outgoing IRC messages (> 512 bytes) (bug #16358)
-   * fix Ruby crash when handler does not return OK or KO (bug #16552)
-   * fix UTF-8 display bug with chars using more than one cell on screen
-     (bug #16356)
-   * fix display bug with DCC file size when > 1 Gb
-   * fix refresh bug (deadlock in curses) when terminal is resized
-     (bug #16542)
-   * fix nicklist sort bug
-   * add russian translations (thanks to Pavel Shevchuk)
-   * add german doc (thanks to Frank Zacharias)
-   * add missing IRC commands (006, 007, 290, 292, 310, 379, 437, 974)
-   * fix crash when multiple pv have same name: now it's forbidden
-     and pv buffer is not renamed (when a nick changes) if another
-     exists with same name (bug #16369)
-   * command /clear [-all] now clears hotlist
-   * fix crash after /upgrade if a line in history is empty (bug #16379)
-   * fix many crashes with DCC chat (bug #16416)
-   * add new option to customize input prompt
-   * add nick modes
-   * fix commands 332, 333 (/topic now ok when channel is not opened)
-   * remove color encoding and charset conversion for commands (only
-     allowed in text sent to channel/private)
-   * add hostnames associeted to nicks (available for /ban completion)
-   * add "+p" mode for channels, fix mode display in status bar
-   * add nick alignment options
-   * fix /names command: now displays result when not on a channel
-   * fix refresh bug (too many refresh) when terminal is resized
-   * fix nicklist display bugs when on top or bottom of chat window
-   * add keyboard handler to plugin API
-   * improve script plugin loader
-   * add hostname/IP option for connection to server
-   * fix --disable-plugins option in configure script
-   * add /setp command (set plugin options)
-   * fix high CPU usage when running under a screen that has been killed
-   * aliases are executed before WeeChat/IRC commands, add /builtin command
-   * add /cycle command, /part command does close buffer any more (use
-     /buffer close (or alias /close) to part and close buffer
+* fix color bug with IRC messages displayed by plugins (bug #19442)
+* fix topic charset, now using channel charset if defined (bug #19386)
+* rename log file for DCC chat (now <server>.dcc.<nick>.weechatlog)
+* fix crash when closing a pv if a DCC chat is open on same nick
+  (bug #19147)
+* fix bug with channel topic after reconnection (not erased) (bug #19384)
+* add current buffer in hotlist when scrolling up in buffer (task #6664)
+* fix bug with explode_string / free_exploded_string when max_items > 0
+* add new key (ctrl-R) for interactive and incremental search in buffer
+  history (task #6628)
+* fix /topic completion when no topic set on current channel (bug #19322)
+* improve password hiding, code cleanup (bug #19229)
+* add new return code in plugin API to force highlight (for message
+  handlers only)
+* fix bug with server buffer when "look_one_server_buffer" is ON and
+  server buffer is moved to any number > 1 (bug #19219)
+* fix /help command: displays plugin help for redefined commands
+  (bug #19166)
+* prefix "/" disabled in commands (patch #5769)
+* fix completion of redefined commands removed by plugins (bug #19176)
+* fix memory leaks in perl and python plugins (bug #19163)
+* add "call" option to /key command, add new key function "insert" to
+  insert text on command line (task #6468)
+* fix permissions on "dcc" and "logs" directories (bug #18978)
+* add event handler to plugin API
+* add scots quickstart guide
+* add numeric argument for /clear command (buffer number) (patch #5372)
+* fix crash when /away command is issued with no server connection
+  (bug #18839)
+* fix crash when closing a buffer opened on many windows
+* fix freeze with SSL server when disconnecting after connection loss
+  (bug #18735)
 
-Version 0.1.8 (2006-03-18):
-   * improve Ruby plugin
-   * fix /set command when internal server name contains one or many dots
-   * fix get_info plugin API function when no server at all is opened
-   * fix display bug when top of buffer is displayed and first line is
-     removed (according to "history_max_lines" setting)
-   * fix /mode command output
-   * improve alias completion (now uses target command for completion)
-   * fix completion problem in private with nicks
-   * add missing IRC command (487)
-   * add inactivity time, available for plugins via get_info("inactivity")
-   * keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll
-     nicklist top/bottom
-   * add special names for plugin message handlers: weechat_pv,
-     weechat_highlight, weechat_ctcp, weechat_dcc
-   * script plugins now load scripts in WeeChat system share directory
-   * /msg command does not open any buffer any more
-   * fix crash when using global history (when older entry is removed)
-   * add IRC raw data buffer (new key: alt-J + alt-R)
-   * fix display bug with /kill command
-   * add new plugins functions: add_timer_handler, remove_timer_handler,
-     remove_infobar
-   * plugin messages handlers now called when message is ignored (by /ignore)
-   * new behaviour for messages ignored by a message handler: now WeeChat
-     executes standard handler, treating message as "ignored"
-   * many commands allowed for aliases
-   * many commands allowed when connecting to server
-   * add Lua script plugin
-   * add functions in plugins API: get_server_info, free_server_info,
-     get_channel_info, free_channel_info, get_nick_info, free_nick_info
-   * add option "look_nick_complete_first" (patch from Gwenn)
-   * add option "look_open_near_server" (patch from Gwenn)
-   * fix bug with /upgrade and servers buffer
-   * fix bug with "get_dcc_info" plugin interface function
-   * add new scroll keys for a few lines up/down (default: meta-pgup/pgdn)
-     (patch from Pistos)
-   * add new option "irc_away_check_max_nicks" to disable away check on
-     channels with high number of nicks (patch from Gwenn)
-   * add new command line argument for setting WeeChat homedir (-d or --dir)
-     (patch from Gwenn)
-   * fix bug with charset in infobar highlights
-   * fix bug with buffer detection in plugins/scripts commands
-   * fix bug with /history command
-   * add option "irc_show_away_once", to show away message only once in pv
-   * add partial hungarian translation
+Version 0.2.3 (2007-01-10)
+--------------------------
 
-Version 0.1.7 (2006-01-14):
-   * fix msg command (now allowed in private buffer with "*" as target)
-   * remove "irc_default_msg_away" setting, for RFC 2812 conformity
-     (/away command wihtout argument only removes away status),
-     new values for "irc_display_away" (off, local, channel)
-   * fix refresh bug with Solaris when term size is changed
-   * replace Texinfo doc by XML Docbook
-   * add color for window separators (when split)
-   * add completion system for plugins/scripts commands
-   * fix plugins autoload
-   * add charset by server and channel, new command: /charset
-   * add Ruby script plugin
-   * add /upgrade command
-   * add ETA (Estimated Time of Arrival) for DCC files
-   * /nick command is now allowed when not connected to server
-   * add server/channel arg to /buffer command for jumping to buffer
-   * fix display bug in chat window when a message length equals to window
-     width
-   * add new keys for switching to other windows: alt-W followed by
-     alt-{arrow}
-   * add new keys for scrolling to previous/next highlight: alt-P / alt-N
-   * add "read marker": an indicator for first unread line in a
-     server or channel buffer (new key alt-U to scroll to marker)
-   * new window maganement: custom size for windows, auto resize when
-     terminal is resized
-   * fix infinite loop when resizing term to small size
-   * add /history command
+* fix display bugs with nicklist at top/bottom when look_nicklist_separator
+  is OFF (bug #18737)
+* fix iconv problem, causing truncated words when using iso locale
+* fix topic scroll when topic has multi-bytes chars
+* fix compilation problem with iconv under FreeBSD
+* fix bugs with charset: now decodes/encodes nicks and channels in IRC
+  messages (bug #18716)
 
-Version 0.1.6 (2005-11-11):
-   * new color management system, IRC colors are now correctly
-     displayed and can be removed by new options irc_colors_receive
-     and irc_colors_send
-   * fix scroll problem when one line is bigger than screen size
-   * add setting for having one server buffer for all servers
-     (look_one_server_buffer)
-   * add setting for ignoring some chars when completing nicks
-   * fix IRC message parser bug
-   * signal SIGPIPE is now ignored
-   * add partial match for highlights
-   * add dcc_own_ip and dcc_port_range settings
-   * full UTF-8 support, auto-detection of UTF-8 usage (locale)
-   * add "Day changed to [date]" message when day changes
-   * new plugin interface, rewritten from scratch: now loads dynamic C
-     library, and perl/python are script plugins
-   * log options (for server/channel/private) can now be set while
-     WeeChat is running
-   * add channel modes +e and +f
-   * add some missing IRC commands, fix command 367
-   * add colors for input buffer and current channel of status bar
-   * add online help for config options (with /set full_option_name)
-   * enhanced "smart" hotlist, with names (new options:
-     look_hotlist_names_{count|level|length}) 
+Version 0.2.2 (2007-01-06)
+--------------------------
 
-Version 0.1.5 (2005-09-24):
-   * add /ame command (send CTCP action to all channels of all
-     connected servers)
-   * add setting "irc_notice_as_pv" to see notices as pv
-   * add nicks colors in setup file
-   * fix DCC bug: delete failed file only if really empty (on disk)
-   * fix IRC message parser bug
-   * fix scroll problem (screen moving when scrolling and new line
-     displayed)
-   * fix infinite loop when scrolling back and displaying long lines
-   * fix crash when closing a buffer used by more than one window
-   * add some missing IRC commands
-   * fix DCC display bug (now decodes string according to charset)
-   * add /ignore and /unignore commands
-   * fix bug with strings comparison (str[n]casecmp) and some locales
-     (like turkish), now using ASCII comparison (thanks to roktas)
-   * signal SIGQUIT is now ignored
-   * fix refresh bug when one line is bigger than screen size
-   * fix look_nicklist_min_size and look_nicklist_max_size options
-   * fix refresh bug when changing channel modes
-   * jump to next server now saves current channel buffer for each server
-   * add keys ctrl-up/ctrl-down to call previous/next command in global
-     history (common to all buffers)
+* fix bug with status bar (missing refresh) when closing a buffer
+* fix bug with use of first buffer for a channel if not connected
+  to server (now allowed only for a server buffer)
+* fix refresh bug with private buffer title
+* fix bug with nick completion in command args (now uses option
+  look_nick_completion_ignore)
+* fix display bug with color for first line on screen (bug #17719)
+* add anti-flood option (irc_anti_flood) (task #5442)
+* fix bug with "set_config" function in plugins API (bug #18448)
+* plugins: "add_message_handler" now accepts "*" for all IRC messages
+* add keys (F9/F10) to scroll topic (task #6030)
+* add auto completion with channels and filenames (task #5423)
+* fix memleak in keyboard input
+* fix refresh bug when changing config options if window is split
+* add space between chat and nicklist when position is "right" (bug #17852)
+* add option "look_nicklist_separator" (task #5437)
+* fix bug with DCC SEND when filename begins with "~"
+* add "irc_send_unknown_commands" option to send unknown commands to
+  IRC server (OFF by default) (task #5947)
+* /charset command and charset conversions now made by "charset" plugin
+* fix display bug in status bar, wrong length when using UTF-8
+* fix bug with ignore: now any IRC command is allowed
+* fix crash with Ctrl-T (transpose) and one char on line (bug #18153)
+* add filename completion (task #5425)
+* add "modifier" in plugins API
+* improve /plugin command
+* fix bug on ignore with "mode" IRC command (bug #18058)
+* fix crash when loading ruby script if file does not exist, with
+  Ruby >= 1.9 only (bug #18064)
+* add date in plugin function get_buffer_data()
+* fix some portability bugs (patch #5271)
+* fix iconv detection for BSD (patch #5456)
+* fix typo in configure.in (bash specific test) (patch #5450)
+* mode changes with /op, /deop, /voice, /devoice, /halfop, /dehalfop are
+  now sent in one mode command to server (task #5968)
+* add more values for config boolean values: y/true/t/1 and n/false/f/0
+* fix bug with /alias and arguments (like $1), now text after
+  argument(s) is used (bug #17944)
+* fix minor display bug with special chars on some arch like PPC
 
-Version 0.1.4 (2005-07-30):
-   * join and part/quit prefixes (arrows) now displayed with different colors
-   * add "irc_highlight" setting, to get highlight with any word
-   * fix auto-rejoin for channels with key
-   * fix /ctcp command (now any command/data allowed)
-   * add /amsg command (send text to all channels of all connected servers)
-   * fix SIGSEGV handler (now write a core file by aborting program)
-   * fix statusbar & infobar background refresh problem with some systems
-   * add color for private in hotlist (different than color for highlight)
-   * add DCC resume and timeout
-   * add function for Perl/Python to get DCC list
-   * fix FIFO pipe (command now authorized on a buffer not connected
-     to an IRC server)
-   * topic completion now decodes UTF-8 string
-   * fix bug with IRC URL on command line (irc://)
-   * new keyboard management: keys are setup in config file, add new command
-     /key, add some new default keys, alt-K key is used to grab key (useful
-     for /key command)
-   * add seconds in infobar time (optional thanks to new setting)
-   * fix some curses refreshs
-   * add auto-prefix with "#" for channels (if no prefix found), with /join command
+Version 0.2.1 (2006-10-01)
+--------------------------
 
-Version 0.1.3 (2005-07-02):
-   * proxy support (http, socks4, socks5) with authentification (http, socks5)
-     and ipv6 support (client to proxy)
-   * add completion for config option (with /set command)
-   * commands from users outside channel now authorized (if special user or
-     channel without "n" flag)
-   * add IPv6 support
-   * kill command now received and displayed
-   * add SSL support
-   * channel notify levels are saved in config file (new option
-     "server_notify_levels" for server sections)
-   * part message now accepts %v (replaced by WeeChat version), like quit message
-   * errors while loading perl scripts are now displayed in server buffer
-     (instead of current buffer)
-   * in python scripts, all messages written in stdin and stderr are redirected
-     in server buffer
-   * fix a filename error while loading a python script manually
-   * fix plugins "print" and "prnt" functions: now ok for writing on server
-     buffers
-   * fix color problem with new libcurses version
-   * fix crash when using alt-S or alt-X on DCC buffer (alt-D)
-   * fix startup crash when config file (~/.weechat/weechat.rc) is not found
-   * improve Perl/Python libs detection for ./configure script
+* fix crash for DCC receiver when resuming a file (bug #17885)
+* fix DCC error for sender when receiver cancels DCC (bug #17838)
+* fix random crash with /upgrade command (error when loading buffers)
+* fix buffer search by server/channel: now if only channel is specified,
+  a channel of another server can be found
+* fix highlight for DCC, invite and notice: when a window is displaying
+  buffer, there's no highlight
+* command "/away -all" now allowed when not connected to current server
+* new signals handled: SIGTERM and SIGHUP (received when terminal is closed):
+  clean WeeChat quit (send quit to irc servers then quit WeeChat)
+* add some new default key bindings for existing keys (for some OS)
+* command /key now ok with one arg (key name): display key if found
+* fix bug with CTCP VERSION sent on channels (bug #17547)
+* add current channel completion for /ctcp command
+* fix bugs in get_buffer_data() which breaks the retrieval of buffer
+  content (perl, lua)
+* fix nicklist display bug when top/bottom (not enough lines) (bug #17537)
+* fix bug with auto-rejoin of keyed chans (bug #17534)
+* add default nick completion when line starts with "//" (bug #17535)
+* values yes/no accepted (as on/off) for config boolean values (task #5454)
+* add server default notify level (set by /buffer notify on server buffer)
+  (task #5634)
+* fix crashs with /buffer and /charset commands when not connected to any
+  server (bug #17525)
+* add special vars $nick/$channel/$server for server_command, alias and
+  plugin command handlers
+* add arguments $1,$2,..,$9 and $* for alias (task #5831)
+* add hotlist in session file when using /upgrade command (task #5449)
+* fix nick refresh problem with unrealircd specific modes: chan owner (~)
+  and chan admin (&) (bug #17340)
 
-Version 0.1.2 (2005-05-21):
-   * add Python plugin support, improve Perl interface (and now Perl/Python
-     libraries are checked by configure script)
-   * add nicklist scroll keys (alt+{home/end/pgup/pgdn} or F11/F12)
-   * add transfer rate for DCC files
-   * add "-all" option for /nick command
-   * buffers timestamp can now be changed (new option in config file)
-   * WeeChat now ok under *BSD and Mac OS X
-   * fix nicklist sort
-   * fix crash when purging old DCC
-   * fix crash with 64-bits arch (like AMD64) when converting UTF-8
-   * add missing IRC commands (307, 341, 485, 671)
+Version 0.2.0 (2006-08-19)
+--------------------------
 
-Version 0.1.1 (2005-03-20):
-   * add nicks count for channel buffers
-   * add FIFO pipe for remote control
-   * add crash dump when WeeChat receives SIGSEGV (Segmentation fault)
-   * add new display engine: doesn't cut words at end of lines
-   * add DCC send and DCC chat
-   * add /halfop & /dehalfop commands, fix halfop display bug in nicklist
-   * add /ban, /unban and /kickban commands
-   * add spanish translation
-   * add --irc-commands and --weechat-commands command line options
-   * connection to IRC server is now made by child process (non blocking)
-   * add support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
-   * new key for window switch (now: F5/F6=switch buffer, F7/F8=switch window)
-   * on server buffer, only server messages are logged
-   * improve /help command output
-   * plugins messages are logged with new config option (log_plugin_msg)
-   * fix /kick command
-   * fix /invite command (and now invite requests are displayed)
-   * fix /buffer close command (now ok when disconnected from server)
-   * fix display bugs when many windows are opened
+* add "C"lear option on IRC raw buffer
+* IRC raw buffer now uses join/part prefix with color to display messages
+* add send of "quit" message to server when using /disconnect
+* fix "wallops" command when received, now displayed by WeeChat (bug #17441)
+* fix /wallops command (now many words are correctly sent)
+* fix command 348 (channel exception list, received by /mode #chan e)
+* add missing modes (channel & user), now all modes are allowed (bug #16606)
+* add "%m" for completion with self nick (on current server)
+* add missing IRC commands (310, 326, 329, 338)
+* fix DCC restore after /upgrade (order is now correctly saved)
+* fix away after server disconnection (now away is set again when
+  reconnecting) (bug #16359)
+* fix DCC file connection problem (connection from receiver to sender)
+* improve DCC speed (up to x5 on LAN) by forking for DCC files and a
+  new option "dcc_fast_send" (does not wait for ACK) (task #5758)
+* fix crash when purging DCC with high number of DCC (> window size)
+* fix completion for command handlers (now empty completion_template
+  means nick completion, "-" string means no completion at all)
+* fix nick alignment problem when look_nickmode is off
+* add generic function for incoming numeric IRC commands (bug #16611)
+* fix crash when doing "/part something" on a server buffer (bug #17201)
+* charsets are now checked when set by /charset command
+* add "look_save_on_exit" option (patch from Emanuele Giaquinta)
+* fix crash on DCC buffer under Darwin 8 (bug #17115)
+* add configure option for doc XSL prefix (bug #16991)
+* fix bug with spaces in script names (bug #16957)
+* fix random crash when "MODE #chan -l" is received
+* fix bug in IRC parser (random crash with malformed IRC messages)
+* fix refresh bugs when terminal is resized: too many refreshs,
+  display bug with split windows
+* case ignored for channel names in charset options (bug #16858)
+* fix crash when setting look_one_server_buffer to ON (bug #16932)
+* add new functions in plugin/script API: get window info,
+  get buffer info, get buffer content
+* add polish, russian and czech quickstart guide
+* fix display bug with special char (bug #16732)
+* add color encoding for some commands like /me
+* add aspell plugin
+* rename plugins names (remove "lib" prefix in name)
+* fix crash when closing DCC/raw buffer if 2 are open (bug #16808)
+* fix crashes with DCC chat remove/purge on DCC view (bug #16775)
+* fix bug with connection to bnc (bug #16760)
+* command /save now writes plugins options (~/.weechat/plugins.rc)
+* fix crash with "register" function in plugin scripts (bug #16701)
+* fix random crash at exit (/quit or /upgrade) with split windows
 
-Version 0.1.0 (2005-02-12):
-   * improve /window command: now split and merge are ok
-   * away nicks are now displayed with another color (new option: "irc_away_check")
-   * add away indicator in status bar
-   * add lag indicator (and auto-disconnect after a delay if important lag)
-   * improve completion: now completes commands arguments (IRC and internal),
-     when only one completion matches, completion mechanism is stoped (to
-     complete command arg for example)
-   * improve /set command: empty strings are allowed, new colors, server
-     options can be changed while WeeChat is running
-   * add default away/part/quit messages in config file
-   * new [irc] section in config file, move option "look_display_away" to
-     "irc_display_away"
-   * server messages & errors are all prefixed (by 3 chars, like '-@-')
-   * add new options for charset (UTF-8 support): look_charset_decode,
-     look_charset_encode and look_charset_internal
-   * fix many memory leaks
-   * fix colors bug: remove "gray" color (replaced by "default"), colors are
-     ok when terminal has white (or light) background
-   * fix crash when resizing terminal to small size
-   * fix crash when multiple servers and big messages received from server
-   * fix crash when closing some private buffers
-   * fix crash when unknown section with option(s) in config file
-   * fix /op, /deop, /voice, /devoice (now ok with many nicks)
-   * fix /me command (now ok without parameter)
-   * fix /away command (now ok if not away)
-   * logs are now disabled by default (server/channel/private)
+Version 0.1.9 (2006-05-25)
+--------------------------
 
-Version 0.0.9 (2005-01-01):
-   * auto-reconnection to server (new options: server_autoreconnect (on/off),
-     server_autoreconnect_delay (in seconds))
-   * fix major bug when socket is closed by server (100% CPU usage),
-     and disconnections are now ok (all channels are "closed", history is still
-     visible, and buffer will be used again if reconnection to server)
-   * option "look_remove_colors_from_msgs" is now working
-   * fix display of nick mode changes
-   * new command "/buffer close" (close any server/channel/private buffer)
-   * fix /notice command (and display when received from server)
-   * new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (= ctrl+Backspace),
-     alt-S (switch to server buffer), alt-X (switch to first channel of next
-     server)
-   * add new config option: "server_command_delay" (delay in seconds after
-     startup command for each server)
+* fix /squery command (message sent to server, now ok with # args > 2)
+* fix /alias command (with an alias name, display content)
+* improve lua plugin detection (bug #16574)
+* add backtrace when WeeChat crashes, log file automatically renamed
+* add lock for log file (~/.weechat/weechat.log), only one WeeChat
+  process can use this file (bug #16382)
+* fix crash with malformed UTF-8 strings
+* fix crash with ncurses color when too many colors defined in ncurses
+  (bug #16556)
+* add new key to find previous completion (shift-tab by default)
+* fix bug with long outgoing IRC messages (> 512 bytes) (bug #16358)
+* fix Ruby crash when handler does not return OK or KO (bug #16552)
+* fix UTF-8 display bug with chars using more than one cell on screen
+  (bug #16356)
+* fix display bug with DCC file size when > 1 Gb
+* fix refresh bug (deadlock in curses) when terminal is resized
+  (bug #16542)
+* fix nicklist sort bug
+* add russian translations (thanks to Pavel Shevchuk)
+* add german doc (thanks to Frank Zacharias)
+* add missing IRC commands (006, 007, 290, 292, 310, 379, 437, 974)
+* fix crash when multiple pv have same name: now it's forbidden
+  and pv buffer is not renamed (when a nick changes) if another
+  exists with same name (bug #16369)
+* command /clear [-all] now clears hotlist
+* fix crash after /upgrade if a line in history is empty (bug #16379)
+* fix many crashes with DCC chat (bug #16416)
+* add new option to customize input prompt
+* add nick modes
+* fix commands 332, 333 (/topic now ok when channel is not opened)
+* remove color encoding and charset conversion for commands (only
+  allowed in text sent to channel/private)
+* add hostnames associeted to nicks (available for /ban completion)
+* add "+p" mode for channels, fix mode display in status bar
+* add nick alignment options
+* fix /names command: now displays result when not on a channel
+* fix refresh bug (too many refresh) when terminal is resized
+* fix nicklist display bugs when on top or bottom of chat window
+* add keyboard handler to plugin API
+* improve script plugin loader
+* add hostname/IP option for connection to server
+* fix --disable-plugins option in configure script
+* add /setp command (set plugin options)
+* fix high CPU usage when running under a screen that has been killed
+* aliases are executed before WeeChat/IRC commands, add /builtin command
+* add /cycle command, /part command does close buffer any more (use
+  /buffer close (or alias /close) to part and close buffer
 
-Version 0.0.8 (2004-10-30):
-   * fix /kick command: now ok with many words as reason
-   * nickserv passwords hidden (new config option: log_hide_nickserv_pwd on/off)
-   * auto-rejoin channels when kicked (new config option: server_autorejoin on/off)
-   * add IRC::command function for Perl scripts
-   * fix bug when adding alias with same name as other
-   * /buffer command developed (buffers list, move and notify)
-   * logging buffers to disk (server/channel/private according to user prefs)
-   * add config option "look_display_away" to announce away in channels
-   * fix crash when resizing terminal to very small size
-   * "-MORE-" message is now erased when switching to another buffer
-   * DCC file receive ok (alt-D for DCC view)
-   * /query command now reopens private buffer if already opened
-   * add key for redrawing terminal (ctrl-L)
-   * add key for clearing hotlist (alt-R)
+Version 0.1.8 (2006-03-18)
+--------------------------
 
-Version 0.0.7 (2004-08-08):
-   * new "col_status_delimiters" config option
-   * add command /buffer , buffers ordered by number, auto-jump to active
-     buffers (alt-A), jump to buffers by number (alt-number)
-   * add command /window, split terminal horizontally/vertically
-   * unique color for each nick (based on nickname)
-   * action messages are now considered as messages, not crappy joins/parts
-   * fix display bug when nicklist is displayed at bottom of screen
-   * add history limit (text buffer and commands)
-   * replace --enable-debug with --with-debug option for ./configure, which is
-     now integer: 1 = compiler debug flag, 2 = same 1 with verbose debug messages
-     in WeeChat (default: 0 = no debug)
+* improve Ruby plugin
+* fix /set command when internal server name contains one or many dots
+* fix get_info plugin API function when no server at all is opened
+* fix display bug when top of buffer is displayed and first line is
+  removed (according to "history_max_lines" setting)
+* fix /mode command output
+* improve alias completion (now uses target command for completion)
+* fix completion problem in private with nicks
+* add missing IRC command (487)
+* add inactivity time, available for plugins via get_info("inactivity")
+* keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll
+  nicklist top/bottom
+* add special names for plugin message handlers: weechat_pv,
+  weechat_highlight, weechat_ctcp, weechat_dcc
+* script plugins now load scripts in WeeChat system share directory
+* /msg command does not open any buffer any more
+* fix crash when using global history (when older entry is removed)
+* add IRC raw data buffer (new key: alt-J + alt-R)
+* fix display bug with /kill command
+* add new plugins functions: add_timer_handler, remove_timer_handler,
+  remove_infobar
+* plugin messages handlers now called when message is ignored (by /ignore)
+* new behaviour for messages ignored by a message handler: now WeeChat
+  executes standard handler, treating message as "ignored"
+* many commands allowed for aliases
+* many commands allowed when connecting to server
+* add Lua script plugin
+* add functions in plugins API: get_server_info, free_server_info,
+  get_channel_info, free_channel_info, get_nick_info, free_nick_info
+* add option "look_nick_complete_first" (patch from Gwenn)
+* add option "look_open_near_server" (patch from Gwenn)
+* fix bug with /upgrade and servers buffer
+* fix bug with "get_dcc_info" plugin interface function
+* add new scroll keys for a few lines up/down (default: meta-pgup/pgdn)
+  (patch from Pistos)
+* add new option "irc_away_check_max_nicks" to disable away check on
+  channels with high number of nicks (patch from Gwenn)
+* add new command line argument for setting WeeChat homedir (-d or --dir)
+  (patch from Gwenn)
+* fix bug with charset in infobar highlights
+* fix bug with buffer detection in plugins/scripts commands
+* fix bug with /history command
+* add option "irc_show_away_once", to show away message only once in pv
+* add partial hungarian translation
 
-Version 0.0.6 (2004-06-05):
-   * improve channel highlight (priority to message vs join/part)
-   * fix bug when opened private win and remote user changes his nick
-   * add command /query (starts private conversation)
-   * add IRC messages 476, 477
-   * /mode command is now ok and channel flags are displayed in status bar
-   * fix display bug (text was blinking when scrolling)
-   * CTCP Version reply is now in english only and doesn't show host (security reason)
+Version 0.1.7 (2006-01-14)
+--------------------------
 
-Version 0.0.5 (2004-02-07):
-   * /set command to modify config options when WeeChat is running
-   * fix look_nicklist config option, now enables/disables nicklist
-   * secure code to prevent buffer overflows and memory leaks
-   * fix QUIT IRC command: now sent to all connected servers (not only current)
-   * URL command line parameter to connect to server(s)
-   * new Perl script function to display message in info bar ("IRC::print_infobar")
-   * info bar highlight notifications
-   * add info bar timestamp in config ("look_infobar_timestamp")
-   * add info bar (optional, "look_infobar" to enable it, "on" by default)
-   * fix crash with /oper command
-   * for default config file, nick is now based on un*x username (thanks to Witukind)
-   * fix crash when config file cannot be written
-   * add -c (or --config) command line parameter to see config file options
-   * highlight action messages
+* fix msg command (now allowed in private buffer with "*" as target)
+* remove "irc_default_msg_away" setting, for RFC 2812 conformity
+  (/away command wihtout argument only removes away status),
+  new values for "irc_display_away" (off, local, channel)
+* fix refresh bug with Solaris when term size is changed
+* replace Texinfo doc by XML Docbook
+* add color for window separators (when split)
+* add completion system for plugins/scripts commands
+* fix plugins autoload
+* add charset by server and channel, new command: /charset
+* add Ruby script plugin
+* add /upgrade command
+* add ETA (Estimated Time of Arrival) for DCC files
+* /nick command is now allowed when not connected to server
+* add server/channel arg to /buffer command for jumping to buffer
+* fix display bug in chat window when a message length equals to window
+  width
+* add new keys for switching to other windows: alt-W followed by
+  alt-{arrow}
+* add new keys for scrolling to previous/next highlight: alt-P / alt-N
+* add "read marker": an indicator for first unread line in a
+  server or channel buffer (new key alt-U to scroll to marker)
+* new window maganement: custom size for windows, auto resize when
+  terminal is resized
+* fix infinite loop when resizing term to small size
+* add /history command
 
-Version 0.0.4 (2004-01-01):
-   * Perl plugin, with auto-load
-   * when private window is created (another user is talking), WeeChat does not
-     switch to this window
-   * highlight when our nick is written in a channel/private window
-   * catch ctrl-C (ignored)
-   * debug messages can be enabled via ./configure --enbale-debug option
+Version 0.1.6 (2005-11-11)
+--------------------------
 
-Version 0.0.3 (2003-11-03):
-   * ./configure script to build WeeChat
-   * nicks are now correctly sorted (op, halfop, voice, other)
-   * fix problem with '353' IRC message (nicklist)
-   * fix problem when nick is truncated by server
-   * fix crash when entering text without any server connection
-   * fix crash when /set command is executed
-   * fix display bug (text was blinking when scrolling)
-   * french translation
-   * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
-     /trace, /admin, /info, /servlist, /squery, /who, /whowas, /die, /summon,
-     /users, /wallops, /userhost, /ison, /ctcp ping
-   * code cleanup
+* new color management system, IRC colors are now correctly
+  displayed and can be removed by new options irc_colors_receive
+  and irc_colors_send
+* fix scroll problem when one line is bigger than screen size
+* add setting for having one server buffer for all servers
+  (look_one_server_buffer)
+* add setting for ignoring some chars when completing nicks
+* fix IRC message parser bug
+* signal SIGPIPE is now ignored
+* add partial match for highlights
+* add dcc_own_ip and dcc_port_range settings
+* full UTF-8 support, auto-detection of UTF-8 usage (locale)
+* add "Day changed to [date]" message when day changes
+* new plugin interface, rewritten from scratch: now loads dynamic C
+  library, and perl/python are script plugins
+* log options (for server/channel/private) can now be set while
+  WeeChat is running
+* add channel modes +e and +f
+* add some missing IRC commands, fix command 367
+* add colors for input buffer and current channel of status bar
+* add online help for config options (with /set full_option_name)
+* enhanced "smart" hotlist, with names (new options:
+  look_hotlist_names_{count|level|length}) 
 
-Version 0.0.2 (2003-10-05):
-   * add commands /rehash and /restart
-   * and command and auto-join channels when connected to server
-   * new commands for alias: /alias, /unalias (new section in config file)
-   * config is now saved automatically when quitting WeeChat, add /save command
-   * new commands for servers: /server, /connect, /disconnect
-   * add autoconnect flag for each server in config file
-   * add "look_set_title" option in config file
-   * term window title is modified with WeeChat name and version
-   * fix nicklist display bug
-   * fix crash when sending command which can only be received
-   * CTCP version returns more info (about OS)
+Version 0.1.5 (2005-09-24)
+--------------------------
 
-Version 0.0.1 (2003-09-27):
-   * ncurses GUI with color output
-   * multi-servers
-   * channel windows, with nicklist (position: top, bottom, left or right)
-   * private windows
-   * IRC commands: away, ctcp, deop, devoice, invite, join, kick, kill, list,
-     me, mode, msg, names, nick, notice, op, oper, part, ping, pong, quit,
-     quote, topic, version, voice, whois
-   * WeeChat commands: clear, help, set (partial)
-   * many config options
-   * log file (~/.weechat/weechat.log)
-   * nicklist can be moved on top, bottom, left or right of window
+* add /ame command (send CTCP action to all channels of all
+  connected servers)
+* add setting "irc_notice_as_pv" to see notices as pv
+* add nicks colors in setup file
+* fix DCC bug: delete failed file only if really empty (on disk)
+* fix IRC message parser bug
+* fix scroll problem (screen moving when scrolling and new line
+  displayed)
+* fix infinite loop when scrolling back and displaying long lines
+* fix crash when closing a buffer used by more than one window
+* add some missing IRC commands
+* fix DCC display bug (now decodes string according to charset)
+* add /ignore and /unignore commands
+* fix bug with strings comparison (str[n]casecmp) and some locales
+  (like turkish), now using ASCII comparison (thanks to roktas)
+* signal SIGQUIT is now ignored
+* fix refresh bug when one line is bigger than screen size
+* fix look_nicklist_min_size and look_nicklist_max_size options
+* fix refresh bug when changing channel modes
+* jump to next server now saves current channel buffer for each server
+* add keys ctrl-up/ctrl-down to call previous/next command in global
+  history (common to all buffers)
+
+Version 0.1.4 (2005-07-30)
+--------------------------
+
+* join and part/quit prefixes (arrows) now displayed with different colors
+* add "irc_highlight" setting, to get highlight with any word
+* fix auto-rejoin for channels with key
+* fix /ctcp command (now any command/data allowed)
+* add /amsg command (send text to all channels of all connected servers)
+* fix SIGSEGV handler (now write a core file by aborting program)
+* fix statusbar & infobar background refresh problem with some systems
+* add color for private in hotlist (different than color for highlight)
+* add DCC resume and timeout
+* add function for Perl/Python to get DCC list
+* fix FIFO pipe (command now authorized on a buffer not connected
+  to an IRC server)
+* topic completion now decodes UTF-8 string
+* fix bug with IRC URL on command line (irc://)
+* new keyboard management: keys are setup in config file, add new command
+  /key, add some new default keys, alt-K key is used to grab key (useful
+  for /key command)
+* add seconds in infobar time (optional thanks to new setting)
+* fix some curses refreshs
+* add auto-prefix with "#" for channels (if no prefix found), with /join command
+
+Version 0.1.3 (2005-07-02)
+--------------------------
+
+* proxy support (http, socks4, socks5) with authentification (http, socks5)
+  and ipv6 support (client to proxy)
+* add completion for config option (with /set command)
+* commands from users outside channel now authorized (if special user or
+  channel without "n" flag)
+* add IPv6 support
+* kill command now received and displayed
+* add SSL support
+* channel notify levels are saved in config file (new option
+  "server_notify_levels" for server sections)
+* part message now accepts %v (replaced by WeeChat version), like quit message
+* errors while loading perl scripts are now displayed in server buffer
+  (instead of current buffer)
+* in python scripts, all messages written in stdin and stderr are redirected
+  in server buffer
+* fix a filename error while loading a python script manually
+* fix plugins "print" and "prnt" functions: now ok for writing on server
+  buffers
+* fix color problem with new libcurses version
+* fix crash when using alt-S or alt-X on DCC buffer (alt-D)
+* fix startup crash when config file (~/.weechat/weechat.rc) is not found
+* improve Perl/Python libs detection for ./configure script
+
+Version 0.1.2 (2005-05-21)
+--------------------------
+
+* add Python plugin support, improve Perl interface (and now Perl/Python
+  libraries are checked by configure script)
+* add nicklist scroll keys (alt+{home/end/pgup/pgdn} or F11/F12)
+* add transfer rate for DCC files
+* add "-all" option for /nick command
+* buffers timestamp can now be changed (new option in config file)
+* WeeChat now ok under *BSD and Mac OS X
+* fix nicklist sort
+* fix crash when purging old DCC
+* fix crash with 64-bits arch (like AMD64) when converting UTF-8
+* add missing IRC commands (307, 341, 485, 671)
+
+Version 0.1.1 (2005-03-20)
+--------------------------
+
+* add nicks count for channel buffers
+* add FIFO pipe for remote control
+* add crash dump when WeeChat receives SIGSEGV (Segmentation fault)
+* add new display engine: doesn't cut words at end of lines
+* add DCC send and DCC chat
+* add /halfop & /dehalfop commands, fix halfop display bug in nicklist
+* add /ban, /unban and /kickban commands
+* add spanish translation
+* add --irc-commands and --weechat-commands command line options
+* connection to IRC server is now made by child process (non blocking)
+* add support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
+* new key for window switch (now: F5/F6=switch buffer, F7/F8=switch window)
+* on server buffer, only server messages are logged
+* improve /help command output
+* plugins messages are logged with new config option (log_plugin_msg)
+* fix /kick command
+* fix /invite command (and now invite requests are displayed)
+* fix /buffer close command (now ok when disconnected from server)
+* fix display bugs when many windows are opened
+
+Version 0.1.0 (2005-02-12)
+--------------------------
+
+* improve /window command: now split and merge are ok
+* away nicks are now displayed with another color (new option: "irc_away_check")
+* add away indicator in status bar
+* add lag indicator (and auto-disconnect after a delay if important lag)
+* improve completion: now completes commands arguments (IRC and internal),
+  when only one completion matches, completion mechanism is stoped (to
+  complete command arg for example)
+* improve /set command: empty strings are allowed, new colors, server
+  options can be changed while WeeChat is running
+* add default away/part/quit messages in config file
+* new [irc] section in config file, move option "look_display_away" to
+  "irc_display_away"
+* server messages & errors are all prefixed (by 3 chars, like "-@-")
+* add new options for charset (UTF-8 support): look_charset_decode,
+  look_charset_encode and look_charset_internal
+* fix many memory leaks
+* fix colors bug: remove "gray" color (replaced by "default"), colors are
+  ok when terminal has white (or light) background
+* fix crash when resizing terminal to small size
+* fix crash when multiple servers and big messages received from server
+* fix crash when closing some private buffers
+* fix crash when unknown section with option(s) in config file
+* fix /op, /deop, /voice, /devoice (now ok with many nicks)
+* fix /me command (now ok without parameter)
+* fix /away command (now ok if not away)
+* logs are now disabled by default (server/channel/private)
+
+Version 0.0.9 (2005-01-01)
+--------------------------
+
+* auto-reconnection to server (new options: server_autoreconnect (on/off),
+  server_autoreconnect_delay (in seconds))
+* fix major bug when socket is closed by server (100% CPU usage),
+  and disconnections are now ok (all channels are "closed", history is still
+  visible, and buffer will be used again if reconnection to server)
+* option "look_remove_colors_from_msgs" is now working
+* fix display of nick mode changes
+* new command "/buffer close" (close any server/channel/private buffer)
+* fix /notice command (and display when received from server)
+* new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (= ctrl+Backspace),
+  alt-S (switch to server buffer), alt-X (switch to first channel of next
+  server)
+* add new config option: "server_command_delay" (delay in seconds after
+  startup command for each server)
+
+Version 0.0.8 (2004-10-30)
+--------------------------
+
+* fix /kick command: now ok with many words as reason
+* nickserv passwords hidden (new config option: log_hide_nickserv_pwd on/off)
+* auto-rejoin channels when kicked (new config option: server_autorejoin on/off)
+* add IRC::command function for Perl scripts
+* fix bug when adding alias with same name as other
+* /buffer command developed (buffers list, move and notify)
+* logging buffers to disk (server/channel/private according to user prefs)
+* add config option "look_display_away" to announce away in channels
+* fix crash when resizing terminal to very small size
+* "-MORE-" message is now erased when switching to another buffer
+* DCC file receive ok (alt-D for DCC view)
+* /query command now reopens private buffer if already opened
+* add key for redrawing terminal (ctrl-L)
+* add key for clearing hotlist (alt-R)
+
+Version 0.0.7 (2004-08-08)
+--------------------------
+
+* new "col_status_delimiters" config option
+* add command /buffer , buffers ordered by number, auto-jump to active
+  buffers (alt-A), jump to buffers by number (alt-number)
+* add command /window, split terminal horizontally/vertically
+* unique color for each nick (based on nickname)
+* action messages are now considered as messages, not crappy joins/parts
+* fix display bug when nicklist is displayed at bottom of screen
+* add history limit (text buffer and commands)
+* replace --enable-debug with --with-debug option for ./configure, which is
+  now integer: 1 = compiler debug flag, 2 = same 1 with verbose debug messages
+  in WeeChat (default: 0 = no debug)
+
+Version 0.0.6 (2004-06-05)
+--------------------------
+
+* improve channel highlight (priority to message vs join/part)
+* fix bug when opened private win and remote user changes his nick
+* add command /query (starts private conversation)
+* add IRC messages 476, 477
+* /mode command is now ok and channel flags are displayed in status bar
+* fix display bug (text was blinking when scrolling)
+* CTCP Version reply is now in english only and doesn't show host (security reason)
+
+Version 0.0.5 (2004-02-07)
+--------------------------
+
+* /set command to modify config options when WeeChat is running
+* fix look_nicklist config option, now enables/disables nicklist
+* secure code to prevent buffer overflows and memory leaks
+* fix QUIT IRC command: now sent to all connected servers (not only current)
+* URL command line parameter to connect to server(s)
+* new Perl script function to display message in info bar ("IRC::print_infobar")
+* info bar highlight notifications
+* add info bar timestamp in config ("look_infobar_timestamp")
+* add info bar (optional, "look_infobar" to enable it, "on" by default)
+* fix crash with /oper command
+* for default config file, nick is now based on un*x username (thanks to Witukind)
+* fix crash when config file cannot be written
+* add -c (or --config) command line parameter to see config file options
+* highlight action messages
+
+Version 0.0.4 (2004-01-01)
+--------------------------
+
+* Perl plugin, with auto-load
+* when private window is created (another user is talking), WeeChat does not
+  switch to this window
+* highlight when our nick is written in a channel/private window
+* catch ctrl-C (ignored)
+* debug messages can be enabled via ./configure --enbale-debug option
+
+Version 0.0.3 (2003-11-03)
+--------------------------
+
+* ./configure script to build WeeChat
+* nicks are now correctly sorted (op, halfop, voice, other)
+* fix problem with "353" IRC message (nicklist)
+* fix problem when nick is truncated by server
+* fix crash when entering text without any server connection
+* fix crash when /set command is executed
+* fix display bug (text was blinking when scrolling)
+* french translation
+* new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
+  /trace, /admin, /info, /servlist, /squery, /who, /whowas, /die, /summon,
+  /users, /wallops, /userhost, /ison, /ctcp ping
+* code cleanup
+
+Version 0.0.2 (2003-10-05)
+--------------------------
+
+* add commands /rehash and /restart
+* and command and auto-join channels when connected to server
+* new commands for alias: /alias, /unalias (new section in config file)
+* config is now saved automatically when quitting WeeChat, add /save command
+* new commands for servers: /server, /connect, /disconnect
+* add autoconnect flag for each server in config file
+* add "look_set_title" option in config file
+* term window title is modified with WeeChat name and version
+* fix nicklist display bug
+* fix crash when sending command which can only be received
+* CTCP version returns more info (about OS)
+
+Version 0.0.1 (2003-09-27)
+--------------------------
+
+* ncurses GUI with color output
+* multi-servers
+* channel windows, with nicklist (position: top, bottom, left or right)
+* private windows
+* IRC commands: away, ctcp, deop, devoice, invite, join, kick, kill, list,
+  me, mode, msg, names, nick, notice, op, oper, part, ping, pong, quit,
+  quote, topic, version, voice, whois
+* WeeChat commands: clear, help, set (partial)
+* many config options
+* log file (~/.weechat/weechat.log)
+* nicklist can be moved on top, bottom, left or right of window

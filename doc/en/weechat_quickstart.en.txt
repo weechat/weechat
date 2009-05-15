@@ -1,210 +1,233 @@
-WeeChat quick start guide (english version, for WeeChat >= 0.3.x)
-=================================================================
+WeeChat quick start guide
+=========================
+FlashCode <flashcode@flashtux.org>
+v0.3.0-dev, 2009-05-15
 
-1. Launch weechat
 
-     A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
-     (it has good UTF-8 support, and no problem with default keyboard bindings).
+[[start]]
+Start weechat
+-------------
 
-     Run "weechat-curses" from your shell.
+A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
+(it has good UTF-8 support, and no problem with default keyboard bindings).
 
-2. Online help / options
+Run "weechat-curses" from your shell.
 
-     WeeChat has help for all commands, just issue /help
-     To get help on a command, issue /help command
 
-     To set options, use /set config.section.option value
-     (where config is configuration name ("weechat" for core, or a plugin
-     name), "section" the section of this configuration and "option" the
-     option name).
+[[help_options]]
+Online help / options
+---------------------
 
-     WeeChat immediately uses new value (you *never* need to restart WeeChat
-     after changes to configuration).
+WeeChat has help for all commands, just issue /help
+To get help on a command, issue `/help command`
 
-     You can use /set option with partial name and wildcard "*" at beginning or
-     end to display all options containg letters.
-     For example:
+To set options, use `/set config.section.option value`
+(where `config` is configuration name (`weechat` for core, or a plugin
+name), `section` the section of this configuration and `option` the
+option name).
 
-        /set             => display all options (WeeChat and plugins)
-        /set weechat.*   => display WeeChat options
-        /set irc.*       => display IRC plugin options
+WeeChat immediately uses new value (you *never* need to restart WeeChat
+after changes to configuration).
 
-     You can display help for an option with /help, for example:
+You can use `/set` option with partial name and wildcard "*" at beginning or
+end to display all options containg letters.
+For example:
 
-        /help weechat.look.highlight
+`/set`::
+    display all options (WeeChat and plugins)
 
-     All settings are saved when WeeChat ends (or with "/save" command to force
-     write of options).
+`/set weechat.*`::
+    display WeeChat options
 
-     You can edit configuration files (*.conf) by hand and reload them by
-     /reload command if you don't want to use /set command.
+`/set irc.*`::
+    display IRC plugin options
 
-3. Core vs plugins
+You can display help for an option with `/help`, for example:
+`/help weechat.look.highlight`.
 
-     WeeChat "core" is only used to display data on screen and interact with
-     user, that means weechat core without plugins is useless
-     (faithful users: IRC was part of core for versions <= 0.2.6).
+All settings are saved when WeeChat ends (or with `/save` command to force
+write of options).
 
-     All network protocols like IRC are provided in separate plugins.
+You can edit configuration files (*.conf) by hand and reload them by
+`/reload` command if you don't want to use `/set` command.
 
-     Use /plugin command to list loaded plugins, you should see "irc" and
-     other plugins in list.
 
-4. Create an IRC server
+[[core_vs_plugins]]
+Core vs plugins
+---------------
 
-     You can add an IRC server with /server command, for example:
+WeeChat "core" is only used to display data on screen and interact with
+user, that means weechat core without plugins is useless
+(faithful users: IRC was part of core for versions < = 0.2.6).
 
-        /server add oftc irc.oftc.org 6667
+All network protocols like IRC are provided in separate plugins.
 
-     As usual, help is available if you're lost:
+Use `/plugin` command to list loaded plugins, you should see "irc" and
+other plugins in list.
 
-        /help server
 
-5. Set custom IRC server options
+[[create_irc_server]]
+Create an IRC server
+--------------------
 
-     WeeChat uses default values for all servers ("fallbacks"), if you
-     don't specify a specific value for a server option.
-     These default options are "irc.server_default.*".
+You can add an IRC server with `/server` command, for example:
 
-     For each server option, WeeChat uses its value if it is defined (not
-     "null"). Otherwise WeeChat uses default value (irc.server_default.xxx).
+  /server add oftc irc.oftc.org 6667
 
-     For example there's default nicks (based on your un*x login), and you can
-     override them for oftc server with following command:
+As usual, help is available if you're lost: `/help server`
 
-        /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
 
-     To set username and realname:
+[[irc_server_options]]
+Set custom IRC server options
+-----------------------------
 
-        /set irc.server.oftc.username "My user name"
-        /set irc.server.oftc.realname "My real name"
+WeeChat uses default values for all servers ("fallbacks"), if you
+don't specify a specific value for a server option.
+These default options are "irc.server_default.*".
 
-     To enable auto-connect to server at startup:
+For each server option, WeeChat uses its value if it is defined (not
+"null"). Otherwise WeeChat uses default value ("irc.server_default.xxx").
 
-        /set irc.server.oftc.autoconnect on
+For example there's default nicks (based on your un*x login), and you can
+override them for oftc server with following command:
 
-     To run a command after connection to server, for example to identify
-     with nickserv:
+  /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
 
-        /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+To set username and realname:
 
-     Note: many commmands can be separated by ';' (semi-colon)
+  /set irc.server.oftc.username "My user name"
+  /set irc.server.oftc.realname "My real name"
 
-     To auto-join some channels when connecting to server:
+To enable auto-connect to server at startup:
 
-        /set irc.server.oftc.autojoin "#channel1,#channel2"
+  /set irc.server.oftc.autoconnect on
 
-     To remove value of a server option, and use default value instead,
-     for example to use default nicks (irc.server_default.nicks):
+To run a command after connection to server, for example to identify
+with nickserv:
 
-        /set irc.server.oftc.nicks null
+  /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
 
-     Other options:
-       You can setup other options with following command ("xxx" is option
-       name):
+Note: many commmands can be separated by ';' (semi-colon)
 
-         /set irc.server.oftc.xxx value
+To auto-join some channels when connecting to server:
 
-6. Connect to IRC server and auto-join channels
+  /set irc.server.oftc.autojoin "#channel1,#channel2"
 
-     /connect oftc
+To remove value of a server option, and use default value instead,
+for example to use default nicks (irc.server_default.nicks):
 
-     Note: this command can be used to create and connect to a new server
-     without using /server command (should I repeat you can see help for
-     this command with /help connect ? ;)
+  /set irc.server.oftc.nicks null
 
-7. Join/part IRC channels
+Other options: you can setup other options with following command ("xxx" is
+option name):
 
-     Join a channel:
+  /set irc.server.oftc.xxx value
 
-        /join #channel
 
-     Part a channel:
+[[connect_to_irc_server]]
+Connect to IRC server and auto-join channels
+--------------------------------------------
 
-        /part [quit message]
+  /connect oftc
 
-     Close server or channel buffer:
+Note: this command can be used to create and connect to a new server
+without using `/server` command (should I repeat you can see help for
+this command with `/help connect` ? ;)
 
-        /close [quit message]
 
-     (/close is an alias on /buffer close)
+[[join_part_irc_channels]]
+Join/part IRC channels
+----------------------
 
-8. Buffer/window management
+`/join #channel`::
+    join a channel
 
-     A buffer is a component linked to a plugin with a number with a category
-     and a name. Buffer contains data displayed on screen.
+`/part [quit message]`::
+    part a channel (keeping buffer open)
 
-     A window is a view on a buffer. By default there's only one window
-     displaying one buffer. If you split screen, you will see many windows
-     with many buffers at same time.
+`/close [quit message]`::
+    close server or channel buffer (`/close` is an alias on `/buffer close`)
 
-     Commands to manage buffers and windows:
 
-        /buffer
-        /window
+[[buffer_window]]
+Buffer/window management
+------------------------
 
-     (I'll not repeat here that you can get help with /help on these commands)
+A buffer is a component linked to a plugin with a number with a category
+and a name. Buffer contains data displayed on screen.
 
-     For example, to split verticaly screen into a small window (1/3 width),
-     and a large (2/3), use command:
+A window is a view on a buffer. By default there's only one window
+displaying one buffer. If you split screen, you will see many windows
+with many buffers at same time.
 
-        /window splitv 33
+Commands to manage buffers and windows:
 
-9. Key bindings
+  /buffer
+  /window
 
-     WeeChat uses many keys by default. All these keys are in documentation,
-     but you should know at least some vital keys:
-     - alt + left/right arrows (or F5/F6): switch to previous/next buffer
-     - F7/F8: switch to previous/next window (when screen is split)
-     - F9/F10: scroll title bar
-     - F11/F12: scroll nicklist
-     - tab: complete text in input bar, like in your shell
-     - page up/down: scroll text in current buffer
-     - alt + A: jump to buffer with activity (in hotlist)
+(I'll not repeat here that you can get help with /help on these commands)
 
-     According to your keyboard and/or your needs, you can rebind any key
-     to a command with "/key" command.
-     A useful key is meta-k (alt-k) to find key codes.
+For example, to split verticaly screen into a small window (1/3 width),
+and a large (2/3), use command:
 
-     For example, to bind meta-y (alt-y) to command "/buffer close":
+  /window splitv 33
 
-        /key (press meta-k) (press meta-y) /buffer close
 
-     You'll have a command line like:
+[[key_bindings]]
+Key bindings
+------------
 
-        /key meta-y /buffer close
+WeeChat uses many keys by default. All these keys are in documentation,
+but you should know at least some vital keys:
 
-     To remove key:
+- 'alt + left/right arrows' (or 'F5'/'F6'): switch to previous/next buffer
+- 'F7'/'F8': switch to previous/next window (when screen is split)
+- 'F9'/'F10': scroll title bar
+- 'F11'/'F12': scroll nicklist
+- 'tab': complete text in input bar, like in your shell
+- 'page up/down': scroll text in current buffer
+- 'alt + A': jump to buffer with activity (in hotlist)
 
-        /key unbind meta-y
+According to your keyboard and/or your needs, you can rebind any key
+to a command with `/key` command.
+A useful key is meta-k (alt-k) to find key codes.
 
-10. Plugins/scripts
+For example, to bind meta-y (alt-y) to command `/buffer close`:
 
-     On some distros like Debian, plugins are available via a separate package
-     (like weechat-plugins).
-     Plugins are automatically loaded when found.
+  /key bind (press meta-k) (press meta-y) /buffer close
 
-     Some plugins let you use scripts in WeeChat (in many languages like Perl,
-     Python, Ruby, Lua and Tcl). These plugins must be loaded with /plugin
-     command and they provide commands like /perl, used to load scripts.
+You'll have a command line like:
 
-     Many external plugins/scripts (from contributors) are available for
-     WeeChat, please look at:
+  /key bind meta-y /buffer close
 
-        http://weechat.flashtux.org/plugins.php
+To remove key:
 
-     Please look at WeeChat documentation to load/unload plugins or scripts.
+  /key unbind meta-y
 
-11. More documentation
 
-     You can now use WeeChat and read FAQ/documentation for any other question:
+[[plugins_scripts]]
+Plugins/scripts
+---------------
 
-        http://weechat.flashtux.org/faq.php
-        http://weechat.flashtux.org/doc.php
+On some distros like Debian, plugins are available via a separate package
+(like weechat-plugins).
+Plugins are automatically loaded when found.
 
-     Enjoy WeeChat!
+Some plugins let you use scripts in WeeChat (in many languages like Perl,
+Python, Ruby, Lua and Tcl). These plugins must be loaded with `/plugin`
+command and they provide commands like `/perl`, used to load scripts.
 
---
-(c) 2006-2009, written by FlashCode <flashcode@flashtux.org>
-Last edited on 2009-05-11.
-This document is part of WeeChat and is distributed under GPL 3 licence.
+Many external plugins/scripts (from contributors) are available for
+WeeChat: http://weechat.flashtux.org/plugins.php
+
+Please look at WeeChat documentation to load/unload plugins or scripts.
+
+
+[[more_doc]]
+More documentation
+------------------
+
+You can now use WeeChat and read FAQ/documentation for any other question:
+http://weechat.flashtux.org/doc.php
+
+Enjoy WeeChat!

@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2008 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2009 FlashCode <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@ SUBDIRS = po $(doc_dir) intl src
 EXTRA_DIST = CMakeLists.txt \
              config.rpath \
              config.h.cmake \
-             BUGS \
-             FAQ \
-             FAQ.fr \
              debian/NEWS \
              debian/changelog \
              debian/compat \

@@ -46,14 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             <emphasis>kolter (Emmanuel Bouthenot)</emphasis>
             <email>kolter AT openics.org</email> -
-            Entwickler
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <emphasis>Ptitlouis</emphasis>
-            <email>ptitlouis AT sysif.net</email> -
-            erzeugt Debian-Pakete
+            Entwickler, erzeugt Debian-Pakete
           </para>
         </listitem>
       </itemizedlist>
@@ -67,6 +60,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Die folgenden Personen trugen zur Entwicklung von WeeChat bei:
       <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>Ptitlouis</emphasis> -
+            Erzeugt Debian-Pakete
+          </para>
+        </listitem>
         <listitem>
           <para>
             <emphasis>Jiri Golembiovsky</emphasis> -

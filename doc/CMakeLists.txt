@@ -25,6 +25,12 @@ SET(DOC_LANGS
   sv
   )
 
+SET(DOC_ASCIIDOC_FILES
+  faq
+  quickstart
+  tester
+  )
+
 FIND_PROGRAM(
   COPY cp
   PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
@@ -47,6 +53,11 @@ FIND_FILE(DOC_XSL_PREFIX chunk.xsl PATHS
   DOC "Path to nwalsh xsl stylesheet"
   )
 STRING(REPLACE "/html/chunk.xsl" "" DOC_XSL_PREFIX "${DOC_XSL_PREFIX}")
+
+FIND_PROGRAM(
+  ASCIIDOC asciidoc
+  PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
+)
       
 IF(XSLTPROC AND DOC_XSL_PREFIX AND COPY)
   SET(BUILD_HTML TRUE)
@@ -55,6 +66,10 @@ ENDIF(XSLTPROC AND DOC_XSL_PREFIX AND COPY)
 IF(DBLATEX AND COPY)
   SET(BUILD_PDF TRUE)
 ENDIF(DBLATEX AND COPY)
+
+IF(ASCIIDOC)
+  SET(BUILD_ASCIIDOC TRUE)
+ENDIF(ASCIIDOC)
 
 IF(BUILD_HTML)
   CONFIGURE_FILE(
@@ -71,7 +86,7 @@ IF(BUILD_HTML)
 ENDIF(BUILD_HTML)
 
 
-IF(BUILD_HTML OR BUILD_PDF)
+IF(BUILD_HTML OR BUILD_PDF OR BUILD_ASCIIDOC)
   EXECUTE_PROCESS(
     COMMAND date "+%F %T"
     OUTPUT_VARIABLE DOC_DATE
@@ -116,14 +131,14 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css
-	  COMMENT "Building user guide - html doc (${dlang})"
+	  COMMENT "Building user's guide - html doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-user-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/user/index.html)
 	ADD_CUSTOM_TARGET(doc-user-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/user/weechat_user.${dlang}.html)
 	INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/user DESTINATION share/doc/${PROJECT_NAME}/html/${dlang}/)
 	
       ENDIF(BUILD_HTML)
-      
+     
       IF(BUILD_PDF)
         FILE(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user)
 	FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user)
@@ -145,7 +160,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
-	  COMMENT "Building user guide - pdf doc (${dlang})"
+	  COMMENT "Building user's guide - pdf doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-user-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user/weechat_user.${dlang}.pdf)
 	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/user/weechat_user.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})
@@ -184,7 +199,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html.xsl.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-doc.css
-	  COMMENT "Building developer guide - html doc (${dlang})"
+	  COMMENT "Building developer's guide - html doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-dev-html-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}/dev/index.html)
 	ADD_CUSTOM_TARGET(doc-dev-html-one-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/dev/weechat_dev.${dlang}.html)
@@ -213,7 +228,7 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/autogen/*
 	  ${CMAKE_CURRENT_SOURCE_DIR}/date.xml.in
 	  ${CMAKE_CURRENT_SOURCE_DIR}/weechat-html-one.xsl.in
-	  COMMENT "Building developer guide - pdf doc (${dlang})"
+	  COMMENT "Building developer's guide - pdf doc (${dlang})"
 	  )
 	ADD_CUSTOM_TARGET(doc-dev-pdf-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf)
 	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/dev/weechat_dev.${dlang}.pdf DESTINATION share/doc/${PROJECT_NAME})
@@ -221,10 +236,32 @@ IF(BUILD_HTML OR BUILD_PDF)
       ENDIF(BUILD_PDF)
       
     ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/dev/weechat_dev.${dlang}.xml)
+    
+#    IF(BUILD_ASCIIDOC)
+#      
+#      FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/asciidoc/${dlang})
+#
+#      FOREACH(doc ${DOC_ASCIIDOC_FILES})
+#        
+#        IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat_${doc}.${dlang}.txt)
+#          ADD_CUSTOM_COMMAND(
+#	    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/asciidoc/${dlang}/weechat_${doc}.${dlang}.html
+#            COMMAND ${ASCIIDOC} ARGS -a toc -n -o ${CMAKE_CURRENT_BINARY_DIR}/asciidoc/${dlang}/weechat_${doc}.${dlang}.html ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat_${doc}.${dlang}.txt
+#            DEPENDS
+#            ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat_${doc}.${dlang}.txt
+#	    COMMENT "Building weechat_${doc}.${dlang}.html"
+#	    )
+#          ADD_CUSTOM_TARGET(doc-${doc}-${dlang} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/asciidoc/${dlang}/weechat_${doc}.${dlang}.html)
+#          INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/asciidoc/${dlang}/weechat_${doc}.${dlang}.html DESTINATION share/doc/${PROJECT_NAME})
+#        ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat_${doc}.${dlang}.txt)
+#        
+#      ENDFOREACH(doc ${DOC_ASCIIDOC_FILES})
+#      
+#    ENDIF(BUILD_ASCIIDOC)
   
   ENDFOREACH(dlang ${DOC_LANGS})
 
-ENDIF(BUILD_HTML OR BUILD_PDF)
+ENDIF(BUILD_HTML OR BUILD_PDF OR BUILD_ASCIIDOC)
 
 FOREACH(dlang ${DOC_LANGS})
   IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat_quickstart.${dlang}.txt)

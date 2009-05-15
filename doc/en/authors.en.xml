@@ -46,14 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             <emphasis>kolter (Emmanuel Bouthenot)</emphasis>
             <email>kolter AT openics.org</email> -
-            developer
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <emphasis>Ptitlouis</emphasis>
-            <email>ptitlouis AT sysif.net</email> -
-            Debian packager
+            developer, Debian packager
           </para>
         </listitem>
       </itemizedlist>
@@ -67,6 +60,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Following people contributed to WeeChat:
       <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>Ptitlouis</emphasis> -
+            first debian packager
+          </para>
+        </listitem>
         <listitem>
           <para>
             <emphasis>Jiri Golembiovsky</emphasis> -

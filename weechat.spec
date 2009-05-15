@@ -17,7 +17,7 @@
 #
 
 %define name weechat
-%define version 0.2.6
+%define version 0.3.0
 %define release 1
 
 Name:      %{name}
@@ -59,7 +59,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
-%doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
+%doc doc/en/weechat_faq.en.txt doc/fr/weechat_faq.fr.txt
+%doc doc/en/weechat_quickstart.en.txt doc/fr/weechat_quickstart.fr.txt
+%doc doc/en/weechat_tester.en.txt doc/fr/weechat_tester.fr.txt
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*

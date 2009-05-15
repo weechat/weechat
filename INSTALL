@@ -1,25 +1,34 @@
-WeeChat - Installation instructions
-===================================
+WeeChat Installation instructions
+=================================
 
 You can build WeeChat with cmake (recommended way) or autotools.
 
-- with cmake:
 
-    mkdir build
-    cd build
-    cmake .. -DPREFIX=/where/you/want/install -DCMAKE_BUILD_TYPE=Debug
-    make
-    make install     (as root for installation in system directories)
+With cmake
+----------
 
-- with autotools:
+------------------------------------------------------------------
+mkdir build
+cd build
+cmake .. -DPREFIX=/where/you/want/install -DCMAKE_BUILD_TYPE=Debug
+make
+make install     (as root for installation in system directories)
+------------------------------------------------------------------
 
-    ./autogen.sh     (for cloned git repository only, not devel package)
-    ./configure --prefix=/where/you/want/install
-    make
-    make install     (as root for installation in system directories)
+
+With autotools
+--------------
+
+----------------------------------------------------------------------
+./autogen.sh     (for cloned git repository only, not .tar.XX package)
+./configure --prefix=/where/you/want/install
+make
+make install     (as root for installation in system directories)
+----------------------------------------------------------------------
 
 
 If you want to report bugs/crashs to developers, please:
+
 - compile with debug info (type "Debug" for cmake build, default for autotools),
 - enable core files (for bash shell, add "ulimit -c unlimited" to your ~/.bashrc).
 
