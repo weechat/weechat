@@ -4546,6 +4546,43 @@ char *value = weechat_config_get_plugin ("option");
       </para>
     </section>
     
+    <section id="secPluginCApi_weechat_config_is_set_plugin">
+      <title>weechat_config_is_set_plugin</title>
+      
+      <para>
+        Prototype:
+<programlisting>
+int weechat_config_is_set_plugin (const char *option_name);
+</programlisting>
+      </para>
+      <para>
+        Check if option is set in plugins configuration file (plugins.conf).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>option_name</option>: option name, WeeChat will add
+              prefix "plugins.var.xxxx." (where xxxx is current plugin name).
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if option is set, 0 if option does not exist.
+      </para>
+      <para>
+        Example:
+<screen>
+if (weechat_config_is_set_plugin ("option"))
+{
+    /* ... */
+}
+</screen>
+      </para>
+    </section>
+    
     <section id="secPluginCApi_weechat_config_set_plugin">
       <title>weechat_config_set_plugin</title>
       
@@ -5138,7 +5175,7 @@ struct t_hook *weechat_hook_command (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5250,7 +5287,7 @@ struct t_hook *weechat_hook_command_run (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5349,7 +5386,7 @@ struct t_hook *weechat_hook_timer (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5450,7 +5487,7 @@ struct t_hook *weechat_hook_fd (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5555,7 +5592,7 @@ struct t_hook *weechat_hook_process (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5718,7 +5755,7 @@ struct t_hook *weechat_hook_connect (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -5893,7 +5930,7 @@ struct t_hook *weechat_hook_print (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -6350,7 +6387,7 @@ struct t_hook *weechat_hook_signal (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -6484,7 +6521,7 @@ struct t_hook *weechat_hook_config (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -6586,7 +6623,7 @@ struct t_hook *weechat_hook_completion (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -6836,7 +6873,7 @@ struct t_hook *weechat_hook_modifier (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -6992,7 +7029,7 @@ struct t_hook *weechat_hook_info (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -7095,7 +7132,7 @@ struct t_hook *weechat_hook_infolist (
           <listitem>
             <para>
               <option>callback_data</option>: pointer given to callback when it
-              is called by WeeeChat
+              is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -7250,7 +7287,7 @@ struct t_gui_buffer *weechat_buffer_new (
           <listitem>
             <para>
               <option>input_callback_data</option>: pointer given to input
-              callback when it is called by WeeeChat
+              callback when it is called by WeeChat
             </para>
           </listitem>
           <listitem>
@@ -7285,7 +7322,7 @@ struct t_gui_buffer *weechat_buffer_new (
           <listitem>
             <para>
               <option>close_callback_data</option>: pointer given to close
-              callback when it is called by WeeeChat
+              callback when it is called by WeeChat
             </para>
           </listitem>
         </itemizedlist>
@@ -7749,7 +7786,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                       <entry>display</entry>
                       <entry>"1", "auto"</entry>
                       <entry>
-                        swtich to this buffer in current window (if value is
+                        switch to this buffer in current window (if value is
                         "auto", then it's considered as auto-switch and read
                         marker is not reset for current buffer)
                       </entry>
@@ -7823,7 +7860,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                       <entry>"-" or comma separated list of words</entry>
                       <entry>
                         "-" is a special value to disable any highlight on this
-                        buffer, or comma separated list of words to higlkight
+                        buffer, or comma separated list of words to highlight
                         in this buffer, for example: "abc,def,ghi"
                       </entry>
                     </row>

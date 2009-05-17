@@ -1536,6 +1536,33 @@ script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_config_is_set_plugin: check if a script option is set
+ */
+
+int
+script_api_config_is_set_plugin (struct t_weechat_plugin *weechat_plugin,
+                                 struct t_plugin_script *script,
+                                 const char *option)
+{
+    char *option_fullname;
+    int return_code;
+    
+    option_fullname = malloc ((strlen (script->name) +
+                               strlen (option) + 2));
+    if (!option_fullname)
+        return 0;
+    
+    strcpy (option_fullname, script->name);
+    strcat (option_fullname, ".");
+    strcat (option_fullname, option);
+    
+    return_code = weechat_config_is_set_plugin (option_fullname);
+    free (option_fullname);
+    
+    return return_code;
+}
+
+/*
  * script_api_config_set_plugin: set value of a script config option
  *                               format in file is "plugin.script.option"
  */

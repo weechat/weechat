@@ -125,6 +125,26 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_config_is_set_plugin: return 1 if plugin option is set, otherwise 0
+ */
+
+int
+plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
+                                 const char *option_name)
+{
+    struct t_config_option *ptr_option;
+    
+    if (!plugin || !option_name)
+        return 0;
+    
+    ptr_option = plugin_config_search (plugin->name, option_name);
+    if (ptr_option)
+        return 1;
+    
+    return 0;
+}
+
+/*
  * plugin_api_config_set_plugin: set value of a plugin config option
  */
 

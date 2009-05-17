@@ -2692,6 +2692,44 @@ weechat_lua_api_config_get_plugin (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_is_set_plugin: check if a plugin option is set
+ */
+
+static int
+weechat_lua_api_config_is_set_plugin (lua_State *L)
+{
+    const char *option;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = script_api_config_is_set_plugin (weechat_lua_plugin,
+                                          lua_current_script,
+                                          option);
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
  * weechat_lua_api_config_set_plugin: set value of a plugin option
  */
 
@@ -7047,6 +7085,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_free", &weechat_lua_api_config_free },
     { "config_get", &weechat_lua_api_config_get },
     { "config_get_plugin", &weechat_lua_api_config_get_plugin },
+    { "config_is_set_plugin", &weechat_lua_api_config_is_set_plugin },
     { "config_set_plugin", &weechat_lua_api_config_set_plugin },
     { "config_unset_plugin", &weechat_lua_api_config_unset_plugin },
     { "prefix", &weechat_lua_api_prefix },

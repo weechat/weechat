@@ -2387,6 +2387,40 @@ weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_is_set_plugin: check if a plugin option is set
+ */
+
+static PyObject *
+weechat_python_api_config_is_set_plugin (PyObject *self, PyObject *args)
+{
+    char *option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+    }
+    
+    rc = script_api_config_is_set_plugin (weechat_python_plugin,
+                                          python_current_script,
+                                          option);
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
  * weechat_python_api_config_set_plugin: set value of a plugin option
  */
 
@@ -5924,6 +5958,7 @@ PyMethodDef weechat_python_funcs[] =
     { "config_free", &weechat_python_api_config_free, METH_VARARGS, "" },
     { "config_get", &weechat_python_api_config_get, METH_VARARGS, "" },
     { "config_get_plugin", &weechat_python_api_config_get_plugin, METH_VARARGS, "" },
+    { "config_is_set_plugin", &weechat_python_api_config_is_set_plugin, METH_VARARGS, "" },
     { "config_set_plugin", &weechat_python_api_config_set_plugin, METH_VARARGS, "" },
     { "config_unset_plugin", &weechat_python_api_config_unset_plugin, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },

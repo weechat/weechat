@@ -2761,6 +2761,42 @@ weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
 }
 
 /*
+ * weechat_ruby_api_config_is_set_plugin: check if a plugin option is set
+ */
+
+static VALUE
+weechat_ruby_api_config_is_set_plugin (VALUE class, VALUE option)
+{
+    char *c_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (option, T_STRING);
+    
+    c_option = STR2CSTR (option);
+    
+    rc = script_api_config_is_set_plugin (weechat_ruby_plugin,
+                                          ruby_current_script,
+                                          c_option);
+    
+    RUBY_RETURN_INT(rc);
+}
+
+/*
  * weechat_ruby_api_config_set_plugin: set value of a plugin option
  */
 
@@ -6837,6 +6873,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "config_free", &weechat_ruby_api_config_free, 1);
     rb_define_module_function (ruby_mWeechat, "config_get", &weechat_ruby_api_config_get, 1);
     rb_define_module_function (ruby_mWeechat, "config_get_plugin", &weechat_ruby_api_config_get_plugin, 1);
+    rb_define_module_function (ruby_mWeechat, "config_is_set_plugin", &weechat_ruby_api_config_is_set_plugin, 1);
     rb_define_module_function (ruby_mWeechat, "config_set_plugin", &weechat_ruby_api_config_set_plugin, 2);
     rb_define_module_function (ruby_mWeechat, "config_unset_plugin", &weechat_ruby_api_config_unset_plugin, 1);
     rb_define_module_function (ruby_mWeechat, "prefix", &weechat_ruby_api_prefix, 1);

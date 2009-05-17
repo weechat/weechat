@@ -31,6 +31,8 @@ extern const char *plugin_api_ngettext (const char *single, const char *plural,
 extern struct t_config_option *plugin_api_config_get (const char *option_name);
 extern const char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                                            const char *option_name);
+extern int plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
+                                            const char *option_name);
 extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
                                          const char *option_name,
                                          const char *value);

@@ -2584,6 +2584,42 @@ weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_config_is_set_plugin: check if a plugin option is set
+ */
+
+static int
+weechat_tcl_api_config_is_set_plugin (ClientData clientData, Tcl_Interp *interp,
+                                      int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *option;
+    int i, rc;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
+        TCL_RETURN_INT(0);
+    }
+    
+    option = Tcl_GetStringFromObj (objv[1], &i);
+    
+    rc = script_api_config_is_set_plugin (weechat_tcl_plugin,
+                                          tcl_current_script,
+                                          option);
+    
+    TCL_RETURN_INT(rc);
+}
+
+/*
  * weechat_tcl_api_config_set_plugin: set value of a plugin option
  */
 
@@ -6434,6 +6470,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_config_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_get_plugin",
                           weechat_tcl_api_config_get_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::config_is_set_plugin",
+                          weechat_tcl_api_config_is_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_set_plugin",
                           weechat_tcl_api_config_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_unset_plugin",
