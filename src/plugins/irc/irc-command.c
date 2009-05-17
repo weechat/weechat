@@ -308,6 +308,9 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                         weechat_buffer_set (ptr_channel->buffer, "unread", "");
                 }
             }
+            
+            /* ask refresh for "away" item */
+            weechat_bar_item_update ("away");
         }
         else
         {
@@ -366,6 +369,9 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                 }
             }
             irc_server_set_away (server, server->nick, 0);
+            
+            /* ask refresh for "away" item */
+            weechat_bar_item_update ("away");
         }
         else
         {
