@@ -499,6 +499,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             content_length += strlen ((item_value) ?
                                                       item_value : ptr_content);
                             content = strdup ((item_value) ? item_value : ptr_content);
+                            first_sub_item = 0;
                         }
                         else
                         {
