@@ -394,7 +394,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   name);
         new_buffer->name = strdup (name);
         new_buffer->short_name = strdup (name);
-        new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
+        new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
         new_buffer->num_displayed = 0;
         new_buffer->print_hooks_enabled = 1;
@@ -406,7 +406,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* title */
         new_buffer->title = NULL;
         
-        /* chat lines (formated) */
+        /* chat lines (formatted) */
         new_buffer->lines = NULL;
         new_buffer->last_line = NULL;
         new_buffer->last_read_line = NULL;
@@ -903,7 +903,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer)
 {
     int refresh;
 
-    if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
         refresh = ((buffer->last_read_line != NULL)
                    && (buffer->last_read_line != buffer->last_line));
@@ -981,8 +981,8 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "type") == 0)
     {
-        if (string_strcasecmp (value, "formated") == 0)
-            gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATED);
+        if (string_strcasecmp (value, "formatted") == 0)
+            gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATTED);
         else if (string_strcasecmp (value, "free") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
@@ -1363,7 +1363,7 @@ gui_buffer_clear_all ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
             gui_buffer_clear (ptr_buffer);
     }
 }

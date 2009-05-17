@@ -422,7 +422,7 @@ gui_input_complete_previous ()
 void
 gui_input_search_text ()
 {
-    if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
         /* toggle search */
         if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
@@ -1193,7 +1193,7 @@ gui_input_scroll_unread ()
     {
         if (CONFIG_STRING(config_look_read_marker) &&
             CONFIG_STRING(config_look_read_marker)[0] &&
-            (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED) &&
+            (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) &&
             (gui_current_window->buffer->first_line_not_read ||
              (gui_current_window->buffer->last_read_line &&
               gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)))

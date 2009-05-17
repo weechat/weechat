@@ -719,7 +719,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             gui_window_scroll_top (window);
         else
         {
-            if (window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+            if (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
                 gui_window_scroll_bottom (window);
         }
     }
@@ -734,7 +734,7 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     
-    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)
@@ -767,7 +767,7 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     
-    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)

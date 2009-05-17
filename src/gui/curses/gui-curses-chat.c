@@ -1043,7 +1043,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             
             switch (ptr_win->buffer->type)
             {
-                case GUI_BUFFER_TYPE_FORMATED:
+                case GUI_BUFFER_TYPE_FORMATTED:
                     /* display at position of scrolling */
                     if (ptr_win->start_line)
                     {

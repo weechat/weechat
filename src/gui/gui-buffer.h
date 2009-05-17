@@ -25,7 +25,7 @@ struct t_infolist;
 
 enum t_gui_buffer_type
 {
-    GUI_BUFFER_TYPE_FORMATED = 0,
+    GUI_BUFFER_TYPE_FORMATTED = 0,
     GUI_BUFFER_TYPE_FREE,
     /* number of buffer types */
     GUI_BUFFER_NUM_TYPES,
@@ -89,7 +89,7 @@ struct t_gui_buffer
                                        /* layout                            */
     char *name;                        /* buffer name                       */
     char *short_name;                  /* short buffer name                 */
-    enum t_gui_buffer_type type;       /* buffer type (formated, free, ..)  */
+    enum t_gui_buffer_type type;       /* buffer type (formatted, free, ..) */
     int notify;                        /* 0 = never                         */
                                        /* 1 = highlight only                */
                                        /* 2 = highlight + msg               */

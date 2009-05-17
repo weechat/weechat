@@ -545,7 +545,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                     if (error && !error[0])
                     {
                         ptr_buffer = gui_buffer_search_by_number (number);
-                        if (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED))
+                        if (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
                             gui_buffer_clear (ptr_buffer);
                     }
                 }
@@ -553,7 +553,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
-            if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+            if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
                 gui_buffer_clear (buffer);
         }
         

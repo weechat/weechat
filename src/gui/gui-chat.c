@@ -671,7 +671,7 @@ gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_chat_line_free: delete a formated line from a buffer
+ * gui_chat_line_free: delete a formatted line from a buffer
  */
 
 void
@@ -739,7 +739,7 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 }
 
 /*
- * gui_chat_line_free_all: delete all formated lines from a buffer
+ * gui_chat_line_free_all: delete all formatted lines from a buffer
  */
 
 void
@@ -1030,7 +1030,7 @@ gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 /*
  * gui_chat_printf_date_tags: display a message in a buffer with optional
  *                            date and tags
- *                            Info: this function works only with formated
+ *                            Info: this function works only with formatted
  *                            buffers (not buffers with free content)
  */
 
@@ -1059,10 +1059,10 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         if (!buffer)
             return;
         
-        if (buffer->type != GUI_BUFFER_TYPE_FORMATED)
+        if (buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             buffer = gui_buffers;
         
-        if (buffer->type != GUI_BUFFER_TYPE_FORMATED)
+        if (buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             return;
     }
     
@@ -1182,7 +1182,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 /*
  * gui_chat_printf_y: display a message on a line in a buffer with free content
  *                    Info: this function works only with free content
- *                    buffers (not formated buffers)
+ *                    buffers (not formatted buffers)
  */
 
 void

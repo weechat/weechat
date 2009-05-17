@@ -616,7 +616,7 @@ gui_window_page_up (struct t_gui_window *window)
     
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (!window->first_line_displayed)
             {
                 gui_chat_calculate_line_diff (window, &window->start_line,
@@ -666,7 +666,7 @@ gui_window_page_down (struct t_gui_window *window)
     
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (window->start_line)
             {
                 gui_chat_calculate_line_diff (window, &window->start_line,
@@ -714,7 +714,7 @@ gui_window_scroll_up (struct t_gui_window *window)
 
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (!window->first_line_displayed)
             {
                 gui_chat_calculate_line_diff (window, &window->start_line,
@@ -758,7 +758,7 @@ gui_window_scroll_down (struct t_gui_window *window)
     
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (window->start_line)
             {
                 gui_chat_calculate_line_diff (window, &window->start_line,
@@ -805,7 +805,7 @@ gui_window_scroll_top (struct t_gui_window *window)
     
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (!window->first_line_displayed)
             {
                 window->start_line = gui_chat_get_first_line_displayed (window->buffer);
@@ -842,7 +842,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
 
     switch (window->buffer->type)
     {
-        case GUI_BUFFER_TYPE_FORMATED:
+        case GUI_BUFFER_TYPE_FORMATTED:
             if (window->start_line)
             {
                 window->start_line = NULL;

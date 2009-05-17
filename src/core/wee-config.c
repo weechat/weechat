@@ -354,7 +354,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
             gui_chat_printf (ptr_buffer,
                              _("\t\tDay changed to %s"),
                              (text_time2) ?

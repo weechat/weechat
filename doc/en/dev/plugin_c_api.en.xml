@@ -1060,7 +1060,7 @@ char *weechat_string_format_size (unsigned long size);
 </programlisting>
       </para>
       <para>
-        Build a string with formated size and translated unit.
+        Build a string with formatted size and translated unit.
       </para>
       <para>
         Arguments:
@@ -1073,7 +1073,7 @@ char *weechat_string_format_size (unsigned long size);
         </itemizedlist>
       </para>
       <para>
-        Return value: string with formated size and translated unit.
+        Return value: string with formatted size and translated unit.
       </para>
       <note>
         <para>
@@ -7802,9 +7802,9 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                     </row>
                     <row>
                       <entry>type</entry>
-                      <entry>"formated" or "free"</entry>
+                      <entry>"formatted" or "free"</entry>
                       <entry>
-                        set type for buffer: "formated" (for printing
+                        set type for buffer: "formatted" (for printing
                         chat messages), or "free" for free content
                       </entry>
                     </row>

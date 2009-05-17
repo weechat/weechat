@@ -426,7 +426,7 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
 
 /*
  * gui_bar_window_content_get_with_filling: get content of a bar window,
- *                                          formated for display, according
+ *                                          formatted for display, according
  *                                          to filling for bar position
  */
 
