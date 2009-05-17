@@ -1810,7 +1810,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
     {
         if (argc >= 3)
         {
-            if (gui_keyboard_unbind (NULL, argv[2]))
+            if (gui_keyboard_unbind (NULL, argv[2], 1))
             {
                 gui_chat_printf (NULL,
                                  _("Key \"%s\" unbound"),

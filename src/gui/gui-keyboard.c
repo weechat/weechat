@@ -28,6 +28,7 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-log.h"
@@ -317,18 +318,22 @@ gui_keyboard_new (struct t_gui_buffer *buffer, const char *key,
         else
             gui_keyboard_insert_sorted (&gui_keys, &last_gui_key, new_key);
         
+        expanded_name = gui_keyboard_get_expanded_name (new_key->key);
+        
+        hook_signal_send ("key_bind",
+                          WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
+        
         if (gui_keyboard_verbose)
         {
-            expanded_name = gui_keyboard_get_expanded_name (new_key->key);
             gui_chat_printf (NULL,
                              _("New key binding: %s%s => %s%s"),
                              (expanded_name) ? expanded_name : new_key->key,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              new_key->command);
-            if (expanded_name)
-                free (expanded_name);
         }
+        if (expanded_name)
+                free (expanded_name);
     }
     else
         return NULL;
@@ -414,7 +419,7 @@ gui_keyboard_bind (struct t_gui_buffer *buffer, const char *key, const char *com
         return NULL;
     }
     
-    gui_keyboard_unbind (buffer, key);
+    gui_keyboard_unbind (buffer, key, 0);
     
     new_key = gui_keyboard_new (buffer, key, command);
     if (!new_key)
@@ -431,7 +436,8 @@ gui_keyboard_bind (struct t_gui_buffer *buffer, const char *key, const char *com
  */
 
 int
-gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key)
+gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key,
+                     int send_signal)
 {
     struct t_gui_key *ptr_key;
     char *internal_code;
@@ -449,6 +455,12 @@ gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key)
     
     if (internal_code)
         free (internal_code);
+    
+    if (send_signal)
+    {
+        hook_signal_send ("key_unbind",
+                          WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
+    }
     
     return (ptr_key != NULL);
 }

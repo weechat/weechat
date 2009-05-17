@@ -1100,7 +1100,7 @@ config_weechat_key_read_cb (void *data, struct t_config_file *config_file,
         else
         {
             /* unbind key if no value given */
-            gui_keyboard_unbind (NULL, option_name);
+            gui_keyboard_unbind (NULL, option_name, 1);
         }
     }
     

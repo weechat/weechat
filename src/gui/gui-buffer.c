@@ -1048,7 +1048,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         if (strcmp (property + 11, "*") == 0)
             gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
         else
-            gui_keyboard_unbind (buffer, property + 11);
+            gui_keyboard_unbind (buffer, property + 11, 1);
     }
     else if (string_strcasecmp (property, "input") == 0)
     {
