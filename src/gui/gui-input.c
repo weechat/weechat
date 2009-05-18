@@ -30,6 +30,7 @@
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-input.h"
+#include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
@@ -1142,19 +1143,65 @@ gui_input_jump_last_buffer ()
 }
 
 /*
- * gui_input_jump_previous_buffer: jump to previous buffer (the one displayed
- *                                 before current one)
- *                                 (default key: meta-j, meta-p)
+ * gui_input_jump_previously_visited_buffer: jump to previously visited buffer
+ *                                           (buffer displayed before current one)
+ *                                           (default key: meta-<)
  */
 
 void
-gui_input_jump_previous_buffer ()
+gui_input_jump_previously_visited_buffer ()
 {
+    int index;
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    
     if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (gui_previous_buffer)
-            gui_buffer_switch_by_number (gui_current_window,
-                                         gui_previous_buffer->number);
+        index = gui_buffer_visited_get_index_previous ();
+        if (index >= 0)
+        {
+            gui_buffers_visited_index = index;
+            log_printf ("prev: index = %d", index);
+            
+            ptr_buffer_visited = gui_buffer_visited_search_by_number (gui_buffers_visited_index);
+            if (ptr_buffer_visited)
+            {
+                gui_buffers_visited_frozen = 1;
+                gui_buffer_switch_by_number (gui_current_window,
+                                             ptr_buffer_visited->buffer->number);
+                gui_buffers_visited_frozen = 0;
+            }
+        }
+    }
+}
+
+/*
+ * gui_input_jump_next_visited_buffer: jump to next visited buffer
+ *                                     (buffer displayed after current one)
+ *                                     (default key: meta->)
+ */
+
+void
+gui_input_jump_next_visited_buffer ()
+{
+    int index;
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    
+    if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    {
+        index = gui_buffer_visited_get_index_next ();
+        if (index >= 0)
+        {
+            gui_buffers_visited_index = index;
+            
+            ptr_buffer_visited = gui_buffer_visited_search_by_number (gui_buffers_visited_index);
+            if (ptr_buffer_visited)
+            {
+                gui_buffers_visited_frozen = 1;
+                gui_buffer_switch_by_number (gui_current_window,
+                                             ptr_buffer_visited->buffer->number);
+                gui_buffers_visited_frozen = 0;
+            }
+        }
     }
 }
 

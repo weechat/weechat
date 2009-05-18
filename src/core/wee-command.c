@@ -724,9 +724,10 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             /* buffer is currently displayed ? then jump to previous buffer */
             if ((number == gui_current_window->buffer->number)
                 && (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer))
-                && gui_previous_buffer)
+                && gui_buffers_visited)
             {
-                number = gui_previous_buffer->number;
+                number = last_gui_buffer_visited->buffer->number;
+                gui_buffer_visited_remove (last_gui_buffer_visited);
             }
             if (number != gui_current_window->buffer->number)
             {
@@ -1690,8 +1691,10 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_jump_smart ();
         else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
             gui_input_jump_last_buffer ();
-        else if (string_strcasecmp (argv[1], "jump_previous_buffer") == 0)
-            gui_input_jump_previous_buffer ();
+        else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
+            gui_input_jump_previously_visited_buffer ();
+        else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
+            gui_input_jump_next_visited_buffer ();
         else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
             gui_input_hotlist_clear ();
         else if (string_strcasecmp (argv[1], "grab_key") == 0)
@@ -3826,9 +3829,11 @@ command_init ()
                   "move_previous_char | move_next_char | move_previous_word | "
                   "move_next_word | history_previous | history_next | "
                   "history_global_previous | history_global_next | "
-                  "jump_smart | jump_last_buffer | jump_previous_buffer | "
-                  "hotlist_clear | grab_key | scroll_unread | set_unread | "
-                  "set_unread_current_buffer | insert [args]",
+                  "jump_smart | jump_last_buffer | "
+                  "jump_previously_visited_buffer | "
+                  "jump_next_visited_buffer | hotlist_clear | grab_key | "
+                  "scroll_unread | set_unread | set_unread_current_buffer | "
+                  "insert [args]",
                   _("This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_next|"
                   "delete_previous_char|delete_next_char|"
@@ -3839,9 +3844,9 @@ command_init ()
                   "move_previous_char|move_next_char|move_previous_word|"
                   "move_next_word|history_previous|history_next|"
                   "history_global_previous|history_global_next|"
-                  "jump_smart|jump_last_buffer|jump_previous_buffer|"
-                  "hotlist_clear|grab_key|scroll_unread|set_unread|"
-                  "set_unread_current_buffer|insert",
+                  "jump_smart|jump_last_buffer|jump_previously_visited_buffer|"
+                  "jump_next_visited_buffer|hotlist_clear|grab_key|"
+                  "scroll_unread|set_unread|set_unread_current_buffer|insert",
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),

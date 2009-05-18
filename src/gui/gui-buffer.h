@@ -47,6 +47,8 @@ enum t_gui_buffer_notify
 
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
+#define GUI_BUFFERS_VISITED_MAX  50
+
 /* buffer structures */
 
 struct t_gui_line
@@ -176,11 +178,22 @@ struct t_gui_buffer
     struct t_gui_buffer *next_buffer;  /* link to next buffer               */
 };
 
+struct t_gui_buffer_visited
+{
+    struct t_gui_buffer *buffer;              /* pointer to buffer          */
+    struct t_gui_buffer_visited *prev_buffer; /* link to previous variable  */
+    struct t_gui_buffer_visited *next_buffer; /* link to next variable      */
+};
+
 /* buffer variables */
 
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
-extern struct t_gui_buffer *gui_previous_buffer;
+extern struct t_gui_buffer_visited *gui_buffers_visited;
+extern struct t_gui_buffer_visited *last_gui_buffer_visited;
+extern int gui_buffers_visited_index;
+extern int gui_buffers_visited_count;
+extern int gui_buffers_visited_frozen;
 extern char *gui_buffer_notify_string[];
 
 /* buffer functions */
@@ -232,6 +245,12 @@ extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
+extern struct t_gui_buffer_visited *gui_buffer_visited_search_by_number (int number);
+extern void gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited);
+extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
+extern struct t_gui_buffer_visited *gui_buffer_visited_add (struct t_gui_buffer *buffer);
+extern int gui_buffer_visited_get_index_previous ();
+extern int gui_buffer_visited_get_index_next ();
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);
 extern int gui_buffer_line_add_to_infolist (struct t_infolist *infolist,

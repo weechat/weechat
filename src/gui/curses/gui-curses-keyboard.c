@@ -174,6 +174,8 @@ gui_keyboard_default_bindings ()
     gui_keyboard_default_bind (/* m-7           */ "meta-7",             "/buffer *7");
     gui_keyboard_default_bind (/* m-8           */ "meta-8",             "/buffer *8");
     gui_keyboard_default_bind (/* m-9           */ "meta-9",             "/buffer *9");
+    gui_keyboard_default_bind (/* m-<           */ "meta-<",             "/input jump_previously_visited_buffer");
+    gui_keyboard_default_bind (/* m->           */ "meta->",             "/input jump_next_visited_buffer");
     
     /* bind meta-j + {01..99} to switch to buffers # > 10 */
     for (i = 1; i < 100; i++)

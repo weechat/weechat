@@ -56,7 +56,13 @@
 
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
-struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
+
+/* history of last visited buffers */
+struct t_gui_buffer_visited *gui_buffers_visited = NULL;
+struct t_gui_buffer_visited *last_gui_buffer_visited = NULL;
+int gui_buffers_visited_index = -1;             /* index of pointer in list */
+int gui_buffers_visited_count = 0;              /* number of visited buffers*/
+int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
@@ -485,8 +491,12 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* check if this buffer should be assigned to a window,
            according to windows layout saved */
         gui_layout_window_check_buffer (new_buffer);
-
-        if (!first_buffer_creation)
+        
+        if (first_buffer_creation)
+        {
+            gui_buffer_visited_add (new_buffer);
+        }
+        else
         {
             hook_signal_send ("buffer_opened",
                               WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
@@ -1377,7 +1387,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
-
+    int index;
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    
     hook_signal_send ("buffer_closing",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     
@@ -1388,6 +1400,21 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     
     if (!weechat_quit)
     {
+        /* find other buffer to display: previously visited buffer if current
+           window is displaying buffer, or buffer # - 1 */
+        ptr_buffer_visited = NULL;
+        if (gui_current_window->buffer == buffer)
+        {
+            index = gui_buffer_visited_get_index_previous ();
+            if (index >= 0)
+            {
+                ptr_buffer_visited = gui_buffer_visited_search_by_number (index);
+                if (ptr_buffer_visited->buffer == buffer)
+                    ptr_buffer_visited = NULL;
+            }
+        }
+        
+        /* switch to another buffer in each window that displays buffer */
         for (ptr_window = gui_windows; ptr_window;
              ptr_window = ptr_window->next_window)
         {
@@ -1397,17 +1424,26 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                 /* switch to previous buffer */
                 if (gui_buffers != last_gui_buffer)
                 {
-                    if (ptr_window->buffer->prev_buffer)
+                    if (ptr_buffer_visited)
                     {
                         gui_window_switch_to_buffer (ptr_window,
-                                                     ptr_window->buffer->prev_buffer,
+                                                     ptr_buffer_visited->buffer,
                                                      1);
                     }
                     else
                     {
-                        gui_window_switch_to_buffer (ptr_window,
-                                                     last_gui_buffer,
-                                                     1);
+                        if (ptr_window->buffer->prev_buffer)
+                        {
+                            gui_window_switch_to_buffer (ptr_window,
+                                                         ptr_window->buffer->prev_buffer,
+                                                         1);
+                        }
+                        else
+                        {
+                            gui_window_switch_to_buffer (ptr_window,
+                                                         last_gui_buffer,
+                                                         1);
+                        }
                     }
                 }
             }
@@ -1418,8 +1454,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (gui_hotlist_initial_buffer == buffer)
         gui_hotlist_initial_buffer = NULL;
     
-    if (gui_previous_buffer == buffer)
-        gui_previous_buffer = NULL;
+    gui_buffer_visited_remove_by_buffer (buffer);
     
     /* decrease buffer number for all next buffers */
     for (ptr_buffer = buffer->next_buffer; ptr_buffer;
@@ -1597,6 +1632,192 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     
     hook_signal_send ("buffer_moved",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * gui_buffer_visited_search: search a visited buffer in list of visited buffers
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_search (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    
+    if (!buffer)
+        return NULL;
+    
+    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
+         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
+    {
+        if (ptr_buffer_visited->buffer == buffer)
+            return ptr_buffer_visited;
+    }
+    
+    /* visited buffer not found */
+    return NULL;
+}
+
+/*
+ * gui_buffer_visited_search_by_number: search a visited buffer in list of
+ *                                      visited buffers
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_search_by_number (int number)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    int i;
+    
+    if ((number < 0) || (number >= gui_buffers_visited_count))
+        return NULL;
+    
+    i = 0;
+    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
+         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
+    {
+        if (i == number)
+            return ptr_buffer_visited;
+        i++;
+    }
+    
+    /* visited buffer not found (should never be reached) */
+    return NULL;
+}
+
+/*
+ * gui_buffer_visited_remove: remove a visited buffer from list of visited buffers
+ */
+
+void
+gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited)
+{
+    if (!buffer_visited)
+        return;
+    
+    /* remove visited buffer from list */
+    if (buffer_visited->prev_buffer)
+        (buffer_visited->prev_buffer)->next_buffer = buffer_visited->next_buffer;
+    if (buffer_visited->next_buffer)
+        (buffer_visited->next_buffer)->prev_buffer = buffer_visited->prev_buffer;
+    if (gui_buffers_visited == buffer_visited)
+        gui_buffers_visited = buffer_visited->next_buffer;
+    if (last_gui_buffer_visited == buffer_visited)
+        last_gui_buffer_visited = buffer_visited->prev_buffer;
+    
+    free (buffer_visited);
+    
+    if (gui_buffers_visited_count > 0)
+        gui_buffers_visited_count--;
+    
+    if (gui_buffers_visited_index >= gui_buffers_visited_count)
+        gui_buffers_visited_index = -1;
+}
+
+/*
+ * gui_buffer_visited_remove_by_buffer: remove a visited buffer from list of
+ *                                      visited buffers
+ */
+
+void
+gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *buffer_visited;
+    
+    if (!buffer)
+        return;
+
+    buffer_visited = gui_buffer_visited_search (buffer);
+    if (buffer_visited)
+        gui_buffer_visited_remove (buffer_visited);
+}
+
+/*
+ * gui_buffer_visited_remove_all: remove all visited buffers from list
+ */
+
+void
+gui_buffer_visited_remove_all ()
+{
+    while (gui_buffers_visited)
+    {
+        gui_buffer_visited_remove (gui_buffers_visited);
+    }
+}
+
+/*
+ * gui_buffer_visited_add: add a visited buffer to list of visited buffers
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_add (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *new_buffer_visited;
+    
+    if (!buffer)
+        return NULL;
+    
+    new_buffer_visited = gui_buffer_visited_search (buffer);
+    if (new_buffer_visited)
+        gui_buffer_visited_remove (new_buffer_visited);
+    
+    /* remove old buffer(s) visited if list is too long */
+    while (gui_buffers_visited_count > GUI_BUFFERS_VISITED_MAX)
+    {
+        gui_buffer_visited_remove (gui_buffers_visited);
+    }
+    
+    new_buffer_visited = malloc (sizeof (*new_buffer_visited));
+    if (new_buffer_visited)
+    {
+        new_buffer_visited->buffer = buffer;
+        
+        new_buffer_visited->prev_buffer = last_gui_buffer_visited;
+        new_buffer_visited->next_buffer = NULL;
+        if (gui_buffers_visited)
+            last_gui_buffer_visited->next_buffer = new_buffer_visited;
+        else
+            gui_buffers_visited = new_buffer_visited;
+        last_gui_buffer_visited = new_buffer_visited;
+        
+        gui_buffers_visited_count++;
+        gui_buffers_visited_index = -1;
+    }
+    
+    return new_buffer_visited;
+}
+
+/*
+ * gui_buffer_visited_get_index_previous: get index for previously visited buffer
+ *                                        return -1 if there's no previously buffer
+ *                                        in history, starting from current index
+ */
+
+int
+gui_buffer_visited_get_index_previous ()
+{
+    if ((gui_buffers_visited_count < 2) || (gui_buffers_visited_index == 0))
+        return -1;
+    
+    if (gui_buffers_visited_index < 0)
+        return gui_buffers_visited_count - 2;
+    else
+        return gui_buffers_visited_index - 1;
+}
+
+/*
+ * gui_buffer_visited_get_index_next: get index for next visited buffer
+ *                                    return -1 if there's no next buffer
+ *                                    in history, starting from current index
+ */
+
+int
+gui_buffer_visited_get_index_next ()
+{
+    if ((gui_buffers_visited_count < 2)
+        || (gui_buffers_visited_index >= gui_buffers_visited_count - 1))
+        return -1;
+    
+    return gui_buffers_visited_index + 1;
 }
 
 /*
@@ -1865,6 +2086,7 @@ gui_buffer_print_log ()
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_buffer_local_var *ptr_local_var;
     struct t_gui_line *ptr_line;
+    struct t_gui_buffer_visited *ptr_buffer_visited;
     char *tags;
     int num;
     
@@ -1997,5 +2219,18 @@ gui_buffer_print_log ()
             log_printf ("");
             gui_completion_print_log (ptr_buffer->completion);
         }
+    }
+    
+    log_printf ("");
+    log_printf ("[visited buffers]");
+    num = 1;
+    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
+         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
+    {
+        log_printf ("  #%d:", num);
+        log_printf ("    buffer . . . . . . . . : 0x%lx", ptr_buffer_visited->buffer);
+        log_printf ("    prev_buffer. . . . . . : 0x%lx", ptr_buffer_visited->prev_buffer);
+        log_printf ("    next_buffer. . . . . . : 0x%lx", ptr_buffer_visited->next_buffer);
+        num++;
     }
 }

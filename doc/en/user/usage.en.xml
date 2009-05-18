@@ -229,6 +229,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Ctrl + K</entry>
               <entry>
                 Delete from cursor until end of command line
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -260,12 +261,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Ctrl + U</entry>
               <entry>
                 Delete from cursor until beginning of command line
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
               <entry>Ctrl + W</entry>
               <entry>
                 Delete previous word of command line
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -404,6 +407,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + D</entry>
               <entry>
                 Delete next word in command line
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -423,12 +427,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J then Alt + L</entry>
               <entry>
                 Switch to last buffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J then Alt + P</entry>
-              <entry>
-                Switch to buffer previously displayed
               </entry>
             </row>
             <row>
@@ -496,6 +494,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + Z</entry>
               <entry>
                 Zoom on current window
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &lt;</entry>
+              <entry>
+                Switch to previous buffer in list of visited buffers
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &gt;</entry>
+              <entry>
+                Switch to next buffer in list of visited buffers
               </entry>
             </row>
             <row>

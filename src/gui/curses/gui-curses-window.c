@@ -497,7 +497,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     {
         window->start_line = NULL;
         window->start_line_pos = 0;
-        gui_previous_buffer = window->buffer;
+        if (!gui_buffers_visited_frozen)
+        {
+            gui_buffer_visited_add (window->buffer);
+            gui_buffer_visited_add (buffer);
+        }
         if (set_last_read)
         {
             if (window->buffer->num_displayed == 0)

@@ -248,6 +248,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Ctrl + K</entry>
               <entry>
                 Effacer du curseur jusqu'à la fin de la ligne de commande
+                (la chaîne supprimée est copiée dans le presse-papiers)
               </entry>
             </row>
             <row>
@@ -280,12 +281,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Ctrl + U</entry>
               <entry>
                 Effacer du curseur jusqu'au début de la ligne de commande
+                (la chaîne supprimée est copiée dans le presse-papiers)
               </entry>
             </row>
             <row>
               <entry>Ctrl + W</entry>
               <entry>
                 Effacer le mot précédent sur la ligne de commande
+                (la chaîne supprimée est copiée dans le presse-papiers)
               </entry>
             </row>
             <row>
@@ -427,6 +430,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + D</entry>
               <entry>
                 Effacer le mot suivant
+                (la chaîne supprimée est copiée dans le presse-papiers)
               </entry>
             </row>
             <row>
@@ -452,12 +456,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J puis Alt + L</entry>
               <entry>
                 Sauter au dernier tampon
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J puis Alt + P</entry>
-              <entry>
-                Sauter au tampon affiché précédemment
               </entry>
             </row>
             <row>
@@ -526,6 +524,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + Z</entry>
               <entry>
                 Zoom sur la fenêtre courante
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &lt;</entry>
+              <entry>
+                Sauter au tampon précédent dans la liste des tampons visités
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &gt;</entry>
+              <entry>
+                Sauter au tampon suivant dans la liste des tampons visités
               </entry>
             </row>
             <row>

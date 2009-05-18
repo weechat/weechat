@@ -245,6 +245,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Strg + K</entry>
               <entry>
                 Lösche vom Cursor bis zum Ende der Kommandozeile
+                <!-- TRANSLATION NEEDED -->
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -277,12 +279,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Strg + U</entry>
               <entry>
                 Lösche vom Cursor bis zum Aanfang der Kommandozeile
+                <!-- TRANSLATION NEEDED -->
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
               <entry>Strg + W</entry>
               <entry>
                 Lösche das vorhergehende Wort in der Kommandozeile
+                <!-- TRANSLATION NEEDED -->
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -422,6 +428,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + D</entry>
               <entry>
                 Lösche das nächste Wort in der Kommandozeile
+                <!-- TRANSLATION NEEDED -->
+                (deleted string is copied to clipboard)
               </entry>
             </row>
             <row>
@@ -447,13 +455,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J dann Alt + L</entry>
               <entry>
                 Schalte zum letzten Puffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J dann Alt + P</entry>
-              <entry>
-                <!-- TRANSLATION NEEDED -->
-                Switch to buffer previously displayed
               </entry>
             </row>
             <row>
@@ -524,6 +525,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>
                 <!-- TRANSLATION NEEDED -->
                 Zoom on current window
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &lt;</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Switch to previous buffer in list of visited buffers
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + &gt;</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Switch to next buffer in list of visited buffers
               </entry>
             </row>
             <row>

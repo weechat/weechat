@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-05-16
+v0.3.0-dev, 2009-05-18
 
 
 Version 0.3.0 (under dev!)
@@ -47,6 +47,8 @@ Version 0.3.0 (under dev!)
 * gui: add tags for lines and custom filtering by tags or regex (task #7674)
 * gui: add custom bars, with custom items
 * gui: add key to zoom a window (task #7470)
+* gui: add keys to move into last visited buffers: alt + "<" and alt + ">"
+* gui: come back to last visited buffer when closing a buffer
 * gui: add new option scroll_page_percent to choose percent of height to scroll
   with page_up and page_down keys (task #8702)
 * gui: add number of lines remaining after last line displayed in "-MORE-"
