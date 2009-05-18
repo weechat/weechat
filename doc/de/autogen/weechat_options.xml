@@ -866,6 +866,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.look.jump_previous_buffer_when_closing</command>: jump to previously visited buffer when closing a buffer (if disabled, then jump to buffer number - 1)
+<itemizedlist>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off (default value: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.nickmode</command>: Nickmode (@%+) vorm Nickname anzeigen
 <itemizedlist>
   <listitem>

@@ -866,6 +866,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.look.jump_previous_buffer_when_closing</command>: sauter au tampon précédemment visité lors de la fermeture d'un tampon (si désactivé, alors le saut se fait vers le numéro de tampon - 1)
+<itemizedlist>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off (valeur par défaut: on)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.nickmode</command>: afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur
 <itemizedlist>
   <listitem>

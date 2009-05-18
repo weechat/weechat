@@ -1403,7 +1403,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         /* find other buffer to display: previously visited buffer if current
            window is displaying buffer, or buffer # - 1 */
         ptr_buffer_visited = NULL;
-        if (gui_current_window->buffer == buffer)
+        if (CONFIG_BOOLEAN(config_look_jump_previous_buffer_when_closing)
+            && (gui_current_window->buffer == buffer))
         {
             index = gui_buffer_visited_get_index_previous ();
             if (index >= 0)
