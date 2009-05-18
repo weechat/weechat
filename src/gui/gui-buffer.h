@@ -47,8 +47,6 @@ enum t_gui_buffer_notify
 
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
-#define GUI_BUFFERS_VISITED_MAX  50
-
 /* buffer structures */
 
 struct t_gui_line

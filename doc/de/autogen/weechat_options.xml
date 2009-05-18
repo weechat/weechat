@@ -716,6 +716,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.history.max_visited_buffers</command>: maximum number of visited buffers to keep in memory
+<itemizedlist>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 0 .. 1000 (default value: 50)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.buffer_notify_default</command>: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message)
 <itemizedlist>
   <listitem>

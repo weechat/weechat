@@ -1761,7 +1761,7 @@ gui_buffer_visited_add (struct t_gui_buffer *buffer)
         gui_buffer_visited_remove (new_buffer_visited);
     
     /* remove old buffer(s) visited if list is too long */
-    while (gui_buffers_visited_count > GUI_BUFFERS_VISITED_MAX)
+    while (gui_buffers_visited_count > CONFIG_INTEGER(config_history_max_visited_buffers))
     {
         gui_buffer_visited_remove (gui_buffers_visited);
     }

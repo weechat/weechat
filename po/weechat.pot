@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-16 00:36+0200\n"
+"POT-Creation-Date: 2009-05-18 18:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1452,6 +1452,9 @@ msgid "maximum number of lines in history per buffer (0 = unlimited)"
 msgstr ""
 
 msgid "maximum number of user commands in history (0 = unlimited)"
+msgstr ""
+
+msgid "maximum number of visited buffers to keep in memory"
 msgstr ""
 
 msgid ""

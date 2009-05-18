@@ -30,7 +30,6 @@
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-input.h"
-#include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
@@ -1160,7 +1159,6 @@ gui_input_jump_previously_visited_buffer ()
         if (index >= 0)
         {
             gui_buffers_visited_index = index;
-            log_printf ("prev: index = %d", index);
             
             ptr_buffer_visited = gui_buffer_visited_search_by_number (gui_buffers_visited_index);
             if (ptr_buffer_visited)

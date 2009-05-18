@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-16 00:36+0200\n"
+"POT-Creation-Date: 2009-05-18 18:04+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1717,6 +1717,10 @@ msgid "maximum number of lines in history per buffer (0 = unlimited)"
 msgstr "maximale Anzahl an Befehlen im Verlauf (0: kein Limit)"
 
 msgid "maximum number of user commands in history (0 = unlimited)"
+msgstr "maximale Anzahl an Befehlen im Verlauf (0: kein Limit)"
+
+#, fuzzy
+msgid "maximum number of visited buffers to keep in memory"
 msgstr "maximale Anzahl an Befehlen im Verlauf (0: kein Limit)"
 
 msgid ""

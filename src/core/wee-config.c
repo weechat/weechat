@@ -163,6 +163,7 @@ struct t_config_option *config_completion_partial_completion_count;
 
 struct t_config_option *config_history_max_lines;
 struct t_config_option *config_history_max_commands;
+struct t_config_option *config_history_max_visited_buffers;
 struct t_config_option *config_history_display_default;
 
 /* config, network section */
@@ -1853,6 +1854,11 @@ config_weechat_init_options ()
         N_("maximum number of user commands in history (0 = "
            "unlimited)"),
         NULL, 0, INT_MAX, "100", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_history_max_visited_buffers = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "max_visited_buffers", "integer",
+        N_("maximum number of visited buffers to keep in memory"),
+        NULL, 0, 1000, "50", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_display_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "display_default", "integer",

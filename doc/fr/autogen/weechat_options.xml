@@ -716,6 +716,16 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.history.max_visited_buffers</command>: nombre maximum de tampons visités à garder en mémoire
+<itemizedlist>
+  <listitem>
+    <para>type: entier</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: 0 .. 1000 (valeur par défaut: 50)</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.buffer_notify_default</command>: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)
 <itemizedlist>
   <listitem>
