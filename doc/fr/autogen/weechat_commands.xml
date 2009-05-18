@@ -52,13 +52,13 @@ Exemples :
     /bar scroll nicklist * ye
 </programlisting>
 
-<command>/buffer  [clear [nombre | -all] | move nombre | close | list | notify niveau | localvar | set propriété valeur | nombre | nom]</command>
+<command>/buffer  [clear [nombre | -all] | move nombre | close [n1[-n2]] | list | notify niveau | localvar | set propriété valeur | nombre | nom]</command>
 <programlisting>
 gestion des tampons
 
    clear: efface le contenu du tampon (-all pour tous les tampons, un numéro pour un tampon, ou rien pour le tampon courant)
     move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
-   close: ferme le tampon
+   close: ferme le tampon (nombre/intervalle optionnel)
     list: liste les tampons ouverts (pas de paramètre affiche cette liste)
   notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas :
                none: jamais
@@ -78,7 +78,8 @@ Exemples:
 effacer le tampon courant: /buffer clear
  effacer tous les tampons: /buffer clear -all
        déplacer le tampon: /buffer move 5
-         fermer le tampon: /buffer close
+ fermer le tampon courant: /buffer close
+ fermer les tampons 5 à 7: /buffer close 5-7
        aller sur #weechat: /buffer #weechat
   aller au tampon suivant: /buffer +1
 </programlisting>

@@ -495,8 +495,8 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_buffer_local_var *ptr_local_var;
-    long number;
-    char *error, *value;
+    long number, number1, number2;
+    char *error, *value, *pos, *str_number1, *pos_number2;
     int i, target_buffer;
     
     /* make C compiler happy */
@@ -603,15 +603,69 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* close buffer */
     if (string_strcasecmp (argv[1], "close") == 0)
     {
-        if (!buffer->plugin)
+        if (argc < 3)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: WeeChat main buffer can't be "
-                               "closed"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_ERROR;
+            number1 = buffer->number;
+            number2 = buffer->number;
         }
-        gui_buffer_close (buffer);
+        else
+        {
+            pos = strchr (argv_eol[2], '-');
+            if (pos)
+            {
+                str_number1 = string_strndup (argv_eol[2],
+                                              pos - argv_eol[2]);
+                pos_number2 = pos + 1;
+            }
+            else
+            {
+                str_number1 = strdup (argv_eol[2]);
+                pos_number2 = NULL;
+            }
+            if (str_number1)
+            {
+                error = NULL;
+                number1 = strtol (str_number1, &error, 10);
+                if (error && !error[0])
+                {
+                    if (pos_number2)
+                    {
+                        error = NULL;
+                        number2 = strtol (pos_number2, &error, 10);
+                        if (!error || error[0])
+                            return WEECHAT_RC_ERROR;
+                    }
+                    else
+                        number2 = number1;
+                }
+                else
+                {
+                    number1 = -1;
+                    number2 = -1;
+                }
+                free (str_number1);
+            }
+            if ((number1 < 0) || (number2 < 0) || (number2 < number1))
+                return WEECHAT_RC_ERROR;
+        }
+        for (i = number2; i >= number1; i--)
+        {
+            ptr_buffer = gui_buffer_search_by_number (i);
+            if (ptr_buffer)
+            {
+                if (!ptr_buffer->plugin)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sError: WeeChat main buffer can't be "
+                                       "closed"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                }
+                else
+                {
+                    gui_buffer_close (ptr_buffer);
+                }
+            }
+        }
         
         return WEECHAT_RC_OK;
     }
@@ -3697,13 +3751,14 @@ command_init ()
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
-                  N_("[clear [number | -all] | move number | close | list | "
-                     "notify level | localvar | set property value | number | name]"),
+                  N_("[clear [number | -all] | move number | close [n1[-n2]]| "
+                     "list | notify level | localvar | set property value | "
+                     "number | name]"),
                   N_("   clear: clear buffer content (-all for all buffers, "
                      "number for a buffer, or nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
-                     "   close: close buffer\n"
+                     "   close: close buffer (number/range is optional)\n"
                      "    list: list buffers (no parameter implies this list)\n"
                      "  notify: set notify level for current buffer: this "
                      "level determines whether buffer will be added to "
@@ -3725,7 +3780,8 @@ command_init ()
                      "clear current buffer: /buffer clear\n"
                      "   clear all buffers: /buffer clear -all\n"
                      "         move buffer: /buffer move 5\n"
-                     "        close buffer: /buffer close\n"
+                     "close current buffer: /buffer close\n"
+                     "close buffers 5 to 7: /buffer close 5-7\n"
                      "    jump to #weechat: /buffer #weechat\n"
                      " jump to next buffer: /buffer +1"),
                   "clear -all|%(buffers_numbers)"

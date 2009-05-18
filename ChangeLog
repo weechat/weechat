@@ -76,6 +76,8 @@ Version 0.3.0 (under dev!)
   for current buffer only (task #7286)
 * core: add polish translation (thanks to Soltys)
 * core: remove key functions, replaced by /input command
+* core: add argument with buffer number/range for command "/buffer close"
+  (task #9390, task #7239)
 * core: fix nick completion bug (missing space after nick)
 
 Version 0.2.6.2 (2009-04-18)
