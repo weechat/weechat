@@ -3412,6 +3412,126 @@ command_version (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_wait_timer_cb: callback for timer set by command_wait
+ */
+
+int
+command_wait_timer_cb (void *data, int remaining_calls)
+{
+    char **timer_args;
+    int i;
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
+    
+    timer_args = (char **)data;
+    
+    if (!timer_args)
+        return WEECHAT_RC_ERROR;
+    
+    if (timer_args[0] && timer_args[1] && timer_args[2])
+    {
+        /* search buffer, fallback to core buffer if not found */
+        ptr_buffer = gui_buffer_search_by_name (timer_args[0], timer_args[1]);
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_main ();
+        
+        /* execute command */
+        if (ptr_buffer)
+            input_data (ptr_buffer, timer_args[2]);
+    }
+    
+    for (i = 0; i < 3; i++)
+    {
+        if (timer_args[i])
+            free (timer_args[i]);
+    }
+    free (timer_args);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_wait: schedule a command execution in future
+ */
+
+int
+command_wait (void *data, struct t_gui_buffer *buffer,
+              int argc, char **argv, char **argv_eol)
+{
+    char *pos, *str_number, *error;
+    long number, factor, delay;
+    char **timer_args;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        pos = argv[1];
+        while (pos[0] && isdigit (pos[0]))
+        {
+            pos++;
+        }
+        
+        /* default is seconds (1000 milliseconds) */
+        factor = 1000;
+        
+        if ((pos != argv[1]) && pos[0])
+        {
+            str_number = string_strndup (argv[1], pos - argv[1]);
+            if (strcmp (pos, "ms") == 0)
+                factor = 1;
+            else if (strcmp (pos, "s") == 0)
+                factor = 1000;
+            else if (strcmp (pos, "m") == 0)
+                factor = 1000 * 60;
+            else if (strcmp (pos, "h") == 0)
+                factor = 1000 * 60 * 60;
+            else
+                return WEECHAT_RC_ERROR;
+        }
+        else
+            str_number = strdup (argv[1]);
+        
+        if (str_number)
+        {
+            error = NULL;
+            number = strtol (str_number, &error, 10);
+            if (error && !error[0])
+            {
+                free (str_number);
+                delay = number * factor;
+                
+                /* build arguments for timer callback */
+                timer_args = malloc (3 * sizeof (*timer_args));
+                if (!timer_args)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sNot enough memory"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_ERROR;
+                }
+                timer_args[0] = strdup (plugin_get_name (buffer->plugin));
+                timer_args[1] = strdup (buffer->name);
+                timer_args[2] = strdup (argv_eol[2]);
+                
+                /* schedule command, execute it after "delay" milliseconds */
+                hook_timer (NULL, delay, 0, 1,
+                            &command_wait_timer_cb, timer_args);
+                
+                return WEECHAT_RC_OK;
+            }
+            free (str_number);
+            return WEECHAT_RC_ERROR;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_window: manage windows
  */
 
@@ -3423,7 +3543,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
     int i;
     char *error;
     long number;
-
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
@@ -4052,6 +4172,27 @@ command_init ()
                   N_("-o: send version to current buffer as input"),
                   "-o",
                   &command_version, NULL);
+    hook_command (NULL, "wait",
+                  N_("schedule a command execution in future"),
+                  N_("number[unit] command"),
+                  N_(" number: amount of time to wait (integer number)\n"
+                     "   unit: optional, values are:\n"
+                     "           ms: milliseconds\n"
+                     "            s: seconds (default)\n"
+                     "            m: minutes\n"
+                     "            h: hours\n"
+                     "command: command to execute (or text to send to buffer "
+                     "if command does not start with '/')\n\n"
+                     "Note: command is executed on buffer where /wait was "
+                     "executed (if buffer is not found (for example if it has "
+                     "been closed before execution of command), then command "
+                     "is executed on WeeChat core buffer).\n\n"
+                     "Examples:\n"
+                     "  join channel in 10 sec: /wait 10 join #test\n"
+                     "  set away in 15 min:     /wait 15m away -all I'm away\n"
+                     "  say 'hello' in 2 min:   /wait 2m hello"),
+                  "%- %(commands)",
+                  &command_wait, NULL);
     hook_command (NULL, "window",
                   N_("manage windows"),
                   N_("[list | -1 | +1 | b# | up | down | left | right | "

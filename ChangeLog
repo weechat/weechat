@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-05-18
+v0.3.0-dev, 2009-05-19
 
 
 Version 0.3.0 (under dev!)
@@ -78,6 +78,7 @@ Version 0.3.0 (under dev!)
 * core: remove key functions, replaced by /input command
 * core: add argument with buffer number/range for command "/buffer close"
   (task #9390, task #7239)
+* core: add new command /wait (schedule a command execution in future)
 * core: fix nick completion bug (missing space after nick)
 
 Version 0.2.6.2 (2009-04-18)

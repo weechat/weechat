@@ -295,6 +295,26 @@ show WeeChat version and compilation date
 -o: send version to current buffer as input
 </programlisting>
 
+<command>/wait  number[unit] command</command>
+<programlisting>
+schedule a command execution in future
+
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
+
+Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
+
+Examples:
+  join channel in 10 sec: /wait 10 join #test
+  set away in 15 min:     /wait 15m away -all I'm away
+  say 'hello' in 2 min:   /wait 2m hello
+</programlisting>
+
 <command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>
 <programlisting>
 manage windows

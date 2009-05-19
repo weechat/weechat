@@ -28,7 +28,7 @@ nom_utilisateur: nom d'utilisateur pour ce serveur
             del: supprimer un serveur
          switch: changer le serveur actif (quand un tampon est utilisé pour tous les serveurs, touche par défaut: alt-s sur le tampon serveur)
 
-Exemples :
+Exemples:
   /jabber listfull
   /jabber add jabberfr user jabber.fr/5222 password -tls
   /jabber copy jabberfr jabberfr2

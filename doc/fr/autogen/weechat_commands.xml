@@ -14,7 +14,7 @@ gestion des barres
      nombarre: nom de la barre (doit être unique)
          type:   root: en dehors des fenêtres
                window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
-    cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window") :
+    cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window"):
                  active: sur la fenêtre active
                inactive: sur les fenêtres inactives
                nicklist: sue les fenêtres avec liste de pseudos
@@ -39,10 +39,10 @@ valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (
      listfull: liste toutes les barres (verbeux)
     listitems: liste tous les objets de barre
 
-Exemples :
-  créer une barre avec l'heure, numéro + nom de tampon, et la complétion :
+Exemples:
+  créer une barre avec l'heure, numéro + nom de tampon, et la complétion:
     /bar add mabarre root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  cacher une barre :
+  cacher une barre:
     /bar hide mabarre
   faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon courant:
     /bar scroll nicklist * y+10
@@ -60,7 +60,7 @@ gestion des tampons
     move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
    close: ferme le tampon (nombre/intervalle optionnel)
     list: liste les tampons ouverts (pas de paramètre affiche cette liste)
-  notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas :
+  notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
                none: jamais
           highlight: pour les highlights seulement
             message: pour les messages d'utilisateurs + highlights
@@ -68,7 +68,7 @@ gestion des tampons
               reset: réinitialise à valeur par défaut (all)
 localvar: affiche la liste des variables locales pour le tampon courant
      set: modifier une propriété du tampon courant
-  nombre: saute au tampon qui a ce numéro, préfixe possible :
+  nombre: saute au tampon qui a ce numéro, préfixe possible:
           '+': saut relatif, ajoute le numéro au courant,
           '-': saut relatif, soustrait le numéro au courant,
           '*': saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
@@ -254,7 +254,7 @@ modifier des options de configuration
 option: nom d'une option
 valeur: nouvelle valeur pour l'option
 
-La nouvelle valeur peut être, selon le type de l'option :
+La nouvelle valeur peut être, selon le type de l'option:
   booléen: on, off ou toggle
   entier : nombre, ++nombre ou --nombre
   chaîne : toute chaîne ("" pour une chaîne vide)
@@ -295,6 +295,26 @@ afficher la version de WeeChat et la date de compilation
 -o: envoyer la version sur le tampon courant comme entrée
 </programlisting>
 
+<command>/wait  nombre[unité] commande</command>
+<programlisting>
+planifie l'exécution d'une commande dans le futur
+
+  nombre: temps à attendre (nombre entier)
+   unité: optionnelle, valeurs possibles:
+            ms: millisecondes
+             s: secondes (par défaut)
+             m: minutes
+             h: heures
+commande: commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
+
+Note: la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
+
+Exemples:
+  rejoindre le canal dans 10 sec: /wait 10 join #test
+  passer absent dans 15 min:      /wait 15m away -all I'm away
+  dire 'bonjour' dans 2 min:      /wait 2m bonjour
+</programlisting>
+
 <command>/window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]</command>
 <programlisting>
 gestion des fenêtres
@@ -325,7 +345,7 @@ scroll_next_highlight: défilement jusqu'au highlight suivant
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
 
-Exemples :
+Exemples:
   sauter à la fenêtre affichant le tampon 1: /window b1
   défilement de 2 lignes vers le haut: /window scroll -2
   défilement de 2 jours vers le haut:  /window scroll -2d

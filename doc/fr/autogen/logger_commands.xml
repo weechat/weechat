@@ -17,19 +17,19 @@ disable: désactiver l'enregistrement pour le tampon courant (définir le niveau
 
 Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.
 
-Exemples :
-  définir le niveau d'enregistrement à 5 pour le tampon courant :
+Exemples:
+  définir le niveau d'enregistrement à 5 pour le tampon courant:
       /logger set 5
-  désactiver l'enregistrement pour le tampon courant :
+  désactiver l'enregistrement pour le tampon courant:
     /logger disable
-  définir le niveau à 3 pour les tampons IRC :
+  définir le niveau à 3 pour les tampons IRC:
     /set logger.level.irc 3
-  désactiver l'enregistrement pour le tampon principal de WeeChat :
+  désactiver l'enregistrement pour le tampon principal de WeeChat:
     /set logger.level.core.weechat 0
-  utiliser un répertoire par serveur IRC et un fichier par canal dedans :
+  utiliser un répertoire par serveur IRC et un fichier par canal dedans:
     /set logger.mask.irc "$server/$channel.weechatlog"
 
-Niveaux de log utilisés par l'extension IRC :
+Niveaux de log utilisés par l'extension IRC:
   1: message d'utilisateur, notice, privé
   2: changement de pseudo
   3: message du serveur
