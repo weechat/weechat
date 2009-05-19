@@ -302,7 +302,7 @@
     <para>type: entier</para>
   </listitem>
   <listitem>
-    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 5)</para>
+    <para>valeurs: 0 .. 2147483647 (valeur par défaut: 0)</para>
   </listitem>
 </itemizedlist>
 

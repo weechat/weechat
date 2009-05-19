@@ -1221,7 +1221,7 @@ irc_config_init ()
         "lag_disconnect", "integer",
         N_("disconnect after important lag (in minutes, 0 = never "
            "disconnect)"),
-        NULL, 0, INT_MAX, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_anti_flood = weechat_config_new_option (
         irc_config_file, ptr_section,
         "anti_flood", "integer",

@@ -302,7 +302,7 @@
     <para>type: integer</para>
   </listitem>
   <listitem>
-    <para>values: 0 .. 2147483647 (default value: 5)</para>
+    <para>values: 0 .. 2147483647 (default value: 0)</para>
   </listitem>
 </itemizedlist>
 
