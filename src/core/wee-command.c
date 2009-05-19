@@ -3247,6 +3247,8 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     exec_args[0] = ptr_binary;
     exec_args[3] = strdup (weechat_home);
     
+    weechat_quit = 1;
+    
     /* save layout, unload plugins, save config, then upgrade */
     gui_layout_save_on_exit ();
     plugin_end ();
