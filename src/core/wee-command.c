@@ -780,13 +780,15 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 && (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer))
                 && gui_buffers_visited)
             {
-                number = last_gui_buffer_visited->buffer->number;
-                gui_buffer_visited_remove (last_gui_buffer_visited);
+                gui_input_jump_previously_visited_buffer ();
             }
-            if (number != gui_current_window->buffer->number)
+            else
             {
-                gui_buffer_switch_by_number (gui_current_window,
-                                             (int) number);
+                if (number != gui_current_window->buffer->number)
+                {
+                    gui_buffer_switch_by_number (gui_current_window,
+                                                 (int) number);
+                }
             }
         }
         
