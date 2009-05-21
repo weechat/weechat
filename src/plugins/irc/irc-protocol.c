@@ -764,7 +764,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
     if (nick && strncmp (pos_args, "\01VERSION", 8) == 0)
     {
         pos_args += 9;
-        pos_end = strchr (pos_args, '\01');
+        pos_end = strrchr (pos_args, '\01');
         if (pos_end)
             pos_end[0] = '\0';
         weechat_printf_tags (server->buffer,
@@ -791,7 +791,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
         if (pos_usec)
         {
             pos_usec[0] = '\0';
-            pos_end = strchr (pos_usec + 1, '\01');
+            pos_end = strrchr (pos_usec + 1, '\01');
             if (pos_end)
             {
                 pos_end[0] = '\0';
@@ -1153,8 +1153,8 @@ irc_protocol_reply_version (struct t_irc_server *server,
     if (version && date)
     {
         irc_server_sendf (server, 0,
-                          "NOTICE %s :%sVERSION WeeChat %s (%s)%s",
-                          nick, "\01", version, date, "\01");
+                          "NOTICE %s :\01VERSION WeeChat %s (%s)\01",
+                          nick, version, date);
         
         if (pos)
         {
@@ -1230,7 +1230,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 if (!irc_ignore_check (server, ptr_channel, nick, host))
                 {
                     pos_args += 8;
-                    pos_end_01 = strchr (pos_args, '\01');
+                    pos_end_01 = strrchr (pos_args, '\01');
                     if (pos_end_01)
                         pos_end_01[0] = '\0';
                     
@@ -1265,7 +1265,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 if (!irc_ignore_check (server, ptr_channel, nick, host))
                 {
                     pos_args += 7;
-                    pos_end_01 = strchr (pos_args, '\01');
+                    pos_end_01 = strrchr (pos_args, '\01');
                     if (pos_end_01)
                         pos_end_01[0] = '\0';
                     
@@ -1293,7 +1293,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     pos_args += 5;
                     while (pos_args[0] == ' ')
                         pos_args++;
-                    pos_end_01 = strchr (pos_args, '\01');
+                    pos_end_01 = strrchr (pos_args, '\01');
                     if (pos_end_01)
                         pos_end_01[0] = '\0';
                     else
@@ -1334,7 +1334,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             }
             
             /* unknown CTCP ? */
-            pos_end_01 = strchr (pos_args + 1, '\01');
+            pos_end_01 = strrchr (pos_args + 1, '\01');
             if ((pos_args[0] == '\01')
                 && pos_end_01 && (pos_end_01[1] == '\0'))
             {
@@ -1455,7 +1455,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     pos_args++;
                 }
-                pos_end_01 = strchr (pos_args, '\01');
+                pos_end_01 = strrchr (pos_args, '\01');
                 if (pos_end_01)
                     pos_end_01[0] = '\0';
                 else
@@ -1493,7 +1493,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, NULL, nick, host))
             {
                 /* check if DCC SEND is ok, i.e. with 0x01 at end */
-                pos_end_01 = strchr (pos_args + 1, '\01');
+                pos_end_01 = strrchr (pos_args + 1, '\01');
                 if (!pos_end_01)
                 {
                     weechat_printf (server->buffer,
@@ -1624,7 +1624,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, NULL, nick, host))
             {
                 /* check if DCC RESUME is ok, i.e. with 0x01 at end */
-                pos_end_01 = strchr (pos_args + 1, '\01');
+                pos_end_01 = strrchr (pos_args + 1, '\01');
                 if (!pos_end_01)
                 {
                     weechat_printf (server->buffer,
@@ -1730,7 +1730,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, NULL, nick, host))
             {
                 /* check if DCC ACCEPT is ok, i.e. with 0x01 at end */
-                pos_end_01 = strchr (pos_args + 1, '\01');
+                pos_end_01 = strrchr (pos_args + 1, '\01');
                 if (!pos_end_01)
                 {
                     weechat_printf (server->buffer,
@@ -1836,7 +1836,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, NULL, nick, host))
             {
                 /* check if DCC CHAT is ok, i.e. with 0x01 at end */
-                pos_end_01 = strchr (pos_args + 1, '\01');
+                pos_end_01 = strrchr (pos_args + 1, '\01');
                 if (!pos_end_01)
                 {
                     weechat_printf (server->buffer,
@@ -1986,7 +1986,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     irc_channel_set_topic (ptr_channel, address);
                 
                 pos_args += 8;
-                pos_end_01 = strchr (pos_args, '\01');
+                pos_end_01 = strrchr (pos_args, '\01');
                 if (pos_end_01)
                     pos_end_01[0] = '\0';
                 
@@ -2013,7 +2013,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
         else
         {
             /* unknown CTCP ? */
-            pos_end_01 = strchr (pos_args + 1, '\01');
+            pos_end_01 = strrchr (pos_args + 1, '\01');
             if ((pos_args[0] == '\01')
                 && pos_end_01 && (pos_end_01[1] == '\0'))
             {
