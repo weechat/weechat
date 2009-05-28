@@ -3,6 +3,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: lightcyan)
 
+* *irc.color.item_away*
+** description: couleur pour l'objet away
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
 * *irc.color.message_join*
 ** description: couleur pour le texte dans les messages join
 ** type: couleur

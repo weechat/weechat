@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-26 10:00+0200\n"
+"POT-Creation-Date: 2009-05-28 16:33+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3811,6 +3811,10 @@ msgstr "prefix pro zprávy ukončení"
 #, fuzzy
 msgid "color for nick in input bar"
 msgstr "barva přezdívek"
+
+#, fuzzy
+msgid "color for away item"
+msgstr "barva přezdívek, které jsou pryč"
 
 #, fuzzy
 msgid ""

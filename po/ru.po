@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-26 10:00+0200\n"
+"POT-Creation-Date: 2009-05-28 16:33+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3816,6 +3816,10 @@ msgstr "сообщение о выходе по-умолчанию"
 #, fuzzy
 msgid "color for nick in input bar"
 msgstr "цвет ников"
+
+#, fuzzy
+msgid "color for away item"
+msgstr "цвет отошедших ников"
 
 #, fuzzy
 msgid ""

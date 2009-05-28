@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-26 10:00+0200\n"
+"POT-Creation-Date: 2009-05-28 16:33+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator:  <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -3281,6 +3281,9 @@ msgid "color for text in part/quit messages"
 msgstr ""
 
 msgid "color for nick in input bar"
+msgstr ""
+
+msgid "color for away item"
 msgstr ""
 
 msgid ""

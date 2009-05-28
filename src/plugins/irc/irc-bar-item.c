@@ -42,6 +42,8 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
 {
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
+    char *buf;
+    int length;
     
     /* make C compiler happy */
     (void) data;
@@ -54,7 +56,17 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
         irc_buffer_get_server_channel (buffer, &server, NULL);
         
         if (server && server->is_away)
-            return strdup (_("away"));
+        {
+            length = strlen (_("away") + 64 + 1);
+            buf = malloc (length);
+            if (buf)
+            {
+                snprintf (buf, length, "%s%s",
+                          IRC_COLOR_ITEM_AWAY,
+                          _("away"));
+                return buf;
+            }
+        }
     }
     
     return NULL;

@@ -66,6 +66,7 @@ struct t_config_option *irc_config_look_topic_strip_colors;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_input_nick;
+struct t_config_option *irc_config_color_item_away;
 
 /* IRC config, network section */
 
@@ -269,6 +270,22 @@ irc_config_change_color_input_nick (void *data,
     (void) option;
     
     weechat_bar_item_update ("input_prompt");
+}
+
+/*
+ * irc_config_change_color_item_away: called when the color of away item is
+ *                                    changed
+ */
+
+void
+irc_config_change_color_item_away (void *data,
+                                   struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("away");
 }
 
 /*
@@ -1167,6 +1184,12 @@ irc_config_init ()
         N_("color for nick in input bar"),
         NULL, -1, 0, "lightcyan", NULL, 0, NULL, NULL,
         &irc_config_change_color_input_nick, NULL, NULL, NULL);
+    irc_config_color_item_away = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_away", "color",
+        N_("color for away item"),
+        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
+        &irc_config_change_color_item_away, NULL, NULL, NULL);
     
     /* network */
     ptr_section = weechat_config_new_section (irc_config_file, "network",

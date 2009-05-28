@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-26 10:00+0200\n"
+"POT-Creation-Date: 2009-05-28 16:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3248,6 +3248,9 @@ msgid "color for text in part/quit messages"
 msgstr ""
 
 msgid "color for nick in input bar"
+msgstr ""
+
+msgid "color for away item"
 msgstr ""
 
 msgid ""
