@@ -368,16 +368,17 @@ logger_config_init ()
     logger_config_file_path = weechat_config_new_option (
         logger_config_file, ptr_section,
         "path", "string",
-        N_("path for WeeChat log files ('%h' will be replaced by WeeChat "
-           "home, ~/.weechat by default)"),
+        N_("path for WeeChat log files (\"%h\" will be replaced by WeeChat "
+           "home, \"~/.weechat\" by default)"),
         NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_mask = weechat_config_new_option (
         logger_config_file, ptr_section,
         "mask", "string",
-        N_("default file name mask for log files (format is 'directory/to/file' "
-           "or 'file', without first '/' because 'path' option is used to "
-           "build complete path to file); local buffer variables are permitted"),
+        N_("default file name mask for log files (format is "
+           "\"directory/to/file\" or \"file\", without first \"/\" because "
+           "\"path\" option is used to build complete path to file); local "
+           "buffer variables are permitted"),
         NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_info_lines = weechat_config_new_option (

@@ -1,0 +1,11 @@
+&bull; *`/relay`* `[list | listfull]`::
+
+........................................
+  relay control
+
+      list: list relay clients
+  listfull: list relay clients (verbose)
+  
+  Without argument, this command opens buffer with list of relay clients.
+........................................
+

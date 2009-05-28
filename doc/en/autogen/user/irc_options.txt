@@ -1,0 +1,240 @@
+* *irc.color.input_nick*
+** description: color for nick in input bar
+** type: color
+** values: a color name (default value: lightcyan)
+
+* *irc.color.message_join*
+** description: color for text in join messages
+** type: color
+** values: a color name (default value: green)
+
+* *irc.color.message_quit*
+** description: color for text in part/quit messages
+** type: color
+** values: a color name (default value: red)
+
+* *irc.look.color_nicks_in_server_messages*
+** description: use nick color in messages from server
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_away*
+** description: display message when (un)marking as away
+** type: integer
+** values: off, local, channel (default value: local)
+
+* *irc.look.display_channel_modes*
+** description: display channel modes in "buffer_name" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_nick_modes*
+** description: display nick modes in "input_prompt" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_old_topic*
+** description: display old topic when channel topic is changed
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.hide_nickserv_pwd*
+** description: hide password displayed by nickserv
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.highlight_tags*
+** description: comma separated list of tags for messages that may produce highlight (usually any message from another user, not server messages,..)
+** type: string
+** values: any string (default value: "irc_privmsg,irc_notice")
+
+* *irc.look.nick_completion_smart*
+** description: smart completion for nicks (completes first with last speakers)
+** type: integer
+** values: off, speakers, speakers_highlights (default value: speakers)
+
+* *irc.look.nick_prefix*
+** description: text to display before nick in chat window
+** type: string
+** values: any string (default value: "")
+
+* *irc.look.nick_suffix*
+** description: text to display after nick in chat window
+** type: string
+** values: any string (default value: "")
+
+* *irc.look.notice_as_pv*
+** description: display notices as private messages
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.look.one_server_buffer*
+** description: use same buffer for all servers
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.look.open_near_server*
+** description: open new channels/privates near server
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.look.raw_messages*
+** description: number of IRC raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** type: integer
+** values: 0 .. 65535 (default value: 256)
+
+* *irc.look.show_away_once*
+** description: show remote away message only once in private
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.smart_filter*
+** description: filter join/part/quit messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.look.smart_filter_delay*
+** description: delay for filtering join/part/quit messages (in minutes)
+** type: integer
+** values: 1 .. 10080 (default value: 5)
+
+* *irc.look.topic_strip_colors*
+** description: strip colors in topic (used only when displaying buffer title)
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.network.anti_flood*
+** description: anti-flood: # seconds between two user messages (0 = no anti-flood)
+** type: integer
+** values: 0 .. 5 (default value: 2)
+
+* *irc.network.away_check*
+** description: interval between two checks for away (in minutes, 0 = never check)
+** type: integer
+** values: 0 .. 2147483647 (default value: 0)
+
+* *irc.network.away_check_max_nicks*
+** description: do not check away nicks on channels with high number of nicks (0 = unlimited)
+** type: integer
+** values: 0 .. 2147483647 (default value: 0)
+
+* *irc.network.colors_receive*
+** description: when off, colors codes are ignored in incoming messages
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.network.colors_send*
+** description: allow user to send colors with special codes (ctrl-c + a code and optional color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.network.default_msg_part*
+** description: default part message (leaving channel) ("%v" will be replaced by WeeChat version in string)
+** type: string
+** values: any string (default value: "WeeChat %v")
+
+* *irc.network.default_msg_quit*
+** description: default quit message (disconnecting from server) ("%v" will be replaced by WeeChat version in string)
+** type: string
+** values: any string (default value: "WeeChat %v")
+
+* *irc.network.lag_check*
+** description: interval between two checks for lag (in seconds, 0 = never check)
+** type: integer
+** values: 0 .. 2147483647 (default value: 60)
+
+* *irc.network.lag_disconnect*
+** description: disconnect after important lag (in minutes, 0 = never disconnect)
+** type: integer
+** values: 0 .. 2147483647 (default value: 0)
+
+* *irc.network.lag_min_show*
+** description: minimum lag to show (in seconds)
+** type: integer
+** values: 0 .. 2147483647 (default value: 1)
+
+* *irc.network.send_unknown_commands*
+** description: send unknown commands to server
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.server_default.addresses*
+** description: list of hostname/port or IP/port for server (separated by comma)
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.autoconnect*
+** description: automatically connect to server when WeeChat is starting
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.server_default.autojoin*
+** description: comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.autoreconnect*
+** description: automatically reconnect to server when disconnected
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.server_default.autoreconnect_delay*
+** description: delay (in seconds) before trying again to reconnect to server
+** type: integer
+** values: 0 .. 65535 (default value: 30)
+
+* *irc.server_default.autorejoin*
+** description: automatically rejoin channels when kicked
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.server_default.command*
+** description: command(s) to run when connected to server (many commands should be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value)
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.command_delay*
+** description: delay (in seconds) after command was executed (example: give some time for authentication)
+** type: integer
+** values: 0 .. 3600 (default value: 0)
+
+* *irc.server_default.ipv6*
+** description: use IPv6 protocol for server communication
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.server_default.local_hostname*
+** description: custom local hostname/IP for server (optional, if empty local hostname is used)
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.nicks*
+** description: nicknames to use on server (separated by comma)
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.password*
+** description: password for server
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.proxy*
+** description: proxy used for this server (optional)
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.realname*
+** description: real name to use on server
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.ssl*
+** description: use SSL for server communication
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.server_default.username*
+** description: user name to use on server
+** type: string
+** values: any string (default value: "")
+

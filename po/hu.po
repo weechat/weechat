@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-19 18:46+0200\n"
+"POT-Creation-Date: 2009-05-26 10:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1797,9 +1797,10 @@ msgid ""
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
+"path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
+"weechat\" by default)"
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
@@ -3714,9 +3715,10 @@ msgstr ""
 "szokásos hosztnév/IP a szerveren (tetszőleges, ha üres akkor a helyi "
 "hosztnevet használja)"
 
+#, fuzzy
 msgid ""
 "command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"separated by \";\", use \"\\;\" for a semicolon, special variables $nick, "
 "$channel and $server are replaced by their value)"
 msgstr ""
 "szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
@@ -3823,8 +3825,9 @@ msgstr "alapértelmezett kilépő üzenet"
 msgid "color for nick in input bar"
 msgstr "nevek színe"
 
+#, fuzzy
 msgid ""
-"default part message (leaving channel) ('%v' will be replaced by WeeChat "
+"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
 msgstr ""
 "alapértelmezett távozó üzenet (szoba elhagyásakor) (a '%v' változó a WeeChat "
@@ -3832,7 +3835,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"default quit message (disconnecting from server) ('%v' will be replaced by "
+"default quit message (disconnecting from server) (\"%v\" will be replaced by "
 "WeeChat version in string)"
 msgstr ""
 "alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
@@ -3862,9 +3865,10 @@ msgstr "anti-flood: # másodperc két üzenet között (0 = anti-flood kikapcsol
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "ha ki van kapcsolva, "
 
+#, fuzzy
 msgid ""
-"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
-"yy=color+background, ^Cu=underline, ^Cr=reverse)"
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
 msgstr ""
 "színküldés engedélyezése speciális karakterekkel (^Cb=félkövér, ^Ccxx=szín, "
 "^Cxx,yy=szín+háttérszín ^Cu=aláhúzás, ^Cr=fordított)"
@@ -4608,6 +4612,21 @@ msgstr ""
 "verziójára cserélődik)"
 
 #, fuzzy
+msgid ""
+"default quit message (disconnecting from server) ('%v' will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+"alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
+"cserélődik)"
+
+msgid ""
+"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
+"yy=color+background, ^Cu=underline, ^Cr=reverse)"
+msgstr ""
+"színküldés engedélyezése speciális karakterekkel (^Cb=félkövér, ^Ccxx=szín, "
+"^Cxx,yy=szín+háttérszín ^Cu=aláhúzás, ^Cr=fordított)"
+
+#, fuzzy
 msgid "Jabber debug messages"
 msgstr "hibakereső üzenetek megjelenítése"
 
@@ -4825,16 +4844,16 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
+"path for WeeChat log files (\"%h\" will be replaced by WeeChat home, \"~/."
+"weechat\" by default)"
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid ""
-"default file name mask for log files (format is 'directory/to/file' or "
-"'file', without first '/' because 'path' option is used to build complete "
-"path to file); local buffer variables are permitted"
+"default file name mask for log files (format is \"directory/to/file\" or "
+"\"file\", without first \"/\" because \"path\" option is used to build "
+"complete path to file); local buffer variables are permitted"
 msgstr ""
 
 msgid "write information line in log file when log starts or ends for a buffer"
@@ -5698,7 +5717,8 @@ msgstr ""
 msgid "convert spaces to underscores when sending files"
 msgstr "szóközök alulvonássá alakítása küldéskor"
 
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+#, fuzzy
+msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "fájlok automatikus átnevezése, ha már léteznek ('.1', '.2', ... hozzáadása)"
 
@@ -5764,6 +5784,15 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "allow user to send colors with special codes (\"^Cb\"=bold, \"^Ccxx"
+#~ "\"=color, \"^Ccxx,yy\"=color+background, \"^Cu\"=underline, \"^Cr"
+#~ "\"=reverse)"
+#~ msgstr ""
+#~ "színküldés engedélyezése speciális karakterekkel (^Cb=félkövér, "
+#~ "^Ccxx=szín, ^Cxx,yy=szín+háttérszín ^Cu=aláhúzás, ^Cr=fordított)"
 
 #, fuzzy
 #~ msgid "filtered"

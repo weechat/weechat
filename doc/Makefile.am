@@ -14,19 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . en fr de
+SUBDIRS = . en fr
 
 man_MANS = weechat-curses.1
 
-EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl.in weechat-html.xsl.in weechat-pdf.xsl dblatex.conf
-
-all-local: weechat-html.xsl weechat-html-one.xsl
-
-weechat-html.xsl: weechat-html.xsl.in
-	sed -e 's,\@DOC_XSL_PREFIX\@,$(DOC_XSL_PREFIX),g' < weechat-html.xsl.in > weechat-html.xsl
-
-weechat-html-one.xsl: weechat-html-one.xsl.in
-	sed -e 's,\@DOC_XSL_PREFIX\@,$(DOC_XSL_PREFIX),g' < weechat-html-one.xsl.in > weechat-html-one.xsl
-
-clean-local:
-	-rm -f weechat-html.xsl weechat-html-one.xsl
+EXTRA_DIST = $(man_MANS) CMakeLists.txt

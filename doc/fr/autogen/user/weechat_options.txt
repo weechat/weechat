@@ -1,0 +1,575 @@
+* *weechat.color.bar_more*
+** description: couleur du texte pour les '+' lors du défilement des barres
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.chat*
+** description: couleur du texte pour la discussion
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.chat_bg*
+** description: couleur du fond pour la discussion
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.chat_buffer*
+** description: couleur du texte pour le nom des tampons
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: white)
+
+* *weechat.color.chat_channel*
+** description: couleur du texte pour le nom des canaux
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: white)
+
+* *weechat.color.chat_delimiters*
+** description: couleur du texte pour les délimiteurs
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
+* *weechat.color.chat_highlight*
+** description: couleur du texte pour le préfixe surligné (highlight)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.chat_highlight_bg*
+** description: couleur du fond pour le préfixe surligné (highlight)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: magenta)
+
+* *weechat.color.chat_host*
+** description: couleur du texte pour les noms d'hôtes
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: cyan)
+
+* *weechat.color.chat_nick*
+** description: couleur du texte pour l'heure dans la fenêtre de discussion
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightcyan)
+
+* *weechat.color.chat_nick_color01*
+** description: couleur du texte n°1 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: cyan)
+
+* *weechat.color.chat_nick_color02*
+** description: couleur du texte n°2 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: magenta)
+
+* *weechat.color.chat_nick_color03*
+** description: couleur du texte n°3 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
+* *weechat.color.chat_nick_color04*
+** description: couleur du texte n°4 le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: brown)
+
+* *weechat.color.chat_nick_color05*
+** description: couleur du texte n°5 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightblue)
+
+* *weechat.color.chat_nick_color06*
+** description: couleur du texte n°6 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.chat_nick_color07*
+** description: couleur du texte n°7 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightcyan)
+
+* *weechat.color.chat_nick_color08*
+** description: couleur du texte n°8 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.chat_nick_color09*
+** description: couleur du texte n°9 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *weechat.color.chat_nick_color10*
+** description: couleur du texte n°10 pour le pseudo
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: blue)
+
+* *weechat.color.chat_nick_other*
+** description: couleur du texte pour l'autre pseudo dans le tampon privée
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: cyan)
+
+* *weechat.color.chat_nick_self*
+** description: couleur du texte pour le pseudo local dans la fenêtre de discussion
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: white)
+
+* *weechat.color.chat_prefix_action*
+** description: couleur du texte pour le préfixe d'action
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: white)
+
+* *weechat.color.chat_prefix_error*
+** description: couleur du texte pour le préfixe d'erreur
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.chat_prefix_join*
+** description: couleur du texte pour le préfixe d'arrivée
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *weechat.color.chat_prefix_more*
+** description: couleur du texte pour les '+' lorsque le préfixe est trop long
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.chat_prefix_network*
+** description: couleur du texte pour le préfixe réseau
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: magenta)
+
+* *weechat.color.chat_prefix_quit*
+** description: couleur du texte pour le préfixe de départ
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightred)
+
+* *weechat.color.chat_prefix_suffix*
+** description: couleur du texte pour le suffixe (après le préfixe)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
+* *weechat.color.chat_read_marker*
+** description: couleur du texte pour le marqueur de données non lues
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: magenta)
+
+* *weechat.color.chat_read_marker_bg*
+** description: couleur du fond pour le marqueur de données non lues
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.chat_server*
+** description: couleur du texte pour le nom des serveurs
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: brown)
+
+* *weechat.color.chat_text_found*
+** description: couleur du texte pour le marqueur sur les lignes où le texte demandé est trouvé
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.chat_text_found_bg*
+** description: couleur du fond pour le marqueur sur les lignes où le texte demandé est trouvé
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.chat_time*
+** description: couleur du texte pour l'heure dans la fenêtre de discussion
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.chat_time_delimiters*
+** description: couleur du texte pour les délimiteurs de l'heure
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: brown)
+
+* *weechat.color.chat_value*
+** description: couleur du texte pour les valeurs
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: cyan)
+
+* *weechat.color.input_actions*
+** description: couleur du texte pour les actions dans la ligne de saisie
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *weechat.color.input_nick*
+** description: couleur du texte pour le pseudo dans la ligne de saisie
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightcyan)
+
+* *weechat.color.input_text_not_found*
+** description: couleur du texte pour la recherche infructueuse de texte dans la ligne de saisie
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: red)
+
+* *weechat.color.nicklist_away*
+** description: couleur du texte pour les pseudos absents
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: cyan)
+
+* *weechat.color.nicklist_group*
+** description: couleur du texte pour les groupes dans la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
+* *weechat.color.nicklist_more*
+** description: couleur du texte pour les '+' lors du défilement des pseudos dans la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.nicklist_prefix1*
+** description: couleur du texte pour le préfixe n°1 de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *weechat.color.nicklist_prefix2*
+** description: couleur du texte pour le préfixe n°2 de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.nicklist_prefix3*
+** description: couleur du texte pour le préfixe n°3 de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.nicklist_prefix4*
+** description: couleur du texte pour le préfixe n°4 de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: blue)
+
+* *weechat.color.nicklist_prefix5*
+** description: couleur du texte pour le préfixe n°5 de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: brown)
+
+* *weechat.color.nicklist_separator*
+** description: couleur du texte pour le séparateur de la liste des pseudos
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: blue)
+
+* *weechat.color.separator*
+** description: couleur du fond pour les séparateurs de fenêtres (quand divisé)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: blue)
+
+* *weechat.color.status_data_highlight*
+** description: couleur du texte pour un tampon avec un highlight (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *weechat.color.status_data_msg*
+** description: couleur du texte pour un tampon avec de nouveaux messages (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.status_data_other*
+** description: couleur du texte pour un tampon avec des nouvelles données (pas des messages) (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *weechat.color.status_data_private*
+** description: couleur du texte pour un tampon avec un message privé (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *weechat.color.status_filter*
+** description: couleur du texte pour l'indicateur de filtrage dans la barre de statut
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
+* *weechat.color.status_more*
+** description: couleur du texte pour un tampon avec des nouvelles données (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.color.status_name*
+** description: couleur du texte pour le nom du tampon courant dans la barre de statut
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: white)
+
+* *weechat.color.status_number*
+** description: couleur du texte pour le numéro du tampon courant dans la barre de statut
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
+* *weechat.completion.default_template*
+** description: modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%(nicks)|%(irc_channels)")
+
+* *weechat.completion.nick_add_space*
+** description: ajouter un espace après la complétion du pseudo (quand le pseudo n'est pas le premier mot sur la ligne de commande)
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.completion.nick_completor*
+** description: chaîne affichée après la complétion des pseudos
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: ":")
+
+* *weechat.completion.nick_first_only*
+** description: compléter seulement avec le premier pseudo trouvé
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.completion.nick_ignore_chars*
+** description: caractères à ignorer pour la complétion des pseudos
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "[]-^")
+
+* *weechat.completion.partial_completion_alert*
+** description: alterte de l'utilisateur lorsqu'une complétion partielle survient
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.completion.partial_completion_command*
+** description: complète partiellement les noms de commandes (stoppe quand plusieurs commandes trouvées commencent par les mêmes lettres)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.completion.partial_completion_command_arg*
+** description: complète partiellement les paramètres de commande (stoppe quand plusieurs paramètres trouvés commencent par les mêmes lettres)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.completion.partial_completion_count*
+** description: afficher le compteur pour chaque complétion partielle dans l'objet de barre
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.completion.partial_completion_other*
+** description: complète partiellement en dehors des commandes (stoppe quand plusieurs mots trouvés commencent par les mêmes lettres)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.history.display_default*
+** description: nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 5)
+
+* *weechat.history.max_commands*
+** description: nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 100)
+
+* *weechat.history.max_lines*
+** description: nombre maximum de lignes dans l'historique (0 = sans limite)
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 4096)
+
+* *weechat.history.max_visited_buffers*
+** description: nombre maximum de tampons visités à garder en mémoire
+** type: entier
+** valeurs: 0 .. 1000 (valeur par défaut: 50)
+
+* *weechat.look.buffer_notify_default*
+** description: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)
+** type: entier
+** valeurs: none, highlight, message, all (valeur par défaut: all)
+
+* *weechat.look.buffer_time_format*
+** description: format de date/heure pour les tampons
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%H:%M:%S")
+
+* *weechat.look.color_nicks_number*
+** description: nombre de couleurs à utiliser pour les couleurs des pseudos
+** type: entier
+** valeurs: 1 .. 10 (valeur par défaut: 10)
+
+* *weechat.look.color_real_white*
+** description: si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.look.day_change*
+** description: affiche un message quand le jour change
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.day_change_time_format*
+** description: format de date pour la date affichée quand le jour a changé
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%a, %d %b %Y")
+
+* *weechat.look.highlight*
+** description: liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *weechat.look.hotlist_names_count*
+** description: nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)
+** type: entier
+** valeurs: 0 .. 32 (valeur par défaut: 3)
+
+* *weechat.look.hotlist_names_length*
+** description: nombre maximum des noms dans la liste d'activité (0 = pas de limite)
+** type: entier
+** valeurs: 0 .. 32 (valeur par défaut: 0)
+
+* *weechat.look.hotlist_names_level*
+** description: niveau pour l'affichage des noms dans la liste d'activité (combinaison de: 1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé+highlight)
+** type: entier
+** valeurs: 1 .. 15 (valeur par défaut: 12)
+
+* *weechat.look.hotlist_short_names*
+** description: si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.hotlist_sort*
+** description: type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)
+** type: entier
+** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: group_time_asc)
+
+* *weechat.look.item_time_format*
+** description: format de date/heure pour l'objet de barre "time"
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%H:%M")
+
+* *weechat.look.jump_current_to_previous_buffer*
+** description: sauter au tampon affiché précédemment lors du saut vers le numéro de tampon courant avec /buffer *N (où N est un numéro de tampon), pour facilement basculer à un autre tampon, puis revenir au tampon courant
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.jump_previous_buffer_when_closing*
+** description: sauter au tampon précédemment visité lors de la fermeture d'un tampon (si désactivé, alors le saut se fait vers le numéro de tampon - 1)
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.nickmode*
+** description: afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.nickmode_empty*
+** description: afficher un espace si le mode du pseudo n'est pas (half)op/voice
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.look.paste_max_lines*
+** description: nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (0 = désactiver cette fonctionnalité)
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 3)
+
+* *weechat.look.prefix_action*
+** description: préfixe pour les messages d'action
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: " *")
+
+* *weechat.look.prefix_align*
+** description: alignement de préfixe (none, left, right (par défaut))
+** type: entier
+** valeurs: none, left, right (valeur par défaut: right)
+
+* *weechat.look.prefix_align_max*
+** description: taille maximum pour le préfixe (0 = pas de taille maximum)
+** type: entier
+** valeurs: 0 .. 64 (valeur par défaut: 0)
+
+* *weechat.look.prefix_error*
+** description: préfixe pour les messages d'erreur
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "=!=")
+
+* *weechat.look.prefix_join*
+** description: préfixe pour les messages d'arrivée
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "-->")
+
+* *weechat.look.prefix_network*
+** description: préfixe pour les messages réseau
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "--")
+
+* *weechat.look.prefix_quit*
+** description: préfixe pour les messages de départ
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "<--")
+
+* *weechat.look.prefix_suffix*
+** description: chaîne affichée après le préfixe
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "|")
+
+* *weechat.look.read_marker*
+** description: utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue
+** type: entier
+** valeurs: none, line, dotted-line, char (valeur par défaut: dotted-line)
+
+* *weechat.look.save_config_on_exit*
+** description: sauvegarder la configuration en quittant
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.look.save_layout_on_exit*
+** description: sauve la disposition en quittant (tampons, fenêtres, ou les deux)
+** type: entier
+** valeurs: none, buffers, windows, all (valeur par défaut: all)
+
+* *weechat.look.scroll_amount*
+** description: nombre de lignes pour le défilement avec scroll_up et scroll_down
+** type: entier
+** valeurs: 1 .. 2147483647 (valeur par défaut: 3)
+
+* *weechat.look.scroll_page_percent*
+** description: pourcentage de l'écran à faire défiler lors du défilement avec page précédente ou suivante (par exemple 100 signifie une page, 50 une demi-page)
+** type: entier
+** valeurs: 1 .. 100 (valeur par défaut: 100)
+
+* *weechat.look.set_title*
+** description: définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.network.gnutls_dh_prime_bitsmax_lines*
+** description: taille minimum en bits pour la poignée de main (handshake) utilisant un échange de clé Diffie Hellman
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 512)
+
+* *weechat.plugin.autoload*
+** description: liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "perl.so")
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "*")
+
+* *weechat.plugin.debug*
+** description: active les messages de debug par défaut pour toutes les extensions (option désactivée par défaut, ce qui est hautement recommandé)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *weechat.plugin.extension*
+** description: extension par défaut des extensions (par example ".so" sous Linux ou ".dll" sous Microsoft Windows)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: ".so")
+
+* *weechat.plugin.path*
+** description: chemin de recherche des extensions ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%h/plugins")
+
+* *weechat.plugin.save_config_on_unload*
+** description: sauvegarder les fichiers de configuration lors du déchargement des extensions
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.startup.command_after_plugins*
+** description: commande exécutée quand WeeChat démarre, après le chargement des extensions
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *weechat.startup.command_before_plugins*
+** description: commande exécutée quand WeeChat démarre, avant le chargement des extensions
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *weechat.startup.display_logo*
+** description: afficher le logo WeeChat au démarrage
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.startup.display_version*
+** description: afficher la version de WeeChat au démarrage
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *weechat.startup.weechat_slogan*
+** description: slogan WeeChat (si vide, le slogan ne sera pas utilisé)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "le client de discussion le plus geek !")
+

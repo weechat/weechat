@@ -1,0 +1,205 @@
+* *jabber.color.input_nick*
+** description: color for nick in input bar
+** type: color
+** values: a color name (default value: lightcyan)
+
+* *jabber.color.message_join*
+** description: color for text in join messages
+** type: color
+** values: a color name (default value: green)
+
+* *jabber.color.message_quit*
+** description: color for text in part/quit messages
+** type: color
+** values: a color name (default value: red)
+
+* *jabber.look.color_nicks_in_server_messages*
+** description: use nick color in messages from server
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.look.display_away*
+** description: display message when (un)marking as away
+** type: integer
+** values: off, local, muc (default value: local)
+
+* *jabber.look.display_muc_modes*
+** description: display MUC modes in "buffer_name" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.look.display_nick_modes*
+** description: display nick modes in "input_prompt" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.look.highlight_tags*
+** description: comma separated list of tags for messages that may produce highlight (usually any message from another user, not server messages,..)
+** type: string
+** values: any string (default value: "jabber_chat_msg,jabber_notice")
+
+* *jabber.look.nick_completion_smart*
+** description: smart completion for nicks (completes with last speakers first)
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.look.nick_prefix*
+** description: text to display before nick in chat window
+** type: string
+** values: any string (default value: "")
+
+* *jabber.look.nick_suffix*
+** description: text to display after nick in chat window
+** type: string
+** values: any string (default value: "")
+
+* *jabber.look.one_server_buffer*
+** description: use same buffer for all servers
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.look.open_near_server*
+** description: open new MUCs/privates near server
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.look.show_away_once*
+** description: show remote away message only once in private
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.look.smart_filter*
+** description: filter join/part/quit messages for a nick if not speaking for some minutes on MUC (you must create a filter on tag "jabber_smart_filter")
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.look.smart_filter_delay*
+** description: delay for filtering join/part/quit messages (in minutes)
+** type: integer
+** values: 1 .. 10080 (default value: 5)
+
+* *jabber.network.anti_flood*
+** description: anti-flood: # seconds between two user messages (0 = no anti-flood)
+** type: integer
+** values: 0 .. 5 (default value: 2)
+
+* *jabber.network.colors_receive*
+** description: when off, colors codes are ignored in incoming messages
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.network.colors_send*
+** description: allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,yy=color+background, ^Cu=underline, ^Cr=reverse)
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.network.default_msg_part*
+** description: default part message (leaving MUC) ('%v' will be replaced by WeeChat version in string)
+** type: string
+** values: any string (default value: "WeeChat %v")
+
+* *jabber.network.default_msg_quit*
+** description: default quit message (disconnecting from server) ('%v' will be replaced by WeeChat version in string)
+** type: string
+** values: any string (default value: "WeeChat %v")
+
+* *jabber.network.lag_check*
+** description: interval between two checks for lag (in seconds, 0 = never check)
+** type: integer
+** values: 0 .. 2147483647 (default value: 60)
+
+* *jabber.network.lag_disconnect*
+** description: disconnect after important lag (in minutes, 0 = never disconnect)
+** type: integer
+** values: 0 .. 2147483647 (default value: 5)
+
+* *jabber.network.lag_min_show*
+** description: minimum lag to show (in seconds)
+** type: integer
+** values: 0 .. 2147483647 (default value: 1)
+
+* *jabber.server_default.autoconnect*
+** description: automatically connect to server when WeeChat is starting
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.server_default.autojoin*
+** description: comma separated list of MUCs to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.autoreconnect*
+** description: automatically reconnect to server when disconnected
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.server_default.autoreconnect_delay*
+** description: delay (in seconds) before trying again to reconnect to server
+** type: integer
+** values: 0 .. 65535 (default value: 10)
+
+* *jabber.server_default.autorejoin*
+** description: automatically rejoin MUCs when kicked
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.server_default.command*
+** description: command(s) to run when connected to server (many commands should be separated by ';', use '\;' for a semicolon, special variables $nick, $muc and $server are replaced by their value)
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.command_delay*
+** description: delay (in seconds) after command was executed (example: give some time for authentication)
+** type: integer
+** values: 0 .. 3600 (default value: 0)
+
+* *jabber.server_default.ipv6*
+** description: use IPv6 protocol for server communication
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.server_default.local_alias*
+** description: local alias
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.local_hostname*
+** description: custom local hostname/IP for server (optional, if empty local hostname is used)
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.password*
+** description: password
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.proxy*
+** description: proxy used for this server (optional)
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.resource*
+** description: resource (for example: Home or Work)
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.sasl*
+** description: use SASL for authentication
+** type: boolean
+** values: on, off (default value: on)
+
+* *jabber.server_default.server*
+** description: hostname/port or IP/port for server
+** type: string
+** values: any string (default value: "")
+
+* *jabber.server_default.tls*
+** description: use TLS cryptographic protocol for server communication
+** type: boolean
+** values: on, off (default value: off)
+
+* *jabber.server_default.username*
+** description: user name to use on server
+** type: string
+** values: any string (default value: "")
+

@@ -1,0 +1,42 @@
+&bull; *`/demo_buffer`* `name`::
+
+........................................
+  open a new buffer
+........................................
+
+&bull; *`/demo_buffer_set`* `property value`::
+
+........................................
+  set a buffer property
+........................................
+
+&bull; *`/demo_info`* `[info [arguments]]`::
+
+........................................
+  get and display an info
+
+       info: info to display
+  arguments: optional arguments for info
+  
+  Without argument, this command displays list of available infos
+........................................
+
+&bull; *`/demo_infolist`* `[infolist [arguments]]`::
+
+........................................
+  get and display an infolist
+
+   infolist: infolist to display
+  arguments: optional arguments for infolist
+  
+  Without argument, this command displays list of available infolists
+........................................
+
+&bull; *`/demo_printf`* `[text]`::
+
+........................................
+  print some messages on current ubffer
+
+  text: write this text
+........................................
+

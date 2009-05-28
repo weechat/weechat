@@ -1,0 +1,11 @@
+&bull; *`/tcl`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | [unload [nom]]`::
+
+........................................
+  liste/charge/décharge des scripts
+
+  fichier: script (fichier) à charger
+  nom: un nom de script
+  
+  Sans argument, cette commande liste tous les scripts chargés.
+........................................
+

@@ -1,0 +1,589 @@
+&bull; *`/admin`* `[target]`::
+
+........................................
+  find information about the administrator of the server
+
+  target: server
+........................................
+
+&bull; *`/ame`* `message`::
+
+........................................
+  send a CTCP action to all channels of all connected servers
+
+  message: message to send
+........................................
+
+&bull; *`/amsg`* `text`::
+
+........................................
+  send message to all channels of all connected servers
+
+  text: text to send
+........................................
+
+&bull; *`/away`* `[-all] [message]`::
+
+........................................
+  toggle away status
+
+     -all: toggle away status on all connected servers
+  message: message for away (if no message is given, away status is removed)
+........................................
+
+&bull; *`/ban`* `[channel] [nickname [nickname ...]]`::
+
+........................................
+  ban nicks or hosts
+
+   channel: channel for ban
+  nickname: user or host to ban
+........................................
+
+&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]`::
+
+........................................
+  connect to IRC server(s)
+
+        -all: connect to all servers
+  servername: internal server name to connect
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+    hostname: hostname to connect
+        port: port for server (integer, default is 6667)
+        ipv6: use IPv6 protocol
+         ssl: use SSL protocol
+........................................
+
+&bull; *`/ctcp`* `receiver type [arguments]`::
+
+........................................
+  send a CTCP message (Client-To-Client Protocol)
+
+   receiver: nick or channel to send CTCP to
+       type: CTCP type (examples: "version", "ping", ..)
+  arguments: arguments for CTCP
+........................................
+
+&bull; *`/cycle`* `[channel[,channel]] [part_message]`::
+
+........................................
+  leave and rejoin a channel
+
+       channel: channel name for cycle
+  part_message: part message (displayed to other users)
+........................................
+
+&bull; *`/dcc`* `action [nickname [file]]`::
+
+........................................
+  start DCC (file or chat)
+
+    action: 'send' (file) or 'chat'
+  nickname: nickname to send file or chat
+      file: filename (on local host)
+........................................
+
+&bull; *`/dehalfop`* `[nickname [nickname]]`::
+
+........................................
+  remove half channel operator status from nickname(s)
+........................................
+
+&bull; *`/deop`* `[nickname [nickname]]`::
+
+........................................
+  remove channel operator status from nickname(s)
+........................................
+
+&bull; *`/devoice`* `[nickname [nickname]]`::
+
+........................................
+  remove voice from nickname(s)
+........................................
+
+&bull; *`/die`*::
+
+........................................
+  shutdown the server
+........................................
+
+&bull; *`/disconnect`* `[-all | servername [servername ...]]`::
+
+........................................
+  disconnect from IRC server(s)
+
+        -all: disconnect from all servers
+  servername: server name to disconnect
+........................................
+
+&bull; *`/halfop`* `[nickname [nickname]]`::
+
+........................................
+  give half channel operator status to nickname(s)
+........................................
+
+&bull; *`/ignore`* `[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]`::
+
+........................................
+  ignore nicks/hosts from servers or channels
+
+       list: list all ignore
+        add: add a ignore
+        del: del a ignore
+     number: number of ignore to delete (look at list to find it)
+       -all: delete all ignore
+  nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
+     server: internal server name where ignore is working
+    channel: channel name where ignore is working
+  
+  Examples:
+    ignore nick "toto" everywhere:
+      /ignore add toto
+    ignore host "toto@domain.com" on freenode server:
+      /ignore add toto@domain.com freenode
+    ignore host "toto*@*.domain.com" on freenode/#weechat:
+      /ignore add toto*@*.domain.com freenode #weechat
+........................................
+
+&bull; *`/info`* `[target]`::
+
+........................................
+  get information describing the server
+
+  target: server name
+........................................
+
+&bull; *`/invite`* `nickname channel`::
+
+........................................
+  invite a nick on a channel
+
+  nickname: nick to invite
+   channel: channel to invite
+........................................
+
+&bull; *`/ison`* `nickname [nickname ...]`::
+
+........................................
+  check if a nickname is currently on IRC
+
+  nickname: nickname
+........................................
+
+&bull; *`/join`* `channel[,channel] [key[,key]]`::
+
+........................................
+  join a channel
+
+  channel: channel name to join
+      key: key to join the channel
+........................................
+
+&bull; *`/kick`* `[channel] nickname [comment]`::
+
+........................................
+  forcibly remove a user from a channel
+
+   channel: channel where user is
+  nickname: nickname to kick
+   comment: comment for kick
+........................................
+
+&bull; *`/kickban`* `[channel] nickname [comment]`::
+
+........................................
+  kicks and bans a nick from a channel
+
+   channel: channel where user is
+  nickname: nickname to kick and ban
+   comment: comment for kick
+........................................
+
+&bull; *`/kill`* `nickname comment`::
+
+........................................
+  close client-server connection
+
+  nickname: nickname
+   comment: comment for kill
+........................................
+
+&bull; *`/links`* `[[server] server_mask]`::
+
+........................................
+  list all servernames which are known by the server answering the query
+
+       server: this server should answer the query
+  server_mask: list of servers must match this mask
+........................................
+
+&bull; *`/list`* `[channel[,channel] [server]]`::
+
+........................................
+  list channels and their topic
+
+  channel: channel to list (a regexp is allowed)
+  server: server name
+........................................
+
+&bull; *`/lusers`* `[mask [target]]`::
+
+........................................
+  get statistics about the size of the IRC network
+
+    mask: servers matching the mask only
+  target: server for forwarding request
+........................................
+
+&bull; *`/me`* `message`::
+
+........................................
+  send a CTCP action to the current channel
+
+  message: message to send
+........................................
+
+&bull; *`/mode`* `{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }`::
+
+........................................
+  change channel or user mode
+
+  channel modes:
+    channel: channel name to modify (default is current one)
+    o: give/take channel operator privileges
+    p: private channel flag
+    s: secret channel flag
+    i: invite-only channel flag
+    t: topic settable by channel operator only flag
+    n: no messages to channel from clients on the outside
+    m: moderated channel
+    l: set the user limit to channel
+    b: set a ban mask to keep users out
+    e: set exception mask
+    v: give/take the ability to speak on a moderated channel
+    k: set a channel key (password)
+  user modes:
+    nickname: nickname to modify
+    i: mark a user as invisible
+    s: mark a user for receive server notices
+    w: user receives wallops
+    o: operator flag
+........................................
+
+&bull; *`/motd`* `[target]`::
+
+........................................
+  get the "Message Of The Day"
+
+  target: server name
+........................................
+
+&bull; *`/msg`* `[-server server] receiver[,receiver] text`::
+
+........................................
+  send message to a nick or channel
+
+    server: send to this server (internal name)
+  receiver: nick or channel (may be mask, '*' = current channel)
+      text: text to send
+........................................
+
+&bull; *`/names`* `[channel[,channel]]`::
+
+........................................
+  list nicknames on channels
+
+  channel: channel name
+........................................
+
+&bull; *`/nick`* `[-all] nickname`::
+
+........................................
+  change current nickname
+
+      -all: set new nickname for all connected servers
+  nickname: new nickname
+........................................
+
+&bull; *`/notice`* `[-server server] nickname text`::
+
+........................................
+  send notice message to user
+
+    server: send to this server (internal name)
+  nickname: user to send notice to
+      text: text to send
+........................................
+
+&bull; *`/op`* `nickname [nickname]`::
+
+........................................
+  give channel operator status to nickname(s)
+........................................
+
+&bull; *`/oper`* `user password`::
+
+........................................
+  get operator privileges
+
+  user/password: used to get privileges on current IRC server
+........................................
+
+&bull; *`/part`* `[channel[,channel]] [part_message]`::
+
+........................................
+  leave a channel
+
+       channel: channel name to leave
+  part_message: part message (displayed to other users)
+........................................
+
+&bull; *`/ping`* `server1 [server2]`::
+
+........................................
+  ping server
+
+  server1: server to ping
+  server2: forward ping to this server
+........................................
+
+&bull; *`/pong`* `daemon [daemon2]`::
+
+........................................
+  answer to a ping message
+
+   daemon: daemon who has responded to Ping message
+  daemon2: forward message to this daemon
+........................................
+
+&bull; *`/query`* `[-server server] nickname [text]`::
+
+........................................
+  send a private message to a nick
+
+    server: send to this server (internal name)
+  nickname: nickname for private conversation
+      text: text to send
+........................................
+
+&bull; *`/quote`* `[-server server] data`::
+
+........................................
+  send raw data to server without parsing
+
+  server: send to this server (internal name)
+  data: raw data to send
+........................................
+
+&bull; *`/reconnect`* `[-all [-nojoin] | servername [servername ...] [-nojoin]]`::
+
+........................................
+  reconnect to server(s)
+
+        -all: reconnect to all servers
+  servername: server name to reconnect
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+........................................
+
+&bull; *`/rehash`*::
+
+........................................
+  tell the server to reload its config file
+........................................
+
+&bull; *`/restart`*::
+
+........................................
+  tell the server to restart itself
+........................................
+
+&bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [raw] | [switch]`::
+
+........................................
+  list, add or remove IRC servers
+
+        list: list servers (no parameter implies this list)
+    listfull: list servers with detailed info for each server
+         add: create a new server
+  servername: server name, for internal and display use
+    hostname: name or IP address of server, with optional port (default: 6667)
+        auto: automatically connect to server when WeeChat starts
+      noauto: do not connect to server when WeeChat starts (default)
+        ipv6: use IPv6 protocol
+         ssl: use SSL protocol
+        copy: duplicate a server
+      rename: rename a server
+        keep: keep server in config file (for temporary servers only)
+         del: delete a server
+     deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+         raw: open buffer with raw IRC data
+      switch: switch active server (when one buffer is used for all servers, default key: alt-s on server buffer)
+  
+  Examples:
+    /server listfull
+    /server add oftc irc.oftc.net/6697 -ssl
+    /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
+    /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+    /server copy oftc oftcbis
+    /server rename oftc newoftc
+    /server del freenode
+    /server deloutq
+    /server switch
+........................................
+
+&bull; *`/service`* `nickname reserved distribution type reserved info`::
+
+........................................
+  register a new service
+
+  distribution: visibility of service
+          type: reserved for future usage
+........................................
+
+&bull; *`/servlist`* `[mask [type]]`::
+
+........................................
+  list services currently connected to the network
+
+  mask: list only services matching this mask
+  type: list only services of this type
+........................................
+
+&bull; *`/squery`* `service text`::
+
+........................................
+  deliver a message to a service
+
+  service: name of service
+  text: text to send
+........................................
+
+&bull; *`/squit`* `server comment`::
+
+........................................
+  disconnect server links
+
+  server: server name
+  comment: comment for quit
+........................................
+
+&bull; *`/stats`* `[query [server]]`::
+
+........................................
+  query statistics about server
+
+   query: c/h/i/k/l/m/o/y/u (see RFC1459)
+  server: server name
+........................................
+
+&bull; *`/summon`* `user [target [channel]]`::
+
+........................................
+  give users who are on a host running an IRC server a message asking them to please join IRC
+
+     user: username
+  target: server name
+  channel: channel name
+........................................
+
+&bull; *`/time`* `[target]`::
+
+........................................
+  query local time from server
+
+  target: query time from specified server
+........................................
+
+&bull; *`/topic`* `[channel] [topic]`::
+
+........................................
+  get/set channel topic
+
+  channel: channel name
+  topic: new topic for channel (if topic is "-delete" then topic is deleted)
+........................................
+
+&bull; *`/trace`* `[target]`::
+
+........................................
+  find the route to specific server
+
+  target: server
+........................................
+
+&bull; *`/unban`* `[channel] nickname [nickname ...]`::
+
+........................................
+  unban nicks or hosts
+
+   channel: channel for unban
+  nickname: user or host to unban
+........................................
+
+&bull; *`/userhost`* `nickname [nickname ...]`::
+
+........................................
+  return a list of information about nicknames
+
+  nickname: nickname
+........................................
+
+&bull; *`/users`* `[target]`::
+
+........................................
+  list of users logged into the server
+
+  target: server
+........................................
+
+&bull; *`/version`* `[server | nickname]`::
+
+........................................
+  give the version info of nick or server (current or specified)
+
+    server: server name
+  nickname: nickname
+........................................
+
+&bull; *`/voice`* `[nickname [nickname]]`::
+
+........................................
+  give voice to nickname(s)
+........................................
+
+&bull; *`/wallops`* `text`::
+
+........................................
+  send a message to all currently connected users who have set the 'w' user mode for themselves
+
+  text to send
+........................................
+
+&bull; *`/who`* `[mask ["o"]]`::
+
+........................................
+  generate a query which returns a list of information
+
+  mask: only information which match this mask
+     o: only operators are returned according to the mask supplied
+........................................
+
+&bull; *`/whois`* `[server] nickname[,nickname]`::
+
+........................................
+  query information about user(s)
+
+    server: server name
+  nickname: nickname (may be a mask)
+........................................
+
+&bull; *`/whowas`* `nickname [,nickname [,nickname ...]] [count [target]]`::
+
+........................................
+  ask for information about a nickname which no longer exists
+
+  nickname: nickname to search
+     count: number of replies to return (full search if negative number)
+    target: reply should match this mask
+........................................
+

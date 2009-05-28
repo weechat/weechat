@@ -754,9 +754,10 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("command(s) to run when connected to server (many commands should "
-                   "be separated by ';', use '\\;' for a semicolon, special variables "
-                   "$nick, $channel and $server are replaced by their value)"),
+                N_("command(s) to run when connected to server (many commands "
+                   "should be separated by \";\", use \"\\;\" for a semicolon, "
+                   "special variables $nick, $channel and $server are replaced "
+                   "by their value)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1182,13 +1183,13 @@ irc_config_init ()
     irc_config_network_default_msg_part = weechat_config_new_option (
         irc_config_file, ptr_section,
         "default_msg_part", "string",
-        N_("default part message (leaving channel) ('%v' will be replaced by "
-           "WeeChat version in string)"),
+        N_("default part message (leaving channel) (\"%v\" will be replaced "
+           "by WeeChat version in string)"),
         NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_default_msg_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "default_msg_quit", "string",
-        N_("default quit message (disconnecting from server) ('%v' will be "
+        N_("default quit message (disconnecting from server) (\"%v\" will be "
            "replaced by WeeChat version in string)"),
         NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_away_check = weechat_config_new_option (
@@ -1236,9 +1237,9 @@ irc_config_init ()
     irc_config_network_colors_send = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_send", "boolean",
-        N_("allow user to send colors with special codes (^Cb=bold, "
-           "^Ccxx=color, ^Ccxx,yy=color+background, ^Cu=underline, "
-           "^Cr=reverse)"),
+        N_("allow user to send colors with special codes (ctrl-c + a code and "
+           "optional color: b=bold, cxx=color, cxx,yy=color+background, "
+           "u=underline, r=reverse)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,

@@ -28,7 +28,6 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_GNU_SOURCE
 AM_PROG_LIBTOOL
-AC_CHECK_PROG(DBLATEX_FOUND, "dblatex", "yes")
 
 # Files to generate
 AC_CONFIG_FILES([weechat.pc])
@@ -144,7 +143,6 @@ AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in 
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_ENABLE(doc,          [  --disable-doc           turn off documentation (default=built)],enable_doc=$enableval,enable_doc=yes)
-AC_ARG_WITH(doc_xsl_prefix, [  --with-doc-xsl-prefix=DIR docbook html/chunk.xsl is in DIR (default=autodetect)],doc_xsl_prefix=$withval,doc_xsl_prefix='')
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 
 not_asked=""
@@ -855,43 +853,6 @@ fi
 msg_doc=""
 
 if test "x$enable_doc" = "xyes" ; then
-    AC_DEFINE(DOC)
-    if test "x$DBLATEX_FOUND" = "xyes"; then
-        msg_doc="pdf $msg_doc"
-    else
-        not_found="$not_found doc(pdf)"
-    fi
-
-    AC_MSG_CHECKING(for html/chunk.xsl)
-    DOC_XSL_PREFIX=""
-
-    if test -n "$doc_xsl_prefix"; then
-        doc_xsl_prefix_path="$doc_xsl_prefix"
-    else
-        doc_xsl_prefix_path="/usr/share/xml/docbook/xsl-stylesheets-1.69"
-        doc_xsl_prefix_path="${doc_xsl_prefix_arr} /usr/share/xml/docbook/stylesheet/nwalsh"
-    fi
-
-    for p in $doc_xsl_prefix_path; do
-        if test -f ${p}/html/chunk.xsl; then
-            DOC_XSL_PREFIX="$p"
-        fi
-    done
-
-    if test "x$DOC_XSL_PREFIX" = "x"; then
-        AC_MSG_RESULT(no)
-        AC_MSG_WARN([
-*** Docbook XSL files not found
-*** WeeChat will be built without documentation.
-*** Try ./configure --with-doc-xsl-prefix=DIR if you have DIR/html/chunk.xsl file])
-        not_found="$not_found doc(html)"
-    else
-        AC_MSG_RESULT($DOC_XSL_PREFIX)
-        AC_SUBST(DOC_XSL_PREFIX)
-        msg_doc="html $msg_doc"
-    fi
-    
-    # check for asciidoc
     DOC_ASCIIDOC8=""
     AC_CHECK_PROGS(ASCIIDOC, [asciidoc])
     if test -n "$ASCIIDOC"; then
@@ -902,13 +863,18 @@ if test "x$enable_doc" = "xyes" ; then
                 DOC_ASCIIDOC8="yes"
                 AC_MSG_RESULT([${asciidoc_version}])
                 msg_doc="asciidoc $msg_doc"
+                AC_DEFINE(DOC)
                 ;;
         *)
                 AC_MSG_RESULT([${asciidoc_version} (too old)])
+                not_found="$not_found asciidoc"
                 ;;
         esac
+    else
+        not_found="$not_found asciidoc"
     fi
     AC_SUBST(DOC_ASCIIDOC8)
+    AC_SUBST(ASCIIDOC)
 else
     not_asked="$not_asked doc"
     msg_doc=""
@@ -992,7 +958,6 @@ CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\""
 
 AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
-AM_CONDITIONAL(DBLATEX_FOUND,  test "$DBLATEX_FOUND" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,    test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(GUI_WXWIDGETS,  test "$enable_wxwidgets" = "yes")
 AM_CONDITIONAL(GUI_GTK,        test "$enable_gtk" = "yes")
@@ -1019,7 +984,6 @@ AC_OUTPUT([Makefile
            doc/Makefile
            doc/en/Makefile
            doc/fr/Makefile
-           doc/de/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

@@ -1,0 +1,84 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| alias | alias | list of alias
+
+| aspell | aspell_langs | list of supported langs for aspell
+
+| irc | irc_channel | current IRC channel
+
+| irc | irc_channel_nicks_hosts | nicks and hostnames of current IRC channel
+
+| irc | irc_channel_topic | topic of current IRC channel
+
+| irc | irc_channels | IRC channels (on all servers)
+
+| irc | irc_ignores_numbers | numbers for defined ignores
+
+| irc | irc_msg_part | default part message for IRC channel
+
+| irc | irc_privates | IRC privates (on all servers)
+
+| irc | irc_server | current IRC server
+
+| irc | irc_server_nick | nick on current IRC server
+
+| irc | irc_server_nicks | nicks on all channels of current IRC server
+
+| irc | irc_servers | IRC servers (internal names)
+
+| irc | nick | nicks of current IRC channel
+
+| lua | lua_script | list of scripts
+
+| perl | perl_script | list of scripts
+
+| python | python_script | list of scripts
+
+| ruby | ruby_script | list of scripts
+
+| tcl | tcl_script | list of scripts
+
+| weechat | bars_names | names of bars
+
+| weechat | bars_options | options for bars
+
+| weechat | buffers_names | names of buffers
+
+| weechat | buffers_numbers | numbers of buffers
+
+| weechat | buffers_plugins_names | names of buffers (including plugins names)
+
+| weechat | commands | commands (weechat and plugins)
+
+| weechat | config_files | configuration files
+
+| weechat | config_option_values | values for a configuration option
+
+| weechat | config_options | configuration options
+
+| weechat | filename | filename
+
+| weechat | filters_names | names of filters
+
+| weechat | infolists | names of infolists hooked
+
+| weechat | infos | names of infos hooked
+
+| weechat | keys_codes | key codes
+
+| weechat | nicks | nicks in nicklist of current buffer
+
+| weechat | plugins_commands | commands defined by plugins
+
+| weechat | plugins_names | names of plugins
+
+| weechat | proxies_names | names of proxies
+
+| weechat | proxies_options | options for proxies
+
+| weechat | weechat_commands | weechat commands
+
+| xfer | nick | nicks of DCC chat
+
+|========================================

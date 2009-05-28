@@ -1,0 +1,35 @@
+* *logger.file.auto_log*
+** description: automatically save content of buffers to files (unless a buffer disables log)
+** type: boolean
+** values: on, off (default value: on)
+
+* *logger.file.info_lines*
+** description: write information line in log file when log starts or ends for a buffer
+** type: boolean
+** values: on, off (default value: off)
+
+* *logger.file.mask*
+** description: default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted
+** type: string
+** values: any string (default value: "$plugin.$name.weechatlog")
+
+* *logger.file.name_lower_case*
+** description: use only lower case for log filenames
+** type: boolean
+** values: on, off (default value: on)
+
+* *logger.file.path*
+** description: path for WeeChat log files ("%h" will be replaced by WeeChat home, "~/.weechat" by default)
+** type: string
+** values: any string (default value: "%h/logs/")
+
+* *logger.file.time_format*
+** description: timestamp used in log files (see man strftime for date/time specifiers)
+** type: string
+** values: any string (default value: "%Y-%m-%d %H:%M:%S")
+
+* *logger.look.backlog*
+** description: maximum number of lines to display from log file when creating new buffer (0 = no backlog)
+** type: integer
+** values: 0 .. 2147483647 (default value: 20)
+

@@ -1,7 +1,6 @@
 Guide du testeur WeeChat
 ========================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-05-15
 
 
 [[purpose]]

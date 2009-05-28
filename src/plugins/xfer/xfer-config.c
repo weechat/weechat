@@ -280,7 +280,7 @@ xfer_config_init ()
     xfer_config_file_auto_rename = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "auto_rename", "boolean",
-        N_("rename incoming files if already exists (add '.1', '.2', ...)"),
+        N_("rename incoming files if already exists (add \".1\", \".2\", ...)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_auto_resume = weechat_config_new_option (
         xfer_config_file, ptr_section,

@@ -1,0 +1,11 @@
+&bull; *`/charset`* `[[decode | encode] charset] | [reset]`::
+
+........................................
+  change charset for current buffer
+
+   decode: change decoding charset
+   encode: change encoding charset
+  charset: new charset for current buffer
+    reset: reset charsets for current buffer
+........................................
+

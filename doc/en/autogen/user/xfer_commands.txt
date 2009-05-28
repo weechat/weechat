@@ -1,0 +1,11 @@
+&bull; *`/xfer`* `[list | listfull]`::
+
+........................................
+  xfer control
+
+      list: list xfer
+  listfull: list xfer (verbose)
+  
+  Without argument, this command opens buffer with xfer list.
+........................................
+

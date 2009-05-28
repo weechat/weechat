@@ -1,0 +1,38 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| fifo | fifo_filename | nom du tube FIFO
+
+| irc | irc_buffer | retourne le pointeur vers le tampon pour un serveur/canal IRC
+
+| irc | irc_current_server | serveur actuellement sélectionné (seulement si un tampon est utilisé pour tous les serveurs)
+
+| irc | irc_is_channel | 1 si la chaîne est un canal IRC
+
+| irc | irc_nick | retourne le pseudo utilisé actuellement sur un serveur
+
+| irc | irc_nick_from_host | retourne le pseudo à partir d'un host IRC
+
+| weechat | charset_internal | charset interne à WeeChat
+
+| weechat | charset_terminal | charset du terminal
+
+| weechat | date | date de compilation de WeeChat
+
+| weechat | dir_separator | séparateur de répertoire
+
+| weechat | filters_enabled | 1 si les filtres sont activés
+
+| weechat | inactivity | inactivité du clavier (secondes)
+
+| weechat | version | version de WeeChat
+
+| weechat | weechat_dir | répertoire de WeeChat
+
+| weechat | weechat_libdir | répertoire "lib" de WeeChat
+
+| weechat | weechat_localedir | répertoire "locale" de WeeChat
+
+| weechat | weechat_sharedir | répertoire "share" de WeeChat
+
+|========================================

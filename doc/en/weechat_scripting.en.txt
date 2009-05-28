@@ -1,0 +1,426 @@
+WeeChat Scripting Guide
+=======================
+FlashCode <flashcode@flashtux.org>
+
+
+This manual documents WeeChat chat client, it is part of WeeChat.
+
+Latest version of this document can be found on this page:
+http://weechat.flashtux.org/doc.php
+
+
+[[introduction]]
+Introduction
+------------
+
+WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
+light, designed for many operating systems.
+
+This manual documents way to write scripts for WeeChat, using one of five
+supported script languages: perl, python, ruby, lua or tcl.
+
+[NOTE]
+Almost all examples in this doc are written in Python, but API is the same for
+other languages.
+
+[[scripts_in_weechat]]
+Scripts in WeeChat
+------------------
+
+[[languages_specifities]]
+Languages specificities
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Some things are specific to languages:
+
+* perl:
+** functions are called with `weechat::xxx(arg1, arg2, ...);`
+* python:
+** you have to `import weechat`
+** functions `print*` are called `prnt*` in python (because 'print' is reserved
+   keyword)
+** functions are called with `weechat.xxx(arg1, arg2, ...)`
+* ruby:
+** you have to define 'weechat_init' and call register inside
+** functions are called with `Weechat.xxx(arg1, arg2, ...)`
+* tcl:
+** functions are called with `weechat::xxx arg1 arg2 ...`
+
+[[register]]
+Register
+~~~~~~~~
+
+All WeeChat scripts must "register" themselves to WeeChat, and this must be
+first WeeChat function called in script.
+
+Prorotype:
+
+[source,python]
+----------------------------------------
+weechat.register(name, author, version, license, description, shutdown_function, charset)
+----------------------------------------
+
+Arguments:
+
+* 'name': string, internal name of script
+* 'author': string, author name
+* 'version': string, script version
+* 'license': string, script license
+* 'description': string, short description of script
+* 'shutdown_function': string, name of function called when script is unloaded
+* 'charset': string, script charset (optional, if your script is UTF-8, you
+  can use blank value here, because UTF-8 is default charset)
+
+[[script_example]]
+Script example
+~~~~~~~~~~~~~~
+
+Exemple of script, for each language:
+
+* perl:
+
+[source,perl]
+----------------------------------------
+weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat::print("", "Hello, from perl script!");
+----------------------------------------
+
+* python:
+
+[source,python]
+----------------------------------------
+import weechat
+
+weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Test script", "", "")
+weechat.prnt("", "Hello, from python script!")
+----------------------------------------
+
+* ruby:
+
+[source,ruby]
+----------------------------------------
+def weechat_init
+  Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Test script", "", "")
+  Weechat.print("", "Hello, from ruby script!")
+  return Weechat::WEECHAT_RC_OK
+end
+----------------------------------------
+
+* lua:
+
+[source,lua]
+----------------------------------------
+weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Test script", "", "")
+weechat.print("", "Hello, from lua script!")
+----------------------------------------
+
+* tcl:
+
+// [source,tcl]
+----------------------------------------
+weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test script" "" ""
+weechat::print "" "Hello, from tcl script!"
+----------------------------------------
+
+[[load_script]]
+Load script
+~~~~~~~~~~~
+
+You have to use command, depending on language:
+
+----------------------------------------
+/perl load perl/script.pl
+/python load python/script.py
+/ruby load ruby/script.rb
+/lua load lua/script.lua
+/tcl load tcl/script.tcl
+----------------------------------------
+
+You can make link in directory 'language/autoload' to autoload script when
+WeeChat is starting.
+
+For example with perl:
+
+----------------------------------------
+$ cd ~/.weechat/perl/autoload
+$ ln -s ../script.pl
+----------------------------------------
+
+[[script_api]]
+Script API
+----------
+
+Script API is almost the same as C plugin API.
+You can look at 'WeeChat Plugin API Reference' for detail about each function
+in API: prototype, arguments, return values, examples.
+
+It's important to make difference between a 'plugin' and a 'script': a
+'plugin' is a binary file compiled and loaded with command `/plugin`, whereas
+a 'script' is a text file loaded with a plugin like 'perl' with command
+`/perl`.
+
+When your script 'test.py' calls a WeeChat API function, path is like that:
+
+........................................
+       (script API)                           (C API)
+            \/                                   \/
+test.py  ------->  python plugin (python.so)  ------->  WeeChat core
+........................................
+
+When WeeChat calls a callback in your script 'test.py', it's reverse of
+previous path:
+
+........................................
+              (C API)                            (script API)
+                 \/                                   \/
+WeeChat core  ------->  python plugin (python.so)  ------->  test.py
+........................................
+
+Functions
+~~~~~~~~~
+
+List of functions in script API:
+
+* general:
+** 'register'
+* plugins:
+** 'plugin_get_name'
+* strings:
+** 'charset_set'
+** 'iconv_to_internal'
+** 'iconv_from_internal'
+** 'gettext'
+** 'ngettext'
+** 'string_remove_color'
+* directories:
+** 'mkdir_home'
+** 'mkdir'
+** 'mkdir_parents'
+* sorted lists:
+** 'list_new'
+** 'list_add'
+** 'list_search'
+** 'list_casesearch'
+** 'list_get'
+** 'list_set'
+** 'list_next'
+** 'list_prev'
+** 'list_string'
+** 'list_size'
+** 'list_remove'
+** 'list_remove_all'
+** 'list_free'
+* configuration files:
+** 'config_new'
+** 'config_new_section'
+** 'config_search_section'
+** 'config_new_option'
+** 'config_search_option'
+** 'config_string_to_boolean'
+** 'config_option_reset'
+** 'config_option_set'
+** 'config_option_set_null'
+** 'config_option_unset'
+** 'config_option_rename'
+** 'config_option_is_null'
+** 'config_option_default_is_null'
+** 'config_boolean'
+** 'config_boolean_default'
+** 'config_integer'
+** 'config_integer_default'
+** 'config_string'
+** 'config_string_default'
+** 'config_color'
+** 'config_color_default'
+** 'config_write_option'
+** 'config_write_line'
+** 'config_write'
+** 'config_read'
+** 'config_reload'
+** 'config_option_free'
+** 'config_section_free_options'
+** 'config_section_free'
+** 'config_free'
+** 'config_get'
+** 'config_get_plugin'
+** 'config_is_set_plugin'
+** 'config_set_plugin'
+** 'config_unset_plugin'
+* display:
+** 'prefix'
+** 'color'
+** 'print' (for python: 'prnt')
+** 'print_date_tags' (for python: 'prnt_date_tags')
+** 'print_y' (for python: 'prnt_y')
+** 'log_print'
+* hooks:
+** 'hook_command'
+** 'hook_command_run'
+** 'hook_timer'
+** 'hook_fd'
+** 'hook_process'
+** 'hook_connect'
+** 'hook_print'
+** 'hook_signal'
+** 'hook_signal_send'
+** 'hook_config'
+** 'hook_completion'
+** 'hook_completion_list_add'
+** 'hook_modifier'
+** 'hook_modifier_exec'
+** 'hook_info'
+** 'hook_infolist'
+** 'unhook'
+** 'unhook_all'
+* buffers:
+** 'buffer_new'
+** 'buffer_search'
+** 'current_buffer'
+** 'buffer_clear'
+** 'buffer_close'
+** 'buffer_get_integer'
+** 'buffer_get_string'
+** 'buffer_get_pointer'
+** 'buffer_set'
+* windows:
+** 'current_window'
+** 'window_get_integer'
+** 'window_get_string'
+** 'window_get_pointer'
+** 'window_set_title'
+* nicklist:
+** 'nicklist_add_group'
+** 'nicklist_search_group'
+** 'nicklist_add_nick'
+** 'nicklist_search_nick'
+** 'nicklist_remove_group'
+** 'nicklist_remove_nick'
+** 'nicklist_remove_all'
+* bars:
+** 'bar_item_search'
+** 'bar_item_new'
+** 'bar_item_update'
+** 'bar_item_remove'
+** 'bar_search'
+** 'bar_new'
+** 'bar_set'
+** 'bar_update'
+** 'bar_remove'
+* commands:
+** 'command'
+* infos:
+** 'info_get'
+* infolists:
+** 'infolist_new'
+** 'infolist_new_var_integer'
+** 'infolist_new_var_string'
+** 'infolist_new_var_pointer'
+** 'infolist_new_var_time'
+** 'infolist_get'
+** 'infolist_next'
+** 'infolist_prev'
+** 'infolist_fields'
+** 'infolist_integer'
+** 'infolist_string'
+** 'infolist_pointer'
+** 'infolist_time'
+** 'infolist_free'
+* upgrade:
+** 'upgrade_new'
+** 'upgrade_write_object'
+** 'upgrade_read'
+** 'upgrade_close'
+
+Constants
+~~~~~~~~~
+
+List of constants in script API:
+
+* 'WEECHAT_RC_OK'
+* 'WEECHAT_RC_OK_EAT'
+* 'WEECHAT_RC_ERROR'
+* 'WEECHAT_CONFIG_READ_OK'
+* 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+* 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
+* 'WEECHAT_CONFIG_WRITE_OK'
+* 'WEECHAT_CONFIG_WRITE_ERROR'
+* 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
+* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
+* 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
+* 'WEECHAT_LIST_POS_SORT'
+* 'WEECHAT_LIST_POS_BEGINNING'
+* 'WEECHAT_LIST_POS_END'
+* 'WEECHAT_HOTLIST_LOW'
+* 'WEECHAT_HOTLIST_MESSAGE'
+* 'WEECHAT_HOTLIST_PRIVATE'
+* 'WEECHAT_HOTLIST_HIGHLIGHT'
+* 'WEECHAT_HOOK_PROCESS_RUNNING'
+* 'WEECHAT_HOOK_PROCESS_ERROR'
+* 'WEECHAT_HOOK_CONNECT_OK'
+* 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND'
+* 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND'
+* 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED'
+* 'WEECHAT_HOOK_CONNECT_PROXY_ERROR'
+* 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR'
+* 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR'
+* 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR'
+* 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR'
+* 'WEECHAT_HOOK_SIGNAL_STRING'
+* 'WEECHAT_HOOK_SIGNAL_INT'
+* 'WEECHAT_HOOK_SIGNAL_POINTER'
+
+Differences with C API
+~~~~~~~~~~~~~~~~~~~~~~
+
+Pointers
+^^^^^^^^
+
+As you probably know, there is not really "pointers" in scripts. So when API
+functions return pointer, it is converted to string for script.
+
+For example, if function return pointer 0x1234ab56, script will get string
+"0x1234ab56".
+
+And when an API function expects a pointer in arguments, script must give that
+string value. C plugin will convert it to real pointer before calling C API
+function.
+
+Empty string or "0x0" are allowed, they means NULL in C.
+For example, to print data on core buffer (WeeChat main buffer), you can do:
+
+[source,python]
+----------------------------------------
+weechat.prnt("", "hey!")
+----------------------------------------
+
+[WARNING]
+In many functions, for speed reasons, WeeChat does not check if your pointer
+is correct or not. It's your job to check you're giving a valid pointer,
+otherwise you may see a nice crash report ;)
+
+Callbacks
+^^^^^^^^^
+
+Almost all WeeChat callbacks must return WEECHAT_RC_OK or WEECHAT_RC_ERROR
+(exception is modifier callback, which returns a string).
+
+C callbacks are using a "data" argument, which is a pointer. In script API,
+this "data" is a string with a any value (it's not a pointer).
+
+For example:
+
+[source,python]
+----------------------------------------
+weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data!")
+
+def my_timer_cb(data, remaining_calls):
+    # this will display: "my data!"
+    weechat.prnt("", data)
+    return weechat.WEECHAT_RC_OK
+----------------------------------------

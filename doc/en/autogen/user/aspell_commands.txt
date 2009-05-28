@@ -1,0 +1,13 @@
+&bull; *`/aspell`* `dictlist | enable lang | disable | addword [lang] word`::
+
+........................................
+  aspell plugin configuration
+
+  dictlist: show installed dictionaries
+    enable: enable aspell on current buffer
+   disable: disable aspell on current buffer
+   addword: add a word in your personal aspell dictionary
+  
+  Input line beginning with a '/' is not checked, except for some commands.
+........................................
+

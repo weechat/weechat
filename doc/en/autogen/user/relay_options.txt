@@ -1,0 +1,55 @@
+* *relay.color.status_active*
+** description: text color for "connected" status
+** type: color
+** values: a color name (default value: lightblue)
+
+* *relay.color.status_auth_failed*
+** description: text color for "authentication failed" status
+** type: color
+** values: a color name (default value: lightred)
+
+* *relay.color.status_connecting*
+** description: text color for "connecting" status
+** type: color
+** values: a color name (default value: yellow)
+
+* *relay.color.status_disconnected*
+** description: text color for "disconnected" status
+** type: color
+** values: a color name (default value: lightred)
+
+* *relay.color.status_waiting_auth*
+** description: text color for "waiting authentication" status
+** type: color
+** values: a color name (default value: brown)
+
+* *relay.color.text*
+** description: text color
+** type: color
+** values: a color name (default value: default)
+
+* *relay.color.text_bg*
+** description: background color
+** type: color
+** values: a color name (default value: default)
+
+* *relay.color.text_selected*
+** description: text color of selected client line
+** type: color
+** values: a color name (default value: white)
+
+* *relay.look.auto_open_buffer*
+** description: auto open relay buffer when a new client is connecting
+** type: boolean
+** values: on, off (default value: on)
+
+* *relay.network.enabled*
+** description: enable relay
+** type: boolean
+** values: on, off (default value: off)
+
+* *relay.network.listen_port_range*
+** description: port number (or range of ports) that relay plugin listens on (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015)
+** type: string
+** values: any string (default value: "22373-22400")
+

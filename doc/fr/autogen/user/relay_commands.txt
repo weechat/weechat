@@ -1,0 +1,11 @@
+&bull; *`/relay`* `[list | listfull]`::
+
+........................................
+  contrôle du relai
+
+      list: liste les clients pour le relai
+  listfull: liste les clients pour le relai (verbeux)
+  
+  Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
+........................................
+

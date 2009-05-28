@@ -1,0 +1,11 @@
+&bull; *`/ruby`* `[list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] | [unload [name]]`::
+
+........................................
+  list/load/unload scripts
+
+  filename: script (file) to load
+  name: a script name
+  
+  Without argument, this command lists all loaded scripts.
+........................................
+

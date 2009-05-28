@@ -1,7 +1,6 @@
-WeeChat Frequently Asked Questions (FAQ)
+WeeChat FAQ (Frequently Asked Questions)
 ========================================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-05-15
 
 
 General

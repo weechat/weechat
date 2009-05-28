@@ -1,0 +1,38 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| fifo | fifo_filename | name of FIFO pipe
+
+| irc | irc_buffer | get buffer pointer for an IRC server/channel
+
+| irc | irc_current_server | currently selected server (only if one buffer is used for all servers)
+
+| irc | irc_is_channel | 1 if string is an IRC channel
+
+| irc | irc_nick | get current nick on a server
+
+| irc | irc_nick_from_host | get nick from IRC host
+
+| weechat | charset_internal | WeeChat internal charset
+
+| weechat | charset_terminal | terminal charset
+
+| weechat | date | WeeChat compilation date
+
+| weechat | dir_separator | directory separator
+
+| weechat | filters_enabled | 1 if filters are enabled
+
+| weechat | inactivity | keyboard inactivity (seconds)
+
+| weechat | version | WeeChat version
+
+| weechat | weechat_dir | WeeChat directory
+
+| weechat | weechat_libdir | WeeChat "lib" directory
+
+| weechat | weechat_localedir | WeeChat "locale" directory
+
+| weechat | weechat_sharedir | WeeChat "share" directory
+
+|========================================

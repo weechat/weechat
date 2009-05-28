@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-05-19 18:46+0200\n"
+"POT-Creation-Date: 2009-05-26 10:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1771,9 +1771,10 @@ msgstr ""
 "standardní přípona souboru pluginů (například \".so\" pod Linuxem nebo \".dll"
 "\" pod Microsoft Windows)"
 
+#, fuzzy
 msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
+"path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
+"weechat\" by default)"
 msgstr ""
 "cesta pro hledání pluginů ('%h' bude nahrazeno domácím adresářem WeeChat, ~/."
 "weechat je výchozí)"
@@ -3700,9 +3701,10 @@ msgstr ""
 "vlastní jméno hosta/IP pro server (nepovinné, pokud je volné použije se "
 "lokální jméno hosta)"
 
+#, fuzzy
 msgid ""
 "command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"separated by \";\", use \"\\;\" for a semicolon, special variables $nick, "
 "$channel and $server are replaced by their value)"
 msgstr ""
 "příkaz(y), které provést po přípojení k serveru (více příkazů se odděluje "
@@ -3810,8 +3812,9 @@ msgstr "prefix pro zprávy ukončení"
 msgid "color for nick in input bar"
 msgstr "barva přezdívek"
 
+#, fuzzy
 msgid ""
-"default part message (leaving channel) ('%v' will be replaced by WeeChat "
+"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
 msgstr ""
 "výchozí zpráva při odchodu z kanálu ('%v' bude nahrazeno verzí WeeChat v "
@@ -3819,7 +3822,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"default quit message (disconnecting from server) ('%v' will be replaced by "
+"default quit message (disconnecting from server) (\"%v\" will be replaced by "
 "WeeChat version in string)"
 msgstr ""
 "výchozí zpráva při uknočnení ('%v' bude nahrazeno verzí WeeChat v řetězci)"
@@ -3855,9 +3858,10 @@ msgstr ""
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "pokud je off, jsou barvy v příchozích zprávách ignorovány"
 
+#, fuzzy
 msgid ""
-"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
-"yy=color+background, ^Cu=underline, ^Cr=reverse)"
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
 msgstr ""
 "povolit uživateli posílat barvy se speciálními kódy (^Cb=tlustě, "
 "^Ccxx=barva, ^Ccxx,yy=barva+pozadí, ^Cu=podtržené, ^Cr=obrácené)"
@@ -4606,6 +4610,20 @@ msgstr ""
 "řetězci)"
 
 #, fuzzy
+msgid ""
+"default quit message (disconnecting from server) ('%v' will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+"výchozí zpráva při uknočnení ('%v' bude nahrazeno verzí WeeChat v řetězci)"
+
+msgid ""
+"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
+"yy=color+background, ^Cu=underline, ^Cr=reverse)"
+msgstr ""
+"povolit uživateli posílat barvy se speciálními kódy (^Cb=tlustě, "
+"^Ccxx=barva, ^Ccxx,yy=barva+pozadí, ^Cu=podtržené, ^Cr=obrácené)"
+
+#, fuzzy
 msgid "Jabber debug messages"
 msgstr "vypsat debug zprávy"
 
@@ -4819,16 +4837,16 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
+"path for WeeChat log files (\"%h\" will be replaced by WeeChat home, \"~/."
+"weechat\" by default)"
 msgstr ""
 "cesta pro hledání pluginů ('%h' bude nahrazeno domácím adresářem WeeChat, ~/."
 "weechat je výchozí)"
 
 msgid ""
-"default file name mask for log files (format is 'directory/to/file' or "
-"'file', without first '/' because 'path' option is used to build complete "
-"path to file); local buffer variables are permitted"
+"default file name mask for log files (format is \"directory/to/file\" or "
+"\"file\", without first \"/\" because \"path\" option is used to build "
+"complete path to file); local buffer variables are permitted"
 msgstr ""
 
 msgid "write information line in log file when log starts or ends for a buffer"
@@ -5706,7 +5724,8 @@ msgstr ""
 msgid "convert spaces to underscores when sending files"
 msgstr "konvertovat mezery na podtržítka při odesílání souborů"
 
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+#, fuzzy
+msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "přejmenovat příchozí soubory, jestliže již existují (přídat '.1', '.2', ...)"
 
@@ -5770,6 +5789,15 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "allow user to send colors with special codes (\"^Cb\"=bold, \"^Ccxx"
+#~ "\"=color, \"^Ccxx,yy\"=color+background, \"^Cu\"=underline, \"^Cr"
+#~ "\"=reverse)"
+#~ msgstr ""
+#~ "povolit uživateli posílat barvy se speciálními kódy (^Cb=tlustě, "
+#~ "^Ccxx=barva, ^Ccxx,yy=barva+pozadí, ^Cu=podtržené, ^Cr=obrácené)"
 
 #, fuzzy
 #~ msgid "filtered"

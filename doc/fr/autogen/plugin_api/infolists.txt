@@ -1,0 +1,56 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| alias | alias | liste des alias
+
+| irc | irc_channel | liste des canaux pour un serveur IRC
+
+| irc | irc_ignore | liste des ignore IRC
+
+| irc | irc_nick | liste des pseudos pour un canal IRC
+
+| irc | irc_server | liste des serveurs IRC
+
+| logger | logger_buffer | liste des enregistreurs de tampons (loggers)
+
+| lua | lua_script | list of lua scripts
+
+| perl | perl_script | list of perl scripts
+
+| python | python_script | list of python scripts
+
+| relay | relay | liste des clients pour le relai
+
+| ruby | ruby_script | list of ruby scripts
+
+| tcl | tcl_script | list of tcl scripts
+
+| weechat | bar | liste des barres
+
+| weechat | bar_item | liste des objets de barres
+
+| weechat | bar_window | liste des fenêtres de barre
+
+| weechat | buffer | liste des tampons
+
+| weechat | buffer_lines | lignes d'un tampon
+
+| weechat | filter | liste des filtres
+
+| weechat | hook | liste des hooks
+
+| weechat | hotlist | liste des tampons dans la hotlist
+
+| weechat | key | liste des associations de touches
+
+| weechat | nicklist | pseudos dans la liste des pseudos pour un tampon
+
+| weechat | option | liste des options
+
+| weechat | plugin | liste des extensions
+
+| weechat | window | liste des fenêtres
+
+| xfer | xfer | liste des xfer
+
+|========================================

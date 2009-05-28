@@ -1,0 +1,84 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| alias | alias | liste des alias
+
+| aspell | aspell_langs | liste des langues supportées pour aspell
+
+| irc | irc_channel | canal IRC courant
+
+| irc | irc_channel_nicks_hosts | pseudos et noms d'hôtes du canal IRC courant
+
+| irc | irc_channel_topic | titre du canal IRC courant
+
+| irc | irc_channels | canaux IRC (sur tous les serveurs)
+
+| irc | irc_ignores_numbers | numéros pour les ignores définis
+
+| irc | irc_msg_part | message de fin par défaut pour le canal IRC
+
+| irc | irc_privates | canaux IRC (sur tous les serveurs)
+
+| irc | irc_server | serveur IRC courant
+
+| irc | irc_server_nick | pseudo sur le serveur IRC courant
+
+| irc | irc_server_nicks | pseudos sur tous les canaux du serveur IRC courant
+
+| irc | irc_servers | serveurs IRC (noms internes)
+
+| irc | nick | pseudos du canal IRC courant
+
+| lua | lua_script | liste des scripts
+
+| perl | perl_script | liste des scripts
+
+| python | python_script | liste des scripts
+
+| ruby | ruby_script | liste des scripts
+
+| tcl | tcl_script | liste des scripts
+
+| weechat | bars_names | noms des barres
+
+| weechat | bars_options | options pour les barres
+
+| weechat | buffers_names | noms des tampons
+
+| weechat | buffers_numbers | numéros des tampons
+
+| weechat | buffers_plugins_names | noms des tampons (incluant les noms d'extensions)
+
+| weechat | commands | commandes (weechat et extensions)
+
+| weechat | config_files | fichiers de configuration
+
+| weechat | config_option_values | valeurs pour une option de configuration
+
+| weechat | config_options | options de configuration
+
+| weechat | filename | nom de fichier
+
+| weechat | filters_names | noms des filtres
+
+| weechat | infolists | noms des infolistes accrochées
+
+| weechat | infos | noms des infos accrochées
+
+| weechat | keys_codes | codes des touches
+
+| weechat | nicks | pseudos dans la liste des pseudos du tampon courant
+
+| weechat | plugins_commands | commandes définies par les extensions
+
+| weechat | plugins_names | noms des extensions
+
+| weechat | proxies_names | noms des proxies
+
+| weechat | proxies_options | options pour les proxies
+
+| weechat | weechat_commands | commandes weechat
+
+| xfer | nick | pseudos de la discussion DCC
+
+|========================================

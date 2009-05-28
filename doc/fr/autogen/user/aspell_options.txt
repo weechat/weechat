@@ -1,0 +1,30 @@
+* *aspell.check.commands*
+** description: liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic")
+
+* *aspell.check.default_dict*
+** description: dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *aspell.check.during_search*
+** description: vérifier les mots pendant la recherche de texte dans le tampon
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *aspell.check.real_time*
+** description: vérification orthographique des mots en temps réel (plus lent, désactivé par défaut: les mots sont vérifiés seulement s'il y a un délimiteur après)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *aspell.check.word_min_length*
+** description: longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 2)
+
+* *aspell.look.color*
+** description: couleur utilisée pour les mots mal orthographiés
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightred)
+

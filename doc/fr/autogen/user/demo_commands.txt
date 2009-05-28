@@ -1,0 +1,42 @@
+&bull; *`/demo_buffer`* `nom`::
+
+........................................
+  ouvrir un nouveau tampon
+........................................
+
+&bull; *`/demo_buffer_set`* `propriété valeur`::
+
+........................................
+  définir une propriété de tampon
+........................................
+
+&bull; *`/demo_info`* `[info [paramètres]]`::
+
+........................................
+  lit et affiche une info
+
+        info: info à afficher
+  paramètres: paramètres optionnels pour l'info
+  
+  Sans paramètre, cette commande affiche la liste des infos disponibles
+........................................
+
+&bull; *`/demo_infolist`* `[infolist [paramètres]]`::
+
+........................................
+  lit et affiche une infolist
+
+    infolist: infolist à afficher
+  paramètres: paramètres optionnels pour l'infolist
+  
+  Sans paramètre, cette commande affiche la liste des infolists disponibles
+........................................
+
+&bull; *`/demo_printf`* `[texte]`::
+
+........................................
+  affiche des messages sur le tampon courant
+
+  texte: affiche ce texte
+........................................
+

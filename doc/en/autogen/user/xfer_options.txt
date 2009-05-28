@@ -1,0 +1,125 @@
+* *xfer.color.status_aborted*
+** description: text color for "aborted" status
+** type: color
+** values: a color name (default value: lightred)
+
+* *xfer.color.status_active*
+** description: text color for "active" status
+** type: color
+** values: a color name (default value: lightblue)
+
+* *xfer.color.status_connecting*
+** description: text color for "connecting" status
+** type: color
+** values: a color name (default value: yellow)
+
+* *xfer.color.status_done*
+** description: text color for "done" status
+** type: color
+** values: a color name (default value: lightgreen)
+
+* *xfer.color.status_failed*
+** description: text color for "failed" status
+** type: color
+** values: a color name (default value: lightred)
+
+* *xfer.color.status_waiting*
+** description: text color for "waiting" status
+** type: color
+** values: a color name (default value: lightcyan)
+
+* *xfer.color.text*
+** description: text color
+** type: color
+** values: a color name (default value: default)
+
+* *xfer.color.text_bg*
+** description: background color
+** type: color
+** values: a color name (default value: default)
+
+* *xfer.color.text_selected*
+** description: text color of selected xfer line
+** type: color
+** values: a color name (default value: white)
+
+* *xfer.file.auto_accept_chats*
+** description: automatically accept chat requests (use carefully!)
+** type: boolean
+** values: on, off (default value: off)
+
+* *xfer.file.auto_accept_files*
+** description: automatically accept incoming files (use carefully!)
+** type: boolean
+** values: on, off (default value: off)
+
+* *xfer.file.auto_rename*
+** description: rename incoming files if already exists (add ".1", ".2", ...)
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.file.auto_resume*
+** description: automatically resume file transfer if connection with remote host is lost
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.file.convert_spaces*
+** description: convert spaces to underscores when sending files
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.file.download_path*
+** description: path for writing incoming files
+** type: string
+** values: any string (default value: "%h/xfer")
+
+* *xfer.file.upload_path*
+** description: path for reading files when sending (when no path is specified by user)
+** type: string
+** values: any string (default value: "~")
+
+* *xfer.file.use_nick_in_filename*
+** description: use remote nick as prefix in local filename when receiving a file
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.look.auto_open_buffer*
+** description: auto open xfer buffer when a new xfer is added to list
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.look.progress_bar_size*
+** description: size of progress bar, in chars (if 0, progress bar is disabled)
+** type: integer
+** values: 0 .. 256 (default value: 20)
+
+* *xfer.network.blocksize*
+** description: block size for sending packets, in bytes
+** type: integer
+** values: 1024 .. 102400 (default value: 65536)
+
+* *xfer.network.fast_send*
+** description: does not wait for ACK when sending file
+** type: boolean
+** values: on, off (default value: on)
+
+* *xfer.network.own_ip*
+** description: IP or DNS address used for sending files/chats (if empty, local interface IP is used)
+** type: string
+** values: any string (default value: "")
+
+* *xfer.network.port_range*
+** description: restricts outgoing files/chats to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)
+** type: string
+** values: any string (default value: "")
+
+* *xfer.network.speed_limit*
+** description: speed limit for sending files, in kilo-bytes by second (0 means no limit)
+** type: integer
+** values: 0 .. 2147483647 (default value: 0)
+
+* *xfer.network.timeout*
+** description: timeout for xfer request (in seconds)
+** type: integer
+** values: 5 .. 2147483647 (default value: 300)
+

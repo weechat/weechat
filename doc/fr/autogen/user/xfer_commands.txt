@@ -1,0 +1,11 @@
+&bull; *`/xfer`* `[list | listfull]`::
+
+........................................
+  contrôle xfer
+
+      list: liste les xfer
+  listfull: liste les xfer (verbeux)
+  
+  Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
+........................................
+
