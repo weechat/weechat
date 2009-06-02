@@ -167,6 +167,8 @@
    unbind: supprimer l'association à une touche
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
   missing: ajoute les touches manquantes (en utilisant les touches par défaut)
+  
+  Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
 ........................................
 
 &bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::

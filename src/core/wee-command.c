@@ -4037,7 +4037,10 @@ command_init ()
                      " unbind: remove a key binding\n"
                      "  reset: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)\n"
-                     "missing: add missing keys (using default bindings)"),
+                     "missing: add missing keys (using default bindings)\n\n"
+                     "When binding a command to a key, it is recommended to "
+                     "use key alt+k (or Esc then k), and then press the key "
+                     "to bind: this will insert key code in command line."),
                   "bind %(keys_codes) %(commands)"
                   " || unbind %(keys_codes)"
                   " || reset"

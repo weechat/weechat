@@ -167,6 +167,8 @@
    unbind: remove a key binding
     reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
   missing: add missing keys (using default bindings)
+  
+  When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 ........................................
 
 &bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
