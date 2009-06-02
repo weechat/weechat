@@ -117,6 +117,11 @@ For versions > = 0.2.3:
 ** if you are using screen, check that it is run with UTF-8 mode
    ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen)
 
+[NOTE]
+UTF-8 locale is recommended for WeeChat. If you're using ISO or other
+locale, please check that *all* your settings (terminal, screen, ..) are ISO
+and *not* UTF-8.
+
 
 [[bars_background]]
 Bars like title and status are not filled, background color stops after text, why?

@@ -122,6 +122,11 @@ Pour les versions > = 0.2.3 :
 ** si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screnrc ou `screen -U` pour lancer screen)
 
+[NOTE]
+La locale UTF-8 est recommandée pour WeeChat. Si vous utilisez ISO ou une autre
+locale, assurez-vous que *tout* soit configuré en ISO (terminal, screen, ...)
+et *pas* en UTF-8.
+
 
 [[bars_background]]
 Des barres telles que le titre et le statut ne sont pas remplies, la couleur de fond s'arrête après le texte, pourquoi ?
