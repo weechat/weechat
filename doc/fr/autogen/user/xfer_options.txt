@@ -109,7 +109,7 @@
 ** valeurs: toute chaîne (valeur par défaut: "")
 
 * *xfer.network.port_range*
-** description: restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)
+** description: restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé, il est recommandé d'utiliser des ports supérieurs à 1024, car seul root peut utiliser les ports en dessous de 1024)
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
 

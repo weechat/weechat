@@ -109,7 +109,7 @@
 ** values: any string (default value: "")
 
 * *xfer.network.port_range*
-** description: restricts outgoing files/chats to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)
+** description: restricts outgoing files/chats to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port, it's recommended to use ports greater than 1024, because only root can use ports below 1024)
 ** type: string
 ** values: any string (default value: "")
 

@@ -230,7 +230,9 @@ xfer_config_init ()
         "port_range", "string",
         N_("restricts outgoing files/chats to use only ports in the given "
            "range (useful for NAT) (syntax: a single port, ie. 5000 or a port "
-           "range, ie. 5000-5015, empty value means any port)"),
+           "range, ie. 5000-5015, empty value means any port, it's recommended "
+           "to use ports greater than 1024, because only root can use ports "
+           "below 1024)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_own_ip = weechat_config_new_option (
         xfer_config_file, ptr_section,

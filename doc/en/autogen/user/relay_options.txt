@@ -49,7 +49,7 @@
 ** values: on, off (default value: off)
 
 * *relay.network.listen_port_range*
-** description: port number (or range of ports) that relay plugin listens on (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015)
+** description: port number (or range of ports) that relay plugin listens on (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to use ports greater than 1024, because only root can use ports below 1024)
 ** type: string
 ** values: any string (default value: "22373-22400")
 

@@ -212,7 +212,8 @@ relay_config_init ()
         "listen_port_range", "string",
         N_("port number (or range of ports) that relay plugin listens on "
            "(syntax: a single port, ie. 5000 or a port "
-           "range, ie. 5000-5015)"),
+           "range, ie. 5000-5015, it's recommended to use ports greater than "
+           "1024, because only root can use ports below 1024)"),
         NULL, 0, 0, "22373-22400", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     return 1;
