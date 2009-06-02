@@ -1006,7 +1006,7 @@ int
 config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
-    int value_int, i, rc, new_value_ok, old_value_was_null;
+    int value_int, i, rc, new_value_ok, old_value_was_null, num_colors;
     long number;
     char *error, *option_full_name;
     
@@ -1195,17 +1195,22 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                 if (option->value)
                 {
-                    CONFIG_COLOR(option) = 0;
+                    num_colors = gui_color_get_number ();
                     value_int = -1;
+                    new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)
                     {
                         error = NULL;
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            number = number % (option->max + 1);
+                            number = number % (num_colors + 1);
                             value_int = (CONFIG_COLOR(option) + number) %
-                                (option->max + 1);
+                                (num_colors + 1);
+                            if (value_int > num_colors - 1)
+                                value_int -= num_colors;
+                            if (value_int <= num_colors - 1)
+                                new_value_ok = 1;
                         }
                     }
                     else if (strncmp (value, "--", 2) == 0)
@@ -1214,16 +1219,22 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            number = number % (option->max + 1);
-                            value_int = (CONFIG_COLOR(option) + (option->max + 1) - number) %
-                                (option->max + 1);
+                            number = number % (num_colors + 1);
+                            value_int = (CONFIG_COLOR(option) + num_colors - number) %
+                                num_colors;
+                            if (value_int < 0)
+                                value_int += num_colors;
+                            if (value_int >= 0)
+                                new_value_ok = 1;
                         }
                     }
                     else
                     {
                         gui_color_assign (&value_int, value);
+                        if ((value_int >= 0) && (value_int <= num_colors - 1))
+                            new_value_ok = 1;
                     }
-                    if (value_int >= 0)
+                    if (new_value_ok)
                     {
                         if (value_int == CONFIG_COLOR(option))
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
