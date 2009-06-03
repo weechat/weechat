@@ -276,6 +276,56 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                 CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 string++;
                 break;
+            case GUI_COLOR_SET_WEECHAT_CHAR:
+                string++;
+                switch (string[0])
+                {
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
+                        string++;
+                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                    A_BOLD);
+                        break;
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
+                        string++;
+                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                    A_REVERSE);
+                        break;
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
+                        string++;
+                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                    A_UNDERLINE);
+                        break;
+                }
+                break;
+            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
+                string++;
+                switch (string[0])
+                {
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
+                        string++;
+                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       A_BOLD);
+                        break;
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
+                        string++;
+                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       A_REVERSE);
+                        break;
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
+                        string++;
+                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       A_UNDERLINE);
+                        break;
+                }
+                break;
             default:
                 next_char = utf8_next_char (string);
                 if (!next_char)
