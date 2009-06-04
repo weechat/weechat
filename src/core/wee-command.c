@@ -610,6 +610,8 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
+            number1 = -1;
+            number2 = -1;
             pos = strchr (argv_eol[2], '-');
             if (pos)
             {
