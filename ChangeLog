@@ -1,13 +1,13 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-05-19
+v0.3.0-dev, 2009-06-06
 
 
 Version 0.3.0 (under dev!)
 --------------------------
 
-* irc: add irc plugin (replaces old IRC code in core)
+* irc: add irc plugin (replaces old IRC code in core) (task #6217)
 * irc: add smart join/part/quit message filter (task #8503)
 * irc: use of many addresses for servers (auto-switch when a connexion fails),
   nicks are now set with one option "nicks" (task #6088)
