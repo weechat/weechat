@@ -57,7 +57,7 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
         
         if (server && server->is_away)
         {
-            length = strlen (_("away") + 64 + 1);
+            length = strlen (_("away")) + 64 + 1;
             buf = malloc (length);
             if (buf)
             {
