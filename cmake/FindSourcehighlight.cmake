@@ -14,15 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_DOC)
+# - Find Source-Highlight
+# This module finds if source-highlight is installed.
 
-  FIND_PACKAGE(Sourcehighlight)
-  FIND_PACKAGE(Asciidoc)
-  IF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-    ADD_SUBDIRECTORY( en )
-    ADD_SUBDIRECTORY( fr )
-  ENDIF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
+IF (SOURCEHIGHLIGHT_FOUND)
+  # Already in cache, be silent
+  SET(SOURCEHIGHLIGHT_FIND_QUIETLY TRUE)
+ENDIF (SOURCEHIGHLIGHT_FOUND)
 
-ENDIF(NOT DISABLE_DOC)
+FIND_PROGRAM(
+  SOURCEHIGHLIGHT_EXECUTABLE source-highlight
+  PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
+)
 
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1 DESTINATION share/man/man1)
+IF(SOURCEHIGHLIGHT_EXECUTABLE)
+  SET(SOURCEHIGHLIGHT_FOUND TRUE)
+  MARK_AS_ADVANCED(
+    SOURCEHIGHLIGHT_EXECUTABLE
+    )
+ENDIF(SOURCEHIGHLIGHT_EXECUTABLE)

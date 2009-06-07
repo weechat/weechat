@@ -45,6 +45,7 @@ EXTRA_DIST = CMakeLists.txt \
              debian/weechat-plugins.install \
              debian/weechat.xpm \
              cmake/cmake_uninstall.cmake.in \
+             cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
              cmake/FindGettext.cmake \
              cmake/FindGnuTLS.cmake \
@@ -56,6 +57,7 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindPkgConfig.cmake \
              cmake/FindPython.cmake \
              cmake/FindRuby.cmake \
+             cmake/FindSourcehighlight.cmake \
              cmake/FindTCL.cmake \
              cmake/makedist.sh.in \
              weechat.spec \
