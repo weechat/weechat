@@ -4291,8 +4291,8 @@ command_init ()
                      "been closed before execution of command), then command "
                      "is executed on WeeChat core buffer).\n\n"
                      "Examples:\n"
-                     "  join channel in 10 sec: /wait 10 join #test\n"
-                     "  set away in 15 min:     /wait 15m away -all I'm away\n"
+                     "  join channel in 10 sec: /wait 10 /join #test\n"
+                     "  set away in 15 min:     /wait 15m /away -all I'm away\n"
                      "  say 'hello' in 2 min:   /wait 2m hello"),
                   "%- %(commands)",
                   &command_wait, NULL);

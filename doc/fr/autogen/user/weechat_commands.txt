@@ -330,8 +330,8 @@
   Note: la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
   
   Exemples:
-    rejoindre le canal dans 10 sec: /wait 10 join #test
-    passer absent dans 15 min:      /wait 15m away -all I'm away
+    rejoindre le canal dans 10 sec: /wait 10 /join #test
+    passer absent dans 15 min:      /wait 15m /away -all I'm away
     dire 'bonjour' dans 2 min:      /wait 2m bonjour
 ........................................
 

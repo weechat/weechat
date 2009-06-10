@@ -330,8 +330,8 @@
   Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
   
   Examples:
-    join channel in 10 sec: /wait 10 join #test
-    set away in 15 min:     /wait 15m away -all I'm away
+    join channel in 10 sec: /wait 10 /join #test
+    set away in 15 min:     /wait 15m /away -all I'm away
     say 'hello' in 2 min:   /wait 2m hello
 ........................................
 
