@@ -28,6 +28,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-string.h"
 #include "gui-history.h"
 #include "gui-buffer.h"
@@ -184,4 +185,29 @@ gui_history_buffer_free (struct t_gui_buffer *buffer)
     buffer->last_history = NULL;
     buffer->ptr_history = NULL;
     buffer->num_history = 0;
+}
+
+/*
+ * gui_history_add_to_infolist: add history of commands in an infolist
+ *                              if buffer is NULL, global history is returned
+ *                              return 1 if ok, 0 if error
+ */
+
+int
+gui_history_add_to_infolist (struct t_infolist *infolist,
+                             struct t_gui_history *history)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !history)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_string (ptr_item, "text", history->text))
+        return 0;
+    
+    return 1;
 }

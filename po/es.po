@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-10 13:00+0200\n"
+"POT-Creation-Date: 2009-06-10 19:09+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4910,6 +4910,10 @@ msgstr "fallÃ³ al cargar el bÃºfer"
 #, fuzzy
 msgid "list of filters"
 msgstr "Lista de alias:\n"
+
+#, fuzzy
+msgid "history of commands"
+msgstr "Comandos internos %s :\n"
 
 #, fuzzy
 msgid "list of hooks"

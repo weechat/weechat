@@ -37,6 +37,8 @@
 
 | weechat | filter | list of filters
 
+| weechat | history | history of commands
+
 | weechat | hook | list of hooks
 
 | weechat | hotlist | list of buffers in hotlist

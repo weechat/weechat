@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-10 13:00+0200\n"
+"POT-Creation-Date: 2009-06-10 19:09+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4921,6 +4921,10 @@ msgstr "konnte den Puffer nicht laden"
 #, fuzzy
 msgid "list of filters"
 msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "history of commands"
+msgstr "%s interne Befehle:\n"
 
 #, fuzzy
 msgid "list of hooks"

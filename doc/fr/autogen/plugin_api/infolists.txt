@@ -37,6 +37,8 @@
 
 | weechat | filter | liste des filtres
 
+| weechat | history | historique des commandes
+
 | weechat | hook | liste des hooks
 
 | weechat | hotlist | liste des tampons dans la hotlist

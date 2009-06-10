@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-10 13:00+0200\n"
+"POT-Creation-Date: 2009-06-10 19:09+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator:  <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4298,6 +4298,10 @@ msgstr ""
 
 msgid "list of filters"
 msgstr ""
+
+#, fuzzy
+msgid "history of commands"
+msgstr "Pozostałe komendy:"
 
 msgid "list of hooks"
 msgstr ""

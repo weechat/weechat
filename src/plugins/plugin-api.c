@@ -45,6 +45,7 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
+#include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-line.h"
@@ -334,6 +335,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_bar_window *ptr_bar_window;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
+    struct t_gui_history *ptr_history;
     struct t_gui_filter *ptr_filter;
     struct t_gui_window *ptr_window;
     struct t_gui_hotlist *ptr_hotlist;
@@ -562,6 +564,28 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                         infolist_free (ptr_infolist);
                         return NULL;
                     }
+                }
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "history") == 0)
+    {
+        /* invalid buffer pointer ? */
+        if (pointer && (!gui_buffer_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (ptr_history = (pointer) ?
+                     ((struct t_gui_buffer *)pointer)->history : history_global;
+                 ptr_history; ptr_history = ptr_history->next_history)
+            {
+                if (!gui_history_add_to_infolist (ptr_infolist, ptr_history))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
                 }
             }
             return ptr_infolist;
@@ -917,6 +941,8 @@ plugin_api_init ()
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "filter", N_("list of filters"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "history", N_("history of commands"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook", N_("list of hooks"),
                    &plugin_api_infolist_get_internal, NULL);
