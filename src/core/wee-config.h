@@ -164,7 +164,7 @@ extern struct t_config_option *config_color_nicklist_separator;
 
 extern struct t_config_option *config_completion_default_template;
 extern struct t_config_option *config_completion_nick_add_space;
-extern struct t_config_option *config_completion_nick_completor;
+extern struct t_config_option *config_completion_nick_completer;
 extern struct t_config_option *config_completion_nick_first_only;
 extern struct t_config_option *config_completion_nick_ignore_chars;
 extern struct t_config_option *config_completion_partial_completion_alert;

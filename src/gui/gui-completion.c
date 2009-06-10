@@ -337,7 +337,7 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
         if (nick_completion && (completion->base_word_pos == 0))
         {
             snprintf (buffer, sizeof (buffer), "%s%s",
-                      word, CONFIG_STRING(config_completion_nick_completor));
+                      word, CONFIG_STRING(config_completion_nick_completer));
             weelist_add (completion->completion_list, buffer, where,
                          (nick_completion) ? (void *)1 : (void *)0);
         }

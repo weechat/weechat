@@ -303,7 +303,7 @@
 ** type: boolean
 ** values: on, off (default value: on)
 
-* *weechat.completion.nick_completor*
+* *weechat.completion.nick_completer*
 ** description: string inserted after nick completion
 ** type: string
 ** values: any string (default value: ":")

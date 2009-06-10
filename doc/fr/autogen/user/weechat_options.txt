@@ -303,7 +303,7 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
-* *weechat.completion.nick_completor*
+* *weechat.completion.nick_completer*
 ** description: chaîne affichée après la complétion des pseudos
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: ":")
