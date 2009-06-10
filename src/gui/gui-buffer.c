@@ -2174,6 +2174,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "active", buffer->active))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "print_hooks_enabled", buffer->print_hooks_enabled))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->lines->first_line_not_read))
