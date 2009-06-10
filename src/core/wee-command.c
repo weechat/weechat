@@ -1927,6 +1927,16 @@ command_key (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_OK;
         }
         
+        if (argc < 4)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "key");
+            return WEECHAT_RC_ERROR;
+        }
+        
         /* bind new key */
         gui_keyboard_verbose = 1;
         ptr_key = gui_keyboard_bind (NULL, argv[2], argv_eol[3]);
