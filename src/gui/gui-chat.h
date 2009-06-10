@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_GUI_CHAT_H
 #define __WEECHAT_GUI_CHAT_H 1
 
-#include <regex.h>
-
 struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_line;
@@ -60,31 +58,9 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
                                     int *word_end_offset,
                                     int *word_length_with_spaces,
                                     int *word_length);
+extern char *gui_chat_get_time_string (time_t date);
 extern void gui_chat_change_time_format ();
-extern int gui_chat_get_line_align (struct t_gui_buffer *buffer,
-                                    struct t_gui_line *line,
-                                    int with_suffix);
-extern int gui_chat_line_displayed (struct t_gui_line *line);
-extern struct t_gui_line *gui_chat_get_first_line_displayed (struct t_gui_buffer *buffer);
-extern struct t_gui_line *gui_chat_get_last_line_displayed (struct t_gui_buffer *buffer);
-extern struct t_gui_line *gui_chat_get_prev_line_displayed (struct t_gui_line *line);
-extern struct t_gui_line *gui_chat_get_next_line_displayed (struct t_gui_line *line);
-extern int gui_chat_line_search (struct t_gui_line *line, const char *text,
-                                 int case_sensitive);
-extern int gui_chat_line_match_regex (struct t_gui_line *line,
-                                      regex_t *regex_prefix,
-                                      regex_t *regex_message);
-extern int gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
-                                     char **tags_array);
-extern void gui_chat_line_free (struct t_gui_buffer *buffer,
-                                struct t_gui_line *line);
-extern void gui_chat_line_free_all (struct t_gui_buffer *buffer);
-extern struct t_gui_line *gui_chat_line_add (struct t_gui_buffer *buffer,
-                                             time_t date,
-                                             time_t date_printed,
-                                             const char *tags,
-                                             const char *prefix,
-                                             const char *message);
+extern char *gui_chat_build_string_prefix_message (struct t_gui_line *line);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, const char *tags,
                                        const char *message, ...);

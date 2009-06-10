@@ -226,16 +226,7 @@ irc_upgrade_read_cb (void *data,
                         ptr_buffer = weechat_buffer_search (IRC_PLUGIN_NAME,
                                                             buffer_name);
                         if (ptr_buffer)
-                        {
                             irc_upgrade_current_server->buffer = ptr_buffer;
-                            if (weechat_config_boolean (irc_config_look_one_server_buffer)
-                                && !irc_buffer_servers)
-                            {
-                                irc_buffer_servers = ptr_buffer;
-                            }
-                            if (weechat_infolist_integer (infolist, "selected"))
-                                irc_current_server = irc_upgrade_current_server;
-                        }
                     }
                     irc_upgrade_current_server->index_current_address =
                         weechat_infolist_integer (infolist, "index_current_address");

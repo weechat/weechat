@@ -33,7 +33,7 @@ struct t_infolist;
 struct t_weelist;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20090510-01"
+#define WEECHAT_PLUGIN_API_VERSION "20090608-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -486,8 +486,12 @@ struct t_weechat_plugin
                                                               struct t_gui_buffer *buffer),
                                         void *close_callback_data);
     struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
+    struct t_gui_buffer *(*buffer_search_main) ();
     void (*buffer_clear) (struct t_gui_buffer *buffer);
     void (*buffer_close) (struct t_gui_buffer *buffer);
+    void (*buffer_merge) (struct t_gui_buffer *buffer,
+                           struct t_gui_buffer *target_buffer);
+    void (*buffer_unmerge) (struct t_gui_buffer *buffer, int number);
     int (*buffer_get_integer) (struct t_gui_buffer *buffer,
                                const char *property);
     const char *(*buffer_get_string) (struct t_gui_buffer *buffer,
@@ -1023,12 +1027,18 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                __close_callback, __close_callback_data)
 #define weechat_buffer_search(__plugin, __name)                         \
     weechat_plugin->buffer_search(__plugin, __name)
+#define weechat_buffer_search_main()                                    \
+    weechat_plugin->buffer_search_main()
 #define weechat_current_buffer()                                        \
     weechat_plugin->buffer_search(NULL, NULL)
 #define weechat_buffer_clear(__buffer)                                  \
     weechat_plugin->buffer_clear(__buffer)
 #define weechat_buffer_close(__buffer)                                  \
     weechat_plugin->buffer_close(__buffer)
+#define weechat_buffer_merge(__buffer, __target_buffer)                 \
+    weechat_plugin->buffer_merge(__buffer, __target_buffer)
+#define weechat_buffer_unmerge(__buffer, __number)                      \
+    weechat_plugin->buffer_unmerge(__buffer, __number)
 #define weechat_buffer_get_integer(__buffer, __property)                \
     weechat_plugin->buffer_get_integer(__buffer, __property)
 #define weechat_buffer_get_string(__buffer, __property)                 \

@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_UPGRADE_FILE_H
 #define __WEECHAT_UPGRADE_FILE_H 1
 
-#define UPGRADE_SIGNATURE "===== WeeChat Upgrade file v2.1 - binary, do not edit! ====="
+#define UPGRADE_SIGNATURE "===== WeeChat Upgrade file v2.2 - binary, do not edit! ====="
 
 #define UPGRADE_ERROR(msg1, msg2)                                       \
     upgrade_file_error(upgrade_file, msg1, msg2, __FILE__, __LINE__)

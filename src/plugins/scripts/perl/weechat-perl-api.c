@@ -3965,6 +3965,30 @@ static XS (XS_weechat_api_buffer_search)
 }
 
 /*
+ * weechat::buffer_search_main: search main buffer (WeeChat core buffer)
+ */
+
+static XS (XS_weechat_api_buffer_search_main)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) items;
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_search_main");
+	PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_buffer_search_main ());
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::current_buffer: get current buffer
  */
 
@@ -4042,6 +4066,64 @@ static XS (XS_weechat_api_buffer_close)
     script_api_buffer_close (weechat_perl_plugin,
                              perl_current_script,
                              script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::buffer_merge: merge a buffer to another buffer
+ */
+
+static XS (XS_weechat_api_buffer_merge)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_merge");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "buffer_merge");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_buffer_merge (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
+                          script_str2ptr (SvPV (ST (1), PL_na))); /* target_buffer */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::buffer_unmerge: unmerge a buffer from group of merged buffers
+ */
+
+static XS (XS_weechat_api_buffer_unmerge)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_buffer_unmerge (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
+                            SvIV (ST (1))); /* number */
     
     PERL_RETURN_OK;
 }
@@ -5709,9 +5791,12 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::unhook_all", XS_weechat_api_unhook_all, "weechat");
     newXS ("weechat::buffer_new", XS_weechat_api_buffer_new, "weechat");
     newXS ("weechat::buffer_search", XS_weechat_api_buffer_search, "weechat");
+    newXS ("weechat::buffer_search_main", XS_weechat_api_buffer_search_main, "weechat");
     newXS ("weechat::current_buffer", XS_weechat_api_current_buffer, "weechat");
     newXS ("weechat::buffer_clear", XS_weechat_api_buffer_clear, "weechat");
     newXS ("weechat::buffer_close", XS_weechat_api_buffer_close, "weechat");
+    newXS ("weechat::buffer_merge", XS_weechat_api_buffer_merge, "weechat");
+    newXS ("weechat::buffer_unmerge", XS_weechat_api_buffer_unmerge, "weechat");
     newXS ("weechat::buffer_get_integer", XS_weechat_api_buffer_get_integer, "weechat");
     newXS ("weechat::buffer_get_string", XS_weechat_api_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_api_buffer_get_pointer, "weechat");

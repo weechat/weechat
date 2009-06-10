@@ -86,6 +86,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_default_bind (/* del           */ "meta2-3~",           "/input delete_next_char");
     gui_keyboard_default_bind (/* ^D            */ "ctrl-D",             "/input delete_next_char");
     gui_keyboard_default_bind (/* ^W            */ "ctrl-W",             "/input delete_previous_word");
+    gui_keyboard_default_bind (/* ^X            */ "ctrl-X",             "/input switch_active_buffer");
     gui_keyboard_default_bind (/* m-d           */ "meta-d",             "/input delete_next_word");
     gui_keyboard_default_bind (/* ^K            */ "ctrl-K",             "/input delete_end_of_line");
     gui_keyboard_default_bind (/* m-r           */ "meta-r",             "/input delete_line");
@@ -114,16 +115,14 @@ gui_keyboard_default_bindings ()
     gui_keyboard_default_bind (/* ^down         */ "meta-Ob",            "/input history_global_next");
     gui_keyboard_default_bind (/* m-a           */ "meta-a",             "/input jump_smart");
     gui_keyboard_default_bind (/* m-j,m-l       */ "meta-jmeta-l",       "/input jump_last_buffer");
-    gui_keyboard_default_bind (/* m-j,m-p       */ "meta-jmeta-p",       "/input jump_previous_buffer");
     gui_keyboard_default_bind (/* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
     gui_keyboard_default_bind (/* m-h           */ "meta-h",             "/input hotlist_clear");
     gui_keyboard_default_bind (/* m-k           */ "meta-k",             "/input grab_key");
-    gui_keyboard_default_bind (/* m-s           */ "meta-s",             "/server switch");
     gui_keyboard_default_bind (/* m-u           */ "meta-u",             "/input scroll_unread");
     gui_keyboard_default_bind (/* ^S^U          */ "ctrl-Sctrl-U",       "/input set_unread");
     gui_keyboard_default_bind (/* ^Cb           */ "ctrl-Cb",            "/input insert \\x02");
     gui_keyboard_default_bind (/* ^Cc           */ "ctrl-Cc",            "/input insert \\x03");
-    gui_keyboard_default_bind (/* ^Cc           */ "ctrl-Ci",            "/input insert \\x1D");
+    gui_keyboard_default_bind (/* ^Ci           */ "ctrl-Ci",            "/input insert \\x1D");
     gui_keyboard_default_bind (/* ^Co           */ "ctrl-Co",            "/input insert \\x0F");
     gui_keyboard_default_bind (/* ^Cr           */ "ctrl-Cr",            "/input insert \\x12");
     gui_keyboard_default_bind (/* ^Cu           */ "ctrl-Cu",            "/input insert \\x15");

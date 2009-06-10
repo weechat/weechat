@@ -293,7 +293,8 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     if (!gui_hotlist_check_buffer_notify (buffer, priority))
         return;
     
-    if ((ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer)))
+    ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer);
+    if (ptr_hotlist)
     {
         /* return if priority is greater or equal than the one to add */
         if (ptr_hotlist->priority >= priority)
@@ -395,7 +396,7 @@ void
 gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_hotlist *pos_hotlist;
-
+    
     pos_hotlist = gui_hotlist_search (gui_hotlist, buffer);
     if (pos_hotlist)
     {
@@ -452,6 +453,10 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_pointer (ptr_item, "buffer_pointer", hotlist->buffer))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "buffer_number", hotlist->buffer->number))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "plugin_name", plugin_get_name (hotlist->buffer->plugin)))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "buffer_name", hotlist->buffer->name))
         return 0;
     
     return 1;

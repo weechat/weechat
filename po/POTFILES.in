@@ -74,6 +74,8 @@
 ./src/gui/gui-keyboard.h
 ./src/gui/gui-layout.c
 ./src/gui/gui-layout.h
+./src/gui/gui-line.c
+./src/gui/gui-line.h
 ./src/gui/gui-main.h
 ./src/gui/gui-nicklist.c
 ./src/gui/gui-nicklist.h

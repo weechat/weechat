@@ -44,6 +44,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-keyboard.h \
                                    gui-layout.c \
                                    gui-layout.h \
+                                   gui-line.c \
+                                   gui-line.h \
                                    gui-main.h \
                                    gui-nicklist.c \
                                    gui-nicklist.h \

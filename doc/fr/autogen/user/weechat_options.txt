@@ -113,6 +113,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: white)
 
+* *weechat.color.chat_prefix_buffer*
+** description: couleur du texte pour le nom du tampon (avant le préfixe, quand plusieurs tampons sont mélangés avec le numéro)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: brown)
+
 * *weechat.color.chat_prefix_error*
 ** description: couleur du texte pour le préfixe d'erreur
 ** type: couleur
@@ -462,6 +467,11 @@
 ** description: taille maximum pour le préfixe (0 = pas de taille maximum)
 ** type: entier
 ** valeurs: 0 .. 64 (valeur par défaut: 0)
+
+* *weechat.look.prefix_buffer_align*
+** description: alignement de préfixe pour le nom du tampon, quand plusieurs tampons sont mélangés avec le même numéro (none, left, right (par défaut))
+** type: entier
+** valeurs: none, left, right (valeur par défaut: right)
 
 * *weechat.look.prefix_error*
 ** description: préfixe pour les messages d'erreur

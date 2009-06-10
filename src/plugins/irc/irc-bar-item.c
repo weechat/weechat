@@ -143,24 +143,12 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
         {
             if (server && !channel)
             {
-                if (weechat_config_boolean (irc_config_look_one_server_buffer))
-                {
-                    snprintf (buf_name, sizeof (buf_name), "%s%s[<%s%s%s>]",
-                              _("servers"),
-                              IRC_COLOR_BAR_DELIM,
-                              IRC_COLOR_STATUS_NAME,
-                              (irc_current_server) ? irc_current_server->name : "-",
-                              IRC_COLOR_BAR_DELIM);
-                }
-                else
-                {
-                    snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
-                              _("server"),
-                              IRC_COLOR_BAR_DELIM,
-                              IRC_COLOR_STATUS_NAME,
-                              server->name,
-                              IRC_COLOR_BAR_DELIM);
-                }
+                snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
+                          _("server"),
+                          IRC_COLOR_BAR_DELIM,
+                          IRC_COLOR_STATUS_NAME,
+                          server->name,
+                          IRC_COLOR_BAR_DELIM);
             }
             else
             {

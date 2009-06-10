@@ -4440,6 +4440,33 @@ weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_buffer_search_main: search main buffer (WeeChat core buffer)
+ */
+
+static int
+weechat_tcl_api_buffer_search_main (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    (void) objc;
+    (void) objv;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_search_main");
+        TCL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_buffer_search_main ());
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_current_buffer: get current buffer
  */
 
@@ -4526,6 +4553,77 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
     script_api_buffer_close (weechat_tcl_plugin,
                              tcl_current_script,
                              script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* buffer */
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_buffer_merge: merge a buffer to another buffer
+ */
+
+static int
+weechat_tcl_api_buffer_merge (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_merge");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "buffer_merge");
+        TCL_RETURN_ERROR;
+    }
+    
+    weechat_buffer_merge (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)), /* buffer */
+                          script_str2ptr (Tcl_GetStringFromObj (objv[2], &i))); /* target_buffer */
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_buffer_unmerge: unmerge a buffer from a group of merged
+ *                                 buffers
+ */
+
+static int
+weechat_tcl_api_buffer_unmerge (ClientData clientData, Tcl_Interp *interp,
+                                int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i, number;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (Tcl_GetIntFromObj (interp, objv[2], &number) != TCL_OK)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        TCL_RETURN_ERROR;
+    }
+    
+    weechat_buffer_unmerge (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)),
+                            number);
     
     TCL_RETURN_OK;
 }
@@ -6528,12 +6626,18 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_buffer_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_search",
                           weechat_tcl_api_buffer_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::buffer_search_main",
+                          weechat_tcl_api_buffer_search_main, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::current_buffer",
                           weechat_tcl_api_current_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_clear",
                           weechat_tcl_api_buffer_clear, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_close",
                           weechat_tcl_api_buffer_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::buffer_merge",
+                          weechat_tcl_api_buffer_merge, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::buffer_unmerge",
+                          weechat_tcl_api_buffer_unmerge, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_get_integer",
                           weechat_tcl_api_buffer_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_get_string",

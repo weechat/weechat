@@ -30,7 +30,6 @@
 #include "../../core/wee-log.h"
 #include "../gui-bar.h"
 #include "../gui-bar-window.h"
-#include "../gui-chat.h"
 #include "../gui-color.h"
 #include "../gui-window.h"
 #include "gui-gtk.h"

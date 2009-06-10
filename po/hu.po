@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-02 15:54+0200\n"
+"POT-Creation-Date: 2009-06-08 22:24+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -828,8 +828,9 @@ msgid "manage buffers"
 msgstr "pufferek kezelése"
 
 msgid ""
-"[clear [number | -all] | move number | close [n1[-n2]]| list | notify level "
-"| localvar | set property value | number | name]"
+"[clear [number | -all] | move number | merge number | unmerge [number] | "
+"close [n1[-n2]]| list | notify level | localvar | set property value | "
+"number | name]"
 msgstr ""
 
 #, fuzzy
@@ -837,6 +838,10 @@ msgid ""
 "   clear: clear buffer content (-all for all buffers, number for a buffer, "
 "or nothing for current buffer)\n"
 "    move: move buffer in the list (may be relative, for example -1)\n"
+"   merge: merge current buffer to another buffer (chat area will be mix of "
+"both buffers)\n"
+"          (by default ctrl-x switches between merged buffers)\n"
+" unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
 "    list: list buffers (no parameter implies this list)\n"
 "  notify: set notify level for current buffer: this level determines whether "
@@ -856,13 +861,15 @@ msgid ""
 "    name: jump to buffer by (partial) name\n"
 "\n"
 "Examples:\n"
-"clear current buffer: /buffer clear\n"
-"   clear all buffers: /buffer clear -all\n"
-"         move buffer: /buffer move 5\n"
-"close current buffer: /buffer close\n"
-"close buffers 5 to 7: /buffer close 5-7\n"
-"    jump to #weechat: /buffer #weechat\n"
-" jump to next buffer: /buffer +1"
+"  clear current buffer: /buffer clear\n"
+"     clear all buffers: /buffer clear -all\n"
+"           move buffer: /buffer move 5\n"
+"merge with core buffer: /buffer merge 1\n"
+"        unmerge buffer: /buffer unmerge\n"
+"  close current buffer: /buffer close\n"
+"  close buffers 5 to 7: /buffer close 5-7\n"
+"      jump to #weechat: /buffer #weechat\n"
+"   jump to next buffer: /buffer +1"
 msgstr ""
 "utasítás: végrehajtandó utasítás:\n"
 "    move: puffer mozgatása a listában (lehet relatív is, például -1)\n"
@@ -1457,6 +1464,11 @@ msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
 msgid "max size for prefix (0 = no max size)"
 msgstr ""
 
+msgid ""
+"prefix alignment for buffer name, when many buffers are merged with same "
+"number (none, left, right (default))"
+msgstr ""
+
 #, fuzzy
 msgid "string displayed after prefix"
 msgstr "névkiegészítés után beszúrt szöveg"
@@ -1508,6 +1520,11 @@ msgstr "idő színe a beszédablakban"
 #, fuzzy
 msgid "text color for time delimiters"
 msgstr "információs pult határolóinak színe"
+
+msgid ""
+"text color for buffer name (before prefix, when many buffers are merged with "
+"same number)"
+msgstr ""
 
 #, fuzzy
 msgid "text color for error prefix"
@@ -2125,9 +2142,9 @@ msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
-#, fuzzy
-msgid "Not enough memory for new line"
-msgstr "Nincs elég memória az új sorhoz\n"
+#, c-format
+msgid "%sError: it is only possible to merge buffers with formatted content"
+msgstr ""
 
 #, fuzzy
 msgid "names of buffers"
@@ -2222,6 +2239,10 @@ msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 #, fuzzy
 msgid "Error: not enough memory for key binding"
 msgstr "%s nincs elég memória a billentyűhozzárendeléshez\n"
+
+#, fuzzy
+msgid "Not enough memory for new line"
+msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -2564,10 +2585,6 @@ msgstr ""
 msgid "away"
 msgstr ""
 
-#, fuzzy
-msgid "servers"
-msgstr "szerver"
-
 msgid "Lag"
 msgstr ""
 
@@ -2602,11 +2619,11 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s nem található név az üzenet küldéséhez\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away: %s"
+msgid "%s: future away: %s"
 msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away removed"
+msgid "%s: future away removed"
 msgstr "%s%d%s mellőzés eltávolítva.\n"
 
 #, fuzzy, c-format
@@ -2646,7 +2663,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is cancelled"
 msgstr "automata újracsatlakozás megszakítva\n"
 
 #, fuzzy, c-format
@@ -3355,7 +3372,7 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [raw] | [switch]"
+"[deloutq] | [raw]"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -3382,8 +3399,6 @@ msgid ""
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
 "       raw: open buffer with raw IRC data\n"
-"    switch: switch active server (when one buffer is used for all servers, "
-"default key: alt-s on server buffer)\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -3759,8 +3774,9 @@ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 msgid "use nick color in messages from server"
 msgstr "helyi idő lekérdezése a szerverről"
 
-msgid "use same buffer for all servers"
-msgstr "ugyanazon puffer használata minden szerverhez"
+#, fuzzy
+msgid "merge server buffers"
+msgstr "pufferek kezelése"
 
 msgid "open new channels/privates near server"
 msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
@@ -3923,9 +3939,6 @@ msgid "get nick from IRC host"
 msgstr "név vagy gép letiltása"
 
 msgid "get buffer pointer for an IRC server/channel"
-msgstr ""
-
-msgid "currently selected server (only if one buffer is used for all servers)"
 msgstr ""
 
 #, fuzzy
@@ -4235,7 +4248,7 @@ msgid ""
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4297,19 +4310,19 @@ msgstr ""
 "%s nem sikerült adatot olvasni a csatornából, kilépés a szerverről...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s túl nagy a késés(lag), lecsatlakozás a szerverről...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
+msgid "%s: reconnecting to server in %d %s"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: switching address to %s/%d"
+msgid "%s: switching address to %s/%d"
 msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%s)"
+msgid "%s: connected to %s (%s)"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
 #, fuzzy, c-format
@@ -4389,7 +4402,7 @@ msgstr ""
 "támogatás nélkül lett fordítva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
@@ -4399,6 +4412,10 @@ msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
+
+#, fuzzy, c-format
+msgid "%s: connecting to server %s/%d%s%s..."
+msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: connecting to server %s/%d%s%s..."
@@ -4417,12 +4434,24 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
+msgid "%s: reconnecting to server..."
 msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from server"
+msgstr "Lekapcsolódott a szerverről!\n"
+
+#, fuzzy
+msgid "servers"
+msgstr "szerver"
+
+#, fuzzy, c-format
+msgid "%s%s: auto-reconnection is cancelled"
+msgstr "automata újracsatlakozás megszakítva\n"
 
 #, fuzzy
 msgid "list, add or remove Jabber servers"
@@ -4596,6 +4625,9 @@ msgstr ""
 msgid "automatically rejoin MUCs when kicked"
 msgstr "automatikus visszalépés a szobába kirúgáskor"
 
+msgid "use same buffer for all servers"
+msgstr "ugyanazon puffer használata minden szerverhez"
+
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
@@ -4668,6 +4700,14 @@ msgid "%s%s: cannot allocate new MUC"
 msgstr "%s nem sikerült új csatornát lefoglalni"
 
 #, fuzzy, c-format
+msgid "%s%s: reconnecting to server in %d %s"
+msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
+
+#, fuzzy, c-format
+msgid "%s%s: connected to %s (%s)"
+msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
+
+#, fuzzy, c-format
 msgid "%s%s: GnuTLS init error"
 msgstr "%s gnutls inicializációs hiba\n"
 
@@ -4714,6 +4754,10 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy, c-format
 msgid "%s%s: failed to create id"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: reconnecting to server..."
+msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: I/O error (%d)"
@@ -6217,7 +6261,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-TOVÁBB-"
-
-#, fuzzy
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"

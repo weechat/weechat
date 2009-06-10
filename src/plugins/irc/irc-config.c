@@ -43,7 +43,7 @@ struct t_config_section *irc_config_section_server = NULL;
 /* IRC config, look section */
 
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
-struct t_config_option *irc_config_look_one_server_buffer;
+struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_open_near_server;
 struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
@@ -153,22 +153,50 @@ irc_config_change_look_color_nicks_number (void *data, const char *option,
 }
 
 /*
- * irc_config_change_look_one_server_buffer: called when the "one server buffer"
- *                                           option is changed
+ * irc_config_change_look_server_buffer: called when the "one server buffer"
+ *                                       option is changed
  */
 
 void
-irc_config_change_look_one_server_buffer (void *data,
-                                          struct t_config_option *option)
+irc_config_change_look_server_buffer (void *data,
+                                      struct t_config_option *option)
 {
+    struct t_irc_server *ptr_server;
+    struct t_gui_buffer *ptr_buffer;
+    
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
-    if (weechat_config_boolean (irc_config_look_one_server_buffer))
-        irc_buffer_merge_servers ();
-    else
-        irc_buffer_split_server ();
+
+    /* first unmerge all IRC server buffers */
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer)
+            weechat_buffer_unmerge (ptr_server->buffer, -1);
+    }
+
+    /* merge IRC server buffers with core buffer or another buffer */
+    if ((weechat_config_integer (irc_config_look_server_buffer) ==
+         IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE)
+        || (weechat_config_integer (irc_config_look_server_buffer) ==
+            IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITHOUT_CORE))
+    {    
+        ptr_buffer =
+            (weechat_config_integer (irc_config_look_server_buffer) ==
+             IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE) ?
+            weechat_buffer_search_main () : irc_buffer_search_first_for_all_servers ();
+        
+        if (ptr_buffer)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ptr_server->buffer && (ptr_server->buffer != ptr_buffer))
+                    weechat_buffer_merge (ptr_server->buffer, ptr_buffer);
+            }
+        }
+    }
 }
 
 /*
@@ -340,24 +368,13 @@ irc_config_change_network_send_unknown_commands (void *data,
             (weechat_config_boolean (irc_config_network_send_unknown_commands)) ?
             "1" : "0");
     
-    if (weechat_config_boolean (irc_config_look_one_server_buffer))
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        if (irc_buffer_servers)
+        if (ptr_server->buffer)
         {
-            weechat_buffer_set (irc_buffer_servers,
+            weechat_buffer_set (ptr_server->buffer,
                                 "input_get_unknown_commands", value);
-        }
-    }
-    else
-    {
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            if (ptr_server->buffer)
-            {
-                weechat_buffer_set (ptr_server->buffer,
-                                    "input_get_unknown_commands", value);
-            }
         }
     }
     
@@ -1055,12 +1072,13 @@ irc_config_init ()
         N_("use nick color in messages from server"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    irc_config_look_one_server_buffer = weechat_config_new_option (
+    irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "one_server_buffer", "boolean",
-        N_("use same buffer for all servers"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        &irc_config_change_look_one_server_buffer, NULL, NULL, NULL);
+        "server_buffer", "integer",
+        N_("merge server buffers"),
+        "merge_with_core|merge_without_core|independent", 0, 0, "merge_with_core",
+        NULL, 0, NULL, NULL,
+        &irc_config_change_look_server_buffer, NULL, NULL, NULL);
     irc_config_look_open_near_server = weechat_config_new_option (
         irc_config_file, ptr_section,
         "open_near_server", "boolean",

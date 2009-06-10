@@ -4800,6 +4800,30 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
 }
 
 /*
+ * weechat_ruby_api_buffer_search_main: search main buffer (WeeChat core buffer)
+ */
+
+static VALUE
+weechat_ruby_api_buffer_search_main (VALUE class)
+{
+    char *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_search_main");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_buffer_search_main ());
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_current_buffer: get current buffer
  */
 
@@ -4891,6 +4915,85 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
     script_api_buffer_close (weechat_ruby_plugin,
                              ruby_current_script,
                              script_str2ptr (c_buffer));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_buffer_merge: merge a buffer to another buffer
+ */
+
+static VALUE
+weechat_ruby_api_buffer_merge (VALUE class, VALUE buffer, VALUE target_buffer)
+{
+    char *c_buffer, *c_target_buffer;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_merge");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_target_buffer = NULL;
+    
+    if (NIL_P (buffer) || NIL_P (target_buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_merge");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (target_buffer, T_STRING);
+    
+    c_buffer = STR2CSTR (buffer);
+    c_target_buffer = STR2CSTR (target_buffer);
+    
+    weechat_buffer_merge (script_str2ptr (c_buffer),
+                          script_str2ptr (c_target_buffer));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_buffer_unmerge: unmerge a buffer from a group of merged
+ *                                  buffers
+ */
+
+static VALUE
+weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
+{
+    char *c_buffer;
+    int c_number;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_number = 0;
+    
+    if (NIL_P (buffer) || NIL_P (number))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (number, T_FIXNUM);
+    
+    c_buffer = STR2CSTR (buffer);
+    c_number = FIX2INT (number);
+    
+    weechat_buffer_unmerge (script_str2ptr (c_buffer), number);
     
     RUBY_RETURN_OK;
 }
@@ -6902,9 +7005,12 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 5);
     rb_define_module_function (ruby_mWeechat, "buffer_search", &weechat_ruby_api_buffer_search, 2);
+    rb_define_module_function (ruby_mWeechat, "buffer_search_main", &weechat_ruby_api_buffer_search_main, 0);
     rb_define_module_function (ruby_mWeechat, "current_buffer", &weechat_ruby_api_current_buffer, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_clear", &weechat_ruby_api_buffer_clear, 1);
     rb_define_module_function (ruby_mWeechat, "buffer_close", &weechat_ruby_api_buffer_close, 1);
+    rb_define_module_function (ruby_mWeechat, "buffer_merge", &weechat_ruby_api_buffer_merge, 2);
+    rb_define_module_function (ruby_mWeechat, "buffer_unmerge", &weechat_ruby_api_buffer_unmerge, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_integer", &weechat_ruby_api_buffer_get_integer, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_string", &weechat_ruby_api_buffer_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_pointer", &weechat_ruby_api_buffer_get_pointer, 2);

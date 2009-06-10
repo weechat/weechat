@@ -28,6 +28,7 @@ gui-hotlist.c gui-hotlist.h
 gui-input.c gui-input.h
 gui-keyboard.c gui-keyboard.h
 gui-layout.c gui-layout.h
+gui-line.c gui-line.h
 gui-main.h
 gui-nicklist.c gui-nicklist.h
 gui-window.c gui-window.h)

@@ -91,6 +91,7 @@ struct t_config_option *config_look_paste_max_lines;
 struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
+struct t_config_option *config_look_prefix_buffer_align;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_save_config_on_exit;
@@ -107,6 +108,7 @@ struct t_config_option *config_color_chat;
 struct t_config_option *config_color_chat_bg;
 struct t_config_option *config_color_chat_time;
 struct t_config_option *config_color_chat_time_delimiters;
+struct t_config_option *config_color_chat_prefix_buffer;
 struct t_config_option *config_color_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_color_chat_prefix_more;
 struct t_config_option *config_color_chat_prefix_suffix;
@@ -1363,6 +1365,12 @@ config_weechat_init_options ()
         "prefix_align_max", "integer",
         N_("max size for prefix (0 = no max size)"),
         NULL, 0, 64, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_buffer_align = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_buffer_align", "integer",
+        N_("prefix alignment for buffer name, when many buffers are merged "
+           "with same number (none, left, right (default))"),
+        "none|left|right", 0, 0, "right", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_suffix = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_suffix", "string",
@@ -1452,6 +1460,13 @@ config_weechat_init_options ()
         "chat_time_delimiters", "color",
         N_("text color for time delimiters"),
         NULL, GUI_COLOR_CHAT_TIME_DELIMITERS, 0, "brown", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_prefix_buffer = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_prefix_buffer", "color",
+        N_("text color for buffer name (before prefix, when many buffers are "
+           "merged with same number)"),
+        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER, 0, "brown", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,

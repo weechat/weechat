@@ -41,7 +41,7 @@
 #include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-filter.h"
-#include "gui-hotlist.h"
+#include "gui-line.h"
 #include "gui-main.h"
 #include "gui-window.h"
 
@@ -359,417 +359,17 @@ gui_chat_change_time_format ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        for (ptr_line = ptr_buffer->lines; ptr_line;
+        for (ptr_line = ptr_buffer->lines->first_line; ptr_line;
              ptr_line = ptr_line->next_line)
         {
-            if (ptr_line->date != 0)
+            if (ptr_line->data->date != 0)
             {
-                if (ptr_line->str_time)
-                    free (ptr_line->str_time);
-                ptr_line->str_time = gui_chat_get_time_string (ptr_line->date);
+                if (ptr_line->data->str_time)
+                    free (ptr_line->data->str_time);
+                ptr_line->data->str_time = gui_chat_get_time_string (ptr_line->data->date);
             }
         }
     }
-}
-
-/*
- * gui_chat_get_line_align: get alignment for a line
- */
-
-int
-gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
-                         int with_suffix)
-{
-    int time_length, length_suffix;
-    
-    time_length = (buffer->time_for_each_line) ? gui_chat_time_length : 0;
-    
-    if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
-        return time_length + 1 + line->prefix_length + 2;
-    
-    length_suffix = 0;
-    if (with_suffix)
-    {
-        if (CONFIG_STRING(config_look_prefix_suffix)
-            && CONFIG_STRING(config_look_prefix_suffix)[0])
-            length_suffix = gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix)) + 1;
-    }
-    return time_length + ((buffer->prefix_max_length > 0) ? 1 : 0) +
-        + (((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
-            && (buffer->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
-           CONFIG_INTEGER(config_look_prefix_align_max) : buffer->prefix_max_length)
-        + length_suffix + 1;
-}
-
-/*
- * gui_chat_line_displayed: return 1 if line is displayed (no filter on line,
- *                          or filters disabled), 0 if line is hidden
- */
-
-int
-gui_chat_line_displayed (struct t_gui_line *line)
-{
-    /* line is hidden if filters are enabled and flag "displayed" is not set */
-    if (gui_filters_enabled && !line->displayed)
-        return 0;
-    
-    /* in all other cases, line is displayed */
-    return 1;
-}
-
-/*
- * gui_chat_get_first_line_displayed: get first line displayed of a buffer
- */
-
-struct t_gui_line *
-gui_chat_get_first_line_displayed (struct t_gui_buffer *buffer)
-{
-    struct t_gui_line *ptr_line;
-    
-    ptr_line = buffer->lines;
-    while (ptr_line && !gui_chat_line_displayed (ptr_line))
-    {
-        ptr_line = ptr_line->next_line;
-    }
-    
-    return ptr_line;
-}
-
-/*
- * gui_chat_get_last_line_displayed: get last line displayed of a buffer
- */
-
-struct t_gui_line *
-gui_chat_get_last_line_displayed (struct t_gui_buffer *buffer)
-{
-    struct t_gui_line *ptr_line;
-    
-    ptr_line = buffer->last_line;
-    while (ptr_line && !gui_chat_line_displayed (ptr_line))
-    {
-        ptr_line = ptr_line->prev_line;
-    }
-    
-    return ptr_line;
-}
-
-/*
- * gui_chat_get_prev_line_displayed: get previous line displayed
- */
-
-struct t_gui_line *
-gui_chat_get_prev_line_displayed (struct t_gui_line *line)
-{
-    if (line)
-    {
-        line = line->prev_line;
-        while (line && !gui_chat_line_displayed (line))
-        {
-            line = line->prev_line;
-        }
-    }
-    return line;
-}
-
-/*
- * gui_chat_get_next_line_displayed: get next line displayed
- */
-
-struct t_gui_line *
-gui_chat_get_next_line_displayed (struct t_gui_line *line)
-{
-    if (line)
-    {
-        line = line->next_line;
-        while (line && !gui_chat_line_displayed (line))
-        {
-            line = line->next_line;
-        }
-    }
-    return line;
-}
-
-/*
- * gui_chat_line_search: search for text in a line
- */
-
-int
-gui_chat_line_search (struct t_gui_line *line, const char *text,
-                      int case_sensitive)
-{
-    char *prefix, *message;
-    int rc;
-    
-    if (!line || !line->message || !text || !text[0])
-        return 0;
-    
-    rc = 0;
-    
-    if (line->prefix)
-    {
-        prefix = gui_color_decode (line->prefix, NULL);
-        if (prefix)
-        {
-            if ((case_sensitive && (strstr (prefix, text)))
-                || (!case_sensitive && (string_strcasestr (prefix, text))))
-                rc = 1;
-            free (prefix);
-        }
-    }
-    
-    if (!rc)
-    {
-        message = gui_color_decode (line->message, NULL);
-        if (message)
-        {
-            if ((case_sensitive && (strstr (message, text)))
-                || (!case_sensitive && (string_strcasestr (message, text))))
-                rc = 1;
-            free (message);
-        }
-    }
-    
-    return rc;
-}
-
-/*
- * gui_chat_line_match_regex: return 1 if message matches regex
- *                            0 if it doesn't match
- */
-
-int
-gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
-                           regex_t *regex_message)
-{
-    char *prefix, *message;
-    int match_prefix, match_message;
-    
-    if (!line || (!regex_prefix && !regex_message))
-        return 0;
-    
-    prefix = NULL;
-    message = NULL;
-    
-    match_prefix = 1;
-    match_message = 1;
-
-    if (line->prefix)
-    {
-        prefix = gui_color_decode (line->prefix, NULL);
-        if (!prefix
-            || (regex_prefix && (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)))
-            match_prefix = 0;
-    }
-    else
-    {
-        if (regex_prefix)
-            match_prefix = 0;
-    }
-
-    if (line->message)
-    {
-        message = gui_color_decode (line->message, NULL);
-        if (!message
-            || (regex_message && (regexec (regex_message, message, 0, NULL, 0) != 0)))
-            match_message = 0;
-    }
-    else
-    {
-        if (regex_message)
-            match_message = 0;
-    }
-    
-    if (prefix)
-        free (prefix);
-    if (message)
-        free (message);
-    
-    return (match_prefix && match_message);
-}
-
-/*
- * gui_chat_line_match_tags: return 1 if line matches tags
- *                           0 if it doesn't match any tag in array
- */
-
-int
-gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
-                          char **tags_array)
-{
-    int i, j;
-    
-    if (!line)
-        return 0;
-    
-    if (line->tags_count == 0)
-        return 0;
-    
-    for (i = 0; i < tags_count; i++)
-    {
-        for (j = 0; j < line->tags_count; j++)
-        {
-            /* check tag */
-            if (string_match (line->tags_array[j],
-                              tags_array[i],
-                              0))
-                return 1;
-        }
-    }
-    
-    return 0;
-}
-
-/*
- * gui_chat_line_has_highlight: return 1 if given message contains highlight (with
- *                              a string in global highlight or buffer highlight)
- */
-
-int
-gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
-                             struct t_gui_line *line)
-{
-    int rc, i;
-    char *msg_no_color;
-    
-    /* highlights are disabled on this buffer? (special value "-" means that
-       buffer does not want any highlight) */
-    if (buffer->highlight_words && (strcmp (buffer->highlight_words, "-") == 0))
-        return 0;
-    
-    /* check if highlight is disabled for line */
-    for (i = 0; i < line->tags_count; i++)
-    {
-        if (strcmp (line->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
-            return 0;
-    }
-    
-    /* check that line matches highlight tags, if any (if no tag is specified,
-       then any tag is allowed) */
-    if (buffer->highlight_tags_count > 0)
-    {
-        if (!gui_chat_line_match_tags (line,
-                                       buffer->highlight_tags_count,
-                                       buffer->highlight_tags_array))
-            return 0;
-    }
-    
-    /* remove color codes from line message */
-    msg_no_color = gui_color_decode (line->message, NULL);
-    if (!msg_no_color)
-        return 0;
-    
-    /* there is highlight on line if one of global highlight words matches line
-       or one of buffer highlight words matches line */
-    rc = (string_has_highlight (msg_no_color,
-                                CONFIG_STRING(config_look_highlight)) ||
-          string_has_highlight (msg_no_color,
-                                buffer->highlight_words));
-    
-    free (msg_no_color);
-    
-    return rc;
-}
-
-/*
- * gui_chat_line_free: delete a formatted line from a buffer
- */
-
-void
-gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
-{
-    int update_prefix_max_length;
-    struct t_gui_line *ptr_line;
-    struct t_gui_window *ptr_win;
-    
-    update_prefix_max_length = (line->prefix_length == buffer->prefix_max_length);
-    
-    /* reset scroll for any window starting with this line */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->start_line == line)
-        {
-            ptr_win->start_line = ptr_win->start_line->next_line;
-            ptr_win->start_line_pos = 0;
-            gui_buffer_ask_chat_refresh (buffer, 2);
-        }
-    }
-    
-    /* move read marker if it was on line we are removing */
-    if (buffer->last_read_line == line)
-    {
-        buffer->last_read_line = buffer->last_read_line->prev_line;
-        buffer->first_line_not_read = (buffer->last_read_line) ? 0 : 1;
-        gui_buffer_ask_chat_refresh (buffer, 1);
-    }
-    
-    /* free data */
-    if (line->str_time)
-        free (line->str_time);
-    if (line->tags_array)
-        string_free_exploded (line->tags_array);
-    if (line->prefix)
-        free (line->prefix);
-    if (line->message)
-        free (line->message);
-    
-    /* remove line from lines list */
-    if (line->prev_line)
-        (line->prev_line)->next_line = line->next_line;
-    if (line->next_line)
-        (line->next_line)->prev_line = line->prev_line;
-    if (buffer->lines == line)
-        buffer->lines = line->next_line;
-    if (buffer->last_line == line)
-        buffer->last_line = line->prev_line;
-    
-    free (line);
-    
-    buffer->lines_count--;
-
-    if (update_prefix_max_length)
-    {
-        buffer->prefix_max_length = 0;
-        for (ptr_line = buffer->lines; ptr_line;
-             ptr_line = ptr_line->next_line)
-        {
-            if (ptr_line->prefix_length > buffer->prefix_max_length)
-                buffer->prefix_max_length = ptr_line->prefix_length;
-        }
-    }
-}
-
-/*
- * gui_chat_line_free_all: delete all formatted lines from a buffer
- */
-
-void
-gui_chat_line_free_all (struct t_gui_buffer *buffer)
-{
-    while (buffer->lines)
-    {
-        gui_chat_line_free (buffer, buffer->lines);
-    }
-}
-
-/*
- * gui_chat_line_get_notify_level: get notify level for a line
- */
-
-int
-gui_chat_line_get_notify_level (struct t_gui_line *line)
-{
-    int i;
-    
-    for (i = 0; i < line->tags_count; i++)
-    {
-        if (string_strcasecmp (line->tags_array[i], "notify_highlight") == 0)
-            return GUI_HOTLIST_HIGHLIGHT;
-        if (string_strcasecmp (line->tags_array[i], "notify_private") == 0)
-            return GUI_HOTLIST_PRIVATE;
-        if (string_strcasecmp (line->tags_array[i], "notify_message") == 0)
-            return GUI_HOTLIST_MESSAGE;
-    }
-    return GUI_HOTLIST_LOW;
 }
 
 /*
@@ -783,22 +383,22 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
     int length;
     
     length = 0;
-    if (line->prefix)
-        length += strlen (line->prefix);
+    if (line->data->prefix)
+        length += strlen (line->data->prefix);
     length++;
-    if (line->message)
-        length += strlen (line->message);
+    if (line->data->message)
+        length += strlen (line->data->message);
     length++;
     
     string = malloc (length);
     if (string)
     {
         string[0] = '\0';
-        if (line->prefix)
-            strcat (string, line->prefix);
+        if (line->data->prefix)
+            strcat (string, line->data->prefix);
         strcat (string, "\t");
-        if (line->message)
-            strcat (string, line->message);
+        if (line->data->message)
+            strcat (string, line->data->message);
     }
 
     if (string)
@@ -812,219 +412,6 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
     }
     
     return string;
-}
-
-/*
- * gui_chat_line_add: add a new line for a buffer
- */
-
-struct t_gui_line *
-gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
-                   time_t date_printed, const char *tags,
-                   const char *prefix, const char *message)
-{
-    struct t_gui_line *new_line;
-    struct t_gui_window *ptr_win;
-    char *message_for_signal;
-    int notify_level;
-    
-    new_line = malloc (sizeof (*new_line));
-    if (!new_line)
-    {
-        log_printf (_("Not enough memory for new line"));
-        return NULL;
-    }
-    
-    /* fill data in new line */
-    new_line->y = 0;
-    new_line->date = date;
-    new_line->date_printed = date_printed;
-    new_line->str_time = (date == 0) ?
-        NULL : gui_chat_get_time_string (date);
-    if (tags)
-    {
-        new_line->tags_array = string_explode (tags, ",", 0, 0,
-                                               &new_line->tags_count);
-    }
-    else
-    {
-        new_line->tags_count = 0;
-        new_line->tags_array = NULL;
-    }
-    new_line->refresh_needed = 0;
-    new_line->prefix = (prefix) ?
-        strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
-    new_line->prefix_length = (prefix) ?
-        gui_chat_strlen_screen (prefix) : 0;
-    new_line->message = (message) ? strdup (message) : strdup ("");
-    new_line->highlight = gui_chat_line_has_highlight (buffer, new_line);
-    
-    /* add line to lines list */
-    if (!buffer->lines)
-        buffer->lines = new_line;
-    else
-        buffer->last_line->next_line = new_line;
-    new_line->prev_line = buffer->last_line;
-    new_line->next_line = NULL;
-    buffer->last_line = new_line;
-    buffer->lines_count++;
-    
-    /* check if line is filtered or not */
-    new_line->displayed = gui_filter_check_line (buffer, new_line);
-    if (new_line->displayed)
-    {
-        if (new_line->prefix_length > buffer->prefix_max_length)
-            buffer->prefix_max_length = new_line->prefix_length;
-        if (new_line->highlight)
-        {
-            gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 1);
-            if (!weechat_upgrading)
-            {
-                message_for_signal = gui_chat_build_string_prefix_message (new_line);
-                if (message_for_signal)
-                {
-                    hook_signal_send ("weechat_highlight",
-                                      WEECHAT_HOOK_SIGNAL_STRING,
-                                      message_for_signal);
-                    free (message_for_signal);
-                }
-            }
-        }
-        else
-        {
-            notify_level = gui_chat_line_get_notify_level (new_line);
-            if (!weechat_upgrading && (notify_level == GUI_HOTLIST_PRIVATE))
-            {
-                message_for_signal = gui_chat_build_string_prefix_message (new_line);
-                if (message_for_signal)
-                {
-                    hook_signal_send ("weechat_pv",
-                                      WEECHAT_HOOK_SIGNAL_STRING,
-                                      message_for_signal);
-                    free (message_for_signal);
-                }
-            }
-            gui_hotlist_add (buffer, notify_level, NULL, 1);
-        }
-    }
-    else
-    {
-        if (!buffer->lines_hidden)
-        {
-            buffer->lines_hidden = 1;
-            hook_signal_send ("buffer_lines_hidden",
-                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-        }
-    }
-    
-    /* remove one line if necessary */
-    if ((CONFIG_INTEGER(config_history_max_lines) > 0)
-        && (buffer->lines_count > CONFIG_INTEGER(config_history_max_lines)))
-    {
-        gui_chat_line_free (buffer, buffer->lines);
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            if ((ptr_win->buffer == buffer)
-                && (buffer->lines_count < ptr_win->win_chat_height))
-            {
-                gui_buffer_ask_chat_refresh (buffer, 2);
-                break;
-            }
-        }
-    }
-    
-    return new_line;
-}
-
-/*
- * gui_chat_line_add_y: add or update a line for a buffer with free content
- */
-
-void
-gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
-{
-    struct t_gui_line *ptr_line, *new_line;
-    
-    if (!message || !message[0])
-        return;
-    
-    /* search if line exists for "y" */
-    for (ptr_line = buffer->lines; ptr_line;
-         ptr_line = ptr_line->next_line)
-    {
-        if (ptr_line->y >= y)
-            break;
-    }
-    
-    if (!ptr_line || (ptr_line->y > y))
-    {
-        new_line = malloc (sizeof (*new_line));
-        if (!new_line)
-        {
-            log_printf (_("Not enough memory for new line"));
-            return;
-        }
-        
-        buffer->lines_count++;
-        
-        /* fill data in new line */
-        new_line->y = y;
-        new_line->date = 0;
-        new_line->date_printed = 0;
-        new_line->str_time = NULL;
-        new_line->tags_count = 0;
-        new_line->tags_array = NULL;
-        new_line->refresh_needed = 1;
-        new_line->prefix = NULL;
-        new_line->prefix_length = 0;
-        new_line->message = NULL;
-        new_line->highlight = 0;
-        
-        /* add line to lines list */
-        if (ptr_line)
-        {
-            /* add before line found */
-            new_line->prev_line = ptr_line->prev_line;
-            new_line->next_line = ptr_line;
-            if (ptr_line->prev_line)
-                (ptr_line->prev_line)->next_line = new_line;
-            else
-                buffer->lines = new_line;
-            ptr_line->prev_line = new_line;
-        }
-        else
-        {
-            /* add at end of list */
-            new_line->prev_line = buffer->last_line;
-            if (buffer->lines)
-                buffer->last_line->next_line = new_line;
-            else
-                buffer->lines = new_line;
-            buffer->last_line = new_line;
-            new_line->next_line = NULL;
-        }
-
-        ptr_line = new_line;
-    }
-    
-    /* set message for line */
-    if (ptr_line->message)
-        free (ptr_line->message);
-    ptr_line->message = strdup (message);
-    
-    /* check if line is filtered or not */
-    ptr_line->displayed = gui_filter_check_line (buffer, ptr_line);
-    if (!ptr_line->displayed)
-    {
-        if (!buffer->lines_hidden)
-        {
-            buffer->lines_hidden = 1;
-            hook_signal_send ("buffer_lines_hidden",
-                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-        }
-    }
-    
-    ptr_line->refresh_needed = 1;
 }
 
 /*
@@ -1082,7 +469,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         date = date_printed;
     
     if (gui_init_ok)
-        ptr_line = buffer->last_line;
+        ptr_line = buffer->lines->last_line;
     
     at_least_one_message_printed = 0;
     
@@ -1153,12 +540,12 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         
         if (gui_init_ok)
         {
-            gui_chat_line_add (buffer, (display_time) ? date : 0,
-                               (display_time) ? date_printed : 0,
-                               tags, pos_prefix, ptr_msg);
-            if (buffer->last_line && buffer->print_hooks_enabled)
+            gui_line_add (buffer, (display_time) ? date : 0,
+                          (display_time) ? date_printed : 0,
+                          tags, pos_prefix, ptr_msg);
+            if (buffer->lines->last_line && buffer->print_hooks_enabled)
             {
-                hook_print_exec (buffer, buffer->last_line);
+                hook_print_exec (buffer, buffer->lines->last_line);
             }
             at_least_one_message_printed = 1;
         }
@@ -1219,15 +606,15 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            for (ptr_line = buffer->lines; ptr_line;
+            for (ptr_line = buffer->lines->first_line; ptr_line;
                  ptr_line = ptr_line->next_line)
             {
-                if (ptr_line->y >= y)
+                if (ptr_line->data->y >= y)
                     break;
             }
-            if (ptr_line && (ptr_line->y == y))
+            if (ptr_line && (ptr_line->data->y == y))
             {
-                gui_chat_line_free (buffer, ptr_line);
+                gui_line_free (buffer, ptr_line);
                 gui_buffer_ask_chat_refresh (buffer, 2);
             }
         }
@@ -1236,7 +623,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            gui_chat_line_add_y (buffer, y, gui_chat_buffer);
+            gui_line_add_y (buffer, y, gui_chat_buffer);
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else

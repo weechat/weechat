@@ -4162,6 +4162,31 @@ weechat_python_api_buffer_search (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_buffer_search_main: search main buffer (WeeChat core buffer)
+ */
+
+static PyObject *
+weechat_python_api_buffer_search_main (PyObject *self, PyObject *args)
+{
+    char *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    (void) args;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_search_main");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_buffer_search_main ());
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_current_buffer: get current buffer
  */
 
@@ -4246,6 +4271,73 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
     script_api_buffer_close (weechat_python_plugin,
                              python_current_script,
                              script_str2ptr (buffer));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_buffer_merge: merge a buffer to another buffer
+ */
+
+static PyObject *
+weechat_python_api_buffer_merge (PyObject *self, PyObject *args)
+{
+    char *buffer, *target_buffer;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_merge");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    target_buffer = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &target_buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "buffer_merge");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_buffer_merge (script_str2ptr (buffer),
+                          script_str2ptr (target_buffer));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_buffer_unmerge: unmerge a buffer from group of merged
+ *                                    buffers
+ */
+
+static PyObject *
+weechat_python_api_buffer_unmerge (PyObject *self, PyObject *args)
+{
+    char *buffer;
+    int number;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    number = 0;
+    
+    if (!PyArg_ParseTuple (args, "si", &buffer, &number))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_buffer_unmerge (script_str2ptr (buffer), number);
     
     PYTHON_RETURN_OK;
 }
@@ -5987,9 +6079,12 @@ PyMethodDef weechat_python_funcs[] =
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },
     { "buffer_search", &weechat_python_api_buffer_search, METH_VARARGS, "" },
+    { "buffer_search_main", &weechat_python_api_buffer_search_main, METH_VARARGS, "" },
     { "current_buffer", &weechat_python_api_current_buffer, METH_VARARGS, "" },
     { "buffer_clear", &weechat_python_api_buffer_clear, METH_VARARGS, "" },
     { "buffer_close", &weechat_python_api_buffer_close, METH_VARARGS, "" },
+    { "buffer_merge", &weechat_python_api_buffer_merge, METH_VARARGS, "" },
+    { "buffer_unmerge", &weechat_python_api_buffer_unmerge, METH_VARARGS, "" },
     { "buffer_get_integer", &weechat_python_api_buffer_get_integer, METH_VARARGS, "" },
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },

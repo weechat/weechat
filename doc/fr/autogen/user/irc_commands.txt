@@ -397,7 +397,7 @@
   demander au serveur de redémarrer
 ........................................
 
-&bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [raw] | [switch]`::
+&bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [raw]`::
 
 ........................................
   liste, ajoute ou retire des serveurs IRC
@@ -417,7 +417,6 @@
           del: supprimer un serveur
       deloutq: supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
           raw: ouvre le tampon avec les données brutes IRC
-       switch: changer le serveur actif (quand un tampon est utilisé pour tous les serveurs, touche par défaut: alt-s sur le tampon serveur)
   
   Exemples:
     /server listfull

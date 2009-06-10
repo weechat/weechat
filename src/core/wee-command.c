@@ -544,9 +544,15 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                     number = strtol (argv[i], &error, 10);
                     if (error && !error[0])
                     {
-                        ptr_buffer = gui_buffer_search_by_number (number);
-                        if (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
-                            gui_buffer_clear (ptr_buffer);
+                        for (ptr_buffer = gui_buffers; ptr_buffer;
+                             ptr_buffer = ptr_buffer->next_buffer)
+                        {
+                            if ((ptr_buffer->number == number)
+                                && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
+                            {
+                                gui_buffer_clear (ptr_buffer);
+                            }
+                        }
                     }
                 }
             }
@@ -600,13 +606,77 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* merge buffer with another number in the list */
+    if (string_strcasecmp (argv[1], "merge") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "buffer");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        error = NULL;
+        number = strtol (argv[2], &error, 10);
+        if (error && !error[0])
+        {
+            ptr_buffer = gui_buffer_search_by_number ((int) number);
+            if (ptr_buffer)
+                gui_buffer_merge (buffer, ptr_buffer);
+        }
+        else
+        {
+            /* invalid number */
+            gui_chat_printf (NULL,
+                             _("%sError: incorrect buffer number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* unmerge buffer */
+    if (string_strcasecmp (argv[1], "unmerge") == 0)
+    {
+        number = -1;
+        if (argc >= 3)
+        {
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (!error || error[0])
+            {
+                /* invalid number */
+                gui_chat_printf (NULL,
+                                 _("%sError: incorrect buffer number"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        gui_buffer_unmerge (buffer, (int) number);
+        
+        return WEECHAT_RC_OK;
+    }
+    
     /* close buffer */
     if (string_strcasecmp (argv[1], "close") == 0)
     {
         if (argc < 3)
         {
-            number1 = buffer->number;
-            number2 = buffer->number;
+            if (!buffer->plugin)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: WeeChat main buffer can't be "
+                                   "closed"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            }
+            else
+            {
+                gui_buffer_close (buffer);
+            }
         }
         else
         {
@@ -649,22 +719,26 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             }
             if ((number1 < 0) || (number2 < 0) || (number2 < number1))
                 return WEECHAT_RC_ERROR;
-        }
-        for (i = number2; i >= number1; i--)
-        {
-            ptr_buffer = gui_buffer_search_by_number (i);
-            if (ptr_buffer)
+            
+            for (i = number2; i >= number1; i--)
             {
-                if (!ptr_buffer->plugin)
+                for (ptr_buffer = last_gui_buffer; ptr_buffer;
+                     ptr_buffer = ptr_buffer->prev_buffer)
                 {
-                    gui_chat_printf (NULL,
-                                     _("%sError: WeeChat main buffer can't be "
-                                       "closed"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                }
-                else
-                {
-                    gui_buffer_close (ptr_buffer);
+                    if (ptr_buffer->number == i)
+                    {
+                        if (!ptr_buffer->plugin)
+                        {
+                            gui_chat_printf (NULL,
+                                             _("%sError: WeeChat main buffer "
+                                               "can't be closed"),
+                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                        }
+                        else
+                        {
+                            gui_buffer_close (ptr_buffer);
+                        }
+                    }
                 }
             }
         }
@@ -1763,6 +1837,8 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_set_unread ();
         else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
             gui_input_set_unread_current_buffer ();
+        else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
+            gui_input_switch_active_buffer ();
         else if (string_strcasecmp (argv[1], "insert") == 0)
         {
             if (argc > 2)
@@ -3877,13 +3953,19 @@ command_init ()
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
-                  N_("[clear [number | -all] | move number | close [n1[-n2]]| "
-                     "list | notify level | localvar | set property value | "
-                     "number | name]"),
+                  N_("[clear [number | -all] | move number | merge number | "
+                     "unmerge [number] | close [n1[-n2]]| list | notify level | "
+                     "localvar | set property value | number | name]"),
                   N_("   clear: clear buffer content (-all for all buffers, "
                      "number for a buffer, or nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
+                     "   merge: merge current buffer to another buffer (chat "
+                     "area will be mix of both buffers)\n"
+                     "          (by default ctrl-x switches between merged "
+                     "buffers)\n"
+                     " unmerge: unmerge buffer from other buffers which have "
+                     "same number\n"
                      "   close: close buffer (number/range is optional)\n"
                      "    list: list buffers (no parameter implies this list)\n"
                      "  notify: set notify level for current buffer: this "
@@ -3903,15 +3985,19 @@ command_init ()
                      "\"weechat.look.jump_current_to_previous_buffer\"\n"
                      "    name: jump to buffer by (partial) name\n\n"
                      "Examples:\n"
-                     "clear current buffer: /buffer clear\n"
-                     "   clear all buffers: /buffer clear -all\n"
-                     "         move buffer: /buffer move 5\n"
-                     "close current buffer: /buffer close\n"
-                     "close buffers 5 to 7: /buffer close 5-7\n"
-                     "    jump to #weechat: /buffer #weechat\n"
-                     " jump to next buffer: /buffer +1"),
+                     "  clear current buffer: /buffer clear\n"
+                     "     clear all buffers: /buffer clear -all\n"
+                     "           move buffer: /buffer move 5\n"
+                     "merge with core buffer: /buffer merge 1\n"
+                     "        unmerge buffer: /buffer unmerge\n"
+                     "  close current buffer: /buffer close\n"
+                     "  close buffers 5 to 7: /buffer close 5-7\n"
+                     "      jump to #weechat: /buffer #weechat\n"
+                     "   jump to next buffer: /buffer +1"),
                   "clear -all|%(buffers_numbers)"
                   " || move %(buffers_numbers)"
+                  " || merge %(buffers_numbers)"
+                  " || unmerge %(buffers_numbers)"
                   " || close"
                   " || list"
                   " || notify reset|none|highlight|message|all"

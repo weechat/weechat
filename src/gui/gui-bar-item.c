@@ -45,6 +45,7 @@
 #include "gui-filter.h"
 #include "gui-hotlist.h"
 #include "gui-keyboard.h"
+#include "gui-line.h"
 #include "gui-nicklist.h"
 #include "gui-window.h"
 
@@ -881,7 +882,7 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    if (!gui_filters_enabled || !gui_filters || !window->buffer->lines_hidden)
+    if (!gui_filters_enabled || !gui_filters || !window->buffer->lines->lines_hidden)
         return NULL;
     
     snprintf (buf, sizeof (buf),
@@ -1365,6 +1366,10 @@ gui_bar_item_init ()
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_merged",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_unmerged",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     
     /* buffer name */

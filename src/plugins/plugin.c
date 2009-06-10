@@ -516,8 +516,11 @@ plugin_load (const char *filename)
         
         new_plugin->buffer_new = &gui_buffer_new;
         new_plugin->buffer_search = &gui_buffer_search_by_name;
+        new_plugin->buffer_search_main = &gui_buffer_search_main;
         new_plugin->buffer_clear = &gui_buffer_clear;
         new_plugin->buffer_close = &gui_buffer_close;
+        new_plugin->buffer_merge = &gui_buffer_merge;
+        new_plugin->buffer_unmerge = &gui_buffer_unmerge;
         new_plugin->buffer_get_integer = &gui_buffer_get_integer;
         new_plugin->buffer_get_string = &gui_buffer_get_string;
         new_plugin->buffer_get_pointer = &gui_buffer_get_pointer;

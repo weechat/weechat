@@ -968,8 +968,8 @@ char *str = weechat_string_format_size (2097152); /* str == "2 MB" */
 free (str);
 ----------------------------------------
 
-weechat_string_reove_color
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_remove_color
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Remove WeeChat colors from a string.
 
@@ -5066,8 +5066,31 @@ Example:
 
 [source,C]
 ----------------------------------------
-struct t_gui_buffer *weechat_buffer = weechat_buffer_search ("core", "weechat");
 struct t_gui_buffer *my_buffer = weechat_buffer_search ("myplugin", "my_buffer");
+----------------------------------------
+
+weechat_buffer_search_main
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Search WeeChat main buffer ('core' buffer, first buffer displayed when WeeChat
+is starting).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_gui_buffer *weechat_buffer_search_main ();
+----------------------------------------
+
+Return value:
+
+* pointer to main buffer
+
+Example:
+
+[source,C]
+----------------------------------------
+struct t_gui_buffer *weechat_buffer = weechat_buffer_search_main ();
 ----------------------------------------
 
 weechat_buffer_clear
@@ -5122,6 +5145,60 @@ struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
                                                      &my_close_cb, NULL);
 /* ... */
 weechat_buffer_close (my_buffer);
+----------------------------------------
+
+weechat_buffer_merge
+^^^^^^^^^^^^^^^^^^^^
+
+Merge buffer into another buffer.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_buffer_merge (struct t_gui_buffer *buffer,
+                           struct t_gui_buffer *target_buffer);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'target_buffer': target buffer, where buffer will be merged
+
+Example:
+
+[source,C]
+----------------------------------------
+/* merge current buffer with weechat core buffer */
+weechat_buffer_merge (weechat_current_buffer (),
+                      weechat_buffer_search ("core", "weechat"));
+----------------------------------------
+
+weechat_buffer_unmerge
+^^^^^^^^^^^^^^^^^^^^^^
+
+Unmerge buffer from a group of merged buffers.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_buffer_unmerge (struct t_gui_buffer *buffer,
+                             int number);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'number': target number for detached buffer, if it is < 1, then buffer will
+  be moved to number of 'buffer' + 1
+
+Example:
+
+[source,C]
+----------------------------------------
+/* unmerge current buffer (to number 1 in list) */
+weechat_buffer_unmerge (weechat_current_buffer (), 1);
 ----------------------------------------
 
 weechat_buffer_get_integer

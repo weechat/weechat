@@ -22,6 +22,13 @@
 
 #define IRC_CONFIG_NAME "irc"
 
+enum t_irc_config_look_server_buffer
+{
+    IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE = 0,
+    IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITHOUT_CORE,
+    IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT,
+};
+
 enum t_irc_config_nick_completion
 {
     IRC_CONFIG_NICK_COMPLETION_SMART_OFF = 0,
@@ -41,7 +48,7 @@ extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
 
 extern struct t_config_option *irc_config_look_color_nicks_in_server_messages;
-extern struct t_config_option *irc_config_look_one_server_buffer;
+extern struct t_config_option *irc_config_look_server_buffer;
 extern struct t_config_option *irc_config_look_open_near_server;
 extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;

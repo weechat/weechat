@@ -49,24 +49,6 @@ enum t_gui_buffer_notify
 
 /* buffer structures */
 
-struct t_gui_line
-{
-    int y;                             /* line position (for free buffer)   */
-    time_t date;                       /* date/time of line (may be past)   */
-    time_t date_printed;               /* date/time when weechat print it   */
-    char *str_time;                    /* time string (for display)         */
-    int tags_count;                    /* number of tags for line           */
-    char **tags_array;                 /* tags for line                     */
-    char displayed;                    /* 1 if line is displayed            */
-    char highlight;                    /* 1 if line has highlight           */
-    char refresh_needed;               /* 1 if refresh asked (free buffer)  */
-    char *prefix;                      /* prefix for line (may be NULL)     */
-    int prefix_length;                 /* prefix length (on screen)         */
-    char *message;                     /* line content (after prefix)       */
-    struct t_gui_line *prev_line;      /* link to previous line             */
-    struct t_gui_line *next_line;      /* link to next line                 */
-};
-
 struct t_gui_buffer_local_var
 {
     char *name;                        /* variable name                     */
@@ -83,6 +65,10 @@ struct t_gui_buffer
        to store plugin name, then restore plugin pointer when plugin is
        loaded */
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
+    /* when upgrading, we use this pointer to remember that this buffer
+       must merge with another buffer (it's done when all buffers are
+       restored) */
+    struct t_gui_buffer *merge_for_upgrade;
     
     int number;                        /* buffer number (for jump/switch)   */
     int layout_number;                 /* the number of buffer saved in     */
@@ -95,6 +81,9 @@ struct t_gui_buffer
                                        /* 2 = highlight + msg               */
                                        /* 3 = highlight + msg + join/part   */
     int num_displayed;                 /* number of windows displaying buf. */
+    int active;                        /* it is 0 only if buffers are       */
+                                       /* merged and that this one is not   */
+                                       /* selected buffer                   */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
     
     /* close callback */
@@ -106,13 +95,10 @@ struct t_gui_buffer
     char *title;                       /* buffer title                      */
     
     /* chat content */
-    struct t_gui_line *lines;          /* lines of chat window              */
-    struct t_gui_line *last_line;      /* last line of chat window          */
-    struct t_gui_line *last_read_line; /* last read line before jump        */
-    int first_line_not_read;           /* if 1, marker is before first line */ 
-    int lines_count;                   /* number of lines in the buffer     */
-    int lines_hidden;                  /* 1 if at least one line is hidden  */
-    int prefix_max_length;             /* length for prefix align           */
+    struct t_gui_lines *own_lines;     /* lines (for this buffer only)      */
+    struct t_gui_lines *mixed_lines;   /* mixed lines (if buffers merged)   */
+    struct t_gui_lines *lines;         /* pointer to "own_lines" or         */
+                                       /* "mixed_lines"                     */
     int time_for_each_line;            /* time is displayed for each line?  */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
@@ -230,6 +216,8 @@ extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             const char *value);
 extern void gui_buffer_set_pointer (struct t_gui_buffer *buffer,
                                     const char *property, void *pointer);
+extern void gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer,
+                                                int value);
 extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
                                                        const char *name);
@@ -242,7 +230,12 @@ extern void gui_buffer_clear_all ();
 extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
+extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
+extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
+extern void gui_buffer_merge (struct t_gui_buffer *buffer,
+                              struct t_gui_buffer *target_buffer);
+extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
 extern struct t_gui_buffer_visited *gui_buffer_visited_search_by_number (int number);
 extern void gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited);
 extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
@@ -251,9 +244,6 @@ extern int gui_buffer_visited_get_index_previous ();
 extern int gui_buffer_visited_get_index_next ();
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);
-extern int gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
-                                            struct t_gui_buffer *buffer,
-                                            struct t_gui_line *line);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
 

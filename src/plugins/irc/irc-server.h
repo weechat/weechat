@@ -153,7 +153,6 @@ struct t_irc_message
 };
 
 extern struct t_irc_server *irc_servers;
-extern struct t_irc_server *irc_current_server;
 #ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
@@ -168,11 +167,9 @@ extern char *irc_server_get_name_without_port (const char *name);
 extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
-extern void irc_server_buffer_set_highlight_words (struct t_gui_buffer *buffer);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
-extern void irc_server_switch_next ();
 extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
                                              const char *new_name);
@@ -184,9 +181,7 @@ extern void irc_server_sendf (struct t_irc_server *server, int queue_msg,
                               const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
-extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,
-                                                      int all_servers);
-extern void irc_server_set_current_server (struct t_irc_server *server);
+extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect ();
 extern void irc_server_autojoin_channels ();

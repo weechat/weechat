@@ -5,8 +5,6 @@
 
 | irc | irc_buffer | get buffer pointer for an IRC server/channel
 
-| irc | irc_current_server | currently selected server (only if one buffer is used for all servers)
-
 | irc | irc_is_channel | 1 if string is an IRC channel
 
 | irc | irc_nick | get current nick on a server

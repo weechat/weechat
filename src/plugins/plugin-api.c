@@ -47,6 +47,7 @@
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
@@ -531,11 +532,12 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
-            for (ptr_line = ((struct t_gui_buffer *)pointer)->lines; ptr_line;
-                 ptr_line = ptr_line->next_line)
+            for (ptr_line = ((struct t_gui_buffer *)pointer)->own_lines->first_line;
+                 ptr_line; ptr_line = ptr_line->next_line)
             {
-                if (!gui_buffer_line_add_to_infolist (ptr_infolist,
-                                                      pointer, ptr_line))
+                if (!gui_line_add_to_infolist (ptr_infolist,
+                                               ((struct t_gui_buffer *)pointer)->own_lines,
+                                               ptr_line))
                 {
                     infolist_free (ptr_infolist);
                     return NULL;

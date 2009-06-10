@@ -73,11 +73,6 @@
 ** type: boolean
 ** values: on, off (default value: off)
 
-* *irc.look.one_server_buffer*
-** description: use same buffer for all servers
-** type: boolean
-** values: on, off (default value: off)
-
 * *irc.look.open_near_server*
 ** description: open new channels/privates near server
 ** type: boolean
@@ -87,6 +82,11 @@
 ** description: number of IRC raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
 ** type: integer
 ** values: 0 .. 65535 (default value: 256)
+
+* *irc.look.server_buffer*
+** description: merge server buffers
+** type: integer
+** values: merge_with_core, merge_without_core, independent (default value: merge_with_core)
 
 * *irc.look.show_away_once*
 ** description: show remote away message only once in private

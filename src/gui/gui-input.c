@@ -35,11 +35,11 @@
 #include "../plugins/plugin.h"
 #include "gui-input.h"
 #include "gui-buffer.h"
-#include "gui-chat.h"
 #include "gui-completion.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-keyboard.h"
+#include "gui-line.h"
 #include "gui-window.h"
 
 
@@ -1239,17 +1239,17 @@ gui_input_scroll_unread ()
         if (CONFIG_STRING(config_look_read_marker) &&
             CONFIG_STRING(config_look_read_marker)[0] &&
             (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) &&
-            (gui_current_window->buffer->first_line_not_read ||
-             (gui_current_window->buffer->last_read_line &&
-              gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)))
+            (gui_current_window->buffer->lines->first_line_not_read ||
+             (gui_current_window->buffer->lines->last_read_line &&
+              gui_current_window->buffer->lines->last_read_line != gui_current_window->buffer->lines->last_line)))
         {
-            if (gui_current_window->buffer->first_line_not_read)
-                gui_current_window->start_line = gui_current_window->buffer->lines;
+            if (gui_current_window->buffer->lines->first_line_not_read)
+                gui_current_window->start_line = gui_current_window->buffer->lines->first_line;
             else
-                gui_current_window->start_line = gui_current_window->buffer->last_read_line->next_line;
+                gui_current_window->start_line = gui_current_window->buffer->lines->last_read_line->next_line;
             gui_current_window->start_line_pos = 0;
             gui_current_window->first_line_displayed =
-                (gui_current_window->start_line == gui_chat_get_first_line_displayed (gui_current_window->buffer));
+                (gui_current_window->start_line == gui_line_get_first_displayed (gui_current_window->buffer));
             gui_buffer_ask_chat_refresh (gui_current_window->buffer, 2);
         }
     }
@@ -1282,6 +1282,24 @@ gui_input_set_unread_current_buffer ()
 {
     if (gui_current_window)
         gui_buffer_set_unread (gui_current_window->buffer);
+}
+
+/*
+ * gui_input_switch_active_buffer: switch active buffer (when many buffers are
+ *                                 merged)
+ */
+
+void
+gui_input_switch_active_buffer ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    ptr_buffer = gui_buffer_get_next_active_buffer (gui_current_window->buffer);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
+    }
 }
 
 /*

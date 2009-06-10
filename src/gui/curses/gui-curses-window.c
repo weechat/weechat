@@ -43,6 +43,7 @@
 #include "../gui-hotlist.h"
 #include "../gui-input.h"
 #include "../gui-main.h"
+#include "../gui-line.h"
 #include "../gui-nicklist.h"
 #include "gui-curses.h"
 
@@ -488,12 +489,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     if (!gui_ok)
         return;
     
-    if (window->buffer->num_displayed > 0)
-        window->buffer->num_displayed--;
+    gui_buffer_add_value_num_displayed (window->buffer, -1);
     
     old_buffer = window->buffer;
     
-    if (window->buffer != buffer)
+    if (window->buffer->number != buffer->number)
     {
         window->start_line = NULL;
         window->start_line_pos = 0;
@@ -506,19 +506,19 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         {
             if (window->buffer->num_displayed == 0)
             {
-                window->buffer->last_read_line = window->buffer->last_line;
-                window->buffer->first_line_not_read = 0;
+                window->buffer->lines->last_read_line = window->buffer->lines->last_line;
+                window->buffer->lines->first_line_not_read = 0;
             }
-            if (buffer->last_read_line == buffer->last_line)
+            if (buffer->lines->last_read_line == buffer->lines->last_line)
             {
-                buffer->last_read_line = NULL;
-                buffer->first_line_not_read = 0;
+                buffer->lines->last_read_line = NULL;
+                buffer->lines->first_line_not_read = 0;
             }
         }
     }
     
     window->buffer = buffer;
-    buffer->num_displayed++;
+    gui_buffer_add_value_num_displayed (buffer, 1);
     
     gui_hotlist_remove_buffer (buffer);
     
@@ -557,6 +557,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->scroll = 0;
         window->scroll_lines_after = 0;
     }
+    
+    gui_buffer_set_active_buffer (buffer);
     
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
@@ -812,7 +814,7 @@ gui_window_scroll_top (struct t_gui_window *window)
         case GUI_BUFFER_TYPE_FORMATTED:
             if (!window->first_line_displayed)
             {
-                window->start_line = gui_chat_get_first_line_displayed (window->buffer);
+                window->start_line = gui_line_get_first_displayed (window->buffer);
                 window->start_line_pos = 0;
                 window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
@@ -857,7 +859,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             break;
         case GUI_BUFFER_TYPE_FREE:
             window->start_line = NULL;
-            if (window->buffer->lines_count > window->win_chat_height)
+            if (window->buffer->lines->lines_count > window->win_chat_height)
             {
                 snprintf (scroll, sizeof (scroll), "-%d",
                           window->win_chat_height - 1);
@@ -1015,7 +1017,7 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
             window->win_height_pct = 100 - percentage;
             
             /* assign same buffer for new window (top window) */
-            new_window->buffer->num_displayed++;
+            gui_buffer_add_value_num_displayed (new_window->buffer, 1);
             
             window->refresh_needed = 1;
             new_window->refresh_needed = 1;
@@ -1059,7 +1061,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
             window->win_width_pct = 100 - percentage;
             
             /* assign same buffer for new window (right window) */
-            new_window->buffer->num_displayed++;
+            gui_buffer_add_value_num_displayed (new_window->buffer, 1);
             
             window->refresh_needed = 1;
             new_window->refresh_needed = 1;

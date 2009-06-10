@@ -34,6 +34,7 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-hotlist.h"
+#include "../gui-line.h"
 #include "../gui-nicklist.h"
 #include "../gui-main.h"
 #include "gui-gtk.h"
@@ -195,8 +196,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 {
     GtkTextIter start, end;
     
-    if (window->buffer->num_displayed > 0)
-        window->buffer->num_displayed--;
+    gui_buffer_add_value_num_displayed (window->buffer, -1);
     
     if (window->buffer != buffer)
     {
@@ -211,13 +211,13 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         {
             if (window->buffer->num_displayed == 0)
             {
-                window->buffer->last_read_line = window->buffer->last_line;
-                window->buffer->first_line_not_read = 0;
+                window->buffer->lines->last_read_line = window->buffer->lines->last_line;
+                window->buffer->lines->first_line_not_read = 0;
             }
-            if (buffer->last_read_line == buffer->last_line)
+            if (buffer->lines->last_read_line == buffer->lines->last_line)
             {
-                buffer->last_read_line = NULL;
-                buffer->first_line_not_read = 0;
+                buffer->lines->last_read_line = NULL;
+                buffer->lines->first_line_not_read = 0;
             }
         }
     }
@@ -245,7 +245,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     window->start_line = NULL;
     window->start_line_pos = 0;
     
-    buffer->num_displayed++;
+    gui_buffer_add_value_num_displayed (buffer, 1);
     
     gui_hotlist_remove_buffer (buffer);
 }
@@ -376,7 +376,7 @@ gui_window_scroll_top (struct t_gui_window *window)
     
     if (!window->first_line_displayed)
     {
-        window->start_line = window->buffer->lines;
+        window->start_line = window->buffer->lines->first_line;
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
     }
@@ -502,7 +502,7 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
             window->win_height_pct = 100 - percentage;
             
             /* assign same buffer for new window (top window) */
-            new_window->buffer->num_displayed++;
+            gui_buffer_add_value_num_displayed (new_window->buffer, 1);
             
             gui_window_switch_to_buffer (window, window->buffer, 1);
             
@@ -546,7 +546,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
             window->win_width_pct = 100 - percentage;
             
             /* assign same buffer for new window (right window) */
-            new_window->buffer->num_displayed++;
+            gui_buffer_add_value_num_displayed (new_window->buffer, 1);
             
             gui_window_switch_to_buffer (window, window->buffer, 1);
             

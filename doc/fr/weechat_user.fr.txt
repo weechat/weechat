@@ -313,87 +313,109 @@ Touches pour la ligne de commande
 
 [width="100%",cols="^.^4,.^15",options="header"]
 |========================================
-| Touches | Description
+| Touches | Description et commande
 
 | Flèche gauche +
   Ctrl + B |
-  Aller au caractère précédent sur la ligne de commande
+  Aller au caractère précédent sur la ligne de commande +
+  `/input move_previous_char`
 
 | Flèche droite +
   Ctrl + F |
-    Aller au caractère suivant sur la ligne de commande
+  Aller au caractère suivant sur la ligne de commande +
+  `/input move_next_char`
 
 | Ctrl + flèche gauche +
   Alt + B |
-  Aller au mot précédent sur la ligne de commande
+  Aller au mot précédent sur la ligne de commande +
+  `/input move_previous_word`
 
 | Ctrl + flèche droite +
   Alt + F |
-  Aller au mot suivant sur la ligne de commande
+  Aller au mot suivant sur la ligne de commande +
+  `/input move_next_word`
 
 | Home +
   Ctrl + A |
-  Aller au début de la ligne de commande
+  Aller au début de la ligne de commande +
+  `/input move_beginning_of_line`
 
 | End +
   Ctrl + E |
-  Aller à la fin de la ligne de commande
+  Aller à la fin de la ligne de commande +
+  `/input move_end_of_line`
 
 | Ctrl + C puis B |
-  Insérer le code pour mettre le texte en gras
+  Insérer le code pour mettre le texte en gras +
+  `/input insert \x02`
 
 | Ctrl + C puis C |
-  Insérer le code pour écrire en couleur
+  Insérer le code pour écrire en couleur +
+  `/input insert \x03`
 
 | Ctrl + C puis I |
-  Insérer le code pour mettre le texte en italique
+  Insérer le code pour mettre le texte en italique +
+  `/input insert \x1D`
 
 | Ctrl + C puis O |
-  Insérer le code pour réinitaliser la couleur
+  Insérer le code pour réinitaliser la couleur +
+  `/input insert \x0F`
 
 | Ctrl + C puis R |
-  Insérer le code pour écrire en couleur inversée
+  Insérer le code pour écrire en couleur inversée +
+  `/input insert \x12`
 
 | Ctrl + C puis U |
-  Insérer le code pour écrire en souligné
+  Insérer le code pour écrire en souligné +
+  `/input insert \x15`
 
 | Delete +
   Ctrl + D |
-  Effacer le caractère suivant sur la ligne de commande
+  Effacer le caractère suivant sur la ligne de commande +
+  `/input delete_next_char`
 
 | Backspace +
   Ctrl + H |
-  Effacer le caractère précédent sur la ligne de commande
+  Effacer le caractère précédent sur la ligne de commande +
+  `/input delete_previous_char`
 
 | Ctrl + K |
   Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne
-  supprimée est copiée dans le presse-papiers)    
+  supprimée est copiée dans le presse-papiers) +
+  `/input delete_end_of_line`
 
 | Ctrl + R |
   Chercher du texte dans l'historique du tampon (deux appuis successifs pour
-  rechercher du texte exact)
+  rechercher du texte exact) +
+  `/input search_text`
 
 | Ctrl + T |
-  Inverser deux caractères
+  Inverser deux caractères +
+  `/input transpose_chars`
 
 | Ctrl + U |
   Effacer du curseur jusqu'au début de la ligne de commande (la chaîne
-  supprimée est copiée dans le presse-papiers)
+  supprimée est copiée dans le presse-papiers) +
+  `/input delete_beginning_of_line`
 
 | Ctrl + W |
   Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est
-  copiée dans le presse-papiers)
+  copiée dans le presse-papiers) +
+  `/input delete_previous_word`
 
 | Ctrl + Y |
-  Coller le contenu du presse-papiers
+  Coller le contenu du presse-papiers +
+  `/input clipboard_paste`
 
 | Tab |
   Compléter la commande ou le pseudo (Tab de nouveau: trouver la complétion
-  suivante)
+  suivante) +
+  `/input complete_next`
 
 | Shift + Tab |
   Sans complétion, effectue une complétion partielle. Avec une complétion en
-  cours, complète avec la complétion précécente.
+  cours, complète avec la complétion précécente +
+  `/input complete_previous`
 
 | Tout caractère |
   Insérer le caractère à la position du curseur sur la ligne de commande
@@ -402,31 +424,39 @@ Touches pour la ligne de commande
   Ctrl + J +
   Ctrl + M |
   Exécuter la commande ou envoyer le message (en mode recherche: arrêter la
-  recherche)
+  recherche) +
+  `/input return`
 
 | Flèche haut |
-  Rappeler la commande précédente (en mode recherche: chercher plus haut)
+  Rappeler la commande précédente (en mode recherche: chercher plus haut) +
+  `/input history_previous`
 
 | Flèche bas |
-  Rappeler la commande suivante (en mode recherche: chercher plus bas)
+  Rappeler la commande suivante (en mode recherche: chercher plus bas) +
+  `/input history_next`
 
 | Ctrl + flèche haut |
   Rappeler la commande précédente dans l'historique global (commun à tous les
-  tampons)
+  tampons) +
+  `/input history_global_previous`
 
 | Ctrl + flèche bas |
   Rappeler la commande suivante dans l'historique global (commun à tous les
-  tampons)
+  tampons) +
+  `/input history_global_next`
 
 | Alt + D |
   Effacer le mot suivant (la chaîne supprimée est copiée dans le
-  presse-papiers)
+  presse-papiers) +
+  `/input delete_next_word`
 
 | Alt + K |
-  Capturer une touche et insérer son code sur la ligne de commande
+  Capturer une touche et insérer son code sur la ligne de commande +
+  `/input grab_key`
 
 | Alt + R |
-  Effacer entièrement la ligne de commande
+  Effacer entièrement la ligne de commande +
+  `/input delete_line`
 |========================================
 
 Touches pour les tampons / fenêtres
@@ -434,105 +464,143 @@ Touches pour les tampons / fenêtres
 
 [width="100%",cols="^.^4,.^15",options="header"]
 |========================================
-| Touches | Description
+| Touches | Description et commande
 
 | Ctrl + L |
-  Réafficher toute la fenêtre
+  Réafficher toute la fenêtre +
+  `/window refresh`
 
 | Ctrl + S puis Ctrl + U |
-  Positionner le marqueur de données non lues sur tous les tampons
+  Positionner le marqueur de données non lues sur tous les tampons +
+  `/input set_unread`
+
+| Ctrl + X |
+  Changer de tampon courant si plusieurs tampons sont attachés avec le même
+  numéro +
+  `/input switch_active_buffer`
 
 | Page haut |
-  Monter d'une page dans l'historique du tampon
+  Monter d'une page dans l'historique du tampon +
+  `/window page_up`
 
 | Page bas |
-  Descendre d'une page dans l'historique du tampon
+  Descendre d'une page dans l'historique du tampon +
+  `/window page_down`
 
 | Alt + Page haut |
-  Monter de quelques lignes dans l'historique du tampon
+  Monter de quelques lignes dans l'historique du tampon +
+  `/window scroll_up`
 
 | Alt + Page bas |
-  Descendre de quelques lignes dans l'historique du tampon
+  Descendre de quelques lignes dans l'historique du tampon +
+  `/window scroll_down`
 
 | Alt + Home |
-  Aller au début du tampon
+  Aller au début du tampon +
+  `/window scroll_top`
 
 | Alt + End |
-  Aller à la fin du tampon
+  Aller à la fin du tampon +
+  `/window scroll_bottom`
 
 | Alt + flèche gauche +
   Alt + flèche haut +
   Ctrl + P +
   F5 |
-  Aller au tampon précédent
+  Aller au tampon précédent +
+  `/buffer -1`
 
 | Alt + flèche droite +
   Alt + flèche bas +
   Ctrl + N +
   F6 |
-  Aller au tampon suivant
+  Aller au tampon suivant +
+  `/buffer +1`
 
 | F7 |
-  Aller à la fenêtre précédente
+  Aller à la fenêtre précédente +
+  `/window -1`
 
 | F8 |
-  Aller à la fenêtre suivante
+  Aller à la fenêtre suivante +
+  `/window +1`
 
 | F9 |
-  Faire défiler le titre du tampon vers la gauche
+  Faire défiler le titre du tampon vers la gauche +
+  `/bar scroll title * x-50%`
 
 | F10 |
-  Faire défiler le titre du tampon vers la droite
+  Faire défiler le titre du tampon vers la droite +
+  `/bar scroll title * x+50%`
 
 | F11 |
-  Monter d'une page dans la liste des pseudos
+  Monter d'une page dans la liste des pseudos +
+  `/bar scroll nicklist * y-100%`
 
 | F12 |
-  Descendre d'une page dans la liste des pseudos
+  Descendre d'une page dans la liste des pseudos +
+  `/bar scroll nicklist * y+100%`
 
 | Alt + F11 |
-  Aller au début de la liste des pseudos
+  Aller au début de la liste des pseudos +
+  `/bar scroll nicklist * yb`
 
 | Alt + F12 |
-  Aller à la fin de la liste des pseudos
+  Aller à la fin de la liste des pseudos +
+  `/bar scroll nicklist * ye`
 
 | Alt + A |
   Sauter au prochain tampon avec activité (avec priorité : highlight, message,
-  autre)
+  autre) +
+  `/input jump_smart`
 
 | Alt + J puis Alt + L |
-  Sauter au dernier tampon
+  Sauter au dernier tampon +
+  `/input jump_last_buffer`
 
 | Alt + J puis Alt + R |
-  Effacer entièrement la ligne de commande
+  Effacer entièrement la ligne de commande +
+  `/server raw`
 
 | Alt + chiffre (0-9) |
-  Sauter au tampon qui porte ce numéro (0 = 10)
+  Sauter au tampon qui porte ce numéro (0 = 10) +
+  `/buffer *N`
 
 | Alt + J puis nombre (01-99) |
-  Sauter au tampon qui porte ce numéro
+  Sauter au tampon qui porte ce numéro +
+  `/buffer NN`
 
 | Alt + N |
-  Se positionner sur le highlight suivant
+  Se positionner sur le highlight suivant +
+  `/window scroll_next_highlight`
 
 | Alt + P |
-  Se positionner sur le highlight précédent
+  Se positionner sur le highlight précédent +
+  `/window scroll_previous_highlight`
 
 | Alt + U |
-  Se positionner sur la première ligne non lue du tampon
+  Se positionner sur la première ligne non lue du tampon +
+  `/input scroll_unread`
 
 | Alt + W puis Alt + flèche |
-  Sauter à une fenêtre avec une direction
+  Sauter à une fenêtre avec une direction +
+  `/window up +
+  `/window down +
+  `/window left +
+  `/window right`
 
 | Alt + Z |
   Zoom sur la fenêtre courante (Alt + Z de nouveau: restaurer l'état initial
-  des fenêtres, avant le zoom)
+  des fenêtres, avant le zoom) +
+  `/window zoom`
 
 | Alt + < |
-  Sauter au tampon précédent dans la liste des tampons visités
+  Sauter au tampon précédent dans la liste des tampons visités +
+  `/input jump_previously_visited_buffer`
 
 | Alt + > |
-  Sauter au tampon suivant dans la liste des tampons visités
+  Sauter au tampon suivant dans la liste des tampons visités +
+  `/input jump_next_visited_buffer`
 |========================================
 
 Autres touches
@@ -540,17 +608,15 @@ Autres touches
 
 [width="100%",cols="^.^4,.^15",options="header"]
 |========================================
-| Touches | Description
+| Touches | Description et commande
 
 | Alt + H |
-  Vider la hotlist (notification d'activité sur les autres tampons)
-
-| Alt + S |
-  Changer de serveur IRC sur le tampon des serveurs (si l'option
-  "irc.look.one_server_buffer" est activée)
+  Vider la hotlist (notification d'activité sur les autres tampons) +
+  `/input hotlist_clear`
 
 | Alt + = |
-  Active/désactive les filtres
+  Active/désactive les filtres +
+  `/filter toggle`
 |========================================
 
 [[command_line]]

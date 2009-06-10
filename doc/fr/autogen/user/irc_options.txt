@@ -73,11 +73,6 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
 
-* *irc.look.one_server_buffer*
-** description: utiliser le même tampon pour tous les serveurs
-** type: booléen
-** valeurs: on, off (valeur par défaut: off)
-
 * *irc.look.open_near_server*
 ** description: ouvrir les nouveaux canaux/privés près du serveur
 ** type: booléen
@@ -87,6 +82,11 @@
 ** description: nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: 256)
+
+* *irc.look.server_buffer*
+** description: mélange des tampons de serveur
+** type: entier
+** valeurs: merge_with_core, merge_without_core, independent (valeur par défaut: merge_with_core)
 
 * *irc.look.show_away_once*
 ** description: voir le message d'absence distant une seule fois en privé

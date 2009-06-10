@@ -58,6 +58,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_READ_MARKER,
     GUI_COLOR_CHAT_TEXT_FOUND,
     GUI_COLOR_CHAT_VALUE,
+    GUI_COLOR_CHAT_PREFIX_BUFFER,
     
     /* number of colors */
     GUI_COLOR_NUM_COLORS,

@@ -45,13 +45,16 @@
       /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/buffer`* `[clear [number | -all] | move number | close [n1[-n2]]| list | notify level | localvar | set property value | number | name]`::
+&bull; *`/buffer`* `[clear [number | -all] | move number | merge number | unmerge [number] | close [n1[-n2]]| list | notify level | localvar | set property value | number | name]`::
 
 ........................................
   manage buffers
 
      clear: clear buffer content (-all for all buffers, number for a buffer, or nothing for current buffer)
       move: move buffer in the list (may be relative, for example -1)
+     merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+            (by default ctrl-x switches between merged buffers)
+   unmerge: unmerge buffer from other buffers which have same number
      close: close buffer (number/range is optional)
       list: list buffers (no parameter implies this list)
     notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
@@ -69,13 +72,15 @@
       name: jump to buffer by (partial) name
   
   Examples:
-  clear current buffer: /buffer clear
-     clear all buffers: /buffer clear -all
-           move buffer: /buffer move 5
-  close current buffer: /buffer close
-  close buffers 5 to 7: /buffer close 5-7
-      jump to #weechat: /buffer #weechat
-   jump to next buffer: /buffer +1
+    clear current buffer: /buffer clear
+       clear all buffers: /buffer clear -all
+             move buffer: /buffer move 5
+  merge with core buffer: /buffer merge 1
+          unmerge buffer: /buffer unmerge
+    close current buffer: /buffer close
+    close buffers 5 to 7: /buffer close 5-7
+        jump to #weechat: /buffer #weechat
+     jump to next buffer: /buffer +1
 ........................................
 
 &bull; *`/command`* `plugin command`::

@@ -66,6 +66,7 @@ extern void gui_input_grab_key ();
 extern void gui_input_scroll_unread ();
 extern void gui_input_set_unread ();
 extern void gui_input_set_unread_current_buffer ();
+extern void gui_input_switch_active_buffer ();
 extern void gui_input_insert ();
 
 #endif /* gui-input.h */

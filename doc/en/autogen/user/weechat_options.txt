@@ -113,6 +113,11 @@
 ** type: color
 ** values: a color name (default value: white)
 
+* *weechat.color.chat_prefix_buffer*
+** description: text color for buffer name (before prefix, when many buffers are merged with same number)
+** type: color
+** values: a color name (default value: brown)
+
 * *weechat.color.chat_prefix_error*
 ** description: text color for error prefix
 ** type: color
@@ -462,6 +467,11 @@
 ** description: max size for prefix (0 = no max size)
 ** type: integer
 ** values: 0 .. 64 (default value: 0)
+
+* *weechat.look.prefix_buffer_align*
+** description: prefix alignment for buffer name, when many buffers are merged with same number (none, left, right (default))
+** type: integer
+** values: none, left, right (default value: right)
 
 * *weechat.look.prefix_error*
 ** description: prefix for error messages

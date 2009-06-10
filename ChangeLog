@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-06-06
+v0.3.0-dev, 2009-06-10
 
 
 Version 0.3.0 (under dev!)
@@ -45,6 +45,7 @@ Version 0.3.0 (under dev!)
 * gui: new display engine, with prefix and message for each line
 * gui: add new type of buffer, with free content
 * gui: add tags for lines and custom filtering by tags or regex (task #7674)
+* gui: add buffer merging (task #7404)
 * gui: add custom bars, with custom items
 * gui: add key to zoom a window (task #7470)
 * gui: add keys to move into last visited buffers: alt + "<" and alt + ">"

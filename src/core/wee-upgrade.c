@@ -36,6 +36,7 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
+#include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -43,6 +44,7 @@
 
 struct t_gui_buffer *upgrade_current_buffer = NULL;
 struct t_gui_buffer *upgrade_set_current_buffer = NULL;
+int upgrade_last_buffer_number = 1;
 int hotlist_reset = 0;
 
 
@@ -147,14 +149,15 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
         }
         
         /* save buffer lines */
-        for (ptr_line = ptr_buffer->lines; ptr_line;
+        for (ptr_line = ptr_buffer->own_lines->first_line; ptr_line;
              ptr_line = ptr_line->next_line)
         {
             ptr_infolist = infolist_new ();
             if (!ptr_infolist)
                 return 0;
-            if (!gui_buffer_line_add_to_infolist (ptr_infolist,
-                                                  ptr_buffer, ptr_line))
+            if (!gui_line_add_to_infolist (ptr_infolist,
+                                           ptr_buffer->own_lines,
+                                           ptr_line))
             {
                 infolist_free (ptr_infolist);
                 return 0;
@@ -289,10 +292,11 @@ upgrade_weechat_read_cb (void *data,
                          int object_id,
                          struct t_infolist *infolist)
 {
-    const char *key, *var_name, *type, *name, *group_name;
+    const char *key, *var_name, *type, *name, *group_name, *plugin_name;
+    const char *buffer_name;
     char option_name[64], *option_key, *option_var;
     struct t_gui_nick_group *ptr_group;
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
     struct t_gui_line *new_line;
     struct timeval creation_time;
     void *buf;
@@ -330,6 +334,7 @@ upgrade_weechat_read_cb (void *data,
                 {
                     /* create buffer if it was created by a plugin (ie not
                        WeeChat main buffer) */
+                    ptr_buffer_for_merge = last_gui_buffer;
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,
                         infolist_string (infolist, "name"),
@@ -341,6 +346,10 @@ upgrade_weechat_read_cb (void *data,
                             upgrade_set_current_buffer = upgrade_current_buffer;
                         upgrade_current_buffer->plugin_name_for_upgrade =
                             strdup (infolist_string (infolist, "plugin_name"));
+                        upgrade_current_buffer->merge_for_upgrade = NULL;
+                        if (infolist_integer (infolist, "number") == upgrade_last_buffer_number)
+                            upgrade_current_buffer->merge_for_upgrade = ptr_buffer_for_merge;
+                        upgrade_last_buffer_number = infolist_integer (infolist, "number");
                         upgrade_current_buffer->short_name =
                             (infolist_string (infolist, "short_name")) ?
                             strdup (infolist_string (infolist, "short_name")) :
@@ -356,7 +365,7 @@ upgrade_weechat_read_cb (void *data,
                         upgrade_current_buffer->title =
                             (infolist_string (infolist, "title")) ?
                             strdup (infolist_string (infolist, "title")) : NULL;
-                        upgrade_current_buffer->first_line_not_read =
+                        upgrade_current_buffer->lines->first_line_not_read =
                             infolist_integer (infolist, "first_line_not_read");
                         upgrade_current_buffer->time_for_each_line =
                             infolist_integer (infolist, "time_for_each_line");
@@ -449,7 +458,7 @@ upgrade_weechat_read_cb (void *data,
                 /* add line to current buffer */
                 if (upgrade_current_buffer)
                 {
-                    new_line = gui_chat_line_add (
+                    new_line = gui_line_add (
                         upgrade_current_buffer,
                         infolist_time (infolist, "date"),
                         infolist_time (infolist, "date_printed"),
@@ -458,10 +467,10 @@ upgrade_weechat_read_cb (void *data,
                         infolist_string (infolist, "message"));
                     if (new_line)
                     {
-                        new_line->highlight = infolist_integer (infolist, "highlight");
+                        new_line->data->highlight = infolist_integer (infolist, "highlight");
                     }
                     if (infolist_integer (infolist, "last_read_line"))
-                        upgrade_current_buffer->last_read_line = new_line;
+                        upgrade_current_buffer->lines->last_read_line = new_line;
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_NICKLIST:
@@ -519,17 +528,23 @@ upgrade_weechat_read_cb (void *data,
                     gui_hotlist_clear ();
                     hotlist_reset = 1;
                 }
-                ptr_buffer = gui_buffer_search_by_number (infolist_integer (infolist, "buffer_number"));
-                if (ptr_buffer)
+                plugin_name = infolist_string (infolist, "plugin_name");
+                buffer_name = infolist_string (infolist, "plugin_name");
+                if (plugin_name && buffer_name)
                 {
-                    buf = infolist_buffer (infolist, "creation_time", &size);
-                    if (buf)
+                    ptr_buffer = gui_buffer_search_by_name (plugin_name,
+                                                            buffer_name);
+                    if (ptr_buffer)
                     {
-                        memcpy (&creation_time, buf, size);
-                        gui_hotlist_add (ptr_buffer,
-                                         infolist_integer (infolist, "priority"),
-                                         &creation_time,
-                                         1);
+                        buf = infolist_buffer (infolist, "creation_time", &size);
+                        if (buf)
+                        {
+                            memcpy (&creation_time, buf, size);
+                            gui_hotlist_add (ptr_buffer,
+                                             infolist_integer (infolist, "priority"),
+                                             &creation_time,
+                                             1);
+                        }
                     }
                 }
                 break;
@@ -549,12 +564,21 @@ upgrade_weechat_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
+    struct t_gui_buffer *ptr_buffer;
     
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
     
     if (!hotlist_reset)
         gui_hotlist_clear ();
+
+    /* merge buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->merge_for_upgrade)
+            gui_buffer_merge (ptr_buffer, ptr_buffer->merge_for_upgrade);
+    }
     
     if (upgrade_set_current_buffer)
     {

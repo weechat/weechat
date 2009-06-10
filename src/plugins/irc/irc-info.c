@@ -166,14 +166,6 @@ irc_info_get_info_cb (void *data, const char *info_name,
             }
         }
     }
-    else if (weechat_strcasecmp (info_name, "irc_current_server") == 0)
-    {
-        if (weechat_config_boolean (irc_config_look_one_server_buffer)
-            && irc_current_server)
-        {
-            return irc_current_server->name;
-        }
-    }
     
     return NULL;
 }
@@ -390,10 +382,6 @@ irc_info_init ()
     weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel"),
-                       &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_current_server",
-                       N_("currently selected server (only if one buffer is "
-                          "used for all servers)"),
                        &irc_info_get_info_cb, NULL);
     
     /* infolist hooks */

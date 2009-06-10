@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-02 15:54+0200\n"
-"PO-Revision-Date: 2009-06-02 15:55+0200\n"
+"POT-Creation-Date: 2009-06-08 22:24+0200\n"
+"PO-Revision-Date: 2009-06-08 22:24+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -827,16 +827,22 @@ msgid "manage buffers"
 msgstr "gestion des tampons"
 
 msgid ""
-"[clear [number | -all] | move number | close [n1[-n2]]| list | notify level "
-"| localvar | set property value | number | name]"
+"[clear [number | -all] | move number | merge number | unmerge [number] | "
+"close [n1[-n2]]| list | notify level | localvar | set property value | "
+"number | name]"
 msgstr ""
-"[clear [nombre | -all] | move nombre | close [n1[-n2]] | list | notify "
-"niveau | localvar | set propriété valeur | nombre | nom]"
+"[clear [nombre | -all] | move nombre | merge nombre | unmerge [nombre] | "
+"close [n1[-n2]] | list | notify niveau | localvar | set propriété valeur | "
+"nombre | nom]"
 
 msgid ""
 "   clear: clear buffer content (-all for all buffers, number for a buffer, "
 "or nothing for current buffer)\n"
 "    move: move buffer in the list (may be relative, for example -1)\n"
+"   merge: merge current buffer to another buffer (chat area will be mix of "
+"both buffers)\n"
+"          (by default ctrl-x switches between merged buffers)\n"
+" unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
 "    list: list buffers (no parameter implies this list)\n"
 "  notify: set notify level for current buffer: this level determines whether "
@@ -856,18 +862,25 @@ msgid ""
 "    name: jump to buffer by (partial) name\n"
 "\n"
 "Examples:\n"
-"clear current buffer: /buffer clear\n"
-"   clear all buffers: /buffer clear -all\n"
-"         move buffer: /buffer move 5\n"
-"close current buffer: /buffer close\n"
-"close buffers 5 to 7: /buffer close 5-7\n"
-"    jump to #weechat: /buffer #weechat\n"
-" jump to next buffer: /buffer +1"
+"  clear current buffer: /buffer clear\n"
+"     clear all buffers: /buffer clear -all\n"
+"           move buffer: /buffer move 5\n"
+"merge with core buffer: /buffer merge 1\n"
+"        unmerge buffer: /buffer unmerge\n"
+"  close current buffer: /buffer close\n"
+"  close buffers 5 to 7: /buffer close 5-7\n"
+"      jump to #weechat: /buffer #weechat\n"
+"   jump to next buffer: /buffer +1"
 msgstr ""
 "   clear: efface le contenu du tampon (-all pour tous les tampons, un numéro "
 "pour un tampon, ou rien pour le tampon courant)\n"
 "    move: déplace le tampon dans la liste (peut être relatif, par exemple -"
 "1)\n"
+"   merge: mélange le tampon courant avec un autre tampon (la zone de "
+"discussion sera un mélange des deux tampons)\n"
+"          (par défaut ctrl-x bascule entre les tampons mélangés)\n"
+" unmerge: détache le tampon courant des autres tampons portant le même "
+"numéro\n"
 "   close: ferme le tampon (nombre/intervalle optionnel)\n"
 "    list: liste les tampons ouverts (pas de paramètre affiche cette liste)\n"
 "  notify: définit le niveau de notification pour le tampon courant: ce "
@@ -887,13 +900,15 @@ msgstr ""
 "     nom: saute au tampon par nom (partiel)\n"
 "\n"
 "Exemples:\n"
-"effacer le tampon courant: /buffer clear\n"
-" effacer tous les tampons: /buffer clear -all\n"
-"       déplacer le tampon: /buffer move 5\n"
-" fermer le tampon courant: /buffer close\n"
-" fermer les tampons 5 à 7: /buffer close 5-7\n"
-"       aller sur #weechat: /buffer #weechat\n"
-"  aller au tampon suivant: /buffer +1"
+"   effacer le tampon courant: /buffer clear\n"
+"    effacer tous les tampons: /buffer clear -all\n"
+"          déplacer le tampon: /buffer move 5\n"
+"mélanger avec le tampon core: /buffer merge 1\n"
+"          détacher le tampon: /buffer unmerge\n"
+"    fermer le tampon courant: /buffer close\n"
+"    fermer les tampons 5 à 7: /buffer close 5-7\n"
+"          aller sur #weechat: /buffer #weechat\n"
+"     aller au tampon suivant: /buffer +1"
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "lancer explicitement une commande WeeChat ou d'une extension"
@@ -1595,6 +1610,13 @@ msgstr "alignement de préfixe (none, left, right (par défaut))"
 msgid "max size for prefix (0 = no max size)"
 msgstr "taille maximum pour le préfixe (0 = pas de taille maximum)"
 
+msgid ""
+"prefix alignment for buffer name, when many buffers are merged with same "
+"number (none, left, right (default))"
+msgstr ""
+"alignement de préfixe pour le nom du tampon, quand plusieurs tampons sont "
+"mélangés avec le même numéro (none, left, right (par défaut))"
+
 msgid "string displayed after prefix"
 msgstr "chaîne affichée après le préfixe"
 
@@ -1641,6 +1663,13 @@ msgstr "couleur du texte pour l'heure dans la fenêtre de discussion"
 
 msgid "text color for time delimiters"
 msgstr "couleur du texte pour les délimiteurs de l'heure"
+
+msgid ""
+"text color for buffer name (before prefix, when many buffers are merged with "
+"same number)"
+msgstr ""
+"couleur du texte pour le nom du tampon (avant le préfixe, quand plusieurs "
+"tampons sont mélangés avec le numéro)"
 
 msgid "text color for error prefix"
 msgstr "couleur du texte pour le préfixe d'erreur"
@@ -2233,8 +2262,11 @@ msgstr "Notification changée pour \"%s%s.%s%s\": \"%s%s%s\" à \"%s%s%s\""
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%sErreur: un tampon avec le même nom (%s) existe déjà"
 
-msgid "Not enough memory for new line"
-msgstr "Pas assez de mémoire pour une nouvelle ligne"
+#, c-format
+msgid "%sError: it is only possible to merge buffers with formatted content"
+msgstr ""
+"%sErreur: il est possible de mélanger seulement des tampons avec du contenu "
+"formaté"
 
 msgid "names of buffers"
 msgstr "noms des tampons"
@@ -2309,6 +2341,9 @@ msgstr "Erreur: impossible de créer la touche \"%s\""
 
 msgid "Error: not enough memory for key binding"
 msgstr "Erreur: pas assez de mémoire pour la touche"
+
+msgid "Not enough memory for new line"
+msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -2674,9 +2709,6 @@ msgstr "nom du tube FIFO"
 msgid "away"
 msgstr "absent"
 
-msgid "servers"
-msgstr "serveurs"
-
 msgid "Lag"
 msgstr "Lag"
 
@@ -2716,12 +2748,12 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s%s: impossible de trouver le pseudo pour envoyer le message"
 
 #, c-format
-msgid "%s%s: future away: %s"
-msgstr "%s%s: future absence: %s"
+msgid "%s: future away: %s"
+msgstr "%s: future absence: %s"
 
 #, c-format
-msgid "%s%s: future away removed"
-msgstr "%s%s: future absence supprimée"
+msgid "%s: future away removed"
+msgstr "%s: future absence supprimée"
 
 #, c-format
 msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
@@ -2762,8 +2794,8 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: non connecté au serveur \"%s\" !"
 
 #, c-format
-msgid "%s%s: auto-reconnection is cancelled"
-msgstr "%s%s: la reconnexion automatique est annulée"
+msgid "%s: auto-reconnection is cancelled"
+msgstr "%s: la reconnexion automatique est annulée"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found"
@@ -3475,12 +3507,12 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [raw] | [switch]"
+"[deloutq] | [raw]"
 msgstr ""
 "[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/"
 "port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur "
 "nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep "
-"nom_serveur] | [del nom_serveur] | [deloutq] | [raw] | [switch]"
+"nom_serveur] | [del nom_serveur] | [deloutq] | [raw]"
 
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
@@ -3500,8 +3532,6 @@ msgid ""
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
 "       raw: open buffer with raw IRC data\n"
-"    switch: switch active server (when one buffer is used for all servers, "
-"default key: alt-s on server buffer)\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -3534,8 +3564,6 @@ msgstr ""
 "serveurs (tous les messages que WeeChat est actuellement en train "
 "d'envoyer)\n"
 "        raw: ouvre le tampon avec les données brutes IRC\n"
-"     switch: changer le serveur actif (quand un tampon est utilisé pour tous "
-"les serveurs, touche par défaut: alt-s sur le tampon serveur)\n"
 "\n"
 "Exemples:\n"
 "  /server listfull\n"
@@ -3867,8 +3895,8 @@ msgstr "%s%s: erreur de création de l'option serveur \"%s\""
 msgid "use nick color in messages from server"
 msgstr "utiliser la couleur du pseudo dans les messages du serveur"
 
-msgid "use same buffer for all servers"
-msgstr "utiliser le même tampon pour tous les serveurs"
+msgid "merge server buffers"
+msgstr "mélange des tampons de serveur"
 
 msgid "open new channels/privates near server"
 msgstr "ouvrir les nouveaux canaux/privés près du serveur"
@@ -4040,11 +4068,6 @@ msgstr "retourne le pseudo à partir d'un host IRC"
 
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "retourne le pointeur vers le tampon pour un serveur/canal IRC"
-
-msgid "currently selected server (only if one buffer is used for all servers)"
-msgstr ""
-"serveur actuellement sélectionné (seulement si un tampon est utilisé pour "
-"tous les serveurs)"
 
 msgid "list of IRC servers"
 msgstr "liste des serveurs IRC"
@@ -4354,10 +4377,10 @@ msgstr ""
 "de la connexion avec le serveur"
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
-"n°%d (\"%s\")"
+"%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo n°"
+"%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -4425,20 +4448,20 @@ msgstr ""
 "%s%s: impossible de lire des données sur la socket, déconnexion du serveur..."
 
 #, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
-msgstr "%s%s: le lag est élevé, déconnexion du serveur..."
+msgid "%s: lag is high, disconnecting from server..."
+msgstr "%s: le lag est élevé, déconnexion du serveur..."
 
 #, c-format
-msgid "%s%s: reconnecting to server in %d %s"
-msgstr "%s%s: reconnexion au serveur dans %d %s"
+msgid "%s: reconnecting to server in %d %s"
+msgstr "%s: reconnexion au serveur dans %d %s"
 
 #, c-format
-msgid "%s%s: switching address to %s/%d"
-msgstr "%s%s: bascule vers l'adresse %s/%d"
+msgid "%s: switching address to %s/%d"
+msgstr "%s: bascule vers l'adresse %s/%d"
 
 #, c-format
-msgid "%s%s: connected to %s (%s)"
-msgstr "%s%s: connecté à %s (%s)"
+msgid "%s: connected to %s (%s)"
+msgstr "%s: connecté à %s (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -4521,12 +4544,16 @@ msgstr ""
 "avec le support GnuTLS"
 
 #, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "%s%s: connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgstr "%s: connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
 
 #, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "Connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
+
+#, c-format
+msgid "%s: connecting to server %s/%d%s%s..."
+msgstr "%s: connexion au serveur %s/%d%s%s..."
 
 #, c-format
 msgid "%s%s: connecting to server %s/%d%s%s..."
@@ -4545,12 +4572,23 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s%s: impossible d'activer l'option socket \"SO_KEEPALIVE\""
 
 #, c-format
-msgid "%s%s: reconnecting to server..."
-msgstr "%s%s: reconnexion au serveur..."
+msgid "%s: reconnecting to server..."
+msgstr "%s: reconnexion au serveur..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: déconnecté du serveur"
+
+#, c-format
+msgid "%s: disconnected from server"
+msgstr "%s: déconnecté du serveur"
+
+msgid "servers"
+msgstr "serveurs"
+
+#, c-format
+msgid "%s%s: auto-reconnection is cancelled"
+msgstr "%s%s: la reconnexion automatique est annulée"
 
 msgid "list, add or remove Jabber servers"
 msgstr "liste, ajoute ou retire des serveurs Jabber"
@@ -4712,6 +4750,9 @@ msgstr ""
 msgid "automatically rejoin MUCs when kicked"
 msgstr "rejoindre automatiquement les MUCs quand mis dehors"
 
+msgid "use same buffer for all servers"
+msgstr "utiliser le même tampon pour tous les serveurs"
+
 msgid "open new MUCs/privates near server"
 msgstr "ouvrir les nouveaux MUCs/privés près du serveur"
 
@@ -4781,6 +4822,14 @@ msgid "%s%s: cannot allocate new MUC"
 msgstr "%s%s: impossible d'allouer un nouveau MUC"
 
 #, c-format
+msgid "%s%s: reconnecting to server in %d %s"
+msgstr "%s%s: reconnexion au serveur dans %d %s"
+
+#, c-format
+msgid "%s%s: connected to %s (%s)"
+msgstr "%s%s: connecté à %s (%s)"
+
+#, c-format
 msgid "%s%s: GnuTLS init error"
 msgstr "%s%s: erreur d'initialisation GnuTLS"
 
@@ -4825,6 +4874,10 @@ msgstr "%s%s: impossible de créer l'analyseur de flux"
 #, c-format
 msgid "%s%s: failed to create id"
 msgstr "%s%s: impossible de créer l'id"
+
+#, c-format
+msgid "%s%s: reconnecting to server..."
+msgstr "%s%s: reconnexion au serveur..."
 
 #, c-format
 msgid "%s%s: I/O error (%d)"
@@ -5936,31 +5989,15 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
 
-#~ msgid ""
-#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
-#~ "single port, ie. 5000 or a port range, ie. 5000-5015)"
-#~ msgstr ""
-#~ "numéro de port (ou intervalle de ports) sur lesquels écoute l'extension "
-#~ "relay (syntaxe: un port simple, par exemple 5000, un intervalle de ports, "
-#~ "par exemple 5000-5015)"
+#~ msgid "control server buffers attachment"
+#~ msgstr "contrôle de l'attachement des tampons de serveur"
 
 #~ msgid ""
-#~ "allow user to send colors with special codes (\"^Cb\"=bold, \"^Ccxx"
-#~ "\"=color, \"^Ccxx,yy\"=color+background, \"^Cu\"=underline, \"^Cr"
-#~ "\"=reverse)"
+#~ "attach server buffers into one buffer (optionally attached to core buffer)"
+#~ msgstr "attachement des tampons des serveurs"
+
+#~ msgid ""
+#~ "currently selected server (only if one buffer is used for all servers)"
 #~ msgstr ""
-#~ "autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux "
-#~ "(\"^Cb\"=gras, \"^Cxx\"=couleur, \"^Ccxx,yy\"=couleur+fond, \"^Cu"
-#~ "\"=souligné, \"^Cr\"=inversé)"
-
-#~ msgid "wait some time before executing a command"
-#~ msgstr "attendre un certain temps avant d'exécuter une commande"
-
-#~ msgid "filtered"
-#~ msgstr "filtré"
-
-#~ msgid "Bar \"%s\" is now hidden"
-#~ msgstr "La barre \"%s\" est maintenant cachée"
-
-#~ msgid "Bar \"%s\" is now visible"
-#~ msgstr "La barre \"%s\" est maintenant visible"
+#~ "serveur actuellement sélectionné (seulement si un tampon est utilisé pour "
+#~ "tous les serveurs)"

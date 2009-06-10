@@ -4646,6 +4646,29 @@ weechat_lua_api_buffer_search (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_buffer_search_main: search main buffer (WeeChat core buffer)
+ */
+
+static int
+weechat_lua_api_buffer_search_main (lua_State *L)
+{
+    char *result;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_search_main");
+        LUA_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_buffer_search_main ());
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_current_buffer: get current buffer
  */
 
@@ -4738,6 +4761,84 @@ weechat_lua_api_buffer_close (lua_State *L)
     script_api_buffer_close (weechat_lua_plugin,
                              lua_current_script,
                              script_str2ptr (buffer));
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_buffer_merge: merge a buffer to another buffer
+ */
+
+static int
+weechat_lua_api_buffer_merge (lua_State *L)
+{
+    const char *buffer, *target_buffer;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_merge");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    target_buffer = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_merge");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    target_buffer = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_buffer_merge (script_str2ptr (buffer),
+                          script_str2ptr (target_buffer));
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_buffer_unmerge: unmerge a buffer from a group of merged
+ *                                 buffers
+ */
+
+static int
+weechat_lua_api_buffer_unmerge (lua_State *L)
+{
+    const char *buffer;
+    int n, number;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    number = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_unmerge");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    number = lua_tonumber (lua_current_interpreter, -1);
+    
+    weechat_buffer_unmerge (script_str2ptr (buffer), number);
     
     LUA_RETURN_OK;
 }
@@ -7114,9 +7215,12 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },
     { "buffer_search", &weechat_lua_api_buffer_search },
+    { "buffer_search_main", &weechat_lua_api_buffer_search_main },
     { "current_buffer", &weechat_lua_api_current_buffer },
     { "buffer_clear", &weechat_lua_api_buffer_clear },
     { "buffer_close", &weechat_lua_api_buffer_close },
+    { "buffer_merge", &weechat_lua_api_buffer_merge },
+    { "buffer_unmerge", &weechat_lua_api_buffer_unmerge },
     { "buffer_get_integer", &weechat_lua_api_buffer_get_integer },
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },

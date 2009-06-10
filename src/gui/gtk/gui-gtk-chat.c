@@ -34,6 +34,7 @@
 #include "../gui-chat.h"
 #include "../gui-color.h"
 #include "../gui-main.h"
+#include "../gui-line.h"
 #include "../gui-window.h"
 #include "gui-gtk.h"
 
@@ -358,7 +359,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
         /* if looking backward, start at last line of buffer */
         if (backward)
         {
-            *line = window->buffer->last_line;
+            *line = window->buffer->lines->last_line;
             if (!(*line))
                 return;
             current_size = gui_chat_display_line (window, *line, 0, 1);
@@ -369,7 +370,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
         /* if looking forward, start at first line of buffer */
         else
         {
-            *line = window->buffer->lines;
+            *line = window->buffer->lines->first_line;
             if (!(*line))
                 return;
             *line_pos = 0;
@@ -425,7 +426,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
         if (backward)
         {
             /* first line reached */
-            *line = window->buffer->lines;
+            *line = window->buffer->lines->first_line;
             *line_pos = 0;
         }
         else

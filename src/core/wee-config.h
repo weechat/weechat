@@ -41,6 +41,13 @@ enum t_config_look_prefix_align
     CONFIG_LOOK_PREFIX_ALIGN_RIGHT,
 };
 
+enum t_config_look_prefix_buffer_align
+{
+    CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE = 0,
+    CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT,
+    CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT,
+};
+
 enum t_config_look_hotlist_sort
 {
     CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC = 0,
@@ -99,6 +106,7 @@ extern struct t_config_option *config_look_paste_max_lines;
 extern struct t_config_option *config_look_prefix[];
 extern struct t_config_option *config_look_prefix_align;
 extern struct t_config_option *config_look_prefix_align_max;
+extern struct t_config_option *config_look_prefix_buffer_align;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_save_config_on_exit;
@@ -113,6 +121,7 @@ extern struct t_config_option *config_color_chat;
 extern struct t_config_option *config_color_chat_bg;
 extern struct t_config_option *config_color_chat_time;
 extern struct t_config_option *config_color_chat_time_delimiters;
+extern struct t_config_option *config_color_chat_prefix_buffer;
 extern struct t_config_option *config_color_chat_prefix[];
 extern struct t_config_option *config_color_chat_prefix_more;
 extern struct t_config_option *config_color_chat_prefix_suffix;

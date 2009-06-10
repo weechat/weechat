@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-02 15:54+0200\n"
+"POT-Creation-Date: 2009-06-08 22:24+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -824,8 +824,9 @@ msgid "manage buffers"
 msgstr "gestionar los bÃºfers"
 
 msgid ""
-"[clear [number | -all] | move number | close [n1[-n2]]| list | notify level "
-"| localvar | set property value | number | name]"
+"[clear [number | -all] | move number | merge number | unmerge [number] | "
+"close [n1[-n2]]| list | notify level | localvar | set property value | "
+"number | name]"
 msgstr ""
 
 #, fuzzy
@@ -833,6 +834,10 @@ msgid ""
 "   clear: clear buffer content (-all for all buffers, number for a buffer, "
 "or nothing for current buffer)\n"
 "    move: move buffer in the list (may be relative, for example -1)\n"
+"   merge: merge current buffer to another buffer (chat area will be mix of "
+"both buffers)\n"
+"          (by default ctrl-x switches between merged buffers)\n"
+" unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
 "    list: list buffers (no parameter implies this list)\n"
 "  notify: set notify level for current buffer: this level determines whether "
@@ -852,13 +857,15 @@ msgid ""
 "    name: jump to buffer by (partial) name\n"
 "\n"
 "Examples:\n"
-"clear current buffer: /buffer clear\n"
-"   clear all buffers: /buffer clear -all\n"
-"         move buffer: /buffer move 5\n"
-"close current buffer: /buffer close\n"
-"close buffers 5 to 7: /buffer close 5-7\n"
-"    jump to #weechat: /buffer #weechat\n"
-" jump to next buffer: /buffer +1"
+"  clear current buffer: /buffer clear\n"
+"     clear all buffers: /buffer clear -all\n"
+"           move buffer: /buffer move 5\n"
+"merge with core buffer: /buffer merge 1\n"
+"        unmerge buffer: /buffer unmerge\n"
+"  close current buffer: /buffer close\n"
+"  close buffers 5 to 7: /buffer close 5-7\n"
+"      jump to #weechat: /buffer #weechat\n"
+"   jump to next buffer: /buffer +1"
 msgstr ""
 "  acciÃ³n: acciÃ³n a efectuar:\n"
 "    move: desplaza el bÃºfer en la lista (puede ser relativo, por ejemplo, -"
@@ -1426,6 +1433,11 @@ msgstr ""
 msgid "max size for prefix (0 = no max size)"
 msgstr ""
 
+msgid ""
+"prefix alignment for buffer name, when many buffers are merged with same "
+"number (none, left, right (default))"
+msgstr ""
+
 #, fuzzy
 msgid "string displayed after prefix"
 msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
@@ -1479,6 +1491,11 @@ msgstr "color para la hora en la ventana de conversaciÃ³n"
 #, fuzzy
 msgid "text color for time delimiters"
 msgstr "color para los delimitadores de la barra de informaciÃ³n"
+
+msgid ""
+"text color for buffer name (before prefix, when many buffers are merged with "
+"same number)"
+msgstr ""
 
 #, fuzzy
 msgid "text color for error prefix"
@@ -2095,9 +2112,9 @@ msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\": un plugin con el mismo nombre "
 "ya existe\n"
 
-#, fuzzy
-msgid "Not enough memory for new line"
-msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
+#, c-format
+msgid "%sError: it is only possible to merge buffers with formatted content"
+msgstr ""
 
 #, fuzzy
 msgid "names of buffers"
@@ -2192,6 +2209,10 @@ msgstr "%s No ha sido posible atar la clave \"%s\"\n"
 #, fuzzy
 msgid "Error: not enough memory for key binding"
 msgstr "%s no hay suficiente memoria para atar la clave\n"
+
+#, fuzzy
+msgid "Not enough memory for new line"
+msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -2530,10 +2551,6 @@ msgstr ""
 msgid "away"
 msgstr ""
 
-#, fuzzy
-msgid "servers"
-msgstr "servidor"
-
 msgid "Lag"
 msgstr ""
 
@@ -2568,11 +2585,11 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away: %s"
+msgid "%s: future away: %s"
 msgstr "el ignore fue eliminado.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away removed"
+msgid "%s: future away removed"
 msgstr "el ignore fue eliminado.\n"
 
 #, fuzzy, c-format
@@ -2613,7 +2630,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s Â¡no conectado al servidor \"%s\"!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is cancelled"
 msgstr "La reconexiÃ³n automÃ¡tica estÃ¡ anulada\n"
 
 #, fuzzy, c-format
@@ -3321,7 +3338,7 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername] | "
-"[deloutq] | [raw] | [switch]"
+"[deloutq] | [raw]"
 msgstr ""
 "[nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -"
 "noauto] [-ipv6] [-ssl] [-pwd contraseÃ±a] [-nicks alias1 alias2 alias3] [-"
@@ -3347,8 +3364,6 @@ msgid ""
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
 "       raw: open buffer with raw IRC data\n"
-"    switch: switch active server (when one buffer is used for all servers, "
-"default key: alt-s on server buffer)\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -3710,8 +3725,9 @@ msgstr ""
 msgid "use nick color in messages from server"
 msgstr "pedir la hora local del servidor"
 
-msgid "use same buffer for all servers"
-msgstr "usar el mismo bÃºfer para todos los servidores"
+#, fuzzy
+msgid "merge server buffers"
+msgstr "gestionar los bÃºfers"
 
 msgid "open new channels/privates near server"
 msgstr "abrir nuevos canales/privados cerca del servidor"
@@ -3880,9 +3896,6 @@ msgid "get nick from IRC host"
 msgstr "banea usuarios o mÃ¡quinas"
 
 msgid "get buffer pointer for an IRC server/channel"
-msgstr ""
-
-msgid "currently selected server (only if one buffer is used for all servers)"
 msgstr ""
 
 #, fuzzy
@@ -4196,7 +4209,7 @@ msgstr ""
 "conexiÃ³n con el servidor!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
@@ -4262,19 +4275,19 @@ msgstr ""
 "%s no ha sido posible leer datos del socket, desconectando del servidor...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
+msgid "%s: reconnecting to server in %d %s"
 msgstr "%s: ReconexiÃ³n al servidor en %d segundos\n"
 
 #, fuzzy, c-format
-msgid "%s%s: switching address to %s/%d"
+msgid "%s: switching address to %s/%d"
 msgstr "%s DirecciÃ³n IP no encontrada\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%s)"
+msgid "%s: connected to %s (%s)"
 msgstr "%s Â¡no conectado al servidor \"%s\"!\n"
 
 #, fuzzy, c-format
@@ -4354,12 +4367,16 @@ msgstr ""
 "con soporte GNUtls\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: conectando al servidor %s:%d%s%s vÃ­a %s proxy %s: %d%s...\n"
 
 #, fuzzy, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "Conectando al servidor %s:%d%s%s vÃ­a %s proxy %s:%d%s...\n"
+
+#, fuzzy, c-format
+msgid "%s: connecting to server %s/%d%s%s..."
+msgstr "%s: conectando al servidor %s:%d%s%s...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: connecting to server %s/%d%s%s..."
@@ -4378,12 +4395,24 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s no ha sido posible configurar la opciÃ³n socket \"SO_KEEPALIVE\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
+msgid "%s: reconnecting to server..."
 msgstr "%s: Reconectando al servidor...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: disconnected from server"
 msgstr "Â¡Desconectado del servidor!\n"
+
+#, fuzzy, c-format
+msgid "%s: disconnected from server"
+msgstr "Â¡Desconectado del servidor!\n"
+
+#, fuzzy
+msgid "servers"
+msgstr "servidor"
+
+#, fuzzy, c-format
+msgid "%s%s: auto-reconnection is cancelled"
+msgstr "La reconexiÃ³n automÃ¡tica estÃ¡ anulada\n"
 
 #, fuzzy
 msgid "list, add or remove Jabber servers"
@@ -4528,6 +4557,9 @@ msgstr ""
 msgid "automatically rejoin MUCs when kicked"
 msgstr "unirse de nuevo automÃ¡ticamente a los canales cuando sea expulsado"
 
+msgid "use same buffer for all servers"
+msgstr "usar el mismo bÃºfer para todos los servidores"
+
 #, fuzzy
 msgid "open new MUCs/privates near server"
 msgstr "abrir nuevos canales/privados cerca del servidor"
@@ -4601,6 +4633,14 @@ msgid "%s%s: cannot allocate new MUC"
 msgstr "%s no ha sido posible crear un nuevo canal"
 
 #, fuzzy, c-format
+msgid "%s%s: reconnecting to server in %d %s"
+msgstr "%s: ReconexiÃ³n al servidor en %d segundos\n"
+
+#, fuzzy, c-format
+msgid "%s%s: connected to %s (%s)"
+msgstr "%s Â¡no conectado al servidor \"%s\"!\n"
+
+#, fuzzy, c-format
 msgid "%s%s: GnuTLS init error"
 msgstr "%s error de inicializaciÃ³n de gnutls\n"
 
@@ -4643,6 +4683,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: failed to create id"
 msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: reconnecting to server..."
+msgstr "%s: Reconectando al servidor...\n"
 
 #, fuzzy, c-format
 msgid "%s%s: I/O error (%d)"
@@ -6147,7 +6191,3 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-MÃS-"
-
-#, fuzzy
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: conectando al servidor %s:%d%s%s...\n"

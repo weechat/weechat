@@ -35,7 +35,7 @@
 #include "../plugins/plugin.h"
 #include "gui-filter.h"
 #include "gui-buffer.h"
-#include "gui-chat.h"
+#include "gui-line.h"
 
 
 struct t_gui_filter *gui_filters = NULL;           /* first filter          */
@@ -54,9 +54,9 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
 {
     int i;
     
-    for (i = 0; i < line->tags_count; i++)
+    for (i = 0; i < line->data->tags_count; i++)
     {
-        if (strcmp (line->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
+        if (strcmp (line->data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
             return 1;
     }
     
@@ -92,17 +92,17 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
                 && string_match (buffer->name, ptr_filter->buffer_name, 0))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
-                    || (gui_chat_line_match_tags (line,
-                                                  ptr_filter->tags_count,
-                                                  ptr_filter->tags_array)))
+                    || (gui_line_match_tags (line,
+                                             ptr_filter->tags_count,
+                                             ptr_filter->tags_array)))
                 {
                     /* check line with regex */
                     if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
                         return 0;
                     
-                    if (gui_chat_line_match_regex (line,
-                                                   ptr_filter->regex_prefix,
-                                                   ptr_filter->regex_message))
+                    if (gui_line_match_regex (line,
+                                              ptr_filter->regex_prefix,
+                                              ptr_filter->regex_message))
                         return 0;
                 }
             }
@@ -125,32 +125,32 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
     
     lines_hidden = 0;
     
-    buffer->prefix_max_length = 0;
+    buffer->lines->prefix_max_length = 0;
     
-    for (ptr_line = buffer->lines; ptr_line;
+    for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
         line_displayed = gui_filter_check_line (buffer, ptr_line);
         
         if (line_displayed
-            && (ptr_line->prefix_length > buffer->prefix_max_length))
+            && (ptr_line->data->prefix_length > buffer->lines->prefix_max_length))
         {
-            buffer->prefix_max_length = ptr_line->prefix_length;
+            buffer->lines->prefix_max_length = ptr_line->data->prefix_length;
         }
         
         /* force chat refresh if at least one line changed */
-        if (ptr_line->displayed != line_displayed)
+        if (ptr_line->data->displayed != line_displayed)
             gui_buffer_ask_chat_refresh (buffer, 2);
         
-        ptr_line->displayed = line_displayed;
+        ptr_line->data->displayed = line_displayed;
         
         if (!line_displayed)
             lines_hidden = 1;
     }
     
-    if (buffer->lines_hidden != lines_hidden)
+    if (buffer->lines->lines_hidden != lines_hidden)
     {
-        buffer->lines_hidden = lines_hidden;
+        buffer->lines->lines_hidden = lines_hidden;
         hook_signal_send ("buffer_lines_hidden",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
