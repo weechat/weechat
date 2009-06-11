@@ -207,7 +207,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_buffer_close) (void *data,
                                            struct t_gui_buffer *buffer))
 {
-    char *string, *completion = "list|listfull|load|autoload|reload|unload %(filename)";
+    char *string, *completion;
     char infolist_description[512], signal_name[128];
     int length, i, upgrading;
     
@@ -237,12 +237,21 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     }
     
     /* add command */
-    length = strlen (completion) + strlen (weechat_plugin->name) + 16;
+    completion = NULL;
+    length = strlen (weechat_plugin->name) + 16;
     string = malloc (length);
     if (string)
     {
-        snprintf (string, length, "%s|%%(%s_script)",
-                  completion, weechat_plugin->name);
+        snprintf (string, length, "%%(%s_script)",
+                  weechat_plugin->name);
+        completion = weechat_string_replace ("list %s"
+                                             " || listfull %s"
+                                             " || load %(filename)"
+                                             " || autoload"
+                                             " || reload"
+                                             " || unload %s",
+                                             "%s",
+                                             string);
     }
     weechat_hook_command (weechat_plugin->name,
                           N_("list/load/unload scripts"),
@@ -253,10 +262,12 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                              "name: a script name\n\n"
                              "Without argument, this command "
                              "lists all loaded scripts."),
-                          (string) ? string : completion,
+                          completion,
                           callback_command, NULL);
     if (string)
         free (string);
+    if (completion)
+        free (completion);
     
     /* add completion and infolist */
     length = strlen (weechat_plugin->name) + 16;
