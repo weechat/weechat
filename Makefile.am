@@ -23,27 +23,6 @@ SUBDIRS = po $(doc_dir) intl src
 EXTRA_DIST = CMakeLists.txt \
              config.rpath \
              config.h.cmake \
-             debian/NEWS \
-             debian/changelog \
-             debian/compat \
-             debian/control \
-             debian/copyright \
-             debian/rules \
-             debian/watch \
-             debian/weechat-core.docs \
-             debian/weechat-core.install \
-             debian/weechat-curses.dirs \
-             debian/weechat-curses.install \
-             debian/weechat-curses.lintian-overrides \
-             debian/weechat-curses.manpages \
-             debian/weechat-curses.menu \
-             debian/weechat-dev.dirs \
-             debian/weechat-dev.install \
-             debian/weechat-doc.docs \
-             debian/weechat-doc.install \
-             debian/weechat-plugins.dirs \
-             debian/weechat-plugins.install \
-             debian/weechat.xpm \
              cmake/cmake_uninstall.cmake.in \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
