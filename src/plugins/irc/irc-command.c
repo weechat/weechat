@@ -3082,10 +3082,17 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_PLUGIN_NAME);
         return WEECHAT_RC_OK;
     }
-
+    
     if (weechat_strcasecmp (argv[1], "raw") == 0)
     {
         irc_raw_open (1);
+        return WEECHAT_RC_OK;
+    }
+    
+    if (weechat_strcasecmp (argv[1], "jump") == 0)
+    {
+        if (ptr_server && ptr_server->buffer)
+            weechat_buffer_set (ptr_server->buffer, "display", "1");
         return WEECHAT_RC_OK;
     }
     
@@ -4012,7 +4019,7 @@ irc_command_init ()
                              "[copy servername newservername] | "
                              "[rename servername newservername] | "
                              "[keep servername] | [del servername] | "
-                             "[deloutq] | [raw]"),
+                             "[deloutq] | [jump] | [raw]"),
                           N_("      list: list servers (no parameter implies "
                              "this list)\n"
                              "  listfull: list servers with detailed info for "
@@ -4036,6 +4043,7 @@ irc_command_init ()
                              "   deloutq: delete messages out queue for all "
                              "servers (all messages WeeChat is currently "
                              "sending)\n"
+                             "      jump: jump to server buffer\n"
                              "       raw: open buffer with raw IRC data\n\n"
                              "Examples:\n"
                              "  /server listfull\n"
@@ -4048,7 +4056,7 @@ irc_command_init ()
                              "  /server del freenode\n"
                              "  /server deloutq\n"
                              "  /server switch"),
-                          "add|copy|rename|keep|del|deloutq|list|listfull|"
+                          "add|copy|rename|keep|del|deloutq|jump|list|listfull|"
                           "raw|switch %(irc_servers) %(irc_servers)",
                           &irc_command_server, NULL);
     weechat_hook_command ("servlist",

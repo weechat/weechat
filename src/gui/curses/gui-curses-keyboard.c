@@ -116,6 +116,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_default_bind (/* m-a           */ "meta-a",             "/input jump_smart");
     gui_keyboard_default_bind (/* m-j,m-l       */ "meta-jmeta-l",       "/input jump_last_buffer");
     gui_keyboard_default_bind (/* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
+    gui_keyboard_default_bind (/* m-j,m-s       */ "meta-jmeta-s",       "/server jump");
     gui_keyboard_default_bind (/* m-h           */ "meta-h",             "/input hotlist_clear");
     gui_keyboard_default_bind (/* m-k           */ "meta-k",             "/input grab_key");
     gui_keyboard_default_bind (/* m-u           */ "meta-u",             "/input scroll_unread");

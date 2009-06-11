@@ -559,8 +559,12 @@ Touches pour les tampons / fenêtres
   `/input jump_last_buffer`
 
 | Alt + J puis Alt + R |
-  Effacer entièrement la ligne de commande +
+  Sauter au tampon IRC de données brutes +
   `/server raw`
+
+| Alt + J puis Alt + S |
+  Sauter au tampon IRC du serveur +
+  `/server jump`
 
 | Alt + chiffre (0-9) |
   Sauter au tampon qui porte ce numéro (0 = 10) +

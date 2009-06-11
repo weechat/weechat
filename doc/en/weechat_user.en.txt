@@ -546,6 +546,10 @@ Keys for buffers / windows
   Switch to IRC raw buffer +
   `/server raw`
 
+| Alt + J then Alt + S |
+  Switch to IRC server buffer +
+  `/server jump`
+
 | Alt + digit (0-9) |
   Switch to buffer by number (0 = 10) +
   `/buffer *N`
