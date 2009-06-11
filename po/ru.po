@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 12:26+0200\n"
+"POT-Creation-Date: 2009-06-11 12:45+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2702,7 +2702,7 @@ msgid "%s%s: error adding ignore"
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy, c-format
-msgid "%s: all ignore deleted"
+msgid "%s: all ignores deleted"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
@@ -2992,11 +2992,11 @@ msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr ""
 
 msgid ""
-"     list: list all ignore\n"
+"     list: list all ignores\n"
 "      add: add a ignore\n"
 "      del: del a ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
-"     -all: delete all ignore\n"
+"     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
 "mask is a string with some \"*\" to replace one or more chars)\n"
 "   server: internal server name where ignore is working\n"
@@ -3947,7 +3947,7 @@ msgid "list of nicks for an IRC channel"
 msgstr "список ников на канале"
 
 #, fuzzy
-msgid "list of IRC ignore"
+msgid "list of IRC ignores"
 msgstr "порт IRC сервера"
 
 #, fuzzy, c-format

@@ -5,7 +5,7 @@
 
 | irc | irc_channel | liste des canaux pour un serveur IRC
 
-| irc | irc_ignore | liste des ignore IRC
+| irc | irc_ignore | liste des ignores IRC
 
 | irc | irc_nick | liste des pseudos pour un canal IRC
 

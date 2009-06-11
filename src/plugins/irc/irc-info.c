@@ -391,6 +391,6 @@ irc_info_init ()
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_nick", N_("list of nicks for an IRC channel"),
                            &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_ignore", N_("list of IRC ignore"),
+    weechat_hook_infolist ("irc_ignore", N_("list of IRC ignores"),
                            &irc_info_get_infolist_cb, NULL);
 }

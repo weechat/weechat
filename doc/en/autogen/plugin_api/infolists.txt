@@ -5,7 +5,7 @@
 
 | irc | irc_channel | list of channels for an IRC server
 
-| irc | irc_ignore | list of IRC ignore
+| irc | irc_ignore | list of IRC ignores
 
 | irc | irc_nick | list of nicks for an IRC channel
 

@@ -127,11 +127,11 @@
 ........................................
   ignore des pseudos/hôtes de serveurs ou canaux
 
-         list: liste tous les ignore
+         list: liste tous les ignores
           add: ajoute un ignore
           del: supprime un ignore
        numéro: numéro du ignore à supprimer (voir la liste des ignore pour le trouver)
-         -all: supprime tous les ignore
+         -all: supprime tous les ignores
   pseudo/hôte: pseudo ou hôte à ignorer: la syntaxe est "re:regex" ou "masque" (un masque est une chaîne avec des "*" pour remplacer un ou plusieurs caractères)
       serveur: nom de serveur interne où le ignore fonctionnera
         canal: canal où le ignore fonctionnera
@@ -397,7 +397,7 @@
   demander au serveur de redémarrer
 ........................................
 
-&bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [raw]`::
+&bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [jump] | [raw]`::
 
 ........................................
   liste, ajoute ou retire des serveurs IRC
@@ -416,6 +416,7 @@
          keep: garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
           del: supprimer un serveur
       deloutq: supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
+         jump: sauter au tampon du serveur
           raw: ouvre le tampon avec les données brutes IRC
   
   Exemples:

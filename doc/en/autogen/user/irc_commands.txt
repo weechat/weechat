@@ -127,11 +127,11 @@
 ........................................
   ignore nicks/hosts from servers or channels
 
-       list: list all ignore
+       list: list all ignores
         add: add a ignore
         del: del a ignore
      number: number of ignore to delete (look at list to find it)
-       -all: delete all ignore
+       -all: delete all ignores
   nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
      server: internal server name where ignore is working
     channel: channel name where ignore is working
@@ -397,7 +397,7 @@
   tell the server to restart itself
 ........................................
 
-&bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [raw]`::
+&bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [jump] | [raw]`::
 
 ........................................
   list, add or remove IRC servers
@@ -416,6 +416,7 @@
         keep: keep server in config file (for temporary servers only)
          del: delete a server
      deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+        jump: jump to server buffer
          raw: open buffer with raw IRC data
   
   Examples:
