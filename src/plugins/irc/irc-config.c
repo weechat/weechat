@@ -54,6 +54,7 @@ struct t_config_option *irc_config_look_display_nick_modes;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
+struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_show_away_once;
@@ -266,6 +267,24 @@ irc_config_change_look_highlight_tags (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_item_display_server: called when the
+ *                                             "item_display_server" option is
+ *                                             changed
+ */
+
+void
+irc_config_change_look_item_display_server (void *data,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    weechat_bar_item_update ("buffer_plugin");
+    weechat_bar_item_update ("buffer_name");
 }
 
 /*
@@ -1137,6 +1156,12 @@ irc_config_init ()
            "messages,..)"),
         NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
         &irc_config_change_look_highlight_tags, NULL, NULL, NULL);
+    irc_config_look_item_display_server = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_display_server", "integer",
+        N_("name of bar item where IRC server is displayed (for status bar)"),
+        "buffer_plugin|buffer_name", 0, 0, "buffer_plugin", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_display_server, NULL, NULL, NULL);
     irc_config_look_raw_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "raw_messages", "integer",

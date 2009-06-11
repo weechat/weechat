@@ -29,6 +29,12 @@ enum t_irc_config_look_server_buffer
     IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT,
 };
 
+enum t_irc_config_look_item_display_server
+{
+    IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN = 0,
+    IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME,
+};
+
 enum t_irc_config_nick_completion
 {
     IRC_CONFIG_NICK_COMPLETION_SMART_OFF = 0,
@@ -59,6 +65,7 @@ extern struct t_config_option *irc_config_look_display_nick_modes;
 extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
+extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_show_away_once;

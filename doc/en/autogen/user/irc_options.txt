@@ -53,6 +53,11 @@
 ** type: string
 ** values: any string (default value: "irc_privmsg,irc_notice")
 
+* *irc.look.item_display_server*
+** description: name of bar item where IRC server is displayed (for status bar)
+** type: integer
+** values: buffer_plugin, buffer_name (default value: buffer_plugin)
+
 * *irc.look.nick_completion_smart*
 ** description: smart completion for nicks (completes first with last speakers)
 ** type: integer

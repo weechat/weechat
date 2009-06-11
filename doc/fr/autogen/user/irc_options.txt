@@ -53,6 +53,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "irc_privmsg,irc_notice")
 
+* *irc.look.item_display_server*
+** description: name of bar item where IRC server is displayed (for status bar)
+** type: entier
+** valeurs: buffer_plugin, buffer_name (valeur par défaut: buffer_plugin)
+
 * *irc.look.nick_completion_smart*
 ** description: complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)
 ** type: entier
