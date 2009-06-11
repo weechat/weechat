@@ -129,7 +129,7 @@ gui_chat_strlen_screen (const char *string)
         string = gui_chat_string_next_char (NULL, (unsigned char *)string, 0);
         if (string)
         {
-            size_on_screen = utf8_char_size_screen (string);
+            size_on_screen = (string[0] < 32) ? 1 : utf8_char_size_screen (string);
             if (size_on_screen > 0)
                 length += size_on_screen;
             string = utf8_next_char (string);
@@ -183,7 +183,7 @@ gui_chat_string_real_pos (const char *string, int pos)
                                                 0);
         if (ptr_string)
         {
-            size_on_screen = utf8_char_size_screen (ptr_string);
+            size_on_screen = (ptr_string[0] < 32) ? 1 : utf8_char_size_screen (ptr_string);
             if (size_on_screen > 0)
                 pos -= size_on_screen;
             ptr_string = utf8_next_char (ptr_string);
