@@ -73,6 +73,7 @@ int
 gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_filter *ptr_filter;
+    const char *buffer_plugin_name;
     
     /* line is always displayed if filters are disabled */
     if (!gui_filters_enabled)
@@ -80,6 +81,9 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     
     if (gui_filter_line_has_tag_no_filter (line))
         return 1;
+
+    buffer_plugin_name = (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
+        buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin);
     
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
@@ -88,7 +92,7 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
         {
             /* check plugin and buffer names */
             if ((!ptr_filter->plugin_name
-                 || (string_strcasecmp (plugin_get_name (buffer->plugin), ptr_filter->plugin_name) == 0))
+                 || (string_strcasecmp (buffer_plugin_name, ptr_filter->plugin_name) == 0))
                 && string_match (buffer->name, ptr_filter->buffer_name, 0))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
