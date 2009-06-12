@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 19:00+0200\n"
+"POT-Creation-Date: 2009-06-12 16:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4988,14 +4988,6 @@ msgstr ""
 "bereits\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
-"version %s, failed to load"
-msgstr ""
-"%s Funktion \"weechat_plugin_init\" nicht in Plugin \"%s\" gefunden Laden "
-"gescheitert\n"
-
-#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s Funktion \"weechat_plugin_init\" nicht in Plugin \"%s\" gefunden Laden "
@@ -5792,6 +5784,14 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+#~ "version %s, failed to load"
+#~ msgstr ""
+#~ "%s Funktion \"weechat_plugin_init\" nicht in Plugin \"%s\" gefunden Laden "
+#~ "gescheitert\n"
 
 #, fuzzy
 #~ msgid ""

@@ -33,7 +33,5 @@ extern void util_exec_on_files (const char *directory, void *data,
                                                  const char *filename));
 extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
-extern int util_weechat_version_cmp (const char *version1,
-                                     const char *version2);
 
 #endif /* wee-util.h */

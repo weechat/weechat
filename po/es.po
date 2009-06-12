@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 19:00+0200\n"
+"POT-Creation-Date: 2009-06-12 16:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4977,14 +4977,6 @@ msgstr ""
 "ya existe\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
-"version %s, failed to load"
-msgstr ""
-"%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
-"fallÃ³ al cargar\n"
-
-#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
@@ -5785,6 +5777,14 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+#~ "version %s, failed to load"
+#~ msgstr ""
+#~ "%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
+#~ "fallÃ³ al cargar\n"
 
 #, fuzzy
 #~ msgid ""

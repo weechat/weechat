@@ -156,7 +156,7 @@ plugin_load (const char *filename)
     char *ptr_home, *full_name, *full_name2;
     void *handle;
     char *name, *api_version, *author, *description, *version;
-    char *weechat_version, *license, *charset;
+    char *license, *charset;
     t_weechat_init_func *init_func;
     int rc, i, argc;
     char **argv;
@@ -302,34 +302,6 @@ plugin_load (const char *filename)
         return NULL;
     }
     
-    /* look for WeeChat version required for plugin */
-    weechat_version = dlsym (handle, "weechat_plugin_weechat_version");
-    if (!weechat_version)
-    {
-        gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found in "
-                           "plugin \"%s\", failed to load"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "weechat_plugin_weechat_version",
-                         full_name);
-        dlclose (handle);
-        free (full_name);
-        return NULL;
-    }
-    if (util_weechat_version_cmp (PACKAGE_VERSION, weechat_version) != 0)
-    {
-        gui_chat_printf (NULL,
-                         _("%sError: plugin \"%s\" is compiled for WeeChat "
-                           "%s and you are running version %s, failed to "
-                           "load"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         full_name,
-                         weechat_version, PACKAGE_VERSION);
-        dlclose (handle);
-        free (full_name);
-        return NULL;
-    }
-    
     /* look for plugin license */
     license = dlsym (handle, "weechat_plugin_license");
     if (!license)
@@ -374,7 +346,6 @@ plugin_load (const char *filename)
         new_plugin->description = strdup (description);
         new_plugin->author = strdup (author);
         new_plugin->version = strdup (version);
-        new_plugin->weechat_version = strdup (weechat_version);
         new_plugin->license = strdup (license);
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
         ptr_option = config_weechat_debug_get (name);
@@ -825,8 +796,6 @@ plugin_remove (struct t_weechat_plugin *plugin)
         free (plugin->author);
     if (plugin->version)
         free (plugin->version);
-    if (plugin->weechat_version)
-        free (plugin->weechat_version);
     if (plugin->license)
         free (plugin->license);
     if (plugin->charset)
@@ -1056,8 +1025,6 @@ plugin_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "author", plugin->author))
         return 0;
     if (!infolist_new_var_string (ptr_item, "version", plugin->version))
-        return 0;
-    if (!infolist_new_var_string (ptr_item, "weechat_version", plugin->weechat_version))
         return 0;
     if (!infolist_new_var_string (ptr_item, "license", plugin->license))
         return 0;

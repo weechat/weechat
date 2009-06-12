@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 19:00+0200\n"
+"POT-Creation-Date: 2009-06-12 16:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5034,14 +5034,6 @@ msgstr ""
 "%s nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
-"version %s, failed to load"
-msgstr ""
-"%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
-"selhalo\n"
-
-#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
@@ -5851,6 +5843,14 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+#~ "version %s, failed to load"
+#~ msgstr ""
+#~ "%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, "
+#~ "načtení selhalo\n"
 
 #, fuzzy
 #~ msgid ""

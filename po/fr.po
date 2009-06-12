@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 19:00+0200\n"
-"PO-Revision-Date: 2009-06-11 19:01+0200\n"
+"POT-Creation-Date: 2009-06-12 16:00+0200\n"
+"PO-Revision-Date: 2009-06-12 16:00+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -5199,14 +5199,6 @@ msgstr ""
 "même nom existe déjà"
 
 #, c-format
-msgid ""
-"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
-"version %s, failed to load"
-msgstr ""
-"%sErreur: l'extension \"%s\" est compilée pour WeeChat %s et vous utilisez "
-"la version %s, échec de chargement"
-
-#, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sErreur: la fonction \"%s\" n'existe pas dans l'extension \"%s\", échec de "
@@ -5998,16 +5990,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "control server buffers attachment"
-#~ msgstr "contrôle de l'attachement des tampons de serveur"
-
-#~ msgid ""
-#~ "attach server buffers into one buffer (optionally attached to core buffer)"
-#~ msgstr "attachement des tampons des serveurs"
-
-#~ msgid ""
-#~ "currently selected server (only if one buffer is used for all servers)"
-#~ msgstr ""
-#~ "serveur actuellement sélectionné (seulement si un tampon est utilisé pour "
-#~ "tous les serveurs)"

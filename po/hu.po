@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-11 19:00+0200\n"
+"POT-Creation-Date: 2009-06-12 16:00+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5046,14 +5046,6 @@ msgid ""
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
-"version %s, failed to load"
-msgstr ""
-"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
-"betöltés sikertelen\n"
-
-#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
@@ -5846,6 +5838,14 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+#~ "version %s, failed to load"
+#~ msgstr ""
+#~ "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
+#~ "betöltés sikertelen\n"
 
 #, fuzzy
 #~ msgid ""

@@ -47,7 +47,6 @@ WEECHAT_PLUGIN_DESCRIPTION("Xfer (file transfer and direct chat) plugin for "
                            "WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_xfer_plugin = NULL;
