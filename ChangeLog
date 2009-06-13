@@ -21,6 +21,7 @@ Version 0.3.0 (under dev!)
 * irc: fix private buffer name with irssi proxy (bug #26589)
 * irc: remove kernel info in CTCP VERSION reply (task #7494)
 * irc: add missing commands (328, 369)
+* irc: fix mode parsing when receiving modes with arguments (bug #26793)
 * aspell: improve plugin: use of many dictionaries, global dictionary, real
   time checking (optional), fix bugs with utf-8
 * xfer: add speed limit for DCC files sending (task #6178)
