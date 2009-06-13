@@ -395,14 +395,27 @@ gui_hotlist_clear ()
 void
 gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
-    struct t_gui_hotlist *pos_hotlist;
+    int hotlist_changed;
+    struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
     
-    pos_hotlist = gui_hotlist_search (gui_hotlist, buffer);
-    if (pos_hotlist)
+    hotlist_changed = 0;
+    
+    ptr_hotlist = gui_hotlist;
+    while (ptr_hotlist)
     {
-        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, pos_hotlist);
-        gui_hotlist_changed_signal ();
+        next_hotlist = ptr_hotlist->next_hotlist;
+        
+        if (ptr_hotlist->buffer->number == buffer->number)
+        {
+            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+            hotlist_changed = 1;
+        }
+        
+        ptr_hotlist = next_hotlist;
     }
+    
+    if (hotlist_changed)
+        gui_hotlist_changed_signal ();
 }
 
 /*
