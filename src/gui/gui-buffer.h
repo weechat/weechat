@@ -224,6 +224,7 @@ extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
 extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
+extern int gui_buffer_count_merged_buffers (int number);
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();

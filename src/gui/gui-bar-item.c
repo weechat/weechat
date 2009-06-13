@@ -997,9 +997,10 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
         
         sprintf (buf + strlen (buf), "%d", ptr_hotlist->buffer->number);
         
-        if (display_name
-            && (CONFIG_INTEGER(config_look_hotlist_names_count) != 0)
-            && (names_count < CONFIG_INTEGER(config_look_hotlist_names_count)))
+        if ((gui_buffer_count_merged_buffers (ptr_hotlist->buffer->number) > 1)
+            || (display_name
+                && (CONFIG_INTEGER(config_look_hotlist_names_count) != 0)
+                && (names_count < CONFIG_INTEGER(config_look_hotlist_names_count))))
         {
             names_count++;
             
