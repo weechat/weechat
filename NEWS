@@ -1,6 +1,11 @@
 WeeChat News
 ============
 
+FlashCode, 2009-06-13::
+    WeeChat 0.2.6.3 released.
+    +
+    This version fixes gnutls detection.
+
 FlashCode, 2009-04-18::
     WeeChat 0.2.6.2 released.
     +
