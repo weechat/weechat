@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2009-04-18
+ChangeLog - 2009-06-13
 
+
+Version 0.2.6.3 (2009-06-13):
+   * fix gnutls detection (use pkg-config instead of libgnutls-config)
+     (bug #26790)
 
 Version 0.2.6.2 (2009-04-18):
    * fix bug with charset decoding (for example with iso2022jp)
