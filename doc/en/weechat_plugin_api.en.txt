@@ -6230,7 +6230,7 @@ Arguments:
 
 * 'buffer': buffer pointer (command is executed on this buffer, use NULL for
   WeeChat core buffer)
-* 'command': command to eecute (if beginning with a "/"), or text is sent to
+* 'command': command to execute (if beginning with a "/"), or text is sent to
   buffer (without leading "/")
 
 Example:
