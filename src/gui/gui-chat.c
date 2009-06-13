@@ -468,9 +468,6 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (date <= 0)
         date = date_printed;
     
-    if (gui_init_ok)
-        ptr_line = buffer->lines->last_line;
-    
     at_least_one_message_printed = 0;
     
     pos = gui_chat_buffer;
@@ -540,14 +537,16 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         
         if (gui_init_ok)
         {
-            gui_line_add (buffer, (display_time) ? date : 0,
-                          (display_time) ? date_printed : 0,
-                          tags, pos_prefix, ptr_msg);
-            if (buffer->lines->last_line && buffer->print_hooks_enabled)
+            ptr_line = gui_line_add (buffer, (display_time) ? date : 0,
+                                     (display_time) ? date_printed : 0,
+                                     tags, pos_prefix, ptr_msg);
+            if (ptr_line)
             {
-                hook_print_exec (buffer, buffer->lines->last_line);
+                if (buffer->print_hooks_enabled)
+                    hook_print_exec (buffer, ptr_line);
+                if (ptr_line->data->displayed)
+                    at_least_one_message_printed = 1;
             }
-            at_least_one_message_printed = 1;
         }
         else
         {
