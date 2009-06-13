@@ -18,18 +18,18 @@ Online help / options
 ---------------------
 
 WeeChat has help for all commands, just issue /help
-To get help on a command, issue `/help command`
+To get help on a specific command, issue `/help command`
 
 To set options, use `/set config.section.option value`
 (where `config` is configuration name (`weechat` for core, or a plugin
 name), `section` the section of this configuration and `option` the
 option name).
 
-WeeChat immediately uses new value (you *never* need to restart WeeChat
+WeeChat immediately uses the new value (you *never* need to restart WeeChat
 after changes to configuration).
 
-You can use `/set` option with partial name and wildcard "*" at beginning or
-end to display all options containg letters.
+You can use `/set` option with partial name and wildcard "*" at the beginning
+or end to display all options containg letters.
 For example:
 
 `/set`::
@@ -45,7 +45,7 @@ You can display help for an option with `/help`, for example:
 `/help weechat.look.highlight`.
 
 All settings are saved when WeeChat ends (or with `/save` command to force
-write of options).
+a write of the options).
 
 You can edit configuration files (*.conf) by hand and reload them by
 `/reload` command if you don't want to use `/set` command.
@@ -56,13 +56,13 @@ Core vs plugins
 ---------------
 
 WeeChat "core" is only used to display data on screen and interact with
-user, that means weechat core without plugins is useless
+the user, that means weechat core without plugins is useless
 (faithful users: IRC was part of core for versions < = 0.2.6).
 
 All network protocols like IRC are provided in separate plugins.
 
-Use `/plugin` command to list loaded plugins, you should see "irc" and
-other plugins in list.
+Use the `/plugin` command to list loaded plugins, you should see "irc" and
+other plugins in the list.
 
 
 [[create_irc_server]]
@@ -112,7 +112,7 @@ To auto-join some channels when connecting to server:
 
   /set irc.server.oftc.autojoin "#channel1,#channel2"
 
-To remove value of a server option, and use default value instead,
+To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
 
   /set irc.server.oftc.nicks null
@@ -145,15 +145,15 @@ Join/part IRC channels
     part a channel (keeping buffer open)
 
 `/close [quit message]`::
-    close server or channel buffer (`/close` is an alias on `/buffer close`)
+    close server or channel buffer (`/close` is an alias for `/buffer close`)
 
 
 [[buffer_window]]
 Buffer/window management
 ------------------------
 
-A buffer is a component linked to a plugin with a number with a category
-and a name. Buffer contains data displayed on screen.
+A buffer is a component linked to a plugin with a number, a category,
+and a name. A buffer contains the data displayed on the screen.
 
 A window is a view on a buffer. By default there's only one window
 displaying one buffer. If you split screen, you will see many windows
@@ -166,8 +166,8 @@ Commands to manage buffers and windows:
 
 (I'll not repeat here that you can get help with /help on these commands)
 
-For example, to split verticaly screen into a small window (1/3 width),
-and a large (2/3), use command:
+For example, to vertically split your screen into a small window (1/3 width),
+and a large window (2/3), use command:
 
   /window splitv 33
 
@@ -176,7 +176,7 @@ and a large (2/3), use command:
 Key bindings
 ------------
 
-WeeChat uses many keys by default. All these keys are in documentation,
+WeeChat uses many keys by default. All these keys are in the documentation,
 but you should know at least some vital keys:
 
 - 'alt + left/right arrows' (or 'F5'/'F6'): switch to previous/next buffer
@@ -213,20 +213,20 @@ On some distros like Debian, plugins are available via a separate package
 Plugins are automatically loaded when found.
 
 Some plugins let you use scripts in WeeChat (in many languages like Perl,
-Python, Ruby, Lua and Tcl). These plugins must be loaded with `/plugin`
+Python, Ruby, Lua and Tcl). These plugins must be loaded with the `/plugin`
 command and they provide commands like `/perl`, used to load scripts.
 
 Many external plugins/scripts (from contributors) are available for
 WeeChat: http://weechat.flashtux.org/plugins.php
 
-Please look at WeeChat documentation to load/unload plugins or scripts.
+Please look at the WeeChat documentation to load/unload plugins or scripts.
 
 
 [[more_doc]]
 More documentation
 ------------------
 
-You can now use WeeChat and read FAQ/documentation for any other question:
+You can now use WeeChat and read FAQ/documentation for any other questions:
 http://weechat.flashtux.org/doc.php
 
-Enjoy WeeChat!
+Enjoy using WeeChat!

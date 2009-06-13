@@ -11,17 +11,18 @@ Many thankful users ask us how can they help developing WeeChat. The
 easiest (and also most tricky) way to help developing WeeChat is
 testing!
 
-Testing is very important part of software development and should not be
+Testing is a very important part of software development and should not be
 underestimated. When some features are implemented it should be tested, but for
 some features there are too many use cases or these cases are tricky and
 developers can't try out every case.
 
-For example: notorious charset plugin introduced in WeeChat 0.2.2: noone of us
-(developers, contributors and testers) used channels with national characters
-in their names and when 0.2.2 was released we got flooded by russian users
-blaming us. If we have more testers it should not happen again in future.
+For example: A notorious charset plugin was introduced in WeeChat 0.2.2: none
+of us (developers, contributors and testers) used channels with national
+characters in their names and when 0.2.2 was released we got flooded by Russian
+users blaming us. If we have more testers it should not happen again in the
+future.
 
-Testing stable version of WeeChat is pointless because developers are busy
+Testing the stable version of WeeChat is pointless because developers are busy
 implementing new stuff (and fixing old bugs) all the time.
 
 
@@ -33,7 +34,7 @@ It would help us a lot if you enable Linux 'core' files: if WeeChat crashes,
 Linux will write a file called 'core'. This file contains very useful debug
 info, to know exactly where is problem in WeeChat.
 
-If you're using 'bash' shell, add following line to your `~/.bashrc`:
+If you're using the 'bash' shell, add following line to your `~/.bashrc`:
 
   ulimit -c unlimited
 
@@ -42,13 +43,13 @@ If you're using 'bash' shell, add following line to your `~/.bashrc`:
 Download devel version
 ----------------------
 
-Fresh code (with last bugs and features) is stored in GIT repository.
+Fresh code (with latest bugs and features) is stored in a GIT repository.
 
 You may decide to build it manually (recommended way):
 
-* GIT version can be built and installed in parallel to stable version,
-* you don't need root access, you don't need to sacrifice stable version of
-  WeeChat.
+* the GIT version can be built and installed in parallel to the stable version,
+* you don't need root access, and you don't need to sacrifice the stable
+  version of WeeChat.
 
 [[get_sources]]
 Get and build sources
@@ -61,7 +62,8 @@ $ mkdir ~/weechat-git
 $ cd ~/weechat-git
 ---------------------
 
-If you have git installed, you can clone git repository (recommended way):
+If you have git installed, you can just clone the git repository (recommended
+way):
 
 --------------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
@@ -69,7 +71,7 @@ $ cd weechat
 --------------------------------------------
 
 NOTE: Later, you can run "`git pull`" in this directory, to get deltas with
-today's version.
+the latest updates.
 
 Otherwise you can download and unpack 'devel' package:
 
@@ -121,8 +123,8 @@ Command is:
 
   ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
 
-If you're still awake you should see familiar interface and brag about
-having newest possible version of WeeChat. ;)
+If you're still awake you should see the familiar interface and brag about
+having the newest possible version of WeeChat. ;)
 
 Now if you experience strange behavior (it may have issues or crash or boil
 your beer) don't hesitate to join `#weechat` at `irc.freenode.net` and tell us.
