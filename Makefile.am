@@ -29,7 +29,6 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindGettext.cmake \
              cmake/FindGnuTLS.cmake \
              cmake/FindIconv.cmake \
-             cmake/FindIksemel.cmake \
              cmake/FindLua.cmake \
              cmake/FindNcurses.cmake \
              cmake/FindPerl.cmake \

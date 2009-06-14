@@ -55,7 +55,6 @@ AM_GNU_GETTEXT_VERSION([0.15])
 # Checks for libraries
 AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
 AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
-AC_CHECK_LIB(iksemel, iks_stream_new, LIBIKSEMEL_FOUND=1, LIBIKSEMEL_FOUND=0)
 
 # Checks for header files
 AC_HEADER_STDC
