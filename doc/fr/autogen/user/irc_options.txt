@@ -54,7 +54,7 @@
 ** valeurs: toute chaîne (valeur par défaut: "irc_privmsg,irc_notice")
 
 * *irc.look.item_display_server*
-** description: name of bar item where IRC server is displayed (for status bar)
+** description: nom de l'objet de barre où est affiché le serveur IRC (pour la barre de statut)
 ** type: entier
 ** valeurs: buffer_plugin, buffer_name (valeur par défaut: buffer_plugin)
 

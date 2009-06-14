@@ -536,6 +536,18 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         {
             if (string_strcasecmp (argv[2], "-all") == 0)
                 gui_buffer_clear_all ();
+            else if (string_strcasecmp (argv[2], "-merged") == 0)
+            {
+                for (ptr_buffer = gui_buffers; ptr_buffer;
+                     ptr_buffer = ptr_buffer->next_buffer)
+                {
+                    if ((ptr_buffer->number == buffer->number)
+                        && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
+                    {
+                        gui_buffer_clear (ptr_buffer);
+                    }
+                }
+            }
             else
             {
                 for (i = 2; i < argc; i++)
@@ -3963,11 +3975,13 @@ command_init ()
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
-                  N_("[clear [number | -all] | move number | merge number | "
-                     "unmerge [number] | close [n1[-n2]]| list | notify level | "
-                     "localvar | set property value | number | name]"),
-                  N_("   clear: clear buffer content (-all for all buffers, "
-                     "number for a buffer, or nothing for current buffer)\n"
+                  N_("[clear [number | -merged | -all] | move number | "
+                     "merge number | unmerge [number] | close [n1[-n2]] | "
+                     "list | notify level | localvar | set property value | "
+                     "number | name]"),
+                  N_("   clear: clear buffer content (number for a buffer, "
+                     "-merged for merged buffers, -all for all buffers, or "
+                     "nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
                      "   merge: merge current buffer to another buffer (chat "
@@ -4004,7 +4018,7 @@ command_init ()
                      "  close buffers 5 to 7: /buffer close 5-7\n"
                      "      jump to #weechat: /buffer #weechat\n"
                      "   jump to next buffer: /buffer +1"),
-                  "clear -all|%(buffers_numbers)"
+                  "clear -merged|-all|%(buffers_numbers)"
                   " || move %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
                   " || unmerge %(buffers_numbers)"

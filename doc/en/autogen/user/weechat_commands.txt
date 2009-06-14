@@ -45,12 +45,12 @@
       /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/buffer`* `[clear [number | -all] | move number | merge number | unmerge [number] | close [n1[-n2]]| list | notify level | localvar | set property value | number | name]`::
+&bull; *`/buffer`* `[clear [number | -merged | -all] | move number | merge number | unmerge [number] | close [n1[-n2]] | list | notify level | localvar | set property value | number | name]`::
 
 ........................................
   manage buffers
 
-     clear: clear buffer content (-all for all buffers, number for a buffer, or nothing for current buffer)
+     clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
       move: move buffer in the list (may be relative, for example -1)
      merge: merge current buffer to another buffer (chat area will be mix of both buffers)
             (by default ctrl-x switches between merged buffers)
