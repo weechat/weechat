@@ -41,7 +41,7 @@ This file defines structures and types used to communicate with WeeChat.
 Macros
 ~~~~~~
 
-The plugin must use some mandatory macros (to define some variables):
+The plugin must use some macros (to define some variables):
 
 WEECHAT_PLUGIN_NAME("name")::
     plugin name
@@ -49,12 +49,8 @@ WEECHAT_PLUGIN_NAME("name")::
 WEECHAT_PLUGIN_DESCRIPTION("description")::
     short description of plugin
 
-WEECHAT_PLUGIN_VERSION("0.1.2")::
+WEECHAT_PLUGIN_VERSION("1.0")::
     plugin version
-
-WEECHAT_PLUGIN_WEECHAT_VERSION("0.3.0")::
-    target WeeChat version where plugin will run (warning: plugin will not run
-    on any other WeeChat version!)
 
 WEECHAT_PLUGIN_LICENSE("GPL3")::
     plugin license
@@ -63,7 +59,10 @@ WEECHAT_PLUGIN_LICENSE("GPL3")::
 Main functions
 ~~~~~~~~~~~~~~
 
-The plugin must use two mandatory functions.
+The plugin must use two functions:
+
+* weechat_plugin_init
+* weechat_plugin_end
 
 weechat_plugin_init
 ^^^^^^^^^^^^^^^^^^^
@@ -156,7 +155,6 @@ WEECHAT_PLUGIN_NAME("double");
 WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION("0.1");
-WEECHAT_PLUGIN_WEECHAT_VERSION("0.3.0");
 WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_plugin = NULL;
@@ -165,8 +163,8 @@ struct t_weechat_plugin *weechat_plugin = NULL;
 /* "/double" command manager */
 
 int
-double_cmd (void *data, struct t_gui_buffer *buffer, int argc,
-            char **argv, char **argv_eol)
+command_double_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
@@ -193,7 +191,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
                           "msg",
                           "msg: message to display two times",
                           NULL,
-                          &double_cmd, NULL);
+                          &command_double_cb, NULL);
     
     return WEECHAT_RC_OK;
 }
