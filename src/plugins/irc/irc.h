@@ -62,6 +62,7 @@
 #define IRC_COLOR_STATUS_NAME weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_name")))
 #define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
 #define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
+#define IRC_COLOR_NOTICE weechat_color(weechat_config_string(irc_config_color_notice))
 #define IRC_COLOR_INPUT_NICK weechat_color(weechat_config_string(irc_config_color_input_nick))
 #define IRC_COLOR_ITEM_AWAY weechat_color(weechat_config_string(irc_config_color_item_away))
 #define IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick)                          \

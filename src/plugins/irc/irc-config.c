@@ -66,6 +66,7 @@ struct t_config_option *irc_config_look_topic_strip_colors;
 
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
+struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
 
@@ -1220,6 +1221,12 @@ irc_config_init ()
         "message_quit", "color",
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_color_notice = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notice", "color",
+        N_("color for text \"Notice\" in notices"),
+        NULL, -1, 0, "green", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_color_input_nick = weechat_config_new_option (
         irc_config_file, ptr_section,

@@ -18,6 +18,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: red)
 
+* *irc.color.notice*
+** description: couleur pour le texte "Notice" dans les notices
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: green)
+
 * *irc.look.color_nicks_in_server_messages*
 ** description: utiliser la couleur du pseudo dans les messages du serveur
 ** type: booléen

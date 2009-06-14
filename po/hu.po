@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-14 11:01+0200\n"
+"POT-Creation-Date: 2009-06-14 12:44+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3847,6 +3847,10 @@ msgstr "új üzenetet tartalmazó ablak színe"
 #, fuzzy
 msgid "color for text in part/quit messages"
 msgstr "alapértelmezett kilépő üzenet"
+
+#, fuzzy
+msgid "color for text \"Notice\" in notices"
+msgstr "új üzenetet tartalmazó ablak színe"
 
 #, fuzzy
 msgid "color for nick in input bar"

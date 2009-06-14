@@ -18,6 +18,11 @@
 ** type: color
 ** values: a color name (default value: red)
 
+* *irc.color.notice*
+** description: color for text "Notice" in notices
+** type: color
+** values: a color name (default value: green)
+
 * *irc.look.color_nicks_in_server_messages*
 ** description: use nick color in messages from server
 ** type: boolean
