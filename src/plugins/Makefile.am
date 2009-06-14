@@ -82,17 +82,13 @@ if PLUGIN_TCL
 script_dir = scripts
 endif
 
-if PLUGIN_TRIGGER
-trigger_dir = trigger
-endif
-
 if PLUGIN_XFER
 xfer_dir = xfer
 endif
 
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
             $(irc_dir) $(jabber_dir) $(logger_dir) $(relay_dir) $(script_dir) \
-            $(trigger_dir) $(xfer_dir)
+            $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

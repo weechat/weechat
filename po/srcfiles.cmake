@@ -226,13 +226,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/scripts/tcl/weechat-tcl-api.h
 ./src/plugins/scripts/tcl/weechat-tcl.c
 ./src/plugins/scripts/tcl/weechat-tcl.h
-./src/plugins/trigger/dump.c
-./src/plugins/trigger/trigger.c
-./src/plugins/trigger/trigger.h
-./src/plugins/trigger/trigger-libc.c
-./src/plugins/trigger/trigger-libc.h
-./src/plugins/trigger/trigger-libirc.c
-./src/plugins/trigger/trigger-libirc.h
 ./src/plugins/weechat-plugin.h
 ./src/plugins/xfer/xfer-buffer.c
 ./src/plugins/xfer/xfer-buffer.h

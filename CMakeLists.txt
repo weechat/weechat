@@ -57,7 +57,6 @@ OPTION(DISABLE_PYTHON        "Disable Python scripting language")
 OPTION(DISABLE_RUBY          "Disable Ruby scripting language")
 OPTION(DISABLE_LUA           "Disable Lua scripting language")
 OPTION(DISABLE_TCL           "Disable Tcl scripting language")
-OPTION(ENABLE_TRIGGER        "Enable Trigger plugin")
 OPTION(DISABLE_XFER          "Disable Xfer plugin (file transfer and direct chat)")
 OPTION(DISABLE_DOC           "Disable Doc")
 
