@@ -413,6 +413,11 @@
 ** type: entier
 ** valeurs: 1 .. 15 (valeur par défaut: 12)
 
+* *weechat.look.hotlist_names_merged_buffers*
+** description: si défini, force l'affichage des noms dans la hotlist pour les tampons mélangés
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *weechat.look.hotlist_short_names*
 ** description: si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)
 ** type: booléen

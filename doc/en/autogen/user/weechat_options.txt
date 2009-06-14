@@ -413,6 +413,11 @@
 ** type: integer
 ** values: 1 .. 15 (default value: 12)
 
+* *weechat.look.hotlist_names_merged_buffers*
+** description: if set, force display of names in hotlist for merged buffers
+** type: boolean
+** values: on, off (default value: off)
+
 * *weechat.look.hotlist_short_names*
 ** description: if set, uses short names to display buffer names in hotlist (start after first '.' in name)
 ** type: boolean

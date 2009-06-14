@@ -80,6 +80,7 @@ struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
+struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_item_time_format;
@@ -1281,6 +1282,11 @@ config_weechat_init_options ()
            "of: 1=join/part, 2=message, 4=private, 8=highlight, "
            "for example: 12=private+highlight)"),
         NULL, 1, 15, "12", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_names_merged_buffers = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_names_merged_buffers", "boolean",
+        N_("if set, force display of names in hotlist for merged buffers"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_short_names = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_short_names", "boolean",

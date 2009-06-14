@@ -95,6 +95,7 @@ extern struct t_config_option *config_look_highlight;
 extern struct t_config_option *config_look_hotlist_names_count;
 extern struct t_config_option *config_look_hotlist_names_length;
 extern struct t_config_option *config_look_hotlist_names_level;
+extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_item_time_format;
