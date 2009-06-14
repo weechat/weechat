@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-14 12:44+0200\n"
+"POT-Creation-Date: 2009-06-14 14:06+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4442,332 +4442,6 @@ msgstr "Отключен от сервера!\n"
 msgid "%s: disconnected from server"
 msgstr "Отключен от сервера!\n"
 
-#, fuzzy
-msgid "servers"
-msgstr "сервер"
-
-#, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
-msgstr "Авто-переподключение отменено\n"
-
-#, fuzzy
-msgid "list, add or remove Jabber servers"
-msgstr "перечислить, добавить или удалить серверы"
-
-#, fuzzy
-msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername username "
-"hostname[/port] password [-auto | -noauto] [-ipv6] [-tls] [-sasl]] | [copy "
-"servername newservername] | [rename servername newservername] | [keep "
-"servername] | [del servername] | [switch]"
-msgstr ""
-"[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
-"temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
-"[-username имя_пользователя] [-realname реальное_имя] [-command команда] [-"
-"autojoin канал[,канал]] ] | [copy сервер новый_сервер] | [rename сервер "
-"новое_имя] | [keep сервер] | [del сервер]"
-
-#, fuzzy
-msgid ""
-"      list: list servers (no parameter implies this list)\n"
-"  listfull: list servers with detailed info for each server\n"
-"       add: create a new server\n"
-"servername: server name, for internal and display use\n"
-"  username: username to use on server\n"
-"  hostname: name or IP address of server, with optional port (default: "
-"5222)\n"
-"  password: password for username on server\n"
-"      auto: automatically connect to server when WeeChat starts\n"
-"    noauto: do not connect to server when WeeChat starts (default)\n"
-"      ipv6: use IPv6 protocol\n"
-"       tls: use TLS cryptographic protocol\n"
-"      sasl: use SASL for authentication\n"
-"      copy: duplicate a server\n"
-"    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
-"       del: delete a server\n"
-"    switch: switch active server (when one buffer is used for all servers, "
-"default key: alt-s on server buffer)\n"
-"\n"
-"Examples:\n"
-"  /jabber listfull\n"
-"  /jabber add jabberfr user jabber.fr/5222 password -tls\n"
-"  /jabber copy jabberfr jabberfr2\n"
-"  /jabber rename jabberfr jabbfr\n"
-"  /jabber del jabberfr\n"
-"  /jabber switch"
-msgstr ""
-"    list: перечислить серверы (отсутствие параметров подразумевает этот "
-"список)\n"
-"listfull: перечислить серверы с подробностями\n"
-"     add: создать новый сервер\n"
-"  сервер: имя сервера\n"
-"hostname: адрес сервера\n"
-"    port: порт сервера (целочисленное значение)\n"
-"    temp: создать временный сервер (не сохраняется в конфигурационном "
-"файле)\n"
-"    auto: автоматически подключаться к серверу при запуске WeeChat\n"
-"  noauto: не подключаться автоматически к серверу при запуске WeeChat\n"
-"    ipv6: использовать протокол IPv6\n"
-"     ssl: использовать протокол SSL\n"
-"password: пароль от сервера\n"
-"   nick1: ник на сервере\n"
-"   nick2: альтернативный ник на сервере\n"
-"   nick3: запасной альтернативный ник на сервере\n"
-"username: имя пользователя\n"
-"realname: настоящее имя\n"
-"    copy: создать копию сервера\n"
-"  rename: переименовать сервер\n"
-"    keep: сохранить временный сервер\n"
-"     del: удалить сервер deloutq: очистить очередь исходящих сообщений для "
-"всех серверов (сообщения, отправляемые WeeChatом)"
-
-msgid "chat with a buddy"
-msgstr ""
-
-#, fuzzy
-msgid "buddy [text]"
-msgstr "текст"
-
-#, fuzzy
-msgid ""
-"buddy: buddy name for chat\n"
-" text: text to send"
-msgstr ""
-"сервис: название сервиса\n"
-" текст: отправляемый текст"
-
-#, fuzzy
-msgid "connect to Jabber server(s)"
-msgstr "подключиться к серверу(-ам)"
-
-#, fuzzy
-msgid ""
-"[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
-"port] [-ipv6] [-tls] [-sasl]]"
-msgstr ""
-"[-all [-nojoin] | сервер [servername ...] [-nojoin] | адрес [-port порт] [-"
-"ipv6] [-ssl]]"
-
-#, fuzzy
-msgid ""
-"      -all: connect to all servers\n"
-"servername: internal server name to connect\n"
-"   -nojoin: do not join any MUC (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect\n"
-"      port: port for server (integer, default is 6667)\n"
-"      ipv6: use IPv6 protocol\n"
-"       tls: use TLS cryptographic protocol\n"
-"      saal: use SASL for authentication"
-msgstr ""
-"   -all: переподключиться ко всем серверам\n"
-" сервер: название сервера для переподключения\n"
-"-nojoin: не заходить на каналы (даже если автозаход включен для сервера)\n"
-"  адрес: адрес сервера, создавая временный сервер\n"
-"   порт: порт сервера (число, по-умолчанию - 6667)\n"
-"   ipv6: использовать протокол IPv6\n"
-"    ssl: использовать протокол SSL"
-
-#, fuzzy
-msgid "disconnect from Jabber server(s)"
-msgstr "отключиться от сервера(-ов)"
-
-#, fuzzy
-msgid "hostname/port or IP/port for server"
-msgstr "ник, используемый на IRC сервере"
-
-#, fuzzy
-msgid "use TLS cryptographic protocol for server communication"
-msgstr "использовать IPv6 при связи с сервером"
-
-#, fuzzy
-msgid "use SASL for authentication"
-msgstr "использовать SSL при связи с сервером"
-
-msgid "resource (for example: Home or Work)"
-msgstr ""
-
-#, fuzzy
-msgid "password"
-msgstr "пользователь пароль"
-
-#, fuzzy
-msgid "local alias"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid ""
-"command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, $muc "
-"and $server are replaced by their value)"
-msgstr ""
-"команды, выполняемые при подключении к серверу (несколько команд должны быть "
-"разделены символом ';', используйте '\\;' вместо обычной точки с запятой, "
-"специальные переменные $nick, $channel и $server заменяются на "
-"соответствующие значения)"
-
-#, fuzzy
-msgid ""
-"comma separated list of MUCs to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
-msgstr ""
-"разделённый запятыми список каналов, на которые заходить при подключении к "
-"серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
-
-#, fuzzy
-msgid "automatically rejoin MUCs when kicked"
-msgstr "автоматически перезаходить на каналы после кика"
-
-msgid "use same buffer for all servers"
-msgstr "один буфер для всех серверов"
-
-#, fuzzy
-msgid "open new MUCs/privates near server"
-msgstr "открывать новые каналы/приваты рядом с сервером"
-
-msgid "smart completion for nicks (completes with last speakers first)"
-msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
-
-msgid "display MUC modes in \"buffer_name\" bar item"
-msgstr ""
-
-msgid ""
-"filter join/part/quit messages for a nick if not speaking for some minutes "
-"on MUC (you must create a filter on tag \"jabber_smart_filter\")"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"default part message (leaving MUC) ('%v' will be replaced by WeeChat version "
-"in string)"
-msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
-
-#, fuzzy
-msgid ""
-"default quit message (disconnecting from server) ('%v' will be replaced by "
-"WeeChat version in string)"
-msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
-
-msgid ""
-"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
-"yy=color+background, ^Cu=underline, ^Cr=reverse)"
-msgstr ""
-"позволить отправлять цвета специальными кодами (^Cb=жирный, ^Ccxx=цветной, "
-"^Ccxx,yy=цветной+фон, ^Cu=подчёркнутый, ^Cr=инвертированный)"
-
-#, fuzzy
-msgid "Jabber debug messages"
-msgstr "выводить отладочные сообщения"
-
-msgid "MUC"
-msgid_plural "MUCs"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy
-msgid "get buffer pointer for a Jabber server/MUC"
-msgstr "Список каналов, на которые заходить при соединении с сервером"
-
-#, fuzzy
-msgid "list of Jabber servers"
-msgstr "порт IRC сервера"
-
-#, fuzzy
-msgid "list of MUCs for a Jabber server"
-msgstr "Список каналов, на которые заходить при соединении с сервером"
-
-#, fuzzy
-msgid "list of buddies for a Jabber server or MUC"
-msgstr "Список каналов, на которые заходить при соединении с сервером"
-
-#, fuzzy, c-format
-msgid "%s: this buffer is not a MUC!"
-msgstr "Это окно не является каналом!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot allocate new MUC"
-msgstr "%s не могу расположить новый канал"
-
-#, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
-msgstr "%s: Повторное подключение к серверу через %d секунд\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connected to %s (%s)"
-msgstr "%s не подключен к серверу \"%s\"!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: GnuTLS init error"
-msgstr "%s ошибка инициализации gnutls\n"
-
-#, fuzzy, c-format
-msgid "%s%s: GnuTLS handshake failed"
-msgstr "%s инициализация gnutls не удалось\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
-msgstr "%s: подключение к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
-
-#, fuzzy, c-format
-msgid "Connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
-msgstr "Подключаюсь к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s%s..."
-msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: username or server not defined for server \"%s\", cannot connect"
-msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: hostname/IP not defined for server \"%s\", cannot connect"
-msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: cannot connect with TLS because iksemel library was not built with "
-"GnuTLS support"
-msgstr ""
-"%s невозможно соединиться с использованием SSL, так как WeeChat собран без "
-"поддержки GNUtls\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to create stream parser"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to create id"
-msgstr "%s DCC: не могу создать pipe\n"
-
-#, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
-msgstr "%s: Повторное соединение...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: I/O error (%d)"
-msgstr "%sСервер: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: SASL authentication failed (check SASL option and password)"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server disconnected"
-msgstr "Сервер %s%s%s создан\n"
-
-#, fuzzy, c-format
-msgid "%s%s: stream error"
-msgstr "%sСервер: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: login ok"
-msgstr "%s DCC: не могу forkнуться\n"
-
-#, fuzzy, c-format
-msgid "%s%s: authentication failed (check SASL option and password)"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
 #, c-format
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
@@ -5812,6 +5486,316 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "servers"
+#~ msgstr "сервер"
+
+#, fuzzy
+#~ msgid "%s%s: auto-reconnection is cancelled"
+#~ msgstr "Авто-переподключение отменено\n"
+
+#, fuzzy
+#~ msgid "list, add or remove Jabber servers"
+#~ msgstr "перечислить, добавить или удалить серверы"
+
+#, fuzzy
+#~ msgid ""
+#~ "[list [servername]] | [listfull [servername]] | [add servername username "
+#~ "hostname[/port] password [-auto | -noauto] [-ipv6] [-tls] [-sasl]] | "
+#~ "[copy servername newservername] | [rename servername newservername] | "
+#~ "[keep servername] | [del servername] | [switch]"
+#~ msgstr ""
+#~ "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
+#~ "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 "
+#~ "ник3] [-username имя_пользователя] [-realname реальное_имя] [-command "
+#~ "команда] [-autojoin канал[,канал]] ] | [copy сервер новый_сервер] | "
+#~ "[rename сервер новое_имя] | [keep сервер] | [del сервер]"
+
+#, fuzzy
+#~ msgid ""
+#~ "      list: list servers (no parameter implies this list)\n"
+#~ "  listfull: list servers with detailed info for each server\n"
+#~ "       add: create a new server\n"
+#~ "servername: server name, for internal and display use\n"
+#~ "  username: username to use on server\n"
+#~ "  hostname: name or IP address of server, with optional port (default: "
+#~ "5222)\n"
+#~ "  password: password for username on server\n"
+#~ "      auto: automatically connect to server when WeeChat starts\n"
+#~ "    noauto: do not connect to server when WeeChat starts (default)\n"
+#~ "      ipv6: use IPv6 protocol\n"
+#~ "       tls: use TLS cryptographic protocol\n"
+#~ "      sasl: use SASL for authentication\n"
+#~ "      copy: duplicate a server\n"
+#~ "    rename: rename a server\n"
+#~ "      keep: keep server in config file (for temporary servers only)\n"
+#~ "       del: delete a server\n"
+#~ "    switch: switch active server (when one buffer is used for all "
+#~ "servers, default key: alt-s on server buffer)\n"
+#~ "\n"
+#~ "Examples:\n"
+#~ "  /jabber listfull\n"
+#~ "  /jabber add jabberfr user jabber.fr/5222 password -tls\n"
+#~ "  /jabber copy jabberfr jabberfr2\n"
+#~ "  /jabber rename jabberfr jabbfr\n"
+#~ "  /jabber del jabberfr\n"
+#~ "  /jabber switch"
+#~ msgstr ""
+#~ "    list: перечислить серверы (отсутствие параметров подразумевает этот "
+#~ "список)\n"
+#~ "listfull: перечислить серверы с подробностями\n"
+#~ "     add: создать новый сервер\n"
+#~ "  сервер: имя сервера\n"
+#~ "hostname: адрес сервера\n"
+#~ "    port: порт сервера (целочисленное значение)\n"
+#~ "    temp: создать временный сервер (не сохраняется в конфигурационном "
+#~ "файле)\n"
+#~ "    auto: автоматически подключаться к серверу при запуске WeeChat\n"
+#~ "  noauto: не подключаться автоматически к серверу при запуске WeeChat\n"
+#~ "    ipv6: использовать протокол IPv6\n"
+#~ "     ssl: использовать протокол SSL\n"
+#~ "password: пароль от сервера\n"
+#~ "   nick1: ник на сервере\n"
+#~ "   nick2: альтернативный ник на сервере\n"
+#~ "   nick3: запасной альтернативный ник на сервере\n"
+#~ "username: имя пользователя\n"
+#~ "realname: настоящее имя\n"
+#~ "    copy: создать копию сервера\n"
+#~ "  rename: переименовать сервер\n"
+#~ "    keep: сохранить временный сервер\n"
+#~ "     del: удалить сервер deloutq: очистить очередь исходящих сообщений "
+#~ "для всех серверов (сообщения, отправляемые WeeChatом)"
+
+#, fuzzy
+#~ msgid "buddy [text]"
+#~ msgstr "текст"
+
+#, fuzzy
+#~ msgid ""
+#~ "buddy: buddy name for chat\n"
+#~ " text: text to send"
+#~ msgstr ""
+#~ "сервис: название сервиса\n"
+#~ " текст: отправляемый текст"
+
+#, fuzzy
+#~ msgid "connect to Jabber server(s)"
+#~ msgstr "подключиться к серверу(-ам)"
+
+#, fuzzy
+#~ msgid ""
+#~ "[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
+#~ "port] [-ipv6] [-tls] [-sasl]]"
+#~ msgstr ""
+#~ "[-all [-nojoin] | сервер [servername ...] [-nojoin] | адрес [-port порт] "
+#~ "[-ipv6] [-ssl]]"
+
+#, fuzzy
+#~ msgid ""
+#~ "      -all: connect to all servers\n"
+#~ "servername: internal server name to connect\n"
+#~ "   -nojoin: do not join any MUC (even if autojoin is enabled on server)\n"
+#~ "  hostname: hostname to connect\n"
+#~ "      port: port for server (integer, default is 6667)\n"
+#~ "      ipv6: use IPv6 protocol\n"
+#~ "       tls: use TLS cryptographic protocol\n"
+#~ "      saal: use SASL for authentication"
+#~ msgstr ""
+#~ "   -all: переподключиться ко всем серверам\n"
+#~ " сервер: название сервера для переподключения\n"
+#~ "-nojoin: не заходить на каналы (даже если автозаход включен для сервера)\n"
+#~ "  адрес: адрес сервера, создавая временный сервер\n"
+#~ "   порт: порт сервера (число, по-умолчанию - 6667)\n"
+#~ "   ipv6: использовать протокол IPv6\n"
+#~ "    ssl: использовать протокол SSL"
+
+#, fuzzy
+#~ msgid "disconnect from Jabber server(s)"
+#~ msgstr "отключиться от сервера(-ов)"
+
+#, fuzzy
+#~ msgid "hostname/port or IP/port for server"
+#~ msgstr "ник, используемый на IRC сервере"
+
+#, fuzzy
+#~ msgid "use TLS cryptographic protocol for server communication"
+#~ msgstr "использовать IPv6 при связи с сервером"
+
+#, fuzzy
+#~ msgid "use SASL for authentication"
+#~ msgstr "использовать SSL при связи с сервером"
+
+#, fuzzy
+#~ msgid "password"
+#~ msgstr "пользователь пароль"
+
+#, fuzzy
+#~ msgid "local alias"
+#~ msgstr "Список сокращений:\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "command(s) to run when connected to server (many commands should be "
+#~ "separated by ';', use '\\;' for a semicolon, special variables $nick, "
+#~ "$muc and $server are replaced by their value)"
+#~ msgstr ""
+#~ "команды, выполняемые при подключении к серверу (несколько команд должны "
+#~ "быть разделены символом ';', используйте '\\;' вместо обычной точки с "
+#~ "запятой, специальные переменные $nick, $channel и $server заменяются на "
+#~ "соответствующие значения)"
+
+#, fuzzy
+#~ msgid ""
+#~ "comma separated list of MUCs to join when connected to server (example: "
+#~ "\"#chan1,#chan2,#chan3 key1,key2\")"
+#~ msgstr ""
+#~ "разделённый запятыми список каналов, на которые заходить при подключении "
+#~ "к серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
+
+#, fuzzy
+#~ msgid "automatically rejoin MUCs when kicked"
+#~ msgstr "автоматически перезаходить на каналы после кика"
+
+#~ msgid "use same buffer for all servers"
+#~ msgstr "один буфер для всех серверов"
+
+#, fuzzy
+#~ msgid "open new MUCs/privates near server"
+#~ msgstr "открывать новые каналы/приваты рядом с сервером"
+
+#~ msgid "smart completion for nicks (completes with last speakers first)"
+#~ msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
+
+#, fuzzy
+#~ msgid ""
+#~ "default part message (leaving MUC) ('%v' will be replaced by WeeChat "
+#~ "version in string)"
+#~ msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
+
+#, fuzzy
+#~ msgid ""
+#~ "default quit message (disconnecting from server) ('%v' will be replaced "
+#~ "by WeeChat version in string)"
+#~ msgstr ""
+#~ "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
+
+#~ msgid ""
+#~ "allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, "
+#~ "^Ccxx,yy=color+background, ^Cu=underline, ^Cr=reverse)"
+#~ msgstr ""
+#~ "позволить отправлять цвета специальными кодами (^Cb=жирный, "
+#~ "^Ccxx=цветной, ^Ccxx,yy=цветной+фон, ^Cu=подчёркнутый, "
+#~ "^Cr=инвертированный)"
+
+#, fuzzy
+#~ msgid "Jabber debug messages"
+#~ msgstr "выводить отладочные сообщения"
+
+#, fuzzy
+#~ msgid "get buffer pointer for a Jabber server/MUC"
+#~ msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+#~ msgid "list of Jabber servers"
+#~ msgstr "порт IRC сервера"
+
+#, fuzzy
+#~ msgid "list of MUCs for a Jabber server"
+#~ msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+#~ msgid "list of buddies for a Jabber server or MUC"
+#~ msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+#~ msgid "%s: this buffer is not a MUC!"
+#~ msgstr "Это окно не является каналом!\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot allocate new MUC"
+#~ msgstr "%s не могу расположить новый канал"
+
+#, fuzzy
+#~ msgid "%s%s: reconnecting to server in %d %s"
+#~ msgstr "%s: Повторное подключение к серверу через %d секунд\n"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%s)"
+#~ msgstr "%s не подключен к серверу \"%s\"!\n"
+
+#, fuzzy
+#~ msgid "%s%s: GnuTLS init error"
+#~ msgstr "%s ошибка инициализации gnutls\n"
+
+#, fuzzy
+#~ msgid "%s%s: GnuTLS handshake failed"
+#~ msgstr "%s инициализация gnutls не удалось\n"
+
+#, fuzzy
+#~ msgid "%s%s: connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+#~ msgstr "%s: подключение к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
+
+#, fuzzy
+#~ msgid "Connecting to server %s/%d%s%s%s via %s proxy %s/%d%s..."
+#~ msgstr "Подключаюсь к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
+
+#, fuzzy
+#~ msgid "%s%s: connecting to server %s/%d%s%s%s..."
+#~ msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: username or server not defined for server \"%s\", cannot connect"
+#~ msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: hostname/IP not defined for server \"%s\", cannot connect"
+#~ msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: cannot connect with TLS because iksemel library was not built with "
+#~ "GnuTLS support"
+#~ msgstr ""
+#~ "%s невозможно соединиться с использованием SSL, так как WeeChat собран "
+#~ "без поддержки GNUtls\n"
+
+#, fuzzy
+#~ msgid "%s%s: failed to create stream parser"
+#~ msgstr "%s не могу создать сервер\n"
+
+#, fuzzy
+#~ msgid "%s%s: failed to create id"
+#~ msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy
+#~ msgid "%s%s: reconnecting to server..."
+#~ msgstr "%s: Повторное соединение...\n"
+
+#, fuzzy
+#~ msgid "%s%s: I/O error (%d)"
+#~ msgstr "%sСервер: %s%s\n"
+
+#, fuzzy
+#~ msgid "%s%s: SASL authentication failed (check SASL option and password)"
+#~ msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: server disconnected"
+#~ msgstr "Сервер %s%s%s создан\n"
+
+#, fuzzy
+#~ msgid "%s%s: stream error"
+#~ msgstr "%sСервер: %s%s\n"
+
+#, fuzzy
+#~ msgid "%s%s: login ok"
+#~ msgstr "%s DCC: не могу forkнуться\n"
+
+#, fuzzy
+#~ msgid "%s%s: authentication failed (check SASL option and password)"
+#~ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 #~ msgid ""

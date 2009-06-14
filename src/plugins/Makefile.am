@@ -50,10 +50,6 @@ if PLUGIN_IRC
 irc_dir = irc
 endif
 
-if PLUGIN_JABBER
-jabber_dir = jabber
-endif
-
 if PLUGIN_LOGGER
 logger_dir = logger
 endif
@@ -87,8 +83,7 @@ xfer_dir = xfer
 endif
 
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
-            $(irc_dir) $(jabber_dir) $(logger_dir) $(relay_dir) $(script_dir) \
-            $(xfer_dir)
+            $(irc_dir) $(logger_dir) $(relay_dir) $(script_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

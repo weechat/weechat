@@ -33,7 +33,7 @@ struct t_infolist;
 struct t_weelist;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20090612-01"
+#define WEECHAT_PLUGIN_API_VERSION "20090614-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \

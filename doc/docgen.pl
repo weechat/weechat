@@ -65,11 +65,11 @@ my @locale_list = qw(en_US fr_FR);
 my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "aspell"  => "o",  "charset" => "co",
                    "demo"    => "co", "fifo"    => "co",
-                   "irc"     => "co", "jabber"  => "co",
-                   "logger"  => "co", "relay"   => "co",
-                   "perl"    => "",   "python"  => "",
-                   "ruby"    => "",   "lua"     => "",
-                   "tcl"     => "",   "xfer"    => "co");
+                   "irc"     => "co", "logger"  => "co",
+                   "relay"   => "co", "perl"    => "",
+                   "python"  => "",   "ruby"    => "",
+                   "lua"     => "",   "tcl"     => "",
+                   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",
@@ -85,13 +85,13 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "weechat\\.notify\\..*");
 
 # infos to ignore
-my @ignore_infos_plugins = ("jabber");
+my @ignore_infos_plugins = ();
 
 # infolists to ignore
-my @ignore_infolists_plugins = ("jabber");
+my @ignore_infolists_plugins = ();
 
 # completions to ignore
-my @ignore_completions_plugins = ("jabber");
+my @ignore_completions_plugins = ();
 my @ignore_completions_items = ("jabber.*",
                                 "weeget.*");
 
