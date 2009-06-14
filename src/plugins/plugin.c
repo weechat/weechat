@@ -697,6 +697,7 @@ plugin_auto_load ()
                 util_exec_on_files ((plugin_path2) ?
                                     plugin_path2 : ((plugin_path) ?
                                                     plugin_path : CONFIG_STRING(config_plugin_path)),
+                                    0,
                                     NULL,
                                     &plugin_auto_load_file);
                 if (plugin_path)
@@ -711,7 +712,7 @@ plugin_auto_load ()
             {
                 snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
                           "%s/plugins", WEECHAT_LIBDIR);
-                util_exec_on_files (dir_name, NULL, &plugin_auto_load_file);
+                util_exec_on_files (dir_name, 0, NULL, &plugin_auto_load_file);
                 free (dir_name);
             }
         }

@@ -615,6 +615,7 @@ void
 upgrade_weechat_remove_files ()
 {
     util_exec_on_files (weechat_home,
+                        0,
                         NULL,
                         &upgrade_weechat_remove_file_cb);
 }

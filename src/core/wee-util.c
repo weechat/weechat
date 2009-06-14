@@ -255,7 +255,7 @@ util_mkdir_parents (const char *directory, int mode)
  */
 
 void
-util_exec_on_files (const char *directory, void *data,
+util_exec_on_files (const char *directory, int hidden_files, void *data,
                     void (*callback)(void *data, const char *filename))
 {
     char complete_filename[1024];
@@ -271,12 +271,15 @@ util_exec_on_files (const char *directory, void *data,
     {
         while ((entry = readdir (dir)))
         {
-            snprintf (complete_filename, sizeof (complete_filename) - 1,
-                      "%s/%s", directory, entry->d_name);
-            lstat (complete_filename, &statbuf);
-            if (!S_ISDIR(statbuf.st_mode))
+            if (hidden_files || (entry->d_name[0] != '.'))
             {
-                (*callback) (data, complete_filename);
+                snprintf (complete_filename, sizeof (complete_filename) - 1,
+                          "%s/%s", directory, entry->d_name);
+                lstat (complete_filename, &statbuf);
+                if (!S_ISDIR(statbuf.st_mode))
+                {
+                    (*callback) (data, complete_filename);
+                }
             }
         }
         closedir (dir);

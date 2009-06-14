@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-06-13
+v0.3.0-dev, 2009-06-14
 
 
 Version 0.3.0 (under dev!)
@@ -38,6 +38,7 @@ Version 0.3.0 (under dev!)
   protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of
   buffers), iset.pl (set options interactively), weetris.pl (tetris-like game),
   mastermind.pl, ...
+* scripts: do not auto-load hidden files (bug #21390)
 * api: add hooks: command, timer, file descriptor, process, connection, print,
   signal, config, completion, modifier, info, infolist
 * api: new plugin API with many new functions: hooks, buffer management and

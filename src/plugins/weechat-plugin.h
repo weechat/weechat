@@ -33,7 +33,7 @@ struct t_infolist;
 struct t_weelist;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20090614-01"
+#define WEECHAT_PLUGIN_API_VERSION "20090614-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -193,7 +193,7 @@ struct t_weechat_plugin
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
     int (*mkdir_parents) (const char *directory, int mode);
-    void (*exec_on_files) (const char *directory, void *data,
+    void (*exec_on_files) (const char *directory, int hidden_files, void *data,
                            void (*callback)(void *data, const char *filename));
     
     /* util */
@@ -751,8 +751,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->mkdir(__directory, __mode)
 #define weechat_mkdir_parents(__directory, __mode)                      \
     weechat_plugin->mkdir_parents(__directory, __mode)
-#define weechat_exec_on_files(__directory, __data, __callback)          \
-    weechat_plugin->exec_on_files(__directory, __data, __callback)
+#define weechat_exec_on_files(__directory, __hidden_files, __data,      \
+                              __callback)                               \
+    weechat_plugin->exec_on_files(__directory, __hidden_files, __data,  \
+                                  __callback)
 
 /* util */
 #define weechat_timeval_cmp(__time1, __time2)                           \

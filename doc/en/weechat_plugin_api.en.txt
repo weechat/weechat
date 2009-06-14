@@ -1549,7 +1549,9 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-void weechat_exec_on_files (const char *directory, void *data,
+void weechat_exec_on_files (const char *directory,
+                            int hidden_files,
+                            void *data,
                             int (*callback)(void *data,
                                             const char *filename));
 ----------------------------------------
@@ -1557,6 +1559,7 @@ void weechat_exec_on_files (const char *directory, void *data,
 Arguments:
 
 * 'directory': directory for searching files
+* 'hidden_files': include hidden files
 * 'data': pointer given to callback when it is called by WeeChat
 * 'callback': function called for each file found, arguments:
 ** 'void *data': pointer
@@ -1572,7 +1575,7 @@ int callback (void *data, const char *filename)
     return 1;
 }
 ...
-weechat_exec_on_files (plugin, "/tmp", &callback);
+weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 ----------------------------------------
 
 [[util]]
