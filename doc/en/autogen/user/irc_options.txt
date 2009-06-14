@@ -79,9 +79,9 @@
 ** values: any string (default value: "")
 
 * *irc.look.notice_as_pv*
-** description: display notices as private messages
-** type: boolean
-** values: on, off (default value: off)
+** description: display notices as private messages (if auto, use private buffer if found)
+** type: integer
+** values: auto, never, always (default value: auto)
 
 * *irc.look.open_near_server*
 ** description: open new channels/privates near server

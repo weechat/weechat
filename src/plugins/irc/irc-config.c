@@ -1188,9 +1188,10 @@ irc_config_init ()
         NULL, 1, 60*24*7, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "notice_as_pv", "boolean",
-        N_("display notices as private messages"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "notice_as_pv", "integer",
+        N_("display notices as private messages (if auto, use private buffer "
+           "if found)"),
+        "auto|never|always", 0, 0, "auto", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (
         irc_config_file, ptr_section,
         "topic_strip_colors", "boolean",

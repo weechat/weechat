@@ -79,9 +79,9 @@
 ** valeurs: toute chaîne (valeur par défaut: "")
 
 * *irc.look.notice_as_pv*
-** description: afficher les notices comme des messages privés
-** type: booléen
-** valeurs: on, off (valeur par défaut: off)
+** description: afficher les notices comme des messages privés (si auto, utilise le tampon privé s'il est trouvé)
+** type: entier
+** valeurs: auto, never, always (valeur par défaut: auto)
 
 * *irc.look.open_near_server*
 ** description: ouvrir les nouveaux canaux/privés près du serveur

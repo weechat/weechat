@@ -856,10 +856,12 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                 notify_private = 1;
             }
             
-            if (nick && weechat_config_boolean (irc_config_look_notice_as_pv))
+            ptr_channel = NULL;
+            if (nick && weechat_config_integer (irc_config_look_notice_as_pv) != IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER)
             {
                 ptr_channel = irc_channel_search (server, nick);
-                if (!ptr_channel)
+                if (!ptr_channel
+                    && weechat_config_integer (irc_config_look_notice_as_pv) == IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS)
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
@@ -871,15 +873,18 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                                           "private buffer \"%s\""),
                                         weechat_prefix ("error"),
                                         IRC_PLUGIN_NAME, nick);
-                        return WEECHAT_RC_ERROR;
                     }
                 }
+            }
+
+            if (ptr_channel)
+            {
                 if (!ptr_channel->topic)
                     irc_channel_set_topic (ptr_channel, address);
                 
                 weechat_printf_tags (ptr_channel->buffer,
                                      irc_protocol_tags (command,
-                                                        (notify_private) ? "notify_private" : NULL),
+                                                        "notify_private"),
                                      "%s%s",
                                      irc_nick_as_prefix (NULL, nick,
                                                          IRC_COLOR_CHAT_NICK_OTHER),

@@ -35,6 +35,13 @@ enum t_irc_config_look_item_display_server
     IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME,
 };
 
+enum t_irc_config_look_notice_as_pv
+{
+    IRC_CONFIG_LOOK_NOTICE_AS_PV_AUTO = 0,
+    IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER,
+    IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS,
+};
+
 enum t_irc_config_nick_completion
 {
     IRC_CONFIG_NICK_COMPLETION_SMART_OFF = 0,
