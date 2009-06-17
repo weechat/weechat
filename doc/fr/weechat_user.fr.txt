@@ -220,7 +220,7 @@ Exemple de terminal avec WeeChat :
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc] 3:freenode/#test(+n){5}* [Act: 4,2]                                    │
+│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
 │[flashy] salut joe !█                                                                    │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
@@ -250,8 +250,9 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_count          | `[4]`                |
   nombre de tampons ouverts
 
-| buffer_plugin         | `[irc]`              |
-  extension du tampon courant
+| buffer_plugin         | `[irc/freenode]`     |
+  extension du tampon courant (l'extension irc peut affiche le nom du serveur
+  IRC auquel est rattaché ce tampon)
 
 | buffer_number         | `3`                  |
   numéro du tampon courant
@@ -752,8 +753,8 @@ Extensions
 ----------
 
 Pour en apprendre plus sur le développement d'extension ou de script (via
-l'API), merci de consulter la 'Référence API Extension' ou 'Le Guide pour
-Scripts WeeChat'.
+l'API), merci de consulter la 'Référence API Extension WeeChat' ou 'Le Guide
+pour Scripts WeeChat'.
 
 [[plugins_in_weechat]]
 Extensions dans WeeChat

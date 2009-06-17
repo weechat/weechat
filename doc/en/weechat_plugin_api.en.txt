@@ -128,7 +128,7 @@ Load plugin
 ~~~~~~~~~~~
 
 Copy file 'libtoto.so' into system plugins directory (for example
-'/usr/local/lib/weechat/plugins' or into user's plugins directory (for example
+'/usr/local/lib/weechat/plugins') or into user's plugins directory (for example
 '/home/xxxxx/.weechat/plugins').
 
 Under WeeChat:
@@ -141,7 +141,7 @@ Under WeeChat:
 Plugin example
 ~~~~~~~~~~~~~~
 
-Full example of plugin, which adds a /double command, which displays two times
+Full example of plugin, which adds a command '/double': displays two times
 arguments on current buffer, or execute two times a command (ok that's not
 very useful, but that's just an example!):
 
@@ -160,7 +160,7 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_plugin = NULL;
 
 
-/* "/double" command manager */
+/* callback for command "/double" */
 
 int
 command_double_cb (void *data, struct t_gui_buffer *buffer, int argc,
@@ -187,9 +187,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
     weechat_plugin = plugin;
     
     weechat_hook_command ("double",
-                          "Display two times a message",
-                          "msg",
-                          "msg: message to display two times",
+                          "Display two times a message "
+                          "or execute two times a command",
+                          "message | command",
+                          "message: message to display two times\n"
+                          "command: command to execute two times",
                           NULL,
                           &command_double_cb, NULL);
     
@@ -219,7 +221,7 @@ Functions to get infos about plugins.
 weechat_plugin_get_name
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Get plugin name (return "core" for WeeChat).
+Get plugin name.
 
 Prototype:
 
@@ -230,7 +232,7 @@ const char *weechat_plugin_get_name (struct t_weechat_plugin *plugin);
 
 Arguments:
 
-* 'plugin': pointer to WeeChat plugin structure (may be NULL for WeeChat core)
+* 'plugin': pointer to WeeChat plugin structure (can be NULL)
 
 Return value:
 
@@ -365,7 +367,8 @@ char *str = weechat_gettext ("hello !");
 weechat_ngettext
 ^^^^^^^^^^^^^^^^
 
-Return translated string, using single or plural form, according to count.
+Return translated string, using single or plural form, according to 'count'
+argument.
 
 Prototype:
 
@@ -377,9 +380,10 @@ const char *weechat_ngettext (const char *string, const char *plural,
 
 Arguments:
 
-* 'string': string to translate (single form)
-* 'plural': string to translate (plural form)
-* 'count': used to choose between single and plural form
+* 'string': string to translate, single form
+* 'plural': string to translate, plural form
+* 'count': used to choose between single and plural form (choice is made
+  according to local language)
 
 Return value:
 
@@ -395,7 +399,7 @@ char *str = weechat_ngettext ("file", "files", num_files);
 weechat_strndup
 ^^^^^^^^^^^^^^^
 
-Return duplicated string, with max "length" chars.
+Return duplicated string, with 'length' chars max.
 
 Prototype:
 
@@ -521,7 +525,7 @@ Arguments:
 * 'string1': first string for comparison
 * 'string2': second string for comparison
 * 'chars_ignored': string with chars to ignored
-* 'case_sensitive': 1 for case sensitive comparison, 0 otherwise
+* 'case_sensitive': 1 for case sensitive comparison, otherwise 0
 
 Return value:
 
@@ -552,7 +556,7 @@ char *weechat_strcasestr (const char *string, const char *search);
 Arguments:
 
 * 'string': string
-* 'search': string to search in "string"
+* 'search': string to search in 'string'
 
 Return value:
 
@@ -601,7 +605,7 @@ int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
 weechat_string_replace
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Replace "search" string by new one in a string.
+Replace all occurences of a string by another string.
 
 Prototype:
 
@@ -615,11 +619,11 @@ Arguments:
 
 * 'string': string
 * 'search': string to replace
-* 'replace': replacement for "search" string
+* 'replace': replacement for string 'search'
 
 Return value:
 
-* string with "search" replaced by "replace" (must be freed by calling "free"
+* string with 'search' replaced by 'replace' (must be freed by calling "free"
   after use)
 
 Example:
@@ -627,12 +631,14 @@ Example:
 [source,C]
 ----------------------------------------
 char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
+/* ... */
+free (str);
 ----------------------------------------
 
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Remove quotes at beginning/end of string (ignore spaces if there are before
+Remove quotes at beginning and end of string (ignore spaces if there are before
 first quote or after last quote).
 
 Prototype:
@@ -657,6 +663,8 @@ Example:
 [source,C]
 ----------------------------------------
 char *str = weechat_string_remove_quotes (string, " 'abc' ", "'"); /* result: "abc" */
+/* ... */
+free (str);
 ----------------------------------------
 
 weechat_string_strip
@@ -688,12 +696,14 @@ Example:
 [source,C]
 ----------------------------------------
 char *str = weechat_string_strip (".abc -", 0, 1, "- ."); /* result: ".abc" */
+/* ... */
+free (str);
 ----------------------------------------
 
 weechat_string_has_highlight
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Check if a string has highlights, using list of highlight words.
+Check if a string has one or more highlights, using list of highlight words.
 
 Prototype:
 
@@ -710,7 +720,7 @@ Arguments:
 
 Return value:
 
-* 1 if string has one or more highlights, 0 otherwise
+* 1 if string has one or more highlights, otherwise 0
 
 Example:
 
@@ -722,7 +732,7 @@ int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return a regex, built with a mask, where only special char is "`*`". All
+Return a regex, built with a mask, where only special char is "`*`". All other
 special chars for regex are escaped.
 
 Prototype:
@@ -745,7 +755,8 @@ Example:
 [source,C]
 ----------------------------------------
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* result is: "test.*mask" */
+/* result: "test.*mask" */
+/* ... */
 free (str_regex);
 ----------------------------------------
 
@@ -775,7 +786,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  "weechat_string_free_exploded" after use)
+  <<_weechat_string_free_exploded>> after use)
 
 Examples:
 
@@ -784,20 +795,20 @@ Examples:
 char **argv;
 int argc;
 argv = weechat_string_explode ("abc de  fghi", " ", 0, 0, &argc);
-/* result:  argv[0] == "abc"
-            argv[1] == "de"
-            argv[2] == "fghi"
-            argv[3] == NULL
-            argc == 3
+/* result: argv[0] == "abc"
+           argv[1] == "de"
+           argv[2] == "fghi"
+           argv[3] == NULL
+           argc == 3
 */
 weechat_string_free_exploded (argv);
 
 argv = weechat_string_explode ("abc de  fghi", " ", 1, 0, &argc);
-/* result:  argv[0] == "abc de  fghi"
-            argv[1] == "de  fghi"
-            argv[2] == "fghi"
-            argv[3] == NULL
-            argc == 3
+/* result: argv[0] == "abc de  fghi"
+           argv[1] == "de  fghi"
+           argv[2] == "fghi"
+           argv[3] == NULL
+           argc == 3
 */
 weechat_string_free_exploded (argv);
 ----------------------------------------
@@ -816,7 +827,7 @@ void weechat_string_free_exploded (char **exploded_string);
 
 Arguments:
 
-* 'exploded_string': string exploded by function "weechat_string_explode"
+* 'exploded_string': string exploded by function <<_weechat_string_explode>>
 
 Example:
 
@@ -844,7 +855,7 @@ char *weechat_string_build_with_exploded (char **exploded_string,
 
 Arguments:
 
-* 'exploded_string': string exploded by function "weechat_string_explode"
+* 'exploded_string': string exploded by function <<_weechat_string_explode>>
 * 'separator': string used to separate strings
 
 Return value:
@@ -860,13 +871,14 @@ int argc;
 argv = weechat_string_explode ("abc def ghi", " ", 0, 0, &argc);
 char *str = weechat_string_build_with_exploded (argv, ";");
 /* str == "abc;def;ghi" */
+/* ... */
 free (str);
 ----------------------------------------
 
 weechat_string_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Split a list of commands separated by "separator" (which can be escaped by "\"
+Split a list of commands separated by 'separator' (which can be escaped by "\"
 in string).
 
 Prototype:
@@ -884,7 +896,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  "weechat_free_split_command" after use)
+  <<_weechat_free_split_command>> after use)
 
 Example:
 
@@ -911,7 +923,7 @@ void weechat_string_free_split_command (char **split_command);
 
 Arguments:
 
-* 'split_command': command split by "weechat_string_split_command"
+* 'split_command': command split by <<_weechat_string_split_command>>
 
 Example:
 
@@ -925,7 +937,8 @@ weechat_free_split_command (argv);
 weechat_string_format_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Build a string with formatted size and translated unit.
+Build a string with formatted file size and a unit translated to local
+language.
 
 Prototype:
 
@@ -936,12 +949,11 @@ char *weechat_string_format_size (unsigned long size);
 
 Arguments:
 
-* 'size': size
+* 'size': size (in bytes)
 
 Return value:
 
-* string with formatted size and translated unit (must be freed by calling
-  "free" after use)
+* formatted string (must be freed by calling "free" after use)
 
 Examples:
 
@@ -1056,12 +1068,12 @@ int weechat_utf8_is_valid (const char *string, char **error);
 Arguments:
 
 * 'string': string
-* 'error': if not NULL, it is set with first non valid UTF-8 char in string,
-  if any
+* 'error': if not NULL, '*error*' is set with pointer to first non valid UTF-8
+  char in string, if any
 
 Return value:
 
-* 1 if UTF-8 string is valid, 0 otherwise
+* 1 if UTF-8 string is valid, otherwise 0
 
 Example:
 
@@ -1093,7 +1105,7 @@ void weechat_utf8_normalize (const char *string, char replacement);
 Arguments:
 
 * 'string': string
-* 'replacement': replacement char for non UTF-8 chars
+* 'replacement': replacement char for invalid chars
 
 Example:
 
@@ -1105,7 +1117,7 @@ weechat_utf8_normalize (string, '?');
 weechat_utf8_prev_char
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Return previous UTF-8 char in a string.
+Return pointer to previous UTF-8 char in a string.
 
 Prototype:
 
@@ -1118,7 +1130,7 @@ Arguments:
 
 * 'string_start': start of string (function will not return a char before this
   pointer)
-* 'string': pointer to string (must be > = string_start)
+* 'string': pointer to string (must be > = 'string_start')
 
 Return value:
 
@@ -1134,7 +1146,7 @@ char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 weechat_utf8_next_char
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Return next UTF-8 char in a string.
+Return pointer to next UTF-8 char in a string.
 
 Prototype:
 
@@ -1188,7 +1200,7 @@ int char_size = weechat_utf8_char_size ("être"); /* == 2 */
 weechat_utf8_strlen
 ^^^^^^^^^^^^^^^^^^^
 
-Return UTF-8 string length (multi-byte char is considered as 1 char).
+Return UTF-8 string length (in UTF-8 chars).
 
 Prototype:
 
@@ -1203,7 +1215,7 @@ Arguments:
 
 Return value:
 
-* UTF-8 string length (number of real chars)
+* UTF-8 string length (number of UTF-8 chars)
 
 Example:
 
@@ -1215,8 +1227,7 @@ int length = weechat_utf8_strlen ("chêne"); /* == 5 */
 weechat_utf8_strnlen
 ^^^^^^^^^^^^^^^^^^^^
 
-Return UTF-8 string length (multi-byte char is considered as 1 char), for max
-bytes in string.
+Return UTF-8 string length (in UTF-8 chars), for max 'bytes' in string.
 
 Prototype:
 
@@ -1228,11 +1239,11 @@ int weechat_utf8_strnlen (const char *string, int bytes);
 Arguments:
 
 * 'string': string
-* 'bytes': max bytes in string
+* 'bytes': max bytes
 
 Return value:
 
-* UTF-8 string length (number of real chars)
+* UTF-8 string length (number of UTF-8 chars)
 
 Example:
 
@@ -1271,7 +1282,7 @@ int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
 weechat_utf8_charcasecmp
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Compare two UTF-8 chars (case is ignored).
+Compare two UTF-8 chars, ignoring case.
 
 Prototype:
 
@@ -1358,7 +1369,7 @@ char *str2 = weechat_utf8_add_offset (str, 3); /* points to "ne" */
 weechat_utf8_real_pos
 ^^^^^^^^^^^^^^^^^^^^^
 
-Get real position in UTF-8 string.
+Return real position in UTF-8 string.
 
 Prototype:
 
@@ -1374,7 +1385,7 @@ Arguments:
 
 Return value:
 
-* real potision (in bytes) for "pos" chars in string
+* real potision (in bytes)
 
 Example:
 
@@ -1386,7 +1397,7 @@ int pos = weechat_utf8_real_pos ("chêne", 3); /* == 4 */
 weechat_utf8_pos
 ^^^^^^^^^^^^^^^^
 
-Get position in UTF-8 string.
+Return position in UTF-8 string.
 
 Prototype:
 
@@ -1402,7 +1413,7 @@ Arguments:
 
 Return value:
 
-* position (in chars) for "real_pos" bytes in string
+* position (number of chars)
 
 Example:
 
@@ -1437,6 +1448,8 @@ Example:
 [source,C]
 ----------------------------------------
 char *string = weechat_utf8_strndup ("chêne", 3); /* returns "chê" */
+/* ... */
+free (string);
 ----------------------------------------
 
 [[directories]]
@@ -1459,8 +1472,8 @@ int weechat_mkdir_home (char *directory, int mode);
 
 Arguments:
 
-* 'directory': directory to create
-* 'mode': mode for new directory
+* 'directory': name of directory to create
+* 'mode': mode for directory
 
 Return value:
 
@@ -1490,8 +1503,8 @@ int weechat_mkdir (char *directory, int mode);
 
 Arguments:
 
-* 'directory': directory to create
-* 'mode': mode for new directory
+* 'directory': name of directory to create
+* 'mode': mode for directory
 
 Return value:
 
@@ -1521,8 +1534,8 @@ int weechat_mkdir_parents (char *directory, int mode);
 
 Arguments:
 
-* 'directory': directory to create
-* 'mode': mode for new directory
+* 'directory': name of directory to create
+* 'mode': mode for directory
 
 Return value:
 
@@ -1550,14 +1563,14 @@ Prototype:
 void weechat_exec_on_files (const char *directory,
                             int hidden_files,
                             void *data,
-                            int (*callback)(void *data,
-                                            const char *filename));
+                            void (*callback)(void *data,
+                                             const char *filename));
 ----------------------------------------
 
 Arguments:
 
 * 'directory': directory for searching files
-* 'hidden_files': include hidden files
+* 'hidden_files': 1 to include hidden files, otherwise 0
 * 'data': pointer given to callback when it is called by WeeChat
 * 'callback': function called for each file found, arguments:
 ** 'void *data': pointer
@@ -1567,10 +1580,9 @@ Example:
 
 [source,C]
 ----------------------------------------
-int callback (void *data, const char *filename)
+void callback (void *data, const char *filename)
 {
     /* ... */
-    return 1;
 }
 ...
 weechat_exec_on_files ("/tmp", 0, NULL, &callback);
@@ -1585,7 +1597,7 @@ Some useful functions.
 weechat_timeval_cmp
 ^^^^^^^^^^^^^^^^^^^
 
-Compare 2 timeval structures.
+Compare two "timeval" structures.
 
 Prototype:
 
@@ -1596,8 +1608,8 @@ int weechat_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 
 Arguments:
 
-* 'tv1': first timeval structure
-* 'tv2': second timeval structure
+* 'tv1': first "timeval" structure
+* 'tv2': second "timeval" structure
 
 Return value:
 
@@ -1618,7 +1630,7 @@ if (weechat_timeval_cmp (&tv1, &tv2) > 0)
 weechat_timeval_diff
 ^^^^^^^^^^^^^^^^^^^^
 
-Return difference (in milliseconds) between 2 timeval structures.
+Return difference (in milliseconds) between two "timeval" structures.
 
 Prototype:
 
@@ -1629,8 +1641,8 @@ long weechat_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 
 Arguments:
 
-* 'tv1': first timeval structure
-* 'tv2': second timeval structure
+* 'tv1': first "timeval" structure
+* 'tv2': second "timeval" structure
 
 Return value:
 
@@ -1659,10 +1671,6 @@ Arguments:
 
 * 'tv': timeval structure
 * 'interval': interval (in milliseconds)
-
-Return value:
-
-* difference in milliseconds
 
 Example:
 
@@ -1769,7 +1777,7 @@ struct t_weelist_item *item = weechat_list_search (list, "my data");
 weechat_list_casesearch
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Search an item in a list (case sensitive search).
+Search an item in a list, ignoring case.
 
 Prototype:
 
@@ -1798,7 +1806,7 @@ struct t_weelist_item *item = weechat_list_casesearch (list, "my data");
 weechat_list_get
 ^^^^^^^^^^^^^^^^
 
-Get an item in a list by position.
+Return an item in a list by position.
 
 Prototype:
 
@@ -1811,7 +1819,7 @@ struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
 Arguments:
 
 * 'weelist': list pointer
-* 'position': position in list (0 is first item)
+* 'position': position in list (first item is 0)
 
 Return value:
 
@@ -1851,7 +1859,7 @@ weechat_list_set (item, "new data");
 weechat_list_next
 ^^^^^^^^^^^^^^^^^
 
-Get next item in list.
+Return next item in list.
 
 Prototype:
 
@@ -1878,7 +1886,7 @@ struct t_weelist_item *next_item = weechat_list_next_item (item);
 weechat_list_prev
 ^^^^^^^^^^^^^^^^^
 
-Get previous item in list.
+Return previous item in list.
 
 Prototype:
 
@@ -1905,7 +1913,7 @@ struct t_weelist_item *prev_item = weechat_list_prev_item (item);
 weechat_list_string
 ^^^^^^^^^^^^^^^^^^^
 
-Get string value of an item.
+Return string value of an item.
 
 Prototype:
 
@@ -1932,7 +1940,7 @@ char *value = weechat_list_string (item);
 weechat_list_size
 ^^^^^^^^^^^^^^^^^
 
-Get size of list (number of items).
+Return size of list (number of items).
 
 Prototype:
 
@@ -2051,7 +2059,7 @@ struct t_config_file *weechat_config_new (const char *name,
 Arguments:
 
 * 'name': name of configuration file (without path or extension)
-* 'callback_reload': callback called when configuration file is reloaded with
+* 'callback_reload': function called when configuration file is reloaded with
   `/reload` (optional, can be NULL), arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
@@ -2063,10 +2071,10 @@ Return value:
 * pointer to new configuration file, NULL if an error occured
 
 [NOTE]
-File is NOT created by this function. It will be created by call to function
-"weechat_write_config" (you should do that only after adding some sections
-(with "weechat_config_new_section") and options (with
-"weechat_config_new_option").
+File is NOT created on disk by this function. It will be created by call to
+function <<_weechat_write_config>>. You should call this function only after
+adding some sections (with <<_weechat_config_new_section>>) and options (with
+<<_weechat_config_new_option>>).
 
 Example:
 
@@ -2130,37 +2138,35 @@ Arguments:
 
 * 'config_file': configuration file pointer
 * 'name': name of section
-* 'user_can_add_options': 1 if user can add options in section, or 0 if it is
-  forbidden
+* 'user_can_add_options': 1 if user can create new options in section, or 0 if
+  it is forbidden
 * 'user_can_delete_options': 1 if user can delete options in section, or 0 if
   it is forbidden
-* 'callback_read': callback called when an option in section is read from disk
-  (should be NULL in most cases, except if options in your section need custom
+* 'callback_read': function called when an option in section is read from disk
+  (should be NULL in most cases, except if options in section need custom
   function), arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
 ** 'const char *value': value
-* 'callback_read_data': pointer given to read callback when it is called by
-   WeeChat
-* 'callback_write': callback called when section is written in file (should be
-  NULL for most cases, except if your section needs to be written by a custom
+* 'callback_read_data': pointer given to callback when it is called by WeeChat
+* 'callback_write': function called when section is written in file (should be
+  NULL for most cases, except if section needs to be written by a custom
   function), arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
-* callback_write_data: pointer given to write callback when it is called by
-  WeeChat
-* callback_write_default: callback called when default values for section must
+* callback_write_data: pointer given to callback when it is called by WeeChat
+* callback_write_default: function called when default values for section must
   be written in file, arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'const char *section_name': name of section
-* 'callback_write_default_data': pointer given to write_default callback when
-  it is called by WeeChat
-* 'callback_create_option': callback called when a new option is created in
+* 'callback_write_default_data': pointer given to callback when it is called by
+  WeeChat
+* 'callback_create_option': function called when a new option is created in
   section (NULL if section does not allow new options to be created),
   arguments:
 ** 'void *data': pointer
@@ -2168,17 +2174,17 @@ Arguments:
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
 ** 'const char *value': value
-* 'callback_create_option_data': pointer given to create_option callback when
-  it is called by WeeChat
-* 'callback_delete_option': callback called when a new option is deleted in
-  section (NULL if section does not allow new options to be deleted),
+* 'callback_create_option_data': pointer given to callback when it is called by
+  WeeChat
+* 'callback_delete_option': function called when an option is deleted in
+  section (NULL if section does not allow options to be deleted),
   arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'struct t_config_option *option': option pointer
-* 'callback_delete_option_data': pointer given to delete_option callback when
-  it is called by WeeChat
+* 'callback_delete_option_data': pointer given to callback when it is called by
+  WeeChat
 
 Return value:
 
@@ -2326,37 +2332,35 @@ Arguments:
 * 'section': section pointer
 * 'name': name of option
 * 'type': type of option:
-** 'boolean'
-** 'integer'
-** 'string'
-** 'color'
+** 'boolean': boolean value (on/off)
+** 'integer': integer value (with optional strings for values)
+** 'string': string value
+** 'color': color
 * 'description': description of option
-* 'string_values': values as string (separated by "|"), used for type integer
+* 'string_values': values as string (separated by "|"), used for type 'integer'
   (optional)
-* 'min': minimum value (for integer)
-* 'max': maximum value (for integer)
+* 'min': minimum value (for type 'integer')
+* 'max': maximum value (for type 'integer')
 * 'default_value': default value for option (used when option is reset)
 * 'value': value for option
-* 'null_value_allowed': 1 if null (undefined value) is allowed for option,
+* 'null_value_allowed': 1 if 'null' (undefined value) is allowed for option,
   otherwise 0
-* 'callback_check_value': callback called to check new value for option
+* 'callback_check_value': function called to check new value for option
   (optional), arguments:
 ** 'void *data': pointer
 ** 'struct t_config_option *option': option pointer
 ** 'const char *value': new value for option
 * 'callback_check_value_data': pointer given to check_value callback when it
   is called by WeeChat
-* 'callback_change': callback called when value of option has changed
+* 'callback_change': function called when value of option has changed
   (optional), arguments:
 ** 'void *data': pointer
-** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_option *option': option pointer
 * 'callback_change_data': pointer given to change callback when it is called
   by WeeChat
-* 'callback_delete': callback called when option will be deleted (optional),
+* 'callback_delete': function called when option will be deleted (optional),
   arguments:
 ** 'void *data': pointer
-** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_option *option': option pointer
 * 'callback_delete_data': pointer given to delete callback when it is called
   by WeeChat
@@ -2471,7 +2475,7 @@ struct t_config_option *option =
 weechat_config_search_with_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Search an option in a configuration file with string.
+Search an option with full name.
 
 Prototype:
 
@@ -2486,8 +2490,8 @@ void weechat_config_search_with_string (const char *option_name,
 Arguments:
 
 * 'option_name': full option name (format: "file.section.option")
-* 'config_file': pointer to configuration file pointer, will be set to
-  configuration file of option, if found
+* 'config_file': pointer to configuration file pointer, will be set with
+  pointer to configuration file of option found
 * 'section': pointer to section pointer, will be set to section of option, if
   found
 * 'option': pointer to an option pointer, will be set to option pointer, if
@@ -2518,7 +2522,7 @@ else
 weechat_config_string_to_boolean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Check if a text is "true" or "false".
+Check if a text is "true" or "false", as boolean value.
 
 Prototype:
 
@@ -2542,11 +2546,11 @@ Example:
 ----------------------------------------
 if (weechat_config_string_to_boolean (option_value))
 {
-    /* option is true */
+    /* value is "true" */
 }
 else
 {
-    /* option is false */
+    /* value is "false" */
 }
 ----------------------------------------
 
@@ -2566,8 +2570,8 @@ int weechat_config_option_reset (struct t_config_option *option,
 Arguments:
 
 * 'option': option pointer
-* 'run_callback': 1 for calling chang callback if option is changed, 0
-  otherwise
+* 'run_callback': 1 for calling callback if value of option is changed,
+  otherwise 0
 
 Return value:
 
@@ -2610,8 +2614,8 @@ Arguments:
 
 * 'option': option pointer
 * 'value': new value for option
-* 'run_callback': 1 for calling chang callback if option is changed, 0
-  otherwise
+* 'run_callback': 1 for calling chang callback if value of option is changed,
+  otherwise 0
 
 Return value:
 
@@ -2653,8 +2657,8 @@ int weechat_config_option_set_null (struct t_config_option *option,
 Arguments:
 
 * 'option': option pointer
-* 'run_callback': 1 for calling chang callback if option is changed (if it was
-  not null), 0 otherwise
+* 'run_callback': 1 for calling chang callback if value of option is changed
+  (if it was not null), otherwise 0
 
 [NOTE]
 You can set value to null only if it is allowed for option (see
@@ -2662,7 +2666,7 @@ You can set value to null only if it is allowed for option (see
 
 Return value:
 
-* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been reset
+* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been changed
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
 * 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occured
 
@@ -2756,7 +2760,7 @@ weechat_config_option_rename (option, "new_name");
 weechat_config_option_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get a pointer on an option property.
+Return a pointer on an option property.
 
 Prototype:
 
@@ -2797,7 +2801,7 @@ char *description = weechat_config_option_get_pointer (option, "description");
 weechat_config_option_is_null
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Check if an option is null (undefined value).
+Check if an option is "null" (undefined value).
 
 Prototype:
 
@@ -2812,8 +2816,8 @@ Arguments:
 
 Return value:
 
-* 1 if option is null
-* 0 if option is not null
+* 1 if value of option is "null"
+* 0 if value of option is not "null"
 
 Example:
 
@@ -2821,18 +2825,18 @@ Example:
 ----------------------------------------
 if (weechat_config_option_is_null (option))
 {
-    /* value is null */
+    /* value is "null" */
 }
 else
 {
-    /* value is not null */
+    /* value is not "null" */
 }
 ----------------------------------------
 
 weechat_config_boolean
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Get boolean value of option.
+Return boolean value of option.
 
 Prototype:
 
@@ -2855,18 +2859,18 @@ Example:
 ----------------------------------------
 if (weechat_config_boolean (option))
 {
-    /* true */
+    /* value is "true" */
 }
 else
 {
-    /* false */
+    /* value is "false" */
 }
 ----------------------------------------
 
 weechat_config_boolean_default
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get default boolean value of option.
+Return default boolean value of option.
 
 Prototype:
 
@@ -2889,18 +2893,18 @@ Example:
 ----------------------------------------
 if (weechat_config_boolean_default (option))
 {
-    /* true */
+    /* value is "true" */
 }
 else
 {
-    /* false */
+    /* value is "false" */
 }
 ----------------------------------------
 
 weechat_config_integer
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Get integer value of option.
+Return integer value of option.
 
 Prototype:
 
@@ -2927,7 +2931,7 @@ int value = weechat_config_integer (option);
 weechat_config_integer_default
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get default integer value of option.
+Return default integer value of option.
 
 Prototype:
 
@@ -2954,7 +2958,7 @@ int value = weechat_config_integer_default (option);
 weechat_config_string
 ^^^^^^^^^^^^^^^^^^^^^
 
-Get string value of option.
+Return string value of option.
 
 Prototype:
 
@@ -2981,7 +2985,7 @@ const char *value = weechat_config_string (option);
 weechat_config_string_default
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get default string value of option.
+Return default string value of option.
 
 Prototype:
 
@@ -3008,7 +3012,7 @@ const char *value = weechat_config_string_default (option);
 weechat_config_color
 ^^^^^^^^^^^^^^^^^^^^
 
-Get color value of option.
+Return color value of option.
 
 Prototype:
 
@@ -3035,7 +3039,7 @@ const char *color = weechat_config_color (option);
 weechat_config_color_default
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get default color value of option.
+Return default color value of option.
 
 Prototype:
 
@@ -3302,7 +3306,7 @@ weechat_config_section_free_options (section);
 weechat_config_section_free
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Free an option.
+Free a section.
 
 Prototype:
 
@@ -3348,7 +3352,7 @@ weechat_config_free (config_file);
 weechat_config_get
 ^^^^^^^^^^^^^^^^^^
 
-Search an option in a configuration file with string.
+Search an option with full name.
 
 Prototype:
 
@@ -3375,8 +3379,7 @@ struct t_config_option *option = weechat_config_get ("weechat.look.item_time_for
 weechat_config_get_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Search an option in plugins configuration file (plugins.conf), by adding
-prefix with current plugin name.
+Search an option in plugins configuration file (plugins.conf).
 
 Prototype:
 
@@ -3388,7 +3391,7 @@ const char *weechat_config_get_plugin (const char *option_name);
 Arguments:
 
 * 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where xxxx is current plugin name)
+  (where "xxxx" is current plugin name)
 
 Return value:
 
@@ -3418,7 +3421,7 @@ int weechat_config_is_set_plugin (const char *option_name);
 Arguments:
 
 * 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where xxxx is current plugin name)
+  (where "xxxx" is current plugin name)
 
 Return value:
 
@@ -3434,14 +3437,14 @@ if (weechat_config_is_set_plugin ("option"))
 }
 else
 {
-    /* option does not exist in plugins.conf */
+    /* option does not exist */
 }
 ----------------------------------------
 
 weechat_config_set_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Set value for option in plugins configuration file (plugins.conf).
+Set new value for option in plugins configuration file (plugins.conf).
 
 Prototype:
 
@@ -3453,12 +3456,12 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
 Arguments:
 
 * 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where xxxx is current plugin name)
+  (where "xxxx" is current plugin name)
 * 'value': new value for option
 
 Return value:
 
-* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option valus has been changed
+* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been changed
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
 * 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND' if option was not found
 * 'WEECHAT_CONFIG_OPTION_SET_ERROR' if other error occured
@@ -3538,7 +3541,7 @@ Functions to display text in buffers.
 weechat_prefix
 ^^^^^^^^^^^^^^
 
-Get a prefix.
+Return a prefix.
 
 Prototype:
 
@@ -3579,7 +3582,7 @@ weechat_printf (NULL, "%sThis is an error...", weechat_prefix ("error"));
 weechat_color
 ^^^^^^^^^^^^^
 
-Get a string color code for display.
+Return a string color code for display.
 
 Prototype:
 
@@ -3599,7 +3602,7 @@ Arguments:
 *** 'reverse': set reverse
 *** '-reverse': remove reverse
 *** 'italic': set italic
-*** '-italic': remove italix
+*** '-italic': remove italic
 *** 'underline': set underline
 *** '-underline': remove underline
 ** bar color name:
@@ -3656,7 +3659,7 @@ Prototype:
 [source,C]
 ----------------------------------------
 void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                            const char *message, ...);
+                          const char *message, ...);
 ----------------------------------------
 
 Arguments:
@@ -3669,7 +3672,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, time (NULL) - 120, "Hello, 2 minutes ago");
+weechat_printf_date (NULL, time (NULL) - 120, "Hello, 2 minutes ago");
 ----------------------------------------
 
 weechat_printf_tags
@@ -3695,7 +3698,8 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf_tags (NULL, "notify_message", "Hello with a message notify tag");
+weechat_printf_tags (NULL, "notify_message",
+                     "Message with a tag 'notify_message'");
 ----------------------------------------
 
 weechat_printf_date_tags
@@ -3723,7 +3727,7 @@ Example:
 [source,C]
 ----------------------------------------
 weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
-                          "Hello, 2 minutes ago, with a message notify tag");
+                          "Message 2 minutes ago, with a tag 'notify_message'");
 ----------------------------------------
 
 weechat_printf_y
@@ -3741,8 +3745,8 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 
 Arguments:
 
-* 'buffer': buffer pointer, if NULL, message is displayed on WeeChat buffer
-* 'y': line number (0 for first line)
+* 'buffer': buffer pointer
+* 'y': line number (first line is 0)
 * 'message': message to display
 
 Example:
@@ -3755,7 +3759,7 @@ weechat_printf_y (buffer, 2, "My message on third line");
 weechat_log_printf
 ^^^^^^^^^^^^^^^^^^
 
-Write a message in WeeChat log file.
+Write a message in WeeChat log file (weechat.log).
 
 Prototype:
 
@@ -3772,7 +3776,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_log_printf ("My message in log");
+weechat_log_printf ("My message in log file");
 ----------------------------------------
 
 [[hooks]]
@@ -3802,25 +3806,26 @@ struct t_hook *weechat_hook_command (const char *command,
 
 Arguments:
 
-* 'command': new command name
-* 'description': description fo command (displayed with `/help command`)
+* 'command': command name
+* 'description': description for command (displayed with `/help command`)
 * 'args': arguments for command (displayed with `/help command`)
 * 'args_description': description of arguments (displayed with `/help command`)
 * 'completion': completion template for command: list of completions for each
-  arguments, separated by space. Many completions are possible for one
+  argument, separated by space. Many completions are possible for one
   argument, separated by "|". Many templates are possible for same command,
   separated by "||". Default completion codes are:
 include::autogen/plugin_api/completions.txt[]
 ** special codes:
-*** '%%command': reuse completion template from /command
+*** '%%command': reuse completion template from command 'command'
 *** '%-': stop completion
 *** '%*': repeat last completion
 * 'callback': function called when command is used, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
-** 'int argc': argument count
-** 'char **argv': arguments
-** 'char **argv_eol': argumenst (until end of line)
+** 'int argc': number of arguments given for command
+** 'char **argv': arguments given for command
+** 'char **argv_eol': arguments given for command (until end of line for each
+   argument)
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 For example, if command called is `/command abc def ghi`, then argv and
@@ -3851,7 +3856,7 @@ my_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     return WEECHAT_RC_OK;
 }
 
-/* this example is inspired by weechat command /filter */
+/* this example is inspired by command /filter */
 struct t_hook *my_command_hook =
     weechat_hook_command (/* command name */
                           "myfilter",
@@ -5205,7 +5210,7 @@ weechat_buffer_unmerge (weechat_current_buffer (), 1);
 weechat_buffer_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get integer value of a buffer property.
+Return integer value of a buffer property.
 
 Prototype:
 
@@ -5226,10 +5231,10 @@ Arguments:
    if all lines are displayed
 ** 'prefix_max_length': max length for prefix in this buffer
 ** 'time_for_each_line': 1 if time is displayed for each line in buffer
-   (default), 0 otherwise
+   (default), otherwise 0
 ** 'text_search': text search type: 0 = disabled, 1 = backward, 2 = forward
 ** 'text_search_exact': 1 if text search is exact (case sensitive)
-** 'text_search_found': 1 if text found, 0 otherwise
+** 'text_search_found': 1 if text found, otherwise 0
 
 Return value:
 
@@ -5246,7 +5251,7 @@ weechat_printf (NULL, "my buffer number is: %d",
 weechat_buffer_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get string value of a buffer property.
+Return string value of a buffer property.
 
 Prototype:
 
@@ -5285,7 +5290,7 @@ weechat_printf (NULL, "name / short name of buffer are: %s / %s",
 weechat_buffer_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get pointer value of a buffer property.
+Return pointer value of a buffer property.
 
 Prototype:
 
@@ -5535,7 +5540,7 @@ struct t_gui_window *current_window = weechat_current_window ();
 weechat_window_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get integer value of a window property.
+Return integer value of a window property.
 
 Prototype:
 
@@ -5583,7 +5588,7 @@ weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
 weechat_window_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get string value of a window property. NOT USED TODAY, reserved for future
+Return string value of a window property. NOT USED TODAY, reserved for future
 version.
 
 Prototype:
@@ -5606,7 +5611,7 @@ Return value:
 weechat_window_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get pointer value of a window property.
+Return pointer value of a window property.
 
 Prototype:
 
@@ -6347,7 +6352,7 @@ Functions to get infos.
 weechat_info_get
 ^^^^^^^^^^^^^^^^
 
-Get info from WeeChat or a plugin.
+Return info from WeeChat or a plugin.
 
 Prototype:
 
@@ -6613,7 +6618,7 @@ struct t_infolist_var *var = weechat_infolist_new_variable_time (item,
 weechat_infolist_get
 ^^^^^^^^^^^^^^^^^^^^
 
-Get infolist from WeeChat or a plugin.
+Return infolist from WeeChat or a plugin.
 
 Prototype:
 
@@ -6740,7 +6745,7 @@ weechat_infolist_reset_item_cursor (infolist);
 weechat_infolist_fields
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Get list of fields for current infolist item.
+Return list of fields for current infolist item.
 
 Prototype:
 
@@ -6771,7 +6776,7 @@ const char *fields = weechat_infolist_fields (infolist);
 weechat_infolist_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get value of integer variable in current infolist item.
+Return value of integer variable in current infolist item.
 
 Prototype:
 
@@ -6800,7 +6805,7 @@ weechat_printf (NULL, "integer value = %d",
 weechat_infolist_string
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Get value of string variable in current infolist item.
+Return value of string variable in current infolist item.
 
 Prototype:
 
@@ -6829,7 +6834,7 @@ weechat_printf (NULL, "string value = %s",
 weechat_infolist_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get value of pointer variable in current infolist item.
+Return value of pointer variable in current infolist item.
 
 Prototype:
 
@@ -6858,7 +6863,7 @@ weechat_printf (NULL, "pointer value = 0x%lx",
 weechat_infolist_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Get value of buffer variable in current infolist item.
+Return value of buffer variable in current infolist item.
 
 Prototype:
 
@@ -6891,7 +6896,7 @@ eechat_printf (NULL, "buffer pointer = 0x%lx, size = %d",
 weechat_infolist_time
 ^^^^^^^^^^^^^^^^^^^^^
 
-Get value of time variable in current infolist item.
+Return value of time variable in current infolist item.
 
 Prototype:
 
@@ -7035,7 +7040,7 @@ struct t_upgrade_file *weechat_upgrade_read (struct t_upgrade_file *upgrade_file
 Arguments:
 
 * 'upgrade_file': upgrade file pointer
-* 'callback_read': callback called for each object read in upgrade file
+* 'callback_read': function called for each object read in upgrade file
 * 'callback_read_data': pointer given to read callback when it is called by
   WeeChat
 

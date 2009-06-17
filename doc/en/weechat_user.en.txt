@@ -216,7 +216,7 @@ Example of terminal with WeeChat:
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc] 3:freenode/#test(+n){5}* [Act: 4,2]                                    │
+│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
 │[flashy] hi joe!█                                                                        │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
@@ -246,7 +246,7 @@ Bar 'status' has following default items:
   number of opened buffers
 
 | buffer_plugin         | `[irc]`              |
-  plugin of current buffer
+  plugin of current buffer (irc plugin can add IRC server name used by buffer)
 
 | buffer_number         | `3`                  |
   current buffer number
