@@ -1740,7 +1740,7 @@ irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
 
 /*
  * irc_command_links: list all servernames which are known by the server
- *                     answering the query
+ *                    answering the query
  */
 
 int
@@ -4054,10 +4054,17 @@ irc_command_init ()
                              "  /server copy oftc oftcbis\n"
                              "  /server rename oftc newoftc\n"
                              "  /server del freenode\n"
-                             "  /server deloutq\n"
-                             "  /server switch"),
-                          "add|copy|rename|keep|del|deloutq|jump|list|listfull|"
-                          "raw|switch %(irc_servers) %(irc_servers)",
+                             "  /server deloutq"),
+                          "add %(irc_servers)"
+                          " || copy %(irc_servers) %(irc_servers)"
+                          " || rename %(irc_servers) %(irc_servers)"
+                          " || keep %(irc_servers)"
+                          " || del %(irc_servers)"
+                          " || deloutq"
+                          " || jump"
+                          " || list %(irc_servers)"
+                          " || listfull %(irc_servers)"
+                          " || raw",
                           &irc_command_server, NULL);
     weechat_hook_command ("servlist",
                           N_("list services currently connected to the "

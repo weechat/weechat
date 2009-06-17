@@ -428,7 +428,6 @@
     /server rename oftc newoftc
     /server del freenode
     /server deloutq
-    /server switch
 ........................................
 
 &bull; *`/service`* `pseudo réservé distribution type réservé info`::
