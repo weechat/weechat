@@ -160,7 +160,7 @@
 ........................................
   functions for command line
 
-  Cette commande est utilisée par les associations de touches ou les extensions.
+  This command is used by key bindings or plugins.
 ........................................
 
 &bull; *`/key`* `[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]`::

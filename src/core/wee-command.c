@@ -4126,7 +4126,7 @@ command_init ()
                   "jump_next_visited_buffer | hotlist_clear | grab_key | "
                   "scroll_unread | set_unread | set_unread_current_buffer | "
                   "insert [args]",
-                  _("This command is used by key bindings or plugins."),
+                  N_("This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_next|"
                   "delete_previous_char|delete_next_char|"
                   "delete_previous_word|delete_next_word|"
