@@ -971,7 +971,10 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
     
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+    {
+        gui_bar_apply_current_size (ptr_bar);
         gui_bar_refresh (ptr_bar);
+    }
 }
 
 /*
@@ -981,11 +984,26 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
 void
 gui_bar_config_change_size_max (void *data, struct t_config_option *option)
 {
+    struct t_gui_bar *ptr_bar;
+    char value[32];
+    
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
-    gui_window_ask_refresh (1);
+
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+    {
+        if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]) > 0)
+            && (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) >
+                CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX])))
+        {
+            snprintf (value, sizeof (value), "%d",
+                      CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]));
+            config_file_option_set (ptr_bar->options[GUI_BAR_OPTION_SIZE], value, 1);
+        }
+        gui_window_ask_refresh (1);
+    }
 }
 
 /*
@@ -1102,123 +1120,6 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 }
 
 /*
- * gui_bar_set_priority: set priority for a bar
- */
-
-void
-gui_bar_set_priority (struct t_gui_bar *bar, const char *priority)
-{
-    long number;
-    char *error;
-    
-    error = NULL;
-    number = strtol (priority, &error, 10);
-    if (error && !error[0])
-    {
-        if (number < 0)
-            number = 0;
-        
-        /* bar number is already ok? */
-        if (number == CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]))
-            return;
-        
-        config_file_option_set (bar->options[GUI_BAR_OPTION_PRIORITY], priority, 1);
-    }
-}
-
-/*
- * gui_bar_set_position: set position for a bar
- */
-
-void
-gui_bar_set_position (struct t_gui_bar *bar, const char *position)
-{
-    int position_value;
-    
-    if (!position || !position[0])
-        return;
-    
-    position_value = gui_bar_search_position (position);
-    if ((position_value >= 0)
-        && (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]) != position_value))
-    {
-        config_file_option_set (bar->options[GUI_BAR_OPTION_POSITION], position, 1);
-    }
-}
-
-/*
- * gui_bar_set_size: set size for a bar
- */
-
-void
-gui_bar_set_size (struct t_gui_bar *bar, const char *size)
-{
-    long number;
-    char *error, value[32];
-    int new_size;
-    
-    error = NULL;
-    number = strtol (((size[0] == '+') || (size[0] == '-')) ?
-                     size + 1 : size,
-                     &error,
-                     10);
-    if (error && !error[0])
-    {
-        new_size = number;
-        if (size[0] == '+')
-            new_size = CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]) + new_size;
-        else if (value[0] == '-')
-            new_size = CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]) - new_size;
-        if ((size[0] == '-') && (new_size < 1))
-            return;
-        if (new_size < 0)
-            return;
-        
-        /* check if new size is ok if it's more than before */
-        if ((new_size != 0) &&
-            ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]) == 0)
-             || (new_size > CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]))))
-        {
-            if (!gui_bar_check_size_add (bar,
-                                         new_size - CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE])))
-                return;
-        }
-        
-        snprintf (value, sizeof (value), "%d", new_size);
-        config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
-
-        gui_bar_apply_current_size (bar);
-    }
-}
-
-/*
- * gui_bar_set_size_max: set max size for a bar
- */
-
-void
-gui_bar_set_size_max (struct t_gui_bar *bar, const char *size)
-{
-    long number;
-    char *error, value[32];
-    
-    error = NULL;
-    number = strtol (size, &error, 10);
-    if (error && !error[0])
-    {
-        if (number < 0)
-            return;
-        
-        snprintf (value, sizeof (value), "%ld", number);
-        config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE_MAX], value, 1);
-
-        if ((number > 0) &&
-            ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]) == 0)
-             || (number < CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE]))))
-            gui_bar_set_size (bar, value);
-    }
-}
-
-/*
  * gui_bar_set: set a property for a bar
  *              return: 1 if ok, 0 if error
  */
@@ -1241,7 +1142,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     }
     else if (string_strcasecmp (property, "priority") == 0)
     {
-        gui_bar_set_priority (bar, value);
+        config_file_option_set (bar->options[GUI_BAR_OPTION_PRIORITY], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "conditions") == 0)
@@ -1251,7 +1152,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     }
     else if (string_strcasecmp (property, "position") == 0)
     {
-        gui_bar_set_position (bar, value);
+        config_file_option_set (bar->options[GUI_BAR_OPTION_POSITION], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "filling_top_bottom") == 0)
@@ -1266,14 +1167,12 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     }
     else if (string_strcasecmp (property, "size") == 0)
     {
-        gui_bar_set_size (bar, value);
-        gui_bar_refresh (bar);
+        config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "size_max") == 0)
     {
-        gui_bar_set_size_max (bar, value);
-        gui_bar_refresh (bar);
+        config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE_MAX], value, 1);
         return 1;
     }
     else if (string_strcasecmp (property, "color_fg") == 0)
