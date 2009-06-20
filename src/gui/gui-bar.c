@@ -970,10 +970,8 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
     (void) data;
     
     ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
-    {
-
-    }
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+        gui_bar_refresh (ptr_bar);
 }
 
 /*
