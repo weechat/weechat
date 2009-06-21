@@ -25,6 +25,14 @@
 #define GUI_COMPLETION_COMMAND_ARG  2
 #define GUI_COMPLETION_AUTO         3
 
+struct t_gui_completion_partial
+{
+    char *word;                   /* (partial) word matching completion      */
+    int count;                    /* number of matching items with this word */
+    struct t_gui_completion_partial *prev_item;
+    struct t_gui_completion_partial *next_item;
+};
+
 struct t_gui_completion
 {
     /* completion context */
@@ -49,17 +57,11 @@ struct t_gui_completion
     int position_replace;         /* position where word has to be replaced  */
     int diff_size;                /* size difference (< 0 = char(s) deleted) */
     int diff_length;              /* length difference (<= diff_size)        */
-};
 
-struct t_gui_completion_partial
-{
-    char *word;                   /* (partial) word matching completion      */
-    int count;                    /* number of matching items with this word */
-    struct t_gui_completion_partial *prev_item;
-    struct t_gui_completion_partial *next_item;
+    /* partial completion */
+    struct t_gui_completion_partial *partial_completion_list;
+    struct t_gui_completion_partial *last_partial_completion;
 };
-
-extern struct t_gui_completion_partial *gui_completion_partial_list;
 
 /* completion functions */
 
