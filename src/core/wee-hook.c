@@ -483,6 +483,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                 }
             }
         }
+        weelist_free (list);
     }
 }
 
@@ -2176,8 +2177,22 @@ unhook (struct t_hook *hook)
                     }
                     free (HOOK_COMMAND(hook, cplt_templates));
                 }
+                if (HOOK_COMMAND(hook, cplt_templates_static))
+                    free (HOOK_COMMAND(hook, cplt_templates_static));
                 if (HOOK_COMMAND(hook, cplt_template_num_args))
                     free (HOOK_COMMAND(hook, cplt_template_num_args));
+                if (HOOK_COMMAND(hook, cplt_template_args))
+                    free (HOOK_COMMAND(hook, cplt_template_args));
+                if (HOOK_COMMAND(hook, cplt_template_args_concat))
+                {
+                    for (i = 0;
+                         i < HOOK_COMMAND(hook, cplt_template_num_args_concat);
+                         i++)
+                    {
+                        free (HOOK_COMMAND(hook, cplt_template_args_concat[i]));
+                    }
+                    free (HOOK_COMMAND(hook, cplt_template_args_concat));
+                }
                 break;
             case HOOK_TYPE_COMMAND_RUN:
                 if (HOOK_COMMAND_RUN(hook, command))

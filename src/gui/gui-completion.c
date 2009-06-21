@@ -49,10 +49,6 @@
 #include "gui-nicklist.h"
 
 
-struct t_gui_completion_partial *gui_completion_partial_list = NULL;
-struct t_gui_completion_partial *last_gui_completion_partial = NULL;
-
-
 /*
  * gui_completion_buffer_init: init completion for a buffer
  */
@@ -80,6 +76,75 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->position_replace = 0;
     completion->diff_size = 0;
     completion->diff_length = 0;
+    
+    completion->partial_completion_list = NULL;
+    completion->last_partial_completion = NULL;
+}
+
+/*
+ * gui_completion_partial_list_add: add an item to partial completions list
+ */
+
+struct t_gui_completion_partial *
+gui_completion_partial_list_add (struct t_gui_completion *completion,
+                                 const char *word, int count)
+{
+    struct t_gui_completion_partial *new_item;
+    
+    new_item = malloc (sizeof (*new_item));
+    if (new_item)
+    {
+        new_item->word = strdup (word);
+        new_item->count = count;
+        
+        new_item->prev_item = completion->last_partial_completion;
+        if (completion->partial_completion_list)
+            (completion->last_partial_completion)->next_item = new_item;
+        else
+            completion->partial_completion_list = new_item;
+        completion->last_partial_completion = new_item;
+        new_item->next_item = NULL;
+    }
+    return new_item;
+}
+
+/*
+ * gui_completion_partial_free: remove an item from partial completions list
+ */
+
+void
+gui_completion_partial_list_free (struct t_gui_completion *completion,
+                                  struct t_gui_completion_partial *item)
+{
+    /* remove partial completion item from list */
+    if (item->prev_item)
+        (item->prev_item)->next_item = item->next_item;
+    if (item->next_item)
+        (item->next_item)->prev_item = item->prev_item;
+    if (completion->partial_completion_list == item)
+        completion->partial_completion_list = item->next_item;
+    if (completion->last_partial_completion == item)
+        completion->last_partial_completion = item->prev_item;
+    
+    /* free data */
+    if (item->word)
+        free (item->word);
+    
+    free (item);
+}
+
+/*
+ * gui_completion_partial_free: remove partial completions list
+ */
+
+void
+gui_completion_partial_list_free_all (struct t_gui_completion *completion)
+{
+    while (completion->partial_completion_list)
+    {
+        gui_completion_partial_list_free (completion,
+                                          completion->partial_completion_list);
+    }
 }
 
 /*
@@ -110,6 +175,8 @@ gui_completion_free_data (struct t_gui_completion *completion)
     if (completion->word_found)
         free (completion->word_found);
     completion->word_found = NULL;
+
+    gui_completion_partial_list_free_all (completion);
 }
 
 /*
@@ -121,68 +188,6 @@ gui_completion_free (struct t_gui_completion *completion)
 {
     gui_completion_free_data (completion);
     free (completion);
-}
-
-/*
- * gui_completion_partial_list_add: add an item to partial completions list
- */
-
-struct t_gui_completion_partial *
-gui_completion_partial_list_add (const char *word, int count)
-{
-    struct t_gui_completion_partial *new_item;
-    
-    new_item = malloc (sizeof (*new_item));
-    if (new_item)
-    {
-        new_item->word = strdup (word);
-        new_item->count = count;
-        
-        new_item->prev_item = last_gui_completion_partial;
-        if (gui_completion_partial_list)
-            last_gui_completion_partial->next_item = new_item;
-        else
-            gui_completion_partial_list = new_item;
-        last_gui_completion_partial = new_item;
-        new_item->next_item = NULL;
-    }
-    return new_item;
-}
-
-/*
- * gui_completion_partial_free: remove an item from partial completions list
- */
-
-void
-gui_completion_partial_list_free (struct t_gui_completion_partial *item)
-{
-    /* remove partial completion item from list */
-    if (item->prev_item)
-        (item->prev_item)->next_item = item->next_item;
-    if (item->next_item)
-        (item->next_item)->prev_item = item->prev_item;
-    if (gui_completion_partial_list == item)
-        gui_completion_partial_list = item->next_item;
-    if (last_gui_completion_partial == item)
-        last_gui_completion_partial = item->prev_item;
-    
-    /* free data */
-    if (item->word)
-        free (item->word);
-    free (item);
-}
-
-/*
- * gui_completion_partial_free: remove partial completions list
- */
-
-void
-gui_completion_partial_list_free_all ()
-{
-    while (gui_completion_partial_list)
-    {
-        gui_completion_partial_list_free (gui_completion_partial_list);
-    }
 }
 
 /*
@@ -198,7 +203,7 @@ gui_completion_stop (struct t_gui_completion *completion,
     completion->position = -1;
     if (remove_partial_completion_list)
     {
-        gui_completion_partial_list_free_all ();
+        gui_completion_partial_list_free_all (completion);
         hook_signal_send ("partial_completion",
                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
@@ -1699,10 +1704,10 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
 {
     int char_size, items_count;
     char utf_char[16], *word;
-    struct t_weelist *weelist_temp, *weelist_words;
+    struct t_weelist *weelist_temp;
     struct t_weelist_item *ptr_item, *next_item;
     
-    gui_completion_partial_list_free_all ();
+    gui_completion_partial_list_free_all (completion);
     
     if (!completion->completion_list || !completion->completion_list->items)
         return;
@@ -1710,13 +1715,6 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
     weelist_temp = weelist_new ();
     if (!weelist_temp)
         return;
-    
-    weelist_words = weelist_new ();
-    if (!weelist_words)
-    {
-        weelist_free (weelist_temp);
-        return;
-    }
     
     for (ptr_item = completion->completion_list->items; ptr_item;
          ptr_item = ptr_item->next_item)
@@ -1754,7 +1752,8 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
         }
         if (word)
         {
-            gui_completion_partial_list_add (word,
+            gui_completion_partial_list_add (completion,
+                                             word,
                                              CONFIG_BOOLEAN(config_completion_partial_completion_count) ?
                                              items_count : -1);
             free (word);
@@ -1900,7 +1899,7 @@ gui_completion_complete (struct t_gui_completion *completion)
                     return;
                 }
                 
-                gui_completion_partial_list_free_all ();
+                gui_completion_partial_list_free_all (completion);
                 
                 return;
             }
@@ -2057,6 +2056,8 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
+    struct t_gui_completion_partial *ptr_item;
+    
     log_printf ("[completion (addr:0x%lx)]", completion);
     log_printf ("  buffer. . . . . . . . . : 0x%lx", completion->buffer);
     log_printf ("  context . . . . . . . . : %d",    completion->context);
@@ -2080,6 +2081,19 @@ gui_completion_print_log (struct t_gui_completion *completion)
         log_printf ("");
         weelist_print_log (completion->completion_list,
                            "completion list element");
+    }
+    if (completion->partial_completion_list)
+    {
+        log_printf ("");
+        for (ptr_item = completion->partial_completion_list;
+             ptr_item; ptr_item = ptr_item->next_item)
+        {
+            log_printf ("[partial completion item (addr:0x%lx)]", ptr_item);
+            log_printf ("  word. . . . . . . . . . : '%s'",  ptr_item->word);
+            log_printf ("  count . . . . . . . . . : %d",    ptr_item->count);
+            log_printf ("  prev_item . . . . . . . : 0x%lx", ptr_item->prev_item);
+            log_printf ("  next_item . . . . . . . : 0x%lx", ptr_item->next_item);
+        }
     }
 }
 

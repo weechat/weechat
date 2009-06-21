@@ -1044,11 +1044,17 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) window;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    if (!window->buffer->completion
+        || !window->buffer->completion->partial_completion_list)
+        return NULL;
     
     length = 1;
-    for (ptr_item = gui_completion_partial_list; ptr_item;
-         ptr_item = ptr_item->next_item)
+    for (ptr_item = window->buffer->completion->partial_completion_list;
+         ptr_item; ptr_item = ptr_item->next_item)
     {
         length += strlen (ptr_item->word) + 32;
     }
@@ -1057,8 +1063,8 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     if (buf)
     {
         buf[0] = '\0';
-        for (ptr_item = gui_completion_partial_list; ptr_item;
-             ptr_item = ptr_item->next_item)
+        for (ptr_item = window->buffer->completion->partial_completion_list;
+             ptr_item; ptr_item = ptr_item->next_item)
         {
             strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
             strcat (buf, ptr_item->word);
