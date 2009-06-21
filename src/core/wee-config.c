@@ -1397,7 +1397,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "save_layout_on_exit", "integer",
         N_("save layout on exit (buffers, windows, or both)"),
-        "none|buffers|windows|all", 0, 0, "all", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "none|buffers|windows|all", 0, 0, "none", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_scroll_amount = config_file_new_option (
         weechat_config_file, ptr_section,
         "scroll_amount", "integer",
