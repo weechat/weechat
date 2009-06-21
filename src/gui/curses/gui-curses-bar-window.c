@@ -495,7 +495,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             y = 0;
             some_data_not_displayed = 0;
             if ((bar_window->scroll_y > 0)
-                && (bar_window->scroll_y >= items_count))
+                && (bar_window->scroll_y > items_count - bar_window->height))
             {
                 bar_window->scroll_y = items_count - bar_window->height;
                 if (bar_window->scroll_y < 0)
