@@ -1515,6 +1515,10 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     
     /* free all lines */
     gui_line_free_all (buffer);
+    if (buffer->own_lines)
+        free (buffer->own_lines);
+    if (buffer->mixed_lines)
+        free (buffer->mixed_lines);
     
     /* free some data */
     if (buffer->title)

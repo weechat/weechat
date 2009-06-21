@@ -1704,7 +1704,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
 {
     int char_size, items_count;
     char utf_char[16], *word;
-    struct t_weelist *weelist_temp, *weelist_words;
+    struct t_weelist *weelist_temp;
     struct t_weelist_item *ptr_item, *next_item;
     
     gui_completion_partial_list_free_all (completion);
@@ -1715,13 +1715,6 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
     weelist_temp = weelist_new ();
     if (!weelist_temp)
         return;
-    
-    weelist_words = weelist_new ();
-    if (!weelist_words)
-    {
-        weelist_free (weelist_temp);
-        return;
-    }
     
     for (ptr_item = completion->completion_list->items; ptr_item;
          ptr_item = ptr_item->next_item)
