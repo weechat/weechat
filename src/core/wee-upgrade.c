@@ -458,19 +458,32 @@ upgrade_weechat_read_cb (void *data,
                 /* add line to current buffer */
                 if (upgrade_current_buffer)
                 {
-                    new_line = gui_line_add (
-                        upgrade_current_buffer,
-                        infolist_time (infolist, "date"),
-                        infolist_time (infolist, "date_printed"),
-                        infolist_string (infolist, "tags"),
-                        infolist_string (infolist, "prefix"),
-                        infolist_string (infolist, "message"));
-                    if (new_line)
+                    switch (upgrade_current_buffer->type)
                     {
-                        new_line->data->highlight = infolist_integer (infolist, "highlight");
+                        case GUI_BUFFER_TYPE_FORMATTED:
+                            new_line = gui_line_add (
+                                upgrade_current_buffer,
+                                infolist_time (infolist, "date"),
+                                infolist_time (infolist, "date_printed"),
+                                infolist_string (infolist, "tags"),
+                                infolist_string (infolist, "prefix"),
+                                infolist_string (infolist, "message"));
+                            if (new_line)
+                            {
+                                new_line->data->highlight = infolist_integer (infolist, "highlight");
+                                if (infolist_integer (infolist, "last_read_line"))
+                                    upgrade_current_buffer->lines->last_read_line = new_line;
+                            }
+                            break;
+                        case GUI_BUFFER_TYPE_FREE:
+                            gui_line_add_y (
+                                upgrade_current_buffer,
+                                infolist_integer (infolist, "y"),
+                                infolist_string (infolist, "message"));
+                            break;
+                        case GUI_BUFFER_NUM_TYPES:
+                            break;
                     }
-                    if (infolist_integer (infolist, "last_read_line"))
-                        upgrade_current_buffer->lines->last_read_line = new_line;
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_NICKLIST:

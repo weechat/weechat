@@ -996,6 +996,8 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
     
+    if (!infolist_new_var_integer (ptr_item, "y", line->data->y))
+        return 0;
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))
         return 0;
     if (!infolist_new_var_time (ptr_item, "date_printed", line->data->date_printed))
