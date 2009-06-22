@@ -459,7 +459,8 @@ gui_line_add_to_list (struct t_gui_lines *lines,
  */
 
 void
-gui_line_remove_from_list (struct t_gui_lines *lines,
+gui_line_remove_from_list (struct t_gui_buffer *buffer,
+                           struct t_gui_lines *lines,
                            struct t_gui_line *line,
                            int free_data)
 {
@@ -467,6 +468,14 @@ gui_line_remove_from_list (struct t_gui_lines *lines,
     
     update_prefix_max_length =
         (line->data->prefix_length == lines->prefix_max_length);
+    
+    /* move read marker if it was on line we are removing */
+    if (lines->last_read_line == line)
+    {
+        lines->last_read_line = lines->last_read_line->prev_line;
+        lines->first_line_not_read = (lines->last_read_line) ? 0 : 1;
+        gui_buffer_ask_chat_refresh (buffer, 1);
+    }
     
     /* free data */
     if (free_data)
@@ -537,7 +546,8 @@ gui_line_mixed_free_buffer (struct t_gui_buffer *buffer)
             
             if (ptr_line->data->buffer == buffer)
             {
-                gui_line_remove_from_list (buffer->mixed_lines,
+                gui_line_remove_from_list (buffer,
+                                           buffer->mixed_lines,
                                            ptr_line,
                                            0);
             }
@@ -558,7 +568,8 @@ gui_line_mixed_free_all (struct t_gui_buffer *buffer)
     {
         while (buffer->mixed_lines->first_line)
         {
-            gui_line_remove_from_list (buffer->mixed_lines,
+            gui_line_remove_from_list (buffer,
+                                       buffer->mixed_lines,
                                        buffer->mixed_lines->first_line,
                                        0);
         }
@@ -566,7 +577,7 @@ gui_line_mixed_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_free: delete a formatted line from a buffer
+ * gui_line_free: delete a line from a buffer
  */
 
 void
@@ -583,7 +594,10 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
         {
             if (ptr_line->data == line->data)
             {
-                gui_line_remove_from_list (buffer->mixed_lines, ptr_line, 0);
+                gui_line_remove_from_list (buffer,
+                                           buffer->mixed_lines,
+                                           ptr_line,
+                                           0);
                 break;
             }
         }
@@ -600,16 +614,8 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
         }
     }
     
-    /* move read marker if it was on line we are removing */
-    if (buffer->own_lines->last_read_line == line)
-    {
-        buffer->own_lines->last_read_line = buffer->own_lines->last_read_line->prev_line;
-        buffer->own_lines->first_line_not_read = (buffer->own_lines->last_read_line) ? 0 : 1;
-        gui_buffer_ask_chat_refresh (buffer, 1);
-    }
-    
     /* remove line from lines list */
-    gui_line_remove_from_list (buffer->own_lines, line, 1);
+    gui_line_remove_from_list (buffer, buffer->own_lines, line, 1);
 }
 
 /*

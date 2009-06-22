@@ -605,7 +605,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            for (ptr_line = buffer->lines->first_line; ptr_line;
+            for (ptr_line = buffer->own_lines->first_line; ptr_line;
                  ptr_line = ptr_line->next_line)
             {
                 if (ptr_line->data->y >= y)
