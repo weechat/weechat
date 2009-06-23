@@ -3907,8 +3907,8 @@ Arguments:
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 [NOTE]
-Callback can return 'WEECHAT_RC_OK' or 'WEECHAT_RC_OK_EAT' (ok and "eat"
-command, will not be executed by WeeChat after callback).
+Callback can return 'WEECHAT_RC_OK' or 'WEECHAT_RC_OK_EAT' (command will not
+be executed by WeeChat after callback).
 
 Return value:
 
@@ -3952,9 +3952,9 @@ struct t_hook *weechat_hook_timer (long interval,
 Arguments:
 
 * 'interval': interval between two calls (milliseconds, so 1000 = 1 second)
-* 'align_second': alignment on a second: align timer on a second. For example,
-  if current time is 09:00, if interval = 60000 (60 seconds), and
-  align_second = 60, then timer is called each minute when second is 00
+* 'align_second': alignment on a second. For example, if current time is 09:00,
+  if interval = 60000 (60 seconds), and align_second = 60, then timer is
+  called each minute when second is 00
 * 'max_calls': number of calls to timer (if 0, then timer has no end)
 * 'callback': function called when time is reached, arguments:
 ** 'void *data': pointer
@@ -3978,7 +3978,7 @@ my_timer_cb (void *data, int remaining_calls)
 
 /* timer called each 20 seconds */
 struct t_hook *my_timer_hook =
-    weechat_hook_timer (20 * 1000, 0, 0, &amp;my_timer_cb, NULL);
+    weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL);
 ----------------------------------------
 
 weechat_hook_fd
@@ -4004,7 +4004,8 @@ Arguments:
 * 'flag_read': 1 = catch read event, 0 = ignore
 * 'flag_write': 1 = catch write event, 0 = ignore
 * 'flag_exception': 1 = catch exception event, 0 = ignore
-* 'callback': function called when time is reached, arguments:
+* 'callback': function called a selected event occurs for file (or socket),
+  arguments:
 ** 'void *data': pointer
 ** 'int fd': file descriptor
 * 'callback_data': pointer given to callback when it is called by WeeChat
@@ -4027,14 +4028,13 @@ my_fd_cb (void *data, int fd)
 int sock = socket (AF_INET, SOCK_STREAM, 0);
 /* set socket options */
 /* ... */
-/* hook socket */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
 ----------------------------------------
 
 weechat_hook_process
 ^^^^^^^^^^^^^^^^^^^^
 
-Hook a process (with fork), and catch output.
+Hook a process (launched with fork), and catch output.
 
 Prototype:
 
@@ -4060,10 +4060,12 @@ Arguments:
   has ended, arguments:
 ** 'void *data': pointer
 ** 'const char *command': command executed by child
-** 'int return_code':
+** 'int return_code': return code:
 *** '>= 0': child command return code
 *** '< 0': 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (data available, but child still
     running) or 'WEECHAT_HOOK_PROCESS_ERROR' (error when launching command)
+** 'stdout': standard output of command
+** 'stderr': error output of command
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -4133,19 +4135,19 @@ Arguments:
 * 'port': port number
 * 'sock': socket used to connect
 * 'ipv6': 1 to use IPv6, 0 to use IPv4
-* 'gnutls_sess': GnuTLSsession (optional)
+* 'gnutls_sess': GnuTLS session (optional)
 * 'callback': function called when connection is ok or failed, arguments:
 ** 'void *data': pointer
-** 'int status': constant with connection status:
-*** 'WEECHAT_HOOK_CONNECT_OK'
-*** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND'
-*** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND'
-*** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED'
-*** 'WEECHAT_HOOK_CONNECT_PROXY_ERROR'
-*** 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR'
-*** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR'
-*** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR'
-*** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR'
+** 'int status': connection status:
+*** 'WEECHAT_HOOK_CONNECT_OK': connection ok
+*** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': address not found
+*** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND': IP address not found
+*** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED': connection refused
+*** 'WEECHAT_HOOK_CONNECT_PROXY_ERROR': error with proxy
+*** 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR': error with local hostname
+*** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': GnuTLS init error
+*** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR': GnuTLS handshake error
+*** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': insufficient memory
 ** 'const char *ip_address': IP address found
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
@@ -4229,15 +4231,15 @@ Arguments:
 * 'tags': only messages with these tags (comma separated list) will be caught
   (optional)
 * 'message': only messages with this string will be caught (optional)
-* 'strip_colors': if == 1, colors will be stripped from message displayed,
-  before calling callback
-* 'callback': function called when message is printed, arguments:
+* 'strip_colors': if 1, colors will be stripped from message displayed, before
+  calling callback
+* 'callback': function called when a message is printed, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer pointer
 ** 'time_t date': date
 ** 'int tags_count': number of tags for line
-** 'const char **tags': tags for line
-** 'int displayed': 1 if line is displayed, 0 if it is filtered
+** 'const char **tags': array with tags for line
+** 'int displayed': 1 if line is displayed, 0 if it is filtered (hidden)
 ** 'int highlight': 1 if line has highlight, otherwise 0
 ** 'const char *prefix': prefix
 ** 'const char *message': message
@@ -4400,7 +4402,7 @@ Arguments:
   paste pending
 
 | weechat | input_search | - |
-  input search
+  text search in buffer
 
 | weechat | input_text_changed | - |
   input text changed
@@ -4464,15 +4466,15 @@ Arguments:
 |========================================
 
 [NOTE]
-^1^ 'xxx' is IRC server name, 'yyy' is IRC command name
+^1^ 'xxx' is IRC server name, 'yyy' is IRC command name.
 
 * 'callback': function called when signal is received, arguments:
 ** 'void *data': pointer
 ** 'const char *signal': signal received
 ** 'const char *type_data': type of data sent with signal:
-*** 'WEECHAT_HOOK_SIGNAL_STRING'
-*** 'WEECHAT_HOOK_SIGNAL_INT'
-*** 'WEECHAT_HOOK_SIGNAL_POINTER'
+*** 'WEECHAT_HOOK_SIGNAL_STRING': string
+*** 'WEECHAT_HOOK_SIGNAL_INT': integer number
+*** 'WEECHAT_HOOK_SIGNAL_POINTER': pointer
 ** 'void *signal_data': data sent with signal
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
@@ -4492,7 +4494,7 @@ my_signal_cb (void *data, const char *signal, const char *type_data,
     return WEECHAT_RC_OK;
 }
 
-/* catch signal "quit", sent by WeeChat when /quit command is executed */
+/* catch signal "quit" */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
                                                      &my_signal_cb, NULL);
 ----------------------------------------
@@ -4541,7 +4543,7 @@ struct t_hook *weechat_hook_config (const char *option,
 
 Arguments:
 
-* 'option': option, format is fulll name, as used with command `/set` (for
+* 'option': option, format is full name, as used with command `/set` (for
   example: `weechat.look.item_time_format`)
 * 'callback': function called when configuration option is changed, arguments:
 ** 'void *data': pointer
@@ -4596,8 +4598,13 @@ Arguments:
 ** 'const char *completion_item': name of completion item
 ** 'struct t_gui_buffer *buffer': buffer where completion is made
 ** 'struct t_gui_completion *completion': structure used to add words for
-   completion
+   completion (see <<_weechat_hook_completion_list_add>>)
 * 'callback_data': pointer given to callback when it is called by WeeChat
+
+[NOTE]
+Completion names are global (shared accross WeeChat and plugins). So it is
+recommended to choose a name with a unique prefix, like "plugin_xxx" (where
+"xxx" is your item name).
 
 Return value:
 
@@ -4619,7 +4626,7 @@ my_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_completion_hook = weechat_hook_completion ("myitem",
+struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
                                                              &my_completion_cb, NULL);
 ----------------------------------------
 
@@ -4642,31 +4649,13 @@ Arguments:
 
 * 'completion': completion pointer
 * 'word': word to add
-* 'nick_completion': 1 if word is a nick, 0 if word it not a nick
+* 'nick_completion': 1 if word is a nick, otherwise 0
 * 'where': position where word will be inserted in list:
-** 'WEECHAT_LIST_POS_SORT'
-** 'WEECHAT_LIST_POS_BEGINNING'
-** 'WEECHAT_LIST_POS_END'
+** 'WEECHAT_LIST_POS_SORT': any position, to keep list sorted
+** 'WEECHAT_LIST_POS_BEGINNING': beginning of list
+** 'WEECHAT_LIST_POS_END': end of list
 
-Example:
-
-[source,C]
-----------------------------------------
-int
-my_completion_cb (void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    weechat_hook_completion_list_add (completion, "word1",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "test_word2",
-                                      0, WEECHAT_LIST_POS_SORT);
-    return WEECHAT_RC_OK;
-}
-
-struct t_hook *my_completion_hook = weechat_hook_completion ("myitem",
-                                                             &my_completion_cb, NULL);
-----------------------------------------
+Example: see <<_weechat_hook_completion>>.
 
 weechat_hook_modifier
 ^^^^^^^^^^^^^^^^^^^^^
@@ -4693,51 +4682,61 @@ Arguments:
 |========================================
 | Plugin | Modifier | Modifier data | String | Output
 
-| charset | charset_decode | plugin.buffer_name |
+| charset | charset_decode |
+  plugin.buffer_name |
   any string |
   string decoded from charset found for plugin/buffer to UTF-8
 
-| charset | charset_encode | plugin.buffer_name |
+| charset | charset_encode |
+  plugin.buffer_name |
   any string |
   string encoded from UTF-8 to charset found for plugin/buffer
 
-| irc | irc_color_decode | "1" to keep colors, "0" to remove colors |
+| irc | irc_color_decode |
+  "1" to keep colors, "0" to remove colors |
   any string |
   string with WeeChat color codes, or without color
 
-| irc | irc_color_encode | "1" to keep colors, "0" to remove colors |
+| irc | irc_color_encode |
+  "1" to keep colors, "0" to remove colors |
   any string |
   string with IRC color codes, or without color
 
-| irc | irc_in_xxx ^1^ | server name |
+| irc | irc_in_xxx ^1^ |
+  server name |
   content of message received from IRC server |
   new content of message
 
-| irc | irc_out_xxx ^1^ | server name |
+| irc | irc_out_xxx ^1^ |
+  server name |
   content of message about to be sent to IRC server |
   new content of message
 
-| weechat | input_text_content | string with buffer pointer ("0x123..") |
+| weechat | input_text_content |
+  string with buffer pointer ("0x123..") |
   input buffer (from user) |
   new content of input buffer
 
-| weechat | input_text_display | string with buffer pointer ("0x123..") |
+| weechat | input_text_display |
+  string with buffer pointer ("0x123..") |
   input buffer (from user), without cursor tag |
   new content of input buffer, for display only (input buffer is not changed)
 
-| weechat | input_text_display_with_cursor | string with buffer pointer ("0x123..") |
+| weechat | input_text_display_with_cursor |
+  string with buffer pointer ("0x123..") |
   input buffer (from user), with cursor tag |
   new content of input buffer, for display only (input buffer is not changed)
 
-| weechat | weechat_print | plugin;buffer_name;tags |
+| weechat | weechat_print |
+  plugin;buffer_name;tags |
   message printed |
   new message printed
 |========================================
 
 [NOTE]
-^1^ 'xxx' is IRC command name
+^1^ 'xxx' is IRC command name.
 
-* 'callback': function called when modifier is received, arguments:
+* 'callback': function called when modifier is used, arguments:
 ** 'void *data': pointer
 ** 'const char *modifier': name of modifier
 ** 'const char *modifier_data': data for modifier
@@ -4801,7 +4800,7 @@ Arguments:
 
 Return value:
 
-* string modifier, NULL if no changes in string were made by modifier(s)
+* string modified, NULL if no changes in string were made by modifier(s)
 
 Example:
 
@@ -4814,7 +4813,7 @@ char *new_string = weechat_hook_modifier_exec ("my_modifier",
 weechat_hook_info
 ^^^^^^^^^^^^^^^^^
 
-Hook an information: callback will return pointer to info asked.
+Hook an information.
 
 Prototype:
 
@@ -4834,13 +4833,13 @@ Arguments:
 * 'description': description
 * 'callback': function called when info is asked, arguments:
 ** 'void *data': pointer
-** 'const char *info_name': name of info to return
+** 'const char *info_name': name of info
 ** 'const char *arguments': additional arguments, depending on info
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
 
-* content of info asked, NULL if not found
+* pointer to new hook, NULL if error occured
 
 Example:
 
@@ -4854,8 +4853,8 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 }
 
 /* add info "my_info" */
-struct t_hook *my_info = weechat_hook_info ("my_info",
-                                            "Some info about something",
+struct t_hook *my_info_hook = weechat_hook_info ("my_info",
+                                            "Some info",
                                             &my_info_cb, NULL);
 ----------------------------------------
 
@@ -4883,15 +4882,15 @@ Arguments:
 * 'description': description
 * 'callback': function called when infolist is asked, arguments:
 ** 'void *data': pointer
-** 'const char *infolist_name': name of infolist to return
-** 'void *pointer': pointer to an something infolist must return (to get only
+** 'const char *infolist_name': name of infolist
+** 'void *pointer': pointer to an object that infolist must return (to get only
    one item in infolist)
 ** 'const char *arguments': additional arguments, depending on infolist
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
 
-* pointer to infolist asked, NULL if not found
+* pointer to new hook, NULL if error occured
 
 Example:
 
@@ -4901,11 +4900,15 @@ struct t_infolist *
 my_infolist_cb (void *data, const char *infolist_name, void *pointer,
                 const char *arguments)
 {
-    /* ... build infolist ... */
+    struct t_infolist *my_infolist;
+    
+    /* build infolist */
+    /* ... */
+    
     return my_infolist;
 }
 
-/* add info "my_infolist" */
+/* add infolist "my_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
                                                     &my_infolist_cb, NULL);
@@ -4988,11 +4991,11 @@ Arguments:
 *** 'void *data': pointer
 *** 'struct t_gui_buffer *buffer': buffer pointer
 *** 'const char *input_data': input data
-* 'callback_data': pointer given to input callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat
 * 'close_callback': function called when buffer is closed, arguments:
 *** 'void *data': pointer
 *** 'struct t_gui_buffer *buffer': buffer pointer
-* 'callback_data': pointer given to close callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
 
@@ -5048,7 +5051,7 @@ weechat_printf (weechat_current_buffer (), "Text on current buffer");
 weechat_buffer_search
 ^^^^^^^^^^^^^^^^^^^^^
 
-Search a buffer by plugin and/or buffer name.
+Search a buffer by plugin and/or name.
 
 Prototype:
 
@@ -5072,7 +5075,8 @@ Example:
 
 [source,C]
 ----------------------------------------
-struct t_gui_buffer *my_buffer = weechat_buffer_search ("myplugin", "my_buffer");
+struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
+                                                        "my_buffer");
 ----------------------------------------
 
 weechat_buffer_search_main
@@ -5090,7 +5094,7 @@ struct t_gui_buffer *weechat_buffer_search_main ();
 
 Return value:
 
-* pointer to main buffer
+* pointer to WeeChat main buffer ('core' buffer)
 
 Example:
 
@@ -5119,7 +5123,8 @@ Example:
 
 [source,C]
 ----------------------------------------
-struct t_gui_buffer *my_buffer = weechat_buffer_search ("myplugin", "my_buffer");
+struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
+                                                        "my_buffer");
 if (my_buffer)
 {
     weechat_buffer_clear (my_buffer);
@@ -5156,7 +5161,9 @@ weechat_buffer_close (my_buffer);
 weechat_buffer_merge
 ^^^^^^^^^^^^^^^^^^^^
 
-Merge buffer into another buffer.
+Merge buffer into another buffer: both buffers will still exist separately, but
+with same number, and WeeChat will display lines from both buffers (mixed
+lines).
 
 Prototype:
 
@@ -5175,9 +5182,9 @@ Example:
 
 [source,C]
 ----------------------------------------
-/* merge current buffer with weechat core buffer */
+/* merge current buffer with weechat "core" buffer */
 weechat_buffer_merge (weechat_current_buffer (),
-                      weechat_buffer_search ("core", "weechat"));
+                      weechat_buffer_search_main ());
 ----------------------------------------
 
 weechat_buffer_unmerge
@@ -5203,7 +5210,6 @@ Example:
 
 [source,C]
 ----------------------------------------
-/* unmerge current buffer (to number 1 in list) */
 weechat_buffer_unmerge (weechat_current_buffer (), 1);
 ----------------------------------------
 
@@ -5224,7 +5230,7 @@ Arguments:
 
 * 'buffer': buffer pointer
 * 'property': property name:
-** 'number': number of buffer (1 to # opened buffers)
+** 'number': number of buffer (starts with 1)
 ** 'num_displayed': number of windows displaying buffer
 ** 'notify': notify level for buffer
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
@@ -5232,8 +5238,11 @@ Arguments:
 ** 'prefix_max_length': max length for prefix in this buffer
 ** 'time_for_each_line': 1 if time is displayed for each line in buffer
    (default), otherwise 0
-** 'text_search': text search type: 0 = disabled, 1 = backward, 2 = forward
-** 'text_search_exact': 1 if text search is exact (case sensitive)
+** 'text_search': text search type:
+*** 0: no search at this moment
+*** 1: backward search (direction: oldest messages)
+*** 2: forward search (direction: newest messages)
+** 'text_search_exact': 1 if text search is case sensitive
 ** 'text_search_found': 1 if text found, otherwise 0
 
 Return value:
@@ -5272,7 +5281,7 @@ Arguments:
 ** 'tilte': title of buffer
 ** 'input': input text
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
-   name of variable you want to read)
+   name of variable to read)
 
 Return value:
 
@@ -5304,9 +5313,8 @@ Arguments:
 
 * 'buffer': buffer pointer
 * 'property': property name:
-** 'plugin': name of plugin which created this buffer ("core" for WeeChat main
+** 'plugin': pointer to plugin which created this buffer (NULL for WeeChat main
    buffer)
-** 'plugin': plugin pointer
 
 Return value:
 
@@ -5348,13 +5356,12 @@ Arguments:
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority
 
-| unread | N/A |
-  set unread marker on current line for buffer
+| unread | (N/A) |
+  set unread marker after last line of buffer
 
 | display | "1", "auto" |
   "1": switch to this buffer in current window +
   "auto": switch to this buffer in current window, read marker is not reset
-  for current buffer
 
 | name | any string |
   set new name for buffer
@@ -5363,8 +5370,8 @@ Arguments:
   set new short name for buffer
 
 | type | "formatted" or "free" |
-  set type for buffer: "formatted" (for printing chat messages), or "free" for
-  free content 
+  set type for buffer: "formatted" (for printing chat messages), or "free" (for
+  free content)
 
 | notify | "0", "1", "2", "3" |
   set notify level for buffer: "0" = never add to hotlist, "1" = add for
@@ -5399,7 +5406,7 @@ Arguments:
   bind a new key 'xxx', specific to this buffer, value is command to execute
   for this key
 
-| key_unbind_xxx | N/A |
+| key_unbind_xxx | (N/A) |
   unbind key 'xxx' for this buffer
 
 | input | any string |
@@ -5414,7 +5421,7 @@ Arguments:
   set new value for local variable 'xxx' (variable is created if it does not
   exist)
 
-| localvar_del_xxx | N/A |
+| localvar_del_xxx | (N/A) |
   remove local variable 'xxx'
 |========================================
 
@@ -5431,8 +5438,8 @@ weechat_buffer_set (NULL, "hotlist", "+");
 /* change buffer name */
 weechat_buffer_set (my_buffer, "name", "my_new_name");
 
-/* add new local variable "toto" with value "my_value" */
-weechat_buffer_set (my_buffer, "localvar_set_toto", "my_value");
+/* add new local variable "toto" with value "abc" */
+weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
 /* remove local variable "toto" */
 weechat_buffer_set (my_buffer, "localvar_del_toto", NULL);
@@ -5471,13 +5478,13 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_OK;
 }
 
-weechat_buffer_set_pointer (NULL, "close_callback", &my_close_cb);
+weechat_buffer_set_pointer (my_buffer, "close_callback", &my_close_cb);
 ----------------------------------------
 
 weechat_buffer_string_replace_local_var
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Replace local variables in a string by their value, using buffer local
+Replace local variables in a string by their values, using buffer local
 variables.
 
 Prototype:
@@ -5495,17 +5502,17 @@ Arguments:
 
 Return value:
 
-* string with value for local variables
+* string with values of local variables
 
 Example:
 
 [source,C]
 ----------------------------------------
-weechat_buffer_set (my_buffer, "localvar_set_toto", "my_value");
+weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
 char *str = weechat_buffer_string_replace_local_var (my_buffer,
                                                      "test with $toto");
-/* str contains "test with my_value" */
+/* str contains "test with abc" */
 ----------------------------------------
 
 [[windows]]
@@ -5554,16 +5561,16 @@ Arguments:
 
 * 'window': window pointer
 * 'property': property name:
-** 'win_x': X position of window in terminal (0 is first column)
-** 'win_y': Y position of window in terminal (0 is first column)
+** 'win_x': X position of window in terminal (first column is 0)
+** 'win_y': Y position of window in terminal (first line is 0)
 ** 'win_width': width of window, in chars
 ** 'win_height': height of window, in chars
-** 'win_width_pct': percentage size, compared to parent window (if 50, width
-   is half)
-** 'win_height_pct': percentage size, compared to parent window (if 50, height
-   is half)
-** 'win_chat_x': X position of chat window in terminal (0 is first column)
-** 'win_chat_y': Y position of chat window in terminal (0 is first column)
+** 'win_width_pct': percentage size, compared to parent window (for example 50
+   means half size)
+** 'win_height_pct': percentage size, compared to parent window (for example 50
+   means half size)
+** 'win_chat_x': X position of chat window in terminal (first column is 0)
+** 'win_chat_y': Y position of chat window in terminal (first line is 0)
 ** 'win_chat_width': width of chat window, in chars
 ** 'win_chat_height': height of chat window, in chars
 ** 'first_line_displayed': 1 if first line of buffer is displayed on screen,
@@ -5581,15 +5588,17 @@ Example:
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
-                weechat_window_get_integer (weechat_current_window, "win_x"),
-                weechat_window_get_integer (weechat_current_window, "win_y"));
+                weechat_window_get_integer (weechat_current_window (), "win_x"),
+                weechat_window_get_integer (weechat_current_window (), "win_y"));
 ----------------------------------------
 
 weechat_window_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return string value of a window property. NOT USED TODAY, reserved for future
-version.
+Return string value of a window property.
+
+[NOTE]
+This function is not used today, it is reserved for a future version.
 
 Prototype:
 
@@ -5636,9 +5645,9 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "current window pointer is: %lx, buffer displayed is: %lx",
-                weechat_window_get_pointer (NULL, "current"),
-                weechat_window_get_integer (weechat_current_window, "buffer"));
+weechat_printf (NULL,
+                "buffer displayed in current window: %lx",
+                weechat_window_get_pointer (weechat_current_window (), "buffer"));
 ----------------------------------------
 
 [[nicklist]]
@@ -5673,19 +5682,18 @@ Arguments:
 ** '1': group and sub-groups/nicks are visible
 ** '0': group and sub-groups/nicks are hidden
 * 'color': color option name:
-*** WeeChat option name (from weechat.color.xxx), for example 'chat_delimiters'
-*** color with optional background, for example 'yellow' or 'yellow,red'
-*** bar color name:
-**** 'bar_fg': foreground color for bar
-**** 'bar_delim': delimiters color for bar
-**** 'bar_bg': background color for bar
+** WeeChat option name, for example 'weechat.color.nicklist_group'
+** color with optional background, for example 'yellow' or 'yellow,red'
+** bar color name:
+*** 'bar_fg': foreground color for bar
+*** 'bar_delim': delimiters color for bar
+*** 'bar_bg': background color for bar
 
 [NOTE]
 The group name can begin with one or more digits, followed by pipe, and then
 group name. When such string is found at beginning, it's used to sort groups
-in nicklist. For examples groups "1|test" and "2|abc" will be sorted: "test"
-first, "abc" second, whereas "test" and "abc" will be sorted: "abc" first,
-"test" second.
+in nicklist. For example groups "1|test" and "2|abc" will be displayed in that
+order: first "test" then "abc".
 
 Return value:
 
@@ -5695,10 +5703,12 @@ Example:
 
 [source,C]
 ----------------------------------------
-struct t_gui_nick_group *my_group = weechat_nicklist_add_group (my_buffer,
-                                                                my_parent_group,
-                                                                "test_group",
-                                                                "weechat.color.nicklist_group", 1);
+struct t_gui_nick_group *my_group =
+    weechat_nicklist_add_group (my_buffer,
+                                my_parent_group,
+                                "test_group",
+                                "weechat.color.nicklist_group",
+                                1);
 ----------------------------------------
 
 weechat_nicklist_search_group
@@ -6283,7 +6293,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-if (weechat_network_pass_proxy ("myproxy", sock, "irc.freenode.net", 6667))
+if (weechat_network_pass_proxy ("my_proxy", sock, "irc.freenode.net", 6667))
 {
     /* OK */
 }
@@ -6327,9 +6337,9 @@ struct sockaddr_in addr;
 socklen_t length;
 unsigned long address;
 
-memset (&amp;addr, 0, sizeof (struct sockaddr_in));
+memset (&addr, 0, sizeof (struct sockaddr_in));
 length = sizeof (addr);
-getsockname (sock, (struct sockaddr *) &amp;addr, &amp;length);
+getsockname (sock, (struct sockaddr *) &addr, &length);
 addr.sin_family = AF_INET;
 address = ntohl (addr.sin_addr.s_addr);
 
@@ -6887,10 +6897,10 @@ Example:
 
 [source,C]
 ----------------------------------------
-nt size;
-oid *pointer = weechat_infolist_buffer (infolist, "my_buffer", &amp;size);
-eechat_printf (NULL, "buffer pointer = 0x%lx, size = %d",
-               pointer, size);
+int size;
+void *pointer = weechat_infolist_buffer (infolist, "my_buffer", &size);
+weechat_printf (NULL, "buffer pointer = 0x%lx, size = %d",
+                pointer, size);
 ----------------------------------------
 
 weechat_infolist_time
