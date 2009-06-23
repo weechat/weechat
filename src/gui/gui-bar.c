@@ -29,6 +29,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
@@ -406,8 +407,10 @@ int
 gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
                                      struct t_gui_window *window)
 {
-    int i;
+    int i, rc;
+    char str_modifier[256], str_window[128], *str_displayed;
 
+    /* check bar conditions */
     for (i = 0; i < bar->conditions_count; i++)
     {
         if (string_strcasecmp (bar->conditions_array[i], "active") == 0)
@@ -427,7 +430,26 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
         }
     }
     
-    return 1;
+    /* call a modifier that will tell us if bar is displayed or not,
+       for example it can be used to display nicklist on some buffers
+       only, using a script that implements this modifier and return "1"
+       to display bar, "0" to hide it */
+    snprintf (str_modifier, sizeof (str_modifier),
+              "bar_condition_%s", bar->name);
+    snprintf (str_window, sizeof (str_window),
+              "0x%lx", (long unsigned int)(window));
+    str_displayed = hook_modifier_exec (NULL,
+                                        str_modifier,
+                                        str_window,
+                                        "");
+    if (str_displayed && strcmp (str_displayed, "0") == 0)
+        rc = 0;
+    else
+        rc = 1;
+    if (str_displayed)
+        free (str_displayed);
+    
+    return rc;
 }
 
 /*

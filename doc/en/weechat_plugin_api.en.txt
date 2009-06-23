@@ -4712,6 +4712,11 @@ Arguments:
   content of message about to be sent to IRC server |
   new content of message
 
+| weechat | bar_condition_yyy ^2^ |
+  string with window pointer ("0x123..") |
+  empty string |
+  "1" to display bar, "0" to hide it
+
 | weechat | input_text_content |
   string with buffer pointer ("0x123..") |
   input buffer (from user) |
@@ -4734,7 +4739,8 @@ Arguments:
 |========================================
 
 [NOTE]
-^1^ 'xxx' is IRC command name.
+^1^ 'xxx' is IRC command name. +
+^2^ 'yyy' is bar name.
 
 * 'callback': function called when modifier is used, arguments:
 ** 'void *data': pointer
