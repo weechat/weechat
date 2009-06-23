@@ -516,7 +516,7 @@
 * *weechat.look.save_layout_on_exit*
 ** description: sauve la disposition en quittant (tampons, fenêtres, ou les deux)
 ** type: entier
-** valeurs: none, buffers, windows, all (valeur par défaut: all)
+** valeurs: none, buffers, windows, all (valeur par défaut: none)
 
 * *weechat.look.scroll_amount*
 ** description: nombre de lignes pour le défilement avec scroll_up et scroll_down

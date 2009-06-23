@@ -233,7 +233,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                         snprintf (modes, sizeof (modes),
                                   "%s(%s%s%s)",
                                   IRC_COLOR_BAR_DELIM,
-                                  IRC_COLOR_STATUS_NAME,
+                                  IRC_COLOR_ITEM_CHANNEL_MODES,
                                   channel->modes,
                                   IRC_COLOR_BAR_DELIM);
                     }

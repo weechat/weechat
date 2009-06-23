@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-17 11:10+0200\n"
+"POT-Creation-Date: 2009-06-23 09:42+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3813,6 +3813,10 @@ msgid "color for away item"
 msgstr "color para los usuarios ausentes"
 
 #, fuzzy
+msgid "color for channel modes, near channel name"
+msgstr "color para los nombres de canal en las acciones"
+
+#, fuzzy
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
@@ -6086,10 +6090,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #, fuzzy
 #~ msgid "text color for server name in input line"
 #~ msgstr "color para el nombre del servidor"
-
-#, fuzzy
-#~ msgid "text color for channel name in input line"
-#~ msgstr "color para los nombres de canal en las acciones"
 
 #, fuzzy
 #~ msgid "text color for delimiters in input line"

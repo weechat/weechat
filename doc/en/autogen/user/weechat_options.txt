@@ -516,7 +516,7 @@
 * *weechat.look.save_layout_on_exit*
 ** description: save layout on exit (buffers, windows, or both)
 ** type: integer
-** values: none, buffers, windows, all (default value: all)
+** values: none, buffers, windows, all (default value: none)
 
 * *weechat.look.scroll_amount*
 ** description: how many lines to scroll by with scroll_up and scroll_down

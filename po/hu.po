@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-17 11:10+0200\n"
+"POT-Creation-Date: 2009-06-23 09:42+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3862,6 +3862,10 @@ msgid "color for away item"
 msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
+msgid "color for channel modes, near channel name"
+msgstr "szobanevek színe az eseményekben"
+
+#, fuzzy
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
@@ -6152,10 +6156,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy
 #~ msgid "text color for server name in input line"
 #~ msgstr "szerver nevének színe"
-
-#, fuzzy
-#~ msgid "text color for channel name in input line"
-#~ msgstr "szobanevek színe az eseményekben"
 
 #, fuzzy
 #~ msgid "text color for delimiters in input line"

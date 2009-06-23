@@ -65,6 +65,7 @@
 #define IRC_COLOR_NOTICE weechat_color(weechat_config_string(irc_config_color_notice))
 #define IRC_COLOR_INPUT_NICK weechat_color(weechat_config_string(irc_config_color_input_nick))
 #define IRC_COLOR_ITEM_AWAY weechat_color(weechat_config_string(irc_config_color_item_away))
+#define IRC_COLOR_ITEM_CHANNEL_MODES weechat_color(weechat_config_string(irc_config_color_item_channel_modes))
 #define IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick)                          \
     ((nick && weechat_config_boolean(irc_config_look_color_nicks_in_server_messages)) ? \
      nick->color : IRC_COLOR_CHAT_NICK)

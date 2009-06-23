@@ -69,6 +69,7 @@ struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
+struct t_config_option *irc_config_color_item_channel_modes;
 
 /* IRC config, network section */
 
@@ -334,6 +335,22 @@ irc_config_change_color_item_away (void *data,
     (void) option;
     
     weechat_bar_item_update ("away");
+}
+
+/*
+ * irc_config_change_color_item_channel_modes: called when the color of channel
+ *                                             modes is changed
+ */
+
+void
+irc_config_change_color_item_channel_modes (void *data,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("buffer_name");
 }
 
 /*
@@ -1241,6 +1258,12 @@ irc_config_init ()
         N_("color for away item"),
         NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
         &irc_config_change_color_item_away, NULL, NULL, NULL);
+    irc_config_color_item_channel_modes = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_channel_modes", "color",
+        N_("color for channel modes, near channel name"),
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        &irc_config_change_color_item_channel_modes, NULL, NULL, NULL);
     
     /* network */
     ptr_section = weechat_config_new_section (irc_config_file, "network",

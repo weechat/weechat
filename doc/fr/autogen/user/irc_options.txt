@@ -8,6 +8,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: yellow)
 
+* *irc.color.item_channel_modes*
+** description: couleur pour les modes du canal, à côté du nom du canal
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
 * *irc.color.message_join*
 ** description: couleur pour le texte dans les messages join
 ** type: couleur

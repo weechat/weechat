@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-17 11:10+0200\n"
+"POT-Creation-Date: 2009-06-23 09:42+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3849,6 +3849,10 @@ msgid "color for away item"
 msgstr "barva přezdívek, které jsou pryč"
 
 #, fuzzy
+msgid "color for channel modes, near channel name"
+msgstr "barva kanálu v akcích"
+
+#, fuzzy
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
@@ -6216,10 +6220,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 #, fuzzy
 #~ msgid "text color for server name in input line"
 #~ msgstr "barva pro jeméno serveru"
-
-#, fuzzy
-#~ msgid "text color for channel name in input line"
-#~ msgstr "barva kanálu v akcích"
 
 #, fuzzy
 #~ msgid "text color for delimiters in input line"
