@@ -135,8 +135,8 @@ gui_hotlist_check_buffer_notify (struct t_gui_buffer *buffer, int priority)
         case GUI_HOTLIST_LOW:
             return (buffer->notify >= 3);
         case GUI_HOTLIST_MESSAGE:
-        case GUI_HOTLIST_PRIVATE:
             return (buffer->notify >= 2);
+        case GUI_HOTLIST_PRIVATE:
         case GUI_HOTLIST_HIGHLIGHT:
             return (buffer->notify >= 1);
     }
