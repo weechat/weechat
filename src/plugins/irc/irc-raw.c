@@ -102,6 +102,11 @@ irc_raw_open (int switch_to_buffer)
             }
         }
     }
+    else
+    {
+        if (switch_to_buffer)
+            weechat_buffer_set (irc_raw_buffer, "display", "1");
+    }
 }
 
 /*
