@@ -981,6 +981,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         if (error && !error[0])
             buffer->print_hooks_enabled = (number) ? 1 : 0;
     }
+    else if (string_strcasecmp (property, "number") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0] && (number >= 1))
+            gui_buffer_move_to_number (buffer, number);
+    }
     else if (string_strcasecmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value);

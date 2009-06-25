@@ -88,8 +88,13 @@
 ** type: integer
 ** values: auto, never, always (default value: auto)
 
-* *irc.look.open_near_server*
-** description: open new channels/privates near server
+* *irc.look.open_channel_near_server*
+** description: open new channels near server
+** type: boolean
+** values: on, off (default value: off)
+
+* *irc.look.open_pv_near_server*
+** description: open new privates near server
 ** type: boolean
 ** values: on, off (default value: off)
 

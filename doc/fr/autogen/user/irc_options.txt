@@ -88,8 +88,13 @@
 ** type: entier
 ** valeurs: auto, never, always (valeur par défaut: auto)
 
-* *irc.look.open_near_server*
-** description: ouvrir les nouveaux canaux/privés près du serveur
+* *irc.look.open_channel_near_server*
+** description: ouvrir les nouveaux canaux près du serveur
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
+* *irc.look.open_pv_near_server*
+** description: ouvrir les nouveaux privés près du serveur
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
 

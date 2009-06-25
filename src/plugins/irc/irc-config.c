@@ -44,7 +44,8 @@ struct t_config_section *irc_config_section_server = NULL;
 
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_server_buffer;
-struct t_config_option *irc_config_look_open_near_server;
+struct t_config_option *irc_config_look_open_channel_near_server;
+struct t_config_option *irc_config_look_open_pv_near_server;
 struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
@@ -1116,10 +1117,15 @@ irc_config_init ()
         "merge_with_core|merge_without_core|independent", 0, 0, "merge_with_core",
         NULL, 0, NULL, NULL,
         &irc_config_change_look_server_buffer, NULL, NULL, NULL);
-    irc_config_look_open_near_server = weechat_config_new_option (
+    irc_config_look_open_channel_near_server = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "open_near_server", "boolean",
-        N_("open new channels/privates near server"),
+        "open_channel_near_server", "boolean",
+        N_("open new channels near server"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_open_pv_near_server = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "open_pv_near_server", "boolean",
+        N_("open new privates near server"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_nick_prefix = weechat_config_new_option (
         irc_config_file, ptr_section,

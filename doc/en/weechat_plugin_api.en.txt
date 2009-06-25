@@ -5369,6 +5369,9 @@ Arguments:
   "1": switch to this buffer in current window +
   "auto": switch to this buffer in current window, read marker is not reset
 
+| number | number |
+  move buffer to this number
+
 | name | any string |
   set new name for buffer
 

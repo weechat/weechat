@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-23 09:42+0200\n"
+"POT-Creation-Date: 2009-06-25 10:20+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3766,7 +3766,12 @@ msgstr "získat lokální čas ze serveru"
 msgid "merge server buffers"
 msgstr "řídit buffery"
 
-msgid "open new channels/privates near server"
+#, fuzzy
+msgid "open new channels near server"
+msgstr "otevřít nový kanál/soukromý rozhovor poblíž serveru"
+
+#, fuzzy
+msgid "open new privates near server"
 msgstr "otevřít nový kanál/soukromý rozhovor poblíž serveru"
 
 msgid "text to display before nick in chat window"
@@ -5700,10 +5705,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "use same buffer for all servers"
 #~ msgstr "pužít stejný buffer pro všechny servery"
-
-#, fuzzy
-#~ msgid "open new MUCs/privates near server"
-#~ msgstr "otevřít nový kanál/soukromý rozhovor poblíž serveru"
 
 #~ msgid "smart completion for nicks (completes with last speakers first)"
 #~ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"

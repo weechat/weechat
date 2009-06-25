@@ -61,6 +61,72 @@ irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
+ * irc_channel_move_near_server: move new channel/pv buffer near server
+ */
+
+void
+irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
+                              struct t_gui_buffer *buffer)
+{
+    int number, number_channel, number_last_channel, number_last_private;
+    int number_found;
+    char str_number[32];
+    struct t_irc_channel *ptr_channel;
+    
+    number = weechat_buffer_get_integer (buffer, "number");
+    number_last_channel = 0;
+    number_last_private = 0;
+    number_found = 0;
+    
+    if (server->channels)
+    {
+        /* search last channel/pv number for server */
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->buffer)
+            {
+                number_channel = weechat_buffer_get_integer (ptr_channel->buffer,
+                                                             "number");
+                switch (ptr_channel->type)
+                {
+                    case IRC_CHANNEL_TYPE_CHANNEL:
+                        if (number_channel > number_last_channel)
+                            number_last_channel = number_channel;
+                        break;
+                    case IRC_CHANNEL_TYPE_PRIVATE:
+                        if (number_channel > number_last_private)
+                            number_last_private = number_channel;
+                        break;
+                }
+            }
+        }
+        
+        /* use last channel/pv number + 1 */
+        switch (channel_type)
+        {
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                if (number_last_channel > 0)
+                    number_found = number_last_channel + 1;
+                break;
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (number_last_private > 0)
+                    number_found = number_last_private + 1;
+                else if (number_last_channel > 0)
+                    number_found = number_last_channel + 1;
+                break;
+        }
+        
+        /* switch to number found */
+        if ((number_found >= 1) && (number_found != number))
+        {
+            snprintf (str_number, sizeof (str_number), "%d", number_found);
+            weechat_buffer_set (buffer, "number", str_number);
+        }
+    }
+}
+
+/*
  * irc_channel_new: allocate a new channel for a server and add it to channels
  *                  list
  */
@@ -99,6 +165,13 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         {
             free (new_channel);
             return NULL;
+        }
+        if (((channel_type == IRC_CHANNEL_TYPE_CHANNEL)
+             && weechat_config_boolean (irc_config_look_open_channel_near_server))
+            || ((channel_type == IRC_CHANNEL_TYPE_PRIVATE)
+                && weechat_config_boolean (irc_config_look_open_pv_near_server)))
+        {
+            irc_channel_move_near_server (server, channel_type, new_buffer);
         }
         buffer_created = 1;
     }

@@ -62,7 +62,8 @@ extern struct t_config_section *irc_config_section_server;
 
 extern struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 extern struct t_config_option *irc_config_look_server_buffer;
-extern struct t_config_option *irc_config_look_open_near_server;
+extern struct t_config_option *irc_config_look_open_channel_near_server;
+extern struct t_config_option *irc_config_look_open_pv_near_server;
 extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;
 extern struct t_config_option *irc_config_look_nick_completion_smart;

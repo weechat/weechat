@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-23 09:42+0200\n"
+"POT-Creation-Date: 2009-06-25 10:20+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3732,7 +3732,12 @@ msgstr "pedir la hora local del servidor"
 msgid "merge server buffers"
 msgstr "gestionar los bÃºfers"
 
-msgid "open new channels/privates near server"
+#, fuzzy
+msgid "open new channels near server"
+msgstr "abrir nuevos canales/privados cerca del servidor"
+
+#, fuzzy
+msgid "open new privates near server"
 msgstr "abrir nuevos canales/privados cerca del servidor"
 
 msgid "text to display before nick in chat window"
@@ -5632,10 +5637,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "use same buffer for all servers"
 #~ msgstr "usar el mismo bÃºfer para todos los servidores"
-
-#, fuzzy
-#~ msgid "open new MUCs/privates near server"
-#~ msgstr "abrir nuevos canales/privados cerca del servidor"
 
 #, fuzzy
 #~ msgid ""
