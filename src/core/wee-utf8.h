@@ -50,6 +50,6 @@ extern int utf8_char_size_screen (const char *string);
 extern char *utf8_add_offset (const char *string, int offset);
 extern int utf8_real_pos (const char *string, int pos);
 extern int utf8_pos (const char *string, int real_pos);
-extern char *utf8_strndup (const char *string, int max_chars);
+extern char *utf8_strndup (const char *string, int length);
 
 #endif /* wee-utf8.h */

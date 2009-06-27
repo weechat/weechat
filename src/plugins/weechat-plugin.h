@@ -187,7 +187,7 @@ struct t_weechat_plugin
     char *(*utf8_add_offset) (const char *string, int offset);
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
-    char *(*utf8_strndup) (const char *string, int max_chars);
+    char *(*utf8_strndup) (const char *string, int length);
     
     /* directories */
     int (*mkdir_home) (const char *directory, int mode);
@@ -743,6 +743,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->utf8_real_pos(__string, __pos)
 #define weechat_utf8_pos(__string, __real_pos)                          \
     weechat_plugin->utf8_pos(__string, __real_pos)
+#define weechat_utf8_strndup(__string, __length)                        \
+    weechat_plugin->utf8_strndup(__string, __length)
 
 /* directories */
 #define weechat_mkdir_home(__directory, __mode)                         \

@@ -129,7 +129,7 @@ Load plugin
 
 Copy file 'libtoto.so' into system plugins directory (for example
 '/usr/local/lib/weechat/plugins') or into user's plugins directory (for example
-'/home/xxxxx/.weechat/plugins').
+'/home/xxx/.weechat/plugins').
 
 Under WeeChat:
 
@@ -662,7 +662,8 @@ Example:
 
 [source,C]
 ----------------------------------------
-char *str = weechat_string_remove_quotes (string, " 'abc' ", "'"); /* result: "abc" */
+char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
+/* result: "I can't" */
 /* ... */
 free (str);
 ----------------------------------------
@@ -1425,19 +1426,19 @@ int pos = weechat_utf8_pos ("chêne", 4); /* == 3 */
 weechat_utf8_strndup
 ^^^^^^^^^^^^^^^^^^^^
 
-Return duplicate string, with max N chars.
+Return duplicate string, with 'length' chars max.
 
 Prototype:
 
 [source,C]
 ----------------------------------------
-char *weechat_utf8_strndup (const char *string, int max_chars);
+char *weechat_utf8_strndup (const char *string, int length);
 ----------------------------------------
 
 Arguments:
 
 * 'string': string
-* 'max_chars': max chars
+* 'length': max chars to duplicate
 
 Return value:
 
@@ -3390,8 +3391,8 @@ const char *weechat_config_get_plugin (const char *option_name);
 
 Arguments:
 
-* 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where "xxxx" is current plugin name)
+* 'option_name': option name, WeeChat will add prefix "plugins.var.xxx."
+  (where "xxx" is current plugin name)
 
 Return value:
 
@@ -3420,8 +3421,8 @@ int weechat_config_is_set_plugin (const char *option_name);
 
 Arguments:
 
-* 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where "xxxx" is current plugin name)
+* 'option_name': option name, WeeChat will add prefix "plugins.var.xxx."
+  (where "xxx" is current plugin name)
 
 Return value:
 
@@ -3455,8 +3456,8 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
 
 Arguments:
 
-* 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where "xxxx" is current plugin name)
+* 'option_name': option name, WeeChat will add prefix "plugins.var.xxx."
+  (where "xxx" is current plugin name)
 * 'value': new value for option
 
 Return value:
@@ -3501,8 +3502,8 @@ int weechat_config_unset_plugin (const char *option_name);
 
 Arguments:
 
-* 'option_name': option name, WeeChat will add prefix "plugins.var.xxxx."
-  (where xxxx is current plugin name)
+* 'option_name': option name, WeeChat will add prefix "plugins.var.xxx."
+  (where xxx is current plugin name)
 
 Return value:
 
@@ -4934,7 +4935,7 @@ void weechat_unhook (struct t_hook *hook);
 
 Arguments:
 
-* 'hook': something hooked with "weechat_hook_xxxx()"
+* 'hook': something hooked with "weechat_hook_xxx()"
 
 Example:
 
@@ -6015,7 +6016,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-eechat_bar_item_update ("myitem");
+weechat_bar_item_update ("myitem");
 ----------------------------------------
 
 weechat_bar_item_remove
@@ -6027,7 +6028,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-oid weechat_bar_item_remove (struct t_gui_bar_item *item);
+void weechat_bar_item_remove (struct t_gui_bar_item *item);
 ----------------------------------------
 
 Arguments:
@@ -6099,15 +6100,15 @@ Arguments:
 * 'name': bar name
 * 'hidden':
 ** 'on': bar is hidden
-** 'off': bas is visible
+** 'off': bar is visible
 * 'priority': bar priority (integer)
 * 'type':
 ** 'root': bar displayed once, outside windows
 ** 'window': bar displayed in each window
-* 'condition': condition for displaying bar, one of following:
+* 'condition': condition for displaying bar:
 ** 'active': bar is displayed in active window only
-** 'inactive': bar is displayed in inactive window(s) only
-** 'nicklist': bar is displayed in window(s) with nicklist
+** 'inactive': bar is displayed in inactive windows only
+** 'nicklist': bar is displayed in windows with nicklist
 * 'position': 'top', 'bottom', 'left' or 'right'
 * 'filling_top_bottom':
 ** 'horizontal': items are filled horizontally (space after each item)
@@ -6255,8 +6256,8 @@ Arguments:
 
 * 'buffer': buffer pointer (command is executed on this buffer, use NULL for
   WeeChat core buffer)
-* 'command': command to execute (if beginning with a "/"), or text is sent to
-  buffer (without leading "/")
+* 'command': command to execute (if beginning with a "/"), or text to send to
+  buffer
 
 Example:
 
@@ -6291,7 +6292,7 @@ Arguments:
 
 * 'proxy': proxy name to use
 * 'sock': socket to use
-* 'address': address (hostname or IP)
+* 'address': address (hostname or IP address)
 * 'port': port
 
 Return value:
@@ -6331,7 +6332,7 @@ Arguments:
 
 * 'proxy': proxy name to use
 * 'sock': socket to use
-* 'address': address (hostname or IP)
+* 'address': address
 * 'port': port
 
 Return value:
@@ -6499,7 +6500,8 @@ Example:
 [source,C]
 ----------------------------------------
 struct t_infolist_var *var = weechat_infolist_new_variable_integer (item,
-                                                                    "my_integer", 123);
+                                                                    "my_integer",
+                                                                    123);
 ----------------------------------------
 
 weechat_infolist_new_var_string
@@ -6531,7 +6533,8 @@ Example:
 [source,C]
 ----------------------------------------
 struct t_infolist_var *var = weechat_infolist_new_variable_integer (item,
-                                                                    "my_string", "value");
+                                                                    "my_string",
+                                                                    "value");
 ----------------------------------------
 
 weechat_infolist_new_var_pointer
@@ -6563,7 +6566,8 @@ Example:
 [source,C]
 ----------------------------------------
 struct t_infolist_var *var = weechat_infolist_new_variable_pointer (item,
-                                                                    "my_pointer", &something);
+                                                                    "my_pointer",
+                                                                    &something);
 ----------------------------------------
 
 weechat_infolist_new_var_buffer
@@ -6598,8 +6602,10 @@ Example:
 ----------------------------------------
 char buffer[256];
 /* ... */
-struct t_infolist_var *var = weechat_infolist_new_variable_buffer (item, "my_buffer",
-                                                                   &buffer, sizeof (buffer));
+struct t_infolist_var *var = weechat_infolist_new_variable_buffer (item,
+                                                                   "my_buffer",
+                                                                   &buffer,
+                                                                   sizeof (buffer));
 ----------------------------------------
 
 weechat_infolist_new_var_time
@@ -6631,7 +6637,8 @@ Example:
 [source,C]
 ----------------------------------------
 struct t_infolist_var *var = weechat_infolist_new_variable_time (item,
-                                                                 "my_time", time (NULL));
+                                                                 "my_time",
+                                                                 time (NULL));
 ----------------------------------------
 
 weechat_infolist_get
@@ -6687,7 +6694,7 @@ Arguments:
 
 Return value:
 
-* 1 if pointer is now on next item, 0 if end of list was reached
+* 1 if cursor has been moved on next item, 0 if end of list was reached
 
 Example:
 
@@ -6722,7 +6729,8 @@ Arguments:
 
 Return value:
 
-* 1 if pointer is now on previous item, 0 if beginning of list was reached
+* 1 if cursor has been moved on previous item, 0 if beginning of list was
+  reached
 
 Example:
 
@@ -6817,7 +6825,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "integer value = %d",
+weechat_printf (NULL, "integer = %d",
                 weechat_infolist_integer (infolist, "my_integer"));
 ----------------------------------------
 
@@ -6846,7 +6854,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "string value = %s",
+weechat_printf (NULL, "string = %s",
                 weechat_infolist_string (infolist, "my_string"));
 ----------------------------------------
 
@@ -6875,7 +6883,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "pointer value = 0x%lx",
+weechat_printf (NULL, "pointer = 0x%lx",
                 weechat_infolist_pointer (infolist, "my_pointer"));
 ----------------------------------------
 
@@ -6908,7 +6916,7 @@ Example:
 ----------------------------------------
 int size;
 void *pointer = weechat_infolist_buffer (infolist, "my_buffer", &size);
-weechat_printf (NULL, "buffer pointer = 0x%lx, size = %d",
+weechat_printf (NULL, "buffer = 0x%lx, size = %d",
                 pointer, size);
 ----------------------------------------
 
@@ -6937,7 +6945,7 @@ Example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "time value = 0x%ld",
+weechat_printf (NULL, "time = 0x%ld",
                 weechat_infolist_time (infolist, "my_time"));
 ----------------------------------------
 
@@ -6968,7 +6976,7 @@ weechat_infolist_free (infolist);
 Upgrade
 ~~~~~~~
 
-Functions for upgrading WeeChat.
+Functions for upgrading WeeChat (command "/upgrade").
 
 weechat_upgrade_new
 ^^^^^^^^^^^^^^^^^^^
@@ -6992,7 +7000,7 @@ Arguments:
 
 Return value:
 
-* pointer to new upgrade file
+* pointer to upgrade file
 
 Example:
 

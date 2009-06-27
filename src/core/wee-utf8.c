@@ -562,17 +562,17 @@ utf8_pos (const char *string, int real_pos)
  */
 
 char *
-utf8_strndup (const char *string, int max_chars)
+utf8_strndup (const char *string, int length)
 {
     const char *end;
     
-    if (!string || (max_chars < 0))
+    if (!string || (length < 0))
         return NULL;
     
-    if (max_chars == 0)
+    if (length == 0)
         return strdup ("");
     
-    end = utf8_add_offset (string, max_chars);
+    end = utf8_add_offset (string, length);
     if (!end || (end == string))
         return strdup (string);
 
