@@ -3753,7 +3753,7 @@ int
 irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
-    char *pos_channel, *pos_nick;
+    char *pos_channel, *pos_nick, *pos_host, *nick;
     const char *color;
     int args, i, prefix_found;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
@@ -3841,19 +3841,28 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
         }
         if (ptr_channel && ptr_channel->nicks)
         {
-            if (!irc_nick_new (server, ptr_channel, pos_nick,
-                               is_chanowner, is_chanadmin, is_chanadmin2,
-                               is_op, is_halfop, has_voice, is_chanuser, 0))
+            pos_host = strchr (pos_nick, '!');
+            if (pos_host)
+                nick = weechat_strndup (pos_nick, pos_host - pos_nick);
+            else
+                nick = strdup (pos_nick);
+            if (nick)
             {
-                weechat_printf (server->buffer,
-                                _("%s%s: cannot create nick \"%s\" "
-                                  "for channel \"%s\""),
-                                weechat_prefix ("error"),
-                                IRC_PLUGIN_NAME, pos_nick, ptr_channel->name);
+                if (!irc_nick_new (server, ptr_channel, nick,
+                                   is_chanowner, is_chanadmin, is_chanadmin2,
+                                   is_op, is_halfop, has_voice, is_chanuser, 0))
+                {
+                    weechat_printf (server->buffer,
+                                    _("%s%s: cannot create nick \"%s\" "
+                                      "for channel \"%s\""),
+                                    weechat_prefix ("error"),
+                                    IRC_PLUGIN_NAME, nick, ptr_channel->name);
+                }
+                free (nick);
             }
         }
     }
-
+    
     if (!ptr_channel)
     {
         weechat_printf_tags (server->buffer,
