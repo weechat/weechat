@@ -41,7 +41,7 @@ Some things are specific to languages:
    keyword)
 ** functions are called with `weechat.xxx(arg1, arg2, ...)`
 * ruby:
-** you have to define 'weechat_init' and call register inside
+** you have to define 'weechat_init' and call 'register' inside
 ** functions are called with `Weechat.xxx(arg1, arg2, ...)`
 * tcl:
 ** functions are called with `weechat::xxx arg1 arg2 ...`
@@ -396,7 +396,7 @@ For example, to print data on core buffer (WeeChat main buffer), you can do:
 
 [source,python]
 ----------------------------------------
-weechat.prnt("", "hey!")
+weechat.prnt("", "hi!")
 ----------------------------------------
 
 [WARNING]
@@ -417,10 +417,10 @@ For example:
 
 [source,python]
 ----------------------------------------
-weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data!")
+weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data")
 
 def my_timer_cb(data, remaining_calls):
-    # this will display: "my data!"
+    # this will display: "my data"
     weechat.prnt("", data)
     return weechat.WEECHAT_RC_OK
 ----------------------------------------

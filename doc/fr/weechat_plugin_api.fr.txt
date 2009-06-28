@@ -119,7 +119,7 @@ Compilation de l'extension
 La compilation ne nécessite pas les sources de WeeChat, seul le fichier
  'weechat-plugin.h' est requis.
 
-Pour compiler l'extension qui n'a qu'un fichier "toto.c" (sous GNU/Linux):
+Pour compiler l'extension qui n'a qu'un fichier "toto.c" (sous GNU/Linux) :
 
 ----------------------------------------
 $ gcc -fPIC -Wall -c toto.c
@@ -3873,7 +3873,7 @@ Paramètres :
   complétions sont possibles pour un paramètre, séparées par "|". Plusieurs
   modèles de complétions sont possibles pour une même commande, séparés par
   "||". Les codes complétions par défaut sont :
-include ::autogen/plugin_api/completions.txt[]
+include::autogen/plugin_api/completions.txt[]
 ** codes spéciaux :
 *** '%%command' : réutiliser le modèle de complétion de la commande 'command'
 *** '%-' : arrêter la complétion
@@ -4121,7 +4121,7 @@ struct t_hook *weechat_hook_process (const char *command,
 Paramètres :
 
 * 'command' : commande à lancer dans le processus fils
-* 'timeout' : timeout pour la commande (en millisecondes): après ce délai, le
+* 'timeout' : timeout pour la commande (en millisecondes) : après ce délai, le
   processus fils est tué (0 signifie pas de limite)
 * 'callback' : function appelée quand des données du fils sont disponibles, or
   ou quand le fils s'est terminé, paramètres :
@@ -5452,9 +5452,9 @@ Paramètres :
 
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
-  "+": active la hotlist (option globale, le pointeur vers le tampon n'est pas
+  "+" : active la hotlist (option globale, le pointeur vers le tampon n'est pas
   utilisé) +
-  "-": désactive la hotlist (option globale, le pointeur vers le tampon n'est
+  "-" : désactive la hotlist (option globale, le pointeur vers le tampon n'est
   pas utilisé) +
   priorité : ajouter ce tampon dans la hotlist avec cette priorité
 
@@ -5462,8 +5462,8 @@ Paramètres :
   définit le marqueur de données non lues après la dernière ligne du tampon
 
 | display | "1", "auto" |
-  "1": basculer vers ce tampon dans la fenêtre active +
-  "auto": basculer vers ce tampon dans la fenêtre active, le marqueur de
+  "1" : basculer vers ce tampon dans la fenêtre active +
+  "auto" : basculer vers ce tampon dans la fenêtre active, le marqueur de
   données non lues n'est pas réinitialisé
 
 | number | numéro |
@@ -5707,7 +5707,7 @@ Exemple :
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "la fenêtre courante est en position (x,y): (%d,%d)",
+weechat_printf (NULL, "la fenêtre courante est en position (x,y) : (%d,%d)",
                 weechat_window_get_integer (weechat_current_window (), "win_x"),
                 weechat_window_get_integer (weechat_current_window (), "win_y"));
 ----------------------------------------
@@ -5814,7 +5814,7 @@ Paramètres :
 Le nom du groupe peut commencer par un ou plusieurs chiffres, suivis d'un pipe
 ("|"), puis du nom du groupe. Quand une telle chaîne est trouvée au début, elle
 est utilisée pour trier les groupes dans la liste des pseudos. Par exemple les
-groupes "1|test" et "2|abc" seront affichés dans cet ordre: "test" en premier,
+groupes "1|test" et "2|abc" seront affichés dans cet ordre : "test" en premier,
 puis "abc" en second.
 
 Valeur de retour :
@@ -6508,7 +6508,7 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 Paramètres :
 
 * 'info_name' : nom de l'information à lire :
-include ::autogen/plugin_api/infos.txt[]
+include::autogen/plugin_api/infos.txt[]
 * 'arguments' : paramètres pour l'information demandée (optionnels, NULL si
   aucun paramètre n'est nécessaire)
 
@@ -6784,7 +6784,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 Paramètres :
 
 * 'infolist_name' : nom de l'infolist à lire :
-include ::autogen/plugin_api/infolists.txt[]
+include::autogen/plugin_api/infolists.txt[]
 * 'pointer' : pointeur vers un objet, pour n'obtenir que celui-ci dans
   l'infolist (optionnel, peut être NULL)
 * 'arguments' : paramètres pour l'infolist demandée (optionnels, NULL si aucun

@@ -1,0 +1,435 @@
+WeeChat Guide pour Scripts
+==========================
+FlashCode <flashcode@flashtux.org>
+
+
+Ce manuel documente le client de messagerie instantanée WeeChat, il fait
+partie de WeeChat.
+
+La dernière version de ce document peut être téléchargée sur cette page :
+http://weechat.flashtux.org/doc.php
+
+
+[[introduction]]
+Introduction
+------------
+
+WeeChat (Wee Enhanced Environment for Chat) est un client de discussion libre,
+rapide et léger, conçu pour différents systèmes d'exploitation.
+
+Ce manuel documente la façon d'écrire des scripts pour WeeChat, en utilisant
+l'un des cinq langages de script supportés : perl, python, ruby, lua ou tcl.
+
+[NOTE]
+La majorité des exemples de cette documentation sont écrits en Python, mais
+l'API est la même pour les autres langages.
+
+[[scripts_in_weechat]]
+Scripts dans WeeChat
+--------------------
+
+[[languages_specifities]]
+Spécificités des langages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Quelques choses sont spécifiques aux langages :
+
+* perl :
+** les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`
+* python :
+** vous devez utiliser `import weechat`
+** les fonctions `print*` se nomment `prnt*` en python (car 'print' est un mot
+   clé réservé)
+** les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+* ruby :
+** vous devez définir 'weechat_init' et appeler 'register' dedans
+** les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`
+* tcl :
+** les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`
+
+[[register]]
+Register
+~~~~~~~~
+
+Tous les scripts WeeChat doivent s'enregistrer ("register") auprès de WeeChat,
+et cela doit être la première fonction WeeChat appelée dans le script.
+
+Prorotype :
+
+[source,python]
+----------------------------------------
+weechat.register(name, author, version, license, description, shutdown_function, charset)
+----------------------------------------
+
+Paramètres :
+
+* 'name' : chaîne, nom interne du script
+* 'author' : chaîne, nom de l'auteur
+* 'version' : chaîne, version du script
+* 'license' : chaîne, licence du script
+* 'description' : chaîne, description courte du script
+* 'shutdown_function' : chaîne, nom de la fonction appelée lorsque le script
+  est déchargé
+* 'charset' : chaîne, jeu de caractères du script (optionnel, si votre script
+  est UTF-8, vous pouvez utiliser une valeur vide ici, car UTF-8 est le jeu de
+  caractères par défaut)
+
+[[script_example]]
+Exemple de script
+~~~~~~~~~~~~~~~~~
+
+Exemple de script, pour chaque langage :
+
+* perl :
+
+[source,perl]
+----------------------------------------
+weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Script de test", "", "");
+weechat::print("", "Bonjour, du script perl !");
+----------------------------------------
+
+* python :
+
+[source,python]
+----------------------------------------
+import weechat
+
+weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
+weechat.prnt("", "Bonjour, du script python !")
+----------------------------------------
+
+* ruby :
+
+[source,ruby]
+----------------------------------------
+def weechat_init
+  Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
+  Weechat.print("", "Bonjour, du script ruby !")
+  return Weechat::WEECHAT_RC_OK
+end
+----------------------------------------
+
+* lua :
+
+[source,lua]
+----------------------------------------
+weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
+weechat.print("", "Bonjour, du script lua !")
+----------------------------------------
+
+* tcl :
+
+// [source,tcl]
+----------------------------------------
+weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Script de test" "" ""
+weechat::print "" "Bonjour, du script tcl !"
+----------------------------------------
+
+[[load_script]]
+Chargement du script
+~~~~~~~~~~~~~~~~~~~~
+
+Vous devez utiliser la commande, dépendant du langage :
+
+----------------------------------------
+/perl load perl/script.pl
+/python load python/script.py
+/ruby load ruby/script.rb
+/lua load lua/script.lua
+/tcl load tcl/script.tcl
+----------------------------------------
+
+Vous pouvez faire un lien dans le répertoire 'langage/autoload' pour charger
+automatiquement le script quand WeeChat démarre.
+
+Par exemple en perl :
+
+----------------------------------------
+$ cd ~/.weechat/perl/autoload
+$ ln -s ../script.pl
+----------------------------------------
+
+[[script_api]]
+API script
+----------
+
+L'API script est quasiment identique à l'API C.
+Vous pouvez consulter la 'Référence API Extension WeeChat' pour le détail de
+chaque fonction de l'API : prototype, paramètres, valeurs de retour, exemples.
+
+Il est important de bien faire la différence entre une 'extension' et un
+'script' : une 'extension' est un fichier binaire compilé et chargé avec la
+commande `/plugin`, tandis qu'un 'script' est un fichier texte chargé par une
+extension comme 'perl' par la commande `perl`.
+
+Quand cotre script 'test.py' appelle une fonction de l'API WeeChat, le chemin
+est le suivant :
+
+........................................
+       (API script)                              (API C)
+            \/                                      \/
+test.py  ------->  extension python (python.so)  ------->  WeeChat core
+........................................
+
+Quand WeeChat appelle un "callabck" dans votre script 'test.py', le chemin
+est inversé :
+
+........................................
+              (API C)                               (API script)
+                 \/                                      \/
+WeeChat core  ------->  extension plugin (python.so)  ------->  test.py
+........................................
+
+Fonctions
+~~~~~~~~~
+
+Liste des fonctions de l'API script :
+
+* général :
+** 'register'
+* extensions :
+** 'plugin_get_name'
+* chaînes :
+** 'charset_set'
+** 'iconv_to_internal'
+** 'iconv_from_internal'
+** 'gettext'
+** 'ngettext'
+** 'string_remove_color'
+* répertoires :
+** 'mkdir_home'
+** 'mkdir'
+** 'mkdir_parents'
+* listes triées :
+** 'list_new'
+** 'list_add'
+** 'list_search'
+** 'list_casesearch'
+** 'list_get'
+** 'list_set'
+** 'list_next'
+** 'list_prev'
+** 'list_string'
+** 'list_size'
+** 'list_remove'
+** 'list_remove_all'
+** 'list_free'
+* fichiers de configuration :
+** 'config_new'
+** 'config_new_section'
+** 'config_search_section'
+** 'config_new_option'
+** 'config_search_option'
+** 'config_string_to_boolean'
+** 'config_option_reset'
+** 'config_option_set'
+** 'config_option_set_null'
+** 'config_option_unset'
+** 'config_option_rename'
+** 'config_option_is_null'
+** 'config_option_default_is_null'
+** 'config_boolean'
+** 'config_boolean_default'
+** 'config_integer'
+** 'config_integer_default'
+** 'config_string'
+** 'config_string_default'
+** 'config_color'
+** 'config_color_default'
+** 'config_write_option'
+** 'config_write_line'
+** 'config_write'
+** 'config_read'
+** 'config_reload'
+** 'config_option_free'
+** 'config_section_free_options'
+** 'config_section_free'
+** 'config_free'
+** 'config_get'
+** 'config_get_plugin'
+** 'config_is_set_plugin'
+** 'config_set_plugin'
+** 'config_unset_plugin'
+* affichage :
+** 'prefix'
+** 'color'
+** 'print' (pour python : 'prnt')
+** 'print_date_tags' (pour python : 'prnt_date_tags')
+** 'print_y' (pour python : 'prnt_y')
+** 'log_print'
+* hooks :
+** 'hook_command'
+** 'hook_command_run'
+** 'hook_timer'
+** 'hook_fd'
+** 'hook_process'
+** 'hook_connect'
+** 'hook_print'
+** 'hook_signal'
+** 'hook_signal_send'
+** 'hook_config'
+** 'hook_completion'
+** 'hook_completion_list_add'
+** 'hook_modifier'
+** 'hook_modifier_exec'
+** 'hook_info'
+** 'hook_infolist'
+** 'unhook'
+** 'unhook_all'
+* tampons :
+** 'buffer_new'
+** 'buffer_search'
+** 'current_buffer'
+** 'buffer_clear'
+** 'buffer_close'
+** 'buffer_get_integer'
+** 'buffer_get_string'
+** 'buffer_get_pointer'
+** 'buffer_set'
+* fenêtres :
+** 'current_window'
+** 'window_get_integer'
+** 'window_get_string'
+** 'window_get_pointer'
+** 'window_set_title'
+* liste des pseudos :
+** 'nicklist_add_group'
+** 'nicklist_search_group'
+** 'nicklist_add_nick'
+** 'nicklist_search_nick'
+** 'nicklist_remove_group'
+** 'nicklist_remove_nick'
+** 'nicklist_remove_all'
+* barres :
+** 'bar_item_search'
+** 'bar_item_new'
+** 'bar_item_update'
+** 'bar_item_remove'
+** 'bar_search'
+** 'bar_new'
+** 'bar_set'
+** 'bar_update'
+** 'bar_remove'
+* commandes :
+** 'command'
+* infos :
+** 'info_get'
+* infolists :
+** 'infolist_new'
+** 'infolist_new_var_integer'
+** 'infolist_new_var_string'
+** 'infolist_new_var_pointer'
+** 'infolist_new_var_time'
+** 'infolist_get'
+** 'infolist_next'
+** 'infolist_prev'
+** 'infolist_fields'
+** 'infolist_integer'
+** 'infolist_string'
+** 'infolist_pointer'
+** 'infolist_time'
+** 'infolist_free'
+* mise à jour :
+** 'upgrade_new'
+** 'upgrade_write_object'
+** 'upgrade_read'
+** 'upgrade_close'
+
+Constantes
+~~~~~~~~~~
+
+Liste des constantes de l'API script :
+
+* 'WEECHAT_RC_OK'
+* 'WEECHAT_RC_OK_EAT'
+* 'WEECHAT_RC_ERROR'
+* 'WEECHAT_CONFIG_READ_OK'
+* 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+* 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
+* 'WEECHAT_CONFIG_WRITE_OK'
+* 'WEECHAT_CONFIG_WRITE_ERROR'
+* 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
+* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
+* 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
+* 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
+* 'WEECHAT_LIST_POS_SORT'
+* 'WEECHAT_LIST_POS_BEGINNING'
+* 'WEECHAT_LIST_POS_END'
+* 'WEECHAT_HOTLIST_LOW'
+* 'WEECHAT_HOTLIST_MESSAGE'
+* 'WEECHAT_HOTLIST_PRIVATE'
+* 'WEECHAT_HOTLIST_HIGHLIGHT'
+* 'WEECHAT_HOOK_PROCESS_RUNNING'
+* 'WEECHAT_HOOK_PROCESS_ERROR'
+* 'WEECHAT_HOOK_CONNECT_OK'
+* 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND'
+* 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND'
+* 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED'
+* 'WEECHAT_HOOK_CONNECT_PROXY_ERROR'
+* 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR'
+* 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR'
+* 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR'
+* 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR'
+* 'WEECHAT_HOOK_SIGNAL_STRING'
+* 'WEECHAT_HOOK_SIGNAL_INT'
+* 'WEECHAT_HOOK_SIGNAL_POINTER'
+
+Différences avec l'API C
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pointeurs
+^^^^^^^^^
+
+Comme vous le savez probablement, il n'y a pas vraiment de "pointeurs" dans les
+scripts. Donc quand les fonctions de l'API retournent un pointeur, il est
+converti en chaîne pour le script.
+
+Par exemple, si une fonction retourne le pointeur 0x1234ab56, le script recevra
+la chaîne "0x1234ab56".
+
+Et quand une fonction de l'API attend un pointeur dans ses paramètres, le
+script doit envoyer cette valeur sous forme de chaîne. L'extension C la
+convertira en pointeur réel avant d'appeler la fonction de l'API C.
+
+Une chaîne vide ou "0x0" sont autorisées, cela signifie le pointeur NULL en C.
+Par exemple, pour afficher un message sur le tampon core (tampon principal
+WeeChat), vous pouvez faire :
+
+[source,python]
+----------------------------------------
+weechat.prnt("", "bonjour !")
+----------------------------------------
+
+[WARNING]
+Dans beaucoup de fonctions, pour des raisons de vitesse, WeeChat ne vérifie pas
+si votre pointeur est correct ou pas. Il est de votre responsabilité de
+vérifier que vous donnez un pointeur valide, sinon vous pourriez voir un joli
+rapport de crash ;)
+
+Callbacks
+^^^^^^^^^
+
+Tous les "callbacks" WeeChat doivent retourner WEECHAT_RC_OK ou
+WEECHAT_RC_ERROR (l'exception est le callback du "modifier", qui retourne une
+chaîne de caractères).
+
+Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
+l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
+valeur (ce n'est pas un pointeur).
+
+Par exemple :
+
+[source,python]
+----------------------------------------
+weechat.hook_timer(1000, 0, 1, "mon_timer_cb", "mes données")
+
+def mon_timer_cb(data, remaining_calls):
+    # cela affichera : "mes données"
+    weechat.prnt("", data)
+    return weechat.WEECHAT_RC_OK
+----------------------------------------

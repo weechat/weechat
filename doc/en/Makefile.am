@@ -43,7 +43,7 @@ weechat_plugin_api.en.html: weechat_plugin_api.en.txt $(wildcard autogen/plugin_
 
 # scripting guide
 weechat_scripting.en.html: weechat_scripting.en.txt
-	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_scripting.en.html weechat_scripting.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_scripting.en.html weechat_scripting.en.txt
 
 # FAQ
 weechat_faq.en.html: weechat_faq.en.txt

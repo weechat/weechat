@@ -63,7 +63,7 @@ Les paquets binaires sont disponibles pour beaucoup de distributions, dont :
 * Debian (ou toute distribution compatible Debian) : `apt-get install weechat`
 * Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
-* Gentoo: `emerge weechat`
+* Gentoo : `emerge weechat`
 
 Des paquets additionnels peuvent être utiles également, comme weechat-plugins.
 
@@ -123,7 +123,7 @@ $ make install
 Sources Git
 ~~~~~~~~~~~
 
-Attention: les sources GIT sont réservés aux utilisateurs avancés : il se peut
+Attention : les sources GIT sont réservés aux utilisateurs avancés : il se peut
 que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
 
 Pour récupérer les sources GIT, tapez cette commande :
@@ -264,7 +264,7 @@ La barre 'status' contient les objets (items) suivants par défaut :
   nombre de pseudos dans la liste des pseudos
 
 | buffer_filter         | `*`                  |
-  indicateur de filtrage: `*` signifie que des lignes sont filtrées (cachées),
+  indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées),
   une valeur vide signifie que toutes les lignes sont affichées
 
 | lag                   | `[Lag: 2.5]`         |
@@ -409,7 +409,7 @@ Touches pour la ligne de commande
   `/input clipboard_paste`
 
 | Tab |
-  Compléter la commande ou le pseudo (Tab de nouveau: trouver la complétion
+  Compléter la commande ou le pseudo (Tab de nouveau : trouver la complétion
   suivante) +
   `/input complete_next`
 
@@ -424,16 +424,16 @@ Touches pour la ligne de commande
 | Enter +
   Ctrl + J +
   Ctrl + M |
-  Exécuter la commande ou envoyer le message (en mode recherche: arrêter la
+  Exécuter la commande ou envoyer le message (en mode recherche : arrêter la
   recherche) +
   `/input return`
 
 | Flèche haut |
-  Rappeler la commande précédente (en mode recherche: chercher plus haut) +
+  Rappeler la commande précédente (en mode recherche : chercher plus haut) +
   `/input history_previous`
 
 | Flèche bas |
-  Rappeler la commande suivante (en mode recherche: chercher plus bas) +
+  Rappeler la commande suivante (en mode recherche : chercher plus bas) +
   `/input history_next`
 
 | Ctrl + flèche haut |
@@ -595,7 +595,7 @@ Touches pour les tampons / fenêtres
   `/window right`
 
 | Alt + Z |
-  Zoom sur la fenêtre courante (Alt + Z de nouveau: restaurer l'état initial
+  Zoom sur la fenêtre courante (Alt + Z de nouveau : restaurer l'état initial
   des fenêtres, avant le zoom) +
   `/window zoom`
 
@@ -685,7 +685,7 @@ suit et éventuellement une valeur) :
 Le même code (sans le numéro pour ^Cc) peut être utilisé pour stopper
 l'attribut défini.
 
-Les codes couleur pour ^Cc sont:
+Les codes couleur pour ^Cc sont :
 
 [width="20%",cols="^1m,2"]
 |========================================
@@ -769,7 +769,7 @@ démarre, et il est posisble de charger et décharger des extensions pendant que
 WeeChat tourne.
 
 Il est important de bien faire la différence entre une 'extension' et un
-'script': une 'extension' est un fichier binaire compilé et chargé avec la
+'script' : une 'extension' est un fichier binaire compilé et chargé avec la
 commande `/plugin`, tandis qu'un 'script' est un fichier texte chargé par une
 extension comme 'perl' par la commande `perl`.
 
@@ -1074,10 +1074,10 @@ signifie "enregistrer tous les messages".
 Les extensions utilisent différent niveaux pour les messages affichés.
 L'extension IRC utilise les niveaux suivants :
 
-* niveau 1: message d'un utilisateur (sur un canal ou en privé)
-* niveau 2: changement de pseudo (vous ou quelqu'un d'autre)
-* niveau 3: tout message du serveur (sauf join/part/quit)
-* niveau 4: message join/part/quit du serveur
+* niveau 1 : message d'un utilisateur (sur un canal ou en privé)
+* niveau 2 : changement de pseudo (vous ou quelqu'un d'autre)
+* niveau 3 : tout message du serveur (sauf join/part/quit)
+* niveau 4 : message join/part/quit du serveur
 
 Donc si vous affectez le niveau 3 pour un canal IRC, WeeChat enregistrera
 tous les messages sauf les join/part/quit.
@@ -1146,7 +1146,7 @@ Vous obtiendrez les fichiers suivants :
 Extensions Scripts
 ~~~~~~~~~~~~~~~~~~
 
-WeeChat fournit 5 extensions pour scripts: Perl, Python, Ruby, Lua and Tcl.
+WeeChat fournit 5 extensions pour scripts : Perl, Python, Ruby, Lua and Tcl.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 

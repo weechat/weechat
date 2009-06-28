@@ -41,7 +41,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html DESTINATION
 # scripting guide
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.en.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.en.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.en.txt
   COMMENT "Building weechat_scripting.en.html"
