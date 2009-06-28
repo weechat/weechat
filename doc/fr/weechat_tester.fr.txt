@@ -74,7 +74,7 @@ $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
 --------------------------------------------
 
-NOTE: Plus tard, vous pourrez utiliser la command "`git pull`" dans ce répertoire
+NOTE: Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce répertoire
 pour obtenir juste les deltas avec la version d'aujourd'hui.
 
 Sinon vous pouvez installer le paquet 'devel' :
@@ -95,7 +95,7 @@ $ make
 $ make install
 --------------------------------------------------------------
 
-Si vous n'avez pas cmake, il est toujours possible d'utiliser les autools :
+Si vous n'avez pas cmake, il est toujours possible d'utiliser les autotools :
 
 -----------------------------------------------------------------
 $ ./autogen.sh       # (seulement si vous avez cloné la base git)
@@ -104,7 +104,7 @@ $ make
 $ make install
 -----------------------------------------------------------------
 
-[[install_binary_pcakcge]]
+[[install_binary_package]]
 Obtenir un paquet binaire
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

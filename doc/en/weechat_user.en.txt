@@ -150,7 +150,7 @@ Running WeeChat
 Command line arguments:
 
 -a, --no-connect::
-    Disable auto-connect to servers at startup
+    Disable auto-connect to servers when WeeChat is starting
 
 -d, --dir 'path'::
     Set path as home for WeeChat (used for configuration files, logs, user
@@ -733,7 +733,7 @@ include::autogen/user/weechat_commands.txt[]
 Plugins
 -------
 
-To learn more about plugin or script development (thru API), please read
+To learn more about plugin or script development (through API), please read
 'WeeChat Plugin API Reference' or 'WeeChat Scripting Guide'.
 
 [[plugins_in_weechat]]
@@ -826,8 +826,8 @@ There is default charset for decode/encode, and specific charsets for buffers
 This plugin is optional, but recommended: if it's not loaded, WeeChat
 can only read/write UTF-8 data.
 
-Charset plugin should be autoloaded by WeeChat at startup. To be sure plugin
-is loaded, try:
+Charset plugin should be autoloaded by WeeChat. To be sure plugin is loaded,
+try:
 
 ----------------------------------------
 /charset
@@ -917,8 +917,8 @@ Fifo plugin
 You can remote control WeeChat, by sending commands or text to a FIFO pipe (if
 option "plugins.var.fifo.fifo" is enabled, it is by default).
 
-The FIFO pipe is located in '~/.weechat/' and is called 'weechat_fifo_xxxxx'
-(where 'xxxxx' is the process ID (PID) of running WeeChat).
+The FIFO pipe is located in '~/.weechat/' and is called 'weechat_fifo_xxxx'
+(where 'xxxx' is the process ID (PID) of running WeeChat).
 
 Syntax for the FIFO pipe commands/text is one of following:
 

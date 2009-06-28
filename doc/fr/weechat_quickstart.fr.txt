@@ -4,7 +4,7 @@ FlashCode <flashcode@flashtux.org>
 
 
 [[start]]
-Démarrer weechat
+Démarrer WeeChat
 ----------------
 
 Un émulateur de terminal recommandé pour X (mais pas obligatoire) est

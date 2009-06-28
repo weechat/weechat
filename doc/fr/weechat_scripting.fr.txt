@@ -54,7 +54,7 @@ Register
 Tous les scripts WeeChat doivent s'enregistrer ("register") auprès de WeeChat,
 et cela doit être la première fonction WeeChat appelée dans le script.
 
-Prorotype :
+Prototype :
 
 [source,python]
 ----------------------------------------
@@ -162,7 +162,7 @@ Il est important de bien faire la différence entre une 'extension' et un
 commande `/plugin`, tandis qu'un 'script' est un fichier texte chargé par une
 extension comme 'perl' par la commande `perl`.
 
-Quand cotre script 'test.py' appelle une fonction de l'API WeeChat, le chemin
+Quand votre script 'test.py' appelle une fonction de l'API WeeChat, le chemin
 est le suivant :
 
 ........................................
@@ -171,7 +171,7 @@ est le suivant :
 test.py  ------->  extension python (python.so)  ------->  WeeChat core
 ........................................
 
-Quand WeeChat appelle un "callabck" dans votre script 'test.py', le chemin
+Quand WeeChat appelle un "callback" dans votre script 'test.py', le chemin
 est inversé :
 
 ........................................

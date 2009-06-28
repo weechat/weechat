@@ -4,7 +4,7 @@ FlashCode <flashcode@flashtux.org>
 
 
 [[start]]
-Start weechat
+Start WeeChat
 -------------
 
 A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
@@ -29,7 +29,7 @@ WeeChat immediately uses the new value (you *never* need to restart WeeChat
 after changes to configuration).
 
 You can use `/set` option with partial name and wildcard "*" at the beginning
-or end to display all options containg letters.
+or end to display all options containing letters.
 For example:
 
 `/set`::
@@ -80,7 +80,7 @@ As usual, help is available if you're lost: `/help server`
 Set custom IRC server options
 -----------------------------
 
-WeeChat uses default values for all servers ("fallbacks"), if you
+WeeChat uses default values for all servers ("fall backs"), if you
 don't specify a specific value for a server option.
 These default options are "irc.server_default.*".
 
@@ -106,7 +106,7 @@ with nickserv:
 
   /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
 
-Note: many commmands can be separated by ';' (semi-colon)
+Note: many commands can be separated by ';' (semi-colon)
 
 To auto-join some channels when connecting to server:
 

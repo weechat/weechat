@@ -53,7 +53,7 @@ Register
 All WeeChat scripts must "register" themselves to WeeChat, and this must be
 first WeeChat function called in script.
 
-Prorotype:
+Prototype:
 
 [source,python]
 ----------------------------------------
@@ -75,7 +75,7 @@ Arguments:
 Script example
 ~~~~~~~~~~~~~~
 
-Exemple of script, for each language:
+Example of script, for each language:
 
 * perl:
 

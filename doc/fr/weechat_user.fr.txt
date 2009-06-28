@@ -55,8 +55,8 @@ Installation
 ------------
 
 [[binary_packages]]
-Binary packages
-~~~~~~~~~~~~~~~
+Paquets binaires
+~~~~~~~~~~~~~~~~
 
 Les paquets binaires sont disponibles pour beaucoup de distributions, dont :
 
@@ -176,7 +176,7 @@ Paramètres de ligne de commande :
     Afficher la version de WeeChat
 
 plugin:option::
-    Option pour l'extension (voir la doc de chaque extension)
+    Option pour l'extension (voir la documentation de chaque extension)
 
 Pour lancer WeeChat, tapez cette commande :
 
@@ -251,7 +251,7 @@ La barre 'status' contient les objets (items) suivants par défaut :
   nombre de tampons ouverts
 
 | buffer_plugin         | `[irc/freenode]`     |
-  extension du tampon courant (l'extension irc peut affiche le nom du serveur
+  extension du tampon courant (l'extension irc peut afficher le nom du serveur
   IRC auquel est rattaché ce tampon)
 
 | buffer_number         | `3`                  |
@@ -415,7 +415,7 @@ Touches pour la ligne de commande
 
 | Shift + Tab |
   Sans complétion, effectue une complétion partielle. Avec une complétion en
-  cours, complète avec la complétion précécente +
+  cours, complète avec la complétion précédente +
   `/input complete_previous`
 
 | Tout caractère |
@@ -765,7 +765,7 @@ chargée par WeeChat.
 Sous GNU/Linux, ce fichier a une extension ".so", et ".dll" sous Windows.
 
 Les extensions trouvées sont automatiquement chargées par WeeChat lorsqu'il
-démarre, et il est posisble de charger et décharger des extensions pendant que
+démarre, et il est possible de charger et décharger des extensions pendant que
 WeeChat tourne.
 
 Il est important de bien faire la différence entre une 'extension' et un
@@ -793,7 +793,7 @@ Les extensions par défaut sont :
 | Extension | Description
 | alias     | Définir des alias pour les commandes
 | aspell    | Vérification orthographique de la ligne de commande
-| charset   | Eécodage/encodage avec jeu de caractère sur les tampons
+| charset   | Encodage/encodage avec jeu de caractère sur les tampons
 | demo      | Extension de démonstration (non compilée par défaut)
 | fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
 | irc       | Discussion avec le protocole IRC
@@ -822,7 +822,7 @@ include::autogen/user/alias_commands.txt[]
 Extension Aspell
 ~~~~~~~~~~~~~~~~
 
-L'extension Aspell permet de vérifier l'orghographe de la ligne de commande.
+L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
 
 Options (aspell.conf)
@@ -928,14 +928,14 @@ Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
 privée), utilisez la même commande que pour le serveur, mais sur le tampon du
 canal (ou du privé).
 
-Pour voir tous les jeux de carcatères utilisés, utilisez la commande uivante :
+Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
 
 ----------------------------------------
 /set charset.*
 ----------------------------------------
 
-Troubleshooting
-^^^^^^^^^^^^^^^
+En cas de problème
+^^^^^^^^^^^^^^^^^^
 
 Pour tout problème avec les jeux de caractères, merci de consulter la
 'FAQ WeeChat'.
@@ -949,15 +949,15 @@ texte dans un tube FIFO (si l'option 'plugins.var.fifo.fifo' est activée,
 elle l'est par défaut).
 
 Le tube FIFO est dans le répertoire '~/.weechat/' et s'appelle
-'weechat_fifo_xxxxx' (où 'xxxxx' est l'ID du processus (PID) du WeeChat qui
+'weechat_fifo_xxxx' (où 'xxxx' est l'ID du processus (PID) du WeeChat qui
 tourne).
 
 La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est une
 des suivantes :
 
 ........................................
-  plugin.buffer *text or command here
-  *text or command here
+  plugin.buffer *texte ou commande ici
+  *texte ou commande ici
 ........................................
 
 Quelques exemples :
@@ -1111,7 +1111,7 @@ Quelques exemples :
 Masques de noms de fichiers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Il est posible de définir un masque de nom de fichier pour chaque tampon, et
+Il est possible de définir un masque de nom de fichier pour chaque tampon, et
 d'utiliser les variables locales du tampon pour construire le nom de fichier.
 Pour voir les variables du tampon courant :
 
