@@ -193,7 +193,7 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
         fields = weechat_infolist_fields (infolist);
         if (fields)
         {
-            argv = weechat_string_explode (fields, ",", 0, 0, &argc);
+            argv = weechat_string_split (fields, ",", 0, 0, &argc);
             if (argv && (argc > 0))
             {
                 for (j = 0; j < argc; j++)
@@ -237,7 +237,7 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
                 }
             }
             if (argv)
-                weechat_string_free_exploded (argv);
+                weechat_string_free_split (argv);
         }
         i++;
     }

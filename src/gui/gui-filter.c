@@ -373,8 +373,8 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         if (tags)
         {
             new_filter->tags = (tags) ? strdup (tags) : NULL;
-            new_filter->tags_array = string_explode (tags, ",", 0, 0,
-                                                     &new_filter->tags_count);
+            new_filter->tags_array = string_split (tags, ",", 0, 0,
+                                                   &new_filter->tags_count);
         }
         else
         {
@@ -443,7 +443,7 @@ gui_filter_free (struct t_gui_filter *filter)
     if (filter->tags)
         free (filter->tags);
     if (filter->tags_array)
-        string_free_exploded (filter->tags_array);
+        string_free_split (filter->tags_array);
     if (filter->regex)
         free (filter->regex);
     if (filter->regex_prefix)

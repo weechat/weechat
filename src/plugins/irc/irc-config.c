@@ -574,16 +574,16 @@ irc_config_ignore_read (void *data,
     {
         if (value && value[0])
         {
-            argv = weechat_string_explode (value, ";", 0, 0, &argc);
-            argv_eol = weechat_string_explode (value, ";", 1, 0, NULL);
+            argv = weechat_string_split (value, ";", 0, 0, &argc);
+            argv_eol = weechat_string_split (value, ";", 1, 0, NULL);
             if (argv && argv_eol && (argc >= 3))
             {
                 irc_ignore_new (argv_eol[2], argv[0], argv[1]);
             }
             if (argv)
-                weechat_string_free_exploded (argv);
+                weechat_string_free_split (argv);
             if (argv_eol)
-                weechat_string_free_exploded (argv_eol);
+                weechat_string_free_split (argv_eol);
         }
     }
     

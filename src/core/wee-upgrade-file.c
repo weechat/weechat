@@ -263,7 +263,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
         fields = infolist_fields (infolist);
         if (fields)
         {
-            argv = string_explode (fields, ",", 0, 0, &argc);
+            argv = string_split (fields, ",", 0, 0, &argc);
             if (argv && (argc > 0))
             {
                 for (i = 0; i < argc; i++)
@@ -372,7 +372,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                 }
             }
             if (argv)
-                string_free_exploded (argv);
+                string_free_split (argv);
         }
         
         /* write object end */

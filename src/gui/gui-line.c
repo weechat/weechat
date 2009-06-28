@@ -483,7 +483,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         if (line->data->str_time)
             free (line->data->str_time);
         if (line->data->tags_array)
-            string_free_exploded (line->data->tags_array);
+            string_free_split (line->data->tags_array);
         if (line->data->prefix)
             free (line->data->prefix);
         if (line->data->message)
@@ -692,8 +692,8 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         NULL : gui_chat_get_time_string (date);
     if (tags)
     {
-        new_line->data->tags_array = string_explode (tags, ",", 0, 0,
-                                                     &new_line->data->tags_count);
+        new_line->data->tags_array = string_split (tags, ",", 0, 0,
+                                                   &new_line->data->tags_count);
     }
     else
     {

@@ -426,9 +426,9 @@ hook_command_build_completion (struct t_hook_command *hook_command)
             hook_command->cplt_templates_static[i] = strdup (hook_command->cplt_templates[i]);
         
         /* build arguments for each template */
-        hook_command->cplt_template_args[i] = string_explode (hook_command->cplt_templates[i],
-                                                              " ", 0, 0,
-                                                              &(hook_command->cplt_template_num_args[i]));
+        hook_command->cplt_template_args[i] = string_split (hook_command->cplt_templates[i],
+                                                            " ", 0, 0,
+                                                            &(hook_command->cplt_template_num_args[i]));
         if (hook_command->cplt_template_num_args[i] > hook_command->cplt_template_num_args_concat)
             hook_command->cplt_template_num_args_concat = hook_command->cplt_template_num_args[i];
     }
@@ -464,8 +464,8 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                 {
                     if (i < hook_command->cplt_template_num_args[j])
                     {
-                        items = string_explode (hook_command->cplt_template_args[j][i],
-                                                "|", 0, 0, &num_items);
+                        items = string_split (hook_command->cplt_template_args[j][i],
+                                              "|", 0, 0, &num_items);
                         for (k = 0; k < num_items; k++)
                         {
                             if (!weelist_search (list, items[k]))
@@ -478,7 +478,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                                              NULL);
                             }
                         }
-                        string_free_exploded (items);
+                        string_free_split (items);
                     }
                 }
             }
@@ -584,13 +584,13 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     
     rc = -1;
     
-    argv = string_explode (string, " ", 0, 0, &argc);
+    argv = string_split (string, " ", 0, 0, &argc);
     if (argc == 0)
     {
-        string_free_exploded (argv);
+        string_free_split (argv);
         return -1;
     }
-    argv_eol = string_explode (string, " ", 1, 0, NULL);
+    argv_eol = string_split (string, " ", 1, 0, NULL);
     
     hook_exec_start ();
     
@@ -660,8 +660,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         }
     }
     
-    string_free_exploded (argv);
-    string_free_exploded (argv_eol);
+    string_free_split (argv);
+    string_free_split (argv_eol);
     
     hook_exec_end ();
     
@@ -1516,8 +1516,8 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     new_hook_print->buffer = buffer;
     if (tags)
     {
-        new_hook_print->tags_array = string_explode (tags, ",", 0, 0,
-                                                     &new_hook_print->tags_count);
+        new_hook_print->tags_array = string_split (tags, ",", 0, 0,
+                                                   &new_hook_print->tags_count);
     }
     else
     {
@@ -2173,7 +2173,7 @@ unhook (struct t_hook *hook)
                             free (HOOK_COMMAND(hook, cplt_templates)[i]);
                         if (HOOK_COMMAND(hook, cplt_templates_static)[i])
                             free (HOOK_COMMAND(hook, cplt_templates_static)[i]);
-                        string_free_exploded (HOOK_COMMAND(hook, cplt_template_args)[i]);
+                        string_free_split (HOOK_COMMAND(hook, cplt_template_args)[i]);
                     }
                     free (HOOK_COMMAND(hook, cplt_templates));
                 }

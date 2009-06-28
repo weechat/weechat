@@ -768,8 +768,8 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
         {
             channel_name = argv[1];
             pos_args = argv_eol[2];
-            channels = weechat_string_explode (channel_name, ",", 0, 0,
-                                               &num_channels);
+            channels = weechat_string_split (channel_name, ",", 0, 0,
+                                             &num_channels);
             if (channels)
             {
                 for (i = 0; i < num_channels; i++)
@@ -780,7 +780,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
                         (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
                         ptr_channel->cycle = 1;
                 }
-                weechat_string_free_exploded (channels);
+                weechat_string_free_split (channels);
             }
         }
         else
@@ -2003,8 +2003,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     
     IRC_COMMAND_CHECK_SERVER("msg", 1);
     
-    targets = weechat_string_explode (argv[arg_target], ",", 0, 0,
-                                      &num_targets);
+    targets = weechat_string_split (argv[arg_target], ",", 0, 0,
+                                    &num_targets);
     if (targets)
     {
         for (i = 0; i < num_targets; i++)
@@ -2118,7 +2118,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
         }
-        weechat_string_free_exploded (targets);
+        weechat_string_free_split (targets);
     }
     
     return WEECHAT_RC_OK;

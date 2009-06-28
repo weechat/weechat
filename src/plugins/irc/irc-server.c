@@ -159,7 +159,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     server->addresses_count = 0;
     if (server->addresses_array)
     {
-        weechat_string_free_exploded (server->addresses_array);
+        weechat_string_free_split (server->addresses_array);
         server->addresses_array = NULL;
     }
     if (server->ports_array)
@@ -171,9 +171,9 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     /* set new addresses/ports */
     if (addresses && addresses[0])
     {
-        server->addresses_array = weechat_string_explode (addresses,
-                                                          ",", 0, 0,
-                                                          &server->addresses_count);
+        server->addresses_array = weechat_string_split (addresses,
+                                                        ",", 0, 0,
+                                                        &server->addresses_count);
         server->ports_array = malloc (server->addresses_count * sizeof (server->ports_array[0]));
         for (i = 0; i < server->addresses_count; i++)
         {
@@ -206,14 +206,14 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
     server->nicks_count = 0;
     if (server->nicks_array)
     {
-        weechat_string_free_exploded (server->nicks_array);
+        weechat_string_free_split (server->nicks_array);
         server->nicks_array = NULL;
     }
     
     /* set new nicks */
-    server->nicks_array = weechat_string_explode ((nicks) ? nicks : IRC_SERVER_DEFAULT_NICKS,
-                                                  ",", 0, 0,
-                                                  &server->nicks_count);
+    server->nicks_array = weechat_string_split ((nicks) ? nicks : IRC_SERVER_DEFAULT_NICKS,
+                                                ",", 0, 0,
+                                                &server->nicks_count);
 }
 
 /*
@@ -611,13 +611,13 @@ irc_server_free_data (struct t_irc_server *server)
     if (server->name)
         free (server->name);
     if (server->addresses_array)
-        weechat_string_free_exploded (server->addresses_array);
+        weechat_string_free_split (server->addresses_array);
     if (server->ports_array)
         free (server->ports_array);
     if (server->current_ip)
         free (server->current_ip);
     if (server->nicks_array)
-        weechat_string_free_exploded (server->nicks_array);
+        weechat_string_free_split (server->nicks_array);
     if (server->unterminated_message)
         free (server->unterminated_message);
     if (server->nick)
@@ -1230,14 +1230,14 @@ irc_server_sendf (struct t_irc_server *server, int queue_msg,
     vsnprintf (buffer, sizeof (buffer) - 1, format, args);
     va_end (args);    
 
-    items = weechat_string_explode (buffer, "\n", 0, 0, &items_count);
+    items = weechat_string_split (buffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
         if (!irc_server_send_one_msg (server, queue_msg, items[i]))
             break;
     }
     if (items)
-        weechat_string_free_exploded (items);
+        weechat_string_free_split (items);
 }
 
 /*
@@ -1334,7 +1334,7 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server, const char *strin
 }
 
 /*
- * irc_server_msgq_add_buffer: explode received buffer, creating queued messages
+ * irc_server_msgq_add_buffer: split received buffer, creating queued messages
  */
 
 void

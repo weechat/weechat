@@ -760,7 +760,7 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
     {
         if (string_strcasecmp (option_name, "buffer") == 0)
         {
-            argv = string_explode (value, ";", 0, 0, &argc);
+            argv = string_split (value, ";", 0, 0, &argc);
             if (argv)
             {
                 if (argc >= 3)
@@ -774,12 +774,12 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
                                                argv[0], argv[1], number1);
                     }
                 }
-                string_free_exploded (argv);
+                string_free_split (argv);
             }
         }
         else if (string_strcasecmp (option_name, "window") == 0)
         {
-            argv = string_explode (value, ";", 0, 0, &argc);
+            argv = string_split (value, ";", 0, 0, &argc);
             if (argv)
             {
                 if (argc >= 6)
@@ -808,7 +808,7 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
                                                argv[5] : NULL);
                     }
                 }
-                string_free_exploded (argv);
+                string_free_split (argv);
             }
         }
     }
@@ -1035,17 +1035,17 @@ config_weechat_filter_read_cb (void *data,
     
     if (option_name && value && value[0])
     {
-        argv = string_explode (value, ";", 0, 0, &argc);
-        argv_eol = string_explode (value, ";", 1, 0, NULL);
+        argv = string_split (value, ";", 0, 0, &argc);
+        argv_eol = string_split (value, ";", 1, 0, NULL);
         if (argv && argv_eol && (argc >= 4))
         {
             gui_filter_new ((string_strcasecmp (argv[0], "on") == 0) ? 1 : 0,
                             option_name, argv[1], argv[2], argv_eol[3]);
         }
         if (argv)
-            string_free_exploded (argv);
+            string_free_split (argv);
         if (argv_eol)
-            string_free_exploded (argv_eol);
+            string_free_split (argv_eol);
     }
     
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;

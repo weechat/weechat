@@ -281,7 +281,7 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
     
     rc = 0;
     
-    argv = weechat_string_explode (dict_list, ",", 0, 0, &argc);
+    argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
     if (argv)
     {
         ptr_speller = weechat_aspell_spellers;
@@ -294,7 +294,7 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
             }
             ptr_speller = ptr_speller->next_speller;
         }
-        weechat_string_free_exploded (argv);
+        weechat_string_free_split (argv);
     }
     
     return rc;
@@ -319,14 +319,14 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
             weechat_aspell_speller_free_all ();
             if (dict_list)
             {
-                argv = weechat_string_explode (dict_list, ",", 0, 0, &argc);
+                argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
                 if (argv)
                 {
                     for (i = 0; i < argc; i++)
                     {
                         weechat_aspell_speller_new (argv[i]);
                     }
-                    weechat_string_free_exploded (argv);
+                    weechat_string_free_split (argv);
                 }
             }
         }

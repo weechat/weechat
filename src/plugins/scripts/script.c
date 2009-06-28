@@ -922,7 +922,7 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
     
     if (*list)
     {
-        argv = weechat_string_explode (*list, ",", 0, 0, &argc);
+        argv = weechat_string_split (*list, ",", 0, 0, &argc);
         if (argv)
         {
             for (i = 0; i < argc; i++)
@@ -995,7 +995,7 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                     free (name);
                 }
             }
-            weechat_string_free_exploded (argv);
+            weechat_string_free_split (argv);
         }
         free (*list);
         *list = NULL;
@@ -1021,7 +1021,7 @@ script_action_remove (struct t_weechat_plugin *weechat_plugin,
     
     if (*list)
     {
-        argv = weechat_string_explode (*list, ",", 0, 0, &argc);
+        argv = weechat_string_split (*list, ",", 0, 0, &argc);
         if (argv)
         {
             for (i = 0; i < argc; i++)
@@ -1034,7 +1034,7 @@ script_action_remove (struct t_weechat_plugin *weechat_plugin,
                 /* remove script file(s) */
                 script_remove_file (weechat_plugin, argv[i], 1);
             }
-            weechat_string_free_exploded (argv);
+            weechat_string_free_split (argv);
         }
         free (*list);
         *list = NULL;

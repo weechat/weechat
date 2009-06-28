@@ -770,24 +770,24 @@ char *str_regex = weechat_string_mask_to_regex ("test*mask");
 free (str_regex);
 ----------------------------------------
 
-weechat_string_explode
-^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_split
+^^^^^^^^^^^^^^^^^^^^
 
-Explosion d'une chaîne à l'aide de délimiteur(s).
+Découpe une chaîne à l'aide de délimiteur(s).
 
 Prototype :
 
 [source,C]
 ----------------------------------------
-char **weechat_string_explode (const char *string, const char *separators,
-                               int keep_eol, int num_items_max,
-                               int *num_items);
+char **weechat_string_split (const char *string, const char *separators,
+                             int keep_eol, int num_items_max,
+                             int *num_items);
 ----------------------------------------
 
 Paramètres :
 
-* 'string' : chaîne à exploser
-* 'separators' : délimiteurs utilisés pour l'explosion
+* 'string' : chaîne à découper
+* 'separators' : délimiteurs utilisés pour le découpage
 * 'keep_eol' : si différent de 0, alors chaque argument contiendra toutes les
   chaînes jusqu'à la fin de la ligne (voir exemple ci-dessous)
 * 'num_items_max' : nombre maximum de chaînes à créer (0 = pas de limite)
@@ -797,7 +797,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être libéré par un appel à
-  <<_weechat_string_free_exploded>> après utilisation)
+  <<_weechat_string_free_split>> après utilisation)
 
 Exemples :
 
@@ -805,40 +805,40 @@ Exemples :
 ----------------------------------------
 char **argv;
 int argc;
-argv = weechat_string_explode ("abc de  fghi", " ", 0, 0, &argc);
+argv = weechat_string_split ("abc de  fghi", " ", 0, 0, &argc);
 /* résultat :  argv[0] == "abc"
                argv[1] == "de"
                argv[2] == "fghi"
                argv[3] == NULL
                argc == 3
 */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 
-argv = weechat_string_explode ("abc de  fghi", " ", 1, 0, &argc);
+argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
 /* résultat : argv[0] == "abc de  fghi"
               argv[1] == "de  fghi"
               argv[2] == "fghi"
               argv[3] == NULL
               argc == 3
 */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 ----------------------------------------
 
-weechat_string_free_exploded
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_free_split
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Libère la mémoire utilisée pour l'explosion d'une chaîne.
+Libère la mémoire utilisée pour le découpage d'une chaîne.
 
 Prototype :
 
 [source,C]
 ----------------------------------------
-void weechat_string_free_exploded (char **exploded_string);
+void weechat_string_free_split (char **split_string);
 ----------------------------------------
 
 Paramètres :
 
-* 'exploded_string' : chaîne explosée par <<_weechat_string_explode>>
+* 'split_string' : chaîne découpée par <<_weechat_string_split>>
 
 Exemple :
 
@@ -846,32 +846,32 @@ Exemple :
 ----------------------------------------
 char *argv;
 int argc;
-argv = weechat_string_explode (string, " ", 0, 0, &argc);
+argv = weechat_string_split (string, " ", 0, 0, &argc);
 /* ... */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 ----------------------------------------
 
-weechat_string_build_with_exploded
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_build_with_split_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Construit une chaîne à partir d'une chaîne explosée.
+Construit une chaîne à partir d'une chaîne découpée.
 
 Prototype :
 
 [source,C]
 ----------------------------------------
-char *weechat_string_build_with_exploded (char **exploded_string,
-                                          const char *separator);
+char *weechat_string_build_with_split_string (char **split_string
+                                              const char *separator);
 ----------------------------------------
 
 Paramètres :
 
-* 'exploded_string' : chaîne explosée par la fonction <<_weechat_string_explode>>
+* 'split_string' : chaîne découpée par la fonction <<_weechat_string_split>>
 * 'separator' : chaîne utilisée pour séparer les différentes chaînes
 
 Valeur de retour :
 
-* chaîne construite avec la chaîne explosée (doit être libérée par un appel à
+* chaîne construite avec la chaîne découpée (doit être libérée par un appel à
   "free" après utilisation)
 
 Exemple :
@@ -880,8 +880,8 @@ Exemple :
 ----------------------------------------
 char **argv;
 int argc;
-argv = weechat_string_explode ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_exploded (argv, ";");
+argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
+char *str = weechat_string_build_with_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

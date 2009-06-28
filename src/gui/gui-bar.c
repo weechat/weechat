@@ -681,7 +681,7 @@ gui_bar_free_items_array (struct t_gui_bar *bar)
     for (i = 0; i < bar->items_count; i++)
     {
         if (bar->items_array[i])
-            string_free_exploded (bar->items_array[i]);
+            string_free_split (bar->items_array[i]);
     }
     if (bar->items_array)
     {
@@ -710,7 +710,7 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
     
     if (items && items[0])
     {
-        tmp_array = string_explode (items, ",", 0, 0, &count);
+        tmp_array = string_split (items, ",", 0, 0, &count);
         if (count > 0)
         {
             bar->items_count = count;
@@ -718,11 +718,11 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
             bar->items_array = malloc (count * sizeof (*bar->items_array));
             for (i = 0; i < count; i++)
             {
-                bar->items_array[i] = string_explode (tmp_array[i], "+", 0, 0,
-                                                      &(bar->items_subcount[i]));
+                bar->items_array[i] = string_split (tmp_array[i], "+", 0, 0,
+                                                    &(bar->items_subcount[i]));
             }
         }
-        string_free_exploded (tmp_array);
+        string_free_split (tmp_array);
     }
 }
 
@@ -856,14 +856,14 @@ gui_bar_config_change_conditions (void *data, struct t_config_option *option)
     if (ptr_bar)
     {
         if (ptr_bar->conditions_array)
-            string_free_exploded (ptr_bar->conditions_array);
+            string_free_split (ptr_bar->conditions_array);
         
         if (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])
             && CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])[0])
         {
-            ptr_bar->conditions_array = string_explode (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]),
-                                                        ",", 0, 0,
-                                                        &ptr_bar->conditions_count);
+            ptr_bar->conditions_array = string_split (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]),
+                                                      ",", 0, 0,
+                                                      &ptr_bar->conditions_count);
         }
         else
         {
@@ -1523,9 +1523,9 @@ gui_bar_new_with_options (const char *name,
         new_bar->options[GUI_BAR_OPTION_CONDITIONS] = conditions;
         if (CONFIG_STRING(conditions) && CONFIG_STRING(conditions)[0])
         {
-            new_bar->conditions_array = string_explode (CONFIG_STRING(conditions),
-                                                        ",", 0, 0,
-                                                        &new_bar->conditions_count);
+            new_bar->conditions_array = string_split (CONFIG_STRING(conditions),
+                                                      ",", 0, 0,
+                                                      &new_bar->conditions_count);
         }
         else
         {
@@ -2165,7 +2165,7 @@ gui_bar_free (struct t_gui_bar *bar)
             config_file_option_free (bar->options[i]);
     }
     if (bar->conditions_array)
-        string_free_exploded (bar->conditions_array);
+        string_free_split (bar->conditions_array);
     gui_bar_free_items_array (bar);
     
     free (bar);

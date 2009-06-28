@@ -80,7 +80,7 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
     
     if (dict_list)
     {
-        argv = weechat_string_explode (dict_list, ",", 0, 0, &argc);
+        argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
         if (argv)
         {
             for (i = 0; i < argc; i++)
@@ -93,7 +93,7 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
                                     ASPELL_PLUGIN_NAME, argv[i]);
                 }
             }
-            weechat_string_free_exploded (argv);
+            weechat_string_free_split (argv);
         }
     }
 }

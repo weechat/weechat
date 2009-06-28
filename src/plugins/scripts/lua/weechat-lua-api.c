@@ -3651,7 +3651,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (buffer);
         lua_argv[2] = timebuffer;
-        lua_argv[3] = weechat_string_build_with_exploded (tags, ",");
+        lua_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!lua_argv[3])
             lua_argv[3] = strdup ("");
         lua_argv[4] = (displayed) ? strdup ("1") : strdup ("0");

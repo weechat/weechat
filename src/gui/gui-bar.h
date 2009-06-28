@@ -85,10 +85,10 @@ struct t_gui_bar
     
     /* internal vars */
     int conditions_count;               /* number of conditions             */
-    char **conditions_array;            /* exploded bar conditions          */
+    char **conditions_array;            /* bar conditions (after split)     */
     int items_count;                    /* number of bar items              */
     int *items_subcount;                /* number of sub items              */
-    char ***items_array;                /* exploded bar items               */
+    char ***items_array;                /* bar items (after split)          */
     struct t_gui_bar_window *bar_window; /* pointer to bar window           */
                                         /* (for type root only)             */
     int bar_refresh_needed;             /* refresh for bar is needed?       */

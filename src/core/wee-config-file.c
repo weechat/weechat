@@ -453,9 +453,9 @@ config_file_new_option (struct t_config_file *config_file,
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (string_values && string_values[0])
                 {
-                    new_option->string_values = string_explode (string_values,
-                                                                "|", 0, 0,
-                                                                &argc);
+                    new_option->string_values = string_split (string_values,
+                                                              "|", 0, 0,
+                                                              &argc);
                     if (!new_option->string_values)
                         goto error;
                 }
@@ -2291,7 +2291,7 @@ config_file_option_free_data (struct t_config_option *option)
     if (option->description)
         free (option->description);
     if (option->string_values)
-        string_free_exploded (option->string_values);
+        string_free_split (option->string_values);
     if (option->default_value)
         free (option->default_value);
     if (option->value)
@@ -2557,8 +2557,8 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                             free (option_full_name);
                             return 0;
                         }
-                        string_values = string_build_with_exploded ((const char **)ptr_option->string_values,
-                                                                    "|");
+                        string_values = string_build_with_split_string ((const char **)ptr_option->string_values,
+                                                                        "|");
                         if (!infolist_new_var_string (ptr_item,
                                                       "string_values",
                                                       string_values))

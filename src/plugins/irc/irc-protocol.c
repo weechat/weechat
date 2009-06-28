@@ -4532,8 +4532,8 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
         }
         else
             dup_entire_line = NULL;
-        argv = weechat_string_explode (dup_entire_line, " ", 0, 0, &argc);
-        argv_eol = weechat_string_explode (dup_entire_line, " ", 1, 0, NULL);
+        argv = weechat_string_split (dup_entire_line, " ", 0, 0, &argc);
+        argv_eol = weechat_string_split (dup_entire_line, " ", 1, 0, NULL);
         
         return_code = (int) (cmd_recv_func) (server, cmd_name,
                                              argc, argv, argv_eol);
@@ -4556,8 +4556,8 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
         if (dup_entire_line)
             free (dup_entire_line);
         if (argv)
-            weechat_string_free_exploded (argv);
+            weechat_string_free_split (argv);
         if (argv_eol)
-            weechat_string_free_exploded (argv_eol);
+            weechat_string_free_split (argv_eol);
     }
 }

@@ -160,11 +160,11 @@ struct t_weechat_plugin
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     char *(*string_mask_to_regex) (const char *mask);
-    char **(*string_explode) (const char *string, const char *separators,
-                              int keep_eol, int num_items_max, int *num_items);
-    void (*string_free_exploded) (char **exploded_string);
-    char *(*string_build_with_exploded) (const char **exploded_string,
-                                         const char *separator);
+    char **(*string_split) (const char *string, const char *separators,
+                            int keep_eol, int num_items_max, int *num_items);
+    void (*string_free_split) (char **split_string);
+    char *(*string_build_with_split_string) (const char **split_string,
+                                             const char *separator);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_split_command) (char **split_command);
     char *(*string_format_size) (unsigned long size);
@@ -691,16 +691,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_has_highlight(__string, __highlight_words)
 #define weechat_string_mask_to_regex(__mask)                            \
     weechat_plugin->string_mask_to_regex(__mask)
-#define weechat_string_explode(__string, __separator, __eol, __max,     \
-                               __num_items)                             \
-    weechat_plugin->string_explode(__string, __separator, __eol,        \
-                                   __max, __num_items)
-#define weechat_string_free_exploded(__exploded_string)                 \
-    weechat_plugin->string_free_exploded(__exploded_string)
-#define weechat_string_build_with_exploded(__exploded_string,           \
-                                           __separator)                 \
-    weechat_plugin->string_build_with_exploded(__exploded_string,       \
-                                               __separator)
+#define weechat_string_split(__string, __separator, __eol, __max,       \
+                             __num_items)                               \
+    weechat_plugin->string_split(__string, __separator, __eol,          \
+                                 __max, __num_items)
+#define weechat_string_free_split(__split_string)                       \
+    weechat_plugin->string_free_split(__split_string)
+#define weechat_string_build_with_split_string(__split_string,          \
+                                               __separator)             \
+    weechat_plugin->string_build_with_split_string(__split_string,      \
+                                                   __separator)
 #define weechat_string_split_command(__command, __separator)            \
     weechat_plugin->string_split_command(__command, __separator)
 #define weechat_string_free_split_command(__split_command)              \

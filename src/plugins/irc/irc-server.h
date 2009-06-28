@@ -102,7 +102,7 @@ struct t_irc_server
     int reloading_from_config;      /* 1 if reloading from config file       */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
     int addresses_count;            /* number of addresses                   */
-    char **addresses_array;         /* exploded addresses                    */
+    char **addresses_array;         /* addresses (after split)               */
     int *ports_array;               /* ports for addresses                   */
     int index_current_address;      /* current address index in array        */
     char *current_ip;               /* current IP address                    */
@@ -116,7 +116,7 @@ struct t_irc_server
 #endif
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
-    char **nicks_array;             /* exploded nicknames                    */
+    char **nicks_array;             /* nicknames (after split)               */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *prefix;                   /* nick prefix allowed (from msg 005)    */

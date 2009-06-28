@@ -78,7 +78,7 @@ irc_mode_channel_set (struct t_irc_server *server,
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
-        argv = weechat_string_explode (pos_args, " ", 0, 0, &argc);
+        argv = weechat_string_split (pos_args, " ", 0, 0, &argc);
     }
     else
     {
@@ -212,7 +212,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     if (str_modes)
         free (str_modes);
     if (argv)
-        weechat_string_free_exploded (argv);
+        weechat_string_free_split (argv);
     
     weechat_bar_item_update ("buffer_name");
     

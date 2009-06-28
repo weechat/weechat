@@ -430,7 +430,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     content = gui_bar_window_content_get_with_filling (bar_window, window);
     if (content)
     {
-        items = string_explode (content, "\n", 0, 0, &items_count);
+        items = string_split (content, "\n", 0, 0, &items_count);
         if (items_count == 0)
         {
             if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
@@ -594,7 +594,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             }
         }
         if (items)
-            string_free_exploded (items);
+            string_free_split (items);
         free (content);
     }
     else

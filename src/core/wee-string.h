@@ -42,11 +42,11 @@ extern char *string_convert_hex_chars (const char *string);
 extern int string_has_highlight (const char *string,
                                  const char *highlight_words);
 extern char *string_mask_to_regex (const char *mask);
-extern char **string_explode (const char *string, const char *separators,
-                              int keep_eol, int num_items_max, int *num_items);
-extern void string_free_exploded (char **exploded_string);
-extern char *string_build_with_exploded (const char **exploded_string,
-                                         const char *separator);
+extern char **string_split (const char *string, const char *separators,
+                            int keep_eol, int num_items_max, int *num_items);
+extern void string_free_split (char **split_string);
+extern char *string_build_with_split_string (const char **split_string,
+                                             const char *separator);
 extern char **string_split_command (const char *command, char separator);
 extern void string_free_split_command (char **split_command);
 extern char *string_iconv (int from_utf8, const char *from_code,

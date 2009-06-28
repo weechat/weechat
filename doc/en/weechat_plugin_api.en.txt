@@ -761,24 +761,24 @@ char *str_regex = weechat_string_mask_to_regex ("test*mask");
 free (str_regex);
 ----------------------------------------
 
-weechat_string_explode
-^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_split
+^^^^^^^^^^^^^^^^^^^^
 
-Explode a string according to one or more delimiter(s).
+Split a string according to one or more delimiter(s).
 
 Prototype:
 
 [source,C]
 ----------------------------------------
-char **weechat_string_explode (const char *string, const char *separators,
-                               int keep_eol, int num_items_max,
-                               int *num_items);
+char **weechat_string_split (const char *string, const char *separators,
+                             int keep_eol, int num_items_max,
+                             int *num_items);
 ----------------------------------------
 
 Arguments:
 
-* 'string': string to explode
-* 'separators': delimiters used for explosion
+* 'string': string to split
+* 'separators': delimiters used for split
 * 'keep_eol': if different from 0, then each argument will contain all string
   until end of line (see example below)
 * 'num_items_max': maximum number of items created (0 = no limit)
@@ -787,7 +787,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  <<_weechat_string_free_exploded>> after use)
+  <<_weechat_string_free_split>> after use)
 
 Examples:
 
@@ -795,40 +795,40 @@ Examples:
 ----------------------------------------
 char **argv;
 int argc;
-argv = weechat_string_explode ("abc de  fghi", " ", 0, 0, &argc);
+argv = weechat_string_split ("abc de  fghi", " ", 0, 0, &argc);
 /* result: argv[0] == "abc"
            argv[1] == "de"
            argv[2] == "fghi"
            argv[3] == NULL
            argc == 3
 */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 
-argv = weechat_string_explode ("abc de  fghi", " ", 1, 0, &argc);
+argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
 /* result: argv[0] == "abc de  fghi"
            argv[1] == "de  fghi"
            argv[2] == "fghi"
            argv[3] == NULL
            argc == 3
 */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 ----------------------------------------
 
-weechat_string_free_exploded
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_free_split
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Free memory used by a string explosion.
+Free memory used by a split string.
 
 Prototype:
 
 [source,C]
 ----------------------------------------
-void weechat_string_free_exploded (char **exploded_string);
+void weechat_string_free_split (char **split_string);
 ----------------------------------------
 
 Arguments:
 
-* 'exploded_string': string exploded by function <<_weechat_string_explode>>
+* 'split_string': string split by function <<_weechat_string_split>>
 
 Example:
 
@@ -836,32 +836,32 @@ Example:
 ----------------------------------------
 char *argv;
 int argc;
-argv = weechat_string_explode (string, " ", 0, 0, &argc);
+argv = weechat_string_split (string, " ", 0, 0, &argc);
 /* ... */
-weechat_string_free_exploded (argv);
+weechat_string_free_split (argv);
 ----------------------------------------
 
-weechat_string_build_with_exploded
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+weechat_string_build_with_split_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Build a string with exploded string.
+Build a string with a split string.
 
 Prototype:
 
 [source,C]
 ----------------------------------------
-char *weechat_string_build_with_exploded (char **exploded_string,
-                                          const char *separator);
+char *weechat_string_build_with_split_string (char **split_string,
+                                              const char *separator);
 ----------------------------------------
 
 Arguments:
 
-* 'exploded_string': string exploded by function <<_weechat_string_explode>>
+* 'split_string': string split by function <<_weechat_string_split>>
 * 'separator': string used to separate strings
 
 Return value:
 
-* string built with exploded string (must be freed by calling "free" after use)
+* string built with split string (must be freed by calling "free" after use)
 
 Example:
 
@@ -869,8 +869,8 @@ Example:
 ----------------------------------------
 char **argv;
 int argc;
-argv = weechat_string_explode ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_exploded (argv, ";");
+argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
+char *str = weechat_string_build_with_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

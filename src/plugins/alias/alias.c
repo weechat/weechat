@@ -127,7 +127,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     const char *start, *pos;
     int argc, length_res, args_count;
     
-    argv = weechat_string_explode (user_args, " ", 0, 0, &argc);
+    argv = weechat_string_split (user_args, " ", 0, 0, &argc);
     
     res = NULL;
     length_res = 0;
@@ -206,7 +206,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     }
     
     if (argv)
-        weechat_string_free_exploded (argv);
+        weechat_string_free_split (argv);
     
     return res;
 }

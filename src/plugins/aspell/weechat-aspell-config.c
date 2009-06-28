@@ -67,7 +67,7 @@ weechat_aspell_config_change_commands (void *data,
     
     if (weechat_aspell_commands_to_check)
     {
-        weechat_string_free_exploded (weechat_aspell_commands_to_check);
+        weechat_string_free_split (weechat_aspell_commands_to_check);
         weechat_aspell_commands_to_check = NULL;
         weechat_aspell_count_commands_to_check = 0;
     }
@@ -81,9 +81,9 @@ weechat_aspell_config_change_commands (void *data,
     value = weechat_config_string (option);
     if (value && value[0])
     {
-        weechat_aspell_commands_to_check = weechat_string_explode (value,
-                                                                   ",", 0, 0,
-                                                                   &weechat_aspell_count_commands_to_check);
+        weechat_aspell_commands_to_check = weechat_string_split (value,
+                                                                 ",", 0, 0,
+                                                                 &weechat_aspell_count_commands_to_check);
         if (weechat_aspell_count_commands_to_check > 0)
         {
             weechat_aspell_length_commands_to_check = malloc (weechat_aspell_count_commands_to_check *
@@ -381,7 +381,7 @@ weechat_aspell_config_free ()
     weechat_config_free (weechat_aspell_config_file);
     
     if (weechat_aspell_commands_to_check)
-        weechat_string_free_exploded (weechat_aspell_commands_to_check);
+        weechat_string_free_split (weechat_aspell_commands_to_check);
     if (weechat_aspell_length_commands_to_check)
         free (weechat_aspell_length_commands_to_check);
 }

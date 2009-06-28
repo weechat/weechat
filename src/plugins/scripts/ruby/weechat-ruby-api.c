@@ -3760,7 +3760,7 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         ruby_argv[1] = script_ptr2str (buffer);
         ruby_argv[2] = timebuffer;
-        ruby_argv[3] = weechat_string_build_with_exploded (tags, ",");
+        ruby_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!ruby_argv[3])
             ruby_argv[3] = strdup ("");
         ruby_argv[4] = (displayed) ? strdup ("1") : strdup ("0");

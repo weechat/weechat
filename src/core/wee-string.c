@@ -727,23 +727,23 @@ string_mask_to_regex (const char *mask)
 }
 
 /*
- * string_explode: explode a string according to separators
- *                 examples:
- *                   string_explode ("abc de  fghi", " ", 0, 0, NULL)
- *                     ==> array[0] = "abc"
- *                         array[1] = "de"
- *                         array[2] = "fghi"
- *                         array[3] = NULL
- *                   string_explode ("abc de  fghi", " ", 1, 0, NULL)
- *                     ==> array[0] = "abc de  fghi"
- *                         array[1] = "de  fghi"
- *                         array[2] = "fghi"
- *                         array[3] = NULL
+ * string_split: split a string according to separators
+ *               examples:
+ *                 string_split ("abc de  fghi", " ", 0, 0, NULL)
+ *                   ==> array[0] = "abc"
+ *                       array[1] = "de"
+ *                       array[2] = "fghi"
+ *                       array[3] = NULL
+ *                 string_split ("abc de  fghi", " ", 1, 0, NULL)
+ *                   ==> array[0] = "abc de  fghi"
+ *                       array[1] = "de  fghi"
+ *                       array[2] = "fghi"
+ *                       array[3] = NULL
  */
 
 char **
-string_explode (const char *string, const char *separators, int keep_eol,
-                int num_items_max, int *num_items)
+string_split (const char *string, const char *separators, int keep_eol,
+              int num_items_max, int *num_items)
 {
     int i, j, n_items;
     char *string2, **array;
@@ -867,42 +867,44 @@ string_explode (const char *string, const char *separators, int keep_eol,
 }
 
 /*
- * string_free_exploded: free an exploded string
+ * string_free_split: free a split string
  */
 
 void
-string_free_exploded (char **exploded_string)
+string_free_split (char **split_string)
 {
     int i;
     
-    if (exploded_string)
+    if (split_string)
     {
-        for (i = 0; exploded_string[i]; i++)
-            free (exploded_string[i]);
-        free (exploded_string);
+        for (i = 0; split_string[i]; i++)
+            free (split_string[i]);
+        free (split_string);
     }
 }
 
 /*
- * string_build_with_exploded: build a string with exploded string
- *                             note: returned value has to be free() after use
+ * string_build_with_split_string: build a string with a split string
+ *                                 note: returned value has to be free() after
+ *                                 use
  */
 
 char *
-string_build_with_exploded (const char **exploded_string, const char *separator)
+string_build_with_split_string (const char **split_string,
+                                const char *separator)
 {
     int i, length, length_separator;
     char *result;
     
-    if (!exploded_string)
+    if (!split_string)
         return NULL;
     
     length = 0;
     length_separator = (separator) ? strlen (separator) : 0;
     
-    for (i = 0; exploded_string[i]; i++)
+    for (i = 0; split_string[i]; i++)
     {
-        length += strlen (exploded_string[i]) + length_separator;
+        length += strlen (split_string[i]) + length_separator;
     }
     
     result = malloc (length + 1);
@@ -910,10 +912,10 @@ string_build_with_exploded (const char **exploded_string, const char *separator)
     {
         result[0] = '\0';
         
-        for (i = 0; exploded_string[i]; i++)
+        for (i = 0; split_string[i]; i++)
         {
-            strcat (result, exploded_string[i]);
-            if (separator && exploded_string[i + 1])
+            strcat (result, split_string[i]);
+            if (separator && split_string[i + 1])
                 strcat (result, separator);
         }
     }

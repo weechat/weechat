@@ -44,7 +44,7 @@ Pre-requisites
 In order to install WeeChat, you need:
 
 * a running GNU/Linux system (with compiler tools for source
-  package), or compatible OS (see above)
+  package), or compatible OS
 * 'root' privileges (to install WeeChat in a system directory)
 * ncurses library
 

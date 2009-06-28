@@ -872,16 +872,16 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
-        string_free_exploded (buffer->highlight_tags_array);
+        string_free_split (buffer->highlight_tags_array);
     
     if (new_highlight_tags)
     {
         buffer->highlight_tags = strdup (new_highlight_tags);
         if (buffer->highlight_tags)
         {
-            buffer->highlight_tags_array = string_explode (new_highlight_tags,
-                                                           ",", 0, 0,
-                                                           &buffer->highlight_tags_count);
+            buffer->highlight_tags_array = string_split (new_highlight_tags,
+                                                         ",", 0, 0,
+                                                         &buffer->highlight_tags_count);
         }
     }
     else
@@ -1548,7 +1548,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
-        string_free_exploded (buffer->highlight_tags_array);
+        string_free_split (buffer->highlight_tags_array);
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
     gui_buffer_local_var_remove_all (buffer);
     
@@ -2288,7 +2288,8 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                     message_without_colors : "(null)");
         if (message_without_colors)
             free (message_without_colors);
-        tags = string_build_with_exploded ((const char **)ptr_line->data->tags_array, ",");
+        tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
+                                               ",");
         log_printf ("  tags: %s", (tags) ? tags : "(none)");
         if (tags)
             free (tags);
@@ -2450,7 +2451,8 @@ gui_buffer_print_log ()
         while (ptr_line)
         {
             num--;
-            tags = string_build_with_exploded ((const char **)ptr_line->data->tags_array, ",");
+            tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
+                                                   ",");
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
                         "displayed:%d, highlight:%d, refresh_needed:%d, prefix:'%s'",
                         num, ptr_line->data->y, ptr_line->data->str_time,

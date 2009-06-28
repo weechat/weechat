@@ -372,9 +372,9 @@ plugin_load (const char *filename)
         new_plugin->string_strip = &string_strip;
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_mask_to_regex = &string_mask_to_regex;
-        new_plugin->string_explode = &string_explode;
-        new_plugin->string_free_exploded = &string_free_exploded;
-        new_plugin->string_build_with_exploded = &string_build_with_exploded;
+        new_plugin->string_split = &string_split;
+        new_plugin->string_free_split = &string_free_split;
+        new_plugin->string_build_with_split_string = &string_build_with_split_string;
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;

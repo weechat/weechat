@@ -152,7 +152,7 @@ relay_client_send_infolist (struct t_relay_client *client,
         fields = weechat_infolist_fields (infolist);
         if (fields)
         {
-            argv = weechat_string_explode (fields, ",", 0, 0, &argc);
+            argv = weechat_string_split (fields, ",", 0, 0, &argc);
             if (argv && (argc > 0))
             {
                 for (i = 0; i < argc; i++)
@@ -193,7 +193,7 @@ relay_client_send_infolist (struct t_relay_client *client,
                 }
             }
             if (argv)
-                weechat_string_free_exploded (argv);
+                weechat_string_free_split (argv);
         }
     }
 }

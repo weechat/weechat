@@ -3080,7 +3080,7 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         perl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         perl_argv[1] = script_ptr2str (buffer);
         perl_argv[2] = timebuffer;
-        perl_argv[3] = weechat_string_build_with_exploded (tags, ",");
+        perl_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!perl_argv[3])
             perl_argv[3] = strdup ("");
         perl_argv[4] = (displayed) ? strdup ("1") : strdup ("0");
