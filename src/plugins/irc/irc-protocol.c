@@ -653,7 +653,8 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
                 /* rename private window if this is with "old nick" */
-                if (weechat_strcasecmp (ptr_channel->name, nick) == 0)
+                if ((weechat_strcasecmp (ptr_channel->name, nick) == 0)
+                    && !irc_channel_search (server, new_nick))
                 {
                     free (ptr_channel->name);
                     ptr_channel->name = strdup (new_nick);
