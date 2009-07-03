@@ -220,7 +220,9 @@ Extensions/scripts
 
 Sur certaines distributions comme Debian, les extensions sont disponibles
 via un paquet séparé (par exemple weechat-plugins).
-Les extensions sont automatiquement chargées lorsqu'elles sont trouvées.
+Les extensions sont automatiquement chargées lorsqu'elles sont trouvées
+(merci de regarder la documentation WeeChat pour charger/décharger des
+extensions ou des scripts).
 
 Des extensions permettent d'utiliser des scripts dans WeeChat (dans
 différent langages comme Perl, Python, Ruby, Lua et Tcl). Ces extensions
@@ -230,8 +232,12 @@ commandes telles que `/perl`, utilisées pour charger les scripts.
 Plusieurs extensions/scripts (de contributeurs) sont disponibles pour
 WeeChat : http://weechat.flashtux.org/plugins.php
 
-Merci de regarder la documentation WeeChat pour charger/décharger des
-extensions ou des scripts.
+La manière la plus simple pour installer des scripts consiste à utiliser le
+script 'weeget.py' :
+
+. téléchargez et copiez 'weeget.py' dans ~/.weechat/python/autoload/
+. chargez le script : `/python autoload`
+. liste des scripts : `/weeget list` (pour l'aide: `/help weeget`)
 
 
 [[more_doc]]
