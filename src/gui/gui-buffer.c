@@ -1723,10 +1723,10 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
             if (ptr_buffer == ptr_last_buffer)
                 break;
         }
-        gui_buffers->prev_buffer = buffer;
-        buffer->prev_buffer = NULL;
-        buffer->next_buffer = gui_buffers;
-        gui_buffers = buffer;
+        gui_buffers->prev_buffer = ptr_last_buffer;
+        ptr_first_buffer->prev_buffer = NULL;
+        ptr_last_buffer->next_buffer = gui_buffers;
+        gui_buffers = ptr_first_buffer;
     }
     else
     {
@@ -1734,7 +1734,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         for (ptr_buffer_pos = gui_buffers; ptr_buffer_pos;
              ptr_buffer_pos = ptr_buffer_pos->next_buffer)
         {
-            if (ptr_buffer_pos->number == number)
+            if (ptr_buffer_pos->number >= number)
                 break;
         }
         if (ptr_buffer_pos)
