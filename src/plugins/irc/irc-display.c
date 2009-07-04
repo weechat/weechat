@@ -99,15 +99,16 @@ irc_display_away (struct t_irc_server *server, const char *string1, const char *
     {
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            weechat_printf (ptr_channel->buffer,
-                            "%s[%s%s%s %s: %s%s]",
-                            IRC_COLOR_CHAT_DELIMITERS,
-                            IRC_COLOR_CHAT_NICK,
-                            server->nick,
-                            IRC_COLOR_CHAT,
-                            string1,
-                            string2,
-                            IRC_COLOR_CHAT_DELIMITERS);
+            weechat_printf_tags (ptr_channel->buffer,
+                                 "away_info",
+                                 "%s[%s%s%s %s: %s%s]",
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_NICK,
+                                 server->nick,
+                                 IRC_COLOR_CHAT,
+                                 string1,
+                                 string2,
+                                 IRC_COLOR_CHAT_DELIMITERS);
         }
     }
 }
