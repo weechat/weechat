@@ -136,9 +136,19 @@ Se connecter au serveur IRC et rejoindre les canaux
 
   /connect oftc
 
-Note : cette commande peut aussi être utilisée pour créer et se connecter
-au serveur sans utiliser la commande `/server` (devrais-je répéter que vous
-pouvez voir l'aide pour cette commande avec `/help connect` ? ;)
+[NOTE]
+Cette commande peut aussi être utilisée pour créer et se connecter au serveur
+sans utiliser la commande `/server` (devrais-je répéter que vous pouvez voir
+l'aide pour cette commande avec `/help connect` ?).
+
+Par défaut, les tampons des serveurs sont mélangés avec le tampon 'core'
+WeeChat. Pour basculer entre le tampon 'core' et les tampons des serveurs, il
+faut utiliser la touche ctrl-X.
+
+Il est possible de désactiver le mélange des tampons serveurs pour avoir un
+tampon distinct par serveur :
+
+  /set irc.look.server_buffer independent
 
 
 [[join_part_irc_channels]]

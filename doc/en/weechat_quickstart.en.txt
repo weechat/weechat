@@ -129,9 +129,18 @@ Connect to IRC server and auto-join channels
 
   /connect oftc
 
-Note: this command can be used to create and connect to a new server
-without using `/server` command (should I repeat you can see help for
-this command with `/help connect` ? ;)
+[NOTE]
+This command can be used to create and connect to a new server without using
+`/server` command (should I repeat you can see help for this command with
+`/help connect` ?).
+
+By default, server buffers are merged with WeeChat 'core' buffer. To switch
+between 'core' buffer and server buffers, you can use ctrl-X.
+
+It is possible to disable auto merge of server buffers to have independent
+server buffers:
+
+  /set irc.look.server_buffer independent
 
 
 [[join_part_irc_channels]]
