@@ -183,7 +183,8 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_ignore *ptr_ignore;
-    char *pos_comma, *server_name;
+    char **argv;
+    int argc;
     
     /* make C compiler happy */
     (void) data;
@@ -277,53 +278,67 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
         {
             ptr_server = NULL;
             ptr_channel = NULL;
-            pos_comma = strchr (arguments, ',');
-            if (pos_comma)
+            argv = weechat_string_split (arguments, ",", 0, 0, &argc);
+            if (argv)
             {
-                server_name = weechat_strndup (arguments, pos_comma - arguments);
-                if (server_name)
+                if (argc >= 2)
                 {
-                    ptr_server = irc_server_search (server_name);
-                    if (ptr_server)
+                    ptr_server = irc_server_search (argv[0]);
+                    if (!ptr_server)
                     {
-                        ptr_channel = irc_channel_search (ptr_server,
-                                                          pos_comma + 1);
+                        weechat_string_free_split (argv);
+                        return NULL;
                     }
-                    free (server_name);
-                }
-            }
-            if (ptr_server && ptr_channel)
-            {
-                if (pointer && !irc_nick_valid (ptr_channel, pointer))
-                    return NULL;
-                
-                ptr_infolist = weechat_infolist_new ();
-                if (ptr_infolist)
-                {
-                    if (pointer)
+                    ptr_channel = irc_channel_search (ptr_server, argv[1]);
+                    if (!ptr_channel)
                     {
-                        /* build list with only one nick */
-                        if (!irc_nick_add_to_infolist (ptr_infolist, pointer))
+                        weechat_string_free_split (argv);
+                        return NULL;
+                    }
+                    if (!pointer && (argc >= 3))
+                    {
+                        pointer = irc_nick_search (ptr_channel, argv[2]);
+                        if (!pointer)
                         {
-                            weechat_infolist_free (ptr_infolist);
+                            weechat_string_free_split (argv);
                             return NULL;
                         }
-                        return ptr_infolist;
                     }
-                    else
+                }
+                weechat_string_free_split (argv);
+                if (ptr_server && ptr_channel)
+                {
+                    if (pointer && !irc_nick_valid (ptr_channel, pointer))
+                        return NULL;
+                    
+                    ptr_infolist = weechat_infolist_new ();
+                    if (ptr_infolist)
                     {
-                        /* build list with all nicks of channel */
-                        for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                             ptr_nick = ptr_nick->next_nick)
+                        if (pointer)
                         {
-                            if (!irc_nick_add_to_infolist (ptr_infolist,
-                                                           ptr_nick))
+                            /* build list with only one nick */
+                            if (!irc_nick_add_to_infolist (ptr_infolist, pointer))
                             {
                                 weechat_infolist_free (ptr_infolist);
                                 return NULL;
                             }
+                            return ptr_infolist;
                         }
-                        return ptr_infolist;
+                        else
+                        {
+                            /* build list with all nicks of channel */
+                            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                                 ptr_nick = ptr_nick->next_nick)
+                            {
+                                if (!irc_nick_add_to_infolist (ptr_infolist,
+                                                               ptr_nick))
+                                {
+                                    weechat_infolist_free (ptr_infolist);
+                                    return NULL;
+                                }
+                            }
+                            return ptr_infolist;
+                        }
                     }
                 }
             }
