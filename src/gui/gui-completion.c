@@ -1536,7 +1536,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
     /* look for context */
     gui_completion_free_data (completion);
     gui_completion_buffer_init (completion, completion->buffer);
-    command = ((data[0] == '/') && (data[1] != '/')) ? 1 : 0;
+    command = (data[0] == '/') ? 1 : 0;
     command_arg = 0;
     i = 0;
     while (i < pos)
@@ -1545,7 +1545,10 @@ gui_completion_find_context (struct t_gui_completion *completion,
         {
             command_arg++;
             i++;
-            while ((i < pos) && (data[i] == ' ')) i++;
+            while ((i < pos) && (data[i] == ' '))
+            {
+                i++;
+            }
             if (!completion->args)
                 completion->args = strdup (data + i);
         }
@@ -1582,23 +1585,33 @@ gui_completion_find_context (struct t_gui_completion *completion,
             {
                 i--;
                 while ((i >= 0) && (data[i] != ' '))
+                {
                     i--;
+                }
                 pos_start = i + 1;
             }
         }
         else
         {
             while ((i >= 0) && (data[i] != ' '))
+            {
                 i--;
+            }
             pos_start = i + 1;
         }
         i = pos;
         while ((i < size) && (data[i] != ' '))
+        {
             i++;
+        }
         pos_end = i - 1;
 
         if (completion->context == GUI_COMPLETION_COMMAND)
+        {
             pos_start++;
+            if (data[pos_start] == '/')
+                pos_start++;
+        }
         
         completion->base_word_pos = pos_start;
         
@@ -1607,7 +1620,9 @@ gui_completion_find_context (struct t_gui_completion *completion,
             completion->position_replace = pos_start;
             completion->base_word = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
+            {
                 completion->base_word[i - pos_start] = data[i];
+            }
             completion->base_word[pos_end - pos_start + 1] = '\0';
         }
     }
@@ -1620,19 +1635,27 @@ gui_completion_find_context (struct t_gui_completion *completion,
     {
         pos_start = 0;
         while ((pos_start < size) && (data[pos_start] != '/'))
+        {
             pos_start++;
+        }
         if (data[pos_start] == '/')
         {
             pos_start++;
+            if (data[pos_start] == '/')
+                pos_start++;
             pos_end = pos_start;
             while ((pos_end < size) && (data[pos_end] != ' '))
+            {
                 pos_end++;
+            }
             if (data[pos_end] == ' ')
                 pos_end--;
             
             completion->base_command = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
+            {
                 completion->base_command[i - pos_start] = data[i];
+            }
             completion->base_command[pos_end - pos_start + 1] = '\0';
             gui_completion_build_list (completion);
         }
