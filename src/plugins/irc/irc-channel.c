@@ -116,13 +116,21 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
                     number_found = number_last_channel + 1;
                 break;
         }
-        
-        /* switch to number found */
-        if ((number_found >= 1) && (number_found != number))
+    }
+    else
+    {
+        if (weechat_config_integer (irc_config_look_server_buffer) ==
+            IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT)
         {
-            snprintf (str_number, sizeof (str_number), "%d", number_found);
-            weechat_buffer_set (buffer, "number", str_number);
+            number_found = weechat_buffer_get_integer (server->buffer, "number") + 1;
         }
+    }
+    
+    /* switch to number found */
+    if ((number_found >= 1) && (number_found != number))
+    {
+        snprintf (str_number, sizeof (str_number), "%d", number_found);
+        weechat_buffer_set (buffer, "number", str_number);
     }
 }
 
