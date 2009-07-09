@@ -243,11 +243,6 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: brown)
 
-* *weechat.color.nicklist_separator*
-** description: couleur du texte pour le séparateur de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: blue)
-
 * *weechat.color.separator*
 ** description: couleur du fond pour les séparateurs de fenêtres (quand divisé)
 ** type: couleur

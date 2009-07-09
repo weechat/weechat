@@ -148,7 +148,6 @@ struct t_config_option *config_color_nicklist_prefix3;
 struct t_config_option *config_color_nicklist_prefix4;
 struct t_config_option *config_color_nicklist_prefix5;
 struct t_config_option *config_color_nicklist_more;
-struct t_config_option *config_color_nicklist_separator;
 
 /* config, completion section */
 
@@ -1783,12 +1782,6 @@ config_weechat_init_options ()
         "nicklist_more", "color",
         N_("text color for '+' when scrolling nicks in nicklist"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_separator = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_separator", "color",
-        N_("text color for nicklist separator"),
-        NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     
     /* completion */

@@ -243,11 +243,6 @@
 ** type: color
 ** values: a color name (default value: brown)
 
-* *weechat.color.nicklist_separator*
-** description: text color for nicklist separator
-** type: color
-** values: a color name (default value: blue)
-
 * *weechat.color.separator*
 ** description: background color for window separators (when split)
 ** type: color

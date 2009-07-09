@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-25 10:20+0200\n"
+"POT-Creation-Date: 2009-07-09 21:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1460,9 +1460,6 @@ msgid "text color for prefix #5 in nicklist"
 msgstr ""
 
 msgid "text color for '+' when scrolling nicks in nicklist"
-msgstr ""
-
-msgid "text color for nicklist separator"
 msgstr ""
 
 msgid ""

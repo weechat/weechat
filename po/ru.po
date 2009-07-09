@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-06-25 10:20+0200\n"
+"POT-Creation-Date: 2009-07-09 21:22+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1735,10 +1735,6 @@ msgstr "цвет ника"
 #, fuzzy
 msgid "text color for '+' when scrolling nicks in nicklist"
 msgstr "цвет '+' при прокрутке ников"
-
-#, fuzzy
-msgid "text color for nicklist separator"
-msgstr "цвет разделителя ников"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -5496,6 +5492,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "text color for nicklist separator"
+#~ msgstr "цвет разделителя ников"
 
 #, fuzzy
 #~ msgid "servers"
