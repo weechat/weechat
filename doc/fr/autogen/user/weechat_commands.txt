@@ -120,7 +120,7 @@
               -all: supprime tous les filtres
   extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
               tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
-             regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
+             regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|')
   
   La touche par défaut alt+'=' active/désactive le filtrage.
   

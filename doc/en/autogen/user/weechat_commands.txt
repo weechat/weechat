@@ -120,7 +120,7 @@
            -all: delete all filters
   plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
            tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-          regex: regular expression to search in line (use \t to separate prefix from message)
+          regex: regular expression to search in line (use \t to separate prefix from message, special chars like '|' must be escaped: '\|')
   
   The default key alt+'=' toggles filtering on/off.
   
