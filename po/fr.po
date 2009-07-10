@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-07-09 21:43+0200\n"
-"PO-Revision-Date: 2009-07-09 21:44+0200\n"
+"POT-Creation-Date: 2009-07-10 23:40+0200\n"
+"PO-Revision-Date: 2009-07-10 23:41+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4861,6 +4861,14 @@ msgstr "liste des fenêtres"
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sErreur: impossible de charger l'extension \"%s\": %s"
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+"%sSi vous essayez de charger un script et non une extension C, essayez la "
+"commande pour charger les scripts (/perl, /python, ...)"
 
 #, c-format
 msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"

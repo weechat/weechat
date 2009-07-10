@@ -187,6 +187,11 @@ plugin_load (const char *filename)
                          _("%sError: unable to load plugin \"%s\": %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          full_name, dlerror());
+        gui_chat_printf (NULL,
+                         _("%sIf you're trying to load a script and not a C "
+                           "plugin, try command to load scripts (/perl, "
+                           "/python, ...)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         free (full_name);
         return NULL;
     }
