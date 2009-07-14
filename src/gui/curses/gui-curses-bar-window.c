@@ -607,7 +607,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     
     /* move cursor if it was asked in an item content (input_text does that
        to move cursor in user input text) */
-    if (window && (gui_current_window == window)
+    if ((!window || (gui_current_window == window))
         && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))
     {
         move (bar_window->cursor_y, bar_window->cursor_x);
