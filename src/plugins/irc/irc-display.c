@@ -40,10 +40,11 @@
 void
 irc_display_hide_password (char *string, int look_for_nickserv)
 {
-    char *pos_nickserv, *pos, *pos_pwd;
-
+    char *pos_nickserv, *pos, *pos_pwd, *pos_space;
+    int char_size;
+    
     pos = string;
-    while (1)
+    while (pos)
     {
         if (look_for_nickserv)
         {
@@ -52,9 +53,23 @@ irc_display_hide_password (char *string, int look_for_nickserv)
                 return;
             pos = pos_nickserv + 9;
             while (pos[0] == ' ')
+            {
                 pos++;
-            if ((strncmp (pos, "identify ", 9) == 0)
-                || (strncmp (pos, "register ", 9) == 0))
+            }
+            if (strncmp (pos, "identify ", 9) == 0)
+            {
+                pos_pwd = pos + 9;
+                pos_space = strchr (pos_pwd, ' ');
+                if (pos_space)
+                {
+                    pos_pwd = pos_space + 1;
+                    while (pos_pwd[0] == ' ')
+                    {
+                        pos_pwd++;
+                    }
+                }
+            }
+            else if (strncmp (pos, "register ", 9) == 0)
                 pos_pwd = pos + 9;
             else
                 pos_pwd = NULL;
@@ -62,23 +77,42 @@ irc_display_hide_password (char *string, int look_for_nickserv)
         else
         {
             pos_pwd = strstr (pos, "identify ");
-            if (!pos_pwd)
+            if (pos_pwd)
+            {
+                pos_pwd += 9;
+                pos_space = strchr (pos_pwd, ' ');
+                if (pos_space)
+                {
+                    pos_pwd = pos_space + 1;
+                    while (pos_pwd[0] == ' ')
+                    {
+                        pos_pwd++;
+                    }
+                }
+            }
+            else
+            {
                 pos_pwd = strstr (pos, "register ");
+                if (pos_pwd)
+                    pos_pwd += 9;
+            }
             if (!pos_pwd)
                 return;
-            pos_pwd += 9;
         }
 
         if (pos_pwd)
         {
             while (pos_pwd[0] == ' ')
-                pos_pwd++;
-            
-            while (pos_pwd[0] && (pos_pwd[0] != ';') && (pos_pwd[0] != ' ')
-                   && (pos_pwd[0] != '"'))
             {
-                pos_pwd[0] = '*';
                 pos_pwd++;
+            }
+            
+            while (pos_pwd && pos_pwd[0] && (pos_pwd[0] != ' '))
+            {
+                char_size = weechat_utf8_char_size (pos_pwd);
+                if (char_size > 0)
+                    memset (pos_pwd, '*', char_size);
+                pos_pwd = weechat_utf8_next_char (pos_pwd);
             }
             pos = pos_pwd;
         }
@@ -90,7 +124,8 @@ irc_display_hide_password (char *string, int look_for_nickserv)
  */
 
 void
-irc_display_away (struct t_irc_server *server, const char *string1, const char *string2)
+irc_display_away (struct t_irc_server *server, const char *string1,
+                  const char *string2)
 {
     struct t_irc_channel *ptr_channel;
     
