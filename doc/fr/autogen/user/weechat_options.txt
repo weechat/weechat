@@ -314,7 +314,7 @@
 ** valeurs: toute chaîne (valeur par défaut: "[]-^")
 
 * *weechat.completion.partial_completion_alert*
-** description: alterte de l'utilisateur lorsqu'une complétion partielle survient
+** description: alterte l'utilisateur lorsqu'une complétion partielle survient
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
@@ -522,6 +522,11 @@
 ** description: pourcentage de l'écran à faire défiler lors du défilement avec page précédente ou suivante (par exemple 100 signifie une page, 50 une demi-page)
 ** type: entier
 ** valeurs: 1 .. 100 (valeur par défaut: 100)
+
+* *weechat.look.search_text_not_found_alert*
+** description: alterte l'utilisateur lorsque le texte cherché n'est pas trouvé dans le tampon
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
 
 * *weechat.look.set_title*
 ** description: définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version

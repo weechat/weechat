@@ -523,6 +523,11 @@
 ** type: integer
 ** values: 1 .. 100 (default value: 100)
 
+* *weechat.look.search_text_not_found_alert*
+** description: alert user when text sought is not found in buffer
+** type: boolean
+** values: on, off (default value: on)
+
 * *weechat.look.set_title*
 ** description: set title for window (terminal for Curses GUI) with name and version
 ** type: boolean

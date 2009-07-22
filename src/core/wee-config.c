@@ -99,6 +99,7 @@ struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_scroll_page_percent;
+struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_set_title;
 
 /* config, colors section */
@@ -1409,6 +1410,11 @@ config_weechat_init_options ()
         N_("percent of screen to scroll when scrolling one page up or down "
            "(for example 100 means one page, 50 half-page)"),
         NULL, 1, 100, "100", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_search_text_not_found_alert = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "search_text_not_found_alert", "boolean",
+        N_("alert user when text sought is not found in buffer"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_set_title = config_file_new_option (
         weechat_config_file, ptr_section,
         "set_title", "boolean",
