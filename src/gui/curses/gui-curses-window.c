@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <libgen.h>
 #include <sys/ioctl.h>
 
