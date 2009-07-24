@@ -1231,7 +1231,7 @@ hook_process_child (struct t_hook *hook_process)
 
 void
 hook_process_child_read (struct t_hook *hook_process, int fd,
-                         int stdout, struct t_hook **hook_fd)
+                         int out, struct t_hook **hook_fd)
 {
     char buffer[4096];
     int num_read;
@@ -1244,8 +1244,8 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
             (hook_process->callback_data,
              HOOK_PROCESS(hook_process, command),
              WEECHAT_HOOK_PROCESS_RUNNING,
-             (stdout) ? buffer : NULL,
-             (stdout) ? NULL : buffer);
+             (out) ? buffer : NULL,
+             (out) ? NULL : buffer);
     }
     else if (num_read == 0)
     {

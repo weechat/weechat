@@ -385,8 +385,8 @@ struct t_weechat_plugin
                                     int (*callback)(void *data,
                                                     const char *command,
                                                     int return_code,
-                                                    const char *stdout,
-                                                    const char *stderr),
+                                                    const char *out,
+                                                    const char *err),
                                     void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
                                     const char *proxy,

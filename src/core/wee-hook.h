@@ -160,8 +160,8 @@ struct t_hook_fd
 /* hook process */
 
 typedef int (t_hook_callback_process)(void *data, const char *command,
-                                      int return_code, const char *stdout,
-                                      const char *stderr);
+                                      int return_code, const char *out,
+                                      const char *err);
 
 struct t_hook_process
 {

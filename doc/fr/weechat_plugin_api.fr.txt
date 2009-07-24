@@ -4112,8 +4112,8 @@ struct t_hook *weechat_hook_process (const char *command,
                                      int (*callback)(void *data,
                                                      const char *command,
                                                      int return_code,
-                                                     const char *stdout,
-                                                     const char *stderr),
+                                                     const char *out,
+                                                     const char *err),
                                      void *callback_data);
 ----------------------------------------
 
@@ -4132,8 +4132,8 @@ Paramètres :
 *** '< 0' : 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (données disponibles, mais le
     fils tourne toujours) ou 'WEECHAT_HOOK_PROCESS_ERROR' (erreur en lançant
     la commande)
-** 'stdout' : sortie standard de la commande
-** 'stderr' : erreurs de la commande
+** 'out' : sortie standard de la commande (stdout)
+** 'err' : erreurs de la commande (stderr)
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
 
@@ -4147,7 +4147,7 @@ Exemple :
 ----------------------------------------
 int
 mon_processus_cb (void *data, const char *command, int return_code,
-                  const char *stdout, const char *stderr)
+                  const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
     {
@@ -4160,14 +4160,14 @@ mon_processus_cb (void *data, const char *command, int return_code,
         weechat_printf (NULL, "return_code = %d", return_code);
     }
     
-    if (stdout)
+    if (out)
     {
-        weechat_printf (NULL, "stdout : %s", stdout);
+        weechat_printf (NULL, "stdout : %s", out);
     }
     
-    if (stderr)
+    if (err)
     {
-        weechat_printf (NULL, "stderr : %s", stderr);
+        weechat_printf (NULL, "stderr : %s", err);
     }
     
     return WEECHAT_RC_OK;

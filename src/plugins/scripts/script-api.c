@@ -887,8 +887,8 @@ script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
                          int (*callback)(void *data,
                                          const char *command,
                                          int return_code,
-                                         const char *stdout,
-                                         const char *stderr),
+                                         const char *out,
+                                         const char *err),
                          const char *function,
                          const char *data)
 {

@@ -3432,7 +3432,7 @@ weechat_lua_api_hook_fd (lua_State *L)
 int
 weechat_lua_api_hook_process_cb (void *data,
                                  const char *command, int return_code,
-                                 const char *stdout, const char *stderr)
+                                 const char *out, const char *err)
 {
     struct t_script_callback *script_callback;
     char *lua_argv[6], str_rc[32], empty_arg[1] = { '\0' };
@@ -3447,8 +3447,8 @@ weechat_lua_api_hook_process_cb (void *data,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = (command) ? (char *)command : empty_arg;
         lua_argv[2] = str_rc;
-        lua_argv[3] = (stdout) ? (char *)stdout : empty_arg;
-        lua_argv[4] = (stderr) ? (char *)stderr : empty_arg;
+        lua_argv[3] = (out) ? (char *)out : empty_arg;
+        lua_argv[4] = (err) ? (char *)err : empty_arg;
         lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,

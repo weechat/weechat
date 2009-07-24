@@ -4046,8 +4046,8 @@ struct t_hook *weechat_hook_process (const char *command,
                                      int (*callback)(void *data,
                                                      const char *command,
                                                      int return_code,
-                                                     const char *stdout,
-                                                     const char *stderr),
+                                                     const char *out,
+                                                     const char *err),
                                      void *callback_data);
 ----------------------------------------
 
@@ -4065,8 +4065,8 @@ Arguments:
 *** '>= 0': child command return code
 *** '< 0': 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (data available, but child still
     running) or 'WEECHAT_HOOK_PROCESS_ERROR' (error when launching command)
-** 'stdout': standard output of command
-** 'stderr': error output of command
+** 'out': standard output of command (stdout)
+** 'err': error output of command (stderr)
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -4079,7 +4079,7 @@ Example:
 ----------------------------------------
 int
 my_process_cb (void *data, const char *command, int return_code,
-               const char *stdout, const char *stderr)
+               const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
     {
@@ -4092,14 +4092,14 @@ my_process_cb (void *data, const char *command, int return_code,
         weechat_printf (NULL, "return_code = %d", return_code);
     }
     
-    if (stdout)
+    if (out)
     {
-        weechat_printf (NULL, "stdout: %s", stdout);
+        weechat_printf (NULL, "stdout: %s", out);
     }
     
-    if (stderr)
+    if (err)
     {
-        weechat_printf (NULL, "stderr: %s", stderr);
+        weechat_printf (NULL, "stderr: %s", err);
     }
     
     return WEECHAT_RC_OK;

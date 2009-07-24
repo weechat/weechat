@@ -2886,7 +2886,7 @@ static XS (XS_weechat_api_hook_fd)
 int
 weechat_perl_api_hook_process_cb (void *data,
                                   const char *command, int return_code,
-                                  const char *stdout, const char *stderr)
+                                  const char *out, const char *err)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[6], str_rc[32], empty_arg[1] = { '\0' };
@@ -2901,8 +2901,8 @@ weechat_perl_api_hook_process_cb (void *data,
         perl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         perl_argv[1] = (command) ? (char *)command : empty_arg;
         perl_argv[2] = str_rc;
-        perl_argv[3] = (stdout) ? (char *)stdout : empty_arg;
-        perl_argv[4] = (stderr) ? (char *)stderr : empty_arg;
+        perl_argv[3] = (out) ? (char *)out : empty_arg;
+        perl_argv[4] = (err) ? (char *)err : empty_arg;
         perl_argv[5] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,

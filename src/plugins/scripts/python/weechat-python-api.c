@@ -3050,7 +3050,7 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
 int
 weechat_python_api_hook_process_cb (void *data,
                                     const char *command, int return_code,
-                                    const char *stdout, const char *stderr)
+                                    const char *out, const char *err)
 {
     struct t_script_callback *script_callback;
     char *python_argv[6], str_rc[32], empty_arg[1] = { '\0' };
@@ -3065,8 +3065,8 @@ weechat_python_api_hook_process_cb (void *data,
         python_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         python_argv[1] = (command) ? (char *)command : empty_arg;
         python_argv[2] = str_rc;
-        python_argv[3] = (stdout) ? (char *)stdout : empty_arg;
-        python_argv[4] = (stderr) ? (char *)stderr : empty_arg;
+        python_argv[3] = (out) ? (char *)out : empty_arg;
+        python_argv[4] = (err) ? (char *)err : empty_arg;
         python_argv[5] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
