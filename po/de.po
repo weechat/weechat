@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-07-22 18:00+0200\n"
+"POT-Creation-Date: 2009-07-27 13:51+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3028,7 +3028,8 @@ msgstr "Nickname: Nickname"
 msgid "join a channel"
 msgstr "einen Channel betreten"
 
-msgid "channel[,channel] [key[,key]]"
+#, fuzzy
+msgid "[channel[,channel] [key[,key]]]"
 msgstr "Channel[,Channel] [Passwort[,Passwort]]"
 
 msgid ""

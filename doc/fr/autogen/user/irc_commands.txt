@@ -170,7 +170,7 @@
   pseudo: pseudo
 ........................................
 
-&bull; *`/join`* `canal[,canal] [clé[,clé]]`::
+&bull; *`/join`* `[canal[,canal] [clé[,clé]]]`::
 
 ........................................
   joindre un canal

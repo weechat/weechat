@@ -170,7 +170,7 @@
   nickname: nickname
 ........................................
 
-&bull; *`/join`* `channel[,channel] [key[,key]]`::
+&bull; *`/join`* `[channel[,channel] [key[,key]]]`::
 
 ........................................
   join a channel

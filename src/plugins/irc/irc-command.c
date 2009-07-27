@@ -1545,7 +1545,7 @@ int
 irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("join", 1);
     
     /* make C compiler happy */
@@ -1556,7 +1556,15 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
         irc_command_join_server (ptr_server, argv_eol[1]);
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "join");
+        if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            && !ptr_channel->nicks)
+        {
+            irc_command_join_server (ptr_server, ptr_channel->name);
+        }
+        else
+        {
+            IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "join");
+        }
     }
     
     return WEECHAT_RC_OK;
@@ -3822,7 +3830,7 @@ irc_command_init ()
                           "%(nicks)|%*", &irc_command_ison, NULL);
     weechat_hook_command ("join",
                           N_("join a channel"),
-                          N_("channel[,channel] [key[,key]]"),
+                          N_("[channel[,channel] [key[,key]]]"),
                           N_("channel: channel name to join\n"
                              "    key: key to join the channel"),
                           "%(irc_channels)", &irc_command_join, NULL);
