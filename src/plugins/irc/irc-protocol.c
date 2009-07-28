@@ -834,7 +834,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
             ptr_channel = irc_channel_search (server, pos_target);
             ptr_nick = irc_nick_search (ptr_channel, nick);
             weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
-                                 irc_protocol_tags (command, NULL),
+                                 irc_protocol_tags (command, "notify_message"),
                                  "%s%sNotice%s(%s%s%s)%s: %s",
                                  weechat_prefix ("network"),
                                  IRC_COLOR_NOTICE,
