@@ -1123,6 +1123,30 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
 }
 
 /*
+ * gui_buffer_compute_num_displayed: compute "num_displayed" for all buffers
+ */
+
+void
+gui_buffer_compute_num_displayed ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *ptr_window;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        ptr_buffer->num_displayed = 0;
+    }
+    
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (ptr_window->buffer)
+            ptr_window->buffer->num_displayed++;
+    }
+}
+
+/*
  * gui_buffer_add_value_num_displayed: add value to "num_displayed" variable
  *                                     for a buffer (value can be negative)
  */
@@ -1449,7 +1473,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     {
         (void)(buffer->close_callback) (buffer->close_callback_data, buffer);
     }
-
+    
     /* first unmerge buffer if it is merged to at least one other buffer */
     if (gui_buffer_count_merged_buffers (buffer->number) > 1)
         gui_buffer_unmerge (buffer, -1);
@@ -1839,6 +1863,8 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         ptr_buffer->number--;
     }
     
+    gui_buffer_compute_num_displayed ();
+    
     gui_window_ask_refresh (1);
     
     hook_signal_send ("buffer_merged",
@@ -1948,6 +1974,8 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     {
         ptr_buffer->number++;
     }
+    
+    gui_buffer_compute_num_displayed ();
     
     gui_window_ask_refresh (1);
     

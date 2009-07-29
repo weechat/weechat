@@ -1067,8 +1067,8 @@ gui_lines_print_log (struct t_gui_lines *lines)
         log_printf ("    first_line . . . . . : 0x%lx", lines->first_line);
         log_printf ("    last_line. . . . . . : 0x%lx", lines->last_line);
         log_printf ("    last_read_line . . . : 0x%lx", lines->last_read_line);
-        log_printf ("    lines_count. . . . . . : %d",  lines->lines_count);
-        log_printf ("    first_line_not_read. . : %d",  lines->first_line_not_read);
+        log_printf ("    lines_count. . . . . : %d",    lines->lines_count);
+        log_printf ("    first_line_not_read. : %d",    lines->first_line_not_read);
         log_printf ("    lines_hidden . . . . : %d",    lines->lines_hidden);
         log_printf ("    buffer_max_length. . : %d",    lines->buffer_max_length);
         log_printf ("    prefix_max_length. . : %d",    lines->prefix_max_length);
