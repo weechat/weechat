@@ -965,7 +965,10 @@ irc_server_parse_message (const char *message, char **nick, char **host,
         *channel = NULL;
     if (arguments)
         *arguments = NULL;
-    
+
+    /* we'll use this message as example:
+       :FlashCode!n=FlashCod@host.com PRIVMSG #channel :hello!
+    */
     if (message[0] == ':')
     {
         pos2 = strchr (message, '!');
@@ -991,7 +994,8 @@ irc_server_parse_message (const char *message, char **nick, char **host,
     }
     else
         pos = message;
-    
+
+    /* pos is pointer on PRIVMSG #channel :hello! */
     if (pos && pos[0])
     {
         while (pos[0] == ' ')
@@ -1001,6 +1005,7 @@ irc_server_parse_message (const char *message, char **nick, char **host,
         pos2 = strchr (pos, ' ');
         if (pos2)
         {
+            /* pos2 is pointer on #channel :hello! */
             if (command)
                 *command = weechat_strndup (pos, pos2 - pos);
             pos2++;
@@ -1028,13 +1033,10 @@ irc_server_parse_message (const char *message, char **nick, char **host,
                     pos3 = strchr (pos2, ' ');
                     if (nick && !*nick)
                     {
-                        if (nick)
-                        {
-                            if (pos3)
-                                *nick = weechat_strndup (pos2, pos3 - pos2);
-                            else
-                                *nick = strdup (pos2);
-                        }
+                        if (pos3)
+                            *nick = weechat_strndup (pos2, pos3 - pos2);
+                        else
+                            *nick = strdup (pos2);
                     }
                     if (pos3)
                     {
@@ -1382,7 +1384,7 @@ irc_server_msgq_flush ()
     char *ptr_data, *new_msg, *ptr_msg, *pos;
     char *nick, *host, *command, *channel;
     char *msg_decoded, *msg_decoded_without_color;
-    char str_modifier[64], modifier_data[256], *ptr_chan_nick;
+    char str_modifier[64], modifier_data[256];
     
     while (irc_recv_msgq)
     {
@@ -1437,22 +1439,31 @@ irc_server_msgq_flush ()
                                                   NULL);
                         
                         /* convert charset for message */
-                        ptr_chan_nick = (channel) ? channel : nick;
-                        if (ptr_chan_nick
-                            && (!nick || !host || (strcmp (nick, host) != 0)))
+                        if (channel)
                         {
                             snprintf (modifier_data, sizeof (modifier_data),
                                       "%s.%s.%s",
                                       weechat_plugin->name,
                                       irc_recv_msgq->server->name,
-                                      ptr_chan_nick);
+                                      channel);
                         }
                         else
                         {
-                            snprintf (modifier_data, sizeof (modifier_data),
-                                      "%s.%s",
-                                      weechat_plugin->name,
-                                      irc_recv_msgq->server->name);
+                            if (nick && (!host || (strcmp (nick, host) != 0)))
+                            {
+                                snprintf (modifier_data, sizeof (modifier_data),
+                                          "%s.%s.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name,
+                                          nick);
+                            }
+                            else
+                            {
+                                snprintf (modifier_data, sizeof (modifier_data),
+                                          "%s.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name);
+                            }
                         }
                         msg_decoded = weechat_hook_modifier_exec ("charset_decode",
                                                                   modifier_data,
