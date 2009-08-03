@@ -120,7 +120,7 @@ Pour les versions > = 0.2.3 :
 ** vérifiez que votre terminal est compatible UTF-8
    (un terminal conseillé pour l'UTF-8 est rxvt-unicode)
 ** si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
-   ("`defutf8 on`" dans ~/.screnrc ou `screen -U` pour lancer screen)
+   ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen)
 
 [NOTE]
 La locale UTF-8 est recommandée pour WeeChat. Si vous utilisez ISO ou une autre
