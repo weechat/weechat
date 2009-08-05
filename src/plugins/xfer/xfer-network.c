@@ -101,7 +101,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
     if (num_read > 0)
     {
         error = NULL;
-        xfer->pos = strtol (bufpipe + 2, &error, 10);
+        xfer->pos = (unsigned long)(strtoll (bufpipe + 2, &error, 10));
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
         
