@@ -457,10 +457,12 @@ utf8_charcasecmp (const char *string1, const char *string2)
         return (string1) ? 1 : ((string2) ? -1 : 0);
     
     wchar1 = utf8_wide_char (string1);
-    wchar1 = towlower (wchar1);
+    if ((wchar1 >= 'A') && (wchar1 <= 'Z'))
+        wchar1 += ('a' - 'A');
     
     wchar2 = utf8_wide_char (string2);
-    wchar2 = towlower (wchar2);
+    if ((wchar2 >= 'A') && (wchar2 <= 'Z'))
+        wchar2 += ('a' - 'A');
     
     return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
 }
