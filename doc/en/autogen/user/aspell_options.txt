@@ -24,7 +24,7 @@
 ** values: 0 .. 2147483647 (default value: 2)
 
 * *aspell.look.color*
-** description: color used for mispelled words
+** description: color used for misspelled words
 ** type: color
 ** values: a color name (default value: lightred)
 

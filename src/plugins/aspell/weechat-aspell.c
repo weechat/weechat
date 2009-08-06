@@ -608,7 +608,7 @@ weechat_aspell_string_is_simili_number (const char *word)
 
 /*
  * weechat_aspell_check_word: spell check a word
- *                            return 1 if word is ok, 0 if word is mispelled
+ *                            return 1 if word is ok, 0 if word is misspelled
  */
 
 int
@@ -814,7 +814,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             strcpy (result + index_result, ptr_string);
             index_result += length_word;
             
-            /* add normal color (after mispelled word) */
+            /* add normal color (after misspelled word) */
             if (!word_ok)
             {
                 strcpy (result + index_result, color_normal);

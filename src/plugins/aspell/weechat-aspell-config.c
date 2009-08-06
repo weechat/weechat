@@ -273,7 +273,7 @@ weechat_aspell_config_init ()
     weechat_aspell_config_look_color = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "color", "color",
-        N_("color used for mispelled words"),
+        N_("color used for misspelled words"),
         NULL, 0, 0, "lightred", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* check */
