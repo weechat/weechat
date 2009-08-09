@@ -39,6 +39,7 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindTCL.cmake \
              cmake/makedist.sh.in \
              po/CMakeLists.txt \
+             po/srcfiles.cmake \
              weechat.spec \
              weechat_icon_32.png \
              weechat.pc.in
