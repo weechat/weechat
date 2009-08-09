@@ -4,7 +4,7 @@
 ** values: any string (default value: "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic")
 
 * *aspell.check.default_dict*
-** description: default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitely enabled it)
+** description: default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitly enabled it)
 ** type: string
 ** values: any string (default value: "")
 

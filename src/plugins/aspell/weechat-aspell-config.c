@@ -302,7 +302,7 @@ weechat_aspell_config_init ()
         "default_dict", "string",
         N_("default dictionary (or comma separated list of dictionaries) to "
            "use when buffer has no dictionary defined (leave blank to disable "
-           "aspell on buffers for which you didn't explicitely enabled it)"),
+           "aspell on buffers for which you didn't explicitly enabled it)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, &weechat_aspell_config_change_default_dict, NULL, NULL, NULL);
     weechat_aspell_config_check_during_search = weechat_config_new_option (
