@@ -193,11 +193,6 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: lightgreen)
 
-* *weechat.color.input_nick*
-** description: couleur du texte pour le pseudo dans la ligne de saisie
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: lightcyan)
-
 * *weechat.color.input_text_not_found*
 ** description: couleur du texte pour la recherche infructueuse de texte dans la ligne de saisie
 ** type: couleur

@@ -151,7 +151,6 @@ extern struct t_config_option *config_color_status_data_private;
 extern struct t_config_option *config_color_status_data_highlight;
 extern struct t_config_option *config_color_status_data_other;
 extern struct t_config_option *config_color_status_more;
-extern struct t_config_option *config_color_input_nick;
 extern struct t_config_option *config_color_input_text_not_found;
 extern struct t_config_option *config_color_input_actions;
 extern struct t_config_option *config_color_nicklist_group;

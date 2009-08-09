@@ -138,7 +138,6 @@ struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_data_highlight;
 struct t_config_option *config_color_status_data_other;
 struct t_config_option *config_color_status_more;
-struct t_config_option *config_color_input_nick;
 struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_nicklist_group;
@@ -1722,12 +1721,6 @@ config_weechat_init_options ()
         NULL, -1, 0, "yellow", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* input window */
-    config_color_input_nick = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "input_nick", "color",
-        N_("text color for nick name in input line"),
-        NULL, -1, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_text_not_found = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_text_not_found", "color",

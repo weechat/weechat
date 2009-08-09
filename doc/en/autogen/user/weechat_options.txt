@@ -193,11 +193,6 @@
 ** type: color
 ** values: a color name (default value: lightgreen)
 
-* *weechat.color.input_nick*
-** description: text color for nick name in input line
-** type: color
-** values: a color name (default value: lightcyan)
-
 * *weechat.color.input_text_not_found*
 ** description: text color for unsucessful text search in input line
 ** type: color
