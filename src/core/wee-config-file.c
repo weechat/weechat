@@ -2043,7 +2043,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 && (ptr_line[0] != '\n'))
             {
                 /* beginning of section */
-                if (ptr_line[0] == '[')
+                if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
                 {
                     pos = strchr (line, ']');
                     if (!pos)
