@@ -43,6 +43,7 @@ struct t_config_option *logger_config_file_auto_log;
 struct t_config_option *logger_config_file_name_lower_case;
 struct t_config_option *logger_config_file_path;
 struct t_config_option *logger_config_file_mask;
+struct t_config_option *logger_config_file_replacement_char;
 struct t_config_option *logger_config_file_info_lines;
 struct t_config_option *logger_config_file_time_format;
 
@@ -380,6 +381,13 @@ logger_config_init ()
            "\"path\" option is used to build complete path to file); local "
            "buffer variables are permitted"),
         NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+    logger_config_file_replacement_char = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "replacement_char", "string",
+        N_("replacement char for special chars in filename built with mask "
+           "(like directory delimiter)"),
+        NULL, 0, 0, "_", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_info_lines = weechat_config_new_option (
         logger_config_file, ptr_section,

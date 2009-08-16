@@ -244,7 +244,7 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    char *res, *mask_decoded;
+    char *res, *mask_decoded, *mask_decoded2;
     const char *mask;
     const char *dir_separator, *weechat_dir;
     char *log_path, *log_path2, *pos_last_sep;
@@ -288,17 +288,24 @@ logger_get_filename (struct t_gui_buffer *buffer)
     
     if (dir_separator && weechat_dir && log_path && log_path2)
     {
-        length = strlen (log_path2) + strlen (mask_decoded) + 1;
-        res = malloc (length);
-        if (res)
+        mask_decoded2 = weechat_string_replace (mask_decoded,
+                                                dir_separator,
+                                                weechat_config_string (logger_config_file_replacement_char));
+        if (mask_decoded2)
         {
-            snprintf (res, length, "%s%s", log_path2, mask_decoded);
-            pos_last_sep = strrchr (res, dir_separator[0]);
-            if (pos_last_sep)
-                pos_last_sep[0] = '\0';
-            weechat_mkdir_parents (res, 0700);
-            if (pos_last_sep)
-                pos_last_sep[0] = dir_separator[0];
+            length = strlen (log_path2) + strlen (mask_decoded2) + 1;
+            res = malloc (length);
+            if (res)
+            {
+                snprintf (res, length, "%s%s", log_path2, mask_decoded2);
+                pos_last_sep = strrchr (res, dir_separator[0]);
+                if (pos_last_sep)
+                    pos_last_sep[0] = '\0';
+                weechat_mkdir_parents (res, 0700);
+                if (pos_last_sep)
+                    pos_last_sep[0] = dir_separator[0];
+            }
+            free (mask_decoded2);
         }
     }
     

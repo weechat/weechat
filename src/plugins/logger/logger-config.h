@@ -29,6 +29,7 @@ extern struct t_config_option *logger_config_file_auto_log;
 extern struct t_config_option *logger_config_file_name_lower_case;
 extern struct t_config_option *logger_config_file_path;
 extern struct t_config_option *logger_config_file_mask;
+extern struct t_config_option *logger_config_file_replacement_char;
 extern struct t_config_option *logger_config_file_info_lines;
 extern struct t_config_option *logger_config_file_time_format;
 
