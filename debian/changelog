@@ -1,20 +1,64 @@
-weechat (0.3.0-1) experimental; urgency=low
+weechat (0.3.0~rc3-1) experimental; urgency=low
 
   * New (major) upstream release.
     - Fix the excessive number of wakeups (Closes: #461945)
+  * Remove patches (merged upstream).
+  * Update debian/copyright: add new copyright holder.
   * Packaging changes:
-    - Drop weechat-common
-    - Add weechat-doc (Documentation)
-    - Add weechat-core (locales files, essential plugins)
-    - Add weechat-dbg (gdb debugging symbols)
-    - Add weechat-dev (plugins developement files)
-  * Adjust Build-Depends for new tcl plugin (update debian/copyright).
-  * Remove quilt from Build-Depends (patches merged upstream).
-  * Switch packaging from cdbs to plain debhelper.
+      - Drop weechat-common
+      - Add weechat-doc (Documentation)
+      - Add weechat-core (locales files, essential plugins)
+      - Add weechat-dev (plugins development files)
+      - Add weechat-dbg (gdb debugging symbols)
+  * Switch packaging from cdbs to debhelper 7.
   * Update packages descriptions.
   * Add a lintian-override against manpage line wrapping error.
+  * Update Standards-Version to 3.8.2.
+  * Add file UPGRADE_0.3 to doc files.
+  * Update debian/NEWS about major changes in this release.
 
- -- Emmanuel Bouthenot <kolter@openics.org>  Fri, 08 May 2009 13:36:39 +0000
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 09 Aug 2009 06:42:45 +0000
+
+weechat (0.2.6.3-1) unstable; urgency=low
+
+  * New upstream release
+    - drop the usage of the deprecated libgnutls-config script to detect
+      gnutls (Closes: #529912).
+
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sat, 13 Jun 2009 21:47:56 +0000
+
+weechat (0.2.6.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Add a patch which fix typos in aspell plugin.
+  * Refresh patch multiple_ip_servers according to the new upstream release.
+  
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 19 Apr 2009 10:23:26 +0000
+
+weechat (0.2.6.1-1) unstable; urgency=low
+
+  * New upstream release which includes a fix against a possible remote
+    Denial of Service (crash) while receiving messages with special chars
+    (Closes: #519940).
+  * Refresh patch multiple_ip_servers according to the new upstream release.
+  * Update Standards-Version to 3.8.1.
+  
+ -- Emmanuel Bouthenot <kolter@openics.org>  Mon, 16 Mar 2009 13:18:29 +0000
+ 
+weechat (0.2.6-3) unstable; urgency=low
+
+  * Add a patch to make weechat try to connect other server IPs
+    when the first one failed. Thanks to Lionel Elie Mamane for
+    his patch (Closes: #498610).
+  * Rename patch 01_perlembed_init_macros to perlembed_init_macros.
+  * Update debian/control:
+     - add ${misc:Depends}
+     - update descriptions
+  * Update debian/copyright about debian packaging.
+  * Add Vcs-Browser and Vcs-Git fields in debian/control.
+  * Add DM-Upload-Allowed field.
+
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sat, 21 Feb 2009 18:34:08 +0000
 
 weechat (0.2.6-2) unstable; urgency=low
 
@@ -28,14 +72,14 @@ weechat (0.2.6-2) unstable; urgency=low
   * Reformat NEWS file to avoid lintian warnings.
   * Fix typos in control file.
 
- -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 30 Nov 2008 16:38:54 +0100
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 07 Sep 2008 19:39:42 +0000
 
 weechat (0.2.6-1) unstable; urgency=low
 
   * New Upstream Version
   * Switch to GPLv3 (update copyright)
   * Update menu entry
-
+  
  -- Emmanuel Bouthenot <kolter@openics.org>  Thu, 06 Sep 2007 20:10:26 +0200
 
 weechat (0.2.5-1) unstable; urgency=low

@@ -1,7 +1,9 @@
-weechat (0.1.6-1) unstable; urgency=low
+weechat (0.3.0~rc3-1) experimental; urgency=low
 
-  * This release introduces some incompatible changes with old scripts
-  and locale support, you can read the upstream NEWS file for more
-  information.
+  This release introduces major changes. Large part of code was
+  rewritten without keeping compatibility with older versions.
 
- -- Julien Louis <ptitlouis@sysif.net>  Fri, 11 Nov 2005 20:45:46 +0100
+  Please refer to the file /usr/share/doc/weechat-core/UPGRADE_0.3
+  for more informations on upgrade from a version 0.2.x to 0.3.x.
+
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 09 Aug 2009 14:38:50 +0000

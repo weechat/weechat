@@ -4,10 +4,9 @@ Sat, 21 May 2005 08:00:00 +0200.
 It was downloaded from http://weechat.flashtux.org/download
 
 Copyright:
-	(2003)	FlashCode <flashcode@flashtux.org>
-		Emmanuel Bouthenot <kolter@openics.org>
-	(2008)	Dmitry Kobylin <fnfal@academ.tsc.ru> (tcl plugin)
-
+    Copyright (C) (2003-2009) FlashCode <flashcode@flashtux.org>
+    Copyright (C) (2005-2009) Emmanuel Bouthenot <kolter@openics.org>
+    Copyright (C) (2008-2009) Dmitry Kobylin <fnfal@academ.tsc.ru> (tcl plugin)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,3 +16,7 @@ your option) any later version.
 On Debian systems, the complete text of the GNU General Public
 License, Version 3 can be found in the file
 /usr/share/common-licenses/GPL-3
+
+Debian packaging (licenced under the GPLv3):
+  Copyright(C) 2005-2008, Julien Louis <ptitlouis@sysif.net>
+  Copyright(C) 2008-2009, Emmanuel Bouthenot <kolter@openics.org>

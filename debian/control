@@ -5,9 +5,13 @@ Maintainer: Emmanuel Bouthenot <kolter@openics.org>
 Build-Depends-Indep: xsltproc, docbook-xsl, docbook-xml
 Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
-Standards-Version: 3.8.1
+ tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config, asciidoc (>= 8.2),
+ source-highlight
+Standards-Version: 3.8.2
 Homepage: http://weechat.flashtux.org/
+Vcs-Git: git://git.debian.org/users/kolter-guest/weechat.git
+Vcs-Browser: http://git.debian.org/git/users/kolter-guest/weechat.git
+DM-Upload-Allowed: yes
 
 Package: weechat
 Architecture: all
@@ -27,6 +31,7 @@ Description: Fast, light and extensible chat client
 Package: weechat-curses
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
+Conflicts: weechat-common
 Recommends: weechat-plugins (= ${binary:Version})
 Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -45,30 +50,30 @@ Description: Fast, light and extensible chat client - console client
 Package: weechat-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: weechat-common, weechat-plugins (<< 0.3.0)
 Suggests: weechat-doc (= ${source:Version})
-Conflicts: weechat-common, weechat-plugins (<< 0.3.0)
 Description: Fast, light and extensible chat client - core files
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides core plugins and locales files for WeeChat. It
- currently ships the following plugins: xfer, notify, irc, charset and
+ currently ships the following plugins: alias, xfer, irc, charset and
  logger. It is useless without weechat-curses.
 
 Package: weechat-plugins
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
-Suggests: weechat-scripts
+Breaks: weechat-scripts (<= 20090221-1)
+Suggests: weechat-scripts (>> 20090221-1)
 Description: Fast, light and extensible chat client - plugins
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides some plugins to enhance WeeChat. It currently
  ships the following plugins:
-  - Perl, Python, Ruby, Lua, and Tcl scripting.
-  - Spell checking (thanks to aspell).
-  - Charsets management
-  - And many others (Relay, Fifo, ...)
+  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - Spell checking (thanks to aspell)
+  - And many others (Fifo, ...)
 
 Package: weechat-doc
 Section: doc

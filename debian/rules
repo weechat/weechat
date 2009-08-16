@@ -4,12 +4,12 @@ builddir/Makefile:
 	mkdir -p builddir
 	cd builddir && \
 	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_C_FLAGS="$(CFLAGS)" \
-		-DCMAKE_LD_FLAGS="-Wl,-z,defs" \
-		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
-		-DCMAKE_SKIP_RPATH=ON \
-		-DCMAKE_VERBOSE_MAKEFILE=ON
+		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+		-DCMAKE_C_FLAGS:STRING="$(CFLAGS)" \
+		-DCMAKE_LD_FLAGS:STRING="-Wl,-z,defs" \
+		-DCMAKE_CXX_FLAGS:STRING="$(CXXFLAGS)" \
+		-DCMAKE_SKIP_RPATH:BOOL=ON \
+		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 build: build-stamp
 build-stamp: builddir/Makefile 
