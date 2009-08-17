@@ -23,6 +23,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "%h/logs/")
 
+* *logger.file.replacement_char*
+** description: caractère de remplacement dans le nom de fichier construit avec le masque (comme le délimiteur de répertoire)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "_")
+
 * *logger.file.time_format*
 ** description: format de date/heure utilisé dans les fichiers log (voir strftime(3) pour le format de date/heure)
 ** type: chaîne

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-09 12:17+0200\n"
-"PO-Revision-Date: 2009-08-09 22:50+0200\n"
+"POT-Creation-Date: 2009-08-17 10:59+0200\n"
+"PO-Revision-Date: 2009-08-17 11:08+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -4170,11 +4170,11 @@ msgstr "%s%s: nieznany typ DCC CHAT otrzymano od %s%s%s: \"%s\""
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s wyszedł %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s wyszedł z IRC %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit"
-msgstr "%s%s%s %s(%s%s%s)%s wyszedł"
+msgstr "%s%s%s %s(%s%s%s)%s wyszedł z IRC"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -4719,6 +4719,13 @@ msgstr ""
 "\"plik\", bez pierwszego \"/\" ponieważ opcja \"path\" jest użyta do "
 "stworzenia kompletnej ścieżki do pliku); lokalne zmienne buforów dozwolone"
 
+msgid ""
+"replacement char for special chars in filename built with mask (like "
+"directory delimiter)"
+msgstr ""
+"znak zastępczy dla znaków specjalnych w plikach stworzonych przy użyciu "
+"maski (jak separator katalogów)"
+
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 "zapisuje informacje w pliku z logami o rozpoczęciu i zakończeniu logowania "
@@ -5250,7 +5257,7 @@ msgstr "%s%s: nie udało się przenieść skryptu %s do %s (%s)"
 #. TRANSLATORS: %s is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
-msgstr "załadowano sktypr %s:"
+msgstr "załadowano sktypt %s:"
 
 #, c-format
 msgid "    file: %s"
@@ -5616,3 +5623,12 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "text color for nick name in input line"
+#~ msgstr "kolor nicku w wprowadzonej lini"
+
+#~ msgid "Bar \"%s\" is now hidden"
+#~ msgstr "Pasek \"%s\" został ukryty"
+
+#~ msgid "Bar \"%s\" is now visible"
+#~ msgstr "Pasek \"%s\" jest teraz widoczny"

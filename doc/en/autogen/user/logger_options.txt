@@ -23,6 +23,11 @@
 ** type: string
 ** values: any string (default value: "%h/logs/")
 
+* *logger.file.replacement_char*
+** description: replacement char for special chars in filename built with mask (like directory delimiter)
+** type: string
+** values: any string (default value: "_")
+
 * *logger.file.time_format*
 ** description: timestamp used in log files (see man strftime for date/time specifiers)
 ** type: string
