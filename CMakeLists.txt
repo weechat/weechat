@@ -59,7 +59,10 @@ OPTION(DISABLE_TCL           "Disable Tcl scripting language")
 OPTION(DISABLE_XFER          "Disable Xfer plugin (file transfer and direct chat)")
 OPTION(DISABLE_DOC           "Disable Doc")
 
-ADD_SUBDIRECTORY( po )
+IF(NOT DISABLE_NLS)
+  ADD_SUBDIRECTORY( po )
+ENDIF(NOT DISABLE_NLS)
+
 ADD_SUBDIRECTORY( src )
 ADD_SUBDIRECTORY( doc )
 
