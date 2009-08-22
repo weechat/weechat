@@ -244,13 +244,20 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    char *res, *mask_decoded, *mask_decoded2;
+    char *res, *mask2, *mask_decoded, *mask_decoded2, *mask_decoded3;
     const char *mask;
     const char *dir_separator, *weechat_dir;
     char *log_path, *log_path2, *pos_last_sep;
     int length;
     
     res = NULL;
+    mask2 = NULL;
+    mask_decoded = NULL;
+    mask_decoded2 = NULL;
+    mask_decoded3 = NULL;
+    
+    dir_separator = weechat_info_get ("dir_separator", "");
+    weechat_dir = weechat_info_get ("weechat_dir", "");
     
     /* get filename mask for buffer */
     mask = logger_get_mask_for_buffer (buffer);
@@ -263,9 +270,25 @@ logger_get_filename (struct t_gui_buffer *buffer)
                         weechat_buffer_get_string (buffer, "name"));
         return NULL;
     }
-    mask_decoded = weechat_buffer_string_replace_local_var (buffer, mask);
+    
+    mask2 = weechat_string_replace (mask, dir_separator, "\01");
+    if (!mask2)
+        goto end;
+    
+    mask_decoded = weechat_buffer_string_replace_local_var (buffer, mask2);
     if (!mask_decoded)
-        return NULL;
+        goto end;
+    
+    mask_decoded2 = weechat_string_replace (mask_decoded,
+                                            dir_separator,
+                                            weechat_config_string (logger_config_file_replacement_char));
+    if (!mask_decoded2)
+        goto end;
+    
+    mask_decoded3 = weechat_string_replace (mask_decoded2,
+                                            "\01", dir_separator);
+    if (!mask_decoded3)
+        goto end;
     
     if (weechat_logger_plugin->debug)
     {
@@ -274,46 +297,45 @@ logger_get_filename (struct t_gui_buffer *buffer)
                         "decoded mask = \"%s\"",
                         LOGGER_PLUGIN_NAME,
                         weechat_buffer_get_string (buffer, "name"),
-                        mask, mask_decoded);
+                        mask, mask_decoded3);
     }
     
     if (weechat_config_boolean (logger_config_file_name_lower_case))
-        weechat_string_tolower (mask_decoded);
+        weechat_string_tolower (mask_decoded3);
     
-    dir_separator = weechat_info_get ("dir_separator", "");
-    weechat_dir = weechat_info_get ("weechat_dir", "");
     log_path = weechat_string_replace (weechat_config_string (logger_config_file_path),
                                        "~", getenv ("HOME"));
     log_path2 = weechat_string_replace (log_path, "%h", weechat_dir);
     
     if (dir_separator && weechat_dir && log_path && log_path2)
     {
-        mask_decoded2 = weechat_string_replace (mask_decoded,
-                                                dir_separator,
-                                                weechat_config_string (logger_config_file_replacement_char));
-        if (mask_decoded2)
+        length = strlen (log_path2) + strlen (mask_decoded3) + 1;
+        res = malloc (length);
+        if (res)
         {
-            length = strlen (log_path2) + strlen (mask_decoded2) + 1;
-            res = malloc (length);
-            if (res)
-            {
-                snprintf (res, length, "%s%s", log_path2, mask_decoded2);
-                pos_last_sep = strrchr (res, dir_separator[0]);
-                if (pos_last_sep)
-                    pos_last_sep[0] = '\0';
-                weechat_mkdir_parents (res, 0700);
-                if (pos_last_sep)
-                    pos_last_sep[0] = dir_separator[0];
-            }
-            free (mask_decoded2);
+            snprintf (res, length, "%s%s", log_path2, mask_decoded3);
+            pos_last_sep = strrchr (res, dir_separator[0]);
+            if (pos_last_sep)
+                pos_last_sep[0] = '\0';
+            weechat_mkdir_parents (res, 0700);
+            if (pos_last_sep)
+                pos_last_sep[0] = dir_separator[0];
         }
     }
-    
+
+end:
     if (log_path)
         free (log_path);
     if (log_path2)
         free (log_path2);
-    free (mask_decoded);
+    if (mask2)
+        free (mask2);
+    if (mask_decoded)
+        free (mask_decoded);
+    if (mask_decoded2)
+        free (mask_decoded2);
+    if (mask_decoded3)
+        free (mask_decoded3);
     
     return res;
 }
