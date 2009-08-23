@@ -97,6 +97,8 @@ window) or displayed by one or more windows.
 I don't see some chars with accents, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+It's common issue, please read carefully and check *ALL* solutions below.
+
 For versions < 0.2.3, please upgrade to the latest stable version.
 
 For versions > = 0.2.3:
@@ -170,8 +172,10 @@ Under OpenBSD, plugin filenames end with ".so.0.0" (".so" for Linux).
 
 You must set that up:
 
-* with WeeChat < = 0.2.6: `/set plugins_extension = ".so.0.0"`
-* with WeeChat > = 0.3.x: `/set weechat.plugin.extension ".so.0.0"`
+* with WeeChat < = 0.2.6: +
+  `/set plugins_extension = ".so.0.0"`
+* with WeeChat > = 0.3.x: +
+  `/set weechat.plugin.extension ".so.0.0"`
 
 Then: `/plugin autoload`.
 
@@ -211,25 +215,30 @@ With the Curses GUI, how can I copy/paste text without pasting nicklist?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
-konsole, ...). Key is usually ctrl + alt + mouse selection.
+konsole, gnome-terminal, ...). Key is usually ctrl + alt + mouse selection.
 
 Another solution is to move nicklist to top or bottom, for example:
 
-* with WeeChat < = 0.2.6: `set look_nicklist_position = top`
-* with WeeChat > = 0.3.x: `/bar set nicklist position top`
+* with WeeChat < = 0.2.6: +
+  `set look_nicklist_position = top`
+* with WeeChat > = 0.3.x: +
+  `/bar set nicklist position top`
 
 
 [[highlight_notification]]
 How can I be warned when someone highlights me on a channel?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the script 'sound.pl' (available on scripts page), and then setup a
-system command (to play sound, display message, ..) with this command:
+According to WeeChat version:
 
-* with WeeChat < = 0.2.6:
-  `/setp perl.sound.cmd_highlight = "/path/command arguments"`
-* with WeeChat > = 0.3.x:
-  `/set plugins.var.perl.sound.cmd_highlight "/path/command arguments"`
+* with WeeChat < = 0.2.6: use script 'sound.pl' (available on scripts page),
+  and then setup a system command (to play sound, display message, ..) with
+  this command: +
+  `/setp perl.sound.cmd_highlight = "/path/to/command arguments"`
+* with WeeChat > = 0.3.x: use script 'launcher.pl' (available on scripts page),
+  and then setup a system command (to play sound, display message, ..) with
+  this command: +
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
 
 Many other scripts exist for notification, please look at plugins/scripts page:
 http://weechat.flashtux.org/plugins.php

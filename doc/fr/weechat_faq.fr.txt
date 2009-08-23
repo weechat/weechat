@@ -100,6 +100,9 @@ aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 Je ne vois pas bien certains accents dans WeeChat, que faire ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
+points ci-dessous.
+
 Pour les versions < 0.2.3, merci d'installer la dernière version stable.
 
 Pour les versions > = 0.2.3 :
@@ -176,8 +179,10 @@ Linux).
 
 Vous devez configurer ça :
 
-* avec WeeChat < = 0.2.6 : `/set plugins_extension = ".so.0.0"`
-* avec WeeChat > = 0.3.x : `/set weechat.plugin.extension ".so.0.0"`
+* avec WeeChat < = 0.2.6 : +
+  `/set plugins_extension = ".so.0.0"`
+* avec WeeChat > = 0.3.x : +
+  `/set weechat.plugin.extension ".so.0.0"`
 
 Puis: `/plugin autoload`.
 
@@ -217,28 +222,32 @@ Avec l'interface Curses, comment puis-je copier/coller du texte sans coller la l
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
-rxvt-unicode, konsole, etc...). La touche est habituellement ctrl + alt +
-sélection à la souris.
+rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
+ctrl + alt + sélection à la souris.
 
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
 
-* avec WeeChat < = 0.2.6 : `/set look_nicklist_position = top`
-* avec WeeChat > = 0.3.x : `/bar set nicklist position top`
+* avec WeeChat < = 0.2.6 : +
+  `/set look_nicklist_position = top`
+* avec WeeChat > = 0.3.x : +
+  `/bar set nicklist position top`
 
 
 [[highlight_notification]]
 Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Vous pouvez utiliser le script 'sound.pl' (disponible sur la page des scripts),
-puis configurer une commande système (jouant un son, affichant un message à
-l'écran, etc...) comme ceci :
+Selon la version de WeeChat :
 
-* avec WeeChat < = 0.2.6 :
-  `/setp perl.sound.cmd_highlight = "/chemin/commande parametres"`
-* avec WeeChat > = 0.3.x :
-  `/set plugins.var.perl.sound.cmd_highlight "/chemin/commande parametres"`
+* avec WeeChat < = 0.2.6 : utilisez le script 'sound.pl' (disponible sur la
+  page des scripts), puis configurez une commande système (jouant un son,
+  affichant un message à l'écran, etc...) comme ceci : +
+  `/setp perl.sound.cmd_highlight = "/chemin/vers/commande parametres"`
+* avec WeeChat > = 0.3.x : utilisez le script 'launcher.pl' (disponible sur la
+  page des scripts), puis configurez une commande système (jouant un son,
+  affichant un message à l'écran, etc...) comme ceci : +
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
 
 De nombreux autres scripts de notification existent, merci de consulter la
 liste des extensions/scripts :
