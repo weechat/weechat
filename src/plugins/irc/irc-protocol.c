@@ -3456,7 +3456,7 @@ irc_protocol_cmd_341 (struct t_irc_server *server, const char *command,
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags (command, "irc_numeric"),
-                         _("%s%s%s%s has invited %s%s%s on %s%s"),
+                         _("%s%s%s%s has invited %s%s%s to %s%s"),
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
                          argv[2],

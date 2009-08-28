@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-17 10:59+0200\n"
+"POT-Creation-Date: 2009-08-28 10:05+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4170,7 +4170,7 @@ msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "Тема установлена пользователем %s%s%s, %s"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has invited %s%s%s on %s%s"
+msgid "%s%s%s%s has invited %s%s%s to %s%s"
 msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 
 #, fuzzy, c-format

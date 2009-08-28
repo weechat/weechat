@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-17 10:59+0200\n"
+"POT-Creation-Date: 2009-08-28 10:05+0200\n"
 "PO-Revision-Date: 2009-08-17 11:08+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4267,8 +4267,8 @@ msgstr "%sTemat ustawiony przez %s%s%s dnia %s"
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTemat kanału %s%s%s ustawiony przez %s%s%s dnia %s"
 
-#, c-format
-msgid "%s%s%s%s has invited %s%s%s on %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s"
 msgstr "%s%s%s%s zaprosił %s%s%s na %s%s"
 
 #, c-format
