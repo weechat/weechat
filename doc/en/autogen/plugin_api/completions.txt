@@ -11,19 +11,23 @@
 
 | irc | irc_channel_topic | topic of current IRC channel
 
-| irc | irc_channels | IRC channels (on all servers)
+| irc | irc_channels | channels on all IRC servers
 
 | irc | irc_ignores_numbers | numbers for defined ignores
 
 | irc | irc_msg_part | default part message for IRC channel
 
-| irc | irc_privates | IRC privates (on all servers)
+| irc | irc_privates | privates on all IRC servers
 
 | irc | irc_server | current IRC server
+
+| irc | irc_server_channels | channels on current IRC server
 
 | irc | irc_server_nick | nick on current IRC server
 
 | irc | irc_server_nicks | nicks on all channels of current IRC server
+
+| irc | irc_server_privates | privates on current IRC server
 
 | irc | irc_servers | IRC servers (internal names)
 

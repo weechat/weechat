@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-28 10:05+0200\n"
+"POT-Creation-Date: 2009-08-28 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3100,6 +3100,12 @@ msgstr ""
 msgid "nick on current IRC server"
 msgstr ""
 
+msgid "channels on current IRC server"
+msgstr ""
+
+msgid "privates on current IRC server"
+msgstr ""
+
 msgid "nicks on all channels of current IRC server"
 msgstr ""
 
@@ -3118,10 +3124,10 @@ msgstr ""
 msgid "topic of current IRC channel"
 msgstr ""
 
-msgid "IRC channels (on all servers)"
+msgid "channels on all IRC servers"
 msgstr ""
 
-msgid "IRC privates (on all servers)"
+msgid "privates on all IRC servers"
 msgstr ""
 
 msgid "default part message for IRC channel"

@@ -11,19 +11,23 @@
 
 | irc | irc_channel_topic | titre du canal IRC courant
 
-| irc | irc_channels | canaux IRC (sur tous les serveurs)
+| irc | irc_channels | canaux sur tous les serveurs IRC
 
 | irc | irc_ignores_numbers | numéros pour les ignores définis
 
 | irc | irc_msg_part | message de fin par défaut pour le canal IRC
 
-| irc | irc_privates | canaux IRC (sur tous les serveurs)
+| irc | irc_privates | privés sur tous les serveurs IRC
 
 | irc | irc_server | serveur IRC courant
+
+| irc | irc_server_channels | canaux sur le serveur IRC courant
 
 | irc | irc_server_nick | pseudo sur le serveur IRC courant
 
 | irc | irc_server_nicks | pseudos sur tous les canaux du serveur IRC courant
+
+| irc | irc_server_privates | privés sur le serveur IRC courant
 
 | irc | irc_servers | serveurs IRC (noms internes)
 

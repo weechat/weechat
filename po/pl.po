@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-28 10:05+0200\n"
+"POT-Creation-Date: 2009-08-28 10:18+0200\n"
 "PO-Revision-Date: 2009-08-17 11:08+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -3743,6 +3743,14 @@ msgstr "obecny serwer IRC"
 msgid "nick on current IRC server"
 msgstr "użytkownicy obecnego serwera IRC"
 
+#, fuzzy
+msgid "channels on current IRC server"
+msgstr "kanały IRC (na wszystkich serwerach)"
+
+#, fuzzy
+msgid "privates on current IRC server"
+msgstr "rozmowy prywatne (na wszystkich serwerach)"
+
 msgid "nicks on all channels of current IRC server"
 msgstr "użytkownicy na wszystkich kanałach obecnego serwera IRC"
 
@@ -3761,10 +3769,12 @@ msgstr "użytkownicy i hosty obecnego kanału IRC"
 msgid "topic of current IRC channel"
 msgstr "temat obecnego kanału IRC"
 
-msgid "IRC channels (on all servers)"
+#, fuzzy
+msgid "channels on all IRC servers"
 msgstr "kanały IRC (na wszystkich serwerach)"
 
-msgid "IRC privates (on all servers)"
+#, fuzzy
+msgid "privates on all IRC servers"
 msgstr "rozmowy prywatne (na wszystkich serwerach)"
 
 msgid "default part message for IRC channel"

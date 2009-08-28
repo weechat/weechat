@@ -85,6 +85,76 @@ irc_completion_server_nick_cb (void *data, const char *completion_item,
 }
 
 /*
+ * irc_completion_server_channels_cb: callback for completion with channels
+ *                                    of current server
+ */
+
+int
+irc_completion_server_channels_cb (void *data, const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    IRC_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    if (ptr_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            {
+                weechat_hook_completion_list_add (completion, ptr_channel->name,
+                                                  0, WEECHAT_LIST_POS_SORT);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_completion_server_privates_cb: callback for completion with privates
+ *                                    of current server
+ */
+
+int
+irc_completion_server_privates_cb (void *data, const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    IRC_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    if (ptr_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+            {
+                weechat_hook_completion_list_add (completion, ptr_channel->name,
+                                                  0, WEECHAT_LIST_POS_SORT);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_completion_server_nicks_cb: callback for completion with nicks
  *                                 of current server
  */
@@ -368,6 +438,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
 
 /*
  * irc_completion_channels_cb: callback for completion with channels
+ *                             of all servers
  */
 
 int
@@ -401,7 +472,8 @@ irc_completion_channels_cb (void *data, const char *completion_item,
 }
 
 /*
- * irc_completion_privates_cb: callback for completion with channels
+ * irc_completion_privates_cb: callback for completion with privates
+ *                             of all servers
  */
 
 int
@@ -501,6 +573,12 @@ irc_completion_init ()
     weechat_hook_completion ("irc_server_nick",
                              N_("nick on current IRC server"),
                              &irc_completion_server_nick_cb, NULL);
+    weechat_hook_completion ("irc_server_channels",
+                             N_("channels on current IRC server"),
+                             &irc_completion_server_channels_cb, NULL);
+    weechat_hook_completion ("irc_server_privates",
+                             N_("privates on current IRC server"),
+                             &irc_completion_server_privates_cb, NULL);
     weechat_hook_completion ("irc_server_nicks",
                              N_("nicks on all channels of current IRC server"),
                              &irc_completion_server_nicks_cb, NULL);
@@ -520,10 +598,10 @@ irc_completion_init ()
                              N_("topic of current IRC channel"),
                              &irc_completion_channel_topic_cb, NULL);
     weechat_hook_completion ("irc_channels",
-                             N_("IRC channels (on all servers)"),
+                             N_("channels on all IRC servers"),
                              &irc_completion_channels_cb, NULL);
     weechat_hook_completion ("irc_privates",
-                             N_("IRC privates (on all servers)"),
+                             N_("privates on all IRC servers"),
                              &irc_completion_privates_cb, NULL);
     weechat_hook_completion ("irc_msg_part",
                              N_("default part message for IRC channel"),

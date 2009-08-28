@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-28 10:05+0200\n"
+"POT-Creation-Date: 2009-08-28 10:18+0200\n"
 "PO-Revision-Date: 2009-08-23 04:03-0300\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3579,6 +3579,14 @@ msgid "nick on current IRC server"
 msgstr "conectarse a un servidor"
 
 #, fuzzy
+msgid "channels on current IRC server"
+msgstr "lista de canales a unirse cuando se conecte a un servidor"
+
+#, fuzzy
+msgid "privates on current IRC server"
+msgstr "lista de canales a unirse cuando se conecte a un servidor"
+
+#, fuzzy
 msgid "nicks on all channels of current IRC server"
 msgstr "lista de canales a unirse cuando se conecte a un servidor"
 
@@ -3602,11 +3610,11 @@ msgid "topic of current IRC channel"
 msgstr "lista de usuarios en el canal"
 
 #, fuzzy
-msgid "IRC channels (on all servers)"
+msgid "channels on all IRC servers"
 msgstr "lista de canales a unirse cuando se conecte a un servidor"
 
 #, fuzzy
-msgid "IRC privates (on all servers)"
+msgid "privates on all IRC servers"
 msgstr "lista de canales a unirse cuando se conecte a un servidor"
 
 #, fuzzy

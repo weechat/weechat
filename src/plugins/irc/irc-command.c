@@ -3822,7 +3822,7 @@ irc_command_init ()
                           N_("nickname channel"),
                           N_("nickname: nick to invite\n"
                              " channel: channel to invite"),
-                          "%(nicks) %(irc_channel)", &irc_command_invite, NULL);
+                          "%(nicks) %(irc_server_channels)", &irc_command_invite, NULL);
     weechat_hook_command ("ison",
                           N_("check if a nickname is currently on IRC"),
                           N_("nickname [nickname ...]"),

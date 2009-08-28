@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-08-28 10:05+0200\n"
+"POT-Creation-Date: 2009-08-28 10:18+0200\n"
 "PO-Revision-Date: 2009-05-11 13:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3628,6 +3628,14 @@ msgid "nick on current IRC server"
 msgstr "připojit se k serveru/serverům"
 
 #, fuzzy
+msgid "channels on current IRC server"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
+msgid "privates on current IRC server"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
 msgid "nicks on all channels of current IRC server"
 msgstr "seznam uživatelů přihlášených k serveru"
 
@@ -3651,11 +3659,11 @@ msgid "topic of current IRC channel"
 msgstr "seznam uživatelů na kanálu"
 
 #, fuzzy
-msgid "IRC channels (on all servers)"
+msgid "channels on all IRC servers"
 msgstr "seznam uživatelů přihlášených k serveru"
 
 #, fuzzy
-msgid "IRC privates (on all servers)"
+msgid "privates on all IRC servers"
 msgstr "seznam uživatelů přihlášených k serveru"
 
 #, fuzzy
