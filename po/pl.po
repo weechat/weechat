@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-08-28 10:18+0200\n"
-"PO-Revision-Date: 2009-08-17 11:08+0100\n"
+"PO-Revision-Date: 2009-08-28 11:51+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -2540,7 +2540,7 @@ msgid "%s%s: error creating configuration file"
 msgstr "%s%s: błąd podczas tworzenia pliku konfiguracyjnego"
 
 msgid "change charset for current buffer"
-msgstr "zmieniono kodowanie dla obecnego bufora"
+msgstr "zmienia kodowanie dla obecnego bufora"
 
 msgid "[[decode | encode] charset] | [reset]"
 msgstr "[[decode | encode] kodowanie] | [reset]"
@@ -3743,13 +3743,11 @@ msgstr "obecny serwer IRC"
 msgid "nick on current IRC server"
 msgstr "użytkownicy obecnego serwera IRC"
 
-#, fuzzy
 msgid "channels on current IRC server"
-msgstr "kanały IRC (na wszystkich serwerach)"
+msgstr "kanały na obecnym serwerze IRC"
 
-#, fuzzy
 msgid "privates on current IRC server"
-msgstr "rozmowy prywatne (na wszystkich serwerach)"
+msgstr "rozmowy prywatne na obecnym serwerze IRC"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "użytkownicy na wszystkich kanałach obecnego serwera IRC"
@@ -3769,13 +3767,11 @@ msgstr "użytkownicy i hosty obecnego kanału IRC"
 msgid "topic of current IRC channel"
 msgstr "temat obecnego kanału IRC"
 
-#, fuzzy
 msgid "channels on all IRC servers"
-msgstr "kanały IRC (na wszystkich serwerach)"
+msgstr "kanały na wszystkich serwerach IRC"
 
-#, fuzzy
 msgid "privates on all IRC servers"
-msgstr "rozmowy prywatne (na wszystkich serwerach)"
+msgstr "rozmowy prywatne na wszystkich serwerac IRC"
 
 msgid "default part message for IRC channel"
 msgstr "domyślna wiadomość opuszczenia kanału IRC"
@@ -4124,7 +4120,7 @@ msgstr "%sJesteś od teraz %s%s"
 
 #, c-format
 msgid "%s%s%s%s is now known as %s%s"
-msgstr "%s%s%s%s jest teraz %s%s"
+msgstr "%s%s%s%s zmienił nick na %s%s"
 
 #, c-format
 msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
@@ -4277,7 +4273,7 @@ msgstr "%sTemat ustawiony przez %s%s%s dnia %s"
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTemat kanału %s%s%s ustawiony przez %s%s%s dnia %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s"
 msgstr "%s%s%s%s zaprosił %s%s%s na %s%s"
 
