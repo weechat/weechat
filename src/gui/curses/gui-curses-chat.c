@@ -579,8 +579,18 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                                           GUI_COLOR_CHAT_PREFIX_BUFFER);
         }
         
+        if ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
+            && (CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE))
+        {
+            length_allowed =
+                (mixed_lines->buffer_max_length <= CONFIG_INTEGER(config_look_prefix_buffer_align_max)) ?
+                mixed_lines->buffer_max_length : CONFIG_INTEGER(config_look_prefix_buffer_align_max);
+        }
+        else
+            length_allowed = mixed_lines->buffer_max_length;
+        
         length = gui_chat_strlen_screen (line->data->buffer->short_name);
-        num_spaces = mixed_lines->buffer_max_length - length;
+        num_spaces = length_allowed - length;
         
         if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
         {
@@ -592,26 +602,58 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             }
         }
         
-        gui_chat_display_word (window, line,
-                               line->data->buffer->short_name,
-                               NULL, 1, num_lines, count, lines_displayed,
-                               simulate);
-        
-        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
-            || ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
-                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
+        /* not enough space to display full buffer name? => truncate it! */
+        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+            && (num_spaces < 0))
         {
-            for (i = 0; i < num_spaces; i++)
+            gui_chat_display_word (window, line,
+                                   line->data->buffer->short_name,
+                                   line->data->buffer->short_name +
+                                   gui_chat_string_real_pos (line->data->buffer->short_name,
+                                                             length_allowed),
+                                   1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        else
+        {
+            gui_chat_display_word (window, line,
+                                   line->data->buffer->short_name,
+                                   NULL, 1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        
+        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+            && (num_spaces < 0))
+        {
+            if (!simulate)
+            {
+                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                              GUI_COLOR_CHAT_PREFIX_MORE);
+            }
+            gui_chat_display_word (window, line, str_plus,
+                                   NULL, 1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        else
+        {
+            if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
+                || ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
+            {
+                for (i = 0; i < num_spaces; i++)
+                {
+                    gui_chat_display_word (window, line, str_space,
+                                           NULL, 1, num_lines, count, lines_displayed,
+                                           simulate);
+                }
+            }
+            if (mixed_lines->buffer_max_length > 0)
             {
                 gui_chat_display_word (window, line, str_space,
                                        NULL, 1, num_lines, count, lines_displayed,
                                        simulate);
             }
         }
-        
-        gui_chat_display_word (window, line, str_space,
-                               NULL, 1, num_lines, count, lines_displayed,
-                               simulate);
     }
     
     /* display prefix */
@@ -657,7 +699,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             }
         } 
         
-        /* not enough space to display full prefix ? => truncate it! */
+        /* not enough space to display full prefix? => truncate it! */
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {

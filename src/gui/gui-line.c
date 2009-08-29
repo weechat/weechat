@@ -93,15 +93,25 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     /* length of buffer name (when many buffers are merged) */
     if (buffer->mixed_lines)
     {
-        length_buffer = ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
-                         && (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)) ?
-            gui_chat_strlen_screen (buffer->short_name) + 1 : buffer->mixed_lines->buffer_max_length + 1;
+        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+            && (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
+            length_buffer = gui_chat_strlen_screen (buffer->short_name) + 1;
+        else
+        {
+            if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+                length_buffer = buffer->mixed_lines->buffer_max_length + 1;
+            else
+                length_buffer = ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
+                                 && (buffer->mixed_lines->buffer_max_length > CONFIG_INTEGER(config_look_prefix_buffer_align_max))) ?
+                    CONFIG_INTEGER(config_look_prefix_buffer_align_max) + 1 : buffer->mixed_lines->buffer_max_length + 1;
+        }
     }
     else
         length_buffer = 0;
     
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
-        return length_time + 1 + length_buffer + line->data->prefix_length + 2;
+        return length_time + 1 + length_buffer + line->data->prefix_length
+            + ((line->data->prefix_length > 0) ? 1 : 0);
     
     length_suffix = 0;
     if (with_suffix)

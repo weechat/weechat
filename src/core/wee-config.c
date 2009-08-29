@@ -93,6 +93,7 @@ struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
 struct t_config_option *config_look_prefix_buffer_align;
+struct t_config_option *config_look_prefix_buffer_align_max;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_save_config_on_exit;
@@ -1369,13 +1370,19 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "prefix_align_max", "integer",
         N_("max size for prefix (0 = no max size)"),
-        NULL, 0, 64, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+        NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_buffer_align = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_buffer_align", "integer",
         N_("prefix alignment for buffer name, when many buffers are merged "
            "with same number (none, left, right (default))"),
         "none|left|right", 0, 0, "right", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_buffer_align_max = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_buffer_align_max", "integer",
+        N_("max size for buffer name, when many buffers are merged with same "
+           "number (0 = no max size)"),
+        NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_suffix = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_suffix", "string",

@@ -108,6 +108,7 @@ extern struct t_config_option *config_look_prefix[];
 extern struct t_config_option *config_look_prefix_align;
 extern struct t_config_option *config_look_prefix_align_max;
 extern struct t_config_option *config_look_prefix_buffer_align;
+extern struct t_config_option *config_look_prefix_buffer_align_max;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_save_config_on_exit;
