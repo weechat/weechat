@@ -463,6 +463,11 @@
 ** type: integer
 ** values: 0 .. 128 (default value: 0)
 
+* *weechat.look.prefix_align_more*
+** description: display '+' if prefix is truncated
+** type: boolean
+** values: on, off (default value: on)
+
 * *weechat.look.prefix_buffer_align*
 ** description: prefix alignment for buffer name, when many buffers are merged with same number (none, left, right (default))
 ** type: integer
@@ -472,6 +477,11 @@
 ** description: max size for buffer name, when many buffers are merged with same number (0 = no max size)
 ** type: integer
 ** values: 0 .. 128 (default value: 0)
+
+* *weechat.look.prefix_buffer_align_more*
+** description: display '+' if buffer name is truncated (when many buffers are merged with same number)
+** type: boolean
+** values: on, off (default value: on)
 
 * *weechat.look.prefix_error*
 ** description: prefix for error messages

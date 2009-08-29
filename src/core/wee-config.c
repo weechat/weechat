@@ -92,8 +92,10 @@ struct t_config_option *config_look_paste_max_lines;
 struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
+struct t_config_option *config_look_prefix_align_more;
 struct t_config_option *config_look_prefix_buffer_align;
 struct t_config_option *config_look_prefix_buffer_align_max;
+struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_save_config_on_exit;
@@ -1371,6 +1373,11 @@ config_weechat_init_options ()
         "prefix_align_max", "integer",
         N_("max size for prefix (0 = no max size)"),
         NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_align_more = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_align_more", "boolean",
+        N_("display '+' if prefix is truncated"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_buffer_align = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_buffer_align", "integer",
@@ -1383,6 +1390,12 @@ config_weechat_init_options ()
         N_("max size for buffer name, when many buffers are merged with same "
            "number (0 = no max size)"),
         NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_buffer_align_more = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_buffer_align_more", "boolean",
+        N_("display '+' if buffer name is truncated (when many buffers are "
+           "merged with same number)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_suffix = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_suffix", "string",

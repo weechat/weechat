@@ -463,6 +463,11 @@
 ** type: entier
 ** valeurs: 0 .. 128 (valeur par défaut: 0)
 
+* *weechat.look.prefix_align_more*
+** description: afficher '+' si le préfixe est tronqué
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
 * *weechat.look.prefix_buffer_align*
 ** description: alignement de préfixe pour le nom du tampon, quand plusieurs tampons sont mélangés avec le même numéro (none, left, right (par défaut))
 ** type: entier
@@ -472,6 +477,11 @@
 ** description: taille maximum pour le nom du tampon, quand plusieurs tampons sont mélangés avec le même numéro (0 = pas de taille maximum)
 ** type: entier
 ** valeurs: 0 .. 128 (valeur par défaut: 0)
+
+* *weechat.look.prefix_buffer_align_more*
+** description: afficher '+' si le nom du tampon est tronqué (quand plusieurs tampons sont mélangés avec le même numéro)
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
 
 * *weechat.look.prefix_error*
 ** description: préfixe pour les messages d'erreur

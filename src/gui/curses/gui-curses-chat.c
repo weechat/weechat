@@ -630,7 +630,9 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
             }
-            gui_chat_display_word (window, line, str_plus,
+            gui_chat_display_word (window, line,
+                                   (CONFIG_BOOLEAN(config_look_prefix_buffer_align_more)) ?
+                                   str_plus : str_space,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate);
         }
@@ -744,7 +746,9 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
             }
-            gui_chat_display_word (window, line, str_plus,
+            gui_chat_display_word (window, line,
+                                   (CONFIG_BOOLEAN(config_look_prefix_align_more)) ?
+                                   str_plus : str_space,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate);
         }
