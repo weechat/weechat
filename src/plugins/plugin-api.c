@@ -88,6 +88,10 @@ plugin_api_gettext (const char *string)
 const char *
 plugin_api_ngettext (const char *single, const char *plural, int count)
 {
+    /* make C compiler happy */
+    (void) single;
+    (void) count;
+    
     return NG_(single, plural, count);
 }
 
