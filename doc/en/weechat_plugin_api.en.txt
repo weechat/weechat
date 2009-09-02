@@ -6051,7 +6051,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-struct t_gui_bar_item *weechat_bar_search (const char *name);
+struct t_gui_bar *weechat_bar_search (const char *name);
 ----------------------------------------
 
 Arguments:
