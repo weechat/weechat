@@ -365,7 +365,7 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
     {
         weechat_printf (NULL,
                         _("%s%s: unable to start logging for buffer "
-                          "\"%s\": filename \"%s\" is already user by "
+                          "\"%s\": filename \"%s\" is already used by "
                           "another buffer (check your log settings)"),
                         weechat_prefix ("error"),
                         LOGGER_PLUGIN_NAME,
