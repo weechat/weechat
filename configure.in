@@ -155,7 +155,7 @@ if test "$LIBDL_FOUND" != "yes"; then
 fi
 if test "$LIBDL_FOUND" != "yes"; then
     AC_MSG_ERROR([
-*** "dl" library (dynamic library loader) couldn't be found in your system.
+*** "dl" library (dynamic library loader) couldn't be found on your system.
 *** Try to install it with your software package manager.])
 fi
 AC_SUBST(PLUGINS_LFLAGS)
@@ -266,7 +266,7 @@ fi
 
 if test "x$iconv_found" = "xno" ; then
    AC_MSG_ERROR([
-*** Iconv headers and/or libraries couldn't be found in your system.
+*** Iconv headers and/or libraries couldn't be found on your system.
 *** Try to install them with your software package manager.
 *** WeeChat can't be built without Iconv support.])
 fi
@@ -308,7 +308,7 @@ if test "x$enable_aspell" = "xyes" ; then
     if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
        AC_MSG_RESULT(no)
        AC_MSG_WARN([
-*** Aspell headers and/or libraries couldn't be found in your system.
+*** Aspell headers and/or libraries couldn't be found on your system.
 *** Try to install them with your software package manager.
 *** WeeChat will be built without Aspell support.])
        enable_aspell="no"
@@ -424,7 +424,7 @@ if test "x$enable_perl" = "xyes" ; then
                 AC_MSG_RESULT(found)
             else
                 AC_MSG_WARN([
-*** Perl library couldn't be found in your system.
+*** Perl library couldn't be found on your system.
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Perl support.])
                 enable_perl="no"
@@ -432,7 +432,7 @@ if test "x$enable_perl" = "xyes" ; then
             fi
         else
             AC_MSG_WARN([
-*** Perl headers couldn't be found in your system.
+*** Perl headers couldn't be found on your system.
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Perl support.])
             enable_perl="no"
@@ -485,7 +485,7 @@ if test "x$enable_python" = "xyes" ; then
                AC_MSG_RESULT(found)
             else
                 AC_MSG_WARN([
-*** Python library couldn't be found in your system.            
+*** Python library couldn't be found on your system.            
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Python support.])
                 enable_python="no"
@@ -493,7 +493,7 @@ if test "x$enable_python" = "xyes" ; then
             fi
         else
             AC_MSG_WARN([
-*** Python header files couldn't be found in your system.
+*** Python header files couldn't be found on your system.
 *** Try to install them with your software package manager.
 *** WeeChat will be built without Python support.])
             enable_python="no"
@@ -531,7 +531,7 @@ if test "x$enable_ruby" = "xyes" ; then
             RUBY_CFLAGS="-I$RUBY_INCLUDE"
         else
             AC_MSG_WARN([
-*** Ruby header files couldn't be found in your system.
+*** Ruby header files couldn't be found on your system.
 *** Try to install them with your software package manager.
 *** WeeChat will be built without Ruby support.])
             enable_ruby="no"
@@ -650,7 +650,7 @@ if test "x$enable_lua" = "xyes" ; then
     if test "x$LUA_TEST" != "x0" ; then
         AC_MSG_RESULT(no)
         AC_MSG_WARN([
-*** Lua (>=5.0) headers and/or librairies couldn't be found in your system.
+*** Lua (>=5.0) headers and/or librairies couldn't be found on your system.
 *** Try to install liblua, liblualib and liblua-dev with your software package manager.
 *** WeeChat will be built without Lua support.])
         enable_lua="no"
@@ -673,49 +673,31 @@ if test "x$enable_lua" = "xyes" ; then
 fi
 
 # --------------------------------- tcl -------------------------------------
+
 TCL_VERSION=
 
 if test "x$enable_tcl" = "xyes" ; then
     enable_plugins="yes"
     
-    AC_PATH_PROGS(TCL, tclsh tclsh8.5 tclsh8.4)
-    if test -z $TCL ; then
+    AC_MSG_CHECKING(for tclConfig.sh)
+    tcl_found="no"
+    tcl_dirs="/lib /usr/lib /usr/tcl/lib /usr/lib/tcl8.5 /usr/lib/tcl8.4 /usr/lib/tcl8.3 /usr/local/lib /usr/local/tcl-8.5/lib /usr/local/tcl-8.4/lib /usr/local/tcl-8.3/lib /usr/local/tcl/lib /opt/lib"
+    for tcl_dir in $tcl_dirs ; do
+        if test -f ${tcl_dir}/tclConfig.sh ; then
+            . ${tcl_dir}/tclConfig.sh
+            TCL_CFLAGS="-I${TCL_PREFIX}/include $TCL_INCLUDE_SPEC"
+            TCL_LFLAGS="$TCL_LIB_SPEC $TCL_LIBS"
+            tcl_found="yes"
+            AC_MSG_RESULT(${tcl_dir}/tclConfig.sh)
+            break
+        fi
+    done
+    if test "x$tcl_found" = "xno" ; then
         AC_MSG_WARN([
-*** Tcl must be installed on your system but tcl interpreter couldn't be found in path.
-*** Please check that tclsh is in path, or install it with your software package manager.
+*** Script tclConfig.sh couldn't be found on your system.
 *** WeeChat will be built without Tcl support.])
         enable_tcl="no"
         not_found="$not_found tcl"
-    else
-        TCL_VERSION=`echo 'puts $tcl_version' | $TCL`
-        TCL_PATCHLEVEL=`echo 'puts $tcl_patchLevel' | $TCL`
-        
-	AC_MSG_CHECKING(for Tcl headers files)
-        TCL_HEADER_TEST=`TT=tcltest.c ; echo "#include <tcl.h>" > $TT; echo "int main() { return 0; }" >> $TT ; $CC -Wall $TT -o $TT.out 1>/dev/null 2>&1; echo $?; rm -f $TT $TT.out 1>/dev/null 2>&1`
-        if test "x$TCL_HEADER_TEST" = "x0" ; then
-            TCL_CFLAGS="-fPIC"
-            AC_MSG_RESULT(found)
-            AC_MSG_CHECKING(for Tcl library)
-            TCL_LIB_TEST=`TT=tcltest.c ; echo "int main() { return 0; }" > $TT ; $CC -Wall $TT -o $TT.out -ltcl$TCL_VERSION 1>/dev/null 2>&1; echo $?; rm -f $TT $TT.out 1>/dev/null 2>&1`
-            if test "x$TCL_LIB_TEST" = "x0" ; then	        
-                TCL_LFLAGS="-ltcl$TCL_VERSION -ldl -export-dynamic"
-                AC_MSG_RESULT(found)
-            else
-                AC_MSG_WARN([
-*** Tcl library couldn't be found in your system.
-*** Try to install it with your software package manager.
-*** WeeChat will be built without Tcl support.])
-                enable_tcl="no"
-                not_found="$not_found tcl"
-            fi
-        else
-            AC_MSG_WARN([
-*** Tcl headers couldn't be found in your system.
-*** Try to install it with your software package manager.
-*** WeeChat will be built without Tcl support.])
-            enable_tcl="no"
-            not_found="$not_found tcl"
-        fi
     fi
 fi
 
@@ -1045,7 +1027,7 @@ if test "x$enable_lua" = "xyes"; then
     listplugins="$listplugins lua($LUA_VERSION)"
 fi
 if test "x$enable_tcl" = "xyes"; then
-    listplugins="$listplugins tcl($TCL_PATCHLEVEL)"
+    listplugins="$listplugins tcl($TCL_VERSION)"
 fi
 if test "x$enable_xfer" = "xyes"; then
     listplugins="$listplugins xfer"
