@@ -255,6 +255,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
     mask_decoded = NULL;
     mask_decoded2 = NULL;
     mask_decoded3 = NULL;
+    log_path = NULL;
+    log_path2 = NULL;
     
     dir_separator = weechat_info_get ("dir_separator", "");
     weechat_dir = weechat_info_get ("weechat_dir", "");
