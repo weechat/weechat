@@ -50,7 +50,6 @@ make
 %makeinstall
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 mv $RPM_BUILD_ROOT%{_libdir}/*.* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{name}/*.pdf
 
 %find_lang %name
 
@@ -60,14 +59,13 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
-%doc doc/en/weechat_faq.en.txt doc/fr/weechat_faq.fr.txt
-%doc doc/en/weechat_quickstart.en.txt doc/fr/weechat_quickstart.fr.txt
-%doc doc/en/weechat_tester.en.txt doc/fr/weechat_tester.fr.txt
+%doc doc/en/weechat_*.txt doc/fr/weechat_*.txt
+%doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*
-%{_docdir}/%{name}/html/*
-%{_docdir}/%{name}/weechat_quickstart*
+%{_libdir}/pkgconfig/weechat.pc
+%{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
 * Thu Sep 06 2007 FlashCode <flashcode@flashtux.org> 0.2.6-1
