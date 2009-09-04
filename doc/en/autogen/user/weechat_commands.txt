@@ -5,7 +5,7 @@
 
             add: add a new bar
         barname: name of bar (must be unique)
-           type:   root: outside windows),
+           type:   root: outside windows,
                  window: inside windows, with optional conditions (see below)
       cond1,...: condition(s) for displaying bar (only for type "window"):
                    active: on active window
@@ -13,7 +13,6 @@
                  nicklist: on windows with nicklist
                  without condition, bar is always displayed
        position: bottom, top, left or right
-        filling: horizontal, vertical, columns_horizontal or columns_vertical
            size: size of bar (in chars)
       separator: 1 for using separator (line), 0 or nothing means no separator
       item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))

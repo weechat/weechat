@@ -3914,7 +3914,7 @@ command_init ()
                      "scroll_value] | [list] | [listfull] | [listitems]"),
                   N_("          add: add a new bar\n"
                      "      barname: name of bar (must be unique)\n"
-                     "         type:   root: outside windows),\n"
+                     "         type:   root: outside windows,\n"
                      "               window: inside windows, with optional "
                      "conditions (see below)\n"
                      "    cond1,...: condition(s) for displaying bar (only for "
@@ -3924,8 +3924,6 @@ command_init ()
                      "               nicklist: on windows with nicklist\n"
                      "               without condition, bar is always displayed\n"
                      "     position: bottom, top, left or right\n"
-                     "      filling: horizontal, vertical, columns_horizontal "
-                     "or columns_vertical\n"
                      "         size: size of bar (in chars)\n"
                      "    separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"

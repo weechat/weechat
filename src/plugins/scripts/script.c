@@ -255,7 +255,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     }
     weechat_hook_command (weechat_plugin->name,
                           N_("list/load/unload scripts"),
-                          N_("[list [name]] | [listfull [name]] "
+                          N_("[list [name]] | [listfull [name]] | "
                              "[load filename] | [autoload] | "
                              "[reload] | [unload [name]]"),
                           N_("filename: script (file) to load\n"
