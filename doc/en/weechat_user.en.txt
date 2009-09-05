@@ -1175,24 +1175,31 @@ Developers
 FlashCode (Sébastien Helleu)::
     main developer
 
-Kolter (Emmanuel Bouthenot)::
-    developer, debian packager
-
 [[contributors]]
 Contributors
 ~~~~~~~~~~~~
 
+Kolter (Emmanuel Bouthenot)::
+    debian packager
+
 Ptitlouis::
-    first debian packager
+    old debian packager
 
 Jiri Golembiovsky::
     czech translation, patches
 
+soltys::
+    polish translation
+
+rettub::
+Frank Zacharias::
+    german translation
+
 Pavel Shevchuk::
     russian translation
 
-Frank Zacharias::
-    german translation
+m4v::
+    spanish translation
 
 Voroskoi::
     hungarian translation

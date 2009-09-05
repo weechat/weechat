@@ -1213,24 +1213,31 @@ Développeurs
 FlashCode (Sébastien Helleu)::
     développeur principal
 
-Kolter (Emmanuel Bouthenot)::
-    développeur, empaqueteur debian
-
 [[contributors]]
 Contributeurs
 ~~~~~~~~~~~~~
 
+Kolter (Emmanuel Bouthenot)::
+    empaqueteur debian
+
 Ptitlouis::
-    premier empaqueteur debian
+    ancien empaqueteur debian
 
 Jiri Golembiovsky::
     traduction en tchèque, patchs
 
+soltys::
+    traduction en polonais
+
+rettub::
+Frank Zacharias::
+    traduction en allemand
+
 Pavel Shevchuk::
     traduction en russe
 
-Frank Zacharias::
-    traduction en allemand
+m4v::
+    traduction en espagnol
 
 Voroskoi::
     traduction en hongrois
