@@ -14,8 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . en fr pl de
-
-man_MANS = weechat-curses.1
-
-EXTRA_DIST = $(man_MANS) CMakeLists.txt
+# quickstart
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.de.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.de.txt
+  COMMENT "Building weechat_quickstart.de.html"
+)
+ADD_CUSTOM_TARGET(doc-quickstart-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html DESTINATION share/doc/${PROJECT_NAME})

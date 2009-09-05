@@ -14,8 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . en fr pl de
+docdir = $(datadir)/doc/$(PACKAGE)
 
-man_MANS = weechat-curses.1
+EXTRA_DIST = CMakeLists.txt \
+		weechat_quickstart.de.txt
 
-EXTRA_DIST = $(man_MANS) CMakeLists.txt
+all-local: weechat_quickstart.de.html
+
+# quickstart
+weechat_quickstart.de.html: weechat_quickstart.de.txt
+	$(ASCIIDOC) -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.de.html weechat_quickstart.de.txt
+
+# install docs
+
+install-data-hook:
+	$(mkinstalldirs) $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
+
+# clean
+
+clean-local:
+	-rm -f *.html
