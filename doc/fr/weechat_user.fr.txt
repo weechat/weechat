@@ -7,7 +7,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-http://weechat.flashtux.org/doc.php
+http://www.weechat.org/doc
 
 
 [[introduction]]
@@ -36,7 +36,7 @@ Ses principales fonctionnalités sont les suivantes :
 * multi plates-formes (GNU/Linux, *BSD, MacOS X, Windows et d'autres systèmes)
 * 100% GPL, logiciel libre
 
-La page d'accueil de WeeChat est ici : http://weechat.flashtux.org/
+La page d'accueil de WeeChat est ici : http://www.weechat.org/
 
 [[pre-requisites]]
 Pré-requis
@@ -1154,7 +1154,7 @@ Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
 
 Vous pouvez trouver des scripts pour WeeChat ici :
-http://weechat.flashtux.org/plugins.php
+http://www.weechat.org/plugins
 
 Commandes Perl
 ^^^^^^^^^^^^^^

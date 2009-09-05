@@ -31,8 +31,7 @@ Some features (version > = 0.3.x):
 * multi-platform
 * 100% GPL and free
 
-More info on this page:
-http://weechat.flashtux.org/features.php
+More info on this page: http://www.weechat.org/features
 
 
 Compilation / install
@@ -241,7 +240,7 @@ According to WeeChat version:
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
 
 Many other scripts exist for notification, please look at plugins/scripts page:
-http://weechat.flashtux.org/plugins.php
+http://www.weechat.org/plugins
 
 
 [[filter_irc_join_part_quit]]
@@ -302,7 +301,7 @@ There are 3 ways:
   * request a new feature: https://savannah.nongnu.org/task/?group=weechat
   * send a patch: https://savannah.nongnu.org/patch/?group=weechat
 . you can mail developers, look at support page for developer's mails:
-  http://weechat.flashtux.org/support.php
+  http://www.weechat.org/about
   (you can subscribe and send to "support" mailing list)
 
 
@@ -310,8 +309,7 @@ There are 3 ways:
 What is the list of supported platforms for WeeChat? Will it be ported to other operating systems?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The full list is on this page:
-http://weechat.flashtux.org/download.php?view=supported_os
+The full list is on this page: http://www.weechat.org/download
 
 We do our best to run on as many platforms as possible. Help is welcome for
 some OS' we don't have, to test WeeChat.
@@ -324,7 +322,7 @@ I want to help WeeChat developers. What can I do?
 There's many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
-http://weechat.flashtux.org/support.php
+http://www.weechat.org/about
 
 
 [[donate]]
@@ -332,4 +330,4 @@ Can I give money or other things to WeeChat developers?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can give us money to help development.
-Details on http://weechat.flashtux.org/donate.php
+Details on http://www.weechat.org/donate

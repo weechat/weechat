@@ -80,7 +80,7 @@ pour obtenir juste les deltas avec la version d'aujourd'hui.
 Sinon vous pouvez installer le paquet 'devel' :
 
 -----------------------------------------------------------------
-$ wget http://weechat.flashtux.org/download/weechat-devel.tar.bz2
+$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 -----------------------------------------------------------------
@@ -111,7 +111,7 @@ Obtenir un paquet binaire
 Selon votre distribution Linux :
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://weechat.flashtux.org/download.php
+* Gentoo: http://www.weechat.org/download
 * ArchLinux: PKGBUILD depuis http://aur.archlinux.org/
 * autre: nous ne savons pas ! Eheh.
 

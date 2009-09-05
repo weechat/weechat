@@ -31,8 +31,7 @@ Quelques fonctionnalités (version > = 0.3.x) :
 * multi-platformes
 * 100% GPL et libre
 
-Plus d'infos sur cette page :
-http://weechat.flashtux.org/features.php
+Plus d'infos sur cette page : http://www.weechat.org/features
 
 
 Compilation / installation
@@ -250,8 +249,7 @@ Selon la version de WeeChat :
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
 
 De nombreux autres scripts de notification existent, merci de consulter la
-liste des extensions/scripts :
-http://weechat.flashtux.org/plugins.php
+liste des extensions/scripts : http://www.weechat.org/plugins
 
 
 [[filter_irc_join_part_quit]]
@@ -315,8 +313,7 @@ Il y a 3 possibilités :
   * demander une nouvelle fonctionnalité: https://savannah.nongnu.org/task/?group=weechat
   * envoyer un patch: https://savannah.nongnu.org/patch/?group=weechat
 . vous pouvez envoyer un mail aux développeurs, consultez la page support
-  pour les mails des développeurs :
-  http://weechat.flashtux.org/support.php
+  pour les mails des développeurs : http://www.weechat.org/about
   (vous pouvez souscrire et envoyer à la liste de diffusion nommée "support")
 
 
@@ -324,8 +321,7 @@ Il y a 3 possibilités :
 Quelle est la liste des plate-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La liste complète est sur cette page :
-http://weechat.flashtux.org/download.php?view=supported_os
+La liste complète est sur cette page : http://www.weechat.org/download
 
 Nous faisons le maximum pour supporter le plus de plate-formes possible.
 Toute aide est la bienvenue pour les systèmes que nous n'avons pas, pous y
@@ -339,8 +335,7 @@ Je souhaiterai aider les développeurs WeeChat. Que puis-je faire ?
 Il y a plusieurs choses à faire (test, code, documentation, etc...)
 
 Merci de prendre contact avec nous par IRC ou mail, consultez la page
-support :
-http://weechat.flashtux.org/support.php
+support : http://www.weechat.org/about
 
 
 [[donate]]
@@ -348,4 +343,4 @@ Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous pouvez donner de l'argent pour aider le développement.
-Plus de détails sur http://weechat.flashtux.org/donate.php
+Plus de détails sur http://www.weechat.org/donate

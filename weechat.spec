@@ -24,8 +24,8 @@ Name:      %{name}
 Summary:   portable, fast, light and extensible IRC client
 Version:   %{version}
 Release:   %{release}
-Source:    http://weechat.flashtux.org/download/%{name}-%{version}.tar.gz
-URL:       http://weechat.flashtux.org
+Source:    http://www.weechat.org/files/src/%{name}-%{version}.tar.gz
+URL:       http://www.weechat.org/
 Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires:  perl, python, ruby, gnutls, ncurses

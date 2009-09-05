@@ -51,7 +51,7 @@
 
 
 #define WEECHAT_COPYRIGHT_DATE "(c) 2003-2009"
-#define WEECHAT_WEBSITE "http://weechat.flashtux.org/"
+#define WEECHAT_WEBSITE "http://www.weechat.org/"
 
 /* log file */
 

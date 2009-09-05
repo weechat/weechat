@@ -10,7 +10,7 @@
  * ##                                                                      ##
  * ##                By FlashCode <flashcode@flashtux.org>                 ##
  * ##                                                                      ##
- * ##                    http://weechat.flashtux.org/                      ##
+ * ##                      http://www.weechat.org/                         ##
  * ##                                                                      ##
  * ##########################################################################
  *

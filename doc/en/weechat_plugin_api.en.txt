@@ -6,7 +6,7 @@ FlashCode <flashcode@flashtux.org>
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-http://weechat.flashtux.org/doc.php
+http://www.weechat.org/doc
 
 
 [[introduction]]

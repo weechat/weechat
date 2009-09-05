@@ -76,7 +76,7 @@ the latest updates.
 Otherwise you can download and unpack 'devel' package:
 
 -----------------------------------------------------------------
-$ wget http://weechat.flashtux.org/download/weechat-devel.tar.bz2
+$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 -----------------------------------------------------------------
@@ -107,7 +107,7 @@ Install binary package
 According to your Linux distribution:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://weechat.flashtux.org/download.php
+* Gentoo: http://www.weechat.org/download
 * ArchLinux: PKGBUILD from http://aur.archlinux.org/
 * other: we don't know! Eheh.
 

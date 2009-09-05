@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config, asciidoc (>= 8.4),
  source-highlight
 Standards-Version: 3.8.2
-Homepage: http://weechat.flashtux.org/
+Homepage: http://www.weechat.org/
 Vcs-Git: git://git.debian.org/users/kolter-guest/weechat.git
 Vcs-Browser: http://git.debian.org/git/users/kolter-guest/weechat.git
 DM-Upload-Allowed: yes
