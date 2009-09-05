@@ -1,0 +1,332 @@
+WeeChat FAQ (Często zadawane pytania)
+=====================================
+FlashCode <flashcode@flashtux.org>
+
+
+Ogólne
+------
+
+
+[[why_choose_weechat]]
+Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ponieważ WeeChat jest lekki i posiada wiele nowych możliwości.
+Niektóre cechy (wersja > = 0.3.x):
+
+* wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
+* wiele zdalnych GUI w dodatku do Courses (już niedługo)
+* dostępny w wielu językach
+* rozszerzalny dzięki wtyczką (C, Perl, Python, Ruby, Lua, Tcl)
+* bufory z wolną zawartością
+* filtrowanie po tagach i wyrażeniach regularnych
+* poziome i pionowe dzielenie okien
+* paski które możemy tworzyć i dostosowywać do własnych potrzeb
+* lista nicków dostępna w każdym GUI
+* przyrostowe wyszukiwanie tekstu w buforach, przeskakiwanie do podświetleń
+* strumień FIFO do zdalnej kontroli
+* wsparcie dla aspell
+* podwójny zestaw znaków (kodowanie/dekodowanie)
+* tworzony od podstaw (nie bazuje na żadnym innym kliencie)
+* wielo platformowy
+* 100% GPL i wolny
+
+Więcej informacji na stronie: http://www.weechat.org/features
+
+
+Kompilacja / instalacja
+-----------------------
+
+
+[[gui]]
+Słyszałem o wielu GUI dla WeeChat. Jak moge je skompilować/użyć?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Obecnie dostępne jest tylko GUI Courses.
+
+Pozostałe będą dostępne jeko zdalne klienty (obecnie rozwijane).
+
+
+[[compile_git]]
+Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Zalecaną metodą kompilacji WeeChat jest użycie cmake.
+
+Jeśli kompilujesz używając autotools (nie cmake), upewnij się, że posiadasz
+najnowszą wersję autoconf i automake (WeeChat jest rozwijany z użyciem autoconf 2.61
+oraz automake 1.10.1).
+
+Innym sposobem jest zainstalowanie "paczki deweloperskiej", która wymaga mniej
+zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium
+git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
+przy aktualizowaniu jak klonowanie z gita.
+
+
+Używanie WeeChat
+----------------
+
+
+[[lost]]
+Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
+Klawisze i komendy są wypisane w dokumentacji.
+
+Nowym użytkowniką zaleca się przeczytanie quickstart (szybki start)
+(zobacz stronę z dokumentacją na stronie www).
+
+
+[[buffer_vs_window]]
+Słyszałem o "buforach" i "oknach", jaka jest między nimi różnica?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+'bufor' jest określany przez numer, nazwę, wyświetlane linie (i trochę innych
+danych).
+
+'okno' jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
+ekranu na wiele okien.
+
+Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany przez
+okno) lub wyświetlany w jednym lub więcej oknach.
+
+
+[[charset]]
+Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązania.
+
+Dla wersji < 0.2.3, zaleca się uaktualnienie do najnowszej stabilnej wersji.
+
+Dla wersji > = 0.2.3:
+
+* sprawdź czy weechat-curses jest zlinkowany z libncursesw (uwaga: wymagane na
+  więkrzości dystrybucji ale nie wszystkich): `ldd /path/to/weechat-curses`
+* sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin` 
+  (jeśli nie jest, to najprawdopodbniej potrzebujesz pakietu "weechat-plugins")
+* sprawdź ustawienia kodowania (w buforze serwera). Powinieneś ujrzeć 'ISO-XXXXXX'
+  lub 'UTF-8' dla kodowania terminala. Jeśli zobaczysz 'ANSI_X3.4-1968' lub inna
+  wartość to twoje locale są prawdopodobnie złe.
+* ustaw globalną wartość dekodowania, na przykład:
+** w WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-2`
+** w WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-2"`
+* jeślu kożystasz z UTF-8:
+** sprawdź czy twój terminal jest przystosowany dla UTF-8 (zalecanym terminalem 
+   dla UTF-8 jest rxvt-unicode)
+** jeśli kożystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
+   ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
+
+[NOTE]
+UTF-8 jest zalecany dla WeeChat. Jeśli kożystasz z locali ISO lub innych,
+sprawdź czy *wszystkie* twoje ustawienia (terminal, screen, ..) są ISO,
+a *nie* UTF-8.
+
+
+[[bars_background]]
+Paski jak tytuł i status nie są filtrowane, kolor tła zatrzymuje się po tekście, czemu?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Może to być spowodowane złą wartośćią zmiennej środowiskowej TERM (spójrz na
+wynik `echo $TERM` w terminalu).
+
+W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
+
+* jeśli WeeChat jest uruchomiony lokalnie lub na zdalnej maszynie bez screena,
+  zależy od używanego terminala: 'xterm', 'rxvt', ..
+* jeśli WeeChat działa pod screenem, powinieneś mieć 'screen'.
+
+W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
+
+
+[[screen_weird_chars]]
+Kiedy używam weechat pod screenem, dostaje dziwne losowe znaki, jak to naprawić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Może to być spowodowane przez złą wartość zmiennej środowiskowej TERM (spójrz na
+wynik `echo $TERM` w terminalu).
+
+Na przykład, 'xterm-color' może wyświetlać takie dziwne znaki, możesz użyc 'xterm',
+który działa dobrze (jak wiele innych wartości).
+
+W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
+
+
+[[key_bindings]]
+Jak mogę zmienić przypisania klawiszy?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Przypisania klawiszy mozna dostosować za pomocą komendy /key.
+
+Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
+go w wierszu poleceń.
+
+
+[[openbsd_plugins]]
+Używam OpenBSD,  WeeChat nie ładuje żadnych pluginów, co jest nie tak?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pod  OpenBSD, nazwy wtyczek kończą się ".so.0.0" (".so" dla Linuksa).
+
+Musisz ustawić:
+
+* dla WeeChat < = 0.2.6: +
+  `/set plugins_extension = ".so.0.0"`
+* dla WeeChat > = 0.3.x: +
+  `/set weechat.plugin.extension ".so.0.0"`
+
+Następnie: `/plugin autoload`.
+
+
+[[scripts]]
+Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować 
+skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
+
+Skrypty nie są kompatybilne z innymi klientami IRC.
+
+Uwagi:
+
+* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy 
+  uruchomieniu WeeChat.
+* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.x.
+
+
+[[change_locale_without_quit]]
+Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tak,musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
+oraz użyć tych komend po załadowaniu skryptu:
+
+  /shell setenv LANG=pl_PL.UTF-8
+  /upgrade
+
+Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osóby
+używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
+
+
+[[terminal_copy_paste]]
+Jak mogę kopiować/wklejać tekst bez wklejania listy nicków w interfejsie Courses?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
+konsole, gnome-terminal, ...). Klawisze to zazwyczaj ctrl + alt + zaznaczenie myszką.
+
+Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na przykład:
+
+* dla WeeChat < = 0.2.6: +
+  `set look_nicklist_position = top`
+* dla WeeChat > = 0.3.x: +
+  `/bar set nicklist position top`
+
+
+[[highlight_notification]]
+Jak mogę zostać powiadomiony, jeśli ktoś będzię chciał przyciągnąć moją uwagę na kanale?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+W zależnośći od wersji WeeChat:
+
+* dla WeeChat < = 0.2.6: użyj skryptu 'sound.pl' (dostępny na stronie ze
+  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
+  wyświetlenia wiadomości, ..) za pomocą komendy: +
+  `/setp perl.sound.cmd_highlight = "/ścieżka/do/komendy argumenty"`
+* dla WeeChat > = 0.3.x: użyj skryptu 'launcher.pl' (dostępny na stronie ze
+  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
+  wyświetlenia wiadomości, ..) za pomocą komendy: +
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"`
+
+Istnieje wiele innych skryptów do powiadomień, zajrzyj na stronę wtyczek/skryptów:
+http://www.weechat.org/plugins
+
+
+[[filter_irc_join_part_quit]]
+Jak moge filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+W zależności od wersji WeeChat:
+
+* dla WeeChat < = 0.2.6: +
+  `/ignore * join #weechat freenode` +
+  `/ignore * part #weechat freenode` +
+  `/ignore * quit #weechat freenode` +
+  (kanał i/lib serwer mogą być "*", `/help ignore` dla pomocy)
+
+* dla WeeChat > = 0.3.x:
+
+** inteligentny filtr (pokazuje te informacje tylko od osób ostatnio aktywnych): +
+   `/set irc.look.smart_filter on` +
+   `/filter add irc_smart * irc_smart_filter *` +
+   (`/help irc.look.smart_filter` oraz `/help filter` dla pomocy)
+
+** globalny filtr (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia): +
+   `/filter add jpk * irc_join,irc_part,irc_quit *` +
+   (`/help filter` dla pomocy)
+
+
+[[ignore_vs_filter]]
+Jaka jest różnica między komendami/ignore i /filter ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
+(serwery i kanały).
+Pozwala ignorować niektóre nicki lub hosty użytkowników serwera lub kanału
+(komendy nie stotuje się do treści wiadomości).
+Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (nigdy
+ich nie zobaczysz).
+
+Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
+Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
+regularnych dla przedrostków i zawartości lini.
+Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
+filtry (domyślnie alt + "=" zmienia stan filtrów).
+
+
+Rozwój
+------
+
+
+[[bug_task_patch]]
+Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Są 3 możliwości:
+
+. możesz dołączyć do nas na IRC: 'irc.freenode.net', kanał '#weechat'
+. możesz użyć strony www savannah:
+  * zgłosić błąd: https://savannah.nongnu.org/bugs/?group=weechat
+  * poprosić o nową możliwość: https://savannah.nongnu.org/task/?group=weechat
+  * wysłać patch: https://savannah.nongnu.org/patch/?group=weechat
+. możesz napisać do deweloperów, na stronie wsparcia możesz znaleźć ich maile:
+  http://www.weechat.org/about
+  (możesz się zapisać na listę mailingową "support" i na niej pisać)
+
+
+[[supported_os]]
+Jaka jest lista platform wspieranych przez WeeChat? Czy będzie przeportowany na inne systemy operacyjne?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pełną listę można znaleźć na stronie: http://www.weechat.org/download
+
+Robimy co w naszej mocy, aby WeeChat działał na tylu platformach ile to tylko
+możliwe. Mile widziana jest pomoc w testowaniu dla systemów, których nie mamy.
+
+
+[[help_developers]]
+Chcę pomóc programistą WeeChat. Co mogę zrobić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
+
+Skontaktuj się z nami na IRC lub mailowo, szczegóły:
+http://www.weechat.org/about
+
+[[donate]]
+Czy mogę dac pieniądze albo inne rzeczy deweloperą WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tak możesz dać nam pieniądze, aby wspomóc rozwój.
+Szczegóły na http://www.weechat.org/donate

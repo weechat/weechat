@@ -8,7 +8,7 @@ Uruchamianie WeeChat
 --------------------
 
 Zalecanym emulatorem terminala dla X (ale nieobowiązkowym) jest rxvt-unicode
-(posiada dobre wsparcie UTF-8, oraz nie ma problemów z domyślnymi sktótami
+(posiada dobre wsparcie UTF-8, oraz nie ma problemów z domyślnymi skrótami
 klawiszowymi).
 
 Wywołaj "weechat-curses" z terminala.
@@ -44,10 +44,10 @@ Na przykład:
 Możesz wyświetlić pomoc dla opcji dzięki `/help`, na przykład:
 `/help weechat.look.highlight`.
 
-Wszystkie ustawienia są zapisywane podczas yjścia z WeeChat (lub za pomocą
+Wszystkie ustawienia są zapisywane podczas wyjścia z WeeChat (lub za pomocą
 komendy `/save`, która wymusza zapisanie opcji).
 
-Możesz edytować ręcznie pliko konfiguracyjne (*.conf) i przeładować je za pomocą
+Możesz edytować ręcznie pliki konfiguracyjne (*.conf) i przeładować je za pomocą
 komendy `/reload`, jeśli nie chcesz użyć komendy `/set`.
 
 
@@ -62,7 +62,7 @@ bezużyteczny (wierni użytkownicy: IRC był częścią rdzenia dla wersji < = 0
 Wszystkie protokoły sieciowe jak IRC są dostarczane w oddzielnych pluginach.
 
 Użyj komendy `/plugin` do wyświetlenia załadowanych wtyczek, powinieneś zobaczyć
-na liście "irc"oraz inne wtyczki.
+na liście "irc" oraz inne wtyczki.
 
 
 [[create_irc_server]]
@@ -187,7 +187,7 @@ Skróty klawiszowe
 WeeChat używa domyślnie wiele klawiszy. Wszystie z nich są w dokumentacji,
 ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 
-- 'alt + sytzałki lewo/prawo' (lub 'F5'/'F6'): przełącza na poprzedni/następny bufor
+- 'alt + strzałki lewo/prawo' (lub 'F5'/'F6'): przełącza na poprzedni/następny bufor
 - 'F7'/'F8': przełącza na poprzednie/następne okno (jeśli ekran jest podzielony)
 - 'F9'/'F10': przewija pasek z tematem kanału
 - 'F11'/'F12': przewija listę z nickami
@@ -195,7 +195,7 @@ ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 - 'page up/down': przewija tekst w obecnym buforze
 - 'alt + A': skocz do bufora z aktywnością (w hotliście)
 
-Zgodnie z Twoja klawiaturą i/lub potrzebami, możesz zmienić przypisanie
+Zgodnie z Twoją klawiaturą i/lub potrzebami, możesz zmienić przypisanie
 dowolnego klawisza do komendy używajac komendy `/key`.
 Przydatnym skrótem jest meta-k (alt-k) do odnajdywania kodów klawiszy.
 
@@ -203,7 +203,7 @@ Na przykład, aby przypisać meta-y (alt-y) do komendy `/buffer close`:
 
   /key bind (wciśnij meta-k) (wciśnij meta-y) /buffer close
 
-Otrzymasz w lini komend:
+Otrzymasz w lini poleceń:
 
   /key bind meta-y /buffer close
 
@@ -216,7 +216,7 @@ Aby usunąć klawisz:
 Wtyczki/skrypty
 ---------------
 
-W niektórych dystrybucjach jak Debian, wtyczki są dostarczane jako oddzielne
+W niektórych dystrybucjach, jak np Debian, wtyczki są dostarczane jako oddzielne
 pakiety (jak weechat-plugins).
 Wtyczki są automatycznie ładowane, kiedy zostaną wykryte (proszę spojrzeć do
 dokumentacji WeeChat, aby się dowiedzieć jak ładowac/wyładowywać wtyczki lub
@@ -224,7 +224,7 @@ skrypty).
 
 Niektóre pluginy pozwalają na używanie skryptów w WeeChat (w wielu językach jak Perl,
 Python, Ruby, Lua oraz Tcl). Te wtyczki muszą być załadowane za pomoca komendy 
-`/plugin` dostarczają one komendy jak `/perl`, używane do ładowania skryptów.
+`/plugin`, dostarczają one komendy jak `/perl`, używane do ładowania skryptów.
 
 Wiele zewnętrznych wtyczek/skryptów (od społeczności) jest dostępnych dla
 WeeChat: http://www.weechat.org/plugins

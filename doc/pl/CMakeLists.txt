@@ -14,6 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# FAQ
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
+  COMMENT "Building weechat_faq.pl.html"
+)
+ADD_CUSTOM_TARGET(doc-faq-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html DESTINATION share/doc/${PROJECT_NAME})
+
 # quickstart
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html
@@ -24,3 +35,14 @@ ADD_CUSTOM_COMMAND(
 )
 ADD_CUSTOM_TARGET(doc-quickstart-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html DESTINATION share/doc/${PROJECT_NAME})
+
+# tester's guide
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
+  COMMENT "Building weechat_tester.pl.html"
+)
+ADD_CUSTOM_TARGET(doc-tester-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html DESTINATION share/doc/${PROJECT_NAME})

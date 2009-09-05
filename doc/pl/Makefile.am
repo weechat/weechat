@@ -17,13 +17,25 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
-		weechat_quickstart.pl.txt
+		weechat_faq.pl.txt \
+		weechat_quickstart.pl.txt \
+		weechat_tester.pl.txt
 
-all-local: weechat_quickstart.pl.html
+all-local: weechat_faq.pl.html \
+		weechat_quickstart.pl.html \
+		weechat_tester.pl.html
+
+# FAQ
+weechat_faq.pl.html: weechat_faq.pl.txt
+	$(ASCIIDOC) -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.pl.html weechat_faq.pl.txt
 
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.txt
 	$(ASCIIDOC) -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.pl.html weechat_quickstart.pl.txt
+
+# tester's guide
+weechat_tester.pl.html: weechat_tester.pl.txt
+	$(ASCIIDOC) -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_tester.pl.html weechat_tester.pl.txt
 
 # install docs
 
