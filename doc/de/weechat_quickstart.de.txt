@@ -23,9 +23,9 @@ Um Hilfe zu einen bestimmten Befehl zu bekommen kann man einfach `/help Befehl`
 ausführen.
 
 Um Optionen zu setzen benutzt man `/set config.section.option value`.
-(dabei ist 'config' der Konfigurationsname ('weechat' für den Kernbereich von
-weechat, oder ein Plugin-Name), 'section' ein Abschnitt dieser Konfiguration und
-'option' der Name der Option).
+(dabei ist 'config' der Konfigurationsname ('weechat' für den Kern von weechat,
+oder ein Plugin-Name), 'section' ein Abschnitt dieser Konfiguration und 'option'
+der Name der Option).
 
 WeeChat benutzt den neuen Wert sofort (*Niemals* muss WeeChat neu gestartet
 werden nach dem die Konfiguration geändert wurde).
@@ -45,7 +45,7 @@ Zum Beispiel:
 `/set irc.*`::
     Anzeige der Optionen des IRC-Plugins
 
-Du kannst mit `/help` Hilfe für Optionen anzeigen lassen, z.B.:
+Du kannst mit `/help` Hilfe für Optionen auflisten lassen, z.B.:
 `/help weechat.look.highlight`.
 
 Beim beenden von WeeChat werden alle Einstellungen gespeichert (mittels `/save`
@@ -57,13 +57,13 @@ verwenden möchte).
 
 
 [[core_vs_plugins]]
-Kernbereich (Core) vs Plugins
------------------------------
+Kern (Core) vs Plugins
+----------------------
 
-Der Kernbereich (core) von WeeChat ist ausschließlich dazu da, Daten auf dem
-Bildschirm darzustellen um mit dem Benutzer zu interagieren, dies bedeutet, 
-WeeChat an sich -also nur WeeChat core- ohne jegliche Plugins ist unbrauchbar.
-(an die treuen User: IRC war ein Teil des Kernbereichs bei Versionen <= 0.2.6)
+Der Kern (core) von WeeChat ist ausschließlich dazu da, Daten auf dem Bildschirm
+darzustellen um mit dem Benutzer zu interagieren, dies bedeutet, WeeChat an sich
+-also nur WeeChat core- ohne jegliche Plugins ist unbrauchbar.
+(an die treuen User: IRC war ein Teil des Kerns bei Versionen <= 0.2.6)
 
 Alle Netzwerkprotokolle, z.B. IRC, werden als separates Plugin bereit gestellt.
 
@@ -115,7 +115,7 @@ beim nickserv:
 
   /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
 
-Hinweis: Viele Befehle können mittels ';' (Semikolon) getrennt werden.
+Hinweis: Mehrere Befehle können mittels ';' (Semikolon) getrennt werden.
 
 Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
 Verbindung zum Server zu erreichen:
@@ -146,9 +146,9 @@ sich mit ihm zu verbinden ohne den Befehl `/server` zu benutzen (sollte ich
 wiederholen, dass Du die Hilfe zu diesem Befehl mit `/help connect` aufrufen
 kannst?).
 
-Generell werden die Server-Puffer und der Puffer des Kernbereichs von WeeChat
--der core-Puffer- zusammengelegt. Um zwischen den core-Puffer und den
-Server-Puffern umzuschalten kannst Du ctrl-X benutzen.
+Generell werden die Server-Puffer und der Puffer des Kerns von WeeChat -der
+core-Puffer- zusammengelegt. Um zwischen den core-Puffer und den Server-Puffern
+umzuschalten kannst Du ctrl-X benutzen.
 
 Es ist möglich das automatische Zusammenlegen der Server-Puffer zu deaktivieren
 um eigenständig Puffer zu haben:
