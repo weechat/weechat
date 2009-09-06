@@ -1,10 +1,10 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0-dev, 2009-06-14
+v0.3.0, 2009-09-06
 
 
-Version 0.3.0 (under dev!)
+Version 0.3.0 (2009-09-06)
 --------------------------
 
 * irc: add irc plugin (replaces old IRC code in core) (task #6217)

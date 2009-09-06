@@ -58,8 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
-%doc doc/en/weechat_*.txt doc/fr/weechat_*.txt
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README UPGRADE_0.3
+%doc doc/en/weechat_*.txt doc/fr/weechat_*.txt doc/pl/weechat_*.txt doc/de/weechat_*.txt
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
@@ -68,6 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
+* Sun Sep 06 2009 FlashCode <flashcode@flashtux.org> 0.3.0-1
+- Released version 0.3.0
 * Thu Sep 06 2007 FlashCode <flashcode@flashtux.org> 0.2.6-1
 - Released version 0.2.6
 * Thu Jun 07 2007 FlashCode <flashcode@flashtux.org> 0.2.5-1

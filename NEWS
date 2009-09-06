@@ -1,8 +1,10 @@
 WeeChat News
 ============
 
-FlashCode, 2009-08-10::
-    WeeChat 0.3.0 will bring major changes, especially for configuration files
+FlashCode, 2009-09-06::
+    WeeChat 0.3.0 released.
+    +
+    This version brings major changes, especially for configuration files
     and plugin API.
     +
     For more information about this version, please read file UPGRADE_0.3.

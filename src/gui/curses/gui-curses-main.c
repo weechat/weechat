@@ -125,8 +125,8 @@ gui_main_init ()
         
         /* set title for core buffer */
         gui_buffer_set_title (ptr_buffer,
-                              "WeeChat " WEECHAT_COPYRIGHT_DATE
-                              " - " WEECHAT_WEBSITE);
+                              "WeeChat " PACKAGE_VERSION " "
+                              WEECHAT_COPYRIGHT_DATE " - " WEECHAT_WEBSITE);
         
         /* create main window (using full space) */
         if (gui_window_new (NULL, ptr_buffer, 0, 0,
