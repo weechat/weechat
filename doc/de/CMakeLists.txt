@@ -24,3 +24,14 @@ ADD_CUSTOM_COMMAND(
 )
 ADD_CUSTOM_TARGET(doc-quickstart-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html DESTINATION share/doc/${PROJECT_NAME})
+
+# tester's guide
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.txt
+  COMMENT "Building weechat_tester.de.html"
+)
+ADD_CUSTOM_TARGET(doc-tester-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html DESTINATION share/doc/${PROJECT_NAME})
