@@ -17,11 +17,17 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+		weechat_faq.de.txt \
 		weechat_quickstart.de.txt \
 		weechat_tester.de.txt
 
-all-local: weechat_quickstart.de.html \
+all-local: weechat_faq.de.html \
+		weechat_quickstart.de.html \
 		weechat_tester.de.html
+
+# FAQ
+weechat_faq.de.html: weechat_faq.de.txt
+	$(ASCIIDOC) -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.de.html weechat_faq.de.txt
 
 # quickstart
 weechat_quickstart.de.html: weechat_quickstart.de.txt
