@@ -1,8 +1,13 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.0, 2009-09-06
+v0.3.1-dev, 2009-09-11
 
+
+Version 0.3.1 (under dev!)
+--------------------------
+
+* api: fix function weechat_bar_set for python/lua/ruby (patch #6912)
 
 Version 0.3.0 (2009-09-06)
 --------------------------

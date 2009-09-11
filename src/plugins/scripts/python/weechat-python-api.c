@@ -5186,9 +5186,9 @@ weechat_python_api_bar_set (PyObject *self, PyObject *args)
         PYTHON_RETURN_ERROR;
     }
     
-    weechat_buffer_set (script_str2ptr (bar),
-                        property,
-                        value);
+    weechat_bar_set (script_str2ptr (bar),
+                     property,
+                     value);
     
     PYTHON_RETURN_OK;
 }

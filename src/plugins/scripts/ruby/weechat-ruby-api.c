@@ -5993,9 +5993,9 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
     c_property = STR2CSTR (property);
     c_value = STR2CSTR (value);
     
-    weechat_buffer_set (script_str2ptr (c_bar),
-                        c_property,
-                        c_value);
+    weechat_bar_set (script_str2ptr (c_bar),
+                     c_property,
+                     c_value);
     
     RUBY_RETURN_OK;
 }
