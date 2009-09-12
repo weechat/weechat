@@ -3872,12 +3872,7 @@ Paramètres :
   complétions pour chaque paramètre, séparés par des espaces. Plusieurs
   complétions sont possibles pour un paramètre, séparées par "|". Plusieurs
   modèles de complétions sont possibles pour une même commande, séparés par
-  "||". Les codes complétions par défaut sont :
-include::autogen/plugin_api/completions.txt[]
-** codes spéciaux :
-*** '%%command' : réutiliser le modèle de complétion de la commande 'command'
-*** '%-' : arrêter la complétion
-*** '%*' : répéter la dernière complétion
+  "||".
 * 'callback' : fonction appelée lorsque la commande est utilisée, paramètres :
 ** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
@@ -3888,17 +3883,14 @@ include::autogen/plugin_api/completions.txt[]
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
 
-Par exemple, si la commande appelée est `/command abc def ghi`, alors argv et
-argv_eol contiendront les valeurs suivantes :
+Les codes complétions par défaut sont :
+include::autogen/plugin_api/completions.txt[]
 
-* 'argv' :
-** 'argv[0]' == "abc"
-** 'argv[1]' == "def"
-** 'argv[2]' == "ghi"
-* 'argv_eol' :
-** 'argv_eol[0]' == "abc def ghi"
-** 'argv_eol[1]' == "def ghi"
-** 'argv_eol[2]' == "ghi"
+Codes spéciaux :
+
+* '%%command' : réutiliser le modèle de complétion de la commande 'command'
+* '%-' : arrêter la complétion
+* '%*' : répéter la dernière complétion
 
 Valeur de retour :
 
@@ -3940,6 +3932,18 @@ struct t_hook *my_command_hook =
                           /* callback_data */
                           NULL);
 ----------------------------------------
+
+Par exemple, si la commande appelée est `/command abc def ghi`, alors argv et
+argv_eol contiendront les valeurs suivantes :
+
+* 'argv' :
+** 'argv[0]' == "abc"
+** 'argv[1]' == "def"
+** 'argv[2]' == "ghi"
+* 'argv_eol' :
+** 'argv_eol[0]' == "abc def ghi"
+** 'argv_eol[1]' == "def ghi"
+** 'argv_eol[2]' == "ghi"
 
 weechat_hook_command_run
 ^^^^^^^^^^^^^^^^^^^^^^^^

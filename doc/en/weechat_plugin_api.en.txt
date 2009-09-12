@@ -3814,12 +3814,7 @@ Arguments:
 * 'completion': completion template for command: list of completions for each
   argument, separated by space. Many completions are possible for one
   argument, separated by "|". Many templates are possible for same command,
-  separated by "||". Default completion codes are:
-include::autogen/plugin_api/completions.txt[]
-** special codes:
-*** '%%command': reuse completion template from command 'command'
-*** '%-': stop completion
-*** '%*': repeat last completion
+  separated by "||".
 * 'callback': function called when command is used, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
@@ -3829,17 +3824,14 @@ include::autogen/plugin_api/completions.txt[]
    argument)
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
-For example, if command called is `/command abc def ghi`, then argv and
-argv_eol contain following values:
+Default completion codes are:
+include::autogen/plugin_api/completions.txt[]
 
-* 'argv':
-** 'argv[0]' == "abc"
-** 'argv[1]' == "def"
-** 'argv[2]' == "ghi"
-* 'argv_eol':
-** 'argv_eol[0]' == "abc def ghi"
-** 'argv_eol[1]' == "def ghi"
-** 'argv_eol[2]' == "ghi"
+Special codes:
+
+* '%%command': reuse completion template from command 'command'
+* '%-': stop completion
+* '%*': repeat last completion
 
 Return value:
 
@@ -3881,6 +3873,18 @@ struct t_hook *my_command_hook =
                           /* callback_data */
                           NULL);
 ----------------------------------------
+
+For example, if command called is `/command abc def ghi`, then argv and
+argv_eol contain following values:
+
+* 'argv':
+** 'argv[0]' == "abc"
+** 'argv[1]' == "def"
+** 'argv[2]' == "ghi"
+* 'argv_eol':
+** 'argv_eol[0]' == "abc def ghi"
+** 'argv_eol[1]' == "def ghi"
+** 'argv_eol[2]' == "ghi"
 
 weechat_hook_command_run
 ^^^^^^^^^^^^^^^^^^^^^^^^
