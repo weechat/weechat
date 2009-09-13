@@ -375,7 +375,8 @@ msgstr ""
 msgid "%d new key added"
 msgid_plural "%d new keys added"
 msgstr[0] "přidána %d nová klávesa"
-msgstr[1] "přidáno %d nových kláves"
+msgstr[1] "přidány %d nové klávesy"
+msgstr[2] "přidáno %d nových kláves"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -437,11 +438,13 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekunda"
 msgstr[1] "sekundy"
+msgstr[2] "sekund"
 
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] "milisekunda"
 msgstr[1] "milisekundy"
+msgstr[2] "milisekund"
 
 #, c-format
 msgid "      %d %s (no call limit)"
@@ -599,12 +602,14 @@ msgid "%s%d%s configuration option found matching with \"%s\""
 msgid_plural "%s%d%s configuration options found matching with \"%s\""
 msgstr[0] "%s%d%s volba nastavení nalezena s \"%s\""
 msgstr[1] "%s%d%s volby nastavení nalezeny s \"%s\""
+msgstr[2] "%s%d%s voleb nastavení nalezeno s \"%s\""
 
 #, c-format
 msgid "%s%d%s configuration option found"
 msgid_plural "%s%d%s configuration options found"
 msgstr[0] "%s%d%s volba nastavení nalezena"
 msgstr[1] "%s%d%s volby nastavení nalezeny"
+msgstr[2] "%s%d%s voleb nastavení nalezeno"
 
 #, c-format
 msgid "%sError: failed to set option \"%s\""
@@ -673,6 +678,7 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "den"
 msgstr[1] "dny"
+msgstr[2] "dnů"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -690,6 +696,7 @@ msgid "time"
 msgid_plural "times"
 msgstr[0] "krát"
 msgstr[1] "krát"
+msgstr[2] "krát"
 
 msgid "Windows list:"
 msgstr "Seznam oken:"
@@ -2133,6 +2140,7 @@ msgid "server"
 msgid_plural "servers"
 msgstr[0] "server"
 msgstr[1] "servery"
+msgstr[2] "serverů"
 
 #, c-format
 msgid ""
@@ -4004,7 +4012,8 @@ msgstr "off"
 msgid "channel"
 msgid_plural "channels"
 msgstr[0] "kanál"
-msgstr[1] "kanálů"
+msgstr[1] "kanály"
+msgstr[2] "kanálů"
 
 msgid "1 if string is an IRC channel"
 msgstr "1 pokud je řetězec IRC kanál"
@@ -4194,11 +4203,13 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hodina"
 msgstr[1] "hodiny"
+msgstr[2] "hodin"
 
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuta"
 msgstr[1] "minuty"
+msgstr[2] "minut"
 
 #, c-format
 msgid ""
