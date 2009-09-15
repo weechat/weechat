@@ -36,6 +36,8 @@ irc_la_SOURCES = irc.c \
                  irc-completion.h \
                  irc-config.c \
                  irc-config.h \
+                 irc-ctcp.c \
+                 irc-ctcp.h \
                  irc-debug.c \
                  irc-debug.h \
                  irc-display.c \

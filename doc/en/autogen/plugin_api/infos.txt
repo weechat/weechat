@@ -33,4 +33,8 @@
 
 | weechat | weechat_sharedir | WeeChat "share" directory
 
+| weechat | weechat_site | WeeChat site
+
+| weechat | weechat_site_download | WeeChat site, download page
+
 |========================================

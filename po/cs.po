@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-04 10:38+0200\n"
+"POT-Creation-Date: 2009-09-15 14:36+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2735,6 +2735,10 @@ msgstr "%s: server %s%s%s vytvořen (dočasný server, NEUKLÁDA SE!)"
 msgid "%s%s: unable to create server \"%s\""
 msgstr "%s%s: nemohu vytvořit server \"%s\""
 
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
+
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" příkaz nemůže být spuštěn v bufferu serveru"
@@ -3766,6 +3770,18 @@ msgstr ""
 "%s%s: varování: server \"%s\" nenalezen v konfiguračním souboru, nesmazáno z "
 "paměti, protože se stále používá"
 
+msgid ""
+"format for CTCP reply or empty string for blocking CTCP (no reply), "
+"following variables are replaced: $version (WeeChat version), $compilation "
+"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
+"(WeeChat site, download page), $time (current date and time as text), "
+"$username (username on server), $realname (realname on server)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytváření aliasu \"%s\" => \"%s\""
+
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr ""
 "seznam jmen hostů nebo IP adres (s porty) pro servery (oddělený čárkami)"
@@ -3990,6 +4006,38 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "posílat neznámé příkazy na server"
 
+#, fuzzy, c-format
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%s%sByl jste zabit uživatelem %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+
+#, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s%s: nedostatek paměti pro příkaz \"%s\""
+
+#, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s%s: nemohu rozpársovat příkaz \"%s\""
+
+#, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s%s: neznámý DCC CHAT typ obdržen od %s%s%s: \"%s\""
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
+
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
@@ -4096,14 +4144,6 @@ msgid "%s%s%s%s is now known as %s%s"
 msgstr "%s%s%s%s je nyní známý jako %s%s"
 
 #, c-format
-msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "%sCTCP %sVERSION%s odpověď od %s%s%s: %s"
-
-#, c-format
-msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
-
-#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s %s(%s%s%s)"
 
@@ -4112,40 +4152,12 @@ msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s"
 
 #, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "%sCTCP %sVERSION%s obdržen od %s%s%s: %s"
-
-#, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s"
-msgstr "%sCTCP %sVERSION%s obdržen od %s%s"
-
-#, c-format
-msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "%sObdržen CTCP %sZVUK%s \"%s\" od %s%s"
-
-#, c-format
-msgid "%sCTCP %sPING%s received from %s%s"
-msgstr "%sCTCP %sPING%s obdržen od %s%s"
-
-#, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s"
-
-#, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s%s: nemohu rozpársovat příkaz \"%s\""
-
-#, c-format
-msgid "%s%s: not enough memory for \"%s\" command"
-msgstr "%s%s: nedostatek paměti pro příkaz \"%s\""
-
-#, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s%s: neznámý DCC CHAT typ obdržen od %s%s%s: \"%s\""
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4739,6 +4751,14 @@ msgstr "\"share\" adresář WeeChat"
 
 msgid "WeeChat \"locale\" directory"
 msgstr "\"locale\" adresář WeeChat"
+
+#, fuzzy
+msgid "WeeChat site"
+msgstr "verze WeeChat"
+
+#, fuzzy
+msgid "WeeChat site, download page"
+msgstr "interní znaková sada WeeChat"
 
 msgid "terminal charset"
 msgstr "znaková sada terminálu"
@@ -5600,3 +5620,18 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+#~ msgstr "%sCTCP %sVERSION%s odpověď od %s%s%s: %s"
+
+#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+#~ msgstr "%sCTCP %sVERSION%s obdržen od %s%s%s: %s"
+
+#~ msgid "%sCTCP %sVERSION%s received from %s%s"
+#~ msgstr "%sCTCP %sVERSION%s obdržen od %s%s"
+
+#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+#~ msgstr "%sObdržen CTCP %sZVUK%s \"%s\" od %s%s"
+
+#~ msgid "%sCTCP %sPING%s received from %s%s"
+#~ msgstr "%sCTCP %sPING%s obdržen od %s%s"

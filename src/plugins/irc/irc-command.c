@@ -663,7 +663,7 @@ int
 irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char *pos, *irc_cmd;
+    char *pos, *irc_cmd, str_time[512];
     struct timeval tv;
     
     IRC_GET_SERVER(buffer);
@@ -688,52 +688,40 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
         if ((weechat_strcasecmp (argv[2], "ping") == 0) && !argv_eol[3])
         {
             gettimeofday (&tv, NULL);
-            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01PING %d %d\01",
-                              argv[1], tv.tv_sec, tv.tv_usec);
+            snprintf (str_time, sizeof (str_time), "%ld %ld",
+                      tv.tv_sec, tv.tv_usec);
+            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01PING %s\01",
+                              argv[1], str_time);
             weechat_printf (ptr_server->buffer,
-                            "CTCP%s(%s%s%s)%s: %s%s %s%d %d",
-                            IRC_COLOR_CHAT_DELIMITERS,
+                            _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
+                            weechat_prefix ("network"),
                             IRC_COLOR_CHAT_NICK,
                             argv[1],
-                            IRC_COLOR_CHAT_DELIMITERS,
                             IRC_COLOR_CHAT,
                             IRC_COLOR_CHAT_CHANNEL,
                             irc_cmd,
                             IRC_COLOR_CHAT,
-                            tv.tv_sec, tv.tv_usec);
+                            " ",
+                            str_time);
         }
         else
         {
-            if (argv_eol[3])
-            {
-                irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01%s %s\01",
-                                  argv[1], irc_cmd, argv_eol[3]);
-                weechat_printf (ptr_server->buffer,
-                                "CTCP%s(%s%s%s)%s: %s%s %s%s",
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT_NICK,
-                                argv[1],
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT,
-                                IRC_COLOR_CHAT_CHANNEL,
-                                irc_cmd,
-                                IRC_COLOR_CHAT,
-                                argv_eol[3]);
-            }
-            else
-            {
-                irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01%s\01",
-                                  argv[1], irc_cmd);
-                weechat_printf (ptr_server->buffer,
-                                "CTCP%s(%s%s%s)%s: %s%s",
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT_NICK,
-                                argv[1],
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT,
-                                IRC_COLOR_CHAT_CHANNEL,
-                                irc_cmd);
-            }
+            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01%s%s%s\01",
+                              argv[1],
+                              irc_cmd,
+                              (argv_eol[3]) ? " " : "",
+                              (argv_eol[3]) ? argv_eol[3] : "");
+            weechat_printf (ptr_server->buffer,
+                            _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
+                            weechat_prefix ("network"),
+                            IRC_COLOR_CHAT_NICK,
+                            argv[1],
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_CHANNEL,
+                            irc_cmd,
+                            IRC_COLOR_CHAT,
+                            (argv_eol[3]) ? " " : "",
+                            (argv_eol[3]) ? argv_eol[3] : "");
         }
         
         free (irc_cmd);
@@ -3730,7 +3718,9 @@ irc_command_init ()
                              "     type: CTCP type (examples: \"version\", "
                              "\"ping\", ..)\n"
                              "arguments: arguments for CTCP"),
-                          "%(irc_channel)|%(nicks) action|ping|version",
+                          "%(irc_channel)|%(nicks) "
+                          "action|clientinfo|finger|ping|source|time|userinfo|"
+                          "version",
                           &irc_command_ctcp, NULL);
     weechat_hook_command ("cycle",
                           N_("leave and rejoin a channel"),

@@ -1009,6 +1009,76 @@ Commands
 
 include::autogen/user/irc_commands.txt[]
 
+[[ctcp_replies]]
+CTCP replies
+^^^^^^^^^^^^
+
+It is possible to customize CTCP replies, or block some CTCP queries (do not
+reply).
+
+For example, to customize reply to CTCP "VERSION", use following command:
+
+----------------------------------------
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----------------------------------------
+
+If you want to block CTCP "VERSION" (do not reply to a query), then set empty
+string:
+
+----------------------------------------
+/set irc.ctcp.version ""
+----------------------------------------
+
+Even unknown CTCP can be customized, for example you can reply to
+CTCP "BLABLA":
+
+----------------------------------------
+/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
+----------------------------------------
+
+It is possible to customize CTCP for one server only, using its internal name
+before CTCP name:
+
+----------------------------------------
+/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+----------------------------------------
+
+If you want to restore standard CTCP reply, then remove option:
+
+----------------------------------------
+/unset irc.ctcp.version
+----------------------------------------
+
+Following codes can be used in strings and are automatically expanded by WeeChat
+when replying to CTCP:
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Code           | Description                 | Value/example
+| `$clientinfo`  | list of supported CTCP      | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| `$version`     | WeeChat version             | `0.3.0`
+| `$compilation` | WeeChat compilation date    | `Sep 13 2009`
+| `$osinfo`      | info about OS               | `Linux 2.6.31 / i686`
+| `$site`        | WeeChat site                | `http://www.weechat.org`
+| `$download`    | WeeChat site, download page | `http://www.weechat.org/download`
+| `$time`        | current date/time           | `Sun Sep 13 15:48:31 2009`
+| `$username`    | username on IRC server      | `nick`
+| `$realname`    | realname on IRC server      | `My name`
+|========================================
+
+If CTCP options are not defined (by default), CTCP replies are:
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| CTCP         | Reply format                      | Example
+| CLIENTINFO   | `$clientinfo`                     | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| FINGER       | `WeeChat $version`                | `WeeChat 0.3.0`
+| SOURCE       | `$download`                       | `http://www.weechat.org/download`
+| TIME         | `$time`                           | `Sun Sep 13 15:48:31 2009`
+| USERINFO     | `$username ($realname)`           | `nick (My name)`
+| VERSION      | `WeeChat $version ($compilation)` | `WeeChat 0.3.0 (Sep 13 2009)`
+|========================================
+
 [[logger_plugin]]
 Logger plugin
 ~~~~~~~~~~~~~

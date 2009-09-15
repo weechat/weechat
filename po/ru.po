@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-04 10:38+0200\n"
+"POT-Creation-Date: 2009-09-15 14:36+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2664,6 +2664,10 @@ msgid "%s%s: unable to create server \"%s\""
 msgstr "%s не могу создать сервер \"%s\"\n"
 
 #, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
@@ -3699,6 +3703,18 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
+msgid ""
+"format for CTCP reply or empty string for blocking CTCP (no reply), "
+"following variables are replaced: $version (WeeChat version), $compilation "
+"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
+"(WeeChat site, download page), $time (current date and time as text), "
+"$username (username on server), $realname (realname on server)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
 #, fuzzy
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr "ник, используемый на IRC сервере"
@@ -3931,6 +3947,38 @@ msgid "send unknown commands to server"
 msgstr "отсылать неизвестные команды IRC серверу"
 
 #, fuzzy, c-format
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%s%s%s убил %s%s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s не могу проанализировать команду \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s неизвестный режим DCC CHAT получен от "
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
+
+#, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
@@ -4043,14 +4091,6 @@ msgid "%s%s%s%s is now known as %s%s"
 msgstr "%s%s%s теперь известен как %s%s\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "Ответ на CTCP %sVERSION%s от %s%s%s: %s\n"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
-
-#, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
@@ -4059,40 +4099,12 @@ msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
 #, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "Получен CTCP %sVERSION%s от %s%s"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s"
-msgstr "Получен CTCP %sVERSION%s от %s%s"
-
-#, fuzzy, c-format
-msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "Получен CTCP %sSOUND%s \"%s\" от %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sPING%s received from %s%s"
-msgstr "Получен CTCP %sPING%s от %s%s\n"
-
-#, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
 
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s не могу проанализировать команду \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory for \"%s\" command"
-msgstr "%s недостаточно памяти для нового DCC\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s неизвестный режим DCC CHAT получен от "
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4631,6 +4643,13 @@ msgid "WeeChat \"share\" directory"
 msgstr "Ошибка WeeChat:"
 
 msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat site"
+msgstr "слоган WeeChat"
+
+msgid "WeeChat site, download page"
 msgstr ""
 
 #, fuzzy
@@ -5523,6 +5542,26 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+#~ msgstr "Ответ на CTCP %sVERSION%s от %s%s%s: %s\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+#~ msgstr "Получен CTCP %sVERSION%s от %s%s"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s received from %s%s"
+#~ msgstr "Получен CTCP %sVERSION%s от %s%s"
+
+#, fuzzy
+#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+#~ msgstr "Получен CTCP %sSOUND%s \"%s\" от %s%s\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sPING%s received from %s%s"
+#~ msgstr "Получен CTCP %sPING%s от %s%s\n"
 
 #, fuzzy
 #~ msgid "text color for nick name in input line"

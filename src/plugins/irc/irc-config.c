@@ -29,6 +29,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
+#include "irc-ctcp.h"
 #include "irc-buffer.h"
 #include "irc-ignore.h"
 #include "irc-nick.h"
@@ -37,6 +38,7 @@
 
 
 struct t_config_file *irc_config_file = NULL;
+struct t_config_section *irc_config_section_ctcp = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
 
@@ -546,6 +548,85 @@ irc_config_reload (void *data, struct t_config_file *config_file)
         }
         
         ptr_server = next_server;
+    }
+    
+    return rc;
+}
+
+/*
+ * irc_config_ctcp_create_option: set a ctcp reply format
+ */
+
+int
+irc_config_ctcp_create_option (void *data, struct t_config_file *config_file,
+                               struct t_config_section *section,
+                               const char *option_name, const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    const char *default_value;
+    static char empty_value[1] = { '\0' };
+    const char *pos_name;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    if (option_name)
+    {
+        ptr_option = weechat_config_search_option (config_file, section,
+                                                   option_name);
+        if (ptr_option)
+        {
+            if (value)
+                rc = weechat_config_option_set (ptr_option, value, 1);
+            else
+            {
+                weechat_config_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value)
+            {
+                pos_name = strchr (option_name, '.');
+                pos_name = (pos_name) ? pos_name + 1 : option_name;
+                
+                default_value = irc_ctcp_get_default_reply (pos_name);
+                if (!default_value)
+                    default_value = empty_value;
+                
+                ptr_option = weechat_config_new_option (
+                    config_file, section,
+                    option_name, "string",
+                    _("format for CTCP reply or empty string for blocking "
+                      "CTCP (no reply), following variables are replaced: "
+                      "$version (WeeChat version), "
+                      "$compilation (compilation date), "
+                      "$osinfo (info about OS), "
+                      "$site (WeeChat site), "
+                      "$download (WeeChat site, download page), "
+                      "$time (current date and time as text), "
+                      "$username (username on server), "
+                      "$realname (realname on server)"),
+                    NULL, 0, 0, default_value, value, 0,
+                    NULL, NULL, NULL, NULL, NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+    
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error creating CTCP \"%s\" => \"%s\""),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        option_name, value);
     }
     
     return rc;
@@ -1350,6 +1431,21 @@ irc_config_init ()
         N_("send unknown commands to server"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
+    
+    /* CTCP */
+    ptr_section = weechat_config_new_section (irc_config_file, "ctcp",
+                                              1, 1,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL,
+                                              &irc_config_ctcp_create_option, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (irc_config_file);
+        return 0;
+    }
+    
+    irc_config_section_ctcp = ptr_section;
     
     /* ignore */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",

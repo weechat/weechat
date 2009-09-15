@@ -38,6 +38,7 @@
 #include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-ctcp.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -732,9 +733,7 @@ int
 irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                          int argc, char **argv, char **argv_eol)
 {
-    char *pos_target, *pos_args, *pos_end, *pos_usec;
-    struct timeval tv;
-    long sec1, usec1, sec2, usec2, difftime;
+    char *pos_target, *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private;
@@ -761,70 +760,11 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
     
     if (nick && irc_ignore_check (server, NULL, nick, host))
         return WEECHAT_RC_OK;
-    
-    if (nick && strncmp (pos_args, "\01VERSION", 8) == 0)
+
+    if (nick && (pos_args[0] == '\01')
+        && (pos_args[strlen (pos_args) - 1] == '\01'))
     {
-        pos_args += 9;
-        pos_end = strrchr (pos_args, '\01');
-        if (pos_end)
-            pos_end[0] = '\0';
-        weechat_printf_tags (server->buffer,
-                             irc_protocol_tags (command, NULL),
-                             _("%sCTCP %sVERSION%s reply from %s%s%s: %s"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_CHANNEL,
-                             IRC_COLOR_CHAT,
-                             IRC_COLOR_CHAT_NICK,
-                             nick,
-                             IRC_COLOR_CHAT,
-                             pos_args);
-        if (pos_end)
-            pos_end[0] = '\01';
-    }
-    else if (nick && strncmp (pos_args, "\01PING", 5) == 0)
-    {
-        pos_args += 5;
-        while (pos_args[0] == ' ')
-        {
-            pos_args++;
-        }
-        pos_usec = strchr (pos_args, ' ');
-        if (pos_usec)
-        {
-            pos_usec[0] = '\0';
-            pos_end = strrchr (pos_usec + 1, '\01');
-            if (pos_end)
-            {
-                pos_end[0] = '\0';
-                
-                gettimeofday (&tv, NULL);
-                sec1 = atol (pos_args);
-                usec1 = atol (pos_usec + 1);
-                sec2 = tv.tv_sec;
-                usec2 = tv.tv_usec;
-                
-                difftime = ((sec2 * 1000000) + usec2) -
-                    ((sec1 * 1000000) + usec1);
-                
-                weechat_printf_tags (server->buffer,
-                                     irc_protocol_tags (command, "irc_ctcp"),
-                                     _("%sCTCP %sPING%s reply from "
-                                       "%s%s%s: %ld.%ld %s"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     IRC_COLOR_CHAT,
-                                     IRC_COLOR_CHAT_NICK,
-                                     nick,
-                                     IRC_COLOR_CHAT,
-                                     difftime / 1000000,
-                                     (difftime % 1000000) / 1000,
-                                     (NG_("second", "seconds",
-                                          (difftime / 1000000))));
-                
-                pos_end[0] = '\01';
-            }
-            pos_usec[0] = ' ';
-        }
+        irc_ctcp_display_reply_from_nick (server, command, nick, pos_args);
     }
     else
     {
@@ -1124,69 +1064,6 @@ irc_protocol_cmd_pong (struct t_irc_server *server, const char *command,
 }
 
 /*
- * irc_protocol_reply_version: send version in reply to "CTCP VERSION" request
- */
-
-void
-irc_protocol_reply_version (struct t_irc_server *server,
-                            struct t_irc_channel *channel, const char *nick,
-                            const char *message, const char *str_version)
-{
-    char *pos;
-    const char *version, *date;
-    struct t_gui_buffer *ptr_buffer;
-    
-    ptr_buffer = (channel) ? channel->buffer : server->buffer;
-    
-    pos = strchr (str_version, ' ');
-    if (pos)
-    {
-        while (pos[0] == ' ')
-            pos++;
-        if (pos[0] == '\01')
-            pos = NULL;
-        else if (!pos[0])
-            pos = NULL;
-    }
-    
-    version = weechat_info_get ("version", "");
-    date = weechat_info_get ("date", "");
-    if (version && date)
-    {
-        irc_server_sendf (server, 0,
-                          "NOTICE %s :\01VERSION WeeChat %s (%s)\01",
-                          nick, version, date);
-        
-        if (pos)
-        {
-            weechat_printf (ptr_buffer,
-                            _("%sCTCP %sVERSION%s received from %s%s%s: "
-                              "%s"),
-                            weechat_prefix ("network"),
-                            IRC_COLOR_CHAT_CHANNEL,
-                            IRC_COLOR_CHAT,
-                            IRC_COLOR_CHAT_NICK,
-                            nick,
-                            IRC_COLOR_CHAT,
-                            pos);
-        }
-        else
-        {
-            weechat_printf (ptr_buffer,
-                            _("%sCTCP %sVERSION%s received from %s%s"),
-                            weechat_prefix ("network"),
-                            IRC_COLOR_CHAT_CHANNEL,
-                            IRC_COLOR_CHAT,
-                            IRC_COLOR_CHAT_NICK,
-                            nick);
-        }
-    }
-    weechat_hook_signal_send ("irc_ctcp",
-                              WEECHAT_HOOK_SIGNAL_STRING,
-                              (void *)message);
-}
-
-/*
  * irc_protocol_cmd_privmsg: 'privmsg' command received
  */
 
@@ -1195,20 +1072,18 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                           int argc, char **argv, char **argv_eol)
 {
     char *pos_args, *pos_end_01, *pos, *pos_message;
-    char *dcc_args, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
     const char *remote_nick;
     int nick_is_me;
-    struct t_infolist *infolist;
-    struct t_infolist_item *item;
-    char plugin_id[128];
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     
     /* PRIVMSG message looks like:
        :nick!user@host PRIVMSG #channel :message for channel here
        :nick!user@host PRIVMSG mynick :message for private here
-       :nick!user@host PRIVMSG #channel :ACTION is testing action
-       :nick!user@host PRIVMSG mynick :ACTION is testing action
+       :nick!user@host PRIVMSG #channel :\01ACTION is testing action\01
+       :nick!user@host PRIVMSG mynick :\01ACTION is testing action\01
+       :nick!user@host PRIVMSG #channel :\01VERSION\01
+       :nick!user@host PRIVMSG mynick :\01VERSION\01
        :nick!user@host PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
     */
     
@@ -1224,176 +1099,16 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
         {
-            if (strncmp (pos_args, "\01ACTION ", 8) == 0)
-            {
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
-                {
-                    pos_args += 8;
-                    pos_end_01 = strrchr (pos_args, '\01');
-                    if (pos_end_01)
-                        pos_end_01[0] = '\0';
-                    
-                    ptr_nick = irc_nick_search (ptr_channel, nick);
-                    
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         irc_protocol_tags (command,
-                                                            "irc_action,notify_message"),
-                                         "%s%s%s %s%s",
-                                         weechat_prefix ("action"),
-                                         (ptr_nick) ? ptr_nick->color : IRC_COLOR_CHAT_NICK,
-                                         nick,
-                                         IRC_COLOR_CHAT,
-                                         pos_args);
-                    
-                    irc_channel_nick_speaking_add (ptr_channel,
-                                                   nick,
-                                                   weechat_string_has_highlight (pos_args,
-                                                                                 server->nick));
-                    irc_channel_nick_speaking_time_remove_old (ptr_channel);
-                    irc_channel_nick_speaking_time_add (ptr_channel, nick,
-                                                        time (NULL));
-                    
-                    if (pos_end_01)
-                        pos_end_01[0] = '\01';
-                }
-                
-                return WEECHAT_RC_OK;
-            }
-            if (strncmp (pos_args, "\01SOUND ", 7) == 0)
-            {
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
-                {
-                    pos_args += 7;
-                    pos_end_01 = strrchr (pos_args, '\01');
-                    if (pos_end_01)
-                        pos_end_01[0] = '\0';
-                    
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         irc_protocol_tags (command, "irc_ctcp"),
-                                         _("%sReceived a CTCP %sSOUND%s \"%s\" "
-                                           "from %s%s"),
-                                         weechat_prefix ("network"),
-                                         IRC_COLOR_CHAT_CHANNEL,
-                                         IRC_COLOR_CHAT,
-                                         pos_args,
-                                         IRC_COLOR_CHAT_NICK,
-                                         nick);
-                    
-                    if (pos_end_01)
-                        pos_end_01[0] = '\01';
-                }
-                
-                return WEECHAT_RC_OK;
-            }
-            if (strncmp (pos_args, "\01PING", 5) == 0)
-            {
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
-                {
-                    pos_args += 5;
-                    while (pos_args[0] == ' ')
-                        pos_args++;
-                    pos_end_01 = strrchr (pos_args, '\01');
-                    if (pos_end_01)
-                        pos_end_01[0] = '\0';
-                    else
-                        pos_args = NULL;
-                    if (pos_args && !pos_args[0])
-                        pos_args = NULL;
-                    if (pos_args)
-                        irc_server_sendf (server, 0,
-                                          "NOTICE %s :\01PING %s\01",
-                                          nick, pos_args);
-                    else
-                        irc_server_sendf (server, 0,
-                                          "NOTICE %s :\01PING\01",
-                                          nick);
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         irc_protocol_tags (command, "irc_ctcp"),
-                                         _("%sCTCP %sPING%s received from %s%s"),
-                                         weechat_prefix ("network"),
-                                         IRC_COLOR_CHAT_CHANNEL,
-                                         IRC_COLOR_CHAT,
-                                         IRC_COLOR_CHAT_NICK,
-                                         nick);
-                    if (pos_end_01)
-                        pos_end_01[0] = '\01';
-                }
-                
-                return WEECHAT_RC_OK;
-            }
-            if (strncmp (pos_args, "\01VERSION", 8) == 0)
-            {
-                if (!irc_ignore_check (server, ptr_channel, nick, host))
-                {
-                    irc_protocol_reply_version (server, ptr_channel, nick,
-                                                argv_eol[0], pos_args);
-                }
-                
-                return WEECHAT_RC_OK;
-            }
-            
-            /* unknown CTCP ? */
-            pos_end_01 = strrchr (pos_args + 1, '\01');
+            /* CTCP to channel */
             if ((pos_args[0] == '\01')
-                && pos_end_01 && (pos_end_01[1] == '\0'))
+                && (pos_args[strlen (pos_args) - 1] == '\01'))
             {
                 if (!irc_ignore_check (server, ptr_channel, nick, host))
                 {
-                    pos_args++;
-                    pos_end_01[0] = '\0';
-                    pos = strchr (pos_args, ' ');
-                    if (pos)
-                    {
-                        pos[0] = '\0';
-                        pos_message = pos + 1;
-                        while (pos_message[0] == ' ')
-                        {
-                            pos_message++;
-                        }
-                        if (!pos_message[0])
-                        pos_message = NULL;
-                    }
-                    else
-                        pos_message = NULL;
-                    
-                    if (pos_message)
-                    {
-                        weechat_printf_tags (ptr_channel->buffer,
-                                             irc_protocol_tags (command, "irc_ctcp"),
-                                             _("%sUnknown CTCP %s%s%s "
-                                               "received from %s%s%s: %s"),
-                                             weechat_prefix ("network"),
-                                             IRC_COLOR_CHAT_CHANNEL,
-                                             pos_args,
-                                             IRC_COLOR_CHAT,
-                                             IRC_COLOR_CHAT_NICK,
-                                             nick,
-                                             IRC_COLOR_CHAT,
-                                             pos_message);
-                    }
-                    else
-                    {
-                        weechat_printf_tags (ptr_channel->buffer,
-                                             irc_protocol_tags (command, "irc_ctcp"),
-                                             _("%sUnknown CTCP %s%s%s "
-                                               "received from %s%s"),
-                                             weechat_prefix ("network"),
-                                             IRC_COLOR_CHAT_CHANNEL,
-                                             pos_args,
-                                             IRC_COLOR_CHAT,
-                                             IRC_COLOR_CHAT_NICK,
-                                             nick);
-                    }
-                    if (pos_end_01)
-                        pos_end_01[0] = '\01';
-                    if (pos)
-                        pos[0] = ' ';
-                    
-                    weechat_hook_signal_send ("irc_ctcp",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
+                    irc_ctcp_recv (server, command, ptr_channel,
+                                   address, nick, NULL, pos_args,
+                                   argv_eol[0]);
                 }
-                
                 return WEECHAT_RC_OK;
             }
             
@@ -1432,530 +1147,25 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
     }
     else
     {
-        /* version asked by another user => answer with WeeChat version */
-        if (strncmp (pos_args, "\01VERSION", 8) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                irc_protocol_reply_version (server, NULL, nick, argv_eol[0],
-                                            pos_args);
-            }
-            
-            return WEECHAT_RC_OK;
-        }
-        
-        /* ping request from another user => answer */
-        if (strncmp (pos_args, "\01PING", 5) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                pos_args += 5;
-                while (pos_args[0] == ' ')
-                {
-                    pos_args++;
-                }
-                pos_end_01 = strrchr (pos_args, '\01');
-                if (pos_end_01)
-                    pos_end_01[0] = '\0';
-                else
-                    pos_args = NULL;
-                if (pos_args && !pos_args[0])
-                    pos_args = NULL;
-                if (pos_args)
-                    irc_server_sendf (server, 0, "NOTICE %s :\01PING %s\01",
-                                      nick, pos_args);
-                else
-                    irc_server_sendf (server, 0, "NOTICE %s :\01PING\01",
-                                      nick);
-                weechat_printf_tags (server->buffer,
-                                     irc_protocol_tags (command, "irc_ctcp"),
-                                     _("%sCTCP %sPING%s received from %s%s"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     IRC_COLOR_CHAT,
-                                     IRC_COLOR_CHAT_NICK,
-                                     nick);
-                weechat_hook_signal_send ("irc_ctcp",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                if (pos_end_01)
-                    pos_end_01[0] = '\01';
-            }
-            
-            return WEECHAT_RC_OK;
-        }
-        
-        /* incoming DCC file */
-        if (strncmp (pos_args, "\01DCC SEND", 9) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                /* check if DCC SEND is ok, i.e. with 0x01 at end */
-                pos_end_01 = strrchr (pos_args + 1, '\01');
-                if (!pos_end_01)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                dcc_args = weechat_strndup (pos_args + 9,
-                                            pos_end_01 - pos_args - 9);
-                
-                if (!dcc_args)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: not enough memory for \"%s\" "
-                                      "command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                /* DCC filename */
-                pos_file = dcc_args;
-                while (pos_file[0] == ' ')
-                {
-                    pos_file++;
-                }
-                
-                /* look for file size */
-                pos_size = strrchr (pos_file, ' ');
-                if (!pos_size)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_size;
-                pos_size++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* look for DCC port */
-                pos_port = strrchr (pos_file, ' ');
-                if (!pos_port)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_port;
-                pos_port++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* look for DCC IP address */
-                pos_addr = strrchr (pos_file, ' ');
-                if (!pos_addr)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_addr;
-                pos_addr++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* add DCC file via xfer plugin */
-                infolist = weechat_infolist_new ();
-                if (infolist)
-                {
-                    item = weechat_infolist_new_item (infolist);
-                    if (item)
-                    {
-                        weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                        snprintf (plugin_id, sizeof (plugin_id),
-                                  "%lx", (long unsigned int)server);
-                        weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
-                        weechat_infolist_new_var_string (item, "type", "file_recv");
-                        weechat_infolist_new_var_string (item, "protocol", "dcc");
-                        weechat_infolist_new_var_string (item, "remote_nick", nick);
-                        weechat_infolist_new_var_string (item, "local_nick", server->nick);
-                        weechat_infolist_new_var_string (item, "filename", pos_file);
-                        weechat_infolist_new_var_string (item, "size", pos_size);
-                        weechat_infolist_new_var_string (item, "proxy",
-                                                         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
-                        weechat_infolist_new_var_string (item, "address", pos_addr);
-                        weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                        weechat_hook_signal_send ("xfer_add",
-                                                  WEECHAT_HOOK_SIGNAL_POINTER,
-                                                  infolist);
-                    }
-                    weechat_infolist_free (infolist);
-                }
-                
-                weechat_hook_signal_send ("irc_dcc",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                
-                free (dcc_args);
-            }
-            
-            return WEECHAT_RC_OK;
-        }
-        
-        /* incoming DCC RESUME (asked by receiver) */
-        if (strncmp (pos_args, "\01DCC RESUME", 11) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                /* check if DCC RESUME is ok, i.e. with 0x01 at end */
-                pos_end_01 = strrchr (pos_args + 1, '\01');
-                if (!pos_end_01)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                dcc_args = weechat_strndup (pos_args + 11,
-                                            pos_end_01 - pos_args - 11);
-                
-                if (!dcc_args)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: not enough memory for \"%s\" "
-                                      "command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                /* DCC filename */
-                pos_file = dcc_args;
-                while (pos_file[0] == ' ')
-                {
-                    pos_file++;
-                }
-                
-                /* look for resume start position */
-                pos_start_resume = strrchr (pos_file, ' ');
-                if (!pos_start_resume)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_start_resume;
-                pos_start_resume++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* look for DCC port */
-                pos_port = strrchr (pos_file, ' ');
-                if (!pos_port)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME, "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_port;
-                pos_port++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* accept resume via xfer plugin */
-                infolist = weechat_infolist_new ();
-                if (infolist)
-                {
-                    item = weechat_infolist_new_item (infolist);
-                    if (item)
-                    {
-                        weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                        snprintf (plugin_id, sizeof (plugin_id),
-                                  "%lx", (long unsigned int)server);
-                        weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
-                        weechat_infolist_new_var_string (item, "type", "file_recv");
-                        weechat_infolist_new_var_string (item, "filename", pos_file);
-                        weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                        weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
-                        weechat_hook_signal_send ("xfer_accept_resume",
-                                                  WEECHAT_HOOK_SIGNAL_POINTER,
-                                                  infolist);
-                    }
-                    weechat_infolist_free (infolist);
-                }
-                
-                weechat_hook_signal_send ("irc_dcc",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                
-                free (dcc_args);
-            } 
-            
-            return WEECHAT_RC_OK;
-        }
-            
-        /* incoming DCC ACCEPT (resume accepted by sender) */
-        if (strncmp (pos_args, "\01DCC ACCEPT", 11) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                /* check if DCC ACCEPT is ok, i.e. with 0x01 at end */
-                pos_end_01 = strrchr (pos_args + 1, '\01');
-                if (!pos_end_01)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                dcc_args = weechat_strndup (pos_args + 11,
-                                            pos_end_01 - pos_args - 11);
-                
-                if (!dcc_args)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: not enough memory for \"%s\" "
-                                      "command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                /* DCC filename */
-                pos_file = dcc_args;
-                while (pos_file[0] == ' ')
-                {
-                    pos_file++;
-                }
-                
-                /* look for resume start position */
-                pos_start_resume = strrchr (pos_file, ' ');
-                if (!pos_start_resume)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_start_resume;
-                pos_start_resume++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* look for DCC port */
-                pos_port = strrchr (pos_file, ' ');
-                if (!pos_port)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos = pos_port;
-                pos_port++;
-                while (pos[0] == ' ')
-                {
-                    pos--;
-                }
-                pos[1] = '\0';
-                
-                /* resume file via xfer plugin */
-                infolist = weechat_infolist_new ();
-                if (infolist)
-                {
-                    item = weechat_infolist_new_item (infolist);
-                    if (item)
-                    {
-                        weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                        snprintf (plugin_id, sizeof (plugin_id),
-                                  "%lx", (long unsigned int)server);
-                        weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
-                        weechat_infolist_new_var_string (item, "type", "file_recv");
-                        weechat_infolist_new_var_string (item, "filename", pos_file);
-                        weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                        weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
-                        weechat_hook_signal_send ("xfer_start_resume",
-                                                  WEECHAT_HOOK_SIGNAL_POINTER,
-                                                  infolist);
-                    }
-                    weechat_infolist_free (infolist);
-                }
-                
-                weechat_hook_signal_send ("irc_dcc",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                
-                free (dcc_args);
-            }
-            
-            return WEECHAT_RC_OK;
-        }
-            
-        /* incoming DCC CHAT */
-        if (strncmp (pos_args, "\01DCC CHAT", 9) == 0)
-        {
-            if (!irc_ignore_check (server, NULL, nick, host))
-            {
-                /* check if DCC CHAT is ok, i.e. with 0x01 at end */
-                pos_end_01 = strrchr (pos_args + 1, '\01');
-                if (!pos_end_01)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                dcc_args = weechat_strndup (pos_args + 9,
-                                            pos_end_01 - pos_args - 9);
-                
-                if (!dcc_args)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: not enough memory for \"%s\" "
-                                      "command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                /* CHAT type */
-                pos_file = dcc_args;
-                while (pos_file[0] == ' ')
-                {
-                    pos_file++;
-                }
-                
-                /* DCC IP address */
-                pos_addr = strchr (pos_file, ' ');
-                if (!pos_addr)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos_addr[0] = '\0';
-                pos_addr++;
-                while (pos_addr[0] == ' ')
-                {
-                    pos_addr++;
-                }
-                
-                /* look for DCC port */
-                pos_port = strchr (pos_addr, ' ');
-                if (!pos_port)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    "privmsg");
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                pos_port[0] = '\0';
-                pos_port++;
-                while (pos_port[0] == ' ')
-                {
-                    pos_port++;
-                }
-                
-                if (weechat_strcasecmp (pos_file, "chat") != 0)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: unknown DCC CHAT type "
-                                      "received from %s%s%s: \"%s\""),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME,
-                                    IRC_COLOR_CHAT_NICK,
-                                    nick,
-                                    IRC_COLOR_CHAT,
-                                    pos_file);
-                    free (dcc_args);
-                    return WEECHAT_RC_ERROR;
-                }
-                
-                /* add DCC chat via xfer plugin */
-                infolist = weechat_infolist_new ();
-                if (infolist)
-                {
-                    item = weechat_infolist_new_item (infolist);
-                    if (item)
-                    {
-                        weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                        snprintf (plugin_id, sizeof (plugin_id),
-                                  "%lx", (long unsigned int)server);
-                        weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
-                        weechat_infolist_new_var_string (item, "type", "chat_recv");
-                        weechat_infolist_new_var_string (item, "remote_nick", nick);
-                        weechat_infolist_new_var_string (item, "local_nick", server->nick);
-                        weechat_infolist_new_var_string (item, "proxy",
-                                                         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
-                        weechat_infolist_new_var_string (item, "address", pos_addr);
-                        weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                        weechat_hook_signal_send ("xfer_add",
-                                                  WEECHAT_HOOK_SIGNAL_POINTER,
-                                                  infolist);
-                    }
-                    weechat_infolist_free (infolist);
-                }
-                
-                weechat_hook_signal_send ("irc_dcc",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                
-                free (dcc_args);
-            }
-            
-            return WEECHAT_RC_OK;
-        }
-        
-        /* private message received => display it */
-        
         if (strcmp (server->nick, nick) == 0)
             remote_nick = argv[2];
         else
             remote_nick = nick;
+        
+        /* CTCP to user */
+        if ((pos_args[0] == '\01')
+            && (pos_args[strlen (pos_args) - 1] == '\01'))
+        {
+            if (!irc_ignore_check (server, NULL, nick, host))
+            {
+                irc_ctcp_recv (server, command, NULL,
+                               address, nick, remote_nick, pos_args,
+                               argv_eol[0]);
+            }
+            return WEECHAT_RC_OK;
+        }
+        
+        /* private message received => display it */
         nick_is_me = (strcmp (server->nick, nick) == 0);
         
         ptr_channel = irc_channel_search (server, remote_nick);

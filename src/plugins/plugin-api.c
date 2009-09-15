@@ -295,6 +295,14 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     {
         return LOCALEDIR;
     }
+    else if (string_strcasecmp (info_name, "weechat_site") == 0)
+    {
+        return WEECHAT_WEBSITE;
+    }
+    else if (string_strcasecmp (info_name, "weechat_site_download") == 0)
+    {
+        return WEECHAT_WEBSITE_DOWNLOAD;
+    }
     else if (string_strcasecmp (info_name, "charset_terminal") == 0)
     {
         return weechat_local_charset;
@@ -923,6 +931,10 @@ plugin_api_init ()
     hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"),
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_site", N_("WeeChat site"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"),
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "charset_terminal", N_("terminal charset"),
                &plugin_api_info_get_internal, NULL);

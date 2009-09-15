@@ -50,8 +50,9 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2009"
-#define WEECHAT_WEBSITE "http://www.weechat.org/"
+#define WEECHAT_COPYRIGHT_DATE   "(c) 2003-2009"
+#define WEECHAT_WEBSITE          "http://www.weechat.org/"
+#define WEECHAT_WEBSITE_DOWNLOAD "http://www.weechat.org/download"
 
 /* log file */
 

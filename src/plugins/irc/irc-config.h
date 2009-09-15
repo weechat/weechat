@@ -57,6 +57,7 @@ enum t_irc_config_display_away
 };
 
 extern struct t_config_file *irc_config_file;
+extern struct t_config_section *irc_config_section_ctcp;
 extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
 

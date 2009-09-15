@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-04 10:38+0200\n"
+"POT-Creation-Date: 2009-09-15 14:36+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2587,6 +2587,10 @@ msgstr "%s: Server %s%s%s angelegt (Vorübergehender Server, NICHT GESICHERT!)"
 msgid "%s%s: unable to create server \"%s\""
 msgstr "%s%s: kann den Server \"%s\" nicht anlegen"
 
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
+
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: der Befehl \"%s\" kann nicht in Serverfenstern ausgeführt werden"
@@ -3594,6 +3598,18 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
+msgid ""
+"format for CTCP reply or empty string for blocking CTCP (no reply), "
+"following variables are replaced: $version (WeeChat version), $compilation "
+"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
+"(WeeChat site, download page), $time (current date and time as text), "
+"$username (username on server), $realname (realname on server)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr ""
 "Liste der Hostnamen/Ports oder IP/Ports des Servers (durch Komma getrennt)"
@@ -3821,6 +3837,38 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "sende unbekannte Befehle an den Server"
 
+#, fuzzy, c-format
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%s%sDu wurdest durch %s%s %s(%s%s%s) gekillt"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+msgstr "%sCTCP %sPING%s Antwort von %s%s%s: %ld.%ld %s"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP %sPING%s Antwort von %s%s%s: %ld.%ld %s"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP %sPING%s Antwort von %s%s%s: %ld.%ld %s"
+
+#, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s%s: nicht genug Speicher für den Befehl \"%s\""
+
+#, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s%s: kann den Befehl \"%s\" nicht parsen"
+
+#, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s%s: unbekannter DCC CHAT-Typ emfpangen von %s%s%s: \"%s\""
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%sUnbekannter CTCP %s%s%s empfangen von %s%s%s : %s"
+
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
@@ -3927,14 +3975,6 @@ msgid "%s%s%s%s is now known as %s%s"
 msgstr "%s%s%s%s ist nun als %s%s bekannt"
 
 #, c-format
-msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "%sCTCP %sVERSION%s Antwort von %s%s%s: %s"
-
-#, c-format
-msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "%sCTCP %sPING%s Antwort von %s%s%s: %ld.%ld %s"
-
-#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s %s(%s%s%s)"
 
@@ -3943,40 +3983,12 @@ msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s"
 
 #, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "%sCTCP %sVERSION%s empfangen von %s%s%s: %s"
-
-#, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s"
-msgstr "%sCTCP %sVERSION%s von %s%s empfangen"
-
-#, c-format
-msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "%sEin CTCP %sSOUND%s \"%s\" wurde von %s%s empfangen"
-
-#, c-format
-msgid "%sCTCP %sPING%s received from %s%s"
-msgstr "%sCTCP %sPING%s wurde von %s%s empfangen"
-
-#, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sUnbekannter CTCP %s%s%s empfangen von %s%s%s : %s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "%sUnbekannter CTCP %s%s%s von %s%s empfangen"
-
-#, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s%s: kann den Befehl \"%s\" nicht parsen"
-
-#, c-format
-msgid "%s%s: not enough memory for \"%s\" command"
-msgstr "%s%s: nicht genug Speicher für den Befehl \"%s\""
-
-#, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s%s: unbekannter DCC CHAT-Typ emfpangen von %s%s%s: \"%s\""
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4521,6 +4533,13 @@ msgid "WeeChat \"share\" directory"
 msgstr "WeeChat-Fehler:"
 
 msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat site"
+msgstr "WeeChat-Slogan"
+
+msgid "WeeChat site, download page"
 msgstr ""
 
 #, fuzzy
@@ -5425,6 +5444,21 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+#~ msgstr "%sCTCP %sVERSION%s Antwort von %s%s%s: %s"
+
+#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+#~ msgstr "%sCTCP %sVERSION%s empfangen von %s%s%s: %s"
+
+#~ msgid "%sCTCP %sVERSION%s received from %s%s"
+#~ msgstr "%sCTCP %sVERSION%s von %s%s empfangen"
+
+#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+#~ msgstr "%sEin CTCP %sSOUND%s \"%s\" wurde von %s%s empfangen"
+
+#~ msgid "%sCTCP %sPING%s received from %s%s"
+#~ msgstr "%sCTCP %sPING%s wurde von %s%s empfangen"
 
 #, fuzzy
 #~ msgid "text color for nick name in input line"

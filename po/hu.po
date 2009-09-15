@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-04 10:38+0200\n"
+"POT-Creation-Date: 2009-09-15 14:36+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2661,6 +2661,10 @@ msgid "%s%s: unable to create server \"%s\""
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
@@ -3707,6 +3711,18 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
+msgid ""
+"format for CTCP reply or empty string for blocking CTCP (no reply), "
+"following variables are replaced: $version (WeeChat version), $compilation "
+"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
+"(WeeChat site, download page), $time (current date and time as text), "
+"$username (username on server), $realname (realname on server)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
 #, fuzzy
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr "felhasználónév az IRC szerveren"
@@ -3939,6 +3955,38 @@ msgid "send unknown commands to server"
 msgstr "ismeretlen parancsok küldése az IRC szervernek"
 
 #, fuzzy, c-format
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
+
+#, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
@@ -4051,14 +4099,6 @@ msgid "%s%s%s%s is now known as %s%s"
 msgstr "%s%s%s mostantól: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
-
-#, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 
@@ -4067,40 +4107,12 @@ msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 
 #, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s válasz innen: %s%s"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sVERSION%s received from %s%s"
-msgstr "CTCP %sVERSION%s válasz innen: %s%s"
-
-#, fuzzy, c-format
-msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "CTCP %sSOUND%s (\"%s\") érkezett innen: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sCTCP %sPING%s received from %s%s"
-msgstr "CTCP %sPING%s érkezett innen: %s%s\n"
-
-#, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory for \"%s\" command"
-msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4646,6 +4658,13 @@ msgid "WeeChat \"share\" directory"
 msgstr "WeeChat Hiba:"
 
 msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat site"
+msgstr "WeeChat szlogen"
+
+msgid "WeeChat site, download page"
 msgstr ""
 
 #, fuzzy
@@ -5544,6 +5563,26 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+#~ msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+#~ msgstr "CTCP %sVERSION%s válasz innen: %s%s"
+
+#, fuzzy
+#~ msgid "%sCTCP %sVERSION%s received from %s%s"
+#~ msgstr "CTCP %sVERSION%s válasz innen: %s%s"
+
+#, fuzzy
+#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+#~ msgstr "CTCP %sSOUND%s (\"%s\") érkezett innen: %s%s\n"
+
+#, fuzzy
+#~ msgid "%sCTCP %sPING%s received from %s%s"
+#~ msgstr "CTCP %sPING%s érkezett innen: %s%s\n"
 
 #, fuzzy
 #~ msgid "text color for nick name in input line"

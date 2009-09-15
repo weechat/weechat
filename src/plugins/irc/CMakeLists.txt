@@ -23,6 +23,7 @@ irc-color.c irc-color.h
 irc-command.c irc-command.h
 irc-completion.c irc-completion.h
 irc-config.c irc-config.h
+irc-ctcp.c irc-ctcp.h
 irc-debug.c irc-debug.h
 irc-display.c irc-display.h
 irc-ignore.c irc-ignore.h
