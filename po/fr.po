@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
-"PO-Revision-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
+"PO-Revision-Date: 2009-09-15 16:31+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4383,32 +4383,30 @@ msgid ""
 msgstr ""
 "%sCanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
-msgid "nicks"
-msgstr "pseudos"
-
 msgid "nick"
-msgstr "pseudo"
-
-msgid "ops"
-msgstr "ops"
+msgid_plural "nicks"
+msgstr[0] "pseudo"
+msgstr[1] "pseudos"
 
 msgid "op"
-msgstr "op"
-
-msgid "halfops"
-msgstr "halfops"
+msgid_plural "ops"
+msgstr[0] "op"
+msgstr[1] "ops"
 
 msgid "halfop"
-msgstr "halfop"
-
-msgid "voices"
-msgstr "voices"
+msgid_plural "halfops"
+msgstr[0] "halfop"
+msgstr[1] "halfops"
 
 msgid "voice"
-msgstr "voice"
+msgid_plural "voices"
+msgstr[0] "voice"
+msgstr[1] "voices"
 
 msgid "normal"
-msgstr "normal"
+msgid_plural "normals"
+msgstr[0] "normal"
+msgstr[1] "normaux"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5744,3 +5742,15 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "nicks"
+#~ msgstr "pseudos"
+
+#~ msgid "ops"
+#~ msgstr "ops"
+
+#~ msgid "halfops"
+#~ msgstr "halfops"
+
+#~ msgid "voices"
+#~ msgstr "voices"

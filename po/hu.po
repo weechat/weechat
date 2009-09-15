@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4243,32 +4243,35 @@ msgid ""
 msgstr ""
 "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-msgid "nicks"
-msgstr "név"
-
+#, fuzzy
 msgid "nick"
-msgstr "név"
+msgid_plural "nicks"
+msgstr[0] "név"
+msgstr[1] "név"
 
-msgid "ops"
-msgstr "operátor"
-
+#, fuzzy
 msgid "op"
-msgstr "operátor"
+msgid_plural "ops"
+msgstr[0] "operátor"
+msgstr[1] "operátor"
 
-msgid "halfops"
-msgstr "féloperátor"
-
+#, fuzzy
 msgid "halfop"
-msgstr "féloperátor"
+msgid_plural "halfops"
+msgstr[0] "féloperátor"
+msgstr[1] "féloperátor"
 
-msgid "voices"
-msgstr "voice"
-
+#, fuzzy
 msgid "voice"
-msgstr "voice"
+msgid_plural "voices"
+msgstr[0] "voice"
+msgstr[1] "voice"
 
+#, fuzzy
 msgid "normal"
-msgstr "normál"
+msgid_plural "normals"
+msgstr[0] "normál"
+msgstr[1] "normál"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5563,6 +5566,18 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "nicks"
+#~ msgstr "név"
+
+#~ msgid "ops"
+#~ msgstr "operátor"
+
+#~ msgid "halfops"
+#~ msgstr "féloperátor"
+
+#~ msgid "voices"
+#~ msgstr "voice"
 
 #, fuzzy
 #~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"

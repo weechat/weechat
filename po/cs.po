@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4292,32 +4292,40 @@ msgid ""
 msgstr ""
 "%sKanál %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
-msgid "nicks"
-msgstr "přezdívky"
-
+#, fuzzy
 msgid "nick"
-msgstr "přezdívka"
+msgid_plural "nicks"
+msgstr[0] "přezdívka"
+msgstr[1] "přezdívka"
+msgstr[2] "přezdívka"
 
-msgid "ops"
-msgstr "ops"
-
+#, fuzzy
 msgid "op"
-msgstr "op"
+msgid_plural "ops"
+msgstr[0] "op"
+msgstr[1] "op"
+msgstr[2] "op"
 
-msgid "halfops"
-msgstr "částeční-ops"
-
+#, fuzzy
 msgid "halfop"
-msgstr "částečný-op"
+msgid_plural "halfops"
+msgstr[0] "částečný-op"
+msgstr[1] "částečný-op"
+msgstr[2] "částečný-op"
 
-msgid "voices"
-msgstr "voices"
-
+#, fuzzy
 msgid "voice"
-msgstr "voice"
+msgid_plural "voices"
+msgstr[0] "voice"
+msgstr[1] "voice"
+msgstr[2] "voice"
 
+#, fuzzy
 msgid "normal"
-msgstr "normální"
+msgid_plural "normals"
+msgstr[0] "normální"
+msgstr[1] "normální"
+msgstr[2] "normální"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5620,6 +5628,18 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "nicks"
+#~ msgstr "přezdívky"
+
+#~ msgid "ops"
+#~ msgstr "ops"
+
+#~ msgid "halfops"
+#~ msgstr "částeční-ops"
+
+#~ msgid "voices"
+#~ msgstr "voices"
 
 #~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
 #~ msgstr "%sCTCP %sVERSION%s odpověď od %s%s%s: %s"

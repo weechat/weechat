@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3638,32 +3638,30 @@ msgid ""
 "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 msgstr ""
 
-msgid "nicks"
-msgstr ""
-
 msgid "nick"
-msgstr ""
-
-msgid "ops"
-msgstr ""
+msgid_plural "nicks"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "op"
-msgstr ""
-
-msgid "halfops"
-msgstr ""
+msgid_plural "ops"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "halfop"
-msgstr ""
-
-msgid "voices"
-msgstr ""
+msgid_plural "halfops"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "voice"
-msgstr ""
+msgid_plural "voices"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "normal"
-msgstr ""
+msgid_plural "normals"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"

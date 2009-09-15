@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4235,32 +4235,35 @@ msgid ""
 msgstr ""
 "Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-msgid "nicks"
-msgstr "ники"
-
+#, fuzzy
 msgid "nick"
-msgstr "ник"
+msgid_plural "nicks"
+msgstr[0] "ник"
+msgstr[1] "ник"
 
-msgid "ops"
-msgstr "опы"
-
+#, fuzzy
 msgid "op"
-msgstr "оп"
+msgid_plural "ops"
+msgstr[0] "оп"
+msgstr[1] "оп"
 
-msgid "halfops"
-msgstr "полуопы"
-
+#, fuzzy
 msgid "halfop"
-msgstr "полуоп"
+msgid_plural "halfops"
+msgstr[0] "полуоп"
+msgstr[1] "полуоп"
 
-msgid "voices"
-msgstr "войсы"
-
+#, fuzzy
 msgid "voice"
-msgstr "войс"
+msgid_plural "voices"
+msgstr[0] "войс"
+msgstr[1] "войс"
 
+#, fuzzy
 msgid "normal"
-msgstr "обычные"
+msgid_plural "normals"
+msgstr[0] "обычные"
+msgstr[1] "обычные"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5542,6 +5545,18 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid "nicks"
+#~ msgstr "ники"
+
+#~ msgid "ops"
+#~ msgstr "опы"
+
+#~ msgid "halfops"
+#~ msgstr "полуопы"
+
+#~ msgid "voices"
+#~ msgstr "войсы"
 
 #, fuzzy
 #~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"

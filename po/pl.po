@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4335,32 +4335,40 @@ msgid ""
 msgstr ""
 "%sKanał %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
-msgid "nicks"
-msgstr "nicki"
-
+#, fuzzy
 msgid "nick"
-msgstr "nick"
+msgid_plural "nicks"
+msgstr[0] "nick"
+msgstr[1] "nick"
+msgstr[2] "nick"
 
-msgid "ops"
-msgstr "opy"
-
+#, fuzzy
 msgid "op"
-msgstr "op"
+msgid_plural "ops"
+msgstr[0] "op"
+msgstr[1] "op"
+msgstr[2] "op"
 
-msgid "halfops"
-msgstr "halfopy"
-
+#, fuzzy
 msgid "halfop"
-msgstr "halfop"
+msgid_plural "halfops"
+msgstr[0] "halfop"
+msgstr[1] "halfop"
+msgstr[2] "halfop"
 
-msgid "voices"
-msgstr "voice"
-
+#, fuzzy
 msgid "voice"
-msgstr "voice"
+msgid_plural "voices"
+msgstr[0] "voice"
+msgstr[1] "voice"
+msgstr[2] "voice"
 
+#, fuzzy
 msgid "normal"
-msgstr "normalnych"
+msgid_plural "normals"
+msgstr[0] "normalnych"
+msgstr[1] "normalnych"
+msgstr[2] "normalnych"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5665,6 +5673,18 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "nicks"
+#~ msgstr "nicki"
+
+#~ msgid "ops"
+#~ msgstr "opy"
+
+#~ msgid "halfops"
+#~ msgstr "halfopy"
+
+#~ msgid "voices"
+#~ msgstr "voice"
 
 #~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
 #~ msgstr "%sCTCP %sVERSION%s odpowiedź od %s%s%s: %s"

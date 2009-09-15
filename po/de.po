@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 14:36+0200\n"
+"POT-Creation-Date: 2009-09-15 16:27+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4120,32 +4120,35 @@ msgid ""
 msgstr ""
 "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
-msgid "nicks"
-msgstr "Nicks"
-
+#, fuzzy
 msgid "nick"
-msgstr "Nick"
+msgid_plural "nicks"
+msgstr[0] "Nick"
+msgstr[1] "Nick"
 
-msgid "ops"
-msgstr "Operatoren"
-
+#, fuzzy
 msgid "op"
-msgstr "Operator"
+msgid_plural "ops"
+msgstr[0] "Operator"
+msgstr[1] "Operator"
 
-msgid "halfops"
-msgstr "Halb-Operatoren"
-
+#, fuzzy
 msgid "halfop"
-msgstr "Halb-Operator"
+msgid_plural "halfops"
+msgstr[0] "Halb-Operator"
+msgstr[1] "Halb-Operator"
 
-msgid "voices"
-msgstr "Gevoicete"
-
+#, fuzzy
 msgid "voice"
-msgstr "Gevoiceter"
+msgid_plural "voices"
+msgstr[0] "Gevoiceter"
+msgstr[1] "Gevoiceter"
 
+#, fuzzy
 msgid "normal"
-msgstr "normal"
+msgid_plural "normals"
+msgstr[0] "normal"
+msgstr[1] "normal"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -5444,6 +5447,18 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "nicks"
+#~ msgstr "Nicks"
+
+#~ msgid "ops"
+#~ msgstr "Operatoren"
+
+#~ msgid "halfops"
+#~ msgstr "Halb-Operatoren"
+
+#~ msgid "voices"
+#~ msgstr "Gevoicete"
 
 #~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
 #~ msgstr "%sCTCP %sVERSION%s Antwort von %s%s%s: %s"
