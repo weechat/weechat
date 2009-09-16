@@ -1078,6 +1078,7 @@ gui_input_history_global_next ()
             }
             else
             {
+                gui_current_window->buffer->input_buffer[0] = '\0';
                 gui_current_window->buffer->input_buffer_size = 0;
                 gui_current_window->buffer->input_buffer_length = 0;
             }

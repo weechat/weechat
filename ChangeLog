@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-09-15
+v0.3.1-dev, 2009-09-16
 
 
 Version 0.3.1 (under dev!)
@@ -9,6 +9,8 @@ Version 0.3.1 (under dev!)
 
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
+* gui: fix /input history_global_next: reset input content when last command in
+  history is reached
 * api: fix function weechat_bar_set for python/lua/ruby (patch #6912)
 
 Version 0.3.0 (2009-09-06)
