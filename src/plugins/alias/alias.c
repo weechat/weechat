@@ -199,12 +199,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
     if (start < pos)
         alias_add_word (&res, &length_res, start);
     
-    if ((args_count == 0) && user_args && user_args[0])
-    {
-        alias_add_word (&res, &length_res, " ");
-        alias_add_word (&res, &length_res, user_args);
-    }
-    
     if (argv)
         weechat_string_free_split (argv);
     
@@ -272,75 +266,56 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 
                 args_replaced = alias_replace_args (*ptr_cmd,
                                                     (argc > 1) ? argv_eol[1] : "");
-                if (args_replaced)
-                {
+                if (args_replaced && (strcmp (args_replaced, *ptr_cmd) != 0))
                     some_args_replaced = 1;
-                    if (*ptr_cmd[0] == '/')
+                
+                /* if alias has arguments, they are now
+                   arguments of the last command in the list (if no $1,$2,..$*) was found */
+                if ((*ptr_next_cmd == NULL) && argv_eol[1] && (!some_args_replaced))
+                {
+                    length1 = strlen (*ptr_cmd);
+                    length2 = strlen (argv_eol[1]);
+                    
+                    alias_command = malloc (1 + length1 + 1 + length2 + 1);
+                    if (alias_command)
                     {
-                        alias_run_command (weechat_current_buffer (),
-                                           args_replaced);
-                    }
-                    else
-                    {
-                        alias_command = malloc (1 + strlen(args_replaced) + 1);
-                        if (alias_command)
-                        {
+                        if (*ptr_cmd[0] != '/')
                             strcpy (alias_command, "/");
-                            strcat (alias_command, args_replaced);
-                            alias_run_command (weechat_current_buffer (),
-                                               alias_command);
-                            free (alias_command);
-                        }
+                        else
+                            strcpy (alias_command, "");
+                        
+                        strcat (alias_command, *ptr_cmd);
+                        strcat (alias_command, " ");
+                        strcat (alias_command, argv_eol[1]);
+                        
+                        alias_run_command (weechat_current_buffer (),
+                                           alias_command);
+                        free (alias_command);
                     }
-                    free (args_replaced);
                 }
                 else
                 {
-                    /* if alias has arguments, they are now
-                       arguments of the last command in the list (if no $1,$2,..$*) was found */
-                    if ((*ptr_next_cmd == NULL) && argv_eol[1] && (!some_args_replaced))
+                    if (*ptr_cmd[0] == '/')
                     {
-                        length1 = strlen (*ptr_cmd);
-                        length2 = strlen (argv_eol[1]);
-                        
-                        alias_command = malloc (1 + length1 + 1 + length2 + 1);
+                        alias_run_command (weechat_current_buffer (),
+                                           (args_replaced) ? args_replaced : *ptr_cmd);
+                    }
+                    else
+                    {
+                        alias_command = malloc (1 + strlen((args_replaced) ? args_replaced : *ptr_cmd) + 1);
                         if (alias_command)
                         {
-                            if (*ptr_cmd[0] != '/')
-                                strcpy (alias_command, "/");
-                            else
-                                strcpy (alias_command, "");
-                            
-                            strcat (alias_command, *ptr_cmd);
-                            strcat (alias_command, " ");
-                            strcat (alias_command, argv_eol[1]);
-                            
+                            strcpy (alias_command, "/");
+                            strcat (alias_command, (args_replaced) ? args_replaced : *ptr_cmd);
                             alias_run_command (weechat_current_buffer (),
                                                alias_command);
                             free (alias_command);
                         }
                     }
-                    else
-                    {
-                        if (*ptr_cmd[0] == '/')
-                        {
-                            alias_run_command (weechat_current_buffer (),
-                                               *ptr_cmd);
-                        }
-                        else
-                        {
-                            alias_command = malloc (1 + strlen (*ptr_cmd) + 1);
-                            if (alias_command)
-                            {
-                                strcpy (alias_command, "/");
-                                strcat (alias_command, *ptr_cmd);
-                                alias_run_command (weechat_current_buffer (),
-                                                   alias_command);
-                                free (alias_command);
-                            }
-                        }
-                    }
                 }
+                
+                if (args_replaced)
+                    free (args_replaced);
             }
             ptr_alias->running = 0;
             weechat_string_free_split_command (commands);
