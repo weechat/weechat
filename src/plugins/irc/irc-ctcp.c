@@ -119,7 +119,7 @@ irc_ctcp_display_request (struct t_irc_server *server,
                          IRC_COLOR_CHAT,
                          IRC_COLOR_CHAT_CHANNEL,
                          ctcp,
-                         IRC_COLOR_CHAT,
+                         (arguments) ? IRC_COLOR_CHAT : "",
                          (arguments) ? " " : "",
                          (arguments) ? arguments : "");
 }
@@ -253,7 +253,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                          IRC_COLOR_CHAT,
                          IRC_COLOR_CHAT_CHANNEL,
                          ctcp,
-                         IRC_COLOR_CHAT,
+                         (arguments) ? IRC_COLOR_CHAT : "",
                          (arguments) ? " " : "",
                          (arguments) ? arguments : "");
 }
@@ -369,6 +369,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     char plugin_id[128];
+    
+    if (!arguments || !arguments[0])
+        return;
     
     if (strncmp (arguments, "SEND ", 5) == 0)
     {
@@ -828,8 +831,9 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                 
                 irc_channel_nick_speaking_add (channel,
                                                nick,
+                                               (pos_args) ? 
                                                weechat_string_has_highlight (pos_args,
-                                                                             server->nick));
+                                                                             server->nick) : 0);
                 irc_channel_nick_speaking_time_remove_old (channel);
                 irc_channel_nick_speaking_time_add (channel, nick,
                                                     time (NULL));
@@ -837,12 +841,13 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                 weechat_printf_tags (channel->buffer,
                                      irc_protocol_tags (command,
                                                         "irc_action,notify_message"),
-                                     "%s%s%s %s%s",
+                                     "%s%s%s%s%s%s",
                                      weechat_prefix ("action"),
                                      (ptr_nick) ? ptr_nick->color : IRC_COLOR_CHAT_NICK,
                                      nick,
-                                     IRC_COLOR_CHAT,
-                                     pos_args);
+                                     (pos_args) ? IRC_COLOR_CHAT : "",
+                                     (pos_args) ? " " : "",
+                                     (pos_args) ? pos_args : "");
             }
             else
             {
@@ -872,13 +877,14 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                                                             (nick_is_me) ?
                                                             "irc_action,notify_private,no_highlight" :
                                                             "irc_action,notify_private"),
-                                         "%s%s%s %s%s",
+                                         "%s%s%s%s%s%s",
                                          weechat_prefix ("action"),
                                          (nick_is_me) ?
                                          IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER,
                                          nick,
-                                         IRC_COLOR_CHAT,
-                                         pos_args);
+                                         (pos_args) ? IRC_COLOR_CHAT : "",
+                                         (pos_args) ? " " : "",
+                                         (pos_args) ? pos_args : "");
                     weechat_hook_signal_send ("irc_pv",
                                               WEECHAT_HOOK_SIGNAL_STRING,
                                               message);
@@ -906,7 +912,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
             {
                 irc_ctcp_display_request (server, command, channel, nick,
                                           arguments + 1, pos_args);
-
+                
                 if (reply[0])
                 {
                     decoded_reply = irc_ctcp_replace_variables (server, reply);
@@ -930,7 +936,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                                      IRC_COLOR_CHAT,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      arguments + 1,
-                                     IRC_COLOR_CHAT,
+                                     (pos_args) ? IRC_COLOR_CHAT : "",
                                      (pos_args) ? " " : "",
                                      (pos_args) ? pos_args : "");
             }
