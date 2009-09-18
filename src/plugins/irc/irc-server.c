@@ -853,8 +853,8 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
     if (!server)
     {
         weechat_printf (NULL,
-                        _("%s%s: error sending data to IRC server: null "
-                          "pointer (please report problem to developers)"),
+                        _("%s%s: sending data to server: null pointer (please "
+                          "report problem to developers)"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return 0;
     }
@@ -862,9 +862,8 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
     if (size_buf <= 0)
     {
         weechat_printf (server->buffer,
-                        _("%s%s: error sending data to IRC server: empty "
-                          "buffer (please report problem to "
-                          "developers)"),
+                        _("%s%s: sending data to server: empty buffer (please "
+                          "report problem to developers)"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return 0;
     }
@@ -878,10 +877,24 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
     
     if (rc < 0)
     {
-        weechat_printf (server->buffer,
-                        _("%s%s: error sending data to IRC server (%s)"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        strerror (errno));
+#ifdef HAVE_GNUTLS
+        if (server->ssl_connected)
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: sending data to server: %d %s"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            rc,
+                            gnutls_strerror (rc));
+        }
+        else
+#endif
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: sending data to server: %d %s"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            errno,
+                            strerror (errno));
+        }
     }
     
     return rc;
@@ -1556,11 +1569,42 @@ irc_server_recv_cb (void *arg_server, int fd)
     }
     else
     {
-        weechat_printf (server->buffer,
-                        _("%s%s: cannot read data from socket, "
-                          "disconnecting from server..."),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        irc_server_disconnect (server, 1);
+#ifdef HAVE_GNUTLS
+        if (server->ssl_connected)
+        {
+            if ((num_read == 0)
+                || ((num_read != GNUTLS_E_AGAIN) && (num_read != GNUTLS_E_INTERRUPTED)))
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: reading data on socket: error %d %s"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                num_read,
+                                (num_read == 0) ? _("(connection closed by peer)") :
+                                gnutls_strerror (num_read));
+                weechat_printf (server->buffer,
+                                _("%s: disconnecting from server..."),
+                                IRC_PLUGIN_NAME);
+                irc_server_disconnect (server, 1);
+            }
+        }
+        else
+#endif
+        {
+            if ((num_read == 0)
+                || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: reading data on socket: error %d %s"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                errno,
+                                (num_read == 0) ? _("(connection closed by peer)") :
+                                strerror (errno));
+                weechat_printf (server->buffer,
+                                _("%s: disconnecting from server..."),
+                                IRC_PLUGIN_NAME);
+                irc_server_disconnect (server, 1);
+            }
+        }
     }
     
     return WEECHAT_RC_OK;

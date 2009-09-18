@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 16:27+0200\n"
+"POT-Creation-Date: 2009-09-18 22:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3722,18 +3722,18 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: error sending data to IRC server: null pointer (please report problem "
-"to developers)"
+"%s%s: sending data to server: null pointer (please report problem to "
+"developers)"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: error sending data to IRC server: empty buffer (please report problem "
-"to developers)"
+"%s%s: sending data to server: empty buffer (please report problem to "
+"developers)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: error sending data to IRC server (%s)"
+msgid "%s%s: sending data to server: %d %s"
 msgstr ""
 
 msgid "(message dropped)"
@@ -3744,7 +3744,14 @@ msgid "%s%s: not enough memory for received message"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot read data from socket, disconnecting from server..."
+msgid "%s%s: reading data on socket: error %d %s"
+msgstr ""
+
+msgid "(connection closed by peer)"
+msgstr ""
+
+#, c-format
+msgid "%s: disconnecting from server..."
 msgstr ""
 
 #, c-format

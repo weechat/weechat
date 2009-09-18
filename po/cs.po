@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 16:27+0200\n"
+"POT-Creation-Date: 2009-09-18 22:47+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4392,24 +4392,24 @@ msgstr "%s%s: chyba při alokování nového serveru"
 msgid "%s%s: error creating new server \"%s\""
 msgstr "%s%s: chyba při vytváření nového zprávu \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: error sending data to IRC server: null pointer (please report problem "
-"to developers)"
+"%s%s: sending data to server: null pointer (please report problem to "
+"developers)"
 msgstr ""
 "%s%s: chyba při posílání dat na IRC server: nulový ukazatel (prosím oznamte "
 "problém vývojářům)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: error sending data to IRC server: empty buffer (please report problem "
-"to developers)"
+"%s%s: sending data to server: empty buffer (please report problem to "
+"developers)"
 msgstr ""
 "%s%s: chyba při posílání dat na IRC server: prázdný buffer (prosím oznamte "
 "problém vývojářům)"
 
-#, c-format
-msgid "%s%s: error sending data to IRC server (%s)"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: %d %s"
 msgstr "%s%s: chyba při zasílání dat na IRC server (%s)"
 
 msgid "(message dropped)"
@@ -4419,9 +4419,16 @@ msgstr "(zpráva zahozena)"
 msgid "%s%s: not enough memory for received message"
 msgstr "%s%s: nedostatek paměti pro získání zprávy"
 
-#, c-format
-msgid "%s%s: cannot read data from socket, disconnecting from server..."
-msgstr "%s%s: nemůžu přečíst data ze soketu, odpojuji se od serveru..."
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket: error %d %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+msgid "(connection closed by peer)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: disconnecting from server..."
+msgstr "%s: odpojen od serveru"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -5628,6 +5635,9 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%s%s: cannot read data from socket, disconnecting from server..."
+#~ msgstr "%s%s: nemůžu přečíst data ze soketu, odpojuji se od serveru..."
 
 #~ msgid "nicks"
 #~ msgstr "přezdívky"

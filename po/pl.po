@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-15 16:27+0200\n"
+"POT-Creation-Date: 2009-09-18 22:47+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4433,24 +4433,24 @@ msgstr "%s%s: błąd podczas przydzielania nowego serwera"
 msgid "%s%s: error creating new server \"%s\""
 msgstr "%s%s: błąd podczas tworzenia serwera\"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: error sending data to IRC server: null pointer (please report problem "
-"to developers)"
+"%s%s: sending data to server: null pointer (please report problem to "
+"developers)"
 msgstr ""
 "%s%s: błąd podczas wysyłania danych do serwera IRC: zerowy wskaźnik (zgłoś "
 "to programistą)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: error sending data to IRC server: empty buffer (please report problem "
-"to developers)"
+"%s%s: sending data to server: empty buffer (please report problem to "
+"developers)"
 msgstr ""
 "%s%s: błąd podczas wysyłania danych do serwera IRC: pusty bufor (zgłoś to "
 "programistą)"
 
-#, c-format
-msgid "%s%s: error sending data to IRC server (%s)"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: %d %s"
 msgstr "%s%s: błąd podczas wysyłania danych do swerwera IRC (%s)"
 
 msgid "(message dropped)"
@@ -4460,9 +4460,16 @@ msgstr "(wiadomości porzucone)"
 msgid "%s%s: not enough memory for received message"
 msgstr "%s%s: za mało pamięci dla otrzymanych wiadomości"
 
-#, c-format
-msgid "%s%s: cannot read data from socket, disconnecting from server..."
-msgstr "%s%s: nie można odczytać danych z gniazda, rozłączam z serwerem..."
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket: error %d %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
+
+msgid "(connection closed by peer)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: disconnecting from server..."
+msgstr "%s: rozłączono z serwerem"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -5673,6 +5680,9 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "%s%s: cannot read data from socket, disconnecting from server..."
+#~ msgstr "%s%s: nie można odczytać danych z gniazda, rozłączam z serwerem..."
 
 #~ msgid "nicks"
 #~ msgstr "nicki"
