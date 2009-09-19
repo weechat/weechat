@@ -1,4 +1,4 @@
-weechat (0.3.0~rc3-1) experimental; urgency=low
+weechat (0.3.0-1) unstable; urgency=low
 
   This release introduces major changes. Large part of code was
   rewritten without keeping compatibility with older versions.
@@ -6,4 +6,4 @@ weechat (0.3.0~rc3-1) experimental; urgency=low
   Please refer to the file /usr/share/doc/weechat-core/UPGRADE_0.3
   for more informations on upgrade from a version 0.2.x to 0.3.x.
 
- -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 09 Aug 2009 14:38:50 +0000
+ -- Emmanuel Bouthenot <kolter@openics.org>  Tue, 15 Sep 2009 20:59:42 +0000

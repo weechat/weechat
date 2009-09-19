@@ -2,12 +2,12 @@ Source: weechat
 Section: net
 Priority: optional
 Maintainer: Emmanuel Bouthenot <kolter@openics.org>
+Build-Depends-Indep: asciidoc (>= 8.2), source-highlight
 Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config, asciidoc (>= 8.4),
- source-highlight
-Standards-Version: 3.8.2
-Homepage: http://www.weechat.org/
+ tcl-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
+Standards-Version: 3.8.3
+Homepage: http://weechat.org/
 Vcs-Git: git://git.debian.org/users/kolter-guest/weechat.git
 Vcs-Browser: http://git.debian.org/git/users/kolter-guest/weechat.git
 DM-Upload-Allowed: yes
@@ -31,6 +31,7 @@ Package: weechat-curses
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
 Conflicts: weechat-common
+Breaks: weechat-scripts (<= 20090221-1)
 Recommends: weechat-plugins (= ${binary:Version})
 Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -62,7 +63,6 @@ Description: Fast, light and extensible chat client - core files
 Package: weechat-plugins
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
-Breaks: weechat-scripts (<= 20090221-1)
 Suggests: weechat-scripts (>> 20090221-1)
 Description: Fast, light and extensible chat client - plugins
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client

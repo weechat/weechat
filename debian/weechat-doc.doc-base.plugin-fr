@@ -1,0 +1,10 @@
+Document: weechat-plugin-fr
+Title: WeeChat plugins API (French)
+Author: Sebastien Helleu
+Abstract: This document describes the API to create plugins
+ for WeeChat (French version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_plugin_api.fr.html
+Files: /usr/share/doc/weechat-doc/weechat_plugin_api.fr.html

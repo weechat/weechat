@@ -1,0 +1,10 @@
+Document: weechat-user-en
+Title: WeeChat User's Guide (English)
+Author: Sebastien Helleu
+Abstract: This manual describes how to use the WeeChat
+ IRC client (English version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_user.en.html
+Files: /usr/share/doc/weechat-doc/weechat_user.en.html

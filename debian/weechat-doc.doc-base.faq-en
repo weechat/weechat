@@ -1,0 +1,13 @@
+Document: weechat-faq-en
+Title: WeeChat FAQ (English)
+Author: Sebastien Helleu
+Abstract: This document answers frequently asked questions
+ about the WeeChat IRC client (English version).
+Section: Network/Communication
+
+Format: text
+Files: /usr/share/doc/weechat-doc/weechat_faq.en.txt.gz
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_faq.en.html
+Files: /usr/share/doc/weechat-doc/weechat_faq.en.html

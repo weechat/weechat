@@ -1,2 +1,2 @@
 version=2
-http://www.weechat.org/files/src/weechat-(\d.*)\.tar\.bz2
+http://weechat.org/files/src/weechat-(\d.*)\.tar\.bz2

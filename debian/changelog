@@ -1,10 +1,19 @@
+weechat (0.3.0-1) unstable; urgency=low
+
+  * New (final) upstream release.
+  * Upload to unstable.
+  * Add doc-base files for documentation.
+
+ -- Emmanuel Bouthenot <kolter@openics.org>  Tue, 15 Sep 2009 20:58:07 +0000
+
 weechat (0.3.0~rc3-1) experimental; urgency=low
 
   * New (major) upstream release.
     - Fix the excessive number of wakeups (Closes: #461945)
   * Remove patches (merged upstream).
   * Update debian/copyright: add new copyright holder.
-  * Packaging changes:
+  * Packaging changes (taking into account future frontends: weechat-gtk,
+    weechat-qt, etc.):
       - Drop weechat-common
       - Add weechat-doc (Documentation)
       - Add weechat-core (locales files, essential plugins)
@@ -13,11 +22,11 @@ weechat (0.3.0~rc3-1) experimental; urgency=low
   * Switch packaging from cdbs to debhelper 7.
   * Update packages descriptions.
   * Add a lintian-override against manpage line wrapping error.
-  * Update Standards-Version to 3.8.2.
+  * Update Standards-Version to 3.8.3.
   * Add file UPGRADE_0.3 to doc files.
   * Update debian/NEWS about major changes in this release.
 
- -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 09 Aug 2009 06:42:45 +0000
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 16 Aug 2009 20:32:01 +0000
 
 weechat (0.2.6.3-1) unstable; urgency=low
 
