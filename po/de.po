@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-18 22:47+0200\n"
+"POT-Creation-Date: 2009-09-19 10:52+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4030,8 +4030,8 @@ msgstr "%s%s[%s%s%s]%s ist abwesend: %s"
 msgid "%sUsers online: %s%s"
 msgstr "%sUser online: %s%s"
 
-#, c-format
-msgid "%s%s%s %s(%s%s@%s%s)%s was %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] (%s%s@%s%s)%s was %s"
 msgstr "%s%s%s %s(%s%s@%s%s)%s war %s"
 
 #, c-format
