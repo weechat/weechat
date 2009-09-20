@@ -55,6 +55,7 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
     va_list args;
     static char buffer[4096];
     int size_buf;
+    char *ptr_msg, *msg_encoded;
     
     if (!xfer || (xfer->sock < 0))
         return;
@@ -62,15 +63,18 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
     va_start (args, format);
     size_buf = vsnprintf (buffer, sizeof (buffer) - 1, format, args);
     va_end (args);
-    
     if (size_buf == 0)
         return;
-    
     buffer[sizeof (buffer) - 1] = '\0';
-    if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
-        size_buf = strlen (buffer);
     
-    if (xfer_chat_send (xfer, buffer, strlen (buffer)) <= 0)
+    msg_encoded = (xfer->charset_modifier) ?
+        weechat_hook_modifier_exec ("charset_encode",
+                                    xfer->charset_modifier,
+                                    buffer) : NULL;
+    
+    ptr_msg = (msg_encoded) ? msg_encoded : buffer;
+    
+    if (xfer_chat_send (xfer, ptr_msg, strlen (ptr_msg)) <= 0)
     {
         weechat_printf (NULL,
                         _("%s%s: error sending data to \"%s\" via xfer chat"),
@@ -78,6 +82,9 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
                         xfer->remote_nick);
         xfer_close (xfer, XFER_STATUS_FAILED);
     }
+    
+    if (msg_encoded)
+        free (msg_encoded);
 }
 
 /*
@@ -90,7 +97,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     struct t_xfer *xfer;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
-    char *ptr_buf_without_weechat_colors, *ptr_buf_color;
+    char *ptr_buf_decoded, *ptr_buf_without_weechat_colors, *ptr_buf_color;
     int num_read;
     
     /* make C compiler happy */
@@ -137,15 +144,23 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             
             if (ptr_buf)
             {
-                ptr_buf_without_weechat_colors = weechat_string_remove_color (ptr_buf, "?");
+                ptr_buf_decoded = (xfer->charset_modifier) ?
+                    weechat_hook_modifier_exec ("charset_decode",
+                                                xfer->charset_modifier,
+                                                ptr_buf) : NULL;
+                ptr_buf_without_weechat_colors = weechat_string_remove_color ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf,
+                                                                              "?");
                 ptr_buf_color = weechat_hook_modifier_exec ("irc_color_decode",
                                                             "1",
                                                             (ptr_buf_without_weechat_colors) ?
-                                                            ptr_buf_without_weechat_colors : ptr_buf);
+                                                            ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf));
                 weechat_printf_tags (xfer->buffer, "notify_message", "%s\t%s",
                                      xfer->remote_nick,
                                      (ptr_buf_color) ?
-                                     ptr_buf_color : ((ptr_buf_without_weechat_colors) ? ptr_buf_without_weechat_colors : ptr_buf));
+                                     ptr_buf_color : ((ptr_buf_without_weechat_colors) ?
+                                                      ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf)));
+                if (ptr_buf_decoded)
+                    free (ptr_buf_decoded);
                 if (ptr_buf_without_weechat_colors)
                     free (ptr_buf_without_weechat_colors);
                 if (ptr_buf_color)

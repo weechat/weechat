@@ -845,7 +845,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     unsigned long address;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char plugin_id[128], str_address[128];
+    char plugin_id[128], str_address[128], charset_modifier[256];
     
     IRC_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("dcc", 1);
@@ -915,6 +915,9 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                     weechat_infolist_new_var_string (item, "type", "chat_send");
                     weechat_infolist_new_var_string (item, "remote_nick", argv[2]);
                     weechat_infolist_new_var_string (item, "local_nick", ptr_server->nick);
+                    snprintf (charset_modifier, sizeof (charset_modifier),
+                              "irc.%s.%s", ptr_server->name, argv[2]);
+                    weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
                     weechat_infolist_new_var_string (item, "address", str_address);

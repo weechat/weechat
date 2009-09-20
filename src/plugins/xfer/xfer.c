@@ -388,6 +388,8 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
                                              xfer->remote_nick);
             weechat_infolist_new_var_string (item, "local_nick",
                                              xfer->local_nick);
+            weechat_infolist_new_var_string (item, "charset_modifier",
+                                             xfer->charset_modifier);
             weechat_infolist_new_var_string (item, "filename",
                                              xfer->filename);
             snprintf (str_long, sizeof (str_long), "%lu", xfer->size);
@@ -432,6 +434,7 @@ xfer_alloc ()
     new_xfer->port = 0;
     new_xfer->remote_nick = NULL;
     new_xfer->local_nick = NULL;
+    new_xfer->charset_modifier = NULL;
     
     new_xfer->type = 0;
     new_xfer->protocol = 0;
@@ -478,9 +481,10 @@ xfer_alloc ()
  */
 
 struct t_xfer *
-xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
-          enum t_xfer_protocol protocol, const char *remote_nick,
-          const char *local_nick, const char *filename,
+xfer_new (const char *plugin_name, const char *plugin_id,
+          enum t_xfer_type type, enum t_xfer_protocol protocol,
+          const char *remote_nick, const char *local_nick,
+          const char *charset_modifier, const char *filename,
           unsigned long size, const char *proxy, unsigned long address,
           int port, int sock, const char *local_filename)
 {
@@ -508,6 +512,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
     new_xfer->protocol = protocol;
     new_xfer->remote_nick = strdup (remote_nick);
     new_xfer->local_nick = (local_nick) ? strdup (local_nick) : NULL;
+    new_xfer->charset_modifier = (charset_modifier) ? strdup (charset_modifier) : NULL;
     if (XFER_IS_FILE(type))
         new_xfer->filename = (filename) ? strdup (filename) : NULL;
     else
@@ -653,6 +658,8 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->remote_nick);
     if (xfer->local_nick)
         free (xfer->local_nick);
+    if (xfer->charset_modifier)
+        free (xfer->charset_modifier);
     if (xfer->filename)
         free (xfer->filename);
     if (xfer->unterminated_message)
@@ -674,11 +681,12 @@ xfer_free (struct t_xfer *xfer)
  */
 
 int
-xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal_data)
+xfer_add_cb (void *data, const char *signal, const char *type_data,
+             void *signal_data)
 {
     struct t_infolist *infolist;
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
-    const char *remote_nick, *local_nick, *filename, *proxy;
+    const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
     int type, protocol;
     const char *weechat_dir;
     char *dir1, *dir2, *filename2, *short_filename, *pos;
@@ -728,6 +736,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     str_protocol = weechat_infolist_string (infolist, "protocol");
     remote_nick = weechat_infolist_string (infolist, "remote_nick");
     local_nick = weechat_infolist_string (infolist, "local_nick");
+    charset_modifier = weechat_infolist_string (infolist, "charset_modifier");
     filename = weechat_infolist_string (infolist, "filename");
     proxy = weechat_infolist_string (infolist, "proxy");
     protocol = XFER_NO_PROTOCOL;
@@ -999,13 +1008,13 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     /* add xfer entry and listen to socket if type is file or chat "send" */
     if (XFER_IS_FILE(type))
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
-                             remote_nick, local_nick, short_filename,
-                             file_size, proxy, local_addr, port, sock,
-                             filename2);
+                             remote_nick, local_nick, charset_modifier,
+                             short_filename, file_size, proxy, local_addr,
+                             port, sock, filename2);
     else
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
-                             remote_nick, local_nick, NULL, 0, proxy,
-                             local_addr, port, sock, NULL);
+                             remote_nick, local_nick, charset_modifier, NULL,
+                             0, proxy, local_addr, port, sock, NULL);
     
     if (!ptr_xfer)
     {
@@ -1233,6 +1242,8 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "local_nick", xfer->local_nick))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "charset_modifier", xfer->charset_modifier))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "filename", xfer->filename))
         return 0;
     snprintf (value, sizeof (value), "%lu", xfer->size);
@@ -1329,6 +1340,7 @@ xfer_print_log ()
                             xfer_protocol_string[ptr_xfer->protocol]);
         weechat_log_printf ("  remote_nick . . . . : '%s'",  ptr_xfer->remote_nick);
         weechat_log_printf ("  local_nick. . . . . : '%s'",  ptr_xfer->local_nick);
+        weechat_log_printf ("  charset_modifier. . : '%s'",  ptr_xfer->charset_modifier);
         weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_xfer->filename);
         weechat_log_printf ("  size. . . . . . . . : %lu",   ptr_xfer->size);
         weechat_log_printf ("  proxy . . . . . . . : '%s'",  ptr_xfer->proxy);

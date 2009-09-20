@@ -113,6 +113,7 @@ struct t_xfer
     enum t_xfer_protocol protocol;     /* xfer protocol (for file transfer) */
     char *remote_nick;                 /* remote nick                       */
     char *local_nick;                  /* local nick                        */
+    char *charset_modifier;            /* string for charset modifier_data  */
     char *filename;                    /* filename                          */
     unsigned long size;                /* file size                         */
     char *proxy;                       /* proxy to use (optional)           */

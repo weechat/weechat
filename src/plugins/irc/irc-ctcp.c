@@ -368,7 +368,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
     char *dcc_args, *pos, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char plugin_id[128];
+    char plugin_id[128], charset_modifier[256];
     
     if (!arguments || !arguments[0])
         return;
@@ -768,6 +768,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                 weechat_infolist_new_var_string (item, "type", "chat_recv");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);
+                snprintf (charset_modifier, sizeof (charset_modifier),
+                          "irc.%s.%s", server->name, nick);
+                weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
                 weechat_infolist_new_var_string (item, "proxy",
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                 weechat_infolist_new_var_string (item, "address", pos_addr);
