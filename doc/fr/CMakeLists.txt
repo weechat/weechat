@@ -24,7 +24,7 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_user.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-user-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 # plugin API reference
 ADD_CUSTOM_COMMAND(
@@ -36,7 +36,7 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_plugin_api.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-plugin-api-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 # scripting guide
 ADD_CUSTOM_COMMAND(
@@ -47,7 +47,7 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_scripting.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-scripting-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 # FAQ
 ADD_CUSTOM_COMMAND(
@@ -58,7 +58,7 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_faq.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-faq-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 # quickstart
 ADD_CUSTOM_COMMAND(
@@ -69,7 +69,7 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_quickstart.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-quickstart-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 # tester's guide
 ADD_CUSTOM_COMMAND(
@@ -80,4 +80,4 @@ ADD_CUSTOM_COMMAND(
   COMMENT "Building weechat_tester.fr.html"
 )
 ADD_CUSTOM_TARGET(doc-tester-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html DESTINATION share/doc/${PROJECT_NAME})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})

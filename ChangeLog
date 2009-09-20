@@ -7,6 +7,8 @@ v0.3.1-dev, 2009-09-20
 Version 0.3.1 (under dev!)
 --------------------------
 
+* core: fix cmake directories: let user customize lib, share, locale and include
+  directories (patch #6922)
 * core: fix plural form in translation files (bug #27430)
 * core: fix terminal title bug: do not reset it when option
   weechat.look.set_title is off (bug #27399)
