@@ -6175,7 +6175,7 @@ int weechat_bar_set (struct t_gui_bar *bar, const char *property,
 
 Arguments:
 
-* 'name': bar name
+* 'bar': bar pointer
 * 'property': name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
   separator, items (see <<_weechat_bar_new>>)

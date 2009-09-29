@@ -6299,7 +6299,7 @@ int weechat_bar_set (struct t_gui_bar *bar, const char *property,
 
 Paramètres :
 
-* 'name' : nom de la barre
+* 'bar' : pointeur vers la barre
 * 'property' : name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
   separator, items (voir <<_weechat_bar_new>>)
