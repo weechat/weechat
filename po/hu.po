@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2316,17 +2316,19 @@ msgstr ""
 "A $nick, $channel és $server változók az aktuális névre/szobára/szerverre "
 "lesznek kicserélve."
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "alias eltávolítása"
 
-msgid "alias_name"
-msgstr "alias_név"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "név [név...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
 
 #, fuzzy
-msgid "list of alias"
+msgid "list of aliases"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
@@ -5570,6 +5572,13 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid "list of alias"
+#~ msgstr "Aliaszok listája:\n"
+
+#~ msgid "alias_name"
+#~ msgstr "alias_név"
+
+#, fuzzy
 #~ msgid "Alias:"
 #~ msgstr "Aliasz:\n"
 
@@ -5991,10 +6000,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "Notify levels:"
 #~ msgstr "Értesítési szintek:"
-
-#, fuzzy
-#~ msgid "list of aliases"
-#~ msgstr "Aliaszok listája:\n"
 
 #, fuzzy
 #~ msgid ""

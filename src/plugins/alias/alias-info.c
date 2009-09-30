@@ -93,6 +93,6 @@ void
 alias_info_init ()
 {
     /* alias infolist hooks */
-    weechat_hook_infolist ("alias", N_("list of alias"),
+    weechat_hook_infolist ("alias", N_("list of aliases"),
                            &alias_info_get_infolist_cb, NULL);
 }

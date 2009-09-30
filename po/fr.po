@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
-"PO-Revision-Date: 2009-09-30 17:40+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
+"PO-Revision-Date: 2009-09-30 17:50+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2428,16 +2428,16 @@ msgstr ""
 "Les variables $nick, $channel et $server sont remplacées par le pseudo/canal/"
 "serveur courant."
 
-msgid "remove an alias"
-msgstr "supprimer un alias"
+msgid "remove aliases"
+msgstr "supprimer des alias"
 
-msgid "alias_name"
-msgstr "nom_alias"
+msgid "alias_name [alias_name...]"
+msgstr "nom_alias [nom_alias...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "nom_alias: nom de l'alias à supprimer"
 
-msgid "list of alias"
+msgid "list of aliases"
 msgstr "liste des alias"
 
 #, c-format
@@ -5747,26 +5747,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "Alias:"
-#~ msgstr "Alias:"
-
-#~ msgid "No alias found"
-#~ msgstr "Aucun alias trouvé."
-
-#~ msgid "%s%s: cannot read data from socket, disconnecting from server..."
-#~ msgstr ""
-#~ "%s%s: impossible de lire des données sur la socket, déconnexion du "
-#~ "serveur..."
-
-#~ msgid "nicks"
-#~ msgstr "pseudos"
-
-#~ msgid "ops"
-#~ msgstr "ops"
-
-#~ msgid "halfops"
-#~ msgstr "halfops"
-
-#~ msgid "voices"
-#~ msgstr "voices"

@@ -1,7 +1,7 @@
 [width="65%",cols="^1,^2,8",options="header"]
 |========================================
 | Plugin | Name | Description
-| alias | alias | list of alias
+| alias | alias | list of aliases
 
 | aspell | aspell_langs | list of supported langs for aspell
 

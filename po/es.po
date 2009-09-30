@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2191,17 +2191,19 @@ msgstr ""
 "     comando: nombre del comando (comando WeeChat o IRC, sin el primer '/')\n"
 "  argumentos: parámetros para el comando"
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "eliminar un alias"
 
-msgid "alias_name"
-msgstr "alias"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "apodo [apodo ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "alias: nombre del alias a suprimir"
 
 #, fuzzy
-msgid "list of alias"
+msgid "list of aliases"
 msgstr "Lista de alias:\n"
 
 #, fuzzy, c-format
@@ -5484,6 +5486,13 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
 
 #, fuzzy
+#~ msgid "list of alias"
+#~ msgstr "Lista de alias:\n"
+
+#~ msgid "alias_name"
+#~ msgstr "alias"
+
+#, fuzzy
 #~ msgid "No alias found"
 #~ msgstr "Ningún alias definido.\n"
 
@@ -5862,10 +5871,6 @@ msgstr "%s falta un argumento para la opción --dir\n"
 
 #~ msgid "Notify levels:"
 #~ msgstr "Niveles de notificación:"
-
-#, fuzzy
-#~ msgid "list of aliases"
-#~ msgstr "Lista de alias:\n"
 
 #~ msgid "[action [args] | number | [[server] [channel]]]"
 #~ msgstr "[acción [argumentos] | número | [[servidor] [canal]]]"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2370,16 +2370,19 @@ msgstr ""
 "Proměnné $nick, $channel a $server jsou nahrazeny aktuální přezdívkou/"
 "kanálem/serverem."
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "odebere alias"
 
-msgid "alias_name"
-msgstr "jméno_aliasu"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "přezdívka [přezdívka ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
-msgid "list of alias"
+#, fuzzy
+msgid "list of aliases"
 msgstr "seznam aliasů"
 
 #, c-format
@@ -5634,6 +5637,12 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "list of alias"
+#~ msgstr "seznam aliasů"
+
+#~ msgid "alias_name"
+#~ msgstr "jméno_aliasu"
 
 #~ msgid "Alias:"
 #~ msgstr "Alias:"

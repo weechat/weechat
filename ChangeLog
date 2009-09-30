@@ -13,6 +13,7 @@ Version 0.3.1 (under dev!)
 * core: fix terminal title bug: do not reset it when option
   weechat.look.set_title is off (bug #27399)
 * alias: allow use of wildcards for /alias list (patch #6925)
+* alias: allow /unalias to remove multiple aliases (patch #6926)
 * alias: fix bug with arguments (bug #27440)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)

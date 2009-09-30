@@ -810,6 +810,7 @@ int
 unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
+    int i;
     char *alias_name;
     struct t_alias *ptr_alias;
     struct t_config_option *ptr_option;
@@ -821,30 +822,34 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        alias_name = (argv[1][0] == '/') ? argv[1] + 1 : argv[1];
-        ptr_alias = alias_search (alias_name);
-        if (!ptr_alias)
+        for (i = 1; i < argc; i++)
         {
-            weechat_printf (NULL,
-                            _("%sAlias \"%s\" not found"),
-                            weechat_prefix ("error"),
-                            alias_name);
-            return WEECHAT_RC_ERROR;
+            alias_name = (argv[i][0] == '/') ? argv[i] + 1 : argv[i];
+            ptr_alias = alias_search (alias_name);
+            if (!ptr_alias)
+            {
+                weechat_printf (NULL,
+                                _("%sAlias \"%s\" not found"),
+                                weechat_prefix ("error"),
+                                alias_name);
+            }
+            else
+            {
+                /* remove alias */
+                alias_free (ptr_alias);
+                
+                /* remove option */
+                ptr_option = weechat_config_search_option (alias_config_file,
+                                                           alias_config_section_cmd,
+                                                           alias_name);
+                if (ptr_option)
+                    weechat_config_option_free (ptr_option);
+                
+                weechat_printf (NULL,
+                                _("Alias \"%s\" removed"),
+                                alias_name);
+            }
         }
-        
-        /* remove alias */
-        alias_free (ptr_alias);
-        
-        /* remove option */
-        ptr_option = weechat_config_search_option (alias_config_file,
-                                                   alias_config_section_cmd,
-                                                   alias_name);
-        if (ptr_option)
-            weechat_config_option_free (ptr_option);
-        
-        weechat_printf (NULL,
-                        _("Alias \"%s\" removed"),
-                        alias_name);
     }
     return WEECHAT_RC_OK;
 }
@@ -944,13 +949,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "%(alias) %(commands)",
                           &alias_command_cb, NULL);
     
-    weechat_hook_command ("unalias", N_("remove an alias"),
-                          N_("alias_name"),
+    weechat_hook_command ("unalias", N_("remove aliases"),
+                          N_("alias_name [alias_name...]"),
                           N_("alias_name: name of alias to remove"),
-                          "%(alias)",
+                          "%(alias)|%*",
                           &unalias_command_cb, NULL);
     
-    weechat_hook_completion ("alias", N_("list of alias"),
+    weechat_hook_completion ("alias", N_("list of aliases"),
                              &alias_completion_cb, NULL);
     
     alias_info_init ();

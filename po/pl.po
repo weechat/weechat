@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -2406,16 +2406,19 @@ msgstr ""
 "Zmienne $nick, $channel oraz $server są zastępowane przez obecny nick/kanał/"
 "serwer."
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "usuwa alias"
 
-msgid "alias_name"
-msgstr "nazwa_aliasu"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "nick [nick ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "nazwa_aliasu: nazwa aliasu do usunięcia"
 
-msgid "list of alias"
+#, fuzzy
+msgid "list of aliases"
 msgstr "lista aliasów"
 
 #, c-format
@@ -5679,6 +5682,12 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "list of alias"
+#~ msgstr "lista aliasów"
+
+#~ msgid "alias_name"
+#~ msgstr "nazwa_aliasu"
 
 #~ msgid "Alias:"
 #~ msgstr "Alias:"

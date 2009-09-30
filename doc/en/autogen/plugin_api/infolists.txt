@@ -1,7 +1,7 @@
 [width="65%",cols="^1,^2,8",options="header"]
 |========================================
 | Plugin | Name | Description
-| alias | alias | list of alias
+| alias | alias | list of aliases
 
 | irc | irc_channel | list of channels for an IRC server
 

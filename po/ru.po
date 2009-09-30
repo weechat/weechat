@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2328,17 +2328,19 @@ msgstr ""
 "Переменные $nick, $channel и $server заменяются на ник, канал и сервер "
 "соответственно."
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "удалить ярлык"
 
-msgid "alias_name"
-msgstr "сокращение"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "ник [ник ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "сокращение: удаляемое сокращение"
 
 #, fuzzy
-msgid "list of alias"
+msgid "list of aliases"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
@@ -5567,6 +5569,13 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "list of alias"
+#~ msgstr "Список сокращений:\n"
+
+#~ msgid "alias_name"
+#~ msgstr "сокращение"
+
+#, fuzzy
 #~ msgid "Alias:"
 #~ msgstr "Сокращение:\n"
 
@@ -5978,10 +5987,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "Notify levels:"
 #~ msgstr "Уровни уведомления:"
-
-#, fuzzy
-#~ msgid "list of aliases"
-#~ msgstr "Список сокращений:\n"
 
 #, fuzzy
 #~ msgid ""

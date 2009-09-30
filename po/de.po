@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-30 17:39+0200\n"
+"POT-Creation-Date: 2009-09-30 17:50+0200\n"
 "PO-Revision-Date: 2009-09-20 13:58+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2245,17 +2245,20 @@ msgstr ""
 "Die Variablen $nick, $channel and $server werden durch den aktuellen Nick/"
 "Channel oder Server ersetzt."
 
-msgid "remove an alias"
+#, fuzzy
+msgid "remove aliases"
 msgstr "einen Alias entfernen"
 
-msgid "alias_name"
-msgstr "Aliasname"
+#, fuzzy
+msgid "alias_name [alias_name...]"
+msgstr "Nickname [Nickname ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "Aliasname: Name des zu löschenden Aliases"
 
-msgid "list of alias"
-msgstr "Liste der Aliases"
+#, fuzzy
+msgid "list of aliases"
+msgstr "Liste der Aliases:\n"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -5453,6 +5456,12 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
+#~ msgid "list of alias"
+#~ msgstr "Liste der Aliases"
+
+#~ msgid "alias_name"
+#~ msgstr "Aliasname"
+
 #~ msgid "Alias:"
 #~ msgstr "Alias:"
 
@@ -5842,10 +5851,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "Notify levels:"
 #~ msgstr "Notify-Ebenen:"
-
-#, fuzzy
-#~ msgid "list of aliases"
-#~ msgstr "Liste der Aliases:\n"
 
 #, fuzzy
 #~ msgid ""
