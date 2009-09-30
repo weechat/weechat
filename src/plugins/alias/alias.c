@@ -325,6 +325,53 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
 }
 
 /*
+ * alias_free: free an alias and remove it from list
+ */
+
+void
+alias_free (struct t_alias *alias)
+{
+    struct t_alias *new_alias_list;
+    
+    /* remove alias from list */
+    if (last_alias == alias)
+        last_alias = alias->prev_alias;
+    if (alias->prev_alias)
+    {
+        (alias->prev_alias)->next_alias = alias->next_alias;
+        new_alias_list = alias_list;
+    }
+    else
+        new_alias_list = alias->next_alias;
+    if (alias->next_alias)
+        (alias->next_alias)->prev_alias = alias->prev_alias;
+
+    /* free data */
+    if (alias->hook)
+        weechat_unhook (alias->hook);
+    if (alias->name)
+        free (alias->name);
+    if (alias->command)
+        free (alias->command);
+    free (alias);
+    
+    alias_list = new_alias_list;
+}
+
+/*
+ * alias_free_all: free all alias
+ */
+
+void
+alias_free_all ()
+{
+    while (alias_list)
+    {
+        alias_free (alias_list);
+    }
+}
+
+/*
  * alias_find_pos: find position for an alias (for sorting aliases)
  */
 
@@ -365,12 +412,7 @@ alias_new (const char *name, const char *command)
     
     ptr_alias = alias_search (name);
     if (ptr_alias)
-    {
-	if (ptr_alias->command)
-	    free (ptr_alias->command);
-	ptr_alias->command = strdup (command);
-	return ptr_alias;
-    }
+        alias_free (ptr_alias);
     
     new_alias = malloc (sizeof (*new_alias));
     if (new_alias)
@@ -382,7 +424,7 @@ alias_new (const char *name, const char *command)
             snprintf (str_completion, length, "%%%%%s",
                       (command[0] == '/') ? command + 1 : command);
         }
-        new_hook = weechat_hook_command (name, "[alias]", NULL, NULL,
+        new_hook = weechat_hook_command (name, command, NULL, NULL,
                                          (str_completion) ? str_completion : NULL,
                                          alias_cb, new_alias);
         if (str_completion)
@@ -467,67 +509,15 @@ alias_get_final_command (struct t_alias *alias)
 }
 
 /*
- * alias_free: free an alias and remove it from list
- */
-
-void
-alias_free (struct t_alias *alias)
-{
-    struct t_alias *new_alias_list;
-    
-    /* remove alias from list */
-    if (last_alias == alias)
-        last_alias = alias->prev_alias;
-    if (alias->prev_alias)
-    {
-        (alias->prev_alias)->next_alias = alias->next_alias;
-        new_alias_list = alias_list;
-    }
-    else
-        new_alias_list = alias->next_alias;
-    if (alias->next_alias)
-        (alias->next_alias)->prev_alias = alias->prev_alias;
-
-    /* free data */
-    if (alias->hook)
-        weechat_unhook (alias->hook);
-    if (alias->name)
-        free (alias->name);
-    if (alias->command)
-        free (alias->command);
-    free (alias);
-    
-    alias_list = new_alias_list;
-}
-
-/*
- * alias_free_all: free all alias
- */
-
-void
-alias_free_all ()
-{
-    while (alias_list)
-    {
-        alias_free (alias_list);
-    }
-}
-
-/*
  * alias_config_change_cb: callback called when alias option is modified
  */
 
 void
 alias_config_change_cb (void *data, struct t_config_option *option)
 {
-    struct t_alias *ptr_alias;
-    
     /* make C compiler happy */
     (void) data;
     
-    ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
-    if (ptr_alias)
-        alias_free (ptr_alias);
     alias_new (weechat_config_option_get_pointer (option, "name"),
                weechat_config_option_get_pointer (option, "value"));
 }
