@@ -3,7 +3,7 @@
 ........................................
   créer un alias pour une commande
 
-   nom_alias: nom de l'alias
+   nom_alias: nom de l'alias (peut démarrer ou se terminer par "*" pour une liste d'alias)
     commande: nom de la commande (plusieurs commandes peuvent être séparées par des point-virgules)
   paramètres: paramètres pour la commande
   

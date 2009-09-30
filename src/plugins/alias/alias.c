@@ -708,6 +708,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     char *alias_name;
     struct t_alias *ptr_alias;
     struct t_config_option *ptr_option;
+    int alias_found;
     
     /* make C compiler happy */
     (void) data;
@@ -749,21 +750,31 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            /* Display one alias */
-            ptr_alias = alias_search (alias_name);
-	    if (ptr_alias)
-	    {
-		weechat_printf (NULL, "");
-		weechat_printf (NULL, _("Alias:"));
-		weechat_printf (NULL, "  %s %s=>%s %s",
-                                ptr_alias->name,
-                                weechat_color ("chat_delimiters"),
-                                weechat_color ("chat"),
-                                ptr_alias->command);
-	    }
-            else
-                weechat_printf (NULL,
-                                _("No alias found"));
+            /* Display list of aliases */
+            alias_found = 0;
+            for (ptr_alias = alias_list; ptr_alias;
+                 ptr_alias = ptr_alias->next_alias)
+            {
+                if (weechat_string_match (ptr_alias->name, alias_name, 0))
+                {
+                    if (!alias_found)
+                    {
+                        weechat_printf (NULL, "");
+                        weechat_printf (NULL, _("List of aliases:"));
+                    }
+                    weechat_printf (NULL, "  %s %s=>%s %s",
+                                    ptr_alias->name,
+                                    weechat_color ("chat_delimiters"),
+                                    weechat_color ("chat"),
+                                    ptr_alias->command);
+                    alias_found = 1;
+                }
+            }
+            if (!alias_found)
+            {
+                weechat_printf (NULL, _("No alias found matching \"%s\""),
+                                alias_name);
+            }
         }
     }
     else
@@ -918,7 +929,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_command ("alias",
                           N_("create an alias for a command"),
                           N_("[alias_name [command [arguments]]]"),
-                          N_("alias_name: name of alias\n"
+                          N_("alias_name: name of alias (can start or end with "
+                             "\"*\" for alias listing)\n"
                              "   command: command name (many commands can be "
                              "separated by semicolons)\n"
                              " arguments: arguments for command\n\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-19 10:52+0200\n"
+"POT-Creation-Date: 2009-09-30 17:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1937,13 +1937,11 @@ msgstr ""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr ""
 
-msgid "Alias:"
-msgstr ""
-
-msgid "No alias found"
-msgstr ""
-
 msgid "List of aliases:"
+msgstr ""
+
+#, c-format
+msgid "No alias found matching \"%s\""
 msgstr ""
 
 msgid "No alias defined"
@@ -1964,7 +1962,7 @@ msgid "[alias_name [command [arguments]]]"
 msgstr ""
 
 msgid ""
-"alias_name: name of alias\n"
+"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-19 10:52+0200\n"
+"POT-Creation-Date: 2009-09-30 17:39+0200\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2267,16 +2267,12 @@ msgid "Alias \"%s\" => \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy
-msgid "Alias:"
-msgstr "Aliasz:\n"
-
-#, fuzzy
-msgid "No alias found"
-msgstr "Nem találtam aliaszt.\n"
-
-#, fuzzy
 msgid "List of aliases:"
 msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "No alias found matching \"%s\""
+msgstr "Nem található '%s' szerver.\n"
 
 #, fuzzy
 msgid "No alias defined"
@@ -2298,7 +2294,7 @@ msgstr "[alias_név [parancs [paraméterek]]]"
 
 #, fuzzy
 msgid ""
-"alias_name: name of alias\n"
+"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"
@@ -5572,6 +5568,14 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "Alias:"
+#~ msgstr "Aliasz:\n"
+
+#, fuzzy
+#~ msgid "No alias found"
+#~ msgstr "Nem találtam aliaszt.\n"
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server (%s)"

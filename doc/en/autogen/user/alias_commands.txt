@@ -3,7 +3,7 @@
 ........................................
   create an alias for a command
 
-  alias_name: name of alias
+  alias_name: name of alias (can start or end with "*" for alias listing)
      command: command name (many commands can be separated by semicolons)
    arguments: arguments for command
   

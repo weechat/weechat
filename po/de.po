@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-19 10:52+0200\n"
+"POT-Creation-Date: 2009-09-30 17:39+0200\n"
 "PO-Revision-Date: 2009-09-20 13:58+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2198,14 +2198,12 @@ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt"
 
-msgid "Alias:"
-msgstr "Alias:"
-
-msgid "No alias found"
-msgstr "Keine Aliases gefunden"
-
 msgid "List of aliases:"
 msgstr "Liste der Aliases:"
+
+#, fuzzy, c-format
+msgid "No alias found matching \"%s\""
+msgstr "Server '%s' nicht gefunden.\n"
 
 msgid "No alias defined"
 msgstr "Keine Aliases definiert"
@@ -2226,7 +2224,7 @@ msgstr "[Aliasname [Befehl [Argumente]]]"
 
 #, fuzzy
 msgid ""
-"alias_name: name of alias\n"
+"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"
@@ -5454,6 +5452,12 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "Alias:"
+#~ msgstr "Alias:"
+
+#~ msgid "No alias found"
+#~ msgstr "Keine Aliases gefunden"
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server (%s)"

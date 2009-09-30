@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-09-19 10:52+0200\n"
+"POT-Creation-Date: 2009-09-30 17:39+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2148,16 +2148,13 @@ msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" creado\n"
 
-msgid "Alias:"
-msgstr ""
-
-#, fuzzy
-msgid "No alias found"
-msgstr "Ningún alias definido.\n"
-
 #, fuzzy
 msgid "List of aliases:"
 msgstr "Lista de alias:\n"
+
+#, fuzzy, c-format
+msgid "No alias found matching \"%s\""
+msgstr "Ningún servidor encontrado con \"%s\""
 
 #, fuzzy
 msgid "No alias defined"
@@ -2179,7 +2176,7 @@ msgstr "[nombre_alias [comando [argumentos]]]"
 
 #, fuzzy
 msgid ""
-"alias_name: name of alias\n"
+"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"
@@ -5485,6 +5482,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
+
+#, fuzzy
+#~ msgid "No alias found"
+#~ msgstr "Ningún alias definido.\n"
 
 #~ msgid "%s%s: error sending data to IRC server (%s)"
 #~ msgstr "%s%s: error al enviar datos al servidor IRC (%s)"
