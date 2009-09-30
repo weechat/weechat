@@ -1434,6 +1434,8 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
         }
     }
     
+    gui_hotlist_remove_buffer (buffer);
+    
     gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
