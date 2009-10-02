@@ -9,7 +9,15 @@
   
   Sans paramètre, cette commande liste tous les alias définis.
   
-  Note: dans la commande, les variables spéciales $1, $2,..,$9 sont remplacés par les paramètres donnés par l'utilisateur, et $* est remplacé par tous les paramètres.
-  Les variables $nick, $channel et $server sont remplacées par le pseudo/canal/serveur courant.
+  Note: dans la commande, les variables spéciales sont remplacées :
+          $n: paramètre 'n' (entre 1 et 9)
+         $-m: paramètres de 1 à 'm'
+         $n-: paramètres de 'n' au dernier
+        $n-m: paramètres de 'n' à 'm'
+          $*: tous les paramètres
+          $~: le dernier paramètre
+       $nick: pseudo courant
+    $channel: canal courant
+     $server: serveur courant
 ........................................
 

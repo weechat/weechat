@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-09-30
+v0.3.1-dev, 2009-10-02
 
 
 Version 0.3.1 (under dev!)
@@ -12,6 +12,8 @@ Version 0.3.1 (under dev!)
 * core: fix plural form in translation files (bug #27430)
 * core: fix terminal title bug: do not reset it when option
   weechat.look.set_title is off (bug #27399)
+* alias: new expansions for alias arguments ($n, $-m, $n-, $n-m, $*, $~)
+  (patch #6917)
 * alias: allow use of wildcards for /alias list (patch #6925)
 * alias: allow /unalias to remove multiple aliases (patch #6926)
 * alias: fix bug with arguments (bug #27440)

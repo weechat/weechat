@@ -9,7 +9,15 @@
   
   Without argument, this command lists all defined alias.
   
-  Note: in command, special variables $1, $2,..,$9 are replaced by arguments given by user, and $* is replaced by all arguments.
-  Variables $nick, $channel and $server are replaced by current nick/channel/server.
+  Note: in command, special variables are replaced:
+          $n: argument 'n' (between 1 and 9)
+         $-m: arguments from 1 to 'm'
+         $n-: arguments from 'n' to last
+        $n-m: arguments from 'n' to 'm'
+          $*: all arguments
+          $~: last argument
+       $nick: current nick
+    $channel: current channel
+     $server: current server
 ........................................
 

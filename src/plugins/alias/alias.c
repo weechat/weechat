@@ -34,6 +34,8 @@ WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL3");
 
+#define ALIAS_IS_ARG_NUMBER(number) ((number >= '1') && (number <= '9'))
+
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
 
 struct t_config_file *alias_config_file = NULL;
@@ -87,12 +89,11 @@ alias_search (const char *alias_name)
 }
 
 /*
- * alias_add_word: add word to string and increment length
- *                 This function should NOT be called directly.
+ * alias_string_add_word: add word to string and increment length
  */
 
 void
-alias_add_word (char **alias, int *length, const char *word)
+alias_string_add_word (char **alias, int *length, const char *word)
 {
     int length_word;
 
@@ -117,15 +118,61 @@ alias_add_word (char **alias, int *length, const char *word)
 }
 
 /*
- * alias_replace_args: replace arguments ($1, $2, .. or $*) in alias arguments
+ * alias_string_add_word_range: add word (in range) to string and increment
+ *                              length
+ */
+
+void
+alias_string_add_word_range (char **alias, int *length, const char *start,
+                             const char *end)
+{
+    char *word;
+    
+    word = weechat_strndup (start, end - start);
+    if (word)
+    {
+        alias_string_add_word (alias, length, word);
+        free (word);
+    }
+}
+
+/*
+ * alias_string_add_arguments: add some arguments to string and increment
+ *                             length
+ */
+
+void
+alias_string_add_arguments (char **alias, int *length, char **argv, int start,
+                            int end)
+{
+    int i;
+    
+    for (i = start; i <= end; i++)
+    {
+        if (i != start)
+            alias_string_add_word (alias, length, " ");
+        alias_string_add_word (alias, length, argv[i]);
+    }
+}
+
+/*
+ * alias_replace_args: replace arguments in alias
+ *                     arguments are:
+ *                       $n   argument n
+ *                       $-m  arguments from 1 to m
+ *                       $n-  arguments from n to last
+ *                       $n-m arguments from n to m
+ *                       $*   all arguments
+ *                       $~   last argument
+ *                     with n and m in 1..9
  */
 
 char *
 alias_replace_args (const char *alias_args, const char *user_args)
 {
-    char **argv, *res, *word;
+    char **argv, *res;
     const char *start, *pos;
-    int argc, length_res, args_count;
+    int n, m, argc, length_res, args_count, offset;
     
     argv = weechat_string_split (user_args, " ", 0, 0, &argc);
     
@@ -136,17 +183,13 @@ alias_replace_args (const char *alias_args, const char *user_args)
     pos = start;
     while (pos && pos[0])
     {
+        offset = 0;
+        
         if ((pos[0] == '\\') && (pos[1] == '$'))
         {
-            word = weechat_strndup (start, pos - start);
-            if (word)
-            {
-                alias_add_word (&res, &length_res, word);
-                free (word);
-            }
-            alias_add_word (&res, &length_res, "$");
-            start = pos + 2;
-            pos = start;
+            offset = 2;
+            alias_string_add_word_range (&res, &length_res, start, pos);
+            alias_string_add_word (&res, &length_res, "$");
         }
         else
         {
@@ -154,50 +197,87 @@ alias_replace_args (const char *alias_args, const char *user_args)
             {
                 if (pos[1] == '*')
                 {
+                    /* replace with all arguments */
                     args_count++;
+                    offset = 2;
                     if (pos > start)
-                    {
-                        word = weechat_strndup (start, pos - start);
-                        if (word)
-                        {
-                            alias_add_word (&res, &length_res, word);
-                            free (word);
-                        }
-                    }
-                    alias_add_word (&res, &length_res, user_args);
-                    start = pos + 2;
-                    pos = start;
+                        alias_string_add_word_range (&res, &length_res, start, pos);
+                    alias_string_add_word (&res, &length_res, user_args);
                 }
-                else
+                else if (pos[1] == '~')
                 {
-                    if ((pos[1] >= '1') && (pos[1] <= '9'))
+                    /* replace with last argument */
+                    args_count++;
+                    offset = 2;
+                    if (pos > start)
+                        alias_string_add_word_range (&res, &length_res, start, pos);
+                    if (argc > 0)
+                        alias_string_add_word (&res, &length_res, argv[argc - 1]);
+                }
+                else if ((pos[1] == '-') && ALIAS_IS_ARG_NUMBER(pos[2]))
+                {
+                    /* replace with arguments 1 to m */
+                    args_count++;
+                    offset = 3;
+                    if (pos > start)
+                        alias_string_add_word_range (&res, &length_res, start, pos);
+                    if (pos[2] - '1' < argc)
+                        m = pos[2] - '1';
+                    else
+                        m = argc - 1;
+                    alias_string_add_arguments (&res, &length_res, argv, 0, m);
+                }
+                else if (ALIAS_IS_ARG_NUMBER(pos[1]))
+                {
+                    args_count++;
+                    n = pos[1] - '1';
+                    if (pos > start)
+                        alias_string_add_word_range (&res, &length_res, start, pos);
+                    if (pos[2] != '-')
                     {
-                        args_count++;
-                        if (pos > start)
-                        {
-                            word = weechat_strndup (start, pos - start);
-                            if (word)
-                            {
-                                alias_add_word (&res, &length_res, word);
-                                free (word);
-                            }
-                        }
-                        if (pos[1] - '1' < argc)
-                            alias_add_word (&res, &length_res, argv[pos[1] - '1']);
-                        start = pos + 2;
-                        pos = start;
+                        /* replace with argument n */
+                        offset = 2;
+                        if (n < argc)
+                            alias_string_add_word (&res, &length_res, argv[n]);
                     }
                     else
-                        pos++;
+                    {
+                        if (ALIAS_IS_ARG_NUMBER(pos[3]))
+                        {
+                            /* replace with arguments n to m */
+                            offset = 4;
+                            if (pos[3] - '1' < argc)
+                                m = pos[3] - '1';
+                            else
+                                m = argc - 1;
+                        }
+                        else
+                        {
+                            /* replace with arguments n to last */
+                            offset = 3;
+                            m = argc - 1;
+                        }
+                        if (n < argc)
+                        {
+                            alias_string_add_arguments (&res, &length_res,
+                                                        argv, n, m);
+                        }
+                    }
                 }
             }
-            else
-                pos++;
         }
+        
+        if (offset != 0)
+        {
+            pos += offset;
+            start = pos;
+        }
+        else
+            pos++;
     }
     
-    if (start < pos)
-        alias_add_word (&res, &length_res, start);
+    if (pos > start)
+        alias_string_add_word (&res, &length_res, start);
     
     if (argv)
         weechat_string_free_split (argv);
@@ -942,10 +1022,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "Without argument, this command lists all "
                              "defined alias.\n\n"
                              "Note: in command, special variables "
-                             "$1, $2,..,$9 are replaced by arguments given "
-                             "by user, and $* is replaced by all arguments.\n"
-                             "Variables $nick, $channel and $server are "
-                             "replaced by current nick/channel/server."),
+                             "are replaced:\n"
+                             "        $n: argument 'n' (between 1 and 9)\n"
+                             "       $-m: arguments from 1 to 'm'\n"
+                             "       $n-: arguments from 'n' to last\n"
+                             "      $n-m: arguments from 'n' to 'm'\n"
+                             "        $*: all arguments\n"
+                             "        $~: last argument\n"
+                             "     $nick: current nick\n"
+                             "  $channel: current channel\n"
+                             "   $server: current server"),
                           "%(alias) %(commands)",
                           &alias_command_cb, NULL);
     
