@@ -164,7 +164,7 @@
 ** valeurs: toute chaîne (valeur par défaut: "WeeChat %v")
 
 * *irc.network.lag_check*
-** description: intervalle entre deux vérifications des absences (en secondes, 0 = ne jamais vérifier)
+** description: intervalle entre deux vérifications du lag (en secondes, 0 = ne jamais vérifier)
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: 60)
 
