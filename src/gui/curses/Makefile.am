@@ -19,7 +19,7 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
 bin_PROGRAMS = weechat-curses
 
 # Because of a linker bug, we have to link 2 times with lib_weechat_core.a
-# (and it must be 2 different path/names to be keeped by linker)
+# (and it must be 2 different path/names to be kept by linker)
 weechat_curses_LDADD = ./../../core/lib_weechat_core.a \
                        ../../plugins/lib_weechat_plugins.a \
                        ../lib_weechat_gui_common.a \
