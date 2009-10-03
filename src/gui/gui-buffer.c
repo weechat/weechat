@@ -1210,15 +1210,23 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
             plugin_match = 1;
             if (plugin && plugin[0])
             {
-                if (ptr_buffer->plugin)
+                if (ptr_buffer->plugin_name_for_upgrade)
                 {
-                    if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
+                    if (strcmp (plugin, ptr_buffer->plugin_name_for_upgrade) != 0)
                         plugin_match = 0;
                 }
                 else
                 {
-                    if (strcmp (plugin, PLUGIN_CORE) != 0)
-                        plugin_match = 0;
+                    if (ptr_buffer->plugin)
+                    {
+                        if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
+                            plugin_match = 0;
+                    }
+                    else
+                    {
+                        if (strcmp (plugin, PLUGIN_CORE) != 0)
+                            plugin_match = 0;
+                    }
                 }
             }
             if (plugin_match && (strcmp (ptr_buffer->name, name) == 0))

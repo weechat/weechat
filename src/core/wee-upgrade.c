@@ -542,7 +542,7 @@ upgrade_weechat_read_cb (void *data,
                     hotlist_reset = 1;
                 }
                 plugin_name = infolist_string (infolist, "plugin_name");
-                buffer_name = infolist_string (infolist, "plugin_name");
+                buffer_name = infolist_string (infolist, "buffer_name");
                 if (plugin_name && buffer_name)
                 {
                     ptr_buffer = gui_buffer_search_by_name (plugin_name,
