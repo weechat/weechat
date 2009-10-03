@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-02 00:08+0200\n"
+"POT-Creation-Date: 2009-10-03 12:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2438,11 +2438,11 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s: server %s%s%s has been copied to %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3453,7 +3453,7 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr ""
 
 #, c-format
-msgid "%sYou have been invited to %s%s%s by %s%s"
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3461,7 +3461,7 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3469,19 +3469,19 @@ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s"
+msgid "%s%s%s%s has kicked %s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s%sYou were killed by %s%s"
+msgid "%s%sYou were killed by %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3493,19 +3493,19 @@ msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr ""
 
 #, c-format
-msgid "%sYou are now known as %s%s"
+msgid "%sYou are now known as %s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s is now known as %s%s"
+msgid "%s%s%s%s is now known as %s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3513,7 +3513,7 @@ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr ""
 
 #, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s"
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3537,7 +3537,7 @@ msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
+msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3610,7 +3610,7 @@ msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s"
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
 msgstr ""
 
 #, c-format

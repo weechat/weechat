@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-02 00:08+0200\n"
+"POT-Creation-Date: 2009-10-03 12:06+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2873,12 +2873,12 @@ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" nenalezen"
 msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 
-#, c-format
-msgid "%s: server %s%s%s has been copied to %s%s"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been copied to %s%s%s"
 msgstr "%s: server %s%s%s byl zkopírován do %s%s"
 
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
 msgstr "%s: server %s%s%s byl přejmenován na %s%s"
 
 #, c-format
@@ -4103,36 +4103,36 @@ msgstr "%s%s: nejste připojen k serveru"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
 
-#, c-format
-msgid "%sYou have been invited to %s%s%s by %s%s"
+#, fuzzy, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sByl jsi pozván na %s%s%s od %s%s"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: nemohu vytvořit nový kanál \"%s\""
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s se připojil %s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""
 
-#, c-format
-msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s byl vykopnut %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s%s%s has kicked %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s"
 msgstr "%s%s%s%s byl vykopnut %s%s"
 
-#, c-format
-msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
 msgstr "%s%sByl jste zabit uživatelem %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%sYou were killed by %s%s"
+#, fuzzy, c-format
+msgid "%s%sYou were killed by %s%s%s"
 msgstr "%s%sByl jste zabit uživatelem %s%s"
 
 #, c-format
@@ -4143,28 +4143,28 @@ msgstr "%sMód %s%s %s[%s%s%s]%s od %s%s"
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr "%sUživatelský mód %s[%s%s%s]%s od %s%s"
 
-#, c-format
-msgid "%sYou are now known as %s%s"
+#, fuzzy, c-format
+msgid "%sYou are now known as %s%s%s"
 msgstr "%sNyní známý jako %s%s"
 
-#, c-format
-msgid "%s%s%s%s is now known as %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s je nyní známý jako %s%s"
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
 
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s"
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
 msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s"
 
 #, c-format
@@ -4187,8 +4187,8 @@ msgstr "%s%s%s%s změnil téma pro %s%s%s z \"%s%s\" na \"%s%s\""
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s změnil téma pro %s%s%s na \"%s%s\""
 
-#, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s%s zrušil téma pro %s%s"
 
 #, c-format
@@ -4266,8 +4266,8 @@ msgstr "%sTéma nastevil %s%s%s v %s"
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTéma pro %s%s%s nastevil %s%s%s v %s"
 
-#, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
 msgstr "%s%s%s%s pozval %s%s%s na %s%s"
 
 #, c-format

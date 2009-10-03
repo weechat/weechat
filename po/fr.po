@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-02 00:08+0200\n"
-"PO-Revision-Date: 2009-10-03 00:29+0200\n"
+"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"PO-Revision-Date: 2009-10-03 12:09+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2945,12 +2945,12 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: le serveur \"%s\" existe déjà pour la commande \"%s\""
 
 #, c-format
-msgid "%s: server %s%s%s has been copied to %s%s"
-msgstr "%s: le serveur %s%s%s a été copié vers %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgstr "%s: le serveur %s%s%s a été copié vers %s%s%s"
 
 #, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "%s: le serveur %s%s%s a été renommé en %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
+msgstr "%s: le serveur %s%s%s a été renommé en %s%s%s"
 
 #, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"
@@ -4199,36 +4199,36 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ce tampon n'est pas un canal !"
 
 #, c-format
-msgid "%sYou have been invited to %s%s%s by %s%s"
-msgstr "%sVous avez été invité sur %s%s%s par %s%s"
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
+msgstr "%sVous avez été invité sur %s%s%s par %s%s%s"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: impossible de créer le nouveau canal \"%s\""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
-msgstr "%s%s%s %s(%s%s%s)%s a rejoint %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
+msgstr "%s%s%s %s(%s%s%s)%s a rejoint %s%s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s%s: canal \"%s\" non trouvé pour la commande \"%s\""
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
-msgstr "%s%s%s%s a expulsé %s%s %s(%s%s%s)"
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s a expulsé %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s%s has kicked %s%s"
-msgstr "%s%s%s%s a expulsé %s%s"
+msgid "%s%s%s%s has kicked %s%s%s"
+msgstr "%s%s%s%s a expulsé %s%s%s"
 
 #, c-format
-msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
-msgstr "%s%sVous avez été tué par %s%s %s(%s%s%s)"
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
+msgstr "%s%sVous avez été tué par %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%sYou were killed by %s%s"
-msgstr "%s%sVous avez été tué par %s%s"
+msgid "%s%sYou were killed by %s%s%s"
+msgstr "%s%sVous avez été tué par %s%s%s"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
@@ -4239,28 +4239,28 @@ msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr "%sMode utilisateur %s[%s%s%s]%s par %s%s"
 
 #, c-format
-msgid "%sYou are now known as %s%s"
-msgstr "%sVous êtes maintenant connu sous le nom %s%s"
+msgid "%sYou are now known as %s%s%s"
+msgstr "%sVous êtes maintenant connu sous le nom %s%s%s"
 
 #, c-format
-msgid "%s%s%s%s is now known as %s%s"
-msgstr "%s%s%s%s est maintenant connu sous le nom %s%s"
+msgid "%s%s%s%s is now known as %s%s%s"
+msgstr "%s%s%s%s est maintenant connu sous le nom %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
-msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s%s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s: %s"
 
 #, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s"
-msgstr "%sCTCP inconnu %s%s%s reçu de %s%s"
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4283,8 +4283,8 @@ msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s a changé le titre pour %s%s%s en \"%s%s\""
 
 #, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
-msgstr "%s%s%s%s a retiré le titre pour %s%s"
+msgid "%s%s%s%s has unset topic for %s%s%s"
+msgstr "%s%s%s%s a retiré le titre pour %s%s%s"
 
 #, c-format
 msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
@@ -4360,8 +4360,8 @@ msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTitre pour %s%s%s défini par %s%s%s le %s"
 
 #, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s"
-msgstr "%s%s%s%s a invité %s%s%s sur %s%s"
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
+msgstr "%s%s%s%s a invité %s%s%s sur %s%s%s"
 
 #, c-format
 msgid "%sChannel reop %s%s%s: %s%s"

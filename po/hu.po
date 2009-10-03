@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-02 00:08+0200\n"
+"POT-Creation-Date: 2009-10-03 12:06+0200\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2795,11 +2795,11 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s has been copied to %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s%s"
 msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
 msgstr "A %s%s%s szerver mostantól: %s%s\n"
 
 #, fuzzy, c-format
@@ -4055,7 +4055,7 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
 
 #, fuzzy, c-format
-msgid "%sYou have been invited to %s%s%s by %s%s"
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
 
 #, fuzzy, c-format
@@ -4063,7 +4063,7 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s belépett a(z) %s%s szobába\n"
 
 #, fuzzy, c-format
@@ -4071,19 +4071,19 @@ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s"
+msgid "%s%s%s%s has kicked %s%s%s"
 msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy, c-format
-msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
 
 #, fuzzy, c-format
-msgid "%s%sYou were killed by %s%s"
+msgid "%s%sYou were killed by %s%s%s"
 msgstr "Az új neved: %s%s\n"
 
 #, fuzzy, c-format
@@ -4095,19 +4095,19 @@ msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr "A %s[%s%s%s]%s felhasználói üzemmódot bekapcsolta: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%sYou are now known as %s%s"
+msgid "%sYou are now known as %s%s%s"
 msgstr "Az új neved: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s is now known as %s%s"
+msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s mostantól: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 
 #, fuzzy, c-format
@@ -4115,7 +4115,7 @@ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s"
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy, c-format
@@ -4139,7 +4139,7 @@ msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
+msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s törölte a %s%s szoba témáját\n"
 
 #, fuzzy, c-format
@@ -4214,7 +4214,7 @@ msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s"
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
 msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 
 #, fuzzy, c-format

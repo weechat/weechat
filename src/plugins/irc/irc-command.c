@@ -2921,13 +2921,14 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL,
                             _("%s: server %s%s%s has been copied to "
-                              "%s%s"),
+                              "%s%s%s"),
                             IRC_PLUGIN_NAME,
                             IRC_COLOR_CHAT_SERVER,
                             argv[2],
                             IRC_COLOR_CHAT,
                             IRC_COLOR_CHAT_SERVER,
-                            argv[3]);
+                            argv[3],
+                            IRC_COLOR_CHAT);
             return WEECHAT_RC_OK;
         }
         
@@ -2969,13 +2970,14 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL,
                             _("%s: server %s%s%s has been renamed to "
-                              "%s%s"),
+                              "%s%s%s"),
                             IRC_PLUGIN_NAME,
                             IRC_COLOR_CHAT_SERVER,
                             argv[2],
                             IRC_COLOR_CHAT,
                             IRC_COLOR_CHAT_SERVER,
-                            argv[3]);
+                            argv[3],
+                            IRC_COLOR_CHAT);
             return WEECHAT_RC_OK;
         }
         

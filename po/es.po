@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-02 00:08+0200\n"
+"POT-Creation-Date: 2009-10-03 12:06+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2679,12 +2679,12 @@ msgstr "%s%s: no se encontró el servidor \"%s\" para el comando \"%s\""
 msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: ya existe el servidor \"%s\" para el comando \"%s\""
 
-#, c-format
-msgid "%s: server %s%s%s has been copied to %s%s"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been copied to %s%s%s"
 msgstr "%s: servidor %s%s%s copiado a %s%s"
 
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
 msgstr "%s: servidor %s%s%s renombrado como %s%s"
 
 #, c-format
@@ -3926,36 +3926,36 @@ msgstr "%s%s: no estas conectado a ningún servidor"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ¡este buffer no es un canal!"
 
-#, c-format
-msgid "%sYou have been invited to %s%s%s by %s%s"
+#, fuzzy, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sUsted ha sido invitado a %s%s%s por %s%s"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: no es posible crear el nuevo canal \"%s\""
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s se ha unido a %s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s%s: canal \"%s\" no encontrado para el comando \"%s\""
 
-#, c-format
-msgid "%s%s%s%s has kicked %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s ha expulsado %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s%s%s has kicked %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s"
 msgstr "%s%s%s%s ha expulsado %s%s"
 
-#, c-format
-msgid "%s%sYou were killed by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
 msgstr "%s%sFuiste expulsado por %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%sYou were killed by %s%s"
+#, fuzzy, c-format
+msgid "%s%sYou were killed by %s%s%s"
 msgstr "%s%sFuiste expulsado por %s%s"
 
 #, c-format
@@ -3966,28 +3966,28 @@ msgstr "%sModo %s%s %s[%s%s%s]%s por %s%s"
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr "%sModo de usuario %s[%s%s%s]%s por %s%s"
 
-#, c-format
-msgid "%sYou are now known as %s%s"
+#, fuzzy, c-format
+msgid "%sYou are now known as %s%s%s"
 msgstr "%sEres conocido ahora como %s%s"
 
-#, c-format
-msgid "%s%s%s%s is now known as %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s es conocido ahora como %s%s"
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s %s(%s%s%s)%s ha abandonado %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s ha abandonado %s%s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sCTCP desconocido %s%s%s recibido de %s%s%s: %s"
 
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s"
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
 msgstr "%sCTCP desconocido %s%s%s recibido de %s%s"
 
 #, c-format
@@ -4010,8 +4010,8 @@ msgstr "%s%s%s%s ha cambiado el tema para %s%s%s de \"%s%s\" a \"%s%s\""
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s ha cambiado el tema para %s%s%s a \"%s%s\""
 
-#, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s%s ha borrado el tema para %s%s"
 
 #, c-format
@@ -4087,8 +4087,8 @@ msgstr "%sTema establecido por %s%s%s el %s"
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTema para %s%s%s establecido por %s%s%s el %s"
 
-#, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
 msgstr "%s%s%s%s ha invitado a %s%s%s a %s%s"
 
 # dunno what reop means
