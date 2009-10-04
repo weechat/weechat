@@ -31,6 +31,7 @@ struct t_gui_bar_item;
 struct t_gui_completion;
 struct t_infolist;
 struct t_weelist;
+struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
 #define WEECHAT_PLUGIN_API_VERSION "20090614-02"

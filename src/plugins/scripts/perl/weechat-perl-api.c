@@ -65,7 +65,7 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
  * weechat::register: startup function for all WeeChat Perl scripts
  */
 
-static XS (XS_weechat_api_register)
+XS (XS_weechat_api_register)
 {
     char *name, *author, *version, *license, *description, *shutdown_func;
     char *charset;
@@ -131,7 +131,7 @@ static XS (XS_weechat_api_register)
  * weechat::plugin_get_name: get name of plugin (return "core" for WeeChat core)
  */
 
-static XS (XS_weechat_api_plugin_get_name)
+XS (XS_weechat_api_plugin_get_name)
 {
     const char *result;
     dXSARGS;
@@ -160,7 +160,7 @@ static XS (XS_weechat_api_plugin_get_name)
  * weechat::charser_set: set script charset
  */
 
-static XS (XS_weechat_api_charset_set)
+XS (XS_weechat_api_charset_set)
 {
     dXSARGS;
     
@@ -189,7 +189,7 @@ static XS (XS_weechat_api_charset_set)
  * weechat::iconv_to_internal: convert string to internal WeeChat charset
  */
 
-static XS (XS_weechat_api_iconv_to_internal)
+XS (XS_weechat_api_iconv_to_internal)
 {
     char *result, *charset, *string;
     dXSARGS;
@@ -222,7 +222,7 @@ static XS (XS_weechat_api_iconv_to_internal)
  *                               to another one
  */
 
-static XS (XS_weechat_api_iconv_from_internal)
+XS (XS_weechat_api_iconv_from_internal)
 {
     char *result, *charset, *string;
     dXSARGS;
@@ -254,7 +254,7 @@ static XS (XS_weechat_api_iconv_from_internal)
  * weechat::gettext: get translated string
  */
 
-static XS (XS_weechat_api_gettext)
+XS (XS_weechat_api_gettext)
 {
     const char *result;
     dXSARGS;
@@ -283,7 +283,7 @@ static XS (XS_weechat_api_gettext)
  * weechat::ngettext: get translated string with plural form
  */
 
-static XS (XS_weechat_api_ngettext)
+XS (XS_weechat_api_ngettext)
 {
     char *single, *plural;
     const char *result;
@@ -317,7 +317,7 @@ static XS (XS_weechat_api_ngettext)
  * weechat::string_remove_color: remove WeeChat color codes from string
  */
 
-static XS (XS_weechat_api_string_remove_color)
+XS (XS_weechat_api_string_remove_color)
 {
     char *result, *string, *replacement;
     dXSARGS;
@@ -349,7 +349,7 @@ static XS (XS_weechat_api_string_remove_color)
  * weechat::mkdir_home: create a directory in WeeChat home
  */
 
-static XS (XS_weechat_api_mkdir_home)
+XS (XS_weechat_api_mkdir_home)
 {
     dXSARGS;
     
@@ -379,7 +379,7 @@ static XS (XS_weechat_api_mkdir_home)
  * weechat::mkdir: create a directory
  */
 
-static XS (XS_weechat_api_mkdir)
+XS (XS_weechat_api_mkdir)
 {
     dXSARGS;
     
@@ -410,7 +410,7 @@ static XS (XS_weechat_api_mkdir)
  *                         needed
  */
 
-static XS (XS_weechat_api_mkdir_parents)
+XS (XS_weechat_api_mkdir_parents)
 {
     dXSARGS;
     
@@ -440,7 +440,7 @@ static XS (XS_weechat_api_mkdir_parents)
  * weechat::list_new: create a new list
  */
 
-static XS (XS_weechat_api_list_new)
+XS (XS_weechat_api_list_new)
 {
     char *result;
     dXSARGS;
@@ -464,7 +464,7 @@ static XS (XS_weechat_api_list_new)
  * weechat::list_add: add a string to list
  */
 
-static XS (XS_weechat_api_list_add)
+XS (XS_weechat_api_list_add)
 {
     char *result, *weelist, *data, *where, *user_data;
     dXSARGS;
@@ -501,7 +501,7 @@ static XS (XS_weechat_api_list_add)
  * weechat::list_search: search a string in list
  */
 
-static XS (XS_weechat_api_list_search)
+XS (XS_weechat_api_list_search)
 {
     char *result, *weelist, *data;
     dXSARGS;
@@ -534,7 +534,7 @@ static XS (XS_weechat_api_list_search)
  * weechat::list_casesearch: search a string in list (ignore case)
  */
 
-static XS (XS_weechat_api_list_casesearch)
+XS (XS_weechat_api_list_casesearch)
 {
     char *result, *weelist, *data;
     dXSARGS;
@@ -567,7 +567,7 @@ static XS (XS_weechat_api_list_casesearch)
  * weechat::list_get: get item by position
  */
 
-static XS (XS_weechat_api_list_get)
+XS (XS_weechat_api_list_get)
 {
     char *result;
     dXSARGS;
@@ -597,7 +597,7 @@ static XS (XS_weechat_api_list_get)
  * weechat::list_set: set new value for item
  */
 
-static XS (XS_weechat_api_list_set)
+XS (XS_weechat_api_list_set)
 {
     char *item, *new_value;
     dXSARGS;
@@ -629,7 +629,7 @@ static XS (XS_weechat_api_list_set)
  * weechat::list_next: get next item
  */
 
-static XS (XS_weechat_api_list_next)
+XS (XS_weechat_api_list_next)
 {
     char *result;
     dXSARGS;
@@ -658,7 +658,7 @@ static XS (XS_weechat_api_list_next)
  * weechat::list_prev: get previous item
  */
 
-static XS (XS_weechat_api_list_prev)
+XS (XS_weechat_api_list_prev)
 {
     char *result;
     dXSARGS;
@@ -687,7 +687,7 @@ static XS (XS_weechat_api_list_prev)
  * weechat::list_string: get string value of item
  */
 
-static XS (XS_weechat_api_list_string)
+XS (XS_weechat_api_list_string)
 {
     const char *result;
     dXSARGS;
@@ -716,7 +716,7 @@ static XS (XS_weechat_api_list_string)
  * weechat::list_size: get number of elements in list
  */
 
-static XS (XS_weechat_api_list_size)
+XS (XS_weechat_api_list_size)
 {
     int size;
     dXSARGS;
@@ -745,7 +745,7 @@ static XS (XS_weechat_api_list_size)
  * weechat::list_remove: remove item from list
  */
 
-static XS (XS_weechat_api_list_remove)
+XS (XS_weechat_api_list_remove)
 {
     char *weelist, *item;
     dXSARGS;
@@ -777,7 +777,7 @@ static XS (XS_weechat_api_list_remove)
  * weechat::list_remove_all: remove all items from list
  */
 
-static XS (XS_weechat_api_list_remove_all)
+XS (XS_weechat_api_list_remove_all)
 {
     dXSARGS;
     
@@ -805,7 +805,7 @@ static XS (XS_weechat_api_list_remove_all)
  * weechat::list_free: free list
  */
 
-static XS (XS_weechat_api_list_free)
+XS (XS_weechat_api_list_free)
 {
     dXSARGS;
     
@@ -874,7 +874,7 @@ weechat_perl_api_config_reload_cb (void *data,
  * weechat::config_new: create a new configuration file
  */
 
-static XS (XS_weechat_api_config_new)
+XS (XS_weechat_api_config_new)
 {
     char *result, *name, *function, *data;
     dXSARGS;
@@ -1128,7 +1128,7 @@ weechat_perl_api_config_section_delete_option_cb (void *data,
  * weechat::config_new_section: create a new section in configuration file
  */
 
-static XS (XS_weechat_api_config_new_section)
+XS (XS_weechat_api_config_new_section)
 {
     char *result, *cfg_file, *name, *function_read, *data_read;
     char *function_write, *data_write, *function_write_default;
@@ -1194,7 +1194,7 @@ static XS (XS_weechat_api_config_new_section)
  * weechat::config_search_section: search section in configuration file
  */
 
-static XS (XS_weechat_api_config_search_section)
+XS (XS_weechat_api_config_search_section)
 {
     char *result, *config_file, *section_name;
     dXSARGS;
@@ -1337,7 +1337,7 @@ weechat_perl_api_config_option_delete_cb (void *data,
  * weechat::config_new_option: create a new option in section
  */
 
-static XS (XS_weechat_api_config_new_option)
+XS (XS_weechat_api_config_new_option)
 {
     char *result, *config_file, *section, *name, *type;
     char *description, *string_values, *default_value, *value;
@@ -1405,7 +1405,7 @@ static XS (XS_weechat_api_config_new_option)
  * weechat::config_search_option: search option in configuration file or section
  */
 
-static XS (XS_weechat_api_config_search_option)
+XS (XS_weechat_api_config_search_option)
 {
     char *result, *config_file, *section, *option_name;
     dXSARGS;
@@ -1440,7 +1440,7 @@ static XS (XS_weechat_api_config_search_option)
  * weechat::config_string_to_boolean: return boolean value of a string
  */
 
-static XS (XS_weechat_api_config_string_to_boolean)
+XS (XS_weechat_api_config_string_to_boolean)
 {
     int value;
     dXSARGS;
@@ -1469,7 +1469,7 @@ static XS (XS_weechat_api_config_string_to_boolean)
  * weechat::config_option_reset: reset an option with default value
  */
 
-static XS (XS_weechat_api_config_option_reset)
+XS (XS_weechat_api_config_option_reset)
 {
     int rc;
     char *option;
@@ -1502,7 +1502,7 @@ static XS (XS_weechat_api_config_option_reset)
  * weechat::config_option_set: set new value for option
  */
 
-static XS (XS_weechat_api_config_option_set)
+XS (XS_weechat_api_config_option_set)
 {
     int rc;
     char *option, *new_value;
@@ -1537,7 +1537,7 @@ static XS (XS_weechat_api_config_option_set)
  * weechat::config_option_set_null: set null (undefined) value for option
  */
 
-static XS (XS_weechat_api_config_option_set_null)
+XS (XS_weechat_api_config_option_set_null)
 {
     int rc;
     char *option;
@@ -1570,7 +1570,7 @@ static XS (XS_weechat_api_config_option_set_null)
  * weechat::config_option_unset: unset an option
  */
 
-static XS (XS_weechat_api_config_option_unset)
+XS (XS_weechat_api_config_option_unset)
 {
     int rc;
     char *option;
@@ -1602,7 +1602,7 @@ static XS (XS_weechat_api_config_option_unset)
  * weechat::config_option_rename: rename an option
  */
 
-static XS (XS_weechat_api_config_option_rename)
+XS (XS_weechat_api_config_option_rename)
 {
     char *option, *new_name;
     dXSARGS;
@@ -1635,7 +1635,7 @@ static XS (XS_weechat_api_config_option_rename)
  * weechat::config_option_is_null: return 1 if value of option is null
  */
 
-static XS (XS_weechat_api_config_option_is_null)
+XS (XS_weechat_api_config_option_is_null)
 {
     int value;
     dXSARGS;
@@ -1665,7 +1665,7 @@ static XS (XS_weechat_api_config_option_is_null)
  *                                         is null
  */
 
-static XS (XS_weechat_api_config_option_default_is_null)
+XS (XS_weechat_api_config_option_default_is_null)
 {
     int value;
     dXSARGS;
@@ -1694,7 +1694,7 @@ static XS (XS_weechat_api_config_option_default_is_null)
  * weechat::config_boolean: return boolean value of option
  */
 
-static XS (XS_weechat_api_config_boolean)
+XS (XS_weechat_api_config_boolean)
 {
     int value;
     dXSARGS;
@@ -1723,7 +1723,7 @@ static XS (XS_weechat_api_config_boolean)
  * weechat::config_boolean_default: return default boolean value of option
  */
 
-static XS (XS_weechat_api_config_boolean_default)
+XS (XS_weechat_api_config_boolean_default)
 {
     int value;
     dXSARGS;
@@ -1752,7 +1752,7 @@ static XS (XS_weechat_api_config_boolean_default)
  * weechat::config_integer: return integer value of option
  */
 
-static XS (XS_weechat_api_config_integer)
+XS (XS_weechat_api_config_integer)
 {
     int value;
     dXSARGS;
@@ -1781,7 +1781,7 @@ static XS (XS_weechat_api_config_integer)
  * weechat::config_integer_default: return default integer value of option
  */
 
-static XS (XS_weechat_api_config_integer_default)
+XS (XS_weechat_api_config_integer_default)
 {
     int value;
     dXSARGS;
@@ -1810,7 +1810,7 @@ static XS (XS_weechat_api_config_integer_default)
  * weechat::config_string: return string value of option
  */
 
-static XS (XS_weechat_api_config_string)
+XS (XS_weechat_api_config_string)
 {
     const char *result;
     dXSARGS;
@@ -1839,7 +1839,7 @@ static XS (XS_weechat_api_config_string)
  * weechat::config_string_default: return default string value of option
  */
 
-static XS (XS_weechat_api_config_string_default)
+XS (XS_weechat_api_config_string_default)
 {
     const char *result;
     dXSARGS;
@@ -1868,7 +1868,7 @@ static XS (XS_weechat_api_config_string_default)
  * weechat::config_color: return color value of option
  */
 
-static XS (XS_weechat_api_config_color)
+XS (XS_weechat_api_config_color)
 {
     const char *result;
     dXSARGS;
@@ -1897,7 +1897,7 @@ static XS (XS_weechat_api_config_color)
  * weechat::config_color_default: return default color value of option
  */
 
-static XS (XS_weechat_api_config_color_default)
+XS (XS_weechat_api_config_color_default)
 {
     const char *result;
     dXSARGS;
@@ -1926,7 +1926,7 @@ static XS (XS_weechat_api_config_color_default)
  * weechat::config_write_option: write an option in configuration file
  */
 
-static XS (XS_weechat_api_config_write_option)
+XS (XS_weechat_api_config_write_option)
 {
     char *config_file, *option;
     dXSARGS;
@@ -1959,7 +1959,7 @@ static XS (XS_weechat_api_config_write_option)
  * weechat::config_write_line: write a line in configuration file
  */
 
-static XS (XS_weechat_api_config_write_line)
+XS (XS_weechat_api_config_write_line)
 {
     char *config_file, *option_name, *value;
     dXSARGS;
@@ -1993,7 +1993,7 @@ static XS (XS_weechat_api_config_write_line)
  * weechat::config_write: write configuration file
  */
 
-static XS (XS_weechat_api_config_write)
+XS (XS_weechat_api_config_write)
 {
     int rc;
     dXSARGS;
@@ -2022,7 +2022,7 @@ static XS (XS_weechat_api_config_write)
  * weechat::config_read: read configuration file
  */
 
-static XS (XS_weechat_api_config_read)
+XS (XS_weechat_api_config_read)
 {
     int rc;
     dXSARGS;
@@ -2051,7 +2051,7 @@ static XS (XS_weechat_api_config_read)
  * weechat::config_reload: reload configuration file
  */
 
-static XS (XS_weechat_api_config_reload)
+XS (XS_weechat_api_config_reload)
 {
     int rc;
     dXSARGS;
@@ -2080,7 +2080,7 @@ static XS (XS_weechat_api_config_reload)
  * weechat::config_option_free: free an option in configuration file
  */
 
-static XS (XS_weechat_api_config_option_free)
+XS (XS_weechat_api_config_option_free)
 {
     dXSARGS;
     
@@ -2111,7 +2111,7 @@ static XS (XS_weechat_api_config_option_free)
  *                                       configuration file
  */
 
-static XS (XS_weechat_api_config_section_free_options)
+XS (XS_weechat_api_config_section_free_options)
 {
     dXSARGS;
     
@@ -2141,7 +2141,7 @@ static XS (XS_weechat_api_config_section_free_options)
  * weechat::config_section_free: free section in configuration file
  */
 
-static XS (XS_weechat_api_config_section_free)
+XS (XS_weechat_api_config_section_free)
 {
     dXSARGS;
     
@@ -2171,7 +2171,7 @@ static XS (XS_weechat_api_config_section_free)
  * weechat::config_free: free configuration file
  */
 
-static XS (XS_weechat_api_config_free)
+XS (XS_weechat_api_config_free)
 {
     dXSARGS;
     
@@ -2201,7 +2201,7 @@ static XS (XS_weechat_api_config_free)
  * weechat::config_get: get config option
  */
 
-static XS (XS_weechat_api_config_get)
+XS (XS_weechat_api_config_get)
 {
     char *result;
     dXSARGS;
@@ -2230,7 +2230,7 @@ static XS (XS_weechat_api_config_get)
  * weechat::config_get_plugin: get value of a plugin option
  */
 
-static XS (XS_weechat_api_config_get_plugin)
+XS (XS_weechat_api_config_get_plugin)
 {
     const char *result;
     dXSARGS;
@@ -2261,7 +2261,7 @@ static XS (XS_weechat_api_config_get_plugin)
  * weechat::config_is_set_plugin: check if a plugin option is set
  */
 
-static XS (XS_weechat_api_config_is_set_plugin)
+XS (XS_weechat_api_config_is_set_plugin)
 {
     char *option;
     int rc;
@@ -2295,7 +2295,7 @@ static XS (XS_weechat_api_config_is_set_plugin)
  * weechat::config_set_plugin: set value of a plugin option
  */
 
-static XS (XS_weechat_api_config_set_plugin)
+XS (XS_weechat_api_config_set_plugin)
 {
     char *option, *value;
     int rc;
@@ -2331,7 +2331,7 @@ static XS (XS_weechat_api_config_set_plugin)
  * weechat::config_unset_plugin: unset a plugin option
  */
 
-static XS (XS_weechat_api_config_unset_plugin)
+XS (XS_weechat_api_config_unset_plugin)
 {
     char *option;
     int rc;
@@ -2365,7 +2365,7 @@ static XS (XS_weechat_api_config_unset_plugin)
  * weechat::prefix: get a prefix, used for display
  */
 
-static XS (XS_weechat_api_prefix)
+XS (XS_weechat_api_prefix)
 {
     const char *result;
     dXSARGS;
@@ -2394,7 +2394,7 @@ static XS (XS_weechat_api_prefix)
  * weechat::color: get a color code, used for display
  */
 
-static XS (XS_weechat_api_color)
+XS (XS_weechat_api_color)
 {
     const char *result;
     dXSARGS;
@@ -2423,7 +2423,7 @@ static XS (XS_weechat_api_color)
  * weechat::print: print message in a buffer
  */
 
-static XS (XS_weechat_api_print)
+XS (XS_weechat_api_print)
 {
     char *buffer, *message;
     dXSARGS;
@@ -2453,7 +2453,7 @@ static XS (XS_weechat_api_print)
  *                           tags
  */
 
-static XS (XS_weechat_api_print_date_tags)
+XS (XS_weechat_api_print_date_tags)
 {
     char *buffer, *tags, *message;
     dXSARGS;
@@ -2491,7 +2491,7 @@ static XS (XS_weechat_api_print_date_tags)
  * weechat::print_y: print message in a buffer with free content
  */
 
-static XS (XS_weechat_api_print_y)
+XS (XS_weechat_api_print_y)
 {
     char *buffer, *message;
     dXSARGS;
@@ -2527,7 +2527,7 @@ static XS (XS_weechat_api_print_y)
  * weechat::log_print: print message in WeeChat log file
  */
 
-static XS (XS_weechat_api_log_print)
+XS (XS_weechat_api_log_print)
 {
     dXSARGS;
     
@@ -2602,7 +2602,7 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
  * weechat::hook_command: hook a command
  */
 
-static XS (XS_weechat_api_hook_command)
+XS (XS_weechat_api_hook_command)
 {
     char *result, *command, *description, *args, *args_description;
     char *completion, *function, *data;
@@ -2691,7 +2691,7 @@ weechat_perl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
  * weechat::hook_command_run: hook a command_run
  */
 
-static XS (XS_weechat_api_hook_command_run)
+XS (XS_weechat_api_hook_command_run)
 {
     char *result, *command, *function, *data;
     dXSARGS;
@@ -2770,7 +2770,7 @@ weechat_perl_api_hook_timer_cb (void *data, int remaining_calls)
  * weechat::hook_timer: hook a timer
  */
 
-static XS (XS_weechat_api_hook_timer)
+XS (XS_weechat_api_hook_timer)
 {
     char *result;
     dXSARGS;
@@ -2846,7 +2846,7 @@ weechat_perl_api_hook_fd_cb (void *data, int fd)
  * weechat::hook_fd: hook a fd
  */
 
-static XS (XS_weechat_api_hook_fd)
+XS (XS_weechat_api_hook_fd)
 {
     char *result;
     dXSARGS;
@@ -2928,7 +2928,7 @@ weechat_perl_api_hook_process_cb (void *data,
  * weechat::hook_process: hook a process
  */
 
-static XS (XS_weechat_api_hook_process)
+XS (XS_weechat_api_hook_process)
 {
     char *command, *function, *data, *result;
     dXSARGS;
@@ -3010,7 +3010,7 @@ weechat_perl_api_hook_connect_cb (void *data, int status,
  * weechat::hook_connect: hook a connection
  */
 
-static XS (XS_weechat_api_hook_connect)
+XS (XS_weechat_api_hook_connect)
 {
     char *proxy, *address, *local_hostname, *function, *data, *result;
     dXSARGS;
@@ -3120,7 +3120,7 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
  * weechat::hook_print: hook a print
  */
 
-static XS (XS_weechat_api_hook_print)
+XS (XS_weechat_api_hook_print)
 {
     char *result, *buffer, *tags, *message, *function, *data;
     dXSARGS;
@@ -3223,7 +3223,7 @@ weechat_perl_api_hook_signal_cb (void *data, const char *signal, const char *typ
  * weechat::hook_signal: hook a signal
  */
 
-static XS (XS_weechat_api_hook_signal)
+XS (XS_weechat_api_hook_signal)
 {
     char *result, *signal, *function, *data;
     dXSARGS;
@@ -3261,7 +3261,7 @@ static XS (XS_weechat_api_hook_signal)
  * weechat::hook_signal_send: send a signal
  */
 
-static XS (XS_weechat_api_hook_signal_send)
+XS (XS_weechat_api_hook_signal_send)
 {
     char *signal, *type_data;
     int number;
@@ -3353,7 +3353,7 @@ weechat_perl_api_hook_config_cb (void *data, const char *option, const char *val
  * weechat::hook_config: hook a config option
  */
 
-static XS (XS_weechat_api_hook_config)
+XS (XS_weechat_api_hook_config)
 {
     char *result, *option, *function, *data;
     dXSARGS;
@@ -3437,7 +3437,7 @@ weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
  * weechat::hook_completion: hook a completion
  */
 
-static XS (XS_weechat_api_hook_completion)
+XS (XS_weechat_api_hook_completion)
 {
     char *result, *completion, *description, *function, *data;
     dXSARGS;
@@ -3477,7 +3477,7 @@ static XS (XS_weechat_api_hook_completion)
  * weechat::hook_completion_list_add: add a word to list for a completion
  */
 
-static XS (XS_weechat_api_hook_completion_list_add)
+XS (XS_weechat_api_hook_completion_list_add)
 {
     char *completion, *word, *where;
     dXSARGS;
@@ -3543,7 +3543,7 @@ weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
  * weechat::hook_modifier: hook a modifier
  */
 
-static XS (XS_weechat_api_hook_modifier)
+XS (XS_weechat_api_hook_modifier)
 {
     char *result, *modifier, *function, *data;
     dXSARGS;
@@ -3581,7 +3581,7 @@ static XS (XS_weechat_api_hook_modifier)
  * weechat::hook_modifier_exec: execute a modifier hook
  */
 
-static XS (XS_weechat_api_hook_modifier_exec)
+XS (XS_weechat_api_hook_modifier_exec)
 {
     char *result, *modifier, *modifier_data, *string;
     dXSARGS;
@@ -3643,7 +3643,7 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
  * weechat::hook_info: hook an info
  */
 
-static XS (XS_weechat_api_hook_info)
+XS (XS_weechat_api_hook_info)
 {
     char *result, *info_name, *description, *function, *data;
     dXSARGS;
@@ -3719,7 +3719,7 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
  * weechat::hook_infolist: hook an infolist
  */
 
-static XS (XS_weechat_api_hook_infolist)
+XS (XS_weechat_api_hook_infolist)
 {
     char *result, *infolist_name, *description, *function, *data;
     dXSARGS;
@@ -3759,7 +3759,7 @@ static XS (XS_weechat_api_hook_infolist)
  * weechat::unhook: unhook something
  */
 
-static XS (XS_weechat_api_unhook)
+XS (XS_weechat_api_unhook)
 {
     dXSARGS;
     
@@ -3789,7 +3789,7 @@ static XS (XS_weechat_api_unhook)
  * weechat::unhook_all: unhook all for script
  */
 
-static XS (XS_weechat_api_unhook_all)
+XS (XS_weechat_api_unhook_all)
 {
     dXSARGS;
     
@@ -3892,7 +3892,7 @@ weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
  * weechat::buffer_new: create a new buffer
  */
 
-static XS (XS_weechat_api_buffer_new)
+XS (XS_weechat_api_buffer_new)
 {
     char *result, *name, *function_input, *data_input, *function_close;
     char *data_close;
@@ -3936,7 +3936,7 @@ static XS (XS_weechat_api_buffer_new)
  * weechat::buffer_search: search a buffer
  */
 
-static XS (XS_weechat_api_buffer_search)
+XS (XS_weechat_api_buffer_search)
 {
     char *result, *plugin, *name;
     dXSARGS;
@@ -3968,7 +3968,7 @@ static XS (XS_weechat_api_buffer_search)
  * weechat::buffer_search_main: search main buffer (WeeChat core buffer)
  */
 
-static XS (XS_weechat_api_buffer_search_main)
+XS (XS_weechat_api_buffer_search_main)
 {
     char *result;
     dXSARGS;
@@ -3992,7 +3992,7 @@ static XS (XS_weechat_api_buffer_search_main)
  * weechat::current_buffer: get current buffer
  */
 
-static XS (XS_weechat_api_current_buffer)
+XS (XS_weechat_api_current_buffer)
 {
     char *result;
     dXSARGS;
@@ -4016,7 +4016,7 @@ static XS (XS_weechat_api_current_buffer)
  * weechat::buffer_clear: clear a buffer
  */
 
-static XS (XS_weechat_api_buffer_clear)
+XS (XS_weechat_api_buffer_clear)
 {
     dXSARGS;
     
@@ -4044,7 +4044,7 @@ static XS (XS_weechat_api_buffer_clear)
  * weechat::buffer_close: close a buffer
  */
 
-static XS (XS_weechat_api_buffer_close)
+XS (XS_weechat_api_buffer_close)
 {
     dXSARGS;
     
@@ -4074,7 +4074,7 @@ static XS (XS_weechat_api_buffer_close)
  * weechat::buffer_merge: merge a buffer to another buffer
  */
 
-static XS (XS_weechat_api_buffer_merge)
+XS (XS_weechat_api_buffer_merge)
 {
     dXSARGS;
     
@@ -4103,7 +4103,7 @@ static XS (XS_weechat_api_buffer_merge)
  * weechat::buffer_unmerge: unmerge a buffer from group of merged buffers
  */
 
-static XS (XS_weechat_api_buffer_unmerge)
+XS (XS_weechat_api_buffer_unmerge)
 {
     dXSARGS;
     
@@ -4132,7 +4132,7 @@ static XS (XS_weechat_api_buffer_unmerge)
  * weechat::buffer_get_integer: get a buffer property as integer
  */
 
-static XS (XS_weechat_api_buffer_get_integer)
+XS (XS_weechat_api_buffer_get_integer)
 {
     char *buffer, *property;
     int value;
@@ -4165,7 +4165,7 @@ static XS (XS_weechat_api_buffer_get_integer)
  * weechat::buffer_get_string: get a buffer property as string
  */
 
-static XS (XS_weechat_api_buffer_get_string)
+XS (XS_weechat_api_buffer_get_string)
 {
     char *buffer, *property;
     const char *result;
@@ -4198,7 +4198,7 @@ static XS (XS_weechat_api_buffer_get_string)
  * weechat::buffer_get_pointer: get a buffer property as pointer
  */
 
-static XS (XS_weechat_api_buffer_get_pointer)
+XS (XS_weechat_api_buffer_get_pointer)
 {
     char *result, *buffer, *property;
     dXSARGS;
@@ -4231,7 +4231,7 @@ static XS (XS_weechat_api_buffer_get_pointer)
  * weechat::buffer_set: set a buffer property
  */
 
-static XS (XS_weechat_api_buffer_set)
+XS (XS_weechat_api_buffer_set)
 {
     char *buffer, *property, *value;
     dXSARGS;
@@ -4264,7 +4264,7 @@ static XS (XS_weechat_api_buffer_set)
  * weechat::current_window: get current window
  */
 
-static XS (XS_weechat_api_current_window)
+XS (XS_weechat_api_current_window)
 {
     char *result;
     dXSARGS;
@@ -4288,7 +4288,7 @@ static XS (XS_weechat_api_current_window)
  * weechat::window_get_integer: get a window property as integer
  */
 
-static XS (XS_weechat_api_window_get_integer)
+XS (XS_weechat_api_window_get_integer)
 {
     char *window, *property;
     int value;
@@ -4321,7 +4321,7 @@ static XS (XS_weechat_api_window_get_integer)
  * weechat::window_get_string: get a window property as string
  */
 
-static XS (XS_weechat_api_window_get_string)
+XS (XS_weechat_api_window_get_string)
 {
     char *window, *property;
     const char *result;
@@ -4354,7 +4354,7 @@ static XS (XS_weechat_api_window_get_string)
  * weechat::window_get_pointer: get a window property as pointer
  */
 
-static XS (XS_weechat_api_window_get_pointer)
+XS (XS_weechat_api_window_get_pointer)
 {
     char *result, *window, *property;
     dXSARGS;
@@ -4387,7 +4387,7 @@ static XS (XS_weechat_api_window_get_pointer)
  * weechat::window_set_title: set window title
  */
 
-static XS (XS_weechat_api_window_set_title)
+XS (XS_weechat_api_window_set_title)
 {
     dXSARGS;
     
@@ -4415,7 +4415,7 @@ static XS (XS_weechat_api_window_set_title)
  * weechat::nicklist_add_group: add a group in nicklist
  */
 
-static XS (XS_weechat_api_nicklist_add_group)
+XS (XS_weechat_api_nicklist_add_group)
 {
     char *result, *buffer, *parent_group, *name, *color;
     dXSARGS;
@@ -4453,7 +4453,7 @@ static XS (XS_weechat_api_nicklist_add_group)
  * weechat::nicklist_search_group: search a group in nicklist
  */
 
-static XS (XS_weechat_api_nicklist_search_group)
+XS (XS_weechat_api_nicklist_search_group)
 {
     char *result, *buffer, *from_group, *name;
     dXSARGS;
@@ -4488,7 +4488,7 @@ static XS (XS_weechat_api_nicklist_search_group)
  * weechat::nicklist_add_nick: add a nick in nicklist
  */
 
-static XS (XS_weechat_api_nicklist_add_nick)
+XS (XS_weechat_api_nicklist_add_nick)
 {
     char *result, *buffer, *group, *name, *color, *prefix, *prefix_color;
     dXSARGS;
@@ -4530,7 +4530,7 @@ static XS (XS_weechat_api_nicklist_add_nick)
  * weechat::nicklist_search_nick: search a nick in nicklist
  */
 
-static XS (XS_weechat_api_nicklist_search_nick)
+XS (XS_weechat_api_nicklist_search_nick)
 {
     char *result, *buffer, *from_group, *name;
     dXSARGS;
@@ -4565,7 +4565,7 @@ static XS (XS_weechat_api_nicklist_search_nick)
  * weechat::nicklist_remove_group: remove a group from nicklist
  */
 
-static XS (XS_weechat_api_nicklist_remove_group)
+XS (XS_weechat_api_nicklist_remove_group)
 {
     char *buffer, *group;
     dXSARGS;
@@ -4598,7 +4598,7 @@ static XS (XS_weechat_api_nicklist_remove_group)
  * weechat::nicklist_remove_nick: remove a nick from nicklist
  */
 
-static XS (XS_weechat_api_nicklist_remove_nick)
+XS (XS_weechat_api_nicklist_remove_nick)
 {
     char *buffer, *nick;
     dXSARGS;
@@ -4631,7 +4631,7 @@ static XS (XS_weechat_api_nicklist_remove_nick)
  * weechat::nicklist_remove_all: remove all groups/nicks from nicklist
  */
 
-static XS (XS_weechat_api_nicklist_remove_all)
+XS (XS_weechat_api_nicklist_remove_all)
 {
     dXSARGS;
     
@@ -4659,7 +4659,7 @@ static XS (XS_weechat_api_nicklist_remove_all)
  * weechat::bar_item_search: search a bar item
  */
 
-static XS (XS_weechat_api_bar_item_search)
+XS (XS_weechat_api_bar_item_search)
 {
     char *result;
     dXSARGS;
@@ -4724,7 +4724,7 @@ weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
  * weechat::bar_item_new: add a new bar item
  */
 
-static XS (XS_weechat_api_bar_item_new)
+XS (XS_weechat_api_bar_item_new)
 {
     char *result, *name, *function, *data;
     dXSARGS;
@@ -4762,7 +4762,7 @@ static XS (XS_weechat_api_bar_item_new)
  * weechat::bar_item_update: update a bar item on screen
  */
 
-static XS (XS_weechat_api_bar_item_update)
+XS (XS_weechat_api_bar_item_update)
 {
     dXSARGS;
     
@@ -4790,7 +4790,7 @@ static XS (XS_weechat_api_bar_item_update)
  * weechat::bar_item_remove: remove a bar item
  */
 
-static XS (XS_weechat_api_bar_item_remove)
+XS (XS_weechat_api_bar_item_remove)
 {
     dXSARGS;
     
@@ -4820,7 +4820,7 @@ static XS (XS_weechat_api_bar_item_remove)
  * weechat::bar_search: search a bar
  */
 
-static XS (XS_weechat_api_bar_search)
+XS (XS_weechat_api_bar_search)
 {
     char *result;
     dXSARGS;
@@ -4849,7 +4849,7 @@ static XS (XS_weechat_api_bar_search)
  * weechat::bar_new: add a new bar
  */
 
-static XS (XS_weechat_api_bar_new)
+XS (XS_weechat_api_bar_new)
 {
     char *result, *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
@@ -4910,7 +4910,7 @@ static XS (XS_weechat_api_bar_new)
  * weechat::bar_set: set a bar property
  */
 
-static XS (XS_weechat_api_bar_set)
+XS (XS_weechat_api_bar_set)
 {
     char *bar, *property, *value;
     dXSARGS;
@@ -4943,7 +4943,7 @@ static XS (XS_weechat_api_bar_set)
  * weechat::bar_update: update a bar on screen
  */
 
-static XS (XS_weechat_api_bar_update)
+XS (XS_weechat_api_bar_update)
 {
     dXSARGS;
     
@@ -4971,7 +4971,7 @@ static XS (XS_weechat_api_bar_update)
  * weechat::bar_remove: remove a bar
  */
 
-static XS (XS_weechat_api_bar_remove)
+XS (XS_weechat_api_bar_remove)
 {
     dXSARGS;
     
@@ -4999,7 +4999,7 @@ static XS (XS_weechat_api_bar_remove)
  * weechat::command: execute a command on a buffer
  */
 
-static XS (XS_weechat_api_command)
+XS (XS_weechat_api_command)
 {
     char *buffer, *command;
     dXSARGS;
@@ -5034,7 +5034,7 @@ static XS (XS_weechat_api_command)
  * weechat::info_get: get info about WeeChat
  */
 
-static XS (XS_weechat_api_info_get)
+XS (XS_weechat_api_info_get)
 {
     char *info_name, *arguments;
     const char *result;
@@ -5067,7 +5067,7 @@ static XS (XS_weechat_api_info_get)
  * weechat::infolist_new: create new infolist
  */
 
-static XS (XS_weechat_api_infolist_new)
+XS (XS_weechat_api_infolist_new)
 {
     char *result;
     dXSARGS;
@@ -5091,7 +5091,7 @@ static XS (XS_weechat_api_infolist_new)
  * weechat::infolist_new_var_integer: create new integer variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_new_var_integer)
+XS (XS_weechat_api_infolist_new_var_integer)
 {
     char *infolist, *name, *result;
     dXSARGS;
@@ -5125,7 +5125,7 @@ static XS (XS_weechat_api_infolist_new_var_integer)
  * weechat::infolist_new_var_string: create new string variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_new_var_string)
+XS (XS_weechat_api_infolist_new_var_string)
 {
     char *infolist, *name, *value, *result;
     dXSARGS;
@@ -5160,7 +5160,7 @@ static XS (XS_weechat_api_infolist_new_var_string)
  * weechat::infolist_new_var_pointer: create new pointer variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_new_var_pointer)
+XS (XS_weechat_api_infolist_new_var_pointer)
 {
     char *infolist, *name, *value, *result;
     dXSARGS;
@@ -5195,7 +5195,7 @@ static XS (XS_weechat_api_infolist_new_var_pointer)
  * weechat::infolist_new_var_time: create new time variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_new_var_time)
+XS (XS_weechat_api_infolist_new_var_time)
 {
     char *infolist, *name, *result;
     dXSARGS;
@@ -5229,7 +5229,7 @@ static XS (XS_weechat_api_infolist_new_var_time)
  * weechat::infolist_get: get list with infos
  */
 
-static XS (XS_weechat_api_infolist_get)
+XS (XS_weechat_api_infolist_get)
 {
     char *result, *name, *pointer, *arguments;
     dXSARGS;
@@ -5264,7 +5264,7 @@ static XS (XS_weechat_api_infolist_get)
  * weechat::infolist_next: move item pointer to next item in infolist
  */
 
-static XS (XS_weechat_api_infolist_next)
+XS (XS_weechat_api_infolist_next)
 {
     int value;
     dXSARGS;
@@ -5293,7 +5293,7 @@ static XS (XS_weechat_api_infolist_next)
  * weechat::infolist_prev: move item pointer to previous item in infolist
  */
 
-static XS (XS_weechat_api_infolist_prev)
+XS (XS_weechat_api_infolist_prev)
 {
     int value;
     dXSARGS;
@@ -5322,7 +5322,7 @@ static XS (XS_weechat_api_infolist_prev)
  * weechat::infolist_fields: get list of fields for current item of infolist
  */
 
-static XS (XS_weechat_api_infolist_fields)
+XS (XS_weechat_api_infolist_fields)
 {
     const char *result;
     dXSARGS;
@@ -5351,7 +5351,7 @@ static XS (XS_weechat_api_infolist_fields)
  * weechat::infolist_integer: get integer value of a variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_integer)
+XS (XS_weechat_api_infolist_integer)
 {
     char *infolist, *variable;
     int value;
@@ -5384,7 +5384,7 @@ static XS (XS_weechat_api_infolist_integer)
  * weechat::infolist_string: get string value of a variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_string)
+XS (XS_weechat_api_infolist_string)
 {
     char *infolist, *variable;
     const char *result;
@@ -5417,7 +5417,7 @@ static XS (XS_weechat_api_infolist_string)
  * weechat::infolist_pointer: get pointer value of a variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_pointer)
+XS (XS_weechat_api_infolist_pointer)
 {
     char *infolist, *variable;
     char *result;
@@ -5450,7 +5450,7 @@ static XS (XS_weechat_api_infolist_pointer)
  * weechat::infolist_time: get time value of a variable in infolist
  */
 
-static XS (XS_weechat_api_infolist_time)
+XS (XS_weechat_api_infolist_time)
 {
     time_t time;
     char timebuffer[64], *result, *infolist, *variable;
@@ -5484,7 +5484,7 @@ static XS (XS_weechat_api_infolist_time)
  * weechat::infolist_free: free infolist
  */
 
-static XS (XS_weechat_api_infolist_free)
+XS (XS_weechat_api_infolist_free)
 {
     dXSARGS;
     
@@ -5512,7 +5512,7 @@ static XS (XS_weechat_api_infolist_free)
  * weechat::upgrade_new: create an upgrade file
  */
 
-static XS (XS_weechat_api_upgrade_new)
+XS (XS_weechat_api_upgrade_new)
 {
     char *result, *filename;
     dXSARGS;
@@ -5544,7 +5544,7 @@ static XS (XS_weechat_api_upgrade_new)
  * weechat::upgrade_write_object: write object in upgrade file
  */
 
-static XS (XS_weechat_api_upgrade_write_object)
+XS (XS_weechat_api_upgrade_write_object)
 {
     char *upgrade_file, *infolist;
     int rc;
@@ -5628,7 +5628,7 @@ weechat_perl_api_upgrade_read_cb (void *data,
  * weechat::config_upgrade_read: read upgrade file
  */
 
-static XS (XS_weechat_api_upgrade_read)
+XS (XS_weechat_api_upgrade_read)
 {
     char *upgrade_file, *function, *data;
     int rc;
@@ -5667,7 +5667,7 @@ static XS (XS_weechat_api_upgrade_read)
  * weechat::upgrade_close: close upgrade file
  */
 
-static XS (XS_weechat_api_upgrade_close)
+XS (XS_weechat_api_upgrade_close)
 {
     char *upgrade_file;
     dXSARGS;

@@ -1967,7 +1967,7 @@ config_weechat_init_options ()
         N_("standard plugins extension in filename (for example "
            "\".so\" under Linux or \".dll\" under Microsoft Windows)"),
         NULL, 0, 0,
-#ifdef WIN32
+#if defined(WIN32) || defined(__CYGWIN__)
         ".dll",
 #else
         ".so",

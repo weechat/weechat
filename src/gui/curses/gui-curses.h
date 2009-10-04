@@ -28,6 +28,10 @@
 #include <curses.h>
 #endif
 
+#ifdef __CYGWIN__
+#include <sys/termios.h>
+#endif
+
 struct t_gui_buffer;
 struct t_gui_window;
 struct t_gui_bar_window;

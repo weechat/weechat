@@ -897,7 +897,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
        any suggestion is welcome to improve that!
     */
     network_connect_child (hook_connect);
-    network_connect_child_read_cb (hook_connect);
+    network_connect_child_read_cb (hook_connect, 0);
 #else
     switch (pid = fork ())
     {
