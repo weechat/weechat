@@ -53,6 +53,7 @@ int gui_keyboard_verbose = 0;          /* 1 to see some messages            */
 char gui_key_combo_buffer[128];     /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
 int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
+int gui_key_grab_command = 0;       /* grab command bound to key?           */
 
 int *gui_keyboard_buffer = NULL;    /* input buffer (for paste detection)   */
 int gui_keyboard_buffer_alloc = 0;  /* input buffer allocated size          */
@@ -96,10 +97,11 @@ gui_keyboard_init_last_activity_time ()
  */
 
 void
-gui_keyboard_grab_init ()
+gui_keyboard_grab_init (int grab_command)
 {
     gui_key_grab = 1;
     gui_key_grab_count = 0;
+    gui_key_grab_command = grab_command;
 }
 
 /*
@@ -110,6 +112,7 @@ void
 gui_keyboard_grab_end ()
 {
     char *expanded_key;
+    struct t_gui_key *ptr_key;
     
     /* get expanded name (for example: ^U => ctrl-u) */
     expanded_key = gui_keyboard_get_expanded_name (gui_key_combo_buffer);
@@ -119,6 +122,15 @@ gui_keyboard_grab_end ()
         if (gui_current_window->buffer->input)
         {
             gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
+            if (gui_key_grab_command)
+            {
+                ptr_key = gui_keyboard_search (NULL, gui_key_combo_buffer);
+                if (ptr_key)
+                {
+                    gui_input_insert_string (gui_current_window->buffer, " ", -1);
+                    gui_input_insert_string (gui_current_window->buffer, ptr_key->command, -1);
+                }
+            }
             if (gui_current_window->buffer->completion)
                 gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
@@ -129,6 +141,7 @@ gui_keyboard_grab_end ()
     /* end grab mode */
     gui_key_grab = 0;
     gui_key_grab_count = 0;
+    gui_key_grab_command = 0;
     gui_key_combo_buffer[0] = '\0';
 }
 

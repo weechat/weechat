@@ -437,8 +437,9 @@ Keys for command line
   `/input delete_next_word`
 
 | Alt + K |
-  Grab a key and insert its code in command line +
-  `/input grab_key`
+  Grab a key and insert its code (and command bound if key exists) in command
+  line +
+  `/input grab_key_command`
 
 | Alt + R` +
   Delete entire command line +

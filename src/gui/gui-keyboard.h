@@ -49,7 +49,7 @@ extern time_t gui_keyboard_last_activity_time;
 /* keyboard functions */
 
 extern void gui_keyboard_init ();
-extern void gui_keyboard_grab_init ();
+extern void gui_keyboard_grab_init (int grab_command);
 extern void gui_keyboard_grab_end ();
 extern char *gui_keyboard_get_internal_code (const char *key);
 extern char *gui_keyboard_get_expanded_name (const char *key);

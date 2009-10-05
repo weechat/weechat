@@ -1224,7 +1224,19 @@ void
 gui_input_grab_key ()
 {
     if (gui_current_window->buffer->input)
-        gui_keyboard_grab_init ();
+        gui_keyboard_grab_init (0);
+}
+
+/*
+ * gui_input_grab_key_command: init "grab key mode" (next key and command
+ *                             bound will be inserted into input buffer)
+ */
+
+void
+gui_input_grab_key_command ()
+{
+    if (gui_current_window->buffer->input)
+        gui_keyboard_grab_init (1);
 }
 
 /*

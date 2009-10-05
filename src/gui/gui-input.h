@@ -63,6 +63,7 @@ extern void gui_input_jump_previously_visited_buffer ();
 extern void gui_input_jump_next_visited_buffer ();
 extern void gui_input_hotlist_clear ();
 extern void gui_input_grab_key ();
+extern void gui_input_grab_key_command ();
 extern void gui_input_scroll_unread ();
 extern void gui_input_set_unread ();
 extern void gui_input_set_unread_current_buffer ();
