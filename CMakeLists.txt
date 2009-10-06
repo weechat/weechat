@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-PROJECT(weechat)
+PROJECT(weechat C)
 
 cmake_minimum_required(VERSION 2.4)
 
