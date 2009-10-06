@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-10-05
+v0.3.1-dev, 2009-10-06
 
 
 Version 0.3.1 (under dev!)
@@ -23,6 +23,8 @@ Version 0.3.1 (under dev!)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
 * irc: improve error management on socket error (recv/send)
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
+* gui: fix alignment problem for buffer name when a merged buffer is closed
+  (bug #27617)
 * gui: update hotlist when a buffer is closed (bug #27470), remove buffer from
   hotlist when buffer is cleared (bug #27530)
 * gui: fix /input history_global_next: reset input content when last command in

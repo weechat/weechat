@@ -1472,7 +1472,7 @@ void
 gui_buffer_close (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_back_to_buffer;
     int index;
     struct t_gui_buffer_visited *ptr_buffer_visited;
     
@@ -1484,9 +1484,14 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         (void)(buffer->close_callback) (buffer->close_callback_data, buffer);
     }
     
+    ptr_back_to_buffer = NULL;
+    
     /* first unmerge buffer if it is merged to at least one other buffer */
     if (gui_buffer_count_merged_buffers (buffer->number) > 1)
+    {
+        ptr_back_to_buffer = gui_buffer_get_next_active_buffer (buffer);
         gui_buffer_unmerge (buffer, -1);
+    }
     
     if (!weechat_quit)
     {
@@ -1515,26 +1520,29 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                 /* switch to previous buffer */
                 if (gui_buffers != last_gui_buffer)
                 {
-                    if (ptr_buffer_visited)
+                    if (ptr_back_to_buffer)
+                    {
+                        gui_window_switch_to_buffer (ptr_window,
+                                                     ptr_back_to_buffer,
+                                                     1);
+                    }
+                    else if (ptr_buffer_visited)
                     {
                         gui_window_switch_to_buffer (ptr_window,
                                                      ptr_buffer_visited->buffer,
                                                      1);
                     }
+                    else if (ptr_window->buffer->prev_buffer)
+                    {
+                        gui_window_switch_to_buffer (ptr_window,
+                                                     ptr_window->buffer->prev_buffer,
+                                                     1);
+                    }
                     else
                     {
-                        if (ptr_window->buffer->prev_buffer)
-                        {
-                            gui_window_switch_to_buffer (ptr_window,
-                                                         ptr_window->buffer->prev_buffer,
-                                                         1);
-                        }
-                        else
-                        {
-                            gui_window_switch_to_buffer (ptr_window,
-                                                         last_gui_buffer,
-                                                         1);
-                        }
+                        gui_window_switch_to_buffer (ptr_window,
+                                                     last_gui_buffer,
+                                                     1);
                     }
                 }
             }
@@ -1891,11 +1899,13 @@ void
 gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 {
     int num_merged;
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_new_active_buffer;
     
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
         return;
+    
+    ptr_new_active_buffer = NULL;
     
     num_merged = gui_buffer_count_merged_buffers (buffer->number);
     
@@ -1933,9 +1943,9 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     else
     {
         /* remove this buffer from mixed_lines, but keep other buffers merged */
-        ptr_buffer = gui_buffer_get_next_active_buffer (buffer);
-        if (ptr_buffer)
-            gui_buffer_set_active_buffer (ptr_buffer);
+        ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer);
+        if (ptr_new_active_buffer)
+            gui_buffer_set_active_buffer (ptr_new_active_buffer);
         gui_line_mixed_free_buffer (buffer);
         buffer->mixed_lines = NULL;
         buffer->lines = buffer->own_lines;
@@ -1986,6 +1996,13 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     }
     
     gui_buffer_compute_num_displayed ();
+
+    if (ptr_new_active_buffer)
+    {
+        gui_line_compute_prefix_max_length (ptr_new_active_buffer->mixed_lines);
+        gui_line_compute_buffer_max_length (ptr_new_active_buffer,
+                                            ptr_new_active_buffer->mixed_lines);
+    }
     
     gui_window_ask_refresh (1);
     
