@@ -14,18 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_DOC)
+docdir = $(datadir)/doc/$(PACKAGE)
 
-  FIND_PACKAGE(Sourcehighlight)
-  FIND_PACKAGE(Asciidoc)
-  IF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-    ADD_SUBDIRECTORY( en )
-    ADD_SUBDIRECTORY( fr )
-    ADD_SUBDIRECTORY( pl )
-    ADD_SUBDIRECTORY( de )
-    ADD_SUBDIRECTORY( ru )
-  ENDIF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
+EXTRA_DIST = CMakeLists.txt \
+		weechat_quickstart.ru.txt
 
-ENDIF(NOT DISABLE_DOC)
+all-local: weechat_quickstart.ru.html
 
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1 DESTINATION ${SHAREDIR}/man/man1)
+# quickstart
+weechat_quickstart.ru.html: weechat_quickstart.ru.txt
+	$(ASCIIDOC) -a toc -a toc_title='таблица содержания' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.ru.html weechat_quickstart.ru.txt
+
+# install docs
+
+install-data-hook:
+	$(mkinstalldirs) $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
+
+# clean
+
+clean-local:
+	-rm -f *.html

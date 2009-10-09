@@ -944,6 +944,7 @@ AC_OUTPUT([Makefile
            doc/fr/Makefile
            doc/pl/Makefile
            doc/de/Makefile
+           doc/ru/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

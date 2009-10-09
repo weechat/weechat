@@ -14,18 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_DOC)
-
-  FIND_PACKAGE(Sourcehighlight)
-  FIND_PACKAGE(Asciidoc)
-  IF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-    ADD_SUBDIRECTORY( en )
-    ADD_SUBDIRECTORY( fr )
-    ADD_SUBDIRECTORY( pl )
-    ADD_SUBDIRECTORY( de )
-    ADD_SUBDIRECTORY( ru )
-  ENDIF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-
-ENDIF(NOT DISABLE_DOC)
-
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1 DESTINATION ${SHAREDIR}/man/man1)
+# quickstart
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='таблица содержания' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.txt
+  COMMENT "Building weechat_quickstart.ru.html"
+)
+ADD_CUSTOM_TARGET(doc-quickstart-ru ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
