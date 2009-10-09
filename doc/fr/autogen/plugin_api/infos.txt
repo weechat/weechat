@@ -33,8 +33,8 @@
 
 | weechat | weechat_sharedir | répertoire "share" de WeeChat
 
-| weechat | weechat_site | Site WeeChat
+| weechat | weechat_site | site WeeChat
 
-| weechat | weechat_site_download | Site WeeChat, page de téléchargement
+| weechat | weechat_site_download | site WeeChat, page de téléchargement
 
 |========================================

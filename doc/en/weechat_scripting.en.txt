@@ -146,9 +146,9 @@ $ cd ~/.weechat/perl/autoload
 $ ln -s ../script.pl
 ----------------------------------------
 
-[[script_api]]
-Script API
-----------
+[[differences_with_c_api]]
+Differences with C API
+----------------------
 
 Script API is almost the same as C plugin API.
 You can look at 'WeeChat Plugin API Reference' for detail about each function
@@ -175,6 +175,60 @@ previous path:
                  \/                                   \/
 WeeChat core  ------->  python plugin (python.so)  ------->  test.py
 ........................................
+
+Pointers
+~~~~~~~~
+
+As you probably know, there is not really "pointers" in scripts. So when API
+functions return pointer, it is converted to string for script.
+
+For example, if function return pointer 0x1234ab56, script will get string
+"0x1234ab56".
+
+And when an API function expects a pointer in arguments, script must give that
+string value. C plugin will convert it to real pointer before calling C API
+function.
+
+Empty string or "0x0" are allowed, they means NULL in C.
+For example, to print data on core buffer (WeeChat main buffer), you can do:
+
+[source,python]
+----------------------------------------
+weechat.prnt("", "hi!")
+----------------------------------------
+
+[WARNING]
+In many functions, for speed reasons, WeeChat does not check if your pointer
+is correct or not. It's your job to check you're giving a valid pointer,
+otherwise you may see a nice crash report ;)
+
+Callbacks
+~~~~~~~~~
+
+Almost all WeeChat callbacks must return WEECHAT_RC_OK or WEECHAT_RC_ERROR
+(exception is modifier callback, which returns a string).
+
+C callbacks are using a "data" argument, which is a pointer. In script API,
+this "data" is a string with a any value (it's not a pointer).
+
+For example:
+
+[source,python]
+----------------------------------------
+weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data")
+
+def my_timer_cb(data, remaining_calls):
+    # this will display: "my data"
+    weechat.prnt("", data)
+    return weechat.WEECHAT_RC_OK
+----------------------------------------
+
+[[script_api]]
+Script API
+----------
+
+For more information about functions in API, please read
+'WeeChat Plugin API Reference'.
 
 Functions
 ~~~~~~~~~
@@ -274,18 +328,21 @@ List of functions in script API:
 ** 'unhook_all'
 * buffers:
 ** 'buffer_new'
-** 'buffer_search'
 ** 'current_buffer'
+** 'buffer_search'
+** 'buffer_search_main'
 ** 'buffer_clear'
 ** 'buffer_close'
+** 'buffer_merge'
+** 'buffer_unmerge'
 ** 'buffer_get_integer'
 ** 'buffer_get_string'
 ** 'buffer_get_pointer'
 ** 'buffer_set'
+** 'buffer_string_replace_local_var'
 * windows:
 ** 'current_window'
 ** 'window_get_integer'
-** 'window_get_string'
 ** 'window_get_pointer'
 ** 'window_set_title'
 * nicklist:
@@ -312,6 +369,7 @@ List of functions in script API:
 ** 'info_get'
 * infolists:
 ** 'infolist_new'
+** 'infolist_new_item'
 ** 'infolist_new_var_integer'
 ** 'infolist_new_var_string'
 ** 'infolist_new_var_pointer'
@@ -319,6 +377,7 @@ List of functions in script API:
 ** 'infolist_get'
 ** 'infolist_next'
 ** 'infolist_prev'
+** 'infolist_reset_item_cursor'
 ** 'infolist_fields'
 ** 'infolist_integer'
 ** 'infolist_string'
@@ -374,53 +433,3 @@ List of constants in script API:
 * 'WEECHAT_HOOK_SIGNAL_STRING'
 * 'WEECHAT_HOOK_SIGNAL_INT'
 * 'WEECHAT_HOOK_SIGNAL_POINTER'
-
-Differences with C API
-~~~~~~~~~~~~~~~~~~~~~~
-
-Pointers
-^^^^^^^^
-
-As you probably know, there is not really "pointers" in scripts. So when API
-functions return pointer, it is converted to string for script.
-
-For example, if function return pointer 0x1234ab56, script will get string
-"0x1234ab56".
-
-And when an API function expects a pointer in arguments, script must give that
-string value. C plugin will convert it to real pointer before calling C API
-function.
-
-Empty string or "0x0" are allowed, they means NULL in C.
-For example, to print data on core buffer (WeeChat main buffer), you can do:
-
-[source,python]
-----------------------------------------
-weechat.prnt("", "hi!")
-----------------------------------------
-
-[WARNING]
-In many functions, for speed reasons, WeeChat does not check if your pointer
-is correct or not. It's your job to check you're giving a valid pointer,
-otherwise you may see a nice crash report ;)
-
-Callbacks
-^^^^^^^^^
-
-Almost all WeeChat callbacks must return WEECHAT_RC_OK or WEECHAT_RC_ERROR
-(exception is modifier callback, which returns a string).
-
-C callbacks are using a "data" argument, which is a pointer. In script API,
-this "data" is a string with a any value (it's not a pointer).
-
-For example:
-
-[source,python]
-----------------------------------------
-weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data")
-
-def my_timer_cb(data, remaining_calls):
-    # this will display: "my data"
-    weechat.prnt("", data)
-    return weechat.WEECHAT_RC_OK
-----------------------------------------

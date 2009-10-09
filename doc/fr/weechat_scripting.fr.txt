@@ -149,9 +149,9 @@ $ cd ~/.weechat/perl/autoload
 $ ln -s ../script.pl
 ----------------------------------------
 
-[[script_api]]
-API script
-----------
+[[differences_with_c_api]]
+Différences avec l'API C
+------------------------
 
 L'API script est quasiment identique à l'API C.
 Vous pouvez consulter la 'Référence API Extension WeeChat' pour le détail de
@@ -179,6 +179,65 @@ est inversé :
                  \/                                      \/
 WeeChat core  ------->  extension plugin (python.so)  ------->  test.py
 ........................................
+
+Pointeurs
+~~~~~~~~~
+
+Comme vous le savez probablement, il n'y a pas vraiment de "pointeurs" dans les
+scripts. Donc quand les fonctions de l'API retournent un pointeur, il est
+converti en chaîne pour le script.
+
+Par exemple, si une fonction retourne le pointeur 0x1234ab56, le script recevra
+la chaîne "0x1234ab56".
+
+Et quand une fonction de l'API attend un pointeur dans ses paramètres, le
+script doit envoyer cette valeur sous forme de chaîne. L'extension C la
+convertira en pointeur réel avant d'appeler la fonction de l'API C.
+
+Une chaîne vide ou "0x0" sont autorisées, cela signifie le pointeur NULL en C.
+Par exemple, pour afficher un message sur le tampon core (tampon principal
+WeeChat), vous pouvez faire :
+
+[source,python]
+----------------------------------------
+weechat.prnt("", "bonjour !")
+----------------------------------------
+
+[WARNING]
+Dans beaucoup de fonctions, pour des raisons de vitesse, WeeChat ne vérifie pas
+si votre pointeur est correct ou pas. Il est de votre responsabilité de
+vérifier que vous donnez un pointeur valide, sinon vous pourriez voir un joli
+rapport de crash ;)
+
+Callbacks
+~~~~~~~~~
+
+Tous les "callbacks" WeeChat doivent retourner WEECHAT_RC_OK ou
+WEECHAT_RC_ERROR (l'exception est le callback du "modifier", qui retourne une
+chaîne de caractères).
+
+Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
+l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
+valeur (ce n'est pas un pointeur).
+
+Par exemple :
+
+[source,python]
+----------------------------------------
+weechat.hook_timer(1000, 0, 1, "mon_timer_cb", "mes données")
+
+def mon_timer_cb(data, remaining_calls):
+    # cela affichera : "mes données"
+    weechat.prnt("", data)
+    return weechat.WEECHAT_RC_OK
+----------------------------------------
+
+[[script_api]]
+API script
+----------
+
+Pour plus d'informations sur les fonctions de l'API, merci de consulter la
+'Référence API Extension WeeChat'.
 
 Fonctions
 ~~~~~~~~~
@@ -278,18 +337,21 @@ Liste des fonctions de l'API script :
 ** 'unhook_all'
 * tampons :
 ** 'buffer_new'
-** 'buffer_search'
 ** 'current_buffer'
+** 'buffer_search'
+** 'buffer_search_main'
 ** 'buffer_clear'
 ** 'buffer_close'
+** 'buffer_merge'
+** 'buffer_unmerge'
 ** 'buffer_get_integer'
 ** 'buffer_get_string'
 ** 'buffer_get_pointer'
 ** 'buffer_set'
+** 'buffer_string_replace_local_var'
 * fenêtres :
 ** 'current_window'
 ** 'window_get_integer'
-** 'window_get_string'
 ** 'window_get_pointer'
 ** 'window_set_title'
 * liste des pseudos :
@@ -316,6 +378,7 @@ Liste des fonctions de l'API script :
 ** 'info_get'
 * infolists :
 ** 'infolist_new'
+** 'infolist_new_item'
 ** 'infolist_new_var_integer'
 ** 'infolist_new_var_string'
 ** 'infolist_new_var_pointer'
@@ -323,6 +386,7 @@ Liste des fonctions de l'API script :
 ** 'infolist_get'
 ** 'infolist_next'
 ** 'infolist_prev'
+** 'infolist_reset_item_cursor'
 ** 'infolist_fields'
 ** 'infolist_integer'
 ** 'infolist_string'
@@ -378,58 +442,3 @@ Liste des constantes de l'API script :
 * 'WEECHAT_HOOK_SIGNAL_STRING'
 * 'WEECHAT_HOOK_SIGNAL_INT'
 * 'WEECHAT_HOOK_SIGNAL_POINTER'
-
-Différences avec l'API C
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Pointeurs
-^^^^^^^^^
-
-Comme vous le savez probablement, il n'y a pas vraiment de "pointeurs" dans les
-scripts. Donc quand les fonctions de l'API retournent un pointeur, il est
-converti en chaîne pour le script.
-
-Par exemple, si une fonction retourne le pointeur 0x1234ab56, le script recevra
-la chaîne "0x1234ab56".
-
-Et quand une fonction de l'API attend un pointeur dans ses paramètres, le
-script doit envoyer cette valeur sous forme de chaîne. L'extension C la
-convertira en pointeur réel avant d'appeler la fonction de l'API C.
-
-Une chaîne vide ou "0x0" sont autorisées, cela signifie le pointeur NULL en C.
-Par exemple, pour afficher un message sur le tampon core (tampon principal
-WeeChat), vous pouvez faire :
-
-[source,python]
-----------------------------------------
-weechat.prnt("", "bonjour !")
-----------------------------------------
-
-[WARNING]
-Dans beaucoup de fonctions, pour des raisons de vitesse, WeeChat ne vérifie pas
-si votre pointeur est correct ou pas. Il est de votre responsabilité de
-vérifier que vous donnez un pointeur valide, sinon vous pourriez voir un joli
-rapport de crash ;)
-
-Callbacks
-^^^^^^^^^
-
-Tous les "callbacks" WeeChat doivent retourner WEECHAT_RC_OK ou
-WEECHAT_RC_ERROR (l'exception est le callback du "modifier", qui retourne une
-chaîne de caractères).
-
-Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
-l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
-valeur (ce n'est pas un pointeur).
-
-Par exemple :
-
-[source,python]
-----------------------------------------
-weechat.hook_timer(1000, 0, 1, "mon_timer_cb", "mes données")
-
-def mon_timer_cb(data, remaining_calls):
-    # cela affichera : "mes données"
-    weechat.prnt("", data)
-    return weechat.WEECHAT_RC_OK
-----------------------------------------
