@@ -1469,8 +1469,16 @@ gui_completion_build_list (struct t_gui_completion *completion)
     repeat_last = 0;
     
     ptr_hook = gui_completion_search_command (completion->base_command);
-    if (!ptr_hook || !HOOK_COMMAND(ptr_hook, completion)
-        || (strcmp (HOOK_COMMAND(ptr_hook, completion), "-") == 0))
+    if (!ptr_hook || !HOOK_COMMAND(ptr_hook, completion))
+    {
+        completion->context = GUI_COMPLETION_AUTO;
+        completion->base_command_arg_index = 0;
+        free (completion->base_command);
+        completion->base_command = NULL;
+        return;
+    }
+    
+    if (strcmp (HOOK_COMMAND(ptr_hook, completion), "-") == 0)
     {
         gui_completion_stop (completion, 1);
         return;
