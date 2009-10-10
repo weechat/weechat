@@ -2325,9 +2325,9 @@ msgstr "Alias \"%s\" => \"%s\" vytvořen"
 msgid "List of aliases:"
 msgstr "Seznam aliasů:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No alias found matching \"%s\""
-msgstr "Žádný server s \"%s\" nenalezen"
+msgstr "Žádný alias odpovídající \"%s\" nenalezen"
 
 msgid "No alias defined"
 msgstr "Žádné aliasy nejsou definovány"
@@ -2346,7 +2346,6 @@ msgstr "vytvoří alias pro příkaz"
 msgid "[alias_name [command [arguments]]]"
 msgstr "[jméno_aliasu [příkaz [argumenty]]]"
 
-#, fuzzy
 msgid ""
 "alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
@@ -2365,29 +2364,32 @@ msgid ""
 "  $channel: current channel\n"
 "   $server: current server"
 msgstr ""
-"jméno_aliasu: jméno aliasu\n"
+"jméno_aliasu: jméno aliasu (může začínat i končit \"*\" pro výpis aliasů)\n"
 "      příkaz: jméno příkazu (více příkazů se rozděluje středníky)\n"
 "   argumenty: argumenty příkazu\n"
 "\n"
 "Spuštění tohoto příkazu bez argumentů vypíše všechny definované aliasy.\n"
 "\n"
-"Poznámka: v příkazu, speciální proměnné $1, $2,...,$9 jsou nahrazeny "
-"argumenty, které zadá uživatel a $* je nahrazeno všemi argumenty.\n"
-"Proměnné $nick, $channel a $server jsou nahrazeny aktuální přezdívkou/"
-"kanálem/serverem."
+"Poznámka: v příkazech jsou nahrazovány speciální proměnné:\n"
+"        $n: argument 'n' (mezi 1 a 9)\n"
+"       $-m: argumenty od 1 do 'm'\n"
+"       $n-: argumenty od 'n' do posledního\n"
+"      $n-m: argumenty od 'n' do 'm'\n"
+"        $*: všechny argumenty\n"
+"        $~: poslední argument\n"
+"     $nick: aktuální přezdívka\n"
+"  $channel: aktuální kanál\n"
+"   $server: aktuální server"
 
-#, fuzzy
 msgid "remove aliases"
-msgstr "odebere alias"
+msgstr "odebere aliasy"
 
-#, fuzzy
 msgid "alias_name [alias_name...]"
-msgstr "přezdívka [přezdívka ...]"
+msgstr "jméno_aliasu [jméno_aliasu ...]"
 
 msgid "alias_name: name of alias to remove"
 msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
-#, fuzzy
 msgid "list of aliases"
 msgstr "seznam aliasů"
 
@@ -2743,9 +2745,9 @@ msgstr "%s: server %s%s%s vytvořen (dočasný server, NEUKLÁDA SE!)"
 msgid "%s%s: unable to create server \"%s\""
 msgstr "%s%s: nemohu vytvořit server \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
+msgstr "%sCTCP dotaz pro %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -2873,13 +2875,13 @@ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" nenalezen"
 msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server %s%s%s has been copied to %s%s%s"
-msgstr "%s: server %s%s%s byl zkopírován do %s%s"
+msgstr "%s: server %s%s%s byl zkopírován do %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server %s%s%s has been renamed to %s%s%s"
-msgstr "%s: server %s%s%s byl přejmenován na %s%s"
+msgstr "%s: server %s%s%s byl přejmenován na %s%s%s"
 
 #, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"
@@ -3446,74 +3448,62 @@ msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
 msgid "tell the server to restart itself"
 msgstr "říct serveru, aby se restartoval"
 
-#, fuzzy
 msgid "forces a user to join channel(s)"
-msgstr "násilně odebrat uživatele z kanálu"
+msgstr "násilně připojit uživatele ke kanálu/kanálům"
 
-#, fuzzy
 msgid "nickname channel[,channel]"
-msgstr "přezdívka kanál"
+msgstr "přezdívka kanál[,kanál]"
 
-#, fuzzy
 msgid ""
 "nickname: nickname\n"
 " channel: channel name"
 msgstr ""
-"přezdívka: přezdívka, kterou pozvat\n"
-"    kanál: kanál na kterou ji pozvat"
+"přezdívka: přezdívka\n"
+"    kanál: jméno kanálu"
 
 msgid "change mode on channel, without having operator status"
-msgstr ""
+msgstr "změnit mód kanálu, bez nutnosti mít operátorské oprávnění"
 
 #. TRANSLATORS: "channel" and "mode" are arguments
 #. for command, translate them separately
-#, fuzzy
 msgid "channel mode"
-msgstr "kanál"
+msgstr "kanál mód"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   mode: mode for channel"
 msgstr ""
-"kanál: jméno kanálu na který se připojit\n"
-" klíč: klíč pro připojení ke kanálu"
+"kanál: jméno kanálu\n"
+"  mód: mód pro kanál"
 
-#, fuzzy
 msgid "forces a user to use another nick"
-msgstr "násilně odebrat uživatele z kanálu"
+msgstr "násilně přinutit uživatele používat jinou přezdívku"
 
-#, fuzzy
 msgid "nickname new_nickname"
-msgstr "přezdívka: přezdívka"
+msgstr "přezdívka nová_přezdívka"
 
-#, fuzzy
 msgid ""
 "    nickname: nickname\n"
 "new_nickname: new nickname"
 msgstr ""
-"přezdívka: přezdívka, kterou pozvat\n"
-"    kanál: kanál na kterou ji pozvat"
+"     přezdívka: přezdívka\n"
+"nová_přezdívka: nová přezdívka"
 
-#, fuzzy
 msgid "forces a user to leave channel(s)"
-msgstr "násilně odebrat uživatele z kanálu"
+msgstr "násilně odebrat uživatele z kanálu/kanálů"
 
-#, fuzzy
 msgid "forces a user to quit server with a reason"
-msgstr "násilně odebrat uživatele z kanálu"
+msgstr "násilně přinutit uživatele opustit server s odůvodněním"
 
-#, fuzzy
 msgid "nickname reason"
-msgstr "přezdívka kanál"
+msgstr "přezdívka důvod"
 
-#, fuzzy
 msgid ""
 "nickname: nickname\n"
 "  reason: reason"
 msgstr ""
-"přezdívka: přezdívka, kterou pozvat\n"
-"    kanál: kanál na kterou ji pozvat"
+"přezdívka: přezdívka\n"
+"    důvod: důvod"
 
 msgid "register a new service"
 msgstr "zaregistrovat novou službu"
@@ -3854,10 +3844,16 @@ msgid ""
 "(WeeChat site, download page), $time (current date and time as text), "
 "$username (username on server), $realname (realname on server)"
 msgstr ""
+"formát CTCP odpovědi nebo prázdný řetězec pro blokování CTCP (žádná "
+"odpověď), následující přoměnné jsou nahrazovány: $version (verze WeeChat), "
+"$compilation (datum kompilace), $osinfo (informace o OS), $site (stránka "
+"WeeChat), $download (stránka WeeChat, stránka pro stažení), $time (aktuální "
+"datum a čas jako text), $username (uživatelské jméno na serveru), $realname "
+"(skutečné jméno na serveru)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
-msgstr "%s%s: chyba vytváření aliasu \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytváření CTCP \"%s\" => \"%s\""
 
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr ""
@@ -4083,21 +4079,21 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "posílat neznámé příkazy na server"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%s%sByl jste zabit uživatelem %s%s %s(%s%s%s)"
+msgstr "%sCTCP požadavek od %s%s%s: %s%s%s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+msgstr "%sCTCP odpověď od %s%s%s: %s%s%s %ld.%ld %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+msgstr "%sCTCP odpověď od %s%s%s: %s%s%s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP %sPING%s odpověď od %s%s%s: %ld.%ld %s"
+msgstr "%sCTCP odpověď od %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for \"%s\" command"
@@ -4111,9 +4107,9 @@ msgstr "%s%s: nemohu rozpársovat příkaz \"%s\""
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: neznámý DCC CHAT typ obdržen od %s%s%s: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
+msgstr "%sNeznámý CTCP požadavek od %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]%s%s"
@@ -4172,37 +4168,37 @@ msgstr "%s%s: nejste připojen k serveru"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
-msgstr "%sByl jsi pozván na %s%s%s od %s%s"
+msgstr "%sByl jsi pozván na %s%s%s od %s%s%s"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: nemohu vytvořit nový kanál \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s se připojil %s%s"
+msgstr "%s%s%s %s(%s%s%s)%s se připojil %s%s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s byl vykopnut %s%s %s(%s%s%s)"
+msgstr "%s%s%s%s byl vykopnut %s%s%s %s(%s%s%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has kicked %s%s%s"
-msgstr "%s%s%s%s byl vykopnut %s%s"
+msgstr "%s%s%s%s byl vykopnut %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
-msgstr "%s%sByl jste zabit uživatelem %s%s %s(%s%s%s)"
+msgstr "%s%sByl jste zabit uživatelem %s%s%s %s(%s%s%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%sYou were killed by %s%s%s"
-msgstr "%s%sByl jste zabit uživatelem %s%s"
+msgstr "%s%sByl jste zabit uživatelem %s%s%s"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
@@ -4212,29 +4208,29 @@ msgstr "%sMód %s%s %s[%s%s%s]%s od %s%s"
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr "%sUživatelský mód %s[%s%s%s]%s od %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sYou are now known as %s%s%s"
-msgstr "%sNyní známý jako %s%s"
+msgstr "%sJste nyní známý jako %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s is now known as %s%s%s"
-msgstr "%s%s%s%s je nyní známý jako %s%s"
+msgstr "%s%s%s%s je nyní známý jako %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s %s(%s%s%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s"
+msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s"
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s"
+msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4256,9 +4252,9 @@ msgstr "%s%s%s%s změnil téma pro %s%s%s z \"%s%s\" na \"%s%s\""
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s změnil téma pro %s%s%s na \"%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
-msgstr "%s%s%s%s zrušil téma pro %s%s"
+msgstr "%s%s%s%s zrušil téma pro %s%s%s"
 
 #, c-format
 msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
@@ -4276,9 +4272,9 @@ msgstr "%s%s[%s%s%s]%s je pryč: %s"
 msgid "%sUsers online: %s%s"
 msgstr "%sUživatelů online: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] (%s%s@%s%s)%s was %s"
-msgstr "%s%s%s %s(%s%s@%s%s)%s byl %s"
+msgstr "%s%s[%s%s%s] (%s%s@%s%s)%s byl %s"
 
 #, c-format
 msgid ""
@@ -4335,9 +4331,9 @@ msgstr "%sTéma nastevil %s%s%s v %s"
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
 msgstr "%sTéma pro %s%s%s nastevil %s%s%s v %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
-msgstr "%s%s%s%s pozval %s%s%s na %s%s"
+msgstr "%s%s%s%s pozval %s%s%s na %s%s%s"
 
 #, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
@@ -4369,40 +4365,35 @@ msgid ""
 msgstr ""
 "%sKanál %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
-#, fuzzy
 msgid "nick"
 msgid_plural "nicks"
-msgstr[0] "přezdívka"
+msgstr[0] "přezdívek"
 msgstr[1] "přezdívka"
-msgstr[2] "přezdívka"
+msgstr[2] "přezdívky"
 
-#, fuzzy
 msgid "op"
 msgid_plural "ops"
-msgstr[0] "op"
+msgstr[0] "opů"
 msgstr[1] "op"
-msgstr[2] "op"
+msgstr[2] "opů"
 
-#, fuzzy
 msgid "halfop"
 msgid_plural "halfops"
-msgstr[0] "částečný-op"
+msgstr[0] "částečných-opů"
 msgstr[1] "částečný-op"
-msgstr[2] "částečný-op"
+msgstr[2] "částečných-opů"
 
-#, fuzzy
 msgid "voice"
 msgid_plural "voices"
-msgstr[0] "voice"
+msgstr[0] "voiců"
 msgstr[1] "voice"
-msgstr[2] "voice"
+msgstr[2] "voiců"
 
-#, fuzzy
 msgid "normal"
 msgid_plural "normals"
-msgstr[0] "normální"
+msgstr[0] "normálních"
 msgstr[1] "normální"
-msgstr[2] "normální"
+msgstr[2] "normálních"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
@@ -4469,25 +4460,25 @@ msgstr "%s%s: chyba při alokování nového serveru"
 msgid "%s%s: error creating new server \"%s\""
 msgstr "%s%s: chyba při vytváření nového zprávu \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
 "developers)"
 msgstr ""
-"%s%s: chyba při posílání dat na IRC server: nulový ukazatel (prosím oznamte "
-"problém vývojářům)"
+"%s%s: posílám data na server: nulový ukazatel (prosím oznamte problém "
+"vývojářům)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: sending data to server: empty buffer (please report problem to "
 "developers)"
 msgstr ""
-"%s%s: chyba při posílání dat na IRC server: prázdný buffer (prosím oznamte "
-"problém vývojářům)"
+"%s%s: posílám data na server: prázdný buffer (prosím oznamte problém "
+"vývojářům)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: sending data to server: %d %s"
-msgstr "%s%s: chyba při zasílání dat na IRC server (%s)"
+msgstr "%s%s: posílám data na server: %d %s"
 
 msgid "(message dropped)"
 msgstr "(zpráva zahozena)"
@@ -4496,16 +4487,16 @@ msgstr "(zpráva zahozena)"
 msgid "%s%s: not enough memory for received message"
 msgstr "%s%s: nedostatek paměti pro získání zprávy"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reading data on socket: error %d %s"
-msgstr "%s%s: chyba při zasílání dat na klienta %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
 
 msgid "(connection closed by peer)"
-msgstr ""
+msgstr "(spojení uzavřeno druhou stranou)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnecting from server..."
-msgstr "%s: odpojen od serveru"
+msgstr "%s: odpojuji se od serveru..."
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -4844,13 +4835,11 @@ msgstr "\"share\" adresář WeeChat"
 msgid "WeeChat \"locale\" directory"
 msgstr "\"locale\" adresář WeeChat"
 
-#, fuzzy
 msgid "WeeChat site"
-msgstr "verze WeeChat"
+msgstr "stránka WeeChat"
 
-#, fuzzy
 msgid "WeeChat site, download page"
-msgstr "interní znaková sada WeeChat"
+msgstr "stránka WeeChat, stránka pro stažení"
 
 msgid "terminal charset"
 msgstr "znaková sada terminálu"
@@ -5712,45 +5701,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-#~ msgid "list of alias"
-#~ msgstr "seznam aliasů"
-
-#~ msgid "alias_name"
-#~ msgstr "jméno_aliasu"
-
-#~ msgid "Alias:"
-#~ msgstr "Alias:"
-
-#~ msgid "No alias found"
-#~ msgstr "Žádné aliasy nenalezeny"
-
-#~ msgid "%s%s: cannot read data from socket, disconnecting from server..."
-#~ msgstr "%s%s: nemůžu přečíst data ze soketu, odpojuji se od serveru..."
-
-#~ msgid "nicks"
-#~ msgstr "přezdívky"
-
-#~ msgid "ops"
-#~ msgstr "ops"
-
-#~ msgid "halfops"
-#~ msgstr "částeční-ops"
-
-#~ msgid "voices"
-#~ msgstr "voices"
-
-#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-#~ msgstr "%sCTCP %sVERSION%s odpověď od %s%s%s: %s"
-
-#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-#~ msgstr "%sCTCP %sVERSION%s obdržen od %s%s%s: %s"
-
-#~ msgid "%sCTCP %sVERSION%s received from %s%s"
-#~ msgstr "%sCTCP %sVERSION%s obdržen od %s%s"
-
-#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-#~ msgstr "%sObdržen CTCP %sZVUK%s \"%s\" od %s%s"
-
-#~ msgid "%sCTCP %sPING%s received from %s%s"
-#~ msgstr "%sCTCP %sPING%s obdržen od %s%s"
