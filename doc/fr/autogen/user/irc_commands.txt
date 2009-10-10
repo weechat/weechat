@@ -406,6 +406,42 @@
    canal: canal
 ........................................
 
+&bull; *`/samode`* `mode canal`::
+
+........................................
+  changer le mode du canal, sans avoir le statut opérateur
+
+  canal: nom du canal
+   mode: mode pour le canal
+........................................
+
+&bull; *`/sanick`* `pseudo nouveau_pseudo`::
+
+........................................
+  force un utilisateur à utiliser un autre pseudo
+
+          pseudo: pseudo
+  nouveau_pseudo: nouveau pseudo
+........................................
+
+&bull; *`/sapart`* `pseudo canal[,canal]`::
+
+........................................
+  force un utilisateur à quitter un ou plusieurs canaux
+
+  pseudo: pseudo
+   canal: canal
+........................................
+
+&bull; *`/saquit`* `pseudo raison`::
+
+........................................
+  force un utilisateur à quitter le serveur avec une raison
+
+  pseudo: pseudo
+  raison: raison
+........................................
+
 &bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [jump] | [raw]`::
 
 ........................................

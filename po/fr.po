@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
-"PO-Revision-Date: 2009-10-10 12:00+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
+"PO-Revision-Date: 2009-10-10 12:40+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3534,6 +3534,50 @@ msgid ""
 msgstr ""
 "pseudo: pseudo\n"
 " canal: canal"
+
+msgid "change mode on channel, without having operator status"
+msgstr "changer le mode du canal, sans avoir le statut opérateur"
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr "mode canal"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"canal: nom du canal\n"
+" mode: mode pour le canal"
+
+msgid "forces a user to use another nick"
+msgstr "force un utilisateur à utiliser un autre pseudo"
+
+msgid "nickname new_nickname"
+msgstr "pseudo nouveau_pseudo"
+
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"        pseudo: pseudo\n"
+"nouveau_pseudo: nouveau pseudo"
+
+msgid "forces a user to leave channel(s)"
+msgstr "force un utilisateur à quitter un ou plusieurs canaux"
+
+msgid "forces a user to quit server with a reason"
+msgstr "force un utilisateur à quitter le serveur avec une raison"
+
+msgid "nickname reason"
+msgstr "pseudo raison"
+
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
+msgstr ""
+"pseudo: pseudo\n"
+"raison: raison"
 
 msgid "register a new service"
 msgstr "enregister un nouveau service"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2908,6 +2908,44 @@ msgstr ""
 msgid ""
 "nickname: nickname\n"
 " channel: channel name"
+msgstr ""
+
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+
+msgid "forces a user to use another nick"
+msgstr ""
+
+msgid "nickname new_nickname"
+msgstr ""
+
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+
+msgid "forces a user to leave channel(s)"
+msgstr ""
+
+msgid "forces a user to quit server with a reason"
+msgstr ""
+
+msgid "nickname reason"
+msgstr ""
+
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
 msgstr ""
 
 msgid "register a new service"

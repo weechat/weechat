@@ -406,6 +406,42 @@
    channel: channel name
 ........................................
 
+&bull; *`/samode`* `channel mode`::
+
+........................................
+  change mode on channel, without having operator status
+
+  channel: channel name
+     mode: mode for channel
+........................................
+
+&bull; *`/sanick`* `nickname new_nickname`::
+
+........................................
+  forces a user to use another nick
+
+      nickname: nickname
+  new_nickname: new nickname
+........................................
+
+&bull; *`/sapart`* `nickname channel[,channel]`::
+
+........................................
+  forces a user to leave channel(s)
+
+  nickname: nickname
+   channel: channel name
+........................................
+
+&bull; *`/saquit`* `nickname reason`::
+
+........................................
+  forces a user to quit server with a reason
+
+  nickname: nickname
+    reason: reason
+........................................
+
 &bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [jump] | [raw]`::
 
 ........................................

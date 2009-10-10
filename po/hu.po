@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3385,6 +3385,59 @@ msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
 
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "%d szoba"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"szoba: a szoba neve, ahová csatlakozni szeretnénk\n"
+"kulcs: a csatlakozáshoz szükséges kulcs"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "felhasználó erőszakos eltávolítása a szobából"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "név: név"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"  név: meghívandó név\n"
+"szoba: meghívandó szoba"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "felhasználó erőszakos eltávolítása a szobából"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "felhasználó erőszakos eltávolítása a szobából"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "név szöveg"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
+msgstr ""
+"  név: meghívandó név\n"
+"szoba: meghívandó szoba"
+
 msgid "register a new service"
 msgstr "új szolgáltatás regisztrálása"
 
@@ -6047,9 +6100,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
-
-#~ msgid "nickname text"
-#~ msgstr "név szöveg"
 
 #~ msgid "nickname [text]"
 #~ msgstr "becenév [szöveg]"

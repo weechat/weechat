@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3393,6 +3393,59 @@ msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
 
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "%d канал"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"канал: название канала\n"
+" ключ: ключ для входа на канал"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "принудительно удалить пользователя с канала"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "ник: ник"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"  ник: приглашаемый ник\n"
+"канал: целевой канал"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "принудительно удалить пользователя с канала"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "принудительно удалить пользователя с канала"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "ник текст"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
+msgstr ""
+"  ник: приглашаемый ник\n"
+"канал: целевой канал"
+
 msgid "register a new service"
 msgstr "зарегистрировать новый сервис"
 
@@ -6034,9 +6087,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s нет аргументов для \"%s\" команды\n"
-
-#~ msgid "nickname text"
-#~ msgstr "ник текст"
 
 #~ msgid "nickname [text]"
 #~ msgstr "ник [текст]"

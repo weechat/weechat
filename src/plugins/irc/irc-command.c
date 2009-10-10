@@ -2762,6 +2762,110 @@ irc_command_sajoin (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_samode: change mode on channel, without having operator status
+ */
+
+int
+irc_command_samode (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("samode", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, 0, "SAMODE %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "samode");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_sanick: forces a user to use another nick
+ */
+
+int
+irc_command_sanick (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("sanick", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, 0, "SANICK %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "sanick");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_sapart: forces a user to leave channel(s)
+ */
+
+int
+irc_command_sapart (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("sapart", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, 0, "SAPART %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "sapart");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_saquit: forces a user to quit server with a reason
+ */
+
+int
+irc_command_saquit (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("saquit", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, 0, "SAQUIT %s :%s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "saquit");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_server: manage IRC servers
  */
 
@@ -4038,7 +4142,34 @@ irc_command_init ()
                           N_("nickname channel[,channel]"),
                           N_("nickname: nickname\n"
                              " channel: channel name"),
-                          "%(nicks) %(irc_channels)", &irc_command_sajoin, NULL);
+                          "%(nicks) %(irc_server_channels)", &irc_command_sajoin, NULL);
+    weechat_hook_command ("samode",
+                          N_("change mode on channel, without having operator "
+                             "status"),
+                          /* TRANSLATORS: "channel" and "mode" are arguments
+                             for command, translate them separately */
+                          N_("channel mode"),
+                          N_("channel: channel name\n"
+                             "   mode: mode for channel"),
+                          "%(irc_server_channels)", &irc_command_samode, NULL);
+    weechat_hook_command ("sanick",
+                          N_("forces a user to use another nick"),
+                          N_("nickname new_nickname"),
+                          N_("    nickname: nickname\n"
+                             "new_nickname: new nickname"),
+                          "%(nicks) %(nicks)", &irc_command_sanick, NULL);
+    weechat_hook_command ("sapart",
+                          N_("forces a user to leave channel(s)"),
+                          N_("nickname channel[,channel]"),
+                          N_("nickname: nickname\n"
+                             " channel: channel name"),
+                          "%(nicks) %(irc_server_channels)", &irc_command_sapart, NULL);
+    weechat_hook_command ("saquit",
+                          N_("forces a user to quit server with a reason"),
+                          N_("nickname reason"),
+                          N_("nickname: nickname\n"
+                             "  reason: reason"),
+                          "%(nicks)", &irc_command_saquit, NULL);
     weechat_hook_command ("service",
                           N_("register a new service"),
                           N_("nickname reserved distribution type reserved "

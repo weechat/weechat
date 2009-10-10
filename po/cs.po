@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3458,6 +3458,59 @@ msgstr "přezdívka kanál"
 msgid ""
 "nickname: nickname\n"
 " channel: channel name"
+msgstr ""
+"přezdívka: přezdívka, kterou pozvat\n"
+"    kanál: kanál na kterou ji pozvat"
+
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "kanál"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"kanál: jméno kanálu na který se připojit\n"
+" klíč: klíč pro připojení ke kanálu"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "násilně odebrat uživatele z kanálu"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "přezdívka: přezdívka"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"přezdívka: přezdívka, kterou pozvat\n"
+"    kanál: kanál na kterou ji pozvat"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "násilně odebrat uživatele z kanálu"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "násilně odebrat uživatele z kanálu"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "přezdívka kanál"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
 msgstr ""
 "přezdívka: přezdívka, kterou pozvat\n"
 "    kanál: kanál na kterou ji pozvat"

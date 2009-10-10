@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-10-03 12:07+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3302,6 +3302,59 @@ msgstr ""
 "Nickname: Chatname des Einzuladenden\n"
 "Channel: Channel, in den er eingeladen werden soll"
 
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "ungültige Channelmaske"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"Channel: zu betretender Channel\n"
+"    Passwort: Channelpasswort (+k-Mode)"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "einen User aus einem Channel herauskicken"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "Nickname: Nickname"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"Nickname: Chatname des Einzuladenden\n"
+"Channel: Channel, in den er eingeladen werden soll"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "einen User aus einem Channel herauskicken"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "einen User aus einem Channel herauskicken"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "Nickname Text"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
+msgstr ""
+"Nickname: Chatname des Einzuladenden\n"
+"Channel: Channel, in den er eingeladen werden soll"
+
 msgid "register a new service"
 msgstr "einen neuen Service eintragen"
 
@@ -5901,9 +5954,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
-
-#~ msgid "nickname text"
-#~ msgstr "Nickname Text"
 
 #~ msgid "nickname [text]"
 #~ msgstr "Nickname [Text]"

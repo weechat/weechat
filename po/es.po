@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3271,6 +3271,59 @@ msgstr ""
 "apodo: apodo a invitar\n"
 "canal: canal para la invitación"
 
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "canal"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"canal: canal a unirse\n"
+"clave: clave para unirse al canal"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "expulsar forzosamente a un usuario de un canal"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "apodo: apodo"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"apodo: apodo a invitar\n"
+"canal: canal para la invitación"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "expulsar forzosamente a un usuario de un canal"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "expulsar forzosamente a un usuario de un canal"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "usuario texto"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
+msgstr ""
+"apodo: apodo a invitar\n"
+"canal: canal para la invitación"
+
 msgid "register a new service"
 msgstr "registrar un nuevo servicio"
 
@@ -5913,9 +5966,6 @@ msgstr "%s falta un argumento para la opción --dir\n"
 #, fuzzy
 #~ msgid "%s%s: unknown/missing channel name for \"%s\" command"
 #~ msgstr "%s faltan argumentos para el comando \"%s\"\n"
-
-#~ msgid "nickname text"
-#~ msgstr "usuario texto"
 
 #~ msgid "nickname [text]"
 #~ msgstr "usuario [texto]"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-10 11:59+0200\n"
+"POT-Creation-Date: 2009-10-10 12:39+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -3496,6 +3496,59 @@ msgstr "nick kanał"
 msgid ""
 "nickname: nickname\n"
 " channel: channel name"
+msgstr ""
+"nick: nick do zaproszenia\n"
+" kanał: kanał na który zapraszamy"
+
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+#, fuzzy
+msgid "channel mode"
+msgstr "kanał"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"kanał: nazwa kanału, na który chcemy wejść\n"
+"    klucz: hasło wymagane do wejścia na kanał"
+
+#, fuzzy
+msgid "forces a user to use another nick"
+msgstr "sułowo usuwa użytkownika z kanału"
+
+#, fuzzy
+msgid "nickname new_nickname"
+msgstr "nick: nazwa użytkownika"
+
+#, fuzzy
+msgid ""
+"    nickname: nickname\n"
+"new_nickname: new nickname"
+msgstr ""
+"nick: nick do zaproszenia\n"
+" kanał: kanał na który zapraszamy"
+
+#, fuzzy
+msgid "forces a user to leave channel(s)"
+msgstr "sułowo usuwa użytkownika z kanału"
+
+#, fuzzy
+msgid "forces a user to quit server with a reason"
+msgstr "sułowo usuwa użytkownika z kanału"
+
+#, fuzzy
+msgid "nickname reason"
+msgstr "nick kanał"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+"  reason: reason"
 msgstr ""
 "nick: nick do zaproszenia\n"
 " kanał: kanał na który zapraszamy"
