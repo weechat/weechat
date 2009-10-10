@@ -24,6 +24,7 @@ Version 0.3.1 (under dev!)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
 * irc: improve error management on socket error (recv/send)
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
+* gui: use default auto completion for arguments of unknown commands
 * gui: fix alignment problem for buffer name when a merged buffer is closed
   (bug #27617)
 * gui: update hotlist when a buffer is closed (bug #27470), remove buffer from
