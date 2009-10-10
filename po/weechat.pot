@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"POT-Creation-Date: 2009-10-10 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2897,6 +2897,17 @@ msgid "tell the server to reload its config file"
 msgstr ""
 
 msgid "tell the server to restart itself"
+msgstr ""
+
+msgid "forces a user to join channel(s)"
+msgstr ""
+
+msgid "nickname channel[,channel]"
+msgstr ""
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
 msgstr ""
 
 msgid "register a new service"

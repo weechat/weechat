@@ -397,6 +397,15 @@
   tell the server to restart itself
 ........................................
 
+&bull; *`/sajoin`* `nickname channel[,channel]`::
+
+........................................
+  forces a user to join channel(s)
+
+  nickname: nickname
+   channel: channel name
+........................................
+
 &bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [jump] | [raw]`::
 
 ........................................

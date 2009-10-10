@@ -397,6 +397,15 @@
   demander au serveur de redémarrer
 ........................................
 
+&bull; *`/sajoin`* `pseudo canal[,canal]`::
+
+........................................
+  force un utilisateur à rejoindre un ou plusieurs canaux
+
+  pseudo: pseudo
+   canal: canal
+........................................
+
 &bull; *`/server`* `[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur] | [deloutq] | [jump] | [raw]`::
 
 ........................................

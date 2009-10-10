@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"POT-Creation-Date: 2009-10-10 11:59+0200\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3445,6 +3445,22 @@ msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
 
 msgid "tell the server to restart itself"
 msgstr "říct serveru, aby se restartoval"
+
+#, fuzzy
+msgid "forces a user to join channel(s)"
+msgstr "násilně odebrat uživatele z kanálu"
+
+#, fuzzy
+msgid "nickname channel[,channel]"
+msgstr "přezdívka kanál"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"přezdívka: přezdívka, kterou pozvat\n"
+"    kanál: kanál na kterou ji pozvat"
 
 msgid "register a new service"
 msgstr "zaregistrovat novou službu"

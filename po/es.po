@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"POT-Creation-Date: 2009-10-10 11:59+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3254,6 +3254,22 @@ msgstr "pedir al servidor que recargue su archivo de configuración"
 
 msgid "tell the server to restart itself"
 msgstr "pedir al servidor que se reinicie"
+
+#, fuzzy
+msgid "forces a user to join channel(s)"
+msgstr "expulsar forzosamente a un usuario de un canal"
+
+#, fuzzy
+msgid "nickname channel[,channel]"
+msgstr "apodo canal"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"apodo: apodo a invitar\n"
+"canal: canal para la invitación"
 
 msgid "register a new service"
 msgstr "registrar un nuevo servicio"

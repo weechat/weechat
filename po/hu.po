@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"POT-Creation-Date: 2009-10-10 11:59+0200\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3368,6 +3368,22 @@ msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 msgid "tell the server to restart itself"
 msgstr "szerver újraindítása"
+
+#, fuzzy
+msgid "forces a user to join channel(s)"
+msgstr "felhasználó erőszakos eltávolítása a szobából"
+
+#, fuzzy
+msgid "nickname channel[,channel]"
+msgstr "név szoba"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"  név: meghívandó név\n"
+"szoba: meghívandó szoba"
 
 msgid "register a new service"
 msgstr "új szolgáltatás regisztrálása"

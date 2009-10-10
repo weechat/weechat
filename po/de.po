@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-03 12:06+0200\n"
+"POT-Creation-Date: 2009-10-10 11:59+0200\n"
 "PO-Revision-Date: 2009-10-03 12:07+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3285,6 +3285,22 @@ msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
 msgid "tell the server to restart itself"
 msgstr "den Server dazu bringen, sich selbst neu zu starten"
+
+#, fuzzy
+msgid "forces a user to join channel(s)"
+msgstr "einen User aus einem Channel herauskicken"
+
+#, fuzzy
+msgid "nickname channel[,channel]"
+msgstr "Nickname Channel"
+
+#, fuzzy
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"Nickname: Chatname des Einzuladenden\n"
+"Channel: Channel, in den er eingeladen werden soll"
 
 msgid "register a new service"
 msgstr "einen neuen Service eintragen"

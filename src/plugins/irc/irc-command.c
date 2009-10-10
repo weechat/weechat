@@ -2736,6 +2736,32 @@ irc_command_restart (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_sajoin: forces a user to join channel(s)
+ */
+
+int
+irc_command_sajoin (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("sajoin", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, 0, "SAJOIN %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "sajoin");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_server: manage IRC servers
  */
 
@@ -4007,6 +4033,12 @@ irc_command_init ()
                           "",
                           "",
                           NULL, &irc_command_restart, NULL);
+    weechat_hook_command ("sajoin",
+                          N_("forces a user to join channel(s)"),
+                          N_("nickname channel[,channel]"),
+                          N_("nickname: nickname\n"
+                             " channel: channel name"),
+                          "%(nicks) %(irc_channels)", &irc_command_sajoin, NULL);
     weechat_hook_command ("service",
                           N_("register a new service"),
                           N_("nickname reserved distribution type reserved "
