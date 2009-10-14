@@ -128,7 +128,9 @@ gui_chat_display_new_line (struct t_gui_window *window, int num_lines, int count
 void
 gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
 {
-    int i, n;
+    int i, n, hline_char;
+    
+    hline_char = gui_window_get_hline_char ();
     
     if (!simulate)
     {
@@ -139,8 +141,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
             case CONFIG_LOOK_READ_MARKER_LINE:
                 mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
                           window->win_chat_cursor_y, window->win_chat_cursor_x,
-                          ACS_HLINE,
-                          window->win_chat_width - 1);
+                          hline_char, window->win_chat_width - 1);
                 break;
             case CONFIG_LOOK_READ_MARKER_DOTTED_LINE:
                 wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
@@ -152,7 +153,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
                     if (i % 2 == n)
                         mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
                                   window->win_chat_cursor_y, i,
-                                  ACS_HLINE, 1);
+                                  hline_char, 1);
                 }
                 break;
             default:

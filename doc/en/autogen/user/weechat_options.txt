@@ -388,6 +388,11 @@
 ** type: string
 ** values: any string (default value: "")
 
+* *weechat.look.hline_char*
+** description: char used to draw horizontal lines, note that empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals
+** type: string
+** values: any string (default value: "-")
+
 * *weechat.look.hotlist_names_count*
 ** description: max number of names in hotlist (0 = no name displayed, only buffer numbers)
 ** type: integer

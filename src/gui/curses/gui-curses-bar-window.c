@@ -405,7 +405,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int length_on_screen, chars_available;
     int length_screen_before_cursor, length_screen_after_cursor;
     int total_length_screen, diff, max_length, optimal_number_of_lines;
-    int some_data_not_displayed;
+    int some_data_not_displayed, hline_char;
     
     if (!gui_init_ok)
         return;
@@ -615,6 +615,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     
     wnoutrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
     
+    hline_char = gui_window_get_hline_char ();
+    
     if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
     {
         switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
@@ -622,14 +624,16 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             case GUI_BAR_POSITION_BOTTOM:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                               GUI_COLOR_SEPARATOR);
-                mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator, 0, 0, ACS_HLINE,
-                          bar_window->width);
+                mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator, 0, 0,
+                          hline_char, bar_window->width);
                 break;
             case GUI_BAR_POSITION_TOP:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                               GUI_COLOR_SEPARATOR);
                 mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                          0, 0, ACS_HLINE, bar_window->width);
+                          0, 0,
+                          hline_char,
+                          bar_window->width);
                 break;
             case GUI_BAR_POSITION_LEFT:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,

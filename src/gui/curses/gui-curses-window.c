@@ -34,6 +34,7 @@
 #include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
+#include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
@@ -157,6 +158,26 @@ gui_window_utf_char_valid (const char *utf_char)
     
     /* any other char is valid */
     return 1;
+}
+
+/*
+ * gui_window_get_hline_char: get char used to draw horizontal lines
+ *                            Note: ACS_HLINE from ncurses is better for
+ *                                  render, but it introduces bug with URLs
+ *                                  selected by terminal: below this line,
+ *                                  some URLs are not visible or shifted
+ */
+
+int
+gui_window_get_hline_char ()
+{
+    const char *hline_char;
+
+    hline_char = CONFIG_STRING(config_look_hline_char);
+    if (!hline_char || !hline_char[0])
+        return ACS_HLINE;
+    
+    return utf8_char_int (hline_char);
 }
 
 /*

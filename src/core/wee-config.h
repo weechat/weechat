@@ -92,6 +92,7 @@ extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_day_change;
 extern struct t_config_option *config_look_day_change_time_format;
 extern struct t_config_option *config_look_highlight;
+extern struct t_config_option *config_look_hline_char;
 extern struct t_config_option *config_look_hotlist_names_count;
 extern struct t_config_option *config_look_hotlist_names_length;
 extern struct t_config_option *config_look_hotlist_names_level;

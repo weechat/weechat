@@ -388,6 +388,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
 
+* *weechat.look.hline_char*
+** description: caractère utilisé pour tracer les lignes horizontales, notez qu'une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "-")
+
 * *weechat.look.hotlist_names_count*
 ** description: nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)
 ** type: entier

@@ -77,6 +77,7 @@ struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_highlight;
+struct t_config_option *config_look_hline_char;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
@@ -1264,6 +1265,13 @@ config_weechat_init_options ()
         N_("comma separated list of words to highlight (case insensitive "
            "comparison, words may begin or end with \"*\" for partial match)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_hline_char = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hline_char", "string",
+        N_("char used to draw horizontal lines, note that empty value will "
+           "draw a real line with ncurses, but may cause bugs with URL "
+           "selection under some terminals"),
+        NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_hotlist_names_count = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_names_count", "integer",
