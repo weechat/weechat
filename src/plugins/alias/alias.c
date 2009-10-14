@@ -291,15 +291,28 @@ alias_replace_args (const char *alias_args, const char *user_args)
  */
 
 void
-alias_run_command (struct t_gui_buffer *buffer, const char *command)
+alias_run_command (struct t_gui_buffer **buffer, const char *command)
 {
     char *string;
+    struct t_gui_buffer *old_current_buffer, *new_current_buffer;
     
-    string = weechat_buffer_string_replace_local_var (buffer, command);
-    weechat_command (buffer,
+    /* save current buffer pointer */
+    old_current_buffer = weechat_current_buffer();
+    
+    /* execute command */
+    string = weechat_buffer_string_replace_local_var (*buffer, command);
+    weechat_command (*buffer,
                      (string) ? string : command);
     if (string)
         free (string);
+    
+    /* get new current buffer */
+    new_current_buffer = weechat_current_buffer();
+    
+    /* if current buffer was changed by command, then we'll use this one for
+       next commands in alias */
+    if (old_current_buffer != new_current_buffer)
+        *buffer = new_current_buffer;
 }
 
 /*
@@ -316,7 +329,6 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     int some_args_replaced, length1, length2;
     
     /* make C compiler happy */
-    (void) buffer;
     (void) argc;
     (void) argv;
     
@@ -368,7 +380,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         strcat (alias_command, " ");
                         strcat (alias_command, argv_eol[1]);
                         
-                        alias_run_command (weechat_current_buffer (),
+                        alias_run_command (&buffer,
                                            alias_command);
                         free (alias_command);
                     }
@@ -377,7 +389,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 {
                     if (*ptr_cmd[0] == '/')
                     {
-                        alias_run_command (weechat_current_buffer (),
+                        alias_run_command (&buffer,
                                            (args_replaced) ? args_replaced : *ptr_cmd);
                     }
                     else
@@ -387,7 +399,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         {
                             strcpy (alias_command, "/");
                             strcat (alias_command, (args_replaced) ? args_replaced : *ptr_cmd);
-                            alias_run_command (weechat_current_buffer (),
+                            alias_run_command (&buffer,
                                                alias_command);
                             free (alias_command);
                         }

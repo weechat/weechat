@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-10-10
+v0.3.1-dev, 2009-10-14
 
 
 Version 0.3.1 (under dev!)
@@ -18,6 +18,8 @@ Version 0.3.1 (under dev!)
   (patch #6917)
 * alias: allow use of wildcards for /alias list (patch #6925)
 * alias: allow /unalias to remove multiple aliases (patch #6926)
+* alias: fix bug with buffer for execution of alias, when called from plugin API
+  with function "command" (bug #27697)
 * alias: fix bug with arguments (bug #27440)
 * irc: add commands /sajoin, /samode, /sanick, /sapart, /saquit (task #9770)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
