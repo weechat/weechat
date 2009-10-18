@@ -14,19 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_DOC)
-
-  FIND_PACKAGE(Sourcehighlight)
-  FIND_PACKAGE(Asciidoc)
-  IF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-    ADD_SUBDIRECTORY( en )
-    ADD_SUBDIRECTORY( fr )
-    ADD_SUBDIRECTORY( pl )
-    ADD_SUBDIRECTORY( de )
-    ADD_SUBDIRECTORY( ru )
-    ADD_SUBDIRECTORY( ja )
-  ENDIF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
-
-ENDIF(NOT DISABLE_DOC)
-
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1 DESTINATION ${SHAREDIR}/man/man1)
+# quickstart
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ja.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ja.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ja.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ja.txt
+  COMMENT "Building weechat_quickstart.ja.html"
+)
+ADD_CUSTOM_TARGET(doc-quickstart-ja ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ja.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ja.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
