@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-10-14 17:29+0200\n"
-"PO-Revision-Date: 2009-10-03 12:07+0200\n"
-"Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
+"PO-Revision-Date: 2009-10-18 21:19+0200\n"
+"Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,15 +54,17 @@ msgstr ""
 "  -h, --help              zeigt diese Hilfe an\n"
 "  -k, --keys              zeigt die Standard-Tastaturbelegung an\n"
 "  -l, --license           zeigt die Lizenz von WeeChat an\n"
-"  -p, --no-plugin         verhindert das Laden der Plugins beim Starten\n"
+"  -p, --no-plugin         verhindert das Laden der Erweiterungen, beim "
+"Programmstart\n"
 "  -v, --version           zeigt die WeeChat-Version an\n"
-"  plugin:option           Option für Plugin\n"
-"                          Beispiel: IRC-Plugin kann ѕich mit einem Server\n"
-"                          folgender url verbinden:\n"
+"  plugin:option           Option für Erweiterung\n"
+"                          Beispiel: IRC-Erweiterung kann ѕich mit einem "
+"Server\n"
+"                          folgender URL verbinden:\n"
 "                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
 "[//#channel1][,#channel2[...]]\n"
-"                          (siehe Dokumentation zu den Pluins für "
-"mögliche                          Optionen)\n"
+"                          (siehe Dokumentation zu den Erweiterungen für "
+"mögliche Optionen)\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -132,7 +134,7 @@ msgstr "Liste der Aliases:\n"
 
 #, c-format
 msgid "  %s (plugin: %s)"
-msgstr "  %s (Plugin: %s)"
+msgstr "  %s (Erweiterung: %s)"
 
 #, fuzzy
 msgid "No bar item defined"
@@ -219,7 +221,7 @@ msgstr "Keine lokale Variable definiert für Puffer \"%s\""
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
-msgstr "%sPlugin \"%s\" nicht gefunden"
+msgstr "%sErweiterung \"%s\" nicht gefunden"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -227,7 +229,7 @@ msgstr "Debug deaktiviert für \"%s\""
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s%s%s / tags: %s / regex: %s %s"
-msgstr "  %s[%s%s%s]%s Puffer: %s%s%s%s%s / tags: %s / regex: %s %s"
+msgstr "  %s[%s%s%s]%s Puffer: %s%s%s%s%s / Tags: %s / Regex: %s %s"
 
 msgid "(disabled)"
 msgstr "(deaktiviert)"
@@ -263,7 +265,8 @@ msgstr "%sFehler: Filter \"%s\" existiert bereits"
 #, c-format
 msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
-"%sFehler: mindestens tag(s) oder regex müѕsen für Filter spezifiziert sein"
+"%sFehler: es muss ein Tag(s) oder ein regulärer Ausdruck für Filter "
+"spezifiziert sein"
 
 #, c-format
 msgid "Filter \"%s\" added:"
@@ -427,7 +430,7 @@ msgid "Layout reset for windows"
 msgstr "Zurücksetzen des Fensterlayouts"
 
 msgid "Plugins loaded:"
-msgstr "Plugins geladen"
+msgstr "installierte Erweiterungen:"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
@@ -472,10 +475,10 @@ msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr "       %d Sekunden\n"
 
 msgid " read"
-msgstr ""
+msgstr "lese"
 
 msgid " write"
-msgstr ""
+msgstr "schreibe"
 
 #, fuzzy
 msgid " exception"
@@ -495,7 +498,7 @@ msgstr "     Befehls-Handler:\n"
 
 #, c-format
 msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      socket: %d, Adresse: %s, port: %d, Kind pid: %d"
+msgstr "      Socket: %d, Adresse: %s, Port: %d, Kind pid: %d"
 
 #, fuzzy
 msgid "    prints hooked:"
@@ -537,28 +540,28 @@ msgid "    modifiers hooked:"
 msgstr "     Timer-Handler:\n"
 
 msgid "No plugin found"
-msgstr "Kein Plugin gefunden"
+msgstr "Keine Erweiterung gefunden"
 
 msgid "  (no plugin)"
-msgstr "  (kein Plugin)"
+msgstr "  (keine Erweiterung)"
 
 #, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%sFehler: fehlerhafte Anzahl von Argumenten für den Befehl \"%s\""
 
 msgid "List of proxies:"
-msgstr "Liste der proxies"
+msgstr "Liste der Proxys"
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), Username: %s, Passwort: %s"
 
 msgid "No proxy defined"
-msgstr "Kein proxy definiert"
+msgstr "Kein Proxy definiert"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
-msgstr "%sError: falscher Typ \"%s\" für proxy \"%s\""
+msgstr "%sError: falscher Typ \"%s\" für Proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" created"
@@ -566,14 +569,14 @@ msgstr "Proxy \"%s\" erstellt"
 
 #, c-format
 msgid "%sError: failed to create proxy \"%s\""
-msgstr "%sFehler: konnte den proxy \"%s\" nicht erstellen"
+msgstr "%sFehler: konnte den Proxy \"%s\" nicht erstellen"
 
 #, c-format
 msgid "%sError: wrong port \"%s\" for proxy \"%s\""
-msgstr "%sFehler: falscher port \"%s\" für den proxy \"%s\""
+msgstr "%sFehler: falscher Port \"%s\" für den Proxy \"%s\""
 
 msgid "All proxies have been deleted"
-msgstr "Alle proxies wurden gelöscht"
+msgstr "Alle Proxys wurden gelöscht"
 
 #, c-format
 msgid "%sError: unknown proxy \"%s\""
@@ -849,7 +852,7 @@ msgid "launch explicit WeeChat or plugin command"
 msgstr ""
 
 msgid "plugin command"
-msgstr "Plugin-Befehl"
+msgstr "Erweiterung-Befehl"
 
 #, fuzzy
 msgid ""
@@ -951,7 +954,7 @@ msgid "functions for command line"
 msgstr "Funktionen für die Befehlszeile"
 
 msgid "This command is used by key bindings or plugins."
-msgstr "Dieser Befehl wird von Tastenbelegungen oder Plugins verwendet"
+msgstr "Dieser Befehl wird von Tastenbelegungen oder Erweiterungen verwendet"
 
 msgid "bind/unbind keys"
 msgstr "belegen/freigeben von Tasten"
@@ -1002,12 +1005,12 @@ msgstr ""
 "  apply: anwenden des gespeicherten Layouts\n"
 "  reset: entferne das gespeicherte Layout\n"
 "buffers: speichere/verwende nur Puffer (Reihenfolge der Puffer)\n"
-"windows: speichere/verwende nur fenster (dargestellte Puffer je Fenster)\n"
+"windows: speichere/verwende nur Fenster (dargestellte Puffer je Fenster)\n"
 "\n"
 "Ohne Argumente zeigt dieser Befehl das gespeicherte Layout."
 
 msgid "list/load/unload plugins"
-msgstr "auflisten/laden/entladen von Plugins"
+msgstr "auflisten/installieren/deinstallieren von Erweiterungen"
 
 msgid ""
 "[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
@@ -1016,7 +1019,6 @@ msgstr ""
 "[list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload "
 "[Name]] | [unload [Name]]"
 
-#, fuzzy
 msgid ""
 "    list: list loaded plugins\n"
 "listfull: list loaded plugins (verbose)\n"
@@ -1028,18 +1030,20 @@ msgid ""
 "\n"
 "Without argument, this command lists loaded plugins."
 msgstr ""
-"    list: geladene Plugins auflisten\n"
-"listfull: geladene Plugins mit Details für jedes Plugin auflisten\n"
-"    load: lade ein Plugin\n"
-"autoload: lade automatisch alle Plugins im System- oder Benutzerverzeichnis\n"
-"  reload: lade ein Plugin erneut (wenn kein Name vorgegeben ist, werden alle "
-"Plugins entladen und autolade die Plugins)\n"
-"  unload: entlade eines oder alle Plugins\n"
+"    list: installierte Erweiterungen auflisten\n"
+"listfull: installierte Erweiterungen mit Details für jede Erweiterung "
+"auflisten\n"
+"    load: installiere eine Erweiterung\n"
+"autoload: installiere automatisch alle Erweiterungen aus System- oder "
+"Benutzerverzeichnis\n"
+"  reload: installiere eine Erweiterung erneut (wenn kein Name vorgegeben "
+"ist, werden alle Erweiterungen de- und dann neu installiert)\n"
+"  unload: deinstalliere eines oder alle Erweiterungen\n"
 "\n"
-"Ohne Argument, listet /plugin alle geladenen Plugins auf."
+"Ohne Argument, listet /plugin alle geladenen Erweiterungen auf."
 
 msgid "manage proxies"
-msgstr "proxies verwalten"
+msgstr "Proxies verwalten"
 
 msgid ""
 "[add proxyname type address port [username [password]]] | [del proxyname|-"
@@ -1161,7 +1165,7 @@ msgstr ""
 "-o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel"
 
 msgid "show WeeChat version and compilation date"
-msgstr "Angeige der WeeChat-Version und des Kompilier-Datums"
+msgstr "Zeigt die WeeChat-Version und das Datum der Kompilierung an"
 
 msgid "-o: send version to current buffer as input"
 msgstr ""
@@ -1311,7 +1315,7 @@ msgid "time format for buffers"
 msgstr "Timestamp für Puffer"
 
 msgid "number of colors to use for nicks colors"
-msgstr "Anzahl der für Nicknames zu benutzenden Farben"
+msgstr "Anzahl der für Nick-Namen zu benutzenden Farben"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -1466,7 +1470,7 @@ msgstr "Warnung falls der gesuchte Text nicht in dem Puffer gefunden wurde"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
-"Fenstertitel setzen (oder Terminaltitel im Curses-GUI) mit Name und Version"
+"Fenstertitel setzen (oder Terminal-Titel im Curses-GUI) mit Name und Version"
 
 msgid "background color for window separators (when split)"
 msgstr ""
@@ -1712,10 +1716,10 @@ msgid "string inserted after nick completion"
 msgstr "Nach Nickvervollständigung anzufügende Zeichenfolge"
 
 msgid "complete only with first nick found"
-msgstr "nur mit dem ersten, passenden Nicknamen vervollständigen"
+msgstr "nur mit dem ersten, passendem Nick-Namen vervollständigen"
 
 msgid "chars ignored for nick completion"
-msgstr "Zeichen, die bei der Nickvervollständigung ignoriert werden"
+msgstr "Zeichen, die bei der Vervollständigung von Nicks ignoriert werden"
 
 msgid "alert user when a partial completion occurs"
 msgstr ""
@@ -1757,15 +1761,15 @@ msgstr "maximale Anzahl der angezeigten Befehle im Verlauf (0: unbegrenzt)"
 msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
 "for \"perl.so\")"
 msgstr ""
-"kommagetrennte Liste der Plugins, die beim Start automatisch geladen werden "
-"sollen, \"*\" lädt alle gefundenen Plugins (es können auch Teile des Namens "
-"angegeben werden, \"perl\" lädt z.B. auch \"libperl.so\")"
+"durch Kommata getrennte Liste der Erweiterungen, die beim Start automatisch "
+"geladen werden sollen, \"*\" lädt alle gefundenen Erweiterungen (es können "
+"auch Teile des Namens angegeben werden, \"perl\" lädt z.B. auch \"libperl.so"
+"\")"
 
 msgid ""
 "enable debug messages by default in all plugins (option disabled by default, "
@@ -1887,22 +1891,22 @@ msgstr ""
 "Verzeichnis zu starten.\n"
 
 msgid "proxy type (http (default), socks4, socks5)"
-msgstr "Proxytyp (http (Standard), socks4, socks5)"
+msgstr "Proxy-Typ (http (Standard), socks4, socks5)"
 
 msgid "connect to proxy using ipv6"
 msgstr "Verbindung zum Proxy über IPv6 aufbauen"
 
 msgid "proxy server address (IP or hostname)"
-msgstr "Adresse des Proxyservers (IP oder Hostname)"
+msgstr "Adresse des Proxy-Servers (IP oder Hostname)"
 
 msgid "port for connecting to proxy server"
-msgstr "Port, auf dem der Proxyserver läuft"
+msgstr "Port, auf dem der Proxy-Server läuft"
 
 msgid "username for proxy server"
-msgstr "Benutzername für die Proxyverbindung"
+msgstr "Benutzername für die Proxy-Verbindung"
 
 msgid "password for proxy server"
-msgstr "Passwort für die Proxyverbindung"
+msgstr "Passwort für die Proxy-Verbindung"
 
 msgid "bytes"
 msgstr "Bytes"
@@ -2112,7 +2116,7 @@ msgid "numbers of buffers"
 msgstr "konnte den Puffer nicht laden"
 
 msgid "names of buffers (including plugins names)"
-msgstr "Liste der Puffer (incl. der Plugin-Namen)"
+msgstr "Liste der Buffer (inkl. der Erweiterungen)"
 
 msgid "configuration files"
 msgstr "Konfigurationsdateien"
@@ -2124,7 +2128,7 @@ msgid "names of filters"
 msgstr "Liste der Filter"
 
 msgid "commands (weechat and plugins)"
-msgstr "Befehle (WeeChat und Plugins)"
+msgstr "Befehle (WeeChat und Erweiterungen)"
 
 #, fuzzy
 msgid "names of infos hooked"
@@ -2142,10 +2146,10 @@ msgid "configuration options"
 msgstr "Konfigurationsoptionen"
 
 msgid "names of plugins"
-msgstr "Liste der Plugins"
+msgstr "Liste der Erweiterungen"
 
 msgid "commands defined by plugins"
-msgstr "Befehle, definiert durch Plugins"
+msgstr "Befehle, definiert durch Erweiterungen"
 
 #, fuzzy
 msgid "names of bars"
@@ -2156,7 +2160,7 @@ msgid "values for a configuration option"
 msgstr "Werte für eine Konfigurationsoption"
 
 msgid "weechat commands"
-msgstr "weechat Befehle"
+msgstr "WeeChat Befehle"
 
 #, fuzzy
 msgid "names of proxies"
@@ -2265,7 +2269,7 @@ msgid "alias_name [alias_name...]"
 msgstr "Nickname [Nickname ...]"
 
 msgid "alias_name: name of alias to remove"
-msgstr "Aliasname: Name des zu löschenden Aliases"
+msgstr "Aliasname: Name des zu löschenden Alias"
 
 #, fuzzy
 msgid "list of aliases"
@@ -2283,31 +2287,36 @@ msgstr "Ende der /who-Liste"
 #, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
+"%s: Fehler: das Wörterbuch \"%s\" ist auf diesem Rechner nicht verfügbar."
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
-msgstr ""
+msgstr "%s: das Wort \"%s\" wurde dem persönlichen Wörterbuch hinzugefügt."
 
 #, c-format
 msgid "%s%s: failed to add word to personal dictionary"
-msgstr ""
+msgstr "%s%s: es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden"
 
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr ""
+"%s%s: es ist kein Wörterbuch für diesen Buffer aktiviert, deshalb kann das "
+"Wort nicht hinzugefügt werden."
 
 #, c-format
 msgid ""
 "%s%s: many dictionaries are defined for this buffer, please specify "
 "dictionary"
 msgstr ""
+"%s%s: mehrere Wörterbücher sind für diesen Buffer definiert. Bitte "
+"definieren Sie ein Wörterbuch"
 
 #, fuzzy
 msgid "aspell plugin configuration"
 msgstr "Konfiguration wird gespeichert\n"
 
 msgid "dictlist | enable lang | disable | addword [lang] word"
-msgstr ""
+msgstr "dictlist | enable lang | disable | addword [lang] word"
 
 msgid ""
 "dictlist: show installed dictionaries\n"
@@ -2317,46 +2326,66 @@ msgid ""
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands."
 msgstr ""
+"dictlist: listet installierte Wörterbücher auf\n"
+"  enable: aktiviert aspell in aktuellem Buffer [lang = Wörterbuch)\n"
+" disable: deaktiviert aspell in aktuellem Buffer\n"
+" addword: fügt ein Wort in das persönliche Wörterbuch von aspell hinzu\n"
+"\n"
+"Eingaben die mit '/' beginnen werden nicht überprüft, außer bei einigen "
+"Befehle."
 
 msgid "list of supported langs for aspell"
-msgstr ""
+msgstr "Liste der Unterstützten Übersetzungen (lang) für Aspell"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
+"durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer genutzt "
+"werden"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 msgid "color used for misspelled words"
-msgstr ""
+msgstr "Farbe die für ein falsch geschriebenes Wort genutzt werden soll."
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
 "checking is disabled for all other commands)"
 msgstr ""
+"durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung "
+"gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)"
 
 msgid ""
 "default dictionary (or comma separated list of dictionaries) to use when "
 "buffer has no dictionary defined (leave blank to disable aspell on buffers "
 "for which you didn't explicitly enabled it)"
 msgstr ""
+"Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der "
+"Wörterbücher) welche(s) genutzt werden soll, falls kein Wörterbuch für den "
+"Buffer definiert wurde. Ohne Einstellung wird aspell für alle Buffer "
+"deaktiviert, die nicht explizit ein Wörterbuch nutzen sollen."
 
 msgid "check words during text search in buffer"
-msgstr ""
+msgstr "Überprüfe Wörter während im Buffer nach einem Text gesucht wird"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "
 "checked only if there's delimiter after)"
 msgstr ""
+"Echtzeit Korrektur bei der Eingabe (langsamer, deshalb standardmäßig "
+"deaktiviert: Wörter werden erst überprüft wenn ein Leerzeichen, dem Wort, "
+"folgt)"
 
 msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr ""
+"Minimallänge für ein Wort welches auf Rechtschreibung überprüft werden soll "
+"(bei 0 werden alle Wörter überprüft)"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr ""
+msgstr "%s: Hinweis: das Wörterbuch \"%s\" ist auf dem Rechner nicht verfügbar"
 
 #, fuzzy, c-format
 msgid "%s%s: not enough memory to create new speller"
@@ -2577,7 +2606,7 @@ msgstr "/ignore-Regel entfernt.\n"
 
 #, c-format
 msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
-msgstr "%s%s: der Befehl \"%s\" kann nur in Channelfenstern ausgeführt werden"
+msgstr "%s%s: der Befehl \"%s\" kann nur in Channel-Fenstern ausgeführt werden"
 
 #, c-format
 msgid "%s%s: already connected to server \"%s\"!"
@@ -3197,7 +3226,7 @@ msgid "nickname [nickname]"
 msgstr "Nickname [Nickname]"
 
 msgid "get operator privileges"
-msgstr "Serveroperatorprivilegien anfordern"
+msgstr "Serveroperator Privilegien anfordern"
 
 msgid "user password"
 msgstr "Benutzername Passwort"
@@ -3743,7 +3772,7 @@ msgid ""
 msgstr ""
 "Befehle, die nach der Verbindung zum Server ausgeführt werden sollen "
 "(mehrere Befehle müssen mit \";\" getrennt werden, um ein Semikolon zu "
-"schreiben, muss man \"\\;\" verwenden, die spezielllen Variablen $nick, "
+"schreiben, muss man \"\\;\" verwenden, die speziellen Variablen $nick, "
 "$channel und $server werden dabei durch den jeweiligen Wert ersetzt)"
 
 msgid ""
@@ -3944,7 +3973,7 @@ msgstr "%s%s: kann den Befehl \"%s\" nicht parsen"
 
 #, c-format
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s%s: unbekannter DCC CHAT-Typ emfpangen von %s%s%s: \"%s\""
+msgstr "%s%s: unbekannter DCC CHAT-Typ empfangen von %s%s%s: \"%s\""
 
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
@@ -4325,141 +4354,147 @@ msgstr "%s Fehler beim Senden von Daten an den IRC-Server\n"
 msgid "(connection closed by peer)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnecting from server..."
-msgstr "Vom Server getrennt!\n"
+msgstr "%s: Trennung vom Server..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: lag is high, disconnecting from server..."
-msgstr "%s der Lag ist hoch, die Verbindung wird getrennt...\n"
+msgstr "%s: Lag ist zu hoch, die Verbindung wird getrennt..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: reconnecting to server in %d %s"
-msgstr "%s: Neuverbinden in %d Sekunden\n"
+msgstr "%s: Neuverbinden zum Server in %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: switching address to %s/%d"
-msgstr "%s IP-Adresse nicht gefunden\n"
+msgstr "%s: Wechsel Adresse zu %s/%d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: connected to %s (%s)"
-msgstr "%s keine Verbindung zum Server \"%s\"!\n"
+msgstr "%s: Verbindung zu %s (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: proxy address \"%s\" not found"
-msgstr "%s Proxyadresse \"%s\" nicht gefunden\n"
+msgstr "%s%s: Proxy-Adresse \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: address \"%s\" not found"
-msgstr "%s Adresse \"%s\" nicht gefunden\n"
+msgstr "%s%s: Adresse \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: %s"
-msgstr "%sServer: %s%s\n"
+msgstr "%s%s: Fehler: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: proxy IP address not found"
-msgstr "%s Proxy-IP-Adresse nicht gefunden\n"
+msgstr "%s%s: Proxy-IP-Adresse nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: IP address not found"
-msgstr "%s IP-Adresse nicht gefunden\n"
+msgstr "%s%s: IP-Adresse nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: proxy connection refused"
-msgstr "%s Proxyverbindung verweigert\n"
+msgstr "%s%s: Proxy-Verbindung verweigert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connection refused"
-msgstr "%s Verbindungsaufbau verweigert\n"
+msgstr "%s%s: Verbindungsaufbau verweigert"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
 "if used and if server address/port is allowed by proxy)"
 msgstr ""
-"%s Der Proxy konnte die Verbindung zum Server nicht aufbauen (bitte "
-"Benutzername/Passwort überprüfen)\n"
+"%s%s: Der Proxy konnte die Verbindung zum Server nicht aufbauen (bitte "
+"Benutzername/Passwort überprüfen und ob Server Adresse/Port für Proxy "
+"freigeschaltet ist)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set local hostname/IP"
-msgstr "%s kann lokalen Hostname/lokale IP nicht festlegen\n"
+msgstr "%s%s: kann lokalen Hostname/IP nicht festlegen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: TLS init error"
-msgstr "%s gnutls Initialisierungsfehler\n"
+msgstr "%s%s: TLS Initialisierungsfehler"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: TLS handshake failed"
-msgstr "%s gnutls-Handshake schlug fehl\n"
+msgstr "%s%s: TLS Handshake fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory"
-msgstr "Nicht genügend Speicher für neue Zeile\n"
+msgstr "%s%s: nicht genügend Speicher"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
-msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
+msgstr ""
+"%s%s: Proxy \"%s\" für Server \"%s\" nicht gefunden, kann keine Verbindung "
+"herstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
-msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+msgstr ""
+"%s%s: fehlende Proxy-Einstellungen. Überprüfe Optionen für Proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
-msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
+msgstr ""
+"%s%s Nicknamen für den Server \"%s\" nicht definiert, kann keinen Verbindung "
+"herstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: cannot connect with SSL because WeeChat was not built with GnuTLS "
 "support"
 msgstr ""
-"%s SSL-Verbindung nicht möglich, da WeeChat nicht mit GNUtls-Support "
-"kompiliert wurde\n"
+"%s%s SSL-Verbindung nicht möglich, da WeeChat nicht mit GNUtls-Support "
+"kompiliert wurde"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "%s: verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
+msgstr "%s: verbinden zu Server %s%d%s%s via %s-Proxy %s%d%s..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
+msgstr "Verbinden zu Server %s%d%s%s via %s-Proxy %s%d%s..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
-msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
+msgstr "%s: verbinden zu Server %s%d%s%s..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connecting to server %s/%d%s%s..."
-msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
+msgstr "%s%s: verbinden zu Server %s%d%s%s..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket"
-msgstr "%s Socket konnte nicht angelegt werden\n"
+msgstr "%s%s: Socket konnte nicht angelegt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s Fehler beim Setzen der Socketoption \"SO_REUSEADDR\"\n"
+msgstr "%s%s Fehler beim setzen der Socket-Option \"SO_REUSEADDR\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s Fehler beim Setzen der Socketoption \"SO_KEEPALIVE\"\n"
+msgstr "%s%s Fehler beim setzen der Socket-Option \"SO_KEEPALIVE\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: reconnecting to server..."
-msgstr "%s: Neuverbinden zum Server...\n"
+msgstr "%s: Neuverbinden zum Server..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: disconnected from server"
-msgstr "Vom Server getrennt!\n"
+msgstr "%s%s: Vom Server getrennt!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnected from server"
-msgstr "Vom Server getrennt!\n"
+msgstr "%s: Vom Server getrennt!"
 
 #, c-format
 msgid ""
@@ -4473,25 +4508,24 @@ msgid ""
 "used by another buffer (check your log settings)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr "%s%s: Kann Verzeichnis für Log-Dateien nicht erstellen (\"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to write log file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Kann Log-Datei \"%s\" nicht schreiben"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t****  Beginning of log  ****"
-msgstr "****  Beginning of log  "
+msgstr "%s\t****  Beginn der Log-Datei  ****"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t****  End of log  ****"
-msgstr "****  End of log  "
+msgstr "%s\t****  Ende der Log-Datei  ****"
 
-#, fuzzy
 msgid "Logging on buffers:"
-msgstr "Liste der Aliases:\n"
+msgstr "Loggen der Buffer:"
 
 #, c-format
 msgid "logging (level: %d)"
@@ -4504,17 +4538,16 @@ msgstr ""
 msgid "log not started"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: \"%s\" => level %d"
-msgstr "Alias \"%s\" entfernt\n"
+msgstr "%s: \"%s\" => Level %d"
 
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
-#, fuzzy
 msgid "logger plugin configuration"
-msgstr "Konfiguration wird gespeichert\n"
+msgstr "Konfiguration für \"logger\" Erweiterung"
 
 msgid "[list | set level | disable]"
 msgstr ""
@@ -4558,26 +4591,26 @@ msgstr ""
 msgid "file mask for log file; local buffer variables are permitted"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "maximum number of lines to display from log file when creating new buffer (0 "
 "= no backlog)"
-msgstr "maximale Anzahl an Befehlen im Verlauf (0: kein Limit)"
+msgstr ""
+"maximale Anzahl der Zeilen die aus der Log-Datei dargestellt werden sollen, "
+"wenn ein neuer Buffer erstellt wird (0 = kein Darstellung)"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
 msgstr ""
 
 msgid "use only lower case for log filenames"
-msgstr ""
+msgstr "Benutze ausschließlich Kleinschreibung für Log-Dateien"
 
-#, fuzzy
 msgid ""
 "path for WeeChat log files (\"%h\" will be replaced by WeeChat home, \"~/."
 "weechat\" by default)"
 msgstr ""
-"Suchpfad für WeeChat-Plugins ('%h' wird durch das WeeChat-Basisiverzeichnis "
-"ersetzt, voreingestellt ist ~/.weechat)"
+"Suchpfad für WeeChat-Log-Dateien (\"%h\" wird durch das WeeChat-"
+"Basisverzeichnis ersetzt. Voreingestellt ist \"~/.weechat\")"
 
 msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
@@ -4596,49 +4629,41 @@ msgstr ""
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 
-#, fuzzy
 msgid "list of logger buffers"
-msgstr "Timestamp für Puffer"
+msgstr "Liste der ge-loggten Buffern"
 
-#, fuzzy
 msgid "WeeChat version"
-msgstr "WeeChat-Slogan"
+msgstr "WeeChat Version"
 
-#, fuzzy
 msgid "WeeChat compilation date"
-msgstr "Konfigurationsdatei gesichert\n"
+msgstr "WeeChat Datum der Kompilierung"
 
-#, fuzzy
 msgid "directory separator"
-msgstr "Farbe für den Zeit-Separator"
+msgstr "Verzeichnis Trennzeichen"
 
-#, fuzzy
 msgid "WeeChat directory"
-msgstr "WeeChat-Fehler:"
+msgstr "WeeChat Verzeichnis"
 
 msgid "WeeChat \"lib\" directory"
 msgstr ""
 
-#, fuzzy
 msgid "WeeChat \"share\" directory"
-msgstr "WeeChat-Fehler:"
+msgstr "WeeChat \"share\" Verzeichnis"
 
 msgid "WeeChat \"locale\" directory"
 msgstr ""
 
-#, fuzzy
 msgid "WeeChat site"
-msgstr "WeeChat-Slogan"
+msgstr "WeeChat Seite"
 
 msgid "WeeChat site, download page"
 msgstr ""
 
-#, fuzzy
 msgid "terminal charset"
-msgstr "Puffer verwalten"
+msgstr "Terminal Zeichensatz"
 
 msgid "WeeChat internal charset"
-msgstr ""
+msgstr "interner WeeChat Zeichensatz"
 
 msgid "keyboard inactivity (seconds)"
 msgstr ""
@@ -4752,17 +4777,17 @@ msgstr "%sFehler: kann das Plugin \"%s\" nicht initialisieren\n"
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%sFehler: kann das Plugin \"%s\" nicht laden (Speichermangel)\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Plugin \"%s\" loaded"
-msgstr "Plugin \"%s\" entladen.\n"
+msgstr "Erweiterung \"%s\" installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Plugin \"%s\" unloaded"
-msgstr "Plugin \"%s\" entladen.\n"
+msgstr "Erweiterung \"%s\" deinstalliert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: plugin \"%s\" not found"
-msgstr "%sFehler: Plugin \"%s\" nicht gefunden\n"
+msgstr "%sFehler: Erweiterung \"%s\" nicht gefunden"
 
 msgid "Actions (letter+enter):"
 msgstr ""
@@ -4773,77 +4798,73 @@ msgstr ""
 msgid "  [R] Remove"
 msgstr "  [R] entfernen"
 
-#, fuzzy
 msgid "  [P] Purge finished"
-msgstr "  [P] alte DCCs entfernen"
+msgstr "  [P] Purge beendet"
 
-#, fuzzy
 msgid "  [Q] Close this buffer"
-msgstr "  [Q] DCC-Ansicht schließen"
+msgstr "  [Q] Schließe diesen Buffer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s%s] %s (started on: %s)"
-msgstr "%s%s%s ist abwesend: %s\n"
+msgstr "%s%s[%s%s%s%s] %s (gestartet am: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%-26s received: %s, sent: %s"
-msgstr "DCC: Datei %s%s%s"
+msgstr "%s%-26s empfangen: %s, gesendet: %s"
 
 msgid "List of clients for relay"
 msgstr ""
 
-#, fuzzy
 msgid "connecting"
 msgstr "verbinden"
 
-#, fuzzy
 msgid "waiting auth"
-msgstr "warten"
+msgstr "warten...."
 
-#, fuzzy
 msgid "auth failed"
-msgstr "fehlg."
+msgstr "fehlgeschlagen"
 
-#, fuzzy
 msgid "disconnected"
-msgstr "verbunden"
+msgstr "unterbrochen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error sending data to client %s"
-msgstr "%s Fehler beim Senden von Daten an den IRC-Server\n"
+msgstr "%s%s: Fehler beim Senden von Daten an den Client %s"
 
 #, c-format
 msgid "%s: new client @ %s"
-msgstr ""
+msgstr "%s: Neuer Client @ %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for new client"
-msgstr "%s nicht genug Speicher für neuen DCC\n"
+msgstr "%s%s: nicht genug Speicher für neuen Client"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: authentication failed with client @ %s"
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Authentifizierung mit Client @ %s fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnected from client @ %s"
-msgstr "Vom Server getrennt!\n"
+msgstr "%s: Trennung vom Client @ %s"
 
 msgid "Clients for relay:"
-msgstr ""
+msgstr "Clients für Relay:"
 
 #, c-format
 msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
 msgstr ""
+"%3d. %s, gestartet am: %s, letzte Aktivität: %s, Bytes: %lu Empfangen, %lu "
+"gesendet"
 
 #, c-format
 msgid "%3d. %s, started on: %s"
-msgstr ""
+msgstr "%3d. %s, gestartet am: %s"
 
 msgid "No client for relay"
-msgstr ""
+msgstr "Keinen Client für Relay"
 
 msgid "relay control"
-msgstr ""
+msgstr "Relay-Kontrolle"
 
 msgid ""
 "    list: list relay clients\n"
@@ -4851,199 +4872,196 @@ msgid ""
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+"    list: liste Relay Clients auf\n"
+"listfull: liste Relay Clients auf (ausführlich)\n"
+"\n"
+"wird der Befehl ohne Argumente aufgerufen, wird ein Buffer geöffnet und eine "
+"Liste der Relay-Clients dargestellt."
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
 
-#, fuzzy
 msgid "text color"
-msgstr "Farbe vom Chat-Text"
+msgstr "Textfarbe"
 
-#, fuzzy
 msgid "background color"
-msgstr "Hintergrundfarbe der Nicknames"
+msgstr "Hintergrundfarbe"
 
-#, fuzzy
 msgid "text color of selected client line"
-msgstr "Farbe des Servernamens"
+msgstr "Textfarbe für selektierten Client-Linie"
 
-#, fuzzy
 msgid "text color for \"connecting\" status"
-msgstr "Farbe des DCC-Status 'verbinden'"
+msgstr "Textfarbe für Status \"verbinde\""
 
-#, fuzzy
 msgid "text color for \"waiting authentication\" status"
-msgstr "Farbe des DCC-Status 'warten'"
+msgstr "Textfarbe für Status \"warte auf Authentifizierung\""
 
-#, fuzzy
 msgid "text color for \"connected\" status"
-msgstr "Farbe des DCC-Status 'verbinden'"
+msgstr "Textfarbe für  Status \"Verbindung hergestellt\""
 
-#, fuzzy
 msgid "text color for \"authentication failed\" status"
-msgstr "Farbe des DCC-Status 'fehlgeschlagen'"
+msgstr "Textfarbe für Status \"Authentifizierung gescheitert\""
 
-#, fuzzy
 msgid "text color for \"disconnected\" status"
-msgstr "Farbe des DCC-Status 'verbinden'"
+msgstr "Textfarbe für Status \"Verbindung getrennt\""
 
 msgid "enable relay"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "port number (or range of ports) that relay plugin listens on (syntax: a "
 "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
 "use ports greater than 1024, because only root can use ports below 1024)"
 msgstr ""
-"beschränkt ausgehenden DCC auf die ausschließliche Benutzung von Ports in "
-"einem vorgegebenen Bereich (hilfreich bei NAT) (Syntax: ein einzelner Port, "
-"z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich "
-"angegeben ist, ist jeder Port möglich)"
+"Nummer des Ports oder Port-Bereiches an dem die Relay-Erweiterung lauschen "
+"soll (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-"
+"5015, es wird empfohlen Ports zu nutzen die größer als 1024 sind. Denn nur "
+"der User \"root\" kann auf den Port-Bereich unter 1024 zugreifen)"
 
-#, fuzzy
 msgid "list of relay clients"
-msgstr "Liste der Aliases:\n"
+msgstr "Liste der Relay-Clients"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed"
-msgstr "FIFO geschlossen\n"
+msgstr "%s: Socket geschlossen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client"
-msgstr "%s Socket konnte nicht angelegt werden\n"
+msgstr "%s%s: kann Client nicht akzeptieren"
 
 #, c-format
 msgid "%s%s: option \"listen_port_range\" is not defined"
-msgstr ""
+msgstr "%s%s: Option \"listen_port_range\" ist nicht definiert."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot find available port for listening"
-msgstr "%s kann keinen freien Port für DCC ermitteln\n"
+msgstr "%s%s: kann keinen verfügbaren Port zum lauschen finden"
 
 #, c-format
 msgid "%s: listening on port %d"
-msgstr ""
+msgstr "%s: lausche am Port %d"
 
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
 "this name)"
 msgstr ""
+"%s%s: Skript kann nicht registriert werden. \"%s\" (ein anderes Skript, mit "
+"diesem Namen, existiert bereits)"
 
 #, c-format
 msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
+msgstr "%s: registriertes Skript \"%s\", Version %s (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to run function \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Kann Funktion \"%s\" nicht ausführen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: script \"%s\" not found"
-msgstr "%s Server \"%s\" nicht gefunden\n"
+msgstr "%s%s: Skript \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: loading script \"%s\""
-msgstr "Sitzung: Lade Server \"%s\"\n"
+msgstr "%s: Lade Skript \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr ""
+"%s%s: Umlenkung von Standardausgabe und Standardfehlerausgabe nicht möglich"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Kann Datei \"%s\" nicht laden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to execute file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Datei \"%s\" kann nicht ausgeführt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
 msgstr ""
-"%s Funktion \"weechat_plugin_init\" nicht in Plugin \"%s\" gefunden Laden "
-"gescheitert\n"
+"%s%s: Funktion \"register\" nicht gefunden (oder fehlerhaft) in Datei \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: unloading script \"%s\""
-msgstr "Sitzung: Lade Server \"%s\"\n"
+msgstr "%s: deinstalliere Skript \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" unloaded"
-msgstr "Plugin \"%s\" entladen.\n"
+msgstr "%s: Skript \"%s\" deinstalliert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s Server \"%s\" nicht gefunden\n"
+msgstr "%s%s: Skript \"%s\" nicht installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+msgstr "%s%s: unbekannte Option für den \"%s\"-Befehl"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s Plugin \"%s\" nicht gefunden\n"
+msgstr "%s%s: Funktion \"%s\" wird intern falsch genutzt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s nicht genug Speicher für neuen DCC\n"
+msgstr "%s%s nicht genug Speicher in Funktion \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s nicht genug Speicher für neuen DCC\n"
+msgstr "%s%s: nicht genug Speicher um Datei \"%s\" zu analysieren"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to parse file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Datei \"%s\" Analyse nicht möglich"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to run file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: kann Datei \"%s\" nicht ausführen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: unbekannter Fehler beim laden der Datei \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to initialize %s"
-msgstr "%s kann das Plugin \"%s\" nicht initialisieren\n"
+msgstr "%s%s: kann %s nicht initialisieren"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s unable to run function \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s kann Funktion \"%s\" nicht ausführen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s Plugin \"%s\" nicht gefunden\n"
+msgstr "%s%s: Funktion \"%s\" muss einen gültigen Wert zurück geben"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error in function \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Fehler in Funktion \"%s\""
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
-msgstr ""
+msgstr "%s: Standardausgabe/Standardfehlerausgabe: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s kann das Plugin \"%s\" nicht initialisieren\n"
+msgstr "%s%s: Initialisierung des WeeChat Moduls nicht möglich"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to redirect stdout"
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: kann Standardausgabe nicht umlenken"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to redirect stderr"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr "%s%s: kann Standardfehlerausgabe nicht umlenken"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -5057,45 +5075,44 @@ msgstr "%s kann den Server nicht anlegen\n"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s kann den Server nicht anlegen\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: \"%s\""
-msgstr "%sServer: %s%s\n"
+msgstr "%s%s: Fehler: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%sServer: %s%s\n"
+msgstr "%s%s: Standardausgabe/Standardfehlerausgabe: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error while loading file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Fehler beim laden der Datei \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Funktion \"weechat_init\" fehlt in der Datei \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr ""
+"%s%s: Evaluation der Funktion \"weechat_init\" in Datei \"%s\" nicht möglich"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr "%s%s: Evaluation des internen WeeChat Ruby Codes nicht möglich"
 
-#, fuzzy
 msgid "list/load/unload scripts"
-msgstr "auflisten/laden/entladen von Plugins"
+msgstr "auflisten/installieren/deinstallieren von Erweiterungen"
 
-#, fuzzy
 msgid ""
 "[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
 "| [unload [name]]"
 msgstr ""
-"[list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload "
-"[Name]] | [unload [Name]]"
+"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
+"| [unload [name]]"
 
 msgid ""
 "filename: script (file) to load\n"
@@ -5103,83 +5120,91 @@ msgid ""
 "\n"
 "Without argument, this command lists all loaded scripts."
 msgstr ""
+"Dateiname: Skript (Datei) die geladen werden soll\n"
+"Name: Name des Skripts\n"
+"\n"
+"Ohne Argumente werden alle geladenen Skripten aufgelistet."
 
-#, fuzzy
 msgid "list of scripts"
-msgstr "Liste der Aliases:\n"
+msgstr "Liste der Skripten:"
 
 #. TRANSLATORS: %s is language (for example "perl")
-#, fuzzy, c-format
+#, c-format
 msgid "list of %s scripts"
-msgstr "Liste der Aliases:\n"
+msgstr "Liste der %s Skripten"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
+"%s: Fehler beim Laden des Skripts \"%s\" (fehlerhafter Name, Leerzeichen "
+"sind nicht erlaubt)"
 
 #, c-format
 msgid ""
 "%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
 "(\"%s\")"
 msgstr ""
+"%s%s: Warnung, die Lizenz \"%s\" für das Skript \"%s\" unterscheidet sich "
+"von der Lizenz für Erweiterungen (\"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s kann das Plugin \"%s\" nicht laden (Speichermangel)\n"
+msgstr "%s: kann Erweiterung \"%s\" nicht laden (Speichermangel)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script removed: %s"
-msgstr "Sie sind nicht im Channel"
+msgstr "%s: Skript entfernt: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s DCC: kann keine Pipe erstellen\n"
+msgstr "%s%s: Fehler beim entfernen des Skripts: %s (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s Server \"%s\" nicht gefunden\n"
+msgstr "%s: Skript \"%s\" nicht gefunden, es wurde nichts entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s DCC: kann keine Pipe erstellen\n"
+msgstr "%s%s: Fehler beim verschieben des Skripts %s nach %s (%s)"
 
 #. TRANSLATORS: %s is language (for example "perl")
-#, fuzzy, c-format
+#, c-format
 msgid "%s scripts loaded:"
-msgstr "FIFO geschlossen\n"
+msgstr "%s Skripten installiert:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "    file: %s"
-msgstr "       IRC(%s)\n"
+msgstr "    Datei: %s"
 
 #, c-format
 msgid "    written by \"%s\", license: %s"
-msgstr ""
+msgstr "    geschrieben von \"%s\", Lizenz: %s"
 
-#, fuzzy
 msgid "  (none)"
-msgstr "(unbekannt)"
+msgstr "  (keine)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr ""
+"%s%s: kann Funktion \"%s\" nicht ausführen, Skript ist nicht initialisiert "
+"(Skript: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
+msgstr "%s%s: fehlerhafte Argumente für die Funktion \"%s\" (Skript: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s unable to run function \"%s\": %s"
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s Kann Funktion \"%s\" nicht ausführen: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create new interpreter"
-msgstr "%s kann den Server nicht anlegen\n"
+msgstr "%s%s: kann neuen Interpreter nicht anlegen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error occured while parsing file \"%s\": %s"
-msgstr "Kann das Logfile nicht schreiben\n"
+msgstr "%s%s: Fehler aufgetreten beim parsen der Datei \"%s\": %s"
 
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"
@@ -5188,46 +5213,38 @@ msgid "  [C] Cancel"
 msgstr "  [C] abbrechen"
 
 msgid "xfer chat"
-msgstr ""
+msgstr "Xfer Chat"
 
 msgid "ETA"
 msgstr "ETA"
 
-#, fuzzy
 msgid "Xfer list"
-msgstr "Hotlist leeren"
+msgstr "Xfer Liste"
 
-#, fuzzy
 msgid "waiting"
-msgstr "warten"
+msgstr "warte"
 
-#, fuzzy
 msgid "active"
 msgstr "aktiv"
 
-#, fuzzy
 msgid "done"
 msgstr "fertig"
 
-#, fuzzy
 msgid "failed"
 msgstr "fehlg."
 
-#, fuzzy
 msgid "aborted"
 msgstr "abgebr."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: file %s %s %s: %s"
-msgstr "DCC: Datei %s%s%s"
+msgstr "%s%s: Datei %s %s %s: %s"
 
-#, fuzzy
 msgid "sent to"
-msgstr " gesendet an "
+msgstr " gesendet an"
 
-#, fuzzy
 msgid "received from"
-msgstr " empfangen von "
+msgstr " empfangen von"
 
 msgid "OK"
 msgstr "OK"
@@ -5235,117 +5252,114 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "FEHLGESCHLAGEN"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s) geschlossen \n"
+msgstr "%s: Chat geschlossen mit %s (%d.%d.%d.%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for new xfer"
-msgstr "%s nicht genug Speicher für neuen DCC\n"
+msgstr "%s%s: nicht genug Speicher für neuen xfer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
 msgstr ""
-"Eingehende DCC-Datei von %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s Bytes\n"
+"%s: eingehende Datei von %s (%d.%d.%d.%d): %s, %lu Bytes (Protokoll: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
 msgstr ""
-"Sende DCC-Datei zu %s%s%s: %s%s%s (lokaler Dateiname: %s%s%s), %s%lu%s "
-"Bytes\n"
+"%s: Sende Datei an %s: %s (lokaler Dateiname: %s), %lu Bytes (Protokoll: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
-msgstr "Eingehende DCC-Chatanforderung von %s%s%s (%s%d.%d.%d.%d%s)\n"
+msgstr "%s: eingehende Chatanforderung von %s (%d.%d.%d.%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: sending chat request to %s"
-msgstr "Sende DCC-Chatanforderung an %s%s\n"
+msgstr "%s: Sende Chatanforderung an: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
-msgstr ""
-"DCC: Datei %s%s%s (lokaler Dateiname: %s%s%s) wird an der Position %u "
-"fortgesetzt\n"
+msgstr "%s: Datei %s (lokaler Dateiname: %s) wird an Position %lu fortgesetzt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing arguments (%s)"
-msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+msgstr "%s%s: fehlende Argumente (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+msgstr "%s%s: unbekannter xfer Type \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+msgstr "%s%s: unbekanntes xfer Protokoll \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot access file \"%s\""
-msgstr "%s kann nicht auf die Datei \"%s\" zugreifen\n"
+msgstr "%s%s: kann nicht auf die Datei \"%s\" zugreifen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr ""
-"%s kann die Adresse für '%s' nicht finden. Greife auf lokale IP zurück.\n"
+"%s%s: kann die Adresse für \"%s\" nicht finden. Greife auf lokale IP zurück."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket for xfer"
-msgstr "%s Socket konnte nicht angelegt werden\n"
+msgstr "%s%s: Socket konnte für xfer nicht angelegt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot find available port for xfer"
-msgstr "%s kann keinen freien Port für DCC ermitteln\n"
+msgstr "%s%s: kann keinen freien Port für xfer ermitteln"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating xfer"
-msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+msgstr "%s%s: Fehler bei xfer Erstellung"
 
 #, fuzzy, c-format
 msgid ""
 "%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
 "found or not ready for transfer"
 msgstr ""
-"%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): DCC "
-"nicht gefunden oder bereits fertig\n"
+"%s%s: kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): "
+"xfer nicht gefunden oder nicht bereit für Transfer"
 
 #, fuzzy, c-format
 msgid "%s: file %s resumed at position %lu"
-msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
+msgstr "%s: Datei %s wird an Position %u fortgesetzt"
 
 #, fuzzy, c-format
 msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
 "xfer not found or not ready for transfer"
 msgstr ""
-"%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): DCC "
-"nicht gefunden oder bereits fertig\n"
+"%s%s kann die Datei \"%s\" nicht akzeptieren (Port: %d, Startposition: %u): "
+"xfer nicht gefunden oder nicht bereit für Transfer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
+msgstr "%s%s: aktiver xfer Transfer: \"%s\" von %s abgebrochen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
+msgstr "%s%s: Fehler beim senden von Daten an \"%s\" via xfer Chat"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
-msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
+msgstr "%s%s: kann keinen xfer für Buffer \"%s\" finden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
-msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
+msgstr "Verbindung zu %s (%d.%d.%d.%d) via xfer Chat aufgebaut"
 
-#, fuzzy
 msgid "Xfer list:"
-msgstr "Hotlist leeren"
+msgstr "Xfer Liste:"
 
 #, c-format
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
+"%3d. %s (%s), Datei: \"%s\" (lokal: \"%s\"), %s %s, Status: %s%s%s (%lu %%)"
 
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
@@ -5361,16 +5375,14 @@ msgstr ""
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""
 
-#, fuzzy
 msgid "yes"
-msgstr "Bytes"
+msgstr "Ja"
 
 msgid "no"
 msgstr ""
 
-#, fuzzy
 msgid "No xfer"
-msgstr "Kein Server.\n"
+msgstr "Kein xfer"
 
 msgid "xfer control"
 msgstr ""
@@ -5382,9 +5394,8 @@ msgid ""
 "Without argument, this command opens buffer with xfer list."
 msgstr ""
 
-#, fuzzy
 msgid "nicks of DCC chat"
-msgstr "Liste von Nicks im Channel"
+msgstr "Nicks vom DCC Chat"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
@@ -5416,16 +5427,14 @@ msgstr "Farbe des DCC-Status 'fehlgeschlagen'"
 msgid "text color for \"aborted\" status"
 msgstr "Farbe des DCC-Status 'abgebrochen'"
 
-#, fuzzy
 msgid "timeout for xfer request (in seconds)"
-msgstr "DCC-Timeout in Sekunden"
+msgstr "Zeitüberschreitung für xfer Anfrage (in Sekunden)"
 
-#, fuzzy
 msgid "block size for sending packets, in bytes"
-msgstr "Blockgröße für DCCs"
+msgstr "Blockgröße für versendete Pakete (in Bytes)"
 
 msgid "does not wait for ACK when sending file"
-msgstr "warte beim Veschicken von Dateien nicht auf das ACK-Signal"
+msgstr "warte beim Verschicken von Dateien nicht auf das ACK-Signal"
 
 #, fuzzy
 msgid ""
@@ -5439,23 +5448,20 @@ msgstr ""
 "z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich "
 "angegeben ist, ist jeder Port möglich)"
 
-#, fuzzy
 msgid ""
 "IP or DNS address used for sending files/chats (if empty, local interface IP "
 "is used)"
 msgstr ""
-"IP- oder DNS-Adresse für ausgehenden DCC (wenn kein Wert angegeben wird, "
-"wird die IP des lokalen Interfaces benutzt)"
+"IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert "
+"angegeben wird, wird die IP des lokalen Interfaces benutzt)"
 
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
 
-#, fuzzy
 msgid "path for writing incoming files"
-msgstr "Pfad für per DCC eingehende Dateien"
+msgstr "Pfad für eingehende Dateien"
 
-#, fuzzy
 msgid "path for reading files when sending (when no path is specified by user)"
 msgstr ""
 "Pfad, aus dem Dateien standardmäßig gelesen werden, wenn keine explizite "
@@ -5465,7 +5471,7 @@ msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
 
 msgid "convert spaces to underscores when sending files"
-msgstr "Leerzeichen in Unterstriche umwandeln beim Veschicken von Dateien"
+msgstr "Leerzeichen in Unterstriche umwandeln beim Verschicken von Dateien"
 
 #, fuzzy
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
@@ -5488,53 +5494,52 @@ msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
 
-#, fuzzy
 msgid "list of xfer"
-msgstr "Liste der Aliases:\n"
+msgstr "xfer-Liste"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe"
-msgstr "%s DCC: kann keine Pipe erstellen\n"
+msgstr "%s%s: kann keine Pipe erstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read local file"
-msgstr "%s DCC: kann lokale Datei nicht lesen\n"
+msgstr "%s%s: kann lokale Datei nicht lesen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to send block to receiver"
-msgstr "%s DCC: kann den Block nicht an den Empfänger übertragen\n"
+msgstr "%s%s: kann den Block nicht an den Empfänger übertragen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read ACK from receiver"
-msgstr "%s DCC: kann kein ACK vom Empfänger empfangen\n"
+msgstr "%s%s: kann kein ACK vom Empfänger empfangen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to connect to sender"
-msgstr "%s DCC: kann keine Verbindung zum Sender herstellen\n"
+msgstr "%s%s: kann keine Verbindung zum Versender herstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to receive block from sender"
-msgstr "%s DCC: kann Block nicht vom Sender empfangen\n"
+msgstr "%s%s: kann vom Versender den Block nicht empfangen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to write local file"
-msgstr "%s DCC: kann lokalen Datei nicht schreiben\n"
+msgstr "%s%s: kann lokale Datei nicht schreiben"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to fork"
-msgstr "%s DCC: kann nicht forken\n"
+msgstr "%s%s: kann nicht forken"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create socket for sending file"
-msgstr "%s DCC: kann keinen Socket für den Dateiversand erstellen\n"
+msgstr "%s%s: kann keinen Socket für den Dateiversand erstellen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket"
-msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
+msgstr "%s%s: kann die \"nonblock\"-Option für den Socket nicht festlegen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
-msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 
 #~ msgid "list of alias"
 #~ msgstr "Liste der Aliases"
