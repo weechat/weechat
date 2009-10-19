@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-14 17:29+0200\n"
+"POT-Creation-Date: 2009-10-19 11:26+0200\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2753,6 +2753,10 @@ msgstr "%s неправильный номер буфера\n"
 msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
+#, c-format
+msgid "%s%s: mask must begin with nick"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
@@ -3106,11 +3110,13 @@ msgstr "кикает и банит пользователя с канала"
 msgid ""
 " channel: channel where user is\n"
 "nickname: nickname to kick and ban\n"
-" comment: comment for kick"
+" comment: comment for kick\n"
+"\n"
+"It is possible to kick/ban with a mask, nick will be extracted from mask and "
+"replaced by \"*\", for example:\n"
+"  /kickban toto!*@host.com\n"
+"  will ban \"*!*@host.com\" and then kick \"toto\"."
 msgstr ""
-"      канал: канал, на котором присутствует пользователь\n"
-"        ник: цель для кика и бана\n"
-"комментарий: причина кика"
 
 msgid "close client-server connection"
 msgstr "закрыть соединение клиент-сервер"
@@ -5647,6 +5653,15 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid ""
+#~ " channel: channel where user is\n"
+#~ "nickname: nickname to kick and ban\n"
+#~ " comment: comment for kick"
+#~ msgstr ""
+#~ "      канал: канал, на котором присутствует пользователь\n"
+#~ "        ник: цель для кика и бана\n"
+#~ "комментарий: причина кика"
 
 #, fuzzy
 #~ msgid "list of alias"

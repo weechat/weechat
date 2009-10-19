@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-10-14
+v0.3.1-dev, 2009-10-19
 
 
 Version 0.3.1 (under dev!)
@@ -25,6 +25,7 @@ Version 0.3.1 (under dev!)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
 * irc: improve error management on socket error (recv/send)
+* irc: improve mask used by command /kickban
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
 * gui: fix bug with URL selection in some terminals (caused by horizontal lines)
   (bug #27700)

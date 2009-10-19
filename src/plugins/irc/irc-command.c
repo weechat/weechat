@@ -1636,7 +1636,8 @@ int
 irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    char *pos_channel, *pos_nick, *nick_only, *pos_comment, *pos;
+    char *pos_channel, *pos_nick, *nick_only, *pos_comment, *pos, *mask;
+    int length;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("kickban", 1);
@@ -1679,10 +1680,6 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
                 return WEECHAT_RC_OK;
             }
         }
-
-        /* set ban for nick(+host) on channel */
-        irc_server_sendf (ptr_server, 0, "MODE %s +b %s",
-                          pos_channel, pos_nick);
         
         /* kick nick from channel */
         nick_only = strdup (pos_nick);
@@ -1694,6 +1691,37 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
             pos = strchr (nick_only, '!');
             if (pos)
                 pos[0] = '\0';
+            
+            if (strcmp (nick_only, "*") == 0)
+            {
+                weechat_printf (ptr_server->buffer,
+                                _("%s%s: mask must begin with nick"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                return WEECHAT_RC_OK;
+            }
+            
+            /* set ban for nick(+host) on channel */
+            if (strchr (pos_nick, '@'))
+            {
+                length = strlen (pos_nick) + 16;
+                mask = malloc (length + 1);
+                if (mask)
+                {
+                    pos = strchr (pos_nick, '!');
+                    snprintf (mask, length, "*!%s",
+                              (pos) ? pos + 1 : pos_nick);
+                    irc_server_sendf (ptr_server, 0, "MODE %s +b %s",
+                                      pos_channel, mask);
+                    free (mask);
+                }
+            }
+            else
+            {
+                irc_server_sendf (ptr_server, 0, "MODE %s +b %s",
+                                  pos_channel, pos_nick);
+            }
+            
+            /* kick nick */
             irc_server_sendf (ptr_server, 0, "KICK %s %s%s%s",
                               pos_channel,
                               nick_only,
@@ -3971,7 +3999,13 @@ irc_command_init ()
                           N_("[channel] nickname [comment]"),
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick and ban\n"
-                             " comment: comment for kick"),
+                             " comment: comment for kick\n\n"
+                             "It is possible to kick/ban with a mask, nick "
+                             "will be extracted from mask and replaced by "
+                             "\"*\", for example:\n"
+                             "  /kickban toto!*@host.com\n"
+                             "  will ban \"*!*@host.com\" and then kick "
+                             "\"toto\"."),
                           "%(irc_channel_nicks_hosts) %-", &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),

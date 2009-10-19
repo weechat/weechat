@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-14 17:29+0200\n"
+"POT-Creation-Date: 2009-10-19 11:26+0200\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2626,6 +2626,10 @@ msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s%s: opción desconocida para el comando \"%s\""
 
 #, c-format
+msgid "%s%s: mask must begin with nick"
+msgstr ""
+
+#, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s%s: \"%s\" no es una expresión regular válida (%s)"
 
@@ -2987,11 +2991,13 @@ msgstr "expulsa y veta a un apodo de un canal"
 msgid ""
 " channel: channel where user is\n"
 "nickname: nickname to kick and ban\n"
-" comment: comment for kick"
+" comment: comment for kick\n"
+"\n"
+"It is possible to kick/ban with a mask, nick will be extracted from mask and "
+"replaced by \"*\", for example:\n"
+"  /kickban toto!*@host.com\n"
+"  will ban \"*!*@host.com\" and then kick \"toto\"."
 msgstr ""
-"     canal: canal donde está el usuario\n"
-"     apodo: apodo a expulsar y vetar\n"
-"comentario: comentario de la expulsión"
 
 msgid "close client-server connection"
 msgstr "cerrar la conexión cliente-servidor"
@@ -5564,6 +5570,15 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
+
+#~ msgid ""
+#~ " channel: channel where user is\n"
+#~ "nickname: nickname to kick and ban\n"
+#~ " comment: comment for kick"
+#~ msgstr ""
+#~ "     canal: canal donde está el usuario\n"
+#~ "     apodo: apodo a expulsar y vetar\n"
+#~ "comentario: comentario de la expulsión"
 
 #, fuzzy
 #~ msgid "list of alias"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-14 17:29+0200\n"
+"POT-Creation-Date: 2009-10-19 11:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2387,6 +2387,10 @@ msgid "%s%s: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
+msgid "%s%s: mask must begin with nick"
+msgstr ""
+
+#, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr ""
 
@@ -2690,7 +2694,12 @@ msgstr ""
 msgid ""
 " channel: channel where user is\n"
 "nickname: nickname to kick and ban\n"
-" comment: comment for kick"
+" comment: comment for kick\n"
+"\n"
+"It is possible to kick/ban with a mask, nick will be extracted from mask and "
+"replaced by \"*\", for example:\n"
+"  /kickban toto!*@host.com\n"
+"  will ban \"*!*@host.com\" and then kick \"toto\"."
 msgstr ""
 
 msgid "close client-server connection"
