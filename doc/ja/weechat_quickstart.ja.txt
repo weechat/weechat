@@ -7,7 +7,7 @@ FlashCode <flashcode@flashtux.org>
 WeeChatの起動する
 ------------
 
-TODO:X用ターミナルエミュレータはrxvt-unicodeを推奨します(UTF-8がサポートされており、
+X用ターミナルエミュレータはrxvt-unicodeを推奨します(UTF-8がサポートされており、
 デフォルトのキーバインドで問題が発生しないためです)。
 
 シェルから"weechat-curses"を実行してください。

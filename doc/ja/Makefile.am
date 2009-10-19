@@ -23,7 +23,7 @@ all-local: weechat_quickstart.ja.html
 
 # quickstart
 weechat_quickstart.ja.html: weechat_quickstart.ja.txt
-	$(ASCIIDOC) -a toc -a toc_title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.ja.html weechat_quickstart.ja.txt
+	$(ASCIIDOC) -a toc -a toc_title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.ja.html weechat_quickstart.ja.txt
 
 # install docs
 
