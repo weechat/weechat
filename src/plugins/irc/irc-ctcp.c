@@ -809,7 +809,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
     
     while (arguments && arguments[0])
     {
-        pos_end = strchr (arguments + 1, '\01');
+        pos_end = strrchr (arguments + 1, '\01');
         if (pos_end)
             pos_end[0] = '\0';
         
