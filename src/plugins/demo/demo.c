@@ -388,7 +388,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_plugin = plugin;
     
     weechat_hook_command ("demo_printf",
-                          N_("print some messages on current ubffer"),
+                          N_("print some messages on current buffer"),
                           N_("[text]"),
                           N_("text: write this text"),
                           "",

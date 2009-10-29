@@ -28,12 +28,18 @@ relay_la_SOURCES = relay.c \
                    relay-client.h \
                    relay-command.c \
                    relay-command.h \
+                   relay-completion.c \
+                   relay-completion.h \
                    relay-config.c \
                    relay-config.h \
                    relay-info.c \
                    relay-info.h \
-                   relay-network.c \
-                   relay-network.h \
+                   relay-protocol-irc.c \
+                   relay-protocol-irc.h \
+                   relay-protocol-weechat.c \
+                   relay-protocol-weechat.h \
+                   relay-server.c \
+                   relay-server.h \
                    relay-upgrade.c \
                    relay-upgrade.h
 

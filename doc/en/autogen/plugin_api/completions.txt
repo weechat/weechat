@@ -39,6 +39,12 @@
 
 | python | python_script | list of scripts
 
+| relay | relay_free_port | first free port for relay plugin
+
+| relay | relay_protocol_name | all possible protocol.name for relay plugin
+
+| relay | relay_relays | protocol.name of current relays for relay plugin
+
 | ruby | ruby_script | list of scripts
 
 | tcl | tcl_script | list of scripts

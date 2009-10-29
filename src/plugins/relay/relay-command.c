@@ -28,6 +28,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-server.h"
 
 
 /*
@@ -61,10 +62,15 @@ relay_command_client_list (int full)
             if (full)
             {
                 weechat_printf (NULL,
-                                _("%3d. %s, started on: %s, last activity: %s, "
-                                  "bytes: %lu recv, %lu sent"),
+                                _("%3d. %s%s%s (%s%s%s), started on: %s, last "
+                                  "activity: %s, bytes: %lu recv, %lu sent"),
                                 i,
+                                RELAY_COLOR_CHAT_HOST,
                                 ptr_client->address,
+                                RELAY_COLOR_CHAT,
+                                RELAY_COLOR_CHAT_BUFFER,
+                                relay_client_status_string[ptr_client->status],
+                                RELAY_COLOR_CHAT,
                                 date_start,
                                 date_activity,
                                 ptr_client->bytes_recv,
@@ -72,16 +78,65 @@ relay_command_client_list (int full)
             }
             else
             {
-                weechat_printf (NULL,
-                                _("%3d. %s, started on: %s"),
-                                i,
-                                ptr_client->address);
+                if (!RELAY_CLIENT_HAS_ENDED(ptr_client->status))
+                {
+                    weechat_printf (NULL,
+                                    _("%3d. %s%s%s, started on: %s"),
+                                    i,
+                                    RELAY_COLOR_CHAT_HOST,
+                                    ptr_client->address,
+                                    RELAY_COLOR_CHAT,
+                                    date_start);
+                }
             }
             i++;
         }
     }
     else
         weechat_printf (NULL, _("No client for relay"));
+}
+
+/*
+ * relay_command_server_list: list servers (list of port on which we are
+ *                            listening)
+ */
+
+void
+relay_command_server_list ()
+{
+    struct t_relay_server *ptr_server;
+    int i;
+    char date_start[128];
+    struct tm *date_tmp;
+    
+    if (relay_servers)
+    {
+        weechat_printf (NULL, "");
+        weechat_printf (NULL, _("Listening on ports:"));
+        i = 1;
+        for (ptr_server = relay_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            date_tmp = localtime (&(ptr_server->start_time));
+            strftime (date_start, sizeof (date_start),
+                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            
+            weechat_printf (NULL,
+                            _("%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"),
+                            i,
+                            RELAY_COLOR_CHAT_BUFFER,
+                            ptr_server->port,
+                            RELAY_COLOR_CHAT,
+                            RELAY_COLOR_CHAT_BUFFER,
+                            relay_protocol_string[ptr_server->protocol],
+                            ptr_server->protocol_string,
+                            RELAY_COLOR_CHAT,
+                            date_start);
+            i++;
+        }
+    }
+    else
+        weechat_printf (NULL, _("No server for relay"));
 }
 
 /*
@@ -92,21 +147,80 @@ int
 relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
+    struct t_relay_server *ptr_server;
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) argv_eol;
 
-    if ((argc > 1) && (weechat_strcasecmp (argv[1], "list") == 0))
+    if (argc > 1)
     {
-        relay_command_client_list (0);
-        return WEECHAT_RC_OK;
-    }
-    
-    if ((argc > 1) && (weechat_strcasecmp (argv[1], "listfull") == 0))
-    {
-        relay_command_client_list (1);
-        return WEECHAT_RC_OK;
+        if (weechat_strcasecmp (argv[1], "list") == 0)
+        {
+            relay_command_client_list (0);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        {
+            relay_command_client_list (1);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (weechat_strcasecmp (argv[1], "listrelay") == 0)
+        {
+            relay_command_server_list ();
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_strcasecmp (argv[1], "add") == 0)
+        {
+            if (argc >= 4)
+            {
+                relay_config_create_option_port (NULL,
+                                                 relay_config_file,
+                                                 relay_config_section_port,
+                                                 argv[2],
+                                                 argv_eol[3]);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                            _("%s%s: missing arguments for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            "relay add");
+            }
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_strcasecmp (argv[1], "del") == 0)
+        {
+            if (argc >= 3)
+            {
+                ptr_server = relay_server_search (argv_eol[2]);
+                if (ptr_server)
+                {
+                    relay_server_free (ptr_server);
+                }
+                else
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: relay \"%s\" not found"),
+                                    weechat_prefix ("error"),
+                                    RELAY_PLUGIN_NAME,
+                                    argv_eol[2]);
+                }
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: missing arguments for \"%s\" "
+                                  "command"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                "relay add");
+            }
+            return WEECHAT_RC_OK;
+        }
     }
     
     if (!relay_buffer)
@@ -145,10 +259,24 @@ relay_command_init ()
 {
     weechat_hook_command ("relay",
                           N_("relay control"),
-                          "[list | listfull]",
-                          N_("    list: list relay clients\n"
-                             "listfull: list relay clients (verbose)\n\n"
+                          N_("[list | listfull | add protocol.name port | "
+                             "del protocol.name]"),
+                          N_("         list: list relay clients (only active "
+                             "relays)\n"
+                             "     listfull: list relay clients (verbose, all "
+                             "relays)\n"
+                             "    listrelay: list relays (name and port)\n"
+                             "          add: add relay for a protocol + name\n"
+                             "          del: remove relay for a protocol + name\n"
+                             "protocol.name: protocol and name to relay\n"
+                             "               for example: irc.freenode\n"
+                             "         port: port used for relay\n\n"
                              "Without argument, this command opens buffer "
                              "with list of relay clients."),
-                          "list|listfull", &relay_command_relay, NULL);
+                          "list %(relay_relays)"
+                          " || listfull %(relay_relays)"
+                          " || listrelay"
+                          " || add %(relay_protocol_name) %(relay_free_port)"
+                          " || del %(relay_relays)",
+                          &relay_command_relay, NULL);
 }

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -2621,7 +2621,8 @@ msgstr ""
 "testowy_sygnał: sygnał: %s, typ_danych: %s, dane_sygnału: 0x%lx (nieznany "
 "typ)"
 
-msgid "print some messages on current ubffer"
+#, fuzzy
+msgid "print some messages on current buffer"
 msgstr "wyświetl troche wiadomości w obecnym buforze"
 
 msgid "[text]"
@@ -5038,12 +5039,15 @@ msgstr "  [P] Wyczyść skończone"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Zamknij ten bufor"
 
-#, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s[%s%s%s%s] %s (rozpoczęto: %s)"
 
-#, c-format
-msgid "%s%-26s received: %s, sent: %s"
+msgid "ended on: "
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
 msgstr "%s%-26s odebrano: %s, wysłano: %s"
 
 msgid "List of clients for relay"
@@ -5062,54 +5066,93 @@ msgid "disconnected"
 msgstr "rozłączono"
 
 #, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
-
-#, c-format
-msgid "%s: new client @ %s"
-msgstr "%s: nowy klient @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s:za mało pamięci dla nowego klienta"
 
-#, c-format
-msgid "%s%s: authentication failed with client @ %s"
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
 msgstr "%s%s: zutoryzacja z klientem nie powiodła się @ %s"
 
-#, c-format
-msgid "%s: disconnected from client @ %s"
+#, fuzzy, c-format
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: rozłączono od klienta @ %s"
 
 msgid "Clients for relay:"
 msgstr "Klienci do przekazania:"
 
-#, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+#, fuzzy, c-format
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 "%3d. %s, rozpoczęto: %s, ostatnia aktywność: %s, bajtów: %lu otrzymano, %lu "
 "wysłano"
 
-#, c-format
-msgid "%3d. %s, started on: %s"
+#, fuzzy, c-format
+msgid "%3d. %s%s%s, started on: %s"
 msgstr "%3d. %s, rozpoczęto: %s"
 
 msgid "No client for relay"
 msgstr "Brak klientów do przesłania"
 
+#, fuzzy
+msgid "Listening on ports:"
+msgstr "Lista proxy:"
+
+#, fuzzy, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "%3d. %s, rozpoczęto: %s"
+
+#, fuzzy
+msgid "No server for relay"
+msgstr "Brak klientów do przesłania"
+
+#, fuzzy, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr "%s%s: serwer \"%s\" nie został znaleziony"
+
 msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr ""
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
-"    list: lista klientów do przekazania\n"
-"listfull: lista klientów do przekazania (szczegułowa)\n"
-"\n"
-"Bez argumentów komenda otworzy bufor z lista zdalnych klientów."
+
+#, fuzzy
+msgid "all possible protocol.name for relay plugin"
+msgstr "kontrola debugu dla rdzenia/wtyczek"
+
+#, fuzzy
+msgid "protocol.name of current relays for relay plugin"
+msgstr "kontrola debugu dla rdzenia/wtyczek"
+
+#, fuzzy
+msgid "first free port for relay plugin"
+msgstr "kontrola debugu dla rdzenia/wtyczek"
+
+#, fuzzy, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr "%sBłąd: filtr \"%s\" już istnieje"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s%s: nieznany protokół xfer \"%s\""
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
@@ -5138,41 +5181,40 @@ msgstr "kolor statusu \"authentication failed\""
 msgid "text color for \"disconnected\" status"
 msgstr "kolor statusu \"disconnected\" "
 
-msgid "enable relay"
-msgstr "włącz przekazywanie"
-
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+msgid "maximum number of clients connecting to a port"
 msgstr ""
-"numer portu (albo przedział), na którym nasłuchuje wtyczka relay (składnia: "
-"pojedynczy port, np. 5000 lub przedział portó, np. 5000-5015, zaleca się "
-"stosowanie portów powyżej 1024, ponieważ tylko root może używać portów "
-"poniżej 1024)"
 
 msgid "list of relay clients"
 msgstr "lista zdalnych klientów"
 
 #, c-format
-msgid "%s: socket closed"
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgstr ""
+"%s%s: nie znaleziono proxy \"%s\" dla serwer \"%s\", nie można połączyć"
+
+#, fuzzy, c-format
+msgid "%s: socket closed for %s.%s (port %d)"
 msgstr "%s: gniazdo zamknięte"
 
-#, c-format
-msgid "%s%s: cannot accept client"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: nie można zaakceptować klienta"
 
-#, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
-msgstr "%s%s: nie zdefiniowana opcja \"listen_port_range\" "
+#, fuzzy, c-format
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgstr "%s%s: nie można zaakceptować klienta"
 
-#, c-format
-msgid "%s%s: cannot find available port for listening"
-msgstr "%s%s: nie można znaleźc dostępnego portu do nasłuchu"
-
-#, c-format
-msgid "%s: listening on port %d"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
 msgstr "%s: nasłuchuję na porcie %d"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for listening on new port"
+msgstr "%s%s: za mało pamięci na nowy xfer"
 
 #, c-format
 msgid ""
@@ -5768,6 +5810,43 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#, fuzzy
+#~ msgid "%s%s: bind error on port %d"
+#~ msgstr "%s: nasłuchuję na porcie %d"
+
+#~ msgid "%s: new client @ %s"
+#~ msgstr "%s: nowy klient @ %s"
+
+#~ msgid "enable relay"
+#~ msgstr "włącz przekazywanie"
+
+#~ msgid ""
+#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
+#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
+#~ "use ports greater than 1024, because only root can use ports below 1024)"
+#~ msgstr ""
+#~ "numer portu (albo przedział), na którym nasłuchuje wtyczka relay "
+#~ "(składnia: pojedynczy port, np. 5000 lub przedział portó, np. 5000-5015, "
+#~ "zaleca się stosowanie portów powyżej 1024, ponieważ tylko root może "
+#~ "używać portów poniżej 1024)"
+
+#~ msgid "%s%s: option \"listen_port_range\" is not defined"
+#~ msgstr "%s%s: nie zdefiniowana opcja \"listen_port_range\" "
+
+#~ msgid "%s%s: cannot find available port for listening"
+#~ msgstr "%s%s: nie można znaleźc dostępnego portu do nasłuchu"
+
+#~ msgid ""
+#~ "    list: list relay clients\n"
+#~ "listfull: list relay clients (verbose)\n"
+#~ "\n"
+#~ "Without argument, this command opens buffer with list of relay clients."
+#~ msgstr ""
+#~ "    list: lista klientów do przekazania\n"
+#~ "listfull: lista klientów do przekazania (szczegułowa)\n"
+#~ "\n"
+#~ "Bez argumentów komenda otworzy bufor z lista zdalnych klientów."
 
 #~ msgid ""
 #~ " channel: channel where user is\n"

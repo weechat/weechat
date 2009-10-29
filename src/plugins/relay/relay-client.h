@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_RELAY_CLIENT_H
 #define __WEECHAT_RELAY_CLIENT_H 1
 
+struct t_relay_server;
+
 /* relay status */
 
 enum t_relay_status
@@ -45,12 +47,18 @@ struct t_relay_client
     int sock;                          /* socket for connection             */
     char *address;                     /* string with IP address            */
     enum t_relay_status status;        /* status (connecting, active,..)    */
+    enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
+    char *protocol_string;             /* string used for protocol          */
+                                       /* example: server for irc protocol  */
+    time_t listen_start_time;          /* when listening started            */
     time_t start_time;                 /* time of client connection         */
+    time_t end_time;                   /* time of client disconnection      */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
     struct t_hook *hook_timer;         /* timeout for recever accept        */
     time_t last_activity;              /* time of last byte received/sent   */
     unsigned long bytes_recv;          /* bytes received from client        */
     unsigned long bytes_sent;          /* bytes sent to client              */
+    void *protocol_data;               /* data depending on protocol used   */
     struct t_relay_client *prev_client;/* link to previous client           */
     struct t_relay_client *next_client;/* link to next client               */
 };
@@ -62,10 +70,12 @@ extern int relay_client_count;
 
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
-extern struct t_relay_client *relay_client_new (int sock, char *address);
+extern struct t_relay_client *relay_client_new (int sock, char *address,
+                                                struct t_relay_server *server);
 extern void relay_client_set_status (struct t_relay_client *client,
                                      enum t_relay_status status);
 extern void relay_client_free (struct t_relay_client *client);
+extern void relay_client_free_all ();
 extern void relay_client_disconnect (struct t_relay_client *client);
 extern void relay_client_disconnect_all ();
 extern int relay_client_add_to_infolist (struct t_infolist *infolist,

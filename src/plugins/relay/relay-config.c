@@ -27,10 +27,11 @@
 #include "relay-config.h"
 #include "relay-client.h"
 #include "relay-buffer.h"
-#include "relay-network.h"
+#include "relay-server.h"
 
 
 struct t_config_file *relay_config_file = NULL;
+struct t_config_section *relay_config_section_port = NULL;
 
 /* relay config, look section */
 
@@ -45,8 +46,7 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 
 /* relay config, network section */
 
-struct t_config_option *relay_config_network_enabled;
-struct t_config_option *relay_config_network_listen_port_range;
+struct t_config_option *relay_config_network_max_clients;
 
 
 /*
@@ -66,23 +66,149 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * relay_config_change_network_enabled_cb: callback called when user
- *                                         enables/disables relay
+ * relay_config_change_port_cb: callback called when relay port option is
+ *                              modified
  */
 
-void
-relay_config_change_network_enabled_cb (void *data,
-                                        struct t_config_option *option)
+int
+relay_config_check_port_cb (void *data, struct t_config_option *option,
+                            const char *value)
 {
+    char *error;
+    long port;
+    struct t_relay_server *ptr_server;
+    
     /* make C compiler happy */
     (void) data;
     (void) option;
     
-    if ((weechat_config_boolean(relay_config_network_enabled) && relay_network_sock < 0)
-        || (!weechat_config_boolean(relay_config_network_enabled) && relay_network_sock >= 0))
+    error = NULL;
+    port = strtol (value, &error, 10);
+    ptr_server = relay_server_search_port ((int)port);
+    if (ptr_server)
     {
-        relay_network_init ();
+        weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME, (int)port);
+        return 0;
     }
+    
+    return 1;
+}
+
+/*
+ * relay_config_change_port_cb: callback called when relay port option is
+ *                              modified
+ */
+
+void
+relay_config_change_port_cb (void *data, struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_server)
+    {
+        relay_server_update_port (ptr_server,
+                                  *((int *)weechat_config_option_get_pointer (option, "value")));
+    }
+}
+
+/*
+ * relay_config_delete_port_cb: callback called when relay port option is
+ *                              deleted
+ */
+
+void
+relay_config_delete_port_cb (void *data, struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_server)
+        relay_server_free (ptr_server);
+}
+
+/*
+ * relay_config_create_option_port: create a relay for a port
+ */
+
+int
+relay_config_create_option_port (void *data,
+                                 struct t_config_file *config_file,
+                                 struct t_config_section *section,
+                                 const char *option_name,
+                                 const char *value)
+{
+    int rc, protocol_number;
+    char *error, *protocol, *protocol_string;
+    long port;
+    struct t_relay_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    
+    relay_server_get_protocol_string (option_name,
+                                      &protocol, &protocol_string);
+    
+    protocol_number = -1;
+    port = -1;
+    
+    if (protocol && protocol_string)
+        protocol_number = relay_protocol_search (protocol);
+    
+    if (protocol_number < 0)
+    {
+        weechat_printf (NULL, _("%s%s: error: unknown protocol \"%s\""),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME, protocol);
+        rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    }
+    
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        error = NULL;
+        port = strtol (value, &error, 10);
+        ptr_server = relay_server_search_port ((int)port);
+        if (ptr_server)
+        {
+            weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME, (int)port);
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
+    }
+    
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        /* create config option */
+        weechat_config_new_option (
+            config_file, section,
+            option_name, "integer", NULL,
+            NULL, 0, 65535, "", value, 0,
+            &relay_config_check_port_cb, NULL,
+            &relay_config_change_port_cb, NULL,
+            &relay_config_delete_port_cb, NULL);
+        
+        relay_server_new (protocol_number, protocol_string, port);
+        
+        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+    
+    if (protocol)
+        free (protocol);
+    if (protocol_string)
+        free (protocol_string);
+    
+    return rc;
 }
 
 /*
@@ -201,20 +327,27 @@ relay_config_init ()
         return 0;
     }
     
-    relay_config_network_enabled = weechat_config_new_option (
+    relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("enable relay"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        &relay_config_change_network_enabled_cb, NULL, NULL, NULL);
-    relay_config_network_listen_port_range = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "listen_port_range", "string",
-        N_("port number (or range of ports) that relay plugin listens on "
-           "(syntax: a single port, ie. 5000 or a port "
-           "range, ie. 5000-5015, it's recommended to use ports greater than "
-           "1024, because only root can use ports below 1024)"),
-        NULL, 0, 0, "22373-22400", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "max_clients", "integer",
+        N_("maximum number of clients connecting to a port"),
+        NULL, 1, 1024, "5", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    
+    ptr_section = weechat_config_new_section (relay_config_file, "port",
+                                              1, 1,
+                                              NULL, NULL,
+                                              NULL, NULL,
+                                              NULL, NULL,
+                                              &relay_config_create_option_port, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (relay_config_file);
+        return 0;
+    }
+    
+    relay_config_section_port = ptr_section;
     
     return 1;
 }

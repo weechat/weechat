@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2386,8 +2386,9 @@ msgid ""
 "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 
-msgid "print some messages on current ubffer"
-msgstr ""
+#, fuzzy
+msgid "print some messages on current buffer"
+msgstr "nombre de canal no encontrado para el búfer"
 
 #, fuzzy
 msgid "[text]"
@@ -4805,11 +4806,14 @@ msgid "  [Q] Close this buffer"
 msgstr "  [Q] Cerrar la vista DCC"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s%s está ausente: %s\n"
 
+msgid "ended on: "
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s%-26s received: %s, sent: %s"
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
 msgstr "DCC: fichero %s%s%s"
 
 msgid "List of clients for relay"
@@ -4831,12 +4835,8 @@ msgstr "Falló"
 msgid "disconnected"
 msgstr "conectado"
 
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s error enviando datos al servidor IRC\n"
-
 #, c-format
-msgid "%s: new client @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4844,36 +4844,81 @@ msgid "%s%s: not enough memory for new client"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client @ %s"
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
 msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client @ %s"
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "Â¡Desconectado del servidor!\n"
 
 msgid "Clients for relay:"
 msgstr ""
 
 #, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 
-#, c-format
-msgid "%3d. %s, started on: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%3d. %s%s%s, started on: %s"
+msgstr "%sCanal %s%s%s creado en %s"
 
 msgid "No client for relay"
 msgstr ""
 
+#, fuzzy
+msgid "Listening on ports:"
+msgstr "Lista de proxies:"
+
+#, fuzzy, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "%s%s%s está ausente: %s\n"
+
+#, fuzzy
+msgid "No server for relay"
+msgstr "Ningún servidor"
+
+#, fuzzy, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr "%s%s: servidor \"%s\" no encontrado"
+
 msgid "relay control"
 msgstr ""
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr ""
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+
+msgid "all possible protocol.name for relay plugin"
+msgstr ""
+
+msgid "protocol.name of current relays for relay plugin"
+msgstr ""
+
+#, fuzzy
+msgid "first free port for relay plugin"
+msgstr "Lista de alias:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr "%sError: el filtro \"%s\" ya existe"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s opción desconocida para el comando \"%s\"\n"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -4910,42 +4955,42 @@ msgstr "color para el estado dcc \"fallo\""
 msgid "text color for \"disconnected\" status"
 msgstr "color para el estado dcc \"conectando\""
 
-msgid "enable relay"
+msgid "maximum number of clients connecting to a port"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
-msgstr ""
-"restringe el dcc de salida a utilizar únicamente los puertos del rango "
-"especificado (útil para NAT) (sintaxis: un puerto simple, e.g. 5000, o un "
-"rango de puertos, e.g. 5000-5015, un valor vacío significa cualquier puerto)"
 
 #, fuzzy
 msgid "list of relay clients"
 msgstr "Lista de alias:\n"
 
 #, fuzzy, c-format
-msgid "%s: socket closed"
+msgid "%s%s: error sending data to client %s"
+msgstr "%s error enviando datos al servidor IRC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgstr ""
+"%s%s: proxy \"%s\" no encontrado para el servidor \"%s\", no es posible "
+"conectarse"
+
+#, fuzzy, c-format
+msgid "%s: socket closed for %s.%s (port %d)"
 msgstr "La tubería FIFO está cerrada\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client"
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
+msgstr "%s no ha sido posible crear el socket\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr "%s no ha sido posible crear el socket\n"
 
 #, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: cannot find available port for listening"
-msgstr "%s no puede encontrar un puerto disponible para el DCC\n"
-
-#, c-format
-msgid "%s: listening on port %d"
-msgstr ""
+msgid "%s%s: not enough memory for listening on new port"
+msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
 #, c-format
 msgid ""
@@ -5571,6 +5616,25 @@ msgstr "%s no es posible crear el servidor\n"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
 
+#, fuzzy
+#~ msgid "%s%s: bind error on port %d"
+#~ msgstr "%s no ha sido posible crear el socket\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
+#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
+#~ "use ports greater than 1024, because only root can use ports below 1024)"
+#~ msgstr ""
+#~ "restringe el dcc de salida a utilizar únicamente los puertos del rango "
+#~ "especificado (útil para NAT) (sintaxis: un puerto simple, e.g. 5000, o un "
+#~ "rango de puertos, e.g. 5000-5015, un valor vacío significa cualquier "
+#~ "puerto)"
+
+#, fuzzy
+#~ msgid "%s%s: cannot find available port for listening"
+#~ msgstr "%s no puede encontrar un puerto disponible para el DCC\n"
+
 #~ msgid ""
 #~ " channel: channel where user is\n"
 #~ "nickname: nickname to kick and ban\n"
@@ -6181,10 +6245,6 @@ msgstr "%s falta un argumento para la opción --dir\n"
 #, fuzzy
 #~ msgid "%s%s: disconnecting client @ %s"
 #~ msgstr "%s: Reconexión al servidor en %d segundos\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot bind socket"
-#~ msgstr "%s no ha sido posible crear el socket\n"
 
 #, fuzzy
 #~ msgid "  [Q] Close client list"

@@ -25,4 +25,22 @@
 
 extern struct t_weechat_plugin *weechat_relay_plugin;
 
+/* relay protocol */
+
+enum t_relay_protocol
+{
+    RELAY_PROTOCOL_WEECHAT = 0,        /* WeeChat protocol                  */
+    RELAY_PROTOCOL_IRC,                /* IRC protocol (IRC proxy)          */
+    /* number of relay protocols */
+    RELAY_NUM_PROTOCOLS,
+};
+
+#define RELAY_COLOR_CHAT weechat_color("chat")
+#define RELAY_COLOR_CHAT_HOST weechat_color("chat_host")
+#define RELAY_COLOR_CHAT_BUFFER weechat_color("chat_buffer")
+
+extern char *relay_protocol_string[];
+
+extern int relay_protocol_search (const char *name);
+
 #endif /* relay.h */

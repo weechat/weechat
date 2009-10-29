@@ -1,10 +1,16 @@
-&bull; *`/relay`* `[list | listfull]`::
+&bull; *`/relay`* `[list | listfull | add protocol.name port | del protocol.name]`::
 
 ........................................
   relay control
 
-      list: list relay clients
-  listfull: list relay clients (verbose)
+           list: list relay clients (only active relays)
+       listfull: list relay clients (verbose, all relays)
+      listrelay: list relays (name and port)
+            add: add relay for a protocol + name
+            del: remove relay for a protocol + name
+  protocol.name: protocol and name to relay
+                 for example: irc.freenode
+           port: port used for relay
   
   Without argument, this command opens buffer with list of relay clients.
 ........................................

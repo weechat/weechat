@@ -197,6 +197,10 @@
         canal: canal où l'utilisateur se trouve
        pseudo: pseudo à éliminer et bannir
   commentaire: commentaire pour l'élimination
+  
+  Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*", par exemple :
+    /kickban toto!*@host.com
+    bannira "*!*@host.com" puis éliminera "toto".
 ........................................
 
 &bull; *`/kill`* `pseudo commentaire`::

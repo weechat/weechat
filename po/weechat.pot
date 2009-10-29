@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2164,7 +2164,7 @@ msgid ""
 "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 
-msgid "print some messages on current ubffer"
+msgid "print some messages on current buffer"
 msgstr ""
 
 msgid "[text]"
@@ -4231,11 +4231,14 @@ msgid "  [Q] Close this buffer"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
+msgstr ""
+
+msgid "ended on: "
 msgstr ""
 
 #, c-format
-msgid "%s%-26s received: %s, sent: %s"
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
 msgstr ""
 
 msgid "List of clients for relay"
@@ -4254,11 +4257,7 @@ msgid "disconnected"
 msgstr ""
 
 #, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr ""
-
-#, c-format
-msgid "%s: new client @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
 msgstr ""
 
 #, c-format
@@ -4266,35 +4265,77 @@ msgid "%s%s: not enough memory for new client"
 msgstr ""
 
 #, c-format
-msgid "%s%s: authentication failed with client @ %s"
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
 msgstr ""
 
 #, c-format
-msgid "%s: disconnected from client @ %s"
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr ""
 
 msgid "Clients for relay:"
 msgstr ""
 
 #, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 
 #, c-format
-msgid "%3d. %s, started on: %s"
+msgid "%3d. %s%s%s, started on: %s"
 msgstr ""
 
 msgid "No client for relay"
 msgstr ""
 
+msgid "Listening on ports:"
+msgstr ""
+
+#, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr ""
+
+msgid "No server for relay"
+msgstr ""
+
+#, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr ""
+
 msgid "relay control"
 msgstr ""
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr ""
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
+msgstr ""
+
+msgid "all possible protocol.name for relay plugin"
+msgstr ""
+
+msgid "protocol.name of current relays for relay plugin"
+msgstr ""
+
+msgid "first free port for relay plugin"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
 msgstr ""
 
 msgid "auto open relay buffer when a new client is connecting"
@@ -4324,36 +4365,38 @@ msgstr ""
 msgid "text color for \"disconnected\" status"
 msgstr ""
 
-msgid "enable relay"
-msgstr ""
-
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+msgid "maximum number of clients connecting to a port"
 msgstr ""
 
 msgid "list of relay clients"
 msgstr ""
 
 #, c-format
-msgid "%s: socket closed"
+msgid "%s%s: error sending data to client %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot accept client"
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
+msgid "%s: socket closed for %s.%s (port %d)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot find available port for listening"
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr ""
 
 #, c-format
-msgid "%s: listening on port %d"
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for listening on new port"
 msgstr ""
 
 #, c-format

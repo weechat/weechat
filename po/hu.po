@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2511,8 +2511,9 @@ msgid ""
 "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
 msgstr ""
 
-msgid "print some messages on current ubffer"
-msgstr ""
+#, fuzzy
+msgid "print some messages on current buffer"
+msgstr "szobanév nem található a pufferhez"
 
 #, fuzzy
 msgid "[text]"
@@ -4907,11 +4908,14 @@ msgid "  [Q] Close this buffer"
 msgstr "  [Q] DCC nézet bezárása"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s%s távol: %s\n"
 
+msgid "ended on: "
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s%-26s received: %s, sent: %s"
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
 msgstr "DCC: fájl %s%s%s"
 
 msgid "List of clients for relay"
@@ -4933,12 +4937,8 @@ msgstr "Sikertelen"
 msgid "disconnected"
 msgstr "csatlakozva"
 
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s adatküldési hiba az IRC szerveren\n"
-
 #, c-format
-msgid "%s: new client @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4946,36 +4946,81 @@ msgid "%s%s: not enough memory for new client"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client @ %s"
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client @ %s"
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 msgid "Clients for relay:"
 msgstr ""
 
 #, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 
-#, c-format
-msgid "%3d. %s, started on: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%3d. %s%s%s, started on: %s"
+msgstr "Szoba létrehozva: %s"
 
 msgid "No client for relay"
 msgstr ""
 
+#, fuzzy
+msgid "Listening on ports:"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "%s%s%s távol: %s\n"
+
+#, fuzzy
+msgid "No server for relay"
+msgstr "Nincs szerver.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
 msgid "relay control"
 msgstr ""
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr ""
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+
+msgid "all possible protocol.name for relay plugin"
+msgstr ""
+
+msgid "protocol.name of current relays for relay plugin"
+msgstr ""
+
+#, fuzzy
+msgid "first free port for relay plugin"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -5012,42 +5057,40 @@ msgstr "\"failed\" dcc státusz színe"
 msgid "text color for \"disconnected\" status"
 msgstr "\"connecting\" dcc státusz színe"
 
-msgid "enable relay"
+msgid "maximum number of clients connecting to a port"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
-msgstr ""
-"korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
-"használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
-"port intervallum, pl. 5000-5015, üresen hagyva tetszőleges port)"
 
 #, fuzzy
 msgid "list of relay clients"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "%s: socket closed"
+msgid "%s%s: error sending data to client %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s: socket closed for %s.%s (port %d)"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client"
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: cannot find available port for listening"
-msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
-
-#, c-format
-msgid "%s: listening on port %d"
-msgstr ""
+msgid "%s%s: not enough memory for listening on new port"
+msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, c-format
 msgid ""
@@ -5656,6 +5699,24 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%s%s: bind error on port %d"
+#~ msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
+#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
+#~ "use ports greater than 1024, because only root can use ports below 1024)"
+#~ msgstr ""
+#~ "korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
+#~ "használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy "
+#~ "egy port intervallum, pl. 5000-5015, üresen hagyva tetszőleges port)"
+
+#, fuzzy
+#~ msgid "%s%s: cannot find available port for listening"
+#~ msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 
 #~ msgid ""
 #~ " channel: channel where user is\n"
@@ -6314,10 +6375,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy
 #~ msgid "%s%s: disconnecting client @ %s"
 #~ msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot bind socket"
-#~ msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy
 #~ msgid "  [Q] Close client list"

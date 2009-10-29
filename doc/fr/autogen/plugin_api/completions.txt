@@ -39,6 +39,12 @@
 
 | python | python_script | liste des scripts
 
+| relay | relay_free_port | premier port libre pour l'extension relay
+
+| relay | relay_protocol_name | tous les protocole.nom possible pour l'extension relay
+
+| relay | relay_relays | protocole.nom des relais courants pour l'extension relay
+
 | ruby | ruby_script | liste des scripts
 
 | tcl | tcl_script | liste des scripts

@@ -43,7 +43,7 @@ void
 relay_buffer_refresh (const char *hotlist)
 {
     struct t_relay_client *ptr_client, *client_selected;
-    char str_color[256], status[64], date_start[128];
+    char str_color[256], status[64], date_start[128], date_end[128];
     char *str_recv, *str_sent;
     int i, length, line;
     struct tm *date_tmp;
@@ -95,10 +95,17 @@ relay_buffer_refresh (const char *hotlist)
             date_tmp = localtime (&(ptr_client->start_time));
             strftime (date_start, sizeof (date_start),
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
+            date_end[0] = '\0';
+            if (ptr_client->end_time > 0)
+            {
+                date_tmp = localtime (&(ptr_client->end_time));
+                strftime (date_end, sizeof (date_end),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+            }
             
             /* first line with status and start time */
             weechat_printf_y (relay_buffer, (line * 2) + 2,
-                              _("%s%s[%s%s%s%s] %s (started on: %s)"),
+                              _("%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"),
                               weechat_color(str_color),
                               (line == relay_buffer_selected_line) ?
                               "*** " : "    ",
@@ -107,15 +114,19 @@ relay_buffer_refresh (const char *hotlist)
                               weechat_color ("reset"),
                               weechat_color (str_color),
                               ptr_client->address,
-                              date_start);
+                              date_start,
+                              (ptr_client->end_time > 0) ? ", " : "",
+                              (ptr_client->end_time > 0) ? _("ended on: ") : "",
+                              (ptr_client->end_time > 0) ? date_end : "");
             
-            /* second line with bytes recv/sent */
+            /* second line with protocol and bytes recv/sent */
             str_recv = weechat_string_format_size (ptr_client->bytes_recv);
             str_sent = weechat_string_format_size (ptr_client->bytes_sent);
             weechat_printf_y (relay_buffer, (line * 2) + 3,
-                              _("%s%-26s received: %s, sent: %s"),
+                              _("%s%-26s protocol: %s, received: %s, sent: %s"),
                               weechat_color(str_color),
                               " ",
+                              relay_protocol_string[ptr_client->protocol],
                               (str_recv) ? str_recv : "?",
                               (str_sent) ? str_sent : "?");
             if (str_recv)

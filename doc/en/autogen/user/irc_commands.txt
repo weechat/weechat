@@ -197,6 +197,10 @@
    channel: channel where user is
   nickname: nickname to kick and ban
    comment: comment for kick
+  
+  It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*", for example:
+    /kickban toto!*@host.com
+    will ban "*!*@host.com" and then kick "toto".
 ........................................
 
 &bull; *`/kill`* `nickname comment`::

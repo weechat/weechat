@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2587,7 +2587,8 @@ msgid ""
 msgstr ""
 "ukázkový_signál: signál: %s, typ_dat: %s, data_signál: 0x%lx (neznámý typ)"
 
-msgid "print some messages on current ubffer"
+#, fuzzy
+msgid "print some messages on current buffer"
 msgstr "vypsat nějaké zprávy do aktuálního bufferu"
 
 msgid "[text]"
@@ -4980,12 +4981,15 @@ msgstr "  [P] Pročistit ukončené"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Zavřít tento buffer"
 
-#, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s[%s%s%s%s] %s (spuštěn: %s)"
 
-#, c-format
-msgid "%s%-26s received: %s, sent: %s"
+msgid "ended on: "
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
 msgstr "%s%-26s obdrženo: %s, posláno: %s"
 
 msgid "List of clients for relay"
@@ -5004,54 +5008,93 @@ msgid "disconnected"
 msgstr "odpojen"
 
 #, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: chyba při zasílání dat na klienta %s"
-
-#, c-format
-msgid "%s: new client @ %s"
-msgstr "%s: nový klient @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: nedostatek paměti pro nového klienta"
 
-#, c-format
-msgid "%s%s: authentication failed with client @ %s"
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
 msgstr "%s%s: selhala autentizace s klientem @ %s"
 
-#, c-format
-msgid "%s: disconnected from client @ %s"
+#, fuzzy, c-format
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: odpojen od klienta @ %s"
 
 msgid "Clients for relay:"
 msgstr "Klienti pro přenos:"
 
-#, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+#, fuzzy, c-format
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 "%3d. %s, spuštěn v: %s, poslední aktivita: %s, bytů: %lu přijato, %lu "
 "odebráno"
 
-#, c-format
-msgid "%3d. %s, started on: %s"
+#, fuzzy, c-format
+msgid "%3d. %s%s%s, started on: %s"
 msgstr "%3d. %s, spuštěno v: %s"
 
 msgid "No client for relay"
 msgstr "Žádný klient pro přesměrování"
 
+#, fuzzy
+msgid "Listening on ports:"
+msgstr "Seznam proxy:"
+
+#, fuzzy, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "%3d. %s, spuštěno v: %s"
+
+#, fuzzy
+msgid "No server for relay"
+msgstr "Žádný klient pro přesměrování"
+
+#, fuzzy, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr "%s%s: server \"%s\" nenalezen"
+
 msgid "relay control"
 msgstr "ovládání přesměrování"
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr ""
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
-"    list: vypíše klienty pro přesměrování\n"
-"listfull: vypíše klienty pro přesměrování(s detaily)\n"
-"\n"
-"Spuštění příkazu bez parametrů otevře buffer se seznamem přenosových klientů."
+
+#, fuzzy
+msgid "all possible protocol.name for relay plugin"
+msgstr "spřáva ladění pro jádro/pluginy"
+
+#, fuzzy
+msgid "protocol.name of current relays for relay plugin"
+msgstr "spřáva ladění pro jádro/pluginy"
+
+#, fuzzy
+msgid "first free port for relay plugin"
+msgstr "spřáva ladění pro jádro/pluginy"
+
+#, fuzzy, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr "%sChyba: filtr \"%s\" již existuje"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s%s: neznámá protokol xfer \"%s\""
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"
@@ -5080,41 +5123,39 @@ msgstr "barva textu pro status \"autentizace selhala\""
 msgid "text color for \"disconnected\" status"
 msgstr "barva textu pro status \"odpojen\""
 
-msgid "enable relay"
-msgstr "přesměrování povoleno"
-
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+msgid "maximum number of clients connecting to a port"
 msgstr ""
-"číslo portu (nebo rozsah portů), na kterých poslouchá plugin pro "
-"přesměrování (syntaxe: jeden port, např. 5000 nebo rozsah portů, např. 5000-"
-"5015, je doporučeno používat porty větší než 1024, protože porty pod 1024 "
-"může používat pouze root)"
 
 msgid "list of relay clients"
 msgstr "seznam klientů přesměrování"
 
 #, c-format
-msgid "%s: socket closed"
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgstr "%s%s: proxy \"%s\" nebyla nalezena pro server \"%s\", nelze se spojit"
+
+#, fuzzy, c-format
+msgid "%s: socket closed for %s.%s (port %d)"
 msgstr "%s: roura zavřena"
 
-#, c-format
-msgid "%s%s: cannot accept client"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: nemohu akceptovat klienta"
 
-#, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
-msgstr "%s%s: volba \"listen_port_range\" není definována"
+#, fuzzy, c-format
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgstr "%s%s: nemohu akceptovat klienta"
 
-#, c-format
-msgid "%s%s: cannot find available port for listening"
-msgstr "%s%s: nemůžu najít dostupný port pro poslouchání"
-
-#, c-format
-msgid "%s: listening on port %d"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
 msgstr "%s: poslouchám na portu %d"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for listening on new port"
+msgstr "%s%s: nedostatek paměti pro nový xfer"
 
 #, c-format
 msgid ""
@@ -5712,6 +5753,44 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#, fuzzy
+#~ msgid "%s%s: bind error on port %d"
+#~ msgstr "%s: poslouchám na portu %d"
+
+#~ msgid "%s: new client @ %s"
+#~ msgstr "%s: nový klient @ %s"
+
+#~ msgid "enable relay"
+#~ msgstr "přesměrování povoleno"
+
+#~ msgid ""
+#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
+#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
+#~ "use ports greater than 1024, because only root can use ports below 1024)"
+#~ msgstr ""
+#~ "číslo portu (nebo rozsah portů), na kterých poslouchá plugin pro "
+#~ "přesměrování (syntaxe: jeden port, např. 5000 nebo rozsah portů, např. "
+#~ "5000-5015, je doporučeno používat porty větší než 1024, protože porty pod "
+#~ "1024 může používat pouze root)"
+
+#~ msgid "%s%s: option \"listen_port_range\" is not defined"
+#~ msgstr "%s%s: volba \"listen_port_range\" není definována"
+
+#~ msgid "%s%s: cannot find available port for listening"
+#~ msgstr "%s%s: nemůžu najít dostupný port pro poslouchání"
+
+#~ msgid ""
+#~ "    list: list relay clients\n"
+#~ "listfull: list relay clients (verbose)\n"
+#~ "\n"
+#~ "Without argument, this command opens buffer with list of relay clients."
+#~ msgstr ""
+#~ "    list: vypíše klienty pro přesměrování\n"
+#~ "listfull: vypíše klienty pro přesměrování(s detaily)\n"
+#~ "\n"
+#~ "Spuštění příkazu bez parametrů otevře buffer se seznamem přenosových "
+#~ "klientů."
 
 #~ msgid ""
 #~ " channel: channel where user is\n"

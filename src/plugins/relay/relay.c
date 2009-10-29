@@ -23,11 +23,13 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-command.h"
+#include "relay-completion.h"
 #include "relay-config.h"
 #include "relay-info.h"
-#include "relay-network.h"
+#include "relay-server.h"
 #include "relay-upgrade.h"
 
 
@@ -42,6 +44,30 @@ struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
 int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
 
+char *relay_protocol_string[] =        /* strings for protocols             */
+{ "weechat", "irc" };
+
+
+/*
+ * relay_protocol_search: search a protocol by name
+ */
+
+int
+relay_protocol_search (const char *name)
+{
+    int i;
+
+    for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
+    {
+        if (weechat_strcasecmp (relay_protocol_string[i], name) == 0)
+        {
+            return i;
+        }
+    }
+    
+    /* protocol not found */
+    return -1;
+}
 
 /*
  * relay_signal_upgrade_cb: callback for "upgrade" signal
@@ -80,6 +106,7 @@ relay_debug_dump_cb (void *data, const char *signal, const char *type_data,
     weechat_log_printf ("***** \"%s\" plugin dump *****",
                         weechat_plugin->name);
     
+    relay_server_print_log ();
     relay_client_print_log ();
     
     weechat_log_printf ("");
@@ -110,12 +137,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     relay_command_init ();
     
+    /* hook completions */
+    relay_completion_init ();
+    
     weechat_hook_signal ("upgrade", &relay_signal_upgrade_cb, NULL);
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL);
     
     relay_info_init ();
-    
-    relay_network_init ();
     
     return WEECHAT_RC_OK;
 }
@@ -132,12 +160,19 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     
     relay_config_write ();
     
-    relay_network_end ();
-    
     if (relay_signal_upgrade_received)
         relay_upgrade_save ();
     else
+    {
+        /* remove all servers */
+        relay_server_free_all ();
+        
+        /* remove all clients */
         relay_client_disconnect_all ();
+        if (relay_buffer)
+            weechat_buffer_close (relay_buffer);
+        relay_client_free_all ();
+    }
     
     return WEECHAT_RC_OK;
 }

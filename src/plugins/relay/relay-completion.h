@@ -17,12 +17,9 @@
  */
 
 
-#ifndef __WEECHAT_RELAY_NETWORK_H
-#define __WEECHAT_RELAY_NETWORK_H 1
+#ifndef __WEECHAT_RELAY_COMPLETION_H
+#define __WEECHAT_RELAY_COMPLETION_H 1
 
-extern int relay_network_sock;
+extern void relay_completion_init ();
 
-extern int relay_network_init ();
-extern void relay_network_end ();
-
-#endif /* relay-network.h */
+#endif /* relay-completion.h */

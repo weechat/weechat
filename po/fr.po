@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-10-19 11:26+0200\n"
-"PO-Revision-Date: 2009-10-19 11:27+0200\n"
+"POT-Creation-Date: 2009-10-29 12:43+0100\n"
+"PO-Revision-Date: 2009-10-29 12:44+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2655,7 +2655,7 @@ msgid ""
 msgstr ""
 "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (type inconnu)"
 
-msgid "print some messages on current ubffer"
+msgid "print some messages on current buffer"
 msgstr "affiche des messages sur le tampon courant"
 
 msgid "[text]"
@@ -5088,12 +5088,15 @@ msgid "  [Q] Close this buffer"
 msgstr "  [Q] Fermer ce tampon"
 
 #, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s)"
-msgstr "%s%s[%s%s%s%s] %s (démarré le: %s)"
+msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
+msgstr "%s%s[%s%s%s%s] %s (démarré le: %s%s%s%s)"
+
+msgid "ended on: "
+msgstr "terminé le: "
 
 #, c-format
-msgid "%s%-26s received: %s, sent: %s"
-msgstr "%s%-26s reçu: %s, envoyé: %s"
+msgid "%s%-26s protocol: %s, received: %s, sent: %s"
+msgstr "%s%-26s protocole: %s, reçu: %s, envoyé: %s"
 
 msgid "List of clients for relay"
 msgstr "Liste des clients pour le relai"
@@ -5111,55 +5114,99 @@ msgid "disconnected"
 msgstr "déconnecté"
 
 #, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: erreur d'envoi de données au client %s"
-
-#, c-format
-msgid "%s: new client @ %s"
-msgstr "%s: nouveau client @ %s"
+msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+msgstr "%s: nouveau client de %s%s%s sur le port %d (relai: %s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: pas assez de mémoire pour un nouveau client"
 
 #, c-format
-msgid "%s%s: authentication failed with client @ %s"
-msgstr "%s%s: l'authentification a échoué avec le client @ %s"
+msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
+msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s.%s)"
 
 #, c-format
-msgid "%s: disconnected from client @ %s"
-msgstr "%s: déconnecté du client @ %s"
+msgid "%s: disconnected from client %s%s%s (%s.%s)"
+msgstr "%s: déconnecté du client %s%s%s (%s.%s)"
 
 msgid "Clients for relay:"
 msgstr "Clients pour le relai:"
 
 #, c-format
-msgid "%3d. %s, started on: %s, last activity: %s, bytes: %lu recv, %lu sent"
+msgid ""
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
-"%3d. %s, démarré le: %s, dernière activité: %s, octets: %lu reçus, %lu "
-"envoyés"
+"%3d. %s%s%s (%s%s%s), démarré le: %s, dernière activité: %s, octets: %lu "
+"reçus, %lu envoyés"
 
 #, c-format
-msgid "%3d. %s, started on: %s"
-msgstr "%3d. %s, démarré le: %s"
+msgid "%3d. %s%s%s, started on: %s"
+msgstr "%3d. %s%s%s, démarré le: %s"
 
 msgid "No client for relay"
 msgstr "Pas de client pour le relai"
 
+msgid "Listening on ports:"
+msgstr "Ecoute sur les ports:"
+
+#, c-format
+msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "%3d. port %s%d%s, relai: %s%s.%s%s, démarré le: %s"
+
+msgid "No server for relay"
+msgstr "Pas de serveur pour le relai"
+
+#, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr "%s%s: relai \"%s\" non trouvé"
+
 msgid "relay control"
 msgstr "contrôle du relai"
 
+msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgstr "[list | listfull | add protocole.nom port | del protocole.nom]"
+
 msgid ""
-"    list: list relay clients\n"
-"listfull: list relay clients (verbose)\n"
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"protocol.name: protocol and name to relay\n"
+"               for example: irc.freenode\n"
+"         port: port used for relay\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
-"    list: liste les clients pour le relai\n"
-"listfull: liste les clients pour le relai (verbeux)\n"
+"         list: liste les clients pour le relai\n"
+"     listfull: liste les clients pour le relai (verbeux)\n"
+"    listrelay: liste les relais (nom et port)\n"
+"          add: ajoute un relai pour un protocole + nom\n"
+"          del: supprime un relai pour un protocole + nom\n"
+"protocole.nom: protocole et nom à relayer\n"
+"               par exemple: irc.freenode\n"
+"         port: port utilisé pour le relai\n"
 "\n"
 "Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
 "pour le relai."
+
+msgid "all possible protocol.name for relay plugin"
+msgstr "tous les protocole.nom possible pour l'extension relay"
+
+msgid "protocol.name of current relays for relay plugin"
+msgstr "protocole.nom des relais courants pour l'extension relay"
+
+msgid "first free port for relay plugin"
+msgstr "premier port libre pour l'extension relay"
+
+#, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr "%s%s: erreur: le port \"%d\" est déjà utilisé"
+
+#, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s%s: erreur: protocole \"%s\" inconnu"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -5190,43 +5237,39 @@ msgstr "couleur du texte pour le statut \"échec auth\""
 msgid "text color for \"disconnected\" status"
 msgstr "couleur du texte pour le statut \"déconnecté\""
 
-msgid "enable relay"
-msgstr "activer le relai"
-
-msgid ""
-"port number (or range of ports) that relay plugin listens on (syntax: a "
-"single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
-msgstr ""
-"restreint les fichiers/discussions sortants à utiliser des ports dans "
-"l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par "
-"exemple 5000, un intervalle de ports, par exemple 5000-5015, si non "
-"renseigné tout port peut être utilisé, il est recommandé d'utiliser des "
-"ports supérieurs à 1024, car seul root peut utiliser les ports en dessous de "
-"1024)"
+msgid "maximum number of clients connecting to a port"
+msgstr "nombre maximum de clients qui se connectent sur un port"
 
 msgid "list of relay clients"
 msgstr "liste des clients pour le relai"
 
 #, c-format
-msgid "%s: socket closed"
-msgstr "%s: socket fermée"
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: erreur d'envoi de données au client %s"
 
 #, c-format
-msgid "%s%s: cannot accept client"
-msgstr "%s%s: impossible d'accepter le client"
+msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgstr "%s%s: tampon non trouvé pour le serveur IRC \"%s\", canal \"%s\""
 
 #, c-format
-msgid "%s%s: option \"listen_port_range\" is not defined"
-msgstr "%s%s: l'option \"listen_port_range\" n'est pas définie"
+msgid "%s: socket closed for %s.%s (port %d)"
+msgstr "%s: socket fermée pour %s.%s (port %d)"
 
 #, c-format
-msgid "%s%s: cannot find available port for listening"
-msgstr "%s%s: impossible de trouver un port disponible pour écouter"
+msgid "%s%s: cannot accept client on port %d (%s.%s)"
+msgstr "%s%s: impossible d'accepter le client sur le port %d (%s.%s)"
 
 #, c-format
-msgid "%s: listening on port %d"
-msgstr "%s: écoute sur le port %d"
+msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s.%s)"
+
+#, c-format
+msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
+msgstr "%s: écoute sur le port %d (relai: %s.%s, max %d clients)"
+
+#, c-format
+msgid "%s%s: not enough memory for listening on new port"
+msgstr "%s%s: pas assez de mémoire pour écouter sur le nouveau port"
 
 #, c-format
 msgid ""
@@ -5837,6 +5880,45 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "%s%s: bind error on port %d"
+#~ msgstr "%s%s: erreur de bind sur le port %d (%s.%s)"
+
+#~ msgid "%s: new client @ %s"
+#~ msgstr "%s: nouveau client @ %s"
+
+#~ msgid "enable relay"
+#~ msgstr "activer le relai"
+
+#~ msgid ""
+#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
+#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
+#~ "use ports greater than 1024, because only root can use ports below 1024)"
+#~ msgstr ""
+#~ "restreint les fichiers/discussions sortants à utiliser des ports dans "
+#~ "l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par "
+#~ "exemple 5000, un intervalle de ports, par exemple 5000-5015, si non "
+#~ "renseigné tout port peut être utilisé, il est recommandé d'utiliser des "
+#~ "ports supérieurs à 1024, car seul root peut utiliser les ports en dessous "
+#~ "de 1024)"
+
+#~ msgid "%s%s: option \"listen_port_range\" is not defined"
+#~ msgstr "%s%s: l'option \"listen_port_range\" n'est pas définie"
+
+#~ msgid "%s%s: cannot find available port for listening"
+#~ msgstr "%s%s: impossible de trouver un port disponible pour écouter"
+
+#~ msgid ""
+#~ "    list: list relay clients\n"
+#~ "listfull: list relay clients (verbose)\n"
+#~ "\n"
+#~ "Without argument, this command opens buffer with list of relay clients."
+#~ msgstr ""
+#~ "    list: liste les clients pour le relai\n"
+#~ "listfull: liste les clients pour le relai (verbeux)\n"
+#~ "\n"
+#~ "Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
+#~ "pour le relai."
 
 #~ msgid ""
 #~ " channel: channel where user is\n"

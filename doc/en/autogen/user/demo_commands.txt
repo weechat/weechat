@@ -35,7 +35,7 @@
 &bull; *`/demo_printf`* `[text]`::
 
 ........................................
-  print some messages on current ubffer
+  print some messages on current buffer
 
   text: write this text
 ........................................

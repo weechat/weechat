@@ -22,7 +22,8 @@
 
 #define RELAY_CONFIG_NAME "relay"
 
-extern struct t_config_file *relay_config;
+extern struct t_config_file *relay_config_file;
+extern struct t_config_section *relay_config_section_port;
 
 extern struct t_config_option *relay_config_look_auto_open_buffer;
 
@@ -31,9 +32,13 @@ extern struct t_config_option *relay_config_color_text_bg;
 extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_color_status[];
 
-extern struct t_config_option *relay_config_network_enabled;
-extern struct t_config_option *relay_config_network_listen_port_range;
+extern struct t_config_option *relay_config_network_max_clients;
 
+extern int relay_config_create_option_port (void *data,
+                                            struct t_config_file *config_file,
+                                            struct t_config_section *section,
+                                            const char *option_name,
+                                            const char *value);
 extern int relay_config_init ();
 extern int relay_config_read ();
 extern int relay_config_write ();

@@ -43,13 +43,8 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
-* *relay.network.enabled*
-** description: activer le relai
-** type: booléen
-** valeurs: on, off (valeur par défaut: off)
-
-* *relay.network.listen_port_range*
-** description: restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé, il est recommandé d'utiliser des ports supérieurs à 1024, car seul root peut utiliser les ports en dessous de 1024)
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: "22373-22400")
+* *relay.network.max_clients*
+** description: nombre maximum de clients qui se connectent sur un port
+** type: entier
+** valeurs: 1 .. 1024 (valeur par défaut: 5)
 
