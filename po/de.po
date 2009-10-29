@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-10-29 12:43+0100\n"
-"PO-Revision-Date: 2009-10-25 16:35+0100\n"
+"PO-Revision-Date: 2009-10-29 18:43+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -290,7 +290,7 @@ msgstr "Filter \"%s\" gelöscht"
 #. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:"
-msgstr "%s interne Befehle:"
+msgstr "interne %s Befehle:"
 
 msgid "Other commands:"
 msgstr "Andere Befehle:"
@@ -2672,9 +2672,8 @@ msgid ""
 msgstr ""
 "Demo_Signal: Signal: %s, Datentyp: %s, Datensignal: 0x%lx (unbekannter Typ)"
 
-#, fuzzy
 msgid "print some messages on current buffer"
-msgstr "Gibt ein paar Nachrichten im aktuellen Buffer aus."
+msgstr "Gibt ein paar Nachrichten im aktuellen Buffer aus"
 
 msgid "[text]"
 msgstr "[Text]"
@@ -3171,7 +3170,7 @@ msgid "shutdown the server"
 msgstr "Server herunterfahren"
 
 msgid "disconnect from IRC server(s)"
-msgstr "Verbindung trennen, zu einem oder mehreren IRC-Server(n)"
+msgstr "Verbindung, zu einem oder mehreren IRC-Server(n), trennen"
 
 msgid "[-all | servername [servername ...]]"
 msgstr "[-all | Servername [Servername ...]]"
@@ -5129,16 +5128,16 @@ msgstr "  [P] Säubern beenden"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Schließe diesen Buffer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
-msgstr "%s%s[%s%s%s%s] %s (gestartet am: %s)"
+msgstr "%s%s[%s%s%s%s] %s (gestartet am:: %s%s%s%s)"
 
 msgid "ended on: "
-msgstr ""
+msgstr "geendet am:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%-26s protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s empfangen: %s, gesendet: %s"
+msgstr "%s%-26s Protokoll: %s, empfangen: %s, gesendet: %s"
 
 msgid "List of clients for relay"
 msgstr "Liste der Relay-Clients:"
@@ -5157,59 +5156,57 @@ msgstr "unterbrochen"
 
 #, c-format
 msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
-msgstr ""
+msgstr "%s: Neuer Client von %s%s%s an Port %d (Relaying: %s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: Nicht genug Speicher für neuen Client"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
-msgstr "%s%s: Authentifizierung mit Client @ %s fehlgeschlagen"
+msgstr "%s%s: Authentifizierung mit Client %s%s%s (%s.%s) fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
-msgstr "%s: Trennung vom Client @ %s"
+msgstr "%s: Trennung von Client %s%s%s (%s.%s)"
 
 msgid "Clients for relay:"
 msgstr "Clients für Relay:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
 "lu sent"
 msgstr ""
-"%3d. %s, gestartet am: %s, letzte Aktivität: %s, Bytes: %lu Empfangen, %lu "
-"gesendet"
+"%3d. %s%s%s (%s%s%s), gestartet am: %s, letzte Aktivität: %s, Bytes: %lu "
+"empfangen, %lu gesendet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3d. %s%s%s, started on: %s"
-msgstr "%3d. %s, gestartet am: %s"
+msgstr "%3d. %s%s%s, gestartet am: %s"
 
 msgid "No client for relay"
 msgstr "Keinen Client für Relay"
 
-#, fuzzy
 msgid "Listening on ports:"
-msgstr "Liste der Proxys:"
+msgstr "Lausche an Ports:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "%3d. %s, gestartet am: %s"
+msgstr "%3d. Port %s%d%s, Relay: %s%s.%s%s, gestartet am: %s"
 
-#, fuzzy
 msgid "No server for relay"
-msgstr "Keinen Client für Relay"
+msgstr "Keinen Server für Relay"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: relay \"%s\" not found"
-msgstr "%s%s: Server \"%s\" nicht gefunden"
+msgstr "%s%s: Relay \"%s\" nicht gefunden"
 
 msgid "relay control"
 msgstr "Relay-Kontrolle"
 
 msgid "[list | listfull | add protocol.name port | del protocol.name]"
-msgstr ""
+msgstr "[list | listfull | add protocol.name port | del protocol.name]"
 
 msgid ""
 "         list: list relay clients (only active relays)\n"
@@ -5223,26 +5220,34 @@ msgid ""
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+"         list: Auflistung der Relay-Clients (nur aktive Relays)\n"
+"     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)\n"
+"    listrelay: Auflistung der Relays (Name und Port)\n"
+"          add: füge ein Relay, für ein Protokoll + Name, hinzu\n"
+"          del: entferne Relay für ein Protokoll + Name\n"
+"protocol.name: Protokoll und Name des Relays\n"
+"               Beispiel: irc.freenode\n"
+"         port: Port den der Relay nutzen soll\n"
+"\n"
+"Ohne Angabe von Argumenten werden alle Relay-Clients, in einem neuen Buffer, "
+"dargestellt."
 
-#, fuzzy
 msgid "all possible protocol.name for relay plugin"
-msgstr "Debug-Kontrolle für Kernprogramm/Erweiterung"
+msgstr "Alle möglichen Protokoll.Namen der Relay-Erweiterung"
 
-#, fuzzy
 msgid "protocol.name of current relays for relay plugin"
-msgstr "Debug-Kontrolle für Kernprogramm/Erweiterung"
+msgstr "Protokoll.Name des aktuellen Relays von der Relay-Erweiterung"
 
-#, fuzzy
 msgid "first free port for relay plugin"
-msgstr "Debug-Kontrolle für Kernprogramm/Erweiterung"
+msgstr "Erster freier Port für Relay-Erweiterung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: port \"%d\" is already used"
-msgstr "%sFehler: Filter \"%s\" existiert bereits"
+msgstr "%s%s: Fehler: Der Port \"%d\" ist schon im Gebrauch"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
-msgstr "%s%s: Unbekanntes Transfer-Protokoll \"%s\""
+msgstr "%s%s: Unbekanntes Protokoll \"%s\""
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -5274,7 +5279,7 @@ msgid "text color for \"disconnected\" status"
 msgstr "Textfarbe für Status \"Verbindung getrennt\""
 
 msgid "maximum number of clients connecting to a port"
-msgstr ""
+msgstr "Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen"
 
 msgid "list of relay clients"
 msgstr "Liste der Relay-Clients"
@@ -5283,31 +5288,29 @@ msgstr "Liste der Relay-Clients"
 msgid "%s%s: error sending data to client %s"
 msgstr "%s%s: Fehler beim Senden von Daten an den Client %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr ""
-"%s%s: Proxy \"%s\" für Server \"%s\" nicht gefunden, kann keine Verbindung "
-"herstellen"
+msgstr "%s%s: Keinen Buffer für IRC Server \"%s\", Channel \"%s\" gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
-msgstr "%s: Socket geschlossen"
+msgstr "%s: Socket geschlossen für %s.%s (Port %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
-msgstr "%s%s: Kann Client nicht akzeptieren"
+msgstr "%s%s: Kann den Client am Port %d (%s.%s) nicht akzeptieren"
 
 #, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
-msgstr ""
+msgstr "%s%s: Fehler mit \"bind\" auf Port %d (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
-msgstr "%s: Lausche am Port %d"
+msgstr "%s: Lausche am Port %d (Relay: %s.%s, Max. %d Clients)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for listening on new port"
-msgstr "%s%s: Nicht genug Speicher für neuen Transfer"
+msgstr "%s%s: Nicht genug Speicher um an dem neuen Port zu lauschen"
 
 #, c-format
 msgid ""
