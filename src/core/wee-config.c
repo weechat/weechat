@@ -185,9 +185,10 @@ struct t_config_option *config_plugin_extension;
 struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_save_config_on_unload;
 
-/* hooks */
+/* other */
 
 struct t_hook *config_day_change_timer = NULL;
+int config_day_change_old_day = -1;
 
 
 /*
@@ -351,25 +352,31 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     
     gettimeofday (&tv_time, NULL);
     local_time = localtime (&tv_time.tv_sec);
-    
-    strftime (text_time, sizeof (text_time),
-              CONFIG_STRING(config_look_day_change_time_format),
-              local_time);
-    text_time2 = string_iconv_to_internal (NULL, text_time);
-    gui_add_hotlist = 0;
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
-            gui_chat_printf (ptr_buffer,
-                             _("\t\tDay changed to %s"),
-                             (text_time2) ?
-                             text_time2 : text_time);
-    }
-    if (text_time2)
-        free (text_time2);
-    gui_add_hotlist = 1;
 
+    if ((config_day_change_old_day >= 0)
+        && (local_time->tm_mday != config_day_change_old_day))
+    {
+        strftime (text_time, sizeof (text_time),
+                  CONFIG_STRING(config_look_day_change_time_format),
+                  local_time);
+        text_time2 = string_iconv_to_internal (NULL, text_time);
+        gui_add_hotlist = 0;
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+                gui_chat_printf (ptr_buffer,
+                                 _("\t\tDay changed to %s"),
+                                 (text_time2) ?
+                                 text_time2 : text_time);
+        }
+        if (text_time2)
+            free (text_time2);
+        gui_add_hotlist = 1;
+    }
+    
+    config_day_change_old_day = local_time->tm_mday;
+    
     return WEECHAT_RC_OK;
 }
 
@@ -380,6 +387,9 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 void
 config_change_day_change (void *data, struct t_config_option *option)
 {
+    struct timeval tv_time;
+    struct tm *local_time;
+    
     /* make C compiler happy */
     (void) data;
     (void) option;
@@ -387,12 +397,18 @@ config_change_day_change (void *data, struct t_config_option *option)
     if (CONFIG_BOOLEAN(config_look_day_change))
     {
         if (!config_day_change_timer)
+        {
+            gettimeofday (&tv_time, NULL);
+            local_time = localtime (&tv_time.tv_sec);
+            config_day_change_old_day = local_time->tm_mday;
+            
             config_day_change_timer = hook_timer (NULL,
-                                                  24 * 3600 * 1000,
-                                                  24 * 3600,
+                                                  60 * 1000, /* each minute */
+                                                  60, /* when second is 00 */
                                                   0,
                                                   &config_day_change_timer_cb,
                                                   NULL);
+        }
     }
     else
     {
@@ -400,6 +416,7 @@ config_change_day_change (void *data, struct t_config_option *option)
         {
             unhook (config_day_change_timer);
             config_day_change_timer = NULL;
+            config_day_change_old_day = -1;
         }
     }
 }
