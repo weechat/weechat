@@ -22,6 +22,7 @@ SET(PO_FILES
   de.po
   ru.po
   pl.po
+  it.po
   )
 
 SET(COPYRIGHT_HOLDER "WeeChat Team")

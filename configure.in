@@ -51,7 +51,7 @@ cygwin*)
 esac
 
 # Gettext
-ALL_LINGUAS="fr es cs hu de ru pl"
+ALL_LINGUAS="fr es cs hu de ru pl it"
 AM_GNU_GETTEXT([use-libtool])
 AM_GNU_GETTEXT_VERSION([0.15])
 

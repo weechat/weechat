@@ -1275,6 +1275,9 @@ m4v::
 Voroskoi::
     hungarian translation
 
+Marco Paolone::
+    italian translation
+
 Rudolf Polzer::
     patches
 

@@ -1314,6 +1314,9 @@ m4v::
 Voroskoi::
     traduction en hongrois
 
+Marco Paolone::
+    traduction en italien
+
 Rudolf Polzer::
     patchs
 
