@@ -4352,7 +4352,7 @@ command_init ()
                      "window as size reference. For example 25 means create a "
                      "new window with size = current_size / 4\n\n"
                      "Examples:\n"
-                     "  jump to window displaying buffer #1: /window b1"
+                     "  jump to window displaying buffer #1: /window b1\n"
                      "  scroll 2 lines up: /window scroll -2\n"
                      "  scroll 2 days up: /window scroll -2d\n"
                      "  scroll to beginning of current day: /window scroll -d"),
