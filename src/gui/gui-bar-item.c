@@ -1444,6 +1444,8 @@ gui_bar_item_init ()
                       &gui_bar_item_default_buffer_nicklist, NULL);
     gui_bar_item_hook_signal ("nicklist_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
 }
 
 /*
