@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5343,11 +5343,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "seznam skriptů"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, c-format
-msgid "list of %s scripts"
-msgstr "seznam %s skriptů"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr "%s: chyba načítání skriptu \"%s\" (špatné jméno, mezery jsou zakázány)"
@@ -5754,6 +5749,9 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "list of %s scripts"
+#~ msgstr "seznam %s skriptů"
 
 #, fuzzy
 #~ msgid "%s%s: bind error on port %d"

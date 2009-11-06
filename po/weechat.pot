@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4573,11 +4573,6 @@ msgid ""
 msgstr ""
 
 msgid "list of scripts"
-msgstr ""
-
-#. TRANSLATORS: %s is language (for example "perl")
-#, c-format
-msgid "list of %s scripts"
 msgstr ""
 
 #, c-format

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5275,11 +5275,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "Aliaszok listája:\n"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, fuzzy, c-format
-msgid "list of %s scripts"
-msgstr "Aliaszok listája:\n"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
@@ -5699,6 +5694,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "list of %s scripts"
+#~ msgstr "Aliaszok listája:\n"
 
 #, fuzzy
 #~ msgid "%s%s: bind error on port %d"

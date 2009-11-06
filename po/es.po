@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5173,11 +5173,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "Lista de alias:\n"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, fuzzy, c-format
-msgid "list of %s scripts"
-msgstr "Lista de alias:\n"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
@@ -5615,6 +5610,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
+
+#, fuzzy
+#~ msgid "list of %s scripts"
+#~ msgstr "Lista de alias:\n"
 
 #, fuzzy
 #~ msgid "%s%s: bind error on port %d"

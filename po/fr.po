@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-11-01 08:27+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5459,11 +5459,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "liste des scripts"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, c-format
-msgid "list of %s scripts"
-msgstr "liste des scripts %s"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
@@ -5880,6 +5875,9 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "list of %s scripts"
+#~ msgstr "liste des scripts %s"
 
 #~ msgid "%s%s: bind error on port %d"
 #~ msgstr "%s%s: erreur de bind sur le port %d (%s.%s)"

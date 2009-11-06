@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-11-03 14:16+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1483,9 +1483,9 @@ msgid ""
 "char used to draw horizontal lines, note that empty value will draw a real "
 "line with ncurses, but may cause bugs with URL selection under some terminals"
 msgstr ""
-"carattere utilizzato per disegnare le righe orizzontali; notare che un valore vuoto "
-"disegnerà una vera riga con ncurses, ma può causare errori con la selezione "
-"dell'URL in alcuni terminali"
+"carattere utilizzato per disegnare le righe orizzontali; notare che un "
+"valore vuoto disegnerà una vera riga con ncurses, ma può causare errori con "
+"la selezione dell'URL in alcuni terminali"
 
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
@@ -3504,7 +3504,7 @@ msgid ""
 "channel: channel name\n"
 "   mode: mode for channel"
 msgstr ""
-   "canale: nome del canale\n"
+"canale: nome del canale\n"
 "modalità: modalità per il canale"
 
 msgid "forces a user to use another nick"
@@ -4014,7 +4014,9 @@ msgstr ""
 "dal server,...)"
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
-msgstr "nome dell'elemento barra dov'è visualizzato il server IRC (per la barra di stato)"
+msgstr ""
+"nome dell'elemento barra dov'è visualizzato il server IRC (per la barra di "
+"stato)"
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -4036,7 +4038,9 @@ msgstr ""
 "\"irc_smart_filter\")"
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
-msgstr "ritardo per il filtraggio dei messaggi di entrata/uscita/abbandono (in minuti)"
+msgstr ""
+"ritardo per il filtraggio dei messaggi di entrata/uscita/abbandono (in "
+"minuti)"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -4045,7 +4049,9 @@ msgstr ""
 "buffer privato se viene trovato)"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
-msgstr "elimina colori nel topic (utilizzato solo quando viene visualizzato il titolo del buffer)"
+msgstr ""
+"elimina colori nel topic (utilizzato solo quando viene visualizzato il "
+"titolo del buffer)"
 
 msgid "color for text in join messages"
 msgstr "colore per il testo nei messaggi di entrata"
@@ -4080,7 +4086,8 @@ msgstr ""
 "sostituito dalla versione di WeeChat)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr "intervallo tra le due verifiche per l'away (in minuti, 0 = nessun check)"
+msgstr ""
+"intervallo tra le due verifiche per l'away (in minuti, 0 = nessun check)"
 
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
@@ -4447,12 +4454,13 @@ msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
 "server"
 msgstr ""
-"%s%s: tutti i nick specificato sono già utilizzati, chiusura della connessione "
-"con il server in corso"
+"%s%s: tutti i nick specificato sono già utilizzati, chiusura della "
+"connessione con il server in corso"
 
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
-msgstr "%s: il nick \"%s\" è già utilizzato, tentativo con il nick #%d (\"%s\")"
+msgstr ""
+"%s: il nick \"%s\" è già utilizzato, tentativo con il nick #%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -4460,7 +4468,9 @@ msgstr "%s%s: comando \"%s\" non trovato:"
 
 #, c-format
 msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
-msgstr "%s%s: impossibile verificare il comando \"%s\" (per favore segnalare agli sviluppatori):"
+msgstr ""
+"%s%s: impossibile verificare il comando \"%s\" (per favore segnalare agli "
+"sviluppatori):"
 
 #, c-format
 msgid ""
@@ -4570,8 +4580,8 @@ msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
 "if used and if server address/port is allowed by proxy)"
 msgstr ""
-"%s%s: errore del proxy nella connessione al server (verificare utente/password "
-"se già in uso e se server/porta sono consentiti dal proxy)"
+"%s%s: errore del proxy nella connessione al server (verificare utente/"
+"password se già in uso e se server/porta sono consentiti dal proxy)"
 
 #, c-format
 msgid "%s%s: unable to set local hostname/IP"
@@ -4591,15 +4601,18 @@ msgstr "%s%s: memoria non sufficiente"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr "%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
+msgstr ""
+"%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
-msgstr "%s%s: proxy \"%s\" non trovato per il server \"%s\", impossibile connettersi"
+msgstr ""
+"%s%s: proxy \"%s\" non trovato per il server \"%s\", impossibile connettersi"
 
 #, c-format
 msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
-msgstr "%s%s: impostazioni proxy mancanti, verificare le opzioni per il proxy \"%s\""
+msgstr ""
+"%s%s: impostazioni proxy mancanti, verificare le opzioni per il proxy \"%s\""
 
 #, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
@@ -4761,7 +4774,8 @@ msgstr ""
 "    /set logger.level.irc 3\n"
 "  disabilita logging per il buffer principale di WeeChat:\n"
 "    /set logger.level.core.weechat 0\n"
-"  utilizza una cartella per il server IRC e un file per il canale al suo interno:\n"
+"  utilizza una cartella per il server IRC e un file per il canale al suo "
+"interno:\n"
 "    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
 "Livelli di log utilizzati dal plugin IRC:\n"
@@ -4779,14 +4793,16 @@ msgstr ""
 "messaggio (più importante) .. 9 = tutti i messaggi)"
 
 msgid "file mask for log file; local buffer variables are permitted"
-msgstr "mask del file per il file di log; sono consentite le variabili dei buffer locali"
+msgstr ""
+"mask del file per il file di log; sono consentite le variabili dei buffer "
+"locali"
 
 msgid ""
 "maximum number of lines to display from log file when creating new buffer (0 "
 "= no backlog)"
 msgstr ""
-"numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo "
-"buffer (0 = nessun backlog)"
+"numero massimo di righe da visualizzare dal file di log alla creazione di un "
+"nuovo buffer (0 = nessun backlog)"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
@@ -4801,18 +4817,18 @@ msgid ""
 "path for WeeChat log files (\"%h\" will be replaced by WeeChat home, \"~/."
 "weechat\" by default)"
 msgstr ""
-"percorso per i file di log di WeeChat (\"%h\" verrà sostituito dalla cartella "
-"home di WeeChat, predefinita è \"~/.weechat)"
+"percorso per i file di log di WeeChat (\"%h\" verrà sostituito dalla "
+"cartella home di WeeChat, predefinita è \"~/.weechat)"
 
 msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
 "\"file\", without first \"/\" because \"path\" option is used to build "
 "complete path to file); local buffer variables are permitted"
 msgstr ""
-"mask del nome file predefinito per i file di log (il formato è \"cartella/per/file\" "
-"oppure \"file\", senza la prima \"/\" perché l'opzione \"path\" è utilizzata "
-"per costruire il percorso completo del file); sono ammesse le variabili dei "
-"buffer locali"
+"mask del nome file predefinito per i file di log (il formato è \"cartella/"
+"per/file\" oppure \"file\", senza la prima \"/\" perché l'opzione \"path\" è "
+"utilizzata per costruire il percorso completo del file); sono ammesse le "
+"variabili dei buffer locali"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -4820,10 +4836,14 @@ msgid ""
 msgstr ""
 
 msgid "write information line in log file when log starts or ends for a buffer"
-msgstr "scrivere riga di informazione nel file di log quando il log inizia o termina per un buffer"
+msgstr ""
+"scrivere riga di informazione nel file di log quando il log inizia o termina "
+"per un buffer"
 
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
-msgstr "data e ora utilizzati nei file di log (consultare man strftime per gli specificatori di data/ora)"
+msgstr ""
+"data e ora utilizzati nei file di log (consultare man strftime per gli "
+"specificatori di data/ora)"
 
 msgid "list of logger buffers"
 msgstr "elenco dei buffer logger"
@@ -4924,11 +4944,13 @@ msgstr ""
 
 #, c-format
 msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
-msgstr "%sErrore: simbolo \"%s\" non trovato nel plugin \"%s\", impossibile caricarlo"
+msgstr ""
+"%sErrore: simbolo \"%s\" non trovato nel plugin \"%s\", impossibile caricarlo"
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr "%sSe il plugin \"%s\" è vecchio/obsoleto, è possibile eliminare questo file."
+msgstr ""
+"%sSe il plugin \"%s\" è vecchio/obsoleto, è possibile eliminare questo file."
 
 #, c-format
 msgid ""
@@ -4940,11 +4962,14 @@ msgstr ""
 msgid ""
 "%sError: unable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
-"%sErrore: impossibile caricare il plugin \"%s\": esiste già un plugin con lo stesso nome"
+"%sErrore: impossibile caricare il plugin \"%s\": esiste già un plugin con lo "
+"stesso nome"
 
 #, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
-msgstr "%sErrore: funzione \"%s\" non trovata nel plugin \"%s\", impossibile caricarlo"
+msgstr ""
+"%sErrore: funzione \"%s\" non trovata nel plugin \"%s\", impossibile "
+"caricarlo"
 
 #, c-format
 msgid "%sError: unable to initialize plugin \"%s\""
@@ -4952,7 +4977,8 @@ msgstr "%sErrore: impossibile inizializzare il plugin \"%s\""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
-msgstr "%sErrore: impossibile caricare il plugin \"%s\" (memoria non sufficiente"
+msgstr ""
+"%sErrore: impossibile caricare il plugin \"%s\" (memoria non sufficiente"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
@@ -5105,7 +5131,8 @@ msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: protocollo xfer  \"%s\" sconosciuto"
 
 msgid "auto open relay buffer when a new client is connecting"
-msgstr "aprire automaticamente il buffer relay alla connessione di un nuovo client"
+msgstr ""
+"aprire automaticamente il buffer relay alla connessione di un nuovo client"
 
 msgid "text color"
 msgstr "colore del testo"
@@ -5319,7 +5346,8 @@ msgstr "%s%s: funzione \"weechat_init\" mancante nel file \"%s\""
 
 #, c-format
 msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "%s%s: impossibile analizzare la funzione \"weechat_init\" nel file \"%s\""
+msgstr ""
+"%s%s: impossibile analizzare la funzione \"weechat_init\" nel file \"%s\""
 
 #, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
@@ -5349,14 +5377,11 @@ msgstr ""
 msgid "list of scripts"
 msgstr "elenco degli script"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, c-format
-msgid "list of %s scripts"
-msgstr "elenco degli script %s"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-msgstr "%s: errore durante il caricamento dello script \"%s\" (nome errato, spazi non ammessi)"
+msgstr ""
+"%s: errore durante il caricamento dello script \"%s\" (nome errato, spazi "
+"non ammessi)"
 
 #, c-format
 msgid ""
@@ -5368,7 +5393,8 @@ msgstr ""
 
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s: errore durante il caricamento dello script \"%s\" (memoria insufficiente)"
+msgstr ""
+"%s: errore durante il caricamento dello script \"%s\" (memoria insufficiente)"
 
 #, c-format
 msgid "%s: script removed: %s"
@@ -5538,8 +5564,8 @@ msgid ""
 "%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
 "found or not ready for transfer"
 msgstr ""
-"%s%s: impossibile riprendere il file \"%s\" (porta: %d, posizione di avvio: %lu): "
-"xfer non trovato o non pronto per il trasferimento"
+"%s%s: impossibile riprendere il file \"%s\" (porta: %d, posizione di avvio: %"
+"lu): xfer non trovato o non pronto per il trasferimento"
 
 #, c-format
 msgid "%s: file %s resumed at position %lu"
@@ -5550,8 +5576,8 @@ msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
 "xfer not found or not ready for transfer"
 msgstr ""
-"%s%s: impossibile accettare di riprendere il file  \"%s\" (porta: %d, posizione "
-"di avvio: %lu):  xfer non trovato o non pronto per il trasferimento"
+"%s%s: impossibile accettare di riprendere il file  \"%s\" (porta: %d, "
+"posizione di avvio: %lu):  xfer non trovato o non pronto per il trasferimento"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -5587,12 +5613,13 @@ msgid ""
 "     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
 "%d (port %d)"
 msgstr ""
-"     plugin: %s (id: %s), file: %lu byte (posizione: %lu), indirizzo: %d.%d.%d."
-"%d (porta %d)"
+"     plugin: %s (id: %s), file: %lu byte (posizione: %lu), indirizzo: %d.%d.%"
+"d.%d (porta %d)"
 
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
-msgstr "     fast_send (invio rapido): %s, dimensione blocchi: %d, avviato il %s"
+msgstr ""
+"     fast_send (invio rapido): %s, dimensione blocchi: %d, avviato il %s"
 
 msgid "yes"
 msgstr "sì"
@@ -5621,7 +5648,9 @@ msgid "nicks of DCC chat"
 msgstr "nick della chat DCC"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
-msgstr "apertura automatica del buffer xfer quando un nuovo xfer viene aggiunto alla lista"
+msgstr ""
+"apertura automatica del buffer xfer quando un nuovo xfer viene aggiunto alla "
+"lista"
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr "dimensione barra di avanzamento, in caratteri (se 0, è disabilitata)"
@@ -5659,10 +5688,11 @@ msgid ""
 "empty value means any port, it's recommended to use ports greater than 1024, "
 "because only root can use ports below 1024)"
 msgstr ""
-"forza i file in uscita/chat ad utilizzare solo le porte in una data serie (utile per "
-"il NAT) (sintassi: una singola porta, es. 5000 o un range di porte, es. "
-"5000-5015. Un valore nullo significa qualsiasi porta, consigliato utilizzare porte "
-"maggiori di 1024, perché l'uso di porte inferiori possibile solo per root)"
+"forza i file in uscita/chat ad utilizzare solo le porte in una data serie "
+"(utile per il NAT) (sintassi: una singola porta, es. 5000 o un range di "
+"porte, es. 5000-5015. Un valore nullo significa qualsiasi porta, consigliato "
+"utilizzare porte maggiori di 1024, perché l'uso di porte inferiori possibile "
+"solo per root)"
 
 msgid ""
 "IP or DNS address used for sending files/chats (if empty, local interface IP "
@@ -5681,16 +5711,19 @@ msgid "path for writing incoming files"
 msgstr "percorso per il salvataggio dei file locali"
 
 msgid "path for reading files when sending (when no path is specified by user)"
-msgstr "percorso per la lettura dei file all'invio (se non specificato dall'utente)"
+msgstr ""
+"percorso per la lettura dei file all'invio (se non specificato dall'utente)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
-msgstr "usa il nick remoto come prefisso nel nome del file locale alla ricezione"
+msgstr ""
+"usa il nick remoto come prefisso nel nome del file locale alla ricezione"
 
 msgid "convert spaces to underscores when sending files"
 msgstr "converti gli spazi in underscore all'invio dei file"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
-msgstr "rinomina i file in ingresso se esistenti (aggiunge \".1\", \".2\", ...)"
+msgstr ""
+"rinomina i file in ingresso se esistenti (aggiunge \".1\", \".2\", ...)"
 
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"
@@ -5750,6 +5783,9 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#~ msgid "list of %s scripts"
+#~ msgstr "elenco degli script %s"
 
 #~ msgid "Alias:"
 #~ msgstr "Alias:"

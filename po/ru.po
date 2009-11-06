@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5277,11 +5277,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "Список сокращений:\n"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, fuzzy, c-format
-msgid "list of %s scripts"
-msgstr "Список сокращений:\n"
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
@@ -5696,6 +5691,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "list of %s scripts"
+#~ msgstr "Список сокращений:\n"
 
 #, fuzzy
 #~ msgid "%s%s: bind error on port %d"

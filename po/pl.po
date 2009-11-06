@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-01 08:26+0100\n"
+"POT-Creation-Date: 2009-11-06 21:20+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -5403,11 +5403,6 @@ msgstr ""
 msgid "list of scripts"
 msgstr "lista skryptów"
 
-#. TRANSLATORS: %s is language (for example "perl")
-#, c-format
-msgid "list of %s scripts"
-msgstr "lista skryptów %s "
-
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
@@ -5811,6 +5806,9 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "list of %s scripts"
+#~ msgstr "lista skryptów %s "
 
 #, fuzzy
 #~ msgid "%s%s: bind error on port %d"

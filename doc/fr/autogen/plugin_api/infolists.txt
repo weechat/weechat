@@ -13,17 +13,17 @@
 
 | logger | logger_buffer | liste des enregistreurs de tampons (loggers)
 
-| lua | lua_script | liste des scripts lua
+| lua | lua_script | liste des scripts
 
-| perl | perl_script | liste des scripts perl
+| perl | perl_script | liste des scripts
 
-| python | python_script | liste des scripts python
+| python | python_script | liste des scripts
 
 | relay | relay | liste des clients pour le relai
 
-| ruby | ruby_script | liste des scripts ruby
+| ruby | ruby_script | liste des scripts
 
-| tcl | tcl_script | liste des scripts tcl
+| tcl | tcl_script | liste des scripts
 
 | weechat | bar | liste des barres
 

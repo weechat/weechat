@@ -10,7 +10,7 @@
       cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window"):
                    active: sur la fenêtre active
                  inactive: sur les fenêtres inactives
-                 nicklist: sue les fenêtres avec liste de pseudos
+                 nicklist: sur les fenêtres avec liste de pseudos
                  sans condition, la barre est toujours affichée
        position: bottom (bas), top (haut), left (gauche) ou right (droite)
          taille: taille de la barre (en caractères)

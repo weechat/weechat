@@ -208,7 +208,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                            struct t_gui_buffer *buffer))
 {
     char *string, *completion;
-    char infolist_description[512], signal_name[128];
+    char signal_name[128];
     int length, i, upgrading;
     
     /* read script configuration */
@@ -277,10 +277,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
         snprintf (string, length, "%s_script", weechat_plugin->name);
         weechat_hook_completion (string, N_("list of scripts"),
                                  callback_completion, NULL);
-        snprintf (infolist_description, sizeof (infolist_description),
-                  /* TRANSLATORS: %s is language (for example "perl") */
-                  _("list of %s scripts"), weechat_plugin->name);
-        weechat_hook_infolist (string, infolist_description,
+        weechat_hook_infolist (string, N_("list of scripts"),
                                callback_infolist, NULL);
         free (string);
     }
