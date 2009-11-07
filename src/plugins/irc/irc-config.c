@@ -1424,7 +1424,7 @@ irc_config_init ()
         "away_check_max_nicks", "integer",
         N_("do not check away nicks on channels with high number of nicks "
            "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL,
+        NULL, 0, INT_MAX, "25", NULL, 0, NULL, NULL,
         &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
