@@ -114,7 +114,9 @@ struct t_irc_server
     struct t_hook *hook_fd;         /* hook for server socket                */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
+#ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
+#endif
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */
