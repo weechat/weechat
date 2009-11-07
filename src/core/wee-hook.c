@@ -1443,6 +1443,8 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *ad
 #ifndef HAVE_GNUTLS
     /* make C compiler happy */
     (void) gnutls_sess;
+    (void) gnutls_cb;
+    (void) gnutls_dhkey_size;
 #endif
     
     if ((sock < 0) || !address || (port <= 0) || !callback)
