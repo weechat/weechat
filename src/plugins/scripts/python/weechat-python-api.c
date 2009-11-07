@@ -3217,6 +3217,8 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
                                                       sock,
                                                       ipv6,
                                                       NULL, /* gnutls session */
+                                                      NULL, /* gnutls callback */
+                                                      0,    /* gnutls DH key size */
                                                       local_hostname,
                                                       &weechat_python_api_hook_connect_cb,
                                                       function,

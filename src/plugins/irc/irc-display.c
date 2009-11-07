@@ -205,6 +205,30 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL]) ?
                             _("on") : _("off"));
+
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_CERT]))
+            weechat_printf (NULL, "  ssl_cert . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT));
+        else
+            weechat_printf (NULL, "  ssl_cert . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_CERT]));
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
+            weechat_printf (NULL, "  ssl_dhkey_size . . . :   (%d)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+        else
+            weechat_printf (NULL, "  ssl_dhkey_size . . . : %s%d",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
+            weechat_printf (NULL, "  ssl_verify . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  ssl_verify . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL_VERIFY]) ?
+                            _("on") : _("off"));
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PASSWORD]))
             weechat_printf (NULL, "  password . . . . . . :   %s",
                             _("(hidden)"));

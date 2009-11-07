@@ -258,6 +258,21 @@
 ** type: boolean
 ** values: on, off (default value: off)
 
+* *irc.server_default.ssl_cert*
+** description: ssl certificate file used to automatically identify your nick
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.ssl_dhkey_size*
+** description: size of the key used during the Diffie-Hellman Key Exchange
+** type: integer
+** values: 0 .. 2147483647 (default value: 2048)
+
+* *irc.server_default.ssl_verify*
+** description: check that the ssl connection is fully trusted
+** type: boolean
+** values: on, off (default value: on)
+
 * *irc.server_default.username*
 ** description: user name to use on server
 ** type: string

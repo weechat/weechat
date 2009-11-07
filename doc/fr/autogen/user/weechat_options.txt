@@ -548,10 +548,10 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
-* *weechat.network.gnutls_dh_prime_bitsmax_lines*
-** description: taille minimum en bits pour la poignée de main (handshake) utilisant un échange de clé Diffie Hellman
-** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 512)
+* *weechat.network.gnutls_ca_file*
+** description: fichier contenant les autorités de certification
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "%h/ssl/CAs.pem")
 
 * *weechat.plugin.autoload*
 ** description: liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "perl.so")

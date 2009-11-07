@@ -377,7 +377,6 @@ main (int argc, char *argv[])
     weechat_local_charset = strdup ("");
 #endif
     utf8_init ();
-    network_init ();
     
     util_catch_signal (SIGINT, SIG_IGN);  /* ignore SIGINT signal           */
     util_catch_signal (SIGQUIT, SIG_IGN); /* ignore SIGQUIT signal          */
@@ -398,6 +397,7 @@ main (int argc, char *argv[])
     log_init ();                        /* init log file                    */
     if (config_weechat_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);
+    network_init ();                    /* init networking                  */
     gui_main_init ();                   /* init WeeChat interface           */
     if (weechat_upgrading)
     {

@@ -175,7 +175,7 @@ struct t_config_option *config_history_display_default;
 
 /* config, network section */
 
-struct t_config_option *config_network_gnutls_dh_prime_bits;
+struct t_config_option *config_network_gnutls_ca_file;
 
 /* config, plugin section */
 
@@ -1954,12 +1954,11 @@ config_weechat_init_options ()
         return 0;
     }
     
-    config_network_gnutls_dh_prime_bits = config_file_new_option (
+    config_network_gnutls_ca_file = config_file_new_option (
         weechat_config_file, ptr_section,
-        "gnutls_dh_prime_bitsmax_lines", "integer",
-        N_("minimum size in bits for handshake using Diffie Hellman key "
-           "exchange"),
-        NULL, 0, INT_MAX, "512", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "gnutls_ca_file", "string",
+        N_("file containing the certificate authorities"),
+        NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",

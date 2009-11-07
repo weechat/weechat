@@ -358,3 +358,35 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
 
     return name_with_ext;
 }
+
+/*
+ * util_file_get_content: read the content of a file
+ *                        return an allocated buffer with the file content
+ *                        else NULL if an error occured
+ *                        (the buffer must be freed by the caller)
+ */
+
+char *
+util_file_get_content (const char *filename)
+{
+    char *buffer;
+    FILE *f;
+    size_t count, fp;
+
+    buffer = NULL;
+    fp = 0;
+
+    f = fopen(filename, "r");
+    if (f) {
+        while(!feof(f)) {
+            buffer = (char *) realloc(buffer, (fp + 1024*sizeof(char)));
+            count = fread(&buffer[fp], sizeof(char), 1024, f);
+            fp += count;
+        }
+        buffer = (char *) realloc(buffer, fp + sizeof(char));
+        buffer[fp] = '\0';
+        fclose(f);
+    }
+
+    return buffer;
+}

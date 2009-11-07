@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-06 21:20+0100\n"
+"POT-Creation-Date: 2009-11-07 13:09+0100\n"
 "PO-Revision-Date: 2009-11-03 17:08+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1953,10 +1953,8 @@ msgstr ""
 "Standardwert für die maximale Anzahl der angezeigten Befehle im Verlauf (0: "
 "unbegrenzt)"
 
-msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
+msgid "file containing the certificate authorities"
 msgstr ""
-"Mindestanzahl, in Bits, für den Handshake (es wird dazu Diffie Hellman key "
-"exchange genutzt)"
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -4002,6 +4000,18 @@ msgstr "Server über IPv6 ansprechen"
 msgid "use SSL for server communication"
 msgstr "Server über SSL ansprechen"
 
+msgid "ssl certificate file used to automatically identify your nick"
+msgstr ""
+
+#, fuzzy
+msgid "size of the key used during the Diffie-Hellman Key Exchange"
+msgstr ""
+"Mindestanzahl, in Bits, für den Handshake (es wird dazu Diffie Hellman key "
+"exchange genutzt)"
+
+msgid "check that the ssl connection is fully trusted"
+msgstr ""
+
 msgid "password for server"
 msgstr "Passwort für den Server"
 
@@ -4706,6 +4716,63 @@ msgstr "%s%s: TLS Handshake fehlgeschlagen"
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: Nicht genügend Speicher"
+
+#, c-format
+msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: error while checking peer's certificate"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate is NOT trusted"
+msgstr ""
+
+msgid "gnutls: peer's certificate is trusted"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate issuer is unknown"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: the certificate has been revoked"
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
+
+#, fuzzy, c-format
+msgid "gnutls: receiving %d certificate"
+msgid_plural "gnutls: receiving %d certificates"
+msgstr[0] "%s%s: Kann Datei \"%s\" nicht lesen"
+msgstr[1] "%s%s: Kann Datei \"%s\" nicht lesen"
+
+#, c-format
+msgid " - certificate[%d] info:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
+
+#, fuzzy
+msgid "gnutls: sending one certificate"
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
+
+#, c-format
+msgid " - client certificate info (%s):"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to read certifcate \"%s\""
+msgstr "%s%s: Kann Datei \"%s\" nicht lesen"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"

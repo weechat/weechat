@@ -35,6 +35,7 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#include <gnutls/x509.h>
 #endif
 
 #include "../weechat-plugin.h"
@@ -59,12 +60,13 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 { "addresses", "proxy", "ipv6", "ssl", "password", "autoconnect",
   "autoreconnect", "autoreconnect_delay", "nicks", "username", "realname",
-  "local_hostname", "command", "command_delay", "autojoin", "autorejoin"
+  "local_hostname", "command", "command_delay", "autojoin", "autorejoin",
+  "ssl_cert", "ssl_dhkey_size", "ssl_verify",
 };
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
-{ "", "", "off", "off", "", "off", "on", "30", "", "", "", "", "", "0", "",
-  "off"
+{ "", "", "off", "off", "", "off", "on", "30", "",
+  "", "", "", "", "0", "", "off", "", "2048", "on",
 };
 
 
@@ -2106,6 +2108,219 @@ irc_server_create_buffer (struct t_irc_server *server)
     return server->buffer;
 }
 
+#ifdef HAVE_GNUTLS
+/*
+ * irc_server_gnutls_callback: gnutls callback called during handshake
+ *
+ */
+int
+irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
+                            const gnutls_datum_t *req_ca, int nreq,
+                            const gnutls_pk_algorithm_t *pk_algos,
+                            int pk_algos_len, gnutls_retr_st *answer)
+{
+    struct t_irc_server *server;
+    gnutls_retr_st tls_struct;
+    gnutls_x509_crt_t tls_cert;
+    gnutls_x509_privkey_t tls_cert_key;
+    gnutls_x509_crt_t cert_temp;
+    const gnutls_datum_t *cert_list;
+    gnutls_datum_t filedatum, cinfo;
+    unsigned int cert_list_len, status;
+    time_t cert_time;
+    char *cert_path0, *cert_path1, *cert_path2, *cert_str, *hostname;
+    const char *weechat_dir;
+    int rc, i, j, rinfo, hostname_match;
+    
+    /* make C compiler happy */
+    (void) req_ca;
+    (void) nreq;
+    (void) pk_algos;
+    (void) pk_algos_len;
+    
+    if (!data)
+        return -1;
+    
+    server = (struct t_irc_server *) data;
+    hostname = server->addresses_array[server->index_current_address];
+    hostname_match = 0;
+    
+    weechat_printf (server->buffer,
+                    _("gnutls: connected using %d-bit Diffie-Hellman shared "
+                      "secret exchange"),
+                    IRC_SERVER_OPTION_INTEGER (server,
+                                               IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+    if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
+    {
+        weechat_printf (server->buffer,
+                        _("%sgnutls: error while checking peer's certificate"),
+                        weechat_prefix ("error"));
+        rc = -1;
+    }
+    else
+    {
+        /* some checks */
+        if (status & GNUTLS_CERT_INVALID)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: peer's certificate is NOT trusted"),
+                            weechat_prefix ("error"));
+            rc = -1;
+        }
+        else
+        {
+            weechat_printf (server->buffer,
+                            _("gnutls: peer's certificate is trusted"));
+        }
+        if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: peer's certificate issuer is unknown"),
+                            weechat_prefix ("error"));
+            rc = -1;
+        }
+        if (status & GNUTLS_CERT_REVOKED)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: the certificate has been revoked"),
+                            weechat_prefix ("error"));
+            rc = -1;
+        }
+        
+        /* check certificates */
+        if (gnutls_x509_crt_init (&cert_temp) >= 0)
+        {
+            cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
+            if (cert_list)
+            {
+                weechat_printf (server->buffer,
+                                NG_("gnutls: receiving %d certificate",
+                                    "gnutls: receiving %d certificates",
+                                    cert_list_len),
+                                cert_list_len);
+                for (i = 0, j = (int) cert_list_len; i < j; i++)
+                {
+                    if (gnutls_x509_crt_import (cert_temp, &cert_list[i], GNUTLS_X509_FMT_DER) >= 0)
+                    {
+                        /* checking if hostname matches in the first certificate */
+                        if (i == 0 && gnutls_x509_crt_check_hostname (cert_temp, hostname) != 0)
+                        {
+                            hostname_match = 1;
+                        }
+                        /* displaying infos about certificate */
+                        rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+                        if (rinfo == 0)
+                        {
+                            weechat_printf (server->buffer,
+                                            _(" - certificate[%d] info:"), i + 1);
+                            weechat_printf (server->buffer,
+                                            "   - %s", cinfo.data);
+                            gnutls_free (cinfo.data);
+                        }
+                        /* check expiration date */
+                        cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
+                        if (cert_time < time(NULL))
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%sgnutls: certificate has expired"),
+                                            weechat_prefix ("error"));
+                            rc = -1;
+                        }
+                        /* check expiration date */
+                        cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
+                        if (cert_time > time(NULL))
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%sgnutls: certificate is not yet activated"),
+                                            weechat_prefix ("error"));
+                            rc = -1;
+                        }
+                    }
+                }
+                if (hostname_match == 0)
+                {
+                    weechat_printf (server->buffer,
+                                    _("%sgnutls: the hostname in the "
+                                      "certificate does NOT match \"%s\""),
+                                    weechat_prefix ("error"), hostname);
+                    rc = -1;
+                }
+            }
+        }
+    }
+    
+    /* using client certificate if it exists */
+    cert_path0 = (char *) IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT);
+    if (cert_path0 && cert_path0[0])
+    {
+        weechat_dir = weechat_info_get ("weechat_dir", "");
+        cert_path1 = weechat_string_replace (cert_path0, "%h", weechat_dir);
+        cert_path2 = (cert_path1) ?
+            weechat_string_replace (cert_path1, "~", getenv ("HOME")) : NULL;
+
+        if (cert_path2)
+        {
+            cert_str = weechat_file_get_content (cert_path2);
+            if (cert_str)
+            {
+                weechat_printf (server->buffer,
+                                _("gnutls: sending one certificate"));
+                
+                filedatum.data = (unsigned char *) cert_str;
+                filedatum.size = strlen (cert_str);
+                
+                /* certificate */
+                gnutls_x509_crt_init (&tls_cert);
+                gnutls_x509_crt_import (tls_cert, &filedatum, GNUTLS_X509_FMT_PEM);
+                
+                /* key */
+                gnutls_x509_privkey_init (&tls_cert_key);
+                gnutls_x509_privkey_import (tls_cert_key, &filedatum, GNUTLS_X509_FMT_PEM);
+                
+                tls_struct.type = GNUTLS_CRT_X509;
+                tls_struct.ncerts = 1;
+                tls_struct.deinit_all = 0;
+                tls_struct.cert.x509 = &tls_cert;
+                tls_struct.key.x509 = tls_cert_key;
+                
+                /* client certificate info */
+                rinfo = gnutls_x509_crt_print (tls_cert, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+                if (rinfo == 0)
+                {
+                    weechat_printf (server->buffer,
+                                    _(" - client certificate info (%s):"), cert_path2);
+                    weechat_printf (server->buffer, "  - %s", cinfo.data);
+                    gnutls_free (cinfo.data);
+                }
+                
+                memcpy(answer, &tls_struct, sizeof (gnutls_retr_st));
+                free (cert_str);
+            }
+            else
+            {
+                weechat_printf (server->buffer,
+                                _("%sgnutls: unable to read certifcate \"%s\""),
+                                weechat_prefix ("error"), cert_path2);
+            }
+        }
+        
+        if (cert_path1)
+            free (cert_path1);
+        if (cert_path2)
+            free (cert_path2);
+    }
+    
+    /* an error should stop the handshake unless the user doesn't care */
+    if ((rc == -1)
+        && (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY) == 0))
+    {
+        rc = 0;
+    }
+    
+    return rc;
+}
+#endif
+
 /*
  * irc_server_connect: connect to an IRC server
  *                     Return: 1 if ok
@@ -2313,6 +2528,7 @@ irc_server_connect (struct t_irc_server *server)
         server->ssl_connected = 1;
 #endif
     
+    
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->addresses_array[server->index_current_address],
                                                  server->ports_array[server->index_current_address],
@@ -2320,8 +2536,10 @@ irc_server_connect (struct t_irc_server *server)
                                                  IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
 #ifdef HAVE_GNUTLS
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
+                                                 (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
+                                                 IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
 #else
-                                                 NULL,
+                                                 NULL, NULL, 0,
 #endif
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
                                                  &irc_server_connect_cb,
@@ -2917,6 +3135,15 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "ssl_cert",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_dhkey_size",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_verify",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD)))
         return 0;
@@ -3042,6 +3269,26 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  ssl. . . . . . . . . : %s",
                                 weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL]) ?
+                                "on" : "off");
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]))
+            weechat_log_printf ("  ssl_cert . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_CERT));
+        else
+            weechat_log_printf ("  ssl_cert . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]));
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
+            weechat_log_printf ("  ssl_dhkey_size . . . : null ('%d')",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+        else
+            weechat_log_printf ("  ssl_dhkey_size . . . : '%d'",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
+            weechat_log_printf ("  ssl_verify . . . . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
+                                "on" : "off");
+        else
+            weechat_log_printf ("  ssl_verify . . . . . : %s",
+                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]) ?
                                 "on" : "off");
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PASSWORD]))
             weechat_log_printf ("  password . . . . . . : null");

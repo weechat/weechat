@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-06 21:20+0100\n"
+"POT-Creation-Date: 2009-11-07 13:09+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1694,7 +1694,7 @@ msgstr ""
 "número máximo de comandos para mostrar por defecto en el listado del "
 "historial (0 = ilimitado)"
 
-msgid "minimum size in bits for handshake using Diffie Hellman key exchange"
+msgid "file containing the certificate authorities"
 msgstr ""
 
 #, fuzzy
@@ -3696,6 +3696,15 @@ msgstr "usar el protocolo IPv6 para la comunicación con el servidor"
 msgid "use SSL for server communication"
 msgstr "usar SSL para la comunicación con el servidor"
 
+msgid "ssl certificate file used to automatically identify your nick"
+msgstr ""
+
+msgid "size of the key used during the Diffie-Hellman Key Exchange"
+msgstr ""
+
+msgid "check that the ssl connection is fully trusted"
+msgstr ""
+
 msgid "password for server"
 msgstr "contraseña del servidor"
 
@@ -4405,6 +4414,63 @@ msgstr "%s%s: el saludo TLS ha fallado"
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: no hay suficiente memoria"
+
+#, c-format
+msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: error while checking peer's certificate"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate is NOT trusted"
+msgstr ""
+
+msgid "gnutls: peer's certificate is trusted"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate issuer is unknown"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: the certificate has been revoked"
+msgstr "No es posible escribir un fichero de log para un búfer\n"
+
+#, fuzzy, c-format
+msgid "gnutls: receiving %d certificate"
+msgid_plural "gnutls: receiving %d certificates"
+msgstr[0] "No es posible escribir un fichero de log para un búfer\n"
+msgstr[1] "No es posible escribir un fichero de log para un búfer\n"
+
+#, c-format
+msgid " - certificate[%d] info:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "No es posible escribir un fichero de log para un búfer\n"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "No es posible escribir un fichero de log para un búfer\n"
+
+#, fuzzy
+msgid "gnutls: sending one certificate"
+msgstr "No es posible escribir un fichero de log para un búfer\n"
+
+#, c-format
+msgid " - client certificate info (%s):"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to read certifcate \"%s\""
+msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"

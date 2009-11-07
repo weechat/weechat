@@ -184,6 +184,13 @@ typedef int (t_hook_callback_connect)(void *data, int status,
                                       const char *error,
                                       const char *ip_address);
 
+#ifdef HAVE_GNUTLS
+typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
+                                const gnutls_datum_t *req_ca, int nreq,
+                                const gnutls_pk_algorithm_t *pk_algos,
+                                int pk_algos_len, gnutls_retr_st *answer);
+#endif
+
 struct t_hook_connect
 {
     t_hook_callback_connect *callback; /* connect callback                  */
@@ -194,6 +201,8 @@ struct t_hook_connect
     int ipv6;                          /* IPv6 connection ?                 */
 #ifdef HAVE_GNUTLS
     gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
+    gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
+    int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
 #endif
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
@@ -345,10 +354,18 @@ extern struct t_hook *hook_process (struct t_weechat_plugin *plugin,
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int sock, int ipv6,
-                                    void *gnutls_session,
+                                    void *gnutls_session, void *gnutls_cb,
+                                    int gnutls_dhkey_size,
                                     const char *local_hostname,
                                     t_hook_callback_connect *callback,
                                     void *callback_data);
+#ifdef HAVE_GNUTLS
+extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
+                                                 const gnutls_datum_t *req_ca, int nreq,
+                                                 const gnutls_pk_algorithm_t *pk_algos,
+                                                 int pk_algos_len,
+                                                 gnutls_retr_st *answer);
+#endif
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags, const char *message,

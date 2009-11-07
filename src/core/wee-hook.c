@@ -1432,9 +1432,9 @@ hook_process_run (struct t_hook *hook_process)
  */
 
 struct t_hook *
-hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
-              const char *address, int port, int sock, int ipv6,
-              void *gnutls_sess, const char *local_hostname,
+hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *address,
+              int port, int sock, int ipv6, void *gnutls_sess, void *gnutls_cb,
+              int gnutls_dhkey_size, const char *local_hostname,
               t_hook_callback_connect *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -1469,6 +1469,8 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->ipv6 = ipv6;
 #ifdef HAVE_GNUTLS
     new_hook_connect->gnutls_sess = gnutls_sess;
+    new_hook_connect->gnutls_cb = gnutls_cb;
+    new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
 #endif
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
@@ -1483,6 +1485,40 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     
     return new_hook;
 }
+
+/*
+ * hook_connect_gnutls_set_certificates: set gnutls
+ */
+
+#ifdef HAVE_GNUTLS
+int
+hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
+                                      const gnutls_datum_t *req_ca, int nreq,
+                                      const gnutls_pk_algorithm_t *pk_algos,
+                                      int pk_algos_len,
+                                      gnutls_retr_st *answer)
+{
+    struct t_hook *ptr_hook;
+    int rc;
+    
+    rc = -1;
+    ptr_hook = weechat_hooks[HOOK_TYPE_CONNECT];
+    while (ptr_hook)
+    {
+        /* looking for the right hook using to the gnutls session pointer */
+        if (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session)
+        {
+            rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
+                (ptr_hook->callback_data, tls_session, req_ca, nreq,
+                 pk_algos, pk_algos_len, answer);
+            break;
+        }
+        ptr_hook = ptr_hook->next_hook;
+    }
+    
+    return rc;
+}
+#endif
 
 /*
  * hook_print: hook a message printed by WeeChat
@@ -2501,6 +2537,10 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
 #ifdef HAVE_GNUTLS
                     if (!infolist_new_var_pointer (ptr_item, "gnutls_sess", HOOK_CONNECT(ptr_hook, gnutls_sess)))
                         return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "gnutls_cb", HOOK_CONNECT(ptr_hook, gnutls_cb)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "gnutls_dhkey_size", HOOK_CONNECT(ptr_hook, gnutls_dhkey_size)))
+                        return 0;
 #endif
                     if (!infolist_new_var_string (ptr_item, "local_hostname", HOOK_CONNECT(ptr_hook, local_hostname)))
                         return 0;
@@ -2772,6 +2812,8 @@ hook_print_log ()
                         log_printf ("    ipv6. . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, ipv6));
 #ifdef HAVE_GNUTLS
                         log_printf ("    gnutls_sess . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_sess));
+                        log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_cb));
+                        log_printf ("    gnutls_dhkey_size . . : %d",    HOOK_CONNECT(ptr_hook, gnutls_dhkey_size));
 #endif
                         log_printf ("    local_hostname. . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));

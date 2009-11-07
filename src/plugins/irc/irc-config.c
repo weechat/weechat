@@ -806,6 +806,42 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_SSL_CERT:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("ssl certificate file used to automatically identify your nick"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SSL_DHKEY_SIZE:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("size of the key used during the Diffie-Hellman Key Exchange"),
+                NULL, 0, INT_MAX,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SSL_VERIFY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("check that the ssl connection is fully trusted"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_PASSWORD:
             new_option = weechat_config_new_option (
                 config_file, section,

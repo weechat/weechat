@@ -3462,6 +3462,8 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                                                       sock,
                                                       ipv6,
                                                       NULL, /* gnutls session */
+                                                      NULL, /* gnutls callback */
+                                                      0,    /* gnutls DH key size */
                                                       local_hostname,
                                                       &weechat_tcl_api_hook_connect_cb,
                                                       function,

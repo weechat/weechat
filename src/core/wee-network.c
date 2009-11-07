@@ -62,14 +62,22 @@ const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 /*
  * network_init: init network
  */
-
 void
 network_init ()
 {
 #ifdef HAVE_GNUTLS
+    char *CApath, *CApath2;
+
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
-    gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
+
+    CApath = string_replace (CONFIG_STRING(config_network_gnutls_ca_file),
+                                     "~", getenv ("HOME"));
+    CApath2 = string_replace (CApath, "%h", weechat_home);
+
+    gnutls_certificate_set_x509_trust_file (gnutls_xcred, CApath2, GNUTLS_X509_FMT_PEM);
+    gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
+                                                     &hook_connect_gnutls_set_certificates);
 #endif
 }
 
@@ -804,8 +812,10 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
             {
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                           (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
-                gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                          CONFIG_INTEGER(config_network_gnutls_dh_prime_bits));
+                if (HOOK_CONNECT(hook_connect, gnutls_dhkey_size) > 0) {
+                    gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                              (unsigned int) HOOK_CONNECT(hook_connect, gnutls_dhkey_size));
+                }
                 while (1)
                 {
                     rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));

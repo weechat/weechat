@@ -258,6 +258,21 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
 
+* *irc.server_default.ssl_cert*
+** description: fichier de certificat ssl utilisé pour identifier automatiquement votre pseudo
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *irc.server_default.ssl_dhkey_size*
+** description: taille de clé utilisée pour l'échange de clé Diffie-Hellman
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: 2048)
+
+* *irc.server_default.ssl_verify*
+** description: vérifier que la connexion ssl est entièrement de confiance
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
 * *irc.server_default.username*
 ** description: nom d'utilisateur pour le serveur
 ** type: chaîne

@@ -34,7 +34,7 @@ struct t_weelist;
 struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20090614-02"
+#define WEECHAT_PLUGIN_API_VERSION "20091107-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -190,12 +190,13 @@ struct t_weechat_plugin
     int (*utf8_pos) (const char *string, int real_pos);
     char *(*utf8_strndup) (const char *string, int length);
     
-    /* directories */
+    /* directories/files */
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
     int (*mkdir_parents) (const char *directory, int mode);
     void (*exec_on_files) (const char *directory, int hidden_files, void *data,
                            void (*callback)(void *data, const char *filename));
+    char *(*file_get_content) (const char *filename);
     
     /* util */
     int (*timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -395,7 +396,8 @@ struct t_weechat_plugin
                                     int port,
                                     int sock,
                                     int ipv6,
-                                    void *gnutls_sess,
+                                    void *gnutls_sess, void *gnutls_cb,
+                                    int gnutls_dhkey_size,
                                     const char *local_hostname,
                                     int (*callback)(void *data,
                                                     int status,
@@ -758,6 +760,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                               __callback)                               \
     weechat_plugin->exec_on_files(__directory, __hidden_files, __data,  \
                                   __callback)
+#define weechat_file_get_content(__filename)                            \
+    weechat_plugin->file_get_content(__filename)
 
 /* util */
 #define weechat_timeval_cmp(__time1, __time2)                           \
@@ -972,10 +976,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_process(weechat_plugin, __command, __timeout,  \
                                  __callback, __callback_data)
 #define weechat_hook_connect(__proxy, __address, __port, __sock,        \
-                             __ipv6, __gnutls_sess, __local_hostname,   \
+                            __ipv6, __gnutls_sess, __gnutls_cb,         \
+                             __gnutls_dhkey_size, __local_hostname,     \
                              __callback, __data)                        \
     weechat_plugin->hook_connect(weechat_plugin, __proxy, __address,    \
                                  __port, __sock, __ipv6, __gnutls_sess, \
+                                 __gnutls_cb, __gnutls_dhkey_size,      \
                                  __local_hostname, __callback, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \
                            __callback, __data)                          \

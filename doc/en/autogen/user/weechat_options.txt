@@ -548,10 +548,10 @@
 ** type: boolean
 ** values: on, off (default value: on)
 
-* *weechat.network.gnutls_dh_prime_bitsmax_lines*
-** description: minimum size in bits for handshake using Diffie Hellman key exchange
-** type: integer
-** values: 0 .. 2147483647 (default value: 512)
+* *weechat.network.gnutls_ca_file*
+** description: file containing the certificate authorities
+** type: string
+** values: any string (default value: "%h/ssl/CAs.pem")
 
 * *weechat.plugin.autoload*
 ** description: comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "perl.so")

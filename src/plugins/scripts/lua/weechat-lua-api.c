@@ -3615,6 +3615,8 @@ weechat_lua_api_hook_connect (lua_State *L)
                                                       sock,
                                                       ipv6,
                                                       NULL, /* gnutls session */
+                                                      NULL, /* gnutls callback */
+                                                      0,    /* gnutls DH key size */
                                                       local_hostname,
                                                       &weechat_lua_api_hook_connect_cb,
                                                       function,

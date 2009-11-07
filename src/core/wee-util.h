@@ -34,5 +34,5 @@ extern void util_exec_on_files (const char *directory, int hidden_files,
                                                  const char *filename));
 extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
-
+extern char *util_file_get_content (const char *filename);
 #endif /* wee-util.h */

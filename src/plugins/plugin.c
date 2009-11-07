@@ -407,6 +407,7 @@ plugin_load (const char *filename)
         new_plugin->mkdir = &util_mkdir;
         new_plugin->mkdir_parents = &util_mkdir_parents;
         new_plugin->exec_on_files = &util_exec_on_files;
+        new_plugin->file_get_content = &util_file_get_content;
         
         new_plugin->timeval_cmp = &util_timeval_cmp;
         new_plugin->timeval_diff = &util_timeval_diff;
