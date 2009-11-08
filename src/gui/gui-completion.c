@@ -1848,7 +1848,7 @@ gui_completion_complete (struct t_gui_completion *completion)
     
     while (ptr_item)
     {
-        item_is_nick = ((int)(ptr_item->user_data) == 1);
+        item_is_nick = ((long)(ptr_item->user_data) == 1);
         if ((item_is_nick
              && (gui_completion_nickncmp (completion->base_word, ptr_item->data,
                                           length) == 0))
