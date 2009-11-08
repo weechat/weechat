@@ -627,7 +627,7 @@ logger_list ()
                 }
                 else
                 {
-                    snprintf (status, sizeof (status), _("not logging"));
+                    snprintf (status, sizeof (status), "%s", _("not logging"));
                 }
                 weechat_printf (NULL,
                                 "  %s[%s%d%s]%s (%s) %s%s%s: %s%s%s%s",
