@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
-"PO-Revision-Date: 2009-11-07 23:28+0100\n"
+"POT-Creation-Date: 2009-11-10 16:48+0100\n"
+"PO-Revision-Date: 2009-11-08 20:20+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -426,7 +426,7 @@ msgid "Layout reset for windows"
 msgstr "Zurücksetzen des Fensterlayouts"
 
 msgid "Plugins loaded:"
-msgstr "installierte Erweiterungen:"
+msgstr "Installierte Erweiterungen:"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
@@ -530,7 +530,7 @@ msgstr "  (keine Erweiterung)"
 
 #, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%sFehler: fehlerhafte Anzahl von Argumenten für den Befehl \"%s\""
+msgstr "%sFehler: Fehlerhafte Anzahl von Argumenten für den Befehl \"%s\""
 
 msgid "List of proxies:"
 msgstr "Liste der Proxys:"
@@ -544,7 +544,7 @@ msgstr "Kein Proxy definiert"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
-msgstr "%sError: falscher Typ \"%s\" für Proxy \"%s\""
+msgstr "%sFehler: Falscher Typ \"%s\" für Proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" created"
@@ -552,7 +552,7 @@ msgstr "Proxy \"%s\" erstellt"
 
 #, c-format
 msgid "%sError: failed to create proxy \"%s\""
-msgstr "%sFehler: kKonnte den Proxy \"%s\" nicht erstellen"
+msgstr "%sFehler: Konnte den Proxy \"%s\" nicht erstellen"
 
 #, c-format
 msgid "%sError: wrong port \"%s\" for proxy \"%s\""
@@ -582,7 +582,7 @@ msgstr "%sFehler: Optionen konnten nicht von %s neu geladen werden"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
-msgstr "unbekannte Konfigurationsdatei \"%s\""
+msgstr "Unbekannte Konfigurationsdatei \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
@@ -609,8 +609,10 @@ msgstr "Konfigurationsoption nicht gefunden"
 #, c-format
 msgid "%s%d%s configuration option found matching with \"%s\""
 msgid_plural "%s%d%s configuration options found matching with \"%s\""
-msgstr[0] "%s%d%s Konfigurationsoption gefunden mit \"%s\""
-msgstr[1] "%s%d%s Konfigurationsoptionen gefunden mit \"%s\""
+msgstr[0] ""
+"%s%d%s Option, in der Konfiguration, gefunden die auf \"%s\" zutrifft."
+msgstr[1] ""
+"%s%d%s Optionen, in der Konfiguration, gefunden die auf \"%s\" zutreffen."
 
 #, c-format
 msgid "%s%d%s configuration option found"
@@ -1014,8 +1016,8 @@ msgid ""
 "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
 "    /filter add sucks irc.freenode.#weechat * weechat sucks"
 msgstr ""
-"         list: listet alle Filter auf\n"
-"       enable: aktiviere Filter (Filter sind Standardmäßig aktiviert)\n"
+"         list: alle Filter auflisten\n"
+"       enable: aktiviere Filter (Filter sind standardmäßig aktiviert)\n"
 "      disable: deaktiviere Filter\n"
 "       toggle: Filterfunktion ein-/ausschalten\n"
 "         name: Filtername\n"
@@ -1121,7 +1123,7 @@ msgid ""
 "\n"
 "Without argument, this command displays saved layout."
 msgstr ""
-"   save: das aktuelle Layout speichern\n"
+"   save: speichert das aktuelle Layout\n"
 "  apply: das gespeicherte Layout anwenden\n"
 "  reset: das gespeicherte Layout entfernen\n"
 "buffers: speichere/verwende nur Buffer (Reihenfolge der Buffer)\n"
@@ -1151,15 +1153,14 @@ msgid ""
 "\n"
 "Without argument, this command lists loaded plugins."
 msgstr ""
-"    list: installierte Erweiterungen auflisten\n"
-"listfull: installierte Erweiterungen mit Details für jede Erweiterung "
-"auflisten\n"
+"    list: installierte Erweiterungen werden aufgelistet\n"
+"listfull: detaillierte Auflistung aller installierten Erweiterungen\n"
 "    load: installiere eine Erweiterung\n"
 "autoload: installiere automatisch alle Erweiterungen aus System- oder "
 "Benutzerverzeichnis\n"
-"  reload: installiere eine Erweiterung erneut (wenn kein Name vorgegeben "
-"ist, werden alle Erweiterungen de- und dann neu installiert)\n"
-"  unload: deinstalliere eines oder alle Erweiterungen\n"
+"  reload: installiere eine Erweiterung erneut (falls kein Name angegeben "
+"wird, werden alle Erweiterungen de- und dann neu installiert)\n"
+"  unload: deinstalliere eine oder alle Erweiterungen\n"
 "\n"
 "Ohne Angabe eines Argumentes listet /plugin alle geladenen Erweiterungen auf."
 
@@ -3437,7 +3438,7 @@ msgstr ""
 "Text: zu sendender Text"
 
 msgid "list nicknames on channels"
-msgstr "Nicknames in Channels auflisten"
+msgstr "Nicknamen in Channels auflisten"
 
 msgid "[channel[,channel]]"
 msgstr "[Channel[,Channel]]"
@@ -3446,7 +3447,7 @@ msgid "channel: channel name"
 msgstr "Channel: Channelname"
 
 msgid "change current nickname"
-msgstr "Aktuellen Nickname wechseln"
+msgstr "Aktuellen Nicknamen wechseln"
 
 msgid "[-all] nickname"
 msgstr "[-all] Nickname"
@@ -3459,7 +3460,7 @@ msgstr ""
 "Nickname: neuer Nickname"
 
 msgid "send notice message to user"
-msgstr "NOTICE an einen User verschicken"
+msgstr "Mitteilung (notice) an einen User verschicken"
 
 msgid "[-server server] nickname text"
 msgstr "[-server Server] Nickname Text"
@@ -3565,7 +3566,7 @@ msgid ""
 msgstr ""
 "      -all: Verbinde mit allen Servern neu\n"
 "Servername: Servername, mit dem verbunden werden soll\n"
-"   -nojoin: kein betreten der Channels (selbst wenn autojoin für diesen "
+"   -nojoin: Channels werden nicht betreten (selbst wenn autojoin für diesen "
 "Server aktiv ist)"
 
 msgid "tell the server to reload its config file"
@@ -3797,7 +3798,7 @@ msgid "query local time from server"
 msgstr "Ortszeit des Servers abfragen"
 
 msgid "target: query time from specified server"
-msgstr "Ziel: der zu fragende Server"
+msgstr "Ziel: Zeit des angegebenen Servers abfragen."
 
 msgid "get/set channel topic"
 msgstr "Channeltopic abfragen/setzen"
@@ -3829,14 +3830,14 @@ msgstr ""
 "Nickname: User, für den der Bann aufzuheben ist"
 
 msgid "return a list of information about nicknames"
-msgstr "Liste von Nickname-Informationen ermitteln"
+msgstr "Zeigt Informationen zu Nicknamen an"
 
 msgid "list of users logged into the server"
 msgstr "Auf dem Server angemeldete User auflisten"
 
 msgid "give the version info of nick or server (current or specified)"
 msgstr ""
-"Versionsinformationen von Nickname oder Server ermitteln (des aktuellen oder "
+"Versionsinformation des Nicknamen oder Servers ermitteln (des aktuellen oder "
 "angegebenen)"
 
 msgid "[server | nickname]"
@@ -3861,7 +3862,7 @@ msgid "text to send"
 msgstr "zu sendender Text"
 
 msgid "generate a query which returns a list of information"
-msgstr "erweiterte Nicknameliste"
+msgstr "Erstelle eine Anfrage welche eine Liste von Informationen zurück gibt"
 
 msgid "[mask [\"o\"]]"
 msgstr "[Maske [\"o\"]]"
@@ -3870,7 +3871,7 @@ msgid ""
 "mask: only information which match this mask\n"
 "   o: only operators are returned according to the mask supplied"
 msgstr ""
-"Maske: nur Information über betreffende Nicknames abfragen\n"
+"Maske: nur Information über betreffende Nicknamen abfragen\n"
 "   o: nur Operatoren ausgeben, die dem Filter entsprechen"
 
 msgid "query information about user(s)"
@@ -3887,7 +3888,7 @@ msgstr ""
 "Nickname: Nickname (oder eine Maske)"
 
 msgid "ask for information about a nickname which no longer exists"
-msgstr "Information über die Vergangenheit eines Nicknames erfragen"
+msgstr "Information über die Vergangenheit eines Nicknamen erfragen"
 
 msgid "nickname [,nickname [,nickname ...]] [count [target]]"
 msgstr "Nickname [,Nickname [,Nickname ...]] [Anzahl [Ziel]]"
@@ -3897,10 +3898,10 @@ msgid ""
 "   count: number of replies to return (full search if negative number)\n"
 "  target: reply should match this mask"
 msgstr ""
-"Nickname: abzufragende Nicknames\n"
+"Nickname: Nickname, welcher gesucht werden soll\n"
 "   Anzahl: maximale Anzahl an Antworten (negative Zahl für eine vollständige "
 "Liste)\n"
-"  Ziel: zu suchende Hostmaske"
+"  Ziel: Antwort soll auf diese Suchmaske zutreffen"
 
 #, c-format
 msgid "%s%s: too few arguments for \"%s\" command"
@@ -3955,7 +3956,7 @@ msgid "privates on all IRC servers"
 msgstr "Private auf allen IRC Servern"
 
 msgid "default part message for IRC channel"
-msgstr "Standard Nachricht beim verlassen (/part) eines IRC-Channels"
+msgstr "Standard Nachricht beim Verlassen (/part) eines IRC-Channels"
 
 msgid "numbers for defined ignores"
 msgstr "Anzahl für festgelegte /ignores"
@@ -4887,7 +4888,6 @@ msgstr "Protokollieren der Buffer:"
 msgid "logging (level: %d)"
 msgstr "Protokolliere (Level: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "nicht protokolliert"
 
