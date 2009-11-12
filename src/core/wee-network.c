@@ -47,6 +47,7 @@
 
 
 #ifdef HAVE_GNUTLS
+int network_init_ok = 0;
 gnutls_certificate_credentials gnutls_xcred; /* GnuTLS client credentials   */
 const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010700
@@ -78,6 +79,7 @@ network_init ()
     gnutls_certificate_set_x509_trust_file (gnutls_xcred, CApath2, GNUTLS_X509_FMT_PEM);
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
+    network_init_ok = 1;
 #endif
 }
 
@@ -89,8 +91,11 @@ void
 network_end ()
 {
 #ifdef HAVE_GNUTLS
-    gnutls_certificate_free_credentials (gnutls_xcred);
-    gnutls_global_deinit();
+    if (network_init_ok)
+    {
+        gnutls_certificate_free_credentials (gnutls_xcred);
+        gnutls_global_deinit();
+    }
 #endif
 }
 
