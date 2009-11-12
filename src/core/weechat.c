@@ -132,6 +132,7 @@ weechat_display_keys ()
     struct t_gui_key *ptr_key;
     char *expanded_name;
     
+    gui_keyboard_default_bindings ();
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: %s is "weechat" */
                           _("%s default keys:\n"),
