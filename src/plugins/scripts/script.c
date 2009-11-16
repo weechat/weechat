@@ -436,24 +436,15 @@ struct t_plugin_script *
 script_search_by_full_name (struct t_plugin_script *scripts,
                             const char *full_name)
 {
-    char *full_name_copy, *base_name;
+    char *base_name;
     struct t_plugin_script *ptr_script;
     
-    full_name_copy = strdup (full_name);
-    
-    if (full_name_copy)
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
     {
-        for (ptr_script = scripts; ptr_script;
-             ptr_script = ptr_script->next_script)
-        {
-            base_name = basename (ptr_script->filename);
-            if (strcmp (base_name, full_name) == 0)
-            {
-                free (full_name_copy);
-                return ptr_script;
-            }
-        }
-        free (full_name_copy);
+        base_name = basename (ptr_script->filename);
+        if (strcmp (base_name, full_name) == 0)
+            return ptr_script;
     }
     
     /* script not found */
@@ -912,7 +903,8 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                        int (*script_load)(const char *filename),
                        char **list)
 {
-    char **argv, *name, *base_name, *new_path, *autoload_path, *symlink_path;
+    char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
+    char *symlink_path;
     const char *dir_home, *dir_separator;
     int argc, i, length;
     struct t_plugin_script *ptr_script;
@@ -927,67 +919,71 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                 name = strdup (argv[i]);
                 if (name)
                 {
-                    base_name = basename (name);
-                    
-                    /* unload script, if script is loaded */
-                    ptr_script = script_search_by_full_name (scripts, base_name);
-                    if (ptr_script)
-                        (*script_unload) (ptr_script);
-                    
-                    /* remove script file(s) */
-                    script_remove_file (weechat_plugin, base_name, 0);
-                    
-                    /* move file from install dir to language dir */
-                    dir_home = weechat_info_get ("weechat_dir", "");
-                    length = strlen (dir_home) + strlen (weechat_plugin->name) +
-                        strlen (base_name) + 16;
-                    new_path = malloc (length);
-                    if (new_path)
+                    ptr_base_name = basename (name);
+                    base_name = strdup (ptr_base_name);
+                    if (base_name)
                     {
-                        snprintf (new_path, length, "%s/%s/%s",
-                                  dir_home, weechat_plugin->name, base_name);
-                        if (rename (name, new_path) == 0)
+                        /* unload script, if script is loaded */
+                        ptr_script = script_search_by_full_name (scripts, base_name);
+                        if (ptr_script)
+                            (*script_unload) (ptr_script);
+                        
+                        /* remove script file(s) */
+                        script_remove_file (weechat_plugin, base_name, 0);
+                        
+                        /* move file from install dir to language dir */
+                        dir_home = weechat_info_get ("weechat_dir", "");
+                        length = strlen (dir_home) + strlen (weechat_plugin->name) +
+                            strlen (base_name) + 16;
+                        new_path = malloc (length);
+                        if (new_path)
                         {
-                            /* make link in autoload dir */
-                            length = strlen (dir_home) +
-                                strlen (weechat_plugin->name) + 8 +
-                                strlen (base_name) + 16;
-                            autoload_path = malloc (length);
-                            if (autoload_path)
+                            snprintf (new_path, length, "%s/%s/%s",
+                                      dir_home, weechat_plugin->name, base_name);
+                            if (rename (name, new_path) == 0)
                             {
-                                snprintf (autoload_path, length,
-                                          "%s/%s/autoload/%s",
-                                          dir_home, weechat_plugin->name,
-                                          base_name);
-                                dir_separator = weechat_info_get ("dir_separator", "");
-                                length = 2 + strlen (dir_separator) +
-                                    strlen (base_name) + 1;
-                                symlink_path = malloc (length);
-                                if (symlink_path)
+                                /* make link in autoload dir */
+                                length = strlen (dir_home) +
+                                    strlen (weechat_plugin->name) + 8 +
+                                    strlen (base_name) + 16;
+                                autoload_path = malloc (length);
+                                if (autoload_path)
                                 {
-                                    snprintf (symlink_path, length, "..%s%s",
-                                              dir_separator, base_name);
-                                    symlink (symlink_path, autoload_path);
-                                    free (symlink_path);
+                                    snprintf (autoload_path, length,
+                                              "%s/%s/autoload/%s",
+                                              dir_home, weechat_plugin->name,
+                                              base_name);
+                                    dir_separator = weechat_info_get ("dir_separator", "");
+                                    length = 2 + strlen (dir_separator) +
+                                        strlen (base_name) + 1;
+                                    symlink_path = malloc (length);
+                                    if (symlink_path)
+                                    {
+                                        snprintf (symlink_path, length, "..%s%s",
+                                                  dir_separator, base_name);
+                                        symlink (symlink_path, autoload_path);
+                                        free (symlink_path);
+                                    }
+                                    free (autoload_path);
                                 }
-                                free (autoload_path);
+                                
+                                /* load script */
+                                (*script_load) (new_path);
                             }
-                            
-                            /* load script */
-                            (*script_load) (new_path);
+                            else
+                            {
+                                weechat_printf (NULL,
+                                                _("%s%s: failed to move script %s "
+                                                  "to %s (%s)"),
+                                                weechat_prefix ("error"),
+                                                weechat_plugin->name,
+                                                name,
+                                                new_path,
+                                                strerror (errno));
+                            }
+                            free (new_path);
                         }
-                        else
-                        {
-                            weechat_printf (NULL,
-                                            _("%s%s: failed to move script %s "
-                                              "to %s (%s)"),
-                                            weechat_prefix ("error"),
-                                            weechat_plugin->name,
-                                            name,
-                                            new_path,
-                                            strerror (errno));
-                        }
-                        free (new_path);
+                        free (base_name);
                     }
                     free (name);
                 }
