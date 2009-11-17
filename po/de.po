@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-10 16:48+0100\n"
-"PO-Revision-Date: 2009-11-08 20:20+0100\n"
+"POT-Creation-Date: 2009-11-17 12:24+0100\n"
+"PO-Revision-Date: 2009-11-17 00:01+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1490,7 +1490,7 @@ msgstr ""
 
 #, c-format
 msgid "\t\tDay changed to %s"
-msgstr "\t\tEin neuer Tag bricht an, heute ist der %s"
+msgstr "\t\tEin neuer Tag bricht an. Heute ist  %s"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
@@ -4179,7 +4179,7 @@ msgid "color for nick in input bar"
 msgstr "Farbe des Nicks in der Eingabe-Bar"
 
 msgid "color for away item"
-msgstr "Farbe des Abwesendheits-Felds (away)"
+msgstr "Farbe des Abwesenheit-Feldes (/away)"
 
 msgid "color for channel modes, near channel name"
 msgstr "Farbe der Channel-Modes (neben dem Channelnamen)"
@@ -4199,23 +4199,27 @@ msgstr ""
 "durch die WeeChat-Version ersetzt)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr "Intervall zwischen zwei Away-Checks (in Minuten, 0 = nie überprüfen)"
+msgstr ""
+"Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall  "
+"(in Minuten, 0 = nicht überprüfen)"
 
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 "überprüfe nicht die Abwesenheitsnachrichten in Channels mit einer hohen "
-"Anzahl von Nicknamen (0 = unbegrenzt)"
+"Anzahl von Nutzern (0 = unbegrenzt)"
 
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
-msgstr "Intervall zwischen zwei Lags (in Minuten, 0 = nie überprüfen)"
+msgstr ""
+"Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine "
+"Überprüfung)"
 
 msgid "minimum lag to show (in seconds)"
-msgstr "Mindest-Lag, der angezeigt werden soll, in Sekunden"
+msgstr "Mindest-Lag, der angezeigt werden soll (in Sekunden)"
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
-"Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0: nie trennen)"
+"Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)"
 
 msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr ""
@@ -4224,8 +4228,7 @@ msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
-"Wenn der Schalter deaktiviert ist, werden die Farben von eingehenden "
-"Nachrichten ignoriert"
+"Falls deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert."
 
 msgid ""
 "allow user to send colors with special codes (ctrl-c + a code and optional "
@@ -4233,7 +4236,7 @@ msgid ""
 msgstr ""
 "Erlaube Benutzern, spezielle Codes zu versenden (ctrl-c + Code und optional "
 "Farbe: b=fett, cxx=Farbe, cxx,yy=Farbe+Hintergrund, u=unterstrichen, "
-"r=Invertiert)"
+"r=invertiert)"
 
 msgid "send unknown commands to server"
 msgstr "Sende unbekannte Befehle an den Server"
@@ -4328,7 +4331,7 @@ msgstr "%s%s: Dieser Buffer ist kein Channel!"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
-msgstr "%sSie wurden in den Channel %s%s%s von %s%s%s eingeladen"
+msgstr "%sDu bist in den Channel %s%s%s von %s%s%s eingeladen worden"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
@@ -4364,11 +4367,11 @@ msgstr "%sModus %s%s %s[%s%s%s]%s durch %s%s"
 
 #, c-format
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "%sUsermodus %s[%s%s%s]%s by %s%s"
+msgstr "%sUsermodus %s[%s%s%s]%s von %s%s"
 
 #, c-format
 msgid "%sYou are now known as %s%s%s"
-msgstr "%sSie sind nun als %s%s%s bekannt"
+msgstr "%sDu bist nun als %s%s%s bekannt"
 
 #, c-format
 msgid "%s%s%s%s is now known as %s%s%s"
@@ -4456,7 +4459,7 @@ msgstr[1] "Minuten"
 msgid ""
 "%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
-"%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, angemeldet am: %s%s"
+"%s%s[%s%s%s]%s Idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, angemeldet am: %s%s"
 
 #, c-format
 msgid "%sURL for %s%s%s: %s"
@@ -4472,7 +4475,7 @@ msgstr "%sChannel %s%s%s erstellt am %s"
 
 #, c-format
 msgid "%sNo topic set for channel %s%s"
-msgstr "%sKein Topic gesetzt für %s%s"
+msgstr "%sKein Topic für %s%s gesetzt"
 
 #, c-format
 msgid "%sTopic for %s%s%s is \"%s%s\""
@@ -4504,7 +4507,8 @@ msgstr "%s%s[%s%s%s]%s Exception %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
-msgstr "%s%s: Nick \"%s\" für Channel \"%s\" konnte nicht angelegt werden"
+msgstr ""
+"%s%s: Der Nick \"%s\" für den Channel \"%s\" konnte nicht angelegt werden"
 
 #, c-format
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
@@ -4637,7 +4641,7 @@ msgstr "(Nachricht verworfen)"
 
 #, c-format
 msgid "%s%s: not enough memory for received message"
-msgstr "%s%s: Nicht genügend Speicher, zum Empfangen der Nachricht, vorhanden"
+msgstr "%s%s: Nicht genügend Speicher vorhanden, um Nachricht zu Empfangen."
 
 #, c-format
 msgid "%s%s: reading data on socket: error %d %s"
@@ -4656,7 +4660,7 @@ msgstr "%s: Lag ist zu hoch, die Verbindung wird getrennt..."
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s"
-msgstr "%s: Neuverbinden zum Server in %d %s"
+msgstr "%s: Verbinde erneut zum Server in %d %s"
 
 #, c-format
 msgid "%s: switching address to %s/%d"
@@ -4700,7 +4704,7 @@ msgid ""
 "if used and if server address/port is allowed by proxy)"
 msgstr ""
 "%s%s: Der Proxy konnte die Verbindung zum Server nicht aufbauen (bitte "
-"Benutzername/Passwort überprüfen und ob Server Adresse/Port für Proxy "
+"Benutzername/Passwort überprüfen und ob die Server Adresse/Port für Proxy "
 "freigeschaltet ist)"
 
 #, c-format
@@ -4875,11 +4879,11 @@ msgstr "%s%s: Kann Protokoll-Datei \"%s\" nicht schreiben"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"
-msgstr "%s\t****  Beginn der Log-Datei  ****"
+msgstr "%s\t****  Beginn der Protokoll-Datei  ****"
 
 #, c-format
 msgid "%s\t****  End of log  ****"
-msgstr "%s\t****  Ende der Log-Datei  ****"
+msgstr "%s\t****  Ende der Protokoll-Datei  ****"
 
 msgid "Logging on buffers:"
 msgstr "Protokollieren der Buffer:"
