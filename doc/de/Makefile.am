@@ -27,15 +27,15 @@ all-local: weechat_faq.de.html \
 
 # FAQ
 weechat_faq.de.html: weechat_faq.de.txt
-	$(ASCIIDOC) -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.de.html weechat_faq.de.txt
+	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.de.html weechat_faq.de.txt
 
 # quickstart
 weechat_quickstart.de.html: weechat_quickstart.de.txt
-	$(ASCIIDOC) -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.de.html weechat_quickstart.de.txt
+	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.de.html weechat_quickstart.de.txt
 
 # tester's guide
 weechat_tester.de.html: weechat_tester.de.txt
-	$(ASCIIDOC) -a toc -a toc_title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_tester.de.html weechat_tester.de.txt
+	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_tester.de.html weechat_tester.de.txt
 
 # install docs
 

@@ -17,7 +17,7 @@
 # quickstart
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc_title='Содержание' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Содержание' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.txt
   COMMENT "Building weechat_quickstart.ru.html"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-17 12:24+0100\n"
+"POT-Creation-Date: 2009-11-07 13:09+0100\n"
 "PO-Revision-Date: 2009-11-17 00:01+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4892,6 +4892,7 @@ msgstr "Protokollieren der Buffer:"
 msgid "logging (level: %d)"
 msgstr "Protokolliere (Level: %d)"
 
+#, c-format
 msgid "not logging"
 msgstr "nicht protokolliert"
 

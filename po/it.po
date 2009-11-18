@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-11-07 13:09+0100\n"
-"PO-Revision-Date: 2009-11-18 15:30+0100\n"
+"PO-Revision-Date: 2009-11-18 21:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2735,8 +2735,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
-"%s%s: disconnesso da %s %d (connessione SSL non supportata con l'upgrade)"
+msgstr "%s%s: disconnesso da %d %s (connessione SSL non supportata con l'upgrade)"
 
 #, c-format
 msgid "%s%s: error with server from URL (\"%s\"), ignored"
