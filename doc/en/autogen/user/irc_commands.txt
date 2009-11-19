@@ -40,16 +40,16 @@
   nickname: user or host to ban
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]`::
+&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-ipv6] [-ssl]]`::
 
 ........................................
   connect to IRC server(s)
 
         -all: connect to all servers
-  servername: internal server name to connect
+  servername: internal server name to connect (server must have been created by /server add)
      -nojoin: do not join any channel (even if autojoin is enabled on server)
-    hostname: hostname to connect
-        port: port for server (integer, default is 6667)
+    hostname: hostname (or IP) of a server
+        port: port for server (6667 by default)
         ipv6: use IPv6 protocol
          ssl: use SSL protocol
 ........................................

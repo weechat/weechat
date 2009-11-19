@@ -30,6 +30,7 @@ Version 0.3.1 (under dev!)
 * irc: add commands /sajoin, /samode, /sanick, /sapart, /saquit (task #9770)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
+* irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
 * irc: improve error management on socket error (recv/send)
 * irc: improve mask used by command /kickban
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)

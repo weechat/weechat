@@ -625,6 +625,16 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                         IRC_COLOR_CHAT_SERVER,
                                         ptr_server->name,
                                         IRC_COLOR_CHAT);
+                        if (ipv6)
+                        {
+                            weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_IPV6],
+                                                       "on", 1);
+                        }
+                        if (ssl)
+                        {
+                            weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_SSL],
+                                                       "on", 1);
+                        }
                         if (!irc_command_connect_one_server (ptr_server, 0))
                             connect_ok = 0;
                     }
@@ -3860,15 +3870,15 @@ irc_command_init ()
     weechat_hook_command ("connect",
                           N_("connect to IRC server(s)"),
                           N_("[-all [-nojoin] | servername [servername ...] "
-                             "[-nojoin] | hostname [-port port] [-ipv6] "
+                             "[-nojoin] | hostname[/port] [-ipv6] "
                              "[-ssl]]"),
                           N_("      -all: connect to all servers\n"
-                             "servername: internal server name to connect\n"
+                             "servername: internal server name to connect "
+                             "(server must have been created by /server add)\n"
                              "   -nojoin: do not join any channel (even if "
                              "autojoin is enabled on server)\n"
-                             "  hostname: hostname to connect\n"
-                             "      port: port for server (integer, default "
-                             "is 6667)\n"
+                             "  hostname: hostname (or IP) of a server\n"
+                             "      port: port for server (6667 by default)\n"
                              "      ipv6: use IPv6 protocol\n"
                              "       ssl: use SSL protocol"),
                           "-all -nojoin"
