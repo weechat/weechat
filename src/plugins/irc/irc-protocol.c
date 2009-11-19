@@ -665,6 +665,11 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                 {
                     free (ptr_channel->name);
                     ptr_channel->name = strdup (new_nick);
+                    if (ptr_channel->pv_remote_nick_color)
+                    {
+                        free (ptr_channel->pv_remote_nick_color);
+                        ptr_channel->pv_remote_nick_color = NULL;
+                    }
                     buffer_name = irc_buffer_build_name (server->name, ptr_channel->name);
                     weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
                     weechat_buffer_set (ptr_channel->buffer, "short_name", ptr_channel->name);
@@ -1081,7 +1086,7 @@ int
 irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                           int argc, char **argv, char **argv_eol)
 {
-    char *pos_args, *pos_end_01, *pos, *pos_message;
+    char *pos_args;
     const char *remote_nick;
     int nick_is_me;
     struct t_irc_channel *ptr_channel;
@@ -1180,157 +1185,40 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
         
         ptr_channel = irc_channel_search (server, remote_nick);
         
-        if (strncmp (pos_args, "\01ACTION ", 8) == 0)
+        if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
         {
-            if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
+            if (!ptr_channel)
             {
+                ptr_channel = irc_channel_new (server,
+                                               IRC_CHANNEL_TYPE_PRIVATE,
+                                               remote_nick, 0, 0);
                 if (!ptr_channel)
                 {
-                    ptr_channel = irc_channel_new (server,
-                                                   IRC_CHANNEL_TYPE_PRIVATE,
-                                                   remote_nick, 0, 0);
-                    if (!ptr_channel)
-                    {
-                        weechat_printf (server->buffer,
-                                        _("%s%s: cannot create new "
-                                          "private buffer \"%s\""),
-                                        weechat_prefix ("error"),
-                                        IRC_PLUGIN_NAME, remote_nick);
-                        return WEECHAT_RC_ERROR;
-                    }
-                }
-                if (!ptr_channel->topic)
-                    irc_channel_set_topic (ptr_channel, address);
-                
-                pos_args += 8;
-                pos_end_01 = strrchr (pos_args, '\01');
-                if (pos_end_01)
-                    pos_end_01[0] = '\0';
-                
-                weechat_printf_tags (ptr_channel->buffer,
-                                     irc_protocol_tags (command,
-                                                        (nick_is_me) ?
-                                                        "irc_action,notify_private,no_highlight" :
-                                                        "irc_action,notify_private"),
-                                     "%s%s%s %s%s",
-                                     weechat_prefix ("action"),
-                                     (nick_is_me) ?
-                                     IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER,
-                                     nick,
-                                     IRC_COLOR_CHAT,
-                                     pos_args);
-                weechat_hook_signal_send ("irc_pv",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                
-                if (pos_end_01)
-                    pos_end_01[0] = '\01';
-            }
-        }
-        else
-        {
-            /* unknown CTCP ? */
-            pos_end_01 = strrchr (pos_args + 1, '\01');
-            if ((pos_args[0] == '\01')
-                && pos_end_01 && (pos_end_01[1] == '\0'))
-            {
-                if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
-                {
-                    pos_args++;
-                    pos_end_01[0] = '\0';
-                    pos = strchr (pos_args, ' ');
-                    if (pos)
-                    {
-                        pos[0] = '\0';
-                        pos_message = pos + 1;
-                        while (pos_message[0] == ' ')
-                        {
-                            pos_message++;
-                        }
-                        if (!pos_message[0])
-                            pos_message = NULL;
-                    }
-                    else
-                        pos_message = NULL;
-                    
-                    if (pos_message)
-                    {
-                        weechat_printf_tags (server->buffer,
-                                             irc_protocol_tags (command, "irc_ctcp"),
-                                             _("%sUnknown CTCP %s%s%s "
-                                               "received from %s%s%s: %s"),
-                                             weechat_prefix ("network"),
-                                             IRC_COLOR_CHAT_CHANNEL,
-                                             pos_args,
-                                             IRC_COLOR_CHAT,
-                                             IRC_COLOR_CHAT_NICK,
-                                             nick,
-                                             IRC_COLOR_CHAT,
-                                             pos_message);
-                    }
-                    else
-                    {
-                        weechat_printf_tags (server->buffer,
-                                             irc_protocol_tags (command, "irc_ctcp"),
-                                             _("%sUnknown CTCP %s%s%s "
-                                               "received from %s%s%s"),
-                                             weechat_prefix ("network"),
-                                             IRC_COLOR_CHAT_CHANNEL,
-                                             pos_args,
-                                             IRC_COLOR_CHAT,
-                                             IRC_COLOR_CHAT_NICK,
-                                             nick,
-                                             IRC_COLOR_CHAT);
-                    }
-                    if (pos_end_01)
-                        pos_end_01[0] = '\01';
-                    if (pos)
-                        pos[0] = ' ';
-                    
-                    weechat_hook_signal_send ("irc_ctcp",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
+                    weechat_printf (server->buffer,
+                                    _("%s%s: cannot create new "
+                                      "private buffer \"%s\""),
+                                    weechat_prefix ("error"),
+                                    IRC_PLUGIN_NAME, remote_nick);
+                    return WEECHAT_RC_ERROR;
                 }
             }
-            else
-            {
-                /* private message */
-                if (!irc_ignore_check (server, ptr_channel, remote_nick, host))
-                {
-                    if (!ptr_channel)
-                    {
-                        ptr_channel = irc_channel_new (server,
-                                                       IRC_CHANNEL_TYPE_PRIVATE,
-                                                       remote_nick, 0, 0);
-                        if (!ptr_channel)
-                        {
-                            weechat_printf (server->buffer,
-                                            _("%s%s: cannot create new "
-                                              "private buffer \"%s\""),
-                                            weechat_prefix ("error"),
-                                            IRC_PLUGIN_NAME, remote_nick);
-                            return WEECHAT_RC_ERROR;
-                        }
-                    }
-                    irc_channel_set_topic (ptr_channel, address);
-                    
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         irc_protocol_tags (command,
-                                                            (nick_is_me) ?
-                                                            "notify_private,no_highlight" :
-                                                            "notify_private"),
-                                         "%s%s",
-                                         irc_nick_as_prefix (NULL,
-                                                             nick,
-                                                             (nick_is_me) ?
-                                                             IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER),
-                                         pos_args);
-                    
-                    weechat_hook_signal_send ("irc_pv",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
-                }
-            }
+            irc_channel_set_topic (ptr_channel, address);
+            
+            weechat_printf_tags (ptr_channel->buffer,
+                                 irc_protocol_tags (command,
+                                                    (nick_is_me) ?
+                                                    "notify_private,no_highlight" :
+                                                    "notify_private"),
+                                 "%s%s",
+                                 irc_nick_as_prefix (NULL,
+                                                     nick,
+                                                     (nick_is_me) ?
+                                                     IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick)),
+                                 pos_args);
+            
+            weechat_hook_signal_send ("irc_pv",
+                                      WEECHAT_HOOK_SIGNAL_STRING,
+                                      argv_eol[0]);
         }
     }
     

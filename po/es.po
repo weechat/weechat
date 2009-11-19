@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3773,6 +3773,10 @@ msgstr "%s%s: error al crear la opción \"%s\" del servidor"
 msgid "use nick color in messages from server"
 msgstr "usar color del apodo en mensajes del servidor"
 
+#, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "color para el otro apodo en una conversación privada"
+
 msgid "merge server buffers"
 msgstr "unir buffers de los servidores"
 
@@ -4071,14 +4075,6 @@ msgstr "%s%s%s %s(%s%s%s)%s ha abandonado %s%s %s(%s%s%s)"
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s ha abandonado %s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sCTCP desconocido %s%s%s recibido de %s%s%s: %s"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sCTCP desconocido %s%s%s recibido de %s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4586,7 +4582,6 @@ msgstr "Lista de alias:\n"
 msgid "logging (level: %d)"
 msgstr "guardando registro (nivel: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr ""
 
@@ -5676,6 +5671,13 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "%sCTCP desconocido %s%s%s recibido de %s%s%s: %s"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "%sCTCP desconocido %s%s%s recibido de %s%s"
 
 #, fuzzy
 #~ msgid "list of %s scripts"

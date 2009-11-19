@@ -33,6 +33,11 @@
 ** type: boolean
 ** values: on, off (default value: on)
 
+* *irc.look.color_pv_nick_like_channel*
+** description: use same nick color for channel and private
+** type: boolean
+** values: on, off (default value: on)
+
 * *irc.look.display_away*
 ** description: display message when (un)marking as away
 ** type: integer
@@ -141,7 +146,7 @@
 * *irc.network.away_check_max_nicks*
 ** description: do not check away nicks on channels with high number of nicks (0 = unlimited)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 0)
+** values: 0 .. 2147483647 (default value: 25)
 
 * *irc.network.colors_receive*
 ** description: when off, colors codes are ignored in incoming messages

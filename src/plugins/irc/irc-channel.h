@@ -53,6 +53,7 @@ struct t_irc_channel
     int display_creation_date;         /* 1 for displaying creation date    */
     int nick_completion_reset;         /* 1 for resetting nick completion   */
                                        /* there was some join/part on chan  */
+    char *pv_remote_nick_color;        /* color for remote nick in pv       */
     int nicks_count;                   /* # nicks on channel (0 if pv)      */
     struct t_irc_nick *nicks;          /* nicks on the channel              */
     struct t_irc_nick *last_nick;      /* last nick on the channel          */

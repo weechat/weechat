@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-11-18 21:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -679,7 +679,8 @@ msgstr[1] "giorni"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr "Uptime di WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, avviato il %s%s"
+msgstr ""
+"Uptime di WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, avviato il %s%s"
 
 msgid "compiled on"
 msgstr "compilato il"
@@ -993,8 +994,8 @@ msgstr ""
 "         -all: elimina tutti i filtri\n"
 "plugin.buffer: plugin e buffer in cui il filtro è attivo (\"*\" per tutti i "
 "buffer)\n"
-"          tag: elenco di tag separati da virgole, per esempio: "
-"\"irc_join,irc_part,irc_quit\"\n"
+"          tag: elenco di tag separati da virgole, per esempio: \"irc_join,"
+"irc_part,irc_quit\"\n"
 "        regex: espressione regolare da cercare nella riga (utilizzare \\t "
 "per separare il prefisso dal messaggio, caratteri speciali come \"|\" devono "
 "essere preceduti dal carattere escape: '\\|')\n"
@@ -1051,7 +1052,9 @@ msgid "bind/unbind keys"
 msgstr "associa/disassocia tasti"
 
 msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
-msgstr "[bind tasto [comando [argomenti]]] | [unbind tasto] | [reset -yes] | [missing]"
+msgstr ""
+"[bind tasto [comando [argomenti]]] | [unbind tasto] | [reset -yes] | "
+"[missing]"
 
 msgid ""
 "   bind: bind a command to a key or display command bound to key\n"
@@ -1177,8 +1180,8 @@ msgstr ""
 "     password: password (opzionale)\n"
 "          del: elimina un proxy (o tutti i proxy con -all)\n"
 "          set: imposta un valore per una proprietà del proxy\n"
-"      opzione: opzione da modificare (per un elenco di opzioni, consultare "
-"/set weechat.proxy.<nome_proxy>.*)\n"
+"      opzione: opzione da modificare (per un elenco di opzioni, consultare /"
+"set weechat.proxy.<nome_proxy>.*)\n"
 "       valore: nuovo valore per l'opzione\n"
 "         list: elenca tutti i proxy\n"
 "\n"
@@ -1465,7 +1468,8 @@ msgid "command executed when WeeChat starts, after loading plugins"
 msgstr "comando eseguito all'avvio di WeeChat, dopo il caricamento dei plugin"
 
 msgid "command executed when WeeChat starts, before loading plugins"
-msgstr "comando eseguito all'avvio di WeeChat, prima del caricamento dei plugin"
+msgstr ""
+"comando eseguito all'avvio di WeeChat, prima del caricamento dei plugin"
 
 msgid "display WeeChat logo at startup"
 msgstr "visualizza il logo di WeeChat all'avvio"
@@ -2110,7 +2114,8 @@ msgstr "%s    sorgente: %s, riga: %d"
 
 #, c-format
 msgid "%s    *** Please report above info to developers ***"
-msgstr "%s *** Per favore inviare le precedenti informazioni agli sviluppatori ***"
+msgstr ""
+"%s *** Per favore inviare le precedenti informazioni agli sviluppatori ***"
 
 msgid "write - object type"
 msgstr "scrittura - tipo oggetto"
@@ -2537,7 +2542,8 @@ msgstr ""
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr "%s: attenzione: il dizionario \"%s\" non è disponibile su questo sistema"
+msgstr ""
+"%s: attenzione: il dizionario \"%s\" non è disponibile su questo sistema"
 
 #, c-format
 msgid "%s%s: not enough memory to create new speller"
@@ -2545,7 +2551,8 @@ msgstr "%s%s: memoria non sufficiente per creare un nuovo controllore"
 
 #, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
-msgstr "%s%s: errore durante la creazione del set di caratteri \"%s\" => \"%s\""
+msgstr ""
+"%s%s: errore durante la creazione del set di caratteri \"%s\" => \"%s\""
 
 msgid "global decoding charset"
 msgstr "set di caratteri per la decodifica globale"
@@ -2735,7 +2742,8 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr "%s%s: disconnesso da %d %s (connessione SSL non supportata con l'upgrade)"
+msgstr ""
+"%s%s: disconnesso da %d %s (connessione SSL non supportata con l'upgrade)"
 
 #, c-format
 msgid "%s%s: error with server from URL (\"%s\"), ignored"
@@ -2767,7 +2775,8 @@ msgstr "%s: prossima assenza rimossa"
 
 #, c-format
 msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
-msgstr "%s%s: il comando \"%s\" può essere eseguito solamente sul buffer del canale"
+msgstr ""
+"%s%s: il comando \"%s\" può essere eseguito solamente sul buffer del canale"
 
 #, c-format
 msgid "%s%s: already connected to server \"%s\"!"
@@ -3003,8 +3012,8 @@ msgid ""
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
 "     -all: attiva/disattiva lo stato di assenza su tutti i server connessi\n"
-"messaggio: messaggio di assenza (se non specificato, lo stato di "
-"assenza viene rimosso)"
+"messaggio: messaggio di assenza (se non specificato, lo stato di assenza "
+"viene rimosso)"
 
 msgid "ban nicks or hosts"
 msgstr "banna nick oppure host"
@@ -3931,10 +3940,12 @@ msgid "use SSL for server communication"
 msgstr "utilizza SSL per le comunicazioni col server"
 
 msgid "ssl certificate file used to automatically identify your nick"
-msgstr "certificato ssl utilizzato per identificare automaticamente il proprio nick"
+msgstr ""
+"certificato ssl utilizzato per identificare automaticamente il proprio nick"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
-msgstr "dimensione della chiave utilizzata durante lo Scambio Chiavi Diffie-Hellman"
+msgstr ""
+"dimensione della chiave utilizzata durante lo Scambio Chiavi Diffie-Hellman"
 
 msgid "check that the ssl connection is fully trusted"
 msgstr "verifica che la connessione ssl sia totalmente fidata"
@@ -4005,6 +4016,10 @@ msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
 msgid "use nick color in messages from server"
 msgstr "utilizza i colori dei nick nei messaggi dal server"
 
+#, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "colore del testo per gli altri nick nel buffer privato"
+
 msgid "merge server buffers"
 msgstr "unisci i buffer dei server"
 
@@ -4021,7 +4036,9 @@ msgid "text to display after nick in chat window"
 msgstr "testo da visualizzare dopo il nick nella finestra di chat"
 
 msgid "smart completion for nicks (completes first with last speakers)"
-msgstr "completamento intelligente per i nick (usando prima chi ha parlato per ultimo)"
+msgstr ""
+"completamento intelligente per i nick (usando prima chi ha parlato per "
+"ultimo)"
 
 msgid "display message when (un)marking as away"
 msgstr "visualizza messaggio al cambio dello stato di assenza"
@@ -4119,27 +4136,33 @@ msgstr ""
 "sostituito dalla versione di WeeChat)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr "intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)"
+msgstr ""
+"intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)"
 
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
-"non verificare l'assenza su canali con un elevato numero di nick (0 = illimitato)"
+"non verificare l'assenza su canali con un elevato numero di nick (0 = "
+"illimitato)"
 
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
-msgstr "intervallo tra le due verifiche per il ritardo (in secondi, 0 = nessun controllo)"
+msgstr ""
+"intervallo tra le due verifiche per il ritardo (in secondi, 0 = nessun "
+"controllo)"
 
 msgid "minimum lag to show (in seconds)"
 msgstr "ritardo minimo da visualizzare (in secondi)"
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
-msgstr "disconnetti dopo un ritardo eccessivo (in minuti, 0 = nessuna disconnessione)"
+msgstr ""
+"disconnetti dopo un ritardo eccessivo (in minuti, 0 = nessuna disconnessione)"
 
 msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr "anti-flood: # secondi tra due messaggi utente (0 = nessun anti-flood)"
 
 msgid "when off, colors codes are ignored in incoming messages"
-msgstr "quando disabilitato, i codici colori vengono ignorati nei messaggi in entrata"
+msgstr ""
+"quando disabilitato, i codici colori vengono ignorati nei messaggi in entrata"
 
 msgid ""
 "allow user to send colors with special codes (ctrl-c + a code and optional "
@@ -4295,14 +4318,6 @@ msgstr "%s%s%s %s(%s%s%s)%s è uscito da %s%s%s %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s è uscito da %s%s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s: %s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4634,7 +4649,9 @@ msgstr "%s%s: memoria non sufficiente"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr "gnutls: connesso utilizzando lo scambio segreto condiviso %d-bit Diffie-Hellman"
+msgstr ""
+"gnutls: connesso utilizzando lo scambio segreto condiviso %d-bit Diffie-"
+"Hellman"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -4690,15 +4707,18 @@ msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr "%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
+msgstr ""
+"%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
-msgstr "%s%s: proxy \"%s\" non trovato per il server \"%s\", impossibile connettersi"
+msgstr ""
+"%s%s: proxy \"%s\" non trovato per il server \"%s\", impossibile connettersi"
 
 #, c-format
 msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
-msgstr "%s%s: impostazioni proxy mancanti, verificare le opzioni per il proxy \"%s\""
+msgstr ""
+"%s%s: impostazioni proxy mancanti, verificare le opzioni per il proxy \"%s\""
 
 #, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
@@ -4792,7 +4812,6 @@ msgstr "Logging sui buffer:"
 msgid "logging (level: %d)"
 msgstr "logging (livello: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "nessun logging"
 
@@ -5872,6 +5891,12 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s: %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s"
 
 #~ msgid "list of %s scripts"
 #~ msgstr "elenco degli script %s"

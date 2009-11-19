@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -3997,6 +3997,10 @@ msgstr "%s%s: błąd podczas tworzenia opcji dla serwera \"%s\""
 msgid "use nick color in messages from server"
 msgstr "użyj koloru nicka w wiadomościach od serwera"
 
+#, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "kolor innego nicka w prywatnym buforze"
+
 msgid "merge server buffers"
 msgstr "połącz bufory serwerów"
 
@@ -4293,14 +4297,6 @@ msgstr "%s%s%s %s(%s%s%s)%s opuścił %s%s %s(%s%s%s)"
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s opuścił %s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s%s: %s"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4803,7 +4799,6 @@ msgstr "Loguję w buforach:"
 msgid "logging (level: %d)"
 msgstr "logowanie (poziom: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "nie loguję"
 
@@ -5874,6 +5869,13 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s%s: %s"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s"
 
 #~ msgid "list of %s scripts"
 #~ msgstr "lista skryptów %s "

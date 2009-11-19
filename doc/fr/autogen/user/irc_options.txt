@@ -33,6 +33,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
+* *irc.look.color_pv_nick_like_channel*
+** description: utiliser la même couleur de pseudo pour le canal et le privé
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
 * *irc.look.display_away*
 ** description: affiche un message pour l'absence/le retour
 ** type: entier
@@ -141,7 +146,7 @@
 * *irc.network.away_check_max_nicks*
 ** description: ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 0)
+** valeurs: 0 .. 2147483647 (valeur par défaut: 25)
 
 * *irc.network.colors_receive*
 ** description: si désactivé, les codes couleurs des messages entrants sont ignorés

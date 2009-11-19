@@ -883,7 +883,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                                          "%s%s%s%s%s%s",
                                          weechat_prefix ("action"),
                                          (nick_is_me) ?
-                                         IRC_COLOR_CHAT_NICK_SELF : IRC_COLOR_CHAT_NICK_OTHER,
+                                         IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick),
                                          nick,
                                          (pos_args) ? IRC_COLOR_CHAT : "",
                                          (pos_args) ? " " : "",

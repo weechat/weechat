@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
-"PO-Revision-Date: 2009-11-18 16:01+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
+"PO-Revision-Date: 2009-11-19 14:35+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4043,6 +4043,9 @@ msgstr "%s%s: erreur de création de l'option serveur \"%s\""
 msgid "use nick color in messages from server"
 msgstr "utiliser la couleur du pseudo dans les messages du serveur"
 
+msgid "use same nick color for channel and private"
+msgstr "utiliser la même couleur de pseudo pour le canal et le privé"
+
 msgid "merge server buffers"
 msgstr "mélange des tampons de serveur"
 
@@ -4341,14 +4344,6 @@ msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s%s %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s: %s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4845,7 +4840,6 @@ msgstr "Enregistrement des tampons:"
 msgid "logging (level: %d)"
 msgstr "enregistrement (niveau: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "pas d'enregistrement"
 
@@ -5941,54 +5935,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "list of %s scripts"
-#~ msgstr "liste des scripts %s"
-
-#~ msgid "%s%s: bind error on port %d"
-#~ msgstr "%s%s: erreur de bind sur le port %d (%s.%s)"
-
-#~ msgid "%s: new client @ %s"
-#~ msgstr "%s: nouveau client @ %s"
-
-#~ msgid "enable relay"
-#~ msgstr "activer le relai"
-
-#~ msgid ""
-#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
-#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-#~ "use ports greater than 1024, because only root can use ports below 1024)"
-#~ msgstr ""
-#~ "restreint les fichiers/discussions sortants à utiliser des ports dans "
-#~ "l'intervalle donné (pratique pour le NAT) (syntaxe: un port simple, par "
-#~ "exemple 5000, un intervalle de ports, par exemple 5000-5015, si non "
-#~ "renseigné tout port peut être utilisé, il est recommandé d'utiliser des "
-#~ "ports supérieurs à 1024, car seul root peut utiliser les ports en dessous "
-#~ "de 1024)"
-
-#~ msgid "%s%s: option \"listen_port_range\" is not defined"
-#~ msgstr "%s%s: l'option \"listen_port_range\" n'est pas définie"
-
-#~ msgid "%s%s: cannot find available port for listening"
-#~ msgstr "%s%s: impossible de trouver un port disponible pour écouter"
-
-#~ msgid ""
-#~ "    list: list relay clients\n"
-#~ "listfull: list relay clients (verbose)\n"
-#~ "\n"
-#~ "Without argument, this command opens buffer with list of relay clients."
-#~ msgstr ""
-#~ "    list: liste les clients pour le relai\n"
-#~ "listfull: liste les clients pour le relai (verbeux)\n"
-#~ "\n"
-#~ "Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
-#~ "pour le relai."
-
-#~ msgid ""
-#~ " channel: channel where user is\n"
-#~ "nickname: nickname to kick and ban\n"
-#~ " comment: comment for kick"
-#~ msgstr ""
-#~ "      canal: canal où l'utilisateur se trouve\n"
-#~ "     pseudo: pseudo à éliminer et bannir\n"
-#~ "commentaire: commentaire pour l'élimination"

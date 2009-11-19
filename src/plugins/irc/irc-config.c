@@ -45,6 +45,7 @@ struct t_config_section *irc_config_section_server = NULL;
 /* IRC config, look section */
 
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
+struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_open_channel_near_server;
 struct t_config_option *irc_config_look_open_pv_near_server;
@@ -150,7 +151,7 @@ irc_config_change_look_color_nicks_number (void *data, const char *option,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                ptr_nick->color = irc_nick_find_color (ptr_nick);
+                ptr_nick->color = irc_nick_find_color (ptr_nick->name);
             }
         }
     }
@@ -1225,6 +1226,12 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "color_nicks_in_server_messages", "boolean",
         N_("use nick color in messages from server"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_color_pv_nick_like_channel = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "color_pv_nick_like_channel", "boolean",
+        N_("use same nick color for channel and private"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_server_buffer = weechat_config_new_option (

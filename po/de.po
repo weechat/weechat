@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-11-17 00:01+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4084,6 +4084,10 @@ msgstr "%s%s: Fehler bei der Erstellung der Server-Option \"%s\""
 msgid "use nick color in messages from server"
 msgstr "Nutze Nick-Farbe bei Nachrichten vom Server"
 
+#, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
+
 msgid "merge server buffers"
 msgstr "Server-Buffer zusammenlegen"
 
@@ -4384,14 +4388,6 @@ msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s%s %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sUnbekannter CTCP %s%s%s empfangen von %s%s%s : %s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sUnbekannter CTCP %s%s%s von %s%s%s empfangen"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4892,7 +4888,6 @@ msgstr "Protokollieren der Buffer:"
 msgid "logging (level: %d)"
 msgstr "Protokolliere (Level: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "nicht protokolliert"
 
@@ -5989,6 +5984,12 @@ msgstr "%s%s: kann die \"nonblock\"-Option für den Socket nicht festlegen"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "%sUnbekannter CTCP %s%s%s empfangen von %s%s%s : %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "%sUnbekannter CTCP %s%s%s von %s%s%s empfangen"
 
 #~ msgid "list of %s scripts"
 #~ msgstr "Liste der %s Skripten"

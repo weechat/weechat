@@ -61,10 +61,10 @@ struct t_irc_nick
 
 extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
-extern const char *irc_nick_find_color (struct t_irc_nick *nick);
+extern const char *irc_nick_find_color (const char *nickname);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
-                                        const char *nick_name,
+                                        const char *nickname,
                                         int is_chanowner,
                                         int is_chanadmin,
                                         int is_chanadmin2,
@@ -90,6 +90,8 @@ extern void irc_nick_set_away (struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);
 extern char *irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
                                  const char *force_color);
+extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
+                                           const char *nickname);
 extern int irc_nick_add_to_infolist (struct t_infolist *infolist,
                                      struct t_irc_nick *nick);
 extern void irc_nick_print_log (struct t_irc_nick *nick);

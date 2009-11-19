@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3956,6 +3956,10 @@ msgstr "%s%s: chyba při vytváření volby serveru \"%s\""
 msgid "use nick color in messages from server"
 msgstr "použít barvu přezdívky ve zprávách ze serveru"
 
+#, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "barva textu pro jiné přezdívky v soukromém bufferu"
+
 msgid "merge server buffers"
 msgstr "spojit buffery serverů"
 
@@ -4246,14 +4250,6 @@ msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
-
-#, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s"
 
 #, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4751,7 +4747,6 @@ msgstr "Loguji buffery:"
 msgid "logging (level: %d)"
 msgstr "logování (úroveň: %d)"
 
-#, c-format
 msgid "not logging"
 msgstr "neloguji"
 
@@ -5817,6 +5812,12 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"
+
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s"
 
 #~ msgid "list of %s scripts"
 #~ msgstr "seznam %s skriptů"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3905,6 +3905,10 @@ msgid "use nick color in messages from server"
 msgstr "запросить местное время сервера"
 
 #, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "цвет ника собеседника в окне привата"
+
+#, fuzzy
 msgid "merge server buffers"
 msgstr "управление буферами"
 
@@ -4201,14 +4205,6 @@ msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4695,7 +4691,6 @@ msgstr "Список сокращений:\n"
 msgid "logging (level: %d)"
 msgstr ""
 
-#, c-format
 msgid "not logging"
 msgstr ""
 
@@ -5758,6 +5753,14 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
 
 #, fuzzy
 #~ msgid "list of %s scripts"

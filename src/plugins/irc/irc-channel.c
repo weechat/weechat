@@ -243,6 +243,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->cycle = 0;
     new_channel->display_creation_date = 0;
     new_channel->nick_completion_reset = 0;
+    new_channel->pv_remote_nick_color = NULL;
     new_channel->nicks_count = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
@@ -652,6 +653,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     irc_nick_free_all (channel);
     if (channel->away_message)
         free (channel->away_message);
+    if (channel->pv_remote_nick_color)
+        free (channel->pv_remote_nick_color);
     if (channel->nicks_speaking[0])
         weechat_list_free (channel->nicks_speaking[0]);
     if (channel->nicks_speaking[1])
@@ -721,6 +724,8 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "limit", channel->limit))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "key", channel->key))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "pv_remote_nick_color", channel->pv_remote_nick_color))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "nicks_count", channel->nicks_count))
         return 0;
@@ -799,6 +804,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       cycle. . . . . . . . . . : %d",    channel->cycle);
     weechat_log_printf ("       display_creation_date. . : %d",    channel->display_creation_date);
     weechat_log_printf ("       nick_completion_reset. . : %d",    channel->nick_completion_reset);
+    weechat_log_printf ("       pv_remote_nick_color . . : '%s'",  channel->pv_remote_nick_color);
     weechat_log_printf ("       nicks_count. . . . . . . : %d",    channel->nicks_count);
     weechat_log_printf ("       nicks. . . . . . . . . . : 0x%lx", channel->nicks);
     weechat_log_printf ("       last_nick. . . . . . . . : 0x%lx", channel->last_nick);

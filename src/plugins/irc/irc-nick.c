@@ -61,15 +61,15 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
  */
 
 const char *
-irc_nick_find_color (struct t_irc_nick *nick)
+irc_nick_find_color (const char *nickname)
 {
     int i, color;
     char color_name[64];
     
     color = 0;
-    for (i = strlen (nick->name) - 1; i >= 0; i--)
+    for (i = strlen (nickname) - 1; i >= 0; i--)
     {
-        color += (int)(nick->name[i]);
+        color += (int)(nickname[i]);
     }
     color = (color %
              weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
@@ -179,7 +179,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
 
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
-              const char *nick_name, int is_chanowner, int is_chanadmin,
+              const char *nickname, int is_chanowner, int is_chanadmin,
               int is_chanadmin2, int is_op, int is_halfop, int has_voice,
               int is_chanuser, int is_away)
 {
@@ -189,7 +189,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     struct t_gui_nick_group *ptr_group;
     
     /* nick already exists on this channel? */
-    ptr_nick = irc_nick_search (channel, nick_name);
+    ptr_nick = irc_nick_search (channel, nickname);
     if (ptr_nick)
     {
         /* remove old nick from nicklist */
@@ -232,7 +232,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         return NULL;
     
     /* initialize new nick */
-    new_nick->name = strdup (nick_name);
+    new_nick->name = strdup (nickname);
     new_nick->host = NULL;
     new_nick->flags = 0;
     IRC_NICK_SET_FLAG(new_nick, is_chanowner, IRC_NICK_CHANOWNER);
@@ -246,7 +246,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (weechat_strcasecmp (new_nick->name, server->nick) == 0)
         new_nick->color = IRC_COLOR_CHAT_NICK_SELF;
     else
-        new_nick->color = irc_nick_find_color (new_nick);
+        new_nick->color = irc_nick_find_color (new_nick->name);
     
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
@@ -311,7 +311,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     if (nick_is_me)
         nick->color = IRC_COLOR_CHAT_NICK_SELF;
     else
-        nick->color = irc_nick_find_color (nick);
+        nick->color = irc_nick_find_color (nick->name);
     
     /* add nick in nicklist */
     prefix[0] = ' ';
@@ -577,6 +577,24 @@ irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
               weechat_config_string (irc_config_look_nick_suffix) : "");
     
     return result;
+}
+
+/*
+ * irc_nick_color_for_pv: return string with color of nick for private
+ */
+
+const char *
+irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
+{
+    if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
+    {
+        if (!channel->pv_remote_nick_color)
+            channel->pv_remote_nick_color = strdup (irc_nick_find_color (nickname));
+        if (channel->pv_remote_nick_color)
+            return channel->pv_remote_nick_color;
+    }
+    
+    return IRC_COLOR_CHAT_NICK_OTHER;
 }
 
 /*

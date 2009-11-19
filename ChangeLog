@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-11-16
+v0.3.1-dev, 2009-11-19
 
 
 Version 0.3.1 (under dev!)
@@ -25,6 +25,7 @@ Version 0.3.1 (under dev!)
 * irc: use self-signed certificate to auto identify on IRC server (CertFP)
   (task #7492)
 * irc: check SSL certificates (task #7492)
+* irc: add option to use same nick color in channel and private (task #9870)
 * irc: add missing command 275 (patch #6952)
 * irc: add commands /sajoin, /samode, /sanick, /sapart, /saquit (task #9770)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-07 13:09+0100\n"
+"POT-Creation-Date: 2009-11-19 14:35+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3904,6 +3904,10 @@ msgid "use nick color in messages from server"
 msgstr "helyi idő lekérdezése a szerverről"
 
 #, fuzzy
+msgid "use same nick color for channel and private"
+msgstr "másik fél nevének színe privát beszélgetésben"
+
+#, fuzzy
 msgid "merge server buffers"
 msgstr "pufferek kezelése"
 
@@ -4199,14 +4203,6 @@ msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, fuzzy, c-format
-msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
@@ -4690,7 +4686,6 @@ msgstr "Aliaszok listája:\n"
 msgid "logging (level: %d)"
 msgstr ""
 
-#, c-format
 msgid "not logging"
 msgstr ""
 
@@ -5760,6 +5755,14 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+#~ msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
+
+#, fuzzy
+#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
+#~ msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy
 #~ msgid "list of %s scripts"
