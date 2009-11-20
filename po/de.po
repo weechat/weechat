@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-11-20 15:30+0100\n"
-"PO-Revision-Date: 2009-11-17 00:01+0100\n"
+"PO-Revision-Date: 2009-11-20 17:55+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +164,7 @@ msgstr "%sFehler: konnte Infobar nicht erstellen\"%s\""
 
 #, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
-msgstr "%sFehler: falsche Größe \"%s\" für Infobar \"%s\""
+msgstr "%sFehler: fehlerhafte Größe \"%s\" für Infobar \"%s\""
 
 msgid "All bars have been deleted"
 msgstr "Alle Infobars wurden entfernt"
@@ -178,7 +178,8 @@ msgstr "Infobar entfernt"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
-msgstr "%sFehler: kann Option \"%s\" für Infobar \"%s\" nicht setzen"
+msgstr ""
+"%sFehler: Die Option \"%s\" kann für Infobar \"%s\" nicht gesetzt werden"
 
 #, c-format
 msgid "%sError: buffer not found for \"%s\" command"
@@ -186,11 +187,11 @@ msgstr "%sFehler: Buffer für den Befehl \"%s\" nicht gefunden"
 
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
-msgstr "%sFehler: kann Infobar \"%s\" nicht scrollen"
+msgstr "%sFehler: Kann Infobar \"%s\" nicht scrollen"
 
 #, c-format
 msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sFehler: unbekannte Option für den Befehl \"%s\""
+msgstr "%sFehler: Unbekannte Option für den Befehl \"%s\""
 
 msgid "Buffers list:"
 msgstr "Liste der vorhandenen Buffer:"
@@ -201,7 +202,7 @@ msgstr "  %s[%s%d%s]%s (%s) %s%s%s (Benachrichtigung: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
-msgstr "%sFehler: falsche Buffernummer"
+msgstr "%sFehler: falsche Buffer-Nummer"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
@@ -217,7 +218,7 @@ msgstr "Keine lokale Variable definiert für Buffer \"%s\""
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
-msgstr "%sErweiterung \"%s\" nicht gefunden"
+msgstr "%sErweiterung \"%s\" wurde nicht gefunden"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -231,10 +232,10 @@ msgid "(disabled)"
 msgstr "(deaktiviert)"
 
 msgid "Message filtering enabled"
-msgstr "Filterung der Nachrichten aktiviert"
+msgstr "Filterung von Nachrichten aktiviert"
 
 msgid "Message filtering disabled"
-msgstr "Filterung der Nachrichten deaktiviert"
+msgstr "Filterung von Nachrichten deaktiviert"
 
 msgid "Message filters:"
 msgstr "Nachrichtenfilter:"
@@ -290,7 +291,7 @@ msgstr "Filter \"%s\" gelöscht"
 #. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:"
-msgstr "interne %s Befehle:"
+msgstr "Interne %s Befehle:"
 
 msgid "Other commands:"
 msgstr "Andere Befehle:"
@@ -3079,15 +3080,13 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "Mit IRC-Server(n) verbinden"
 
-#, fuzzy
 msgid ""
 "[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-"
 "ipv6] [-ssl]]"
 msgstr ""
-"[-all [-nojoin] | Servername [Servername ...] [-nojoin] | Hostname [-port "
-"Port] [-ipv6] [-ssl]]"
+"[-all [-nojoin] | Servername [Servername ...] [-nojoin] | Hostname [/port] [-"
+"ipv6] [-ssl]]"
 
-#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect (server must have been created "
@@ -3098,15 +3097,15 @@ msgid ""
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol"
 msgstr ""
-"      -all: Verbinde mit allen Servern neu\n"
-"servername: intern genutzter Servername, mit dem verbunden werden soll\n"
+"      -all: Verbinde mit allen Servern\n"
+"servername: intern genutzter Servername, mit dem verbunden werden soll (Der "
+"Server muss zuerst mittels \"/server add\" angelegt werden)\n"
 "   -nojoin: betrete (/join) keinen Channel (auch wenn die Funktion \"autojoin"
 "\" aktiviert sein sollte)\n"
-"  hostname: Hostname, mit dem Verbunden werden soll\n"
-"      port: Port den der Server nutzen soll (Integer-Wert, Standardport ist: "
-"6667)\n"
-"      ipv6: nutze das IPv6 Protokoll\n"
-"       ssl: nutze das SSL Protokoll"
+"  hostname: Hostname, oder IP, eines Servers\n"
+"      port: Port den der Server nutzen soll (Standardport: 6667)\n"
+"      ipv6: IPv6 Protokoll soll genutzt werden\n"
+"       ssl: SSL Protokoll soll genutzt werden"
 
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP-Nachricht verschicken"
@@ -4087,9 +4086,10 @@ msgstr "%s%s: Fehler bei der Erstellung der Server-Option \"%s\""
 msgid "use nick color in messages from server"
 msgstr "Nutze Nick-Farbe bei Nachrichten vom Server"
 
-#, fuzzy
 msgid "use same nick color for channel and private"
-msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
+msgstr ""
+"Nutzt die selbe Farbe für die Darstellung des Nicks im Channel als auch "
+"Privat"
 
 msgid "merge server buffers"
 msgstr "Server-Buffer zusammenlegen"
@@ -4833,11 +4833,11 @@ msgstr "%s%s: Socket konnte nicht angelegt werden"
 
 #, c-format
 msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s Fehler beim setzen der Socket-Option \"SO_REUSEADDR\""
+msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
 
 #, c-format
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s Fehler beim setzen der Socket-Option \"SO_KEEPALIVE\""
+msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
 
 #, c-format
 msgid "%s: reconnecting to server..."
@@ -4864,7 +4864,7 @@ msgid ""
 "%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
 "used by another buffer (check your log settings)"
 msgstr ""
-"%s%s: Kann keine Aufzeichnung für \"%s\" vornehmen: Die Datei \"%s\" wird "
+"%s%s: Kann keine Protokollierung für \"%s\" vornehmen: Die Datei \"%s\" wird "
 "schon durch einen anderen Buffer verwendet (Überprüfe die Protokoll-"
 "Konfiguration)"
 
@@ -4892,7 +4892,7 @@ msgid "logging (level: %d)"
 msgstr "Protokolliere (Level: %d)"
 
 msgid "not logging"
-msgstr "nicht protokolliert"
+msgstr "nicht protokollieren"
 
 msgid "log not started"
 msgstr "Protokollierung wurde nicht gestartet"
@@ -4999,7 +4999,7 @@ msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
 msgstr ""
 "Speichert automatisch den Inhalt eines Buffers, in eine Datei (sofern das "
-"Protokollieren, für den Buffer,  nicht deaktiviert ist)"
+"Protokollieren, für den Buffer, nicht deaktiviert sein sollte)"
 
 msgid "use only lower case for log filenames"
 msgstr "Benutze ausschließlich Kleinschreibung für Protokoll-Dateien"
@@ -5024,7 +5024,9 @@ msgstr ""
 msgid ""
 "replacement char for special chars in filename built with mask (like "
 "directory delimiter)"
-msgstr "Ersatzzeichen bei Dateinamen, wenn diese ein Sonderzeichen beinhalten"
+msgstr ""
+"Ersatzzeichen für Dateinamen, falls diese ein Sonderzeichen beinhalten (z.B. "
+"das Trennzeichen bei Verzeichnissen \"/\")"
 
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
@@ -5073,7 +5075,7 @@ msgid "WeeChat internal charset"
 msgstr "Interner WeeChat Zeichensatz"
 
 msgid "keyboard inactivity (seconds)"
-msgstr "Tastatur Inaktivität (Sekunden)"
+msgstr "Inaktivität der Tastatur (Sekunden)"
 
 msgid "1 if filters are enabled"
 msgstr "1, falls Filter aktiviert sind"
@@ -5097,7 +5099,7 @@ msgid "list of filters"
 msgstr "Liste der Filter"
 
 msgid "history of commands"
-msgstr "Verlaufspeicher für Befehle"
+msgstr "Verlaufspeicher der Befehle"
 
 msgid "list of hooks"
 msgstr "Auflistung der Hooks"
@@ -5122,14 +5124,14 @@ msgstr "Auflistung der Windows"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
-msgstr "%sFehler: Kann Erweiterung  nicht laden \"%s\": %s"
+msgstr "%sFehler: Kann Erweiterung  \"%s\" nicht installieren: %s"
 
 #, c-format
 msgid ""
 "%sIf you're trying to load a script and not a C plugin, try command to load "
 "scripts (/perl, /python, ...)"
 msgstr ""
-"%sFalls ein Skript installiert werden soll und keine Erweiterung, in C, dann "
+"%sFalls ein Skript installiert werden soll und keine C-Erweiterung, dann "
 "muss der Befehl zum Installieren von Skripten genutzt werden (/perl, /"
 "python, ...)"
 
@@ -5142,8 +5144,8 @@ msgstr ""
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
 msgstr ""
-"%sFalls die Erweiterung \"%s\" überholt oder obsolet sein sollte, kann diese "
-"gelöscht werden."
+"%sFalls die Erweiterung \"%s\" überholt oder obsolet sein sollte, sollte "
+"diese gelöscht werden."
 
 #, c-format
 msgid ""
@@ -5172,19 +5174,19 @@ msgstr "%sFehler: Kann Erweiterung \"%s\" nicht initialisieren"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
-msgstr "%sFehler: Kann Erweiterung \"%s\" nicht laden (Speichermangel)"
+msgstr "%sFehler: Kann Erweiterung \"%s\" nicht installieren (Speichermangel)"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
-msgstr "Erweiterung \"%s\" installiert"
+msgstr "Erweiterung \"%s\" ist installiert worden"
 
 #, c-format
 msgid "Plugin \"%s\" unloaded"
-msgstr "Erweiterung \"%s\" deinstalliert"
+msgstr "Erweiterung \"%s\" wurde deinstalliert"
 
 #, c-format
 msgid "%sError: plugin \"%s\" not found"
-msgstr "%sFehler: Erweiterung \"%s\" nicht gefunden"
+msgstr "%sFehler: Die Erweiterung \"%s\" wurde nicht gefunden"
 
 msgid "Actions (letter+enter):"
 msgstr "Aktion (Zeichen+Enter):"
@@ -5241,7 +5243,7 @@ msgstr "%s%s: Authentifizierung mit Client %s%s%s (%s.%s) fehlgeschlagen"
 
 #, c-format
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
-msgstr "%s: Trennung von Client %s%s%s (%s.%s)"
+msgstr "%s: Trennung vom Client %s%s%s (%s.%s)"
 
 msgid "Clients for relay:"
 msgstr "Clients für Relay:"
@@ -5337,19 +5339,19 @@ msgid "text color of selected client line"
 msgstr "Textfarbe für selektierten Client-Linie"
 
 msgid "text color for \"connecting\" status"
-msgstr "Textfarbe für Status \"verbinde\""
+msgstr "Textfarbe für Status: \"verbinde\""
 
 msgid "text color for \"waiting authentication\" status"
-msgstr "Textfarbe für Status \"warte auf Authentifizierung\""
+msgstr "Textfarbe für Status: \"warte auf Authentifizierung\""
 
 msgid "text color for \"connected\" status"
-msgstr "Textfarbe für  Status \"Verbindung hergestellt\""
+msgstr "Textfarbe für Status: \"Verbindung hergestellt\""
 
 msgid "text color for \"authentication failed\" status"
-msgstr "Textfarbe für Status \"Authentifizierung gescheitert\""
+msgstr "Textfarbe für Status: \"Authentifizierung gescheitert\""
 
 msgid "text color for \"disconnected\" status"
-msgstr "Textfarbe für Status \"Verbindung getrennt\""
+msgstr "Textfarbe für Status: \"Verbindung getrennt\""
 
 msgid "maximum number of clients connecting to a port"
 msgstr "Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen"
@@ -5367,7 +5369,7 @@ msgstr "%s%s: Keinen Buffer für IRC Server \"%s\", Channel \"%s\" gefunden"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
-msgstr "%s: Socket geschlossen für %s.%s (Port %d)"
+msgstr "%s: Socket für %s.%s (Port %d) geschlossen"
 
 #, c-format
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
@@ -5399,15 +5401,15 @@ msgstr "%s: Registriertes Skript \"%s\", Version %s (%s)"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: Kann Funktion \"%s\" nicht ausführen"
+msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
 
 #, c-format
 msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: Skript \"%s\" nicht gefunden"
+msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
 
 #, c-format
 msgid "%s: loading script \"%s\""
-msgstr "%s: Lade Skript \"%s\""
+msgstr "%s: Lade das Skript \"%s\""
 
 #, c-format
 msgid "%s%s: unable to create new sub-interpreter"
@@ -5420,11 +5422,11 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: Kann Datei \"%s\" nicht laden"
+msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
 
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: Datei \"%s\" kann nicht ausgeführt werden"
+msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
 #, c-format
 msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
@@ -5433,15 +5435,15 @@ msgstr ""
 
 #, c-format
 msgid "%s: unloading script \"%s\""
-msgstr "%s: Deinstalliere Skript \"%s\""
+msgstr "%s: Deinstalliere das Skript \"%s\""
 
 #, c-format
 msgid "%s: script \"%s\" unloaded"
-msgstr "%s: Skript \"%s\" deinstalliert"
+msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
 
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: Skript \"%s\" nicht installiert"
+msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
 
 #, c-format
 msgid "%s%s: unknown option for command \"%s\""
@@ -5593,7 +5595,7 @@ msgstr "%s: Skript entfernt: %s"
 
 #, c-format
 msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s%s: Fehler beim entfernen des Skripts: %s (%s)"
+msgstr "%s%s: Fehler beim Entfernen des Skripts: %s (%s)"
 
 #, c-format
 msgid "%s: script \"%s\" not found, nothing was removed"
@@ -5601,7 +5603,7 @@ msgstr "%s: Skript \"%s\" nicht gefunden, es wurde nichts entfernt"
 
 #, c-format
 msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s%s: Fehler beim verschieben des Skripts %s nach %s (%s)"
+msgstr "%s%s: Fehler beim Verschieben des Skripts %s nach %s (%s)"
 
 #. TRANSLATORS: %s is language (for example "perl")
 #, c-format
@@ -5623,24 +5625,24 @@ msgstr "  (keine)"
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
 msgstr ""
-"%s%s: Kann Funktion \"%s\" nicht ausführen. Skript ist nicht initialisiert "
-"(Skript: %s)"
+"%s%s: Die Funktion \"%s\" kann nicht ausführen werden. Skript ist nicht "
+"initialisiert (Skript: %s)"
 
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: Fehlerhafte Argumente für die Funktion \"%s\" (Skript: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
-msgstr "%s%s Kann Funktion \"%s\" nicht ausführen: %s"
+msgstr "%s%s: Kann Funktion \"%s\" nicht ausführen: %s"
 
 #, c-format
 msgid "%s%s: unable to create new interpreter"
-msgstr "%s%s: Kann neuen Interpreter nicht anlegen"
+msgstr "%s%s: Neuer Interpreter kann nicht anlegt werden"
 
 #, c-format
 msgid "%s%s: error occured while parsing file \"%s\": %s"
-msgstr "%s%s: Fehler aufgetreten beim Parsen der Datei \"%s\": %s"
+msgstr "%s%s: Beim Parsen der Datei \"%s\" ist ein Fehler aufgetreten: %s"
 
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"
@@ -5694,7 +5696,9 @@ msgstr "%s: Chat mit %s (%d.%d.%d.%d) geschlossen"
 
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
-msgstr "%s%s: Nicht genug Speicher für neuen Transfer"
+msgstr ""
+"%s%s: Für einen neuen Transfer (xfer) steht nicht ausreichend Speicher zur "
+"Verfügung"
 
 #, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -5742,15 +5746,15 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer"
-msgstr "%s%s: Socket konnte für xfer nicht angelegt werden"
+msgstr "%s%s: Für den Transfer (xfer) konnte kein Socket angelegt werden"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: Kann keinen freien Port für xfer ermitteln"
+msgstr "%s%s: Kann keinen freien Port für den Transfer (xfer) ermitteln"
 
 #, c-format
 msgid "%s%s: error creating xfer"
-msgstr "%s%s: Fehler bei xfer Erstellung"
+msgstr "%s%s: Fehler bei Transfer (xfer) Erstellung"
 
 #, c-format
 msgid ""
@@ -5769,13 +5773,13 @@ msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
 "xfer not found or not ready for transfer"
 msgstr ""
-"%s%s Kann die Datei \"%s\" zum fortsetzen der Übertragung nicht akzeptieren "
+"%s%s Kann die Datei \"%s\" zum Fortsetzen der Übertragung nicht akzeptieren "
 "(Port: %d, Startposition: %lu): xfer nicht gefunden oder nicht bereit für "
 "Transfer"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "%s%s: aktiver xfer Transfer: \"%s\" von %s abgebrochen"
+msgstr "%s%s: aktiver Transfer (xfer): \"%s\" von %s abgebrochen"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -5783,7 +5787,7 @@ msgstr "%s%s: Fehler beim Senden von Daten an \"%s\" via xfer Chat"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
-msgstr "%s%s: kann keinen xfer für Buffer \"%s\" finden"
+msgstr "%s%s: Kann keinen xfer für Buffer \"%s\" finden"
 
 #, c-format
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
@@ -5801,7 +5805,7 @@ msgstr ""
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
-"%3d. %s, Der Chat mit %s (lokaler Nick: %s), wurde gestartet am %s, Status: %"
+"%3d. %s, Der Chat mit %s (lokaler Nick: %s), wurde am %s gestartet, Status: %"
 "s%s"
 
 #, c-format
@@ -5844,7 +5848,7 @@ msgstr "Nicks vom DCC Chat"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
-"öffnet automatisch den Übertragungs-Buffer wenn eine neue Übertragung "
+"öffnet automatisch den Übertragungs-Buffer falls eine neue Übertragung "
 "hinzugefügt wird"
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
@@ -5856,28 +5860,29 @@ msgid "text color of selected xfer line"
 msgstr "Farbe der selektierten Transfer-Zeile"
 
 msgid "text color for \"waiting\" status"
-msgstr "Textfarbe für \"wartend\" Status"
+msgstr "Textfarbe für Status: \"wartend\""
 
 msgid "text color for \"active\" status"
-msgstr "Textfarbe für \"aktiv\" Status"
+msgstr "Textfarbe für Status: \"aktiv\""
 
 msgid "text color for \"done\" status"
-msgstr "Textfarbe für \"fertig\" Status"
+msgstr "Textfarbe für Status: \"fertig\""
 
 msgid "text color for \"failed\" status"
-msgstr "Textfarbe für \"fehlgeschlagen\" Status"
+msgstr "Textfarbe für Status: \"fehlgeschlagen\""
 
 msgid "text color for \"aborted\" status"
-msgstr "Textfarbe für \"abgebrochen\" Status"
+msgstr "Textfarbe für Status: \"abgebrochen\""
 
 msgid "timeout for xfer request (in seconds)"
-msgstr "Zeitüberschreitung für xfer Anfrage (in Sekunden)"
+msgstr "Zeitüberschreitung bei Transfer-Anfrage (in Sekunden)"
 
 msgid "block size for sending packets, in bytes"
 msgstr "Blockgröße für versendete Pakete (in Bytes)"
 
 msgid "does not wait for ACK when sending file"
-msgstr "Warte beim Verschicken von Dateien nicht auf das ACK-Signal"
+msgstr ""
+"Warte beim Verschicken von Dateien nicht auf das Bestätigungssignal (ACK)"
 
 msgid ""
 "restricts outgoing files/chats to use only ports in the given range (useful "
@@ -5885,11 +5890,11 @@ msgid ""
 "empty value means any port, it's recommended to use ports greater than 1024, "
 "because only root can use ports below 1024)"
 msgstr ""
-"schränkt ausgehende Daten/Chats auf die ausschließliche Benutzung von Ports "
+"Schränkt ausgehende Daten/Chats auf die ausschließliche Benutzung von Ports "
 "in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner "
-"Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015, es wird empfohlen "
-"Ports zu nutzen die größer als 1024 sind. Denn nur der User \"root\" kann "
-"auf den Port-Bereich unter 1024 zugreifen)"
+"Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen "
+"Ports zu nutzen die Größer als 1024 sind. Denn nur der User \"root\" kann "
+"auf den Port-Bereich <1024 zugreifen)"
 
 msgid ""
 "IP or DNS address used for sending files/chats (if empty, local interface IP "
@@ -5905,12 +5910,12 @@ msgstr ""
 "Sekunde (0 = keine Begrenzung)"
 
 msgid "path for writing incoming files"
-msgstr "Pfad für eingehende Dateien"
+msgstr "Zielpfad für eingehende Dateien"
 
 msgid "path for reading files when sending (when no path is specified by user)"
 msgstr ""
-"Pfad, aus dem Dateien standardmäßig gelesen werden (falls keine explizite "
-"Angabe für einen Pfad vorliegt)"
+"Quellpfad, aus dem Dateien standardmäßig gelesen werden (falls keine "
+"explizite Angabe für einen Pfad angegeben worden ist)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -5922,63 +5927,65 @@ msgstr "Beim Verschicken von Dateien, Leerzeichen in Unterstrich umwandeln"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
-"eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden "
-"(füge  dabei '.1', '.2', ... dem Dateinamen hinzu)"
+"Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden "
+"(fügt  dabei '.1', '.2', ... dem Dateinamen hinzu)"
 
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"
 msgstr ""
-"abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung "
+"Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung "
 "getrennt wurde"
 
 msgid "automatically accept incoming files (use carefully!)"
-msgstr "akzeptiere, automatisch, die Annahme von Daten (Vorsicht!)"
+msgstr "Die Annahme von Daten wird, automatisch, akzeptiert (Vorsicht!)"
 
 msgid "automatically accept chat requests (use carefully!)"
-msgstr "akzeptiere, automatisch, die Annahme von Chats (Vorsicht!)"
+msgstr ""
+"Die Annahme einer Chat-Anfrage wird, automatisch, akzeptiert (Vorsicht!)"
 
 msgid "list of xfer"
 msgstr "Transfer-Liste"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
-msgstr "%s%s: kann keine Pipe erstellen"
+msgstr "%s%s: Kann keine Pipe erstellen"
 
 #, c-format
 msgid "%s%s: unable to read local file"
-msgstr "%s%s: kann lokale Datei nicht lesen"
+msgstr "%s%s: kKann lokale Datei nicht lesen"
 
 #, c-format
 msgid "%s%s: unable to send block to receiver"
-msgstr "%s%s: kann den Block nicht an den Empfänger übertragen"
+msgstr "%s%s: Der Block kann nicht an den Empfänger übertragen werden"
 
 #, c-format
 msgid "%s%s: unable to read ACK from receiver"
-msgstr "%s%s: kann kein ACK vom Empfänger empfangen"
+msgstr "%s%s: Kann kein Zustimmung (ACK) vom Empfänger empfangen"
 
 #, c-format
 msgid "%s%s: unable to connect to sender"
-msgstr "%s%s: kann keine Verbindung zum Versender herstellen"
+msgstr "%s%s: Eine Verbindung zum Versender kann nicht herstellt werden"
 
 #, c-format
 msgid "%s%s: unable to receive block from sender"
-msgstr "%s%s: kann vom Versender den Block nicht empfangen"
+msgstr "%s%s: Der Block kann vom Versender nicht empfangen werden"
 
 #, c-format
 msgid "%s%s: unable to write local file"
-msgstr "%s%s: kann lokale Datei nicht schreiben"
+msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 
 #, c-format
 msgid "%s%s: unable to fork"
-msgstr "%s%s: kann nicht forken"
+msgstr "%s%s: Kann nicht forken"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"
-msgstr "%s%s: kann keinen Socket für den Dateiversand erstellen"
+msgstr "%s%s: Für den Dateiversand kann kein Socket erstellt werden"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket"
-msgstr "%s%s: kann die \"nonblock\"-Option für den Socket nicht festlegen"
+msgstr ""
+"%s%s: Die \"nonblock\"-Option für den Socket kann nicht festlegt werden"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
