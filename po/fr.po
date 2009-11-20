@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
-"PO-Revision-Date: 2009-11-19 15:24+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
+"PO-Revision-Date: 2009-11-20 15:30+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -5427,10 +5427,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: impossible d'initialiser %s"
 
 #, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "%s%s: impossible de lancer la fonction \"%s\""
-
-#, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s%s: la fonction \"%s\" doit retourner une valeur valide"
 
@@ -5583,8 +5579,8 @@ msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\" (script: %s)"
 
 #, c-format
-msgid "%s%s unable to run function \"%s\": %s"
-msgstr "%s%s impossible de lancer la fonction \"%s\": %s"
+msgid "%s%s: unable to run function \"%s\": %s"
+msgstr "%s%s: impossible de lancer la fonction \"%s\": %s"
 
 #, c-format
 msgid "%s%s: unable to create new interpreter"

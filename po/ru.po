@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5251,10 +5251,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s plugin \"%s\" не найден\n"
 
@@ -5398,7 +5394,7 @@ msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to run function \"%s\": %s"
+msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -5755,6 +5751,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s unable to run function \"%s\""
+#~ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"

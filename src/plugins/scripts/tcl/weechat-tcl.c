@@ -144,7 +144,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
     Tcl_ListObjReplace(interp,cmdlist,0,llength,0,NULL); /* remove elements, decrement their ref count */
     Tcl_DecrRefCount(cmdlist); /* -1 */
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s unable to run function \"%s\": %s"),
+                    weechat_gettext ("%s%s: unable to run function \"%s\": %s"),
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
                     Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
     tcl_current_script = old_tcl_script;

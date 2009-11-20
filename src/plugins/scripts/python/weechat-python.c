@@ -95,7 +95,7 @@ weechat_python_exec (struct t_plugin_script *script,
     if ( !(evFunc && PyCallable_Check (evFunc)) )
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s unable to run function \"%s\""),
+                        weechat_gettext ("%s%s: unable to run function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
         if (old_interpreter)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5149,10 +5149,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "No es posible escribir un fichero de log para un búfer\n"
-
-#, fuzzy, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s plugin \"%s\" no encontrado\n"
 
@@ -5295,7 +5291,7 @@ msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to run function \"%s\": %s"
+msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #, fuzzy, c-format
@@ -5674,6 +5670,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opción --dir\n"
+
+#, fuzzy
+#~ msgid "%s%s unable to run function \"%s\""
+#~ msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 #~ msgstr "%sCTCP desconocido %s%s%s recibido de %s%s%s: %s"

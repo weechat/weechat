@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -5378,10 +5378,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: nie można zainicjalizować %s"
 
 #, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "%s%s nie można wykonać funkcji \"%s\""
-
-#, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s%s: funkcja \"%s\" musi zwrócić poprawną wartość"
 
@@ -5530,8 +5526,8 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: nieprawidłowe argumenty dla funkcji \"%s\" (skrypt: %s)"
 
-#, c-format
-msgid "%s%s unable to run function \"%s\": %s"
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "%s%s nie można wywołac funkcji \"%s\": %s"
 
 #, c-format
@@ -5872,6 +5868,9 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "%s%s unable to run function \"%s\""
+#~ msgstr "%s%s nie można wykonać funkcji \"%s\""
 
 #~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 #~ msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s%s: %s"

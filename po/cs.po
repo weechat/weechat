@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5318,10 +5318,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: nemohu inicializovat %s"
 
 #, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "%s%s nemůžu spustit funkci \"%s\""
-
-#, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
 
@@ -5467,8 +5463,8 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
 
-#, c-format
-msgid "%s%s unable to run function \"%s\": %s"
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "%s%s nemůžu spustit funkci \"%s\": %s"
 
 #, c-format
@@ -5815,6 +5811,9 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%s%s unable to run function \"%s\""
+#~ msgstr "%s%s nemůžu spustit funkci \"%s\""
 
 #~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 #~ msgstr "%sNeznámý CTCP %s%s%s obdržen od %s%s%s: %s"

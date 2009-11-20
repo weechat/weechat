@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-19 15:23+0100\n"
+"POT-Creation-Date: 2009-11-20 15:30+0100\n"
 "PO-Revision-Date: 2009-11-18 21:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5396,10 +5396,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: impossibile inizializzare %s"
 
 #, c-format
-msgid "%s%s unable to run function \"%s\""
-msgstr "%s%s: impossibile eseguire la funzione \"%s\""
-
-#, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
 msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
 
@@ -5550,8 +5546,8 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: argomenti errati per la funzione \"%s\" (script: %s)"
 
-#, c-format
-msgid "%s%s unable to run function \"%s\": %s"
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "%s%s: impossibile avviare la funzione \"%s\": %s"
 
 #, c-format
@@ -5894,6 +5890,9 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#~ msgid "%s%s unable to run function \"%s\""
+#~ msgstr "%s%s: impossibile eseguire la funzione \"%s\""
 
 #~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
 #~ msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s: %s"
