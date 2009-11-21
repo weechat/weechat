@@ -3031,15 +3031,13 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "connette ad uno o più server IRC"
 
-#, fuzzy
 msgid ""
 "[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-"
 "ipv6] [-ssl]]"
 msgstr ""
-"[-all [-nojoin] | nome_server [nome_server ...] [-nojoin] | nome_host [-"
-"porta porta] [-ipv6] [-ssl]]"
+"[-all [-nojoin] | nome_server [nome_server ...] [-nojoin] | nome_host"
+"[/porta] [-ipv6] [-ssl]]"
 
-#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect (server must have been created "
@@ -3051,11 +3049,12 @@ msgid ""
 "       ssl: use SSL protocol"
 msgstr ""
 "               -all: connette a tutti i server\n"
-"nome_server: nome interno del server a cui connettersi\n"
+"nome_server: nome interno del server a cui connettersi (il server deve "
+"essere stato creato con /server add)\n"
 "         -nojoin: non entrare in nessun canale (anche se l'ingresso "
 "automatico è attivo sul server)\n"
-"   nome_host: host a cui connettersi\n"
-"            porta: porta per il server (intero, quella predefinita è 6667)\n"
+"   nome_host: nome host (oppure IP) del server \n"
+"            porta: porta per il server (6667 è la predefinita)\n"
 "             ipv6: utilizza il protocollo IPv6\n"
 "                ssl: utilizza il protocollo ssl"
 
@@ -4019,9 +4018,8 @@ msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
 msgid "use nick color in messages from server"
 msgstr "utilizza i colori dei nick nei messaggi dal server"
 
-#, fuzzy
 msgid "use same nick color for channel and private"
-msgstr "colore del testo per gli altri nick nel buffer privato"
+msgstr "usa lo stesso colore del nick per canale e privato"
 
 msgid "merge server buffers"
 msgstr "unisci i buffer dei server"
@@ -5546,9 +5544,9 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: argomenti errati per la funzione \"%s\" (script: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
-msgstr "%s%s: impossibile avviare la funzione \"%s\": %s"
+msgstr "%s%s: impossibile eseguire la funzione \"%s\": %s"
 
 #, c-format
 msgid "%s%s: unable to create new interpreter"
