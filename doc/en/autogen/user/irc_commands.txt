@@ -40,7 +40,7 @@
   nickname: user or host to ban
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-ipv6] [-ssl]]`::
+&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
 
 ........................................
   connect to IRC server(s)
@@ -50,8 +50,15 @@
      -nojoin: do not join any channel (even if autojoin is enabled on server)
     hostname: hostname (or IP) of a server
         port: port for server (6667 by default)
-        ipv6: use IPv6 protocol
-         ssl: use SSL protocol
+      option: set option for server (for boolean option, value can be omitted)
+    nooption: set boolean option to 'off' (for example: -nossl)
+  
+  Examples:
+    /connect freenode
+    /connect irc.oftc.net/6667
+    /connect irc6.oftc.net/6667 -ipv6
+    /connect irc6.oftc.net/6697 -ipv6 -ssl
+    /connect my.server.org/6697 -ssl -password=test
 ........................................
 
 &bull; *`/ctcp`* `receiver type [arguments]`::
@@ -446,7 +453,7 @@
     reason: reason
 ........................................
 
-&bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [jump] | [raw]`::
+&bull; *`/server`* `[list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-temp] [-option[=value]] [-nooption]] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername] | [deloutq] | [jump] | [raw]`::
 
 ........................................
   list, add or remove IRC servers
@@ -456,10 +463,9 @@
          add: create a new server
   servername: server name, for internal and display use
     hostname: name or IP address of server, with optional port (default: 6667)
-        auto: automatically connect to server when WeeChat starts
-      noauto: do not connect to server when WeeChat starts (default)
-        ipv6: use IPv6 protocol
-         ssl: use SSL protocol
+        temp: create temporary server (not saved)
+      option: set option for server (for boolean option, value can be omitted)
+    nooption: set boolean option to 'off' (for example: -nossl)
         copy: duplicate a server
       rename: rename a server
         keep: keep server in config file (for temporary servers only)
@@ -470,7 +476,7 @@
   
   Examples:
     /server listfull
-    /server add oftc irc.oftc.net/6697 -ssl
+    /server add oftc irc.oftc.net/6697 -ssl -autoconnect
     /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
     /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
     /server copy oftc oftcbis

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-11-19
+v0.3.1-dev, 2009-11-24
 
 
 Version 0.3.1 (under dev!)
@@ -30,6 +30,7 @@ Version 0.3.1 (under dev!)
 * irc: add commands /sajoin, /samode, /sanick, /sapart, /saquit (task #9770)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
+* irc: add all server options for commands /server and /connect
 * irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
 * irc: improve error management on socket error (recv/send)
 * irc: improve mask used by command /kickban
