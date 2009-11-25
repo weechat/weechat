@@ -841,7 +841,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                                                         "notify_private"),
                                      "%s%s",
                                      irc_nick_as_prefix (NULL, nick,
-                                                         IRC_COLOR_CHAT_NICK_OTHER),
+                                                         irc_nick_color_for_pv (ptr_channel, nick)),
                                      pos_args);
             }
             else
