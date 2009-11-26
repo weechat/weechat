@@ -630,13 +630,22 @@ xfer_new (const char *plugin_name, const char *plugin_id,
 void
 xfer_free (struct t_xfer *xfer)
 {
-    struct t_xfer *new_xfer_list;
+    struct t_xfer *new_xfer_list, *ptr_xfer;
+    struct t_gui_buffer *ptr_buffer;
     
     if (!xfer)
         return;
     
     if (xfer->buffer)
-        weechat_buffer_close (xfer->buffer);
+    {
+        ptr_buffer = xfer->buffer;
+        for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+        {
+            if (ptr_xfer->buffer == ptr_buffer)
+                ptr_xfer->buffer = NULL;
+        }
+        weechat_buffer_close (ptr_buffer);
+    }
     
     /* remove xfer from list */
     if (last_xfer == xfer)

@@ -14,6 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# FAQ
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Indice' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.it.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.it.txt
+  COMMENT "Building weechat_faq.it.html"
+)
+ADD_CUSTOM_TARGET(doc-faq-it ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
 # quickstart
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.it.html

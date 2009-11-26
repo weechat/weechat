@@ -536,9 +536,8 @@ int
 irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    int i, nb_connect, connect_ok, all_servers, no_join, port, ipv6, ssl;
-    char *name, *error;
-    long number;
+    int i, nb_connect, connect_ok, all_servers, no_join;
+    char *name;
     
     IRC_GET_SERVER(buffer);
     
@@ -548,9 +547,6 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
     
     nb_connect = 0;
     connect_ok = 1;
-    port = IRC_SERVER_DEFAULT_PORT;
-    ipv6 = 0;
-    ssl = 0;
     
     all_servers = 0;
     no_join = 0;
@@ -560,26 +556,6 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
             all_servers = 1;
         if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
             no_join = 1;
-        if (weechat_strcasecmp (argv[i], "-ipv6") == 0)
-            ipv6 = 1;
-        if (weechat_strcasecmp (argv[i], "-ssl") == 0)
-            ssl = 1;
-        if (weechat_strcasecmp (argv[i], "-port") == 0)
-        {
-            if (i == (argc - 1))
-            {
-                weechat_printf (NULL,
-                                _("%s%s: missing argument for \"%s\" "
-                                  "option"),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                "-port");
-                return WEECHAT_RC_OK;
-            }
-            error = NULL;
-            number = strtol (argv[++i], &error, 10);
-            if (error && !error[0])
-                port = number;
-        }
     }
     
     if (all_servers)
@@ -625,16 +601,8 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                         IRC_COLOR_CHAT_SERVER,
                                         ptr_server->name,
                                         IRC_COLOR_CHAT);
-                        if (ipv6)
-                        {
-                            weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_IPV6],
-                                                       "on", 1);
-                        }
-                        if (ssl)
-                        {
-                            weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_SSL],
-                                                       "on", 1);
-                        }
+                        irc_server_apply_command_line_options (ptr_server,
+                                                               argc, argv);
                         if (!irc_command_connect_one_server (ptr_server, 0))
                             connect_ok = 0;
                     }
@@ -3011,34 +2979,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         
         weechat_config_option_set (new_server->options[IRC_SERVER_OPTION_ADDRESSES],
                                    argv[3], 1);
-        
-        /* parse arguments */
-        for (i = 4; i < argc; i++)
-        {
-            if (argv[i][0] == '-')
-            {
-                if (weechat_strcasecmp (argv[i], "-auto") == 0)
-                {
-                    weechat_config_option_set (new_server->options[IRC_SERVER_OPTION_AUTOCONNECT],
-                                               "on", 1);
-                }
-                if (weechat_strcasecmp (argv[i], "-noauto") == 0)
-                {
-                    weechat_config_option_set (new_server->options[IRC_SERVER_OPTION_AUTOCONNECT],
-                                               "off", 1);
-                }
-                if (weechat_strcasecmp (argv[i], "-ipv6") == 0)
-                {
-                    weechat_config_option_set (new_server->options[IRC_SERVER_OPTION_IPV6],
-                                               "on", 1);
-                }
-                if (weechat_strcasecmp (argv[i], "-ssl") == 0)
-                {
-                    weechat_config_option_set (new_server->options[IRC_SERVER_OPTION_SSL],
-                                               "on", 1);
-                }
-            }
-        }
+        irc_server_apply_command_line_options (new_server, argc, argv);
         
         weechat_printf (NULL,
                         _("%s: server %s%s%s created"),
@@ -3870,8 +3811,8 @@ irc_command_init ()
     weechat_hook_command ("connect",
                           N_("connect to IRC server(s)"),
                           N_("[-all [-nojoin] | servername [servername ...] "
-                             "[-nojoin] | hostname[/port] [-ipv6] "
-                             "[-ssl]]"),
+                             "[-nojoin] | hostname[/port] [-option[=value]] "
+                             "[-nooption]]"),
                           N_("      -all: connect to all servers\n"
                              "servername: internal server name to connect "
                              "(server must have been created by /server add)\n"
@@ -3879,8 +3820,16 @@ irc_command_init ()
                              "autojoin is enabled on server)\n"
                              "  hostname: hostname (or IP) of a server\n"
                              "      port: port for server (6667 by default)\n"
-                             "      ipv6: use IPv6 protocol\n"
-                             "       ssl: use SSL protocol"),
+                             "    option: set option for server (for boolean "
+                             "option, value can be omitted)\n"
+                             "  nooption: set boolean option to 'off' (for "
+                             "example: -nossl)\n\n"
+                             "Examples:\n"
+                             "  /connect freenode\n"
+                             "  /connect irc.oftc.net/6667\n"
+                             "  /connect irc6.oftc.net/6667 -ipv6\n"
+                             "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
+                             "  /connect my.server.org/6697 -ssl -password=test"),
                           "-all -nojoin"
                           " || %(irc_servers)|%*",
                           &irc_command_connect, NULL);
@@ -4224,8 +4173,8 @@ irc_command_init ()
     weechat_hook_command ("server",
                           N_("list, add or remove IRC servers"),
                           N_("[list [servername]] | [listfull [servername]] | "
-                             "[add servername hostname[/port] "
-                             "[-auto | -noauto] [-ipv6] [-ssl]] | "
+                             "[add servername hostname[/port] [-temp] "
+                             "[-option[=value]] [-nooption]] | "
                              "[copy servername newservername] | "
                              "[rename servername newservername] | "
                              "[keep servername] | [del servername] | "
@@ -4239,12 +4188,11 @@ irc_command_init ()
                              "display use\n"
                              "  hostname: name or IP address of server, with "
                              "optional port (default: 6667)\n"
-                             "      auto: automatically connect to server "
-                             "when WeeChat starts\n"
-                             "    noauto: do not connect to server when "
-                             "WeeChat starts (default)\n"
-                             "      ipv6: use IPv6 protocol\n"
-                             "       ssl: use SSL protocol\n"
+                             "      temp: create temporary server (not saved)\n"
+                             "    option: set option for server (for boolean "
+                             "option, value can be omitted)\n"
+                             "  nooption: set boolean option to 'off' (for "
+                             "example: -nossl)\n"
                              "      copy: duplicate a server\n"
                              "    rename: rename a server\n"
                              "      keep: keep server in config file (for "
@@ -4257,7 +4205,7 @@ irc_command_init ()
                              "       raw: open buffer with raw IRC data\n\n"
                              "Examples:\n"
                              "  /server listfull\n"
-                             "  /server add oftc irc.oftc.net/6697 -ssl\n"
+                             "  /server add oftc irc.oftc.net/6697 -ssl -autoconnect\n"
                              "  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
                              "  /server add freenode2 chat.eu.freenode.net/6667,"
                              "chat.us.freenode.net/6667\n"

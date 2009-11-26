@@ -173,6 +173,8 @@ extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
+extern void irc_server_apply_command_line_options (struct t_irc_server *server,
+                                                   int argc, char **argv);
 extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
                                              const char *new_name);
