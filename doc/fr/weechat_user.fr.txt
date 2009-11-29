@@ -1317,20 +1317,18 @@ Voroskoi::
 Marco Paolone::
     traduction en italien
 
-Rudolf Polzer::
-    patchs
+Dmitry Kobylin::
+    extension tcl
 
+Rudolf Polzer::
 Jim Ramsay::
+Pistos::
+Gwenn::
+Dominik Honnef::
     patchs
 
 Odin::
     RPM pour SuSE
-
-Pistos::
-    patchs
-
-Gwenn::
-    patchs
 
 
 [[support]]
