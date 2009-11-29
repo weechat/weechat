@@ -22,6 +22,10 @@
 #undef _
 
 #include <ruby.h>
+#if defined(RUBY_VERSION) && RUBY_VERSION >=19
+#include <ruby/encoding.h>
+#endif
+
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -30,6 +34,35 @@
 #include "../script.h"
 #include "weechat-ruby.h"
 #include "weechat-ruby-api.h"
+
+#ifndef StringValuePtr
+#define StringValuePtr(s) STR2CSTR(s)
+#endif
+#ifndef RARRAY_LEN
+#define RARRAY_LEN(s) RARRAY(s)->len
+#endif
+#ifndef RARRAY_PTR
+#define RARRAY_PTR(s) RARRAY(s)->ptr
+#endif
+#ifndef RSTRING_LEN
+#define RSTRING_LEN(s) RSTRING(s)->len
+#endif
+#ifndef RSTRING_PTR
+#define RSTRING_PTR(s) RSTRING(s)->ptr
+#endif
+
+#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
+#define rb_errinfo                      dll_rb_errinfo
+#define ruby_errinfo dll_rb_errinfo
+#else
+#define ruby_errinfo			(*dll_ruby_errinfo)
+#endif
+
+#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
+static VALUE (*dll_rb_errinfo) (void);
+#else
+static VALUE *dll_ruby_errinfo;
+#endif
 
 
 WEECHAT_PLUGIN_NAME(RUBY_PLUGIN_NAME);
@@ -80,12 +113,12 @@ typedef struct protect_call_arg {
  */
 
 static VALUE 
-protect_funcall0(VALUE arg)
+protect_funcall0 (VALUE arg)
 {
-    return rb_funcall2(((protect_call_arg_t *) arg)->recv,
-                       ((protect_call_arg_t *) arg)->mid,
-                       ((protect_call_arg_t *) arg)->argc,
-                       ((protect_call_arg_t *) arg)->argv);
+    return rb_funcall2 (((protect_call_arg_t *)arg)->recv,
+                        ((protect_call_arg_t *)arg)->mid,
+                        ((protect_call_arg_t *)arg)->argc,
+                        ((protect_call_arg_t *)arg)->argv);
 }
 
 /* 
@@ -118,7 +151,85 @@ rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, ...)
 }
 
 /*
- * weechat_ruby_exec: execute a Ruby script
+ *  weechat_ruby_print_exception: display ruby exception
+ */
+
+int
+weechat_ruby_print_exception (VALUE err)
+{
+    VALUE backtrace;
+    int i;
+    int ruby_error;
+    char* line;
+    char* cline;
+    char* err_msg;
+    char* err_class;
+    
+    backtrace = rb_protect_funcall (err, rb_intern("backtrace"),
+                                    &ruby_error, 0);
+    err_msg = STR2CSTR(rb_protect_funcall(err, rb_intern("message"),
+                                          &ruby_error, 0));
+    err_class = STR2CSTR(rb_protect_funcall(rb_protect_funcall(err,
+                                                               rb_intern("class"),
+                                                               &ruby_error, 0),
+                                            rb_intern("name"), &ruby_error, 0));
+    
+    if (strcmp (err_class, "SyntaxError") == 0)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: error: %s"),
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                        STR2CSTR(rb_inspect(err)));
+    }
+    else
+    {
+        for (i = 0; i < RARRAY_LEN(backtrace); i++)
+        {
+            line = STR2CSTR(RARRAY_PTR(backtrace)[i]);
+            cline = NULL;
+            if (i == 0)
+            {
+                cline = (char *)calloc (strlen (line) + 2 + strlen (err_msg) +
+                                        3 + strlen (err_class) + 1,
+                                        sizeof (char));
+                if (cline)
+                {
+                    strcat (cline, line);
+                    strcat (cline, ": ");
+                    strcat (cline, err_msg);
+                    strcat (cline, " (");
+                    strcat (cline, err_class);
+                    strcat (cline, ")");
+                }
+            }
+            else
+            {
+                cline = (char *)calloc(strlen (line) + strlen ("     from ") + 1,
+                                       sizeof (char));
+                if (cline)
+                {
+                    strcat (cline, "     from ");
+                    strcat (cline, line);
+                }
+            }
+            if (cline)
+            {
+                weechat_printf (NULL,
+                                weechat_gettext ("%s%s: error: %s"),
+                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                                cline);
+            }
+            
+            if (cline)
+                free (cline);
+        }
+    }
+    
+    return 0;
+}
+
+/*
+ * weechat_ruby_exec: call a ruby command
  */
 
 void *
@@ -242,11 +353,8 @@ weechat_ruby_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
 	
-	err = rb_inspect(rb_gv_get("$!"));
-	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        STR2CSTR(err));
+      err = rb_gv_get("$!");
+      weechat_ruby_print_exception(err);
         
 	return NULL;
     }
@@ -392,18 +500,13 @@ weechat_ruby_load (const char *filename)
     
     if (ruby_retcode == Qnil)
     {
-	err = rb_inspect(rb_gv_get("$!"));
-	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        STR2CSTR(err));
+      err = rb_gv_get("$!");
+      weechat_ruby_print_exception(err);
 	return 0;
     }
     
     if (NUM2INT(ruby_retcode) != 0)
     {
-	VALUE ruby_eval_error;
-	
 	switch (NUM2INT(ruby_retcode))
 	{
             case 1:
@@ -432,14 +535,7 @@ weechat_ruby_load (const char *filename)
 	
 	if (NUM2INT(ruby_retcode) == 1 || NUM2INT(ruby_retcode) == 2)
 	{
-	    ruby_eval_error = rb_iv_get(curModule, "@load_eval_file_error");
-	    if (ruby_eval_error)
-            {
-		weechat_printf (NULL,
-                                weechat_gettext ("%s%s: error: %s"),
-                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                                STR2CSTR(ruby_eval_error));
-            }
+          weechat_ruby_print_exception(rb_iv_get(curModule, "@load_eval_file_error"));
 	}
 	
 	return 0;
@@ -455,11 +551,8 @@ weechat_ruby_load (const char *filename)
                                          "\"weechat_init\" in file \"%s\""),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
 	
-	err = rb_inspect(rb_gv_get("$!"));
-	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        STR2CSTR(err));
+      err = rb_gv_get("$!");
+      weechat_ruby_print_exception(err);
 	
 	if (ruby_current_script != NULL)
         {
@@ -821,42 +914,39 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             "$stderr = WeechatOutputs\n"
             "\n"
             "class Module\n"
-            "  @load_eval_file_error = ''\n"
             "\n"
             "  def load_eval_file (file)\n"
             "    lines = ''\n"
-	    "    begin\n"
-	    "      f = File.open(file, 'r')\n"
-	    "      lines = f.readlines.join\n"
-	    "    rescue => e\n"
-	    "      @load_eval_file_error = e\n"
-	    "      return 1\n"
-	    "    end\n"
-	    "\n"	   
-	    "    begin\n"
-	    "      module_eval(lines)\n"
-	    "    rescue => e\n"
-	    "      @load_eval_file_error = e\n"
-	    "      return 2\n"
-	    "    end\n"
-	    "\n"
-	    "    has_init = false\n"
-	    "\n"
-	    "    instance_methods.each do |meth|\n"
-	    "      if meth == 'weechat_init'\n"
-	    "        has_init = true\n"
-	    "      end\n"
-	    "      module_eval('module_function :' + meth)\n"
-	    "    end\n"
-	    "\n"
-	    "    unless has_init\n"
-	    "      return 3\n"
-	    "    end\n"
-	    "\n"
-	    "    return 0\n"
-	    "  end\n"
-	    "end\n"
-	};
+            "    begin\n"
+            "      lines = File.read(file)\n"
+            "    rescue => e\n"
+            "      return 1\n"
+            "    end\n"
+            "\n"	   
+            "    begin\n"
+            "      module_eval(lines)\n"
+            "    rescue Exception => e\n"
+            "      @load_eval_file_error = e\n"
+            "      return 2\n"
+            "    end\n"
+            "\n"
+            "    has_init = false\n"
+            "\n"
+            "    instance_methods.each do |meth|\n"
+            "      if meth.to_s == 'weechat_init'\n"
+            "        has_init = true\n"
+            "      end\n"
+            "      module_eval('module_function :' + meth)\n"
+            "    end\n"
+            "\n"
+            "    unless has_init\n"
+            "      return 3\n"
+            "    end\n"
+            "\n"
+            "    return 0\n"
+            "  end\n"
+            "end\n"
+        };
     
     weechat_ruby_plugin = plugin;
     
@@ -864,6 +954,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     /* init stdout/stderr buffer */
     ruby_buffer_output[0] = '\0';
+    
+#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
+    RUBY_INIT_STACK;
+#endif
     
     ruby_init ();
     ruby_init_loadpath ();
@@ -886,7 +980,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     rb_eval_string_protect(weechat_ruby_code, &ruby_error);
     if (ruby_error)
     {
-	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
+	VALUE ruby_error_info = rb_inspect((VALUE)ruby_errinfo);
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
@@ -934,7 +1028,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* unload all scripts */
     weechat_ruby_unload_all ();
     
-    ruby_finalize();
+    ruby_cleanup (0);
     
     return WEECHAT_RC_OK;
 }
