@@ -1508,7 +1508,9 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
     while (ptr_hook)
     {
         /* looking for the right hook using to the gnutls session pointer */
-        if (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session)
+        if (!ptr_hook->deleted
+            && HOOK_CONNECT(ptr_hook, gnutls_sess)
+            && (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session))
         {
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
                 (ptr_hook->callback_data, tls_session, req_ca, nreq,

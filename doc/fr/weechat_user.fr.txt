@@ -1016,7 +1016,7 @@ L'extension IRC permet de dialoguer avec d'autres personnes via le
 protocole IRC.
 
 Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
-compris la discussion directe (DCC chat) and le transfert de fichier DCC
+compris la discussion directe (DCC chat) et le transfert de fichier DCC
 (via l'extension xfer, voir <<xfer_plugin>>).
 
 Options de ligne de commande
@@ -1218,7 +1218,7 @@ Vous obtiendrez les fichiers suivants :
 Extensions Scripts
 ~~~~~~~~~~~~~~~~~~
 
-WeeChat fournit 5 extensions pour scripts : Perl, Python, Ruby, Lua and Tcl.
+WeeChat fournit 5 extensions pour scripts : Perl, Python, Ruby, Lua et Tcl.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
@@ -1317,20 +1317,18 @@ Voroskoi::
 Marco Paolone::
     traduction en italien
 
-Rudolf Polzer::
-    patchs
+Dmitry Kobylin::
+    extension tcl
 
+Rudolf Polzer::
 Jim Ramsay::
+Pistos::
+Gwenn::
+Dominik Honnef::
     patchs
 
 Odin::
     RPM pour SuSE
-
-Pistos::
-    patchs
-
-Gwenn::
-    patchs
 
 
 [[support]]

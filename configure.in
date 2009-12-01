@@ -529,20 +529,32 @@ if test "x$enable_ruby" = "xyes" ; then
         not_found="$not_found ruby"
     else
 	RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
-        RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
-        AC_MSG_CHECKING(for Ruby header files)
-        if test -r "$RUBY_INCLUDE/ruby.h"; then
-            RUBY_CFLAGS="-I$RUBY_INCLUDE"
-        else
+        if test "$RUBY_VERSION" = "1.9.0"; then
             AC_MSG_WARN([
-*** Ruby header files couldn't be found on your system.
-*** Try to install them with your software package manager.
+*** Ruby header files have been found, but they're of the version 1.9.0.
+*** Ruby 1.9.0 is an unstable release and should not be used in production.
+*** Please install Ruby >=1.8.6 or 1.9.1.
 *** WeeChat will be built without Ruby support.])
             enable_ruby="no"
             not_found="$not_found ruby"
+        else
+            RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['rubyhdrdir']] || Config::CONFIG[['archdir']]"`
+            RUBY_ARCH=`$RUBY -rrbconfig -e 'print Config::CONFIG[["arch"]]'`
+            AC_MSG_CHECKING(for Ruby header files)
+            if test -d "$RUBY_INCLUDE/"; then
+                M_RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']].gsub(/\./, '')[[0,2]]"`
+                RUBY_CFLAGS="-I$RUBY_INCLUDE/ -I$RUBY_INCLUDE/$RUBY_ARCH -DRUBY_VERSION=$M_RUBY_VERSION"
+            else
+                AC_MSG_WARN([
+*** Ruby header files couldn't be found on your system.
+*** Try to install them with your software package manager.
+*** WeeChat will be built without Ruby support.])
+                enable_ruby="no"
+                not_found="$not_found ruby"
+            fi
+            AC_MSG_RESULT(found)
+            RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
         fi
-        AC_MSG_RESULT(found)
-        RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
     fi
 else
     not_asked="$not_asked ruby"

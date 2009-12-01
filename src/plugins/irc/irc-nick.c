@@ -322,7 +322,9 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
               "weechat.color.nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
-                               nick->name, "bar_fg",
+                               nick->name,
+                               (nick->flags & IRC_NICK_AWAY) ?
+                               "weechat.color.nicklist_away" : "bar_fg",
                                prefix, str_prefix_color, 1);
 }
 

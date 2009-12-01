@@ -1278,20 +1278,18 @@ Voroskoi::
 Marco Paolone::
     italian translation
 
-Rudolf Polzer::
-    patches
+Dmitry Kobylin::
+    tcl plugin
 
+Rudolf Polzer::
 Jim Ramsay::
+Pistos::
+Gwenn::
+Dominik Honnef::
     patches
 
 Odin::
     SuSE RPM
-
-Pistos::
-    patches
-
-Gwenn::
-    patches
 
 
 [[support]]
