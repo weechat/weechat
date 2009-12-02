@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-24 15:30+0100\n"
+"POT-Creation-Date: 2009-12-02 12:06+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3384,6 +3384,9 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
+msgid "option: extra option, for some servers"
+msgstr ""
+
 msgid "tell the server to restart itself"
 msgstr "szerver újraindítása"
 
@@ -5288,10 +5291,6 @@ msgid "%s%s: unable to free interpreter"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error: \"%s\""
-msgstr "%sSzerver: %s%s\n"
-
-#, fuzzy, c-format
 msgid "%s%s: stdout/stderr: %s%s"
 msgstr "%sSzerver: %s%s\n"
 
@@ -5757,6 +5756,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%s%s: error: \"%s\""
+#~ msgstr "%sSzerver: %s%s\n"
 
 #, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" option"

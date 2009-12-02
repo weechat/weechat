@@ -2710,11 +2710,12 @@ irc_command_rehash (void *data, struct t_gui_buffer *buffer, int argc,
     
     /* make C compiler happy */
     (void) data;
-    (void) argc;
     (void) argv;
-    (void) argv_eol;
     
-    irc_server_sendf (ptr_server, 0, "REHASH");
+    if (argc > 1)
+        irc_server_sendf (ptr_server, 0, "REHASH %s", argv_eol[1]);
+    else
+        irc_server_sendf (ptr_server, 0, "REHASH");
     
     return WEECHAT_RC_OK;
 }
@@ -4122,8 +4123,8 @@ irc_command_init ()
                           &irc_command_reconnect, NULL);
     weechat_hook_command ("rehash",
                           N_("tell the server to reload its config file"),
-                          "",
-                          "",
+                          N_("[option]"),
+                          N_("option: extra option, for some servers"),
                           NULL, &irc_command_rehash, NULL);
     weechat_hook_command ("restart",
                           N_("tell the server to restart itself"),

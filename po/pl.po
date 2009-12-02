@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-24 15:30+0100\n"
+"POT-Creation-Date: 2009-12-02 12:06+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -3499,6 +3499,9 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr "mówi serwerowi, żeby przeładował pliki konfiguracyjne"
 
+msgid "option: extra option, for some servers"
+msgstr ""
+
 msgid "tell the server to restart itself"
 msgstr "mówi serwerowi, aby się ponownie uruchomił"
 
@@ -5420,10 +5423,6 @@ msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: nie można zwolnić interpretera"
 
 #, c-format
-msgid "%s%s: error: \"%s\""
-msgstr "%s%s: błąd: \"%s\""
-
-#, c-format
 msgid "%s%s: stdout/stderr: %s%s"
 msgstr "%s%s: stdout/stderr: %s%s"
 
@@ -5874,6 +5873,9 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "%s%s: error: \"%s\""
+#~ msgstr "%s%s: błąd: \"%s\""
 
 #~ msgid "%s%s: missing argument for \"%s\" option"
 #~ msgstr "%s%s: brakuje argumentu dla opcji \"%s\""

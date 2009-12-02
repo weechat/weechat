@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-11-29
+v0.3.1-dev, 2009-12-02
 
 
 Version 0.3.1 (under dev!)
@@ -34,6 +34,7 @@ Version 0.3.1 (under dev!)
 * irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
 * irc: improve error management on socket error (recv/send)
 * irc: improve mask used by command /kickban
+* irc: add arguments for command /rehash
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
 * ruby: support of Ruby >= 1.9.1 (patch #6989)
 * gui: fix message "Day changed to", sometimes displayed at wrong time

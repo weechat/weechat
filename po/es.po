@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-24 15:30+0100\n"
+"POT-Creation-Date: 2009-12-02 12:06+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3383,6 +3383,9 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr "pedir al servidor que recargue su archivo de configuración"
 
+msgid "option: extra option, for some servers"
+msgstr ""
+
 msgid "tell the server to restart itself"
 msgstr "pedir al servidor que se reinicie"
 
@@ -5248,10 +5251,6 @@ msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: no es posible liberar el interprete"
 
 #, c-format
-msgid "%s%s: error: \"%s\""
-msgstr "%s%s: error: \"%s\""
-
-#, c-format
 msgid "%s%s: stdout/stderr: %s%s"
 msgstr "%s%s: stdout/stderr: %s%s"
 
@@ -5712,6 +5711,9 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "%s%s: error: \"%s\""
+#~ msgstr "%s%s: error: \"%s\""
 
 #~ msgid "%s%s: missing argument for \"%s\" option"
 #~ msgstr "%s%s: falta el argumento para la opción \"%s\""

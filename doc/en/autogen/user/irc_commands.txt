@@ -396,10 +396,12 @@
      -nojoin: do not join any channel (even if autojoin is enabled on server)
 ........................................
 
-&bull; *`/rehash`*::
+&bull; *`/rehash`* `[option]`::
 
 ........................................
   tell the server to reload its config file
+
+  option: extra option, for some servers
 ........................................
 
 &bull; *`/restart`*::

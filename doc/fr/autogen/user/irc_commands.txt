@@ -396,10 +396,12 @@
       -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
 ........................................
 
-&bull; *`/rehash`*::
+&bull; *`/rehash`* `[option]`::
 
 ........................................
   demander au serveur de recharger son fichier de configuration
+
+  option: option supplémentaire, pour certains serveurs
 ........................................
 
 &bull; *`/restart`*::

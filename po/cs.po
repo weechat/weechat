@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-11-24 15:30+0100\n"
+"POT-Creation-Date: 2009-12-02 12:06+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3463,6 +3463,9 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
 
+msgid "option: extra option, for some servers"
+msgstr ""
+
 msgid "tell the server to restart itself"
 msgstr "říct serveru, aby se restartoval"
 
@@ -5360,10 +5363,6 @@ msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: nemohu uvolnit interpreter"
 
 #, c-format
-msgid "%s%s: error: \"%s\""
-msgstr "%s%s: chyba: \"%s\""
-
-#, c-format
 msgid "%s%s: stdout/stderr: %s%s"
 msgstr "%s%s: stdout/stderr: %s%s"
 
@@ -5817,6 +5816,9 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%s%s: error: \"%s\""
+#~ msgstr "%s%s: chyba: \"%s\""
 
 #~ msgid "%s%s: missing argument for \"%s\" option"
 #~ msgstr "%s%s: chybí argument pro volbu \"%s\""
