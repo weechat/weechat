@@ -51,19 +51,6 @@
 #define RSTRING_PTR(s) RSTRING(s)->ptr
 #endif
 
-#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
-#define rb_errinfo                      dll_rb_errinfo
-#define ruby_errinfo dll_rb_errinfo
-#else
-#define ruby_errinfo			(*dll_ruby_errinfo)
-#endif
-
-#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
-static VALUE (*dll_rb_errinfo) (void);
-#else
-static VALUE *dll_ruby_errinfo;
-#endif
-
 
 WEECHAT_PLUGIN_NAME(RUBY_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Ruby plugin for WeeChat");
@@ -912,6 +899,21 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         {
             "$stdout = WeechatOutputs\n"
             "$stderr = WeechatOutputs\n"
+            "begin"
+            "  if RUBY_VERSION.split('.')[1] == '9'\n"
+            "    require 'thread'\n"
+            "    class ::Mutex\n"
+            "      def synchronize(*args)\n"
+            "        yield\n"
+            "      end\n"
+            "    end\n"
+            "    require 'rubygems'\n"
+            "    $LOAD_PATH.concat Gem.latest_load_paths\n"
+            "  else\n"
+            "    require 'rubygems'\n"
+            "  end\n"
+            "rescue LoadError\n"
+            "end\n"
             "\n"
             "class Module\n"
             "\n"
@@ -980,15 +982,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     rb_eval_string_protect(weechat_ruby_code, &ruby_error);
     if (ruby_error)
     {
-	VALUE ruby_error_info = rb_inspect((VALUE)ruby_errinfo);
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME);
-	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error: %s"),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        STR2CSTR(ruby_error_info));
+        VALUE err = rb_gv_get("$!");
+        weechat_ruby_print_exception(err);
 	return WEECHAT_RC_ERROR;
     }
     
