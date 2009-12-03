@@ -15,6 +15,8 @@ Version 0.3.1 (under dev!)
 * core: fix plural form in translation files (bug #27430)
 * core: fix terminal title bug: do not reset it when option
   weechat.look.set_title is off (bug #27399)
+* core: fix buffer used by some input functions called via plugin API with
+  buffer pointer (bug #28152)
 * alias: new expansions for alias arguments ($n, $-m, $n-, $n-m, $*, $~)
   (patch #6917)
 * alias: allow use of wildcards for /alias list (patch #6925)
