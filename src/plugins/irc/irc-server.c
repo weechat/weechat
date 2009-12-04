@@ -1909,8 +1909,8 @@ irc_server_switch_address (struct t_irc_server *server)
  */
 
 int
-irc_server_connect_cb (void *arg_server, int status, const char *error,
-                       const char *ip_address)
+irc_server_connect_cb (void *arg_server, int status, int gnutls_rc,
+                       const char *error, const char *ip_address)
 {
     struct t_irc_server *server;
     const char *proxy;
@@ -2044,6 +2044,17 @@ irc_server_connect_cb (void *arg_server, int status, const char *error,
                                 _("%s%s: error: %s"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 error);
+            }
+            if (gnutls_rc == GNUTLS_E_DH_PRIME_UNACCEPTABLE)
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: you should play with option "
+                                  "irc.server.%s.ssl_dhkey_size (current "
+                                  "value is %d)"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                server->name,
+                                IRC_SERVER_OPTION_INTEGER (server,
+                                                           IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
             }
             irc_server_close_connection (server);
             irc_server_switch_address (server);

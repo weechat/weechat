@@ -3523,11 +3523,12 @@ weechat_lua_api_hook_process (lua_State *L)
  */
 
 int
-weechat_lua_api_hook_connect_cb (void *data, int status,
+weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
                                  const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], str_status[32], empty_arg[1] = { '\0' };
+    char *lua_argv[6], str_status[32], str_gnutls_rc[32];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3535,12 +3536,14 @@ weechat_lua_api_hook_connect_cb (void *data, int status,
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
+        snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
         
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = str_status;
-        lua_argv[2] = (ip_address) ? (char *)ip_address : empty_arg;
-        lua_argv[3] = (error) ? (char *)error : empty_arg;
-        lua_argv[4] = NULL;
+        lua_argv[2] = str_gnutls_rc;
+        lua_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
+        lua_argv[4] = (error) ? (char *)error : empty_arg;
+        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,

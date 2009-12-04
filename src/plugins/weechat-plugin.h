@@ -34,7 +34,7 @@ struct t_weelist;
 struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20091107-01"
+#define WEECHAT_PLUGIN_API_VERSION "20091204-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -401,6 +401,7 @@ struct t_weechat_plugin
                                     const char *local_hostname,
                                     int (*callback)(void *data,
                                                     int status,
+                                                    int gnutls_rc,
                                                     const char *error,
                                                     const char *ip_address),
                                     void *callback_data);

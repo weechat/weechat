@@ -181,6 +181,7 @@ struct t_hook_process
 /* hook connect */
 
 typedef int (t_hook_callback_connect)(void *data, int status,
+                                      int gnutls_rc,
                                       const char *error,
                                       const char *ip_address);
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-02 12:06+0100\n"
+"POT-Creation-Date: 2009-12-04 17:12+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4593,6 +4593,12 @@ msgstr "%s%s: chyba inicializace TLS"
 #, c-format
 msgid "%s%s: TLS handshake failed"
 msgstr "%s%s: TLS handshake selhal"
+
+#, c-format
+msgid ""
+"%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
+"value is %d)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory"

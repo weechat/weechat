@@ -834,6 +834,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                     (void) (HOOK_CONNECT(hook_connect, callback))
                         (hook_connect->callback_data,
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+                         rc,
                          gnutls_strerror (rc),
                          ip_address);
                     unhook (hook_connect);
@@ -845,7 +846,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 #endif
         }
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data, buffer[0] - '0', NULL, ip_address);
+            (hook_connect->callback_data, buffer[0] - '0', 0, NULL, ip_address);
         unhook (hook_connect);
     }
     
@@ -876,7 +877,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
                  '0' + WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
-                 NULL, NULL);
+                 0, NULL, NULL);
             unhook (hook_connect);
             return;
         }
@@ -899,7 +900,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
              '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             NULL, NULL);
+             0, NULL, NULL);
         unhook (hook_connect);
         return;
     }
@@ -921,7 +922,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
                  '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-                 NULL, NULL);
+                 0, NULL, NULL);
             unhook (hook_connect);
             return;
         /* child process */
