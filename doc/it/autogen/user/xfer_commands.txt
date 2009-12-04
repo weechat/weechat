@@ -1,0 +1,11 @@
+&bull; *`/xfer`* `[list | listfull]`::
+
+........................................
+  controllo xfer
+
+      list: lista xfer
+  listfull: lista xfer (dettagliata)
+  
+  Senza argomenti, il comando apre il buffer con la lista xfer.
+........................................
+

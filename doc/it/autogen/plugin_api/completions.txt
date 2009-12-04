@@ -1,0 +1,94 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| alias | alias | elenco di alias
+
+| aspell | aspell_langs | elenco di lingue supportate per aspell
+
+| irc | irc_channel | canale IRC corrente
+
+| irc | irc_channel_nicks_hosts | nick e host del canale IRC corrente
+
+| irc | irc_channel_topic | topic del canale IRC attivo
+
+| irc | irc_channels | canali su tutti i server IRC
+
+| irc | irc_ignores_numbers | numero di ignore definiti
+
+| irc | irc_msg_part | messaggio di uscita predefinito per il canale IRC
+
+| irc | irc_privates | privati su tutti i server IRC
+
+| irc | irc_server | server IRC corrente
+
+| irc | irc_server_channels | canali sul server IRC corrente
+
+| irc | irc_server_nick | nick sul server IRC corrente
+
+| irc | irc_server_nicks | nick su tutti i canali del server IRC corrente
+
+| irc | irc_server_privates | privati sul server IRC corrente
+
+| irc | irc_servers | server IRC (nomi interni)
+
+| irc | nick | nick del canale IRC corrente
+
+| lua | lua_script | elenco degli script
+
+| perl | perl_script | elenco degli script
+
+| python | python_script | elenco degli script
+
+| relay | relay_free_port | prima porta libera per il plugin relay
+
+| relay | relay_protocol_name | protocollo.nome possibile per il plugin relay
+
+| relay | relay_relays | protocollo.nome dei relay correnti per il plugin relay
+
+| ruby | ruby_script | elenco degli script
+
+| tcl | tcl_script | elenco degli script
+
+| weechat | bars_names | nomi delle barre
+
+| weechat | bars_options | opzioni per le barre
+
+| weechat | buffers_names | nomi dei buffer
+
+| weechat | buffers_numbers | numeri dei buffer
+
+| weechat | buffers_plugins_names | nomi dei buffer (inclusi i nomi plugin)
+
+| weechat | commands | comandi (weechat e plugin)
+
+| weechat | config_files | file di configurazione
+
+| weechat | config_option_values | valori per una opzione di configurazione
+
+| weechat | config_options | opzioni di configurazione
+
+| weechat | filename | nome file
+
+| weechat | filters_names | nomi dei filtri
+
+| weechat | infolists | nomi delle liste info in attesa
+
+| weechat | infos | nomi delle info in attesa
+
+| weechat | keys_codes | codici tasti
+
+| weechat | nicks | nick nella lista nick del buffer corrente
+
+| weechat | plugins_commands | comandi definiti dai plugin
+
+| weechat | plugins_names | nomi dei plugin
+
+| weechat | proxies_names | nomi dei proxy
+
+| weechat | proxies_options | opzioni per i proxy
+
+| weechat | weechat_commands | comandi di weechat
+
+| xfer | nick | nick della chat DCC
+
+|========================================

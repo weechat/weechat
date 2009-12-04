@@ -53,7 +53,7 @@ my $version = "0.1";
 my $default_path = "~/src/weechat/doc";
 
 # list of locales for which we want to build XML doc files to include
-my @locale_list = qw(en_US fr_FR);
+my @locale_list = qw(en_US fr_FR it_IT);
 
 # all commands/options/.. of following plugins will produce a file
 # non-listed plugins will be ignored

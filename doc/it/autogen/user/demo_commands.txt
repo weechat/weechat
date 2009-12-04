@@ -1,0 +1,42 @@
+&bull; *`/demo_buffer`* `nome`::
+
+........................................
+  apri un nuovo buffer
+........................................
+
+&bull; *`/demo_buffer_set`* `valore della proprietà`::
+
+........................................
+  imposta una proprietà del buffer
+........................................
+
+&bull; *`/demo_info`* `[info [argomenti]]`::
+
+........................................
+  ricevi e visualizza un'informazione
+
+            info: informazioni da visualizzare
+  argomenti: argomenti opzionali per le informazioni
+  
+  Senza argomenti, questo comando visualizza un elenco di informazioni disponibili
+........................................
+
+&bull; *`/demo_infolist`* `[infolist [argomenti]]`::
+
+........................................
+  ricevi e visualizza una lista info
+
+    infolist: lista info da visualizzare
+   argomenti: argomenti opzionali per la lista info
+  
+  Senza argomento, il comando visualizza l'elenco delle liste info disponibili
+........................................
+
+&bull; *`/demo_printf`* `[testo]`::
+
+........................................
+  stampa alcuni messaggi sul buffer corrente
+
+  testo: scrivi questo testo
+........................................
+

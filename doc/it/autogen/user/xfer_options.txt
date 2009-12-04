@@ -1,0 +1,125 @@
+* *xfer.color.status_aborted*
+** descrizione: colore del testo per lo status "annullato"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightred)
+
+* *xfer.color.status_active*
+** descrizione: colore del testo per lo status "attivo"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightblue)
+
+* *xfer.color.status_connecting*
+** descrizione: colore del testo per lo status "connessione in corso"
+** tipo: colore
+** valori: un nome colore (valore predefinito: yellow)
+
+* *xfer.color.status_done*
+** descrizione: colore del testo per lo status "completato"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightgreen)
+
+* *xfer.color.status_failed*
+** descrizione: colore del testo per lo status "fallito"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightred)
+
+* *xfer.color.status_waiting*
+** descrizione: colore del testo per lo status "in attesa"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightcyan)
+
+* *xfer.color.text*
+** descrizione: colore del testo
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
+* *xfer.color.text_bg*
+** descrizione: colore di sfondo
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
+* *xfer.color.text_selected*
+** descrizione: colore del testo per la riga xfer selezionata
+** tipo: colore
+** valori: un nome colore (valore predefinito: white)
+
+* *xfer.file.auto_accept_chats*
+** descrizione: accetta automaticamente le richieste di chat (usare con cautela!)
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
+* *xfer.file.auto_accept_files*
+** descrizione: accetta automaticamente i file in arrivo (usare con cautela!)
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
+* *xfer.file.auto_rename*
+** descrizione: rinomina i file in ingresso se esistenti (aggiunge ".1", ".2", ...)
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.file.auto_resume*
+** descrizione: riprendi automaticamente il trasferimento file se la connessione all'host viene perduta
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.file.convert_spaces*
+** descrizione: converti gli spazi in underscore all'invio dei file
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.file.download_path*
+** descrizione: percorso per il salvataggio dei file locali
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "%h/xfer")
+
+* *xfer.file.upload_path*
+** descrizione: percorso per la lettura dei file all'invio (se non specificato dall'utente)
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "~")
+
+* *xfer.file.use_nick_in_filename*
+** descrizione: usa il nick remoto come prefisso nel nome del file locale alla ricezione
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.look.auto_open_buffer*
+** descrizione: apertura automatica del buffer xfer quando un nuovo xfer viene aggiunto alla lista
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.look.progress_bar_size*
+** descrizione: dimensione barra di avanzamento, in caratteri (se 0, è disabilitata)
+** tipo: intero
+** valori: 0 .. 256 (valore predefinito: 20)
+
+* *xfer.network.blocksize*
+** descrizione: dimensione blocco per l'invio dei pacchetti, in byte
+** tipo: intero
+** valori: 1024 .. 102400 (valore predefinito: 65536)
+
+* *xfer.network.fast_send*
+** descrizione: non attendere ACK all'invio del file
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *xfer.network.own_ip*
+** descrizione: Indirizzo IP o DNS per l'invio di file/chat (se vuoto, verrà utilizzata l'interfaccia IP locale)
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "")
+
+* *xfer.network.port_range*
+** descrizione: forza i file in uscita/chat ad utilizzare solo le porte in una data serie (utile per il NAT) (sintassi: una singola porta, es. 5000 o un range di porte, es. 5000-5015. Un valore nullo significa qualsiasi porta, consigliato utilizzare porte maggiori di 1024, perché l'uso di porte inferiori possibile solo per root)
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "")
+
+* *xfer.network.speed_limit*
+** descrizione: limite di velocità per l'invio dei file, in kb per secondo (0 vuol dire senza limite)
+** tipo: intero
+** valori: 0 .. 2147483647 (valore predefinito: 0)
+
+* *xfer.network.timeout*
+** descrizione: timeout per la richiesta xfer (in secondi)
+** tipo: intero
+** valori: 5 .. 2147483647 (valore predefinito: 300)
+

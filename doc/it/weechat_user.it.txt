@@ -1,0 +1,1338 @@
+Guida per l'Utente di WeeChat
+=============================
+FlashCode <flashcode@flashtux.org>
+
+
+Questo manuale documenta il client di chat WeeChat, ed è parte
+del programma stesso.
+
+È possibile trovare l'ultima versione di questo documento qui:
+http://www.weechat.org/doc
+
+
+[[introduction]]
+Introduzione
+------------
+
+WeeChat (Wee Enhanced Environment for Chat) è un client di chat
+gratuito, veloce e leggero, realizzato per diversi sistemi operativi.
+
+[[features]]
+Caratteristiche
+~~~~~~~~~~~~~~~
+
+Le caratteristiche principali:
+
+* multi-protocollo (IRC ed altri presto in arrivo)
+* connessione a server multipli (con SSL, IPv6, proxy)
+* molte interfacce: Curses (wxWidgets, Gtk e Qt in fase di sviluppo)
+* piccolo, veloce e leggero
+* personalizzabile ed estensibile con plugin e script
+* conforme alle RFC di IRC http://www.ietf.org/rfc/rfc1459.txt[1459],
+  http://www.ietf.org/rfc/rfc2810.txt[2810],
+  http://www.ietf.org/rfc/rfc2811.txt[2811],
+  http://www.ietf.org/rfc/rfc2812.txt[2812] e
+  http://www.ietf.org/rfc/rfc2813.txt[2813]
+* multi-piattaforma (GNU/Linux, *BSD, MacOS X, Windows ed altre)
+* 100% GPL, software libero
+
+WeeChat homepage is here: http://www.weechat.org/
+
+[[pre-requisites]]
+Requisiti
+~~~~~~~~~
+
+Per poter installare WeeChat, è necessario:
+
+* un sistema GNU/Linux in esecuzione (con gli strumenti di
+  compilazione per i sorgenti), oppure OS compatibile
+* privilegi di 'root' (per installare WeeChat in una cartella di
+  sistema)
+* librerie ncurses
+
+
+[[install]]
+Installazione
+-------------
+
+[[binary_packages]]
+Pacchetti binari
+~~~~~~~~~~~~~~~~
+
+I pacchetti binari sono disponibili per molte distribuzioni, incluse:
+
+* Debian (o qualsiasi distribuzione compatibile): `apt-get install weechat`
+* Mandriva/RedHat (o qualsiasi distribuzione compatibile con gli  RPM):
+  `rpm -i /percorso/per/weechat-x.y.z-1.i386.rpm`
+* Gentoo: `emerge weechat`
+
+Potrebbero risultare utili alcuni pacchetti addizionali, come
+weechat-plugins.
+
+Per altre distribuzioni, consultare il manuale per le istruzioni di
+installazione.
+
+[[source_package]]
+Sorgenti
+~~~~~~~~
+
+WeeChat può essere compilato con cmake oppure autotools
+(tuttavia si raccomanda cmake).
+
+Con cmake
+^^^^^^^^^
+
+* Installazione nelle cartelle di sistema (richiede privilegi di 'root'):
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+% make install    (come root)
+----------------------------------------
+
+* Installazione in una cartella personalizzata:
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=/percorso/della/cartella
+$ make
+$ make install
+----------------------------------------
+
+Con autotools
+^^^^^^^^^^^^^^
+
+* Installazione nelle cartelle di sistema (richiede privilegi di 'root'):
+
+----------------------------------------
+$ ./configure
+$ make
+% make install    (come root)
+----------------------------------------
+
+* Installazione in una cartella personalizzata:
+
+----------------------------------------
+$ ./configure --prefix=/path/to/directory
+$ make
+$ make install
+----------------------------------------
+
+[[git_sources]]
+Sorgenti git
+~~~~~~~~~~~~
+
+Attenzione: i sorgenti GIT sono per gli utenti avanzati: potrebbero non
+compilare o essere instabili. Siete avvisati!
+
+Per ottenere i sorgenti GIT, dare il comando:
+
+----------------------------------------
+$ git clone git://git.sv.gnu.org/weechat.git
+----------------------------------------
+
+Se si usano gli autotools (e non cmake), eseguire questo script:
+
+----------------------------------------
+$ ./autogen.sh
+----------------------------------------
+
+Poi seguire le istruzioni per i sorgenti (consultare <<source_package>>).
+
+
+[[usage]]
+Utilizzo
+--------
+
+[[running_weechat]]
+Esecuzione di WeeChat
+~~~~~~~~~~~~~~~~~~~~~
+
+Argomenti a riga di comando:
+
+-a, --no-connect::
+    Disabilita la connessione automatica ai server all'avvio di WeeChat
+
+-d, --dir 'path'::
+    Imposta una cartella come home per WeeChat (utilizzata per i file di
+    configurazione, log, plugin e script dell'utente), il valore predefinito
+    è ~/.weechat
+
+-h, --help::
+    Visualizza l'aiuto
+
+-k, --keys::
+    Visualizza i tasti predefiniti di WeeChat
+
+-l, --license::
+    Visualizza la licenza di WeeChat
+
+-p, --no-plugin::
+    Disabilita il caricamento automatico dei plugin
+
+-v, --version::
+    Visualizza la versione di WeeChat
+
+plugin:option::
+    Opzione per il plugin (consultare la documentazione per ogni plugin)
+
+Per avviare WeeChat, digitare questo comando:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
+
+Alla prima esecuzione di WeeChat, viene creato un file di configurazione
+predefinito. Il file di configurazione viene creato nella cartella:
+'~/.weechat/weechat.conf'.
+
+È possibile modificare questo file per configurare WeeChat a seconda delle
+proprie esigenze, oppure impostando i parametri con il comando `/set`
+all'interno di WeeChat (consultare <<weechat_commands>>).
+
+[[screen_layout]]
+Layout dello schermo
+~~~~~~~~~~~~~~~~~~~~
+
+Esempio di terminale con WeeChat:
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Benvenuti in #test, questo è un canale di test                                           │
+│12:52:27    --> | flashy (n=flashcod@hellix.flashtux.org) è entrato in #test  │@ChanServ │
+│12:52:27     -- | Nick #test: [@ChanServ @flashy +_FlashB0t joe mike]         │@flashy   │
+│12:52:27     -- | Canale #test: 5 nick (2 ops, 0 halfop, 1 voce, 2 normale)   │+_FlashB0t│
+│12:52:27     -- | Canale creato il Tue Jan 27 06:30:17 2009                   │joe       │
+│12:54:15 flashy | ehi!                                                        │mike      │
+│12:55:01    joe | ciao flashy!                                                │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Attività: 4,2]                    │          │
+│[flashy] ciao joe!█                                                           │          │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Lo schermo è composto dalle seguenti aree:
+
+* area di chat (centro dello schermo) con le righe di chat, e per ogni riga:
+** ora
+** prefisso (prima di "|")
+** messaggio (dopo di "|")
+* barre che circondano l'area di chat, quelle predefinite sono:
+** barra 'titolo', in alto rispetto all'area di chat
+** barra 'stato', in basso rispetto all'area di chat
+** barra 'input', in basso rispetto alla barra di stato
+** barra 'nicklist', sulla destra
+
+La barra 'stato' ha i seguenti elementi predefiniti:
+
+[width="100%",cols="^3,^3,10",options="header"]
+|=======================================
+| Elemento                   | Esempio                      | Descrizione
+
+| time                       | `[12:55]`                    |
+  ora
+
+| buffer_count               | `[4]`                        |
+  numero di buffer aperti
+
+| buffer_plugin              | `[irc]`                      |
+  plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc
+  usato dal buffer)
+
+| buffer_number              | `3`                          |
+  numero del buffer corrente
+
+| buffer_name                | `freenode/#test(+n)`         |
+  nome del buffer attivo
+
+| buffer_nicklist_count      | `{5}`                        |
+  numero di nick nella lista nick
+
+| buffer_filter              | `*`                          |
+  indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste),
+  valori vuoti indicano che tutte le righe sono visualizzate
+
+| lag                        | `[Ritardo: 2.5]`             |
+  indicatore ritardo, in secondi (nascosto se il ritardo è basso)
+
+| hotlist                    | `[Attività: 4,2]`            |
+  elenco dei buffer con attività (messaggi non letti)
+
+| completion                 | `abc(2) def(5)`              |
+  elenco di parole per il completamento, con il numero di completamenti
+  possibili per ogni parola
+
+| scroll                     | `-ANCORA(50)-`               |
+  indicatore di scorrimento, con il numero di righe sotto l'ultima
+  riga visualizzata
+|=======================================
+
+La barra 'input' ha i seguenti elementi predefiniti:
+
+[width="100%",cols="^3,^6,8",options="header"]
+|=======================================
+| Elemento         | Esempio | Descrizione
+
+| input_paste      | `[Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No]` |
+  chiede all'utente se incollare le righe
+
+| input_prompt     | `[nick]` |
+  prompt per l'input (nick per il plugin irc)
+
+| away             | `(assente)` |
+  indicatore di assenza
+
+| input_search     | `[Ricerca testo]` |
+  indicatore di ricerca testo
+
+| input_text       | `bla bla...` |
+  testo in input
+|=======================================
+
+[[key_bindings]]
+Associazione tasti predefinita
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tasti per la riga di comando
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|=======================================
+| Tasti | Descrizione e comando
+
+| Freccia sinistra +
+  Ctrl + B |
+  Passa al carattere precedente nella riga di comando +
+  `/input move_previous_char`
+
+| Freccia destra +
+  Ctrl + F |
+  Passa al carattere successivo nella riga di comando +
+  `/input move_next_char`
+
+| Ctrl + freccia sinistra +
+  Alt + B |
+  Passa alla parola precedente nella riga di comando +
+  `/input move_previous_word`
+
+| Ctrl + freccia destra +
+  Alt + F |
+  Passa alla parola successiva nella riga di comando +
+  `/input move_next_word`
+
+| Home +
+  Ctrl + A |
+  Si sposta all'inizio della riga di comando +
+  `/input move_beginning_of_line`
+
+| Fine +
+  Ctrl + E |
+  Si sposta alla fine della riga di comando +
+  `/input move_end_of_line`
+
+| Ctrl + C poi B  |
+  Inserisce il codice per il testo in grassetto +
+  `/input insert \x02`
+
+| Ctrl + C poi C |
+  Inserisce il codice per il testo colorato +
+  `/input insert \x03`
+
+| Ctrl + C poi I |
+  Inserisce il codice per il testo in corsivo +
+  `/input insert \x1D`
+
+| Ctrl + C poi O |
+  Inserisce il codice per il reset dei colori +
+  `/input insert \x0F`
+
+| Ctrl + C then R |
+  Inserisce il codice per l'inversione dei colori +
+  `/input insert \x12`
+
+| Ctrl + C poi U |
+  Inserisce il codice per il testo sottolineato +
+  `/input insert \x15`
+
+| Canc +
+  Ctrl + D |
+  Elimina il carattere successivo nella riga di comando +
+  `/input delete_next_char`
+
+| Backspace +
+  Ctrl + H |
+  Elimina il carattere precedente nella riga di comando +
+  `/input delete_previous_char`
+
+| Ctrl + K |
+  Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata
+  viene copiata negli appunti) +
+  `/input delete_end_of_line`
+
+| Ctrl + R |
+  Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto) +
+  `/input search_text`
+
+| Ctrl + T |
+  Inverti caratteri +
+  `/input transpose_chars`
+
+| Ctrl + U |
+  Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata
+  viene copiata negli appunti) +
+  `/input delete_beginning_of_line`
+
+| Ctrl + W |
+  Elimina la parola precedente nella riga di comando (la stringa eliminata viene
+  copiata negli appunti) +
+  `/input delete_previous_word`
+
+| Ctrl + Y |
+  Incolla il contenuto degli appunti +
+  `/input clipboard_paste`
+
+| Tab |
+  Completa comando o nick (Tab di nuovo: trova prossimo completamento) +
+  `/input complete_next`
+
+| Shift + Tab |
+  Senza completamento: effettua un completamento parziale, con
+  completamento in sospeso: completa con il completamento precedente +
+  `/input complete_previous`
+
+| Qualsiasi carattere |
+  Inserisce carattere alla posizione del cursore nella riga di comando
+
+| Invio +
+  Ctrl + J +
+  Ctrl + M |
+  Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) +
+  `/input return`
+
+| Freccia in alto |
+  Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) +
+  `/input history_previous`
+
+| Freccia giù |
+  Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) +
+  `/input history_next`
+
+| Ctrl + freccia su |
+  Chiama il comando/messaggio precedente nella cronologia globale (identico
+  per tutti i buffer) +
+  `/input history_global_previous`
+
+| Ctrl + freccia giù |
+  Chiama il comando/messaggio successivo nella cronologia globale (identico
+  per tutti i buffer) +
+  `/input history_global_next`
+
+| Alt + D |
+  Elimina la parola successiva nella riga di comando (la stringa eliminata viene
+  copiata negli appunti) +
+  `/input delete_next_word`
+
+| Alt + K |
+  Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto
+  esiste) nella riga di comando +
+  `/input grab_key_command`
+
+| Alt + R` +
+  Elimina l'intera riga di comando +
+  `/input delete_line`
+|=======================================
+
+Tasti per buffer / finestre
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|=======================================
+| Tasti | Descrizione e comando
+
+| Ctrl + L |
+  Ridisegna l'intera finestra +
+  `/window refresh`
+
+| Ctrl + S poi Ctrl + U |
+  Imposta l'evidenziatore dei messaggi non letti su tutti i buffer +
+  `/input set_unread`
+
+| Ctrl + X |
+  Passa al buffer attivo se i buffer sono collegati con lo stesso numero +
+  `/input switch_active_buffer`
+
+| Pagina su |
+  Scorre in alto di una pagina nella cronologia del buffer +
+  `/window page_up`
+
+| Pagina giù |
+  Scorre di una pagina in basso nella cronologia del buffer +
+  `/window page_down`
+
+| Alt + Pagina su |
+  Scorre di qualche riga in alto nella cronologia del buffer +
+  `/window scroll_up`
+
+| Alt + Pagina giù |
+  Scorre di qualche riga in basso nella cronologia del buffer +
+  `/window scroll_down`
+
+| Alt + Home |
+  Scorre in cima al buffer +
+  `/window scroll_top`
+
+| Alt + Fine |
+  Scorre alla fine del del buffer +
+  `/window scroll_bottom`
+
+| Alt + freccia sinistra +
+  Alt + freccia su +
+  Ctrl + P +
+  F5 |
+  Passa al buffer precedente +
+  `/buffer -1`
+
+| Alt + freccia destra +
+  Alt + freccia giù +
+  Ctrl + N +
+  F6 |
+  Passa al buffer successivo +
+  `/buffer +1`
+
+| F7 |
+  Passa alla finestra precedente +
+  `/window -1`
+| F8 |
+  Passa alla finestra successiva +
+  `/window +1`
+
+| F9 |
+  Scorre il titolo del buffer sulla sinistra +
+  `/bar scroll title * x-50%`
+
+| F10 |
+  Scorre il titolo del buffer sulla destra +
+  `/bar scroll title * x+50%`
+
+| F11 |
+  Scorre di una pagina in alto nella lista nick +
+  `/bar scroll nicklist * y-100%`
+
+| F12 |
+  Scorre di una pagina in basso nella lista nick +
+  `/bar scroll nicklist * y+100%`
+
+| Alt + F11 |
+  Sposta all'inizio della lista nick +
+  `/bar scroll nicklist * yb`
+
+| Alt + F12 |
+  Sposta alla fine della lista nick +
+  `/bar scroll nicklist * ye`
+
+| Alt + A |
+  Passa al buffer successivo con attività (con priorità: evento, messaggio,
+  altro) +
+  `/input jump_smart`
+
+| Alt + J poi Alt + L |
+  Passa all'ultimo buffer +
+  `/input jump_last_buffer`
+
+| Alt + J poi Alt + R |
+  Passa al buffer raw IRC +
+  `/server raw`
+
+| Alt + J poi Alt + S |
+  Passa al buffer server IRC +
+  `/server jump`
+
+| Alt + num (0-9) |
+  Passa al buffer numero (0 = 10) +
+  `/buffer *N`
+
+| Alt + J poi numero (01-99) |
+  Passa al buffer numero +
+  `/buffer NN`
+
+| Alt + N |
+  Scorre fino all'evento successivo +
+  `/window scroll_next_highlight`
+
+| Alt + P |
+  Scorre fino all'evento precedente +
+  `/window scroll_previous_highlight`
+
+| Alt + U |
+  Scorre fino alla prima riga non letta nel buffer +
+  `/input scroll_unread`
+
+| Alt + W poi Alt + freccia |
+  Passa alla finestra con direzione +
+  `/window up` (in alto) +
+  `/window down` (in basso) +
+  `/window left` (a sinistra) +
+  `/window right` (a destra)
+
+| Alt + Z |
+  Ingrandimento sulla finestra attiva (Alt + Z di nuovo: ripristina lo stato iniziale
+  della finestra, prima dell'ingrandimento) +
+  `/window zoom`
+
+| Alt + < |
+  Passa al buffer precedente nella lista dei buffer visitati +
+  `/input jump_previously_visited_buffer`
+
+| Alt + > |
+  Passa al buffer successivo nella lista dei buffer visitati +
+  `/input jump_next_visited_buffer`
+|=======================================
+
+Altri tasti
+^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|=======================================
+| Tasti | Descrizione e comando
+
+| Alt + H |
+  Pulisce hotlist (notifica di attività su altri buffer) +
+  `/input hotlist_clear` +
+
+| Alt + = |
+  Attiva/disattiva filtri +
+  `/filter toggle` +
+|=======================================
+
+[[command_line]]
+Riga di comando
+~~~~~~~~~~~~~~~
+
+La riga di comando di WeeChat (nella parte inferiore della finestra) consente di
+inserire i comandi o di inviare del testo sul buffer.
+
+Sintassi
+^^^^^^^^
+
+I comandi iniziano con il carattere "/", seguito dal nome del comando. Ad esempio,
+per consultare un elenco di opzioni:
+
+----------------------------------------
+/set
+----------------------------------------
+
+Il testo inviato ad un buffer è qualsiasi testo che non comincia con
+il carattere "/". Per esempio, per inviare il testo 'ciao' sul buffer
+attivo:
+
+----------------------------------------
+ciao
+----------------------------------------
+
+Ad ogni modo, è possibile iniziare con il carattere "/", aggiungendone
+poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
+
+----------------------------------------
+//set
+----------------------------------------
+
+Colori
+^^^^^^
+
+Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
+come segue (digitare Ctrl-C poi la lettera che segue, con il valore
+opzionale):
+
+^Cb::
+    testo in grassetto
+
+^Ccxx::
+    colore del testo `xx` (consultare la lista di colori che segue)
+
+^Ccxx,yy::
+    colore del testo `xx` e di sfondo `yy` (consultare la lista di colori
+    che segue)
+
+^Co::
+    disabilita colori ed attributi
+
+^Cr::
+    video inverso (inverte il colore del testo con quello di sfondo)
+
+^Cu::
+    testo sottolineato
+
+[NOTE]
+Lo stesso codice (senza numero per ^Cc) può essere usato per
+terminare l'attributo.
+
+I codici colore  per ^Cc sono:
+
+[width="20%",cols="^1m,2"]
+|=======================================
+| 00 | bianco
+| 01 | nero
+| 02 | blu scuro
+| 03 | verde scuro
+| 04 | rosso chiaro
+| 05 | rosso scuro
+| 06 | rosa scuro
+| 07 | arancione
+| 08 | giallo
+| 09 | verde chiaro
+| 10 | azzurro scuro
+| 11 | azzurro chiaro
+| 12 | blu chiaro
+| 13 | rosa chiaro
+| 14 | grigio
+| 15 | grigio chiaro (bianco)
+|=======================================
+
+Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
+e "a tutti" in rosso chiaro sottolineato:
+
+----------------------------------------
+^Cc12^Cbciao^Cb^Cc04^Cu a tutti^Cu^Cc!
+----------------------------------------
+
+[[weechat_options]]
+Opzioni di WeeChat (weechat.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_options.txt[]
+
+I colori per l'interfaccia Curses sono:
+
+[width="50%",cols="^3m,8"]
+|=======================================
+| default      | colore predefinito del terminale (trasparente per lo sfondo)
+| black        | nero
+| red          | rosso scuro
+| lightred     | rosso chiaro
+| green        | verde scuro
+| lightgreen   | verde chiaro
+| brown        | marrone
+| yellow       | giallo
+| blue         | blu scuro
+| lightblue    | blu chiaro
+| magenta      | rosa scuro
+| lightmagenta | rosa chiaro
+| cyan         | azzurro scuro
+| lightcyan    | azzurro chiaro
+| white        | bianco
+|=======================================
+
+[[weechat_commands]]
+Comandi di WeeChat
+~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_commands.txt[]
+
+
+[[plugins]]
+Plugin
+------
+
+Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
+favore consultare 'Riferimento API dei Plugin per WeeChat' oppure
+'Guida allo Scripting di WeeChat'.
+
+[[plugins_in_weechat]]
+Plugin in WeeChat
+~~~~~~~~~~~~~~~~~
+
+Un plugin è una libreria dinamica, scritta in C e compilata, che viene caricata
+da WeeChat.
+In GNU/Linux, il file ha estensione ".so", ".dll" in Windows.
+
+I plugin trovati vengono caricati automaticamente all'avvio di WeeChat, ed
+è possibile attivare o disattivare i plugin durante l'esecuzione del programma.
+
+È importante evidenziare la differenza tra un 'plugin' ed uno 'script': un
+'plugin' è un file binario compilato e caricato con il comando `/plugin`,
+mentre uno 'script' è un file di testo caricato con un plugin come 'perl'
+con il comando `/perl`.
+
+È possibile utilizzare il comando `/plugin` per attivare/disattivare un plugin,
+oppure elencare tutti i plugin attivi.
+Quando un plugin viene disattivato, tutti i buffer creati da questo plugin
+sono chiusi automaticamente.
+
+Esempi per attivare, disattivare oppure elencare i plugin:	 
+
+----------------------------------------
+/plugin load irc
+/plugin unload irc
+/plugin list
+----------------------------------------
+
+I plugin predefiniti sono:
+
+[width="50%",cols=">1s,5",options="header"]
+|=======================================
+| Plugin  | Descrizione
+| alias   | Definisce gli alias per i comandi
+| aspell  | Controllo ortografico per la riga di comando
+| charset | Set di caratteri per la codifica/decodifica nei buffer
+| demo    | Plugin Demo (non viene compilato per default)
+| fifo    | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
+| irc     | protocollo chat per IRC
+| logger  | Registra i buffer su file
+| perl    | API per lo scripting in Perl
+| python  | API per lo scripting in Python
+| ruby    | API per lo scripting in Ruby
+| lua     | API per lo scripting in Lua
+| tcl     | API per lo scripting in TCL
+| xfer    | Trasferimento file e chat diretta
+|=======================================
+
+[[alias_plugin]]
+Plugin Alias
+~~~~~~~~~~~~
+
+Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
+plugin).
+
+Comandi
+^^^^^^^
+
+include::autogen/user/alias_commands.txt[]
+
+[[aspell_plugin]]
+Plugin Aspell
+~~~~~~~~~~~~~
+
+Il plugin Aspell consente di verificare l'ortografia nella riga di comando.
+È possibile utilizzare più lingue per buffer.
+
+Opzioni (aspell.conf)
+^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/aspell_options.txt[]
+
+Comandi
+^^^^^^^
+
+include::autogen/user/aspell_commands.txt[]
+
+[[charset_plugin]]
+Plugin Charset
+~~~~~~~~~~~~~~
+
+Il plugin Charset consente di decodificare o codificare dati utilizzando
+i set caratteri.
+
+Esiste un set caratteri predefinito per la codifica/decodifica, e set caratteri
+specifici per i buffer (o gruppi di buffer).
+
+Questo plugin è opzionale, ma raccomandato: se non attivato, WeeChat
+può leggere/scrivere soltanto dati UTF-8.
+
+Il plugin Charset dovrebbe essere caricato automaticamente da WeeChat.
+Per essere sicuri che sia caricato, provare con:
+
+----------------------------------------
+/charset
+----------------------------------------
+
+Se non trovato, allora si deve caricare il plugin con il comando:
+
+----------------------------------------
+/plugin load charset
+----------------------------------------
+
+Se il plugin non viene trovato, allora è necessario ricompilare WeeChat
+con il supporto ai plugin e a Charset.
+
+Quando viene avviato il plugin Charset, mostra i set caratteri del
+terminale e quello interno. Il set caratteri dipende dal proprio
+locale, mentre quello interno è UTF-8.
+
+Per esempio:
+
+........................................
+set caratteri: terminale: ISO-8859-15, interno: UTF-8
+........................................
+
+Opzioni (charset.conf)
+^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/charset_options.txt[]
+
+Comandi
+^^^^^^^
+
+include::autogen/user/charset_commands.txt[]
+
+Impostare il set caratteri
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Per impostare il set caratteri globale per la codifica e la decodifica,
+utilizzare il comando `/set`.
+
+Per esempio:
+
+----------------------------------------
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----------------------------------------
+
+Se il set caratteri globale per la decodifica non è impostato (ad
+esempio durante il primo caricamento del plugin Charset), verrà
+impostato automaticamente sul set caratteri del terminale (se
+diverso da UTF-8), oppure su 'ISO-8859-1'.
+
+Il valore di codifica predefinito è vuoto, perciò il testo viene
+inviato per default con il set caratteri interno (UTF-8).
+
+Per impostare il set caratteri del server IRC, utilizzare il comando `charset`
+sul buffer del server. Se viene immesso solo il set caratteri, allora i valori
+di codifica e decodifica saranno gli stessi.
+
+Ad esempio:
+
+----------------------------------------
+/charset ISO-8859-15
+----------------------------------------
+
+È l'equivalente di:
+
+----------------------------------------
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----------------------------------------
+
+Per impostare il set caratteri per il canale IRC (o il privato), utilizzare gli
+stessi comandi per il server, ma sul buffer del canale (o quello privato).
+
+Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguente:
+
+----------------------------------------
+/set charset.*
+----------------------------------------
+
+Risoluzione problemi
+^^^^^^^^^^^^^^^^^^^^
+
+Per qualunque problema con i set caratteri, per favore consultare
+le 'Domande Frequenti di WeeChat'.
+
+[[fifo_plugin]]
+Plugin Fifo
+~~~~~~~~~~~
+
+È possibile controllare da remoto WeeChat, inviando comandi o del testo ad una
+pipe FIFO (se l'opzione "plugins.var.fifo.fifo" è abilitata, e lo è per default).
+
+La pipe FIFO si trova in '~/.weechat/' ed è chiamata 'weechat_fifo_xxxx'
+(dove 'xxxx' è l'ID del processo (PID) dell'istanza di WeeChat in esecuzione).
+
+La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
+
+........................................
+  plugin.buffer *testo o comando qui
+  *testo o comando qui
+........................................
+
+Alcuni esempi:
+
+* cambiare il nick sul server IRC freenode in "nuovonick":
+
+----------------------------------------
+$ echo 'irc.server.freenode */nick nuovonick' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* visualizazre del testo sul canale IRC #weechat:
+
+----------------------------------------
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* visualizzare del testo sul buffer attivo:
+
+----------------------------------------
+$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* inviare due comandi per disattivare/caricare gli script Perl (è necessario
+  separarli con "\n"):
+
+----------------------------------------
+$ echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+È possibile realizzare uno script per inviare un comando a tutte le istanze di
+WeeChat in esecuzione, per esempio:
+
+[source,shell]
+----------------------------------------
+#!/bin/sh
+if [ $# -eq 1 ]; then
+    for fifo in ~/.weechat/weechat_fifo_*
+    do
+        echo -e "$1" >$fifo
+    done
+fi
+----------------------------------------
+
+Se lo script viene chiamato "auto_weechat_command", può essere
+eseguito con:
+
+----------------------------------------
+$ ./auto_weechat_command 'irc.freenode.#weechat *ciao'
+----------------------------------------
+
+[[irc_plugin]]
+Plugin IRC
+~~~~~~~~~~
+
+Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre persone.
+
+È multi-server, ed offre tutti i comandi IRC supportati inclusi la chat DCC ed il
+trasferimento file (tramite plugin xfer, consultare <<xfer_plugin>>).
+
+Opzioni a riga di comando
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+È possibile fornire un URL per uno o più server IRC, come segue:
+
+----------------------------------------
+[irc][6][s]://[nick[:password]@]irc.esempio.org[/porta][//#canale1][,#canale2[...]]
+----------------------------------------
+
+Esempio per entrare in '#weechat' e '#tizio' sul server 'irc.freenode.net',
+porta predefinita (6667), con il nick 'caio':
+
+----------------------------------------
+$ weechat-curses irc://caio@irc.freenode.net/#weechat,#tizio
+----------------------------------------
+
+Opzioni (irc.conf)
+^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/irc_options.txt[]
+
+Comandi
+^^^^^^^
+
+include::autogen/user/irc_commands.txt[]
+
+[[ctcp_replies]]
+Risposte CTCP
+^^^^^^^^^^^^^
+
+È possibile personalizzare le risposte CTCP, o bloccare alcune richieste CTCP
+(non rispondere).
+
+Ad esempio, per personalizzare la richiesta CTCP "VERSIONE", utilizzare il
+seguente comando:
+
+----------------------------------------
+/set irc.ctcp.version "Uso WeeChat $version, fico!"
+----------------------------------------
+
+Se si desidera bloccare CTCP "VERSIONE" (non rispondere ad una query),
+allora basta impostare una stringa vuota:
+
+----------------------------------------
+/set irc.ctcp.version ""
+----------------------------------------
+
+Anche un CTCP sconosciuto può essere personalizzato, per esempio si
+può rispondere "BLABLA":
+
+----------------------------------------
+/set irc.ctcp.blabla "Questa è la mia risposta a CTCP BLABLA"
+----------------------------------------
+
+È possibile personalizzare CTCP per un solo server, utilizzando il suo nome
+interno prima del nome CTCP:
+
+----------------------------------------
+/set irc.ctcp.freenode.version "WeeChat $version (per freenode)"
+----------------------------------------
+
+Se si desidera ripristinare la risposta CTCP standard, allora disabilitare
+l'opzione:
+
+----------------------------------------
+/unset irc.ctcp.version
+----------------------------------------
+
+I codici seguenti possono essere utilizzati nelle stringhe e vengono estese
+automaticamente da WeeChat quando si risponde alle CTCP
+
+[width="100%",cols="^2,4,8",options="header"]
+|=======================================
+| Codice         | Descrizione                         | Valore/esempio
+| `$clientinfo`  | elenco di CTCP supportate           | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| `$version`     | versione di WeeChat                 | `0.3.0`
+| `$compilation` | data di compilazione di WeeChat     | `Sep 13 2009`
+| `$osinfo`      | informazioni sull'OS                | `Linux 2.6.31 / i686`
+| `$site`        | sito di WeeChat                     | `http://www.weechat.org`
+| `$download`    | sito di WeeChat, pagina di download | `http://www.weechat.org/download`
+| `$time`        | data/ora correnti                   | `Sun Sep 13 15:48:31 2009`
+| `$username`    | nome utente sul server IRC          | `nick`
+| `$realname`    | nome reale sul server IRC           | `Mio nome`
+|=======================================
+
+Se le opzioni CTCP non sono definite (comportamento predefinito),
+le risposte CTCP sono:
+
+[width="100%",cols="^2,4,8",options="header"]
+|=======================================
+| CTCP         | Formato risposta                  | Esempio
+| CLIENTINFO   | `$clientinfo`                     | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| FINGER       | `WeeChat $version`                | `WeeChat 0.3.0`
+| SOURCE       | `$download`                       | `http://www.weechat.org/download`
+| TIME         | `$time`                           | `Sun Sep 13 15:48:31 2009`
+| USERINFO     | `$username ($realname)`           | `nick (Mio nome)`
+| VERSION      | `WeeChat $version ($compilation)` | `WeeChat 0.3.0 (Sep 13 2009)`
+|=======================================
+
+[[logger_plugin]]
+Plugin Logger
+~~~~~~~~~~~~~
+
+Il plugin Logger consente di salvare il contenuto dei buffer su file, con
+opzioni a proposito su cosa e come viene salvato.
+
+Opzioni (logger.conf)
+^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/logger_options.txt[]
+
+Comandi
+^^^^^^^^
+
+include::autogen/user/logger_commands.txt[]
+
+Livelli di log
+^^^^^^^^^^^^^^
+
+Il logging viene effettuato con un livello per ogni buffer. Il livello
+predefinito è il 9 (registra tutti i messaggi visualizzati sul buffer).
+È possibile cambiare il livello per un buffer, oppure per un gruppo di buffer.
+
+I livelli possibili sono da 0 a 9. Zero vuol dire "non registrare nulla" mentre
+9 "registra tutto".
+
+I plugin utilizzano livelli diversi per i messaggi visualizzati.
+Il plugin IRC usa i seguenti livelli:
+
+* livello 1: messaggio da un utente (su canale o privato)
+* livello 2: cambio nick (proprio o di qualcun altro)
+* livello 3: ogni messaggio del server (esclui entrata/uscita/disconnessione)
+* livello 4: messaggio del server entrata/uscita/disconnessione
+
+Se viene impostato il livello 3 per un canale IRC, WeeChat registrerà
+tutti i messaggi, ma non quelli di entrata/uscita/disconnessione.
+
+Alcuni esempi:
+
+* imposta il livello 3 per il canale IRC #weechat:
+
+----------------------------------------
+/set logger.level.irc.freenode.#weechat 3
+----------------------------------------
+
+* set level 3 for freenode server buffer:
+
+----------------------------------------
+/set logger.level.irc.server.freenode 3
+----------------------------------------
+
+* imposta il livello 3 per tutti i canali sul server freenode:
+
+----------------------------------------
+/set logger.level.irc.freenode 3
+----------------------------------------
+
+* imposta il livello 2 per tutti i buffer IRC:
+
+----------------------------------------
+/set logger.level.irc 2
+----------------------------------------
+
+Mask per il nome file
+^^^^^^^^^^^^^^^^^^^^^
+
+È possibile definire un mask per il nome del file di ogni buffer, ed utilizzare
+le variabili buffer locali per costruire il nome del file. Per visualizzare le
+variabili locali per il buffer corrente:
+
+----------------------------------------
+/buffer localvar
+----------------------------------------
+
+Per esempio, se si vuole una cartella per server IRC e un file per canale al
+suo interno:
+
+----------------------------------------
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----------------------------------------
+
+Si avranno i seguenti file:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- irc/
+            |--- freenode/
+            |       freenode.weechatlog
+            |       #weechat.weechatlog
+            |       #miocanale.weechatlog
+            |--- oftc/
+            |       oftc.weechatlog
+            |       #canale1.weechatlog
+            |       #canale2.weechatlog
+........................................
+
+[[scripts_plugins]]
+Plugin per gli script
+~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat fornisce 5 plugin per lo scripting: Perl, Python, Ruby, Lua, Tcl.
+Questi plugin possono caricare, eseguire e disattivare gli script per questi
+linguaggi.
+
+Per maggiori informazioni su come scrivere gli script, o le API WeeChat
+per gli script, consultare la 'Guida allo Scripting di WeeChat'.
+
+È possibile trovare alcuni script qui: http://www.weechat.org/plugins
+
+Comandi Perl
+^^^^^^^^^^^^
+
+include::autogen/user/perl_commands.txt[]
+
+Comandi Python
+^^^^^^^^^^^^^^
+
+include::autogen/user/python_commands.txt[]
+
+Comandi Ruby
+^^^^^^^^^^^^
+
+include::autogen/user/ruby_commands.txt[]
+
+Comandi Lua
+^^^^^^^^^^^
+
+include::autogen/user/lua_commands.txt[]
+
+Comandi Tcl
+^^^^^^^^^^^
+
+include::autogen/user/tcl_commands.txt[]
+
+[[xfer_plugin]]
+Plugin xfer
+~~~~~~~~~~~
+
+Il plugin xfer fornisce:
+
+* chat diretta (tra due host, senza server): per esempio "DCC Chat"
+  tramite plugin IRC
+* trasferimento file, per esempio "DCC" tramite il plugin IRC
+
+Opzioni (xfer.conf)
+^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/xfer_options.txt[]
+
+Comandi
+^^^^^^^^
+
+include::autogen/user/xfer_commands.txt[]
+
+
+[[authors]]
+Autori
+------
+
+[[developers]]
+Sviluppatori
+~~~~~~~~~~~~
+
+FlashCode (Sébastien Helleu)::
+    sviluppatore principale
+
+[[contributors]]
+Contributori
+~~~~~~~~~~~~
+
+Kolter (Emmanuel Bouthenot)::
+    packager debian
+
+Ptitlouis::
+    packager debian precedente
+
+Jiri Golembiovsky::
+    traduzione in ceco, patch
+
+soltys::
+    traduzione in polacco
+
+rettub::
+Frank Zacharias::
+    traduzione in tedesco
+
+Pavel Shevchuk::
+    traduzione in russo
+
+m4v::
+    traduzione in spagnolo
+
+Voroskoi::
+    traduzione in ungherese
+
+Marco Paolone::
+    traduzione in italiano
+
+Dmitry Kobylin::
+    plugin tcl
+
+Rudolf Polzer::
+Jim Ramsay::
+Pistos::
+Gwenn::
+Dominik Honnef::
+    patch
+
+Odin::
+    SuSE RPM
+
+
+[[support]]
+Supporto
+--------
+
+Prima di chieder supporto, assicurarsi di aver letto la documentazione e le FAQ
+fornite con WeeChat (la documentazione è questo documento, se non sono state
+lette tutte le righe prima di questa frase, è possibile ricominciare!).
+
+Per ricevere supporto:
+
+* IRC: server 'irc.freenode.net', canali '#weechat' (inglese) e
+  '#weechat-fr' (francese)
+* Forum di WeeChat: http://forums.flashtux.org/
+* Mailing list:
+** sottoscrizione: http://mail.nongnu.org/mailman/listinfo/weechat-support
+** inviare una mail a weechat-support@nongnu.org
+** archivi: http://mail.nongnu.org/archive/html/weechat-support

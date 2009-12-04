@@ -1,0 +1,30 @@
+* *aspell.check.commands*
+** descrizione: elenco separato da virgole di comandi per cui il controllo ortografico è abilitato (il controllo ortografico è disabilitato per tutti gli altri comandi)
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic")
+
+* *aspell.check.default_dict*
+** descrizione: dizionario predefinito (o elenco separato da virgole di dizionari) da utilizzare quando il buffer non ha alcun dizionario definito (vuoto per disabilitare il controllo ortografico sui buffer in cui non è stato esplicitamente abilitato)
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: "")
+
+* *aspell.check.during_search*
+** descrizione: controlla le parole durante la ricerca del testo nel buffer
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
+* *aspell.check.real_time*
+** descrizione: controllo ortografico in tempo reale (più lento, disabilitato per default: le parole vengono controllate solo se seguite da un delimitatore)
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
+* *aspell.check.word_min_length*
+** descrizione: lunghezza minima per una parola da controllare (0 per controllarle tutte)
+** tipo: intero
+** valori: 0 .. 2147483647 (valore predefinito: 2)
+
+* *aspell.look.color*
+** descrizione: colore utilizzato per le parole non corrette
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightred)
+

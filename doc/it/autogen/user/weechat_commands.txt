@@ -1,0 +1,375 @@
+&bull; *`/bar`* `[add nome_barra tipo[,cond1,cond2,...] posizione dimensione separatore elemento1,elemento2,...] | [default] | [del nome_barra|-all] | [set nome_barra opzione valore] | [hide|show|toggle nome_barra] | [scroll nome_barra buffer scroll_value] | [list] | [listfull] | [listitems]`::
+
+........................................
+  gestione barre
+
+            add: aggiungi una nuova barra
+     nome_barra: nome della barra (deve essere unico)
+           tipo: root: fuori dalle finestre,
+                 window: all'interno delle finestre, con opzioni condizionali (a seguire)
+      cond1,...: condizione(i) per la visualizzazione della barra (solo per quelle di tipo "window"):
+                   active: sulla finestra attiva
+                 inactive: sulle finestre inattive
+                 nicklist: sulle finestre con le liste nick
+                 senza condizioni, la barra  viene sempre visualizzata
+      posizione: bottom (basso), top (alto), left (sinistra) or right (destra)
+     dimensione: dimensione della barra (in caratteri)
+     separatore: 1 per utilizzare un separatore (riga), 0 o nessun valore corrisponde a nessun separatore
+  elemento1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) or "+" (elementi incollati))
+        default: crea barre predefinite
+            del: elimina una barra (o tutte le barre con -all)
+            set: imposta un valore per una proprietà della barra
+        opzione: opzione da modificare (per un elenco di opzioni, consultare /set weechat.bar.<nome_barra>.*)
+         valore: nuovo valore per l'opzione
+           hide: nasconde una barra
+           show: mostra una barra nascosta
+         toggle: nasconde/mostra una barra
+         scroll: scorre la barra in alto/basso
+         buffer: nome del buffer da scorrere ('*' sta per buffer corrente, è consigliato utilizzare '*' per le barre root)
+   scroll_value: valore per lo scorrimento: 'x' o 'y', seguito da '+', '-', 'b' (inizio) o 'e' (fine), valore (per +/-), e un opzionale %% (per scorrere di %% di larghezza/altezza, altrimenti il valore è un numero di caratteri)
+           list: elenca tutte le barre
+       listfull: elenca tutte le barre (dettagliato)
+      listitems: elenca tutti gli elementi barra
+  
+  Esempi:
+    crea  una barra con l'ora, il numero del buffer + nome, e completamento:
+      /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+    nasconde una barra:
+      /bar hide mibarra
+    scorre lista nick di 10 linee in basso sul buffer corrente:
+      /bar scroll nicklist * y+10
+    scorre la lista nick una pagina in su sul buffer #weechat:
+      /bar scroll nicklist #weechat y-100%
+    scorre fino alla fine della lista nick sul buffer corrente:
+      /bar scroll nicklist * ye
+........................................
+
+&bull; *`/buffer`* `[clear [numero | -merged | -all] | move numero | merge numero | unmerge [numero] | close [n1[-n2]] | list | notify livello | localvar | set proprietà valore | numero | nome]`::
+
+........................................
+  gestione buffer
+
+     clear: pulisce il contenuto del buffero (numero per un buffer, -merged per i buffer uniti, -all per tutti i buffer, o nulla per quello corrente)
+      move: sposta buffer nella lista (può essere relativo, ad esempio -1)
+     merge: unisce il buffer corrente ad un altro (l'area di chat sarà un mix di entrambi)
+            (con ctrl-x alterna i buffer uniti)
+   unmerge: stacca il buffer da quelli con lo stesso numero
+     close: chiudi buffer (numero/range opzionale)
+      list: elenca i buffer (nessun parametro implica questa lista)
+    notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer verrà aggiunto alla hotlist oppure no:
+                 none: mai
+            highlight: solo per le evidenziazioni
+              message: per i messaggi da tutti gli utenti + evidenziazioni
+                  all: tutti i messaggi
+                reset: ripristina il valore predefinito (all (tutti attivi))
+  localvar: visualizza la variabile locale per il buffer corrente
+       set: imposta una proprietà per il buffer corrente
+    number: passa al buffer di numero in numero:
+            '+': passo relativo, aggiunge il numero a quello corrente
+            '-': passo relativo, sottrae il numero a quello corrente
+            '*': passa al numero, utilizzando l'opzione "weechat.look.jump_current_to_previous_buffer"
+      nome: passa al buffer di nome (parziale)
+  
+  Esempi:
+     pulisci buffer corrente: /buffer clear
+      pulisci tutti i buffer: /buffer clear -all
+               sposta buffer: /buffer move 5
+       unisci al buffer core: /buffer merge 1
+               stacca buffer: /buffer unmerge
+      chiudi buffer corrente: /buffer close
+      chiudi buffer da 5 a 7: /buffer close 5-7
+            passa a #weechat: /buffer #weechat
+  passa al buffer successivo: /buffer +1
+........................................
+
+&bull; *`/command`* `plugin comando`::
+
+........................................
+  esegui comando o plugin di WeeChat esplicito
+
+   plugin: nome plugin ('weechat' per il comando interno di WeeChat)
+  comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trovata all'inizio del comando)
+........................................
+
+&bull; *`/debug`* `[list | plugin livello | dump | buffer | windows]`::
+
+........................................
+  attiva debug per core/plugin
+
+    plugin: nome del plugin ("core" per il core di WeeChat)
+   livello: livello di debug per il plugin (0 = disabilita debug)
+      dump: salva il dump della memoria nel file di log di Weechat (lo stesso dump viene salvato quando WeeChat va in crash)
+    buffer: esegue il dump del contenuto con valori esadecimali nel file di log
+   windows: visualizza l'albero delle finestre
+      text: invia il segnale "debug" con "text" come argomento"
+........................................
+
+&bull; *`/filter`* `[list] | [enable|disable|toggle [nome]] | [add nome plugin.buffer tag regex] | [del nome|-all]`::
+
+........................................
+  filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp
+
+           list: elenca tutti i filtri
+         enable: abilita filtri (i filtri sono abilitati di default)
+        disable: disabilita filtri
+         toggle: abilita/disabilita filtri
+           nome: nome del filtro
+            add: aggiungi un filtro
+            del: elimina un filtro
+           -all: elimina tutti i filtri
+  plugin.buffer: plugin e buffer in cui il filtro è attivo ("*" per tutti i buffer)
+            tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+          regex: espressione regolare da cercare nella riga (utilizzare \t per separare il prefisso dal messaggio, caratteri speciali come "|" devono essere preceduti dal carattere escape: '\|')
+  
+  Il tasto predefinito alt+'=' abilita/disabilita il filtraggio.
+  
+  Esempi:
+    usa il filtro intelligente IRC per i messaggi di entrata/uscita/abbandono:
+     /filter add irc_smart * irc_smart_filter *
+    filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+     /filter add joinquit * irc_join,irc_part,irc_quit *
+    filtra il nick "tizio" sul canale IRC #weechat
+     /filter add tizio irc.freenode.#esempio * tizio\t
+    filtra le righe contententi la parola "spam":
+     /filter add filterspam ** spam
+    filtra le righe contententi "weechat fa schifo" sul canale irc #weechat:
+     /filter add schifo irc.freenode.#weechat * weechat fa schifo
+........................................
+
+&bull; *`/help`* `[comando | opzione]`::
+
+........................................
+  visualizza l'aiuto su comandi e opzioni
+
+  comando: nome comando
+  opzione: nome opzione (utilizza /set per vedere l'elenco)
+........................................
+
+&bull; *`/history`* `[clear | valore]`::
+
+........................................
+  mostra la cronologia dei comandi del buffer
+
+   clear: pulisci cronologia
+  valore: numero delle voci nella cronologia da mostrare
+........................................
+
+&bull; *`/input`* `return | complete_next | complete_previous | search_next | delete_previous_char | delete_next_char | delete_previous_word | delete_next_word | delete_beginning_of_line | delete_end_of_line | delete_line | clipboard_paste | transpose_chars | move_beginning_of_line | move_end_of_line | move_previous_char | move_next_char | move_previous_word | move_next_word | history_previous | history_next | history_global_previous | history_global_next | jump_smart | jump_last_buffer | jump_previously_visited_buffer | jump_next_visited_buffer | hotlist_clear | grab_key | grab_key_command | scroll_unread | set_unread | set_unread_current_buffer | insert [args]`::
+
+........................................
+  funzioni per la riga di comando
+
+  Questo comando è utilizzato da combinazioni di tasti o plugin.
+........................................
+
+&bull; *`/key`* `[bind tasto [comando [argomenti]]] | [unbind tasto] | [reset -yes] | [missing]`::
+
+........................................
+  associa/disassocia tasti
+
+      bind: associa un comando ad un tasto o visualizza il comando associato al tasto
+    unbind: elimina l'associazione di un tasto
+     reset: ripristina le associazioni ai valori predefiniti ed elimina TUTTE le associazioni personalizzate (attenzione!)
+   missing: aggiunge i tasti mancanti (utilizzando le associazioni predefinite)
+  
+  Quando viene associato un comando ad una chiave, è consigliato utilizzare il tasto alt+k (oppure Esc e k), e poi premere il tasto da associare: il codice tasto verrà inserito nella riga di comando.
+........................................
+
+&bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
+
+........................................
+  salva/applica/resetta il layout per i buffer e le finestre
+
+     save: salva il layout corrente
+    apply: applica il layout salvato
+    reset: elimina il layout salvato
+  buffers: salva/applica modifiche solo ai buffer (ordine dei buffer)
+  windows: salva/applica modifiche solo alle finestre (buffer visualizzato da ogni finestra)
+  
+  Senza argomenti, il comando visualizza il layout salvato.
+........................................
+
+&bull; *`/plugin`* `[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload [nome]] | [unload [nome]]`::
+
+........................................
+  elenca/attiva/disattiva plugin
+
+      list: elenca i plugin attivi
+  listfull: elenca i plugin attivi (dettagliato)
+      load: carica un plugin
+  autoload: attiva automaticamente i plugin nella cartella utente o di sistema
+    reload: riattiva un plugin (se non specificato, disattiva i plugin e liriattiva automaticamente)
+    unload: disattiva uno o tutti i plugin
+  
+  Senza argomenti, questo comando elenca i plugin attivati.
+........................................
+
+&bull; *`/proxy`* `[add nome_proxy tipo indirizzo porta [nome [password]]] | [del nome_proxy|-all] | [set nome_proxy opzione valore] | [list]`::
+
+........................................
+  gestione proxy
+
+            add: aggiungi un nuovo proxy
+     nome_proxy: nome del proxy (deve essere unico)
+           tipo: http, socks4 o socks5
+      indirizzo: IP o nome host
+           port: porta
+         utente: nome utente (opzionale)
+       password: password (opzionale)
+            del: elimina un proxy (o tutti i proxy con -all)
+            set: imposta un valore per una proprietà del proxy
+        opzione: opzione da modificare (per un elenco di opzioni, consultare /set weechat.proxy.<nome_proxy>.*)
+         valore: nuovo valore per l'opzione
+           list: elenca tutti i proxy
+  
+  Esempi:
+    crea un proxy http, in esecuzione su host locale, porta 8888:
+      /proxy add locale http 127.0.0.1 8888
+    crea un proxy http utilizzando il protocollo IPv6:
+      /proxy add locale http 127.0.0.1 8888
+      /proxy set locale ipv6 on
+    crea un proxy socks5 con utente/password:
+      /proxy add mioproxy socks5 esempio.host.org 3128 mioutente miapassword
+    elimina un proxy:
+      /proxy del mioproxy
+........................................
+
+&bull; *`/quit`*::
+
+........................................
+  esci da WeeChat
+........................................
+
+&bull; *`/reload`* `[file [file....]]`::
+
+........................................
+  ricarica i file di configurazione da disco
+
+  file: file di configurazione da ricaricare
+  
+  Senza argomento, tutti i file (WeeChat e plugin) vengono ricaricati.
+........................................
+
+&bull; *`/save`* `[file [file....]]`::
+
+........................................
+  salva i file di configurazione su disco
+
+  file: file di configurazione da salvare
+  
+  Senza argomento, tutti i file (WeeChat e plugin) verranno salvati.
+........................................
+
+&bull; *`/set`* `[opzione [valore]]`::
+
+........................................
+  imposta le opzioni di configurazione
+
+  opzione: nome dell'opzione
+     valore: nuovo valore per l'opzione
+  
+  Il nuovo valore può essere, in base al tipo di variabile:
+       bool: on, off oppure alterna
+     intero: numero, ++numero o --numero
+    stringa: qualsiasi stringa ("" per le stringhe vuote)
+     colore: nome colore, ++numero o --numero
+  
+  Per tutti i tipi, è possibile utilizzare un valore nullo per eliminare il valore dell'opzione (non definito). Funziona solo per alcune variabili speciali dei plugin.
+........................................
+
+&bull; *`/unset`* `[opzione]`::
+
+........................................
+  annulla/resetta opzione
+
+  opzione: nome di un'opzione (può cominciare o finire con "*" per il reset di più opzioni, attenzione!)
+  
+  A seconda dell'opzione, viene resettata (per le opzioni standard) o rimossa (per le impostazioni opzionali, come i valori del server)
+........................................
+
+&bull; *`/upgrade`* `[percorso_del_binario]`::
+
+........................................
+  aggiorna WeeChat senza disconnettere dai server
+
+  percorso_del_binario: percorso del binario di WeeChat (quello corrente è il predefinito)
+  
+  Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
+........................................
+
+&bull; *`/uptime`* `[-o]`::
+
+........................................
+  mostra l'uptime di WeeChat
+
+  -o: invia l'uptime al buffer corrente come input
+........................................
+
+&bull; *`/version`* `[-o]`::
+
+........................................
+  mostra la versione e la data di compilazione di WeeChat
+
+  -o: invia versione al buffer corrente come input
+........................................
+
+&bull; *`/wait`* `numero[unità] comando`::
+
+........................................
+  pianifica l'esecuzione di un comando
+
+   numero: tempo di attesa (numero intero)
+       unità: valori opzionali sono:
+          ms: millisecondi
+           s: secondi (predefinito)
+           m: minuti
+           h: ore
+  comando: comando da eseguire (o testo da inviare al buffer se il comando non inizia con '/')
+  
+  Nota: il comando è eseguito sui buffer dove /wait è stato eseguito (se il buffer non viene trovato (per esempio se è stato chiuso prima dell'esecuzione), allora il comando verrà eseguito sul buffer core di WeeChat)
+  
+  Esempi:
+    entra nel canale tra 10 secondi: /wait 10 /join #test
+       imposta assenza in 15 minuti: /wait 15m /away -all Sono via
+                dì ciao in 2 minuti: /wait 2m ciao
+........................................
+
+&bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
+
+........................................
+  gestione finestre
+
+           list: elenca le finestre aperte (nessun parametro implica questa lista)
+             -1: salta alla finestra precedente
+             +1: salta alla finestra successiva
+             b#: salta alla finestra successiva che visualizza il buffer numero #
+             up: passa alla finestra superiore a quella corrente
+           down: passa alla finestra inferiore a quella attiva
+           left: passa alla finestra a sinistra
+          right: passa alla finestra a destra
+         splith: divide la finestra attiva orizzontalmente
+         splitv: divide la finestra attiva verticalmente
+         resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
+          merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
+  
+        page_up: scorre di una pagina in alto
+      page_down: scorre di una pagina in basso
+        refresh: aggiorna lo schermo
+         scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
+      scroll_up: scorre di alcune righe in alto
+    scroll_down: scorre di alcune righe in basso
+     scroll_top: scorre fino all'inizio del buffer
+  scroll_bottom: scorre fino alla fine del buffer buffer
+  scroll_previous_highlight: passa all'evidenziazione precedente
+      scroll_next_highlight: passa all'evidenziazione successiva
+           zoom: ingrandimento sulla finestra
+  
+  Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
+  
+  Esempi:
+  salta alla finestra che visualizza il buffer #1: /window b1
+                      scorre di due righe in alto: /window scroll -2
+                scorre all'indietro di due giorni: /window scroll -2d
+             scorre all'inizio del giorno attuale: /window scroll -d
+........................................
+

@@ -1,0 +1,50 @@
+* *relay.color.status_active*
+** descrizione: colore del testo per lo status "connesso"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightblue)
+
+* *relay.color.status_auth_failed*
+** descrizione: colore del testo per lo status "autenticazione fallita"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightred)
+
+* *relay.color.status_connecting*
+** descrizione: colore del testo per lo status "connessione in corso"
+** tipo: colore
+** valori: un nome colore (valore predefinito: yellow)
+
+* *relay.color.status_disconnected*
+** descrizione: colore del testo per lo status "disconnesso"
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightred)
+
+* *relay.color.status_waiting_auth*
+** descrizione: colore del testo per lo status "in attesa dell'autenticazione"
+** tipo: colore
+** valori: un nome colore (valore predefinito: brown)
+
+* *relay.color.text*
+** descrizione: colore del testo
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
+* *relay.color.text_bg*
+** descrizione: colore di sfondo
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
+* *relay.color.text_selected*
+** descrizione: colore della riga del client selezionato
+** tipo: colore
+** valori: un nome colore (valore predefinito: white)
+
+* *relay.look.auto_open_buffer*
+** descrizione: apre automaticamente il buffer relay alla connessione di un nuovo client
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *relay.network.max_clients*
+** descrizione: numero massimo di client connessi ad una porta
+** tipo: intero
+** valori: 1 .. 1024 (valore predefinito: 5)
+

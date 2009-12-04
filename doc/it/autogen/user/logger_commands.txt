@@ -1,0 +1,33 @@
+&bull; *`/logger`* `[list | set livello | disable]`::
+
+........................................
+  configurazione del plugin logger
+
+     list: mostra lo stato del logging per i buffer aperti
+      set: imposta il livello di logging per il buffer corrente
+    level: livello per i messaggi da loggare (0 = disabilitato, 1 = alcuni messaggi (più importanti) .. 9 = tutti i messaggi)
+  disable: disabilita il logging sul buffer corrente (imposta livello a 0)
+  
+  Le opzioni "logger.level.*" e "logger.mask.*" possono essere utilizzate per impostare un livello o una mask per un buffer, o per i buffer che cominciano per nome.
+  
+  Esempi:
+    imposta il livello 5 al buffer attivo:
+      /logger set 5
+    disabilita logging per il buffer attivo:
+      /logger disable
+  
+    imposta il livello 3 per tutti i buffer IRC:
+      /set logger.level.irc 3
+    disabilita logging per il buffer principale di WeeChat:
+      /set logger.level.core.weechat 0
+    utilizza una cartella per il server IRC e un file per il canale al suo interno:
+      /set logger.mask.irc "$server/$channel.weechatlog"
+  
+  Livelli di log utilizzati dal plugin IRC:
+    1: messaggio utente, notifica, privato
+    2: cambio di nick
+    3: messaggio del server
+    4: entrata/uscita/abbandono
+    9: tutti gli altri messaggi
+........................................
+

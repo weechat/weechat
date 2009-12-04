@@ -1,0 +1,11 @@
+&bull; *`/perl`* `[list [nome]] | [listfull [nome]] | [load nome_file] | [autoload] | [reload] | [unload [nome]]`::
+
+........................................
+  elenca/attiva/disattiva script
+
+  nome_file: file script da attivare
+        nome: il nome dello script
+  
+  Senza argomenti, il comando elenca tutti gli script caricati
+........................................
+

@@ -1,0 +1,23 @@
+&bull; *`/alias`* `[nome_alias [comando [argomenti]]]`::
+
+........................................
+  crea un alias per un comando
+
+  nome_alias: nome di un alias (può iniziare o terminare con "*" per un elenco di alias)
+     comando: nome comando (più comandi possono essere separati da punto e virgola)
+   argomenti: argomenti per un comando
+  
+  Senza argomanto, questo comando elenca tutti gli alias definiti.
+  
+  Nota: nel comando, le variabii speciali vengono sostituite:
+          $n: argomento 'n' (tra 1 e 9)
+         $-m: argomenti da 1 a 'm'
+         $n-: argomenti da 'n' alla fine
+        $n-m: argomenti da 'n' a 'm'
+          $*: tutti gli argomenti
+          $~: ultimo argomento
+       $nick: nick corrente
+    $channel: canale corrente
+     $server: server corrente
+........................................
+

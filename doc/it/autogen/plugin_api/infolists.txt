@@ -1,0 +1,58 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Plugin | Name | Description
+| alias | alias | elenco di alias
+
+| irc | irc_channel | elenco dei canali per un server IRC
+
+| irc | irc_ignore | elenco di ignore IRC
+
+| irc | irc_nick | elenco dei nick per un canale IRC
+
+| irc | irc_server | elenco di server IRC
+
+| logger | logger_buffer | elenco dei buffer logger
+
+| lua | lua_script | elenco degli script
+
+| perl | perl_script | elenco degli script
+
+| python | python_script | elenco degli script
+
+| relay | relay | elenco di client relay
+
+| ruby | ruby_script | elenco degli script
+
+| tcl | tcl_script | elenco degli script
+
+| weechat | bar | elenco delle barre
+
+| weechat | bar_item | elenco degli elementi barra
+
+| weechat | bar_window | elenco delle finestre barra
+
+| weechat | buffer | elenco dei buffer
+
+| weechat | buffer_lines | righe di un buffer
+
+| weechat | filter | elenco dei filtri
+
+| weechat | history | cronologia dei comandi
+
+| weechat | hook | elenco di hook
+
+| weechat | hotlist | elenco dei buffer nella hotlist
+
+| weechat | key | elenco di tasti associati
+
+| weechat | nicklist | nick nella lista nick per un buffer
+
+| weechat | option | elenco delle opzioni
+
+| weechat | plugin | elenco dei plugin
+
+| weechat | window | elenco delle finestre
+
+| xfer | xfer | lista di xfer
+
+|========================================
