@@ -2045,6 +2045,7 @@ irc_server_connect_cb (void *arg_server, int status, int gnutls_rc,
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 error);
             }
+#ifdef HAVE_GNUTLS
             if (gnutls_rc == GNUTLS_E_DH_PRIME_UNACCEPTABLE)
             {
                 weechat_printf (server->buffer,
@@ -2056,6 +2057,9 @@ irc_server_connect_cb (void *arg_server, int status, int gnutls_rc,
                                 IRC_SERVER_OPTION_INTEGER (server,
                                                            IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
             }
+#else
+            (void) gnutls_rc;
+#endif
             irc_server_close_connection (server);
             irc_server_switch_address (server);
             break;
