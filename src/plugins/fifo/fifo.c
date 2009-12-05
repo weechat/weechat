@@ -25,6 +25,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #include <fcntl.h>
 
 #include "../weechat-plugin.h"
@@ -38,6 +39,8 @@ WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL3");
 
+#define FIFO_FILENAME_PREFIX "weechat_fifo_"
+
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
 
@@ -47,6 +50,57 @@ struct t_hook *fifo_fd_hook = NULL;
 char *fifo_filename;
 char *fifo_unterminated = NULL;
 
+
+/*
+ * fifo_remove_old_pipes: remove old fifo pipes in directory
+ */
+
+void
+fifo_remove_old_pipes ()
+{
+    char *buf;
+    int buf_len, prefix_len;
+    const char *weechat_home, *dir_separator;
+    DIR *dp;
+    struct dirent *entry;
+    struct stat statbuf;
+    
+    buf_len = PATH_MAX;
+    buf = malloc (buf_len);
+    if (!buf)
+	return;
+    
+    weechat_home = weechat_info_get ("weechat_dir", "");
+    dir_separator = weechat_info_get ("dir_separator", "");
+    
+    prefix_len = strlen (FIFO_FILENAME_PREFIX);
+    
+    dp = opendir (weechat_home);
+    if (dp != NULL)
+    {
+        while ((entry = readdir (dp)) != NULL) 
+        {
+            if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
+                continue;
+
+            if (strncmp (entry->d_name, FIFO_FILENAME_PREFIX, prefix_len) == 0)
+            {
+                snprintf (buf, buf_len, "%s%s%s",
+                          weechat_home, dir_separator, entry->d_name);
+                if (stat (buf, &statbuf) != -1)
+                {
+                    weechat_printf (NULL,
+                                    _("%s: removing old fifo pipe \"%s\""),
+                                    FIFO_PLUGIN_NAME, buf);
+                    unlink (buf);
+                }
+            }
+        }
+        closedir (dp);
+    }
+    
+    free (buf);
+}
 
 /*
  * fifo_create: create FIFO pipe for remote control
@@ -73,6 +127,8 @@ fifo_create ()
     
     if (fifo_option && weechat_home)
     {
+        fifo_remove_old_pipes ();
+        
         if (weechat_strcasecmp (fifo_option, "on") == 0)
         {
             /* build FIFO filename: "<weechat_home>/weechat_fifo_" + process
@@ -82,8 +138,8 @@ fifo_create ()
                 filename_length = strlen (weechat_home) + 64;
                 fifo_filename = malloc (filename_length);
                 snprintf (fifo_filename, filename_length,
-                          "%s/weechat_fifo_%d",
-                          weechat_home, (int) getpid());
+                          "%s/%s%d",
+                          weechat_home, FIFO_FILENAME_PREFIX, (int) getpid());
             }
             
             fifo_fd = -1;
