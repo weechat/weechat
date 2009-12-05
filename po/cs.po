@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-04 17:12+0100\n"
+"POT-Creation-Date: 2009-12-05 11:22+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2641,6 +2641,10 @@ msgstr ""
 "argumenty: volitelné argumenty pro infolist\n"
 "\n"
 "Spuštění příkazu bez argumetů zobrazí seznam dostupných infolistů"
+
+#, fuzzy, c-format
+msgid "%s: removing old fifo pipe \"%s\""
+msgstr "ladění: odstraňuji soubor: %s"
 
 #, c-format
 msgid "%s: pipe opened"

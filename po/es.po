@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-04 17:12+0100\n"
+"POT-Creation-Date: 2009-12-05 11:22+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2546,6 +2546,10 @@ msgid ""
 "\n"
 "Without argument, this command displays list of available infolists"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: removing old fifo pipe \"%s\""
+msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
 # XXX how do I translate "pipe"?
 #, c-format
@@ -6491,11 +6495,6 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""
-#~ msgstr ""
-#~ "No hay suficiente memoria para el mensaje de la barra de información\n"
-
-#, fuzzy
-#~ msgid "%s: removing speller for lang \"%s\""
 #~ msgstr ""
 #~ "No hay suficiente memoria para el mensaje de la barra de información\n"
 

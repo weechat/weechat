@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-04 17:12+0100\n"
-"PO-Revision-Date: 2009-12-04 17:13+0100\n"
+"POT-Creation-Date: 2009-12-05 11:22+0100\n"
+"PO-Revision-Date: 2009-12-05 11:23+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2707,6 +2707,10 @@ msgstr ""
 "paramètres: paramètres optionnels pour l'infolist\n"
 "\n"
 "Sans paramètre, cette commande affiche la liste des infolists disponibles"
+
+#, c-format
+msgid "%s: removing old fifo pipe \"%s\""
+msgstr "%s: suppression du vieux tube \"%s\""
 
 #, c-format
 msgid "%s: pipe opened"
@@ -5951,9 +5955,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "%s%s: error: \"%s\""
-#~ msgstr "%s%s: erreur: \"%s\""
-
-#~ msgid "%s%s: missing argument for \"%s\" option"
-#~ msgstr "%s%s: paramètre manquant pour l'option \"%s\""

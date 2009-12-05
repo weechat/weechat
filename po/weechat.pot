@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-04 17:12+0100\n"
+"POT-Creation-Date: 2009-12-05 11:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2209,6 +2209,10 @@ msgid ""
 "arguments: optional arguments for infolist\n"
 "\n"
 "Without argument, this command displays list of available infolists"
+msgstr ""
+
+#, c-format
+msgid "%s: removing old fifo pipe \"%s\""
 msgstr ""
 
 #, c-format

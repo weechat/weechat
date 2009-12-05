@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-04 17:12+0100\n"
+"POT-Creation-Date: 2009-12-05 11:22+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2578,6 +2578,10 @@ msgid ""
 "\n"
 "Without argument, this command displays list of available infolists"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: removing old fifo pipe \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy, c-format
 msgid "%s: pipe opened"
@@ -6580,10 +6584,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""
-#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy
-#~ msgid "%s: removing speller for lang \"%s\""
 #~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy
