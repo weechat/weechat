@@ -1258,7 +1258,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
         else
             ptr_nick = irc_nick_search (ptr_channel, nick);
         
-        if (ptr_nick || (strcmp (ptr_channel->name, nick) == 0))
+        if (ptr_nick || (weechat_strcasecmp (ptr_channel->name, nick) == 0))
         {
             /* display quit message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
