@@ -287,6 +287,9 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     if (!buffer && !from_group)
         return NULL;
     
+    if (!from_group && !buffer->nicklist_root)
+        return NULL;
+    
     for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
