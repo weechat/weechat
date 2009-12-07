@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <limits.h>
 #include <fcntl.h>
 
 #include "../weechat-plugin.h"
@@ -38,6 +39,10 @@ WEECHAT_PLUGIN_DESCRIPTION("Fifo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL3");
+
+#ifndef PATH_MAX
+    #define PATH_MAX 4096
+#endif
 
 #define FIFO_FILENAME_PREFIX "weechat_fifo_"
 
