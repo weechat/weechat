@@ -246,7 +246,7 @@ Befehl `/plugin` geladen werden und verfügen ihrerseits über Befehle wie z.B.
 `/perl` um Scripte zu laden.
 
 Viele externe Plugins/Scripte (der Mitarbeitenden) sind für WeeChat verfügbar,
-siehe: http://www.weechat.org/plugins
+siehe: http://www.weechat.org/scripts
 
 Der einfachste Weg um Scripte zu installieren ist die verwendung von 'weeget.py':
 

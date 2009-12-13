@@ -246,7 +246,7 @@ A seconda della versione di WeeChat:
 
 Esistono molti altri script per le notifiche, per favore consultare la pagina
 dei plugin/script:
-http://www.weechat.org/plugins
+http://www.weechat.org/scripts
 
 
 [[filter_irc_join_part_quit]]

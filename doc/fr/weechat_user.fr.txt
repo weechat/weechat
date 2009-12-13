@@ -1226,7 +1226,7 @@ Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
 
 Vous pouvez trouver des scripts pour WeeChat ici :
-http://www.weechat.org/plugins
+http://www.weechat.org/scripts
 
 Commandes Perl
 ^^^^^^^^^^^^^^

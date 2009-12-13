@@ -240,7 +240,7 @@ According to WeeChat version:
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
 
 Many other scripts exist for notification, please look at plugins/scripts page:
-http://www.weechat.org/plugins
+http://www.weechat.org/scripts
 
 
 [[filter_irc_join_part_quit]]

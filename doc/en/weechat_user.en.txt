@@ -1187,7 +1187,7 @@ These plugins can load, execute and unload scripts for these languages.
 For more information about how to write scripts, or WeeChat API for
 scripts, please read 'WeeChat Scripting Guide'.
 
-You can find some scripts for WeeChat here: http://www.weechat.org/plugins
+You can find some scripts for WeeChat here: http://www.weechat.org/scripts
 
 Perl commands
 ^^^^^^^^^^^^^

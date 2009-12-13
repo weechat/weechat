@@ -227,7 +227,7 @@ Python, Ruby, Lua and Tcl). These plugins must be loaded with the `/plugin`
 command and they provide commands like `/perl`, used to load scripts.
 
 Many external plugins/scripts (from contributors) are available for
-WeeChat: http://www.weechat.org/plugins
+WeeChat: http://www.weechat.org/scripts
 
 Easiest way to install scripts is to use script 'weeget.py':
 

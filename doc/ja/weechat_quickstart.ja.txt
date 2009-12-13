@@ -223,7 +223,7 @@ Debianのようにいくつかのディストリビューションでは、プ�
 コマンドで読み込む必要があり、 `/perl` のようなコマンドが提供されます。
 
 WeeChatには(ユーザから提供された)多くの外部プラグイン／スクリプトが用意
-されています: http://www.weechat.org/plugins
+されています: http://www.weechat.org/scripts
 
 スクリプト 'weeget.py' をインストールする簡単な方法:
 

@@ -227,7 +227,7 @@ Python, Ruby, Lua oraz Tcl). Te wtyczki muszą być załadowane za pomoca komend
 `/plugin`, dostarczają one komendy jak `/perl`, używane do ładowania skryptów.
 
 Wiele zewnętrznych wtyczek/skryptów (od społeczności) jest dostępnych dla
-WeeChat: http://www.weechat.org/plugins
+WeeChat: http://www.weechat.org/scripts
 
 Najprostrzym sposobem na instalowanie skryptów jest użycie skryptu 'weeget.py':
 

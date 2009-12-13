@@ -249,7 +249,7 @@ Selon la version de WeeChat :
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
 
 De nombreux autres scripts de notification existent, merci de consulter la
-liste des extensions/scripts : http://www.weechat.org/plugins
+liste des extensions/scripts : http://www.weechat.org/scripts
 
 
 [[filter_irc_join_part_quit]]

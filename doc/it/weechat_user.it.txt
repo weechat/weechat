@@ -1214,7 +1214,7 @@ linguaggi.
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
 per gli script, consultare la 'Guida allo Scripting di WeeChat'.
 
-È possibile trovare alcuni script qui: http://www.weechat.org/plugins
+È possibile trovare alcuni script qui: http://www.weechat.org/scripts
 
 Comandi Perl
 ^^^^^^^^^^^^

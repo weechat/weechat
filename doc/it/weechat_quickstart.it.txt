@@ -242,7 +242,7 @@ caricati con il comando `/plugin` e forniscono comandi come `/perl`,
 utilizzati per caricare gli script.
 
 Sono disponibili molti plugin/script esterni (dai contributori) per
-WeeChat: http://www.weechat.org/plugins
+WeeChat: http://www.weechat.org/scripts
 
 Il modo più facile per installare gli script è utilizzare 'weeget.py':
 

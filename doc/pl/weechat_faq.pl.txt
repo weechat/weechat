@@ -240,7 +240,7 @@ W zależnośći od wersji WeeChat:
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"`
 
 Istnieje wiele innych skryptów do powiadomień, zajrzyj na stronę wtyczek/skryptów:
-http://www.weechat.org/plugins
+http://www.weechat.org/scripts
 
 
 [[filter_irc_join_part_quit]]

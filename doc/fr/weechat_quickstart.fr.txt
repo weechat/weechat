@@ -240,7 +240,7 @@ doivent être chargées avec la commande `/plugin` et elles fournissent des
 commandes telles que `/perl`, utilisées pour charger les scripts.
 
 Plusieurs extensions/scripts (de contributeurs) sont disponibles pour
-WeeChat : http://www.weechat.org/plugins
+WeeChat : http://www.weechat.org/scripts
 
 La manière la plus simple pour installer des scripts consiste à utiliser le
 script 'weeget.py' :
