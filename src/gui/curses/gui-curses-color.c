@@ -37,23 +37,27 @@
 
 
 struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,            0, 0,        "default"      },
-  { COLOR_BLACK,   0, 0,        "black"        },
-  { COLOR_RED,     0, 0,        "red"          },
-  { COLOR_RED,     0, A_BOLD,   "lightred"     },
-  { COLOR_GREEN,   0, 0,        "green"        },
-  { COLOR_GREEN,   0, A_BOLD,   "lightgreen"   },
-  { COLOR_YELLOW,  0, 0,        "brown"        },
-  { COLOR_YELLOW,  0, A_BOLD,   "yellow"       },
-  { COLOR_BLUE,    0, 0,        "blue"         },
-  { COLOR_BLUE,    0, A_BOLD,   "lightblue"    },
-  { COLOR_MAGENTA, 0, 0,        "magenta"      },
-  { COLOR_MAGENTA, 0, A_BOLD,   "lightmagenta" },
-  { COLOR_CYAN,    0, 0,        "cyan"         },
-  { COLOR_CYAN,    0, A_BOLD,   "lightcyan"    },
-  { COLOR_WHITE,   0, A_BOLD,   "white"        },
-  { 0,             0, 0,        NULL           }
+{ { -1,            0, 0,                      "default"      },
+  { COLOR_BLACK,   COLOR_BLACK,       0,      "black"        },
+  { COLOR_BLACK,   COLOR_BLACK + 8,   A_BOLD, "darkgray"     },
+  { COLOR_RED,     COLOR_RED,         0,      "red"          },
+  { COLOR_RED,     COLOR_RED + 8,     A_BOLD, "lightred"     },
+  { COLOR_GREEN,   COLOR_GREEN,      0,       "green"        },
+  { COLOR_GREEN,   COLOR_GREEN + 8,   A_BOLD, "lightgreen"   },
+  { COLOR_YELLOW,  COLOR_YELLOW,      0,      "brown"        },
+  { COLOR_YELLOW,  COLOR_YELLOW + 8,  A_BOLD, "yellow"       },
+  { COLOR_BLUE,    COLOR_BLUE,        0,      "blue"         },
+  { COLOR_BLUE,    COLOR_BLUE + 8,    A_BOLD, "lightblue"    },
+  { COLOR_MAGENTA, COLOR_MAGENTA,     0,      "magenta"      },
+  { COLOR_MAGENTA, COLOR_MAGENTA + 8, A_BOLD, "lightmagenta" },
+  { COLOR_CYAN,    COLOR_CYAN,        0,      "cyan"         },
+  { COLOR_CYAN,    COLOR_CYAN + 8,    A_BOLD, "lightcyan"    },
+  { COLOR_WHITE,   COLOR_WHITE,       A_BOLD, "white"        },
+  { 0,             0,                 0,      NULL           }
 };
+
+int gui_color_last_pair = 63;
+int gui_color_num_bg = 8;
 
 
 /*
@@ -75,49 +79,6 @@ gui_color_search (const char *color_name)
     /* color not found */
     return -1;
 }
-
-/*
- * gui_color_get_fg_bg: get foreground and background from a string with format:
- *                      foreground,background
- */
-
-/*void
-gui_color_get_fg_bg (const char *string, const char **fg, const char **bg)
-{
-    char *pos, *pos_end_fg;
-    
-    pos = strchr (string, ',');
-    if (pos)
-    {
-        if (pos > string)
-        {
-            pos_end_fg = pos - 1;
-            while ((pos_end_fg > string) && (pos_end_fg == ' '))
-            {
-                pos_end_fg--;
-            }
-            *fg = string_strndup (string, pos_end_fg - string + 1);
-        }
-        else
-            *fg = strudp ("default");
-        if (pos[1])
-        {
-            pos++;
-            while (pos[0] && (pos[0] == ' '))
-            {
-                pos++;
-            }
-            *bg = strdup (pos);
-        }
-        else
-            *bg = strdup ("default");
-    }
-    else
-    {
-        *fg = strdup (string);
-        *bg = strdup ("default");
-    }
-}*/
 
 /*
  * gui_color_assign: assign a WeeChat color (read from config)
@@ -143,110 +104,6 @@ gui_color_assign (int *color, const char *color_name)
     /* color not found */
     return 0;
 }
-
-/*
- * gui_color_assign: assign a WeeChat color (read from config)
- */
-
-/*void
-gui_color_assign (t_gui_color **color, const char *fg_and_bg)
-{
-    char *color_fg, *color_bg, *color_fg2, *color_bg2;
-    int value_fg, value_bg;
-    t_config_option *ptr_option;
-    
-    if (!(*color))
-    {
-        *color = malloc (sizeof (**color));
-        if (!(*color))
-            return;
-        *color->foreground = 0;
-        *color->background = 0;
-        *color->attributes = 0;
-        *color->string = NULL;
-    }
-
-    gui_color_get_fg_bg (fg_and_bg, &color_fg, &color_bg);
-
-    if (color_fg && color_bg)
-    {
-        // look for curses colors in table 
-        value_fg = gui_color_search (color_fg);
-        value_bg = gui_color_search (color_bg);
-        
-        if (value_fg < 0)
-        {
-            // it's not a known value for foreground, maybe it's reference to
-            // another config option ?
-            value_fg = 0;
-            ptr_option = config_option_section_option_search (weechat_config_sections,
-                                                              weechat_config_options,
-                                                              color_fg);
-            if (ptr_option && *(ptr_option->ptr_color)
-                && *(ptr_option->ptr_string))
-            {
-                gui_color_get_fg_bg (*(ptr_option->ptr_string),
-                                     &color_fg2, &color_bg2);
-                if (color_fg2)
-                    value_fg = gui_color_search (color_fg2);
-
-                if (color_fg2)
-                    free (color_fg2);
-                if (color_bg2)
-                    free (color_bg2);
-            }
-        }
-        
-        if (value_bg < 0)
-        {
-            // it's not a known value for background, maybe it's reference to
-            // another config option ?
-            value_bg = 0;
-            ptr_option = config_option_section_option_search (weechat_config_sections,
-                                                              weechat_config_options,
-                                                              color_bg);
-            if (ptr_option && *(ptr_option->ptr_color)
-                && *(ptr_option->ptr_string))
-            {
-                gui_color_get_fg_bg (*(ptr_option->ptr_string),
-                                     &color_fg2, &color_bg2);
-                if (color_bg2)
-                    value_bg = gui_color_search (color_bg2);
-                
-                if (color_fg2)
-                    free (color_fg2);
-                if (color_bg2)
-                    free (color_bg2);
-            }
-        }
-        
-        *color->foreground = gui_weechat_colors[value_fg].foreground;
-        *color->background = gui_weechat_colors[value_bg].background;
-        *color->attributes = gui_weechat_colors[value_fg].attributes;
-        
-        if (*color->string)
-            free (*color->string);
-        *color->string = malloc (4);
-        if (*color->string)
-            snprintf (*color->string, 4,
-                      "%s%02d",
-                      GUI_COLOR_COLOR_STR, number);
-    }
-    else
-    {
-        *color->foreground = 0;
-        *color->background = 0;
-        *color->attributes = 0;
-        if (*color->string)
-            free (*color->string);
-        *color->string = NULL;
-    }
-    
-    if (color_fg)
-        free (color_fg);
-    if (color_bg)
-        free (color_bg);
-}*/
 
 /*
  * gui_color_get_number: get number of available colors
@@ -313,13 +170,13 @@ gui_color_get_pair (int num_color)
     
     if (((fg == -1) || (fg == 99))
         && ((bg == -1) || (bg == 99)))
-        return 63;
+        return gui_color_last_pair;
     if ((fg == -1) || (fg == 99))
         fg = COLOR_WHITE;
     if ((bg == -1) || (bg == 99))
         bg = 0;
     
-    return (bg * 8) + fg;
+    return (bg * gui_color_num_bg) + fg + 1;
 }
 
 /*
@@ -329,19 +186,35 @@ gui_color_get_pair (int num_color)
 void
 gui_color_init_pairs ()
 {
-    int i;
+    int i, fg, bg, num_colors;
+
+    /* depending on terminal and $TERM value, we can have for example:
+       terminal  $TERM            colors   pairs
+       urxvt     rxvt-unicode       88      256
+       urxvt     xterm-256color    256    32767
+       screen    screen             8        64
+       screen    screen-256color   256    32767
+    */
     
     if (has_colors ())
     {
-        for (i = 1; i < 64; i++)
-            init_pair (i, i % 8, (i < 8) ? -1 : i / 8);
+        gui_color_num_bg = (COLOR_PAIRS >= 256) ? 16 : 8;
+        num_colors = (COLOR_PAIRS >= 256) ? 256 : COLOR_PAIRS;
+        for (i = 1; i < num_colors; i++)
+        {
+            fg = (i - 1) % gui_color_num_bg;
+            bg = ((i - 1) < gui_color_num_bg) ? -1 : (i - 1) / gui_color_num_bg;
+            init_pair (i, fg, bg);
+        }
+        gui_color_last_pair = num_colors - 1;
         
         /* disable white on white, replaced by black on white */
-        init_pair (63, -1, -1);
+        init_pair (gui_color_last_pair, -1, -1);
         
-        /* white on default bg is default (-1) */
+        /* white on default bg is default (-1) (for terminals with white/light
+           background) */
         if (!CONFIG_BOOLEAN(config_look_color_real_white))
-            init_pair (COLOR_WHITE, -1, -1);
+            init_pair (COLOR_WHITE + 1, -1, -1);
     }
 }
 
@@ -399,7 +272,6 @@ gui_color_pre_init ()
         gui_color[i] = NULL;
     }
 }
-
 
 /*
  * gui_color_init: init GUI colors

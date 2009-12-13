@@ -155,6 +155,14 @@ gui_main_init ()
             gui_bar_window_create_win (ptr_bar_win);
         }
     }
+    
+    /* display infos about terminal and colors */
+    if (weechat_debug_core >= 1)
+    {
+        gui_chat_printf (NULL,
+                         _("TERM=\"%s\", %d colors available, %d pairs"),
+                         getenv ("TERM"), COLORS, COLOR_PAIRS);
+    }
 }
 
 /*

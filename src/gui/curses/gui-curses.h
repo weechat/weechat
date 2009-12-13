@@ -36,7 +36,7 @@ struct t_gui_buffer;
 struct t_gui_window;
 struct t_gui_bar_window;
 
-#define GUI_CURSES_NUM_WEECHAT_COLORS 15
+#define GUI_CURSES_NUM_WEECHAT_COLORS 16
 
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))
@@ -57,6 +57,8 @@ struct t_gui_bar_window_curses_objects
 
 extern int gui_term_cols, gui_term_lines;
 extern struct t_gui_color gui_weechat_colors[];
+extern int gui_color_last_pair;
+extern int gui_color_num_bg;
 
 /* color functions */
 extern int gui_color_get_pair (int num_color);

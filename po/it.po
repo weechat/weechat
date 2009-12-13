@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-05 11:22+0100\n"
+"POT-Creation-Date: 2009-12-13 22:11+0100\n"
 "PO-Revision-Date: 2009-11-26 01:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2168,6 +2168,10 @@ msgstr ""
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminale perduto, chiusura di WeeChat..."
+
+#, c-format
+msgid "TERM=\"%s\", %d colors available, %d pairs"
+msgstr ""
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
