@@ -283,6 +283,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: yellow)
 
+* *weechat.color.status_time*
+** description: couleur du texte pour l'heure (barre de statut)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
 * *weechat.completion.default_template*
 ** description: modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle)
 ** type: chaîne

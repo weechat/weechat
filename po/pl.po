@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-13 22:11+0100\n"
+"POT-Creation-Date: 2009-12-14 12:49+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -1827,6 +1827,10 @@ msgstr "kolor bufora z nowymi zdarzeniami (nie wiadomościami) (pasek statusu)"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "kolor bufora z nowymi zdarzeniami (pasek statusu)"
+
+#, fuzzy
+msgid "text color for time (status bar)"
+msgstr "kolor statusu \"active\""
 
 msgid "text color for unsucessful text search in input line"
 msgstr "kolor nieudanego wyszukiwania tekstu w wprowadzonej lini"

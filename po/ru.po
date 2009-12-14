@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-13 22:11+0100\n"
+"POT-Creation-Date: 2009-12-14 12:49+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1719,6 +1719,10 @@ msgstr "цвет окна с новыми данными (но не сообще
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "цвет окна с новыми данными (в строке состояния)"
+
+#, fuzzy
+msgid "text color for time (status bar)"
+msgstr "цвет строки состояния"
 
 #, fuzzy
 msgid "text color for unsucessful text search in input line"
@@ -6475,10 +6479,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy
 #~ msgid "background color for title bar"
 #~ msgstr "цвет фона заголовка"
-
-#, fuzzy
-#~ msgid "text color for status bar"
-#~ msgstr "цвет строки состояния"
 
 #, fuzzy
 #~ msgid "background color for status bar"

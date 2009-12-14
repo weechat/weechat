@@ -142,6 +142,7 @@ struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_data_highlight;
 struct t_config_option *config_color_status_data_other;
 struct t_config_option *config_color_status_more;
+struct t_config_option *config_color_status_time;
 struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_nicklist_group;
@@ -1762,6 +1763,12 @@ config_weechat_init_options ()
         "status_more", "color",
         N_("text color for buffer with new data (status bar)"),
         NULL, -1, 0, "yellow", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_time = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_time", "color",
+        N_("text color for time (status bar)"),
+        NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* input window */
     config_color_input_text_not_found = config_file_new_option (

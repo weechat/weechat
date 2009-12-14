@@ -283,6 +283,11 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: yellow)
 
+* *weechat.color.status_time*
+** descrizione: text color for time (status bar)
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
 * *weechat.completion.default_template*
 ** descrizione: modello di completamento predefinito (consulta la documentazione per codici e valori del template)
 ** tipo: stringa

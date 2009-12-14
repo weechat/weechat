@@ -755,7 +755,7 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
 {
     time_t date;
     struct tm *local_time;
-    char text_time[128];
+    char text_time[128], text_time2[128];
     
     /* make C compiler happy */
     (void) data;
@@ -769,7 +769,11 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
                   local_time) == 0)
         return NULL;
     
-    return strdup (text_time);
+    snprintf (text_time2, sizeof (text_time2), "%s%s",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_time))),
+              text_time);
+    
+    return strdup (text_time2);
 }
 
 /*

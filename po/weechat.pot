@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-13 22:11+0100\n"
+"POT-Creation-Date: 2009-12-14 12:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1447,6 +1447,9 @@ msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 
 msgid "text color for buffer with new data (status bar)"
+msgstr ""
+
+msgid "text color for time (status bar)"
 msgstr ""
 
 msgid "text color for unsucessful text search in input line"
