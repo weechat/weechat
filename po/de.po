@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-12-14 12:49+0100\n"
-"PO-Revision-Date: 2009-12-05 11:30+0100\n"
+"PO-Revision-Date: 2009-12-14 18:29+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1858,9 +1858,8 @@ msgstr ""
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Buffers, mit neuen Daten in der Statuszeile"
 
-#, fuzzy
 msgid "text color for time (status bar)"
-msgstr "Textfarbe für Status: \"aktiv\""
+msgstr "Textfarbe für die Uhrzeit (Statusbar)"
 
 msgid "text color for unsucessful text search in input line"
 msgstr "Textfarbe in der Eingabezeile, bei einer erfolglosen Textsuche "
@@ -2210,7 +2209,7 @@ msgstr "Terminal verloren, beende WeeChat..."
 
 #, c-format
 msgid "TERM=\"%s\", %d colors available, %d pairs"
-msgstr ""
+msgstr "TERM=\"%s\", %d verfügbare Farben, %d Paare"
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
@@ -2741,7 +2740,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: removing old fifo pipe \"%s\""
-msgstr ""
+msgstr "%s: Entferne alte FIFO Pipe \"%s\""
 
 #, c-format
 msgid "%s: pipe opened"
@@ -2769,7 +2768,8 @@ msgstr "%s%s: Fehler: Buffer für PIPE-Daten nicht gefunden"
 
 #, c-format
 msgid "%s%s: error reading pipe, closing it"
-msgstr "%s%s: Fehler beim Lesen der Pipe, Pipe wird geschlossen"
+msgstr ""
+"%s%s: Fehler beim Lesen der Pipe. Pipe wird aufgrund dessen geschlossen"
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
