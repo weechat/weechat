@@ -708,6 +708,7 @@ Colors for Curses GUI are:
 |========================================
 | default      | default terminal color (transparent for background)
 | black        | black
+| darkgray     | dark gray
 | red          | dark red
 | lightred     | light red
 | green        | dark green

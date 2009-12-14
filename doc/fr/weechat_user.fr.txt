@@ -727,6 +727,7 @@ Les couleurs pour l'interface Curses sont :
 |========================================
 | default      | couleur par défaut du terminal (transparent pour le fond)
 | black        | noir
+| darkgray     | gris foncé
 | red          | rouge foncé
 | lightred     | rouge clair
 | green        | vert foncé
