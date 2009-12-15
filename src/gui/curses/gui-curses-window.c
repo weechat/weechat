@@ -230,7 +230,7 @@ gui_window_clear (WINDOW *window, int bg)
 
     if ((bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
     {
-        color = gui_weechat_colors[bg].foreground;
+        color = gui_weechat_colors[bg].background;
         wbkgdset (window,
                   ' ' | COLOR_PAIR (((color == -1) || (color == 99)) ?
                                     gui_color_last_pair : (color * gui_color_num_bg) + 1));
