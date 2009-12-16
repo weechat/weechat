@@ -337,6 +337,15 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOREJOIN]) ?
                             _("on") : _("off"));
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))
+            weechat_printf (NULL, "  autorejoin_delay . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY)));
+        else
+            weechat_printf (NULL, "  autorejoin_delay . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY])));
     }
     else
     {

@@ -985,8 +985,20 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
-                N_("automatically rejoin channels when kicked"),
+                N_("automatically rejoin channels after kick"),
                 NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_AUTOREJOIN_DELAY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("delay (in seconds) before autorejoin (after kick)"),
+                NULL, 0, 3600*24,
                 default_value, value,
                 null_value_allowed,
                 NULL, NULL,

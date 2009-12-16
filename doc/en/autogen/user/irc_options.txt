@@ -214,9 +214,14 @@
 ** values: 0 .. 65535 (default value: 30)
 
 * *irc.server_default.autorejoin*
-** description: automatically rejoin channels when kicked
+** description: automatically rejoin channels after kick
 ** type: boolean
 ** values: on, off (default value: off)
+
+* *irc.server_default.autorejoin_delay*
+** description: delay (in seconds) before autorejoin (after kick)
+** type: integer
+** values: 0 .. 86400 (default value: 30)
 
 * *irc.server_default.command*
 ** description: command(s) to run when connected to server (many commands should be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value)

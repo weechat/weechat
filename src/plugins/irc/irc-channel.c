@@ -29,6 +29,7 @@
 #include "irc.h"
 #include "irc-channel.h"
 #include "irc-buffer.h"
+#include "irc-command.h"
 #include "irc-config.h"
 #include "irc-nick.h"
 #include "irc-server.h"
@@ -244,6 +245,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->display_creation_date = 0;
     new_channel->nick_completion_reset = 0;
     new_channel->pv_remote_nick_color = NULL;
+    new_channel->hook_autorejoin = NULL;
     new_channel->nicks_count = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
@@ -616,6 +618,62 @@ irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
 }
 
 /*
+ * irc_channel_rejoin: rejoin a channel (for example after kick)
+ */
+
+void
+irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
+{
+    char join_args[256];
+    
+    snprintf (join_args, sizeof (join_args), "%s%s%s",
+              channel->name,
+              (channel->key) ? " " : "",
+              (channel->key) ? channel->key : "");
+    
+    irc_command_join_server (server, join_args);
+}
+
+/*
+ * irc_channel_autorejoin_cb: callback for autorejoin on a channel
+ */
+
+int
+irc_channel_autorejoin_cb (void *data, int remaining_calls)
+{
+    struct t_irc_server *ptr_server, *ptr_server_found;
+    struct t_irc_channel *ptr_channel_arg, *ptr_channel;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
+    
+    ptr_channel_arg = (struct t_irc_channel *)data;
+    
+    ptr_server_found = NULL;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel == ptr_channel_arg)
+            {
+                ptr_server_found = ptr_server;
+                break;
+            }
+        }
+    }
+    
+    if (ptr_server_found && (ptr_channel_arg->hook_autorejoin))
+    {
+        irc_channel_rejoin (ptr_server_found, ptr_channel_arg);
+        ptr_channel_arg->hook_autorejoin = NULL;
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_channel_free: free a channel and remove it from channels list
  */
 
@@ -655,6 +713,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
         free (channel->away_message);
     if (channel->pv_remote_nick_color)
         free (channel->pv_remote_nick_color);
+    if (channel->hook_autorejoin)
+        weechat_unhook(channel->hook_autorejoin);
     if (channel->nicks_speaking[0])
         weechat_list_free (channel->nicks_speaking[0]);
     if (channel->nicks_speaking[1])
@@ -805,6 +865,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       display_creation_date. . : %d",    channel->display_creation_date);
     weechat_log_printf ("       nick_completion_reset. . : %d",    channel->nick_completion_reset);
     weechat_log_printf ("       pv_remote_nick_color . . : '%s'",  channel->pv_remote_nick_color);
+    weechat_log_printf ("       hook_autorejoin. . . . . : 0x%lx", channel->hook_autorejoin);
     weechat_log_printf ("       nicks_count. . . . . . . : %d",    channel->nicks_count);
     weechat_log_printf ("       nicks. . . . . . . . . . : 0x%lx", channel->nicks);
     weechat_log_printf ("       last_nick. . . . . . . . : 0x%lx", channel->last_nick);

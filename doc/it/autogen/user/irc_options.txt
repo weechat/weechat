@@ -214,9 +214,14 @@
 ** valori: 0 .. 65535 (valore predefinito: 30)
 
 * *irc.server_default.autorejoin*
-** descrizione: rientra automaticamente nei canali dopo il kick
+** descrizione: automatically rejoin channels after kick
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
+
+* *irc.server_default.autorejoin_delay*
+** descrizione: delay (in seconds) before autorejoin (after kick)
+** tipo: intero
+** valori: 0 .. 86400 (valore predefinito: 30)
 
 * *irc.server_default.command*
 ** descrizione: comando(i) da eseguire quando si è connessi al server (più comandi vanno separati da ":", utilizzare ";" per un punto e virgola, le variabili speciali $nick, $canale e $server vengono sostituite dai loro valori)

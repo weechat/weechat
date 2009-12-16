@@ -214,9 +214,14 @@
 ** valeurs: 0 .. 65535 (valeur par défaut: 30)
 
 * *irc.server_default.autorejoin*
-** description: rejoindre automatiquement les canaux quand mis dehors
+** description: rejoindre automatiquement les canaux après un "kick"
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
+
+* *irc.server_default.autorejoin_delay*
+** description: délai (en secondes) avant de rejoindre automatiquement (après un "kick")
+** type: entier
+** valeurs: 0 .. 86400 (valeur par défaut: 30)
 
 * *irc.server_default.command*
 ** description: commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)

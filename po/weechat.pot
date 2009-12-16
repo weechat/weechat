@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-16 12:12+0100\n"
+"POT-Creation-Date: 2009-12-16 14:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3333,7 +3333,10 @@ msgid ""
 "\"#chan1,#chan2,#chan3 key1,key2\")"
 msgstr ""
 
-msgid "automatically rejoin channels when kicked"
+msgid "automatically rejoin channels after kick"
+msgstr ""
+
+msgid "delay (in seconds) before autorejoin (after kick)"
 msgstr ""
 
 #, c-format

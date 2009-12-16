@@ -37,6 +37,9 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_PROXY,         /* proxy used for server (optional)     */
     IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
     IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
+    IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
+    IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
+    IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
     IRC_SERVER_OPTION_AUTOCONNECT,   /* autoconnect to server at startup     */
     IRC_SERVER_OPTION_AUTORECONNECT, /* autoreconnect when disconnected      */
@@ -49,9 +52,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
     IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
-    IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
-    IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
-    IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
+    IRC_SERVER_OPTION_AUTOREJOIN_DELAY, /* delay before auto rejoin          */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };

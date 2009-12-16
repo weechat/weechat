@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-16 12:12+0100\n"
+"POT-Creation-Date: 2009-12-16 14:20+0100\n"
 "PO-Revision-Date: 2009-09-06 21:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4025,8 +4025,14 @@ msgstr ""
 "oddzielona przecinkami lista kanałów do wejścia po połączeniu z serwerem "
 "(przykład: \"#kanał1,#kanał2,#kanał3 klucz1,klucz2\")"
 
-msgid "automatically rejoin channels when kicked"
+#, fuzzy
+msgid "automatically rejoin channels after kick"
 msgstr "automatycznie wejdź na kanał po wykopaniu"
+
+#, fuzzy
+msgid "delay (in seconds) before autorejoin (after kick)"
+msgstr ""
+"opóźnienie (w sekundach) przed próbą ponownego połączenia się z serwerem"
 
 #, c-format
 msgid "%s%s: error creating server \"%s\""

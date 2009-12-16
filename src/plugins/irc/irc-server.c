@@ -58,15 +58,17 @@ struct t_irc_message *irc_recv_msgq = NULL;
 struct t_irc_message *irc_msgq_last_msg = NULL;
 
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
-{ "addresses", "proxy", "ipv6", "ssl", "password", "autoconnect",
-  "autoreconnect", "autoreconnect_delay", "nicks", "username", "realname",
-  "local_hostname", "command", "command_delay", "autojoin", "autorejoin",
-  "ssl_cert", "ssl_dhkey_size", "ssl_verify",
+{ "addresses", "proxy", "ipv6", "ssl", "ssl_cert", "ssl_dhkey_size",
+  "ssl_verify", "password", "autoconnect", "autoreconnect",
+  "autoreconnect_delay", "nicks", "username", "realname", "local_hostname",
+  "command", "command_delay", "autojoin", "autorejoin", "autorejoin_delay",
 };
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
-{ "", "", "off", "off", "", "off", "on", "30", "",
-  "", "", "", "", "0", "", "off", "", "2048", "on",
+{ "", "", "off", "off", "", "2048",
+  "on", "", "off", "on",
+  "30", "", "", "", "",
+  "", "0", "", "off", "30",
 };
 
 
@@ -3253,6 +3255,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin_delay",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
@@ -3437,6 +3442,12 @@ irc_server_print_log ()
             weechat_log_printf ("  autorejoin . . . . . : %s",
                                 weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN]) ?
                                 "on" : "off");
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))
+            weechat_log_printf ("  autorejoin_delay . . : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY));
+        else
+            weechat_log_printf ("  autorejoin_delay . . : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]));
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
         weechat_log_printf ("  reloaded_from_config : %d",    ptr_server->reloaded_from_config);

@@ -54,6 +54,7 @@ struct t_irc_channel
     int nick_completion_reset;         /* 1 for resetting nick completion   */
                                        /* there was some join/part on chan  */
     char *pv_remote_nick_color;        /* color for remote nick in pv       */
+    struct t_hook *hook_autorejoin;    /* this time+delay = autorejoin time */
     int nicks_count;                   /* # nicks on channel (0 if pv)      */
     struct t_irc_nick *nicks;          /* nicks on the channel              */
     struct t_irc_nick *last_nick;      /* last nick on the channel          */
@@ -106,6 +107,9 @@ extern void irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
 extern void irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
                                                    const char *old_nick,
                                                    const char *new_nick);
+extern void irc_channel_rejoin (struct t_irc_server *server,
+                                struct t_irc_channel *channel);
+extern int irc_channel_autorejoin_cb (void *data, int remaining_calls);
 extern int irc_channel_add_to_infolist (struct t_infolist *infolist,
                                         struct t_irc_channel *channel);
 extern void irc_channel_print_log (struct t_irc_channel *channel);

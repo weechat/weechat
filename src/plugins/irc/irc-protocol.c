@@ -464,7 +464,22 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
            more */
         irc_nick_free_all (ptr_channel);
         if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN))
-            irc_command_join_server (server, ptr_channel->name);
+        {
+            if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
+            {
+                /* immediately rejoin if delay is 0 */
+                irc_channel_rejoin (server, ptr_channel);
+            }
+            else
+            {
+                /* rejoin channel later, according to delay */
+                ptr_channel->hook_autorejoin =
+                    weechat_hook_timer (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY) * 1000,
+                                        0, 1,
+                                        &irc_channel_autorejoin_cb,
+                                        ptr_channel);
+            }
+        }
     }
     else
     {

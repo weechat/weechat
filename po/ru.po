@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-16 12:12+0100\n"
+"POT-Creation-Date: 2009-12-16 14:20+0100\n"
 "PO-Revision-Date: 2009-09-20 13:50+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3926,8 +3926,13 @@ msgstr ""
 "разделённый запятыми список каналов, на которые заходить при подключении к "
 "серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
 
-msgid "automatically rejoin channels when kicked"
+#, fuzzy
+msgid "automatically rejoin channels after kick"
 msgstr "автоматически перезаходить на каналы после кика"
+
+#, fuzzy
+msgid "delay (in seconds) before autorejoin (after kick)"
+msgstr "задержка (в секундах) перед повторным соединением с сервером"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
