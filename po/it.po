@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-14 12:49+0100\n"
+"POT-Creation-Date: 2009-12-16 12:12+0100\n"
 "PO-Revision-Date: 2009-11-26 01:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -212,6 +212,9 @@ msgstr "Nessuna variabile locale definita per il buffer \"%s\""
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" non trovato"
+
+msgid "Raw content of buffers has been written in log file"
+msgstr ""
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -921,17 +924,20 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "attiva debug per core/plugin"
 
-msgid "[list | plugin level | dump | buffer | windows]"
+#, fuzzy
+msgid "[list | set plugin level | dump | buffer | windows | term]"
 msgstr "[list | plugin livello | dump | buffer | windows]"
 
+#, fuzzy
 msgid ""
+"    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
+"   term: display infos about terminal and available colors"
 msgstr ""
 "  plugin: nome del plugin (\"core\" per il core di WeeChat)\n"
 " livello: livello di debug per il plugin (0 = disabilita debug)\n"
@@ -2015,6 +2021,10 @@ msgstr "%sAttenzione: %s, riga %d: valore non valido per l'opzione \"%s\""
 msgid "Reloading configuration file %s"
 msgstr "Ricaricamento del file di configurazione %s"
 
+#, fuzzy
+msgid "Windows tree:"
+msgstr "Elenco delle finestre:"
+
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
 msgstr "%sErrore: un altro comando \"%s\" esiste già per il plugin \"%s\""
@@ -2174,15 +2184,23 @@ msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminale perduto, chiusura di WeeChat..."
 
 #, c-format
-msgid "TERM=\"%s\", %d colors available, %d pairs"
-msgstr ""
-
-#, c-format
 msgid "Signal %s received, exiting WeeChat..."
 msgstr "Ricevuto segnale %s, chiusura di WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Ricevuto segnale SIGHUP, caricamento dei file di configurazione"
+
+#, fuzzy
+msgid "Terminal infos:"
+msgstr "Informazioni disponibili:"
+
+#, c-format
+msgid "  TERM='%s', size: %dx%d"
+msgstr ""
+
+#, c-format
+msgid "  %d colors available, %d pairs"
+msgstr ""
 
 msgid "server"
 msgid_plural "servers"

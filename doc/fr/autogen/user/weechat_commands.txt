@@ -91,17 +91,18 @@
    commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ........................................
 
-&bull; *`/debug`* `[list | extension niveau | dump | buffer windows]`::
+&bull; *`/debug`* `[list | set extension niveau | dump | buffer | windows | term]`::
 
 ........................................
   contrôle du debug pour le coeur/les extensions
 
+        set: définir le niveau de log pour l'extension
   extension: nom de l'extension ("core" pour le coeur de WeeChat)
      niveau: niveau de debug pour l'extension
        dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
      buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
     windows: affiche l'arbre des fenêtres<
-      texte: envoie le signal "debug" avec "texte" comme paramètre
+       term: afficher des infos sur le terminal et les couleurs disponibles
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [nom]] | [add nom extension.tampon tags regex] | [del nom|-all]`::

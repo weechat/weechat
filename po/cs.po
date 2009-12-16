@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-14 12:49+0100\n"
+"POT-Creation-Date: 2009-12-16 12:12+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -208,6 +208,9 @@ msgstr "Není definovaná žádná lokální proměnná pro buffer \"%s\""
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" nenalezen"
+
+msgid "Raw content of buffers has been written in log file"
+msgstr ""
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -921,17 +924,20 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "spřáva ladění pro jádro/pluginy"
 
-msgid "[list | plugin level | dump | buffer | windows]"
+#, fuzzy
+msgid "[list | set plugin level | dump | buffer | windows | term]"
 msgstr "[list | plugin level | dump | buffer | windows]"
 
+#, fuzzy
 msgid ""
+"    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
+"   term: display infos about terminal and available colors"
 msgstr ""
 " plugin: jméno pluginu (\"core\" pro jádro WeeChat)\n"
 "  level: úroveň ladění pro plugin (0 = vypnout ladění)\n"
@@ -1982,6 +1988,10 @@ msgstr "%sUpozornění: %s, řádek %d: nevalidní hodnota pro nastavení \"%s\"
 msgid "Reloading configuration file %s"
 msgstr "Znovunačítám konfigurační soubor %s"
 
+#, fuzzy
+msgid "Windows tree:"
+msgstr "Seznam oken:"
+
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
 msgstr "%sChyba: příkaz \"%s\" již existuje pro plugin \"%s\""
@@ -2138,15 +2148,23 @@ msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
 
 #, c-format
-msgid "TERM=\"%s\", %d colors available, %d pairs"
-msgstr ""
-
-#, c-format
 msgid "Signal %s received, exiting WeeChat..."
 msgstr "Obdržen signál %s, ukončuji WeeChat.."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Obdržen signál SIGHUP, znovunačítám konfigurační soubory"
+
+#, fuzzy
+msgid "Terminal infos:"
+msgstr "Dostupné informace:"
+
+#, c-format
+msgid "  TERM='%s', size: %dx%d"
+msgstr ""
+
+#, c-format
+msgid "  %d colors available, %d pairs"
+msgstr ""
 
 msgid "server"
 msgid_plural "servers"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-14 12:49+0100\n"
-"PO-Revision-Date: 2009-12-14 12:49+0100\n"
+"POT-Creation-Date: 2009-12-16 12:12+0100\n"
+"PO-Revision-Date: 2009-12-16 12:13+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,6 +210,9 @@ msgstr "Pas de variable locale définie pour le tampon \"%s\""
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sExtension \"%s\" non trouvée"
+
+msgid "Raw content of buffers has been written in log file"
+msgstr "Le contenu brut des tampons a été écrit dans le fichier de log"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -927,18 +930,20 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "contrôle du debug pour le coeur/les extensions"
 
-msgid "[list | plugin level | dump | buffer | windows]"
-msgstr "[list | extension niveau | dump | buffer windows]"
+msgid "[list | set plugin level | dump | buffer | windows | term]"
+msgstr "[list | set extension niveau | dump | buffer | windows | term]"
 
 msgid ""
+"    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
+"   term: display infos about terminal and available colors"
 msgstr ""
+"      set: définir le niveau de log pour l'extension\n"
 "extension: nom de l'extension (\"core\" pour le coeur de WeeChat)\n"
 "   niveau: niveau de debug pour l'extension\n"
 "     dump: affiche les variables mémoire WeeChat dans le fichier log (les "
@@ -946,7 +951,7 @@ msgstr ""
 "   buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
 "fichier log\n"
 "  windows: affiche l'arbre des fenêtres<\n"
-"    texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
+"     term: afficher des infos sur le terminal et les couleurs disponibles"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -2028,6 +2033,9 @@ msgstr "%sAttention: %s, ligne %d: valeur invalide pour l'option \"%s\""
 msgid "Reloading configuration file %s"
 msgstr "Rechargement du fichier de configuration %s"
 
+msgid "Windows tree:"
+msgstr "Arbre des fenêtres:"
+
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
 msgstr ""
@@ -2188,15 +2196,22 @@ msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal perdu, sortie de WeeChat..."
 
 #, c-format
-msgid "TERM=\"%s\", %d colors available, %d pairs"
-msgstr "TERM=\"%s\", %d couleurs disponibles, %d paires"
-
-#, c-format
 msgid "Signal %s received, exiting WeeChat..."
 msgstr "Signal %s reçu, sortie de WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP reçu, rechargement des fichiers de configuration"
+
+msgid "Terminal infos:"
+msgstr "Infos sur le terminal:"
+
+#, c-format
+msgid "  TERM='%s', size: %dx%d"
+msgstr "  TERM='%s', taille: %dx%d"
+
+#, c-format
+msgid "  %d colors available, %d pairs"
+msgstr "  %d couleurs disponibles, %d paires"
 
 msgid "server"
 msgid_plural "servers"

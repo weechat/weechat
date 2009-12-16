@@ -1485,6 +1485,21 @@ gui_window_set_title (const char *title)
 }
 
 /*
+ * gui_window_term_display_infos: display some infos about terminal and colors
+ */
+
+void
+gui_window_term_display_infos ()
+{
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, _("Terminal infos:"));
+    gui_chat_printf (NULL, _("  TERM='%s', size: %dx%d"),
+                     getenv("TERM"), gui_term_cols, gui_term_lines);
+    gui_chat_printf (NULL, _("  %d colors available, %d pairs"),
+                     COLORS, COLOR_PAIRS);
+}
+
+/*
  * gui_window_objects_print_log: print window Curses objects infos in log
  *                               (usually for crash dump)
  */

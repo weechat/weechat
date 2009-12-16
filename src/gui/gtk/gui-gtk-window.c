@@ -802,6 +802,16 @@ gui_window_set_title (const char *title)
 }
 
 /*
+ * gui_window_term_display_infos: display some infos about terminal and colors
+ */
+
+void
+gui_window_term_display_infos ()
+{
+    /* No term info for Gtk */
+}
+
+/*
  * gui_window_objects_print_log: print Gtk objects infos in log
  *                               (usually for crash dump)
  */

@@ -231,7 +231,7 @@ void
 debug_windows_tree ()
 {
     gui_chat_printf (NULL, "");
-    gui_chat_printf (NULL, "DEBUG: windows tree:");
+    gui_chat_printf (NULL, _("Windows tree:"));
     debug_windows_tree_display (gui_windows_tree, 1);
 }
 

@@ -91,17 +91,18 @@
   command: command to execute (a '/' is automatically added if not found at beginning of command)
 ........................................
 
-&bull; *`/debug`* `[list | plugin level | dump | buffer | windows]`::
+&bull; *`/debug`* `[list | set plugin level | dump | buffer | windows | term]`::
 
 ........................................
   control debug for core/plugins
 
+      set: set log level for plugin
    plugin: name of plugin ("core" for WeeChat core)
     level: debug level for plugin (0 = disable debug)
      dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
    buffer: dump buffer content with hexadecimal values in log file
   windows: display windows tree
-     text: send "debug" signal with "text" as argument
+     term: display infos about terminal and available colors
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]`::

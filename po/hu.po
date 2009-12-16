@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-14 12:49+0100\n"
+"POT-Creation-Date: 2009-12-16 12:12+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -221,6 +221,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
+
+msgid "Raw content of buffers has been written in log file"
+msgstr ""
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -917,18 +920,20 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr ""
 
-msgid "[list | plugin level | dump | buffer | windows]"
-msgstr ""
+#, fuzzy
+msgid "[list | set plugin level | dump | buffer | windows | term]"
+msgstr "dump | buffer | windows"
 
 #, fuzzy
 msgid ""
+"    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
+"   term: display infos about terminal and available colors"
 msgstr ""
 "   dump: memóriatartalom mentése a WeeChat logba (ugyanez a tartalom íródik "
 "a WeeChat összeomlásakor)\n"
@@ -1900,6 +1905,10 @@ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 msgid "Reloading configuration file %s"
 msgstr "Beállítások mentése a lemezre\n"
 
+#, fuzzy
+msgid "Windows tree:"
+msgstr "a /who lista vége"
+
 #, fuzzy, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
 msgstr "%s az ignore már létezik\n"
@@ -2059,16 +2068,23 @@ msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
 #, c-format
-msgid "TERM=\"%s\", %d colors available, %d pairs"
-msgstr ""
-
-#, c-format
 msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
+
+msgid "Terminal infos:"
+msgstr ""
+
+#, c-format
+msgid "  TERM='%s', size: %dx%d"
+msgstr ""
+
+#, c-format
+msgid "  %d colors available, %d pairs"
+msgstr ""
 
 #, fuzzy
 msgid "server"
@@ -6530,10 +6546,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy
 #~ msgid "%s: debug enabled"
 #~ msgstr "FIFO cső nyitva\n"
-
-#, fuzzy
-#~ msgid "dump | buffer | windows | text"
-#~ msgstr "dump | buffer | windows"
 
 #~ msgid "automatically log server messages"
 #~ msgstr "szerverüzenetek automatikus naplózása"
