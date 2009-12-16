@@ -25,7 +25,7 @@ Version 0.3.1 (under dev!)
   with function "command" (bug #27697)
 * alias: fix bug with arguments (bug #27440)
 * irc: use self-signed certificate to auto identify on IRC server (CertFP)
-  (task #7492)
+  (task #7492, debian #453348)
 * irc: check SSL certificates (task #7492)
 * irc: add option "autorejoin_delay" for servers (task #8771)
 * irc: fix autorejoin on channels with key
