@@ -43,7 +43,7 @@ Version 0.3.1 (under dev!)
 * ruby: support of Ruby >= 1.9.1 (patch #6989)
 * fifo: remove old pipes before creating new pipe
 * gui: add color "darkgray", add support for background with light color
-* gui: fix color "black" (bug #23882)
+* gui: fix color "black" (bug #23882, debian #512957)
 * gui: fix message "Day changed to", sometimes displayed at wrong time
   (bug #26959)
 * gui: fix bug with URL selection in some terminals (caused by horizontal lines)
