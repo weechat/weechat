@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-12-16 14:20+0100\n"
-"PO-Revision-Date: 2009-12-16 12:13+0100\n"
+"PO-Revision-Date: 2009-12-16 18:22+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,6 +222,7 @@ msgstr "%sErweiterung \"%s\" wurde nicht gefunden"
 
 msgid "Raw content of buffers has been written in log file"
 msgstr ""
+"Der Inhalt des Buffers wurde im Rohformat in die Protokolldatei geschrieben."
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -962,11 +963,9 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Kernprogramm/Erweiterung"
 
-#, fuzzy
 msgid "[list | set plugin level | dump | buffer | windows | term]"
-msgstr "[list | plugin level | dump | buffer | windows]"
+msgstr "[list | set plugin level | dump | buffer | windows | term]"
 
-#, fuzzy
 msgid ""
 "    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -977,9 +976,15 @@ msgid ""
 "windows: display windows tree\n"
 "   term: display infos about terminal and available colors"
 msgstr ""
-"dump: Speicherabbild in der WeeChat Log-Datei ablegen (wie nach einem "
-"Programmabsturz)\n"
-"windows: zeigt Fensterdaten an"
+"    set: setzt den Level der Protokollierung für eine Erweiterung\n"
+" plugin: Name der Erweiterung (\"core\" für den WeeChat Kern)\n"
+"  level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)\n"
+"   dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei "
+"einem Programmabsturz)\n"
+" buffer: Speichert den Bufferinhalt als hexadezimale Ausgabe in die  "
+"Protokolldatei\n"
+"windows: zeigt die Fensterstruktur an\n"
+"   term: gibt Informationen über das Terminal und verfügbare Farben aus."
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -2053,9 +2058,8 @@ msgstr "%sWarnung: %s, Zeile %d: ungültige Wert für Option \"%s\""
 msgid "Reloading configuration file %s"
 msgstr "Konfigurationsdatei %s wird erneut geladen"
 
-#, fuzzy
 msgid "Windows tree:"
-msgstr "Fensterliste:"
+msgstr "Fensterstruktur:"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -2101,8 +2105,8 @@ msgid ""
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
-"Fehler: kann Log-Datei nicht erzeugen oder keine Daten anhängen (weechat."
-"log)\n"
+"Fehler: kann Protokoll-Datei nicht erzeugen oder keine Daten anhängen "
+"(weechat.log)\n"
 "Falls ein anderer WeeChat-Prozess die Datei benutzt sollte dann können Sie "
 "versuchen, durch den\n"
 "Aufruf der \"--dir\" Kommandozeilenoption, WeeChat mit einem anderen Home-"
@@ -2224,13 +2228,12 @@ msgstr "Signal %s empfangen, beende WeeChat..."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP empfangen, lese Konfigurationsdateien neu"
 
-#, fuzzy
 msgid "Terminal infos:"
-msgstr "verfügbare Informationen:"
+msgstr "Terminal Informationen:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
-msgstr ""
+msgstr "  TERM='%s', Größe: %dx%d"
 
 #, c-format
 msgid "  %d colors available, %d pairs"
@@ -4117,15 +4120,13 @@ msgstr ""
 "Durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server "
 "betreten werden sollen (Beispiel: \"#chan1,#chan2,#chan3 key1,key2\")"
 
-#, fuzzy
 msgid "automatically rejoin channels after kick"
-msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
+msgstr "Channels automatisch betreten, falls man ge-kickt wurde."
 
-#, fuzzy
 msgid "delay (in seconds) before autorejoin (after kick)"
 msgstr ""
-"Zeit in Sekunden, die gewartet wird, bevor ein Verbindungsneuaufbau versucht "
-"wird"
+"Wartezeit, in Sekunden, die verstreichen soll bevor man den Channel "
+"automatisch erneut betritt (nachdem man ge-kickt wurde)"
 
 #, c-format
 msgid "%s%s: error creating server \"%s\""
@@ -6046,6 +6047,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
-
-#~ msgid "TERM=\"%s\", %d colors available, %d pairs"
-#~ msgstr "TERM=\"%s\", %d verfügbare Farben, %d Paare"
