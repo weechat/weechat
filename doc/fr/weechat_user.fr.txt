@@ -1302,6 +1302,7 @@ Jiri Golembiovsky::
 soltys::
     traduction en polonais
 
+Nils Görs::
 rettub::
 Frank Zacharias::
     traduction en allemand

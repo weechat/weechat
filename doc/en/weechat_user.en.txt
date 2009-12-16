@@ -1263,6 +1263,7 @@ Jiri Golembiovsky::
 soltys::
     polish translation
 
+Nils Görs::
 rettub::
 Frank Zacharias::
     german translation

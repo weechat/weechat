@@ -1290,6 +1290,7 @@ Jiri Golembiovsky::
 soltys::
     traduzione in polacco
 
+Nils Görs::
 rettub::
 Frank Zacharias::
     traduzione in tedesco
