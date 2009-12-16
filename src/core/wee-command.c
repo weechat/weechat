@@ -1376,7 +1376,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
 {
     struct t_hook *ptr_hook;
     struct t_config_option *ptr_option;
-    int i, length;
+    int i, length, command_found;
     char *string;
     
     /* make C compiler happy */
@@ -1387,11 +1387,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
     /* display help for all commands */
     if (argc == 1)
     {
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL,
-                         /* TRANSLATORS: %s is "weechat" */
-                         _("%s internal commands:"),
-                         PACKAGE_NAME);
+        command_found = 0;
         for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
@@ -1400,6 +1396,15 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 && HOOK_COMMAND(ptr_hook, command)
                 && HOOK_COMMAND(ptr_hook, command)[0])
             {
+                if (!command_found)
+                {
+                    gui_chat_printf (NULL, "");
+                    gui_chat_printf (NULL,
+                                     /* TRANSLATORS: %s is "weechat" */
+                                     _("%s internal commands:"),
+                                     PACKAGE_NAME);
+                    command_found = 1;
+                }
                 gui_chat_printf (NULL, "   %s%s%s%s%s",
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  HOOK_COMMAND(ptr_hook, command),
@@ -1412,8 +1417,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                  _(HOOK_COMMAND(ptr_hook, description)) : "");
             }
         }
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Other commands:"));
+        command_found = 0;
         for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
@@ -1422,6 +1426,12 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 && HOOK_COMMAND(ptr_hook, command)
                 && HOOK_COMMAND(ptr_hook, command)[0])
             {
+                if (!command_found)
+                {
+                    gui_chat_printf (NULL, "");
+                    gui_chat_printf (NULL, _("Other commands:"));
+                    command_found = 1;
+                }
                 gui_chat_printf (NULL, "   %s%s%s%s%s",
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  HOOK_COMMAND(ptr_hook, command),
