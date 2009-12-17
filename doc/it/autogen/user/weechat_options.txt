@@ -284,7 +284,7 @@
 ** valori: un nome colore (valore predefinito: yellow)
 
 * *weechat.color.status_time*
-** descrizione: text color for time (status bar)
+** descrizione: colore del testo per l'ora (barra di stato)
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: default)
 

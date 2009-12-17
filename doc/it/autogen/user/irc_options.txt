@@ -214,12 +214,12 @@
 ** valori: 0 .. 65535 (valore predefinito: 30)
 
 * *irc.server_default.autorejoin*
-** descrizione: automatically rejoin channels after kick
+** descrizione: rientra automaticamente nei canali dopo il kick
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
 * *irc.server_default.autorejoin_delay*
-** descrizione: delay (in seconds) before autorejoin (after kick)
+** descrizione: ritardo (in secondi) prima di rientrare automaticamente (dopo il kick)
 ** tipo: intero
 ** valori: 0 .. 86400 (valore predefinito: 30)
 

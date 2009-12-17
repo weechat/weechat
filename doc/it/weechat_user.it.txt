@@ -15,7 +15,7 @@ Introduzione
 ------------
 
 WeeChat (Wee Enhanced Environment for Chat) è un client di chat
-gratuito, veloce e leggero, realizzato per diversi sistemi operativi.
+libero, veloce e leggero, realizzato per diversi sistemi operativi.
 
 [[features]]
 Caratteristiche
@@ -36,7 +36,7 @@ Le caratteristiche principali:
 * multi-piattaforma (GNU/Linux, *BSD, MacOS X, Windows ed altre)
 * 100% GPL, software libero
 
-WeeChat homepage is here: http://www.weechat.org/
+La home page di WeeChat si trova qui: http://www.weechat.org/
 
 [[pre-requisites]]
 Requisiti

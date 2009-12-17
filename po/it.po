@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-12-16 14:20+0100\n"
-"PO-Revision-Date: 2009-11-26 01:26+0100\n"
+"PO-Revision-Date: 2009-12-17 08:27+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,7 +214,7 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" non trovato"
 
 msgid "Raw content of buffers has been written in log file"
-msgstr ""
+msgstr "Il contenuto raw dei buffer è stato salvato sul file di log"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -924,11 +924,9 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "attiva debug per core/plugin"
 
-#, fuzzy
 msgid "[list | set plugin level | dump | buffer | windows | term]"
-msgstr "[list | plugin livello | dump | buffer | windows]"
+msgstr "[list | set plugin livello | dump | buffer | windows | term]"
 
-#, fuzzy
 msgid ""
 "    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -939,6 +937,7 @@ msgid ""
 "windows: display windows tree\n"
 "   term: display infos about terminal and available colors"
 msgstr ""
+"     set: imposta il livello di log per il plugin\n"
 "  plugin: nome del plugin (\"core\" per il core di WeeChat)\n"
 " livello: livello di debug per il plugin (0 = disabilita debug)\n"
 "    dump: salva il dump della memoria nel file di log di Weechat (lo stesso "
@@ -946,7 +945,7 @@ msgstr ""
 "  buffer: esegue il dump del contenuto con valori esadecimali nel file di "
 "log\n"
 " windows: visualizza l'albero delle finestre\n"
-"    text: invia il segnale \"debug\" con \"text\" come argomento\""
+"    term: visualizza informazioni sul terminale e i colori disponibili"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1830,9 +1829,8 @@ msgstr ""
 msgid "text color for buffer with new data (status bar)"
 msgstr "colore del testo per il buffer con nuovi dati (barra di stato)"
 
-#, fuzzy
 msgid "text color for time (status bar)"
-msgstr "colore del testo per lo status \"attivo\""
+msgstr "colore del testo per l'ora (barra di stato)"
 
 msgid "text color for unsucessful text search in input line"
 msgstr "colore del testo per la ricerca del testo fallita sulla riga di input"
@@ -2021,9 +2019,8 @@ msgstr "%sAttenzione: %s, riga %d: valore non valido per l'opzione \"%s\""
 msgid "Reloading configuration file %s"
 msgstr "Ricaricamento del file di configurazione %s"
 
-#, fuzzy
 msgid "Windows tree:"
-msgstr "Elenco delle finestre:"
+msgstr "Albero delle finestre:"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -2190,17 +2187,16 @@ msgstr "Ricevuto segnale %s, chiusura di WeeChat..."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Ricevuto segnale SIGHUP, caricamento dei file di configurazione"
 
-#, fuzzy
 msgid "Terminal infos:"
-msgstr "Informazioni disponibili:"
+msgstr "Informazioni sul terminale:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
-msgstr ""
+msgstr "  TERM='%s', dimensione %dx%d"
 
 #, c-format
 msgid "  %d colors available, %d pairs"
-msgstr ""
+msgstr "  %d colori disponibili, %d coppie"
 
 msgid "server"
 msgid_plural "servers"
@@ -2715,9 +2711,9 @@ msgstr ""
 "\n"
 "Senza argomento, il comando visualizza l'elenco delle liste info disponibili"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: removing old fifo pipe \"%s\""
-msgstr "debug: rimozione del file: %s"
+msgstr "%s: rimozione della pipe fifo %s precedente"
 
 #, c-format
 msgid "%s: pipe opened"
@@ -3560,7 +3556,7 @@ msgid "tell the server to reload its config file"
 msgstr "chiede al server di ricaricare il proprio file di configurazione"
 
 msgid "option: extra option, for some servers"
-msgstr ""
+msgstr "opzione: opzione extra, per alcuni server"
 
 msgid "tell the server to restart itself"
 msgstr "chiede al server di riavviarsi"
@@ -4049,14 +4045,11 @@ msgstr ""
 "elenco separato da virgole di canali in cui entrare quando si è connessi al "
 "server (esempio: \"#canale1\", #canale2, #canale3 chiave1,chiave2\")"
 
-#, fuzzy
 msgid "automatically rejoin channels after kick"
 msgstr "rientra automaticamente nei canali dopo il kick"
 
-#, fuzzy
 msgid "delay (in seconds) before autorejoin (after kick)"
-msgstr ""
-"ritardo (in secondi) prima di effettuare una nuova connessione al server"
+msgstr "ritardo (in secondi) prima di rientrare automaticamente (dopo il kick)"
 
 #, c-format
 msgid "%s%s: error creating server \"%s\""
@@ -4700,6 +4693,8 @@ msgid ""
 "%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
 "value is %d)"
 msgstr ""
+"%s%s: è necessario modificare l'opzione irc.server.%s.ssl_dhkey_size (il "
+"valore corrente è %d)"
 
 #, c-format
 msgid "%s%s: not enough memory"
@@ -5941,49 +5936,3 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
-
-#~ msgid "%s%s: error: \"%s\""
-#~ msgstr "%s%s: errore: \"%s\""
-
-#~ msgid "%s%s: missing argument for \"%s\" option"
-#~ msgstr "%s%s: argomento mancante per l'opzione \"%s\""
-
-#~ msgid "%s%s unable to run function \"%s\""
-#~ msgstr "%s%s: impossibile eseguire la funzione \"%s\""
-
-#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-#~ msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s: %s"
-
-#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-#~ msgstr "%sCTCP %s%s%s sconosciuto ricevuto da %s%s%s"
-
-#~ msgid "list of %s scripts"
-#~ msgstr "elenco degli script %s"
-
-#~ msgid "Alias:"
-#~ msgstr "Alias:"
-
-#~ msgid "No alias found"
-#~ msgstr "Nessun alias trovato"
-
-#~ msgid "alias_name"
-#~ msgstr "nome_alias"
-
-#~ msgid ""
-#~ " channel: channel where user is\n"
-#~ "nickname: nickname to kick and ban\n"
-#~ " comment: comment for kick"
-#~ msgstr ""
-#~ "      canale: canale dove si trova l'utente\n"
-#~ "          nick: nick da cacciare e bannare\n"
-#~ "commento: commento per il kick"
-
-#~ msgid ""
-#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
-#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-#~ "use ports greater than 1024, because only root can use ports below 1024)"
-#~ msgstr ""
-#~ "numero porta (o range di porte) su cui il plugin relay è in ascolto "
-#~ "(sintassi: una singola porta, es. 5000 o un range di porte, es. 5000-"
-#~ "5015. Si raccomanda l'uso di porte maggiori di 1024, poiché quelle "
-#~ "inferiori possono essere utilizzate soltanto da root)"

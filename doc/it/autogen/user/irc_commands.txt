@@ -400,7 +400,7 @@
 ........................................
   chiede al server di ricaricare il proprio file di configurazione
 
-  option: extra option, for some servers
+  opzione: opzione extra, per alcuni server
 ........................................
 
 &bull; *`/restart`*::
