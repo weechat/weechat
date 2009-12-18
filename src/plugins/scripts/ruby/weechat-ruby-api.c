@@ -6170,6 +6170,40 @@ weechat_ruby_api_infolist_new (VALUE class)
 }
 
 /*
+ * weechat_ruby_api_infolist_new_item: create new item in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
+{
+    char *c_infolist, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    
+    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (c_infolist)));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_infolist_new_var_integer: create new integer variable in
  *                                            infolist
  */
@@ -7044,6 +7078,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "command", &weechat_ruby_api_command, 2);
     rb_define_module_function (ruby_mWeechat, "info_get", &weechat_ruby_api_info_get, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_new", &weechat_ruby_api_infolist_new, 0);
+    rb_define_module_function (ruby_mWeechat, "infolist_new_item", &weechat_ruby_api_infolist_new_item, 1);
     rb_define_module_function (ruby_mWeechat, "infolist_new_var_integer", &weechat_ruby_api_infolist_new_var_integer, 3);
     rb_define_module_function (ruby_mWeechat, "infolist_new_var_string", &weechat_ruby_api_infolist_new_var_string, 3);
     rb_define_module_function (ruby_mWeechat, "infolist_new_var_pointer", &weechat_ruby_api_infolist_new_var_pointer, 3);

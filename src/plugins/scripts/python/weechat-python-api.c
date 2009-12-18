@@ -5353,6 +5353,38 @@ weechat_python_api_infolist_new (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_infolist_new_item: create new item in infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new_item (PyObject *self, PyObject *args)
+{
+    char *infolist, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (infolist)));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_infolist_new_var_integer: create new integer variable in
  *                                              infolist
  */
@@ -6118,6 +6150,7 @@ PyMethodDef weechat_python_funcs[] =
     { "command", &weechat_python_api_command, METH_VARARGS, "" },
     { "info_get", &weechat_python_api_info_get, METH_VARARGS, "" },
     { "infolist_new", &weechat_python_api_infolist_new, METH_VARARGS, "" },
+    { "infolist_new_item", &weechat_python_api_infolist_new_item, METH_VARARGS, "" },
     { "infolist_new_var_integer", &weechat_python_api_infolist_new_var_integer, METH_VARARGS, "" },
     { "infolist_new_var_string", &weechat_python_api_infolist_new_var_string, METH_VARARGS, "" },
     { "infolist_new_var_pointer", &weechat_python_api_infolist_new_var_pointer, METH_VARARGS, "" },

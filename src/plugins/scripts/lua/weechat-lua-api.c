@@ -6013,6 +6013,43 @@ weechat_lua_api_infolist_new (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_infolist_new_item: create new item in infolist
+ */
+
+static int
+weechat_lua_api_infolist_new_item (lua_State *L)
+{
+    const char *infolist;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        LUA_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        LUA_RETURN_EMPTY;
+    }
+    
+    infolist = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (infolist)));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_infolist_new_var_integer: create new integer variable in
  *                                           infolist
  */
@@ -7254,6 +7291,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "command", &weechat_lua_api_command },
     { "info_get", &weechat_lua_api_info_get },
     { "infolist_new", &weechat_lua_api_infolist_new },
+    { "infolist_new_item", &weechat_lua_api_infolist_new_item },
     { "infolist_new_var_integer", &weechat_lua_api_infolist_new_var_integer },
     { "infolist_new_var_string", &weechat_lua_api_infolist_new_var_string },
     { "infolist_new_var_pointer", &weechat_lua_api_infolist_new_var_pointer },

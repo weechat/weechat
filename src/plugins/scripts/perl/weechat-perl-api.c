@@ -5093,6 +5093,37 @@ XS (XS_weechat_api_infolist_new)
 }
 
 /*
+ * weechat::infolist_new_item: create new item in infolist
+ */
+
+XS (XS_weechat_api_infolist_new_item)
+{
+    char *infolist, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_item");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist = SvPV (ST (0), PL_na);
+    
+    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (infolist)));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::infolist_new_var_integer: create new integer variable in infolist
  */
 
@@ -5830,6 +5861,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::command", XS_weechat_api_command, "weechat");
     newXS ("weechat::info_get", XS_weechat_api_info_get, "weechat");
     newXS ("weechat::infolist_new", XS_weechat_api_infolist_new, "weechat");
+    newXS ("weechat::infolist_new_item", XS_weechat_api_infolist_new_item, "weechat");
     newXS ("weechat::infolist_new_var_integer", XS_weechat_api_infolist_new_var_integer, "weechat");
     newXS ("weechat::infolist_new_var_string", XS_weechat_api_infolist_new_var_string, "weechat");
     newXS ("weechat::infolist_new_var_pointer", XS_weechat_api_infolist_new_var_pointer, "weechat");

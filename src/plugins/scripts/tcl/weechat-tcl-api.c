@@ -5689,6 +5689,38 @@ weechat_tcl_api_infolist_new (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_infolist_new_item: create new item in infolist
+ */
+
+static int
+weechat_tcl_api_infolist_new_item (ClientData clientData, Tcl_Interp *interp,
+                                   int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_item");
+        TCL_RETURN_INT(0);
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i)))); /* infolist */
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_infolist_new_var_integer: create new integer variable in
  *                                           infolist
  */
@@ -6699,6 +6731,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_info_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_new",
                           weechat_tcl_api_infolist_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::infolist_new_item",
+                          weechat_tcl_api_infolist_new_item, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_integer",
                           weechat_tcl_api_infolist_new_var_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_string",
