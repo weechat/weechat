@@ -114,21 +114,15 @@ relay_completion_free_port_cb (void *data, const char *completion_item,
     (void) buffer;
     (void) completion_item;
     
-    /* default port is 8000 */
-    port_max = 8000 - 1;
-    
-    if (ptr_server)
+    port_max = -1;
+    for (ptr_server = relay_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        port_max = -1;
-        for (ptr_server = relay_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            if (ptr_server->port > port_max)
-                port_max = ptr_server->port;
-        }
-        if (port_max < 0)
-            port_max = 8000 - 1;
+        if (ptr_server->port > port_max)
+            port_max = ptr_server->port;
     }
+    if (port_max < 0)
+        port_max = 8000 - 1;
     
     snprintf (str_port, sizeof (str_port), "%d", port_max + 1);
     weechat_hook_completion_list_add (completion, str_port,
