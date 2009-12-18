@@ -4259,7 +4259,10 @@ command_init ()
                   &command_proxy, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
-                  "", "",
+                  N_("[arguments]"),
+                  N_("arguments: text sent with signal \"quit\"\n"
+                     "           (for example irc plugin uses this text to "
+                     "send quit message to server)"),
                   "",
                   &command_quit, NULL);
     hook_command (NULL, "reload",

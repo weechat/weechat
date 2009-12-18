@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-16 14:20+0100\n"
+"POT-Creation-Date: 2009-12-18 19:35+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1128,6 +1128,16 @@ msgid ""
 msgstr ""
 
 msgid "quit WeeChat"
+msgstr ""
+
+#, fuzzy
+msgid "[arguments]"
+msgstr "fogadó típusa [paraméterek]"
+
+msgid ""
+"arguments: text sent with signal \"quit\"\n"
+"           (for example irc plugin uses this text to send quit message to "
+"server)"
 msgstr ""
 
 #, fuzzy

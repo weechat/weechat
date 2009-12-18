@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-16 14:20+0100\n"
+"POT-Creation-Date: 2009-12-18 19:35+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1195,6 +1195,16 @@ msgstr ""
 
 msgid "quit WeeChat"
 msgstr "ukončit WeeChat"
+
+#, fuzzy
+msgid "[arguments]"
+msgstr "[info [argumenty]]"
+
+msgid ""
+"arguments: text sent with signal \"quit\"\n"
+"           (for example irc plugin uses this text to send quit message to "
+"server)"
+msgstr ""
 
 msgid "reload configuration files from disk"
 msgstr "znovu načíst konfikurační soubory z disku"

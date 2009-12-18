@@ -235,10 +235,13 @@
       /proxy del myproxy
 ........................................
 
-&bull; *`/quit`*::
+&bull; *`/quit`* `[paramètres]`::
 
 ........................................
   quitter WeeChat
+
+  paramètres: texte envoyé avec le signal "quit"
+              (par exemple l'extension irc utilise ce texte pour envoyer le message de quit au serveur)
 ........................................
 
 &bull; *`/reload`* `[fichier [fichier...]]`::
