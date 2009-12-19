@@ -277,6 +277,7 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     char *result;
     int valid_char, length;
     struct t_gui_bar_item *ptr_item;
+    struct t_weechat_plugin *ptr_plugin;
     
     start = NULL;
     end = NULL;
@@ -312,10 +313,12 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     item_value = NULL;
     if (item_name)
     {
-        ptr_item = gui_bar_item_search_with_plugin ((window && window->buffer) ?
-                                                    window->buffer->plugin : NULL,
-                                                    0,
-                                                    item_name);
+        ptr_plugin = NULL;
+        if (window && window->buffer)
+            ptr_plugin = window->buffer->plugin;
+        else if (gui_current_window && gui_current_window->buffer)
+            ptr_plugin = gui_current_window->buffer->plugin;
+        ptr_item = gui_bar_item_search_with_plugin (ptr_plugin, 0, item_name);
         if (ptr_item && ptr_item->build_callback)
         {
             item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
