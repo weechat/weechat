@@ -240,68 +240,68 @@ L'écran est composé des zones suivantes :
 
 La barre 'status' contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Objet (item)          | Exemple              | Description
+| Objet (item)          | Exemple        | Description
 
-| time                  | `[12:55]`            |
+| time                  | [12:55]        |
   heure
 
-| buffer_count          | `[4]`                |
+| buffer_count          | [4]            |
   nombre de tampons ouverts
 
-| buffer_plugin         | `[irc/freenode]`     |
+| buffer_plugin         | [irc/freenode] |
   extension du tampon courant (l'extension irc peut afficher le nom du serveur
   IRC auquel est rattaché ce tampon)
 
-| buffer_number         | `3`                  |
+| buffer_number         | 3              |
   numéro du tampon courant
 
-| buffer_name           | `freenode/#test(+n)` |
+| buffer_name           | #test(+n)      |
   nom du tampon courant
 
-| buffer_nicklist_count | `{5}`                |
+| buffer_nicklist_count | {5}            |
   nombre de pseudos dans la liste des pseudos
 
-| buffer_filter         | `*`                  |
+| buffer_filter         | *              |
   indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées),
   une valeur vide signifie que toutes les lignes sont affichées
 
-| lag                   | `[Lag: 2.5]`         |
+| lag                   | [Lag: 2.5]     |
   indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag
   est faible)
 
-| hotlist               | `[Act: 4,2]`         |
+| hotlist               | [Act: 4,2]     |
   liste des tampons où il y a de l'activité (messages non lus)
 
-| completion            | `abc(2) def(5)`      |
+| completion            | abc(2) def(5)  |
   liste des mots pour la complétion, avec le nombre de complétions possibles
   pour chaque mot
 
-| scroll                | `-PLUS(50)-`         |
+| scroll                | -PLUS(50)-     |
   indicateur de scroll, avec le nombre de lignes sous la dernière ligne
   affichée
 |========================================
 
 La barre 'input' contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^6l,8",options="header"]
 |========================================
 | Objet (item)     | Exemple | Description
 
-| input_paste      | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` |
+| input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] |
   question à l'utilisateur pour coller des lignes
 
-| input_prompt     | `[pseudo]` |
+| input_prompt     | [pseudo] |
   prompt (pseudo pour l'extension irc)
 
-| away             | `(absent)` |
+| away             | (absent) |
   indicateur d'absence
 
-| input_search     | `[Recherche texte]` |
+| input_search     | [Recherche texte] |
   indicateur de recherche de texte
 
-| input_text       | `bla bla...` |
+| input_text       | bla bla... |
   texte entré
 |========================================
 
@@ -1090,32 +1090,133 @@ Si vous voulez restaurer la réponse CTCP standard, alors supprimez l'option :
 Les codes suivants peuvent être utilisés dans les chaînes et sont
 automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| Code           | Description                       | Valeur / exemple
-| `$clientinfo`  | liste des CTCP supportés          | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| `$version`     | version de WeeChat                | `0.3.0`
-| `$compilation` | date de compi lation WeeChat      | `Sep 13 2009`
-| `$osinfo`      | information sur l'OS              | `Linux 2.6.31 / i686`
-| `$site`        | site WeeChat                      | `http://www.weechat.org`
-| `$download`    | site WeeChat, page téléchargement | `http://www.weechat.org/download`
-| `$time`        | date/heure courante               | `Sun Sep 13 15:48:31 2009`
-| `$username`    | nom d'utilisateur sur le serveur  | `pseudo`
-| `$realname`    | nom réel sur le serveur           | `Mon nom`
+| Code         | Description                       | Valeur / exemple
+| $clientinfo  | liste des CTCP supportés          | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | version de WeeChat                | 0.3.0
+| $compilation | date de compi lation WeeChat      | Sep 13 2009
+| $osinfo      | information sur l'OS              | Linux 2.6.31 / i686
+| $site        | site WeeChat                      | http://www.weechat.org
+| $download    | site WeeChat, page téléchargement | http://www.weechat.org/download
+| $time        | date/heure courante               | Sun Sep 13 15:48:31 2009
+| $username    | nom d'utilisateur sur le serveur  | pseudo
+| $realname    | nom réel sur le serveur           | Mon nom
 |========================================
 
 Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont :
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP         | Format de réponse                 | Exemple
-| CLIENTINFO   | `$clientinfo`                     | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| FINGER       | `WeeChat $version`                | `WeeChat 0.3.0`
-| SOURCE       | `$download`                       | `http://www.weechat.org/download`
-| TIME         | `$time`                           | `Sun Sep 13 15:48:31 2009`
-| USERINFO     | `$username ($realname)`           | `pseudo (Mon nom)`
-| VERSION      | `WeeChat $version ($compilation)` | `WeeChat 0.3.0 (Sep 13 2009)`
+| CTCP         | Format de réponse               | Exemple
+| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER       | WeeChat $version                | WeeChat 0.3.0
+| SOURCE       | $download                       | http://www.weechat.org/download
+| TIME         | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO     | $username ($realname)           | pseudo (Mon nom)
+| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
+
+[[target_buffer]]
+Tampon cible pour les messages IRC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Il est possible de personnaliser le tampon cible pour les messages IRC (le
+tampon utilisé pour afficher le message) avec les options `irc.msgbuffer.*`.
+
+Pour certains messages IRC (voir la liste ci-dessous), vous pouvez utiliser
+la valeur :
+
+current::
+    tampon courant (si c'est un tampon IRC, sinon sur le tampon du serveur)
+
+private::
+    tampon privé pour le pseudo, ou le tampon courant s'il n'est pas trouvé
+    (selon l'option 'irc.look.msgbuffer_fallback')
+
+weechat::
+    tampon "core" WeeChat
+
+Par défaut, le tampon du serveur est utilisé (quand l'option n'est pas définie).
+
+Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
+
+[width="50%",cols="^1m,^1m,3",options="header"]
+|========================================
+| message | alias  | description
+| invite  |        | invité sur un canal
+| notice  |        | notice
+| wallops |        | wallops
+| 221     |        | chaîne de mode utilisateur
+| 275     | whois  | whois (connexion sécurisée)
+| 303     |        | ison
+| 305     | unaway | non absent
+| 306     | away   | absent
+| 307     | whois  | whois (pseudo enregistré)
+| 310     | whois  | whois (mode aide)
+| 311     | whois  | whois (utilisateur)
+| 312     | whois  | whois (serveur)
+| 313     | whois  | whois (opérateur)
+| 314     | whowas | whowas
+| 315     | who    | who (fin)
+| 317     | whois  | whois (inactivité)
+| 318     | whois  | whois (fin)
+| 319     | whois  | whois (canaux)
+| 320     | whois  | whois (utilisateur identifié)
+| 321     | list   | list (début)
+| 322     | list   | list (canal)
+| 323     | list   | list (fin)
+| 326     | whois  | whois (a les privilèges oper)
+| 327     | whois  | whois (machine)
+| 330     | whois  | whois (identifié comme)
+| 335     | whois  | whois (est un robot sur)
+| 338     | whois  | whois (machine)
+| 341     |        | invitation
+| 344     | reop   | reop canal
+| 345     | reop   | reop canal (fin)
+| 351     |        | version du serveur
+| 352     | who    | who
+| 369     | whowas | whowas (fin)
+| 378     | whois  | whois (connection depuis)
+| 379     | whois  | whois (utilise les modes)
+| 432     |        | pseudo erroné
+| 433     |        | pseudo déjà en cours d'utilisation
+| 438     |        | pas autorisé à changer de pseudo
+| 671     | whois  | whois (connexion sécurisée)
+| 901     |        | vous êtes maintenant identifié
+|========================================
+
+Les autres messages numériques peuvent être paramétrés de la même manière.
+
+Le message peut être préfixé par le nom du serveur pour être spécifique à un
+serveur IRC (par exemple: `freenode.whois`).
+
+Quelques exemples:
+
+* afficher le résultat de `/whois` sur le tampon privé:
+
+----------------------------------------
+/set irc.msgbuffer.whois private
+----------------------------------------
+
+* restaurer le tampon par défaut pour whois (tampon du serveur):
+
+----------------------------------------
+/unset irc.msgbuffer.whois
+----------------------------------------
+
+* afficher une invitation sur le tampon courant, pour le serveur "freenode"
+seulement :
+
+----------------------------------------
+/set irc.msgbuffer.freenode.invite current
+----------------------------------------
+
+* afficher le message "303" (ison) sur le tampon "core" WeeChat:
+
+----------------------------------------
+/set irc.msgbuffer.303 weechat
+----------------------------------------
 
 [[logger_plugin]]
 Extension Logger

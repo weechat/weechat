@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-18 19:35+0100\n"
+"POT-Creation-Date: 2009-12-31 00:57+0100\n"
 "PO-Revision-Date: 2009-12-17 08:27+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3962,6 +3962,13 @@ msgstr ""
 "%s%s: attenzione: il server \"%s\" non è stato trovato nel file di "
 "configurazione, e non è stato eliminato perché è attivo"
 
+msgid "buffer used to display message received from IRC server"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating \"%s\" => \"%s\""
+msgstr "%s%s: errore nella creazione del CTCP \"%s\" => \"%s\""
+
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
 "following variables are replaced: $version (WeeChat version), $compilation "
@@ -4122,6 +4129,11 @@ msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 "nome dell'elemento barra dov'è visualizzato il server IRC (per la barra di "
 "stato)"
+
+msgid ""
+"default target buffer for msgbuffer options when target is private and that "
+"private buffer is not found"
+msgstr ""
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -5946,3 +5958,8 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#, fuzzy
+#~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""
+#~ msgstr ""
+#~ "%s%s: errore durante la creazione del set di caratteri \"%s\" => \"%s\""

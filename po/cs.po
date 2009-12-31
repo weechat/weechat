@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-18 19:35+0100\n"
+"POT-Creation-Date: 2009-12-31 00:57+0100\n"
 "PO-Revision-Date: 2009-09-14 10:56+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3900,6 +3900,13 @@ msgstr ""
 "%s%s: varování: server \"%s\" nenalezen v konfiguračním souboru, nesmazáno z "
 "paměti, protože se stále používá"
 
+msgid "buffer used to display message received from IRC server"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytváření CTCP \"%s\" => \"%s\""
+
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
 "following variables are replaced: $version (WeeChat version), $compilation "
@@ -4059,6 +4066,11 @@ msgstr ""
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr "jméno položky pole, kde je IRC server zobrazen (pro stavový řádek)"
+
+msgid ""
+"default target buffer for msgbuffer options when target is private and that "
+"private buffer is not found"
+msgstr ""
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -5867,6 +5879,10 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#, fuzzy
+#~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""
+#~ msgstr "%s%s: chyba vytváření znakové sady \"%s\" => \"%s\""
 
 #~ msgid "%s%s: error: \"%s\""
 #~ msgstr "%s%s: chyba: \"%s\""

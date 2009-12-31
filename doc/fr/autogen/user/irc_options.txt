@@ -73,6 +73,11 @@
 ** type: entier
 ** valeurs: buffer_plugin, buffer_name (valeur par défaut: buffer_plugin)
 
+* *irc.look.msgbuffer_fallback*
+** description: tampon cible par défaut pour les options msgbuffer quand la cible est "private" et que le tampon privé n'est pas trouvé
+** type: entier
+** valeurs: current, server (valeur par défaut: current)
+
 * *irc.look.nick_completion_smart*
 ** description: complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)
 ** type: entier

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-18 19:35+0100\n"
+"POT-Creation-Date: 2009-12-31 00:57+0100\n"
 "PO-Revision-Date: 2009-09-20 13:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3843,6 +3843,13 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
+msgid "buffer used to display message received from IRC server"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating \"%s\" => \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
 "following variables are replaced: $version (WeeChat version), $compilation "
@@ -4002,6 +4009,11 @@ msgid ""
 msgstr ""
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
+msgstr ""
+
+msgid ""
+"default target buffer for msgbuffer options when target is private and that "
+"private buffer is not found"
 msgstr ""
 
 msgid ""
@@ -5805,6 +5817,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy
 #~ msgid "%s%s: error: \"%s\""

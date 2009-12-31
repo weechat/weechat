@@ -235,65 +235,65 @@ Screen is composed by following areas:
 
 Bar 'status' has following default items:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Item                  | Example              | Description
+| Item                  | Example        | Description
 
-| time                  | `[12:55]`            |
+| time                  | [12:55]        |
   time
 
-| buffer_count          | `[4]`                |
+| buffer_count          | [4]            |
   number of opened buffers
 
-| buffer_plugin         | `[irc]`              |
+| buffer_plugin         | [irc/freenode] |
   plugin of current buffer (irc plugin can add IRC server name used by buffer)
 
-| buffer_number         | `3`                  |
+| buffer_number         | 3              |
   current buffer number
 
-| buffer_name           | `freenode/#test(+n)` |
+| buffer_name           | #test(+n)      |
   current buffer name
 
-| buffer_nicklist_count | `{5}`                |
+| buffer_nicklist_count | {5}            |
   number of nicks in nicklist
 
-| buffer_filter         | `*`                  |
+| buffer_filter         | *              |
   filtering indicator: `*` means some lines are filtered (hidden), empty value
   means all lines are displayed
 
-| lag                   | `[Lag: 2.5]`         |
+| lag                   | [Lag: 2.5]     |
   lag indicator, in seconds (hidden if lag is low)
 
-| hotlist               | `[Act: 4,2]`         |
+| hotlist               | [Act: 4,2]     |
   list of buffers with activity (unread messages)
 
-| completion            | `abc(2) def(5)`      |
+| completion            | abc(2) def(5)  |
   list of words for completion, with number of possible completions for each
   word
 
-| scroll                | `-MORE(50)-`         |
+| scroll                | -MORE(50)-     |
   scroll indicator, with number of lines below last line displayed
 |========================================
 
 Bar 'input' has following default items:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^6m,8",options="header"]
 |========================================
 | Item             | Example | Description
 
-| input_paste      | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` |
+| input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] |
   question to user for pasting lines
 
-| input_prompt     | `[nick]` |
+| input_prompt     | [nick] |
   input prompt (nick for irc plugin)
 
-| away             | `(away)` |
+| away             | (away) |
   away indicator
 
-| input_search     | `[Text search]` |
+| input_search     | [Text search] |
   text search indicator
 
-| input_text       | `bla bla...` |
+| input_text       | bla bla... |
   input text
 |========================================
 
@@ -1054,32 +1054,131 @@ If you want to restore standard CTCP reply, then remove option:
 Following codes can be used in strings and are automatically expanded by WeeChat
 when replying to CTCP:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| Code           | Description                 | Value/example
-| `$clientinfo`  | list of supported CTCP      | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| `$version`     | WeeChat version             | `0.3.0`
-| `$compilation` | WeeChat compilation date    | `Sep 13 2009`
-| `$osinfo`      | info about OS               | `Linux 2.6.31 / i686`
-| `$site`        | WeeChat site                | `http://www.weechat.org`
-| `$download`    | WeeChat site, download page | `http://www.weechat.org/download`
-| `$time`        | current date/time           | `Sun Sep 13 15:48:31 2009`
-| `$username`    | username on IRC server      | `nick`
-| `$realname`    | realname on IRC server      | `My name`
+| Code         | Description                 | Value/example
+| $clientinfo  | list of supported CTCP      | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat version             | 0.3.0
+| $compilation | WeeChat compilation date    | Sep 13 2009
+| $osinfo      | info about OS               | Linux 2.6.31 / i686
+| $site        | WeeChat site                | http://www.weechat.org
+| $download    | WeeChat site, download page | http://www.weechat.org/download
+| $time        | current date/time           | Sun Sep 13 15:48:31 2009
+| $username    | username on IRC server      | nick
+| $realname    | realname on IRC server      | My name
 |========================================
 
 If CTCP options are not defined (by default), CTCP replies are:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP         | Reply format                      | Example
-| CLIENTINFO   | `$clientinfo`                     | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| FINGER       | `WeeChat $version`                | `WeeChat 0.3.0`
-| SOURCE       | `$download`                       | `http://www.weechat.org/download`
-| TIME         | `$time`                           | `Sun Sep 13 15:48:31 2009`
-| USERINFO     | `$username ($realname)`           | `nick (My name)`
-| VERSION      | `WeeChat $version ($compilation)` | `WeeChat 0.3.0 (Sep 13 2009)`
+| CTCP         | Reply format                    | Example
+| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER       | WeeChat $version                | WeeChat 0.3.0
+| SOURCE       | $download                       | http://www.weechat.org/download
+| TIME         | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO     | $username ($realname)           | nick (My name)
+| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
+
+[[target_buffer]]
+Target buffer for IRC messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible to customize target buffer for IRC messages (buffer used to
+display message) with options `irc.msgbuffer.*`.
+
+For some IRC messages (see list below), you can use value:
+
+current::
+    current buffer (if it's IRC buffer, or on server buffer by default)
+
+private::
+    private buffer for nick, or current/server buffer if not found (according
+    to option 'irc.look.msgbuffer_fallback')
+
+weechat::
+    WeeChat "core" buffer
+
+Default is server buffer (when option is not set).
+
+Non-exhaustive list of IRC messages or alias that you can customize:
+
+[width="50%",cols="^1m,^1m,3",options="header"]
+|========================================
+| message | alias  | description
+| invite  |        | invited on a channel
+| notice  |        | notice
+| wallops |        | wallops
+| 221     |        | user mode string
+| 275     | whois  | whois (secure connection)
+| 303     |        | ison
+| 305     | unaway | unaway
+| 306     | away   | away
+| 307     | whois  | whois (registered nick)
+| 310     | whois  | whois (help mode)
+| 311     | whois  | whois (user)
+| 312     | whois  | whois (server)
+| 313     | whois  | whois (operator)
+| 314     | whowas | whowas
+| 315     | who    | who (end)
+| 317     | whois  | whois (idle)
+| 318     | whois  | whois (end)
+| 319     | whois  | whois (channels)
+| 320     | whois  | whois (identified user)
+| 321     | list   | list (start)
+| 322     | list   | list (channel)
+| 323     | list   | list (end)
+| 326     | whois  | whois (has oper privs)
+| 327     | whois  | whois (host)
+| 330     | whois  | whois (logged in as)
+| 335     | whois  | whois (is a bot on)
+| 338     | whois  | whois (host)
+| 341     |        | inviting
+| 344     | reop   | channel reop
+| 345     | reop   | channel reop (end)
+| 351     |        | server version
+| 352     | who    | who
+| 369     | whowas | whowas (end)
+| 378     | whois  | whois (connecting from)
+| 379     | whois  | whois (using modes)
+| 432     |        | erroneous nickname
+| 433     |        | nickname already in use
+| 438     |        | not authorized to change nickname
+| 671     | whois  | whois (secure connection)
+| 901     |        | you are now logged in
+|========================================
+
+Other numeric commands can be customized as well.
+
+Message can be prefixed by server name to be specific to an irc server
+(for example: `freenode.whois`).
+
+Some examples:
+
+* display result of `/whois` on private buffer:
+
+----------------------------------------
+/set irc.msgbuffer.whois private
+----------------------------------------
+
+* restore default buffer for whois (server buffer):
+
+----------------------------------------
+/unset irc.msgbuffer.whois
+----------------------------------------
+
+* display invitation on current buffer, only for "freenode" server:
+
+----------------------------------------
+/set irc.msgbuffer.freenode.invite current
+----------------------------------------
+
+* display message "303" (ison) on WeeChat "core" buffer:
+
+----------------------------------------
+/set irc.msgbuffer.303 weechat
+----------------------------------------
 
 [[logger_plugin]]
 Logger plugin

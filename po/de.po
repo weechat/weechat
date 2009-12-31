@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2009-12-18 19:35+0100\n"
+"POT-Creation-Date: 2009-12-31 00:57+0100\n"
 "PO-Revision-Date: 2009-12-20 18:42+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4038,6 +4038,13 @@ msgstr ""
 "gefunden werden. Da der Server zur Zeit genutzt wird, konnte er noch nicht "
 "entfernt werden"
 
+msgid "buffer used to display message received from IRC server"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating \"%s\" => \"%s\""
+msgstr "%s%s: Fehler bei CTCP Erstellung \"%s\" => \"%s\""
+
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
 "following variables are replaced: $version (WeeChat version), $compilation "
@@ -4208,6 +4215,11 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 "Name der Bar-Item in dem der IRC Server angezeigt wird (für Status-Bar)"
+
+msgid ""
+"default target buffer for msgbuffer options when target is private and that "
+"private buffer is not found"
+msgstr ""
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -6065,3 +6077,7 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#, fuzzy
+#~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""
+#~ msgstr "%s%s: Fehler bei Zeichensatz Erstellung \"%s\" => \"%s\""

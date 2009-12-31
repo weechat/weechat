@@ -73,6 +73,11 @@
 ** tipo: intero
 ** valori: buffer_plugin, buffer_name (valore predefinito: buffer_plugin)
 
+* *irc.look.msgbuffer_fallback*
+** descrizione: default target buffer for msgbuffer options when target is private and that private buffer is not found
+** tipo: intero
+** valori: current, server (valore predefinito: current)
+
 * *irc.look.nick_completion_smart*
 ** descrizione: completamento intelligente per i nick (usando prima chi ha parlato per ultimo)
 ** tipo: intero

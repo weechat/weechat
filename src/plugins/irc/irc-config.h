@@ -35,6 +35,12 @@ enum t_irc_config_look_item_display_server
     IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME,
 };
 
+enum t_irc_config_look_msgbuffer_fallback
+{
+    IRC_CONFIG_LOOK_MSGBUFFER_FALLBACK_CURRENT = 0,
+    IRC_CONFIG_LOOK_MSGBUFFER_FALLBACK_SERVER,
+};
+
 enum t_irc_config_look_notice_as_pv
 {
     IRC_CONFIG_LOOK_NOTICE_AS_PV_AUTO = 0,
@@ -57,6 +63,7 @@ enum t_irc_config_display_away
 };
 
 extern struct t_config_file *irc_config_file;
+extern struct t_config_section *irc_config_section_msgbuffer;
 extern struct t_config_section *irc_config_section_ctcp;
 extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
@@ -76,6 +83,7 @@ extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_item_display_server;
+extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_show_away_once;

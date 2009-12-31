@@ -32,12 +32,14 @@
 #include "irc-ctcp.h"
 #include "irc-buffer.h"
 #include "irc-ignore.h"
+#include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 
 
 struct t_config_file *irc_config_file = NULL;
+struct t_config_section *irc_config_section_msgbuffer = NULL;
 struct t_config_section *irc_config_section_ctcp = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
@@ -59,6 +61,7 @@ struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
+struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_show_away_once;
@@ -549,6 +552,72 @@ irc_config_reload (void *data, struct t_config_file *config_file)
         }
         
         ptr_server = next_server;
+    }
+    
+    return rc;
+}
+
+/*
+ * irc_config_msgbuffer_create_option: set a message target buffer
+ */
+
+int
+irc_config_msgbuffer_create_option (void *data,
+                                    struct t_config_file *config_file,
+                                    struct t_config_section *section,
+                                    const char *option_name, const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    const char *pos_name;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    if (option_name)
+    {
+        ptr_option = weechat_config_search_option (config_file, section,
+                                                   option_name);
+        if (ptr_option)
+        {
+            if (value)
+                rc = weechat_config_option_set (ptr_option, value, 1);
+            else
+            {
+                weechat_config_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value)
+            {
+                pos_name = strchr (option_name, '.');
+                pos_name = (pos_name) ? pos_name + 1 : option_name;
+                
+                ptr_option = weechat_config_new_option (
+                    config_file, section,
+                    option_name, "integer",
+                    _("buffer used to display message received from IRC "
+                      "server"),
+                    "weechat|current|private", 0, 0, value, value, 0,
+                    NULL, NULL, NULL, NULL, NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+    
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error creating \"%s\" => \"%s\""),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        option_name, value);
     }
     
     return rc;
@@ -1322,6 +1391,13 @@ irc_config_init ()
         N_("name of bar item where IRC server is displayed (for status bar)"),
         "buffer_plugin|buffer_name", 0, 0, "buffer_plugin", NULL, 0, NULL, NULL,
         &irc_config_change_look_item_display_server, NULL, NULL, NULL);
+    irc_config_look_msgbuffer_fallback = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "msgbuffer_fallback", "integer",
+        N_("default target buffer for msgbuffer options when target is "
+           "private and that private buffer is not found"),
+        "current|server", 0, 0, "current", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_raw_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "raw_messages", "integer",
@@ -1487,6 +1563,20 @@ irc_config_init ()
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
     
+    /* msgbuffer */
+    ptr_section = weechat_config_new_section (irc_config_file, "msgbuffer",
+                                              1, 1,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL,
+                                              &irc_config_msgbuffer_create_option, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (irc_config_file);
+        return 0;
+    }
+    irc_config_section_msgbuffer = ptr_section;
+    
     /* CTCP */
     ptr_section = weechat_config_new_section (irc_config_file, "ctcp",
                                               1, 1,
@@ -1499,7 +1589,6 @@ irc_config_init ()
         weechat_config_free (irc_config_file);
         return 0;
     }
-    
     irc_config_section_ctcp = ptr_section;
     
     /* ignore */
@@ -1526,7 +1615,6 @@ irc_config_init ()
         weechat_config_free (irc_config_file);
         return 0;
     }
-    
     irc_config_section_server_default = ptr_section;
     
     irc_config_server_create_default_options (ptr_section);
@@ -1544,7 +1632,6 @@ irc_config_init ()
         weechat_config_free (irc_config_file);
         return 0;
     }
-    
     irc_config_section_server = ptr_section;
     
     hook_config_color_nicks_number = weechat_hook_config ("weechat.look.color_nicks_number",

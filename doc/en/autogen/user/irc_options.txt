@@ -73,6 +73,11 @@
 ** type: integer
 ** values: buffer_plugin, buffer_name (default value: buffer_plugin)
 
+* *irc.look.msgbuffer_fallback*
+** description: default target buffer for msgbuffer options when target is private and that private buffer is not found
+** type: integer
+** values: current, server (default value: current)
+
 * *irc.look.nick_completion_smart*
 ** description: smart completion for nicks (completes first with last speakers)
 ** type: integer
