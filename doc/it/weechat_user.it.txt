@@ -452,7 +452,7 @@ Tasti per la riga di comando
   esiste) nella riga di comando +
   `/input grab_key_command`
 
-| Alt + R` +
+| Alt + R |
   Elimina l'intera riga di comando +
   `/input delete_line`
 |=======================================
@@ -517,6 +517,7 @@ Tasti per buffer / finestre
 | F7 |
   Passa alla finestra precedente +
   `/window -1`
+
 | F8 |
   Passa alla finestra successiva +
   `/window +1`

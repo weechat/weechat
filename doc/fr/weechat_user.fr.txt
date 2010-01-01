@@ -590,9 +590,9 @@ Touches pour les tampons / fenêtres
 
 | Alt + W puis Alt + flèche |
   Sauter à une fenêtre avec une direction +
-  `/window up +
-  `/window down +
-  `/window left +
+  `/window up` +
+  `/window down` +
+  `/window left` +
   `/window right`
 
 | Alt + Z |

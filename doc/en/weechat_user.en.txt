@@ -441,7 +441,7 @@ Keys for command line
   line +
   `/input grab_key_command`
 
-| Alt + R` +
+| Alt + R |
   Delete entire command line +
   `/input delete_line`
 |========================================
@@ -506,6 +506,7 @@ Keys for buffers / windows
 | F7 |
   Switch to previous window +
   `/window -1`
+
 | F8 |
   Switch to next window +
   `/window +1`
