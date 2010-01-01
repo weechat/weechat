@@ -1626,7 +1626,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                         for (j = 0; j < line->data->tags_count; j++)
                         {
                             if (string_strcasecmp (HOOK_PRINT(ptr_hook, tags_array)[i],
-                                                   line->data->tags_array[j]) != 0)
+                                                   line->data->tags_array[j]) == 0)
                             {
                                 tag_found = 1;
                                 break;
