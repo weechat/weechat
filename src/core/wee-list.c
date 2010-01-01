@@ -375,6 +375,7 @@ weelist_print_log (struct t_weelist *weelist, const char *name)
          ptr_item = ptr_item->next_item)
     {
         log_printf ("  data . . . . . . . . . : '%s'",  ptr_item->data);
+        log_printf ("  user_data. . . . . . . : 0x%lx", ptr_item->user_data);
         log_printf ("  prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
         log_printf ("  next_item. . . . . . . : 0x%lx", ptr_item->next_item);
     }
