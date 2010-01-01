@@ -9,7 +9,7 @@
 
 | irc | irc_channel_nicks_hosts | nick e host del canale IRC corrente
 
-| irc | irc_channel_topic | topic del canale IRC attivo
+| irc | irc_channel_topic | argomento del canale IRC attivo
 
 | irc | irc_channels | canali su tutti i server IRC
 

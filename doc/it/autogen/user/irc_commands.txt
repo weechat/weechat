@@ -3,7 +3,7 @@
 ........................................
   informazioni sull'amministratore del server
 
-  obiettivo: server
+  destinazione: server
 ........................................
 
 &bull; *`/ame`* `messaggio`::
@@ -156,7 +156,7 @@
 ........................................
   ottieni informazioni sul server
 
-  obiettivo: nome server
+  destinazione: nome server
 ........................................
 
 &bull; *`/invite`* `nick canale`::
@@ -230,19 +230,19 @@
 &bull; *`/list`* `[canale[,canale] [server]`::
 
 ........................................
-  elenca i canali ed i loro topic
+  elenca i canali ed i loro argomenti
 
   canale: canale da elencare (è consentita un'espressione regolare)
   server: nome del server
 ........................................
 
-&bull; *`/lusers`* `[mask [obiettivo]]`::
+&bull; *`/lusers`* `[mask [destinazione]]`::
 
 ........................................
   ottiene statistiche sulla dimensione del network IRC
 
    mask: server corrispondenti alla mask
-  obiettivo: server per redirigere la richiesta
+  destinazione: server per redirigere la richiesta
 ........................................
 
 &bull; *`/me`* `messaggio`::
@@ -264,7 +264,7 @@
     p: canale privato
     s: canale segreto
     i: canale a solo-invito
-    t: topic modificabile solo dall'operatore del canale
+    t: argomento modificabile solo dall'operatore del canale
     n: nessun messaggio al canale da client esterni
     m: canale moderato
     l: imposta il limite massimo di utenti sul canale
@@ -285,7 +285,7 @@
 ........................................
   riceve il "Messaggio Del Giorno"
 
-  obiettivo: nome server
+  destinazione: nome server
 ........................................
 
 &bull; *`/msg`* `[-server server] [destinatario[,destinatario] testo`::
@@ -531,31 +531,31 @@
   server: nome server
 ........................................
 
-&bull; *`/summon`* `utente [target [canale]]`::
+&bull; *`/summon`* `utente [destinazione [canale]]`::
 
 ........................................
   invia agli utenti connessi ad un host con un server IRC in esecuzione un messaggio per invitarli ad entrare su IRC
 
   utente: nome utente
-  target: nome server
+  destinazione: nome server
   canale: nome canale
 ........................................
 
 &bull; *`/time`* `[obiettivo]`::
 
 ........................................
-  richiede l'ora locale dai server
+  richiede l'ora locale dal server
 
-  target: richiede l'ora dal server specificato
+  destinazione: richiede l'ora dal server specificato
 ........................................
 
-&bull; *`/topic`* `[canale] [topic]`::
+&bull; *`/topic`* `[canale] [argomento]`::
 
 ........................................
-  legge/modifica topic del canale
+  legge/modifica argomento del canale
 
   canale: nome canale
-   topic: nuovo topic per il canale (se il topic è "delete" allora viene eliminato)
+  argomento: nuovo argomento per il canale (se l'argomento è "-delete" allora viene eliminato)
 ........................................
 
 &bull; *`/trace`* `[obiettivo]`::
@@ -563,7 +563,7 @@
 ........................................
   trova il percorso del server specifico
 
-  obiettivo: server
+  destinazione: server
 ........................................
 
 &bull; *`/unban`* `[canale] nick [nick ...]`::
@@ -588,7 +588,7 @@
 ........................................
   lista di utenti autenticati sul server
 
-  obiettivo: server
+  destinazione: server
 ........................................
 
 &bull; *`/version`* `[server | nick]`::
@@ -632,13 +632,13 @@
       nick: nick (può essere una mask)
 ........................................
 
-&bull; *`/whowas`* `nick [,nick [,nick ...]] [count [target]]`::
+&bull; *`/whowas`* `nick [,nick [,nick ...]] [count [destinazione]]`::
 
 ........................................
   richiede informazioni su un nick non più esistente
 
       nick: nick da cercare
    count: numero di risultati da visualizzare (ricerca completa se il numero è negativo)
-  target: la risposta dovrebbe coincidere con la mask
+  destinazione: la risposta dovrebbe coincidere con la mask
 ........................................
 

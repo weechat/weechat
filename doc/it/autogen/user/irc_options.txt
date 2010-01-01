@@ -54,7 +54,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.display_old_topic*
-** descrizione: visualizza il topic del canale precedente quando viene cambiato
+** descrizione: visualizza l'argomento del canale precedente quando viene cambiato
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
@@ -74,7 +74,7 @@
 ** valori: buffer_plugin, buffer_name (valore predefinito: buffer_plugin)
 
 * *irc.look.msgbuffer_fallback*
-** descrizione: default target buffer for msgbuffer options when target is private and that private buffer is not found
+** descrizione: buffer di destinazione predefinito per le opzioni di msgbuffer quando la destinazione è privata ed il buffer privato non viene trovato
 ** tipo: intero
 ** valori: current, server (valore predefinito: current)
 
@@ -134,7 +134,7 @@
 ** valori: 1 .. 10080 (valore predefinito: 5)
 
 * *irc.look.topic_strip_colors*
-** descrizione: elimina colori nel topic (utilizzato solo quando viene visualizzato il titolo del buffer)
+** descrizione: elimina colori nell'argomento (utilizzato solo quando viene visualizzato il titolo del buffer)
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 

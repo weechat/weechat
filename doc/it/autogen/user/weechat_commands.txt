@@ -235,13 +235,13 @@
       /proxy del mioproxy
 ........................................
 
-&bull; *`/quit`* `[arguments]`::
+&bull; *`/quit`* `[argomenti]`::
 
 ........................................
   esci da WeeChat
 
-  arguments: text sent with signal "quit"
-             (for example irc plugin uses this text to send quit message to server)
+  argomenti: testo inviato con il segnale "quit"
+  	    (ad esempio il plugin irc usa questo testo per inviare il messaggio di uscita al server)
 ........................................
 
 &bull; *`/reload`* `[file [file....]]`::

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2009-12-31 00:57+0100\n"
-"PO-Revision-Date: 2009-12-17 08:27+0100\n"
+"PO-Revision-Date: 2010-01-01 15:18+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1204,15 +1204,17 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "esci da WeeChat"
 
-#, fuzzy
 msgid "[arguments]"
-msgstr "[info [argomenti]]"
+msgstr "[argomenti]"
 
 msgid ""
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
 msgstr ""
+"argomenti: testo inviato con il segnale \"quit\"\n"
+"\t    (ad esempio il plugin irc usa questo testo per inviare il messaggio di "
+"uscita al server)"
 
 msgid "reload configuration files from disk"
 msgstr "ricarica i file di configurazione da disco"
@@ -3013,7 +3015,7 @@ msgid "[target]"
 msgstr "[obiettivo]"
 
 msgid "target: server"
-msgstr "obiettivo: server"
+msgstr "destinazione: server"
 
 msgid "send a CTCP action to all channels of all connected servers"
 msgstr "invia un comando CTCP per tutti i canali dei server connessi"
@@ -3228,7 +3230,7 @@ msgid "get information describing the server"
 msgstr "ottieni informazioni sul server"
 
 msgid "target: server name"
-msgstr "obiettivo: nome server"
+msgstr "destinazione: nome server"
 
 msgid "invite a nick on a channel"
 msgstr "invita un nick su un canale"
@@ -3330,7 +3332,7 @@ msgstr ""
 "mask_server: elenco dei server devono corrispondere a questa mask"
 
 msgid "list channels and their topic"
-msgstr "elenca i canali ed i loro topic"
+msgstr "elenca i canali ed i loro argomenti"
 
 msgid "[channel[,channel] [server]]"
 msgstr "[canale[,canale] [server]"
@@ -3346,14 +3348,14 @@ msgid "get statistics about the size of the IRC network"
 msgstr "ottiene statistiche sulla dimensione del network IRC"
 
 msgid "[mask [target]]"
-msgstr "[mask [obiettivo]]"
+msgstr "[mask [destinazione]]"
 
 msgid ""
 "  mask: servers matching the mask only\n"
 "target: server for forwarding request"
 msgstr ""
 " mask: server corrispondenti alla mask\n"
-"obiettivo: server per redirigere la richiesta"
+"destinazione: server per redirigere la richiesta"
 
 msgid "send a CTCP action to the current channel"
 msgstr "invia un'azione CTCP al canale corrente"
@@ -3396,7 +3398,7 @@ msgstr ""
 "  p: canale privato\n"
 "  s: canale segreto\n"
 "  i: canale a solo-invito\n"
-"  t: topic modificabile solo dall'operatore del canale\n"
+"  t: argomento modificabile solo dall'operatore del canale\n"
 "  n: nessun messaggio al canale da client esterni\n"
 "  m: canale moderato\n"
 "  l: imposta il limite massimo di utenti sul canale\n"
@@ -3775,7 +3777,7 @@ msgstr ""
 "messaggio per invitarli ad entrare su IRC"
 
 msgid "user [target [channel]]"
-msgstr "utente [target [canale]]"
+msgstr "utente [destinazione [canale]]"
 
 msgid ""
 "   user: username\n"
@@ -3783,28 +3785,28 @@ msgid ""
 "channel: channel name"
 msgstr ""
 "utente: nome utente\n"
-"target: nome server\n"
+"destinazione: nome server\n"
 "canale: nome canale"
 
 msgid "query local time from server"
-msgstr "richiede l'ora locale dai server"
+msgstr "richiede l'ora locale dal server"
 
 msgid "target: query time from specified server"
-msgstr "target: richiede l'ora dal server specificato"
+msgstr "destinazione: richiede l'ora dal server specificato"
 
 msgid "get/set channel topic"
-msgstr "legge/modifica topic del canale"
+msgstr "legge/modifica argomento del canale"
 
 msgid "[channel] [topic]"
-msgstr "[canale] [topic]"
+msgstr "[canale] [argomento]"
 
 msgid ""
 "channel: channel name\n"
 "topic: new topic for channel (if topic is \"-delete\" then topic is deleted)"
 msgstr ""
 "canale: nome canale\n"
-" topic: nuovo topic per il canale (se il topic è \"delete\" allora viene "
-"eliminato)"
+"argomento: nuovo argomento per il canale (se l'argomento è \"-delete\" "
+"allora viene eliminato)"
 
 msgid "find the route to specific server"
 msgstr "trova il percorso del server specifico"
@@ -3886,7 +3888,7 @@ msgid "ask for information about a nickname which no longer exists"
 msgstr "richiede informazioni su un nick non più esistente"
 
 msgid "nickname [,nickname [,nickname ...]] [count [target]]"
-msgstr "nick [,nick [,nick ...]] [count [target]]"
+msgstr "nick [,nick [,nick ...]] [count [destinazione]]"
 
 msgid ""
 "nickname: nickname to search\n"
@@ -3896,7 +3898,7 @@ msgstr ""
 "    nick: nick da cercare\n"
 " count: numero di risultati da visualizzare (ricerca completa se il numero è "
 "negativo)\n"
-"target: la risposta dovrebbe coincidere con la mask"
+"destinazione: la risposta dovrebbe coincidere con la mask"
 
 #, c-format
 msgid "%s%s: too few arguments for \"%s\" command"
@@ -3940,7 +3942,7 @@ msgid "nicks and hostnames of current IRC channel"
 msgstr "nick e host del canale IRC corrente"
 
 msgid "topic of current IRC channel"
-msgstr "topic del canale IRC attivo"
+msgstr "argomento del canale IRC attivo"
 
 msgid "channels on all IRC servers"
 msgstr "canali su tutti i server IRC"
@@ -3963,11 +3965,11 @@ msgstr ""
 "configurazione, e non è stato eliminato perché è attivo"
 
 msgid "buffer used to display message received from IRC server"
-msgstr ""
+msgstr "buffer utilizzato per visualizzare i messaggi ricevuti dal server IRC"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating \"%s\" => \"%s\""
-msgstr "%s%s: errore nella creazione del CTCP \"%s\" => \"%s\""
+msgstr "%s%s: errore nella creazione \"%s\" => \"%s\""
 
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
@@ -4112,7 +4114,7 @@ msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "visualizza le modalità nick nell'elemento barra \"input_prompt\""
 
 msgid "display old topic when channel topic is changed"
-msgstr "visualizza il topic del canale precedente quando viene cambiato"
+msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
 
 msgid "hide password displayed by nickserv"
 msgstr "nascondi password visualizzata da nickserv"
@@ -4134,6 +4136,8 @@ msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
 msgstr ""
+"buffer di destinazione predefinito per le opzioni di msgbuffer quando la "
+"destinazione è privata ed il buffer privato non viene trovato"
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -4167,7 +4171,7 @@ msgstr ""
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
-"elimina colori nel topic (utilizzato solo quando viene visualizzato il "
+"elimina colori nell'argomento (utilizzato solo quando viene visualizzato il "
 "titolo del buffer)"
 
 msgid "color for text in join messages"
@@ -4400,15 +4404,15 @@ msgstr "%s%s: comando \"%s\" ricevuto senza alcun canale"
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
-msgstr "%s%s%s%s ha cambiato il topic per %s%s%s da \"%s%s\" a \"%s%s\""
+msgstr "%s%s%s%s ha cambiato l'argomento per %s%s%s da \"%s%s\" a \"%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
-msgstr "%s%s%s%s ha cambiato topic per %s%s%s in \"%s%s\""
+msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
-msgstr "%s%s%s%s ha rimosso il topic per %s%s%s"
+msgstr "%s%s%s%s ha rimosso l'argomento per %s%s%s"
 
 #, c-format
 msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
@@ -4469,19 +4473,19 @@ msgstr "%sCanale %s%s%s creato %s"
 
 #, c-format
 msgid "%sNo topic set for channel %s%s"
-msgstr "%sNessun topic impostato per il canale %s%s"
+msgstr "%sNessun argomento impostato per il canale %s%s"
 
 #, c-format
 msgid "%sTopic for %s%s%s is \"%s%s\""
-msgstr "%sIl topic per %s%s%s è \"%s%s\""
+msgstr "%sL'argomento per %s%s%s è \"%s%s\""
 
 #, c-format
 msgid "%sTopic set by %s%s%s on %s"
-msgstr "%sTopic impostato da %s%s%s il %s"
+msgstr "%sArgomento impostato da %s%s%s il %s"
 
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s on %s"
-msgstr "%sTopic per %s%s%s impostato da %s%s%s il %s"
+msgstr "%sArgomento per %s%s%s impostato da %s%s%s il %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
