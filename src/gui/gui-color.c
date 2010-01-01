@@ -43,12 +43,12 @@ struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
 
 
 /*
- * gui_color_search_config_int: search a color with configuration option name
- *                              return color found (number >= 0), -1 if not found
+ * gui_color_search_config: search a color with configuration option name
+ *                          return color string, NULL if not found
  */
 
-int
-gui_color_search_config_int (const char *color_name)
+const char *
+gui_color_search_config (const char *color_name)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -63,13 +63,20 @@ gui_color_search_config_int (const char *color_name)
                  ptr_option = ptr_option->next_option)
             {
                 if (string_strcasecmp (ptr_option->name, color_name) == 0)
-                    return ptr_option->min;
+                {
+                    if (ptr_option->min < 0)
+                    {
+                        return gui_color_get_custom (
+                            gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                    }
+                    return GUI_COLOR(ptr_option->min);
+                }
             }
         }
     }
     
     /* color not found */
-    return -1;
+    return NULL;
 }
 
 /*

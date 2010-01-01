@@ -215,16 +215,16 @@ plugin_api_prefix (const char *prefix)
 const char *
 plugin_api_color (const char *color_name)
 {
-    int num_color;
+    const char *str_color;
     
     if (!color_name)
         return GUI_NO_COLOR;
     
     /* name is a weechat color option ? => then return this color */
-    num_color = gui_color_search_config_int (color_name);
-    if (num_color >= 0)
-        return GUI_COLOR(num_color);
-
+    str_color = gui_color_search_config (color_name);
+    if (str_color)
+        return str_color;
+    
     return gui_color_get_custom (color_name);
 }
 
