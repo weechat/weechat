@@ -2234,6 +2234,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *string;
     int arg_nick, arg_text;
+    struct t_irc_channel *ptr_channel;
     
     IRC_GET_SERVER(buffer);
     
@@ -2255,9 +2256,12 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         
         string = irc_color_decode (argv_eol[arg_text],
                                    weechat_config_boolean (irc_config_network_colors_receive));
-        weechat_printf (ptr_server->buffer,
-                        "Notice -> %s%s%s: %s",
-                        IRC_COLOR_CHAT_NICK,
+        ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
+        weechat_printf ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
+                        "%sNotice -> %s%s%s: %s",
+                        weechat_prefix ("network"),
+                        (irc_channel_is_channel (argv[arg_nick])) ?
+                        IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
                         argv[arg_nick],
                         IRC_COLOR_CHAT,
                         (string) ? string : argv_eol[arg_text]);
