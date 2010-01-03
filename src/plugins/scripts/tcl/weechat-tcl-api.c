@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2009 Dmitry Kobylin <fnfal@academ.tsc.ru>
+ * Copyright (c) 2008-2010 by Dmitry Kobylin <fnfal@academ.tsc.ru>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
