@@ -5218,25 +5218,35 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-struct t_hook *weechat_hook_connect (const char *address,
+struct t_hook *weechat_hook_connect (const char *proxy,
+                                     const char *address,
                                      int port,
                                      int sock,
                                      int ipv6,
                                      void *gnutls_sess,
+                                     void *gnutls_cb,
+                                     int gnutls_dhkey_size,
                                      const char *local_hostname,
                                      int (*callback)(void *data,
                                                      int status,
+                                                     int gnutls_rc,
+                                                     const char *error,
                                                      const char *ip_address),
                                      void *callback_data);
 ----------------------------------------
 
 Paramètres :
 
+* 'proxy': nom du proxy à utiliser pour la connexion (optionnel, NULL signifie
+  une connexion sans proxy)
 * 'address' : nom ou adresse IP de la machine à laquelle se connecter
 * 'port' : numéro de port
 * 'sock' : socket utilisée pour la connexion
 * 'ipv6' : 1 pour utiliser IPv6, 0 pour utiliser IPv4
 * 'gnutls_sess' : GnuTLS session (optionnel)
+* 'gnutls_cb' : callback pour GnuTLS (optionnel)
+* 'gnutls_dhkey_size': taille de clé utilisée pour l'échange de clé
+  Diffie-Hellman (GnuTLS)
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres :
 ** 'void *data' : pointeur
@@ -5251,6 +5261,8 @@ Paramètres :
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR' : erreur avec la
     "poignée de main" GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR' : mémoire insuffisante
+** 'gnutls_rc' : valeur retour de 'gnutls_handshake()'
+** 'const char *error' : valeur retour de 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address' : adresse IP trouvée
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -5264,7 +5276,8 @@ Exemple en C :
 [source,C]
 ----------------------------------------
 int
-my_connect_cb (void *data, int status, const char *ip_address)
+my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
+               const char *ip_address)
 {
     switch (status)
     {
@@ -5299,8 +5312,11 @@ my_connect_cb (void *data, int status, const char *ip_address)
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_connect_hook = weechat_hook_connect ("my.server.org", 1234,
-                                                       sock, 0, NULL, NULL,
+struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
+                                                       "my.server.org", 1234,
+                                                       sock, 0,
+                                                       NULL, NULL, 0, /* GnuTLS */
+                                                       NULL,
                                                        &my_connect_cb, NULL);
 ----------------------------------------
 
@@ -5309,11 +5325,11 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_connect(address, port, sock, ipv6, local_hostname,
+hook = weechat.hook_connect(proxy, address, port, sock, ipv6, local_hostname,
     callback, callback_data)
 
 # exemple
-def my_connect_cb(data, status, ip_address):
+def my_connect_cb(data, status, gnutls_rc, error, ip_address):
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -5334,7 +5350,8 @@ def my_connect_cb(data, status, ip_address):
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("my.server.org", 1234, sock, 0, "", "my_connect_cb", "")
+hook = weechat.hook_connect("", "my.server.org", 1234, sock, 0, "",
+                            "my_connect_cb", "")
 ----------------------------------------
 
 weechat_hook_print
