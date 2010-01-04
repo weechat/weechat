@@ -4858,8 +4858,8 @@ weechat_python_api_nicklist_remove_nick (PyObject *self, PyObject *args)
         PYTHON_RETURN_ERROR;
     }
     
-    weechat_nicklist_remove_group (script_str2ptr (buffer),
-                                   script_str2ptr (nick));
+    weechat_nicklist_remove_nick (script_str2ptr (buffer),
+                                  script_str2ptr (nick));
     
     PYTHON_RETURN_OK;
 }
