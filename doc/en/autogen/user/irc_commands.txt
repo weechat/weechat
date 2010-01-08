@@ -11,7 +11,7 @@
 ........................................
   execute a command on all channels of all connected servers
 
-   -current: execute command for channels of curent server only
+   -current: execute command for channels of current server only
    -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
     command: command to execute
   arguments: arguments for command

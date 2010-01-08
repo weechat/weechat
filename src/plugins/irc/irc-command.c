@@ -3912,7 +3912,7 @@ irc_command_init ()
                           N_("[-current] [-exclude=channel[,channel...]] "
                              "command [arguments]"),
                           N_(" -current: execute command for channels of "
-                             "curent server only\n"
+                             "current server only\n"
                              " -exclude: exclude some channels ('*' is "
                              "allowed at beginning or end of channel name, to "
                              "exclude many channels)\n"
