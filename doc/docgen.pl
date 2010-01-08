@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Documentation generator for WeeChat: build XML include files with commands,
+# Documentation generator for WeeChat: build include files with commands,
 # options, infos and completions for WeeChat core and plugins.
 #
 # Instructions to build config files yourself in WeeChat directories (replace
@@ -26,7 +26,7 @@
 #           /set plugins.var.perl.docgen.path "~/src/weechat/doc"
 #     3.  run docgen command:
 #           /docgen
-# XML files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language)
+# Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language)
 #
 # Script written on 2008-08-22 by FlashCode <flashcode@flashtux.org>
 #

@@ -132,10 +132,10 @@ SET(CPACK_SOURCE_IGNORE_FILES "/\\\\.git" "/build/" "/m4/"
   "/config\\\\.h.in$" "/config\\\\.log$" "/config\\\\.rpath$"
   "/config\\\\.status$" "/config\\\\.sub$" "/configure$" "/depcomp$"
   "/install-sh$" "/missing$" "/intl/" "/libtool$" "/\\\\.libs/"
-  "/ltmain\\\\.sh$" "/\\\\.deps/" "/date\\\\.xml$" "/html/" "/html1/"
-  "\\\\.pdf$" "/Makefile$" "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$"
-  "\\\\.gmo$" "~$" "\\\\.o$" "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$"
-  "\\\\.Plo$" "/weechat-curses$" "/weechat-gtk$"
+  "/ltmain\\\\.sh$" "/\\\\.deps/" "/html/" "/html1/" "/Makefile$"
+  "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$" "\\\\.gmo$" "~$" "\\\\.o$"
+  "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat-curses$"
+  "/weechat-gtk$"
 )
 
 INCLUDE(CPack)

@@ -9,13 +9,11 @@
 *.lo
 *.m4
 *.o
-*.pdf
 *.Plo
 *.Po
 *.so
 *.so.0
 *.so.0.0.0
-*.xsl
 
 ABOUT-NLS
 autom4te*
@@ -27,7 +25,6 @@ config.rpath
 config.status
 config.sub
 configure
-date.xml
 debian/*.log
 depcomp
 insert-header.sin
