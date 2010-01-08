@@ -45,6 +45,37 @@
 
 
 /*
+ * irc_command_mode_nicks: send mode change for many nicks on a channel
+ */
+
+void
+irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
+                        const char *set, const char *mode, int argc, char **argv)
+{
+    int i, length;
+    char *command;
+    
+    length = 0;
+    for (i = 1; i < argc; i++)
+        length += strlen (argv[i]) + 1;
+    length += strlen (channel) + (argc * strlen (mode)) + 32;
+    command = malloc (length);
+    if (command)
+    {
+        snprintf (command, length, "MODE %s %s", channel, set);
+        for (i = 1; i < argc; i++)
+            strcat (command, mode);
+        for (i = 1; i < argc; i++)
+        {
+            strcat (command, " ");
+            strcat (command, argv[i]);
+        }
+        irc_server_sendf (server, 0, "%s", command);
+        free (command);
+    }
+}
+
+/*
  * irc_command_admin: find information about the administrator of the server
  */
 
@@ -64,6 +95,229 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
     else
         irc_server_sendf (ptr_server, 0, "ADMIN");
     
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_exec_all_channels: execute a command on all channels
+ *                                if server is NULL, command is executed on all
+ *                                channels of all connected servers
+ */
+
+void
+irc_command_exec_all_channels (struct t_irc_server *server,
+                               const char *exclude_channels,
+                               const char *command)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    char **channels, *str_command;
+    int num_channels, length, excluded, i;
+    
+    if (!command || !command[0])
+        return;
+
+    if (command[0] != '/')
+    {
+        length = 1 + strlen (command) + 1;
+        str_command = malloc (length);
+        snprintf (str_command, length, "/%s", command);
+    }
+    else
+        str_command = strdup (command);
+    
+    if (!str_command)
+        return;
+    
+    channels = (exclude_channels && exclude_channels[0]) ?
+        weechat_string_split (exclude_channels, ",", 0, 0, &num_channels) : NULL;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (!server || (ptr_server == server))
+        {
+            if (ptr_server->is_connected)
+            {
+                for (ptr_channel = ptr_server->channels; ptr_channel;
+                     ptr_channel = ptr_channel->next_channel)
+                {
+                    if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                    {
+                        excluded = 0;
+                        if (channels)
+                        {
+                            for (i = 0; i < num_channels; i++)
+                            {
+                                if (weechat_string_match (ptr_channel->name,
+                                                          channels[i], 0))
+                                {
+                                    excluded = 1;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!excluded)
+                        {
+                            weechat_command (ptr_channel->buffer, str_command);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    free (str_command);
+    if (channels)
+        weechat_string_free_split (channels);
+}
+
+/*
+ * irc_command_allchan: execute a command on all channels of all connected
+ *                      servers
+ */
+
+int
+irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
+{
+    int i, current_server;
+    const char *ptr_exclude_channels, *ptr_command;
+    
+    IRC_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 1)
+    {
+        current_server = 0;
+        ptr_exclude_channels = NULL;
+        ptr_command = argv_eol[1];
+        for (i = 1; i < argc; i++)
+        {
+            if (weechat_strcasecmp (argv[i], "-current") == 0)
+            {
+                current_server = 1;
+                ptr_command = argv_eol[i + 1];
+            }
+            else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+            {
+                ptr_exclude_channels = argv[i] + 9;
+                ptr_command = argv_eol[i + 1];
+            }
+            else
+                break;
+        }
+        
+        if (ptr_command && ptr_command[0])
+        {
+            weechat_buffer_set (NULL, "hotlist", "-");
+            irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
+                                           ptr_exclude_channels,
+                                           ptr_command);
+            weechat_buffer_set (NULL, "hotlist", "+");
+        }
+    }
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_exec_all_servers: execute a command on all connected channels
+ */
+
+void
+irc_command_exec_all_servers (const char *exclude_servers, const char *command)
+{
+    struct t_irc_server *ptr_server;
+    char **servers, *str_command;
+    int num_servers, length, excluded, i;
+    
+    if (!command || !command[0])
+        return;
+
+    if (command[0] != '/')
+    {
+        length = 1 + strlen (command) + 1;
+        str_command = malloc (length);
+        snprintf (str_command, length, "/%s", command);
+    }
+    else
+        str_command = strdup (command);
+    
+    if (!str_command)
+        return;
+    
+    servers = (exclude_servers && exclude_servers[0]) ?
+        weechat_string_split (exclude_servers, ",", 0, 0, &num_servers) : NULL;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected)
+        {
+            excluded = 0;
+            if (servers)
+            {
+                for (i = 0; i < num_servers; i++)
+                {
+                    if (weechat_string_match (ptr_server->name,
+                                              servers[i], 0))
+                    {
+                        excluded = 1;
+                        break;
+                    }
+                }
+            }
+            if (!excluded)
+            {
+                weechat_command (ptr_server->buffer, str_command);
+            }
+        }
+    }
+    
+    free (str_command);
+    if (servers)
+        weechat_string_free_split (servers);
+}
+
+/*
+ * irc_command_allserv: execute a command on all connected servers
+ */
+
+int
+irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
+{
+    int i;
+    const char *ptr_exclude_servers, *ptr_command;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    if (argc > 1)
+    {
+        ptr_exclude_servers = NULL;
+        ptr_command = argv_eol[1];
+        for (i = 1; i < argc; i++)
+        {
+            if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+            {
+                ptr_exclude_servers = argv[i] + 9;
+                ptr_command = argv_eol[i + 1];
+            }
+            else
+                break;
+        }
+        
+        if (ptr_command && ptr_command[0])
+        {
+            weechat_buffer_set (NULL, "hotlist", "-");
+            irc_command_exec_all_servers (ptr_exclude_servers, ptr_command);
+            weechat_buffer_set (NULL, "hotlist", "+");
+        }
+    }
     return WEECHAT_RC_OK;
 }
 
@@ -110,141 +364,6 @@ irc_command_me_all_channels (struct t_irc_server *server, const char *arguments)
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             irc_command_me_channel (server, ptr_channel, arguments);
     }
-}
-
-/*
- * irc_command_mode_nicks: send mode change for many nicks on a channel
- */
-
-void
-irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
-                        const char *set, const char *mode, int argc, char **argv)
-{
-    int i, length;
-    char *command;
-    
-    length = 0;
-    for (i = 1; i < argc; i++)
-        length += strlen (argv[i]) + 1;
-    length += strlen (channel) + (argc * strlen (mode)) + 32;
-    command = malloc (length);
-    if (command)
-    {
-        snprintf (command, length, "MODE %s %s", channel, set);
-        for (i = 1; i < argc; i++)
-            strcat (command, mode);
-        for (i = 1; i < argc; i++)
-        {
-            strcat (command, " ");
-            strcat (command, argv[i]);
-        }
-        irc_server_sendf (server, 0, "%s", command);
-        free (command);
-    }
-}
-
-/*
- * irc_command_ame: send a ctcp action to all channels of all connected servers
- */
-
-int
-irc_command_ame (void *data, struct t_gui_buffer *buffer, int argc,
-                 char **argv, char **argv_eol)
-{
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
-    
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
-    (void) argv;
-    
-    if (argc > 1)
-    {
-        weechat_buffer_set (NULL, "hotlist", "-");
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            if (ptr_server->is_connected)
-            {
-                for (ptr_channel = ptr_server->channels; ptr_channel;
-                     ptr_channel = ptr_channel->next_channel)
-                {
-                    if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                        irc_command_me_channel (ptr_server, ptr_channel,
-                                                argv_eol[1]);
-                }
-            }
-        }
-        weechat_buffer_set (NULL, "hotlist", "+");
-    }
-    return WEECHAT_RC_OK;
-}
-
-/*
- * irc_command_amsg: send message to all channels of all connected servers
- */
-
-int
-irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
-                  char **argv, char **argv_eol)
-{
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
-    char *string;
-    
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
-    (void) argv;
-    
-    if (argc > 1)
-    {
-        weechat_buffer_set (NULL, "hotlist", "-");
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            if (ptr_server->is_connected)
-            {
-                for (ptr_channel = ptr_server->channels; ptr_channel;
-                     ptr_channel = ptr_channel->next_channel)
-                {
-                    if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                    {
-                        irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
-                                          ptr_channel->name, argv_eol[1]);
-                        ptr_nick = irc_nick_search (ptr_channel,
-                                                    ptr_server->nick);
-                        if (ptr_nick)
-                        {
-                            string = irc_color_decode (argv_eol[1],
-                                                       weechat_config_boolean (irc_config_network_colors_receive));
-                            weechat_printf (ptr_channel->buffer, "%s%s",
-                                            irc_nick_as_prefix (ptr_nick,
-                                                                NULL, NULL),
-                                            (string) ? string : argv_eol[1]);
-                            if (string)
-                                free (string);
-                        }
-                        else
-                        {
-                            weechat_printf (ptr_server->buffer,
-                                            _("%s%s: cannot find nick for "
-                                              "sending message"),
-                                            weechat_prefix ("error"),
-                                            IRC_PLUGIN_NAME);
-                        }
-                    }
-                }
-            }
-        }
-        weechat_buffer_set (NULL, "hotlist", "+");
-    }
-    else
-        return WEECHAT_RC_ERROR;
-    
-    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3787,18 +3906,42 @@ irc_command_init ()
                           N_("[target]"),
                           N_("target: server"),
                           NULL, &irc_command_admin, NULL);
-    weechat_hook_command ("ame",
-                          N_("send a CTCP action to all channels of all "
+    weechat_hook_command ("allchan",
+                          N_("execute a command on all channels of all "
                              "connected servers"),
-                          N_("message"),
-                          N_("message: message to send"),
-                          NULL, &irc_command_ame, NULL);
-    weechat_hook_command ("amsg",
-                          N_("send message to all channels of all connected "
-                             "servers"),
-                          N_("text"),
-                          N_("text: text to send"),
-                          NULL, &irc_command_amsg, NULL);
+                          N_("[-current] [-exclude=channel[,channel...]] "
+                             "command [arguments]"),
+                          N_(" -current: execute command for channels of "
+                             "curent server only\n"
+                             " -exclude: exclude some channels ('*' is "
+                             "allowed at beginning or end of channel name, to "
+                             "exclude many channels)\n"
+                             "  command: command to execute\n"
+                             "arguments: arguments for command\n\n"
+                             "Examples:\n"
+                             "  execute '/me is testing' on all channels:\n"
+                             "    /allchan me is testing\n"
+                             "  say 'hello' everywhere but not on #weechat:\n"
+                             "    /allchan -exclude=#weechat msg * hello\n"
+                             "  say 'hello' everywhere but not on #weechat "
+                             "and channels beginning with #linux:\n"
+                             "    /allchan -exclude=#weechat,#linux* msg * hello"),
+                          NULL, &irc_command_allchan, NULL);
+    weechat_hook_command ("allserv",
+                          N_("execute a command on all connected servers"),
+                          N_("[-exclude=server[,server...]] "
+                             "command [arguments]"),
+                          N_(" -exclude: exclude some servers ('*' is "
+                             "allowed at beginning or end of server name, to "
+                             "exclude many servers)\n"
+                             "  command: command to execute\n"
+                             "arguments: arguments for command\n\n"
+                             "Examples:\n"
+                             "  change nick on all servers:\n"
+                             "    /allserv nick newnick\n"
+                             "  set away on all servers:\n"
+                             "    /allserv away I'm away"),
+                          NULL, &irc_command_allserv, NULL);
     weechat_hook_command ("away",
                           N_("toggle away status"),
                           N_("[-all] [message]"),

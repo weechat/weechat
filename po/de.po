@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-03 15:15+0100\n"
+"POT-Creation-Date: 2010-01-07 21:55+0100\n"
 "PO-Revision-Date: 2010-01-03 15:15+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2858,12 +2858,6 @@ msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: Neuer Channel konnte nicht alloziert werden"
 
 #, c-format
-msgid "%s%s: cannot find nick for sending message"
-msgstr ""
-"%s%s: Kann den Nicknamen nicht finden, an den die Nachricht gesendet werden "
-"soll"
-
-#, c-format
 msgid "%s: future away: %s"
 msgstr "%s: Künftige Abwesenheit: %s"
 
@@ -3080,23 +3074,49 @@ msgstr "[Ziel]"
 msgid "target: server"
 msgstr "Ziel: Server"
 
-msgid "send a CTCP action to all channels of all connected servers"
+#, fuzzy
+msgid "execute a command on all channels of all connected servers"
 msgstr "Nachricht an alle Channels aller verbundenen Server schicken"
 
-msgid "message"
-msgstr "Nachricht"
+msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
+msgstr ""
 
-msgid "message: message to send"
-msgstr "zu sendende Nachricht"
+msgid ""
+" -current: execute command for channels of curent server only\n"
+" -exclude: exclude some channels ('*' is allowed at beginning or end of "
+"channel name, to exclude many channels)\n"
+"  command: command to execute\n"
+"arguments: arguments for command\n"
+"\n"
+"Examples:\n"
+"  execute '/me is testing' on all channels:\n"
+"    /allchan me is testing\n"
+"  say 'hello' everywhere but not on #weechat:\n"
+"    /allchan -exclude=#weechat msg * hello\n"
+"  say 'hello' everywhere but not on #weechat and channels beginning with "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * hello"
+msgstr ""
 
-msgid "send message to all channels of all connected servers"
+#, fuzzy
+msgid "execute a command on all connected servers"
 msgstr "Nachricht an alle Channels aller verbundener Server schicken"
 
-msgid "text"
-msgstr "Text"
+msgid "[-exclude=server[,server...]] command [arguments]"
+msgstr ""
 
-msgid "text: text to send"
-msgstr "Text: zu sendender Text"
+msgid ""
+" -exclude: exclude some servers ('*' is allowed at beginning or end of "
+"server name, to exclude many servers)\n"
+"  command: command to execute\n"
+"arguments: arguments for command\n"
+"\n"
+"Examples:\n"
+"  change nick on all servers:\n"
+"    /allserv nick newnick\n"
+"  set away on all servers:\n"
+"    /allserv away I'm away"
+msgstr ""
 
 msgid "toggle away status"
 msgstr "Abwesenheitsnachricht ein-/ausschalten"
@@ -3430,6 +3450,12 @@ msgstr ""
 
 msgid "send a CTCP action to the current channel"
 msgstr "Eine CTCP ACTION an den aktuellen Channel senden"
+
+msgid "message"
+msgstr "Nachricht"
+
+msgid "message: message to send"
+msgstr "zu sendende Nachricht"
 
 msgid "change channel or user mode"
 msgstr "Modus von einem Channel oder User ändern"
@@ -3925,6 +3951,9 @@ msgid ""
 "send a message to all currently connected users who have set the 'w' user "
 "mode for themselves"
 msgstr "Nachricht an alle User schicken, die den 'w'-Mode gesetzt haben"
+
+msgid "text"
+msgstr "Text"
 
 msgid "text to send"
 msgstr "zu sendender Text"
@@ -6080,6 +6109,14 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "%s%s: cannot find nick for sending message"
+#~ msgstr ""
+#~ "%s%s: Kann den Nicknamen nicht finden, an den die Nachricht gesendet "
+#~ "werden soll"
+
+#~ msgid "text: text to send"
+#~ msgstr "Text: zu sendender Text"
 
 #, fuzzy
 #~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""

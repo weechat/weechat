@@ -6,20 +6,39 @@
   destinazione: server
 ........................................
 
-&bull; *`/ame`* `messaggio`::
+&bull; *`/allchan`* `[-current] [-exclude=channel[,channel...]] command [arguments]`::
 
 ........................................
-  invia un comando CTCP per tutti i canali dei server connessi
+  execute a command on all channels of all connected servers
 
-  messaggio: messaggio da inviare
+   -current: execute command for channels of curent server only
+   -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
+    command: command to execute
+  arguments: arguments for command
+  
+  Examples:
+    execute '/me is testing' on all channels:
+      /allchan me is testing
+    say 'hello' everywhere but not on #weechat:
+      /allchan -exclude=#weechat msg * hello
+    say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+      /allchan -exclude=#weechat,#linux* msg * hello
 ........................................
 
-&bull; *`/amsg`* `testo`::
+&bull; *`/allserv`* `[-exclude=server[,server...]] command [arguments]`::
 
 ........................................
-  invia un messaggio a tutti i canali di tutti dei server connessi
+  execute a command on all connected servers
 
-  testo: testo da inviare
+   -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
+    command: command to execute
+  arguments: arguments for command
+  
+  Examples:
+    change nick on all servers:
+      /allserv nick newnick
+    set away on all servers:
+      /allserv away I'm away
 ........................................
 
 &bull; *`/away`* `[-all] [messaggio]`::

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-03 15:15+0100\n"
+"POT-Creation-Date: 2010-01-07 21:55+0100\n"
 "PO-Revision-Date: 2010-01-03 15:15+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2755,10 +2755,6 @@ msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: nemohu přidělit nový kanál"
 
 #, c-format
-msgid "%s%s: cannot find nick for sending message"
-msgstr "%s%s: nemohu najít přezdívku pro poslání zprávy"
-
-#, c-format
 msgid "%s: future away: %s"
 msgstr "%s: Budoucí zpráva o nepřítomnosit: %s"
 
@@ -2969,23 +2965,49 @@ msgstr "[cíl]"
 msgid "target: server"
 msgstr "cíl: server"
 
-msgid "send a CTCP action to all channels of all connected servers"
+#, fuzzy
+msgid "execute a command on all channels of all connected servers"
 msgstr "poslat CTCP akci na všechny kanály všech připojených serverů"
 
-msgid "message"
-msgstr "zpráva"
+msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
+msgstr ""
 
-msgid "message: message to send"
-msgstr "zpráva: zpráva, která se má poslat"
+msgid ""
+" -current: execute command for channels of curent server only\n"
+" -exclude: exclude some channels ('*' is allowed at beginning or end of "
+"channel name, to exclude many channels)\n"
+"  command: command to execute\n"
+"arguments: arguments for command\n"
+"\n"
+"Examples:\n"
+"  execute '/me is testing' on all channels:\n"
+"    /allchan me is testing\n"
+"  say 'hello' everywhere but not on #weechat:\n"
+"    /allchan -exclude=#weechat msg * hello\n"
+"  say 'hello' everywhere but not on #weechat and channels beginning with "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * hello"
+msgstr ""
 
-msgid "send message to all channels of all connected servers"
+#, fuzzy
+msgid "execute a command on all connected servers"
 msgstr "poslat zprávu na všechny kanály všech připojených serverů"
 
-msgid "text"
-msgstr "text"
+msgid "[-exclude=server[,server...]] command [arguments]"
+msgstr ""
 
-msgid "text: text to send"
-msgstr "text: texk k poslání"
+msgid ""
+" -exclude: exclude some servers ('*' is allowed at beginning or end of "
+"server name, to exclude many servers)\n"
+"  command: command to execute\n"
+"arguments: arguments for command\n"
+"\n"
+"Examples:\n"
+"  change nick on all servers:\n"
+"    /allserv nick newnick\n"
+"  set away on all servers:\n"
+"    /allserv away I'm away"
+msgstr ""
 
 msgid "toggle away status"
 msgstr "přepnout status nepřítomnosti"
@@ -3296,6 +3318,12 @@ msgstr ""
 
 msgid "send a CTCP action to the current channel"
 msgstr "poslat CTCP akci na aktuální kanál"
+
+msgid "message"
+msgstr "zpráva"
+
+msgid "message: message to send"
+msgstr "zpráva: zpráva, která se má poslat"
 
 msgid "change channel or user mode"
 msgstr "změní mód kanálu nebo uživatele"
@@ -3791,6 +3819,9 @@ msgid ""
 msgstr ""
 "poslat zprávu všem aktuálně připojeným uživatelům, kteří mají u sebe "
 "nastaven uživatelský mód 'w'"
+
+msgid "text"
+msgstr "text"
 
 msgid "text to send"
 msgstr "text pro poslání"
@@ -5879,6 +5910,12 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "%s%s: cannot find nick for sending message"
+#~ msgstr "%s%s: nemohu najít přezdívku pro poslání zprávy"
+
+#~ msgid "text: text to send"
+#~ msgstr "text: texk k poslání"
 
 #, fuzzy
 #~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""

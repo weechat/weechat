@@ -1,6 +1,16 @@
 WeeChat News
 ============
 
+FlashCode, 2010-01-08::
+    WeeChat 0.3.1 is under development.
+    +
+    IRC commands /ame and /amsg are now aliases, if you are upgrading from
+    version 0.3.0, you must create aliases with following commands:
+    * `/alias aaway allserv /away`
+    * `/alias ame allchan /me`
+    * `/alias amsg allchan /amsg *`
+    * `/alias anick allserv /nick`
+
 FlashCode, 2009-09-06::
     WeeChat 0.3.0 released.
     +

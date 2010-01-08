@@ -661,6 +661,10 @@ alias_config_write_default (void *data,
     
     weechat_config_write_line (config_file, section_name, NULL);
     
+    weechat_config_write_line (config_file, "AAWAY", "%s", "\"allserv /away\"");
+    weechat_config_write_line (config_file, "AME", "%s", "\"allchan /me\"");
+    weechat_config_write_line (config_file, "AMSG", "%s", "\"allchan /msg *\"");
+    weechat_config_write_line (config_file, "ANICK", "%s", "\"allserv /nick\"");
     weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\"");
     weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\"");

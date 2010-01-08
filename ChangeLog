@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2009-12-31
+v0.3.1-dev, 2010-01-08
 
 
 Version 0.3.1 (under dev!)
@@ -24,6 +24,8 @@ Version 0.3.1 (under dev!)
 * alias: fix bug with buffer for execution of alias, when called from plugin API
   with function "command" (bug #27697)
 * alias: fix bug with arguments (bug #27440)
+* irc: add new commands /allchan and /allserv with excluding option, commands
+  /ame and /amsg are now aliases, new aliases /aaway and /anick
 * irc: add options to customize target buffer for messages (task #7381)
 * irc: use self-signed certificate to auto identify on IRC server (CertFP)
   (task #7492, debian #453348)
