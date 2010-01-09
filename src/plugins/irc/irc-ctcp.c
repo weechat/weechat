@@ -897,10 +897,14 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
         /* CTCP PING */
         else if (strcmp (arguments + 1, "PING") == 0)
         {
+            reply = irc_ctcp_get_reply (server, arguments + 1);
             irc_ctcp_display_request (server, command, channel, nick,
                                       arguments + 1, pos_args);
-            irc_ctcp_reply_to_nick (server, command, channel, nick,
-                                    arguments + 1, pos_args);
+            if (!reply || reply[0])
+            {
+                irc_ctcp_reply_to_nick (server, command, channel, nick,
+                                        arguments + 1, pos_args);
+            }
         }
         /* CTCP DCC */
         else if (strcmp (arguments + 1, "DCC") == 0)
