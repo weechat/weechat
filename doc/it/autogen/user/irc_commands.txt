@@ -6,39 +6,39 @@
   destinazione: server
 ........................................
 
-&bull; *`/allchan`* `[-current] [-exclude=channel[,channel...]] command [arguments]`::
+&bull; *`/allchan`* `[-current] [-exclude=canale,[,canale...]] comando [argomenti]`::
 
 ........................................
-  execute a command on all channels of all connected servers
+  esegue un comando su tutti i canali di tutti i server connessi
 
-   -current: execute command for channels of current server only
-   -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
-    command: command to execute
-  arguments: arguments for command
+   -current: esegue il comando solo per i canali del server corrente
+   -exclude: esclude alcunu canali ('*' è consentito all'inizio o alla fine del nome del canale, per escludere più canali)
+    comando: comando da eseguire
+  argomenti: argomenti per il comando
   
-  Examples:
-    execute '/me is testing' on all channels:
+  Esempi:
+    esegue '/me sta testando' su tutti i canali:
       /allchan me is testing
-    say 'hello' everywhere but not on #weechat:
-      /allchan -exclude=#weechat msg * hello
-    say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-      /allchan -exclude=#weechat,#linux* msg * hello
+    dice 'ciao' dovunque tranne che su #weechat:
+      /allchan -exclude=#weechat msg * ciao
+    dice 'ciao' dovunque tranne che su #weechat e i canali che iniziano con #linux:
+      /allchan -exclude=#weechat,#linux* msg * ciao
 ........................................
 
-&bull; *`/allserv`* `[-exclude=server[,server...]] command [arguments]`::
+&bull; *`/allserv`* `[-exclude=server[,server...]] comando [argomenti]`::
 
 ........................................
-  execute a command on all connected servers
+  esegue un comando su tutti i server connessi
 
-   -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
-    command: command to execute
-  arguments: arguments for command
+   -exclude: esclude alcuni server ('*' è consentito all'inizio o alla fine del nome server, per escludere più server)
+    comando: comando da eseguire
+  argomenti: argomenti per il comando
   
-  Examples:
-    change nick on all servers:
-      /allserv nick newnick
-    set away on all servers:
-      /allserv away I'm away
+  Esempli:
+    cambia nick su tutti i server:
+      /allserv nick nuovonick
+    imposta l'assenza su tutti i server:
+      /allserv away sono assente
 ........................................
 
 &bull; *`/away`* `[-all] [messaggio]`::

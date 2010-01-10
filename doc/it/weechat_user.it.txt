@@ -1108,99 +1108,103 @@ le risposte CTCP sono:
 |=======================================
 
 [[target_buffer]]
-Target buffer for IRC messages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Buffer di destinazione per i messaggi IRC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to customize target buffer for IRC messages (buffer used to
-display message) with options `irc.msgbuffer.*`.
+È possibile personalizzare il buffer di destinazione per i messaggi IRC
+(buffer usato per visualizzare messaggi) con l'opzione `irc.msgbuffer.*`.
 
-For some IRC messages (see list below), you can use value:
+Per alcuni messaggi IRC (elenco in basso), si possono usare i seguenti
+valori:
 
 current::
-    current buffer (if it's IRC buffer, or on server buffer by default)
+    buffer attivo (se è il buffer IRC, oppure sul buffer del server, come
+    predefinito)
 
 private::
-    private buffer for nick, or current buffer if not found (according
-    to option 'irc.look.msgbuffer_fallback')
+    buffer privato per il nick, o il buffer corrente se non trovato
+    (in base all'opzione 'irc.look.msgbuffer_fallback')
 
 weechat::
-    WeeChat "core" buffer
+    Il buffer "core" di WeeChat
 
-Default is server buffer (when option is not set).
+Il buffer del server è la destinazione predefinita
+(quando l'opzione non è impostata).
 
-Non-exhaustive list of IRC messages or alias that you can customize:
+Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
+personalizzare:
 
 [width="50%",cols="^1m,^1m,3",options="header"]
 |========================================
-| message | alias  | description
-| invite  |        | invited on a channel
-| notice  |        | notice
-| wallops |        | wallops
-| 221     |        | user mode string
-| 275     | whois  | whois (secure connection)
-| 303     |        | ison
-| 305     | unaway | unaway
-| 306     | away   | away
-| 307     | whois  | whois (registered nick)
-| 310     | whois  | whois (help mode)
-| 311     | whois  | whois (user)
-| 312     | whois  | whois (server)
-| 313     | whois  | whois (operator)
-| 314     | whowas | whowas
-| 315     | who    | who (end)
-| 317     | whois  | whois (idle)
-| 318     | whois  | whois (end)
-| 319     | whois  | whois (channels)
-| 320     | whois  | whois (identified user)
-| 321     | list   | list (start)
-| 322     | list   | list (channel)
-| 323     | list   | list (end)
-| 326     | whois  | whois (has oper privs)
-| 327     | whois  | whois (host)
-| 330     | whois  | whois (logged in as)
-| 335     | whois  | whois (is a bot on)
-| 338     | whois  | whois (host)
-| 341     |        | inviting
-| 344     | reop   | channel reop
-| 345     | reop   | channel reop (end)
-| 351     |        | server version
-| 352     | who    | who
-| 369     | whowas | whowas (end)
-| 378     | whois  | whois (connecting from)
-| 379     | whois  | whois (using modes)
-| 432     |        | erroneous nickname
-| 433     |        | nickname already in use
-| 438     |        | not authorized to change nickname
-| 671     | whois  | whois (secure connection)
-| 901     |        | you are now logged in
+| messaggio | alias  | descrizione
+| invite    |        | invitato su un canale
+| notice    |        | notifica
+| wallops   |        | wallops
+| 221       |        | stringa modalità utente
+| 275       | whois  | whois (connessione sicura)
+| 303       |        | ison
+| 305       | unaway | presente
+| 306       | away   | assente
+| 307       | whois  | whois (nick registrato)
+| 310       | whois  | whois (modalità aiuto)
+| 311       | whois  | whois (utente)
+| 312       | whois  | whois (server)
+| 313       | whois  | whois (operatore)
+| 314       | whowas | whowas
+| 315       | who    | who (fine)
+| 317       | whois  | whois (inattività)
+| 318       | whois  | whois (fine)
+| 319       | whois  | whois (canali)
+| 320       | whois  | whois (utente identificato)
+| 321       | list   | list (inizio)
+| 322       | list   | list (canale)
+| 323       | list   | list (fine)
+| 326       | whois  | whois (con privilegi di operatore)
+| 327       | whois  | whois (host)
+| 330       | whois  | whois (loggato come)
+| 335       | whois  | whois (è un bot su)
+| 338       | whois  | whois (host)
+| 341       |        | invito
+| 344       | reop   | reop sul canale
+| 345       | reop   | reop sul canale (fine)
+| 351       |        | versione del server
+| 352       | who    | who
+| 369       | whowas | whowas (fine)
+| 378       | whois  | whois (connesso da)
+| 379       | whois  | whois (usa le modalità)
+| 432       |        | nick errato
+| 433       |        | nick già utilizzato
+| 438       |        | non autorizzato a cambiare nick
+| 671       | whois  | whois (connessione sicura)
+| 901       |        | ora si è loggati
 |========================================
 
-Other numeric commands can be customized as well.
+Anche altri comandi numerici possono essere personalizzati.
 
-Message can be prefixed by server name to be specific to an irc server
-(for example: `freenode.whois`).
+Il messaggio può essere preceduto dal nome del server per essere più
+precisi (ad esempio: `freenode.whois`).
 
-Some examples:
+Alcuni esempi:
 
-* display result of `/whois` on private buffer:
+* visualizza il risultato di `/whois` su un buffer privato:
 
 ----------------------------------------
 /set irc.msgbuffer.whois private
 ----------------------------------------
 
-* restore default buffer for whois (server buffer):
+* ripristina il buffer predefinito per il whois (buffer del server):
 
 ----------------------------------------
 /unset irc.msgbuffer.whois
 ----------------------------------------
 
-* display invitation on current buffer, only for "freenode" server:
+* visualizza inviti sul buffer corrente, solo per il server "freenode":
 
 ----------------------------------------
 /set irc.msgbuffer.freenode.invite current
 ----------------------------------------
 
-* display message "303" (ison) on WeeChat "core" buffer:
+* visualizza messaggio "303" (ison) sul buffer "core" di WeeChat:
 
 ----------------------------------------
 /set irc.msgbuffer.303 weechat
