@@ -337,9 +337,9 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
     
     if (!completion->base_word || !completion->base_word[0]
         || (nick_completion && (gui_completion_nickncmp (completion->base_word, word,
-                                                         strlen (completion->base_word)) == 0))
+                                                         utf8_strlen (completion->base_word)) == 0))
         || (!nick_completion && (string_strncasecmp (completion->base_word, word,
-                                                     strlen (completion->base_word)) == 0)))
+                                                     utf8_strlen (completion->base_word)) == 0)))
     {
         if (nick_completion && (completion->base_word_pos == 0))
         {
@@ -1811,7 +1811,7 @@ gui_completion_complete (struct t_gui_completion *completion)
     int common_prefix_size, item_is_nick;
     struct t_weelist_item *ptr_item, *ptr_item2;
     
-    length = strlen (completion->base_word);
+    length = utf8_strlen (completion->base_word);
     word_found_seen = 0;
     other_completion = 0;
     
@@ -1846,7 +1846,7 @@ gui_completion_complete (struct t_gui_completion *completion)
     
     if (partial_completion
         && completion->word_found
-        && ((int)strlen (completion->word_found) >= common_prefix_size))
+        && (utf8_strlen (completion->word_found) >= common_prefix_size))
     {
         return;
     }
@@ -1914,7 +1914,7 @@ gui_completion_complete (struct t_gui_completion *completion)
                 
                 /* stop after common prefix, if asked by user */
                 if (partial_completion
-                    && (((int)strlen (completion->word_found) >= common_prefix_size))
+                    && ((utf8_strlen (completion->word_found) >= common_prefix_size))
                     && (other_completion > 0))
                 {
                     completion->word_found[common_prefix_size] = '\0';
