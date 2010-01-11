@@ -495,13 +495,23 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                               "weechat_print",
                                               modifier_data,
                                               pos);
-                /* no changes in new message */
-                if (new_msg && (strcmp (message, new_msg) == 0))
-                {
-                    free (new_msg);
-                    new_msg = NULL;
-                }
                 free (modifier_data);
+                if (new_msg)
+                {
+                    if (!new_msg[0])
+                    {
+                        /* modifier returned empty message, then we'll not
+                           print anything */
+                        free (new_msg);
+                        return;
+                    }
+                    if (strcmp (message, new_msg) == 0)
+                    {
+                        /* no changes in new message */
+                        free (new_msg);
+                        new_msg = NULL;
+                    }
+                }
             }
         }
         
