@@ -1034,7 +1034,7 @@ Comandi
 
 include::autogen/user/irc_commands.txt[]
 
-[[ctcp_replies]]
+[[irc_ctcp_replies]]
 Risposte CTCP
 ^^^^^^^^^^^^^
 
@@ -1107,7 +1107,7 @@ le risposte CTCP sono:
 | VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |=======================================
 
-[[target_buffer]]
+[[irc_target_buffer]]
 Buffer di destinazione per i messaggi IRC
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -1046,7 +1046,7 @@ Commandes
 
 include::autogen/user/irc_commands.txt[]
 
-[[ctcp_replies]]
+[[irc_ctcp_replies]]
 Réponses CTCP
 ^^^^^^^^^^^^^
 
@@ -1117,7 +1117,7 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 | VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
 
-[[target_buffer]]
+[[irc_target_buffer]]
 Tampon cible pour les messages IRC
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
