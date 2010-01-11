@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2010-01-08
+v0.3.1-dev, 2010-01-11
 
 
 Version 0.3.1 (under dev!)
@@ -31,17 +31,18 @@ Version 0.3.1 (under dev!)
   (task #7492, debian #453348)
 * irc: check SSL certificates (task #7492)
 * irc: add option "autorejoin_delay" for servers (task #8771)
-* irc: fix autorejoin on channels with key
 * irc: add option to use same nick color in channel and private (task #9870)
 * irc: add missing command 275 (patch #6952)
 * irc: add commands /sajoin, /samode, /sanick, /sapart, /saquit (task #9770)
 * irc: add options for CTCP, to block/customize CTCP reply (task #9693)
 * irc: add missing CTCP: clientinfo, finger, source, time, userinfo (task #7270)
 * irc: add all server options for commands /server and /connect
-* irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
+* irc: add arguments for command /rehash
 * irc: improve error management on socket error (recv/send)
 * irc: improve mask used by command /kickban
-* irc: add arguments for command /rehash
+* irc: fix nick color for nicks with wide chars (bug #28547)
+* irc: fix autorejoin on channels with key
+* irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
 * ruby: support of Ruby >= 1.9.1 (patch #6989)
 * fifo: remove old pipes before creating new pipe

@@ -63,17 +63,20 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
 const char *
 irc_nick_find_color (const char *nickname)
 {
-    int i, color;
+    int color;
     char color_name[64];
+    const char *ptr_nick;
     
     color = 0;
-    for (i = strlen (nickname) - 1; i >= 0; i--)
+    ptr_nick = nickname;
+    while (ptr_nick && ptr_nick[0])
     {
-        color += (int)(nickname[i]);
+        color += weechat_utf8_char_int (ptr_nick);
+        ptr_nick = weechat_utf8_next_char (ptr_nick);
     }
     color = (color %
              weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
-
+    
     snprintf (color_name, sizeof (color_name),
               "chat_nick_color%02d", color + 1);
     
