@@ -266,8 +266,8 @@ Selon la version de WeeChat :
 
 * avec WeeChat > = 0.3.x :
 
-** filtre interlligent (pour garder les join/part/quit des utilisateurs qui
-   ont parlé récemment) : +
+** filtre intelligent (pour garder les join/part/quit des utilisateurs qui ont
+   parlé récemment) : +
    `/set irc.look.smart_filter on` +
    `/filter add irc_smart * irc_smart_filter *` +
     (`/help irc.look.smart_filter` et `/help filter` pour l'aide)
