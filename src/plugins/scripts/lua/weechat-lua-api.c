@@ -5006,6 +5006,46 @@ weechat_lua_api_buffer_set (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_buffer_string_replace_local_var: replace local variables ($var) in a string,
+ *                                                  using value of local variables
+ */
+
+static int
+weechat_lua_api_buffer_string_replace_local_var (lua_State *L)
+{
+    const char *buffer, *string;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    string = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    string = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_current_window: get current window
  */
 
@@ -7267,6 +7307,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },
+    { "buffer_string_replace_local_var", &weechat_lua_api_buffer_string_replace_local_var },
     { "current_window", &weechat_lua_api_current_window },
     { "window_get_integer", &weechat_lua_api_window_get_integer },
     { "window_get_string", &weechat_lua_api_window_get_string },

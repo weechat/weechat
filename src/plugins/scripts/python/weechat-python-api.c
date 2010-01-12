@@ -4483,6 +4483,40 @@ weechat_python_api_buffer_set (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_buffer_string_replace_local_var: replace local variables ($var) in a string,
+ *                                                     using value of local variables
+ */
+
+static PyObject *
+weechat_python_api_buffer_string_replace_local_var (PyObject *self, PyObject *args)
+{
+    char *buffer, *string, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_current_window: get current window
  */
 
@@ -6126,6 +6160,7 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },
+    { "buffer_string_replace_local_var", &weechat_python_api_buffer_string_replace_local_var, METH_VARARGS, "" },
     { "current_window", &weechat_python_api_current_window, METH_VARARGS, "" },
     { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
     { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },

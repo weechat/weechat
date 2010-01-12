@@ -4266,6 +4266,39 @@ XS (XS_weechat_api_buffer_set)
 }
 
 /*
+ * weechat::buffer_string_replace_local_var: replace local variables ($var) in a string,
+ *                                           using value of local variables
+ */
+
+XS (XS_weechat_api_buffer_string_replace_local_var)
+{
+    char *buffer, *string, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
+        PERL_RETURN_ERROR;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    string = SvPV (ST (1), PL_na);
+    
+    result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::current_window: get current window
  */
 
@@ -5837,6 +5870,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_get_string", XS_weechat_api_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_api_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_api_buffer_set, "weechat");
+    newXS ("weechat::buffer_string_replace_local_var", XS_weechat_api_buffer_string_replace_local_var, "weechat");
     newXS ("weechat::current_window", XS_weechat_api_current_window, "weechat");
     newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
     newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
