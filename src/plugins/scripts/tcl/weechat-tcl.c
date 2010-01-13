@@ -116,7 +116,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
             ret_cv = Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i);
-            if (ret_cv && ret_cv[0])
+            if (ret_cv)
                 ret_val = (void *)strdup (ret_cv);
             else
                 ret_val = NULL;
