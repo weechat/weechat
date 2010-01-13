@@ -6382,7 +6382,7 @@ def my_input_cb(data, buffer, input_data):
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_strinf(buffer, "name"))
+    weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("mon_buffer", "my_input_cb", "", "my_close_cb", "")
@@ -6690,6 +6690,7 @@ Paramètres :
 *** 2 : recherche avant (vers les messages les plus récents)
 ** 'text_search_exact' : 1 si la recherche de texte est sensible à la casse
 ** 'text_search_found' : 1 si du texte a été trouvé, sinon 0
+** 'input_pos': position du curseur dans la zone de saisie
 
 Valeur de retour :
 
@@ -6901,6 +6902,9 @@ Paramètres :
 
 | input | toute chaîne |
   change le contenu de la zone de saisie
+
+| input_pos | position |
+  change la position du curseur dans la zone de saisie
 
 | input_get_unknown_commands | "0" ou "1" |
   "0" pour désactiver les commandes inconnues sur ce tampon (comportement par

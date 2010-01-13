@@ -173,6 +173,22 @@ gui_input_move (struct t_gui_buffer *buffer, char *target, const char *source,
 }
 
 /*
+ * gui_input_set_pos: set position in input line
+ */
+
+void
+gui_input_set_pos (struct t_gui_buffer *buffer, int pos)
+{
+    if ((pos >= 0) && (buffer->input_buffer_pos != pos))
+    {
+        buffer->input_buffer_pos = pos;
+        if (buffer->input_buffer_pos > buffer->input_buffer_length)
+            buffer->input_buffer_pos = buffer->input_buffer_length;
+        gui_input_text_cursor_moved_signal ();
+    }
+}
+
+/*
  * gui_input_insert_string: insert a string into the input buffer
  *                          if pos == -1, string is inserted at cursor position
  *                          return: number of chars inserted

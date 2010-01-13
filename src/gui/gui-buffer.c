@@ -664,6 +664,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->text_search_exact;
         else if (string_strcasecmp (property, "text_search_found") == 0)
             return buffer->text_search_found;
+        else if (string_strcasecmp (property, "input_pos") == 0)
+            return buffer->input_buffer_pos;
     }
     
     return 0;
@@ -1072,6 +1074,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_input_delete_line (buffer);
         gui_input_insert_string (buffer, value, 0);
         gui_input_text_changed_modifier_and_signal (buffer);
+    }
+    else if (string_strcasecmp (property, "input_pos") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_input_set_pos (buffer, number);
     }
     else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
     {

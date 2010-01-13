@@ -6291,7 +6291,7 @@ def my_input_cb(data, buffer, input_data):
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_strinf(buffer, "name"))
+    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
@@ -6598,6 +6598,7 @@ Arguments:
 *** 2: forward search (direction: newest messages)
 ** 'text_search_exact': 1 if text search is case sensitive
 ** 'text_search_found': 1 if text found, otherwise 0
+** 'input_pos': cursor position in buffer input
 
 Return value:
 
@@ -6803,6 +6804,9 @@ Arguments:
 
 | input | any string |
   set new value for buffer input
+
+| input_pos | position |
+  set cursor position in buffer input
 
 | input_get_unknown_commands | "0" or "1" |
   "0" to disable unknown commands on this buffer (default behaviour), "1" to
