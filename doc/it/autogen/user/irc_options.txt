@@ -48,6 +48,21 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
+* *irc.look.display_ctcp_blocked*
+** descrizione: display CTCP message even if it is blocked
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_ctcp_reply*
+** descrizione: display CTCP reply sent by WeeChat
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_ctcp_unknown*
+** descrizione: display CTCP message even if it is unknown CTCP
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
 * *irc.look.display_nick_modes*
 ** descrizione: visualizza le modalità nick nell'elemento barra "input_prompt"
 ** tipo: bool

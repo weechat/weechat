@@ -48,6 +48,21 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
+* *irc.look.display_ctcp_blocked*
+** description: afficher le message CTCP même s'il est bloqué
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_ctcp_reply*
+** description: afficher la réponse CTCP envoyée par WeeChat
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_ctcp_unknown*
+** description: afficher le message CTCP même si le CTCP est inconnu
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
 * *irc.look.display_nick_modes*
 ** description: affiche les modes du pseudo dans l'objet de barre "input_prompt"
 ** type: booléen

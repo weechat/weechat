@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-08 22:27+0100\n"
+"POT-Creation-Date: 2010-01-14 10:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3422,6 +3422,15 @@ msgstr ""
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
+msgid "display CTCP message even if it is blocked"
+msgstr ""
+
+msgid "display CTCP reply sent by WeeChat"
+msgstr ""
+
+msgid "display CTCP message even if it is unknown CTCP"
+msgstr ""
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr ""
 
@@ -3526,7 +3535,10 @@ msgid "send unknown commands to server"
 msgstr ""
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgstr ""
+
+msgid " (blocked)"
 msgstr ""
 
 #, c-format

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-08 22:27+0100\n"
-"PO-Revision-Date: 2010-01-08 22:38+0100\n"
+"POT-Creation-Date: 2010-01-14 10:20+0100\n"
+"PO-Revision-Date: 2010-01-14 10:21+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4191,6 +4191,15 @@ msgstr "affiche un message pour l'absence/le retour"
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
 
+msgid "display CTCP message even if it is blocked"
+msgstr "afficher le message CTCP même s'il est bloqué"
+
+msgid "display CTCP reply sent by WeeChat"
+msgstr "afficher la réponse CTCP envoyée par WeeChat"
+
+msgid "display CTCP message even if it is unknown CTCP"
+msgstr "afficher le message CTCP même si le CTCP est inconnu"
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "affiche les modes du pseudo dans l'objet de barre \"input_prompt\""
 
@@ -4328,8 +4337,11 @@ msgid "send unknown commands to server"
 msgstr "envoie les commandes inconnues au serveur"
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP demandé par %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgstr "%sCTCP demandé par %s%s%s: %s%s%s%s%s%s"
+
+msgid " (blocked)"
+msgstr " (bloqué)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
@@ -6061,3 +6073,6 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "display message if CTCP is unknown"
+#~ msgstr "afficher le message si le CTCP est inconnu"

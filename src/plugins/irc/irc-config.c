@@ -56,6 +56,9 @@ struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_channel_modes;
+struct t_config_option *irc_config_look_display_ctcp_blocked;
+struct t_config_option *irc_config_look_display_ctcp_reply;
+struct t_config_option *irc_config_look_display_ctcp_unknown;
 struct t_config_option *irc_config_look_display_nick_modes;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
@@ -1360,6 +1363,24 @@ irc_config_init ()
         N_("display channel modes in \"buffer_name\" bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_look_display_channel_modes, NULL, NULL, NULL);
+    irc_config_look_display_ctcp_blocked = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_ctcp_blocked", "boolean",
+        N_("display CTCP message even if it is blocked"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_display_ctcp_reply = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_ctcp_reply", "boolean",
+        N_("display CTCP reply sent by WeeChat"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_display_ctcp_unknown = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_ctcp_unknown", "boolean",
+        N_("display CTCP message even if it is unknown CTCP"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_display_nick_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_nick_modes", "boolean",

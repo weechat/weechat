@@ -108,20 +108,27 @@ irc_ctcp_display_request (struct t_irc_server *server,
                           const char *command,
                           struct t_irc_channel *channel,
                           const char *nick,  const char *ctcp,
-                          const char *arguments)
+                          const char *arguments,
+                          const char *reply)
 {
+    /* CTCP blocked and user doesn't want to see message? then just return */
+    if (reply && !reply[0]
+        && !weechat_config_boolean (irc_config_look_display_ctcp_blocked))
+        return;
+    
     weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
                          irc_protocol_tags (command, "irc_ctcp"),
-                         _("%sCTCP requested by %s%s%s: %s%s%s%s%s"),
+                         _("%sCTCP requested by %s%s%s: %s%s%s%s%s%s"),
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
                          nick,
                          IRC_COLOR_CHAT,
                          IRC_COLOR_CHAT_CHANNEL,
                          ctcp,
-                         (arguments) ? IRC_COLOR_CHAT : "",
+                         IRC_COLOR_CHAT,
                          (arguments) ? " " : "",
-                         (arguments) ? arguments : "");
+                         (arguments) ? arguments : "",
+                         (reply && !reply[0]) ? _(" (blocked)") : "");
 }
 
 /*
@@ -243,19 +250,22 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                       nick, ctcp,
                       (arguments) ? " " : "",
                       (arguments) ? arguments : "");
-    
-    weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
-                         irc_protocol_tags (command, "irc_ctcp,irc_ctcp_reply"),
-                         _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
-                         weechat_prefix ("network"),
-                         IRC_COLOR_CHAT_NICK,
-                         nick,
-                         IRC_COLOR_CHAT,
-                         IRC_COLOR_CHAT_CHANNEL,
-                         ctcp,
-                         (arguments) ? IRC_COLOR_CHAT : "",
-                         (arguments) ? " " : "",
-                         (arguments) ? arguments : "");
+
+    if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
+    {
+        weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+                             irc_protocol_tags (command, "irc_ctcp,irc_ctcp_reply"),
+                             _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_NICK,
+                             nick,
+                             IRC_COLOR_CHAT,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             ctcp,
+                             (arguments) ? IRC_COLOR_CHAT : "",
+                             (arguments) ? " " : "",
+                             (arguments) ? arguments : "");
+    }
 }
 
 /*
@@ -899,7 +909,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
         {
             reply = irc_ctcp_get_reply (server, arguments + 1);
             irc_ctcp_display_request (server, command, channel, nick,
-                                      arguments + 1, pos_args);
+                                      arguments + 1, pos_args, reply);
             if (!reply || reply[0])
             {
                 irc_ctcp_reply_to_nick (server, command, channel, nick,
@@ -918,7 +928,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
             if (reply)
             {
                 irc_ctcp_display_request (server, command, channel, nick,
-                                          arguments + 1, pos_args);
+                                          arguments + 1, pos_args, reply);
                 
                 if (reply[0])
                 {
@@ -933,19 +943,22 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
             }
             else
             {
-                weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
-                                     irc_protocol_tags (command, "irc_ctcp"),
-                                     _("%sUnknown CTCP requested by %s%s%s: "
-                                       "%s%s%s%s%s"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_CHAT_NICK,
-                                     nick,
-                                     IRC_COLOR_CHAT,
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     arguments + 1,
-                                     (pos_args) ? IRC_COLOR_CHAT : "",
-                                     (pos_args) ? " " : "",
-                                     (pos_args) ? pos_args : "");
+                if (weechat_config_boolean (irc_config_look_display_ctcp_unknown))
+                {
+                    weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+                                         irc_protocol_tags (command, "irc_ctcp"),
+                                         _("%sUnknown CTCP requested by %s%s%s: "
+                                           "%s%s%s%s%s"),
+                                         weechat_prefix ("network"),
+                                         IRC_COLOR_CHAT_NICK,
+                                         nick,
+                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_CHAT_CHANNEL,
+                                         arguments + 1,
+                                         (pos_args) ? IRC_COLOR_CHAT : "",
+                                         (pos_args) ? " " : "",
+                                         (pos_args) ? pos_args : "");
+                }
             }
         }
         
