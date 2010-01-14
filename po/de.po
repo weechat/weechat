@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-14 10:20+0100\n"
-"PO-Revision-Date: 2010-01-08 22:29+0100\n"
+"PO-Revision-Date: 2010-01-14 15:43+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3955,12 +3955,12 @@ msgid "return a list of information about nicknames"
 msgstr "Zeigt Informationen zu Nicknamen an"
 
 msgid "list of users logged into the server"
-msgstr "Auf dem Server angemeldete User auflisten"
+msgstr "Auflistung der User, die bei dem Server angemeldet sind"
 
 msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "Versionsinformation des Nicknamen oder Servers ermitteln (des aktuellen oder "
-"angegebenen)"
+"angegebenen Nicks/Servers)"
 
 msgid "[server | nickname]"
 msgstr "[Server | Nickname]"
@@ -3987,7 +3987,8 @@ msgid "text to send"
 msgstr "zu sendender Text"
 
 msgid "generate a query which returns a list of information"
-msgstr "Erstelle eine Anfrage welche eine Liste von Informationen zurück gibt"
+msgstr ""
+"Erstellung einer Anfrage, die eine Anzahl von Informationen zurück gibt."
 
 msgid "[mask [\"o\"]]"
 msgstr "[Maske [\"o\"]]"
@@ -4013,10 +4014,10 @@ msgstr ""
 "Nickname: Nickname (oder eine Maske)"
 
 msgid "ask for information about a nickname which no longer exists"
-msgstr "Information über die Vergangenheit eines Nicknamen erfragen"
+msgstr "Informationen eines Nicknamen abfragen, welcher nicht mehr existiert"
 
 msgid "nickname [,nickname [,nickname ...]] [count [target]]"
-msgstr "Nickname [,Nickname [,Nickname ...]] [Anzahl [Ziel]]"
+msgstr "nickname [,nickname [,nickname ...]] [count [target]]"
 
 msgid ""
 "nickname: nickname to search\n"
@@ -4024,9 +4025,9 @@ msgid ""
 "  target: reply should match this mask"
 msgstr ""
 "Nickname: Nickname, welcher gesucht werden soll\n"
-"   Anzahl: maximale Anzahl an Antworten (negative Zahl für eine vollständige "
+"   count: maximale Anzahl an Antworten (negative Zahl für eine vollständige "
 "Liste)\n"
-"  Ziel: Antwort soll auf diese Suchmaske zutreffen"
+"  target: Antwort soll auf diese Suchmaske zutreffen"
 
 #, c-format
 msgid "%s%s: too few arguments for \"%s\" command"
@@ -4041,23 +4042,23 @@ msgstr ""
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr ""
-"%s%s: Der Befehl \"%s\" kann nur bei einem verbundenen Server ausgeführt "
+"%s%s: Der Befehl \"%s\" kann nur bei einem verbundenen IRC-Server ausgeführt "
 "werden"
 
 msgid "current IRC server"
-msgstr "derzeitiger IRC-Server"
+msgstr "aktueller IRC-Server"
 
 msgid "nick on current IRC server"
 msgstr "Nick beim derzeitigen IRC-Server"
 
 msgid "channels on current IRC server"
-msgstr "Channels beim derzeitigen IRC-Server"
+msgstr "Channels des derzeitigen IRC-Server"
 
 msgid "privates on current IRC server"
 msgstr "Privat auf aktuellem IRC Server"
 
 msgid "nicks on all channels of current IRC server"
-msgstr "Nicks aller Channels beim derzeitigen IRC-Server"
+msgstr "Nicks in allen Channels, auf dem aktuellen IRC-Server"
 
 msgid "IRC servers (internal names)"
 msgstr "IRC-Server (interne Namen)"
@@ -4066,10 +4067,10 @@ msgid "current IRC channel"
 msgstr "Aktueller IRC-Channel"
 
 msgid "nicks of current IRC channel"
-msgstr "Liste der Nicks im derzeitigen Channel"
+msgstr "Liste der Nicks im aktuellen Channel"
 
 msgid "nicks and hostnames of current IRC channel"
-msgstr "Liste der Nicks und Hostnamen im aktuellen Channel"
+msgstr "Liste der Nicks und Hostnamen des aktuellen Channels"
 
 msgid "topic of current IRC channel"
 msgstr "Topic des aktuellen IRC-Channels"
@@ -4081,7 +4082,7 @@ msgid "privates on all IRC servers"
 msgstr "Private auf allen IRC Servern"
 
 msgid "default part message for IRC channel"
-msgstr "Standard Nachricht beim Verlassen (/part) eines IRC-Channels"
+msgstr "Standardnachricht beim Verlassen (/part) eines IRC-Channels"
 
 msgid "numbers for defined ignores"
 msgstr "Anzahl für festgelegte /ignores"
@@ -4110,12 +4111,13 @@ msgid ""
 "(WeeChat site, download page), $time (current date and time as text), "
 "$username (username on server), $realname (realname on server)"
 msgstr ""
-"Format für CTCP Antwort. Folgende Variablen werden durch einen Wert ersetzt: "
-"$version (WeeChat Version), $compilation (Datum der Kompilierung), $osinfo "
-"(Informationen über genutztes Betriebssystem), $site (WeeChat Webseite), "
-"$download (Download-Seite von WeeChat), $time (aktuelles Datum und Uhrzeit, "
-"als Text), $username (Username auf Server), $realname (Realname auf Server), "
-"mittels einer leeren Zeichenkette wird CTCP blockiert (keine Antwort)"
+"Format der CTCP Antwort. Folgende Variablen werden durch den entsprechenden "
+"Wert ersetzt: $version (WeeChat Version), $compilation (Datum der "
+"Kompilierung), $osinfo (Informationen über genutztes Betriebssystem), $site "
+"(WeeChat Webseite), $download (Download-Seite von WeeChat), $time (aktuelles "
+"Datum und Uhrzeit, als Text), $username (Username auf Server), $realname "
+"(Realname auf Server). Durch die Nutzung einer leeren Zeichenkette wird die "
+"CTCP Antwort blockiert."
 
 #, c-format
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
@@ -4254,13 +4256,13 @@ msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "Zeige die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
 
 msgid "display CTCP message even if it is blocked"
-msgstr ""
+msgstr "CTCP Nachrichten werden angezeigt, obwohl sie unterdrückt werden"
 
 msgid "display CTCP reply sent by WeeChat"
-msgstr ""
+msgstr "CTCP Antworten, die durch WeeChat versendet wurden, werden angezeigt"
 
 msgid "display CTCP message even if it is unknown CTCP"
-msgstr ""
+msgstr "unbekannte CTCP Nachrichten werden angezeigt."
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "Zeige Nick-Modi in \"input_prompt\" Bar-Item"
@@ -4400,13 +4402,12 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "Sende unbekannte Befehle an den Server"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP angefordert von %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP angefordert von %s%s%s: %s%s%s%s%s%s"
 
-#, fuzzy
 msgid " (blocked)"
-msgstr "(deaktiviert)"
+msgstr " (unterdrückt)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
