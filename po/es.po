@@ -3009,13 +3009,12 @@ msgstr "[objetivo]"
 msgid "target: server"
 msgstr "objetivo: servidor"
 
-#, fuzzy
 msgid "execute a command on all channels of all connected servers"
 msgstr ""
-"envía una acción CTCP a todos los canales de todos los servidores conectados"
+"ejecuta un comando en todos los canales de todos los servidores conectados"
 
 msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
-msgstr ""
+msgstr "[-current] [-exclude=canal[,canal...]] comando [argumentos]"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -3033,13 +3032,26 @@ msgid ""
 "#linux:\n"
 "    /allchan -exclude=#weechat,#linux* msg * hello"
 msgstr ""
+"  -current: ejecuta comando para los canales del servidor actual solamente\n"
+"  -exclude: excluye algunos canales ('*' está permitido al principio o final "
+"del nombre del canal, para excluir varios canales)\n"
+"   comando: comando a ejecutar\n"
+"argumentos: argumentos para el comando\n"
+"\n"
+"Ejemplos:\n"
+"  ejecuta '/me está probando' en todos los canales:\n"
+"    /allchan me está probando\n"
+"  decir 'hola' en todos lados menos en #weechat:\n"
+"    /allchan -exclude=#weechat msg * hola\n"
+"  decir 'hola' en todos lados menos en #weechat o canales que empiezen con "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * hola"
 
-#, fuzzy
 msgid "execute a command on all connected servers"
-msgstr "enviar mensaje a todos los canales de todos los servidores conectados"
+msgstr "ejecuta un comando en todos los servidores conectados"
 
 msgid "[-exclude=server[,server...]] command [arguments]"
-msgstr ""
+msgstr "[-exclude=servidor[,servidor...]] comando [argumentos]"
 
 msgid ""
 " -exclude: exclude some servers ('*' is allowed at beginning or end of "
@@ -3053,6 +3065,16 @@ msgid ""
 "  set away on all servers:\n"
 "    /allserv away I'm away"
 msgstr ""
+"  -exclude: excluye algunos servidores ('*' está permitido al principio o "
+"final del nombre del servidor, para excluir varios servidores)\n"
+"   comando: comando a ejecutar\n"
+"argumentos: argumentos para el comando\n"
+"\n"
+"Ejemplos:\n"
+"  cambiar apodo en todos los servidores:\n"
+"    /allserv nick apodo_nuevo\n"
+"  poner ausente en todos los servidores:\n"
+"    /allserv away Estoy ausente"
 
 msgid "toggle away status"
 msgstr "activa/desactiva el estado ausente"
@@ -4143,13 +4165,13 @@ msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "mostrar los modos del canal en el elemento de barra \"buffer_name\""
 
 msgid "display CTCP message even if it is blocked"
-msgstr ""
+msgstr "mostrar mensaje CTCP incluso si está bloqueado"
 
 msgid "display CTCP reply sent by WeeChat"
-msgstr ""
+msgstr "mostrar respuesta CTCP enviada por WeeChat"
 
 msgid "display CTCP message even if it is unknown CTCP"
-msgstr ""
+msgstr "mostrar mensaje CTCP incluso si es un CTCP desconocido"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "mostrar los modos del apodo en el elemento de barra \"input_prompt\""
@@ -4287,13 +4309,12 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "envía comandos desconocidos al servidor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP solicitado por %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP solicitado por %s%s%s: %s%s%s%s%s%s"
 
-#, fuzzy
 msgid " (blocked)"
-msgstr "(desactivado)"
+msgstr " (bloqueado)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
