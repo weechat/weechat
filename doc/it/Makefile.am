@@ -20,7 +20,9 @@ EXTRA_DIST = CMakeLists.txt \
 		weechat_user.it.txt \
 		weechat_faq.it.txt \
 		weechat_quickstart.it.txt \
-		weechat_tester.it.txt
+		weechat_tester.it.txt \
+		$(wildcard autogen/user/*.txt) \
+		$(wildcard autogen/plugin_api/*.txt)
 
 all-local: weechat_user.it.html \
 		weechat_faq.it.html \
