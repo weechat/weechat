@@ -217,8 +217,8 @@ utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
 
 
 [[terminal_copy_paste]]
-Avec l'interface Curses, comment puis-je copier/coller du texte sans coller la liste des pseudos ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
@@ -231,6 +231,31 @@ exemple :
   `/set look_nicklist_position = top`
 * avec WeeChat > = 0.3.x : +
   `/bar set nicklist position top`
+
+
+[[urls]]
+Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat affiche l'heure et un préfixe pour chaque ligne avec des barres
+optionnelles autour de la zone de discussion, donc il n'est pas possible
+d'afficher les longs URLs sans les tronquer.
+
+Vous pouvez utiliser un des scripts suivants :
+
+urlbar.py::
+    affiche les URLs dans une barre
+
+urlgrab.py::
+    enregistre les URLs et les ouvre dans un navigateur
+
+url_shorten.rb::
+tinyurl.py::
+shortenurl.py::
+    réduit les URLs longs
+
+Liste des scripts manipulant des URLs :
+http://www.weechat.org/scripts/stable/tag/url/
 
 
 [[highlight_notification]]

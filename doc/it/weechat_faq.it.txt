@@ -213,8 +213,8 @@ utenti ISO, digitare: `/shell setenv LANG=en_US`.
 
 
 [[terminal_copy_paste]]
-Con l'interfaccia Curses, come posso copiare/incollare testo senza incollare la lista nick?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso copiare/incollare testo senza incollare la lista nick?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
@@ -226,6 +226,29 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
   `/set look_nicklist_position = top`
 * con WeeChat > = 0.3.x: +
   `/bar set nicklist position top`
+
+
+[[urls]]
+How can I click on long URLs (more than one line)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat displays time and prefix for each line and optional bars around chat
+area, so it is not possible to display long URLs without truncating them.
+
+You can use one of following scripts:
+
+urlbar.py::
+    display URLs in a bar
+
+urlgrab.py::
+    logs URLs and open them in browser
+
+url_shorten.rb::
+tinyurl.py::
+shortenurl.py::
+    shorten long URLs
+
+List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
 
 
 [[highlight_notification]]

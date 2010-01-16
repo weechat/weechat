@@ -210,8 +210,8 @@ używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
 
 
 [[terminal_copy_paste]]
-Jak mogę kopiować/wklejać tekst bez wklejania listy nicków w interfejsie Courses?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj ctrl + alt + zaznaczenie myszką.
@@ -222,6 +222,29 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
   `set look_nicklist_position = top`
 * dla WeeChat > = 0.3.x: +
   `/bar set nicklist position top`
+
+
+[[urls]]
+How can I click on long URLs (more than one line)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat displays time and prefix for each line and optional bars around chat
+area, so it is not possible to display long URLs without truncating them.
+
+You can use one of following scripts:
+
+urlbar.py::
+    display URLs in a bar
+
+urlgrab.py::
+    logs URLs and open them in browser
+
+url_shorten.rb::
+tinyurl.py::
+shortenurl.py::
+    shorten long URLs
+
+List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
 
 
 [[highlight_notification]]
