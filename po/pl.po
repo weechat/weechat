@@ -1,16 +1,16 @@
 # WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2009 FlashCode <flashcode@flashtux.org>
 #
 # Polish translations for WeeChat
 # This file is put in the public domain.
-#  <soltys@szluug.org>, 2009-2010.
+#  <soltys@szluug.org>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-14 10:20+0100\n"
-"PO-Revision-Date: 2010-01-03 15:16+0100\n"
+"PO-Revision-Date: 2010-01-17 00:15+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -3001,12 +3001,11 @@ msgstr "[cel]"
 msgid "target: server"
 msgstr "cel: serwer"
 
-#, fuzzy
 msgid "execute a command on all channels of all connected servers"
-msgstr "wysyła akcje CTCP na wszystkie kanały na połączonych serwerach"
+msgstr "wykonuje komendę na wszystkich kanałach na połączonych serwerach"
 
 msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
-msgstr ""
+msgstr "[-current] [-exclude=kanał[,kanał...]] komenda [argumenty]"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -3024,13 +3023,26 @@ msgid ""
 "#linux:\n"
 "    /allchan -exclude=#weechat,#linux* msg * hello"
 msgstr ""
+" -current: wykonuje komendę tylko na kanałach obecnego serwera\n"
+" -exclude: wyklucza niektóre kanały ('*' jest dozwolone na początku lub "
+"końcu nazwy kanału, aby wykluczyć wiele kanałów)\n"
+"  komenda: komenda do wykonania\n"
+"argumenty: argumenty dla komendy\n"
+"\n"
+"Przykłady:\n"
+"  wykonuje '/me testuje' na wszystkich kanałach:\n"
+"    /allchan me testuje\n"
+"  mówi 'witam' wszędzie tylko nie na #weechat:\n"
+"    /allchan -exclude=#weechat msg * witam\n"
+"  mówi 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * witam"
 
-#, fuzzy
 msgid "execute a command on all connected servers"
-msgstr "wysyła wiadomość na wszystkie kanały na połączonych serwerach"
+msgstr "wykonuje komendę na wszystkich połączonych serwerach"
 
 msgid "[-exclude=server[,server...]] command [arguments]"
-msgstr ""
+msgstr "[-exclude=serwer[,serwer...]] komenda [argumenty]"
 
 msgid ""
 " -exclude: exclude some servers ('*' is allowed at beginning or end of "
@@ -3044,6 +3056,16 @@ msgid ""
 "  set away on all servers:\n"
 "    /allserv away I'm away"
 msgstr ""
+" -exclude: wyklucza niektóre serwery ('*' jest dozwolone na początku lub "
+"końcu nazwy, w celu wykluczenia wielu serwerów)\n"
+"  komenda: komenda do wykonania\n"
+"argumenty: argumenty dla komendy\n"
+"\n"
+"Przykłady:\n"
+"  zmienia nick na wszystkich serwerach:\n"
+"    /allserv nick nowynick\n"
+"  ustawia stan nieobecności na wszystkich serwerach:\n"
+"    /allserv away Jestem nieobecny"
 
 msgid "toggle away status"
 msgstr "zmienia status nieobecności"
@@ -3981,11 +4003,11 @@ msgstr ""
 "usunięty z pamięci, ponieważ jest obecnie uzywany"
 
 msgid "buffer used to display message received from IRC server"
-msgstr ""
+msgstr "bufor używany do wyświetlania wiadomości otrzymanych od serwera IRC"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating \"%s\" => \"%s\""
-msgstr "%s%s: błąd podczas tworzenia CTCP \"%s\" => \"%s\""
+msgstr "%s%s: błąd podczas tworzenia \"%s\" => \"%s\""
 
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
@@ -4125,13 +4147,13 @@ msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""
 
 msgid "display CTCP message even if it is blocked"
-msgstr ""
+msgstr "wyświetl wiadomość CTCP nawet jeśli jest blokowana"
 
 msgid "display CTCP reply sent by WeeChat"
-msgstr ""
+msgstr "wyświetlaj odpowiedź CTCP wysłaną przez WeeChat"
 
 msgid "display CTCP message even if it is unknown CTCP"
-msgstr ""
+msgstr "wyświetl wiadomość CTCP nawet jeśli jest to nieznana CTCP"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\" "
@@ -4157,6 +4179,8 @@ msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
 msgstr ""
+"domyślny bufor docelowy dla bufora wiadomości, kiedy cel jest prywatny i nie "
+"odnaleziono tego prywatnego bufora"
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -4265,13 +4289,12 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "wysyłaj nieznane komendy do serwera"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP zażądane przez %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP zażądane przez %s%s%s: %s%s%s%s%s%s"
 
-#, fuzzy
 msgid " (blocked)"
-msgstr "(wyłączone)"
+msgstr "(zablokowane)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"

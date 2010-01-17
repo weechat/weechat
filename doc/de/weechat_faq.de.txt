@@ -8,31 +8,31 @@ Allgemein
 
 
 [[why_choose_weechat]]
-Warum WeeChat? X-Chat und Irssi sind sehr gut...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Weshalb WeeChat? - X-Chat und Irssi sind sehr gut...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Weil WeeChat schlank ist und neu Features hat.
-Einige Features (Version > = 0.3.x):
+Weil WeeChat schlank ist und neue Funktionen besitzt.
+Einige Funktionen (Version > = 0.3.x):
 
-* Unterstützung mehrerer Protokolle via Plugins (IRC, Jabber)
+* Unterstützung mehrerer Protokolle durch Erweiterungen (IRC, Jabber)
 * mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
 * in mehreren Sprachen verfügbar
-* Erweiterungsfähig durch Plugins (C, Perl, Python, Ruby, Lua, Tcl)
-* Puffer mit unabhängigem Inhalt
+* Erweiterungsfähig durch Erweiterungen (C, Perl, Python, Ruby, Lua, Tcl)
+* Buffer mit unabhängigem Inhalt
 * Filterung der Anzeige mittels Tags und regulären Ausdrücken
 * horizontale und vertikale Teilung der Fenster
 * anpass- und erweiterbare Leisten
 * Nickliste in allen GUI's verfügbar
-* inkrementelle Textsuche in Puffern, zu Highlights springen
+* inkrementelle Textsuche in Buffern, zu Highlights springen
 * FIFO Pipe für Fernsteuerung
-* Unterstützung für aspell
-* Doppelter Zeichensatz (Codierung/Decodierung)
+* Unterstützung für Aspell
+* Doppelter Zeichensatz (Kodierung/Dekodierung)
 * Neuentwicklung (basiert auf keinem anderem Programm)
-* Lauffähig auf mehren Plattformen
+* Lauffähig auf einer Vielzahl von Plattformen
 * 100% GPL und Frei
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
-http://weechat.flashtux.org/features.php
+http://www.weechat.org/features
 
 
 Kompilierung / Installation
@@ -40,8 +40,8 @@ Kompilierung / Installation
 
 
 [[gui]]
-Ich habe von mehreren GUIs für WeeChat gehört. Wie kann ich diese kompilieren bzw nutzen?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich habe gehört, es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw nutzen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Zur Zeit ist nur die GUI für Curses verfügbar.
 
@@ -61,9 +61,9 @@ autoconf 2.61 und automake 1.10.1 entwickelt).
 
 Der andere Weg ist, das "Entwickler-Paket" zu installieren, dieses hat weniger
 Abhängigkeiten. Dieses Paket wird quasi täglich aus dem git Repository erstellt.
-Bedenke, dass dieses Paket nicht immer exakt mit dem git Repository übereinstimmen
-kann und daher auch weniger brauchbar sein kann als wenn man selbst das
-Repository klont und daraus Updates installiert.
+Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstimmt
+und daher auch weniger brauchbar sein kann als wenn man selbst das Repository
+klont und daraus Updates installiert.
 
 
 WeeChat anwenden
@@ -86,16 +86,16 @@ Dokumentation auf der Internetseite).
 
 
 [[buffer_vs_window]]
-Ich habe von "Puffern" und "Fenstern" gehört - was ist der Unterschied?
+Ich habe von "Buffern" und "Fenstern" gehört - was ist der Unterschied?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ein 'Puffer' besteht aus einer Nummer, einem Namen, anzuzeigenden Zeilen (und
+Ein 'Buffer' besteht aus einer Nummer, einem Namen, anzuzeigenden Zeilen (und
 anderen Daten)
 
-Ein 'Fenster' ist ein Bildschirmbereich der Puffer darstellt. Es ist möglich
+Ein 'Fenster' ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
 
-Jedes Fenster stellt einen Puffer dar. Ein Puffer kann unsichtbar sein (er wird
+Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 nicht durch ein Fenster angezeigt), oder durch ein sowie mehrere Fenster
 angezeigt werden.
 
@@ -114,9 +114,9 @@ Für Versionen > = 0.2.3:
 * prüfe, dass weechat-curses mit libncursesw gelinkt ist (Warnung: nötig bei den
   meißten Distributionen - jedoch nicht bei allen):
   `ldd /path/to/weechat-curses`
-* prüfe mit dem Befehl `/plugin`, dass das "Charset" Plugin geladen ist (falls
+* prüfe mit dem Befehl `/plugin`, dass die "Charset" Erweiterung geladen ist (falls
   nicht, benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
-* prüfe die Ausgabe des Befehls /charset (auf dem Server-Puffer). Du solltest
+* prüfe die Ausgabe des Befehls /charset (auf dem Server-Buffer). Du solltest
   'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz sehen. Falls Du
   'ANSI_X3.4-1968' oder andere Werte siehst, ist Deine Einstellung der locale
   möglicherweise falsch.
@@ -177,10 +177,10 @@ Code der jeweiligen Taste herausfinden und in die Eingabezeile einfügen.
 
 
 [[openbsd_plugins]]
-Ich benutze BSD, und Weechat lädt keine Plugins - warum?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich benutze BSD, und WeeChat lädt keine Erweiterungen - warum?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unter BSD enden die Dateinamen der Plugins mit ".so.0.0" (".so" bei Linux).
+Unter BSD Enden die Dateinamen der Erweiterungen mit ".so.0.0" (".so" bei Linux).
 
 Um dies zu beheben muss folgendes konfiguriert werden:
 
@@ -193,27 +193,27 @@ Danach: `/plugin autoload`.
 
 
 [[scripts]]
-Wie kann ich Perl/Python/Ruby/Lua/Tcl Scripe laden? Sind Scripte kompatibel zu anderen IRC-Clients?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich Perl/Python/Ruby/Lua/Tcl Skripten laden? Sind Skripten kompatibel zu anderen IRC-Clients?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Benutze die Befehle: `/perl`, `/python`, `/ruby`, `/lua` und `/tcl` um Scripte
-zu laden (Voreingestellter Pfad zu den Skripten: '~/.weechat/<Scriptsprache>/').
+Benutze die Befehle: `/perl`, `/python`, `/ruby`, `/lua` und `/tcl` um Skripten
+zu laden (Voreingestellter Pfad zu den Skripten: '~/.weechat/<Skriptsprache>/').
 
-Scripte sind mit den anderer IRC-Clients nicht kompatibel.
+Die Skripten sind mit den anderer IRC-Clients nicht kompatibel.
 
 Anmerkung:
 
-* Scripte, die sich unter '~/.weechat/<Scriptsprache>/autoload/' befinden, werden
+* Skripten, die sich unter '~/.weechat/<Skriptsprache>/autoload/' befinden, werden
   beim Start von WeeChat automatisch geladen.
-* Ein 'tcl' Plugin ist ab version > = 0.3.x verfügbar.
+* Eine 'tcl' Erweiterung ist ab version > = 0.3.x verfügbar.
 
 
 [[change_locale_without_quit]]
 Ich möchte die Sprache der Meldungen, die WeeChat ausgibt, ändern ohne WeeChat zu verlassen. Ist dies möglich?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ja, dazu kannst Du das Python-Script shell.py verwenden (erhältlich auf der
-Internetseite). Nach dem laden des Scipts führe folgende Befehle aus:
+Ja, dazu kannst Du das Python-Skript shell.py verwenden (erhältlich auf der
+Internetseite). Nach dem laden des Skripts führe folgende Befehle aus:
 
   /shell setenv LANG=en_US.UTF-8
   /upgrade
@@ -224,12 +224,12 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 
 
 [[terminal_copy_paste]]
-Wie kann ich Text kopieren und einfügen ohne das die Nickliste auch eingefügt wird?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste auch eingefügt wird?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Do kannst hierzu ein Terminal nutzen, welches Block-Selektierung erlaubt
+Du kannst hierzu ein Terminal nutzen, welches Block-Selektierung erlaubt
 (wie rxvt-unicode, konsole, gnome-terminal, ...). Im Normalfall erfolgt diese
-mittels der Tasten ctrl + alt in Verbindung mit der Selektion durch die Maus.
+mittels der Tasten ctrl + alt in Verbindung mit der Auswahl durch die Maus.
 
 Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben, z.B.:
 
@@ -240,49 +240,50 @@ Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben, z.B.
 
 
 [[urls]]
-How can I click on long URLs (more than one line)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich eine URL aufrufen, die einen Zeilenumbruch besitzt?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat displays time and prefix for each line and optional bars around chat
-area, so it is not possible to display long URLs without truncating them.
+Da WeeChat sowohl die Uhrzeit als auch einen Präfix für jede Zeile darstellt und
+man optional auch noch Bars nutzen kann, die das Chatfenster zusätzlich
+verkleinern, kann es passieren das sehr lange URLs abgeschnitten und nicht mehr
+aufgerufen werden können.
 
-You can use one of following scripts:
+Deshalb sollte man eines der folgenden Skripten nutzen:
 
 urlbar.py::
-    display URLs in a bar
+    stellt die URL in einer Bar dar.
 
 urlgrab.py::
-    logs URLs and open them in browser
+    protokolliert URLs und öffnet diese im Standardbrowser.
 
 url_shorten.rb::
 tinyurl.py::
 shortenurl.py::
-    shorten long URLs
+    URLs werden durch einen Internet-Dienst gekürzt.
 
-List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
+Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url/
 
 
 [[highlight_notification]]
-Wie kann ich informiert werden, wenn jemand in einem Channel 'highlightet'
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich informiert werden, wenn jemand in einem Channel highlightet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ((A.d.Ü) highlight bedeutet, dass der eigene Nick z.B. im Channel genannt wird,
-der Nick dessen der in schrieb wird farblich hervorgehoben)
+der Nick dessen der ihn schrieb wird farblich hervorgehoben)
 
 Abhängig der WeeChat Version:
 
-* WeeChat < = 0.2.6: nutze das Script 'sound.pl' (verfügbar auf der Script-Site),
+* WeeChat < = 0.2.6: nutze das Skript 'sound.pl' (verfügbar auf der Skript-Site),
   und nehme Einstellungen für einen System-Befehl (um einen Klang zu spielen,
   eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
   `/setp perl.sound.cmd_highlight = "/path/to/command arguments"`
-* WeeChat > = 0.3.x: nutze das Script 'launcher.pl' (verfügbar auf der Script-Site),
+* WeeChat > = 0.3.x: nutze das Skript 'launcher.pl' (verfügbar auf der Skript-Site),
   und nehme Einstellungen für einen System-Befehl (um einen Klang zu spielen,
   eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
 
-Es gibt noch andere Scripte, die über solche Ereignisse informieren , bitte
-besuche dazu die Plugin/Script-Webseite:
-http://weechat.flashtux.org/plugins.php
+Es gibt noch andere Skripten, die über solche Ereignisse informieren , bitte
+besuche dazu die Skripten-Webseite: http://www.weechat.org/scripts/
 
 
 [[filter_irc_join_part_quit]]
@@ -312,16 +313,16 @@ Entsprechend der WeeChat-Version:
 Was ist der Unterschied zwischen den Befehlen /ignore und /filter?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Der Befehl `/ignore` ist ein IRC-Befehl und beeinflußt somit nur die IRC-Puffer
+Der Befehl `/ignore` ist ein IRC-Befehl und beeinflußt somit nur die IRC-Buffer
 (Server und Channel).
-Durch ihn kannst Du bestimmte Nicks oder Hostnamen von Usern eines Servers oder
+Durch den Befehl kann man bestimmte Nicks oder Hostnamen von Usern eines Servers oder
 Channels ignorieren (Der Befehl wird nicht auf den Inhalt der Meldung angewandt).
 Passende Meldungen werden von dem IRC-Plugin vor der Anzeige gelöscht (Du wirst
 sie niemals zu Gesicht bekommen).
 
 Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
-nicht an den Server gesendet) und beeinflußt somit jeden Puffer.
-Er gibt Dir die Möglichkeit bestimmte Zeilen in Puffern, mittels Tags und
+nicht an den Server gesendet) und beeinflußt somit jeden Buffer.
+Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Tags und
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
 Gefilterte Zeilen werden nur unsichtbar - nicht gelöscht. Sehen kannst Du sie
 wenn Du den Filter deaktivierst (Voreinstellung zum Aktivieren/Deaktivieren der
@@ -333,15 +334,15 @@ Entwicklung
 
 
 [[bug_task_patch]]
-Was mache ich um Fehler zu melden, nach neuen Features zu fragen oder Patches einzusenden?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Was mache ich um Fehler zu melden, nach neuen Funktionen zu fragen oder Patches einzusenden?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Es gibt drei Möglichkeiten:
 
 . Du kannst zu uns in den IRC kommen: 'irc.freenode.net', channel '#weechat'
 . Du kannst die Internetseite savannah nutzen:
   * Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
-  * Nach einem neuen Feature fragen: https://savannah.nongnu.org/task/?group=weechat
+  * Nach einer neuen Funktion fragen: https://savannah.nongnu.org/task/?group=weechat
   * Patch senden: https://savannah.nongnu.org/patch/?group=weechat
 . Du kannst den Entwicklern mailen, entsprechende Mail-Adressen auf der Supportseite:
   http://www.weechat.org/about
@@ -349,13 +350,13 @@ Es gibt drei Möglichkeiten:
 
 
 [[supported_os]]
-Auf welchen Plattformen läuft WeeChat? Wird es noch zu anderen Betriebssystemen portiert?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Auf welchen Plattformen läuft WeeChat? Wird es noch auf anderen Betriebssystemen portiert?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Die gesamte Liste gibt es unter: http://www.weechat.org/download
 
 Wir geben unser Bestes um WeeChat auf möglichst vielen Plattformen lauffähig zu
-haben. Um WeeChat auf Betriebssystemen zu testen, zu denen wir keinen Zugang
+machen. Um WeeChat auf Betriebssystemen zu testen, zu denen wir keinen Zugang
 haben, ist Hilfe willkommenen.
 
 

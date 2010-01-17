@@ -112,7 +112,7 @@ Dla wersji > = 0.2.3:
 * ustaw globalną wartość dekodowania, na przykład:
 ** w WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-2`
 ** w WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-2"`
-* jeślu kożystasz z UTF-8:
+* jeśli kożystasz z UTF-8:
 ** sprawdź czy twój terminal jest przystosowany dla UTF-8 (zalecanym terminalem 
    dla UTF-8 jest rxvt-unicode)
 ** jeśli kożystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
@@ -199,7 +199,7 @@ Uwagi:
 Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Tak,musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
+Tak, musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
 oraz użyć tych komend po załadowaniu skryptu:
 
   /shell setenv LANG=pl_PL.UTF-8
@@ -225,26 +225,27 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 
 
 [[urls]]
-How can I click on long URLs (more than one line)?
+Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat displays time and prefix for each line and optional bars around chat
-area, so it is not possible to display long URLs without truncating them.
+WeeChat wuświetla czas i przedrostek dla każdej lini, oraz opcjonalne paski do
+okoła przestrzeni rozmów, dlatego nie jest możliwe wyświetlanie długich URLi
+bez skrócenia ich.
 
-You can use one of following scripts:
+Możesz użyć jednego z poniższych skryptów:
 
 urlbar.py::
-    display URLs in a bar
+    wyświetla adresy URL na pasku
 
 urlgrab.py::
-    logs URLs and open them in browser
+    zapisuje zapisuje URL i otwiera je w przeglądarce
 
 url_shorten.rb::
 tinyurl.py::
 shortenurl.py::
-    shorten long URLs
+    skraca długie adresy URL
 
-List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
+Lista skryptów do obsługi adresów URL: http://www.weechat.org/scripts/stable/tag/url/
 
 
 [[highlight_notification]]
