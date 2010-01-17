@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-14 10:20+0100\n"
+"POT-Creation-Date: 2010-01-17 15:43+0100\n"
 "PO-Revision-Date: 2010-01-03 15:16+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4289,7 +4289,17 @@ msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "desconexión tras un retraso importante (en minutos, 0 = no desconectar nunca)"
 
-msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
+#, fuzzy
+msgid ""
+"anti-flood for high priority queue: number of seconds between two user "
+"messages or commands sent to IRC server (0 = no anti-flood)"
+msgstr ""
+"anti-flood: # segundos entre 2 mensajes de un usuario (0 = sin anti-flood"
+
+#, fuzzy
+msgid ""
+"anti-flood for low priority queue: number of seconds between two messages "
+"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
 "anti-flood: # segundos entre 2 mensajes de un usuario (0 = sin anti-flood"
 

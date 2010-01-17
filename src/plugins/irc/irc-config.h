@@ -108,7 +108,7 @@ extern struct t_config_option *irc_config_network_away_check_max_nicks;
 extern struct t_config_option *irc_config_network_lag_check;
 extern struct t_config_option *irc_config_network_lag_min_show;
 extern struct t_config_option *irc_config_network_lag_disconnect;
-extern struct t_config_option *irc_config_network_anti_flood;
+extern struct t_config_option *irc_config_network_anti_flood[2];
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_send_unknown_commands;

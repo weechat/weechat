@@ -124,8 +124,8 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
         }
     }
     
-    irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
-                      ptr_channel->name, text);
+    irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                      "PRIVMSG %s :%s", ptr_channel->name, text);
     irc_input_user_message_display (buffer, text);
     
     if (next)
@@ -157,7 +157,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
         && (input_data[0] == '/') && (input_data[1] != '/'))
     {
         if (ptr_server)
-            irc_server_sendf (ptr_server, 1, input_data + 1);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              input_data + 1);
         return WEECHAT_RC_OK;
     }
     

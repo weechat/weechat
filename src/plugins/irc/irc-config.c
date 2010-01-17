@@ -90,7 +90,7 @@ struct t_config_option *irc_config_network_away_check_max_nicks;
 struct t_config_option *irc_config_network_lag_check;
 struct t_config_option *irc_config_network_lag_min_show;
 struct t_config_option *irc_config_network_lag_disconnect;
-struct t_config_option *irc_config_network_anti_flood;
+struct t_config_option *irc_config_network_anti_flood[2];
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_send_unknown_commands;
@@ -1559,12 +1559,19 @@ irc_config_init ()
         N_("disconnect after important lag (in minutes, 0 = never "
            "disconnect)"),
         NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_anti_flood = weechat_config_new_option (
+    irc_config_network_anti_flood[0] = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "anti_flood", "integer",
-        N_("anti-flood: # seconds between two user messages (0 = no "
-           "anti-flood)"),
-        NULL, 0, 5, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "anti_flood_prio_high", "integer",
+        N_("anti-flood for high priority queue: number of seconds between two "
+           "user messages or commands sent to IRC server (0 = no anti-flood)"),
+        NULL, 0, 60, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_network_anti_flood[1] = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "anti_flood_prio_low", "integer",
+        N_("anti-flood for low priority queue: number of seconds between two "
+           "messages sent to IRC server (messages like automatic CTCP replies) "
+           "(0 = no anti-flood)"),
+        NULL, 0, 60, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_receive", "boolean",

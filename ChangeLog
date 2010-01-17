@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2010-01-11
+v0.3.1-dev, 2010-01-17
 
 
 Version 0.3.1 (under dev!)
@@ -27,6 +27,8 @@ Version 0.3.1 (under dev!)
 * irc: add new commands /allchan and /allserv with excluding option, commands
   /ame and /amsg are now aliases, new aliases /aaway and /anick
 * irc: add options to customize target buffer for messages (task #7381)
+* irc: add new output queue for messages with low priority (like automatic CTCP
+  replies), high priority is given to user messages or commands
 * irc: use self-signed certificate to auto identify on IRC server (CertFP)
   (task #7492, debian #453348)
 * irc: check SSL certificates (task #7492)

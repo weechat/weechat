@@ -83,6 +83,10 @@ enum t_irc_server_option
 #define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
     "weechat4,weechat5"
 
+#define IRC_SERVER_OUTQUEUE_PRIO_HIGH 1
+#define IRC_SERVER_OUTQUEUE_PRIO_LOW  2
+#define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -137,8 +141,9 @@ struct t_irc_server
     time_t lag_next_check;          /* time for next check                   */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     time_t last_user_message;       /* time of last user message (anti flood)*/
-    struct t_irc_outqueue *outqueue;      /* queue for outgoing user msgs    */
-    struct t_irc_outqueue *last_outqueue; /* last outgoing user message      */
+    struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
+                                             /* with 2 priorities (high/low) */
+    struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */
@@ -194,7 +199,8 @@ extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *arg_server, int fd);
 extern int irc_server_timer_cb (void *data, int remaining_calls);
 extern int irc_server_timer_check_away_cb (void *data, int remaining_calls);
-extern void irc_server_outqueue_free_all (struct t_irc_server *server);
+extern void irc_server_outqueue_free_all (struct t_irc_server *server,
+                                          int priority);
 extern int irc_server_get_channel_count (struct t_irc_server *server);
 extern int irc_server_get_pv_count (struct t_irc_server *server);
 extern void irc_server_set_away (struct t_irc_server *server, const char *nick,

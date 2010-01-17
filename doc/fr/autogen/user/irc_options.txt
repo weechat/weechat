@@ -153,10 +153,15 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
 
-* *irc.network.anti_flood*
-** description: anti-flood: nombre de secondes entre deux messages utilisateur (0 = pas d'anti-flood)
+* *irc.network.anti_flood_prio_high*
+** description: anti-flood pour la file d'attente haute priorité : nombre de secondes entre deux messages utilisateur ou commandes envoyés au serveur IRC (0 = pas d'anti-flood)
 ** type: entier
-** valeurs: 0 .. 5 (valeur par défaut: 2)
+** valeurs: 0 .. 60 (valeur par défaut: 2)
+
+* *irc.network.anti_flood_prio_low*
+** description: anti-flood pour la file d'attente basse priorité : nombre de secondes entre deux messages envoyés au serveur IRC (messages comme les réponses automatiques aux CTCP) (0 = pas d'anti-flood)
+** type: entier
+** valeurs: 0 .. 60 (valeur par défaut: 2)
 
 * *irc.network.away_check*
 ** description: intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)

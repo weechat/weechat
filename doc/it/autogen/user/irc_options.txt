@@ -153,10 +153,15 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
-* *irc.network.anti_flood*
-** descrizione: anti-flood: # secondi tra due messaggi utente (0 = nessun anti-flood)
+* *irc.network.anti_flood_prio_high*
+** descrizione: anti-flood for high priority queue: number of seconds between two user messages or commands sent to IRC server (0 = no anti-flood)
 ** tipo: intero
-** valori: 0 .. 5 (valore predefinito: 2)
+** valori: 0 .. 60 (valore predefinito: 2)
+
+* *irc.network.anti_flood_prio_low*
+** descrizione: anti-flood for low priority queue: number of seconds between two messages sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)
+** tipo: intero
+** valori: 0 .. 60 (valore predefinito: 2)
 
 * *irc.network.away_check*
 ** descrizione: intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)

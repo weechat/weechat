@@ -332,7 +332,8 @@ irc_command_me_channel (struct t_irc_server *server,
 {
     char *string;
     
-    irc_server_sendf (server, 1, "PRIVMSG %s :\01ACTION %s\01",
+    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                      "PRIVMSG %s :\01ACTION %s\01",
                       channel->name,
                       (arguments && arguments[0]) ? arguments : "");
     string = (arguments && arguments[0]) ?
@@ -392,7 +393,8 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
         {
             server->is_away = 1;
             server->away_time = time (NULL);
-            irc_server_sendf (server, 1, "AWAY :%s", arguments);
+            irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "AWAY :%s", arguments);
             if (weechat_config_integer (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
             {
                 string = irc_color_decode (arguments,
@@ -452,7 +454,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
         /* if server is connected, send away command now */
         if (server->is_connected)
         {
-            irc_server_sendf (server, 1, "AWAY");
+            irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH, "AWAY");
             server->is_away = 0;
             if (server->away_time != 0)
             {
@@ -787,7 +789,8 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
             gettimeofday (&tv, NULL);
             snprintf (str_time, sizeof (str_time), "%ld %ld",
                       tv.tv_sec, tv.tv_usec);
-            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01PING %s\01",
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "PRIVMSG %s :\01PING %s\01",
                               argv[1], str_time);
             weechat_printf (ptr_server->buffer,
                             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
@@ -803,7 +806,8 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01%s%s%s\01",
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "PRIVMSG %s :\01%s%s%s\01",
                               argv[1],
                               irc_cmd,
                               (argv_eol[3]) ? " " : "",
@@ -2158,7 +2162,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                 if (string)
                     free (string);
                 
-                irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
+                irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                                  "PRIVMSG %s :%s",
                                   ptr_channel->name, argv_eol[arg_text]);
             }
             else
@@ -2180,7 +2185,9 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         if (string)
                             free (string);
                     }
-                    irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
+                    irc_server_sendf (ptr_server,
+                                      IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                                      "PRIVMSG %s :%s",
                                       targets[i], argv_eol[arg_text]);
                 }
                 else
@@ -2237,7 +2244,9 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         if (string)
                             free (string);
                     }
-                    irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
+                    irc_server_sendf (ptr_server,
+                                      IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                                      "PRIVMSG %s :%s",
                                       targets[i], argv_eol[arg_text]);
                 }
             }
@@ -2386,7 +2395,8 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                         (string) ? string : argv_eol[arg_text]);
         if (string)
             free (string);
-        irc_server_sendf (ptr_server, 1, "NOTICE %s :%s",
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "NOTICE %s :%s",
                           argv[arg_nick], argv_eol[arg_text]);
     }
     else
@@ -2661,7 +2671,8 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
                                             (string) ? string : argv_eol[arg_text]);
             if (string)
                 free (string);
-            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :%s",
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "PRIVMSG %s :%s",
                               argv[arg_nick], argv_eol[arg_text]);
         }
     }
@@ -2694,13 +2705,15 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
             ptr_server = irc_server_search (argv[2]);
             if (!ptr_server || (ptr_server->sock < 0))
                 return WEECHAT_RC_ERROR;
-            irc_server_sendf (ptr_server, 1, "%s", argv_eol[3]);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "%s", argv_eol[3]);
         }
         else
         {
             if (!ptr_server || (ptr_server->sock < 0))
                 return WEECHAT_RC_ERROR;
-            irc_server_sendf (ptr_server, 1, "%s", argv_eol[1]);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "%s", argv_eol[1]);
         }
     }
     else
@@ -3307,7 +3320,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         for (ptr_server2 = irc_servers; ptr_server2;
              ptr_server2 = ptr_server2->next_server)
         {
-            irc_server_outqueue_free_all (ptr_server2);
+            for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
+            {
+                irc_server_outqueue_free_all (ptr_server2, i);
+            }
         }
         weechat_printf (NULL,
                         _("%s: messages outqueue DELETED for all "
@@ -3402,10 +3418,12 @@ irc_command_squery (void *data, struct t_gui_buffer *buffer, int argc,
     if (argc > 1)
     {
         if (argc > 2)
-            irc_server_sendf (ptr_server, 1, "SQUERY %s :%s",
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "SQUERY %s :%s",
                               argv[1], argv_eol[2]);
         else
-            irc_server_sendf (ptr_server, 1, "SQUERY %s", argv_eol[1]);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "SQUERY %s", argv_eol[1]);
     }
     else
     {
@@ -3562,13 +3580,14 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
     if (new_topic)
     {
         if (weechat_strcasecmp (new_topic, "-delete") == 0)
-            irc_server_sendf (ptr_server, 1, "TOPIC %s :",
-                              channel_name);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "TOPIC %s :", channel_name);
         else
         {
             new_topic_color = irc_color_encode (new_topic,
                                                 weechat_config_boolean (irc_config_network_colors_send));
-            irc_server_sendf (ptr_server, 1, "TOPIC %s :%s",
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "TOPIC %s :%s",
                               channel_name,
                               (new_topic_color) ? new_topic_color : new_topic);
             if (new_topic_color)
@@ -3576,7 +3595,8 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
         }
     }
     else
-        irc_server_sendf (ptr_server, 1, "TOPIC %s", channel_name);
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "TOPIC %s", channel_name);
     
     return WEECHAT_RC_OK;
 }
@@ -3737,14 +3757,15 @@ irc_command_version (void *data, struct t_gui_buffer *buffer, int argc,
     {
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             && irc_nick_search (ptr_channel, argv[1]))
-            irc_server_sendf (ptr_server, 1, "PRIVMSG %s :\01VERSION\01",
-                              argv[1]);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "PRIVMSG %s :\01VERSION\01", argv[1]);
         else
-            irc_server_sendf (ptr_server, 1, "VERSION %s",
-                              argv[1]);
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "VERSION %s", argv[1]);
     }
     else
-        irc_server_sendf (ptr_server, 1, "VERSION");
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "VERSION");
     
     return WEECHAT_RC_OK;
 }
@@ -3803,7 +3824,8 @@ irc_command_wallops (void *data, struct t_gui_buffer *buffer, int argc,
     (void) argv;
     
     if (argc > 1)
-        irc_server_sendf (ptr_server, 1, "WALLOPS :%s", argv_eol[1]);
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "WALLOPS :%s", argv_eol[1]);
     else
     {
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "wallops");
