@@ -261,7 +261,7 @@ tinyurl.py::
 shortenurl.py::
     URLs werden durch einen Internet-Dienst gekürzt.
 
-Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url/
+Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[highlight_notification]]

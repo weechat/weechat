@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-17 15:43+0100\n"
-"PO-Revision-Date: 2010-01-09 23:03+0100\n"
+"PO-Revision-Date: 2010-01-17 16:27+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4164,13 +4164,13 @@ msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "visualizza le modalità canale nell'elemento barra \"buffer_name\""
 
 msgid "display CTCP message even if it is blocked"
-msgstr ""
+msgstr "visualizza messaggio CTCP anche se bloccato"
 
 msgid "display CTCP reply sent by WeeChat"
-msgstr ""
+msgstr "visualizza risposta CTCP inviata da WeeChat"
 
 msgid "display CTCP message even if it is unknown CTCP"
-msgstr ""
+msgstr "visualizza messaggio CTCP anche se è CTCP sconosciuto"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "visualizza le modalità nick nell'elemento barra \"input_prompt\""
@@ -4296,11 +4296,10 @@ msgid ""
 "messages or commands sent to IRC server (0 = no anti-flood)"
 msgstr "anti-flood: # secondi tra due messaggi utente (0 = nessun anti-flood)"
 
-#, fuzzy
 msgid ""
 "anti-flood for low priority queue: number of seconds between two messages "
 "sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
-msgstr "anti-flood: # secondi tra due messaggi utente (0 = nessun anti-flood)"
+msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
@@ -4317,13 +4316,12 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "invia comandi sconosciuti al server"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP richiesto da %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP richiesto da %s%s%s: %s%s%s%s%s%s"
 
-#, fuzzy
 msgid " (blocked)"
-msgstr "(disabilitato)"
+msgstr "(bloccato)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
@@ -6037,14 +6035,3 @@ msgstr "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
-
-#~ msgid "%s%s: cannot find nick for sending message"
-#~ msgstr "%s%s: impossibile trovare il nick per l'invio del messaggio"
-
-#~ msgid "text: text to send"
-#~ msgstr "testo: testo da inviare"
-
-#, fuzzy
-#~ msgid "%s%s: error creating msgbuffer \"%s\" => \"%s\""
-#~ msgstr ""
-#~ "%s%s: errore durante la creazione del set di caratteri \"%s\" => \"%s\""

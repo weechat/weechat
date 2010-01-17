@@ -245,7 +245,7 @@ tinyurl.py::
 shortenurl.py::
     skraca długie adresy URL
 
-Lista skryptów do obsługi adresów URL: http://www.weechat.org/scripts/stable/tag/url/
+Lista skryptów do obsługi adresów URL: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[highlight_notification]]

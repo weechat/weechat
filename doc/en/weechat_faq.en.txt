@@ -244,7 +244,7 @@ tinyurl.py::
 shortenurl.py::
     shorten long URLs
 
-List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
+List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[highlight_notification]]

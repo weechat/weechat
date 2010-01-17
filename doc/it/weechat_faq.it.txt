@@ -229,26 +229,27 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
 
 [[urls]]
-How can I click on long URLs (more than one line)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso cliccare su URL lunghi (più di una riga)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat displays time and prefix for each line and optional bars around chat
-area, so it is not possible to display long URLs without truncating them.
+WeeChat visualizza data e prefisso per ogni riga e per le barre opzionali che
+circondano l'area di chat, perciò non è possibile visualizzare URL lunghi senza
+tagliarli.
 
-You can use one of following scripts:
+È possibile usare uno degli script seguenti:
 
 urlbar.py::
-    display URLs in a bar
+    visualizza URL in una barra
 
 urlgrab.py::
-    logs URLs and open them in browser
+    tiene traccia degli URL e li apre nel browser
 
 url_shorten.rb::
 tinyurl.py::
 shortenurl.py::
-    shorten long URLs
+    abbrevia URL lunghi
 
-List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url/
+Elenco di script a proposito di URL: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[highlight_notification]]

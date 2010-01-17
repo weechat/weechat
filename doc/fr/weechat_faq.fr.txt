@@ -255,7 +255,7 @@ shortenurl.py::
     réduit les URLs longs
 
 Liste des scripts manipulant des URLs :
-http://www.weechat.org/scripts/stable/tag/url/
+http://www.weechat.org/scripts/stable/tag/url
 
 
 [[highlight_notification]]
