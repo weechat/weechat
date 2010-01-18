@@ -440,6 +440,7 @@ xfer_alloc ()
     new_xfer->protocol = 0;
     new_xfer->status = 0;
     new_xfer->buffer = NULL;
+    new_xfer->remote_nick_color = NULL;
     new_xfer->fast_send = weechat_config_boolean (xfer_config_network_fast_send);
     new_xfer->blocksize = weechat_config_integer (xfer_config_network_blocksize);
     new_xfer->start_time = time_now;
@@ -489,6 +490,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
           int port, int sock, const char *local_filename)
 {
     struct t_xfer *new_xfer;
+    const char *ptr_color;
     
     new_xfer = xfer_alloc ();
     if (!new_xfer)
@@ -511,6 +513,8 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->type = type;
     new_xfer->protocol = protocol;
     new_xfer->remote_nick = strdup (remote_nick);
+    ptr_color = weechat_info_get ("irc_nick_color", remote_nick);
+    new_xfer->remote_nick_color = (ptr_color) ? strdup (ptr_color) : NULL;
     new_xfer->local_nick = (local_nick) ? strdup (local_nick) : NULL;
     new_xfer->charset_modifier = (charset_modifier) ? strdup (charset_modifier) : NULL;
     if (XFER_IS_FILE(type))
@@ -671,6 +675,8 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->charset_modifier);
     if (xfer->filename)
         free (xfer->filename);
+    if (xfer->remote_nick_color)
+        free (xfer->remote_nick_color);
     if (xfer->unterminated_message)
         free (xfer->unterminated_message);
     if (xfer->local_filename)
@@ -1272,6 +1278,8 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", xfer->buffer))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "remote_nick_color", xfer->remote_nick_color))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "fast_send", xfer->fast_send))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "blocksize", xfer->blocksize))
@@ -1360,6 +1368,7 @@ xfer_print_log ()
                             ptr_xfer->status,
                             xfer_status_string[ptr_xfer->status]);
         weechat_log_printf ("  buffer. . . . . . . : 0x%lx", ptr_xfer->buffer);
+        weechat_log_printf ("  remote_nick_color . : '%s'",  ptr_xfer->remote_nick_color);
         weechat_log_printf ("  fast_send . . . . . : %d",    ptr_xfer->fast_send);
         weechat_log_printf ("  blocksize . . . . . : %d",    ptr_xfer->blocksize);
         weechat_log_printf ("  start_time. . . . . : %ld",   ptr_xfer->start_time);

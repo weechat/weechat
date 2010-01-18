@@ -26,8 +26,52 @@
 #include "../weechat-plugin.h"
 #include "xfer.h"
 #include "xfer-buffer.h"
+#include "xfer-chat.h"
 #include "xfer-config.h"
 
+
+/*
+ * xfer_command_me: send a ctcp action to remote host
+ */
+
+int
+xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
+{
+    struct t_xfer *ptr_xfer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) argc;
+    (void) argv;
+    
+    ptr_xfer = xfer_search_by_buffer (buffer);
+
+    if (!ptr_xfer)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: can't find xfer for buffer \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        weechat_buffer_get_string (buffer, "name"));
+        return WEECHAT_RC_OK;
+    }
+    
+    if (!XFER_HAS_ENDED(ptr_xfer->status))
+    {
+        xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\n",
+                         (argv_eol[1]) ? argv_eol[1] : "");
+        weechat_printf_tags (buffer,
+                             "no_highlight",
+                             "%s%s%s %s%s",
+                             weechat_prefix ("action"),
+                             weechat_color ("chat_nick_self"),
+                             ptr_xfer->local_nick,
+                             weechat_color ("chat"),
+                             (argv_eol[1]) ? argv_eol[1] : "");
+    }
+    
+    return WEECHAT_RC_OK;
+}
 
 /*
  * xfer_command_xfer_list: list xfer
@@ -195,6 +239,11 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
 void
 xfer_command_init ()
 {
+    weechat_hook_command ("me",
+                          N_("send a CTCP action to remote host"),
+                          N_("message"),
+                          N_("message: message to send"),
+                          NULL, &xfer_command_me, NULL);
     weechat_hook_command ("xfer",
                           N_("xfer control"),
                           "[list | listfull]",

@@ -41,6 +41,7 @@
 #include "irc-nick.h"
 #include "irc-display.h"
 #include "irc-ignore.h"
+#include "irc-protocol.h"
 #include "irc-raw.h"
 
 
@@ -339,13 +340,14 @@ irc_command_me_channel (struct t_irc_server *server,
     string = (arguments && arguments[0]) ?
         irc_color_decode (arguments,
                           weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
-    weechat_printf (channel->buffer,
-                    "%s%s%s %s%s",
-                    weechat_prefix ("action"),
-                    IRC_COLOR_CHAT_NICK_SELF,
-                    server->nick,
-                    IRC_COLOR_CHAT,
-                    (string) ? string : "");
+    weechat_printf_tags (channel->buffer,
+                         irc_protocol_tags ("privmsg", "irc_action,no_highlight"),
+                         "%s%s%s %s%s",
+                         weechat_prefix ("action"),
+                         IRC_COLOR_CHAT_NICK_SELF,
+                         server->nick,
+                         IRC_COLOR_CHAT,
+                         (string) ? string : "");
     if (string)
         free (string);
 }

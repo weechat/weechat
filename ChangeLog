@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1-dev, 2010-01-17
+v0.3.1-dev, 2010-01-18
 
 
 Version 0.3.1 (under dev!)
@@ -45,6 +45,8 @@ Version 0.3.1 (under dev!)
 * irc: fix nick color for nicks with wide chars (bug #28547)
 * irc: fix autorejoin on channels with key
 * irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
+* xfer: add color for nicks in chat
+* xfer: add missing command /me (bug #28658)
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
 * ruby: support of Ruby >= 1.9.1 (patch #6989)
 * fifo: remove old pipes before creating new pipe

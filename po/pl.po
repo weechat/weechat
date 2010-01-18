@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-17 15:43+0100\n"
+"POT-Creation-Date: 2010-01-18 10:29+0100\n"
 "PO-Revision-Date: 2010-01-17 00:15+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4369,6 +4369,10 @@ msgstr "pobiera aktualny nick z serwera"
 msgid "get nick from IRC host"
 msgstr "pobiera nick z hosta IRC"
 
+#, fuzzy
+msgid "get nick color"
+msgstr "kolor tekstu"
+
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "pobiera wskaźnik bufora kanału/serwera IRC"
 
@@ -5858,6 +5862,10 @@ msgstr "nie"
 
 msgid "No xfer"
 msgstr "Brak xfer"
+
+#, fuzzy
+msgid "send a CTCP action to remote host"
+msgstr "wysyła akcję CTCP na aktualny kanał"
 
 msgid "xfer control"
 msgstr "kontrola xfer"

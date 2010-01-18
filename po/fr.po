@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-17 15:43+0100\n"
-"PO-Revision-Date: 2010-01-17 15:44+0100\n"
+"POT-Creation-Date: 2010-01-18 10:29+0100\n"
+"PO-Revision-Date: 2010-01-18 10:29+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4415,6 +4415,9 @@ msgstr "retourne le pseudo utilisé actuellement sur un serveur"
 msgid "get nick from IRC host"
 msgstr "retourne le pseudo à partir d'un host IRC"
 
+msgid "get nick color"
+msgstr "retourne la couleur du pseudo"
+
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "retourne le pointeur vers le tampon pour un serveur/canal IRC"
 
@@ -5921,6 +5924,9 @@ msgstr "non"
 
 msgid "No xfer"
 msgstr "Pas de xfer"
+
+msgid "send a CTCP action to remote host"
+msgstr "envoyer une action CTCP à l'hôte distant"
 
 msgid "xfer control"
 msgstr "contrôle xfer"

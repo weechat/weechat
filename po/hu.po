@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-01-17 15:43+0100\n"
+"POT-Creation-Date: 2010-01-18 10:29+0100\n"
 "PO-Revision-Date: 2010-01-03 15:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4238,6 +4238,10 @@ msgstr "aktuális név megváltoztatása"
 msgid "get nick from IRC host"
 msgstr "név vagy gép letiltása"
 
+#, fuzzy
+msgid "get nick color"
+msgstr "üzenetek színe"
+
 msgid "get buffer pointer for an IRC server/channel"
 msgstr ""
 
@@ -5711,6 +5715,10 @@ msgstr ""
 #, fuzzy
 msgid "No xfer"
 msgstr "Nincs szerver.\n"
+
+#, fuzzy
+msgid "send a CTCP action to remote host"
+msgstr "CTCP parancs küldése az aktuális szobába"
 
 msgid "xfer control"
 msgstr ""

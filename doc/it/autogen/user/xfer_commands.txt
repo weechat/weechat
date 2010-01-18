@@ -1,3 +1,11 @@
+&bull; *`/me`* `messaggio`::
+
+........................................
+  send a CTCP action to remote host
+
+  messaggio: messaggio da inviare
+........................................
+
 &bull; *`/xfer`* `[list | listfull]`::
 
 ........................................

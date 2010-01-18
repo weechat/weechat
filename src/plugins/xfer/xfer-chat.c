@@ -96,9 +96,9 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
     static char buffer[4096 + 2];
-    char *buf2, *pos, *ptr_buf, *next_ptr_buf;
+    char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
     char *ptr_buf_decoded, *ptr_buf_without_weechat_colors, *ptr_buf_color;
-    int num_read;
+    int num_read, length, ctcp_action;
     
     /* make C compiler happy */
     (void) fd;
@@ -144,6 +144,20 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             
             if (ptr_buf)
             {
+                ctcp_action = 0;
+                length = strlen (ptr_buf);
+                if ((ptr_buf[0] == '\01')
+                    && (ptr_buf[length - 1] == '\01'))
+                {
+                    ptr_buf[length - 1] = '\0';
+                    ptr_buf++;
+                    if (strncmp (ptr_buf, "ACTION ", 7) == 0)
+                    {
+                        ptr_buf += 7;
+                        ctcp_action = 1;
+                    }
+                }
+                
                 ptr_buf_decoded = (xfer->charset_modifier) ?
                     weechat_hook_modifier_exec ("charset_decode",
                                                 xfer->charset_modifier,
@@ -154,11 +168,32 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                                                             "1",
                                                             (ptr_buf_without_weechat_colors) ?
                                                             ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf));
-                weechat_printf_tags (xfer->buffer, "notify_message", "%s\t%s",
-                                     xfer->remote_nick,
-                                     (ptr_buf_color) ?
-                                     ptr_buf_color : ((ptr_buf_without_weechat_colors) ?
-                                                      ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf)));
+                ptr_buf2 = (ptr_buf_color) ?
+                    ptr_buf_color : ((ptr_buf_without_weechat_colors) ?
+                                     ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf));
+                if (ctcp_action)
+                {
+                    weechat_printf_tags (xfer->buffer,
+                                         "irc_privmsg,irc_action,notify_message",
+                                         "%s%s%s%s%s%s",
+                                         weechat_prefix ("action"),
+                                         (xfer->remote_nick_color) ?
+                                         xfer->remote_nick_color : weechat_color ("chat_nick_other"),
+                                         xfer->remote_nick,
+                                         weechat_color ("chat"),
+                                         (ptr_buf2[0]) ? " " : "",
+                                         ptr_buf2);
+                }
+                else
+                {
+                    weechat_printf_tags (xfer->buffer,
+                                         "irc_privmsg,notify_message",
+                                         "%s%s\t%s",
+                                         (xfer->remote_nick_color) ?
+                                         xfer->remote_nick_color : weechat_color ("chat_nick_other"),
+                                         xfer->remote_nick,
+                                         ptr_buf2);
+                }
                 if (ptr_buf_decoded)
                     free (ptr_buf_decoded);
                 if (ptr_buf_without_weechat_colors)
@@ -216,10 +251,12 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
                                                            "1",
                                                            input_data);
-            weechat_printf (buffer,
-                            "%s\t%s",
-                            ptr_xfer->local_nick,
-                            (input_data_color) ? input_data_color : input_data);
+            weechat_printf_tags (buffer,
+                                 "irc_privmsg,no_highlight",
+                                 "%s%s\t%s",
+                                 weechat_color ("chat_nick_self"),
+                                 ptr_xfer->local_nick,
+                                 (input_data_color) ? input_data_color : input_data);
             if (input_data_color)
                 free (input_data_color);
         }
