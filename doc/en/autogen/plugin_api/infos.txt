@@ -9,6 +9,8 @@
 
 | irc | irc_nick | get current nick on a server
 
+| irc | irc_nick_color | get nick color
+
 | irc | irc_nick_from_host | get nick from IRC host
 
 | weechat | charset_internal | WeeChat internal charset

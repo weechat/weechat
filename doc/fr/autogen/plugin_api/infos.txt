@@ -9,6 +9,8 @@
 
 | irc | irc_nick | retourne le pseudo utilisé actuellement sur un serveur
 
+| irc | irc_nick_color | retourne la couleur du pseudo
+
 | irc | irc_nick_from_host | retourne le pseudo à partir d'un host IRC
 
 | weechat | charset_internal | charset interne à WeeChat

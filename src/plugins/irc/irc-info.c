@@ -90,6 +90,10 @@ irc_info_get_info_cb (void *data, const char *info_name,
     {
         return irc_protocol_get_nick_from_host (arguments);
     }
+    else if (weechat_strcasecmp (info_name, "irc_nick_color") == 0)
+    {
+        return irc_nick_find_color (arguments);
+    }
     else if (weechat_strcasecmp (info_name, "irc_buffer") == 0)
     {
         if (arguments && arguments[0])
@@ -395,6 +399,8 @@ irc_info_init ()
     weechat_hook_info ("irc_nick", N_("get current nick on a server"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_nick_color", N_("get nick color"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel"),
                        &irc_info_get_info_cb, NULL);
