@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Weechat 0.31-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-18 10:29+0100\n"
-"PO-Revision-Date: 2010-01-17 16:27+0100\n"
+"PO-Revision-Date: 2010-01-20 12:04+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4280,7 +4280,7 @@ msgstr ""
 
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
-"intervallo tra le due verifiche per il ritardo (in secondi, 0 = nessun "
+"intervallo tra due controlli per il ritardo (in secondi, 0 = nessun "
 "controllo)"
 
 msgid "minimum lag to show (in seconds)"
@@ -4290,20 +4290,24 @@ msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "disconnetti dopo un ritardo eccessivo (in minuti, 0 = nessuna disconnessione)"
 
-#, fuzzy
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
 "messages or commands sent to IRC server (0 = no anti-flood)"
-msgstr "anti-flood: # secondi tra due messaggi utente (0 = nessun anti-flood)"
+msgstr ""
+"anti-flood per coda ad alta priorità: numero di secondi tra due messaggi "
+"utente o comandi inviati al server IRC (0 = nessun anti-flood)"
 
 msgid ""
 "anti-flood for low priority queue: number of seconds between two messages "
 "sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
+"anti-flood per coda a bassa priorità: numero di secondi tra due messaggi "
+"inviati al server IRC (messaggi come risposte CTCP automatiche) (0 = nessun "
+"anti-flood)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
-"quando disabilitato, i codici colori vengono ignorati nei messaggi in entrata"
+"se disabilitato, i codici colori vengono ignorati nei messaggi in entrata"
 
 msgid ""
 "allow user to send colors with special codes (ctrl-c + a code and optional "
@@ -4384,9 +4388,8 @@ msgstr "ottiene nick corrente su un server"
 msgid "get nick from IRC host"
 msgstr "ottiene nick dall'host IRC"
 
-#, fuzzy
 msgid "get nick color"
-msgstr "colore del testo"
+msgstr "riceve colore del nick"
 
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "ottiene puntatore al buffer per un server/canale IRC"
@@ -5886,9 +5889,8 @@ msgstr "no"
 msgid "No xfer"
 msgstr "Nessun xfer"
 
-#, fuzzy
 msgid "send a CTCP action to remote host"
-msgstr "invia un'azione CTCP al canale corrente"
+msgstr "invia un'azione CTCP all'host remoto"
 
 msgid "xfer control"
 msgstr "controllo xfer"
@@ -5909,7 +5911,7 @@ msgstr "nick della chat DCC"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
-"apertura automatica del buffer xfer quando un nuovo xfer viene aggiunto alla "
+"apre automaticamente il buffer xfer quando un nuovo xfer viene aggiunto alla "
 "lista"
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
