@@ -1,7 +1,7 @@
 &bull; *`/me`* `messaggio`::
 
 ........................................
-  send a CTCP action to remote host
+  invia un'azione CTCP all'host remoto
 
   messaggio: messaggio da inviare
 ........................................

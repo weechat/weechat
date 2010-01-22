@@ -154,12 +154,12 @@
 ** valori: on, off (valore predefinito: off)
 
 * *irc.network.anti_flood_prio_high*
-** descrizione: anti-flood for high priority queue: number of seconds between two user messages or commands sent to IRC server (0 = no anti-flood)
+** descrizione: anti-flood per coda ad alta priorità: numero di secondi tra due messaggi utente o comandi inviati al server IRC (0 = nessun anti-flood)
 ** tipo: intero
 ** valori: 0 .. 60 (valore predefinito: 2)
 
 * *irc.network.anti_flood_prio_low*
-** descrizione: anti-flood for low priority queue: number of seconds between two messages sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)
+** descrizione: anti-flood per coda a bassa priorità: numero di secondi tra due messaggi inviati al server IRC (messaggi come risposte CTCP automatiche) (0 = nessun anti-flood)
 ** tipo: intero
 ** valori: 0 .. 60 (valore predefinito: 2)
 
@@ -174,7 +174,7 @@
 ** valori: 0 .. 2147483647 (valore predefinito: 25)
 
 * *irc.network.colors_receive*
-** descrizione: quando disabilitato, i codici colori vengono ignorati nei messaggi in entrata
+** descrizione: se disabilitato, i codici colori vengono ignorati nei messaggi in entrata
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
@@ -194,7 +194,7 @@
 ** valori: qualsiasi stringa (valore predefinito: "WeeChat %v")
 
 * *irc.network.lag_check*
-** descrizione: intervallo tra le due verifiche per il ritardo (in secondi, 0 = nessun controllo)
+** descrizione: intervallo tra due controlli per il ritardo (in secondi, 0 = nessun controllo)
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: 60)
 

@@ -84,7 +84,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *xfer.look.auto_open_buffer*
-** descrizione: apertura automatica del buffer xfer quando un nuovo xfer viene aggiunto alla lista
+** descrizione: apre automaticamente il buffer xfer quando un nuovo xfer viene aggiunto alla lista
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 

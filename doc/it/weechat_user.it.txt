@@ -775,7 +775,7 @@ oppure elencare tutti i plugin attivi.
 Quando un plugin viene disattivato, tutti i buffer creati da questo plugin
 sono chiusi automaticamente.
 
-Esempi per attivare, disattivare oppure elencare i plugin:	 
+Esempi per attivare, disattivare oppure elencare i plugin:
 
 ----------------------------------------
 /plugin load irc

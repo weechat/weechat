@@ -241,7 +241,7 @@
   esci da WeeChat
 
   argomenti: testo inviato con il segnale "quit"
-  	    (ad esempio il plugin irc usa questo testo per inviare il messaggio di uscita al server)
+             (ad esempio il plugin irc usa questo testo per inviare il messaggio di uscita al server)
 ........................................
 
 &bull; *`/reload`* `[file [file....]]`::
