@@ -846,6 +846,59 @@ config_file_string_to_boolean (const char *text)
 }
 
 /*
+ * config_file_hook_config_exec: execute hook_config for modified option
+ */
+
+void
+config_file_hook_config_exec (struct t_config_option *option)
+{
+    char *option_full_name, str_value[256];
+    
+    if (option)
+    {
+        option_full_name = config_file_option_full_name (option);
+        if (option_full_name)
+        {
+            if (option->value)
+            {
+                switch (option->type)
+                {
+                    case CONFIG_OPTION_TYPE_BOOLEAN:
+                        hook_config_exec (option_full_name,
+                                          (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                                          "on" : "off");
+                        break;
+                    case CONFIG_OPTION_TYPE_INTEGER:
+                        if (option->string_values)
+                            hook_config_exec (option_full_name,
+                                              option->string_values[CONFIG_INTEGER(option)]);
+                        else
+                        {
+                            snprintf (str_value, sizeof (str_value),
+                                      "%d", CONFIG_INTEGER(option));
+                            hook_config_exec (option_full_name, str_value);
+                        }
+                        break;
+                    case CONFIG_OPTION_TYPE_STRING:
+                        hook_config_exec (option_full_name, (char *)option->value);
+                        break;
+                    case CONFIG_OPTION_TYPE_COLOR:
+                        hook_config_exec (option_full_name,
+                                          gui_color_get_name (CONFIG_COLOR(option)));
+                        break;
+                    case CONFIG_NUM_OPTION_TYPES:
+                        break;
+                }
+            }
+            else
+                hook_config_exec (option_full_name, NULL);
+            
+            free (option_full_name);
+        }
+    }
+}
+
+/*
  * config_file_option_reset: set default value for an option
  *                           return one of these values:
  *                             WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
@@ -857,14 +910,12 @@ int
 config_file_option_reset (struct t_config_option *option, int run_callback)
 {
     int rc, old_value_was_null;
-    char value[256], *option_full_name;
     
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    value[0] = '\0';
-
+    
     if (option->default_value)
     {
         old_value_was_null = (option->value == NULL);
@@ -877,9 +928,6 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     if (option->value)
                     {
                         CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
-                        snprintf (value, sizeof (value), "%s",
-                                  CONFIG_BOOLEAN(option) ?
-                                  config_boolean_true[0] : config_boolean_false[0]);
                         rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                     }
                 }
@@ -890,9 +938,6 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     else
                     {
                         CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
-                        snprintf (value, sizeof (value), "%s",
-                                  CONFIG_BOOLEAN(option) ?
-                                  config_boolean_true[0] : config_boolean_false[0]);
                         rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                     }
                 }
@@ -909,8 +954,6 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 else
                 {
                     CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
-                    snprintf (value, sizeof (value), "%d",
-                              CONFIG_INTEGER(option));
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
                 break;
@@ -926,12 +969,7 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     option->value = NULL;
                 }
                 option->value = strdup ((char *)option->default_value);
-                if (option->value)
-                {
-                    snprintf (value, sizeof (value), "%s",
-                              CONFIG_STRING(option));
-                }
-                else
+                if (!option->value)
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
@@ -946,8 +984,6 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 else
                 {
                     CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
-                    snprintf (value, sizeof (value), "%d",
-                              CONFIG_COLOR(option));
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
                 break;
@@ -978,17 +1014,11 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
         (void)(option->callback_change)(option->callback_change_data, option);
     }
     
-    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    /* run config hook(s) */
+    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        && option->config_file && option->section)
     {
-        if (option->config_file && option->section)
-        {
-            option_full_name = config_file_option_full_name (option);
-            if (option_full_name)
-            {
-                hook_config_exec (option_full_name, value);
-                free (option_full_name);
-            }
-        }
+        config_file_hook_config_exec (option);
     }
     
     return rc;
@@ -1008,7 +1038,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
 {
     int value_int, i, rc, new_value_ok, old_value_was_null, num_colors;
     long number;
-    char *error, *option_full_name;
+    char *error;
     
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1272,17 +1302,10 @@ config_file_option_set (struct t_config_option *option, const char *value,
     }
     
     /* run config hook(s) */
-    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        && option->config_file && option->section)
     {
-        if (option->config_file && option->section)
-        {
-            option_full_name = config_file_option_full_name (option);
-            if (option_full_name)
-            {
-                hook_config_exec (option_full_name, value);
-                free (option_full_name);
-            }
-        }
+        config_file_hook_config_exec (option);
     }
     
     return rc;
@@ -1300,7 +1323,6 @@ int
 config_file_option_set_null (struct t_config_option *option, int run_callback)
 {
     int rc;
-    char *option_full_name;
     
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1330,17 +1352,10 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
     }
     
     /* run config hook(s) */
-    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        && option->config_file && option->section)
     {
-        if (option->config_file && option->section)
-        {
-            option_full_name = config_file_option_full_name (option);
-            if (option_full_name)
-            {
-                hook_config_exec (option_full_name, NULL);
-                free (option_full_name);
-            }
-        }
+        config_file_hook_config_exec (option);
     }
     
     return rc;
@@ -1572,7 +1587,12 @@ config_file_option_set_with_string (const char *option_name, const char *value)
                 if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
                     || (rc == WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE))
                 {
-                    hook_config_exec (option_name, value);
+                    config_file_search_with_string (option_name, NULL, NULL,
+                                                    &ptr_option, NULL);
+                    if (ptr_option)
+                        config_file_hook_config_exec (ptr_option);
+                    else
+                        hook_config_exec (option_name, value);
                 }
             }
         }
