@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-18 10:29+0100\n"
-"PO-Revision-Date: 2010-01-17 00:15+0100\n"
+"PO-Revision-Date: 2010-01-22 18:27+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -4268,21 +4268,21 @@ msgstr "minimalne opóźnienie do pokazania (w sekundach)"
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr "rozłącz po dużym opóźnieniu (w minutach, 0 = nie rozłączaj nigdy)"
 
-#, fuzzy
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
 "messages or commands sent to IRC server (0 = no anti-flood)"
 msgstr ""
-"anty-flood: # sekund pomiędzy dwoma wiadomościami użytkownika (0 - brak anty-"
-"flood)"
+"anty-flood dla kolejki o wysokim priorytecie: liczba sekund pomiędzy dwoma "
+"wiadomościami użytkownika, bądź komendami wysłanymi do serwera IRC (0 = brak "
+"anty-flooda)"
 
-#, fuzzy
 msgid ""
 "anti-flood for low priority queue: number of seconds between two messages "
 "sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
-"anty-flood: # sekund pomiędzy dwoma wiadomościami użytkownika (0 - brak anty-"
-"flood)"
+"anty-flood dla kolejek o niskim priorytecie: liczba sekund pomiędzy dwoma "
+"wiadomościami wysłanymi do serwera IRC  (wiadomości jak automatyczne "
+"odpowiedzi na CTCP) (0 = brak anty-flooda)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
@@ -4369,9 +4369,8 @@ msgstr "pobiera aktualny nick z serwera"
 msgid "get nick from IRC host"
 msgstr "pobiera nick z hosta IRC"
 
-#, fuzzy
 msgid "get nick color"
-msgstr "kolor tekstu"
+msgstr "pobiera kolor nicka"
 
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "pobiera wskaźnik bufora kanału/serwera IRC"
@@ -5863,9 +5862,8 @@ msgstr "nie"
 msgid "No xfer"
 msgstr "Brak xfer"
 
-#, fuzzy
 msgid "send a CTCP action to remote host"
-msgstr "wysyła akcję CTCP na aktualny kanał"
+msgstr "wysyła akcję CTCP do zdalnego hosta"
 
 msgid "xfer control"
 msgstr "kontrola xfer"
