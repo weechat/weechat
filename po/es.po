@@ -4289,19 +4289,20 @@ msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "desconexión tras un retraso importante (en minutos, 0 = no desconectar nunca)"
 
-#, fuzzy
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
 "messages or commands sent to IRC server (0 = no anti-flood)"
 msgstr ""
-"anti-flood: # segundos entre 2 mensajes de un usuario (0 = sin anti-flood"
+"anti-flood para la cola de alta prioridad: número de segundos entre dos "
+"mensajes del usuario o comandos enviados al servidor (0 = no anti-flood)"
 
-#, fuzzy
 msgid ""
 "anti-flood for low priority queue: number of seconds between two messages "
 "sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
-"anti-flood: # segundos entre 2 mensajes de un usuario (0 = sin anti-flood"
+"anti-flood para la cola de baja prioridad: número de segundos entre dos "
+"mensajes enviados al servidor IRC (mensajes como respuestas CTCP "
+"automáticas) (0 = no anti-flood)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
@@ -4387,9 +4388,8 @@ msgstr "devuelve el apodo actual en el servidor"
 msgid "get nick from IRC host"
 msgstr "devuelve apodo de un host IRC"
 
-#, fuzzy
 msgid "get nick color"
-msgstr "color del texto"
+msgstr "obtiene el color del apodo"
 
 msgid "get buffer pointer for an IRC server/channel"
 msgstr "devuelve el puntero del buffer de un canal/servidor IRC"
@@ -5905,9 +5905,8 @@ msgstr "no"
 msgid "No xfer"
 msgstr "Ninguna transferencia"
 
-#, fuzzy
 msgid "send a CTCP action to remote host"
-msgstr "envía una acción CTCP al canal actual"
+msgstr "envía una acción CTCP al host remoto"
 
 msgid "xfer control"
 msgstr "control de transferencias"
