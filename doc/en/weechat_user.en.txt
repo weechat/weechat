@@ -75,6 +75,7 @@ Source package
 
 WeeChat can be compiled with cmake or autotools (cmake is recommended way).
 
+[[compile_with_cmake]]
 With cmake
 ^^^^^^^^^^
 
@@ -98,6 +99,7 @@ $ make
 $ make install
 ----------------------------------------
 
+[[compile_with_autotools]]
 With autotools
 ^^^^^^^^^^^^^^
 
@@ -301,6 +303,7 @@ Bar 'input' has following default items:
 Default key bindings
 ~~~~~~~~~~~~~~~~~~~~
 
+[[key_bindings_command_line]]
 Keys for command line
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -446,6 +449,7 @@ Keys for command line
   `/input delete_line`
 |========================================
 
+[[key_bindings_buffers_windows]]
 Keys for buffers / windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -593,6 +597,7 @@ Keys for buffers / windows
   `/input jump_next_visited_buffer`
 |========================================
 
+[[key_bindings_other]]
 Other keys
 ^^^^^^^^^^
 
@@ -616,6 +621,7 @@ Command line
 WeeChat command line (at the bottom of window) lets you execute commands or
 send text to buffer.
 
+[[command_line_syntax]]
 Syntax
 ^^^^^^
 
@@ -640,6 +646,7 @@ For example, to send text '/set' on current buffer:
 //set
 ----------------------------------------
 
+[[command_line_colors]]
 Colors
 ^^^^^^
 
@@ -795,6 +802,7 @@ Alias plugin
 Alias plugin lets you create alias for commands (from WeeChat or other
 plugins).
 
+[[alias_commands]]
 Commands
 ^^^^^^^^
 
@@ -807,11 +815,13 @@ Aspell plugin
 Aspell plugin lets you check spelling in command line. It is possible to use
 many languages by buffer.
 
+[[aspell_options]]
 Options (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/aspell_options.txt[]
 
+[[aspell_commands]]
 Commands
 ^^^^^^^^
 
@@ -854,16 +864,19 @@ For example:
 charset: terminal: ISO-8859-15, internal: UTF-8
 ........................................
 
+[[charset_options]]
 Options (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/charset_options.txt[]
 
+[[charset_commands]]
 Commands
 ^^^^^^^^
 
 include::autogen/user/charset_commands.txt[]
 
+[[charset_set]]
 Set charset
 ^^^^^^^^^^^
 
@@ -908,6 +921,7 @@ To see all charsets used, use following command:
 /set charset.*
 ----------------------------------------
 
+[[charset_troubleshooting]]
 Troubleshooting
 ^^^^^^^^^^^^^^^
 
@@ -986,6 +1000,7 @@ The IRC plugin is designed to chat through IRC protocol with other people.
 It is multi-servers, and offers all supported IRC commands including DCC chat
 and file transfer (via xfer plugin, see <<xfer_plugin>>).
 
+[[irc_command_line_options]]
 Command line options
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1002,11 +1017,13 @@ default port (6667), with nick 'nono':
 $ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
+[[irc_options]]
 Options (irc.conf)
 ^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/irc_options.txt[]
 
+[[irc_commands]]
 Commands
 ^^^^^^^^
 
@@ -1188,16 +1205,19 @@ Logger plugin
 The Logger plugin lets you save content of buffers to files, with options
 about what and how it is saved.
 
+[[logger_options]]
 Options (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/logger_options.txt[]
 
+[[logger_commands]]
 Commands
 ^^^^^^^^
 
 include::autogen/user/logger_commands.txt[]
 
+[[logger_log_levels]]
 Log levels
 ^^^^^^^^^^
 
@@ -1245,6 +1265,7 @@ Some examples:
 /set logger.level.irc 2
 ----------------------------------------
 
+[[logger_filenames_masks]]
 Filenames masks
 ^^^^^^^^^^^^^^^
 
@@ -1290,26 +1311,31 @@ scripts, please read 'WeeChat Scripting Guide'.
 
 You can find some scripts for WeeChat here: http://www.weechat.org/scripts
 
+[[perl_commands]]
 Perl commands
 ^^^^^^^^^^^^^
 
 include::autogen/user/perl_commands.txt[]
 
+[[python_commands]]
 Python commands
 ^^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
 
+[[ruby_commands]]
 Ruby commands
 ^^^^^^^^^^^^^
 
 include::autogen/user/ruby_commands.txt[]
 
+[[lua_commands]]
 Lua commands
 ^^^^^^^^^^^^
 
 include::autogen/user/lua_commands.txt[]
 
+[[tcl_commands]]
 Tcl commands
 ^^^^^^^^^^^^
 
@@ -1325,11 +1351,13 @@ Xfer plugin brings:
   IRC plugin
 * file transfer, for example "DCC" via IRC plugin
 
+[[xfer_options]]
 Options (xfer.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/xfer_options.txt[]
 
+[[xfer_commands]]
 Commands
 ^^^^^^^^
 

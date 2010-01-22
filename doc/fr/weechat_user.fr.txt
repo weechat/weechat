@@ -77,6 +77,7 @@ Paquet source
 WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
 recommandée).
 
+[[compile_with_cmake]]
 Avec cmake
 ^^^^^^^^^^
 
@@ -100,6 +101,7 @@ $ make
 $ make install
 ----------------------------------------
 
+[[compile_with_autotools]]
 Avec autotools
 ^^^^^^^^^^^^^^
 
@@ -309,6 +311,7 @@ La barre 'input' contient les objets (items) suivants par défaut :
 Raccourcis clavier par défaut
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+[[key_bindings_command_line]]
 Touches pour la ligne de commande
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -461,6 +464,7 @@ Touches pour la ligne de commande
   `/input delete_line`
 |========================================
 
+[[key_bindings_buffers_windows]]
 Touches pour les tampons / fenêtres
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -609,6 +613,7 @@ Touches pour les tampons / fenêtres
   `/input jump_next_visited_buffer`
 |========================================
 
+[[key_bindings_other]]
 Autres touches
 ^^^^^^^^^^^^^^
 
@@ -632,6 +637,7 @@ Ligne de commande
 La ligne de commande WeeChat (située en bas de la fenêtre) permet d'exécuter
 des commandes ou d'envoyer du texte vers le tampon.
 
+[[command_line_syntax]]
 Syntaxe
 ^^^^^^^
 
@@ -656,6 +662,7 @@ doublant. Par exemple pour envoyer le texte '/set' sur le tampon courant :
 //set
 ----------------------------------------
 
+[[command_line_colors]]
 Couleurs
 ^^^^^^^^
 
@@ -815,6 +822,7 @@ Extension Alias
 L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
 d'autres extensions).
 
+[[alias_commands]]
 Commandes
 ^^^^^^^^^
 
@@ -827,11 +835,13 @@ Extension Aspell
 L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
 
+[[aspell_options]]
 Options (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/aspell_options.txt[]
 
+[[aspell_commands]]
 Commandes
 ^^^^^^^^^
 
@@ -877,16 +887,19 @@ Par exemple :
 charset: terminal: ISO-8859-15, interne: UTF-8
 ........................................
 
+[[charset_options]]
 Options (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/charset_options.txt[]
 
+[[charset_commands]]
 Commandes
 ^^^^^^^^^
 
 include::autogen/user/charset_commands.txt[]
 
+[[charset_set]]
 Définir le jeu de caractère
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -936,6 +949,7 @@ Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante 
 /set charset.*
 ----------------------------------------
 
+[[charset_troubleshooting]]
 En cas de problème
 ^^^^^^^^^^^^^^^^^^
 
@@ -1020,6 +1034,7 @@ Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
 compris la discussion directe (DCC chat) et le transfert de fichier DCC
 (via l'extension xfer, voir <<xfer_plugin>>).
 
+[[irc_command_line_options]]
 Options de ligne de commande
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1036,11 +1051,13 @@ port par défaut (6667), avec le pseudo 'nono' :
 $ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
+[[irc_options]]
 Options (irc.conf)
 ^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/irc_options.txt[]
 
+[[irc_commands]]
 Commandes
 ^^^^^^^^^
 
@@ -1225,16 +1242,19 @@ Extension Logger
 L'extension Logger permet de sauvegarder le contenu des tampons dans des
 fichiers, avec des options sur comment et quoi sauvegarder.
 
+[[logger_options]]
 Options (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/logger_options.txt[]
 
+[[logger_commands]]
 Commandes
 ^^^^^^^^^
 
 include::autogen/user/logger_commands.txt[]
 
+[[logger_log_levels]]
 Niveaux d'enregistrement
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1282,6 +1302,7 @@ Quelques exemples :
 /set logger.level.irc 2
 ----------------------------------------
 
+[[logger_filenames_masks]]
 Masques de noms de fichiers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1330,26 +1351,31 @@ WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
 Vous pouvez trouver des scripts pour WeeChat ici :
 http://www.weechat.org/scripts
 
+[[perl_commands]]
 Commandes Perl
 ^^^^^^^^^^^^^^
 
 include::autogen/user/perl_commands.txt[]
 
+[[python_commands]]
 Commandes Python
 ^^^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
 
+[[ruby_commands]]
 Commandes Ruby
 ^^^^^^^^^^^^^^
 
 include::autogen/user/ruby_commands.txt[]
 
+[[lua_commands]]
 Commandes Lua
 ^^^^^^^^^^^^^
 
 include::autogen/user/lua_commands.txt[]
 
+[[tcl_commands]]
 Commandes Tcl
 ^^^^^^^^^^^^^
 
@@ -1365,11 +1391,13 @@ L'extension Xfer permet :
   "DCC Chat" via l'extension IRC
 * le transfert de fichiers, par exemple le "DCC" via l'extension IRC
 
+[[xfer_options]]
 Options (xfer.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/xfer_options.txt[]
 
+[[xfer_commands]]
 Commandes
 ^^^^^^^^^
 

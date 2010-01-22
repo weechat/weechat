@@ -79,6 +79,7 @@ Sorgenti
 WeeChat può essere compilato con cmake oppure autotools
 (tuttavia si raccomanda cmake).
 
+[[compile_with_cmake]]
 Con cmake
 ^^^^^^^^^
 
@@ -102,8 +103,9 @@ $ make
 $ make install
 ----------------------------------------
 
+[[compile_with_autotools]]
 Con autotools
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 * Installazione nelle cartelle di sistema (richiede privilegi di 'root'):
 
@@ -308,6 +310,7 @@ La barra 'input' ha i seguenti elementi predefiniti:
 Associazione tasti predefinita
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+[[key_bindings_command_line]]
 Tasti per la riga di comando
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -457,6 +460,7 @@ Tasti per la riga di comando
   `/input delete_line`
 |=======================================
 
+[[key_bindings_buffers_windows]]
 Tasti per buffer / finestre
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -604,6 +608,7 @@ Tasti per buffer / finestre
   `/input jump_next_visited_buffer`
 |=======================================
 
+[[key_bindings_other]]
 Altri tasti
 ^^^^^^^^^^^
 
@@ -627,6 +632,7 @@ Riga di comando
 La riga di comando di WeeChat (nella parte inferiore della finestra) consente di
 inserire i comandi o di inviare del testo sul buffer.
 
+[[command_line_syntax]]
 Sintassi
 ^^^^^^^^
 
@@ -652,6 +658,7 @@ poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
 //set
 ----------------------------------------
 
+[[command_line_colors]]
 Colori
 ^^^^^^
 
@@ -810,6 +817,7 @@ Plugin Alias
 Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
 plugin).
 
+[[alias_commands]]
 Comandi
 ^^^^^^^
 
@@ -822,11 +830,13 @@ Plugin Aspell
 Il plugin Aspell consente di verificare l'ortografia nella riga di comando.
 È possibile utilizzare più lingue per buffer.
 
+[[aspell_options]]
 Opzioni (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/aspell_options.txt[]
 
+[[aspell_commands]]
 Comandi
 ^^^^^^^
 
@@ -871,16 +881,19 @@ Per esempio:
 set caratteri: terminale: ISO-8859-15, interno: UTF-8
 ........................................
 
+[[charset_options]]
 Opzioni (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/charset_options.txt[]
 
+[[charset_commands]]
 Comandi
 ^^^^^^^
 
 include::autogen/user/charset_commands.txt[]
 
+[[charset_set]]
 Impostare il set caratteri
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -928,6 +941,7 @@ Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguent
 /set charset.*
 ----------------------------------------
 
+[[charset_troubleshooting]]
 Risoluzione problemi
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1008,6 +1022,7 @@ Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre person
 È multi-server, ed offre tutti i comandi IRC supportati inclusi la chat DCC ed il
 trasferimento file (tramite plugin xfer, consultare <<xfer_plugin>>).
 
+[[irc_command_line_options]]
 Opzioni a riga di comando
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1024,11 +1039,13 @@ porta predefinita (6667), con il nick 'caio':
 $ weechat-curses irc://caio@irc.freenode.net/#weechat,#tizio
 ----------------------------------------
 
+[[irc_options]]
 Opzioni (irc.conf)
 ^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/irc_options.txt[]
 
+[[irc_commands]]
 Comandi
 ^^^^^^^
 
@@ -1217,16 +1234,19 @@ Plugin Logger
 Il plugin Logger consente di salvare il contenuto dei buffer su file, con
 opzioni a proposito su cosa e come viene salvato.
 
+[[logger_options]]
 Opzioni (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/logger_options.txt[]
 
+[[logger_commands]]
 Comandi
-^^^^^^^^
+^^^^^^^
 
 include::autogen/user/logger_commands.txt[]
 
+[[logger_log_levels]]
 Livelli di log
 ^^^^^^^^^^^^^^
 
@@ -1274,6 +1294,7 @@ Alcuni esempi:
 /set logger.level.irc 2
 ----------------------------------------
 
+[[logger_filenames_masks]]
 Mask per il nome file
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -1321,26 +1342,31 @@ per gli script, consultare la 'Guida allo Scripting di WeeChat'.
 
 È possibile trovare alcuni script qui: http://www.weechat.org/scripts
 
+[[perl_commands]]
 Comandi Perl
 ^^^^^^^^^^^^
 
 include::autogen/user/perl_commands.txt[]
 
+[[python_commands]]
 Comandi Python
 ^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
 
+[[ruby_commands]]
 Comandi Ruby
 ^^^^^^^^^^^^
 
 include::autogen/user/ruby_commands.txt[]
 
+[[lua_commands]]
 Comandi Lua
 ^^^^^^^^^^^
 
 include::autogen/user/lua_commands.txt[]
 
+[[tcl_commands]]
 Comandi Tcl
 ^^^^^^^^^^^
 
@@ -1356,13 +1382,15 @@ Il plugin xfer fornisce:
   tramite plugin IRC
 * trasferimento file, per esempio "DCC" tramite il plugin IRC
 
+[[xfer_options]]
 Opzioni (xfer.conf)
 ^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/xfer_options.txt[]
 
+[[xfer_commands]]
 Comandi
-^^^^^^^^
+^^^^^^^
 
 include::autogen/user/xfer_commands.txt[]
 
