@@ -6,10 +6,10 @@
 # Elián Hanisch <lambdae2@gmail.com>, 2009-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.1-dev\n"
+"Project-Id-Version: WeeChat 0.3.1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-01-18 10:29+0100\n"
-"PO-Revision-Date: 2010-01-03 15:16+0100\n"
+"PO-Revision-Date: 2010-01-23 09:07+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"

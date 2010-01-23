@@ -17,7 +17,7 @@
 #
 
 %define name weechat
-%define version 0.3.0
+%define version 0.3.1
 %define release 1
 
 Name:      %{name}
@@ -35,7 +35,7 @@ Packager:  [Odin] <odin@dtdm.org>
 
 %description
 WeeChat (Wee Enhanced Environment for Chat) is a portable, fast, light and
-extensible IRC client. Everything can be done with a keyboard.
+extensible chat client. Everything can be done with a keyboard.
 It is customizable and extensible with scripts.
 
 %prep
@@ -59,7 +59,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README UPGRADE_0.3
-%doc doc/en/weechat_*.txt doc/fr/weechat_*.txt doc/pl/weechat_*.txt doc/de/weechat_*.txt doc/ru/weechat_*.txt
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
@@ -68,6 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
+* Sat Jan 23 2010 FlashCode <flashcode@flashtux.org> 0.3.1-1
+- Released version 0.3.1
 * Sun Sep 06 2009 FlashCode <flashcode@flashtux.org> 0.3.0-1
 - Released version 0.3.0
 * Thu Sep 06 2007 FlashCode <flashcode@flashtux.org> 0.2.6-1
