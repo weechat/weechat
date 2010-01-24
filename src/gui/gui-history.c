@@ -55,38 +55,38 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
     if (!buffer->history
         || (buffer->history
             && (strcmp (buffer->history->text, string) != 0)))
-    {	
-	new_history = malloc (sizeof (*new_history));
-	if (new_history)
-	{
-	    new_history->text = strdup (string);
-	    /*if (config_log_hide_nickserv_pwd)
+    {
+        new_history = malloc (sizeof (*new_history));
+        if (new_history)
+        {
+            new_history->text = strdup (string);
+            /*if (config_log_hide_nickserv_pwd)
               irc_display_hide_password (new_history->text, 1);*/
-	    
-	    if (buffer->history)
-		buffer->history->prev_history = new_history;
-	    else
-		buffer->last_history = new_history;
-	    new_history->next_history = buffer->history;
-	    new_history->prev_history = NULL;
-	    buffer->history = new_history;
-	    buffer->num_history++;
-	    
-	    /* remove one command if necessary */
-	    if ((CONFIG_INTEGER(config_history_max_commands) > 0)
-		&& (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
-	    {
-		ptr_history = buffer->last_history->prev_history;
+
+            if (buffer->history)
+                buffer->history->prev_history = new_history;
+            else
+                buffer->last_history = new_history;
+            new_history->next_history = buffer->history;
+            new_history->prev_history = NULL;
+            buffer->history = new_history;
+            buffer->num_history++;
+
+            /* remove one command if necessary */
+            if ((CONFIG_INTEGER(config_history_max_commands) > 0)
+                && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
+            {
+                ptr_history = buffer->last_history->prev_history;
                 if (buffer->ptr_history == buffer->last_history)
                     buffer->ptr_history = ptr_history;
-		((buffer->last_history)->prev_history)->next_history = NULL;
-		if (buffer->last_history->text)
-		    free (buffer->last_history->text);
-		free (buffer->last_history);
-		buffer->last_history = ptr_history;
-		buffer->num_history++;
-	    }
-	}
+                ((buffer->last_history)->prev_history)->next_history = NULL;
+                if (buffer->last_history->text)
+                    free (buffer->last_history->text);
+                free (buffer->last_history);
+                buffer->last_history = ptr_history;
+                buffer->num_history++;
+            }
+        }
     }
 }
 
@@ -106,37 +106,37 @@ gui_history_global_add (const char *string)
         || (history_global
             && (strcmp (history_global->text, string) != 0)))
     {
-	new_history = malloc (sizeof (*new_history));
-	if (new_history)
-	{
-	    new_history->text = strdup (string);
-	    /*if (config_log_hide_nickserv_pwd)
+        new_history = malloc (sizeof (*new_history));
+        if (new_history)
+        {
+            new_history->text = strdup (string);
+            /*if (config_log_hide_nickserv_pwd)
               irc_display_hide_password (new_history->text, 1);*/
-	    
-	    if (history_global)
-		history_global->prev_history = new_history;
-	    else
-		last_history_global = new_history;
-	    new_history->next_history = history_global;
-	    new_history->prev_history = NULL;
-	    history_global = new_history;
-	    num_history_global++;
-	    
-	    /* remove one command if necessary */
-	    if ((CONFIG_INTEGER(config_history_max_commands) > 0)
-		&& (num_history_global > CONFIG_INTEGER(config_history_max_commands)))
-	    {
-		ptr_history = last_history_global->prev_history;
+
+            if (history_global)
+                history_global->prev_history = new_history;
+            else
+                last_history_global = new_history;
+            new_history->next_history = history_global;
+            new_history->prev_history = NULL;
+            history_global = new_history;
+            num_history_global++;
+
+            /* remove one command if necessary */
+            if ((CONFIG_INTEGER(config_history_max_commands) > 0)
+                && (num_history_global > CONFIG_INTEGER(config_history_max_commands)))
+            {
+                ptr_history = last_history_global->prev_history;
                 if (history_global_ptr == last_history_global)
                     history_global_ptr = ptr_history;
-		(last_history_global->prev_history)->next_history = NULL;
-		if (last_history_global->text)
-		    free (last_history_global->text);
-		free (last_history_global);
-		last_history_global = ptr_history;
-		num_history_global--;
-	    }
-	}
+                (last_history_global->prev_history)->next_history = NULL;
+                if (last_history_global->text)
+                    free (last_history_global->text);
+                free (last_history_global);
+                last_history_global = ptr_history;
+                num_history_global--;
+            }
+        }
     }
 }
 

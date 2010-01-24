@@ -344,7 +344,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
         return WEECHAT_RC_ERROR;
     }
     else
-    {		
+    {
         /* an alias can contain many commands separated by ';' */
         commands = weechat_string_split_command (ptr_alias->command, ';');
         if (commands)
@@ -499,7 +499,7 @@ alias_new (const char *name, const char *command)
     
     while (name[0] == '/')
     {
-	name++;
+        name++;
     }
     
     ptr_alias = alias_search (name);
@@ -530,7 +530,7 @@ alias_new (const char *name, const char *command)
         new_alias->hook = new_hook;
         new_alias->name = strdup (name);
         new_alias->command = strdup (command);
-	new_alias->running = 0;
+        new_alias->running = 0;
 
         if (alias_list)
         {

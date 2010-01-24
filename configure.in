@@ -253,13 +253,13 @@ if test "x$ac_found_iconv_header" = "xyes" ; then
    fi
    AC_MSG_CHECKING(for iconv usability in programs)   
    AC_TRY_RUN([
-	#include <iconv.h>
-	int main(int argc, char **argv) {
-	    iconv_t conv = iconv_open("ISO8859-1", "UTF-8");
+        #include <iconv.h>
+        int main(int argc, char **argv) {
+            iconv_t conv = iconv_open("ISO8859-1", "UTF-8");
             if (conv != (iconv_t) -1) {
-	      return 0;
+                return 0;
             }
-	    return 1;
+            return 1;
       }],iconv_found="yes")
   if test "x$iconv_found" = "xno" ; then
      AC_MSG_RESULT(no)
@@ -318,8 +318,8 @@ if test "x$enable_aspell" = "xyes" ; then
        enable_aspell="no"
        not_found="$not_found aspell"
     else
-	AC_MSG_RESULT(yes)
-	ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
+        AC_MSG_RESULT(yes)
+        ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
     fi
 else
     not_asked="$not_asked aspell"
@@ -413,7 +413,7 @@ if test "x$enable_perl" = "xyes" ; then
         enable_perl="no"
         not_found="$not_found perl"
     else
-	PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
+        PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
         AC_MSG_CHECKING(for Perl headers files)
         
         PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
@@ -423,7 +423,7 @@ if test "x$enable_perl" = "xyes" ; then
             AC_MSG_RESULT(found)
             AC_MSG_CHECKING(for Perl library)
             PERL_LIB_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
-            if test "x$PERL_LIB_TEST" = "x0" ; then	        
+            if test "x$PERL_LIB_TEST" = "x0" ; then
                 PERL_LFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
                 AC_MSG_RESULT(found)
             else
@@ -528,7 +528,7 @@ if test "x$enable_ruby" = "xyes" ; then
         enable_ruby="no"
         not_found="$not_found ruby"
     else
-	RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
+        RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
         if test "$RUBY_VERSION" = "1.9.0"; then
             AC_MSG_WARN([
 *** Ruby header files have been found, but they're of the version 1.9.0.
@@ -590,20 +590,20 @@ if test "x$enable_lua" = "xyes" ; then
         PKGCONFIG=""
         AC_CHECK_PROGS(PKGCONFIG, pkg-config)
         if test "x$PKGCONFIG" != "x"; then
-	    AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
-	    echo
-	    for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
-	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
-	        if test "x$?" = "x0" ; then
-		    LUA_VERSION=`$PKGCONFIG --modversion lua$l`
+            AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
+            echo
+            for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
+                pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
+                if test "x$?" = "x0" ; then
+                    LUA_VERSION=`$PKGCONFIG --modversion lua$l`
                     LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
                     LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
 
-		    pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
-		    if test  "x$?" = "x0"; then
-		       LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
-		       LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
-		    fi
+                    pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
+                    if test  "x$?" = "x0"; then
+                        LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+                        LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+                    fi
                     break
                 fi
             done
@@ -615,16 +615,16 @@ if test "x$enable_lua" = "xyes" ; then
         AC_CHECK_PROGS(LUACONFIG, lua-config lua-config51 lua-config5.1 lua-config50 lua-config5.0)
         if test "x$LUACONFIG" != "x" ; then
             AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
-	    echo
+            echo
             LUA_CFLAGS=`$LUACONFIG --include`
             LUA_LFLAGS=`$LUACONFIG --libs`
-	    LUA_VERSION="5.0.x"
+            LUA_VERSION="5.0.x"
         fi
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
         AC_MSG_CHECKING(for Lua headers and librairies)
-	echo
+        echo
         AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
         AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
         if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
@@ -633,31 +633,31 @@ if test "x$enable_lua" = "xyes" ; then
         for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
             AC_CHECK_LIB(lua$l,lua_call,ac_found_lua_lib="yes",ac_found_lua_lib="no")
             if test "x$ac_found_lua_lib" = "xyes" ; then
-	        LUA_VERSION=">=5.1.0"	       
+                LUA_VERSION=">=5.1.0"
+                
+                LUA_LFLAGS="$LDFLAGS -llua$l -lm"
+                
+                ac2_save_LDFLAGS="$LDFLAGS"
+                LDFLAGS="$LDFLAGS -llua$l -lm"
 
-	        LUA_LFLAGS="$LDFLAGS -llua$l -lm"
-		
-		ac2_save_LDFLAGS="$LDFLAGS"
-		LDFLAGS="$LDFLAGS -llua$l -lm"		
+                if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+                    LDFLAGS="$LDFLAGS -ldl"
+                fi
 
-		if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
-		   LDFLAGS="$LDFLAGS -ldl"
-		fi
+                AC_CHECK_LIB(lualib$l,luaL_openlib,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
+                if test "x$ac_found_liblua_lib" = "xyes" ; then
+                    LUA_VERSION="5.0.x"
+                    
+                    LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
+                    
+                    if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+                        LUA_LFLAGS="$LUA_LFLAGS -ldl"
+                    fi
+                fi
 
-		AC_CHECK_LIB(lualib$l,luaL_openlib,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
-		if test "x$ac_found_liblua_lib" = "xyes" ; then
-		   LUA_VERSION="5.0.x"
-		   
-		   LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
-
-		   if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
-		      LUA_LFLAGS="$LUA_LFLAGS -ldl"
-		   fi		   
-		fi
-
-		LDFLAGS="$ac2_save_LDFLAGS"
-		break
-	    fi
+                LDFLAGS="$ac2_save_LDFLAGS"
+                break
+            fi
         done
     fi
 
@@ -755,7 +755,7 @@ if test "x$enable_gnutls" = "xyes" ; then
       enable_gnutls="no"
       not_found="$not_found gnutls"
     else
-	AC_MSG_RESULT(yes)
+        AC_MSG_RESULT(yes)
         GNUTLS_CFLAGS=`pkg-config gnutls --cflags`
         GNUTLS_LFLAGS=`pkg-config gnutls --libs`
         AC_SUBST(GNUTLS_CFLAGS)
@@ -841,13 +841,13 @@ if test "x$enable_doc" = "xyes" ; then
                 ;;
         esac
     else
-	enable_doc="no"
+        enable_doc="no"
     fi
     if test -z "$ASCIIDOC"; then
         not_found="$not_found asciidoc"
     fi
     if test -z "$SOURCEHIGHLIGHT"; then
-	not_found="$not_found source-highlight(needed by asciidoc)"
+        not_found="$not_found source-highlight(needed by asciidoc)"
     fi
     AC_SUBST(DOC_ASCIIDOC8)
     AC_SUBST(ASCIIDOC)
@@ -919,7 +919,7 @@ netbsd*)
         fi
         CFLAGS="$CFLAGS $CPPFLAGS"
         ;;
-gnu*)	
+gnu*)
         LDFLAGS="$LDFLAGS -lpthread"
         ;;
 *)

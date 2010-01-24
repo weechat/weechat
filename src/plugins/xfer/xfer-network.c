@@ -481,7 +481,7 @@ xfer_network_connect (struct t_xfer *xfer)
     {
         /* listen to socket */
         if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
-            return 0;	
+            return 0;
         if (listen (xfer->sock, 1) == -1)
             return 0;
         if (fcntl (xfer->sock, F_SETFL, 0) == -1)

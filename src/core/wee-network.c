@@ -614,8 +614,8 @@ network_connect_child (struct t_hook *hook_connect)
             freeaddrinfo (res);
             return;
         }
-        
-	status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
+
+        status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
     }
     else
     {

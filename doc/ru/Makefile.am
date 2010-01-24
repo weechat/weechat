@@ -17,7 +17,7 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
-		weechat_quickstart.ru.txt
+             weechat_quickstart.ru.txt
 
 all-local: weechat_quickstart.ru.html
 

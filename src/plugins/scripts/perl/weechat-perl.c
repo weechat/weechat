@@ -126,7 +126,7 @@ char *perl_weechat_code =
 
 void *
 weechat_perl_exec (struct t_plugin_script *script,
-		   int ret_type, const char *function, char **argv)
+                   int ret_type, const char *function, char **argv)
 {
     char *func;
     unsigned int count;
@@ -173,7 +173,7 @@ weechat_perl_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME,
                         SvPV_nolen (ERRSV));
-        (void) POPs; /* poping the 'undef' */	
+        (void) POPs; /* poping the 'undef' */
         mem_err = 0;
     }
     else
@@ -302,7 +302,7 @@ weechat_perl_load (const char *filename)
     perl_construct (perl_current_interpreter);
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
-		perl_args_count, perl_args, NULL);
+                perl_args_count, perl_args, NULL);
     
     eval_pv (perl_weechat_code, TRUE);
     perl_argv[0] = (char *)filename;
@@ -316,23 +316,23 @@ weechat_perl_load (const char *filename)
     perl_argv[2] = NULL;
 #endif
     eval = weechat_perl_exec (&temp_script,
-			      WEECHAT_SCRIPT_EXEC_INT,
-			      "weechat_perl_load_eval_file",
+                              WEECHAT_SCRIPT_EXEC_INT,
+                              "weechat_perl_load_eval_file",
                               perl_argv);
     if (!eval)
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: not enough memory to parse "
                                          "file \"%s\""),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME, filename);
-	return 0;
+        return 0;
     }
     
     if (*eval != 0) 
     {
-	if (*eval == 2) 
-	{
-	    weechat_printf (NULL,
+        if (*eval == 2)
+        {
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to parse file "
                                              "\"%s\""),
                             weechat_prefix ("error"), PERL_PLUGIN_NAME,
@@ -351,42 +351,42 @@ weechat_perl_load (const char *filename)
                                              "weechat_perl_load_eval_file_error",
                                              FALSE), len));
 #endif
-	}
-	else if (*eval == 1)
-	{
-	    weechat_printf (NULL,
+        }
+        else if (*eval == 1)
+        {
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to run file \"%s\""),
                             weechat_prefix ("error"), PERL_PLUGIN_NAME,
                             filename);
-	}
-	else
+        }
+        else
         {
-	    weechat_printf (NULL,
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: unknown error while "
                                              "loading file \"%s\""),
                             weechat_prefix ("error"), PERL_PLUGIN_NAME,
                             filename);
-	}
+        }
 #ifdef MULTIPLICITY
-	perl_destruct (perl_current_interpreter);
+        perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif
-	if (perl_current_script && (perl_current_script != &temp_script))
+        if (perl_current_script && (perl_current_script != &temp_script))
         {
             script_remove (weechat_perl_plugin,
                            &perl_scripts, &last_perl_script,
                            perl_current_script);
         }
-	
-	free (eval);
-	return 0;
+
+        free (eval);
+        return 0;
     }
     
     free (eval);
 
     if (!perl_current_script)
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME, filename);
@@ -444,10 +444,10 @@ weechat_perl_unload (struct t_plugin_script *script)
     {
         r = (int *) weechat_perl_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
-				       script->shutdown_func,
+                                       script->shutdown_func,
                                        perl_argv);
-	if (r)
-	    free (r);
+        if (r)
+            free (r);
     }
     
     interpreter = script->interpreter;
@@ -464,7 +464,7 @@ weechat_perl_unload (struct t_plugin_script *script)
     perl_free (interpreter);
 #else
     if (interpreter)
-	free (interpreter);
+        free (interpreter);
 #endif
 }
 
@@ -794,7 +794,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     perl_construct (perl_main);
     perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
-		perl_args, NULL);
+                perl_args, NULL);
     eval_pv (perl_weechat_code, TRUE);
 #endif
     
@@ -841,9 +841,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* free perl intepreter */
     if (perl_main)
     {
-	perl_destruct (perl_main);
-	perl_free (perl_main);
-	perl_main = NULL;
+        perl_destruct (perl_main);
+        perl_free (perl_main);
+        perl_main = NULL;
     }
 #endif
 

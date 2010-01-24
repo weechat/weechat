@@ -73,7 +73,7 @@ fifo_remove_old_pipes ()
     buf_len = PATH_MAX;
     buf = malloc (buf_len);
     if (!buf)
-	return;
+        return;
     
     weechat_home = weechat_info_get ("weechat_dir", "");
     dir_separator = weechat_info_get ("dir_separator", "");

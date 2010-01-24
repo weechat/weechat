@@ -39,10 +39,10 @@ run ()
     echo -n "Running \"$@\""
     eval $@ >$AUTOGEN_LOG 2>&1
     if [ $? = 0 ] ; then
-	echo -e $OK
+        echo -e $OK
     else
-	echo -e $FAIL
-	err
+        echo -e $FAIL
+        err
     fi
 }
 

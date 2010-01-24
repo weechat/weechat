@@ -17,14 +17,14 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
-		weechat_user.fr.txt \
-		weechat_plugin_api.fr.txt \
-		weechat_scripting.fr.txt \
-		weechat_faq.fr.txt \
-		weechat_quickstart.fr.txt \
-		weechat_tester.fr.txt \
-		$(wildcard autogen/user/*.txt) \
-		$(wildcard autogen/plugin_api/*.txt)
+             weechat_user.fr.txt \
+             weechat_plugin_api.fr.txt \
+             weechat_scripting.fr.txt \
+             weechat_faq.fr.txt \
+             weechat_quickstart.fr.txt \
+             weechat_tester.fr.txt \
+             $(wildcard autogen/user/*.txt) \
+             $(wildcard autogen/plugin_api/*.txt)
 
 all-local: weechat_user.fr.html \
 		weechat_plugin_api.fr.html \

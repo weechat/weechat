@@ -249,7 +249,7 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     if (ignore->regex_mask)
     {
         regfree (ignore->regex_mask);
-	free (ignore->regex_mask);
+        free (ignore->regex_mask);
     }
     if (ignore->server)
         free (ignore->server);

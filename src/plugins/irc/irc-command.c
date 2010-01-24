@@ -1912,43 +1912,43 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (ptr_server->cmd_list_regexp)
     {
-	regfree (ptr_server->cmd_list_regexp);
-	free (ptr_server->cmd_list_regexp);
-	ptr_server->cmd_list_regexp = NULL;
+        regfree (ptr_server->cmd_list_regexp);
+        free (ptr_server->cmd_list_regexp);
+        ptr_server->cmd_list_regexp = NULL;
     }
     
     if (argc > 1)
     {
-	ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
-	if (ptr_server->cmd_list_regexp)
-	{
-	    if ((ret = regcomp (ptr_server->cmd_list_regexp,
+        ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
+        if (ptr_server->cmd_list_regexp)
+        {
+            if ((ret = regcomp (ptr_server->cmd_list_regexp,
                                 argv_eol[1],
                                 REG_NOSUB | REG_ICASE)) != 0)
-	    {
-		regerror (ret, ptr_server->cmd_list_regexp,
+            {
+                regerror (ret, ptr_server->cmd_list_regexp,
                           buf, sizeof(buf));
-		weechat_printf (ptr_server->buffer,
+                weechat_printf (ptr_server->buffer,
                                 _("%s%s: \"%s\" is not a valid regular "
                                   "expression (%s)"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 argv_eol, buf);
                 return WEECHAT_RC_OK;
-	    }
-	    else
-		irc_server_sendf (ptr_server, 0, "LIST");
-	}
-	else
-	{
-	    weechat_printf (ptr_server->buffer,
+            }
+            else
+                irc_server_sendf (ptr_server, 0, "LIST");
+        }
+        else
+        {
+            weechat_printf (ptr_server->buffer,
                             _("%s%s: not enough memory for regular "
                               "expression"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
             return WEECHAT_RC_OK;
-	}
+        }
     }
     else
-	irc_server_sendf (ptr_server, 0, "LIST");
+        irc_server_sendf (ptr_server, 0, "LIST");
     
     return WEECHAT_RC_OK;
 }

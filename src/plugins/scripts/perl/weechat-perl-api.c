@@ -452,7 +452,7 @@ XS (XS_weechat_api_list_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_list_new ());
@@ -475,7 +475,7 @@ XS (XS_weechat_api_list_add)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_add");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
@@ -512,7 +512,7 @@ XS (XS_weechat_api_list_search)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_search");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -545,7 +545,7 @@ XS (XS_weechat_api_list_casesearch)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_casesearch");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -578,7 +578,7 @@ XS (XS_weechat_api_list_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_get");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -608,7 +608,7 @@ XS (XS_weechat_api_list_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_set");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -640,7 +640,7 @@ XS (XS_weechat_api_list_next)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_next");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -669,7 +669,7 @@ XS (XS_weechat_api_list_prev)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_prev");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -698,7 +698,7 @@ XS (XS_weechat_api_list_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -727,7 +727,7 @@ XS (XS_weechat_api_list_size)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_size");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -756,7 +756,7 @@ XS (XS_weechat_api_list_remove)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_remove");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -787,7 +787,7 @@ XS (XS_weechat_api_list_remove_all)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_remove_all");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -815,7 +815,7 @@ XS (XS_weechat_api_list_free)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_free");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -885,7 +885,7 @@ XS (XS_weechat_api_config_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -1143,7 +1143,7 @@ XS (XS_weechat_api_config_new_section)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new_section");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 14)
@@ -1205,7 +1205,7 @@ XS (XS_weechat_api_config_search_section)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_search_section");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -1351,7 +1351,7 @@ XS (XS_weechat_api_config_new_option)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new_option");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 17)
@@ -1416,7 +1416,7 @@ XS (XS_weechat_api_config_search_option)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_search_option");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -1451,7 +1451,7 @@ XS (XS_weechat_api_config_string_to_boolean)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1481,7 +1481,7 @@ XS (XS_weechat_api_config_option_reset)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_reset");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 2)
@@ -1514,7 +1514,7 @@ XS (XS_weechat_api_config_option_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_set");
-	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (items < 3)
@@ -1549,7 +1549,7 @@ XS (XS_weechat_api_config_option_set_null)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_set_null");
-	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (items < 2)
@@ -1582,7 +1582,7 @@ XS (XS_weechat_api_config_option_unset)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_unset");
-	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (items < 1)
@@ -1613,7 +1613,7 @@ XS (XS_weechat_api_config_option_rename)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_rename");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -1646,7 +1646,7 @@ XS (XS_weechat_api_config_option_is_null)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_is_null");
-	PERL_RETURN_INT(1);
+        PERL_RETURN_INT(1);
     }
     
     if (items < 1)
@@ -1676,7 +1676,7 @@ XS (XS_weechat_api_config_option_default_is_null)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
-	PERL_RETURN_INT(1);
+        PERL_RETURN_INT(1);
     }
     
     if (items < 1)
@@ -1705,7 +1705,7 @@ XS (XS_weechat_api_config_boolean)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_boolean");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1734,7 +1734,7 @@ XS (XS_weechat_api_config_boolean_default)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_boolean_default");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1763,7 +1763,7 @@ XS (XS_weechat_api_config_integer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_integer");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1792,7 +1792,7 @@ XS (XS_weechat_api_config_integer_default)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_integer_default");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1821,7 +1821,7 @@ XS (XS_weechat_api_config_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -1850,7 +1850,7 @@ XS (XS_weechat_api_config_string_default)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string_default");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -1879,7 +1879,7 @@ XS (XS_weechat_api_config_color)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_color");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1908,7 +1908,7 @@ XS (XS_weechat_api_config_color_default)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_color_default");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -1937,7 +1937,7 @@ XS (XS_weechat_api_config_write_option)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write_option");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -1970,7 +1970,7 @@ XS (XS_weechat_api_config_write_line)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write_line");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 3)
@@ -2004,7 +2004,7 @@ XS (XS_weechat_api_config_write)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write");
-	PERL_RETURN_INT(-1);
+        PERL_RETURN_INT(-1);
     }
     
     if (items < 1)
@@ -2033,7 +2033,7 @@ XS (XS_weechat_api_config_read)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_read");
-	PERL_RETURN_INT(-1);
+        PERL_RETURN_INT(-1);
     }
     
     if (items < 1)
@@ -2062,7 +2062,7 @@ XS (XS_weechat_api_config_reload)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_reload");
-	PERL_RETURN_INT(-1);
+        PERL_RETURN_INT(-1);
     }
     
     if (items < 1)
@@ -2090,7 +2090,7 @@ XS (XS_weechat_api_config_option_free)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_free");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -2121,7 +2121,7 @@ XS (XS_weechat_api_config_section_free_options)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_section_free_options");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -2151,7 +2151,7 @@ XS (XS_weechat_api_config_section_free)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_section_free");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -2181,7 +2181,7 @@ XS (XS_weechat_api_config_free)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_free");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -2212,7 +2212,7 @@ XS (XS_weechat_api_config_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_get");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -2241,7 +2241,7 @@ XS (XS_weechat_api_config_get_plugin)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_get_plugin");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -2307,7 +2307,7 @@ XS (XS_weechat_api_config_set_plugin)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_set_plugin");
-	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
     if (items < 2)
@@ -2343,7 +2343,7 @@ XS (XS_weechat_api_config_unset_plugin)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_unset_plugin");
-	PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+        PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
     if (items < 1)
@@ -2614,7 +2614,7 @@ XS (XS_weechat_api_hook_command)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_command");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 7)
@@ -2702,7 +2702,7 @@ XS (XS_weechat_api_hook_command_run)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_command_run");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -2781,7 +2781,7 @@ XS (XS_weechat_api_hook_timer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_timer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 5)
@@ -2857,7 +2857,7 @@ XS (XS_weechat_api_hook_fd)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_fd");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 6)
@@ -3136,7 +3136,7 @@ XS (XS_weechat_api_hook_print)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_print");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 6)
@@ -3239,7 +3239,7 @@ XS (XS_weechat_api_hook_signal)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_signal");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -3278,7 +3278,7 @@ XS (XS_weechat_api_hook_signal_send)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_signal_send");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 3)
@@ -3369,7 +3369,7 @@ XS (XS_weechat_api_hook_config)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_config");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -3453,7 +3453,7 @@ XS (XS_weechat_api_hook_completion)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_completion");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
@@ -3493,7 +3493,7 @@ XS (XS_weechat_api_hook_completion_list_add)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 4)
@@ -3559,7 +3559,7 @@ XS (XS_weechat_api_hook_modifier)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_modifier");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -3597,7 +3597,7 @@ XS (XS_weechat_api_hook_modifier_exec)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -3659,7 +3659,7 @@ XS (XS_weechat_api_hook_info)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_info");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
@@ -3735,7 +3735,7 @@ XS (XS_weechat_api_hook_infolist)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_infolist");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
@@ -3774,7 +3774,7 @@ XS (XS_weechat_api_unhook)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "unhook");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -3805,7 +3805,7 @@ XS (XS_weechat_api_unhook_all)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "unhook_all");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     script_api_unhook_all (perl_current_script);
@@ -3952,7 +3952,7 @@ XS (XS_weechat_api_buffer_search)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_search");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -3985,7 +3985,7 @@ XS (XS_weechat_api_buffer_search_main)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_search_main");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_buffer_search_main ());
@@ -4009,7 +4009,7 @@ XS (XS_weechat_api_current_buffer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "current_buffer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_current_buffer ());
@@ -4031,7 +4031,7 @@ XS (XS_weechat_api_buffer_clear)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_clear");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -4059,7 +4059,7 @@ XS (XS_weechat_api_buffer_close)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_close");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -4089,7 +4089,7 @@ XS (XS_weechat_api_buffer_merge)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_merge");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -4118,7 +4118,7 @@ XS (XS_weechat_api_buffer_unmerge)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -4149,7 +4149,7 @@ XS (XS_weechat_api_buffer_get_integer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_integer");
-	PERL_RETURN_INT(-1);
+        PERL_RETURN_INT(-1);
     }
     
     if (items < 2)
@@ -4182,7 +4182,7 @@ XS (XS_weechat_api_buffer_get_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -4214,7 +4214,7 @@ XS (XS_weechat_api_buffer_get_pointer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -4314,7 +4314,7 @@ XS (XS_weechat_api_current_window)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "current_window");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_current_window ());
@@ -4338,7 +4338,7 @@ XS (XS_weechat_api_window_get_integer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_integer");
-	PERL_RETURN_INT(-1);
+        PERL_RETURN_INT(-1);
     }
     
     if (items < 2)
@@ -4371,7 +4371,7 @@ XS (XS_weechat_api_window_get_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -4403,7 +4403,7 @@ XS (XS_weechat_api_window_get_pointer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_pointer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -4435,7 +4435,7 @@ XS (XS_weechat_api_window_set_title)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_set_title");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -4464,7 +4464,7 @@ XS (XS_weechat_api_nicklist_add_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_add_group");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 5)
@@ -4502,7 +4502,7 @@ XS (XS_weechat_api_nicklist_search_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_search_group");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -4537,7 +4537,7 @@ XS (XS_weechat_api_nicklist_add_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 7)
@@ -4579,7 +4579,7 @@ XS (XS_weechat_api_nicklist_search_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -4614,7 +4614,7 @@ XS (XS_weechat_api_nicklist_remove_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -4647,7 +4647,7 @@ XS (XS_weechat_api_nicklist_remove_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -4679,7 +4679,7 @@ XS (XS_weechat_api_nicklist_remove_all)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -4708,7 +4708,7 @@ XS (XS_weechat_api_bar_item_search)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_search");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -4773,7 +4773,7 @@ XS (XS_weechat_api_bar_item_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -4810,7 +4810,7 @@ XS (XS_weechat_api_bar_item_update)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_update");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -4838,7 +4838,7 @@ XS (XS_weechat_api_bar_item_remove)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_remove");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -4869,7 +4869,7 @@ XS (XS_weechat_api_bar_search)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_search");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -4900,7 +4900,7 @@ XS (XS_weechat_api_bar_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 15)
@@ -4959,7 +4959,7 @@ XS (XS_weechat_api_bar_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_set");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 3)
@@ -4991,7 +4991,7 @@ XS (XS_weechat_api_bar_update)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_update");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -5019,7 +5019,7 @@ XS (XS_weechat_api_bar_remove)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_remove");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
@@ -5084,7 +5084,7 @@ XS (XS_weechat_api_info_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "info_get");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -5117,7 +5117,7 @@ XS (XS_weechat_api_infolist_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = script_ptr2str (weechat_infolist_new ());
@@ -5140,7 +5140,7 @@ XS (XS_weechat_api_infolist_new_item)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_item");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -5171,7 +5171,7 @@ XS (XS_weechat_api_infolist_new_var_integer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -5205,7 +5205,7 @@ XS (XS_weechat_api_infolist_new_var_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -5240,7 +5240,7 @@ XS (XS_weechat_api_infolist_new_var_pointer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -5275,7 +5275,7 @@ XS (XS_weechat_api_infolist_new_var_time)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -5309,7 +5309,7 @@ XS (XS_weechat_api_infolist_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_get");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
@@ -5344,7 +5344,7 @@ XS (XS_weechat_api_infolist_next)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_next");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -5373,7 +5373,7 @@ XS (XS_weechat_api_infolist_prev)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_prev");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 1)
@@ -5402,7 +5402,7 @@ XS (XS_weechat_api_infolist_fields)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_fields");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -5432,7 +5432,7 @@ XS (XS_weechat_api_infolist_integer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_integer");
-	PERL_RETURN_INT(0);
+        PERL_RETURN_INT(0);
     }
     
     if (items < 2)
@@ -5465,7 +5465,7 @@ XS (XS_weechat_api_infolist_string)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_string");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -5498,7 +5498,7 @@ XS (XS_weechat_api_infolist_pointer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_pointer");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -5531,7 +5531,7 @@ XS (XS_weechat_api_infolist_time)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_time");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
@@ -5563,7 +5563,7 @@ XS (XS_weechat_api_infolist_free)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_free");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)

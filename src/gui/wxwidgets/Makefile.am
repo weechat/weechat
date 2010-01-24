@@ -24,4 +24,4 @@ weechat_wxwidgets_LDADD = ../lib_weechat_gui_common.a \
                        ../../plugins/lib_weechat_plugins.a $(PLUGINS_LIBS)
 
 weechat_wxwidgets_SOURCES = gui-display.c \
-			             gui-input.c
+                            gui-input.c

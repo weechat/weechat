@@ -67,7 +67,7 @@ char python_buffer_output[128];
 
 void *
 weechat_python_exec (struct t_plugin_script *script,
-		     int ret_type, const char *function, char **argv)
+                     int ret_type, const char *function, char **argv)
 {
     struct t_plugin_script *old_python_current_script;
     PyThreadState *old_interpreter;
@@ -97,10 +97,10 @@ weechat_python_exec (struct t_plugin_script *script,
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
-	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+        /* PyEval_ReleaseThread (python_current_script->interpreter); */
         if (old_interpreter)
             PyThreadState_Swap (old_interpreter);
-	return NULL;
+        return NULL;
     }
     
     python_current_script = script;
@@ -184,7 +184,7 @@ weechat_python_exec (struct t_plugin_script *script,
        because of '#define WEECHAT_RC_OK 0'
     */
     if (rc ==  NULL)
-	rc = PyInt_FromLong (0);
+        rc = PyInt_FromLong (0);
     
     if (PyErr_Occurred())
     {
@@ -193,19 +193,18 @@ weechat_python_exec (struct t_plugin_script *script,
     }
     else if (PyString_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_STRING))
     {
-	if (PyString_AsString (rc))
-	    ret_value = strdup (PyString_AsString(rc));
-	else
-	    ret_value = NULL;
-	
-	Py_XDECREF(rc);
+        if (PyString_AsString (rc))
+            ret_value = strdup (PyString_AsString(rc));
+        else
+            ret_value = NULL;
+
+        Py_XDECREF(rc);
     }
     else if (PyInt_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_INT))
     {
-	
-	ret_i = malloc (sizeof (*ret_i));
-	if (ret_i)
-	    *ret_i = (int) PyInt_AsLong(rc);
+        ret_i = malloc (sizeof (*ret_i));
+        if (ret_i)
+            *ret_i = (int) PyInt_AsLong(rc);
         ret_value = ret_i;
         
         Py_XDECREF(rc);
@@ -253,39 +252,39 @@ weechat_python_output (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "s", &msg))
     {
         if (strlen(python_buffer_output) > 0)
-	{
-	    weechat_printf (NULL,
+        {
+            weechat_printf (NULL,
                             weechat_gettext ("%s: stdout/stderr: %s%s"),
                             PYTHON_PLUGIN_NAME, python_buffer_output, "");
-	    python_buffer_output[0] = '\0';
-	}
+            python_buffer_output[0] = '\0';
+        }
     }
     else 
     {
-	m = msg;
-	while ((p = strchr (m, '\n')) != NULL)
-	{
-	    *p = '\0';
-	    if (strlen (m) + strlen (python_buffer_output) > 0)
+        m = msg;
+        while ((p = strchr (m, '\n')) != NULL)
+        {
+            *p = '\0';
+            if (strlen (m) + strlen (python_buffer_output) > 0)
             {
-		weechat_printf (NULL,
+                weechat_printf (NULL,
                                 weechat_gettext ("%s: stdout/stderr: %s%s"),
                                 PYTHON_PLUGIN_NAME, python_buffer_output, m);
             }
-	    *p = '\n';
-	    python_buffer_output[0] = '\0';
-	    m = ++p;
-	}
-	
-	if (strlen(m) + strlen(python_buffer_output) > sizeof(python_buffer_output))
-	{
-	    weechat_printf (NULL,
+            *p = '\n';
+            python_buffer_output[0] = '\0';
+            m = ++p;
+        }
+
+        if (strlen(m) + strlen(python_buffer_output) > sizeof(python_buffer_output))
+        {
+            weechat_printf (NULL,
                             weechat_gettext ("%s: stdout/stderr: %s%s"),
                             PYTHON_PLUGIN_NAME, python_buffer_output, m);
-	    python_buffer_output[0] = '\0';
-	}
-	else
-	    strcat (python_buffer_output, m);
+            python_buffer_output[0] = '\0';
+        }
+        else
+            strcat (python_buffer_output, m);
     }
     
     Py_INCREF(Py_None);
@@ -361,7 +360,7 @@ weechat_python_load (const char *filename)
                                          "module"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         fclose (fp);
-	
+        
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
 
@@ -497,7 +496,7 @@ weechat_python_load (const char *filename)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
-	
+        
         if (PyErr_Occurred ())
             PyErr_Print ();
         Py_EndInterpreter (python_current_interpreter);
@@ -543,9 +542,9 @@ weechat_python_unload (struct t_plugin_script *script)
     if (script->shutdown_func && script->shutdown_func[0])
     {
         r = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
-					 script->shutdown_func, NULL);
-	if (r)
-	    free (r);
+                                         script->shutdown_func, NULL);
+        if (r)
+            free (r);
     }
 
     old_interpreter = PyThreadState_Swap (NULL);
@@ -914,9 +913,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* free Python interpreter */
     if (python_mainThreadState != NULL)
     {
-	/* PyEval_AcquireLock (); */
+        /* PyEval_AcquireLock (); */
         PyThreadState_Swap (python_mainThreadState);
-	/* PyEval_ReleaseLock (); */
+        /* PyEval_ReleaseLock (); */
         python_mainThreadState = NULL;
     }
     

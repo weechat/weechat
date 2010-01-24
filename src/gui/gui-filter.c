@@ -449,12 +449,12 @@ gui_filter_free (struct t_gui_filter *filter)
     if (filter->regex_prefix)
     {
         regfree (filter->regex_prefix);
-	free (filter->regex_prefix);
+        free (filter->regex_prefix);
     }
     if (filter->regex_message)
     {
         regfree (filter->regex_message);
-	free (filter->regex_message);
+        free (filter->regex_message);
     }
     
     /* remove filter from filters list */

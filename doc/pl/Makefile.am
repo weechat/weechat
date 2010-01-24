@@ -17,9 +17,9 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
-		weechat_faq.pl.txt \
-		weechat_quickstart.pl.txt \
-		weechat_tester.pl.txt
+             weechat_faq.pl.txt \
+             weechat_quickstart.pl.txt \
+             weechat_tester.pl.txt
 
 all-local: weechat_faq.pl.html \
 		weechat_quickstart.pl.html \

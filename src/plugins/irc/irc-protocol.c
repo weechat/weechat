@@ -1595,11 +1595,11 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
     ptr_command = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND);
     if (ptr_command && ptr_command[0])
     {
-	/* splitting command on ';' which can be escaped with '\;' */ 
-	commands = weechat_string_split_command (ptr_command, ';');
-	if (commands)
-	{
-	    for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+        /* splitting command on ';' which can be escaped with '\;' */
+        commands = weechat_string_split_command (ptr_command, ';');
+        if (commands)
+        {
+            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
             {
                 vars_replaced = irc_protocol_replace_vars (server, NULL,
                                                            *ptr_cmd);
@@ -1608,10 +1608,10 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
                 if (vars_replaced)
                     free (vars_replaced);
             }
-	    weechat_string_free_split_command (commands);
-	}
-	
-	if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)
+            weechat_string_free_split_command (commands);
+        }
+
+        if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)
             server->command_time = time (NULL) + 1;
         else
             irc_server_autojoin_channels (server);
