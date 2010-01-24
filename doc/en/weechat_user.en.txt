@@ -1029,6 +1029,111 @@ Commands
 
 include::autogen/user/irc_commands.txt[]
 
+[[irc_ssl_certificates]]
+SSL certificates
+^^^^^^^^^^^^^^^^
+
+When connecting to IRC server with SSL, WeeChat checks by default that the
+connection is fully trusted.
+
+Some options are used to control SSL connection:
+
+weechat.network.gnutls_ca_file::
+    path to file with certificate authorities (by default: "%h/ssl/CAs.pem")
+
+irc.server.xxx.ssl_cert::
+    SSL certificate file used to automatically identify your nick (for example
+    CertFP on oftc, see below)
+
+irc.server.xxx.ssl_dhkey_size::
+    size of the key used during the Diffie-Hellman Key Exchange (by default:
+    2048)
+
+irc.server.xxx.ssl_verify::
+    check that the SSL connection is fully trusted (on by default)
+
+[NOTE]
+Option "ssl_verify" is on by default, so verification is strict and may fail,
+even if it was ok with versions prior to 0.3.1.
+
+[[irc_connect_oftc_with_certificate]]
+First example: connect to oftc and check certificate
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Import certificate in shell:
+
+----------------------------------------
+$ mkdir ~/.weechat/ssl
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+----------------------------------------
+
+Note: it is possible to concatenate many certificates in file CAs.pem.
+
+* In WeeChat, with "oftc" server already created:
+
+----------------------------------------
+/connect oftc
+----------------------------------------
+
+[[irc_connect_oftc_with_certfp]]
+Second example: connect to oftc using CertFP
+++++++++++++++++++++++++++++++++++++++++++++
+
+* Create certificate in shell:
+
+----------------------------------------
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
+$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+----------------------------------------
+
+* In WeeChat, with "oftc" server already created:
+
+----------------------------------------
+/set irc.server.oftc.ssl_cert "%s/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----------------------------------------
+
+For more information, look at http://www.oftc.net/oftc/NickServ/CertFP
+
+[[irc_smart_filter_join_part_quit]]
+Smart filter for join/part/quit messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A smart filter is available to filter join/part/quit messages when nick did not
+say something during past X minutes on channel.
+
+Smart filter is enabled by default, but you must add a filter to hide lines on
+buffers, for example:
+
+----------------------------------------
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
+
+It is possible to create filter for one channel only or channels beginning with
+same name (see `/help filter`):
+
+----------------------------------------
+/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+----------------------------------------
+
+You can hide only join or part/quit with following options:
+
+----------------------------------------
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----------------------------------------
+
+You can setup delay (in minutes):
+
+----------------------------------------
+/set irc.look.smart_filter_delay 5
+----------------------------------------
+
+If a nick did not speak during last 5 minutes, its join and/or part/quit will be
+hidden on channel.
+
 [[irc_ctcp_replies]]
 CTCP replies
 ^^^^^^^^^^^^

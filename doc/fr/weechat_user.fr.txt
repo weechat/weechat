@@ -1063,6 +1063,115 @@ Commandes
 
 include::autogen/user/irc_commands.txt[]
 
+[[irc_ssl_certificates]]
+Certificats SSL
+^^^^^^^^^^^^^^^
+
+Lors de la connexion à un serveur IRC avec SSL, WeeChat vérifie par défaut que
+la connexion est entièrement de confiance.
+
+Quelques options sont utilisées pour contrôler la connexion SSL :
+
+weechat.network.gnutls_ca_file::
+    chemin vers le fichier avec les certificats de confiance (par défaut :
+    "%h/ssl/CAs.pem")
+
+irc.server.xxx.ssl_cert::
+    fichier de certificat SSL utilisé pour authentifier automatiquement votre
+    pseudo (par exemple CertFP sur oftc, voir ci-dessous)
+
+irc.server.xxx.ssl_dhkey_size::
+    taille de clé utilisée pour l'échange de clé Diffie-Hellman (par défaut :
+    2048)
+
+irc.server.xxx.ssl_verify::
+    vérifier que la connexion SSL est entièrement de confiance (activé par
+    défaut)
+
+[NOTE]
+L'option "ssl_verify" est activée par défaut, donc la vérification est stricte
+et peut échouer, même si cela pouvait être ok dans les versions inférieures à
+0.3.1.
+
+[[irc_connect_oftc_with_certificate]]
+Premier exemple : se connecter à oftc en vérifiant le certificat
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Importer le certificat sous le shell :
+
+----------------------------------------
+$ mkdir ~/.weechat/ssl
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+----------------------------------------
+
+Note: il est possible de concaténer plusieurs certificats dans une le fichier
+CAs.pem.
+
+* Sous WeeChat, avec le serveur "oftc" déjà créé :
+
+----------------------------------------
+/connect oftc
+----------------------------------------
+
+[[irc_connect_oftc_with_certfp]]
+Second exemple : se connecter à oftc en utilisant CertFP
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Créer le certificat sous le shell :
+
+----------------------------------------
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
+$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+----------------------------------------
+
+* Sous WeeChat, avec le serveur "oftc" déjà créé :
+
+----------------------------------------
+/set irc.server.oftc.ssl_cert "%s/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----------------------------------------
+
+Pour plus d'informations, consulter http://www.oftc.net/oftc/NickServ/CertFP
+
+[[irc_smart_filter_join_part_quit]]
+Filtre intelligent pour les messages join/part/quit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Un filtre intelligent est disponible pour filtrer les messages join/part/quit
+lorsque le pseudo n'a rien dit durant les X dernières minutes sur le canal.
+
+Le filtre intelligent est activé par défaut, mais vous devez ajouter un filtre
+pour cacher les lignes sur les tampons, par exemple :
+
+----------------------------------------
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
+
+Il est possible de créer un filtre pour un canal seulement ou plusieurs canaux
+commençant par le même nom (voir `/help filter`) :
+
+----------------------------------------
+/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+----------------------------------------
+
+Vous pouvez cacher seulement les join ou part/quit avec les options suivantes :
+
+----------------------------------------
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----------------------------------------
+
+Vous pouvez modifier le délai (en minutes) :
+
+----------------------------------------
+/set irc.look.smart_filter_delay 5
+----------------------------------------
+
+Si le pseudo n'a pas parlé durant les 5 dernières minutes, ses join et/ou
+part/quit seront cachés sur le canal.
+
 [[irc_ctcp_replies]]
 Réponses CTCP
 ^^^^^^^^^^^^^
