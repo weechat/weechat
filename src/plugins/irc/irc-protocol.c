@@ -364,12 +364,14 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     if (!irc_ignore_check (server, ptr_channel, nick, host))
     {
         local_join = (strcmp (nick, server->nick) == 0);
-        ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                             && (weechat_config_boolean (irc_config_look_smart_filter_join))) ?
             irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
         weechat_printf_tags (ptr_channel->buffer,
                              irc_protocol_tags (command,
                                                 (local_join
                                                  || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                 || !weechat_config_boolean (irc_config_look_smart_filter_join)
                                                  || ptr_nick_speaking) ?
                                                 NULL : "irc_smart_filter"),
                              _("%s%s%s %s(%s%s%s)%s has joined %s%s%s"),
@@ -949,7 +951,8 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
             /* display part message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
-                ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                     && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
                     irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                 if (pos_comment)
                 {
@@ -957,6 +960,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                                          irc_protocol_tags (command,
                                                             (local_part
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                             || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has left %s%s%s "
@@ -983,6 +987,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                                          irc_protocol_tags (command,
                                                             (local_part
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                             || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has left "
@@ -1284,7 +1289,8 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
                 local_quit = (strcmp (nick, server->nick) == 0);
-                ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                     && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
                     irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                 if (pos_comment && pos_comment[0])
                 {
@@ -1292,6 +1298,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                          irc_protocol_tags (command,
                                                             (local_quit
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                             || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has quit "
@@ -1316,6 +1323,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                          irc_protocol_tags (command,
                                                             (local_quit
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
+                                                             || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has quit"),

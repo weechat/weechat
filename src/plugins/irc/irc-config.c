@@ -70,6 +70,8 @@ struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
+struct t_config_option *irc_config_look_smart_filter_join;
+struct t_config_option *irc_config_look_smart_filter_quit;
 struct t_config_option *irc_config_look_topic_strip_colors;
 
 /* IRC config, color section */
@@ -1436,12 +1438,22 @@ irc_config_init ()
         N_("filter join/part/quit messages for a nick if not speaking for "
            "some minutes on channel (you must create a filter on tag "
            "\"irc_smart_filter\")"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
         N_("delay for filtering join/part/quit messages (in minutes)"),
         NULL, 1, 60*24*7, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_join", "boolean",
+        N_("enable smart filter for \"join\" messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_quit = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_quit", "boolean",
+        N_("enable smart filter for \"part\" and \"quit\" messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "integer",
