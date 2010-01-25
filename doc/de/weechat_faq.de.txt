@@ -329,6 +329,23 @@ wenn Du den Filter deaktivierst (Voreinstellung zum Aktivieren/Deaktivieren der
 Filter: Alt-Taste + "=").
 
 
+[[memory_usage]]
+How can I tweak WeeChat to consume less memory?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can try following tips to consume less memory:
+
+* use latest stable version (it is supposed to have less memory leaks than
+  older versions)
+* do not load some plugins if you don't use them, for example: aspell, fifo,
+  logger, perl, python, ruby, lua, tcl, xfer (used for DCC)
+* load only scripts that you really need
+* reduce value of option 'weechat.history.max_lines' (number of lines saved in
+  memory for each buffer)
+* reduce value of option 'weechat.history.max_commands' (number of user commands
+  saved in memory)
+
+
 Entwicklung
 -----------
 

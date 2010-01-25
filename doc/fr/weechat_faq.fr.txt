@@ -322,6 +322,24 @@ de les voir en désactivant les filtres (par défaut, la touche alt + "="
 active/désactive les filtres).
 
 
+[[memory_usage]]
+Comment configurer WeeChat pour consommer moins de mémoire ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
+
+* utiliser la dernière version stable (elle est supposée avoir moins de fuites
+  de mémoire que les versions plus anciennes)
+* ne pas charger les extensions si vous ne les utilisez pas, par exemple :
+  aspell, fifo, logger, perl, python, ruby, lua, tcl, xfer (utilisé pour les
+  DCC)
+* charger uniquement les scripts dont vous avez vraiment besoin
+* réduire la valeur de l'option 'weechat.history.max_lines' (nombre de lignes
+  sauvées en mémoire pour chaque tampon)
+* réduire la valeur de l'option 'weechat.history.max_commands' (nombre de
+  commandes utilisateur sauvées en mémoire)
+
+
 Développement
 -------------
 
