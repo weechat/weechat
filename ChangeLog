@@ -1,8 +1,14 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1, 2010-01-23
+v0.3.2-dev, 2010-01-25
 
+
+Version 0.3.2 (under dev!)
+--------------------------
+* api: add missing infos in functions buffer_get_integer / buffer_get_string
+  and in buffer infolist
+* irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
 
 Version 0.3.1 (2010-01-23)
 --------------------------

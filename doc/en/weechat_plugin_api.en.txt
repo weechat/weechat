@@ -6585,20 +6585,36 @@ Arguments:
 * 'buffer': buffer pointer
 * 'property': property name:
 ** 'number': number of buffer (starts with 1)
-** 'num_displayed': number of windows displaying buffer
+** 'layout_number': number of buffer saved in layout
+** 'type': buffer type (0: formatted, 1: free content)
 ** 'notify': notify level for buffer
+** 'num_displayed': number of windows displaying buffer
+** 'active': 1 if buffer is active, 0 if buffer is merged and not selected
+** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
    if all lines are displayed
 ** 'prefix_max_length': max length for prefix in this buffer
 ** 'time_for_each_line': 1 if time is displayed for each line in buffer
    (default), otherwise 0
+** 'nicklist': 1 if nicklist is enabled, otherwise 0
+** 'nicklist_case_sensitive': 1 if nicks are case sensitive, otherwise 0
+** 'nicklist_max_length': max length for a nick
+** 'nicklist_display_groups': 1 if groups are displayed, otherwise 0
+** 'nicklist_visible_count': number of nicks/groups displayed
+** 'input': 1 if input is enabled, otherwise 0
+** 'input_get_unknown_commands': 1 if unknown commands are sent to input
+   callback, otherwise 0
+** 'input_size': input size (in bytes)
+** 'input_length': input length (number of chars)
+** 'input_pos': cursor position in buffer input
+** 'input_1st_display': first char displayed on screen
+** 'num_history': number of commands in history
 ** 'text_search': text search type:
 *** 0: no search at this moment
 *** 1: backward search (direction: oldest messages)
 *** 2: forward search (direction: newest messages)
 ** 'text_search_exact': 1 if text search is case sensitive
 ** 'text_search_found': 1 if text found, otherwise 0
-** 'input_pos': cursor position in buffer input
 
 Return value:
 
@@ -6644,8 +6660,11 @@ Arguments:
    buffer)
 ** 'name': name of buffer
 ** 'short_name': short name of buffer
-** 'tilte': title of buffer
+** 'title': title of buffer
 ** 'input': input text
+** 'text_search_input': input saved before text search
+** 'highlight_words': list of words to highlight
+** 'highlight_tags': list of tags to highlight
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
    name of variable to read)
 

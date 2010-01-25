@@ -6677,20 +6677,38 @@ Paramètres :
 * 'buffer' : pointeur vers le tampon
 * 'property' : nom de la propriété :
 ** 'number' : numéro du tampon (commence à 1)
-** 'num_displayed' : nombre de fenêtres affichant ce tampon
+** 'layout_number': numéro du tampon sauvegardé dans le "layout"
+** 'type': type de tampon (0: formaté, 1: contenu libre)
 ** 'notify' : niveau de notification du tampon
+** 'num_displayed' : nombre de fenêtres affichant ce tampon
+** 'active': 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas
+   sélectionné
+** 'print_hooks_enabled': 1 si les hooks "print" sont activés, sinon 0
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
 ** 'time_for_each_line' : 1 si l'heure est affichée pour chaque ligne du tampon
    (par défaut), sinon 0
+** 'nicklist': 1 si la liste de pseudos est activée, sinon 0
+** 'nicklist_case_sensitive': 1 si les pseudos sont sensibles à la casse,
+   sinon 0
+** 'nicklist_max_length': longueur maxi d'un pseudo
+** 'nicklist_display_groups': 1 si les groupes sont affichés, sinon 0
+** 'nicklist_visible_count': nombre de pseudos/groupes affichés
+** 'input': 1 si la zone de saisie est activée, sinon 0
+** 'input_get_unknown_commands': 1 si les commandes inconnues sont envoyées
+   au "callback input", sinon 0
+** 'input_size': taille de la zone de saisie (en octets)
+** 'input_length': longueur de la zone de saisie (nombre de caractères)
+** 'input_pos': position du curseur dans la zone de saisie
+** 'input_1st_display': premier caractère affiché à l'écran
+** 'num_history': nombre de commandes dans l'historique
 ** 'text_search' : type de recherche de texte :
 *** 0 : pas de recherche en cours
 *** 1 : recherche arrière (vers les messages les plus anciens)
 *** 2 : recherche avant (vers les messages les plus récents)
 ** 'text_search_exact' : 1 si la recherche de texte est sensible à la casse
 ** 'text_search_found' : 1 si du texte a été trouvé, sinon 0
-** 'input_pos': position du curseur dans la zone de saisie
 
 Valeur de retour :
 
@@ -6736,8 +6754,11 @@ Paramètres :
    principal WeeChat)
 ** 'name' : nom du tampon
 ** 'short_name' : nom court du tampon
-** 'tilte' : titre du tampon
+** 'title' : titre du tampon
 ** 'input' : texte saisi
+** 'text_search_input': texte saisi sauvegardé avant la recherche de texte
+** 'highlight_words': liste des mots pour le highlight
+** 'highlight_tags': liste des étiquettes pour le highlight
 ** 'localvar_xxx' : contenu de la variable locale "xxx" (remplacer "xxx" par le
    nom de la variable locale à lire)
 

@@ -646,26 +646,54 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
     {
         if (string_strcasecmp (property, "number") == 0)
             return buffer->number;
-        else if (string_strcasecmp (property, "num_displayed") == 0)
-            return buffer->num_displayed;
-        else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
-            return buffer->print_hooks_enabled;
+        else if (string_strcasecmp (property, "layout_number") == 0)
+            return buffer->layout_number;
+        else if (string_strcasecmp (property, "type") == 0)
+            return buffer->type;
         else if (string_strcasecmp (property, "notify") == 0)
             return buffer->notify;
+        else if (string_strcasecmp (property, "num_displayed") == 0)
+            return buffer->num_displayed;
+        else if (string_strcasecmp (property, "active") == 0)
+            return buffer->active;
+        else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+            return buffer->print_hooks_enabled;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines->lines_hidden;
         else if (string_strcasecmp (property, "prefix_max_length") == 0)
             return buffer->lines->prefix_max_length;
         else if (string_strcasecmp (property, "time_for_each_line") == 0)
             return buffer->time_for_each_line;
+        else if (string_strcasecmp (property, "nicklist") == 0)
+            return buffer->nicklist;
+        else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+            return buffer->nicklist_case_sensitive;
+        else if (string_strcasecmp (property, "nicklist_max_length") == 0)
+            return buffer->nicklist_max_length;
+        else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+            return buffer->nicklist_display_groups;
+        else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
+            return buffer->nicklist_visible_count;
+        else if (string_strcasecmp (property, "input") == 0)
+            return buffer->input;
+        else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+            return buffer->input_get_unknown_commands;
+        else if (string_strcasecmp (property, "input_size") == 0)
+            return buffer->input_buffer_size;
+        else if (string_strcasecmp (property, "input_length") == 0)
+            return buffer->input_buffer_length;
+        else if (string_strcasecmp (property, "input_pos") == 0)
+            return buffer->input_buffer_pos;
+        else if (string_strcasecmp (property, "input_1st_display") == 0)
+            return buffer->input_buffer_1st_display;
+        else if (string_strcasecmp (property, "num_history") == 0)
+            return buffer->num_history;
         else if (string_strcasecmp (property, "text_search") == 0)
             return buffer->text_search;
         else if (string_strcasecmp (property, "text_search_exact") == 0)
             return buffer->text_search_exact;
         else if (string_strcasecmp (property, "text_search_found") == 0)
             return buffer->text_search_found;
-        else if (string_strcasecmp (property, "input_pos") == 0)
-            return buffer->input_buffer_pos;
     }
     
     return 0;
@@ -692,6 +720,12 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->title;
         else if (string_strcasecmp (property, "input") == 0)
             return buffer->input_buffer;
+        else if (string_strcasecmp (property, "text_search_input") == 0)
+            return buffer->text_search_input;
+        else if (string_strcasecmp (property, "highlight_words") == 0)
+            return buffer->highlight_words;
+        else if (string_strcasecmp (property, "highlight_tags") == 0)
+            return buffer->highlight_tags;
         else if (string_strncasecmp (property, "localvar_", 9) == 0)
         {
             ptr_local_var = gui_buffer_local_var_search (buffer, property + 9);
@@ -2265,6 +2299,10 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_display_groups", buffer->nicklist_display_groups))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_max_length", buffer->nicklist_max_length))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_visible_count", buffer->nicklist_visible_count))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
@@ -2282,6 +2320,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "input_buffer_pos", buffer->input_buffer_pos))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input_buffer_1st_display", buffer->input_buffer_1st_display))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "num_history", buffer->num_history))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search", buffer->text_search))
         return 0;
