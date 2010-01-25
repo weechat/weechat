@@ -141,12 +141,22 @@
 * *irc.look.smart_filter*
 ** description: filter join/part/quit messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: on)
 
 * *irc.look.smart_filter_delay*
 ** description: delay for filtering join/part/quit messages (in minutes)
 ** type: integer
 ** values: 1 .. 10080 (default value: 5)
+
+* *irc.look.smart_filter_join*
+** description: enable smart filter for "join" messages
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.smart_filter_quit*
+** description: enable smart filter for "part" and "quit" messages
+** type: boolean
+** values: on, off (default value: on)
 
 * *irc.look.topic_strip_colors*
 ** description: strip colors in topic (used only when displaying buffer title)

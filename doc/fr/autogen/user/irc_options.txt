@@ -141,12 +141,22 @@
 * *irc.look.smart_filter*
 ** description: filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")
 ** type: booléen
-** valeurs: on, off (valeur par défaut: off)
+** valeurs: on, off (valeur par défaut: on)
 
 * *irc.look.smart_filter_delay*
 ** description: délai pour filtrer les messages join/part/quit (en minutes)
 ** type: entier
 ** valeurs: 1 .. 10080 (valeur par défaut: 5)
+
+* *irc.look.smart_filter_join*
+** description: enable smart filter for "join" messages
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.smart_filter_quit*
+** description: enable smart filter for "part" and "quit" messages
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
 
 * *irc.look.topic_strip_colors*
 ** description: supprimer les couleurs dans le titre (utilisé seulement lors de l'affichage du titre du tampon)

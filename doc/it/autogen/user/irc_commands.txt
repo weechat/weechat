@@ -85,16 +85,16 @@
   invia un messaggio CTCP (Protocollo Client-A-Client)
 
   destinatario: nick o canale a cui inviare il CTCP
-               tipo: tipo CTCP (esempi: "version", "ping", ..)
+          tipo: tipo CTCP (esempi: "version", "ping", ..)
      argomenti: argomenti per il CTCP
 ........................................
 
 &bull; *`/cycle`* `[canale[,canale]] [messaggio]`::
 
 ........................................
-  lascia e rienta in un canale
+  esce e rienta in un canale
 
-        canale: nome canale per il ciclo
+     canale: nome canale per il ciclo
   messaggio: messaggio di uscita (mostrato agli altri utenti)
 ........................................
 
@@ -103,15 +103,15 @@
 ........................................
   avvia DCC (file o  chat)
 
-  azione: 'send' (invia file) o 'chat'
-     nick: nick a cui inviare il file o aprire la chat
-       file: nome file (sull'host locale)
+  azione: 'send' (invia file) o 'chat' (avvia una conversazione)
+    nick: nick a cui inviare il file o aprire la chat
+    file: nome file (sull'host locale)
 ........................................
 
 &bull; *`/dehalfop`* `[nick [nick]]`::
 
 ........................................
-  rimuovi lo stato di half-op da uno (o più) nick
+  rimuove lo stato di half-op da uno (o più) nick
 ........................................
 
 &bull; *`/deop`* `[nick [nick]]`::
@@ -123,7 +123,7 @@
 &bull; *`/devoice`* `[nick [nick]]`::
 
 ........................................
-  rimuove voice da uno (o più) nick
+  rimuove voce da uno (o più) nick
 ........................................
 
 &bull; *`/die`*::
@@ -144,7 +144,7 @@
 &bull; *`/halfop`* `[nick [nick]]`::
 
 ........................................
-  concedi lo stato di halfop ad uno (o più) nick
+  concede lo stato di halfop ad uno (o più) nick
 ........................................
 
 &bull; *`/ignore`* `[list] | [add [re:]nick/host [server [canale]]] | [del numero|-all]`::
@@ -209,8 +209,8 @@
 ........................................
   caccia forzatamente un utente da un canale
 
-        canale: canale dove si trova l'utente
-            nick: nick da cacciare
+    canale: canale dove si trova l'utente
+      nick: nick da cacciare
   commento: commento per il kick
 ........................................
 
@@ -260,7 +260,7 @@
 ........................................
   ottiene statistiche sulla dimensione del network IRC
 
-   mask: server corrispondenti alla mask
+          mask: server corrispondenti alla mask
   destinazione: server per redirigere la richiesta
 ........................................
 
@@ -278,8 +278,8 @@
   cambia modalità canale o utente
 
   modalità canale:
-    canale: nome canale da modificare (predefinito è quello attivo)
-    o: concedi/ottieni privilegi di operatore del canale
+    canale: nome canale da modificare (quello attivo è il predefinito)
+    o: concede/nega i privilegi di operatore del canale
     p: canale privato
     s: canale segreto
     i: canale a solo-invito
@@ -289,7 +289,7 @@
     l: imposta il limite massimo di utenti sul canale
     b: imposta un mask ban per tenere alla larga agli utenti
     e: imposta mask di eccezione
-    v: concedi/ottieni la possibilità di parlare su un canale moderato
+    v: concede/nega la possibilità di parlare su un canale moderato
     k: imposta una chiave per il canale (password)
   modalità utente:
     nick: nick da modificare
@@ -312,9 +312,9 @@
 ........................................
   invia un messaggio ad un nick o a un canale
 
-           server: invia a questo server (nome interno)
+        server: invia a questo server (nome interno)
   destinatario: nick o canale (può essere una mask, '*' = canale corrente)
-            testo: testo da inviare
+         testo: testo da inviare
 ........................................
 
 &bull; *`/names`* `[canale[,canale]]`::
@@ -330,7 +330,7 @@
 ........................................
   modifica il nick corrente
 
-     -all: imposta nuovo nick per tutti i server connessi
+   -all: imposta nuovo nick per tutti i server connessi
    nick: nuovo nick
 ........................................
 
@@ -339,15 +339,15 @@
 ........................................
   invia messaggio di notifica all'utente
 
-    server: invia a questo server (nome interno)
-       nick: utente a cui inviare la notifica
-     testo: testo da inviare
+  server: invia a questo server (nome interno)
+    nick: utente a cui inviare la notifica
+   testo: testo da inviare
 ........................................
 
 &bull; *`/op`* `nick [nick]`::
 
 ........................................
-  concedi lo stato di operatore del canale al(ai) nick
+  concede lo stato di operatore del canale al(ai) nick
 ........................................
 
 &bull; *`/oper`* `utente password`::
@@ -361,9 +361,9 @@
 &bull; *`/part`* `[canale[,canale]] [messaggio]`::
 
 ........................................
-  lascia un canale
+  esce da un canale
 
-                   canale: nome del canale da lasciare
+            canale: nome del canale da lasciare
   messaggio_uscita: messaggio di uscita (mostrato agli altri utenti)
 ........................................
 
@@ -391,8 +391,8 @@
   invia un messaggio privato ad un nick
 
   server: invia a questo server (nome interno)
-      nick: nick per la conversazione privata
-    testo: testo da inviare
+    nick: nick per la conversazione privata
+   testo: testo da inviare
 ........................................
 
 &bull; *`/quote`* `[-server server] dati`::
@@ -401,7 +401,7 @@
   invia dati grezzi al server senza analisi
 
   server: invia a questo server (nome interno)
-      dati: dati grezzi da inviare
+    dati: dati grezzi da inviare
 ........................................
 
 &bull; *`/reconnect`* `[-all [-nojoin] | nome_server [nome_server ...] [-nojoin]]`::
@@ -409,9 +409,9 @@
 ........................................
   riconnetti a uno (o più) server
 
-                 -all: riconnetti a tutti i server
+         -all: riconnetti a tutti i server
   nome_server: nome del server a cui riconnettersi
-             nojoin: non entrare in nessun canale (anche se l'ingresso automatico è abilitato sul server
+       nojoin: non entrare in nessun canale (anche se l'ingresso automatico è abilitato sul server)
 ........................................
 
 &bull; *`/rehash`* `[opzione]`::
@@ -433,7 +433,7 @@
 ........................................
   forza un utente ad entrare su uno o più canali
 
-      nick: nick
+    nick: nick
   canale: nome del canale
 ........................................
 
@@ -460,7 +460,7 @@
 ........................................
   forza un utente a lasciare uno o più canali
 
-      nick: nick
+    nick: nick
   canale: nome del canale
 ........................................
 
@@ -622,7 +622,7 @@
 &bull; *`/voice`* `[nick [nick]]`::
 
 ........................................
-  concedi il voice ad uno (o più) utenti
+  concede il voice ad uno (o più) utenti
 ........................................
 
 &bull; *`/wallops`* `testo`::

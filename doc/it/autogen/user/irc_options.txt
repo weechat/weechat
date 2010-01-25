@@ -141,12 +141,22 @@
 * *irc.look.smart_filter*
 ** descrizione: filtra i messaggi di entrata/uscita/abbandono per un nick se inattivo per alcuni minuti sul canale (è necessario creare un filtro sul tag "irc_smart_filter")
 ** tipo: bool
-** valori: on, off (valore predefinito: off)
+** valori: on, off (valore predefinito: on)
 
 * *irc.look.smart_filter_delay*
 ** descrizione: ritardo per il filtraggio dei messaggi di entrata/uscita/abbandono (in minuti)
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: 5)
+
+* *irc.look.smart_filter_join*
+** descrizione: enable smart filter for "join" messages
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.smart_filter_quit*
+** descrizione: enable smart filter for "part" and "quit" messages
+** tipo: bool
+** valori: on, off (valore predefinito: on)
 
 * *irc.look.topic_strip_colors*
 ** descrizione: elimina colori nell'argomento (utilizzato solo quando viene visualizzato il titolo del buffer)
