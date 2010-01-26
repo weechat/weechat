@@ -9,6 +9,8 @@ Version 0.3.2 (under dev!)
 * core: add signal "day_changed"
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
+* irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
+  (bug #28741)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
 * logger: allow date format in logger options path and mask (task #9430)
 
