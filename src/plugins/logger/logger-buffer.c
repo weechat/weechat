@@ -89,6 +89,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
         new_logger_buffer->log_file = NULL;
         new_logger_buffer->log_enabled = 1;
         new_logger_buffer->log_level = log_level;
+        new_logger_buffer->write_start_info_line = 1;
         
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
@@ -156,14 +157,9 @@ void
 logger_buffer_free (struct t_logger_buffer *logger_buffer)
 {
     struct t_logger_buffer *new_logger_buffers;
+    struct t_gui_buffer *ptr_buffer;
     
-    if (weechat_logger_plugin->debug)
-    {
-        weechat_printf (NULL,
-                        "%s: stop logging for buffer \"%s\"",
-                        LOGGER_PLUGIN_NAME,
-                        weechat_buffer_get_string (logger_buffer->buffer, "name"));
-    }
+    ptr_buffer = logger_buffer->buffer;
     
     /* remove logger buffer */
     if (last_logger_buffer == logger_buffer)
@@ -182,10 +178,20 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
     /* free data */
     if (logger_buffer->log_filename)
         free (logger_buffer->log_filename);
+    if (logger_buffer->log_file)
+        fclose (logger_buffer->log_file);
     
     free (logger_buffer);
     
     logger_buffers = new_logger_buffers;
+    
+    if (weechat_logger_plugin->debug)
+    {
+        weechat_printf (NULL,
+                        "%s: stop logging for buffer \"%s\"",
+                        LOGGER_PLUGIN_NAME,
+                        weechat_buffer_get_string (ptr_buffer, "name"));
+    }
 }
 
 /*
@@ -215,6 +221,8 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "log_enabled", logger_buffer->log_enabled))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "log_level", logger_buffer->log_level))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "write_start_info_line", logger_buffer->write_start_info_line))
         return 0;
     
     return 1;

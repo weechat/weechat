@@ -63,10 +63,7 @@ logger_config_change_file_option_restart_log (void *data,
     (void) option;
     
     if (!logger_config_loading)
-    {
-        logger_stop_all ();
-        logger_start_buffer_all ();
-    }
+        logger_adjust_log_filenames ();
 }
 
 /*
@@ -80,9 +77,9 @@ logger_config_level_change (void *data,
     /* make C compiler happy */
     (void) data;
     (void) option;
-
+    
     if (!logger_config_loading)
-        logger_start_buffer_all ();
+        logger_start_buffer_all (1);
 }
 
 /*
@@ -102,7 +99,7 @@ logger_config_level_delete_option (void *data,
     
     weechat_config_option_free (option);
     
-    logger_start_buffer_all ();
+    logger_start_buffer_all (1);
     
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -161,7 +158,7 @@ logger_config_level_create_option (void *data,
     }
 
     if (!logger_config_loading)
-        logger_start_buffer_all ();
+        logger_start_buffer_all (1);
     
     return rc;
 }
@@ -205,10 +202,7 @@ logger_config_mask_change (void *data,
     (void) option;
 
     if (!logger_config_loading)
-    {
-        logger_stop_all ();
-        logger_start_buffer_all ();
-    }
+        logger_adjust_log_filenames ();
 }
 
 /*
@@ -228,8 +222,7 @@ logger_config_mask_delete_option (void *data,
     
     weechat_config_option_free (option);
     
-    logger_stop_all ();
-    logger_start_buffer_all ();
+    logger_adjust_log_filenames ();
     
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -286,12 +279,9 @@ logger_config_mask_create_option (void *data,
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
     }
-
+    
     if (!logger_config_loading)
-    {
-        logger_stop_all ();
-        logger_start_buffer_all ();
-    }
+        logger_adjust_log_filenames ();
     
     return rc;
 }
@@ -369,8 +359,9 @@ logger_config_init ()
     logger_config_file_path = weechat_config_new_option (
         logger_config_file, ptr_section,
         "path", "string",
-        N_("path for WeeChat log files (\"%h\" will be replaced by WeeChat "
-           "home, \"~/.weechat\" by default)"),
+        N_("path for WeeChat log files; \"%h\" at beginning of string is "
+           "replaced by WeeChat home (\"~/.weechat\" by default); date "
+           "specifiers are permitted (see man strftime)"),
         NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_mask = weechat_config_new_option (
@@ -379,7 +370,8 @@ logger_config_init ()
         N_("default file name mask for log files (format is "
            "\"directory/to/file\" or \"file\", without first \"/\" because "
            "\"path\" option is used to build complete path to file); local "
-           "buffer variables are permitted"),
+           "buffer variables are permitted; date specifiers are permitted "
+           "(see man strftime)"),
         NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_replacement_char = weechat_config_new_option (

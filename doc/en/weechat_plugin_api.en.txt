@@ -5389,7 +5389,7 @@ Arguments:
 
 * 'signal': signal to catch, can begin or end with "*":
 
-[width="80%",cols="^1,^3,^3,5",options="header"]
+[width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
 | Plugin | Signal | Arguments | Description
 
@@ -5476,6 +5476,9 @@ Arguments:
 
 | weechat | buffer_type_changed | pointer: buffer |
   type of buffer changed
+
+| weechat | day_changed | string: new date, format: "2010-01-31" |
+  day of system date has changed
 
 | weechat | debug_dump | - |
   dump request

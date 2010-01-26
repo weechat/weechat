@@ -5462,7 +5462,7 @@ Paramètres :
 
 * 'signal' : signal à intercepter, peut commencer ou se terminer par "*" :
 
-[width="80%",cols="^1,^3,^3,5",options="header"]
+[width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
 | Extension | Signal | Paramètres | Description
 
@@ -5549,6 +5549,9 @@ Paramètres :
 
 | weechat | buffer_type_changed | pointeur : tampon |
   type de tampon changé
+
+| weechat | day_changed | chaîne : nouvelle date, format : "2010-01-31" |
+  le jour de la date système a changé
 
 | weechat | debug_dump | - |
   requête de "dump"

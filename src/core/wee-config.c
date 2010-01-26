@@ -344,7 +344,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 {
     struct timeval tv_time;
     struct tm *local_time;
-    char text_time[1024], *text_time2;
+    char text_time[256], *text_time2;
     struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
@@ -374,6 +374,10 @@ config_day_change_timer_cb (void *data, int remaining_calls)
         if (text_time2)
             free (text_time2);
         gui_add_hotlist = 1;
+        
+        /* send signal "day_changed" */
+        strftime (text_time, sizeof (text_time), "%Y-%m-%d", local_time);
+        hook_signal_send ("day_changed", WEECHAT_HOOK_SIGNAL_STRING, text_time);
     }
     
     config_day_change_old_day = local_time->tm_mday;

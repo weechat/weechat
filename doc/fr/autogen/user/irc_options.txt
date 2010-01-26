@@ -149,12 +149,12 @@
 ** valeurs: 1 .. 10080 (valeur par défaut: 5)
 
 * *irc.look.smart_filter_join*
-** description: enable smart filter for "join" messages
+** description: activer le filtre intelligent pour les messages "join"
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
 * *irc.look.smart_filter_quit*
-** description: enable smart filter for "part" and "quit" messages
+** description: activer le filtre intelligent pour les messages "part" et "quit"
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 

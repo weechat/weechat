@@ -9,7 +9,7 @@
 ** values: on, off (default value: off)
 
 * *logger.file.mask*
-** description: default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted
+** description: default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted; date specifiers are permitted (see man strftime)
 ** type: string
 ** values: any string (default value: "$plugin.$name.weechatlog")
 
@@ -19,7 +19,7 @@
 ** values: on, off (default value: on)
 
 * *logger.file.path*
-** description: path for WeeChat log files ("%h" will be replaced by WeeChat home, "~/.weechat" by default)
+** description: path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime)
 ** type: string
 ** values: any string (default value: "%h/logs/")
 
