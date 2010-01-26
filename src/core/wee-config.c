@@ -357,23 +357,26 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     if ((config_day_change_old_day >= 0)
         && (local_time->tm_mday != config_day_change_old_day))
     {
-        strftime (text_time, sizeof (text_time),
-                  CONFIG_STRING(config_look_day_change_time_format),
-                  local_time);
-        text_time2 = string_iconv_to_internal (NULL, text_time);
-        gui_add_hotlist = 0;
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
+        if (CONFIG_BOOLEAN(config_look_day_change))
         {
-            if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
-                gui_chat_printf (ptr_buffer,
-                                 _("\t\tDay changed to %s"),
-                                 (text_time2) ?
-                                 text_time2 : text_time);
+            strftime (text_time, sizeof (text_time),
+                      CONFIG_STRING(config_look_day_change_time_format),
+                      local_time);
+            text_time2 = string_iconv_to_internal (NULL, text_time);
+            gui_add_hotlist = 0;
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
+            {
+                if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+                    gui_chat_printf (ptr_buffer,
+                                     _("\t\tDay changed to %s"),
+                                     (text_time2) ?
+                                     text_time2 : text_time);
+            }
+            if (text_time2)
+                free (text_time2);
+            gui_add_hotlist = 1;
         }
-        if (text_time2)
-            free (text_time2);
-        gui_add_hotlist = 1;
         
         /* send signal "day_changed" */
         strftime (text_time, sizeof (text_time), "%Y-%m-%d", local_time);
@@ -383,47 +386,6 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     config_day_change_old_day = local_time->tm_mday;
     
     return WEECHAT_RC_OK;
-}
-
-/*
- * config_change_day_change: called when day_change option changed
- */
-
-void
-config_change_day_change (void *data, struct t_config_option *option)
-{
-    struct timeval tv_time;
-    struct tm *local_time;
-    
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    if (CONFIG_BOOLEAN(config_look_day_change))
-    {
-        if (!config_day_change_timer)
-        {
-            gettimeofday (&tv_time, NULL);
-            local_time = localtime (&tv_time.tv_sec);
-            config_day_change_old_day = local_time->tm_mday;
-            
-            config_day_change_timer = hook_timer (NULL,
-                                                  60 * 1000, /* each minute */
-                                                  60, /* when second is 00 */
-                                                  0,
-                                                  &config_day_change_timer_cb,
-                                                  NULL);
-        }
-    }
-    else
-    {
-        if (config_day_change_timer)
-        {
-            unhook (config_day_change_timer);
-            config_day_change_timer = NULL;
-            config_day_change_old_day = -1;
-        }
-    }
 }
 
 /*
@@ -1275,7 +1237,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "day_change", "boolean",
         N_("display special message when day changes"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_day_change, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_day_change_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "day_change_time_format", "string",
@@ -2100,6 +2062,8 @@ int
 config_weechat_init ()
 {
     int rc;
+    struct timeval tv_time;
+    struct tm *local_time;
     
     rc = config_weechat_init_options ();
     
@@ -2107,6 +2071,20 @@ config_weechat_init ()
     {
         gui_chat_printf (NULL,
                          _("FATAL: error initializing configuration options"));
+    }
+    
+    /* create timer to check if day has changed */
+    if (!config_day_change_timer)
+    {
+        gettimeofday (&tv_time, NULL);
+        local_time = localtime (&tv_time.tv_sec);
+        config_day_change_old_day = local_time->tm_mday;
+        config_day_change_timer = hook_timer (NULL,
+                                              60 * 1000, /* each minute */
+                                              60, /* when second is 00 */
+                                              0,
+                                              &config_day_change_timer_cb,
+                                              NULL);
     }
     
     return rc;
@@ -2128,7 +2106,6 @@ config_weechat_read ()
     rc = config_file_read (weechat_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
-        config_change_day_change (NULL, NULL);
         proxy_use_temp_proxies ();
         gui_bar_use_temp_bars ();
         gui_bar_create_default ();
