@@ -309,6 +309,7 @@ Entsprechend der WeeChat-Version:
    `/filter add jpk * irc_join,irc_part,irc_quit *` +
    (Hilfe mit: `/help filter`)
 
+
 [[ignore_vs_filter]]
 Was ist der Unterschied zwischen den Befehlen /ignore und /filter?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -330,20 +331,20 @@ Filter: Alt-Taste + "=").
 
 
 [[memory_usage]]
-How can I tweak WeeChat to consume less memory?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can try following tips to consume less memory:
+Du kannst folgende Tipps umsetzen womit WeeChat weniger Speicher benötigt:
 
-* use latest stable version (it is supposed to have less memory leaks than
-  older versions)
-* do not load some plugins if you don't use them, for example: aspell, fifo,
-  logger, perl, python, ruby, lua, tcl, xfer (used for DCC)
-* load only scripts that you really need
-* reduce value of option 'weechat.history.max_lines' (number of lines saved in
-  memory for each buffer)
-* reduce value of option 'weechat.history.max_commands' (number of user commands
-  saved in memory)
+* nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
+  weniger Speicherlecks besitzt, als eine ältere Version)
+* lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Fifo,
+  Logger, Perl, Python, Ruby, Lua, Tcl, Xfer (wird für DCC benötigst)
+* lade nur Skripten die Du auch benutzt
+* nutze einen kleineren Wert für die Option 'weechat.history.max_lines' (Anzahl
+  der Zeilen die für jeden Buffer im Speicher gehalten werden soll)
+* nutze einen kleineren Wert für die Option 'weechat.history.max_commands' (Anzahl
+  des Verlaufsspeichers, für Befehle, die im Speicher gehalten werden sollen)
 
 
 Entwicklung
@@ -351,16 +352,16 @@ Entwicklung
 
 
 [[bug_task_patch]]
-Was mache ich um Fehler zu melden, nach neuen Funktionen zu fragen oder Patches einzusenden?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Was muß ich machen falls ich einen Fehler gefunden habe, nach neuen Funktionen fragen oder Patches einsenden möchte?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Es gibt drei Möglichkeiten:
 
 . Du kannst zu uns in den IRC kommen: 'irc.freenode.net', channel '#weechat'
 . Du kannst die Internetseite savannah nutzen:
-  * Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
+  * Einen Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
   * Nach einer neuen Funktion fragen: https://savannah.nongnu.org/task/?group=weechat
-  * Patch senden: https://savannah.nongnu.org/patch/?group=weechat
+  * Einen Patch senden: https://savannah.nongnu.org/patch/?group=weechat
 . Du kannst den Entwicklern mailen, entsprechende Mail-Adressen auf der Supportseite:
   http://www.weechat.org/about
   (Um emails an die "support" Mailing-Liste zu schicken, kannst Du diese abonnieren)
