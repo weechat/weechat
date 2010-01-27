@@ -4225,12 +4225,13 @@ msgstr ""
 "ritardo per il filtraggio dei messaggi di entrata/uscita/abbandono (in "
 "minuti)"
 
-#, fuzzy
 msgid "enable smart filter for \"join\" messages"
-msgstr "prefisso per i messaggi di entrata"
+msgstr "abilita filtro smart per i messaggi \"join\" (entrata)"
 
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
+"abilita filtro smart per i messaggi \"part\" (uscita) e \"quit "
+"(disconnessione)"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -5087,16 +5088,15 @@ msgstr ""
 msgid "use only lower case for log filenames"
 msgstr "utilizzare solo lettere minuscole per i nomi dei file di log"
 
-#, fuzzy
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
 "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
 "man strftime)"
 msgstr ""
-"percorso per i file di log di WeeChat (\"%h\" verrà sostituito dalla "
-"cartella home di WeeChat, predefinita è \"~/.weechat)"
+"percorso per i file di log di WeeChat: \"%h\" all'inizio della stringa viene "
+"sostituito dalla cartella home di WeeChat (predefinita è \"~/.weechat); sono "
+"ammessi gli specificatori di data (consultare man strftime)"
 
-#, fuzzy
 msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
 "\"file\", without first \"/\" because \"path\" option is used to build "
@@ -5106,7 +5106,8 @@ msgstr ""
 "mask del nome file predefinito per i file di log (il formato è \"cartella/"
 "per/file\" oppure \"file\", senza la prima \"/\" perché l'opzione \"path\" è "
 "utilizzata per costruire il percorso completo del file); sono ammesse le "
-"variabili dei buffer locali"
+"variabili del buffer locale; sono ammessi gli specificatori di data "
+"(consultare man strftime)"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -5117,7 +5118,7 @@ msgstr ""
 
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
-"scrivere riga di informazione nel file di log quando il log inizia o termina "
+"scrive una riga informativa nel file di log quando il log inizia o termina "
 "per un buffer"
 
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"

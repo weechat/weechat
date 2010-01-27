@@ -4,12 +4,12 @@
 ** valori: on, off (valore predefinito: on)
 
 * *logger.file.info_lines*
-** descrizione: scrivere riga di informazione nel file di log quando il log inizia o termina per un buffer
+** descrizione: scrive una riga informativa nel file di log quando il log inizia o termina per un buffer
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
 * *logger.file.mask*
-** descrizione: default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted; date specifiers are permitted (see man strftime)
+** descrizione: mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è utilizzata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "$plugin.$name.weechatlog")
 
@@ -19,7 +19,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *logger.file.path*
-** descrizione: path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime)
+** descrizione: percorso per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla cartella home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "%h/logs/")
 
