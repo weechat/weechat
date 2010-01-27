@@ -2238,6 +2238,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     (void) nreq;
     (void) pk_algos;
     (void) pk_algos_len;
+
+    rc = 0;
     
     if (!data)
         return -1;
