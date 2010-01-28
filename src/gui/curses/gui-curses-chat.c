@@ -564,12 +564,8 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     {
         if (!simulate)
             gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
-        
-        gui_chat_display_word (window, line, str_space,
-                               NULL, 1, num_lines, count, lines_displayed,
-                               simulate);
     }
-
+    
     /* display buffer name (if many buffers are merged) */
     mixed_lines = line->data->buffer->mixed_lines;
     if (mixed_lines)
