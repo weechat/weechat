@@ -2316,7 +2316,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         }
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                         /* displaying infos about certificate */
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400
+                        rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_X509_CRT_ONELINE, &cinfo);
+#else
                         rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+#endif
                         if (rinfo == 0)
                         {
                             weechat_printf (server->buffer,
@@ -2393,7 +2397,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 tls_struct.key.x509 = tls_cert_key;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                 /* client certificate info */
-                rinfo = gnutls_x509_crt_print (tls_cert, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400
+                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_X509_CRT_ONELINE, &cinfo);
+#else
+                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+#endif
                 if (rinfo == 0)
                 {
                     weechat_printf (server->buffer,
