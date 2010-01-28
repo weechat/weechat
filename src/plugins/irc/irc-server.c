@@ -2226,13 +2226,17 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     gnutls_x509_privkey_t tls_cert_key;
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
-    gnutls_datum_t filedatum, cinfo;
+    gnutls_datum_t filedatum;
     unsigned int cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *hostname;
     const char *weechat_dir;
-    int rc, i, j, rinfo, hostname_match;
-    
+    int rc, i, j, hostname_match;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
+    gnutls_datum_t cinfo;
+    int rinfo;
+#endif
+
     /* make C compiler happy */
     (void) req_ca;
     (void) nreq;
@@ -2310,6 +2314,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         {
                             hostname_match = 1;
                         }
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                         /* displaying infos about certificate */
                         rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
                         if (rinfo == 0)
@@ -2320,6 +2325,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                                             "   - %s", cinfo.data);
                             gnutls_free (cinfo.data);
                         }
+#endif
                         /* check expiration date */
                         cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
                         if (cert_time < time(NULL))
@@ -2385,7 +2391,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 tls_struct.deinit_all = 0;
                 tls_struct.cert.x509 = &tls_cert;
                 tls_struct.key.x509 = tls_cert_key;
-                
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                 /* client certificate info */
                 rinfo = gnutls_x509_crt_print (tls_cert, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
                 if (rinfo == 0)
@@ -2395,7 +2401,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                     weechat_printf (server->buffer, "  - %s", cinfo.data);
                     gnutls_free (cinfo.data);
                 }
-                
+#endif
                 memcpy(answer, &tls_struct, sizeof (gnutls_retr_st));
                 free (cert_str);
             }
