@@ -88,7 +88,12 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     int length_time, length_buffer, length_suffix;
     
     /* length of time */
-    length_time = (buffer->time_for_each_line) ? gui_chat_time_length : 0;
+    if (buffer->time_for_each_line)
+    {
+        length_time = (gui_chat_time_length == 0) ? 0 : gui_chat_time_length + 1;
+    }
+    else
+        length_time = 0;
     
     /* length of buffer name (when many buffers are merged) */
     if (buffer->mixed_lines)
@@ -110,7 +115,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         length_buffer = 0;
     
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
-        return length_time + 1 + length_buffer + line->data->prefix_length
+        return length_time + length_buffer + line->data->prefix_length
             + ((line->data->prefix_length > 0) ? 1 : 0);
     
     length_suffix = 0;
@@ -126,7 +131,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         + (((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
             && (buffer->lines->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
            CONFIG_INTEGER(config_look_prefix_align_max) : buffer->lines->prefix_max_length)
-        + length_suffix + 1;
+        + length_suffix;
 }
 
 /*
