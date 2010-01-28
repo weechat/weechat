@@ -304,6 +304,7 @@ gui_input_return (struct t_gui_window *window)
                 window->buffer->input_buffer_1st_display = 0;
                 gui_completion_stop (window->buffer->completion, 1);
                 window->buffer->ptr_history = NULL;
+                history_global_ptr = NULL;
                 gui_input_optimize_size (window->buffer);
                 gui_input_text_changed_modifier_and_signal (window->buffer);
                 input_data (window->buffer, command);
