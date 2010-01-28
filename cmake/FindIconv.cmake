@@ -30,6 +30,9 @@ IF(ICONV_FOUND)
    set(ICONV_FIND_QUIETLY TRUE)
 ENDIF(ICONV_FOUND)
 
+INCLUDE(CheckLibraryExists)
+INCLUDE(CheckFunctionExists)
+
 FIND_PATH(ICONV_INCLUDE_PATH
   NAMES iconv.h
   PATHS /usr/include /usr/local/include /usr/pkg/include
