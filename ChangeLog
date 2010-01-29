@@ -13,6 +13,7 @@ Version 0.3.2 (under dev!)
   input (bug #28754)
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
+* irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit

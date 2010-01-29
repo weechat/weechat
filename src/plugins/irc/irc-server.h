@@ -121,6 +121,8 @@ struct t_irc_server
     int ssl_connected;              /* = 1 if connected with SSL             */
 #ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
+    gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
+    gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
 #endif
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */

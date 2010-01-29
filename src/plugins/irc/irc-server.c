@@ -2222,8 +2222,6 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 {
     struct t_irc_server *server;
     gnutls_retr_st tls_struct;
-    gnutls_x509_crt_t tls_cert;
-    gnutls_x509_privkey_t tls_cert_key;
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
@@ -2363,7 +2361,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     }
     
     /* using client certificate if it exists */
-    cert_path0 = (char *) IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT);
+    cert_path0 = (char *) IRC_SERVER_OPTION_STRING(server,
+                                                   IRC_SERVER_OPTION_SSL_CERT);
     if (cert_path0 && cert_path0[0])
     {
         weechat_dir = weechat_info_get ("weechat_dir", "");
@@ -2383,29 +2382,36 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 filedatum.size = strlen (cert_str);
                 
                 /* certificate */
-                gnutls_x509_crt_init (&tls_cert);
-                gnutls_x509_crt_import (tls_cert, &filedatum, GNUTLS_X509_FMT_PEM);
+                gnutls_x509_crt_init (&server->tls_cert);
+                gnutls_x509_crt_import (server->tls_cert, &filedatum,
+                                        GNUTLS_X509_FMT_PEM);
                 
                 /* key */
-                gnutls_x509_privkey_init (&tls_cert_key);
-                gnutls_x509_privkey_import (tls_cert_key, &filedatum, GNUTLS_X509_FMT_PEM);
+                gnutls_x509_privkey_init (&server->tls_cert_key);
+                gnutls_x509_privkey_import (server->tls_cert_key, &filedatum,
+                                            GNUTLS_X509_FMT_PEM);
                 
                 tls_struct.type = GNUTLS_CRT_X509;
                 tls_struct.ncerts = 1;
                 tls_struct.deinit_all = 0;
-                tls_struct.cert.x509 = &tls_cert;
-                tls_struct.key.x509 = tls_cert_key;
+                tls_struct.cert.x509 = &server->tls_cert;
+                tls_struct.key.x509 = server->tls_cert_key;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                 /* client certificate info */
 #if LIBGNUTLS_VERSION_NUMBER < 0x020400
-                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_X509_CRT_ONELINE, &cinfo);
+                rinfo = gnutls_x509_crt_print (cert_temp,
+                                               GNUTLS_X509_CRT_ONELINE,
+                                               &cinfo);
 #else
-                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+                rinfo = gnutls_x509_crt_print (cert_temp,
+                                               GNUTLS_CRT_PRINT_ONELINE,
+                                               &cinfo);
 #endif
                 if (rinfo == 0)
                 {
                     weechat_printf (server->buffer,
-                                    _(" - client certificate info (%s):"), cert_path2);
+                                    _(" - client certificate info (%s):"),
+                                    cert_path2);
                     weechat_printf (server->buffer, "  - %s", cinfo.data);
                     gnutls_free (cinfo.data);
                 }
