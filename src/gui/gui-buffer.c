@@ -2541,14 +2541,14 @@ gui_buffer_print_log ()
         log_printf ("");
         log_printf ("  => last 100 lines:");
         num = 0;
-        ptr_line = ptr_buffer->lines->last_line;
+        ptr_line = ptr_buffer->own_lines->last_line;
         while (ptr_line && (num < 100))
         {
             num++;
             ptr_line = ptr_line->prev_line;
         }
         if (!ptr_line)
-            ptr_line = ptr_buffer->lines->first_line;
+            ptr_line = ptr_buffer->own_lines->first_line;
         else
             ptr_line = ptr_line->next_line;
         
