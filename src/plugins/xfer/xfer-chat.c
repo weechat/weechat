@@ -278,18 +278,18 @@ xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    
-    ptr_xfer = xfer_search_by_buffer (buffer);
-    
-    if (ptr_xfer)
-    {    
-        if (!XFER_HAS_ENDED(ptr_xfer->status))
+
+    for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+    {
+        if (ptr_xfer->buffer == buffer)
         {
-            xfer_close (ptr_xfer, XFER_STATUS_ABORTED);
-            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            if (!XFER_HAS_ENDED(ptr_xfer->status))
+            {
+                xfer_close (ptr_xfer, XFER_STATUS_ABORTED);
+                xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            }
+            ptr_xfer->buffer = NULL;
         }
-        
-        ptr_xfer->buffer = NULL;
     }
     
     return WEECHAT_RC_OK;
