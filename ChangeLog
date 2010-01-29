@@ -10,6 +10,7 @@ Version 0.3.1.1 (under dev!)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
 * irc: fix compilation with old GnuTLS versions (bug #28723)
+* xfer: fix crash when purging old xfer chats (bug #28764)
 
 Version 0.3.1 (2010-01-23)
 --------------------------
