@@ -6,6 +6,7 @@ v0.3.1.1, 2010-01-29
 
 Version 0.3.1.1 (under dev!)
 --------------------------
+* irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
 * irc: fix compilation with old GnuTLS versions (bug #28723)
