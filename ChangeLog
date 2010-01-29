@@ -1,13 +1,14 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1.1, 2010-01-27
+v0.3.1.1, 2010-01-29
 
 
 Version 0.3.1.1 (under dev!)
 --------------------------
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
+* irc: fix compilation with old GnuTLS versions (bug #28723)
 
 Version 0.3.1 (2010-01-23)
 --------------------------
