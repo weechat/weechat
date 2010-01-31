@@ -1,11 +1,11 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.1.1, 2010-01-29
+v0.3.1.1, 2010-01-31
 
 
-Version 0.3.1.1 (under dev!)
---------------------------
+Version 0.3.1.1 (2010-01-31)
+----------------------------
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
