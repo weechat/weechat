@@ -5684,7 +5684,7 @@ Script (Python):
 hook = weechat.hook_signal(signal, callback, callback_data)
 
 # exemple
-def my_signal_cb(data, signal, type_data, signal_data):
+def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
