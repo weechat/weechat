@@ -25,7 +25,6 @@ SET(PO_FILES
   it.po
   )
 
-SET(COPYRIGHT_HOLDER "WeeChat Team")
 SET(BUGS_ADDRESS "flashcode@flashtux.org")
 SET(POT_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pot)
 
@@ -50,13 +49,12 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
   ADD_CUSTOM_COMMAND(
     OUTPUT ${POT_FILE}
     COMMAND ${XGETTEXT_EXECUTABLE}
-    ARGS -o ${POT_FILE} --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --directory=${CMAKE_SOURCE_DIR} --omit-header --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder=${COPYRIGHT_HOLDER} ${SRC_FILES}
+    ARGS -o ${POT_FILE} --add-comments='TRANSLATORS:' --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --directory=${CMAKE_SOURCE_DIR} --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder='' ${SRC_FILES}
     DEPENDS ${POT_DEPENDS}
     COMMENT "Generating PO template file"
     )
 
   # Update .po files and compile them to binary .gmo files
-
   SET(GMO_FILES)
   FOREACH(pofile ${PO_FILES})
     GET_FILENAME_COMPONENT(polang ${pofile} NAME_WE)
@@ -64,8 +62,9 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     SET(gmofile ${CMAKE_CURRENT_BINARY_DIR}/${polang}.gmo)
     ADD_CUSTOM_COMMAND(
       OUTPUT ${gmofile}
-      COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -s -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE}
+      COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE}
       COMMAND ${MSGFMT_EXECUTABLE} ARGS -o ${gmofile} ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
+      COMMAND ${MSGFMT_EXECUTABLE} ARGS -c --statistics --output-file=/dev/null ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
       DEPENDS ${POT_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile}
       COMMENT "Compiling locales (${polang})"
       )
