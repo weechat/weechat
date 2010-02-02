@@ -483,7 +483,7 @@
      listfull: afficher les serveurs avec de l'info détaillée pour chaque
           add: créer un nouveau serveur
   nom_serveur: nom du serveur, pour usage interne et affichage
-          nom: nom ou adresse IP du serveur avec port en option (defaut: 6667)
+          nom: nom ou adresse IP du serveur avec port en option (defaut: 6667), plusieurs addresses peuvent être séparées par une virgule
          temp: créer un serveur temporaire (non sauvé)
        option: définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
      nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
@@ -500,6 +500,7 @@
     /server add oftc irc.oftc.net/6697 -ssl -autoconnect
     /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
     /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+    /server add freenode3 irc.freenode.net -password=mypass
     /server copy oftc oftcbis
     /server rename oftc newoftc
     /server del freenode

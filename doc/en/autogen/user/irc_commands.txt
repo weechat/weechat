@@ -483,7 +483,7 @@
     listfull: list servers with detailed info for each server
          add: create a new server
   servername: server name, for internal and display use
-    hostname: name or IP address of server, with optional port (default: 6667)
+    hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
         temp: create temporary server (not saved)
       option: set option for server (for boolean option, value can be omitted)
     nooption: set boolean option to 'off' (for example: -nossl)
@@ -500,6 +500,7 @@
     /server add oftc irc.oftc.net/6697 -ssl -autoconnect
     /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
     /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+    /server add freenode3 irc.freenode.net -password=mypass
     /server copy oftc oftcbis
     /server rename oftc newoftc
     /server del freenode
