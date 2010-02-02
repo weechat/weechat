@@ -48,6 +48,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
+* *irc.look.display_channel_modes_hide_key*
+** description: cacher la clé du canal si les modes sont affichés dans l'objet de barre "buffer_name" (cela cachera tous les paramètres des modes du canal si le mode +k est défini sur le canal)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *irc.look.display_ctcp_blocked*
 ** description: afficher le message CTCP même s'il est bloqué
 ** type: booléen

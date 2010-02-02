@@ -172,8 +172,8 @@ char *
 irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                           struct t_gui_window *window)
 {
-    char buf[512], buf_name[256], modes[128];
-    const char *name;
+    char buf[512], buf_name[256], modes[128], *modes_without_args;
+    const char *name, *pos_space, *pos_key;
     int part_from_channel, display_server;
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
@@ -230,12 +230,28 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                         && channel->modes && channel->modes[0]
                         && (strcmp (channel->modes, "+") != 0))
                     {
+                        modes_without_args = NULL;
+                        if (weechat_config_boolean (irc_config_look_display_channel_modes_hide_key))
+                        {
+                            pos_space = strchr(channel->modes, ' ');
+                            if (pos_space)
+                            {
+                                pos_key = strchr(channel->modes, 'k');
+                                if (pos_key && (pos_key < pos_space))
+                                {
+                                    modes_without_args = weechat_strndup(channel->modes,
+                                                                         pos_space - channel->modes);
+                                }
+                            }
+                        }
                         snprintf (modes, sizeof (modes),
                                   "%s(%s%s%s)",
                                   IRC_COLOR_BAR_DELIM,
                                   IRC_COLOR_ITEM_CHANNEL_MODES,
-                                  channel->modes,
+                                  (modes_without_args) ? modes_without_args : channel->modes,
                                   IRC_COLOR_BAR_DELIM);
+                        if (modes_without_args)
+                            free (modes_without_args);
                     }
                 }
             }

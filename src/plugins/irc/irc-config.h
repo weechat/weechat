@@ -78,6 +78,7 @@ extern struct t_config_option *irc_config_look_nick_suffix;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_channel_modes;
+extern struct t_config_option *irc_config_look_display_channel_modes_hide_key;
 extern struct t_config_option *irc_config_look_display_ctcp_blocked;
 extern struct t_config_option *irc_config_look_display_ctcp_reply;
 extern struct t_config_option *irc_config_look_display_ctcp_unknown;

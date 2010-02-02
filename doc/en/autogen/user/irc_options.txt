@@ -48,6 +48,11 @@
 ** type: boolean
 ** values: on, off (default value: on)
 
+* *irc.look.display_channel_modes_hide_key*
+** description: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
+** type: boolean
+** values: on, off (default value: off)
+
 * *irc.look.display_ctcp_blocked*
 ** description: display CTCP message even if it is blocked
 ** type: boolean

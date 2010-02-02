@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-01-31
+v0.3.2-dev, 2010-02-02
 
 
 Version 0.3.2 (under dev!)
@@ -17,6 +17,8 @@ Version 0.3.2 (under dev!)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
+* irc: add option irc.look.display_channel_modes_hide_key to hide channel key
+  in channel modes (bug #23961)
 * irc: fix compilation with old GnuTLS versions (bug #28723)
 * logger: allow date format in logger options path and mask (task #9430)
 * xfer: fix crash when purging old xfer chats (bug #28764)
