@@ -1977,6 +1977,29 @@ irc_command_lusers (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_map: show a graphical map of the IRC network
+ */
+
+int
+irc_command_map (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
+{
+    IRC_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("map", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) argv;
+    
+    if (argc > 1)
+        irc_server_sendf (ptr_server, 0, "MAP %s", argv_eol[1]);
+    else
+        irc_server_sendf (ptr_server, 0, "MAP");
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_me: send a ctcp action to the current channel
  */
 
@@ -4166,6 +4189,11 @@ irc_command_init ()
                           N_("  mask: servers matching the mask only\n"
                              "target: server for forwarding request"),
                           NULL, &irc_command_lusers, NULL);
+    weechat_hook_command ("map",
+                          N_("show a graphical map of the IRC network"),
+                          "",
+                          "",
+                          NULL, &irc_command_map, NULL);
     weechat_hook_command ("me",
                           N_("send a CTCP action to the current channel"),
                           N_("message"),
