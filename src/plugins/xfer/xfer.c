@@ -265,6 +265,8 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
     
     if (XFER_HAS_ENDED(xfer->status))
     {
+        xfer_send_signal (xfer, "xfer_ended");
+        
         if (xfer->hook_fd)
         {
             weechat_unhook (xfer->hook_fd);
