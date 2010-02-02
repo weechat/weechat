@@ -70,6 +70,7 @@ extern void gui_input_scroll_unread (struct t_gui_window *window);
 extern void gui_input_set_unread ();
 extern void gui_input_set_unread_buffer (struct t_gui_buffer *buffer);
 extern void gui_input_switch_active_buffer (struct t_gui_window *window);
+extern void gui_input_switch_active_buffer_previous (struct t_gui_window *window);
 extern void gui_input_insert (struct t_gui_buffer *buffer, const char *args);
 
 #endif /* gui-input.h */

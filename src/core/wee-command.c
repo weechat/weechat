@@ -1879,6 +1879,8 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_set_unread_buffer (gui_current_window->buffer);
         else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
             gui_input_switch_active_buffer (gui_current_window);
+        else if (string_strcasecmp (argv[1], "switch_active_buffer_previous") == 0)
+            gui_input_switch_active_buffer_previous (gui_current_window);
         else if (string_strcasecmp (argv[1], "insert") == 0)
         {
             if (argc > 2)
@@ -4160,7 +4162,7 @@ command_init ()
                   "jump_next_visited_buffer | hotlist_clear | grab_key | "
                   "grab_key_command | scroll_unread | set_unread | "
                   "set_unread_current_buffer | switch_active_buffer | "
-                  "insert [args]",
+                  "switch_active_buffer_previous | insert [args]",
                   N_("This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_next|"
                   "delete_previous_char|delete_next_char|"
@@ -4174,7 +4176,8 @@ command_init ()
                   "jump_smart|jump_last_buffer|jump_previously_visited_buffer|"
                   "jump_next_visited_buffer|hotlist_clear|grab_key|"
                   "grab_key_command|scroll_unread|set_unread|"
-                  "set_unread_current_buffer|switch_active_buffer|insert",
+                  "set_unread_current_buffer|switch_active_buffer|"
+                  "switch_active_buffer_previous|insert",
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),

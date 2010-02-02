@@ -1732,6 +1732,34 @@ gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_get_previous_active_buffer: get previous active buffer (when many
+ *                                        buffers are merged)
+ */
+
+struct t_gui_buffer *
+gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    if (buffer->prev_buffer
+        && (buffer->prev_buffer->number == buffer->number))
+        return buffer->prev_buffer;
+    else
+    {
+        for (ptr_buffer = last_gui_buffer; ptr_buffer;
+             ptr_buffer = ptr_buffer->prev_buffer)
+        {
+            if ((ptr_buffer != buffer)
+                && (ptr_buffer->number == buffer->number))
+            {
+                return ptr_buffer;
+            }
+        }
+    }
+    return buffer;
+}
+
+/*
  * gui_buffer_move_to_number: move a buffer to another number
  */
 

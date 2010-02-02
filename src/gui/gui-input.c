@@ -1288,8 +1288,8 @@ gui_input_set_unread_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_input_switch_active_buffer: switch active buffer (when many buffers are
- *                                 merged)
+ * gui_input_switch_active_buffer: switch active buffer to next buffer
+ *                                 (when many buffers are merged)
  */
 
 void
@@ -1298,6 +1298,25 @@ gui_input_switch_active_buffer (struct t_gui_window *window)
     struct t_gui_buffer *ptr_buffer;
     
     ptr_buffer = gui_buffer_get_next_active_buffer (window->buffer);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        gui_window_switch_to_buffer (window, ptr_buffer, 1);
+    }
+}
+
+/*
+ * gui_input_switch_active_buffer_previous: switch active buffer to previous
+ *                                          buffer (when many buffers are
+ *                                          merged)
+ */
+
+void
+gui_input_switch_active_buffer_previous (struct t_gui_window *window)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    ptr_buffer = gui_buffer_get_previous_active_buffer (window->buffer);
     if (ptr_buffer)
     {
         gui_buffer_set_active_buffer (ptr_buffer);
