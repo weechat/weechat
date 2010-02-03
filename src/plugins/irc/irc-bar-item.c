@@ -274,6 +274,87 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * irc_bar_item_channel: bar item with channel name (without modes)
+ */
+
+char *
+irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
+                      struct t_gui_window *window)
+{
+    char buf[512], buf_name[256], modes[128];
+    const char *name;
+    int part_from_channel, display_server;
+    struct t_gui_buffer *buffer;
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    
+    if (!window)
+        window = weechat_current_window ();
+    
+    buf_name[0] = '\0';
+    modes[0] = '\0';
+    
+    display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
+    
+    buffer = weechat_window_get_pointer (window, "buffer");
+    
+    if (buffer)
+    {
+        irc_buffer_get_server_channel (buffer, &server, &channel);
+        if (server || channel)
+        {
+            if (server && !channel)
+            {
+                snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
+                          _("server"),
+                          IRC_COLOR_BAR_DELIM,
+                          IRC_COLOR_STATUS_NAME,
+                          server->name,
+                          IRC_COLOR_BAR_DELIM);
+            }
+            else
+            {
+                if (channel)
+                {
+                    part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                                         && !channel->nicks);
+                    snprintf (buf_name, sizeof (buf_name),
+                              "%s%s%s%s%s%s%s%s%s%s",
+                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                              (part_from_channel) ? "(" : "",
+                              IRC_COLOR_STATUS_NAME,
+                              (display_server) ? server->name : "",
+                              (display_server) ? IRC_COLOR_BAR_DELIM : "",
+                              (display_server) ? "/" : "",
+                              IRC_COLOR_STATUS_NAME,
+                              channel->name,
+                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                              (part_from_channel) ? ")" : "");
+                }
+            }
+        }
+        else
+        {
+            name = weechat_buffer_get_string (buffer, "name");
+            if (name)
+                snprintf (buf_name, sizeof (buf_name), "%s", name);
+        }
+        
+        snprintf (buf, sizeof (buf), "%s%s%s",
+                  IRC_COLOR_STATUS_NAME,
+                  buf_name,
+                  modes);
+        return strdup (buf);
+    }
+    
+    return NULL;
+}
+
+/*
  * irc_bar_item_lag: bar item with lag value
  */
 
@@ -379,6 +460,7 @@ irc_bar_item_init ()
     weechat_bar_item_new ("buffer_title", &irc_bar_item_buffer_title, NULL);
     weechat_bar_item_new ("buffer_plugin", &irc_bar_item_buffer_plugin, NULL);
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
+    weechat_bar_item_new ("irc_channel", &irc_bar_item_channel, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
 }
