@@ -2819,11 +2819,17 @@ irc_server_autojoin_channels (struct t_irc_server *server)
             if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
                 if (ptr_channel->key)
-                    irc_server_sendf (server, 0, "JOIN %s %s",
+                {
+                    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                                      "JOIN %s %s",
                                       ptr_channel->name, ptr_channel->key);
+                }
                 else
-                    irc_server_sendf (server, 0, "JOIN %s",
+                {
+                    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                                      "JOIN %s",
                                       ptr_channel->name);
+                }
             }
         }
         server->reconnect_join = 0;

@@ -601,7 +601,10 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
         if (ptr_channel)
         {
             if (irc_mode_channel_set (server, ptr_channel, pos_modes))
-                irc_server_sendf (server, 0, "MODE %s", ptr_channel->name);
+            {
+                irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                                  "MODE %s", ptr_channel->name);
+            }
         }
         ptr_nick = irc_nick_search (ptr_channel, nick);
         if (!irc_ignore_check (server, ptr_channel, nick, host))
