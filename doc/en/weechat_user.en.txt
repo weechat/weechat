@@ -1089,7 +1089,7 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 * In WeeChat, with "oftc" server already created:
 
 ----------------------------------------
-/set irc.server.oftc.ssl_cert "%s/ssl/nick.pem"
+/set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----------------------------------------
