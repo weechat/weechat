@@ -5566,6 +5566,9 @@ Arguments:
 
 | xfer | xfer_resume_ready | pointer: infolist with xfer info |
   xfer resume ready
+
+| xfer | xfer_ended | pointer: infolist with xfer info |
+  xfer has ended
 |========================================
 
 [NOTE]

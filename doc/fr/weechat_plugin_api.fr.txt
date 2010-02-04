@@ -5639,6 +5639,9 @@ Paramètres :
 
 | xfer | xfer_resume_ready | pointer : infolist avec l'info xfer |
   redémarrage prêt
+
+| xfer | xfer_ended | pointer : infolist avec l'info xfer |
+  le xfer s'est terminé
 |========================================
 
 [NOTE]
