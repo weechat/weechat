@@ -943,7 +943,8 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
     pos_comment = (argc > 3) ?
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
     
-    ptr_channel = irc_channel_search (server, argv[2]);
+    ptr_channel = irc_channel_search (server,
+                                      (argv[2][0] == ':') ? argv[2] + 1 : argv[2]);
     if (ptr_channel)
     {
         ptr_nick = irc_nick_search (ptr_channel, nick);
