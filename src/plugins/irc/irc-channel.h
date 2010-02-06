@@ -85,10 +85,12 @@ extern void irc_channel_free_all (struct t_irc_server *server);
 extern struct t_irc_channel *irc_channel_search (struct t_irc_server *server,
                                                  const char *channel_name);
 extern int irc_channel_is_channel (const char *string);
-extern void irc_channel_remove_away (struct t_irc_channel *channel);
+extern void irc_channel_remove_away (struct t_irc_server *server,
+                                     struct t_irc_channel *channel);
 extern void irc_channel_check_away (struct t_irc_server *server,
                                     struct t_irc_channel *channel, int force);
-extern void irc_channel_set_away (struct t_irc_channel *channel,
+extern void irc_channel_set_away (struct t_irc_server *server,
+                                  struct t_irc_channel *channel,
                                   const char *nick_name,
                                   int is_away);
 extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,

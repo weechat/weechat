@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-02 15:34+0100\n"
+"POT-Creation-Date: 2010-02-06 12:11+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4166,14 +4166,6 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "mostrar mensaje cuando se cambie el estado de ausente"
 
-msgid "display channel modes in \"buffer_name\" bar item"
-msgstr "mostrar los modos del canal en el elemento de barra \"buffer_name\""
-
-msgid ""
-"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
-"will hide all channel modes arguments if mode +k is set on channel)"
-msgstr ""
-
 msgid "display CTCP message even if it is blocked"
 msgstr "mostrar mensaje CTCP incluso si está bloqueado"
 
@@ -4183,11 +4175,23 @@ msgstr "mostrar respuesta CTCP enviada por WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "mostrar mensaje CTCP incluso si es un CTCP desconocido"
 
+msgid "display old topic when channel topic is changed"
+msgstr "mostrar el tema anterior cuando se cambia el tema del canal"
+
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr "mostrar los modos del canal en el elemento de barra \"buffer_name\""
+
+msgid ""
+"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
+"will hide all channel modes arguments if mode +k is set on channel)"
+msgstr ""
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "mostrar los modos del apodo en el elemento de barra \"input_prompt\""
 
-msgid "display old topic when channel topic is changed"
-msgstr "mostrar el tema anterior cuando se cambia el tema del canal"
+#, fuzzy
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr "mostrar los modos del apodo en el elemento de barra \"input_prompt\""
 
 msgid "hide password displayed by nickserv"
 msgstr "ocultar contraseña mostrada por nickserv"

@@ -35,7 +35,8 @@
  */
 
 void
-irc_mode_channel_set_nick (struct t_irc_channel *channel, const char *nick,
+irc_mode_channel_set_nick (struct t_irc_server *server,
+                           struct t_irc_channel *channel, const char *nick,
                            char set_flag, int flag)
 {
     struct t_irc_nick *ptr_nick;
@@ -44,7 +45,7 @@ irc_mode_channel_set_nick (struct t_irc_channel *channel, const char *nick,
     {
         ptr_nick = irc_nick_search (channel, nick);
         if (ptr_nick)
-            irc_nick_set (channel, ptr_nick, (set_flag == '+'), flag);
+            irc_nick_set (server, channel, ptr_nick, (set_flag == '+'), flag);
     }
 }
 
@@ -122,7 +123,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '~'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_CHANADMIN);
                     current_arg++;
                     break;
@@ -135,7 +136,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '%'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_HALFOP);
                     current_arg++;
                     break;
@@ -172,7 +173,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '@'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_OP);
                     current_arg++;
                     break;
@@ -180,7 +181,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '~'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_CHANOWNER);
                     current_arg++;
                     break;
@@ -188,7 +189,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '-'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_CHANUSER);
                     current_arg++;
                     break;
@@ -196,7 +197,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
                     if (irc_mode_nick_prefix_allowed (server, '+'))
-                        irc_mode_channel_set_nick (channel, ptr_arg,
+                        irc_mode_channel_set_nick (server, channel, ptr_arg,
                                                    set_flag, IRC_NICK_VOICE);
                     current_arg++;
                     break;

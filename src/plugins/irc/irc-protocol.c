@@ -2922,7 +2922,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, const char *command,
             if (ptr_nick->host)
                 snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
             if (pos_attr)
-                irc_nick_set_away (ptr_channel, ptr_nick,
+                irc_nick_set_away (server, ptr_channel, ptr_nick,
                                    (pos_attr[0] == 'G') ? 1 : 0);
         }
     }

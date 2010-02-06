@@ -43,16 +43,6 @@
 ** type: entier
 ** valeurs: off, local, channel (valeur par défaut: local)
 
-* *irc.look.display_channel_modes*
-** description: affiche les modes du canal dans l'objet de barre "buffer_name"
-** type: booléen
-** valeurs: on, off (valeur par défaut: on)
-
-* *irc.look.display_channel_modes_hide_key*
-** description: cacher la clé du canal si les modes sont affichés dans l'objet de barre "buffer_name" (cela cachera tous les paramètres des modes du canal si le mode +k est défini sur le canal)
-** type: booléen
-** valeurs: on, off (valeur par défaut: off)
-
 * *irc.look.display_ctcp_blocked*
 ** description: afficher le message CTCP même s'il est bloqué
 ** type: booléen
@@ -65,11 +55,6 @@
 
 * *irc.look.display_ctcp_unknown*
 ** description: afficher le message CTCP même si le CTCP est inconnu
-** type: booléen
-** valeurs: on, off (valeur par défaut: on)
-
-* *irc.look.display_nick_modes*
-** description: affiche les modes du pseudo dans l'objet de barre "input_prompt"
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
@@ -88,10 +73,30 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "irc_privmsg,irc_notice")
 
+* *irc.look.item_channel_modes*
+** description: affiche les modes du canal dans l'objet de barre "buffer_name"
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.item_channel_modes_hide_key*
+** description: cacher la clé du canal si les modes sont affichés dans l'objet de barre "buffer_name" (cela cachera tous les paramètres des modes du canal si le mode +k est défini sur le canal)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *irc.look.item_display_server*
 ** description: nom de l'objet de barre où est affiché le serveur IRC (pour la barre de statut)
 ** type: entier
 ** valeurs: buffer_plugin, buffer_name (valeur par défaut: buffer_plugin)
+
+* *irc.look.item_nick_modes*
+** description: affiche les modes du pseudo dans l'objet de barre "input_prompt"
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.item_nick_prefix*
+** description: affiche le préfixe du pseudo dans l'objet de barre "input_prompt"
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
 
 * *irc.look.msgbuffer_fallback*
 ** description: tampon cible par défaut pour les options msgbuffer quand la cible est "private" et que le tampon privé n'est pas trouvé

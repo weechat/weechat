@@ -337,7 +337,8 @@ irc_channel_is_channel (const char *string)
  */
 
 void
-irc_channel_remove_away (struct t_irc_channel *channel)
+irc_channel_remove_away (struct t_irc_server *server,
+                         struct t_irc_channel *channel)
 {
     struct t_irc_nick *ptr_nick;
     
@@ -345,7 +346,7 @@ irc_channel_remove_away (struct t_irc_channel *channel)
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
-            irc_nick_set (channel, ptr_nick, 0, IRC_NICK_AWAY);
+            irc_nick_set (server, channel, ptr_nick, 0, IRC_NICK_AWAY);
         }
     }
 }
@@ -369,7 +370,7 @@ irc_channel_check_away (struct t_irc_server *server,
                               "WHO %s", channel->name);
         }
         else
-            irc_channel_remove_away (channel);
+            irc_channel_remove_away (server, channel);
     }
 }
 
@@ -378,7 +379,8 @@ irc_channel_check_away (struct t_irc_server *server,
  */
 
 void
-irc_channel_set_away (struct t_irc_channel *channel, const char *nick_name,
+irc_channel_set_away (struct t_irc_server *server,
+                      struct t_irc_channel *channel, const char *nick_name,
                       int is_away)
 {
     struct t_irc_nick *ptr_nick;
@@ -387,7 +389,7 @@ irc_channel_set_away (struct t_irc_channel *channel, const char *nick_name,
     {
         ptr_nick = irc_nick_search (channel, nick_name);
         if (ptr_nick)
-            irc_nick_set_away (channel, ptr_nick, is_away);
+            irc_nick_set_away (server, channel, ptr_nick, is_away);
     }
 }
 

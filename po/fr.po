@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-02 15:34+0100\n"
-"PO-Revision-Date: 2010-02-02 15:35+0100\n"
+"POT-Creation-Date: 2010-02-06 12:11+0100\n"
+"PO-Revision-Date: 2010-02-06 12:11+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4193,6 +4193,18 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "affiche un message pour l'absence/le retour"
 
+msgid "display CTCP message even if it is blocked"
+msgstr "afficher le message CTCP même s'il est bloqué"
+
+msgid "display CTCP reply sent by WeeChat"
+msgstr "afficher la réponse CTCP envoyée par WeeChat"
+
+msgid "display CTCP message even if it is unknown CTCP"
+msgstr "afficher le message CTCP même si le CTCP est inconnu"
+
+msgid "display old topic when channel topic is changed"
+msgstr "afficher l'ancien titre lorsque le titre du canal est changé"
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
 
@@ -4204,20 +4216,11 @@ msgstr ""
 "\"buffer_name\" (cela cachera tous les paramètres des modes du canal si le "
 "mode +k est défini sur le canal)"
 
-msgid "display CTCP message even if it is blocked"
-msgstr "afficher le message CTCP même s'il est bloqué"
-
-msgid "display CTCP reply sent by WeeChat"
-msgstr "afficher la réponse CTCP envoyée par WeeChat"
-
-msgid "display CTCP message even if it is unknown CTCP"
-msgstr "afficher le message CTCP même si le CTCP est inconnu"
-
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "affiche les modes du pseudo dans l'objet de barre \"input_prompt\""
 
-msgid "display old topic when channel topic is changed"
-msgstr "afficher l'ancien titre lorsque le titre du canal est changé"
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr "affiche le préfixe du pseudo dans l'objet de barre \"input_prompt\""
 
 msgid "hide password displayed by nickserv"
 msgstr "masquer le mot de passe affiché par nickserv"

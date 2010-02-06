@@ -43,16 +43,6 @@
 ** tipo: intero
 ** valori: off, local, channel (valore predefinito: local)
 
-* *irc.look.display_channel_modes*
-** descrizione: visualizza le modalità canale nell'elemento barra "buffer_name"
-** tipo: bool
-** valori: on, off (valore predefinito: on)
-
-* *irc.look.display_channel_modes_hide_key*
-** descrizione: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
-** tipo: bool
-** valori: on, off (valore predefinito: off)
-
 * *irc.look.display_ctcp_blocked*
 ** descrizione: visualizza messaggio CTCP anche se bloccato
 ** tipo: bool
@@ -65,11 +55,6 @@
 
 * *irc.look.display_ctcp_unknown*
 ** descrizione: visualizza messaggio CTCP anche se è CTCP sconosciuto
-** tipo: bool
-** valori: on, off (valore predefinito: on)
-
-* *irc.look.display_nick_modes*
-** descrizione: visualizza le modalità nick nell'elemento barra "input_prompt"
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
@@ -88,10 +73,30 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "irc_privmsg,irc_notice")
 
+* *irc.look.item_channel_modes*
+** descrizione: visualizza le modalità canale nell'elemento barra "buffer_name"
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.item_channel_modes_hide_key*
+** descrizione: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
 * *irc.look.item_display_server*
 ** descrizione: nome dell'elemento barra dov'è visualizzato il server IRC (per la barra di stato)
 ** tipo: intero
 ** valori: buffer_plugin, buffer_name (valore predefinito: buffer_plugin)
+
+* *irc.look.item_nick_modes*
+** descrizione: visualizza le modalità nick nell'elemento barra "input_prompt"
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.item_nick_prefix*
+** descrizione: display nick prefix in "input_prompt" bar item
+** tipo: bool
+** valori: on, off (valore predefinito: on)
 
 * *irc.look.msgbuffer_fallback*
 ** descrizione: buffer di destinazione predefinito per le opzioni di msgbuffer quando la destinazione è privata ed il buffer privato non viene trovato

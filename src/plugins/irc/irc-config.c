@@ -55,13 +55,14 @@ struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
-struct t_config_option *irc_config_look_display_channel_modes;
-struct t_config_option *irc_config_look_display_channel_modes_hide_key;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
-struct t_config_option *irc_config_look_display_nick_modes;
 struct t_config_option *irc_config_look_display_old_topic;
+struct t_config_option *irc_config_look_item_channel_modes;
+struct t_config_option *irc_config_look_item_channel_modes_hide_key;
+struct t_config_option *irc_config_look_item_nick_modes;
+struct t_config_option *irc_config_look_item_nick_prefix;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
@@ -216,48 +217,63 @@ irc_config_change_look_server_buffer (void *data,
 }
 
 /*
- * irc_config_change_look_display_channel_modes: called when the "display
- *                                               channel modes" option is
- *                                               changed
+ * irc_config_change_look_item_channel_modes: called when the "display
+ *                                            channel modes" option is changed
  */
 
 void
-irc_config_change_look_display_channel_modes (void *data,
-                                              struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    weechat_bar_item_update ("buffer_name");
-}
-
-/*
- * irc_config_change_look_display_channel_modes_hide_key: called when the 
- *                                                        "display channel modes
- *                                                        hide key" option is
- *                                                        changed
- */
-
-void
-irc_config_change_look_display_channel_modes_hide_key (void *data,
-                                                       struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    weechat_bar_item_update ("buffer_name");
-}
-
-/*
- * irc_config_change_look_display_nick_modes: called when the "display
- *                                            nick modes" option is changed
- */
-
-void
-irc_config_change_look_display_nick_modes (void *data,
+irc_config_change_look_item_channel_modes (void *data,
                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("buffer_name");
+}
+
+/*
+ * irc_config_change_look_item_channel_modes_hide_key: called when the 
+ *                                                     "display channel modes
+ *                                                     hide key" option is
+ *                                                     changed
+ */
+
+void
+irc_config_change_look_item_channel_modes_hide_key (void *data,
+                                                    struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("buffer_name");
+}
+
+/*
+ * irc_config_change_look_item_nick_modes: called when the "display nick modes"
+ *                                         option is changed
+ */
+
+void
+irc_config_change_look_item_nick_modes (void *data,
+                                        struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("input_prompt");
+}
+
+/*
+ * irc_config_change_look_item_nick_prefix: called when the "display nick
+ *                                          prefix" option is changed
+ */
+
+void
+irc_config_change_look_item_nick_prefix (void *data,
+                                         struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -1378,20 +1394,6 @@ irc_config_init ()
         N_("display message when (un)marking as away"),
         "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL, NULL, NULL,
         NULL, NULL);
-    irc_config_look_display_channel_modes = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "display_channel_modes", "boolean",
-        N_("display channel modes in \"buffer_name\" bar item"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_display_channel_modes, NULL, NULL, NULL);
-    irc_config_look_display_channel_modes_hide_key = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "display_channel_modes_hide_key", "boolean",
-        N_("hide channel key if modes are displayed in \"buffer_name\" bar "
-           "item (this will hide all channel modes arguments if mode +k is "
-           "set on channel)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        &irc_config_change_look_display_channel_modes_hide_key, NULL, NULL, NULL);
     irc_config_look_display_ctcp_blocked = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_ctcp_blocked", "boolean",
@@ -1410,18 +1412,38 @@ irc_config_init ()
         N_("display CTCP message even if it is unknown CTCP"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    irc_config_look_display_nick_modes = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "display_nick_modes", "boolean",
-        N_("display nick modes in \"input_prompt\" bar item"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_display_nick_modes, NULL, NULL, NULL);
     irc_config_look_display_old_topic = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_old_topic", "boolean",
         N_("display old topic when channel topic is changed"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_item_channel_modes = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_channel_modes", "boolean",
+        N_("display channel modes in \"buffer_name\" bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_channel_modes, NULL, NULL, NULL);
+    irc_config_look_item_channel_modes_hide_key = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_channel_modes_hide_key", "boolean",
+        N_("hide channel key if modes are displayed in \"buffer_name\" bar "
+           "item (this will hide all channel modes arguments if mode +k is "
+           "set on channel)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_channel_modes_hide_key, NULL, NULL, NULL);
+    irc_config_look_item_nick_modes = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_nick_modes", "boolean",
+        N_("display nick modes in \"input_prompt\" bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_nick_modes, NULL, NULL, NULL);
+    irc_config_look_item_nick_prefix = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_nick_prefix", "boolean",
+        N_("display nick prefix in \"input_prompt\" bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_nick_prefix, NULL, NULL, NULL);
     irc_config_look_hide_nickserv_pwd = weechat_config_new_option (
         irc_config_file, ptr_section,
         "hide_nickserv_pwd", "boolean",

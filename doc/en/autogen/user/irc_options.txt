@@ -43,16 +43,6 @@
 ** type: integer
 ** values: off, local, channel (default value: local)
 
-* *irc.look.display_channel_modes*
-** description: display channel modes in "buffer_name" bar item
-** type: boolean
-** values: on, off (default value: on)
-
-* *irc.look.display_channel_modes_hide_key*
-** description: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
-** type: boolean
-** values: on, off (default value: off)
-
 * *irc.look.display_ctcp_blocked*
 ** description: display CTCP message even if it is blocked
 ** type: boolean
@@ -65,11 +55,6 @@
 
 * *irc.look.display_ctcp_unknown*
 ** description: display CTCP message even if it is unknown CTCP
-** type: boolean
-** values: on, off (default value: on)
-
-* *irc.look.display_nick_modes*
-** description: display nick modes in "input_prompt" bar item
 ** type: boolean
 ** values: on, off (default value: on)
 
@@ -88,10 +73,30 @@
 ** type: string
 ** values: any string (default value: "irc_privmsg,irc_notice")
 
+* *irc.look.item_channel_modes*
+** description: display channel modes in "buffer_name" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.item_channel_modes_hide_key*
+** description: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
+** type: boolean
+** values: on, off (default value: off)
+
 * *irc.look.item_display_server*
 ** description: name of bar item where IRC server is displayed (for status bar)
 ** type: integer
 ** values: buffer_plugin, buffer_name (default value: buffer_plugin)
+
+* *irc.look.item_nick_modes*
+** description: display nick modes in "input_prompt" bar item
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.item_nick_prefix*
+** description: display nick prefix in "input_prompt" bar item
+** type: boolean
+** values: on, off (default value: on)
 
 * *irc.look.msgbuffer_fallback*
 ** description: default target buffer for msgbuffer options when target is private and that private buffer is not found

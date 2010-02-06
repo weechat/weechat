@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-02 15:34+0100\n"
+"POT-Creation-Date: 2010-02-06 12:11+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4080,14 +4080,6 @@ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako p
 msgid "display message when (un)marking as away"
 msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
-msgid "display channel modes in \"buffer_name\" bar item"
-msgstr "zobrazit módy kanálu v položce pole \"buffer_name\""
-
-msgid ""
-"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
-"will hide all channel modes arguments if mode +k is set on channel)"
-msgstr ""
-
 msgid "display CTCP message even if it is blocked"
 msgstr ""
 
@@ -4097,11 +4089,23 @@ msgstr ""
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr ""
 
+msgid "display old topic when channel topic is changed"
+msgstr "zobrazit staré téma rozhovoru, když se téma změní"
+
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr "zobrazit módy kanálu v položce pole \"buffer_name\""
+
+msgid ""
+"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
+"will hide all channel modes arguments if mode +k is set on channel)"
+msgstr ""
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
 
-msgid "display old topic when channel topic is changed"
-msgstr "zobrazit staré téma rozhovoru, když se téma změní"
+#, fuzzy
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
 
 msgid "hide password displayed by nickserv"
 msgstr "schovat heslo zobrazené nickservem"

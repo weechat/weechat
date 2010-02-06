@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-02 15:34+0100\n"
+"POT-Creation-Date: 2010-02-06 12:11+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4026,14 +4026,6 @@ msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 msgid "display message when (un)marking as away"
 msgstr "üzenet mutatása távollétkor/visszatéréskor"
 
-msgid "display channel modes in \"buffer_name\" bar item"
-msgstr ""
-
-msgid ""
-"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
-"will hide all channel modes arguments if mode +k is set on channel)"
-msgstr ""
-
 msgid "display CTCP message even if it is blocked"
 msgstr ""
 
@@ -4043,10 +4035,21 @@ msgstr ""
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr ""
 
+msgid "display old topic when channel topic is changed"
+msgstr ""
+
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
+msgid ""
+"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
+"will hide all channel modes arguments if mode +k is set on channel)"
+msgstr ""
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr ""
 
-msgid "display old topic when channel topic is changed"
+msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr ""
 
 msgid "hide password displayed by nickserv"

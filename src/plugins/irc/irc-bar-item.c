@@ -30,6 +30,7 @@
 #include "irc-config.h"
 #include "irc-server.h"
 #include "irc-channel.h"
+#include "irc-nick.h"
 
 
 /*
@@ -226,12 +227,12 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                               (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                               (part_from_channel) ? ")" : "");
                     if (!part_from_channel
-                        && weechat_config_boolean (irc_config_look_display_channel_modes)
+                        && weechat_config_boolean (irc_config_look_item_channel_modes)
                         && channel->modes && channel->modes[0]
                         && (strcmp (channel->modes, "+") != 0))
                     {
                         modes_without_args = NULL;
-                        if (weechat_config_boolean (irc_config_look_display_channel_modes_hide_key))
+                        if (weechat_config_boolean (irc_config_look_item_channel_modes_hide_key))
                         {
                             pos_space = strchr(channel->modes, ' ');
                             if (pos_space)
@@ -400,8 +401,10 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 {
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
-    char *buf;
-    int length;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *ptr_nick;
+    char *buf, prefix[2], str_prefix_color[64], str_prefix[64];
+    int length, prefix_color;
     
     /* make C compiler happy */
     (void) data;
@@ -414,20 +417,45 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, NULL);
+        irc_buffer_get_server_channel (buffer, &server, &channel);
         if (!server || !server->nick)
             return NULL;
         
-        length = strlen (server->nick) + 64 +
+        /* build prefix */
+        str_prefix[0] = '\0';
+        if (channel)
+        {
+            ptr_nick = irc_nick_search (channel, server->nick);
+            if (ptr_nick)
+            {
+                prefix[0] = '\0';
+                prefix[1] = '\0';
+                irc_nick_get_gui_infos (ptr_nick, &prefix[0], &prefix_color,
+                                        NULL, NULL);
+                if (prefix[0] != ' ')
+                {
+                    snprintf (str_prefix_color, sizeof (str_prefix_color),
+                              "weechat.color.nicklist_prefix%d",
+                              prefix_color);
+                    snprintf (str_prefix, sizeof (str_prefix), "%s%s",
+                              weechat_color(weechat_config_string(weechat_config_get(str_prefix_color))),
+                              prefix);
+                }
+            }
+        }
+        
+        /* build bar item */
+        length = 64 + strlen (server->nick) + 64 +
             ((server->nick_modes) ? strlen (server->nick_modes) : 0) + 64 + 1;
         
         buf = malloc (length);
         if (buf)
         {
-            if (weechat_config_boolean (irc_config_look_display_nick_modes)
+            if (weechat_config_boolean (irc_config_look_item_nick_modes)
                 && server->nick_modes && server->nick_modes[0])
             {
-                snprintf (buf, length, "%s%s%s(%s%s%s)",
+                snprintf (buf, length, "%s%s%s%s(%s%s%s)",
+                          str_prefix,
                           IRC_COLOR_INPUT_NICK,
                           server->nick,
                           IRC_COLOR_BAR_DELIM,
@@ -437,7 +465,8 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
             }
             else
             {
-                snprintf (buf, length, "%s%s",
+                snprintf (buf, length, "%s%s%s",
+                          str_prefix,
                           IRC_COLOR_INPUT_NICK,
                           server->nick);
             }

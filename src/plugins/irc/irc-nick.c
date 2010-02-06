@@ -336,7 +336,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
  */
 
 void
-irc_nick_set (struct t_irc_channel *channel,
+irc_nick_set (struct t_irc_server *server, struct t_irc_channel *channel,
               struct t_irc_nick *nick, int set, int flag)
 {
     char prefix[2], str_prefix_color[64];
@@ -367,6 +367,9 @@ irc_nick_set (struct t_irc_channel *channel,
                                (nick->flags & IRC_NICK_AWAY) ?
                                "weechat.color.nicklist_away" : "bar_fg",
                                prefix, str_prefix_color, 1);
+    
+    if (strcmp (nick->name, server->nick) == 0)
+        weechat_bar_item_update ("input_prompt");
 }
 
 /*
@@ -507,8 +510,8 @@ irc_nick_count (struct t_irc_channel *channel, int *total, int *count_op,
  */
 
 void
-irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
-                   int is_away)
+irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
+                   struct t_irc_nick *nick, int is_away)
 {
     if ((weechat_config_integer (irc_config_network_away_check) > 0)
         && ((weechat_config_integer (irc_config_network_away_check_max_nicks) == 0) ||
@@ -517,7 +520,7 @@ irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
         if (((is_away) && (!(nick->flags & IRC_NICK_AWAY))) ||
             ((!is_away) && (nick->flags & IRC_NICK_AWAY)))
         {
-            irc_nick_set (channel, nick, is_away, IRC_NICK_AWAY);
+            irc_nick_set (server, channel, nick, is_away, IRC_NICK_AWAY);
         }
     }
 }

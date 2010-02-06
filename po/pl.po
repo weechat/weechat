@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-02 15:34+0100\n"
+"POT-Creation-Date: 2010-02-06 12:11+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4148,14 +4148,6 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "wyświetla wiadomość, kiedy stajemy sie/przestajemy być nieobecni"
 
-msgid "display channel modes in \"buffer_name\" bar item"
-msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""
-
-msgid ""
-"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
-"will hide all channel modes arguments if mode +k is set on channel)"
-msgstr ""
-
 msgid "display CTCP message even if it is blocked"
 msgstr "wyświetl wiadomość CTCP nawet jeśli jest blokowana"
 
@@ -4165,11 +4157,23 @@ msgstr "wyświetlaj odpowiedź CTCP wysłaną przez WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "wyświetl wiadomość CTCP nawet jeśli jest to nieznana CTCP"
 
+msgid "display old topic when channel topic is changed"
+msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
+
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""
+
+msgid ""
+"hide channel key if modes are displayed in \"buffer_name\" bar item (this "
+"will hide all channel modes arguments if mode +k is set on channel)"
+msgstr ""
+
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\" "
 
-msgid "display old topic when channel topic is changed"
-msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
+#, fuzzy
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\" "
 
 msgid "hide password displayed by nickserv"
 msgstr "ukryj hasło wyświetlane przez nickserv"
