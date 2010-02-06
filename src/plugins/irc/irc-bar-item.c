@@ -423,7 +423,8 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
         
         /* build prefix */
         str_prefix[0] = '\0';
-        if (channel)
+        if (weechat_config_boolean (irc_config_look_item_nick_prefix)
+            && channel)
         {
             ptr_nick = irc_nick_search (channel, server->nick);
             if (ptr_nick)
