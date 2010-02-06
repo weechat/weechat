@@ -934,6 +934,9 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
     
     /* PART message looks like:
        :nick!user@host PART #channel :part message
+       On undernet server, it can be:
+       :nick!user@host PART :#channel
+       :nick!user@host PART #channel :part message
     */
     
     IRC_PROTOCOL_GET_HOST;
@@ -1771,7 +1774,7 @@ int
 irc_protocol_cmd_303 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
-    /* 301 message looks like:
+    /* 303 message looks like:
        :server 303 mynick :nick1 nick2
     */
 
@@ -3353,6 +3356,10 @@ irc_protocol_cmd_432 (struct t_irc_server *server, const char *command,
     int i, nick_found, nick_to_use;
     struct t_gui_buffer *ptr_buffer;
     
+    /* 432 message looks like:
+       :server 432 * mynick :Erroneous Nickname
+    */
+    
     irc_protocol_cmd_error (server, command, argc, argv, argv_eol);
     
     if (!server->is_connected)
@@ -3414,6 +3421,10 @@ irc_protocol_cmd_433 (struct t_irc_server *server, const char *command,
 {
     int i, nick_found, nick_to_use;
     struct t_gui_buffer *ptr_buffer;
+    
+    /* 433 message looks like:
+       :server 433 * mynick :Nickname is already in use.
+    */
     
     if (!server->is_connected)
     {
