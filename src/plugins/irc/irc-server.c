@@ -1751,8 +1751,8 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     && (weechat_config_integer (irc_config_network_lag_disconnect) > 0))
                 {
                     gettimeofday (&tv, NULL);
-                    diff = (int) weechat_timeval_diff (&(ptr_server->lag_check_time),
-                                                       &tv);
+                    diff = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
+                                                            &tv);
                     if (diff / 1000 > weechat_config_integer (irc_config_network_lag_disconnect) * 60)
                     {
                         weechat_printf (ptr_server->buffer,

@@ -364,7 +364,7 @@
 ** values: none, highlight, message, all (default value: all)
 
 * *weechat.look.buffer_time_format*
-** description: time format for buffers
+** description: time format for each line displayed in buffers
 ** type: string
 ** values: any string (default value: "%H:%M:%S")
 
@@ -552,6 +552,11 @@
 ** description: set title for window (terminal for Curses GUI) with name and version
 ** type: boolean
 ** values: on, off (default value: on)
+
+* *weechat.look.time_format*
+** description: time format for dates converted to strings and displayed in messages
+** type: string
+** values: any string (default value: "%a, %d %b %Y %T")
 
 * *weechat.network.gnutls_ca_file*
 ** description: file containing the certificate authorities

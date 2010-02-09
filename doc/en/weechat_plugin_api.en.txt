@@ -1718,8 +1718,8 @@ Util
 
 Some useful functions.
 
-weechat_timeval_cmp
-^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_cmp
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compare two "timeval" structures.
 
@@ -1727,7 +1727,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-int weechat_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
+int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 ----------------------------------------
 
 Arguments:
@@ -1745,14 +1745,14 @@ C example:
 
 [source,C]
 ----------------------------------------
-if (weechat_timeval_cmp (&tv1, &tv2) > 0)
+if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 {
     /* tv1 > tv2 */
 }
 ----------------------------------------
 
-weechat_timeval_diff
-^^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_diff
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Return difference (in milliseconds) between two "timeval" structures.
 
@@ -1760,7 +1760,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-long weechat_timeval_diff (struct timeval *tv1, struct timeval *tv2);
+long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----------------------------------------
 
 Arguments:
@@ -1776,11 +1776,11 @@ C example:
 
 [source,C]
 ----------------------------------------
-long diff = weechat_timeval_diff (&tv1, &tv2);
+long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----------------------------------------
 
-weechat_timeval_add
-^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_add
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Add interval (in milliseconds) to a timeval structure.
 
@@ -1788,7 +1788,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-void weechat_timeval_add (struct timeval *tv, long interval);
+void weechat_util_timeval_add (struct timeval *tv, long interval);
 ----------------------------------------
 
 Arguments:
@@ -1800,7 +1800,32 @@ C example:
 
 [source,C]
 ----------------------------------------
-weechat_timeval_add (&tv, 2000); /* add 2 seconds */
+weechat_util_timeval_add (&tv, 2000); /* add 2 seconds */
+----------------------------------------
+
+weechat_util_get_time_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get date/time as a string built with "strftime".
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_util_get_time_string (const time_t *date);
+----------------------------------------
+
+Arguments:
+
+* 'date': pointer to date
+
+C example:
+
+[source,C]
+----------------------------------------
+time_t date = time (NULL);
+weechat_printf (NULL, "date: %s",
+                weechat_util_get_time_string (&date));
 ----------------------------------------
 
 [[sorted_lists]]

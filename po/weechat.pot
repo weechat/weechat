@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -642,14 +642,14 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1077,16 +1077,17 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr ""
 
-msgid "[-o]"
-msgstr ""
-
-msgid "-o: send uptime to current buffer as input"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
 
 msgid "show WeeChat version and compilation date"
 msgstr ""
 
-msgid "-o: send version to current buffer as input"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
 msgstr ""
 
 msgid "schedule a command execution in future"
@@ -1202,7 +1203,7 @@ msgid ""
 "displayed in hotlist or not, according to importance of message)"
 msgstr ""
 
-msgid "time format for buffers"
+msgid "time format for each line displayed in buffers"
 msgstr ""
 
 msgid "number of colors to use for nicks colors"
@@ -1342,6 +1343,9 @@ msgid "alert user when text sought is not found in buffer"
 msgstr ""
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
+msgstr ""
+
+msgid "time format for dates converted to strings and displayed in messages"
 msgstr ""
 
 msgid "background color for window separators (when split)"

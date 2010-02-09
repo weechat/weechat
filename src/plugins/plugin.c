@@ -409,9 +409,10 @@ plugin_load (const char *filename)
         new_plugin->exec_on_files = &util_exec_on_files;
         new_plugin->file_get_content = &util_file_get_content;
         
-        new_plugin->timeval_cmp = &util_timeval_cmp;
-        new_plugin->timeval_diff = &util_timeval_diff;
-        new_plugin->timeval_add = &util_timeval_add;
+        new_plugin->util_timeval_cmp = &util_timeval_cmp;
+        new_plugin->util_timeval_diff = &util_timeval_diff;
+        new_plugin->util_timeval_add = &util_timeval_add;
+        new_plugin->util_get_time_string = &util_get_time_string;
         
         new_plugin->list_new = &weelist_new;
         new_plugin->list_add = &weelist_add;

@@ -12,6 +12,9 @@ Version 0.3.2 (under dev!)
   weechat.look.buffer_time_format is set to empty value (bug #28751)
 * core: add option "switch_active_buffer_previous" for command /input
   (task #10141)
+* core: add new option weechat.look.time_format to customize default format
+  for date/time displayed (localized date by default), add function
+  weechat_util_get_time_string in plugin API (patch #6914)
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
 * api: add missing infos in functions buffer_get_integer / buffer_get_string

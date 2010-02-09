@@ -320,20 +320,22 @@
   Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 ........................................
 
-&bull; *`/uptime`* `[-o]`::
+&bull; *`/uptime`* `[-o | -ol]`::
 
 ........................................
   montrer l'uptime de WeeChat
 
-  -o: envoyer l'uptime sur le tampon courant comme entrée
+   -o: envoyer l'uptime sur le tampon courant comme entrée (chaîne en anglais)
+  -ol: envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)
 ........................................
 
-&bull; *`/version`* `[-o]`::
+&bull; *`/version`* `[-o | -ol]`::
 
 ........................................
   afficher la version de WeeChat et la date de compilation
 
-  -o: envoyer la version sur le tampon courant comme entrée
+   -o: envoyer la version sur le tampon courant comme entrée (chaîne en anglais)
+  -ol: envoyer la version sur le tampon courant comme entrée (chaîne traduite)
 ........................................
 
 &bull; *`/wait`* `nombre[unité] commande`::

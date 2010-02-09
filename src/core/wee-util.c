@@ -124,6 +124,24 @@ util_get_time_length (const char *time_format)
 }
 
 /*
+ * util_get_time_string: converts date to a string, using format of option
+ *                       weechat.look.time_format (can be localized)
+ */
+
+char *
+util_get_time_string (const time_t *date)
+{
+    struct tm *local_time;
+    static char text_time[128];
+    
+    local_time = localtime (date);
+    strftime (text_time, sizeof (text_time),
+              CONFIG_STRING(config_look_time_format), local_time);
+    
+    return text_time;
+}
+
+/*
  * util_catch_signal: catch a signal
  */
 

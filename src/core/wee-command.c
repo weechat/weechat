@@ -38,12 +38,13 @@
 #include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-input.h"
+#include "wee-list.h"
 #include "wee-log.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
-#include "wee-list.h"
+#include "wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
@@ -3514,7 +3515,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
         snprintf (string, sizeof (string),
-                  _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
+                  "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
                   day,
                   NG_("day", "days", day),
                   hour,
@@ -3522,6 +3523,18 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                   sec,
                   ctime (&weechat_start_time));
         string[strlen (string) - 1] = '\0';
+        input_data (buffer, string);
+    }
+    else if ((argc >= 2) && (string_strcasecmp (argv[1], "-ol") == 0))
+    {
+        snprintf (string, sizeof (string),
+                  _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
+                  day,
+                  NG_("day", "days", day),
+                  hour,
+                  min,
+                  sec,
+                  util_get_time_string (&weechat_start_time));
         input_data (buffer, string);
     }
     else
@@ -3544,7 +3557,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                          sec,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         ctime (&weechat_start_time));
+                         util_get_time_string (&weechat_start_time));
     }
     
     return WEECHAT_RC_OK;
@@ -3556,28 +3569,52 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
 
 void
 command_version_display (struct t_gui_buffer *buffer,
-                         int send_to_buffer_as_input)
+                         int send_to_buffer_as_input,
+                         int translated_string)
 {
     char string[512];
     
     if (send_to_buffer_as_input)
     {
-        snprintf (string, sizeof (string),
-                  "WeeChat %s [%s %s %s]",
-                  PACKAGE_VERSION,
-                  _("compiled on"),
-                  __DATE__,
-                  __TIME__);
-        input_data (buffer, string);
-        if (weechat_upgrade_count > 0)
+        if (translated_string)
         {
             snprintf (string, sizeof (string),
-                      _("Upgraded %d %s, first start: %s"),
-                      weechat_upgrade_count,
-                      NG_("time", "times", weechat_upgrade_count),
-                      ctime (&weechat_start_time));
-            string[strlen (string) - 1] = '\0';
+                      "WeeChat %s [%s %s %s]",
+                      PACKAGE_VERSION,
+                      _("compiled on"),
+                      __DATE__,
+                      __TIME__);
             input_data (buffer, string);
+            if (weechat_upgrade_count > 0)
+            {
+                snprintf (string, sizeof (string),
+                          _("Upgraded %d %s, first start: %s"),
+                          weechat_upgrade_count,
+                          /* TRANSLATORS: text is: "upgraded xx times" */
+                          NG_("time", "times", weechat_upgrade_count),
+                          util_get_time_string (&weechat_start_time));
+                input_data (buffer, string);
+            }
+        }
+        else
+        {
+            snprintf (string, sizeof (string),
+                      "WeeChat %s [%s %s %s]",
+                      PACKAGE_VERSION,
+                      "compiled on",
+                      __DATE__,
+                      __TIME__);
+            input_data (buffer, string);
+            if (weechat_upgrade_count > 0)
+            {
+                snprintf (string, sizeof (string),
+                          "Upgraded %d %s, first start: %s",
+                          weechat_upgrade_count,
+                          (weechat_upgrade_count > 1) ? "times" : "time",
+                          ctime (&weechat_start_time));
+                string[strlen (string) - 1] = '\0';
+                input_data (buffer, string);
+            }
         }
     }
     else
@@ -3598,7 +3635,7 @@ command_version_display (struct t_gui_buffer *buffer,
                              weechat_upgrade_count,
                              /* TRANSLATORS: text is: "upgraded xx times" */
                              NG_("time", "times", weechat_upgrade_count),
-                             ctime (&weechat_start_time));
+                             util_get_time_string (&weechat_start_time));
         }
     }
 }
@@ -3611,16 +3648,28 @@ int
 command_version (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
-    int send_to_buffer_as_input;
+    int send_to_buffer_as_input, translated_string;
     
     /* make C compiler happy */
     (void) data;
     (void) argv_eol;
+
+    send_to_buffer_as_input = 0;
+    translated_string = 0;
+
+    if (argc >= 2)
+    {
+        if (string_strcasecmp (argv[1], "-o") == 0)
+            send_to_buffer_as_input = 1;
+        else if (string_strcasecmp (argv[1], "-ol") == 0)
+        {
+            send_to_buffer_as_input = 1;
+            translated_string = 1;
+        }
+    }
     
-    send_to_buffer_as_input = ((argc >= 2)
-                               && (string_strcasecmp (argv[1], "-o") == 0));
-    
-    command_version_display (buffer, send_to_buffer_as_input);
+    command_version_display (buffer, send_to_buffer_as_input,
+                             translated_string);
     
     return WEECHAT_RC_OK;
 }
@@ -4424,15 +4473,21 @@ command_init ()
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
                   N_("show WeeChat uptime"),
-                  N_("[-o]"),
-                  N_("-o: send uptime to current buffer as input"),
-                  "-o",
+                  "[-o | -ol]",
+                  N_(" -o: send uptime to current buffer as input (english "
+                     "string)\n"
+                     "-ol: send uptime to current buffer as input (translated "
+                     "string)"),
+                  "-o|-ol",
                   &command_uptime, NULL);
     hook_command (NULL, "version",
                   N_("show WeeChat version and compilation date"),
-                  N_("[-o]"),
-                  N_("-o: send version to current buffer as input"),
-                  "-o",
+                  "[-o | -ol]",
+                  N_(" -o: send version to current buffer as input (english "
+                     "string)\n"
+                     "-ol: send version to current buffer as input (translated "
+                     "string)"),
+                  "-o|-ol",
                   &command_version, NULL);
     hook_command (NULL, "wait",
                   N_("schedule a command execution in future"),

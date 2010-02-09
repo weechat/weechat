@@ -34,7 +34,7 @@ struct t_weelist;
 struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20091218-01"
+#define WEECHAT_PLUGIN_API_VERSION "20100209-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -199,9 +199,10 @@ struct t_weechat_plugin
     char *(*file_get_content) (const char *filename);
     
     /* util */
-    int (*timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
-    long (*timeval_diff) (struct timeval *tv1, struct timeval *tv2);
-    void (*timeval_add) (struct timeval *tv, long interval);
+    int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
+    long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
+    void (*util_timeval_add) (struct timeval *tv, long interval);
+    char *(*util_get_time_string) (const time_t *date);
     
     /* sorted lists */
     struct t_weelist *(*list_new) ();
@@ -765,12 +766,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->file_get_content(__filename)
 
 /* util */
-#define weechat_timeval_cmp(__time1, __time2)                           \
-    weechat_plugin->timeval_cmp(__time1, __time2)
-#define weechat_timeval_diff(__time1, __time2)                          \
-    weechat_plugin->timeval_diff(__time1, __time2)
-#define weechat_timeval_add(__time, __interval)                         \
-    weechat_plugin->timeval_add(__time, __interval)
+#define weechat_util_timeval_cmp(__time1, __time2)                      \
+    weechat_plugin->util_timeval_cmp(__time1, __time2)
+#define weechat_util_timeval_diff(__time1, __time2)                     \
+    weechat_plugin->util_timeval_diff(__time1, __time2)
+#define weechat_util_timeval_add(__time, __interval)                    \
+    weechat_plugin->util_timeval_add(__time, __interval)
+#define weechat_util_get_time_string(__date)                            \
+    weechat_plugin->util_get_time_string(__date)
 
 /* sorted list */
 #define weechat_list_new()                                              \

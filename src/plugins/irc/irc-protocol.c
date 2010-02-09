@@ -1095,8 +1095,8 @@ irc_protocol_cmd_pong (struct t_irc_server *server, const char *command,
         /* calculate lag (time diff with lag check) */
         old_lag = server->lag;
         gettimeofday (&tv, NULL);
-        server->lag = (int) weechat_timeval_diff (&(server->lag_check_time),
-                                                  &tv);
+        server->lag = (int) weechat_util_timeval_diff (&(server->lag_check_time),
+                                                       &tv);
         if (old_lag != server->lag)
             weechat_bar_item_update ("lag");
         
@@ -2122,7 +2122,7 @@ irc_protocol_cmd_317 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_CHAT,
                              NG_("second", "seconds", sec),
                              IRC_COLOR_CHAT_CHANNEL,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     else
     {
@@ -2150,7 +2150,7 @@ irc_protocol_cmd_317 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_CHAT,
                              NG_("second", "seconds", sec),
                              IRC_COLOR_CHAT_CHANNEL,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     
     return WEECHAT_RC_OK;
@@ -2422,7 +2422,7 @@ irc_protocol_cmd_329 (struct t_irc_server *server, const char *command,
                                  irc_protocol_tags (command, "irc_numeric"),
                                  _("%sChannel created on %s"),
                                  weechat_prefix ("network"),
-                                 ctime (&datetime));
+                                 weechat_util_get_time_string (&datetime));
             ptr_channel->display_creation_date = 0;
         }
     }
@@ -2435,7 +2435,7 @@ irc_protocol_cmd_329 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     
     return WEECHAT_RC_OK;
@@ -2587,7 +2587,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                              argv[4],
                              IRC_COLOR_CHAT,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     else
     {
@@ -2601,7 +2601,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                              IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                              argv[4],
                              IRC_COLOR_CHAT,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     
     return WEECHAT_RC_OK;
@@ -2776,7 +2776,7 @@ irc_protocol_cmd_348 (struct t_irc_server *server, const char *command,
                              irc_protocol_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     else
     {
@@ -3279,7 +3279,7 @@ irc_protocol_cmd_367 (struct t_irc_server *server, const char *command,
                              irc_protocol_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
-                             ctime (&datetime));
+                             weechat_util_get_time_string (&datetime));
     }
     else
     {

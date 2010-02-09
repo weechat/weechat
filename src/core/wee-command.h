@@ -27,6 +27,7 @@ extern int command_reload (void *data, struct t_gui_buffer *buffer,
 extern void command_init ();
 extern void command_startup (int plugins_looaded);
 extern void command_version_display (struct t_gui_buffer *buffer,
-                                     int send_to_buffer_as_input);
+                                     int send_to_buffer_as_input,
+                                     int translated_string);
 
 #endif /* wee-command.h */

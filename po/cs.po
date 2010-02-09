@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -673,15 +673,15 @@ msgstr "%sChyba: nemohu uložit sezení do souboru"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] "den"
 msgstr[1] "dny"
 msgstr[2] "dnů"
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1330,17 +1330,18 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "zobrazit jak dlouho WeeChat běží"
 
-msgid "[-o]"
-msgstr "[-o]"
-
-msgid "-o: send uptime to current buffer as input"
-msgstr "-o: poslat čas běhu na aktuální kanál jako vstup"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
+msgstr ""
 
 msgid "show WeeChat version and compilation date"
 msgstr "zobrazit verzi WeeChat a datum kompilace"
 
-msgid "-o: send version to current buffer as input"
-msgstr "-c: pošle verzi jako vstup pro aktuální buffer"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
+msgstr ""
 
 msgid "schedule a command execution in future"
 msgstr "naplánovat spuštění příkazu v budoucnosti"
@@ -1516,8 +1517,9 @@ msgstr ""
 "výchozí upozorňovací úrovně pro buffery (používano WeeChatem pro určení "
 "jestli má být buffer zobrazen v hotlistu nebo ne, podle důležitosti zprávy)"
 
-msgid "time format for buffers"
-msgstr "formát času pro buffer"
+#, fuzzy
+msgid "time format for each line displayed in buffers"
+msgstr "formát času pro zobrazení dne při změně dne"
 
 msgid "number of colors to use for nicks colors"
 msgstr "počet barev použitých pro barvy přezdívek"
@@ -1691,6 +1693,10 @@ msgstr "upozornit uživatele, když není hledaný text nalezen v bufferu"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
+
+#, fuzzy
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr "formát času pro zobrazení dne při změně dne"
 
 msgid "background color for window separators (when split)"
 msgstr "barva pozadí děliče oken (při rozdělení)"
@@ -5992,6 +5998,18 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "[-o]"
+#~ msgstr "[-o]"
+
+#~ msgid "-o: send uptime to current buffer as input"
+#~ msgstr "-o: poslat čas běhu na aktuální kanál jako vstup"
+
+#~ msgid "-o: send version to current buffer as input"
+#~ msgstr "-c: pošle verzi jako vstup pro aktuální buffer"
+
+#~ msgid "time format for buffers"
+#~ msgstr "formát času pro buffer"
 
 #~ msgid "%s%s: cannot find nick for sending message"
 #~ msgstr "%s%s: nemohu najít přezdívku pro poslání zprávy"

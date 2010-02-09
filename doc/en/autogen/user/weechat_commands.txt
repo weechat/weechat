@@ -320,20 +320,22 @@
   This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 ........................................
 
-&bull; *`/uptime`* `[-o]`::
+&bull; *`/uptime`* `[-o | -ol]`::
 
 ........................................
   show WeeChat uptime
 
-  -o: send uptime to current buffer as input
+   -o: send uptime to current buffer as input (english string)
+  -ol: send uptime to current buffer as input (translated string)
 ........................................
 
-&bull; *`/version`* `[-o]`::
+&bull; *`/version`* `[-o | -ol]`::
 
 ........................................
   show WeeChat version and compilation date
 
-  -o: send version to current buffer as input
+   -o: send version to current buffer as input (english string)
+  -ol: send version to current buffer as input (translated string)
 ........................................
 
 &bull; *`/wait`* `number[unit] command`::

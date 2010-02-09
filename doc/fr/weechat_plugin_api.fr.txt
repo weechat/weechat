@@ -1823,7 +1823,32 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
-weechat_timeval_add (&tv, 2000); /* add 2 seconds */
+weechat_timeval_add (&tv, 2000); /* ajoute 2 secondes */
+----------------------------------------
+
+weechat_util_get_time_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retourne la date/heure sous forme de chaîne construite avec "strftime".
+
+Prototype :
+
+[source,C]
+----------------------------------------
+char *weechat_util_get_time_string (const time_t *date);
+----------------------------------------
+
+Paramètres :
+
+* 'date': pointeur vers la date
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+time_t date = time (NULL);
+weechat_printf (NULL, "date: %s",
+                weechat_util_get_time_string (&date));
 ----------------------------------------
 
 [[sorted_lists]]

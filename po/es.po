@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -672,14 +672,14 @@ msgstr "%sError: no se pudo guardar la sesión"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** Error: el ejecutable falló (programa: \"%s\"), cerrando WeeChat"
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado en %s"
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "días"
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado en %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1348,17 +1348,18 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "muestra el tiempo de uso de WeeChat"
 
-msgid "[-o]"
-msgstr "[-o]"
-
-msgid "-o: send uptime to current buffer as input"
-msgstr "-o: envía el tiempo de uso al canal actual"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
+msgstr ""
 
 msgid "show WeeChat version and compilation date"
 msgstr "muestra la versión y la fecha de compilación de  WeeChat"
 
-msgid "-o: send version to current buffer as input"
-msgstr "-o: envía la versión a la entrada del buffer actual"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
+msgstr ""
 
 msgid "schedule a command execution in future"
 msgstr "agenda un comando para ejecutar en el futuro"
@@ -1536,8 +1537,9 @@ msgstr ""
 "buffer debe ser mostrado en la lista de actividad o no, según la importancia "
 "del mensaje)"
 
-msgid "time format for buffers"
-msgstr "formato de hora para los buffers"
+#, fuzzy
+msgid "time format for each line displayed in buffers"
+msgstr "formato para la fecha mostrada cuando el día cambió"
 
 msgid "number of colors to use for nicks colors"
 msgstr "número de colores para usar en los colores de nombres de usuario"
@@ -1721,6 +1723,10 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "define el título de la ventana (el terminal para la interfaz Curses) con el "
 "nombre y la versión"
+
+#, fuzzy
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr "formato para la fecha mostrada cuando el día cambió"
 
 msgid "background color for window separators (when split)"
 msgstr "color de fondo para los separadores de ventana (cuando se dividen)"
@@ -6118,6 +6124,18 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "[-o]"
+#~ msgstr "[-o]"
+
+#~ msgid "-o: send uptime to current buffer as input"
+#~ msgstr "-o: envía el tiempo de uso al canal actual"
+
+#~ msgid "-o: send version to current buffer as input"
+#~ msgstr "-o: envía la versión a la entrada del buffer actual"
+
+#~ msgid "time format for buffers"
+#~ msgstr "formato de hora para los buffers"
 
 #~ msgid "%s%s: cannot find nick for sending message"
 #~ msgstr "%s%s: no se pudo encontrar el apodo para enviarle el mensaje"

@@ -105,6 +105,7 @@ struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_set_title;
+struct t_config_option *config_look_time_format;
 
 /* config, colors section */
 
@@ -1217,7 +1218,7 @@ config_weechat_init_options ()
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
-        N_("time format for buffers"),
+        N_("time format for each line displayed in buffers"),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_nicks_number = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1430,6 +1431,12 @@ config_weechat_init_options ()
         N_("set title for window (terminal for Curses GUI) with "
            "name and version"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_title, NULL, NULL, NULL);
+    config_look_time_format = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "time_format", "string",
+        N_("time format for dates converted to strings and displayed in "
+           "messages"),
+        NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* colors */
     ptr_section = config_file_new_section (weechat_config_file, "color",

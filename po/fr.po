@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
-"PO-Revision-Date: 2010-02-09 13:16+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
+"PO-Revision-Date: 2010-02-09 16:36+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -673,14 +673,14 @@ msgstr "%sErreur: impossible de sauvegarder la session dans le ficheir"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** Error: exec a échoué (programme: \"%s\"), sortie de WeeChat"
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Uptime WeeChat: %d %s %02d:%02d:%02d, démarré le %s"
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] "jour"
 msgstr[1] "jours"
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "Uptime WeeChat: %d %s %02d:%02d:%02d, démarré le %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1364,17 +1364,24 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "montrer l'uptime de WeeChat"
 
-msgid "[-o]"
-msgstr "[-o]"
-
-msgid "-o: send uptime to current buffer as input"
-msgstr "-o: envoyer l'uptime sur le tampon courant comme entrée"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
+msgstr ""
+" -o: envoyer l'uptime sur le tampon courant comme entrée (chaîne en "
+"anglais)\n"
+"-ol: envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "afficher la version de WeeChat et la date de compilation"
 
-msgid "-o: send version to current buffer as input"
-msgstr "-o: envoyer la version sur le tampon courant comme entrée"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
+msgstr ""
+" -o: envoyer la version sur le tampon courant comme entrée (chaîne en "
+"anglais)\n"
+"-ol: envoyer la version sur le tampon courant comme entrée (chaîne traduite)"
 
 msgid "schedule a command execution in future"
 msgstr "planifie l'exécution d'une commande dans le futur"
@@ -1554,8 +1561,8 @@ msgstr ""
 "WeeChat si le tampon doit être affiché dans la hotlist ou non, selon "
 "l'importance du message)"
 
-msgid "time format for buffers"
-msgstr "format de date/heure pour les tampons"
+msgid "time format for each line displayed in buffers"
+msgstr "format de date/heure pour chaque ligne affichée dans les tampons"
 
 msgid "number of colors to use for nicks colors"
 msgstr "nombre de couleurs à utiliser pour les couleurs des pseudos"
@@ -1738,6 +1745,11 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "définit le titre de la fenêtre (terminal pour l'interface Curses) avec le "
 "nom et la version"
+
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr ""
+"format de date/heure pour les dates converties en chaînes et affichées dans "
+"les messages"
 
 msgid "background color for window separators (when split)"
 msgstr "couleur du fond pour les séparateurs de fenêtres (quand divisé)"
@@ -6157,9 +6169,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "[-all | -current] command"
-#~ msgstr "[-all | -current] commande"
-
-#~ msgid "display message if CTCP is unknown"
-#~ msgstr "afficher le message si le CTCP est inconnu"

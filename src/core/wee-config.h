@@ -120,6 +120,7 @@ extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
 extern struct t_config_option *config_look_set_title;
+extern struct t_config_option *config_look_time_format;
 
 extern struct t_config_option *config_color_separator;
 extern struct t_config_option *config_color_bar_more;

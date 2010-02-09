@@ -323,7 +323,7 @@ weechat_welcome_message ()
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
-        command_version_display (NULL, 0);
+        command_version_display (NULL, 0, 0);
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         (CONFIG_STRING(config_startup_weechat_slogan)

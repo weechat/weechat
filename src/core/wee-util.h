@@ -24,6 +24,7 @@ extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long interval);
 extern int util_get_time_length (const char *time_format);
+extern char *util_get_time_string (const time_t *date);
 extern void util_catch_signal (int signum, void (*handler)(int));
 extern int util_mkdir_home (const char *directory, int mode);
 extern int util_mkdir (const char *directory, int mode);

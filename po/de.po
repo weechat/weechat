@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
 "PO-Revision-Date: 2010-01-26 22:35+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -687,14 +687,14 @@ msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 "***** Fehler: Ausführung schlug fehl (Programm: \"%s\"), WeeChat wird beendet"
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1385,18 +1385,18 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "Zeigt die Uptime von Weechat an"
 
-msgid "[-o]"
-msgstr "[-o]"
-
-msgid "-o: send uptime to current buffer as input"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
-"-o: sendet die Weechat-Uptime, als Mitteilung, in den aktuellen Channel"
 
 msgid "show WeeChat version and compilation date"
 msgstr "Zeigt die WeeChat-Version und das Datum der Kompilierung an"
 
-msgid "-o: send version to current buffer as input"
-msgstr "-o: schickt Version in den aktuellen Buffer"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
+msgstr ""
 
 msgid "schedule a command execution in future"
 msgstr "Terminiere einen Befehl der ausgeführt werden soll"
@@ -1580,8 +1580,9 @@ msgstr ""
 "genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden "
 "soll oder nicht, entsprechend der Wichtigkeit der Nachricht)"
 
-msgid "time format for buffers"
-msgstr "Zeitformatierung für Buffer"
+#, fuzzy
+msgid "time format for each line displayed in buffers"
+msgstr "Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird"
 
 msgid "number of colors to use for nicks colors"
 msgstr "Anzahl der für Nick-Namen zu benutzenden Farben"
@@ -1761,6 +1762,10 @@ msgstr ""
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "Fenstertitel setzen (oder Terminal-Titel im Curses-GUI) mit Name und Version"
+
+#, fuzzy
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr "Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird"
 
 msgid "background color for window separators (when split)"
 msgstr ""
@@ -6217,3 +6222,16 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "[-o]"
+#~ msgstr "[-o]"
+
+#~ msgid "-o: send uptime to current buffer as input"
+#~ msgstr ""
+#~ "-o: sendet die Weechat-Uptime, als Mitteilung, in den aktuellen Channel"
+
+#~ msgid "-o: send version to current buffer as input"
+#~ msgstr "-o: schickt Version in den aktuellen Buffer"
+
+#~ msgid "time format for buffers"
+#~ msgstr "Zeitformatierung für Buffer"

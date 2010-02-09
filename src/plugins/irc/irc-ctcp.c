@@ -338,8 +338,7 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     
     /* time */
     now = time (NULL);
-    snprintf (buf, sizeof (buf), "%s",
-              ctime (&now));
+    snprintf (buf, sizeof (buf), "%s", ctime (&now));
     buf[strlen (buf) - 1] = '\0';
     temp = weechat_string_replace (res, "$time", buf);
     free (res);

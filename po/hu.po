@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 13:15+0100\n"
+"POT-Creation-Date: 2010-02-09 16:35+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -726,14 +726,14 @@ msgstr "%s nem sikerült a folyamatot menteni\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
-
 msgid "day"
 msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
 
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -1247,18 +1247,18 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "a WeeChat futásidejének mutatása"
 
-msgid "[-o]"
-msgstr "[-o]"
-
-#, fuzzy
-msgid "-o: send uptime to current buffer as input"
-msgstr "-o: a futásidő mint IRC üzenet elküldése az aktuális szobába"
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
+msgstr ""
 
 #, fuzzy
 msgid "show WeeChat version and compilation date"
 msgstr "Konfigurációs fájl elmentve\n"
 
-msgid "-o: send version to current buffer as input"
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
 msgstr ""
 
 msgid "schedule a command execution in future"
@@ -1399,8 +1399,8 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "time format for buffers"
-msgstr "a pufferek időbélyege"
+msgid "time format for each line displayed in buffers"
+msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid "number of colors to use for nicks colors"
 msgstr "nevek színezéséhez használt színek száma"
@@ -1560,6 +1560,10 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "ablak címsorának beállítása (Curses GUI esetén a terminálé) a program nevére "
 "és verziójára"
+
+#, fuzzy
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr "új nap kezdetével megjelenő időbélyeg"
 
 #, fuzzy
 msgid "background color for window separators (when split)"
@@ -5925,6 +5929,17 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "[-o]"
+#~ msgstr "[-o]"
+
+#, fuzzy
+#~ msgid "-o: send uptime to current buffer as input"
+#~ msgstr "-o: a futásidő mint IRC üzenet elküldése az aktuális szobába"
+
+#, fuzzy
+#~ msgid "time format for buffers"
+#~ msgstr "a pufferek időbélyege"
 
 #, fuzzy
 #~ msgid "%s%s: cannot find nick for sending message"
