@@ -5755,6 +5755,7 @@ Prototype:
 [source,C]
 ----------------------------------------
 struct t_hook *weechat_hook_completion (const char *completion_item,
+                                        const char *description,
                                         int (*callback)(void *data,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
@@ -5766,6 +5767,7 @@ Arguments:
 
 * 'completion_item': name of completion item, after you can use '%(name)' in
   a command hooked (argument 'completion')
+* 'description': description of completion
 * 'callback': function called when completion item is used (user is completing
   something using this item), artuments:
 ** 'void *data': pointer
@@ -5801,6 +5803,7 @@ my_completion_cb (void *data, const char *completion_item,
 }
 
 struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
+                                                             "my custom completion!",
                                                              &my_completion_cb, NULL);
 ----------------------------------------
 
@@ -5817,7 +5820,8 @@ def my_completion_cb(data, completion_item, buffer, completion):
     weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_completion("plugin_item", "my_completion_cb", "")
+hook = weechat.hook_completion("plugin_item", "my custom completion!",
+                               "my_completion_cb", "")
 ----------------------------------------
 
 weechat_hook_completion_list_add

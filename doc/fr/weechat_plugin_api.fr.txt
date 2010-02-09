@@ -5832,6 +5832,7 @@ Prototype :
 [source,C]
 ----------------------------------------
 struct t_hook *weechat_hook_completion (const char *completion_item,
+                                        const char *description,
                                         int (*callback)(void *data,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
@@ -5843,6 +5844,7 @@ Paramètres :
 
 * 'completion_item' : nom de l'objet de complétion, après vous pouvez utiliser
   '%(nom)' dans une commande (paramètre 'completion')
+* 'description': description de la complétion
 * 'callback' : fonction appelée lorsque la complétion est utilisée
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
   complétion), paramètres :
@@ -5879,7 +5881,8 @@ my_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_completion_hook = weechat_hook_completion ("xtension_item",
+struct t_hook *my_completion_hook = weechat_hook_completion ("extension_item",
+                                                             "ma complétion !",
                                                              &my_completion_cb, NULL);
 ----------------------------------------
 
@@ -5896,7 +5899,8 @@ def my_completion_cb(data, completion_item, buffer, completion):
     weechat.hook_completion_list_add(completion, "test_mot2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_completion("extension_item", "my_completion_cb", "")
+hook = weechat.hook_completion("extension_item", "ma complétion !",
+                               "my_completion_cb", "")
 ----------------------------------------
 
 weechat_hook_completion_list_add
