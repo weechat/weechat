@@ -53,7 +53,7 @@ my $version = "0.1";
 my $default_path = "~/src/weechat/doc";
 
 # list of locales for which we want to build XML doc files to include
-my @locale_list = qw(en_US fr_FR it_IT);
+my @all_locale_list = qw(en_US fr_FR it_IT);
 
 # all commands/options/.. of following plugins will produce a file
 # non-listed plugins will be ignored
@@ -96,14 +96,19 @@ my @ignore_infolists_plugins = ();
 
 # completions to ignore
 my @ignore_completions_plugins = ();
-my @ignore_completions_items = ("jabber.*",
+my @ignore_completions_items = ("docgen.*",
+                                "jabber.*",
                                 "weeget.*");
 
 # -------------------------------[ init ]--------------------------------------
 
 weechat::register("docgen", "FlashCode <flashcode\@flashtux.org>", $version,
-                  "GPL", "Doc generator for WeeChat 0.3.x", "", "");
-weechat::hook_command("docgen", "Doc generator", "", "", "", "docgen", "");
+                  "GPL3", "Doc generator for WeeChat 0.3.x", "", "");
+weechat::hook_command("docgen", "Doc generator",
+                      "[locales]",
+                      "locales: list of locales to build (by default build all locales)",
+                      "%(docgen_locales)|%*", "docgen", "");
+weechat::hook_completion("docgen_locales", "locales for docgen", "docgen_completion", "");
 weechat::config_set_plugin("path", $default_path)
     if (weechat::config_get_plugin("path") eq "");
 
@@ -285,6 +290,11 @@ sub escape_table
 # build XML doc files (command /docgen)
 sub docgen
 {
+    my ($data, $buffer, $args) = ($_[0], $_[1], $_[2]);
+    
+    my @locale_list = @all_locale_list;
+    @locale_list = split(/ /, $args) if ($args ne "");
+    
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
     my %plugin_infos = get_infos();
@@ -301,6 +311,7 @@ sub docgen
     my $num_files = 0;
     my $num_files_updated = 0;
     my $filename = "";
+    
     foreach my $locale (@locale_list)
     {
         my $num_files_commands = 0;
@@ -599,5 +610,16 @@ sub docgen
     
     setlocale(LC_MESSAGES, $old_locale);
     
+    return weechat::WEECHAT_RC_OK;
+}
+
+sub docgen_completion
+{
+    my ($data, $completion_item, $buffer, $completion) = ($_[0], $_[1], $_[2], $_[3]);
+    
+    foreach my $locale (@all_locale_list)
+    {
+        weechat::hook_completion_list_add($completion, $locale, 0, weechat::WEECHAT_LIST_POS_SORT);
+    }
     return weechat::WEECHAT_RC_OK;
 }
