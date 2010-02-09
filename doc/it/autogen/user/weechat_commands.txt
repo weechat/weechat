@@ -281,6 +281,25 @@
   Per tutti i tipi, è possibile utilizzare un valore nullo per eliminare il valore dell'opzione (non definito). Funziona solo per alcune variabili speciali dei plugin.
 ........................................
 
+&bull; *`/silence`* `[-current | -buffer name | -all] command`::
+
+........................................
+  execute a command silently
+
+  -current: no output on curent buffer
+   -buffer: no output on specified buffer
+      name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+      -all: no output on ALL buffers
+   command: command to execute silently (a '/' is automatically added if not found at beginning of command)
+  
+  If no target is specified (-current, -buffer or -all), then default is to silence WeeChat core buffer only.
+  
+  Examples:
+    config save: /silence save
+    message to current IRC channel: /silence -current msg * hi!
+    message to #weechat channel: /silence -buffer irc.freenode.#weechat msg #weechat hi!
+........................................
+
 &bull; *`/unset`* `[opzione]`::
 
 ........................................

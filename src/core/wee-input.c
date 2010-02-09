@@ -78,8 +78,6 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 
 /*
  * input_exec_command: execute a command (WeeChat internal or a plugin command)
- *                     if only_builtin == 1, then try only
- *                     WeeChat commands (not plugins neither aliases)
  *                     returns: 1 if command was executed succesfully
  *                              0 if error (command not executed)
  */

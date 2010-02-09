@@ -46,10 +46,12 @@
 #include "gui-window.h"
 
 
-char *gui_chat_buffer = NULL;                 /* buffer for printf          */
-char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES]; /* prefixes                   */
-char gui_chat_prefix_empty[] = "";            /* empty prefix               */
+char *gui_chat_buffer = NULL;                   /* buffer for printf        */
+char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];   /* prefixes                 */
+char gui_chat_prefix_empty[] = "";              /* empty prefix             */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
+int gui_chat_silent = GUI_CHAT_SILENT_DISABLED; /* silence mode             */
+struct t_gui_buffer *gui_chat_silent_buffer = NULL; /* buffer for silence   */
 
 
 /*
@@ -452,6 +454,12 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         if (buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             return;
     }
+
+    /* if silent is enabled for buffer (or all buffers), then just return */
+    if ((gui_chat_silent == GUI_CHAT_SILENT_ALL_BUFFERS)
+        || ((gui_chat_silent == GUI_CHAT_SILENT_BUFFER)
+            && (gui_chat_silent_buffer == buffer)))
+        return;
     
     if (!gui_chat_buffer)
         gui_chat_buffer = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);

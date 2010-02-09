@@ -31,7 +31,7 @@ struct t_gui_line;
 
 #define GUI_CHAT_TAG_NO_HIGHLIGHT "no_highlight"
 
-enum t_gui_prefix
+enum t_gui_chat_prefix
 {
     GUI_CHAT_PREFIX_ERROR = 0,
     GUI_CHAT_PREFIX_NETWORK,
@@ -42,9 +42,18 @@ enum t_gui_prefix
     GUI_CHAT_NUM_PREFIXES,
 };
 
+enum t_gui_chat_silent
+{
+    GUI_CHAT_SILENT_DISABLED = 0,
+    GUI_CHAT_SILENT_BUFFER,
+    GUI_CHAT_SILENT_ALL_BUFFERS,
+};
+
 extern char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
+extern int gui_chat_silent;
+extern struct t_gui_buffer *gui_chat_silent_buffer;
 
 /* chat functions */
 

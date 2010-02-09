@@ -281,6 +281,25 @@
   Pour tous les types, vous pouvez utiliser null pour supprimer la valeur de l'option (valeur non définie). Cela ne fonctionne qu'avec certaines options spéciales des extensions.
 ........................................
 
+&bull; *`/silence`* `[-current | -buffer nom | -all] commande`::
+
+........................................
+  exécuter une commande silencieusement
+
+  -current: pas d'affichage sur le tampon courant
+   -buffer: pas d'affichage sur le tampon spécifié
+       nom: nom complet du tampon (exemples: "irc.server.freenode", "irc.freenode.#weechat")
+      -all: pas d'affichage sur TOUS les tampons
+  commande: commande à exécuter silencieusement (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+  
+  Si aucune cible n'est spécifiée (-current, -buffer ou -all), alors par défaut seul le tampon core WeeChat sera silencieux.
+  
+  Exemples:
+    sauvegarde configuration: /silence save
+    message au canal IRC courant: /silence -current msg * bonjour !
+    message au canal #weechat: /silence -buffer irc.freenode.#weechat msg #weechat bonjour !
+........................................
+
 &bull; *`/unset`* `[option]`::
 
 ........................................

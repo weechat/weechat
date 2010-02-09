@@ -3204,6 +3204,88 @@ command_set (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_silence: execute a command silently
+ */
+
+int
+command_silence (void *data, struct t_gui_buffer *buffer,
+                 int argc, char **argv, char **argv_eol)
+{
+    int length, silent_mode;
+    char *command, *ptr_command, *buffer_name, *pos;
+    struct t_gui_buffer *silent_buffer, *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc >= 2)
+    {
+        silent_mode = GUI_CHAT_SILENT_BUFFER;
+        silent_buffer = gui_buffer_search_main ();
+        ptr_command = argv_eol[1];
+        
+        if (string_strcasecmp (argv[1], "-current") == 0)
+        {
+            silent_buffer = buffer;
+            ptr_command = argv_eol[2];
+        }
+        else if (string_strcasecmp (argv[1], "-buffer") == 0)
+        {
+            ptr_buffer = NULL;
+            if (argc < 3)
+                return WEECHAT_RC_ERROR;
+            buffer_name = strdup (argv[2]);
+            if (!buffer_name)
+                return WEECHAT_RC_ERROR;
+            pos = strchr (buffer_name, '.');
+            if (pos)
+            {
+                pos[0] = '\0';
+                pos++;
+                ptr_buffer = gui_buffer_search_by_name (buffer_name, pos);
+            }
+            free (buffer_name);
+            if (ptr_buffer)
+                silent_buffer = ptr_buffer;
+            ptr_command = argv_eol[3];
+        }
+        else if (string_strcasecmp (argv[1], "-all") == 0)
+        {
+            silent_mode = GUI_CHAT_SILENT_ALL_BUFFERS;
+            silent_buffer = NULL;
+            ptr_command = argv_eol[2];
+        }
+        
+        if (ptr_command && ptr_command[0])
+        {
+            gui_chat_silent = silent_mode;
+            gui_chat_silent_buffer = silent_buffer;
+            
+            if (ptr_command[0] == '/')
+            {
+                input_exec_command (buffer, 1, NULL, ptr_command);
+            }
+            else
+            {
+                length = strlen (ptr_command) + 2;
+                command = malloc (length);
+                if (command)
+                {
+                    snprintf (command, length, "/%s", ptr_command);
+                    input_exec_command (buffer, 1, NULL, command);
+                    free (command);
+                }
+            }
+            
+            gui_chat_silent = GUI_CHAT_SILENT_DISABLED;
+            gui_chat_silent_buffer = NULL;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_unset: unset/reset config options
  */
 
@@ -4300,6 +4382,27 @@ command_init ()
                      "for some special plugin variables."),
                   "%(config_options) %(config_option_values)",
                   &command_set, NULL);
+    hook_command (NULL, "silence",
+                  N_("execute a command silently"),
+                  N_("[-current | -buffer name | -all] command"),
+                  N_("-current: no output on curent buffer\n"
+                     " -buffer: no output on specified buffer\n"
+                     "    name: full buffer name (examples: "
+                     "\"irc.server.freenode\", \"irc.freenode.#weechat\")\n"
+                     "    -all: no output on ALL buffers\n"
+                     " command: command to execute silently (a '/' is "
+                     "automatically added if not found at beginning of "
+                     "command)\n\n"
+                     "If no target is specified (-current, -buffer or -all), "
+                     "then default is to silence WeeChat core buffer only.\n\n"
+                     "Examples:\n"
+                     "  config save: /silence save\n"
+                     "  message to current IRC channel: "
+                     "/silence -current msg * hi!\n"
+                     "  message to #weechat channel: "
+                     "/silence -buffer irc.freenode.#weechat msg #weechat hi!"),
+                  "-current|-buffer|-all|%(commands) %(commands)|%*",
+                  &command_silence, NULL);
     hook_command (NULL, "unset",
                   N_("unset/reset config options"),
                   N_("[option]"),
