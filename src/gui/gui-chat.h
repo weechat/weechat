@@ -42,18 +42,18 @@ enum t_gui_chat_prefix
     GUI_CHAT_NUM_PREFIXES,
 };
 
-enum t_gui_chat_silent
+enum t_gui_chat_mute
 {
-    GUI_CHAT_SILENT_DISABLED = 0,
-    GUI_CHAT_SILENT_BUFFER,
-    GUI_CHAT_SILENT_ALL_BUFFERS,
+    GUI_CHAT_MUTE_DISABLED = 0,
+    GUI_CHAT_MUTE_BUFFER,
+    GUI_CHAT_MUTE_ALL_BUFFERS,
 };
 
 extern char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
-extern int gui_chat_silent;
-extern struct t_gui_buffer *gui_chat_silent_buffer;
+extern int gui_chat_mute;
+extern struct t_gui_buffer *gui_chat_mute_buffer;
 
 /* chat functions */
 

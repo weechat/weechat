@@ -190,6 +190,25 @@
   Without argument, this command displays saved layout.
 ........................................
 
+&bull; *`/mute`* `[-current | -buffer name | -all] command`::
+
+........................................
+  execute a command silently
+
+  -current: no output on curent buffer
+   -buffer: no output on specified buffer
+      name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+      -all: no output on ALL buffers
+   command: command to execute silently (a '/' is automatically added if not found at beginning of command)
+  
+  If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
+  
+  Examples:
+    config save: /mute save
+    message to current IRC channel: /mute -current msg * hi!
+    message to #weechat channel: /mute -buffer irc.freenode.#weechat msg #weechat hi!
+........................................
+
 &bull; *`/plugin`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]`::
 
 ........................................
@@ -279,25 +298,6 @@
     color  : color name, ++number or --number
   
   For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
-........................................
-
-&bull; *`/silence`* `[-current | -buffer name | -all] command`::
-
-........................................
-  execute a command silently
-
-  -current: no output on curent buffer
-   -buffer: no output on specified buffer
-      name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
-      -all: no output on ALL buffers
-   command: command to execute silently (a '/' is automatically added if not found at beginning of command)
-  
-  If no target is specified (-current, -buffer or -all), then default is to silence WeeChat core buffer only.
-  
-  Examples:
-    config save: /silence save
-    message to current IRC channel: /silence -current msg * hi!
-    message to #weechat channel: /silence -buffer irc.freenode.#weechat msg #weechat hi!
 ........................................
 
 &bull; *`/unset`* `[option]`::
