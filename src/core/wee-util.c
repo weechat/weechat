@@ -38,6 +38,7 @@
 #include "wee-util.h"
 #include "wee-config.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 
 
 /*
@@ -407,4 +408,62 @@ util_file_get_content (const char *filename)
     }
 
     return buffer;
+}
+
+/*
+ * util_version_number: get version number (integer) with version as string
+ *                      (non-digit chars like "-dev" are ignored)
+ *                      for example:
+ *                        "0.3.2-dev" ==> 197120 (== 0x00030200)
+ *                        "0.3.2"     ==> 197120 (== 0x00030200)
+ *                        "0.3.1.1"   ==> 196865 (== 0x00030101)
+ *                        "0.3.1"     ==> 196864 (== 0x00030100)
+ *                        "0.3.0"     ==> 196608 (== 0x00030000)
+ */
+
+int
+util_version_number (const char *version)
+{
+    char **items, buf[64], *ptr_item, *error;
+    int num_items, i, version_int[4], index_buf;
+    long number;
+    
+    items = string_split (version, ".", 0, 4, &num_items);
+    for (i = 0; i < 4; i++)
+    {
+        version_int[i] = 0;
+        if (items && (i < num_items))
+        {
+            ptr_item = items[i];
+            index_buf = 0;
+            while (ptr_item && ptr_item[0] && (index_buf < (int)sizeof (buf) - 1))
+            {
+                if (isdigit (ptr_item[0]))
+                {
+                    buf[index_buf] = ptr_item[0];
+                    index_buf++;
+                }
+                ptr_item = utf8_next_char (ptr_item);
+            }
+            buf[index_buf] = '\0';
+            if (buf[0])
+            {
+                error = NULL;
+                number = strtol (buf, &error, 10);
+                if (error && !error[0])
+                {
+                    if (number < 0)
+                        number = 0;
+                    else if (number > 0xFF)
+                        number = 0xFF;
+                    version_int[i] = number;
+                }
+            }
+        }
+    }
+    if (items)
+        string_free_split (items);
+    
+    return (version_int[0] << 24) | (version_int[1] << 16)
+        | (version_int[2] << 8) | version_int[3];
 }

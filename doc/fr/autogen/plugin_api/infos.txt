@@ -27,6 +27,8 @@
 
 | weechat | version | version de WeeChat
 
+| weechat | version_number | version de WeeChat (sous forme de nombre)
+
 | weechat | weechat_dir | répertoire de WeeChat
 
 | weechat | weechat_libdir | répertoire "lib" de WeeChat

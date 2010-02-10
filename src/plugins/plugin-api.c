@@ -38,6 +38,7 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-string.h"
+#include "../core/wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-bar-window.h"
@@ -258,7 +259,7 @@ plugin_api_info_get_internal (void *data, const char *info_name,
                               const char *arguments)
 {
     time_t inactivity;
-    static char value[32];
+    static char value[32], version_number[32] = { '\0' };
     
     /* make C compiler happy */
     (void) data;
@@ -271,7 +272,16 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     {
         return PACKAGE_VERSION;
     }
-    if (string_strcasecmp (info_name, "date") == 0)
+    else if (string_strcasecmp (info_name, "version_number") == 0)
+    {
+        if (!version_number[0])
+        {
+            snprintf (version_number, sizeof (version_number), "%d",
+                      util_version_number (PACKAGE_VERSION));
+        }
+        return version_number;
+    }
+    else if (string_strcasecmp (info_name, "date") == 0)
     {
         return __DATE__;
     }
@@ -919,6 +929,8 @@ plugin_api_init ()
 {
     /* WeeChat core info hooks */
     hook_info (NULL, "version", N_("WeeChat version"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "version_number", N_("WeeChat version (as number)"),
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "date", N_("WeeChat compilation date"),
                &plugin_api_info_get_internal, NULL);

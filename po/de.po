@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 16:35+0100\n"
+"POT-Creation-Date: 2010-02-10 10:33+0100\n"
 "PO-Revision-Date: 2010-01-26 22:35+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5275,6 +5275,10 @@ msgid "list of logger buffers"
 msgstr "Liste der protokollierten Buffer"
 
 msgid "WeeChat version"
+msgstr "WeeChat Version"
+
+#, fuzzy
+msgid "WeeChat version (as number)"
 msgstr "WeeChat Version"
 
 msgid "WeeChat compilation date"

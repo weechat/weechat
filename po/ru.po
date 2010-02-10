@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-09 16:35+0100\n"
+"POT-Creation-Date: 2010-02-10 10:33+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4973,6 +4973,10 @@ msgstr "время в буферах"
 
 #, fuzzy
 msgid "WeeChat version"
+msgstr "слоган WeeChat"
+
+#, fuzzy
+msgid "WeeChat version (as number)"
 msgstr "слоган WeeChat"
 
 #, fuzzy
