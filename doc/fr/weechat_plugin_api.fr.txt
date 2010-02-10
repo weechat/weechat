@@ -8271,7 +8271,7 @@ weechat_printf (NULL, "La version de WeeChat est : %s (compilée le %s)",
                 weechat_info_get ("version", NULL),
                 weechat_info_get ("date", NULL));
 weechat_printf (NULL, "Le répertoire de WeeChat est : %s",
-                weechat_info_get ("weechat_dir"));
+                weechat_info_get ("weechat_dir", NULL));
 ----------------------------------------
 
 Script (Python):
@@ -8284,7 +8284,7 @@ value = weechat.info_get(info_name, arguments)
 # exemple
 weechat.prnt("", "La version de WeeChat est : %s (compilée le %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
-weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weechat_dir"))
+weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weechat_dir", ""))
 ----------------------------------------
 
 [[infolists]]
