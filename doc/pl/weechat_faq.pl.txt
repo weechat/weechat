@@ -310,20 +310,20 @@ filtry (domyślnie alt + "=" zmienia stan filtrów).
 
 
 [[memory_usage]]
-How can I tweak WeeChat to consume less memory?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę zmusić WeeChat do zużywania mniejszej ilości pamięci?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can try following tips to consume less memory:
+W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych rad:
 
-* use latest stable version (it is supposed to have less memory leaks than
-  older versions)
-* do not load some plugins if you don't use them, for example: aspell, fifo,
-  logger, perl, python, ruby, lua, tcl, xfer (used for DCC)
-* load only scripts that you really need
-* reduce value of option 'weechat.history.max_lines' (number of lines saved in
-  memory for each buffer)
-* reduce value of option 'weechat.history.max_commands' (number of user commands
-  saved in memory)
+* używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
+  niż starsze wersje)
+* nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python, 
+  ruby, lua, tcl, xfer (używana do DCC)
+* ładować tylko naprawde używane skrypty
+* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość lini trzymanych 
+  w pamięci dla każdego bufora)
+* zmniejszyć wartość opcji 'weechat.history.max_commands' (ilość komend
+  użytkownika trzymanych w pamięci)
 
 
 Rozwój
