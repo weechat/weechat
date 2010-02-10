@@ -26,6 +26,7 @@ Version 0.3.2 (under dev!)
   (bug #28741)
 * irc: fix PART message received on Undernet server (bug #28825)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
+* irc: apply smart filter only on channels, not private buffers (bug #28841)
 * irc: add option irc.look.item_channel_modes_hide_key to hide channel key
   in channel modes (bug #23961)
 * irc: add option irc.look.item_nick_prefix

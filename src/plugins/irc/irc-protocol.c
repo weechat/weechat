@@ -958,14 +958,19 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
             /* display part message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
-                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                     && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
-                    irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                ptr_nick_speaking = NULL;
+                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                {
+                    ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                         && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
+                        irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                }
                 if (pos_comment)
                 {
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             (local_part
+                                                             || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
@@ -993,6 +998,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             (local_part
+                                                             || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
@@ -1296,14 +1302,19 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
                 local_quit = (strcmp (nick, server->nick) == 0);
-                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                     && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
-                    irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                ptr_nick_speaking = NULL;
+                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                {
+                    ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                         && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
+                        irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                }
                 if (pos_comment && pos_comment[0])
                 {
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             (local_quit
+                                                             || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
@@ -1329,6 +1340,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             (local_quit
+                                                             || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
