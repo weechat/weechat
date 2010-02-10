@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-09
+v0.3.2-dev, 2010-02-10
 
 
 Version 0.3.2 (under dev!)
@@ -17,6 +17,8 @@ Version 0.3.2 (under dev!)
   weechat_util_get_time_string in plugin API (patch #6914)
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
+* api: add "version_number" for function info_get to get WeeChat version as
+  number
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
