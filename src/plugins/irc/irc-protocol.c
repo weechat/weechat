@@ -1322,8 +1322,8 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                          _("%s%s%s %s(%s%s%s)%s has quit "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
-                                         ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) && (ptr_channel->pv_remote_nick_color)) ?
-                                         ptr_channel->pv_remote_nick_color : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
+                                         irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
@@ -1347,8 +1347,8 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                                                             NULL : "irc_smart_filter"),
                                          _("%s%s%s %s(%s%s%s)%s has quit"),
                                          weechat_prefix ("quit"),
-                                         ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) && (ptr_channel->pv_remote_nick_color)) ?
-                                         ptr_channel->pv_remote_nick_color : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
+                                         irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          IRC_COLOR_CHAT_HOST,
