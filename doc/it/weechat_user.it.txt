@@ -1268,6 +1268,7 @@ personalizzare:
 | wallops   |        | wallops
 | 221       |        | stringa modalità utente
 | 275       | whois  | whois (connessione sicura)
+| 301       | whois  | whois (assente)
 | 303       |        | ison
 | 305       | unaway | presente
 | 306       | away   | assente

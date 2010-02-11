@@ -1275,6 +1275,7 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | wallops |        | wallops
 | 221     |        | chaîne de mode utilisateur
 | 275     | whois  | whois (connexion sécurisée)
+| 301     | whois  | whois (absent)
 | 303     |        | ison
 | 305     | unaway | non absent
 | 306     | away   | absent

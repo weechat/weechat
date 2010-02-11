@@ -1235,6 +1235,7 @@ Non-exhaustive list of IRC messages or alias that you can customize:
 | wallops |        | wallops
 | 221     |        | user mode string
 | 275     | whois  | whois (secure connection)
+| 301     | whois  | whois (away)
 | 303     |        | ison
 | 305     | unaway | unaway
 | 306     | away   | away
