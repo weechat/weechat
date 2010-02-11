@@ -41,6 +41,7 @@ extern const char *irc_msgbuffer_get_string (int target);
 extern struct t_gui_buffer *irc_msgbuffer_get_target_buffer (struct t_irc_server *server,
                                                              const char *nick,
                                                              const char *message,
-                                                             const char *alias);
+                                                             const char *alias,
+                                                             struct t_gui_buffer *default_buffer);
 
 #endif /* irc-msgbuffer.h */

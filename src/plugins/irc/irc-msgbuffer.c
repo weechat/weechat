@@ -93,11 +93,15 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
  *                                    (for example: "invite", "312")
  *                                  alias is optional alias for message
  *                                    (for example "whois")
+ *                                  default_buffer is used if no target is
+ *                                    defined (optional, by default server
+ *                                    buffer is used)
  */
 
 struct t_gui_buffer *
 irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
-                                 const char *message, const char *alias)
+                                 const char *message, const char *alias,
+                                 struct t_gui_buffer *default_buffer)
 {
     struct t_config_option *ptr_option;
     int target;
@@ -108,6 +112,9 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
     ptr_option = irc_msgbuffer_get_option (server, message);
     if (!ptr_option && alias && alias[0])
         ptr_option = irc_msgbuffer_get_option (server, alias);
+    
+    if (!ptr_option && default_buffer)
+        return default_buffer;
     
     target = (ptr_option) ?
         weechat_config_integer (ptr_option) : -1;
