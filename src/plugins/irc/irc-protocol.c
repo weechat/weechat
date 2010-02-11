@@ -2454,15 +2454,18 @@ irc_protocol_cmd_329 (struct t_irc_server *server, const char *command,
 }
 
 /*
- * irc_protocol_cmd_330: '330' command (whois, logged in as)
+ * irc_protocol_cmd_330_343: '330' command (whois, is logged in as),
+ *                           '343' command (whois, is opered as)
  */
 
 int
-irc_protocol_cmd_330 (struct t_irc_server *server, const char *command,
-                      int argc, char **argv, char **argv_eol)
+irc_protocol_cmd_330_343 (struct t_irc_server *server, const char *command,
+                          int argc, char **argv, char **argv_eol)
 {
     /* 330 message looks like:
        :server 330 mynick nick1 nick2 :is logged in as
+       343 message looks like:
+       :server 343 mynick nick1 nick2 :is opered as
     */
     
     IRC_PROTOCOL_MIN_ARGS(6);
@@ -3616,6 +3619,7 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "005", /* a server message */ 1, &irc_protocol_cmd_005 },
           { "221", /* user mode string */ 1, &irc_protocol_cmd_221 },
           { "275", /* whois (secure connection) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "276", /* whois (has client certificate fingerprint) */ 1, &irc_protocol_cmd_whois_nick_msg },
           { "301", /* away message */ 1, &irc_protocol_cmd_301 },
           { "303", /* ison */ 1, &irc_protocol_cmd_303 },
           { "305", /* unaway */ 1, &irc_protocol_cmd_305 },
@@ -3639,13 +3643,14 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "327", /* whois (host) */ 1, &irc_protocol_cmd_327 },
           { "328", /* channel url */ 1, &irc_protocol_cmd_328 },
           { "329", /* channel creation date */ 1, &irc_protocol_cmd_329 },
-          { "330", /* is logged in as */ 1, &irc_protocol_cmd_330 },
+          { "330", /* is logged in as */ 1, &irc_protocol_cmd_330_343 },
           { "331", /* no topic for channel */ 1, &irc_protocol_cmd_331 },
           { "332", /* topic of channel */ 0, &irc_protocol_cmd_332 },
           { "333", /* infos about topic (nick and date changed) */ 1, &irc_protocol_cmd_333 },
           { "335", /* is a bot on */ 1, &irc_protocol_cmd_whois_nick_msg },
           { "338", /* whois (host) */ 1, &irc_protocol_cmd_338 },
           { "341", /* inviting */ 1, &irc_protocol_cmd_341 },
+          { "343", /* is opered as */ 1, &irc_protocol_cmd_330_343 },
           { "344", /* channel reop */ 1, &irc_protocol_cmd_344 },
           { "345", /* end of channel reop list */ 1, &irc_protocol_cmd_345 },
           { "348", /* channel exception list */ 1, &irc_protocol_cmd_348 },
