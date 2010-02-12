@@ -3650,7 +3650,7 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
 
 XS (XS_weechat_api_hook_info)
 {
-    char *result, *info_name, *description, *function, *data;
+    char *result, *info_name, *description, *args_description, *function, *data;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3662,7 +3662,7 @@ XS (XS_weechat_api_hook_info)
         PERL_RETURN_EMPTY;
     }
     
-    if (items < 4)
+    if (items < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hook_info");
         PERL_RETURN_EMPTY;
@@ -3670,13 +3670,15 @@ XS (XS_weechat_api_hook_info)
     
     info_name = SvPV (ST (0), PL_na);
     description = SvPV (ST (1), PL_na);
-    function = SvPV (ST (2), PL_na);
-    data = SvPV (ST (3), PL_na);
+    args_description = SvPV (ST (2), PL_na);
+    function = SvPV (ST (3), PL_na);
+    data = SvPV (ST (4), PL_na);
     
     result = script_ptr2str (script_api_hook_info (weechat_perl_plugin,
                                                    perl_current_script,
                                                    info_name,
                                                    description,
+                                                   args_description,
                                                    &weechat_perl_api_hook_info_cb,
                                                    function,
                                                    data));
@@ -3726,7 +3728,8 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
 
 XS (XS_weechat_api_hook_infolist)
 {
-    char *result, *infolist_name, *description, *function, *data;
+    char *result, *infolist_name, *description, *pointer_description;
+    char *args_description, *function, *data;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3738,7 +3741,7 @@ XS (XS_weechat_api_hook_infolist)
         PERL_RETURN_EMPTY;
     }
     
-    if (items < 4)
+    if (items < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hook_infolist");
         PERL_RETURN_EMPTY;
@@ -3746,13 +3749,17 @@ XS (XS_weechat_api_hook_infolist)
     
     infolist_name = SvPV (ST (0), PL_na);
     description = SvPV (ST (1), PL_na);
-    function = SvPV (ST (2), PL_na);
-    data = SvPV (ST (3), PL_na);
+    pointer_description = SvPV (ST (2), PL_na);
+    args_description = SvPV (ST (3), PL_na);
+    function = SvPV (ST (4), PL_na);
+    data = SvPV (ST (5), PL_na);
     
     result = script_ptr2str (script_api_hook_infolist (weechat_perl_plugin,
                                                        perl_current_script,
                                                        infolist_name,
                                                        description,
+                                                       pointer_description,
+                                                       args_description,
                                                        &weechat_perl_api_hook_infolist_cb,
                                                        function,
                                                        data));

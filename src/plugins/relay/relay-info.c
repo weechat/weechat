@@ -92,5 +92,7 @@ relay_info_init ()
 {
     /* relay infolist hooks */
     weechat_hook_infolist ("relay", N_("list of relay clients"),
+                           N_("relay pointer (optional)"),
+                           NULL,
                            &relay_info_get_infolist_cb, NULL);
 }

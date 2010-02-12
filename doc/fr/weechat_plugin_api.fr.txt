@@ -6142,6 +6142,7 @@ Prototype :
 ----------------------------------------
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
+                                  const char *args_description,
                                   const char *(*callback)(void *data,
                                                           const char *info_name,
                                                           const char *arguments),
@@ -6152,6 +6153,7 @@ Paramètres :
 
 * 'info_name' : nom de l'information
 * 'description' : description
+* 'args_description' : description des paramètres (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres :
 ** 'void *data' : pointeur
 ** 'const char *info_name' : nom de l'information
@@ -6178,6 +6180,7 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 /* ajoute l'information "mon_info" */
 struct t_hook *my_info_hook = weechat_hook_info ("mon_info",
                                                  "Une information",
+                                                 "Info sur les paramètres",
                                                  &my_info_cb, NULL);
 ----------------------------------------
 
@@ -6186,19 +6189,22 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_info(info_name, description, callback, callback_data)
+hook = weechat.hook_info(info_name, description, args_description,
+                         callback, callback_data)
 
 # exemple
 def my_info_cb(data, info_name, arguments):
     return "some_info"
 
-hook = weechat.hook_info("mon_info", "Une information", "my_info_cb", "")
+hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètres",
+                         "my_info_cb", "")
 ----------------------------------------
 
 weechat_hook_infolist
 ^^^^^^^^^^^^^^^^^^^^^
 
-Accroche une infolist.
+Accroche une infolist : le "callback" retournera un pointeur vers l'infolist
+demandée.
 
 Prototype :
 
@@ -6206,6 +6212,8 @@ Prototype :
 ----------------------------------------
 struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
+                                      const char *pointer_description,
+                                      const char *args_description,
                                       const char *(*callback)(void *data,
                                                               const char *infolist_name,
                                                               void *pointer,
@@ -6217,6 +6225,8 @@ Paramètres :
 
 * 'infolist_name' : nom de l'infolist
 * 'description' : description
+* 'pointer_description' : description du pointeur (optionnel, peut être NULL)
+* 'args_description' : description des paramètres (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'infolist est demandée, paramètres :
 ** 'void *data' : pointeur
 ** 'const char *infolist_name' : nom de l'infolist
@@ -6249,6 +6259,8 @@ my_infolist_cb (void *data, const char *infolist_name, void *pointer,
 /* ajoute l'infolist "mon_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("mon_infolist",
                                                     "Mon infolist",
+                                                    "Info sur le pointeur",
+                                                    "Info sur les paramètres",
                                                     &my_infolist_cb, NULL);
 ----------------------------------------
 
@@ -6257,7 +6269,8 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_infolist(infolist_name, description, callback, callback_data)
+hook = weechat.hook_infolist(infolist_name, description, pointer_description,
+                             args_description, callback, callback_data)
 
 # exemple
 def my_infolist_cb(data, infolist_name, pointer, arguments):
@@ -6265,7 +6278,9 @@ def my_infolist_cb(data, infolist_name, pointer, arguments):
     # ...
     return my_infolist
 
-hook = weechat.hook_infolist("mon_infolist", "Mon infolist", "my_infolist_cb", "")
+hook = weechat.hook_infolist("mon_infolist", "Mon infolist",
+                             "Info sur le pointeur", "Info sur les paramètres",
+                             "my_infolist_cb", "")
 ----------------------------------------
 
 weechat_unhook
@@ -6896,7 +6911,7 @@ Paramètres :
   pas utilisé) +
   priorité : ajouter ce tampon dans la hotlist avec cette priorité
 
-| unread | (sans objet) |
+| unread | - |
   définit le marqueur de données non lues après la dernière ligne du tampon
 
 | display | "1", "auto" |
@@ -6953,7 +6968,7 @@ Paramètres :
   associe la nouvelle touche 'xxx', spécifique à ce tampon, la valeur est la
   commande à exécuter pour cette touche
 
-| key_unbind_xxx | (sans objet) |
+| key_unbind_xxx | - |
   supprime la touche 'xxx' pour ce tampon
 
 | input | toute chaîne |
@@ -6972,7 +6987,7 @@ Paramètres :
   change la valeur de la variable locale 'xxx' (la variable est créée si elle
   n'existe pas)
 
-| localvar_del_xxx | N/A |
+| localvar_del_xxx | - |
   supprime la variable locale 'xxx'
 |========================================
 

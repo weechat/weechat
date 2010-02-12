@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-10 10:33+0100\n"
+"POT-Creation-Date: 2010-02-12 16:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2465,6 +2465,13 @@ msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 msgid "list of aliases"
 msgstr "seznam aliasů"
 
+#, fuzzy
+msgid "alias pointer (optional)"
+msgstr "seznam konfiguračních možností"
+
+msgid "alias name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, c-format
 msgid "%s: \"%s\" removed"
 msgstr "%s: \"%s\" odebrán"
@@ -4342,30 +4349,68 @@ msgstr[2] "kanálů"
 msgid "1 if string is an IRC channel"
 msgstr "1 pokud je řetězec IRC kanál"
 
+#, fuzzy
+msgid "channel name"
+msgstr "kanál mód"
+
 msgid "get current nick on a server"
 msgstr "získat aktuální přezdívku na serveru"
 
+#, fuzzy
+msgid "server name"
+msgstr "cíl: server jméno"
+
 msgid "get nick from IRC host"
 msgstr "získat přezdívku od IRC hosta"
+
+msgid "IRC host (like `:nick!name@server.com`)"
+msgstr ""
 
 #, fuzzy
 msgid "get nick color"
 msgstr "barva textu"
 
-msgid "get buffer pointer for an IRC server/channel"
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] přezdívka"
+
+#, fuzzy
+msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "získat ukazatel bufferu od IRC serveru/kanálu"
+
+msgid "server,channel,nick (channel and nicks are optional)"
+msgstr ""
 
 msgid "list of IRC servers"
 msgstr "seznam IRC serverů"
 
+#, fuzzy
+msgid "server pointer (optional)"
+msgstr "IRC servery (vnitřní jména)"
+
+msgid "server name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of channels for an IRC server"
 msgstr "seznam kanálů pro IRC server"
+
+msgid "channel pointer (optional)"
+msgstr ""
 
 msgid "list of nicks for an IRC channel"
 msgstr "seznam uživatelů pro IRC kanál"
 
+msgid "nick pointer (optional)"
+msgstr ""
+
+msgid "server,channel,nick (channel and nick are optional)"
+msgstr ""
+
 msgid "list of IRC ignores"
 msgstr "seznam pro IRC ignorování"
+
+msgid "ignore pointer (optional)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -5080,6 +5125,10 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "seznam logovacích bufferů"
 
+#, fuzzy
+msgid "logger pointer (optional)"
+msgstr "konfigurace logovacího pluginu"
+
 msgid "WeeChat version"
 msgstr "verze WeeChat"
 
@@ -5126,26 +5175,60 @@ msgstr "1 pokud jsou filtry povoleny"
 msgid "list of bars"
 msgstr "seznam polí"
 
+msgid "bar pointer (optional)"
+msgstr ""
+
+msgid "bar name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of bar items"
 msgstr "seznam položek polí"
+
+msgid "bar item pointer (optional)"
+msgstr ""
+
+msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "list of bar windows"
 msgstr "seznam oken polí"
 
+msgid "bar window pointer (optional)"
+msgstr ""
+
 msgid "list of buffers"
 msgstr "seznam bufferů"
+
+msgid "buffer pointer (optional)"
+msgstr ""
+
+msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "lines of a buffer"
 msgstr "řádků bufferu"
 
+#, fuzzy
+msgid "buffer pointer"
+msgstr "nastavit vlastnost bufferu"
+
 msgid "list of filters"
 msgstr "seznam filtrů"
+
+msgid "filter name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "history of commands"
 msgstr "historie příkazů"
 
+msgid "buffer pointer (if not set, return global history) (optional)"
+msgstr ""
+
 msgid "list of hooks"
 msgstr "seznam napojení"
+
+msgid "hook type: command, timer, .. (optional)"
+msgstr ""
 
 msgid "list of buffers in hotlist"
 msgstr "seznam bufferů v hotlistu"
@@ -5156,14 +5239,32 @@ msgstr "seznam napojení kláves"
 msgid "nicks in nicklist for a buffer"
 msgstr "přezdívky v seznamu přezdívek bufferu"
 
+msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
+msgstr ""
+
 msgid "list of options"
 msgstr "seznam konfiguračních možností"
+
+msgid "option name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "list of plugins"
 msgstr "seznam pluginů"
 
+msgid "plugin pointer (optional)"
+msgstr ""
+
+msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of windows"
 msgstr "seznam oken"
+
+msgid "window pointer (optional)"
+msgstr ""
+
+msgid "window name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5387,6 +5488,10 @@ msgstr ""
 msgid "list of relay clients"
 msgstr "seznam klientů přesměrování"
 
+#, fuzzy
+msgid "relay pointer (optional)"
+msgstr "ovládání přesměrování"
+
 #, c-format
 msgid "%s%s: error sending data to client %s"
 msgstr "%s%s: chyba při zasílání dat na klienta %s"
@@ -5591,6 +5696,12 @@ msgstr ""
 
 msgid "list of scripts"
 msgstr "seznam skriptů"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -5959,6 +6070,10 @@ msgstr "automaticky akceptovat požadavek o rozhovor (používejte opatrně!)"
 msgid "list of xfer"
 msgstr "seznam xfer"
 
+#, fuzzy
+msgid "xfer pointer (optional)"
+msgstr "ovládání xfer"
+
 #, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s%s: nemohu vytvořit rouru"
@@ -6002,6 +6117,25 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+msgid "Plugin"
+msgstr ""
+
+#, fuzzy
+msgid "Name"
+msgstr "jméno"
+
+#, fuzzy
+msgid "Description"
+msgstr "popis"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "[info [argumenty]]"
+
+#, fuzzy
+msgid "Pointer"
+msgstr "celé číslo"
 
 #~ msgid "[-o]"
 #~ msgstr "[-o]"

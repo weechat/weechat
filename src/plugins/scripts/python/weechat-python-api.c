@@ -3838,7 +3838,7 @@ weechat_python_api_hook_info_cb (void *data, const char *info_name,
 static PyObject *
 weechat_python_api_hook_info (PyObject *self, PyObject *args)
 {
-    char *info_name, *description, *function, *data, *result;
+    char *info_name, *description, *args_description, *function, *data, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3852,11 +3852,12 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
     
     info_name = NULL;
     description = NULL;
+    args_description = NULL;
     function = NULL;
     data = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssss", &info_name, &description, &function,
-                           &data))
+    if (!PyArg_ParseTuple (args, "sssss", &info_name, &description,
+                           &args_description, &function, &data))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hook_info");
         PYTHON_RETURN_EMPTY;
@@ -3866,6 +3867,7 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
                                                   python_current_script,
                                                   info_name,
                                                   description,
+                                                  args_description,
                                                   &weechat_python_api_hook_info_cb,
                                                   function,
                                                   data));
@@ -3916,7 +3918,8 @@ weechat_python_api_hook_infolist_cb (void *data, const char *infolist_name,
 static PyObject *
 weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
 {
-    char *infolist_name, *description, *function, *data, *result;
+    char *infolist_name, *description, *pointer_description, *args_description;
+    char *function, *data, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3930,11 +3933,14 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
     
     infolist_name = NULL;
     description = NULL;
+    pointer_description = NULL;
+    args_description = NULL;
     function = NULL;
     data = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssss", &infolist_name, &description,
-                           &function, &data))
+    if (!PyArg_ParseTuple (args, "ssssss", &infolist_name, &description,
+                           &pointer_description, &args_description, &function,
+                           &data))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hook_infolist");
         PYTHON_RETURN_EMPTY;
@@ -3944,6 +3950,8 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
                                                       python_current_script,
                                                       infolist_name,
                                                       description,
+                                                      pointer_description,
+                                                      args_description,
                                                       &weechat_python_api_hook_infolist_cb,
                                                       function,
                                                       data));

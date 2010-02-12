@@ -100,6 +100,9 @@ my @ignore_completions_items = ("docgen.*",
                                 "jabber.*",
                                 "weeget.*");
 
+# for gettext
+my $d;
+
 # -------------------------------[ init ]--------------------------------------
 
 weechat::register("docgen", "FlashCode <flashcode\@flashtux.org>", $version,
@@ -113,6 +116,12 @@ weechat::config_set_plugin("path", $default_path)
     if (weechat::config_get_plugin("path") eq "");
 
 # -----------------------------------------------------------------------------
+
+# gettext
+sub weechat_gettext
+{
+    return $d->get($_[0]);
+}
 
 # get list of commands in a hash with 3 indexes: plugin, command, xxx
 sub get_commands
@@ -202,6 +211,7 @@ sub get_infos
         if ($ignore ne 1)
         {
             $infos{$plugin}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+            $infos{$plugin}{$info_name}{"args_description"} = weechat::infolist_string($infolist, "args_description");
         }
     }
     weechat::infolist_free($infolist);
@@ -232,6 +242,8 @@ sub get_infolists
         if ($ignore ne 1)
         {
             $infolists{$plugin}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
+            $infolists{$plugin}{$infolist_name}{"pointer_description"} = weechat::infolist_string($infolist, "pointer_description");
+            $infolists{$plugin}{$infolist_name}{"args_description"} = weechat::infolist_string($infolist, "args_description");
         }
     }
     weechat::infolist_free($infolist);
@@ -326,7 +338,7 @@ sub docgen
         my $num_files_completions_updated = 0;
         
         setlocale(LC_MESSAGES, $locale.".UTF-8");
-        my $d = Locale::gettext->domain_raw("weechat");
+        $d = Locale::gettext->domain_raw("weechat");
         $d->codeset("UTF-8");
         $d->dir(weechat::info_get("weechat_localedir", ""));
         
@@ -425,21 +437,21 @@ sub docgen
                             }
                             if ($type eq "string")
                             {
-                                $values = $d->get("any string") if ($max <= 0);
-                                $values = $d->get("any char") if ($max == 1);
-                                $values = $d->get("any string")." (".$d->get("max chars").": ".$max.")" if ($max > 1);
+                                $values = weechat_gettext("any string") if ($max <= 0);
+                                $values = weechat_gettext("any char") if ($max == 1);
+                                $values = weechat_gettext("any string")." (".weechat_gettext("max chars").": ".$max.")" if ($max > 1);
                                 $default_value = "\"".escape_string($default_value)."\"";
                             }
                             if ($type eq "color")
                             {
-                                $values = $d->get("a color name");
+                                $values = weechat_gettext("a color name");
                             }
                             
                             print FILE "* *".$config.".".$section.".".$option."*\n";
-                            print FILE "** ".$d->get("description").": ".$description."\n";
-                            print FILE "** ".$d->get("type").": ".$type_nls."\n";
-                            print FILE "** ".$d->get("values").": ".$values." "
-                                ."(".$d->get("default value").": ".$default_value.")\n\n";
+                            print FILE "** ".weechat_gettext("description").": ".$description."\n";
+                            print FILE "** ".weechat_gettext("type").": ".$type_nls."\n";
+                            print FILE "** ".weechat_gettext("values").": ".$values." "
+                                ."(".weechat_gettext("default value").": ".$default_value.")\n\n";
                         }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
@@ -468,18 +480,22 @@ sub docgen
             $filename = $dir."plugin_api/infos.txt";
             if (open(FILE, ">".$filename.".tmp"))
             {
-                print FILE "[width=\"65%\",cols=\"^1,^2,8\",options=\"header\"]\n";
+                print FILE "[width=\"100%\",cols=\"^1,^2,6,6\",options=\"header\"]\n";
                 print FILE "|========================================\n";
-                print FILE "| ".$d->get("Plugin")." | ".$d->get("Name")." | ".$d->get("Description")."\n";
+                print FILE "| ".weechat_gettext("Plugin")." | ".weechat_gettext("Name")
+                    ." | ".weechat_gettext("Description")." | ".weechat_gettext("Arguments")."\n\n";
                 foreach my $plugin (sort keys %plugin_infos)
                 {
                     foreach my $info (sort keys %{$plugin_infos{$plugin}})
                     {
                         my $description = $plugin_infos{$plugin}{$info}{"description"};
                         $description = $d->get($description) if ($description ne "");
+                        my $args_description = $plugin_infos{$plugin}{$info}{"args_description"};
+                        $args_description = $d->get($args_description) if ($args_description ne "");
+                        $args_description = "-" if ($args_description eq "");
                         
                         print FILE "| ".escape_table($plugin)." | ".escape_table($info)
-                            ." | ".escape_table($description)."\n\n";
+                            ." | ".escape_table($description)." | ".escape_table($args_description)."\n\n";
                     }
                 }
                 print FILE "|========================================\n";
@@ -508,18 +524,27 @@ sub docgen
             $filename = $dir."plugin_api/infolists.txt";
             if (open(FILE, ">".$filename.".tmp"))
             {
-                print FILE "[width=\"65%\",cols=\"^1,^2,8\",options=\"header\"]\n";
+                print FILE "[width=\"100%\",cols=\"^1,^2,5,5,5\",options=\"header\"]\n";
                 print FILE "|========================================\n";
-                print FILE "| ".$d->get("Plugin")." | ".$d->get("Name")." | ".$d->get("Description")."\n";
+                print FILE "| ".weechat_gettext("Plugin")." | ".weechat_gettext("Name")
+                    ." | ".weechat_gettext("Description")." | ".weechat_gettext("Pointer")
+                    ." | ".weechat_gettext("Arguments")."\n\n";
                 foreach my $plugin (sort keys %plugin_infolists)
                 {
                     foreach my $infolist (sort keys %{$plugin_infolists{$plugin}})
                     {
                         my $description = $plugin_infolists{$plugin}{$infolist}{"description"};
                         $description = $d->get($description) if ($description ne "");
+                        my $pointer_description = $plugin_infolists{$plugin}{$infolist}{"pointer_description"};
+                        $pointer_description = $d->get($pointer_description) if ($pointer_description ne "");
+                        $pointer_description = "-" if ($pointer_description eq "");
+                        my $args_description = $plugin_infolists{$plugin}{$infolist}{"args_description"};
+                        $args_description = $d->get($args_description) if ($args_description ne "");
+                        $args_description = "-" if ($args_description eq "");
                         
                         print FILE "| ".escape_table($plugin)." | ".escape_table($infolist)
-                            ." | ".escape_table($description)."\n\n";
+                            ." | ".escape_table($description)." | ".escape_table($pointer_description)
+                            ." | ".escape_table($args_description)."\n\n";
                     }
                 }
                 print FILE "|========================================\n";
@@ -550,7 +575,8 @@ sub docgen
             {
                 print FILE "[width=\"65%\",cols=\"^1,^2,8\",options=\"header\"]\n";
                 print FILE "|========================================\n";
-                print FILE "| ".$d->get("Plugin")." | ".$d->get("Name")." | ".$d->get("Description")."\n";
+                print FILE "| ".weechat_gettext("Plugin")." | ".weechat_gettext("Name")
+                    ." | ".weechat_gettext("Description")."\n\n";
                 foreach my $plugin (sort keys %plugin_completions)
                 {
                     foreach my $completion_item (sort keys %{$plugin_completions{$plugin}})

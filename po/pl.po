@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-10 11:23+0100\n"
+"POT-Creation-Date: 2010-02-12 16:45+0100\n"
 "PO-Revision-Date: 2010-02-09 15:52+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -2516,6 +2516,13 @@ msgstr "nazwa_aliasu: nazwa aliasu do usunięcia"
 msgid "list of aliases"
 msgstr "lista aliasów"
 
+#, fuzzy
+msgid "alias pointer (optional)"
+msgstr "lista opcji"
+
+msgid "alias name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, c-format
 msgid "%s: \"%s\" removed"
 msgstr "%s: \"%s\" usunięty"
@@ -4432,29 +4439,67 @@ msgstr[2] "kanałów"
 msgid "1 if string is an IRC channel"
 msgstr "1 jeśli ciąg jest w kanale IRC"
 
+#, fuzzy
+msgid "channel name"
+msgstr "kanał atrybuty"
+
 msgid "get current nick on a server"
 msgstr "pobiera aktualny nick z serwera"
+
+#, fuzzy
+msgid "server name"
+msgstr "cel: nazwa srwera"
 
 msgid "get nick from IRC host"
 msgstr "pobiera nick z hosta IRC"
 
+msgid "IRC host (like `:nick!name@server.com`)"
+msgstr ""
+
 msgid "get nick color"
 msgstr "pobiera kolor nicka"
 
-msgid "get buffer pointer for an IRC server/channel"
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] nick"
+
+#, fuzzy
+msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "pobiera wskaźnik bufora kanału/serwera IRC"
+
+msgid "server,channel,nick (channel and nicks are optional)"
+msgstr ""
 
 msgid "list of IRC servers"
 msgstr "lista serwerów IRC"
 
+#, fuzzy
+msgid "server pointer (optional)"
+msgstr "serwery IRC (nazwy wewnętrzne)"
+
+msgid "server name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of channels for an IRC server"
 msgstr "lista kanałów IRC"
+
+msgid "channel pointer (optional)"
+msgstr ""
 
 msgid "list of nicks for an IRC channel"
 msgstr "lista nicków na kanale IRC"
 
+msgid "nick pointer (optional)"
+msgstr ""
+
+msgid "server,channel,nick (channel and nick are optional)"
+msgstr ""
+
 msgid "list of IRC ignores"
 msgstr "lista ignorów IRC"
+
+msgid "ignore pointer (optional)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -5165,6 +5210,10 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "lista logowanych buforów"
 
+#, fuzzy
+msgid "logger pointer (optional)"
+msgstr "konfiguracja pluginu logera"
+
 msgid "WeeChat version"
 msgstr "wersja WeeChat"
 
@@ -5211,26 +5260,60 @@ msgstr "1 jeśli filtry są aktywne"
 msgid "list of bars"
 msgstr "lista pasków"
 
+msgid "bar pointer (optional)"
+msgstr ""
+
+msgid "bar name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of bar items"
 msgstr "lista elementów pasków"
+
+msgid "bar item pointer (optional)"
+msgstr ""
+
+msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "list of bar windows"
 msgstr "lista pasków okien"
 
+msgid "bar window pointer (optional)"
+msgstr ""
+
 msgid "list of buffers"
 msgstr "lista buforów"
+
+msgid "buffer pointer (optional)"
+msgstr ""
+
+msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "lines of a buffer"
 msgstr "linie w buforze"
 
+#, fuzzy
+msgid "buffer pointer"
+msgstr "ustaw właściwośc bufora"
+
 msgid "list of filters"
 msgstr "lista filtrów"
+
+msgid "filter name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "history of commands"
 msgstr "historia komend"
 
+msgid "buffer pointer (if not set, return global history) (optional)"
+msgstr ""
+
 msgid "list of hooks"
 msgstr "lista powiązań"
+
+msgid "hook type: command, timer, .. (optional)"
+msgstr ""
 
 msgid "list of buffers in hotlist"
 msgstr "lista buforów w hotliście"
@@ -5241,14 +5324,32 @@ msgstr "lista skrótów klawiszowych"
 msgid "nicks in nicklist for a buffer"
 msgstr "licki na liście nicków bufora"
 
+msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
+msgstr ""
+
 msgid "list of options"
 msgstr "lista opcji"
+
+msgid "option name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 msgid "list of plugins"
 msgstr "lista wtyczek"
 
+msgid "plugin pointer (optional)"
+msgstr ""
+
+msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 msgid "list of windows"
 msgstr "lista okien"
+
+msgid "window pointer (optional)"
+msgstr ""
+
+msgid "window name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5482,6 +5583,10 @@ msgstr "maksymalna ilość klientów łączących się na port"
 msgid "list of relay clients"
 msgstr "lista zdalnych klientów"
 
+#, fuzzy
+msgid "relay pointer (optional)"
+msgstr "zarządzanie przesyłaniem"
+
 #, c-format
 msgid "%s%s: error sending data to client %s"
 msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
@@ -5687,6 +5792,12 @@ msgstr ""
 
 msgid "list of scripts"
 msgstr "lista skryptów"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -6051,6 +6162,10 @@ msgstr "automatycznie akceptuj proźby o rozmowę (ostrożnie!)"
 msgid "list of xfer"
 msgstr "lista xfer"
 
+#, fuzzy
+msgid "xfer pointer (optional)"
+msgstr "kontrola xfer"
+
 #, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s%s: nie można utworzyć strumienia"
@@ -6094,6 +6209,25 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+msgid "Plugin"
+msgstr ""
+
+#, fuzzy
+msgid "Name"
+msgstr "nazwa"
+
+#, fuzzy
+msgid "Description"
+msgstr "opis"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "[argumenty]"
+
+#, fuzzy
+msgid "Pointer"
+msgstr "liczba"
 
 #~ msgid "[-o]"
 #~ msgstr "[-o]"

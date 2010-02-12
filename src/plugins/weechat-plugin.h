@@ -34,7 +34,7 @@ struct t_weelist;
 struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20100209-01"
+#define WEECHAT_PLUGIN_API_VERSION "20100212-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -462,6 +462,7 @@ struct t_weechat_plugin
     struct t_hook *(*hook_info) (struct t_weechat_plugin *plugin,
                                  const char *info_name,
                                  const char *description,
+                                 const char *args_description,
                                  const char *(*callback)(void *data,
                                                          const char *info_name,
                                                          const char *arguments),
@@ -469,6 +470,8 @@ struct t_weechat_plugin
     struct t_hook *(*hook_infolist) (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
                                      const char *description,
+                                     const char *pointer_description,
+                                     const char *args_description,
                                      struct t_infolist *(*callback)(void *data,
                                                                     const char *infolist_name,
                                                                     void *pointer,
@@ -1017,14 +1020,18 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                    __string)                            \
     weechat_plugin->hook_modifier_exec(weechat_plugin, __modifier,      \
                                        __modifier_data, __string)
-#define weechat_hook_info(__info_name, __description, __callback,       \
-                          __data)                                       \
+#define weechat_hook_info(__info_name, __description,                   \
+                          __args_description, __callback, __data)       \
     weechat_plugin->hook_info(weechat_plugin, __info_name,              \
-                              __description, __callback, __data)
+                              __description, __args_description,        \
+                              __callback, __data)
 #define weechat_hook_infolist(__infolist_name, __description,           \
-                              __callback, __data)                       \
+                              __pointer_description,                    \
+                              __args_description, __callback, __data)   \
     weechat_plugin->hook_infolist(weechat_plugin, __infolist_name,      \
-                                  __description, __callback, __data)
+                                  __description, __pointer_description, \
+                                  __args_description, __callback,       \
+                                  __data)
 #define weechat_unhook(__hook)                                          \
     weechat_plugin->unhook( __hook)
 #define weechat_unhook_all()                                            \

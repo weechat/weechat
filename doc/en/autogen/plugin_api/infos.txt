@@ -1,44 +1,45 @@
-[width="65%",cols="^1,^2,8",options="header"]
+[width="100%",cols="^1,^2,6,6",options="header"]
 |========================================
-| Plugin | Name | Description
-| fifo | fifo_filename | name of FIFO pipe
+| Plugin | Name | Description | Arguments
 
-| irc | irc_buffer | get buffer pointer for an IRC server/channel
+| fifo | fifo_filename | name of FIFO pipe | -
 
-| irc | irc_is_channel | 1 if string is an IRC channel
+| irc | irc_buffer | get buffer pointer for an IRC server/channel/nick | server,channel,nick (channel and nicks are optional)
 
-| irc | irc_nick | get current nick on a server
+| irc | irc_is_channel | 1 if string is an IRC channel | channel name
 
-| irc | irc_nick_color | get nick color
+| irc | irc_nick | get current nick on a server | server name
 
-| irc | irc_nick_from_host | get nick from IRC host
+| irc | irc_nick_color | get nick color | nickname
 
-| weechat | charset_internal | WeeChat internal charset
+| irc | irc_nick_from_host | get nick from IRC host | IRC host (like `:nick!name@server.com`)
 
-| weechat | charset_terminal | terminal charset
+| weechat | charset_internal | WeeChat internal charset | -
 
-| weechat | date | WeeChat compilation date
+| weechat | charset_terminal | terminal charset | -
 
-| weechat | dir_separator | directory separator
+| weechat | date | WeeChat compilation date | -
 
-| weechat | filters_enabled | 1 if filters are enabled
+| weechat | dir_separator | directory separator | -
 
-| weechat | inactivity | keyboard inactivity (seconds)
+| weechat | filters_enabled | 1 if filters are enabled | -
 
-| weechat | version | WeeChat version
+| weechat | inactivity | keyboard inactivity (seconds) | -
 
-| weechat | version_number | WeeChat version (as number)
+| weechat | version | WeeChat version | -
 
-| weechat | weechat_dir | WeeChat directory
+| weechat | version_number | WeeChat version (as number) | -
 
-| weechat | weechat_libdir | WeeChat "lib" directory
+| weechat | weechat_dir | WeeChat directory | -
 
-| weechat | weechat_localedir | WeeChat "locale" directory
+| weechat | weechat_libdir | WeeChat "lib" directory | -
 
-| weechat | weechat_sharedir | WeeChat "share" directory
+| weechat | weechat_localedir | WeeChat "locale" directory | -
 
-| weechat | weechat_site | WeeChat site
+| weechat | weechat_sharedir | WeeChat "share" directory | -
 
-| weechat | weechat_site_download | WeeChat site, download page
+| weechat | weechat_site | WeeChat site | -
+
+| weechat | weechat_site_download | WeeChat site, download page | -
 
 |========================================

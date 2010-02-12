@@ -91,7 +91,9 @@ logger_info_get_infolist_cb (void *data, const char *infolist_name,
 void
 logger_info_init ()
 {
-    /* irc infolist hooks */
+    /* logger infolist hooks */
     weechat_hook_infolist ("logger_buffer", N_("list of logger buffers"),
+                           N_("logger pointer (optional)"),
+                           NULL,
                            &logger_info_get_infolist_cb, NULL);
 }

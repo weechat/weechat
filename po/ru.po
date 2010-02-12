@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-10 10:33+0100\n"
+"POT-Creation-Date: 2010-02-12 16:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2418,6 +2418,13 @@ msgstr "сокращение: удаляемое сокращение"
 msgid "list of aliases"
 msgstr "Список сокращений:\n"
 
+#, fuzzy
+msgid "alias pointer (optional)"
+msgstr "настроить параметры конфигурации"
+
+msgid "alias name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s: \"%s\" removed"
 msgstr "Сокращение \"%s\" удалено\n"
@@ -4282,35 +4289,72 @@ msgid "1 if string is an IRC channel"
 msgstr "список ников на канале"
 
 #, fuzzy
+msgid "channel name"
+msgstr "%d канал"
+
+#, fuzzy
 msgid "get current nick on a server"
 msgstr "сменить текущий ник"
+
+#, fuzzy
+msgid "server name"
+msgstr "цель: название сервера"
 
 #, fuzzy
 msgid "get nick from IRC host"
 msgstr "банит ник или хост"
 
+msgid "IRC host (like `:nick!name@server.com`)"
+msgstr ""
+
 #, fuzzy
 msgid "get nick color"
 msgstr "цвет чата"
 
-msgid "get buffer pointer for an IRC server/channel"
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] ник"
+
+#, fuzzy
+msgid "get buffer pointer for an IRC server/channel/nick"
+msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+msgid "server,channel,nick (channel and nicks are optional)"
 msgstr ""
 
 #, fuzzy
 msgid "list of IRC servers"
 msgstr "порт IRC сервера"
 
+msgid "server pointer (optional)"
+msgstr ""
+
+msgid "server name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of channels for an IRC server"
 msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+msgid "channel pointer (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "список ников на канале"
 
+msgid "nick pointer (optional)"
+msgstr ""
+
+msgid "server,channel,nick (channel and nick are optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of IRC ignores"
 msgstr "порт IRC сервера"
+
+msgid "ignore pointer (optional)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -4972,6 +5016,10 @@ msgid "list of logger buffers"
 msgstr "время в буферах"
 
 #, fuzzy
+msgid "logger pointer (optional)"
+msgstr "Сохраняю конфигурацию\n"
+
+#, fuzzy
 msgid "WeeChat version"
 msgstr "слоган WeeChat"
 
@@ -5026,33 +5074,67 @@ msgstr "команда users отключена"
 msgid "list of bars"
 msgstr "Список сокращений:\n"
 
+msgid "bar pointer (optional)"
+msgstr ""
+
+msgid "bar name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of bar items"
 msgstr "Список сокращений:\n"
+
+msgid "bar item pointer (optional)"
+msgstr ""
+
+msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "list of bar windows"
 msgstr "Список игнорирования:\n"
 
+msgid "bar window pointer (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of buffers"
 msgstr "Список сокращений:\n"
+
+msgid "buffer pointer (optional)"
+msgstr ""
+
+msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "lines of a buffer"
 msgstr "загрузка буфера не удалась"
 
 #, fuzzy
+msgid "buffer pointer"
+msgstr "поиск текста в истории буфера"
+
+#, fuzzy
 msgid "list of filters"
 msgstr "Список сокращений:\n"
+
+msgid "filter name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "history of commands"
 msgstr "Внутренние команды %s:\n"
 
+msgid "buffer pointer (if not set, return global history) (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of hooks"
 msgstr "Список сокращений:\n"
+
+msgid "hook type: command, timer, .. (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "list of buffers in hotlist"
@@ -5066,17 +5148,35 @@ msgstr "Список игнорирования:\n"
 msgid "nicks in nicklist for a buffer"
 msgstr "некорректная длина буфера"
 
+msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of options"
 msgstr "настроить параметры конфигурации"
+
+msgid "option name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "list of plugins"
 msgstr "настроить параметры конфигурации"
 
+msgid "plugin pointer (optional)"
+msgstr ""
+
+msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
 #, fuzzy
 msgid "list of windows"
 msgstr "Список игнорирования:\n"
+
+msgid "window pointer (optional)"
+msgstr ""
+
+msgid "window name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5310,6 +5410,9 @@ msgstr ""
 msgid "list of relay clients"
 msgstr "Список сокращений:\n"
 
+msgid "relay pointer (optional)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: error sending data to client %s"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
@@ -5512,6 +5615,12 @@ msgstr ""
 #, fuzzy
 msgid "list of scripts"
 msgstr "Список сокращений:\n"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -5888,6 +5997,9 @@ msgstr "автоматически подтверждать dcc-чат (испо
 msgid "list of xfer"
 msgstr "Список сокращений:\n"
 
+msgid "xfer pointer (optional)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: не могу создать pipe\n"
@@ -5931,6 +6043,25 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (нет pluginа)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . описание: %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "адресат тип [аргументы]"
+
+#, fuzzy
+msgid "Pointer"
+msgstr "минута"
 
 #~ msgid "[-o]"
 #~ msgstr "[-o]"
@@ -6271,10 +6402,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr "выводить отладочные сообщения"
 
 #, fuzzy
-#~ msgid "get buffer pointer for a Jabber server/MUC"
-#~ msgstr "Список каналов, на которые заходить при соединении с сервером"
-
-#, fuzzy
 #~ msgid "list of Jabber servers"
 #~ msgstr "порт IRC сервера"
 
@@ -6440,10 +6567,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
 #~ msgid "  (used by a plugin)"
-#~ msgstr "  (нет pluginа)\n"
-
-#, fuzzy
-#~ msgid "plugin:"
 #~ msgstr "  (нет pluginа)\n"
 
 #, fuzzy

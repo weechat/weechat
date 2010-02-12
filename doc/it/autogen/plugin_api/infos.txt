@@ -1,44 +1,45 @@
-[width="65%",cols="^1,^2,8",options="header"]
+[width="100%",cols="^1,^2,6,6",options="header"]
 |========================================
-| Plugin | Name | Description
-| fifo | fifo_filename | nome della pipe FIFO
+| Plugin | Name | Description | Arguments
 
-| irc | irc_buffer | ottiene puntatore al buffer per un server/canale IRC
+| fifo | fifo_filename | nome della pipe FIFO | -
 
-| irc | irc_is_channel | 1 se la stringa è un canale IRC
+| irc | irc_buffer | get buffer pointer for an IRC server/channel/nick | server,channel,nick (channel and nicks are optional)
 
-| irc | irc_nick | ottiene nick corrente su un server
+| irc | irc_is_channel | 1 se la stringa è un canale IRC | channel name
 
-| irc | irc_nick_color | riceve colore del nick
+| irc | irc_nick | ottiene nick corrente su un server | server name
 
-| irc | irc_nick_from_host | ottiene nick dall'host IRC
+| irc | irc_nick_color | riceve colore del nick | nickname
 
-| weechat | charset_internal | set caratteri interno di WeeChat
+| irc | irc_nick_from_host | ottiene nick dall'host IRC | IRC host (like `:nick!name@server.com`)
 
-| weechat | charset_terminal | set caratteri terminale
+| weechat | charset_internal | set caratteri interno di WeeChat | -
 
-| weechat | date | data di compilazione di WeeChat
+| weechat | charset_terminal | set caratteri terminale | -
 
-| weechat | dir_separator | separatore cartella
+| weechat | date | data di compilazione di WeeChat | -
 
-| weechat | filters_enabled | 1 se i filtri sono abilitati
+| weechat | dir_separator | separatore cartella | -
 
-| weechat | inactivity | inattività della tastiera (secondi)
+| weechat | filters_enabled | 1 se i filtri sono abilitati | -
 
-| weechat | version | versione di WeeChat
+| weechat | inactivity | inattività della tastiera (secondi) | -
 
-| weechat | version_number | WeeChat version (as number)
+| weechat | version | versione di WeeChat | -
 
-| weechat | weechat_dir | cartella WeeChat
+| weechat | version_number | WeeChat version (as number) | -
 
-| weechat | weechat_libdir | cartella "lib" di WeeChat
+| weechat | weechat_dir | cartella WeeChat | -
 
-| weechat | weechat_localedir | cartella "locale" di WeeChat
+| weechat | weechat_libdir | cartella "lib" di WeeChat | -
 
-| weechat | weechat_sharedir | cartella "share" di WeeChat
+| weechat | weechat_localedir | cartella "locale" di WeeChat | -
 
-| weechat | weechat_site | sito di WeeChat
+| weechat | weechat_sharedir | cartella "share" di WeeChat | -
 
-| weechat | weechat_site_download | sito di WeeChat, pagina di download
+| weechat | weechat_site | sito di WeeChat | -
+
+| weechat | weechat_site_download | sito di WeeChat, pagina di download | -
 
 |========================================

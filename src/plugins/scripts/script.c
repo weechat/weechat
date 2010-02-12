@@ -278,6 +278,8 @@ script_init (struct t_weechat_plugin *weechat_plugin,
         weechat_hook_completion (string, N_("list of scripts"),
                                  callback_completion, NULL);
         weechat_hook_infolist (string, N_("list of scripts"),
+                               N_("script pointer (optional)"),
+                               N_("script name (can start or end with \"*\" as joker) (optional)"),
                                callback_infolist, NULL);
         free (string);
     }

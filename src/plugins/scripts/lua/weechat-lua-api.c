@@ -4291,7 +4291,7 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_info (lua_State *L)
 {
-    const char *info_name, *description, *function, *data;
+    const char *info_name, *description, *args_description, *function, *data;
     char *result;
     int n;
     
@@ -4305,19 +4305,22 @@ weechat_lua_api_hook_info (lua_State *L)
     }
     
     info_name = NULL;
+    description = NULL;
+    args_description = NULL;
     function = NULL;
     data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 4)
+    if (n < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_info");
         LUA_RETURN_EMPTY;
     }
     
-    info_name = lua_tostring (lua_current_interpreter, -4);
-    description = lua_tostring (lua_current_interpreter, -3);
+    info_name = lua_tostring (lua_current_interpreter, -5);
+    description = lua_tostring (lua_current_interpreter, -4);
+    args_description = lua_tostring (lua_current_interpreter, -3);
     function = lua_tostring (lua_current_interpreter, -2);
     data = lua_tostring (lua_current_interpreter, -1);
     
@@ -4325,6 +4328,7 @@ weechat_lua_api_hook_info (lua_State *L)
                                                    lua_current_script,
                                                    info_name,
                                                    description,
+                                                   args_description,
                                                    &weechat_lua_api_hook_info_cb,
                                                    function,
                                                    data));
@@ -4375,7 +4379,8 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_infolist (lua_State *L)
 {
-    const char *infolist_name, *description, *function, *data;
+    const char *infolist_name, *description, *pointer_description;
+    const char *args_description, *function, *data;
     char *result;
     int n;
     
@@ -4389,19 +4394,24 @@ weechat_lua_api_hook_infolist (lua_State *L)
     }
     
     infolist_name = NULL;
+    description = NULL;
+    pointer_description = NULL;
+    args_description = NULL;
     function = NULL;
     data = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 4)
+    if (n < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_infolist");
         LUA_RETURN_EMPTY;
     }
     
-    infolist_name = lua_tostring (lua_current_interpreter, -4);
-    description = lua_tostring (lua_current_interpreter, -3);
+    infolist_name = lua_tostring (lua_current_interpreter, -6);
+    description = lua_tostring (lua_current_interpreter, -5);
+    pointer_description = lua_tostring (lua_current_interpreter, -4);
+    args_description = lua_tostring (lua_current_interpreter, -3);
     function = lua_tostring (lua_current_interpreter, -2);
     data = lua_tostring (lua_current_interpreter, -1);
     
@@ -4409,6 +4419,8 @@ weechat_lua_api_hook_infolist (lua_State *L)
                                                        lua_current_script,
                                                        infolist_name,
                                                        description,
+                                                       pointer_description,
+                                                       args_description,
                                                        &weechat_lua_api_hook_infolist_cb,
                                                        function,
                                                        data));

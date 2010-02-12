@@ -1,6 +1,7 @@
 [width="65%",cols="^1,^2,8",options="header"]
 |========================================
-| Plugin | Name | Description
+| Extension | Nom | Description
+
 | alias | alias | liste des alias
 
 | aspell | aspell_langs | liste des langues supportées pour aspell

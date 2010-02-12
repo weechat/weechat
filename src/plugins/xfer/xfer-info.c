@@ -91,5 +91,7 @@ xfer_info_init ()
 {
     /* xfer infolist hooks */
     weechat_hook_infolist ("xfer", N_("list of xfer"),
+                           N_("xfer pointer (optional)"),
+                           NULL,
                            &xfer_info_get_infolist_cb, NULL);
 }

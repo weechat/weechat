@@ -395,23 +395,36 @@ irc_info_init ()
 {
     /* info hooks */
     weechat_hook_info ("irc_is_channel", N_("1 if string is an IRC channel"),
+                       N_("channel name"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick", N_("get current nick on a server"),
+                       N_("server name"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
+                       N_("IRC host (like `:nick!name@server.com`)"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_nick_color", N_("get nick color"),
+                       N_("nickname"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel"),
+    weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel/nick"),
+                       N_("server,channel,nick (channel and nicks are optional)"),
                        &irc_info_get_info_cb, NULL);
     
     /* infolist hooks */
     weechat_hook_infolist ("irc_server", N_("list of IRC servers"),
+                           N_("server pointer (optional)"),
+                           N_("server name (can start or end with \"*\" as joker) (optional)"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),
+                           N_("channel pointer (optional)"),
+                           N_("server name"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_nick", N_("list of nicks for an IRC channel"),
+                           N_("nick pointer (optional)"),
+                           N_("server,channel,nick (channel and nick are optional)"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_ignore", N_("list of IRC ignores"),
+                           N_("ignore pointer (optional)"),
+                           NULL,
                            &irc_info_get_infolist_cb, NULL);
 }

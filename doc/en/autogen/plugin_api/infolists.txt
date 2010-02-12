@@ -1,58 +1,59 @@
-[width="65%",cols="^1,^2,8",options="header"]
+[width="100%",cols="^1,^2,5,5,5",options="header"]
 |========================================
-| Plugin | Name | Description
-| alias | alias | list of aliases
+| Plugin | Name | Description | Pointer | Arguments
 
-| irc | irc_channel | list of channels for an IRC server
+| alias | alias | list of aliases | alias pointer (optional) | alias name (can start or end with "*" as joker) (optional)
 
-| irc | irc_ignore | list of IRC ignores
+| irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server name
 
-| irc | irc_nick | list of nicks for an IRC channel
+| irc | irc_ignore | list of IRC ignores | ignore pointer (optional) | -
 
-| irc | irc_server | list of IRC servers
+| irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (channel and nick are optional)
 
-| logger | logger_buffer | list of logger buffers
+| irc | irc_server | list of IRC servers | server pointer (optional) | server name (can start or end with "*" as joker) (optional)
 
-| lua | lua_script | list of scripts
+| logger | logger_buffer | list of logger buffers | logger pointer (optional) | -
 
-| perl | perl_script | list of scripts
+| lua | lua_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
 
-| python | python_script | list of scripts
+| perl | perl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
 
-| relay | relay | list of relay clients
+| python | python_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
 
-| ruby | ruby_script | list of scripts
+| relay | relay | list of relay clients | relay pointer (optional) | -
 
-| tcl | tcl_script | list of scripts
+| ruby | ruby_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
 
-| weechat | bar | list of bars
+| tcl | tcl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
 
-| weechat | bar_item | list of bar items
+| weechat | bar | list of bars | bar pointer (optional) | bar name (can start or end with "*" as joker) (optional)
 
-| weechat | bar_window | list of bar windows
+| weechat | bar_item | list of bar items | bar item pointer (optional) | bar item name (can start or end with "*" as joker) (optional)
 
-| weechat | buffer | list of buffers
+| weechat | bar_window | list of bar windows | bar window pointer (optional) | -
 
-| weechat | buffer_lines | lines of a buffer
+| weechat | buffer | list of buffers | buffer pointer (optional) | buffer name (can start or end with "*" as joker) (optional)
 
-| weechat | filter | list of filters
+| weechat | buffer_lines | lines of a buffer | buffer pointer | -
 
-| weechat | history | history of commands
+| weechat | filter | list of filters | - | filter name (can start or end with "*" as joker) (optional)
 
-| weechat | hook | list of hooks
+| weechat | history | history of commands | buffer pointer (if not set, return global history) (optional) | -
 
-| weechat | hotlist | list of buffers in hotlist
+| weechat | hook | list of hooks | - | hook type: command, timer, .. (optional)
 
-| weechat | key | list of key bindings
+| weechat | hotlist | list of buffers in hotlist | - | -
 
-| weechat | nicklist | nicks in nicklist for a buffer
+| weechat | key | list of key bindings | - | -
 
-| weechat | option | list of options
+| weechat | nicklist | nicks in nicklist for a buffer | buffer pointer | nick_xxx or group_xxx to get only nick/group xxx (optional)
 
-| weechat | plugin | list of plugins
+| weechat | option | list of options | - | option name (can start or end with "*" as joker) (optional)
 
-| weechat | window | list of windows
+| weechat | plugin | list of plugins | plugin pointer (optional) | plugin name (can start or end with "*" as joker) (optional)
 
-| xfer | xfer | list of xfer
+| weechat | window | list of windows | window pointer (optional) | window name (can start or end with "*" as joker) (optional)
+
+| xfer | xfer | list of xfer | xfer pointer (optional) | -
 
 |========================================

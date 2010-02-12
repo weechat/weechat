@@ -4110,7 +4110,7 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
                            int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result, *info_name, *description, *function, *data;
+    char *result, *info_name, *description, *args_description, *function, *data;
     int i;
     
     /* make C compiler happy */
@@ -4122,7 +4122,7 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    if (objc < 5)
+    if (objc < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_info");
         TCL_RETURN_EMPTY;
@@ -4130,13 +4130,15 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
     
     info_name = Tcl_GetStringFromObj (objv[1], &i);
     description = Tcl_GetStringFromObj (objv[2], &i);
-    function = Tcl_GetStringFromObj (objv[3], &i);
-    data = Tcl_GetStringFromObj (objv[4], &i);
+    args_description = Tcl_GetStringFromObj (objv[3], &i);
+    function = Tcl_GetStringFromObj (objv[4], &i);
+    data = Tcl_GetStringFromObj (objv[5], &i);
     
     result = script_ptr2str (script_api_hook_info (weechat_tcl_plugin,
                                                    tcl_current_script,
                                                    info_name,
                                                    description,
+                                                   args_description,
                                                    &weechat_tcl_api_hook_info_cb,
                                                    function,
                                                    data));
@@ -4189,7 +4191,8 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
                                int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *result, *infolist_name, *description, *function, *data;
+    char *result, *infolist_name, *description, *pointer_description;
+    char *args_description, *function, *data;
     int i;
     
     /* make C compiler happy */
@@ -4201,7 +4204,7 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    if (objc < 5)
+    if (objc < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_infolist");
         TCL_RETURN_EMPTY;
@@ -4209,13 +4212,17 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
     
     infolist_name = Tcl_GetStringFromObj (objv[1], &i);
     description = Tcl_GetStringFromObj (objv[2], &i);
-    function = Tcl_GetStringFromObj (objv[3], &i);
-    data = Tcl_GetStringFromObj (objv[4], &i);
+    pointer_description = Tcl_GetStringFromObj (objv[3], &i);
+    args_description = Tcl_GetStringFromObj (objv[4], &i);
+    function = Tcl_GetStringFromObj (objv[5], &i);
+    data = Tcl_GetStringFromObj (objv[6], &i);
     
     result = script_ptr2str (script_api_hook_infolist (weechat_tcl_plugin,
                                                        tcl_current_script,
                                                        infolist_name,
                                                        description,
+                                                       pointer_description,
+                                                       args_description,
                                                        &weechat_tcl_api_hook_infolist_cb,
                                                        function,
                                                        data));

@@ -4887,7 +4887,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Arguments:
 
-* 'command': command to hook, may start or end with "*" as joker
+* 'command': command to hook, can start or end with "*" as joker
 * 'callback': function called when command is run, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
@@ -6056,6 +6056,7 @@ Prototype:
 ----------------------------------------
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
+                                  const char *args_description,
                                   const char *(*callback)(void *data,
                                                           const char *info_name,
                                                           const char *arguments),
@@ -6066,6 +6067,7 @@ Arguments:
 
 * 'info_name': name of info
 * 'description': description
+* 'args_description': description of arguments (optional, can be NULL)
 * 'callback': function called when info is asked, arguments:
 ** 'void *data': pointer
 ** 'const char *info_name': name of info
@@ -6089,8 +6091,9 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 
 /* add info "my_info" */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
-                                            "Some info",
-                                            &my_info_cb, NULL);
+                                                 "Some info",
+                                                 "Info about arguments",
+                                                 &my_info_cb, NULL);
 ----------------------------------------
 
 Script (Python):
@@ -6098,13 +6101,14 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_info(info_name, description, callback, callback_data)
+hook = weechat.hook_info(info_name, description, args_description, callback, callback_data)
 
 # example
 def my_info_cb(data, info_name, arguments):
     return "some_info"
 
-hook = weechat.hook_info("my_info", "Some info", "my_info_cb", "")
+hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
+                         "my_info_cb", "")
 ----------------------------------------
 
 weechat_hook_infolist
@@ -6118,6 +6122,8 @@ Prototype:
 ----------------------------------------
 struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
+                                      const char *pointer_description,
+                                      const char *args_description,
                                       const char *(*callback)(void *data,
                                                               const char *infolist_name,
                                                               void *pointer,
@@ -6129,6 +6135,8 @@ Arguments:
 
 * 'infolist_name': name of infolist
 * 'description': description
+* 'pointer_description': description of pointer (optional, can be NULL)
+* 'args_description': description of arguments (optional, can be NULL)
 * 'callback': function called when infolist is asked, arguments:
 ** 'void *data': pointer
 ** 'const char *infolist_name': name of infolist
@@ -6160,6 +6168,8 @@ my_infolist_cb (void *data, const char *infolist_name, void *pointer,
 /* add infolist "my_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
+                                                    "Info about pointer",
+                                                    "Info about arguments",
                                                     &my_infolist_cb, NULL);
 ----------------------------------------
 
@@ -6168,7 +6178,8 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_infolist(infolist_name, description, callback, callback_data)
+hook = weechat.hook_infolist(infolist_name, description, pointer_description,
+                             args_description, callback, callback_data)
 
 # example
 def my_infolist_cb(data, infolist_name, pointer, arguments):
@@ -6176,7 +6187,9 @@ def my_infolist_cb(data, infolist_name, pointer, arguments):
     # ...
     return my_infolist
 
-hook = weechat.hook_infolist("my_infolist", "Infolist with some data", "my_infolist_cb", "")
+hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
+                             "Info about pointer", "Info about arguments",
+                             "my_infolist_cb", "")
 ----------------------------------------
 
 weechat_unhook
@@ -6800,7 +6813,7 @@ Arguments:
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority
 
-| unread | (N/A) |
+| unread | - |
   set unread marker after last line of buffer
 
 | display | "1", "auto" |
@@ -6853,7 +6866,7 @@ Arguments:
   bind a new key 'xxx', specific to this buffer, value is command to execute
   for this key
 
-| key_unbind_xxx | (N/A) |
+| key_unbind_xxx | - |
   unbind key 'xxx' for this buffer
 
 | input | any string |
@@ -6871,7 +6884,7 @@ Arguments:
   set new value for local variable 'xxx' (variable is created if it does not
   exist)
 
-| localvar_del_xxx | (N/A) |
+| localvar_del_xxx | - |
   remove local variable 'xxx'
 |========================================
 

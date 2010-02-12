@@ -229,4 +229,5 @@ SET(WEECHAT_SOURCES
 ./src/plugins/xfer/xfer-network.h
 ./src/plugins/xfer/xfer-upgrade.c
 ./src/plugins/xfer/xfer-upgrade.h
+./doc/docgen.pl
 )

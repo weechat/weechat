@@ -2000,7 +2000,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 
 struct t_hook *
 hook_info (struct t_weechat_plugin *plugin, const char *info_name,
-           const char *description,
+           const char *description, const char *args_description,
            t_hook_callback_info *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -2026,6 +2026,8 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
     new_hook_info->info_name = strdup (info_name);
     new_hook_info->description = (description) ?
         strdup (description) : strdup ("");
+    new_hook_info->args_description = (args_description) ?
+        strdup (args_description) : strdup ("");
     
     hook_add_to_list (new_hook);
     
@@ -2085,7 +2087,8 @@ hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
 
 struct t_hook *
 hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
-               const char *description,
+               const char *description, const char *pointer_description,
+               const char *args_description,
                t_hook_callback_infolist *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -2111,6 +2114,10 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
     new_hook_infolist->infolist_name = strdup (infolist_name);
     new_hook_infolist->description = (description) ?
         strdup (description) : strdup ("");
+    new_hook_infolist->pointer_description = (pointer_description) ?
+        strdup (pointer_description) : strdup ("");
+    new_hook_infolist->args_description = (args_description) ?
+        strdup (args_description) : strdup ("");
     
     hook_add_to_list (new_hook);
     
@@ -2311,12 +2318,18 @@ unhook (struct t_hook *hook)
                     free (HOOK_INFO(hook, info_name));
                 if (HOOK_INFO(hook, description))
                     free (HOOK_INFO(hook, description));
+                if (HOOK_INFO(hook, args_description))
+                    free (HOOK_INFO(hook, args_description));
                 break;
             case HOOK_TYPE_INFOLIST:
                 if (HOOK_INFOLIST(hook, infolist_name))
                     free (HOOK_INFOLIST(hook, infolist_name));
                 if (HOOK_INFOLIST(hook, description))
                     free (HOOK_INFOLIST(hook, description));
+                if (HOOK_INFOLIST(hook, pointer_description))
+                    free (HOOK_INFOLIST(hook, pointer_description));
+                if (HOOK_INFOLIST(hook, args_description))
+                    free (HOOK_INFOLIST(hook, args_description));
                 break;
             case HOOK_NUM_TYPES:
                 /* this constant is used to count types only,
@@ -2632,6 +2645,13 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                                                    && HOOK_INFO(ptr_hook, description)[0]) ?
                                                   _(HOOK_INFO(ptr_hook, description)) : ""))
                         return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description", HOOK_INFO(ptr_hook, args_description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description_nls",
+                                                  (HOOK_INFO(ptr_hook, args_description)
+                                                   && HOOK_INFO(ptr_hook, args_description)[0]) ?
+                                                  _(HOOK_INFO(ptr_hook, args_description)) : ""))
+                        return 0;
                 }
                 break;
             case HOOK_TYPE_INFOLIST:
@@ -2647,6 +2667,20 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                                                   (HOOK_INFOLIST(ptr_hook, description)
                                                    && HOOK_INFOLIST(ptr_hook, description)[0]) ?
                                                   _(HOOK_INFOLIST(ptr_hook, description)) : ""))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "pointer_description", HOOK_INFOLIST(ptr_hook, pointer_description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "pointer_description_nls",
+                                                  (HOOK_INFOLIST(ptr_hook, pointer_description)
+                                                   && HOOK_INFOLIST(ptr_hook, pointer_description)[0]) ?
+                                                  _(HOOK_INFOLIST(ptr_hook, pointer_description)) : ""))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description", HOOK_INFOLIST(ptr_hook, args_description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description_nls",
+                                                  (HOOK_INFOLIST(ptr_hook, args_description)
+                                                   && HOOK_INFOLIST(ptr_hook, args_description)[0]) ?
+                                                  _(HOOK_INFOLIST(ptr_hook, args_description)) : ""))
                         return 0;
                 }
                 break;
@@ -2878,6 +2912,7 @@ hook_print_log ()
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_INFO(ptr_hook, callback));
                         log_printf ("    info_name . . . . . . : '%s'",  HOOK_INFO(ptr_hook, info_name));
                         log_printf ("    description . . . . . : '%s'",  HOOK_INFO(ptr_hook, description));
+                        log_printf ("    args_description. . . : '%s'",  HOOK_INFO(ptr_hook, args_description));
                     }
                     break;
                 case HOOK_TYPE_INFOLIST:
@@ -2887,6 +2922,8 @@ hook_print_log ()
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_INFOLIST(ptr_hook, callback));
                         log_printf ("    infolist_name . . . . : '%s'",  HOOK_INFOLIST(ptr_hook, infolist_name));
                         log_printf ("    description . . . . . : '%s'",  HOOK_INFOLIST(ptr_hook, description));
+                        log_printf ("    pointer_description . : '%s'",  HOOK_INFOLIST(ptr_hook, pointer_description));
+                        log_printf ("    args_description. . . : '%s'",  HOOK_INFOLIST(ptr_hook, args_description));
                     }
                     break;
                 case HOOK_NUM_TYPES:

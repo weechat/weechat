@@ -928,62 +928,91 @@ void
 plugin_api_init ()
 {
     /* WeeChat core info hooks */
-    hook_info (NULL, "version", N_("WeeChat version"),
+    hook_info (NULL, "version", N_("WeeChat version"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "version_number", N_("WeeChat version (as number)"),
+    hook_info (NULL, "version_number", N_("WeeChat version (as number)"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "date", N_("WeeChat compilation date"),
+    hook_info (NULL, "date", N_("WeeChat compilation date"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "dir_separator", N_("directory separator"),
+    hook_info (NULL, "dir_separator", N_("directory separator"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_dir", N_("WeeChat directory"),
+    hook_info (NULL, "weechat_dir", N_("WeeChat directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_libdir", N_("WeeChat \"lib\" directory"),
+    hook_info (NULL, "weechat_libdir", N_("WeeChat \"lib\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"),
+    hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"),
+    hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site", N_("WeeChat site"),
+    hook_info (NULL, "weechat_site", N_("WeeChat site"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"),
+    hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_terminal", N_("terminal charset"),
+    hook_info (NULL, "charset_terminal", N_("terminal charset"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_internal", N_("WeeChat internal charset"),
+    hook_info (NULL, "charset_internal", N_("WeeChat internal charset"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "inactivity", N_("keyboard inactivity (seconds)"),
+    hook_info (NULL, "inactivity", N_("keyboard inactivity (seconds)"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"),
+    hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"), NULL,
                &plugin_api_info_get_internal, NULL);
     
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar", N_("list of bars"),
+                   N_("bar pointer (optional)"),
+                   N_("bar name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_item", N_("list of bar items"),
+                   N_("bar item pointer (optional)"),
+                   N_("bar item name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_window", N_("list of bar windows"),
+                   N_("bar window pointer (optional)"),
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer", N_("list of buffers"),
+                   N_("buffer pointer (optional)"),
+                   N_("buffer name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
+                   N_("buffer pointer"),
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "filter", N_("list of filters"),
+                   NULL,
+                   N_("filter name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "history", N_("history of commands"),
+                   N_("buffer pointer (if not set, return global history) (optional)"),
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook", N_("list of hooks"),
+                   NULL,
+                   N_("hook type: command, timer, .. (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
+                   NULL,
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "key", N_("list of key bindings"),
+                   NULL,
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
+                   N_("buffer pointer"),
+                   N_("nick_xxx or group_xxx to get only nick/group xxx "
+                      "(optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "option", N_("list of options"),
+                   NULL,
+                   N_("option name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "plugin", N_("list of plugins"),
+                   N_("plugin pointer (optional)"),
+                   N_("plugin name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "window", N_("list of windows"),
+                   N_("window pointer (optional)"),
+                   N_("window name (can start or end with \"*\" as joker) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
 }
