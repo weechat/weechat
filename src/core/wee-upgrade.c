@@ -135,7 +135,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
             ptr_infolist = infolist_new ();
             if (!ptr_infolist)
                 return 0;
-            if (!gui_nicklist_add_to_infolist (ptr_infolist, ptr_buffer))
+            if (!gui_nicklist_add_to_infolist (ptr_infolist, ptr_buffer, NULL))
             {
                 infolist_free (ptr_infolist);
                 return 0;

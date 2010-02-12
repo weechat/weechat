@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-11
+v0.3.2-dev, 2010-02-12
 
 
 Version 0.3.2 (under dev!)
@@ -15,6 +15,7 @@ Version 0.3.2 (under dev!)
 * core: add new option weechat.look.time_format to customize default format
   for date/time displayed (localized date by default), add function
   weechat_util_get_time_string in plugin API (patch #6914)
+* core: use arguments for infolist "nicklist" to return only one nick or group
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
 * api: add "version_number" for function info_get to get WeeChat version as

@@ -632,68 +632,125 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_nicklist_add_group_to_infolist: add a group in an infolist
+ *                                     return 1 if ok, 0 if error
+ */
+
+int
+gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
+                                    struct t_gui_nick_group *group)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !group)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_string (ptr_item, "type", "group"))
+        return 0;
+    if (group->parent)
+    {
+        if (!infolist_new_var_string (ptr_item, "parent_name", group->parent->name))
+            return 0;
+    }
+    if (!infolist_new_var_string (ptr_item, "name", group->name))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "color", group->color))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "visible", group->visible))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "level", group->level))
+        return 0;
+    
+    return 1;
+}
+
+/*
+ * gui_nicklist_add_nick_to_infolist: add a nick in an infolist
+ *                                    return 1 if ok, 0 if error
+ */
+
+int
+gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
+                                   struct t_gui_nick *nick)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !nick)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_string (ptr_item, "type", "nick"))
+        return 0;
+    if (nick->group)
+    {
+        if (!infolist_new_var_string (ptr_item, "group_name", nick->group->name))
+            return 0;
+    }
+    if (!infolist_new_var_string (ptr_item, "name", nick->name))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "color", nick->color))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "prefix", nick->prefix))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "prefix_color", nick->prefix_color))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "visible", nick->visible))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * gui_nicklist_add_to_infolist: add a nicklist in an infolist
  *                               return 1 if ok, 0 if error
  */
 
 int
 gui_nicklist_add_to_infolist (struct t_infolist *infolist,
-                              struct t_gui_buffer *buffer)
+                              struct t_gui_buffer *buffer,
+                              const char *name)
 {
-    struct t_infolist_item *ptr_item;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     
     if (!infolist || !buffer)
         return 0;
     
+    /* add only one nick if asked */
+    if (name && (strncmp (name, "nick_", 5) == 0))
+    {
+        ptr_nick = gui_nicklist_search_nick (buffer, NULL, name + 5);
+        if (!ptr_nick)
+            return 0;
+        return gui_nicklist_add_nick_to_infolist (infolist, ptr_nick);
+    }
+    
+    /* add only one group if asked */
+    if (name && (strncmp (name, "group_", 6) == 0))
+    {
+        ptr_group = gui_nicklist_search_group (buffer, NULL, name + 6);
+        if (!ptr_group)
+            return 0;
+        return gui_nicklist_add_group_to_infolist (infolist, ptr_group);
+    }
+    
     ptr_group = NULL;
     ptr_nick = NULL;
     gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     while (ptr_group || ptr_nick)
     {
-        ptr_item = infolist_new_item (infolist);
-        if (!ptr_item)
-            return 0;
-        
         if (ptr_nick)
-        {
-            if (!infolist_new_var_string (ptr_item, "type", "nick"))
-                return 0;
-            if (ptr_nick->group)
-            {
-                if (!infolist_new_var_string (ptr_item, "group_name", ptr_nick->group->name))
-                    return 0;
-            }
-            if (!infolist_new_var_string (ptr_item, "name", ptr_nick->name))
-                return 0;
-            if (!infolist_new_var_string (ptr_item, "color", ptr_nick->color))
-                return 0;
-            if (!infolist_new_var_string (ptr_item, "prefix", ptr_nick->prefix))
-                return 0;
-            if (!infolist_new_var_string (ptr_item, "prefix_color", ptr_nick->prefix_color))
-                return 0;
-            if (!infolist_new_var_integer (ptr_item, "visible", ptr_nick->visible))
-                return 0;
-        }
+            gui_nicklist_add_nick_to_infolist (infolist, ptr_nick);
         else
-        {
-            if (!infolist_new_var_string (ptr_item, "type", "group"))
-                return 0;
-            if (ptr_group->parent)
-            {
-                if (!infolist_new_var_string (ptr_item, "parent_name", ptr_group->parent->name))
-                    return 0;
-            }
-            if (!infolist_new_var_string (ptr_item, "name", ptr_group->name))
-                return 0;
-            if (!infolist_new_var_string (ptr_item, "color", ptr_group->color))
-                return 0;
-            if (!infolist_new_var_integer (ptr_item, "visible", ptr_group->visible))
-                return 0;
-            if (!infolist_new_var_integer (ptr_item, "level", ptr_group->level))
-                return 0;
-        }
+            gui_nicklist_add_group_to_infolist (infolist, ptr_group);
+        
         gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     }
     

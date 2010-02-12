@@ -82,7 +82,8 @@ extern char *gui_nicklist_get_group_start (const char *name);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *group);
 extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
-                                         struct t_gui_buffer *buffer);
+                                         struct t_gui_buffer *buffer,
+                                         const char *name);
 extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
 
 #endif /* gui-nicklist.h */

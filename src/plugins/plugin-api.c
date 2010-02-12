@@ -668,7 +668,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
-            if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer))
+            if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer, arguments))
             {
                 infolist_free (ptr_infolist);
                 return NULL;
