@@ -2493,8 +2493,10 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                                    weechat_config_boolean (irc_config_network_colors_receive));
         ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
         weechat_printf ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
-                        "%sNotice -> %s%s%s: %s",
+                        "%s%sNotice%s -> %s%s%s: %s",
                         weechat_prefix ("network"),
+                        IRC_COLOR_NOTICE,
+                        IRC_COLOR_CHAT,
                         (irc_channel_is_channel (argv[arg_nick])) ?
                         IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
                         argv[arg_nick],
