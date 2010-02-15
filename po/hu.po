@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-12 16:45+0100\n"
+"POT-Creation-Date: 2010-02-15 11:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3960,6 +3960,18 @@ msgstr ""
 msgid "password for server"
 msgstr "jelszó az IRC szerveren"
 
+#, fuzzy
+msgid "mechanism for SASL authentication"
+msgstr "SSL használata a a kapcsolathoz"
+
+#, fuzzy
+msgid "username for SASL authentication"
+msgstr "SSL használata a a kapcsolathoz"
+
+#, fuzzy
+msgid "password for SASL authentication"
+msgstr "SSL használata a a kapcsolathoz"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automatikus csatlakozás a szerverhez a WeeChat indulásakor"
 
@@ -4362,6 +4374,22 @@ msgstr "%s nincs csatlakozva szerverhez!\n"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
 
+#, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, requesting: sasl"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
@@ -4670,6 +4698,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: disconnecting from server..."
 msgstr "Lekapcsolódott a szerverről!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -6343,10 +6375,6 @@ msgstr "perc"
 #~ msgstr "IPv6 protokoll használata a kapcsolathoz"
 
 #, fuzzy
-#~ msgid "use SASL for authentication"
-#~ msgstr "SSL használata a a kapcsolathoz"
-
-#, fuzzy
 #~ msgid "password"
 #~ msgstr "felhasználó jelszó"
 
@@ -6609,10 +6637,6 @@ msgstr "perc"
 #~ msgstr ""
 #~ "%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
 #~ "támogatás nélkül lett fordítva\n"
-
-#, fuzzy
-#~ msgid "%s%s: authentication failed"
-#~ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
 #~ msgid "list of Jabber ignore"

@@ -1247,7 +1247,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
         return 0;
     
     if ((!server->is_connected) && (!server->hook_connect)
-        && (server->reconnect_start == 0))
+        && (!server->hook_fd) && (server->reconnect_start == 0))
     {
         weechat_printf (server->buffer,
                         _("%s%s: not connected to server \"%s\"!"),
@@ -1296,6 +1296,7 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
                  ptr_server = ptr_server->next_server)
             {
                 if ((ptr_server->is_connected) || (ptr_server->hook_connect)
+                    || (ptr_server->hook_fd)
                     || (ptr_server->reconnect_start != 0))
                 {
                     if (!irc_command_disconnect_one_server (ptr_server))
@@ -2853,7 +2854,7 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
 
 /*
  * irc_command_reconnect_one_server: reconnect to a server
- *                               return 0 if error, 1 if ok
+ *                                   return 0 if error, 1 if ok
  */
 
 int
@@ -2862,7 +2863,8 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     if (!server)
         return 0;
     
-    if ((!server->is_connected) && (!server->hook_connect))
+    if ((!server->is_connected) && (!server->hook_connect)
+        && (!server->hook_fd))
     {
         weechat_printf (server->buffer,
                         _("%s%s: not connected to server \"%s\"!"),
@@ -2918,7 +2920,8 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
              ptr_server = ptr_server->next_server)
         {
             nb_reconnect++;
-            if ((ptr_server->is_connected) || (ptr_server->hook_connect))
+            if ((ptr_server->is_connected) || (ptr_server->hook_connect)
+                || (ptr_server->hook_fd))
             {
                 if (!irc_command_reconnect_one_server (ptr_server, no_join))
                     reconnect_ok = 0;

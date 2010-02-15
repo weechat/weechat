@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-12 16:45+0100\n"
+"POT-Creation-Date: 2010-02-15 11:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4027,6 +4027,15 @@ msgstr ""
 msgid "password for server"
 msgstr "heslo pro server"
 
+msgid "mechanism for SASL authentication"
+msgstr ""
+
+msgid "username for SASL authentication"
+msgstr ""
+
+msgid "password for SASL authentication"
+msgstr ""
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automaticky připojit k serveru, když je WeeChat spouštěn"
 
@@ -4421,6 +4430,22 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
 
 #, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, requesting: sasl"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr ""
+
+#, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sByl jsi pozván na %s%s%s od %s%s%s"
 
@@ -4741,6 +4766,10 @@ msgstr "(spojení uzavřeno druhou stranou)"
 #, c-format
 msgid "%s: disconnecting from server..."
 msgstr "%s: odpojuji se od serveru..."
+
+#, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr ""
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."

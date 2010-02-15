@@ -1271,3 +1271,65 @@ string_format_size (unsigned long size)
     
     return strdup (str_size);
 }
+
+/*
+ * string_convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
+ */
+
+void
+string_convbase64_8x3_to_6x4 (const char *from, char *to)
+{
+    unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz0123456789+/";
+    
+    to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
+    to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
+    to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
+    to[3] = base64_table [ from[2] & 0x3f ];
+}
+
+/*
+ * string_encode_base64: encode a string in base64
+ *                       length is number of bytes in "from" to convert
+ *                       (commonly strlen(from))
+ */
+
+void
+string_encode_base64 (const char *from, int length, char *to)
+{
+    const char *ptr_from;
+    char *ptr_to;
+    
+    ptr_from = from;
+    ptr_to = to;
+    
+    while (length >= 3)
+    {
+        string_convbase64_8x3_to_6x4 (ptr_from, ptr_to);
+        ptr_from += 3 * sizeof (*ptr_from);
+        ptr_to += 4 * sizeof (*ptr_to);
+        length -= 3;
+    }
+    
+    if (length > 0)
+    {
+        char rest[3] = { 0, 0, 0 };
+        switch (length)
+        {
+            case 1 :
+                rest[0] = ptr_from[0];
+                string_convbase64_8x3_to_6x4 (rest, ptr_to);
+                ptr_to[2] = ptr_to[3] = '=';
+                break;
+            case 2 :
+                rest[0] = ptr_from[0];
+                rest[1] = ptr_from[1];
+                string_convbase64_8x3_to_6x4 (rest, ptr_to);
+                ptr_to[3] = '=';
+                break;
+        }
+        ptr_to[4] = 0;
+    }
+    else
+        ptr_to[0] = '\0';
+}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-12 16:45+0100\n"
+"POT-Creation-Date: 2010-02-15 11:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:57+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3961,6 +3961,18 @@ msgstr ""
 msgid "password for server"
 msgstr "пароль, используемый при подключении к IRC серверу"
 
+#, fuzzy
+msgid "mechanism for SASL authentication"
+msgstr "использовать SSL при связи с сервером"
+
+#, fuzzy
+msgid "username for SASL authentication"
+msgstr "использовать SSL при связи с сервером"
+
+#, fuzzy
+msgid "password for SASL authentication"
+msgstr "использовать SSL при связи с сервером"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "подключаться к серверу автоматически при запуске WeeChat"
 
@@ -4364,6 +4376,22 @@ msgstr "%s вы не подключены к серверу\n"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Это окно не является каналом!\n"
 
+#, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, requesting: sasl"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Вас пригласил на %s%s%s пользователь %s%s\n"
@@ -4678,6 +4706,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: disconnecting from server..."
 msgstr "Отключен от сервера!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -6336,10 +6368,6 @@ msgstr "минута"
 #~ msgstr "использовать IPv6 при связи с сервером"
 
 #, fuzzy
-#~ msgid "use SASL for authentication"
-#~ msgstr "использовать SSL при связи с сервером"
-
-#, fuzzy
 #~ msgid "password"
 #~ msgstr "пользователь пароль"
 
@@ -6597,10 +6625,6 @@ msgstr "минута"
 #~ msgstr ""
 #~ "%s невозможно соединиться с использованием SSL, так как WeeChat собран "
 #~ "без поддержки GNUtls\n"
-
-#, fuzzy
-#~ msgid "%s%s: authentication failed"
-#~ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 #~ msgid "list of Jabber ignore"

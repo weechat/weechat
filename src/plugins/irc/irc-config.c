@@ -964,6 +964,42 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_SASL_MECHANISM:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("mechanism for SASL authentication"),
+                "plain" /*"plain|dh-blowfish"*/, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SASL_USERNAME:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("username for SASL authentication"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SASL_PASSWORD:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("password for SASL authentication"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_AUTOCONNECT:
             new_option = weechat_config_new_option (
                 config_file, section,

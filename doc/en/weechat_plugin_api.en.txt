@@ -1108,6 +1108,33 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(my_string, "?")
 ----------------------------------------
 
+weechat_string_encode_base64
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Encode a string in base64.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_string_encode_base64 (const char *from, int length, char *to);
+----------------------------------------
+
+Arguments:
+
+* 'from': string to encode
+* 'length': length of string to encode (for example `strlen(from)`)
+* 'to': pointer to string to store result (must be long enough)
+
+Example:
+
+[source,C]
+----------------------------------------
+char *string = "abcdefgh", result[128];
+weechat_string_encode_base64 (string, strlen (string), result);
+/* result == "YWJjZGVmZ2g=" */
+----------------------------------------
+
 [[utf-8]]
 UTF-8
 ~~~~~

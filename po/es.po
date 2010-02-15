@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-12 16:45+0100\n"
+"POT-Creation-Date: 2010-02-15 11:45+0100\n"
 "PO-Revision-Date: 2010-01-23 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4110,6 +4110,18 @@ msgstr "verificar que la conexión SSL es confiable completamente"
 msgid "password for server"
 msgstr "contraseña del servidor"
 
+#, fuzzy
+msgid "mechanism for SASL authentication"
+msgstr "usar SSL para la comunicación del servidor"
+
+#, fuzzy
+msgid "username for SASL authentication"
+msgstr "usar SSL para la comunicación del servidor"
+
+#, fuzzy
+msgid "password for SASL authentication"
+msgstr "usar SSL para la comunicación del servidor"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "conectarse automáticamente al servidor cuando WeeChat se inicia"
 
@@ -4513,6 +4525,22 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ¡este buffer no es un canal!"
 
 #, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, requesting: sasl"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr ""
+
+#, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sUsted ha sido invitado a %s%s%s por %s%s%s"
 
@@ -4827,6 +4855,10 @@ msgstr "(conexión cerrara por un par)"
 #, c-format
 msgid "%s: disconnecting from server..."
 msgstr "%s: desconectado del servidor..."
+
+#, fuzzy, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -6503,10 +6535,6 @@ msgstr "entero"
 #~ msgstr "usar el protocolo IPv6 para la comunicación del servidor"
 
 #, fuzzy
-#~ msgid "use SASL for authentication"
-#~ msgstr "usar SSL para la comunicación del servidor"
-
-#, fuzzy
 #~ msgid "password"
 #~ msgstr "contraseña de usuario"
 
@@ -6762,10 +6790,6 @@ msgstr "entero"
 #~ msgstr ""
 #~ "%s No ha sido posible conectar con SSL debido a que Weechat no fue "
 #~ "compilado con soporte GNUtls\n"
-
-#, fuzzy
-#~ msgid "%s%s: authentication failed"
-#~ msgstr "No es posible escribir un fichero de log para un búfer\n"
 
 #, fuzzy
 #~ msgid "list of Jabber ignore"

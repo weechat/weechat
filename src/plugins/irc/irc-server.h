@@ -41,6 +41,9 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
     IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
+    IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
+    IRC_SERVER_OPTION_SASL_USERNAME, /* username for SASL authentication     */
+    IRC_SERVER_OPTION_SASL_PASSWORD, /* password for SASL authentication     */
     IRC_SERVER_OPTION_AUTOCONNECT,   /* autoconnect to server at startup     */
     IRC_SERVER_OPTION_AUTORECONNECT, /* autoreconnect when disconnected      */
     IRC_SERVER_OPTION_AUTORECONNECT_DELAY, /* delay before trying again reco */
@@ -87,6 +90,16 @@ enum t_irc_server_option
 #define IRC_SERVER_OUTQUEUE_PRIO_LOW  2
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
 
+/* SASL authentication mechanisms */
+
+enum t_irc_sasl_mechanism
+{
+    IRC_SASL_MECHANISM_PLAIN = 0,
+    /* TODO: IRC_SASL_MECHANISM_DH_BLOWFISH, */
+    /* number of SASL mechanisms */
+    IRC_NUM_SASL_MECHANISMS,
+};
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -117,6 +130,7 @@ struct t_irc_server
     int sock;                       /* socket for server (IPv4 or IPv6)      */
     struct t_hook *hook_connect;    /* connection hook                       */
     struct t_hook *hook_fd;         /* hook for server socket                */
+    struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
 #ifdef HAVE_GNUTLS
@@ -171,9 +185,11 @@ extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 extern char *irc_server_option_string[];
 extern char *irc_server_option_default[];
+extern char *irc_sasl_mechanism_string[];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern int irc_server_search_option (const char *option_name);
+extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
@@ -199,6 +215,7 @@ extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect ();
 extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *arg_server, int fd);
+extern int irc_server_timer_sasl_cb (void *arg_server, int remaining_calls);
 extern int irc_server_timer_cb (void *data, int remaining_calls);
 extern int irc_server_timer_check_away_cb (void *data, int remaining_calls);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server,

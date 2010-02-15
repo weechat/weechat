@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-12 16:45+0100\n"
-"PO-Revision-Date: 2010-02-12 16:29+0100\n"
+"POT-Creation-Date: 2010-02-15 11:45+0100\n"
+"PO-Revision-Date: 2010-02-15 10:01+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4160,6 +4160,15 @@ msgstr "vérifier que la connexion ssl est entièrement de confiance"
 msgid "password for server"
 msgstr "mot de passe pour le serveur"
 
+msgid "mechanism for SASL authentication"
+msgstr "mécanisme pour l'authentification SASL"
+
+msgid "username for SASL authentication"
+msgstr "nom d'utilisateur pour l'authentification SASL"
+
+msgid "password for SASL authentication"
+msgstr "mot de passe pour l'authentification SASL"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "connexion automatique au serveur quand WeeChat démarre"
 
@@ -4559,6 +4568,22 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ce tampon n'est pas un canal !"
 
 #, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr "%s%s: client capability, le serveur supporte: %s"
+
+#, c-format
+msgid "%s%s: client capability, requesting: sasl"
+msgstr "%s%s: client capability, demande: sasl"
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr "%s%s: client capability: sasl non supporté"
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr "%s%s: client capability, activé: %s"
+
+#, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sVous avez été invité sur %s%s%s par %s%s%s"
 
@@ -4875,6 +4900,10 @@ msgstr "(connexion fermée par l'hôte distant)"
 #, c-format
 msgid "%s: disconnecting from server..."
 msgstr "%s: déconnexion du serveur..."
+
+#, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr "%s%s: délai d'authentification sasl dépassé"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."

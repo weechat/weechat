@@ -308,6 +308,21 @@
 ** type: string
 ** values: any string (default value: "")
 
+* *irc.server_default.sasl_mechanism*
+** description: mechanism for SASL authentication
+** type: integer
+** values: plain (default value: plain)
+
+* *irc.server_default.sasl_password*
+** description: password for SASL authentication
+** type: string
+** values: any string (default value: "")
+
+* *irc.server_default.sasl_username*
+** description: username for SASL authentication
+** type: string
+** values: any string (default value: "")
+
 * *irc.server_default.ssl*
 ** description: use SSL for server communication
 ** type: boolean

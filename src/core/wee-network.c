@@ -100,67 +100,6 @@ network_end ()
 }
 
 /*
- * network_convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
- */
-
-void
-network_convbase64_8x3_to_6x4 (const char *from, char *to)
-{
-    unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz0123456789+/";
-    
-    to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
-    to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
-    to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
-    to[3] = base64_table [ from[2] & 0x3f ];
-}
-
-/*
- * network_base64encode: encode a string in base64
- */
-
-void
-network_base64encode (const char *from, char *to)
-{
-    const char *f;
-    char *t;
-    int from_len;
-    
-    from_len = strlen (from);
-    
-    f = from;
-    t = to;
-    
-    while (from_len >= 3)
-    {
-        network_convbase64_8x3_to_6x4 (f, t);
-        f += 3 * sizeof (*f);
-        t += 4 * sizeof (*t);
-        from_len -= 3;
-    }
-    
-    if (from_len > 0)
-    {
-        char rest[3] = { 0, 0, 0 };
-        switch (from_len)
-        {
-            case 1 :
-                rest[0] = f[0];
-                network_convbase64_8x3_to_6x4 (rest, t);
-                t[2] = t[3] = '=';
-                break;
-            case 2 :
-                rest[0] = f[0];
-                rest[1] = f[1];
-                network_convbase64_8x3_to_6x4 (rest, t);
-                t[3] = '=';
-                break;
-        }
-        t[4] = 0;
-    }
-}
-
-/*
  * network_pass_httpproxy: establish connection/authentification to an
  *                         http proxy
  *                         return 1 if connection is ok
@@ -182,7 +121,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                   CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
                   (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])) ?
                   CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]) : "");
-        network_base64encode (authbuf, authbuf_base64);
+        string_encode_base64 (authbuf, strlen (authbuf), authbuf_base64);
         n = snprintf (buffer, sizeof (buffer),
                       "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
                       address, port, authbuf_base64);

@@ -384,6 +384,7 @@ plugin_load (const char *filename)
         new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;
         new_plugin->string_remove_color = &gui_color_decode;
+        new_plugin->string_encode_base64 = &string_encode_base64;
         
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

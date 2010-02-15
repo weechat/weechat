@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-12
+v0.3.2-dev, 2010-02-15
 
 
 Version 0.3.2 (under dev!)
@@ -20,9 +20,11 @@ Version 0.3.2 (under dev!)
   input (bug #28754)
 * api: add "version_number" for function info_get to get WeeChat version as
   number
+* api: add function "string_encode_base64", fix bug with base64 encoding
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
 * api: add description of arguments for functions hook_info and hook_infolist
+* irc: add SASL authentication (task #8829)
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)

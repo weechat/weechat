@@ -216,6 +216,158 @@ irc_protocol_replace_vars (struct t_irc_server *server,
 }
 
 /*
+ * irc_protocol_cmd_authenticate: 'authenticate' message received
+ */
+
+int
+irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
+                               int argc, char **argv, char **argv_eol)
+{
+    const char *sasl_username, *sasl_password;
+    char *string, *string_base64;
+    int length_username, length;
+    
+    /* AUTHENTICATE message looks like:
+       AUTHENTICATE +
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(2);
+    
+    /* make C compiler happy */
+    (void) command;
+    (void) argv_eol;
+    
+    if (strcmp (argv[1], "+") == 0)
+    {
+        sasl_username = IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SASL_USERNAME);
+        sasl_password = IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SASL_PASSWORD);
+        if (sasl_username && sasl_username[0]
+            && sasl_password && sasl_password[0])
+        {
+            length_username = strlen (sasl_username);
+            length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
+            string = malloc (length);
+            if (string)
+            {
+                snprintf (string, length, "%s|%s|%s",
+                          sasl_username, sasl_username, sasl_password);
+                string[length_username] = '\0';
+                string[(length_username * 2) + 1] = '\0';
+                string_base64 = malloc (length * 2);
+                if (string_base64)
+                {
+                    weechat_string_encode_base64 (string, length - 1, string_base64);
+                    irc_server_sendf (server, 0, "AUTHENTICATE %s", string_base64);
+                    free (string_base64);
+                }
+                free (string);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cmd_cap: 'cap' message received (client capability)
+ */
+
+int
+irc_protocol_cmd_cap (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    char *ptr_caps, **items;
+    int num_items, sasl, i;
+    
+    /* CAP message looks like:
+       :server CAP * LS :identify-msg multi-prefix sasl
+       :server CAP * ACK :sasl
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(4);
+    
+    /* make C compiler happy */
+    (void) command;
+    
+    if (strcmp (argv[3], "LS") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf (server->buffer,
+                            _("%s%s: client capability, server supports: %s"),
+                            weechat_prefix ("network"),
+                            IRC_PLUGIN_NAME,
+                            ptr_caps);
+            sasl = 0;
+            items = weechat_string_split (ptr_caps, " ", 0, 0, &num_items);
+            if (items)
+            {
+                for (i = 0; i < num_items; i++)
+                {
+                    if (strcmp (items[i], "sasl") == 0)
+                    {
+                        sasl = 1;
+                        break;
+                    }
+                }
+                weechat_string_free_split (items);
+            }
+            if (sasl)
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: client capability, requesting: sasl"),
+                                weechat_prefix ("network"),
+                                IRC_PLUGIN_NAME);
+                irc_server_sendf (server, 0, "CAP REQ :sasl");
+            }
+            else
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: client capability: sasl not supported"),
+                                weechat_prefix ("network"),
+                                IRC_PLUGIN_NAME);
+                irc_server_sendf (server, 0, "CAP END");
+            }
+        }
+    }
+    else if (strcmp (argv[3], "ACK") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf (server->buffer,
+                            _("%s%s: client capability, enabled: %s"),
+                            weechat_prefix ("network"),
+                            IRC_PLUGIN_NAME,
+                            ptr_caps);
+            if (strcmp (ptr_caps, "sasl") == 0)
+            {
+                switch (IRC_SERVER_OPTION_INTEGER(server,
+                                                  IRC_SERVER_OPTION_SASL_USERNAME))
+                {
+                    case IRC_SASL_MECHANISM_PLAIN:
+                        irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
+                        break;
+                    default:
+                        irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
+                        break;
+                }
+                if (server->hook_timer_sasl)
+                    weechat_unhook (server->hook_timer_sasl);
+                server->hook_timer_sasl = weechat_hook_timer (5 * 1000, 0, 1,
+                                                              &irc_server_timer_sasl_cb,
+                                                              server);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cmd_error: error received from server
  */
 
@@ -3558,6 +3710,35 @@ irc_protocol_cmd_438 (struct t_irc_server *server, const char *command,
 }
 
 /*
+ * irc_protocol_cmd_900: '900' command (logged in as (SASL))
+ */
+
+int
+irc_protocol_cmd_900 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    /* 900 message looks like:
+       :server 900 mynick nick!user@host mynick :You are now logged in as mynick
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(6);
+    
+    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
+                                                          command, NULL,
+                                                          NULL),
+                         irc_protocol_tags (command, "irc_numeric"),
+                         "%s%s %s(%s%s%s)",
+                         weechat_prefix ("network"),
+                         (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT_HOST,
+                         argv[3],
+                         IRC_COLOR_CHAT_DELIMITERS);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cmd_901: '901' command received (you are now logged in)
  */
 
@@ -3583,6 +3764,44 @@ irc_protocol_cmd_901 (struct t_irc_server *server, const char *command,
     }
     else
         irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cmd_903: '903' command received (SASL authentication successful)
+ */
+
+int
+irc_protocol_cmd_903 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    /* 903 message looks like:
+       :server 903 nick :SASL authentication successful
+    */
+    
+    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
+    
+    irc_server_sendf (server, 0, "CAP END");
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cmd_904: '904' command received (SASL authentication failed)
+ */
+
+int
+irc_protocol_cmd_904 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    /* 904 message looks like:
+       :server 904 nick :SASL authentication failed
+    */
+    
+    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
+    
+    irc_server_sendf (server, 0, "CAP END");
     
     return WEECHAT_RC_OK;
 }
@@ -3621,7 +3840,9 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
     const char *cmd_name;
     char **argv, **argv_eol;
     struct t_irc_protocol_msg irc_protocol_messages[] =
-        { { "error", /* error received from IRC server */ 1, &irc_protocol_cmd_error },
+        { { "authenticate", /* authenticate */ 1, &irc_protocol_cmd_authenticate },
+          { "cap", /* client capability */ 1, &irc_protocol_cmd_cap },
+          { "error", /* error received from IRC server */ 1, &irc_protocol_cmd_error },
           { "invite", /* invite a nick on a channel */ 1, &irc_protocol_cmd_invite },
           { "join", /* join a channel */ 1, &irc_protocol_cmd_join },
           { "kick", /* forcibly remove a user from a channel */ 1, &irc_protocol_cmd_kick },
@@ -3741,7 +3962,10 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "501", /* unknown mode flag */ 1, &irc_protocol_cmd_error },
           { "502", /* can't change mode for other users */ 1, &irc_protocol_cmd_error },
           { "671", /* whois (secure connection) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "900", /* logged in as (SASL) */ 1, &irc_protocol_cmd_900 },
           { "901", /* you are now logged in */ 1, &irc_protocol_cmd_901 },
+          { "903", /* SASL authentication successful */ 1, &irc_protocol_cmd_903 },
+          { "904", /* SASL authentication failed */ 1, &irc_protocol_cmd_904 },
           { "973", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
           { "974", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
           { "975", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },

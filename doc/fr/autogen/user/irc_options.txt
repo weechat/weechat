@@ -308,6 +308,21 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
 
+* *irc.server_default.sasl_mechanism*
+** description: mécanisme pour l'authentification SASL
+** type: entier
+** valeurs: plain (valeur par défaut: plain)
+
+* *irc.server_default.sasl_password*
+** description: mot de passe pour l'authentification SASL
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
+* *irc.server_default.sasl_username*
+** description: nom d'utilisateur pour l'authentification SASL
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
 * *irc.server_default.ssl*
 ** description: utiliser SSL pour la communication avec le serveur
 ** type: booléen
