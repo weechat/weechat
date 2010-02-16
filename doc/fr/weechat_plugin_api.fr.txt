@@ -1139,7 +1139,7 @@ Paramètres :
 * 'from': chaîne à encoder
 * 'length': longueur de chaîne à encoder (par exemple `strlen(from)`)
 * 'to': pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
-  long)
+  long, le résultat est plus long que la chaîne initiale)
 
 Exemple :
 
@@ -1148,6 +1148,38 @@ Exemple :
 char *string = "abcdefgh", result[128];
 weechat_string_encode_base64 (string, strlen (string), result);
 /* result == "YWJjZGVmZ2g=" */
+----------------------------------------
+
+weechat_string_decode_base64
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Décode une chaîne base64.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_string_decode_base64 (const char *from, char *to);
+----------------------------------------
+
+Paramètres :
+
+* 'from': chaîne à décoder
+* 'to': pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
+  long, le résultat est plus court que la chaîne initiale)
+
+Valeur de retour :
+
+* longueur de la chaîne stockée dans *to (ne compte pas le '\0' final)
+
+Example:
+
+[source,C]
+----------------------------------------
+char *string = "YWJjZGVmZ2g=", result[128];
+int length;
+length = weechat_string_decode_base64 (string, result);
+/* length == 8, result == "abcdefgh" */
 ----------------------------------------
 
 [[utf-8]]

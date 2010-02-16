@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-15
+v0.3.2-dev, 2010-02-16
 
 
 Version 0.3.2 (under dev!)
@@ -20,7 +20,8 @@ Version 0.3.2 (under dev!)
   input (bug #28754)
 * api: add "version_number" for function info_get to get WeeChat version as
   number
-* api: add function "string_encode_base64", fix bug with base64 encoding
+* api: add functions "string_encode_base64" and "string_decode_base64",, fix
+  bug with base64 encoding
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
 * api: add description of arguments for functions hook_info and hook_infolist

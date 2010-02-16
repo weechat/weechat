@@ -34,7 +34,7 @@ struct t_weelist;
 struct timeval;
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20100215-01"
+#define WEECHAT_PLUGIN_API_VERSION "20100216-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -171,6 +171,7 @@ struct t_weechat_plugin
     char *(*string_format_size) (unsigned long size);
     char *(*string_remove_color) (const char *string, const char *replacement);
     void (*string_encode_base64) (const char *from, int length, char *to);
+    int (*string_decode_base64) (const char *from, char *to);
     
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -720,6 +721,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_remove_color(__string, __replacement)
 #define weechat_string_encode_base64(__from, __length, __to)            \
     weechat_plugin->string_encode_base64(__from, __length, __to)
+#define weechat_string_decode_base64(__from, __to)                      \
+    weechat_plugin->string_decode_base64(__from, __to)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
