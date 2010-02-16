@@ -229,6 +229,7 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
     
     /* AUTHENTICATE message looks like:
        AUTHENTICATE +
+       AUTHENTICATE QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=
     */
     
     IRC_PROTOCOL_MIN_ARGS(2);
@@ -237,24 +238,26 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
     (void) command;
     (void) argv_eol;
     
-    if (strcmp (argv[1], "+") == 0)
+    sasl_username = IRC_SERVER_OPTION_STRING(server,
+                                             IRC_SERVER_OPTION_SASL_USERNAME);
+    sasl_password = IRC_SERVER_OPTION_STRING(server,
+                                             IRC_SERVER_OPTION_SASL_PASSWORD);
+    if (sasl_username && sasl_username[0]
+        && sasl_password && sasl_password[0])
     {
-        sasl_username = IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SASL_USERNAME);
-        sasl_password = IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SASL_PASSWORD);
-        if (sasl_username && sasl_username[0]
-            && sasl_password && sasl_password[0])
+        length_username = strlen (sasl_username);
+        length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
+        string = malloc (length);
+        if (string)
         {
-            length_username = strlen (sasl_username);
-            length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
-            string = malloc (length);
-            if (string)
+            snprintf (string, length, "%s|%s|%s",
+                      sasl_username, sasl_username, sasl_password);
+            string[length_username] = '\0';
+            string[(length_username * 2) + 1] = '\0';
+            
+            if (strcmp (argv[1], "+") == 0)
             {
-                snprintf (string, length, "%s|%s|%s",
-                          sasl_username, sasl_username, sasl_password);
-                string[length_username] = '\0';
-                string[(length_username * 2) + 1] = '\0';
+                /* mechanism PLAIN */
                 string_base64 = malloc (length * 2);
                 if (string_base64)
                 {
@@ -262,8 +265,13 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
                     irc_server_sendf (server, 0, "AUTHENTICATE %s", string_base64);
                     free (string_base64);
                 }
-                free (string);
             }
+            else
+            {
+                /* TODO: other mechanisms */
+            }
+            
+            free (string);
         }
     }
     
@@ -346,11 +354,9 @@ irc_protocol_cmd_cap (struct t_irc_server *server, const char *command,
             if (strcmp (ptr_caps, "sasl") == 0)
             {
                 switch (IRC_SERVER_OPTION_INTEGER(server,
-                                                  IRC_SERVER_OPTION_SASL_USERNAME))
+                                                  IRC_SERVER_OPTION_SASL_MECHANISM))
                 {
                     case IRC_SASL_MECHANISM_PLAIN:
-                        irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
-                        break;
                     default:
                         irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
                         break;
@@ -3769,39 +3775,23 @@ irc_protocol_cmd_901 (struct t_irc_server *server, const char *command,
 }
 
 /*
- * irc_protocol_cmd_903: '903' command received (SASL authentication successful)
+ * irc_protocol_cmd_sasl_end: '903' to '907' command received
  */
 
 int
-irc_protocol_cmd_903 (struct t_irc_server *server, const char *command,
-                      int argc, char **argv, char **argv_eol)
+irc_protocol_cmd_sasl_end (struct t_irc_server *server, const char *command,
+                           int argc, char **argv, char **argv_eol)
 {
     /* 903 message looks like:
        :server 903 nick :SASL authentication successful
-    */
-    
-    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
-    
-    irc_server_sendf (server, 0, "CAP END");
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
- * irc_protocol_cmd_904: '904' command received (SASL authentication failed)
- */
-
-int
-irc_protocol_cmd_904 (struct t_irc_server *server, const char *command,
-                      int argc, char **argv, char **argv_eol)
-{
-    /* 904 message looks like:
+       904 message looks like:
        :server 904 nick :SASL authentication failed
     */
     
     irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
     
-    irc_server_sendf (server, 0, "CAP END");
+    if (!server->is_connected)
+        irc_server_sendf (server, 0, "CAP END");
     
     return WEECHAT_RC_OK;
 }
@@ -3964,8 +3954,11 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "671", /* whois (secure connection) */ 1, &irc_protocol_cmd_whois_nick_msg },
           { "900", /* logged in as (SASL) */ 1, &irc_protocol_cmd_900 },
           { "901", /* you are now logged in */ 1, &irc_protocol_cmd_901 },
-          { "903", /* SASL authentication successful */ 1, &irc_protocol_cmd_903 },
-          { "904", /* SASL authentication failed */ 1, &irc_protocol_cmd_904 },
+          { "903", /* SASL authentication successful */ 1, &irc_protocol_cmd_sasl_end },
+          { "904", /* SASL authentication failed */ 1, &irc_protocol_cmd_sasl_end },
+          { "905", /* SASL message too long */ 1, &irc_protocol_cmd_sasl_end },
+          { "906", /* SASL authentication aborted */ 1, &irc_protocol_cmd_sasl_end },
+          { "907", /* You have already completed SASL authentication */ 1, &irc_protocol_cmd_sasl_end },
           { "973", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
           { "974", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
           { "975", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
