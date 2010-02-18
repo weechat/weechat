@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-15 11:45+0100\n"
-"PO-Revision-Date: 2010-02-15 10:01+0100\n"
+"POT-Creation-Date: 2010-02-18 19:55+0100\n"
+"PO-Revision-Date: 2010-02-18 19:56+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4169,6 +4169,11 @@ msgstr "nom d'utilisateur pour l'authentification SASL"
 msgid "password for SASL authentication"
 msgstr "mot de passe pour l'authentification SASL"
 
+msgid "timeout (in seconds) before giving up SASL authentication"
+msgstr ""
+"délai d'attende maximum (en secondes) avant d'abandonner l'authentification "
+"SASL"
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "connexion automatique au serveur quand WeeChat démarre"
 
@@ -4568,6 +4573,13 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ce tampon n'est pas un canal !"
 
 #, c-format
+msgid ""
+"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+msgstr ""
+"%s%s: erreur de construction de la réponse pour l'authentification SASL, en "
+"utilisant le mécanisme \"%s\""
+
+#, c-format
 msgid "%s%s: client capability, server supports: %s"
 msgstr "%s%s: client capability, le serveur supporte: %s"
 
@@ -4582,6 +4594,18 @@ msgstr "%s%s: client capability: sasl non supporté"
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
 msgstr "%s%s: client capability, activé: %s"
+
+#, c-format
+msgid ""
+"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+"WeeChat was not built with libgcrypt support"
+msgstr ""
+"%s%s: impossible de s'authentifier avec SASL et le mécanisme DH-BLOWFISH car "
+"WeeChat n'a pas été construit avec le support libgcrypt"
+
+#, c-format
+msgid "%s%s: client capability, refused: %s"
+msgstr "%s%s: client capability, refusé: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -6341,6 +6365,3 @@ msgstr "Paramètres"
 
 msgid "Pointer"
 msgstr "Pointeur"
-
-#~ msgid "host"
-#~ msgstr "nom d'hôte"

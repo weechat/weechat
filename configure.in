@@ -96,6 +96,7 @@ AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa mem
 AH_VERBATIM([PREFIX], [#undef PREFIX])
 AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
 AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
+AH_VERBATIM([HAVE_GCRYPT], [#undef HAVE_GCRYPT])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
@@ -120,6 +121,7 @@ AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interfac
 AC_ARG_ENABLE(wxwidgets,    [  --enable-wxwidgets      turn on WxWidgets interface (default=off)],enable_wxwidgets=$enableval,enable_wxwidgets=no)
 AC_ARG_ENABLE(gtk,          [  --enable-gtk            turn on Gtk interface (default=off)],enable_gtk=$enableval,enable_gtk=no)
 AC_ARG_ENABLE(qt,           [  --enable-qt             turn on Qt interface (default=off)],enable_qt=$enableval,enable_qt=no)
+AC_ARG_ENABLE(gcrypt,       [  --disable-gcrypt        turn off gcrypt support (default=compiled if found)],enable_gcrypt=$enableval,enable_gcrypt=yes)
 AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
@@ -739,21 +741,51 @@ else
 fi
 
 # ------------------------------------------------------------------------------
+#                                   gcrypt
+# ------------------------------------------------------------------------------
+
+if test "x$enable_gcrypt" = "xyes" ; then
+    AC_CHECK_HEADER(gcrypt.h,ac_found_gcrypt_header="yes",ac_found_gcrypt_header="no")
+    AC_CHECK_LIB(gcrypt,gcry_check_version,ac_found_gcrypt_lib="yes",ac_found_gcrypt_lib="no")
+    
+    AC_MSG_CHECKING(for gcrypt headers and librairies)
+    if test "x$ac_found_gcrypt_header" = "xno" -o "x$ac_found_gcrypt_lib" = "xno" ; then
+        AC_MSG_RESULT(no)
+        AC_MSG_WARN([
+*** libgcrypt was not found. You may want to get it from ftp://ftp.gnupg.org/gcrypt/libgcrypt/
+*** WeeChat will be built without gcrypt support.
+*** Some features like SASL authentication with IRC server using mechanism DH-BLOWFISH will be disabled.])
+        enable_gcrypt="no"
+        not_found="$not_found gcrypt"
+    else
+        AC_MSG_RESULT(yes)
+        GCRYPT_CFLAGS=`libgcrypt-config --cflags`
+        GCRYPT_LFLAGS=`libgcrypt-config --libs`
+        AC_SUBST(GCRYPT_CFLAGS)
+        AC_SUBST(GCRYPT_LFLAGS)
+        AC_DEFINE(HAVE_GCRYPT)
+        CFLAGS="$CFLAGS -DHAVE_GCRYPT"
+    fi
+else
+    not_asked="$not_asked gcrypt"
+fi
+
+# ------------------------------------------------------------------------------
 #                                   gnutls
 # ------------------------------------------------------------------------------
 
 if test "x$enable_gnutls" = "xyes" ; then
-   AC_CHECK_HEADER(gnutls/gnutls.h,ac_found_gnutls_header="yes",ac_found_gnutls_header="no")
-   AC_CHECK_LIB(gnutls,gnutls_global_init,ac_found_gnutls_lib="yes",ac_found_gnutls_lib="no")
-
-   AC_MSG_CHECKING(for gnutls headers and librairies)
-   if test "x$ac_found_gnutls_header" = "xno" -o "x$ac_found_gnutls_lib" = "xno" ; then
-      AC_MSG_RESULT(no)
-      AC_MSG_WARN([
+    AC_CHECK_HEADER(gnutls/gnutls.h,ac_found_gnutls_header="yes",ac_found_gnutls_header="no")
+    AC_CHECK_LIB(gnutls,gnutls_global_init,ac_found_gnutls_lib="yes",ac_found_gnutls_lib="no")
+    
+    AC_MSG_CHECKING(for gnutls headers and librairies)
+    if test "x$ac_found_gnutls_header" = "xno" -o "x$ac_found_gnutls_lib" = "xno" ; then
+        AC_MSG_RESULT(no)
+        AC_MSG_WARN([
 *** libgnutls was not found. You may want to get it from ftp://ftp.gnutls.org/pub/gnutls/
 *** WeeChat will be built without GnuTLS support.])
-      enable_gnutls="no"
-      not_found="$not_found gnutls"
+        enable_gnutls="no"
+        not_found="$not_found gnutls"
     else
         AC_MSG_RESULT(yes)
         GNUTLS_CFLAGS=`pkg-config gnutls --cflags`
@@ -932,6 +964,7 @@ CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\""
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
+AM_CONDITIONAL(HAVE_GCRYPT,    test "$enable_gcrypt" = "yes")
 AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,    test "$enable_ncurses" = "yes")
@@ -1058,6 +1091,9 @@ if test "x$enable_xfer" = "xyes"; then
 fi
 
 listoptional=""
+if test "x$enable_gcrypt" = "xyes"; then
+    listoptional="$listoptional gcrypt"
+fi
 if test "x$enable_gnutls" = "xyes"; then
     listoptional="$listoptional gnutls"
 fi

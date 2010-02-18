@@ -37,6 +37,10 @@
 #include <gnutls/gnutls.h>
 #endif
 
+#ifdef HAVE_GCRYPT
+#include <gcrypt.h>
+#endif
+
 #include "weechat.h"
 #include "wee-network.h"
 #include "wee-hook.h"
@@ -80,6 +84,11 @@ network_init ()
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
     network_init_ok = 1;
+#endif
+#ifdef HAVE_GCRYPT
+    gcry_check_version (GCRYPT_VERSION);
+    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+    gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 #endif
 }
 

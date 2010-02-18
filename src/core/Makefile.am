@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GNUTLS_CFLAGS)
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS)
 
 noinst_LIBRARIES = lib_weechat_core.a
 

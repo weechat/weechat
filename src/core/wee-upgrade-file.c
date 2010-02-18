@@ -668,7 +668,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             rc = 0;
     }
     
-    end:
+end:
     if (infolist)
         infolist_free (infolist);
     if (name)

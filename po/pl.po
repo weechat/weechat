@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-15 11:45+0100\n"
-"PO-Revision-Date: 2010-02-09 15:52+0100\n"
+"POT-Creation-Date: 2010-02-18 19:55+0100\n"
+"PO-Revision-Date: 2010-02-18 19:54+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -4120,6 +4120,9 @@ msgstr ""
 msgid "password for SASL authentication"
 msgstr ""
 
+msgid "timeout (in seconds) before giving up SASL authentication"
+msgstr ""
+
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automatycznie połącz się z serwerem przy uruchamianiu WeeChat"
 
@@ -4519,6 +4522,11 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: to nie jest bufor kanału"
 
 #, c-format
+msgid ""
+"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+msgstr ""
+
+#, c-format
 msgid "%s%s: client capability, server supports: %s"
 msgstr ""
 
@@ -4533,6 +4541,18 @@ msgstr ""
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+"WeeChat was not built with libgcrypt support"
+msgstr ""
+"%s%s: nie można połączyć używając SSL, ponieważ WeeChat został skompilowany "
+"bez wsparcia dla GnuTLS"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, refused: %s"
+msgstr "%s%s: nieprawidłowe kodowanie: \"%s\""
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -6257,148 +6277,3 @@ msgstr "[argumenty]"
 #, fuzzy
 msgid "Pointer"
 msgstr "liczba"
-
-#~ msgid "[-o]"
-#~ msgstr "[-o]"
-
-#~ msgid "-o: send uptime to current buffer as input"
-#~ msgstr "-o: wysyła czas pracy jako wejście do obecnego bufora"
-
-#~ msgid "-o: send version to current buffer as input"
-#~ msgstr "-o: wysyła wersję jako wejście do obecnego bufora"
-
-#~ msgid "time format for buffers"
-#~ msgstr "format czasu dla buforów"
-
-#~ msgid "%s%s: cannot find nick for sending message"
-#~ msgstr "%s%s: nie można znaleźć nicku do wysłania wiadomości"
-
-#~ msgid "text: text to send"
-#~ msgstr "tekst: tekst do wysłania"
-
-#~ msgid "%s%s: error: \"%s\""
-#~ msgstr "%s%s: błąd: \"%s\""
-
-#~ msgid "%s%s: missing argument for \"%s\" option"
-#~ msgstr "%s%s: brakuje argumentu dla opcji \"%s\""
-
-#~ msgid ""
-#~ "      -all: connect to all servers\n"
-#~ "servername: internal server name to connect\n"
-#~ "   -nojoin: do not join any channel (even if autojoin is enabled on "
-#~ "server)\n"
-#~ "  hostname: hostname to connect\n"
-#~ "      port: port for server (integer, default is 6667)\n"
-#~ "      ipv6: use IPv6 protocol\n"
-#~ "       ssl: use SSL protocol"
-#~ msgstr ""
-#~ "      -all: łączy się ze wszystkimi serwerami\n"
-#~ "nazwa_serwera: wewnętrzna nazwa serwera do połączenia\n"
-#~ "   -nojoin: nie wchodź na żaden kanał (nawet jeśli serwer posiada "
-#~ "zdefiniowane kanały, z któreymi sam ma się połączyć)\n"
-#~ "  nazwa_hosta: nazwa hosta, z która ma sie połączyć\n"
-#~ "      port: port serwera (liczba całkowita, domyślnie 6667)\n"
-#~ "      ipv6: użyj protokołu IPv6\n"
-#~ "       ssl: użyj protokołu SSL "
-
-#~ msgid ""
-#~ " channel: channel where user is\n"
-#~ "nickname: nickname to kick and ban\n"
-#~ " comment: comment for kick"
-#~ msgstr ""
-#~ " kanał: kanał, na którym znajduje się użytkownik\n"
-#~ "nick: osoba do wykopania i zbanowania\n"
-#~ " komentarz: powód "
-
-#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
-#~ msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s%s: %s"
-
-#~ msgid "%sUnknown CTCP %s%s%s received from %s%s%s"
-#~ msgstr "%sNieznane CTCP %s%s%s otrzymano od %s%s%s"
-
-#~ msgid "%s: new client @ %s"
-#~ msgstr "%s: nowy klient @ %s"
-
-#~ msgid ""
-#~ "    list: list relay clients\n"
-#~ "listfull: list relay clients (verbose)\n"
-#~ "\n"
-#~ "Without argument, this command opens buffer with list of relay clients."
-#~ msgstr ""
-#~ "    list: lista klientów do przekazania\n"
-#~ "listfull: lista klientów do przekazania (szczegułowa)\n"
-#~ "\n"
-#~ "Bez argumentów komenda otworzy bufor z lista zdalnych klientów."
-
-#~ msgid "enable relay"
-#~ msgstr "włącz przekazywanie"
-
-#~ msgid ""
-#~ "port number (or range of ports) that relay plugin listens on (syntax: a "
-#~ "single port, ie. 5000 or a port range, ie. 5000-5015, it's recommended to "
-#~ "use ports greater than 1024, because only root can use ports below 1024)"
-#~ msgstr ""
-#~ "numer portu (albo przedział), na którym nasłuchuje wtyczka relay "
-#~ "(składnia: pojedynczy port, np. 5000 lub przedział portó, np. 5000-5015, "
-#~ "zaleca się stosowanie portów powyżej 1024, ponieważ tylko root może "
-#~ "używać portów poniżej 1024)"
-
-#~ msgid "%s%s: option \"listen_port_range\" is not defined"
-#~ msgstr "%s%s: nie zdefiniowana opcja \"listen_port_range\" "
-
-#~ msgid "%s%s: cannot find available port for listening"
-#~ msgstr "%s%s: nie można znaleźc dostępnego portu do nasłuchu"
-
-#~ msgid "%s%s unable to run function \"%s\""
-#~ msgstr "%s%s nie można wykonać funkcji \"%s\""
-
-#~ msgid "list of %s scripts"
-#~ msgstr "lista skryptów %s "
-
-#~ msgid "Alias:"
-#~ msgstr "Alias:"
-
-#~ msgid "No alias found"
-#~ msgstr "Nie znaleziono żadnego aliasu"
-
-#~ msgid "alias_name"
-#~ msgstr "nazwa_aliasu"
-
-#~ msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
-#~ msgstr "%sCTCP %sVERSION%s odpowiedź od %s%s%s: %s"
-
-#~ msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
-#~ msgstr "%sCTCP %sVERSION%s otrzymano od %s%s%s: %s"
-
-#~ msgid "%sCTCP %sVERSION%s received from %s%s"
-#~ msgstr "%sCTCP %sVERSION%s otrzymano od %s%s"
-
-#~ msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
-#~ msgstr "%sOtrzymano CTCP %sSOUND%s \"%s\" od %s%s"
-
-#~ msgid "%sCTCP %sPING%s received from %s%s"
-#~ msgstr "%sCTCP %sPING%s otrzymane od %s%s"
-
-#~ msgid "nicks"
-#~ msgstr "nicki"
-
-#~ msgid "ops"
-#~ msgstr "opy"
-
-#~ msgid "halfops"
-#~ msgstr "halfopy"
-
-#~ msgid "voices"
-#~ msgstr "voice"
-
-#~ msgid "%s%s: cannot read data from socket, disconnecting from server..."
-#~ msgstr "%s%s: nie można odczytać danych z gniazda, rozłączam z serwerem..."
-
-#~ msgid "text color for nick name in input line"
-#~ msgstr "kolor nicku w wprowadzonej lini"
-
-#~ msgid "Bar \"%s\" is now hidden"
-#~ msgstr "Pasek \"%s\" został ukryty"
-
-#~ msgid "Bar \"%s\" is now visible"
-#~ msgstr "Pasek \"%s\" jest teraz widoczny"

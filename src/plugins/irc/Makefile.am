@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GNUTLS_CFLAGS)
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
@@ -58,12 +58,14 @@ irc_la_SOURCES = irc.c \
                  irc-protocol.h \
                  irc-raw.c \
                  irc-raw.h \
+                 irc-sasl.c \
+                 irc-sasl.h \
                  irc-server.c \
                  irc-server.h \
                  irc-upgrade.c \
                  irc-upgrade.h
 
 irc_la_LDFLAGS = -module
-irc_la_LIBADD  = $(IRC_LFLAGS) $(GNUTLS_LFLAGS)
+irc_la_LIBADD  = $(IRC_LFLAGS) $(GCRYPT_LFLAGS) $(GNUTLS_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

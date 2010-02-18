@@ -49,6 +49,7 @@
 #include "irc-nick.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
+#include "irc-sasl.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -60,7 +61,7 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 { "addresses", "proxy", "ipv6",
   "ssl", "ssl_cert", "ssl_dhkey_size", "ssl_verify",
-  "password", "sasl_mechanism", "sasl_username", "sasl_password",
+  "password", "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout",
   "autoconnect", "autoreconnect", "autoreconnect_delay",
   "nicks", "username", "realname", "local_hostname",
   "command", "command_delay", "autojoin", "autorejoin", "autorejoin_delay",
@@ -69,14 +70,11 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 { "", "", "off",
   "off", "", "2048", "on",
-  "", "plain", "", "",
+  "", "plain", "", "", "15",
   "off", "on", "30",
   "", "", "", "",
   "", "0", "", "off", "30",
 };
-
-char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
-{ "plain", /*"dh-blowfish"*/ };
 
 
 void irc_server_reconnect (struct t_irc_server *server);

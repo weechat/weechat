@@ -140,6 +140,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-protocol.h
 ./src/plugins/irc/irc-raw.c
 ./src/plugins/irc/irc-raw.h
+./src/plugins/irc/irc-sasl.c
+./src/plugins/irc/irc-sasl.h
 ./src/plugins/irc/irc-server.c
 ./src/plugins/irc/irc-server.h
 ./src/plugins/logger/logger.c

@@ -969,7 +969,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "integer",
                 N_("mechanism for SASL authentication"),
-                "plain" /*"plain|dh-blowfish"*/, 0, 0,
+                "plain|dh-blowfish", 0, 0,
                 default_value, value,
                 null_value_allowed,
                 NULL, NULL,
@@ -994,6 +994,19 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("password for SASL authentication"),
                 NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SASL_TIMEOUT:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("timeout (in seconds) before giving up SASL "
+                   "authentication"),
+                NULL, 1, 3600,
                 default_value, value,
                 null_value_allowed,
                 NULL, NULL,

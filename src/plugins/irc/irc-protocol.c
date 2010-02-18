@@ -44,6 +44,7 @@
 #include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
+#include "irc-sasl.h"
 #include "irc-server.h"
 
 
@@ -224,8 +225,7 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
                                int argc, char **argv, char **argv_eol)
 {
     const char *sasl_username, *sasl_password;
-    char *string, *string_base64;
-    int length_username, length;
+    char *answer;
     
     /* AUTHENTICATE message looks like:
        AUTHENTICATE +
@@ -236,7 +236,7 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
     
     /* make C compiler happy */
     (void) command;
-    (void) argv_eol;
+    (void) argv;
     
     sasl_username = IRC_SERVER_OPTION_STRING(server,
                                              IRC_SERVER_OPTION_SASL_USERNAME);
@@ -245,33 +245,33 @@ irc_protocol_cmd_authenticate (struct t_irc_server *server, const char *command,
     if (sasl_username && sasl_username[0]
         && sasl_password && sasl_password[0])
     {
-        length_username = strlen (sasl_username);
-        length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
-        string = malloc (length);
-        if (string)
+        switch (IRC_SERVER_OPTION_INTEGER(server,
+                                          IRC_SERVER_OPTION_SASL_MECHANISM))
         {
-            snprintf (string, length, "%s|%s|%s",
-                      sasl_username, sasl_username, sasl_password);
-            string[length_username] = '\0';
-            string[(length_username * 2) + 1] = '\0';
-            
-            if (strcmp (argv[1], "+") == 0)
-            {
-                /* mechanism PLAIN */
-                string_base64 = malloc (length * 2);
-                if (string_base64)
-                {
-                    weechat_string_encode_base64 (string, length - 1, string_base64);
-                    irc_server_sendf (server, 0, "AUTHENTICATE %s", string_base64);
-                    free (string_base64);
-                }
-            }
-            else
-            {
-                /* TODO: other mechanisms */
-            }
-            
-            free (string);
+            case IRC_SASL_MECHANISM_DH_BLOWFISH:
+                answer = irc_sasl_mechanism_dh_blowfish (argv_eol[1],
+                                                         sasl_username,
+                                                         sasl_password);
+                break;
+            case IRC_SASL_MECHANISM_PLAIN:
+            default:
+                answer = irc_sasl_mechanism_plain (sasl_username,
+                                                   sasl_password);
+                break;
+        }
+        if (answer)
+        {
+            irc_server_sendf (server, 0, "AUTHENTICATE %s", answer);
+            free (answer);
+        }
+        else
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: error building answer for "
+                              "SASL authentication, using mechanism \"%s\""),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
+            irc_server_sendf (server, 0, "CAP END");
         }
     }
     
@@ -287,11 +287,12 @@ irc_protocol_cmd_cap (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *ptr_caps, **items;
-    int num_items, sasl, i;
+    int num_items, sasl, i, timeout;
     
     /* CAP message looks like:
        :server CAP * LS :identify-msg multi-prefix sasl
        :server CAP * ACK :sasl
+       :server CAP * NAK :sasl
     */
     
     IRC_PROTOCOL_MIN_ARGS(4);
@@ -348,14 +349,27 @@ irc_protocol_cmd_cap (struct t_irc_server *server, const char *command,
             ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
             weechat_printf (server->buffer,
                             _("%s%s: client capability, enabled: %s"),
-                            weechat_prefix ("network"),
-                            IRC_PLUGIN_NAME,
+                            weechat_prefix ("network"), IRC_PLUGIN_NAME,
                             ptr_caps);
             if (strcmp (ptr_caps, "sasl") == 0)
             {
                 switch (IRC_SERVER_OPTION_INTEGER(server,
                                                   IRC_SERVER_OPTION_SASL_MECHANISM))
                 {
+                    case IRC_SASL_MECHANISM_DH_BLOWFISH:
+#ifdef HAVE_GCRYPT
+                        irc_server_sendf (server, 0, "AUTHENTICATE DH-BLOWFISH");
+#else
+                        weechat_printf (server->buffer,
+                                        _("%s%s: cannot authenticate with SASL "
+                                          "and mechanism DH-BLOWFISH because "
+                                          "WeeChat was not built with "
+                                          "libgcrypt support"),
+                                        weechat_prefix ("error"),
+                                        IRC_PLUGIN_NAME);
+                        irc_server_sendf (server, 0, "CAP END");
+#endif
+                        break;
                     case IRC_SASL_MECHANISM_PLAIN:
                     default:
                         irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
@@ -363,10 +377,26 @@ irc_protocol_cmd_cap (struct t_irc_server *server, const char *command,
                 }
                 if (server->hook_timer_sasl)
                     weechat_unhook (server->hook_timer_sasl);
-                server->hook_timer_sasl = weechat_hook_timer (5 * 1000, 0, 1,
+                timeout = IRC_SERVER_OPTION_INTEGER(server,
+                                                    IRC_SERVER_OPTION_SASL_TIMEOUT);
+                server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
+                                                              0, 1,
                                                               &irc_server_timer_sasl_cb,
                                                               server);
             }
+        }
+    }
+    else if (strcmp (argv[3], "NAK") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf (server->buffer,
+                            _("%s%s: client capability, refused: %s"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            ptr_caps);
+            if (!server->is_connected)
+                irc_server_sendf (server, 0, "CAP END");
         }
     }
     

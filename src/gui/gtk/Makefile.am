@@ -26,8 +26,8 @@ weechat_gtk_LDADD = ./../../core/lib_weechat_core.a \
                     ../../core/lib_weechat_core.a \
                     $(PLUGINS_LFLAGS) \
                     $(GTK_LFLAGS) \
-                    $(GNUTLS_LFLAGS) \
-                    $(IKSEMEL_LFLAGS)
+                    $(GCRYPT_LFLAGS) \
+                    $(GNUTLS_LFLAGS)
 
 weechat_gtk_SOURCES = gui-gtk-bar-window.c \
                       gui-gtk-chat.c \

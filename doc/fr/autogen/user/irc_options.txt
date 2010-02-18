@@ -311,12 +311,17 @@
 * *irc.server_default.sasl_mechanism*
 ** description: mécanisme pour l'authentification SASL
 ** type: entier
-** valeurs: plain (valeur par défaut: plain)
+** valeurs: plain, dh-blowfish (valeur par défaut: plain)
 
 * *irc.server_default.sasl_password*
 ** description: mot de passe pour l'authentification SASL
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
+
+* *irc.server_default.sasl_timeout*
+** description: délai d'attende maximum (en secondes) avant d'abandonner l'authentification SASL
+** type: entier
+** valeurs: 1 .. 3600 (valeur par défaut: 15)
 
 * *irc.server_default.sasl_username*
 ** description: nom d'utilisateur pour l'authentification SASL
