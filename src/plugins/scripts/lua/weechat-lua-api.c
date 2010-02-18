@@ -2875,7 +2875,7 @@ weechat_lua_api_color (lua_State *L)
     
     color = lua_tostring (lua_current_interpreter, -1);
     
-    result = weechat_prefix (color);
+    result = weechat_color (color);
     
     LUA_RETURN_STRING(result);
 }
