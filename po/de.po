@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-18 19:55+0100\n"
-"PO-Revision-Date: 2010-02-18 19:52+0100\n"
+"POT-Creation-Date: 2010-02-19 07:55+0100\n"
+"PO-Revision-Date: 2010-02-19 07:56+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -411,7 +411,7 @@ msgid "Saved layout for buffers:"
 msgstr "Layout gespeichert für die Buffer:"
 
 msgid "Saved layout for windows:"
-msgstr "Layout gespeichert für die Fenster:"
+msgstr "gespeicherte Layouts  für Fenster:"
 
 msgid "No layout saved"
 msgstr "Kein Layout gespeichert"
@@ -1185,7 +1185,7 @@ msgstr ""
 "Beispiele:\n"
 "  Speichern der Konfiguration: /mute save\n"
 "  Nachricht in den aktuellen Channel senden: /mute -current msg * hi!\n"
-"  Nachricht an den #weechat Channe sendenl: /mute -buffer irc.freenode."
+"  Nachricht an den #weechat Channel senden: /mute -buffer irc.freenode."
 "#weechat msg #weechat hi!"
 
 msgid "list/load/unload plugins"
@@ -1405,6 +1405,9 @@ msgid ""
 " -o: send uptime to current buffer as input (english string)\n"
 "-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
+" -o: sendet die WeeChat Laufzeit in den aktuellen Buffer (englisch)\n"
+"-ol: sendet die WeeChat Laufzeit in den aktuellen Buffer (in der "
+"Voreingestellten Landesprache)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "Zeigt die WeeChat-Version und das Datum der Kompilierung an"
@@ -1413,6 +1416,9 @@ msgid ""
 " -o: send version to current buffer as input (english string)\n"
 "-ol: send version to current buffer as input (translated string)"
 msgstr ""
+" -o: sendet die WeeChat Version in den aktuellen Buffer (englisch)\n"
+"-ol: sendet die WeeChat Version in den aktuellen Buffer (in der "
+"Voreingestellten Landesprache)"
 
 msgid "schedule a command execution in future"
 msgstr "Terminiere einen Befehl der ausgeführt werden soll"
@@ -1596,9 +1602,8 @@ msgstr ""
 "genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden "
 "soll oder nicht, entsprechend der Wichtigkeit der Nachricht)"
 
-#, fuzzy
 msgid "time format for each line displayed in buffers"
-msgstr "Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird"
+msgstr "Format der Uhrzeit, welche für jede Zeile im Buffer verwendet wird"
 
 msgid "number of colors to use for nicks colors"
 msgstr "Anzahl der für Nick-Namen zu benutzenden Farben"
@@ -1619,7 +1624,7 @@ msgid "display special message when day changes"
 msgstr "Spezielle Nachricht anzeigen, wenn ein neuer Tag beginnt"
 
 msgid "time format for date displayed when day changed"
-msgstr "Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird"
+msgstr "Format für Zeit und Datum, das beim Tageswechsel angezeigt wird"
 
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
@@ -1779,9 +1784,10 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "Fenstertitel setzen (oder Terminal-Titel im Curses-GUI) mit Name und Version"
 
-#, fuzzy
 msgid "time format for dates converted to strings and displayed in messages"
-msgstr "Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird"
+msgstr ""
+"Zeitstempel für das Datum. Dieser wird in eine Zeichenkette umgewandelt und "
+"in Nachrichten dargestellt."
 
 msgid "background color for window separators (when split)"
 msgstr ""
@@ -2571,12 +2577,11 @@ msgstr "Aliasname: Name des zu löschenden Alias"
 msgid "list of aliases"
 msgstr "Liste der Aliase"
 
-#, fuzzy
 msgid "alias pointer (optional)"
-msgstr "Liste der Optionen"
+msgstr "Alias Pointer (optional)"
 
 msgid "alias name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "Alias Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -4212,16 +4217,17 @@ msgid "password for server"
 msgstr "Passwort für den Server"
 
 msgid "mechanism for SASL authentication"
-msgstr ""
+msgstr "Vorrichtung zur SASL Authentifizierung"
 
 msgid "username for SASL authentication"
-msgstr ""
+msgstr "Username für SASL Authentifizierung"
 
 msgid "password for SASL authentication"
-msgstr ""
+msgstr "Passwort für SASL Authentifizierung"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
+"Zeitüberschreitung (in Sekunden) bis zum Abbruch der SASL Authentifizierung"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "Automatisch mit dem Server verbinden, wenn WeeChat gestartet wird"
@@ -4563,67 +4569,62 @@ msgstr[1] "Channels"
 msgid "1 if string is an IRC channel"
 msgstr "1, falls die Zeichenkette ein IRC-Channel ist"
 
-#, fuzzy
 msgid "channel name"
-msgstr "Channel Modus"
+msgstr "Channelname"
 
 msgid "get current nick on a server"
 msgstr "Aktuellen Nicknamen für den Server erhalten"
 
-#, fuzzy
 msgid "server name"
-msgstr "Ziel: Servername"
+msgstr "Servername"
 
 msgid "get nick from IRC host"
 msgstr "Nicknamen des IRC-Hosts erhalten"
 
 msgid "IRC host (like `:nick!name@server.com`)"
-msgstr ""
+msgstr "IRC host (in der Form `:nick!name@server.com`)"
 
 msgid "get nick color"
 msgstr "Hole Farbe für Nick"
 
-#, fuzzy
 msgid "nickname"
-msgstr "[-all] Nickname"
+msgstr "Nickname"
 
-#, fuzzy
 msgid "get buffer pointer for an IRC server/channel/nick"
-msgstr "Zeiger auf den Buffer für einen IRC-Server oder Channel erhalten"
+msgstr "hole Buffer Pointer für einen IRC Server/Channel/Nick"
 
 msgid "server,channel,nick (channel and nicks are optional)"
-msgstr ""
+msgstr "server,channel,nick (Channel und Nicks sind optional)"
 
 msgid "list of IRC servers"
 msgstr "Liste der IRC-Server"
 
-#, fuzzy
 msgid "server pointer (optional)"
-msgstr "IRC-Server (interne Namen)"
+msgstr "Server Pointer (optional)"
 
 msgid "server name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "Servername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of channels for an IRC server"
 msgstr "Liste der Channels eines IRC-Servers"
 
 msgid "channel pointer (optional)"
-msgstr ""
+msgstr "Channel Pointer (optional)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "Liste der Nicks im IRC-Channel"
 
 msgid "nick pointer (optional)"
-msgstr ""
+msgstr "Nick Pointer (optional)"
 
 msgid "server,channel,nick (channel and nick are optional)"
-msgstr ""
+msgstr "Server,Channel,Nick (Channel und Nick sind optional)"
 
 msgid "list of IRC ignores"
 msgstr "Liste von ignorierten IRCs"
 
 msgid "ignore pointer (optional)"
-msgstr ""
+msgstr "Ignore Pointer (optional)"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -4637,34 +4638,36 @@ msgstr "%s%s: Dieser Buffer ist kein Channel!"
 msgid ""
 "%s%s: error building answer for SASL authentication, using mechanism \"%s\""
 msgstr ""
+"%s%s: Fehler beim Erstellen der Antwort für die SASL Authentifizierung. \"%s"
+"\" Mechanismus wurde genutzt."
 
 #, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr ""
+msgstr "%s%s: Client Fähigkeit, Server unterstützt: %s"
 
 #, c-format
 msgid "%s%s: client capability, requesting: sasl"
-msgstr ""
+msgstr "%s%s: Client Fähigkeit, Anfrage: SASL"
 
 #, c-format
 msgid "%s%s: client capability: sasl not supported"
-msgstr ""
+msgstr "%s%s: Client Fähigkeit: SASL wird nicht unterstützt"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
-msgstr ""
+msgstr "%s%s: Client Fähigkeit, aktiviert: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
 "WeeChat was not built with libgcrypt support"
 msgstr ""
-"%s%s SSL-Verbindung nicht möglich, da WeeChat nicht mit GNUtls-Support "
-"kompiliert wurde"
+"%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
+"möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, refused: %s"
-msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
+msgstr "%s%s: Client Fähigkeit, abgewiesen: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -4985,7 +4988,7 @@ msgstr "%s: Trennung vom Server..."
 
 #, c-format
 msgid "%s%s: sasl authentication timeout"
-msgstr ""
+msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -5386,18 +5389,14 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "Liste der protokollierten Buffer"
 
-#, fuzzy
 msgid "logger pointer (optional)"
-msgstr ""
-"Konfiguration für \"logger\" Erweiterung (dient zum Protokollieren der "
-"Buffer)"
+msgstr "Logger Pointer (optional)"
 
 msgid "WeeChat version"
 msgstr "WeeChat Version"
 
-#, fuzzy
 msgid "WeeChat version (as number)"
-msgstr "WeeChat Version"
+msgstr "WeeChat Version (als Nummer)"
 
 msgid "WeeChat compilation date"
 msgstr "Datum der WeeChat Kompilierung"
@@ -5439,59 +5438,61 @@ msgid "list of bars"
 msgstr "Auflistung der Bars"
 
 msgid "bar pointer (optional)"
-msgstr ""
+msgstr "Bar Pointer (optional)"
 
 msgid "bar name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "Bar Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of bar items"
 msgstr "Liste der Bar-Items"
 
 msgid "bar item pointer (optional)"
-msgstr ""
+msgstr "Bar Item Pointer (optional)"
 
 msgid "bar item name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"Bar-Item Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of bar windows"
 msgstr "Liste der Bar-Fenster"
 
 msgid "bar window pointer (optional)"
-msgstr ""
+msgstr "Bar-Fenster Pointer (optional)"
 
 msgid "list of buffers"
 msgstr "Liste der Buffer"
 
 msgid "buffer pointer (optional)"
-msgstr ""
+msgstr "Buffer Pointer (optional)"
 
 msgid "buffer name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "Buffername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "lines of a buffer"
 msgstr "Zeilen des Buffers"
 
-#, fuzzy
 msgid "buffer pointer"
-msgstr "Bestimme eine Eigenschaft des Buffers"
+msgstr "Buffer Pointer"
 
 msgid "list of filters"
 msgstr "Liste der Filter"
 
 msgid "filter name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "Filtername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "history of commands"
 msgstr "Verlaufspeicher der Befehle"
 
 msgid "buffer pointer (if not set, return global history) (optional)"
 msgstr ""
+"Buffer Pointer (falls nicht gesetzt, wird der globale Verlauf zurückgegeben) "
+"(optional)"
 
 msgid "list of hooks"
 msgstr "Auflistung der Hooks"
 
 msgid "hook type: command, timer, .. (optional)"
-msgstr ""
+msgstr "hook Type: command, timer, .. (optional)"
 
 msgid "list of buffers in hotlist"
 msgstr "Liste der Buffer in Hotlist"
@@ -5504,30 +5505,35 @@ msgstr "Nicks in Nickliste für einen Buffer"
 
 msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
 msgstr ""
+"nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)"
 
 msgid "list of options"
 msgstr "Liste der Optionen"
 
 msgid "option name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"Name einer Option (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of plugins"
 msgstr "Auflistung der Erweiterungen"
 
 msgid "plugin pointer (optional)"
-msgstr ""
+msgstr "Pointer der Erweiterung (optional)"
 
 msgid "plugin name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"Name einer Erweiterung (darf mit einem Joker \"*\" beginnen oder enden) "
+"(optional)"
 
 msgid "list of windows"
 msgstr "Auflistung der Windows"
 
 msgid "window pointer (optional)"
-msgstr ""
+msgstr "Fenster Pointer (optional)"
 
 msgid "window name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"Fenstername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5766,9 +5772,8 @@ msgstr "Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen"
 msgid "list of relay clients"
 msgstr "Liste der Relay-Clients"
 
-#, fuzzy
 msgid "relay pointer (optional)"
-msgstr "Relay-Kontrolle"
+msgstr "Relay Pointer (optional)"
 
 #, c-format
 msgid "%s%s: error sending data to client %s"
@@ -5979,10 +5984,11 @@ msgid "list of scripts"
 msgstr "Liste der Skripten:"
 
 msgid "script pointer (optional)"
-msgstr ""
+msgstr "Skript Pointer (optional)"
 
 msgid "script name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"Name des Skripts (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -6362,9 +6368,8 @@ msgstr ""
 msgid "list of xfer"
 msgstr "Transfer-Liste"
 
-#, fuzzy
 msgid "xfer pointer (optional)"
-msgstr "Transfer-Steuerung"
+msgstr "xfer Pointer (optional)"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
@@ -6412,20 +6417,16 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 
 msgid "Plugin"
-msgstr ""
+msgstr "Erweiterung"
 
-#, fuzzy
 msgid "Name"
 msgstr "Name"
 
-#, fuzzy
 msgid "Description"
 msgstr "Beschreibung"
 
-#, fuzzy
 msgid "Arguments"
-msgstr "[arguments]"
+msgstr "Argumente"
 
-#, fuzzy
 msgid "Pointer"
-msgstr "integer"
+msgstr "Pointer"
