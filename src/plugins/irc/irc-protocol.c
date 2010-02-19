@@ -1790,6 +1790,11 @@ irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
+    if (server->hook_timer_connection)
+    {
+        weechat_unhook (server->hook_timer_connection);
+        server->hook_timer_connection = NULL;
+    }
     server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
     irc_server_set_buffer_title (server);

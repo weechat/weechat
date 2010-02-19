@@ -121,6 +121,7 @@ struct t_irc_server
     int sock;                       /* socket for server (IPv4 or IPv6)      */
     struct t_hook *hook_connect;    /* connection hook                       */
     struct t_hook *hook_fd;         /* hook for server socket                */
+    struct t_hook *hook_timer_connection; /* timer for connection            */
     struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
@@ -204,8 +205,8 @@ extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *serve
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect ();
 extern void irc_server_autojoin_channels ();
-extern int irc_server_recv_cb (void *arg_server, int fd);
-extern int irc_server_timer_sasl_cb (void *arg_server, int remaining_calls);
+extern int irc_server_recv_cb (void *data, int fd);
+extern int irc_server_timer_sasl_cb (void *data, int remaining_calls);
 extern int irc_server_timer_cb (void *data, int remaining_calls);
 extern int irc_server_timer_check_away_cb (void *data, int remaining_calls);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server,

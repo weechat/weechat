@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-18 19:55+0100\n"
+"POT-Creation-Date: 2010-02-19 16:14+0100\n"
 "PO-Revision-Date: 2010-02-18 19:54+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4176,6 +4176,12 @@ msgstr "távollevő felhasználók nevének színe"
 msgid "color for channel modes, near channel name"
 msgstr "szobanevek színe az eseményekben"
 
+msgid ""
+"timeout (in seconds) between TCP connection to server and message 001 "
+"received, if this timeout is reached before 001 message is received, WeeChat "
+"will disconnect from server"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
@@ -4719,6 +4725,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: disconnecting from server..."
 msgstr "Lekapcsolódott a szerverről!\n"
+
+#, c-format
+msgid "%s%s: connection timeout (message 001 not received)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: sasl authentication timeout"

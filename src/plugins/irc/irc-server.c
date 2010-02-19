@@ -320,6 +320,7 @@ irc_server_alloc (const char *name)
     new_server->sock = -1;
     new_server->hook_connect = NULL;
     new_server->hook_fd = NULL;
+    new_server->hook_timer_connection = NULL;
     new_server->hook_timer_sasl = NULL;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
@@ -714,6 +715,8 @@ irc_server_free_data (struct t_irc_server *server)
         weechat_unhook (server->hook_connect);
     if (server->hook_fd)
         weechat_unhook (server->hook_fd);
+    if (server->hook_timer_connection)
+        weechat_unhook (server->hook_timer_connection);
     if (server->hook_timer_sasl)
         weechat_unhook (server->hook_timer_sasl);
     if (server->unterminated_message)
@@ -1659,7 +1662,7 @@ irc_server_msgq_flush ()
  */
 
 int
-irc_server_recv_cb (void *arg_server, int fd)
+irc_server_recv_cb (void *data, int fd)
 {
     struct t_irc_server *server;
     static char buffer[4096 + 2];
@@ -1668,7 +1671,7 @@ irc_server_recv_cb (void *arg_server, int fd)
     /* make C compiler happy */
     (void) fd;
     
-    server = (struct t_irc_server *)arg_server;
+    server = (struct t_irc_server *)data;
     
     if (!server)
         return WEECHAT_RC_ERROR;
@@ -1731,6 +1734,38 @@ irc_server_recv_cb (void *arg_server, int fd)
 }
 
 /*
+ * irc_server_timer_connection_cb: callback for server connection
+ *                                 it is called if WeeChat is TCP-connected to
+ *                                 server, but did not receive message 001
+ */
+
+int
+irc_server_timer_connection_cb (void *data, int remaining_calls)
+{
+    struct t_irc_server *server;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
+    
+    server = (struct t_irc_server *)data;
+    
+    if (!server)
+        return WEECHAT_RC_ERROR;
+    
+    server->hook_timer_connection = NULL;
+    
+    if (!server->is_connected)
+    {
+        weechat_printf (server->buffer,
+                        _("%s%s: connection timeout (message 001 not received)"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        irc_server_disconnect (server, 1);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_server_timer_sasl_cb: callback for SASL authentication timer
  *                           it is called if there is a timeout with SASL
  *                           authentication
@@ -1740,14 +1775,14 @@ irc_server_recv_cb (void *arg_server, int fd)
  */
 
 int
-irc_server_timer_sasl_cb (void *arg_server, int remaining_calls)
+irc_server_timer_sasl_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *server;
     
     /* make C compiler happy */
     (void) remaining_calls;
     
-    server = (struct t_irc_server *)arg_server;
+    server = (struct t_irc_server *)data;
     
     if (!server)
         return WEECHAT_RC_ERROR;
@@ -1990,6 +2025,13 @@ irc_server_login (struct t_irc_server *server)
                       server->addresses_array[server->index_current_address],
                       (realname && realname[0]) ?
                       realname : "weechat");
+    
+    if (server->hook_timer_connection)
+        weechat_unhook (server->hook_timer_connection);
+    server->hook_timer_connection = weechat_hook_timer (weechat_config_integer (irc_config_network_connection_timeout) * 1000,
+                                                        0, 1,
+                                                        &irc_server_timer_connection_cb,
+                                                        server);
 }
 
 /*
@@ -2020,13 +2062,13 @@ irc_server_switch_address (struct t_irc_server *server)
  */
 
 int
-irc_server_connect_cb (void *arg_server, int status, int gnutls_rc,
+irc_server_connect_cb (void *data, int status, int gnutls_rc,
                        const char *error, const char *ip_address)
 {
     struct t_irc_server *server;
     const char *proxy;
     
-    server = (struct t_irc_server *)arg_server;
+    server = (struct t_irc_server *)data;
     
     proxy = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY);
     
@@ -3645,6 +3687,7 @@ irc_server_print_log ()
         weechat_log_printf ("  sock . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_connect . . . . : 0x%lx", ptr_server->hook_connect);
         weechat_log_printf ("  hook_fd. . . . . . . : 0x%lx", ptr_server->hook_fd);
+        weechat_log_printf ("  hook_timer_connection: 0x%lx", ptr_server->hook_timer_connection);
         weechat_log_printf ("  hook_timer_sasl. . . : 0x%lx", ptr_server->hook_timer_sasl);
         weechat_log_printf ("  is_connected . . . . : %d",    ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected. . . . : %d",    ptr_server->ssl_connected);

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-18 19:55+0100\n"
-"PO-Revision-Date: 2010-02-18 19:56+0100\n"
+"POT-Creation-Date: 2010-02-19 16:14+0100\n"
+"PO-Revision-Date: 2010-02-19 16:16+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4377,6 +4377,15 @@ msgid "color for channel modes, near channel name"
 msgstr "couleur pour les modes du canal, à côté du nom du canal"
 
 msgid ""
+"timeout (in seconds) between TCP connection to server and message 001 "
+"received, if this timeout is reached before 001 message is received, WeeChat "
+"will disconnect from server"
+msgstr ""
+"délai d'attente (en secondes) entre la connexion TCP au serveur et la "
+"réception du message 001, si ce délai est atteint avant que le message 001 "
+"soit reçu, WeeChat se déconnectera du serveur"
+
+msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
 "version in string)"
 msgstr ""
@@ -4924,6 +4933,10 @@ msgstr "(connexion fermée par l'hôte distant)"
 #, c-format
 msgid "%s: disconnecting from server..."
 msgstr "%s: déconnexion du serveur..."
+
+#, c-format
+msgid "%s%s: connection timeout (message 001 not received)"
+msgstr "%s%s: délai de connexion dépassé (message 001 non reçu)"
 
 #, c-format
 msgid "%s%s: sasl authentication timeout"

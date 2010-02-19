@@ -203,6 +203,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
+* *irc.network.connection_timeout*
+** description: délai d'attente (en secondes) entre la connexion TCP au serveur et la réception du message 001, si ce délai est atteint avant que le message 001 soit reçu, WeeChat se déconnectera du serveur
+** type: entier
+** valeurs: 1 .. 3600 (valeur par défaut: 60)
+
 * *irc.network.default_msg_part*
 ** description: message par défaut pour le part (en quittant un canal) ("%v" sera remplacé par la version de WeeChat dans la chaîne)
 ** type: chaîne

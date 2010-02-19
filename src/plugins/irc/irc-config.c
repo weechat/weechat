@@ -87,6 +87,7 @@ struct t_config_option *irc_config_color_item_channel_modes;
 
 /* IRC config, network section */
 
+struct t_config_option *irc_config_network_connection_timeout;
 struct t_config_option *irc_config_network_default_msg_part;
 struct t_config_option *irc_config_network_default_msg_quit;
 struct t_config_option *irc_config_network_away_check;
@@ -1626,6 +1627,14 @@ irc_config_init ()
         return 0;
     }
     
+    irc_config_network_connection_timeout = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "connection_timeout", "integer",
+        N_("timeout (in seconds) between TCP connection to server and message "
+           "001 received, if this timeout is reached before 001 message is "
+           "received, WeeChat will disconnect from server"),
+        NULL, 1, 3600, "60", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_network_default_msg_part = weechat_config_new_option (
         irc_config_file, ptr_section,
         "default_msg_part", "string",
