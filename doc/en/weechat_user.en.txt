@@ -75,9 +75,39 @@ Source package
 
 WeeChat can be compiled with cmake or autotools (cmake is recommended way).
 
+[[dependencies]]
+Dependencies
+^^^^^^^^^^^^
+
+Following table shows list of packages that are required or optional to
+compile WeeChat.
+
+[width="80%",cols="4,^2,13",options="header"]
+|========================================
+| Package ^1^          | Required | Feature
+| cmake                | *yes*    | build (autotools still possible, but cmake is recommended)
+| libncursesw5-dev ^2^ | *yes*    | ncurses interface
+| libgcrypt11-dev      | no       | SASL authentication with IRC server, using mechanism DH-BLOWFISH
+| libgnutls-dev        | no       | SSL connection to IRC server
+| libaspell-dev        | no       | aspell plugin
+| libperl-dev          | no       | perl plugin
+| python-dev           | no       | python plugin
+| ruby1.8-dev          | no       | ruby plugin
+| liblua5.1-0-dev      | no       | lua plugin
+| tcl-dev              | no       | tcl plugin
+| asciidoc (>= 8.2)    | no       | build documentation (HTML files)
+| source-highlight     | no       | syntax highlight for sources in HTML documentation
+|========================================
+
+[NOTE]
+^1^ name comes from GNU/Linux Debian distribution, version in package name can
+be different +
+^2^ WeeChat can compile with libncurses5-dev, but it is *NOT* recommended (you
+will have display bugs with wide chars)
+
 [[compile_with_cmake]]
-With cmake
-^^^^^^^^^^
+Compile with cmake
+^^^^^^^^^^^^^^^^^^
 
 * Installation in system directories (requires 'root' privileges):
 
@@ -100,8 +130,8 @@ $ make install
 ----------------------------------------
 
 [[compile_with_autotools]]
-With autotools
-^^^^^^^^^^^^^^
+Compile with autotools
+^^^^^^^^^^^^^^^^^^^^^^
 
 * Installation in system directories (requires 'root' privileges):
 
