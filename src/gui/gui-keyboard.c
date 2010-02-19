@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-hook.h"
@@ -76,20 +77,7 @@ gui_keyboard_init ()
     gui_key_combo_buffer[0] = '\0';
     gui_key_grab = 0;
     gui_key_grab_count = 0;
-}
-
-/*
- * gui_keyboard_init_last_activity_time: init last activity time with current
- *                                       time
- */
-
-void
-gui_keyboard_init_last_activity_time ()
-{
-    struct timeval tv_time;
-    
-    gettimeofday (&tv_time, NULL);
-    gui_keyboard_last_activity_time = tv_time.tv_sec;
+    gui_keyboard_last_activity_time = time (NULL);
 }
 
 /*
