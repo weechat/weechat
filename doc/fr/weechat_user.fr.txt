@@ -60,10 +60,14 @@ Paquets binaires
 
 Les paquets binaires sont disponibles pour beaucoup de distributions, dont :
 
-* Debian (ou toute distribution compatible Debian) : `apt-get install weechat`
+* Debian (ou toute distribution compatible Debian) :
+  `apt-get install weechat-curses`
 * Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * Gentoo : `emerge weechat`
+* Arch Linux : `pacman -S weechat`
+* Fedora Core : `yum install weechat`
+* Sourcemage : `cast weechat`
 
 Des paquets additionnels peuvent être utiles également, comme weechat-plugins.
 

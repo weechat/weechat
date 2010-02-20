@@ -61,10 +61,14 @@ Pacchetti binari
 
 I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 
-* Debian (o qualsiasi distribuzione compatibile): `apt-get install weechat`
+* Debian (o qualsiasi distribuzione compatibile):
+  `apt-get install weechat-curses`
 * Mandriva/RedHat (o qualsiasi distribuzione compatibile con gli  RPM):
   `rpm -i /percorso/per/weechat-x.y.z-1.i386.rpm`
 * Gentoo: `emerge weechat`
+* Arch Linux: `pacman -S weechat`
+* Fedora Core: `yum install weechat`
+* Sourcemage: `cast weechat`
 
 Potrebbero risultare utili alcuni pacchetti addizionali, come
 weechat-plugins.
@@ -91,7 +95,7 @@ compile WeeChat.
 | Package ^(1)^          | Required | Feature
 | cmake                  | *yes*    | build (autotools still possible, but cmake is recommended)
 | libncursesw5-dev ^(2)^ | *yes*    | ncurses interface
-| libgcrypt11-dev        | no       | SASL authentication with IRC server, using mechanism DH-BLOWFISH
+| libgcrypt11-dev        | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
 | libgnutls-dev          | no       | SSL connection to IRC server
 | libaspell-dev          | no       | aspell plugin
 | libperl-dev            | no       | perl plugin
@@ -104,8 +108,8 @@ compile WeeChat.
 |========================================
 
 [NOTE]
-^(1)^ Name comes from GNU/Linux Debian distribution, version in package name can
-be different. +
+^(1)^ Name comes from the Debian GNU/Linux distribution, versions and package
+names may be different in different distributions and versions. +
 ^(2)^ WeeChat can compile with libncurses5-dev, but it is *NOT* recommended (you
 will have display bugs with wide chars).
 

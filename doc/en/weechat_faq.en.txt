@@ -57,7 +57,7 @@ If you're compiling with autotools (and not cmake), check that you have latest
 version of autoconf and automake (WeeChat is developed with autoconf 2.61 and
 automake 1.10.1).
 
-The other way is to install "devel package", which needs less dependencies.
+The other way is to install the "devel package", which needs less dependencies.
 This package is built almost every day using git repository. Note that this
 package may not correspond exactly to git base and that it's less convenient
 than git cloning for installing updates.
@@ -314,7 +314,7 @@ How can I tweak WeeChat to consume less memory?
 
 You can try following tips to consume less memory:
 
-* use latest stable version (it is supposed to have less memory leaks than
+* use the latest stable version (it is supposed to have less memory leaks than
   older versions)
 * do not load some plugins if you don't use them, for example: aspell, fifo,
   logger, perl, python, ruby, lua, tcl, xfer (used for DCC)
