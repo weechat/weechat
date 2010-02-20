@@ -1902,7 +1902,13 @@ void
 irc_server_close_connection (struct t_irc_server *server)
 {
     int i;
-
+    
+    if (server->hook_timer_connection)
+    {
+        weechat_unhook (server->hook_timer_connection);
+        server->hook_timer_connection = NULL;
+    }
+    
     if (server->hook_timer_sasl)
     {
         weechat_unhook (server->hook_timer_sasl);
