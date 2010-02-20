@@ -156,11 +156,30 @@ Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
 
+[[meta_keys]]
+Some meta keys (alt + key) are not working, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using some terminals like xterm or uxterm, some meta keys does not
+work by default. You can add a line in file '~/.Xresources':
+
+* for xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* for uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+
+
 [[key_bindings]]
 Come posso personalizzare le associazioni dei tasti?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Le associazioni dei tasti sono personalizzabili con il comando /key.
+Le associazioni dei tasti sono personalizzabili con il comando `/key`.
 
 Il tasto predefinito Meta-k (di solito Alt-k) consente di registrare il codice
 tasto ed inserirlo nella riga di comando.
@@ -195,7 +214,7 @@ Note:
 
 * gli script in '~/.weechat/<linguaggio>/autoload/' sono caricati automaticamente
   all'avvio di WeeChat.
-* è disponibile un plugin 'tcl' con la versione > = 0.3.x.
+* è disponibile un plugin 'tcl' con la versione > = 0.3.0.
 
 
 [[change_locale_without_quit]]

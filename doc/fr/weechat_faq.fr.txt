@@ -159,11 +159,31 @@ Par exemple 'xterm-color' provoque ce genre de problèmes, utilisez
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
 
+[[meta_keys]]
+Quelques touches meta (alt + touche) ne fonctionnent pas, pourquoi ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
+meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
+fichier '~/.Xresources':
+
+* pour xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* pour uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
+
+
 [[key_bindings]]
 Comment puis-je configurer les raccourcis clavier ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Les raccourcis clavier sont modifiables avec la commande /key.
+Les raccourcis clavier sont modifiables avec la commande `/key`.
 
 La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code d'une
 touche et de l'inclure dans la ligne de commande.
@@ -199,7 +219,7 @@ Notes :
 
 * les scripts dans '~/.weechat/<langage>/autoload/' sont automatiquement chargés
   par WeeChat lorsqu'il démarre.
-* l'extension 'tcl' est disponible à partir de la version 0.3.x.
+* l'extension 'tcl' est disponible à partir de la version 0.3.0.
 
 
 [[change_locale_without_quit]]

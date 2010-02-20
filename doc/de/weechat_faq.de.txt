@@ -166,11 +166,30 @@ nutzte stattdessen 'xterm' - die ist ok (wie mehrer andere Werte).
 Wenn nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 
+[[meta_keys]]
+Some meta keys (alt + key) are not working, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using some terminals like xterm or uxterm, some meta keys does not
+work by default. You can add a line in file '~/.Xresources':
+
+* for xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* for uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+
+
 [[key_bindings]]
 Wie kann ich die Tastaturbelegung anpassen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Die Tasten werden mit dem Befehl /key belegt.
+Die Tasten werden mit dem Befehl `/key` belegt.
 
 Per Voreinstellung kannst Du mit der Tastenkombination Meta-k (normal Alt-k) den
 Code der jeweiligen Taste herausfinden und in die Eingabezeile einfügen.
@@ -205,7 +224,7 @@ Anmerkung:
 
 * Skripten, die sich unter '~/.weechat/<Skriptsprache>/autoload/' befinden, werden
   beim Start von WeeChat automatisch geladen.
-* Eine 'tcl' Erweiterung ist ab version > = 0.3.x verfügbar.
+* Eine 'tcl' Erweiterung ist ab version > = 0.3.0 verfügbar.
 
 
 [[change_locale_without_quit]]

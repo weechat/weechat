@@ -153,11 +153,30 @@ który działa dobrze (jak wiele innych wartości).
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 
+[[meta_keys]]
+Some meta keys (alt + key) are not working, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using some terminals like xterm or uxterm, some meta keys does not
+work by default. You can add a line in file '~/.Xresources':
+
+* for xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* for uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+
+
 [[key_bindings]]
 Jak mogę zmienić przypisania klawiszy?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Przypisania klawiszy mozna dostosować za pomocą komendy /key.
+Przypisania klawiszy mozna dostosować za pomocą komendy `/key`.
 
 Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
 go w wierszu poleceń.
@@ -192,7 +211,7 @@ Uwagi:
 
 * skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy 
   uruchomieniu WeeChat.
-* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.x.
+* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.0.
 
 
 [[change_locale_without_quit]]
