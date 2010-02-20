@@ -29,6 +29,7 @@
 #include "irc-raw.h"
 #include "irc-buffer.h"
 #include "irc-config.h"
+#include "irc-input.h"
 #include "irc-server.h"
 
 
@@ -72,7 +73,7 @@ irc_raw_open (int switch_to_buffer)
         if (!irc_raw_buffer)
         {
             irc_raw_buffer = weechat_buffer_new (IRC_RAW_BUFFER_NAME,
-                                                 NULL, NULL,
+                                                 &irc_input_data_cb, NULL,
                                                  &irc_buffer_close_cb, NULL);
             
             /* failed to create buffer ? then return */

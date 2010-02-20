@@ -31,6 +31,7 @@
 #include "irc-color.h"
 #include "irc-config.h"
 #include "irc-protocol.h"
+#include "irc-raw.h"
 
 
 /*
@@ -146,44 +147,52 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     const char *ptr_data;
     char *data_with_colors, *msg;
     
+    IRC_GET_SERVER_CHANNEL(buffer);
+    
     /* make C compiler happy */
     (void) data;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
-    
-    /* if send unknown commands is enabled and that input data is a command,
-       then send this command to IRC server */
-    if (weechat_config_boolean (irc_config_network_send_unknown_commands)
-        && (input_data[0] == '/') && (input_data[1] != '/'))
+    if (buffer == irc_raw_buffer)
     {
-        if (ptr_server)
-            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
-                              input_data + 1);
-        return WEECHAT_RC_OK;
-    }
-    
-    if (ptr_channel)
-    {
-        ptr_data = ((input_data[0] == '/') && (input_data[1] == '/')) ?
-            input_data + 1 : input_data;
-        data_with_colors = irc_color_encode (ptr_data,
-                                             weechat_config_boolean (irc_config_network_colors_send));
-
-        msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
-        if (msg)
-        {
-            irc_input_send_user_message (buffer, msg);
-            free (msg);
-        }
-        
-        if (data_with_colors)
-            free (data_with_colors);
+        if (weechat_strcasecmp (input_data, "q") == 0)
+            weechat_buffer_close (buffer);
     }
     else
     {
-        weechat_printf (buffer,
-                        _("%s%s: this buffer is not a channel!"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        /* if send unknown commands is enabled and that input data is a command,
+           then send this command to IRC server */
+        if (weechat_config_boolean (irc_config_network_send_unknown_commands)
+            && (input_data[0] == '/') && (input_data[1] != '/'))
+        {
+            if (ptr_server)
+                irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                                  input_data + 1);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (ptr_channel)
+        {
+            ptr_data = ((input_data[0] == '/') && (input_data[1] == '/')) ?
+                input_data + 1 : input_data;
+            data_with_colors = irc_color_encode (ptr_data,
+                                                 weechat_config_boolean (irc_config_network_colors_send));
+            
+            msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
+            if (msg)
+            {
+                irc_input_send_user_message (buffer, msg);
+                free (msg);
+            }
+            
+            if (data_with_colors)
+                free (data_with_colors);
+        }
+        else
+        {
+            weechat_printf (buffer,
+                            _("%s%s: this buffer is not a channel!"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        }
     }
     
     return WEECHAT_RC_OK;
