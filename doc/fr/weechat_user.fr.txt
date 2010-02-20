@@ -86,26 +86,26 @@ compiler WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Paquet ^1^           | Requis | Fonctionnalité
-| cmake                | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^2^ | *oui*  | interface ncurses
-| libgcrypt11-dev      | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
-| libgnutls-dev        | non    | connexion SSL au serveur IRC
-| libaspell-dev        | non    | extension aspell
-| libperl-dev          | non    | extension perl
-| python-dev           | non    | extension python
-| ruby1.8-dev          | non    | extension ruby
-| liblua5.1-0-dev      | non    | extension lua
-| tcl-dev              | non    | extension tcl
-| asciidoc (>= 8.2)    | non    | construction de la documentation (fichiers HTML)
-| source-highlight     | non    | coloration des sources dans la documentation HTML
+| Paquet ^(1)^           | Requis | Fonctionnalité
+| cmake                  | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^ | *oui*  | interface ncurses
+| libgcrypt11-dev        | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
+| libgnutls-dev          | non    | connexion SSL au serveur IRC
+| libaspell-dev          | non    | extension aspell
+| libperl-dev            | non    | extension perl
+| python-dev             | non    | extension python
+| ruby1.8-dev            | non    | extension ruby
+| liblua5.1-0-dev        | non    | extension lua
+| tcl-dev                | non    | extension tcl
+| asciidoc (>= 8.2)      | non    | construction de la documentation (fichiers HTML)
+| source-highlight       | non    | coloration des sources dans la documentation HTML
 |========================================
 
 [NOTE]
-^1^ le nom provient de la distribution GNU/Linux Debian, la version dans le nom
-du paquet peut être différente +
-^2^ WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS* recommandé
-(vous aurez des bugs d'affichage avec les caractères larges)
+^(1)^ Le nom provient de la distribution GNU/Linux Debian, la version dans le
+nom du paquet peut être différente. +
+^(2)^ WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS* recommandé
+(vous aurez des bugs d'affichage avec les caractères larges).
 
 [[compile_with_cmake]]
 Compilation avec cmake

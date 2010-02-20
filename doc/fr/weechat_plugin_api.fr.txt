@@ -5551,13 +5551,13 @@ Paramètres :
 |========================================
 | Extension | Signal | Paramètres | Description
 
-| irc | xxx,irc_in_yyy ^1^ | chaîne : message |
+| irc | xxx,irc_in_yyy ^(1)^ | chaîne : message |
   message irc du serveur (avant utilisation par l'extension irc)
 
-| irc | xxx,irc_in2_yyy ^1^ | chaîne : message |
+| irc | xxx,irc_in2_yyy ^(1)^ | chaîne : message |
   message irc du serveur (après utilisation par l'extension irc)
 
-| irc | xxx,irc_out_yyy ^1^ | chaîne : message |
+| irc | xxx,irc_out_yyy ^(1)^ | chaîne : message |
   message irc envoyé au serveur
 
 | irc | irc_ctcp | chaîne : message |
@@ -5730,7 +5730,7 @@ Paramètres :
 |========================================
 
 [NOTE]
-^1^ 'xxx' est le nom du serveur IRC, 'yyy' est le nom d'une commande IRC.
+^(1)^ 'xxx' est le nom du serveur IRC, 'yyy' est le nom d'une commande IRC.
 
 * 'callback' : fonction appelée quand le signal est reçu, paramètres :
 ** 'void *data' : pointeur
@@ -6048,17 +6048,17 @@ Paramètres :
   toute chaîne |
   chaîne avec des codes couleur IRC, ou sans couleur
 
-| irc | irc_in_xxx ^1^ |
+| irc | irc_in_xxx ^(1)^ |
   nom de serveur |
   contenu du message reçu du serveur IRC |
   nouveau contenu du message
 
-| irc | irc_out_xxx ^1^ |
+| irc | irc_out_xxx ^(1)^ |
   nom de serveur |
   contenu du message qui va être envoyé au serveur IRC |
   nouveau contenu du message
 
-| weechat | bar_condition_yyy ^2^ |
+| weechat | bar_condition_yyy ^(2)^ |
   chaîne avec un pointeur vers la fenêtre ("0x123..") |
   chaîne vide |
   "1" pour afficher la barre, "0" pour la cacher
@@ -6087,8 +6087,8 @@ Paramètres :
 |========================================
 
 [NOTE]
-^1^ 'xxx' est un nom de commande IRC. +
-^2^ 'yyy' est le nom de la barre.
+^(1)^ 'xxx' est un nom de commande IRC. +
+^(2)^ 'yyy' est le nom de la barre.
 
 * 'callback' : fonction appelée lorsque le "modifieur" est utilisé, paramètres :
 ** 'void *data' : pointeur

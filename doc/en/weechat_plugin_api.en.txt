@@ -5478,13 +5478,13 @@ Arguments:
 |========================================
 | Plugin | Signal | Arguments | Description
 
-| irc | xxx,irc_in_yyy ^1^ | string: message |
+| irc | xxx,irc_in_yyy ^(1)^ | string: message |
   irc message from server (before irc plugin uses it)
 
-| irc | xxx,irc_in2_yyy ^1^ | string: message |
+| irc | xxx,irc_in2_yyy ^(1)^ | string: message |
   irc message from server (after irc plugin uses it)
 
-| irc | xxx,irc_out_yyy ^1^ | string: message |
+| irc | xxx,irc_out_yyy ^(1)^ | string: message |
   irc message sent to server
 
 | irc | irc_ctcp | string: message |
@@ -5657,7 +5657,7 @@ Arguments:
 |========================================
 
 [NOTE]
-^1^ 'xxx' is IRC server name, 'yyy' is IRC command name.
+^(1)^ 'xxx' is IRC server name, 'yyy' is IRC command name.
 
 * 'callback': function called when signal is received, arguments:
 ** 'void *data': pointer
@@ -5966,17 +5966,17 @@ Arguments:
   any string |
   string with IRC color codes, or without color
 
-| irc | irc_in_xxx ^1^ |
+| irc | irc_in_xxx ^(1)^ |
   server name |
   content of message received from IRC server |
   new content of message
 
-| irc | irc_out_xxx ^1^ |
+| irc | irc_out_xxx ^(1)^ |
   server name |
   content of message about to be sent to IRC server |
   new content of message
 
-| weechat | bar_condition_yyy ^2^ |
+| weechat | bar_condition_yyy ^(2)^ |
   string with window pointer ("0x123..") |
   empty string |
   "1" to display bar, "0" to hide it
@@ -6003,8 +6003,8 @@ Arguments:
 |========================================
 
 [NOTE]
-^1^ 'xxx' is IRC command name. +
-^2^ 'yyy' is bar name.
+^(1)^ 'xxx' is IRC command name. +
+^(2)^ 'yyy' is bar name.
 
 * 'callback': function called when modifier is used, arguments:
 ** 'void *data': pointer
