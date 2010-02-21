@@ -18,6 +18,7 @@ Version 0.3.2 (under dev!)
 * core: use arguments for infolist "nicklist" to return only one nick or group
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
+* gui: fix bug with bar background after text with background color (bug #28157)
 * api: add "version_number" for function info_get to get WeeChat version as
   number
 * api: add functions "string_encode_base64" and "string_decode_base64",, fix

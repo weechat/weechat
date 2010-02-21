@@ -556,12 +556,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     {
                         some_data_not_displayed = 1;
                     }
-                    while (x < bar_window->width)
-                    {
-                        gui_bar_window_print_string (bar_window,
-                                                     &x, &y,
-                                                     " ", 0, 0);
-                    }
+                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                    wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                     x = 0;
                     y++;
                 }
