@@ -560,6 +560,12 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                                        CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                                                        CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                     wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                    while (x < bar_window->width)
+                    {
+                        gui_bar_window_print_string (bar_window,
+                                                     &x, &y,
+                                                     " ", 0, 0);
+                    }
                     x = 0;
                     y++;
                 }
