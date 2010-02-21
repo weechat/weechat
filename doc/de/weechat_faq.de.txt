@@ -1,5 +1,5 @@
-WeeChat FAQ (Frequently Asked Questions)
-========================================
+WeeChat FAQ (häufig gestellte Fragen)
+=====================================
 FlashCode <flashcode@flashtux.org>
 
 
@@ -74,115 +74,114 @@ WeeChat anwenden
 Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Um Hilfe zu erhalten, gebe `/help` ein. Hilfe zu einem Befehl erhälst Du durch
-die Eingabe von: `help Befehlsname`. 
+Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhältst
+Du durch die Eingabe von: `help Befehlsname`. 
 Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 aufgeführt.
-FIXME: (Tip: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige
-scrollen)
+(Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige scrollen)
 
 Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen (siehe
 Dokumentation auf der Internetseite).
 
 
 [[buffer_vs_window]]
-Ich habe von "Buffern" und "Fenstern" gehört - was ist der Unterschied?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich habe von "Buffern" und "Fenstern" gehört - Worin besteht der Unterschied?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ein 'Buffer' besteht aus einer Nummer, einem Namen, anzuzeigenden Zeilen (und
-anderen Daten)
+Ein 'Buffer' besteht aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
+werden (und noch anderen Daten).
 
 Ein 'Fenster' ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
-nicht durch ein Fenster angezeigt), oder durch ein sowie mehrere Fenster
-angezeigt werden.
+in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere Fenster
+angezeigt.
 
 
 [[charset]]
-Teilweise fehlen bei Zeichen die Akzente, was kann ich tun?
+Teilweise fehlen den Zeichen die Akzente, was kann ich tun?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies ist ein bekanntes Problem, bitte lese nachfolgendes sorgfältig und
-prüfe *alle* aufgezeigten Lösungsmöglichkeiten.
+Dies ist ein bekanntes Problem. Bitte lese nachfolgende Erklärungen sorgfältig
+durch und überprüfe *alle* aufgezeigten Lösungsmöglichkeiten.
 
-Für Versionen < 0.2.3, bitte auf die neueste stabile Version upgraden.
+Für Versionen < 0.2.3, bitte auf die neueste stabile Version wechseln.
 
 Für Versionen > = 0.2.3:
 
-* prüfe, dass weechat-curses mit libncursesw gelinkt ist (Warnung: nötig bei den
-  meißten Distributionen - jedoch nicht bei allen):
-  `ldd /path/to/weechat-curses`
-* prüfe mit dem Befehl `/plugin`, dass die "Charset" Erweiterung geladen ist (falls
-  nicht, benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
-* prüfe die Ausgabe des Befehls /charset (auf dem Server-Buffer). Du solltest
+* überprüfe, ob weechat-curses mit libncursesw verlinkt ist (Warnung: nötig bei den
+  meisten Distributionen - jedoch nicht bei allen): `ldd /path/to/weechat-curses`
+* prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
+  dies nicht der Fall sein sollte, benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
+* überprüfe die Ausgabe des `/charset` Befehls (auf dem Server-Buffer). Du solltest
   'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz sehen. Falls Du
   'ANSI_X3.4-1968' oder andere Werte siehst, ist Deine Einstellung der locale
   möglicherweise falsch.
-* setzen des globalen decode Wertes, z.B.:
+* Einstellen des globalen decode Wertes, z.B.:
 ** WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-15`
 ** WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-15"`
 * Falls Du UTF-8 locale nutzt:
 ** prüfe, ob Dein Terminal UTF-8 fähig ist (der empfohlene Terminal für UTF-8
    ist rxvt-unicode)
-** Solltest Du screen nutzten, prüfe ob er im UTF-8 Modus läuft
-   ("`defutf8 on`" in der Datei ~/.screenrc oder `screen -U` zum Sarten von
+** Solltest Du screen nutzten, prüfe ob dieser im UTF-8 Modus läuft
+   ("`defutf8 on`" in der Datei ~/.screenrc oder `screen -U` zum Starten von
    screen)
 
 [NOTE]
-Die Nutzung der UTF-8 locale wird für WeeChat empfohlen. Nutzt Du jedoch ISO
-oder andere locale, bitte vergewissere Dich dann, dass *alle* Deine
-Einstellungen (Terminal, screen, ...) sich auch auf ISO beziehen und *nicht* auf
-UTF-8.
+Für Weechat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO
+oder andere locale, bitte vergewissere Dich, dass *alle* Deine Einstellungen
+(Terminal, screen, ...) sich auch auf ISO beziehen und *nicht* auf UTF-8.
 
 
 [[bars_background]]
-Leisten, z.B. Titel und Status sind nicht ausgefüllt, die Hintergrundfarbe endet direkt nach dem Text, warum?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bars, z.B. Titel und Status haben keine Hintergrundfarbe bzw. diese endet direkt nach dem Text, warum?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dies kann durch einen falschen Wert der Variablen TERM Deiner Shell verursacht
 werden (schaue Dir die Ausgabe von `echo $TERM` in Deinem Terminal an).
 
-Abhängig davon wo Du WeeChat startest, solltest Du folgenden Wert haben:
+Abhängig davon von wo WeeChat startet wird, solltest Du folgenden Wert haben:
 
 * falls WeeChat lokal oder auf einem entfernten Rechner läuft, je nach benutztem
-  Terminal: 'xterm', 'rxvt', ...
+  Terminal: '-term', 'rxvt', ...
 * falls WeeChat unter screen läuft, sollte der Wert 'screen' sein.
 
 Wenn nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 
 [[screen_weird_chars]]
-Wenn ich Weechat unter screen nutze, habe ich merkwürdige Zeichen, wie kann ich dies beheben?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wenn ich Weechat unter screen nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies kann durch einen falschen Wert der Variablen TERM Deiner Shell verursacht
+Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell verursacht
 werden (schaue Dir die Ausgabe von `echo $TERM` in Deinem Terminal an).
 
-Als Beispiel, 'xterm-color' könnte solche merkwürdigen Zeichen produzieren,
-nutzte stattdessen 'xterm' - die ist ok (wie mehrer andere Werte).
+Als Beispiel, '-term-color' könnte solche merkwürdigen Zeichen produzieren.
+Nutzte stattdessen lieber '-term'.
 
-Wenn nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
+Wenn nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
 
 [[meta_keys]]
-Some meta keys (alt + key) are not working, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Aus welchem Grund funktionieren manche meta keys (alt + key) nicht?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using some terminals like xterm or uxterm, some meta keys does not
-work by default. You can add a line in file '~/.Xresources':
+Wenn Du einen Terminal wie -term oder uxterm nutzten solltest werden einige
+meta keys standardmäßig nicht unterstützt.
+In diesem Fall sollte folgende Zeile in '~/.Xresources' hinzugefügt werden:
 
-* for xterm:
+* für -term:
 ----------------------------------------
 XTerm*metaSendsEscape: true
 ----------------------------------------
-* for uxterm:
+* für uxterm:
 ----------------------------------------
 UXTerm*metaSendsEscape: true
 ----------------------------------------
 
-And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+Danach muss resources neu geladen werden (`xrdb -override ~/.Xresources`) oder
+man startet X neu.
 
 
 [[key_bindings]]
@@ -191,8 +190,8 @@ Wie kann ich die Tastaturbelegung anpassen?
 
 Die Tasten werden mit dem Befehl `/key` belegt.
 
-Per Voreinstellung kannst Du mit der Tastenkombination Meta-k (normal Alt-k) den
-Code der jeweiligen Taste herausfinden und in die Eingabezeile einfügen.
+Mit der voreingestellten Tastenkombination Meta-k (normal Alt-k) kann man sich den
+Code der jeweiligen Taste anzeigen lassen und in die Eingabezeile einfügen.
 
 
 [[openbsd_plugins]]
@@ -222,14 +221,14 @@ Die Skripten sind mit den anderer IRC-Clients nicht kompatibel.
 
 Anmerkung:
 
-* Skripten, die sich unter '~/.weechat/<Skriptsprache>/autoload/' befinden, werden
+* Skripten, die sich unter '~/.weechat/<Skriptsprache>/autoload/' befinden werden
   beim Start von WeeChat automatisch geladen.
-* Eine 'tcl' Erweiterung ist ab version > = 0.3.0 verfügbar.
+* Eine 'tcl' Erweiterung ist ab Version > = 0.3.0 verfügbar.
 
 
 [[change_locale_without_quit]]
-Ich möchte die Sprache der Meldungen, die WeeChat ausgibt, ändern ohne WeeChat zu verlassen. Ist dies möglich?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich möchte die Sprache der Meldungen die WeeChat ausgibt ändern, ohne WeeChat zu verlassen. Ist dies möglich?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ja, dazu kannst Du das Python-Skript shell.py verwenden (erhältlich auf der
 Internetseite). Nach dem laden des Skripts führe folgende Befehle aus:
@@ -246,9 +245,9 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste auch eingefügt wird?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Du kannst hierzu ein Terminal nutzen, welches Block-Selektierung erlaubt
-(wie rxvt-unicode, konsole, gnome-terminal, ...). Im Normalfall erfolgt diese
-mittels der Tasten ctrl + alt in Verbindung mit der Auswahl durch die Maus.
+Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
+konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
+ctrl + alt in Verbindung mit der Auswahl durch die Maus.
 
 Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben, z.B.:
 
@@ -259,8 +258,8 @@ Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben, z.B.
 
 
 [[urls]]
-Wie kann ich eine URL aufrufen, die einen Zeilenumbruch besitzt?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Da WeeChat sowohl die Uhrzeit als auch einen Präfix für jede Zeile darstellt und
 man optional auch noch Bars nutzen kann, die das Chatfenster zusätzlich
@@ -287,27 +286,27 @@ Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/st
 Wie kann ich informiert werden, wenn jemand in einem Channel highlightet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-((A.d.Ü) highlight bedeutet, dass der eigene Nick z.B. im Channel genannt wird,
-der Nick dessen der ihn schrieb wird farblich hervorgehoben)
+((A.d.Ü) highlight bedeutet, dass der eigene Nick z.B. im Channel genannt wird.
+Der Nick dessen der ihn schrieb wird farblich hervorgehoben)
 
 Abhängig der WeeChat Version:
 
-* WeeChat < = 0.2.6: nutze das Skript 'sound.pl' (verfügbar auf der Skript-Site),
-  und nehme Einstellungen für einen System-Befehl (um einen Klang zu spielen,
+* WeeChat < = 0.2.6: nutze das Skript 'sound.pl' (verfügbar auf der Skript-Seite),
+  und nehme Einstellungen für einen System-Befehl (um einen Klang abzuspielen,
   eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
   `/setp perl.sound.cmd_highlight = "/path/to/command arguments"`
-* WeeChat > = 0.3.x: nutze das Skript 'launcher.pl' (verfügbar auf der Skript-Site),
-  und nehme Einstellungen für einen System-Befehl (um einen Klang zu spielen,
+* WeeChat > = 0.3.x: nutze das Skript 'launcher.pl' (verfügbar auf der Skript-Seite),
+  und nehme Einstellungen für einen System-Befehl (um einen Klang abzuspielen,
   eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
   `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
 
-Es gibt noch andere Skripten, die über solche Ereignisse informieren , bitte
+Es gibt noch andere Skripten, die über verschiedene Ereignisse informieren , bitte
 besuche dazu die Skripten-Webseite: http://www.weechat.org/scripts/
 
 
 [[filter_irc_join_part_quit]]
-Wie kann ich join/part/quit Meldungen der IRC Channels filtern (A.d.ü.: unterdrücken)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich join/part/quit Meldungen in den IRC Channels filtern (A.d.ü.: unterdrücken)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Entsprechend der WeeChat-Version:
 
@@ -330,23 +329,23 @@ Entsprechend der WeeChat-Version:
 
 
 [[ignore_vs_filter]]
-Was ist der Unterschied zwischen den Befehlen /ignore und /filter?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Was ist der Unterschied zwischen dem Befehl /ignore und /filter?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Der Befehl `/ignore` ist ein IRC-Befehl und beeinflußt somit nur die IRC-Buffer
+Der Befehl `/ignore` ist ein IRC-Befehl und beeinflusst somit nur die IRC-Buffer
 (Server und Channel).
 Durch den Befehl kann man bestimmte Nicks oder Hostnamen von Usern eines Servers oder
-Channels ignorieren (Der Befehl wird nicht auf den Inhalt der Meldung angewandt).
-Passende Meldungen werden von dem IRC-Plugin vor der Anzeige gelöscht (Du wirst
-sie niemals zu Gesicht bekommen).
+von Channels ignorieren (Der Befehl wird nicht auf den Inhalt der Meldung angewandt).
+Zutreffende Meldungen werden, bevor sie Angezeigt werden, von der IRC-Erweiterung gelöscht
+(Du wirst sie niemals zu Gesicht bekommen).
 
 Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
 nicht an den Server gesendet) und beeinflußt somit jeden Buffer.
 Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Tags und
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
-Gefilterte Zeilen werden nur unsichtbar - nicht gelöscht. Sehen kannst Du sie
-wenn Du den Filter deaktivierst (Voreinstellung zum Aktivieren/Deaktivieren der
-Filter: Alt-Taste + "=").
+Die Darstellung von gefilterte Zeilen wird nur unterdrückt, die Zeilen werden nicht gelöscht.
+Du kannst diese Zeilen sichtbar machen indem Du den Filter deaktivierst (Voreinstellung zum
+Aktivieren/Deaktivieren der Filter: Alt-Taste + "=").
 
 
 [[memory_usage]]
@@ -371,8 +370,8 @@ Entwicklung
 
 
 [[bug_task_patch]]
-Was muß ich machen falls ich einen Fehler gefunden habe, nach neuen Funktionen fragen oder Patches einsenden möchte?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Was kann ich machen falls ich einen Fehler gefunden habe, nach neuen Funktionen fragen oder Patches einsenden möchte?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Es gibt drei Möglichkeiten:
 
@@ -411,5 +410,5 @@ http://www.weechat.org/about
 Kann ich Geld oder Anderes an die Entwickler von WeeChat spenden? 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Du kannst uns Geld zur Unterstützung der weitern Entwicklung spenden.
+Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.
 Details hierzu gibt es auf: http://www.weechat.org/donate
