@@ -84,34 +84,34 @@ WeeChat può essere compilato con cmake oppure autotools
 (tuttavia si raccomanda cmake).
 
 [[dependencies]]
-Dependencies
-^^^^^^^^^^^^
+Dipendenze
+^^^^^^^^^^
 
-Following table shows list of packages that are required or optional to
-compile WeeChat.
+La seguente tabella mostra l'elenco di pacchetti richiesti o opzionali per
+compilare WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Package ^(1)^          | Required | Feature
-| cmake                  | *yes*    | build (autotools still possible, but cmake is recommended)
-| libncursesw5-dev ^(2)^ | *yes*    | ncurses interface
-| libgcrypt11-dev        | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
-| libgnutls-dev          | no       | SSL connection to IRC server
-| libaspell-dev          | no       | aspell plugin
-| libperl-dev            | no       | perl plugin
-| python-dev             | no       | python plugin
-| ruby1.8-dev            | no       | ruby plugin
-| liblua5.1-0-dev        | no       | lua plugin
-| tcl-dev                | no       | tcl plugin
-| asciidoc (>= 8.2)      | no       | build documentation (HTML files)
-| source-highlight       | no       | syntax highlight for sources in HTML documentation
+| Pacchetto ^(1)^        | Richiesto | Caratteristica
+| cmake                  | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| libncursesw5-dev ^(2)^ | *sì*      | interfaccia ncurses
+| libgcrypt11-dev        | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
+| libgnutls-dev          | no        | connessione SSL al server IRC
+| libaspell-dev          | no        | plugin aspell
+| libperl-dev            | no        | plugin perl
+| python-dev             | no        | plugin python
+| ruby1.8-dev            | no        | plugin ruby
+| liblua5.1-0-dev        | no        | plugin lua
+| tcl-dev                | no        | plugin tcl
+| asciidoc (>= 8.2)      | no        | compilazione della documentazione (file HTML)
+| source-highlight       | no        | evidenziazione della sintassi per i sorgenti nella documentazione HTML
 |========================================
 
 [NOTE]
-^(1)^ Name comes from the Debian GNU/Linux distribution, versions and package
-names may be different in different distributions and versions. +
-^(2)^ WeeChat can compile with libncurses5-dev, but it is *NOT* recommended (you
-will have display bugs with wide chars).
+^(1)^ Il nome viene dalla distribuzione Debian GNU/Linux, nomi e versioni dei pacchetti
+potrebbero essere differenti in versioni e distribuzioni differenti. +
+^(2)^ WeeChat può essere compilato con libncurses5-dev, ma *NON* è raccomandato
+(potrebbero verificarsi bug di visualizzazione).
 
 [[compile_with_cmake]]
 Compilazione con cmake
