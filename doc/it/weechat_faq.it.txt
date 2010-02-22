@@ -157,22 +157,22 @@ Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
 
 [[meta_keys]]
-Some meta keys (alt + key) are not working, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Alcuni tasti meta (alt + tasto) non funzionano, perché?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using some terminals like xterm or uxterm, some meta keys does not
-work by default. You can add a line in file '~/.Xresources':
+Se si utilizzano terminali come xterm o uxterm, alcuni tasti meta non funzionano
+per default. È possibile aggiungere una riga nel file '~/.Xresources':
 
-* for xterm:
+* per xterm:
 ----------------------------------------
 XTerm*metaSendsEscape: true
 ----------------------------------------
-* for uxterm:
+* per uxterm:
 ----------------------------------------
 UXTerm*metaSendsEscape: true
 ----------------------------------------
 
-And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riavviare X.
 
 
 [[key_bindings]]
