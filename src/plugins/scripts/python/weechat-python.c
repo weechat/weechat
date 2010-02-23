@@ -603,6 +603,38 @@ weechat_python_unload_all ()
 }
 
 /*
+ * weechat_python_reload_name: reload a Python script by name
+ */
+
+void
+weechat_python_reload_name (const char *name)
+{
+    struct t_plugin_script *ptr_script;
+    char *filename;
+    
+    ptr_script = script_search (weechat_python_plugin, python_scripts, name);
+    if (ptr_script)
+    {
+        filename = strdup (ptr_script->filename);
+        if (filename)
+        {
+            weechat_python_unload (ptr_script);
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            PYTHON_PLUGIN_NAME, name);
+            weechat_python_load (filename);
+            free (filename);
+        }
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" not loaded"),
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, name);
+    }
+}
+
+/*
  * weechat_python_cmd: callback for "/python" command
  */
 
@@ -667,6 +699,11 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_python_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
+        }
+        else if (weechat_strcasecmp (argv[1], "reload") == 0)
+        {
+            /* reload one Python script */
+            weechat_python_reload_name (argv_eol[2]);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {

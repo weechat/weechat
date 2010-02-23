@@ -1,4 +1,4 @@
-&bull; *`/python`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | [unload [nom]]`::
+&bull; *`/python`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]`::
 
 ........................................
   liste/charge/décharge des scripts

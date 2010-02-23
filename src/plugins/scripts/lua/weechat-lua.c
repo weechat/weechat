@@ -354,6 +354,38 @@ weechat_lua_unload_name (const char *name)
 }
 
 /*
+ * weechat_lua_reload_name: reload a Lua script by name
+ */
+
+void
+weechat_lua_reload_name (const char *name)
+{
+    struct t_plugin_script *ptr_script;
+    char *filename;
+    
+    ptr_script = script_search (weechat_lua_plugin, lua_scripts, name);
+    if (ptr_script)
+    {
+        filename = strdup (ptr_script->filename);
+        if (filename)
+        {
+            weechat_lua_unload (ptr_script);
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            LUA_PLUGIN_NAME, name);
+            weechat_lua_load (filename);
+            free (filename);
+        }
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" not loaded"),
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, name);
+    }
+}
+
+/*
  * weechat_lua_unload_all: unload all Lua scripts
  */
 
@@ -431,6 +463,11 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_lua_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
+        }
+        else if (weechat_strcasecmp (argv[1], "reload") == 0)
+        {
+            /* reload one Lua script */
+            weechat_lua_reload_name (argv_eol[2]);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {

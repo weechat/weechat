@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-19 16:14+0100\n"
-"PO-Revision-Date: 2010-02-18 19:55+0100\n"
+"POT-Creation-Date: 2010-02-23 10:39+0100\n"
+"PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -727,15 +727,15 @@ msgstr "%s не могу сохранить сессию в файл\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "WeeChat работает: %d %s %02d:%02d:%02d, запущен %s"
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "WeeChat работает: %d %s %02d:%02d:%02d, запущен %s"
 
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -5659,14 +5659,6 @@ msgstr "%s не могу создать сервер\n"
 #, fuzzy
 msgid "list/load/unload scripts"
 msgstr "перечислить/загрузить/выгрузить plugin'ы"
-
-#, fuzzy
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
-msgstr ""
-"[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
-"[имя]] | [unload [имя]]"
 
 msgid ""
 "filename: script (file) to load\n"

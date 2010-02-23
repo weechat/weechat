@@ -1,4 +1,4 @@
-&bull; *`/tcl`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | [unload [nom]]`::
+&bull; *`/tcl`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]`::
 
 ........................................
   liste/charge/décharge des scripts

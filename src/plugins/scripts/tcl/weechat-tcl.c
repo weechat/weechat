@@ -302,6 +302,38 @@ weechat_tcl_unload_all ()
 }
 
 /*
+ * weechat_tcl_reload_name: reload a Tcl script by name
+ */
+
+void
+weechat_tcl_reload_name (const char *name)
+{
+    struct t_plugin_script *ptr_script;
+    char *filename;
+    
+    ptr_script = script_search (weechat_tcl_plugin, tcl_scripts, name);
+    if (ptr_script)
+    {
+        filename = strdup (ptr_script->filename);
+        if (filename)
+        {
+            weechat_tcl_unload (ptr_script);
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            TCL_PLUGIN_NAME, name);
+            weechat_tcl_load (filename);
+            free (filename);
+        }
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" not loaded"),
+                        weechat_prefix ("error"), TCL_PLUGIN_NAME, name);
+    }
+}
+
+/*
  * weechat_tcl_command_cb: callback for "/tcl" command
  */
 
@@ -366,6 +398,11 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_tcl_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
+        }
+        else if (weechat_strcasecmp (argv[1], "reload") == 0)
+        {
+            /* reload one Tcl script */
+            weechat_tcl_reload_name (argv_eol[2]);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {

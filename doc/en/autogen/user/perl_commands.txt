@@ -1,4 +1,4 @@
-&bull; *`/perl`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] | [unload [name]]`::
+&bull; *`/perl`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]`::
 
 ........................................
   list/load/unload scripts

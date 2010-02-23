@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-19 16:14+0100\n"
-"PO-Revision-Date: 2010-02-18 19:54+0100\n"
+"POT-Creation-Date: 2010-02-23 10:39+0100\n"
+"PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -683,15 +683,15 @@ msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 "***** Błąd: wykonanie nie powiodło się (program: \"%s\"), wyjście z WeeChat"
 
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "Czas działania WeeChat: %d %s %02d:%02d:%02d, uruchomiono %s"
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dzień"
 msgstr[1] "dni"
 msgstr[2] "dni"
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Czas działania WeeChat: %d %s %02d:%02d:%02d, uruchomiono %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -5830,13 +5830,6 @@ msgstr "%s%s: nie można ocenic wewnętrznego kodu ruby w WeeChat"
 
 msgid "list/load/unload scripts"
 msgstr "list/load/unload skrypt"
-
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
-msgstr ""
-"[list [nazwa]] | [listfull [nazwa]] [load plik] | [autoload] | [reload] | "
-"[unload [nazwa]]"
 
 msgid ""
 "filename: script (file) to load\n"

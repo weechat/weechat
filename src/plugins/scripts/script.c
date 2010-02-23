@@ -248,7 +248,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                              " || listfull %s"
                                              " || load %(filename)"
                                              " || autoload"
-                                             " || reload"
+                                             " || reload %s"
                                              " || unload %s",
                                              "%s",
                                              string);
@@ -257,7 +257,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                           N_("list/load/unload scripts"),
                           N_("[list [name]] | [listfull [name]] | "
                              "[load filename] | [autoload] | "
-                             "[reload] | [unload [name]]"),
+                             "[reload [name]] | [unload [name]]"),
                           N_("filename: script (file) to load\n"
                              "name: a script name\n\n"
                              "Without argument, this command "

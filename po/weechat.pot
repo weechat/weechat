@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-19 16:14+0100\n"
+"POT-Creation-Date: 2010-02-23 10:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -642,14 +642,14 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -4928,11 +4928,6 @@ msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr ""
 
 msgid "list/load/unload scripts"
-msgstr ""
-
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
 msgstr ""
 
 msgid ""

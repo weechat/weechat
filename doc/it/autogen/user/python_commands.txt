@@ -1,4 +1,4 @@
-&bull; *`/python`* `[list [nome]] | [listfull [nome]] | [load nome_file] | [autoload] | [reload] | [unload [nome]]`::
+&bull; *`/python`* `[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload [nome]] | [unload [nome]]`::
 
 ........................................
   elenca/attiva/disattiva script

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-19 16:14+0100\n"
-"PO-Revision-Date: 2010-02-18 19:54+0100\n"
+"POT-Creation-Date: 2010-02-23 10:39+0100\n"
+"PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -726,14 +726,14 @@ msgstr "%s nem sikerült a folyamatot menteni\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
 
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -5656,14 +5656,6 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy
 msgid "list/load/unload scripts"
 msgstr "modulok listázása/betöltése/eltávolítása"
-
-#, fuzzy
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
-msgstr ""
-"[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
-"[név]] | [unload [név]]"
 
 msgid ""
 "filename: script (file) to load\n"

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-19
+v0.3.2-dev, 2010-02-23
 
 
 Version 0.3.2 (under dev!)
@@ -29,6 +29,7 @@ Version 0.3.2 (under dev!)
 * api: fix function "color" in Lua script API
 * api: fix "inactivity" value when no key has been pressed since WeeChat started
   (bug #28930)
+* scripts: allow script commands to reload only one script
 * irc: add SASL authentication, with PLAIN and DH-BLOWFISH mechanisms
   (task #8829)
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-02-19 16:14+0100\n"
-"PO-Revision-Date: 2010-02-19 07:56+0100\n"
+"POT-Creation-Date: 2010-02-23 10:39+0100\n"
+"PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -687,14 +687,14 @@ msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 "***** Fehler: Ausführung schlug fehl (Programm: \"%s\"), WeeChat wird beendet"
 
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
+
 msgid "day"
 msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
 
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
@@ -5970,13 +5970,6 @@ msgstr "%s%s: Evaluation des internen WeeChat Ruby Codes nicht möglich"
 
 msgid "list/load/unload scripts"
 msgstr "auflisten/installieren/deinstallieren von Skripten"
-
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
-msgstr ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload] "
-"| [unload [name]]"
 
 msgid ""
 "filename: script (file) to load\n"
