@@ -711,24 +711,25 @@ attribute.
 
 Color codes for ^Cc are:
 
-[width="20%",cols="^1m,2"]
+[width="30%",cols="^1m,3,3",options="header"]
 |========================================
-| 00 | white
-| 01 | black
-| 02 | dark blue
-| 03 | dark green
-| 04 | light red
-| 05 | dark red
-| 06 | magenta
-| 07 | orange
-| 08 | yellow
-| 09 | light green
-| 10 | cyan
-| 11 | light cyan
-| 12 | light blue
-| 13 | light magenta
-| 14 | gray
-| 15 | light gray (white)
+| Code | IRC           | WeeChat (ncurses)
+| 00   | white         | white
+| 01   | black         | black
+| 02   | dark blue     | blue
+| 03   | dark green    | green
+| 04   | light red     | lightred
+| 05   | dark red      | red
+| 06   | magenta       | magenta
+| 07   | orange        | brown
+| 08   | yellow        | yellow
+| 09   | light green   | lightgreen
+| 10   | cyan          | cyan
+| 11   | light cyan    | lightcyan
+| 12   | light blue    | lightblue
+| 13   | light magenta | lightmagenta
+| 14   | gray          | default
+| 15   | light gray    | white
 |========================================
 
 Example: display of "hello everybody!" with "hello" in light blue bold and

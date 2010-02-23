@@ -729,24 +729,25 @@ l'attribut défini.
 
 Les codes couleur pour ^Cc sont :
 
-[width="20%",cols="^1m,2"]
+[width="30%",cols="^1m,3,3",options="header"]
 |========================================
-| 00 | blanc
-| 01 | noir
-| 02 | bleu foncé
-| 03 | vert foncé
-| 04 | rouge clair
-| 05 | rouge foncé
-| 06 | violet
-| 07 | orange
-| 08 | jaune
-| 09 | vert clair
-| 10 | cyan
-| 11 | cyan clair
-| 12 | bleu clair
-| 13 | violet clair
-| 14 | gris
-| 15 | gris clair (blanc)
+| Code | IRC          | WeeChat (ncurses)
+| 00   | blanc        | white
+| 01   | noir         | black
+| 02   | bleu foncé   | blue
+| 03   | vert foncé   | green
+| 04   | rouge clair  | lightred
+| 05   | rouge foncé  | red
+| 06   | violet       | magenta
+| 07   | orange       | brown
+| 08   | jaune        | yellow
+| 09   | vert clair   | lightgreen
+| 10   | cyan         | cyan
+| 11   | cyan clair   | lightcyan
+| 12   | bleu clair   | lightblue
+| 13   | violet clair | lightmagenta
+| 14   | gris         | default
+| 15   | gris clair   | white
 |========================================
 
 Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair

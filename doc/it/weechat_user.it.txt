@@ -723,26 +723,27 @@ opzionale):
 Lo stesso codice (senza numero per ^Cc) può essere usato per
 terminare l'attributo.
 
-I codici colore  per ^Cc sono:
+I codici colore per ^Cc sono:
 
-[width="20%",cols="^1m,2"]
+[width="30%",cols="^1m,3,3",options="header"]
 |=======================================
-| 00 | bianco
-| 01 | nero
-| 02 | blu scuro
-| 03 | verde scuro
-| 04 | rosso chiaro
-| 05 | rosso scuro
-| 06 | rosa scuro
-| 07 | arancione
-| 08 | giallo
-| 09 | verde chiaro
-| 10 | azzurro scuro
-| 11 | azzurro chiaro
-| 12 | blu chiaro
-| 13 | rosa chiaro
-| 14 | grigio
-| 15 | grigio chiaro (bianco)
+| Codice | IRC            | WeeChat (ncurses)
+| 00     | bianco         | white
+| 01     | nero           | black
+| 02     | blu scuro      | blue
+| 03     | verde scuro    | green
+| 04     | rosso chiaro   | lightred
+| 05     | rosso scuro    | red
+| 06     | rosa scuro     | magenta
+| 07     | arancione      | brown
+| 08     | giallo         | yellow
+| 09     | verde chiaro   | lightgreen
+| 10     | azzurro scuro  | cyan
+| 11     | azzurro chiaro | lightcyan
+| 12     | blu chiaro     | lightblue
+| 13     | rosa chiaro    | lightmagenta
+| 14     | grigio         | default
+| 15     | grigio chiaro  | white
 |=======================================
 
 Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
