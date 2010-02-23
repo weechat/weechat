@@ -277,7 +277,7 @@ Lo schermo è composto dalle seguenti aree:
 La barra 'stato' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3l,10",options="header"]
-|=======================================
+|========================================
 | Elemento                   | Esempio         | Descrizione
 
 | time                       | [12:55]         |
@@ -316,12 +316,12 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 | scroll                     | -ANCORA(50)-    |
   indicatore di scorrimento, con il numero di righe sotto l'ultima
   riga visualizzata
-|=======================================
+|========================================
 
 La barra 'input' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^6l,8",options="header"]
-|=======================================
+|========================================
 | Elemento         | Esempio | Descrizione
 
 | input_paste      | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] |
@@ -338,7 +338,7 @@ La barra 'input' ha i seguenti elementi predefiniti:
 
 | input_text       | bla bla... |
   testo in input
-|=======================================
+|========================================
 
 [[key_bindings]]
 Associazione tasti predefinita
@@ -349,7 +349,7 @@ Tasti per la riga di comando
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [width="100%",cols="^.^4,.^15",options="header"]
-|=======================================
+|========================================
 | Tasti | Descrizione e comando
 
 | Freccia sinistra +
@@ -492,14 +492,14 @@ Tasti per la riga di comando
 | Alt + R |
   Elimina l'intera riga di comando +
   `/input delete_line`
-|=======================================
+|========================================
 
 [[key_bindings_buffers_windows]]
 Tasti per buffer / finestre
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [width="100%",cols="^.^4,.^15",options="header"]
-|=======================================
+|========================================
 | Tasti | Descrizione e comando
 
 | Ctrl + L |
@@ -640,14 +640,14 @@ Tasti per buffer / finestre
 | Alt + > |
   Passa al buffer successivo nella lista dei buffer visitati +
   `/input jump_next_visited_buffer`
-|=======================================
+|========================================
 
 [[key_bindings_other]]
 Altri tasti
 ^^^^^^^^^^^
 
 [width="100%",cols="^.^4,.^15",options="header"]
-|=======================================
+|========================================
 | Tasti | Descrizione e comando
 
 | Alt + H |
@@ -657,7 +657,7 @@ Altri tasti
 | Alt + = |
   Attiva/disattiva filtri +
   `/filter toggle` +
-|=======================================
+|========================================
 
 [[command_line]]
 Riga di comando
@@ -725,9 +725,9 @@ terminare l'attributo.
 
 I codici colore per ^Cc sono:
 
-[width="30%",cols="^1m,3,3",options="header"]
+[width="35%",cols="^1m,3,3",options="header"]
 |=======================================
-| Codice | IRC            | WeeChat (ncurses)
+| Codice | IRC            | WeeChat (curses)
 | 00     | bianco         | white
 | 01     | nero           | black
 | 02     | blu scuro      | blue
@@ -759,10 +759,12 @@ Opzioni di WeeChat (weechat.conf)
 
 include::autogen/user/weechat_options.txt[]
 
-I colori per l'interfaccia Curses sono:
+[[curses_colors]]
+I colori per l'interfaccia Curses
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [width="50%",cols="^3m,8"]
-|=======================================
+|========================================
 | default      | colore predefinito del terminale (trasparente per lo sfondo)
 | black        | nero
 | darkgray     | grigio scuro
@@ -827,7 +829,7 @@ Esempi per attivare, disattivare oppure elencare i plugin:
 
 I plugin predefiniti sono:
 
-[width="50%",cols=">1s,5",options="header"]
+[width="50%",cols="^1,5",options="header"]
 |=======================================
 | Plugin  | Descrizione
 | alias   | Definisce gli alias per i comandi

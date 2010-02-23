@@ -183,7 +183,7 @@ Utilisation
 
 [[running_weechat]]
 Lancer WeeChat
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 Paramètres de ligne de commande :
 
@@ -729,9 +729,9 @@ l'attribut défini.
 
 Les codes couleur pour ^Cc sont :
 
-[width="30%",cols="^1m,3,3",options="header"]
+[width="35%",cols="^1m,3,3",options="header"]
 |========================================
-| Code | IRC          | WeeChat (ncurses)
+| Code | IRC          | WeeChat (curses)
 | 00   | blanc        | white
 | 01   | noir         | black
 | 02   | bleu foncé   | blue
@@ -763,7 +763,9 @@ Options WeeChat (weechat.conf)
 
 include::autogen/user/weechat_options.txt[]
 
-Les couleurs pour l'interface Curses sont :
+[[curses_colors]]
+Couleurs pour l'interface Curses
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [width="50%",cols="^3m,8"]
 |========================================
@@ -832,7 +834,7 @@ Exemples pour charger, décharger et afficher les extensions :
 
 Les extensions par défaut sont :
 
-[width="50%",cols=">1s,5",options="header"]
+[width="50%",cols="^1,5",options="header"]
 |========================================
 | Extension | Description
 | alias     | Définir des alias pour les commandes

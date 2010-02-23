@@ -711,9 +711,9 @@ attribute.
 
 Color codes for ^Cc are:
 
-[width="30%",cols="^1m,3,3",options="header"]
+[width="35%",cols="^1m,3,3",options="header"]
 |========================================
-| Code | IRC           | WeeChat (ncurses)
+| Code | IRC           | WeeChat (curses)
 | 00   | white         | white
 | 01   | black         | black
 | 02   | dark blue     | blue
@@ -745,7 +745,9 @@ WeeChat options (weechat.conf)
 
 include::autogen/user/weechat_options.txt[]
 
-Colors for Curses GUI are:
+[[curses_colors]]
+Colors for Curses GUI
+^^^^^^^^^^^^^^^^^^^^^
 
 [width="50%",cols="^3m,8"]
 |========================================
@@ -812,7 +814,7 @@ Examples to load, unload or list plugins:
 
 Default plugins are:
 
-[width="50%",cols=">1s,5",options="header"]
+[width="50%",cols="^1,5",options="header"]
 |========================================
 | Plugin  | Description
 | alias   | Define alias for commands
