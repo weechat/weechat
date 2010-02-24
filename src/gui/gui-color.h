@@ -91,24 +91,26 @@ enum t_gui_color_enum
 #define GUI_COLOR_CUSTOM_BAR_DELIM (gui_color_get_custom ("bar_delim"))
 #define GUI_COLOR_CUSTOM_BAR_BG    (gui_color_get_custom ("bar_bg"))
 
-#define GUI_COLOR_FG_CHAR              'F'
-#define GUI_COLOR_FG_STR               "F"
-#define GUI_COLOR_BG_CHAR              'B'
-#define GUI_COLOR_BG_STR               "B"
-#define GUI_COLOR_FG_BG_CHAR           '*'
-#define GUI_COLOR_FG_BG_STR            "*"
-#define GUI_COLOR_BAR_CHAR             'b'
-#define GUI_COLOR_BAR_STR              "b"
-#define GUI_COLOR_BAR_FG_CHAR          'F'
-#define GUI_COLOR_BAR_FG_STR           "F"
-#define GUI_COLOR_BAR_DELIM_CHAR       'D'
-#define GUI_COLOR_BAR_DELIM_STR        "D"
-#define GUI_COLOR_BAR_BG_CHAR          'B'
-#define GUI_COLOR_BAR_BG_STR           "B"
-#define GUI_COLOR_BAR_START_INPUT_CHAR '_'
-#define GUI_COLOR_BAR_START_INPUT_STR  "_"
-#define GUI_COLOR_BAR_MOVE_CURSOR_CHAR '#'
-#define GUI_COLOR_BAR_MOVE_CURSOR_STR  "#"
+#define GUI_COLOR_FG_CHAR                     'F'
+#define GUI_COLOR_FG_STR                      "F"
+#define GUI_COLOR_BG_CHAR                     'B'
+#define GUI_COLOR_BG_STR                      "B"
+#define GUI_COLOR_FG_BG_CHAR                  '*'
+#define GUI_COLOR_FG_BG_STR                   "*"
+#define GUI_COLOR_BAR_CHAR                    'b'
+#define GUI_COLOR_BAR_STR                     "b"
+#define GUI_COLOR_BAR_FG_CHAR                 'F'
+#define GUI_COLOR_BAR_FG_STR                  "F"
+#define GUI_COLOR_BAR_DELIM_CHAR              'D'
+#define GUI_COLOR_BAR_DELIM_STR               "D"
+#define GUI_COLOR_BAR_BG_CHAR                 'B'
+#define GUI_COLOR_BAR_BG_STR                  "B"
+#define GUI_COLOR_BAR_START_INPUT_CHAR        '_'
+#define GUI_COLOR_BAR_START_INPUT_STR         "_"
+#define GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR '-'
+#define GUI_COLOR_BAR_START_INPUT_HIDDEN_STR  "-"
+#define GUI_COLOR_BAR_MOVE_CURSOR_CHAR        '#'
+#define GUI_COLOR_BAR_MOVE_CURSOR_STR         "#"
 
 /* color structure */
 

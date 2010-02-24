@@ -292,6 +292,7 @@ gui_color_decode (const char *string, const char *replacement)
                                 case GUI_COLOR_BAR_BG_CHAR:
                                 case GUI_COLOR_BAR_DELIM_CHAR:
                                 case GUI_COLOR_BAR_START_INPUT_CHAR:
+                                case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
                                 case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                                     ptr_string++;
                                     break;

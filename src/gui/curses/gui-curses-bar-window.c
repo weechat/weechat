@@ -152,7 +152,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int reset_color_before_display,
                              int hide_chars_if_scrolling)
 {
-    int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char;
+    int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char, hidden;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
@@ -168,6 +168,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     }
     
     x_with_hidden = *x;
+
+    hidden = 0;
     
     while (string && string[0])
     {
@@ -241,11 +243,19 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
                                 string += 2;
+                                hidden = 0;
+                                break;
+                            case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
+                                string += 2;
+                                hidden = 1;
                                 break;
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                                 /* move cursor to current position on screen */
-                                bar_window->cursor_x = *x + bar_window->x;
-                                bar_window->cursor_y = *y + bar_window->y;
+                                getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                       bar_window->cursor_y,
+                                       bar_window->cursor_x);
+                                bar_window->cursor_x += bar_window->x;
+                                bar_window->cursor_y += bar_window->y;
                                 string += 2;
                                 break;
                             default:
@@ -354,7 +364,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         /* hidden char (before scroll_x value) */
                         x_with_hidden++;
                     }
-                    else
+                    else if (!hidden)
                     {
                         if (*x + size_on_screen > bar_window->width)
                         {
@@ -398,25 +408,40 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int x, y, items_count, num_lines, line;
     enum t_gui_bar_filling filling;
     char *content, **items;
-    char str_start_input[16], str_cursor[16];
-    char *pos_start_input, *pos_cursor, *buf, *new_start_input;
-    int length_on_screen, chars_available;
+    static char str_start_input[16] = { '\0' };
+    static char str_start_input_hidden[16] = { '\0' };
+    static char str_cursor[16] = { '\0' };
+    char *pos_start_input, *pos_after_start_input, *pos_cursor, *buf;
+    char *new_start_input;
+    static int length_start_input, length_start_input_hidden;
+    int length_on_screen;
+    int chars_available, index, size;
     int length_screen_before_cursor, length_screen_after_cursor;
     int total_length_screen, diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed;
     
     if (!gui_init_ok)
         return;
-    
-    snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_BAR_CHAR,
-              GUI_COLOR_BAR_START_INPUT_CHAR);
-    
-    snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_BAR_CHAR,
-              GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+
+    if (!str_start_input[0])
+    {
+        snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_START_INPUT_CHAR);
+        length_start_input = strlen (str_start_input);
+        
+        snprintf (str_start_input_hidden, sizeof (str_start_input_hidden), "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR);
+        length_start_input_hidden = strlen (str_start_input_hidden);
+        
+        snprintf (str_cursor, sizeof (str_cursor), "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+    }
     
     /* these values will be overwritten later (by gui_bar_window_print_string)
        if cursor has to move somewhere in bar window */
@@ -506,27 +531,25 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 pos_start_input = strstr (items[line], str_start_input);
                 if (pos_start_input)
                 {
-                    pos_cursor = strstr (items[line], str_cursor);
-                    if (pos_cursor && (pos_cursor > pos_start_input))
+                    pos_after_start_input = pos_start_input + strlen (str_start_input);
+                    pos_cursor = strstr (pos_after_start_input, str_cursor);
+                    if (pos_cursor)
                     {
-                        pos_start_input += strlen (str_start_input);
-                        
                         chars_available =
                             ((bar_window->height - y - 1) * bar_window->width) + /* next lines */
                             (bar_window->width - x - 1); /* chars on current line */
                         
                         length_screen_before_cursor = -1;
                         length_screen_after_cursor = -1;
-                        if (pos_cursor && (pos_cursor > items[line]))
+
+                        buf = string_strndup (items[line], pos_cursor - items[line]);
+                        if (buf)
                         {
-                            buf = string_strndup (items[line], pos_cursor - items[line]);
-                            if (buf)
-                            {
-                                length_screen_before_cursor = gui_chat_strlen_screen (buf);
-                                length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor);
-                                free (buf);
-                            }
+                            length_screen_before_cursor = gui_chat_strlen_screen (buf);
+                            length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor);
+                            free (buf);
                         }
+                        
                         if ((length_screen_before_cursor < 0) || (length_screen_after_cursor < 0))
                         {
                             length_screen_before_cursor = gui_chat_strlen_screen (items[line]);
@@ -538,11 +561,48 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)
                         {
-                            new_start_input = pos_start_input + gui_chat_string_real_pos (pos_start_input, diff);
-                            if (pos_cursor && (new_start_input > pos_cursor))
+                            /* TODO: keep some spaces after end of input
+                               for example by adding something to diff, like:
+                               diff += (9 - (diff % 10));
+                               but then scroll position has to be saved
+                               (in bar window ?)
+                            */
+                            
+                            /* compute new start for displaying input */
+                            new_start_input = pos_after_start_input + gui_chat_string_real_pos (pos_after_start_input, diff);
+                            if (new_start_input > pos_cursor)
                                 new_start_input = pos_cursor;
-                            memmove (pos_start_input, new_start_input, strlen (new_start_input) + 1);
+                            
+                            buf = malloc (strlen (items[line]) + length_start_input_hidden + 1);
+                            if (buf)
+                            {
+                                /* add string before start of input */
+                                index = 0;
+                                if (pos_start_input > items[line])
+                                {
+                                    size = pos_start_input - items[line];
+                                    memmove (buf, items[line], size);
+                                    index += size;
+                                }
+                                /* add tag "start_input_hidden" */
+                                memmove (buf + index, str_start_input_hidden, length_start_input_hidden);
+                                index += length_start_input_hidden;
+                                /* add hidden part of input */
+                                size = new_start_input - pos_after_start_input;
+                                memmove (buf + index, pos_after_start_input, size);
+                                index += size;
+                                /* add tag "start_input" */
+                                memmove (buf + index, str_start_input, length_start_input);
+                                index += length_start_input;
+                                /* add input (will be displayed) */
+                                size = strlen (new_start_input) + 1;
+                                memmove (buf + index, new_start_input, size);
+                                
+                                free (items[line]);
+                                items[line] = buf;
+                            }
                         }
+
                     }
                 }
                 
@@ -564,8 +624,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         while (x < bar_window->width)
                         {
                             gui_bar_window_print_string (bar_window,
-                                                         &x, &y,
-                                                         " ", 0, 0);
+                                                         &x, &y, " ", 0, 0);
                         }
                     }
                     
