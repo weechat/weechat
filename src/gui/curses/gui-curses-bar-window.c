@@ -244,10 +244,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                                 /* move cursor to current position on screen */
-                                getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                       bar_window->cursor_y, bar_window->cursor_x);
-                                bar_window->cursor_x += bar_window->x;
-                                bar_window->cursor_y += bar_window->y;
+                                bar_window->cursor_x = *x + bar_window->x;
+                                bar_window->cursor_y = *y + bar_window->y;
                                 string += 2;
                                 break;
                             default:
@@ -405,7 +403,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int length_on_screen, chars_available;
     int length_screen_before_cursor, length_screen_after_cursor;
     int total_length_screen, diff, max_length, optimal_number_of_lines;
-    int some_data_not_displayed, hline_char;
+    int some_data_not_displayed;
     
     if (!gui_init_ok)
         return;
@@ -556,16 +554,21 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     {
                         some_data_not_displayed = 1;
                     }
-                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                    wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
-                    while (x < bar_window->width)
+                    
+                    if (x < bar_window->width)
                     {
-                        gui_bar_window_print_string (bar_window,
-                                                     &x, &y,
-                                                     " ", 0, 0);
+                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                        wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                        while (x < bar_window->width)
+                        {
+                            gui_bar_window_print_string (bar_window,
+                                                         &x, &y,
+                                                         " ", 0, 0);
+                        }
                     }
+                    
                     x = 0;
                     y++;
                 }
@@ -608,18 +611,18 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
-    
+
     /* move cursor if it was asked in an item content (input_text does that
        to move cursor in user input text) */
     if ((!window || (gui_current_window == window))
         && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))
     {
+        wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, 0, 0);
+        wrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
         move (bar_window->cursor_y, bar_window->cursor_x);
     }
-    
-    wnoutrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
-    
-    hline_char = gui_window_get_hline_char ();
+    else
+        wnoutrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
     
     if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
     {
@@ -628,15 +631,15 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             case GUI_BAR_POSITION_BOTTOM:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                               GUI_COLOR_SEPARATOR);
-                mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator, 0, 0,
-                          hline_char, bar_window->width);
+                mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
+                          0, 0, gui_window_get_hline_char (),
+                          bar_window->width);
                 break;
             case GUI_BAR_POSITION_TOP:
                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                               GUI_COLOR_SEPARATOR);
                 mvwhline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                          0, 0,
-                          hline_char,
+                          0, 0, gui_window_get_hline_char (),
                           bar_window->width);
                 break;
             case GUI_BAR_POSITION_LEFT:

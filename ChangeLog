@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-23
+v0.3.2-dev, 2010-02-24
 
 
 Version 0.3.2 (under dev!)
@@ -19,6 +19,7 @@ Version 0.3.2 (under dev!)
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
 * gui: fix bug with bar background after text with background color (bug #28157)
+* gui: fix bug with cursor when position is last char of terminal
 * api: add "version_number" for function info_get to get WeeChat version as
   number
 * api: add functions "string_encode_base64" and "string_decode_base64",, fix
