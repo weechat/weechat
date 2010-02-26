@@ -1,13 +1,15 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-02-24
+v0.3.2-dev, 2010-02-26
 
 
 Version 0.3.2 (under dev!)
 --------------------------
 * core: add signal "day_changed"
 * core: add new command /mute
+* core: add command line option "-s" (or "--no-script") to start WeeChat
+  without loading any script
 * core: remove unneeded space after time on each line if option
   weechat.look.buffer_time_format is set to empty value (bug #28751)
 * core: add option "switch_active_buffer_previous" for command /input

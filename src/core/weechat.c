@@ -111,6 +111,7 @@ weechat_display_usage (char *exec_name)
                             "  -k, --keys        display WeeChat default keys\n"
                             "  -l, --license     display WeeChat license\n"
                             "  -p, --no-plugin   don't load any plugin at startup\n"
+                            "  -s, --no-script   don't load any script at startup\n"
                             "  -v, --version     display WeeChat version\n"
                             "  plugin:option     option for plugin\n"
                             "                    for example, irc plugin can connect\n"

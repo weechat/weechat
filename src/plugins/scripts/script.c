@@ -209,7 +209,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
 {
     char *string, *completion;
     char signal_name[128];
-    int length, i, upgrading;
+    int length, i, upgrading, auto_load_scripts;
     
     /* read script configuration */
     script_config_read (weechat_plugin);
@@ -298,16 +298,29 @@ script_init (struct t_weechat_plugin *weechat_plugin,
               weechat_plugin->name);
     weechat_hook_signal (signal_name, callback_signal_script_action, NULL);
     
-    /* autoload scripts */
-    script_auto_load (weechat_plugin, callback_load_file);
-    
-    /* actions after upgrade */
+    /* parse arguments */
     upgrading = 0;
+    auto_load_scripts = 1;
     for (i = 0; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
+        if (strcmp (argv[i], "--upgrade") == 0)
+        {
             upgrading = 1;
+        }
+        else if ((strcmp (argv[i], "-s") == 0)
+                 || (strcmp (argv[i], "--no-script") == 0))
+        {
+            auto_load_scripts = 0;
+        }
     }
+    
+    /* autoload scripts */
+    if (auto_load_scripts)
+    {
+        script_auto_load (weechat_plugin, callback_load_file);
+    }
+    
+    /* set buffer callbacks after upgrade */
     if (upgrading)
     {
         script_upgrade_set_buffer_callbacks (weechat_plugin,

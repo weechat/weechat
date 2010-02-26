@@ -586,10 +586,12 @@ plugin_load (const char *filename)
                 argc = 0;
                 for (i = 0; i < plugin_argc; i++)
                 {
-                    if ((string_strcasecmp (plugin_argv[i], "-a") == 0)
-                        || (string_strcasecmp (plugin_argv[i], "--no-connect") == 0)
-                        || (string_strcasecmp (plugin_argv[i], "--upgrade") == 0)
-                        || (string_strncasecmp (plugin_argv[i], name, strlen (name)) == 0))
+                    if ((strcmp (plugin_argv[i], "-a") == 0)
+                        || (strcmp (plugin_argv[i], "--no-connect") == 0)
+                        || (strcmp (plugin_argv[i], "-s") == 0)
+                        || (strcmp (plugin_argv[i], "--no-script") == 0)
+                        || (strcmp (plugin_argv[i], "--upgrade") == 0)
+                        || (strncmp (plugin_argv[i], name, strlen (name)) == 0))
                     {
                         argv[argc] = plugin_argv[i];
                         argc++;
