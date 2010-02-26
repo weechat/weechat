@@ -205,6 +205,9 @@ Command line arguments:
 -p, --no-plugin::
     Disable plugins auto-load
 
+-s, --no-script::
+    Disable scirpts auto-load
+
 -v, --version::
     Display WeeChat version
 

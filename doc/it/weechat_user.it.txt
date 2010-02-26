@@ -209,6 +209,9 @@ Argomenti a riga di comando:
 -p, --no-plugin::
     Disabilita il caricamento automatico dei plugin
 
+-s, --no-script::
+    Disabilita il caricamento automatico dei script
+
 -v, --version::
     Visualizza la versione di WeeChat
 

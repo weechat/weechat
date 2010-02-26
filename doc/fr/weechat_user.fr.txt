@@ -208,6 +208,9 @@ Paramètres de ligne de commande :
 -p, --no-plugin::
     Supprimer le chargement automatique des extensions au démarrage
 
+-s, --no-script::
+    Supprimer le chargement automatique des scripts au démarrage
+
 -v, --version::
     Afficher la version de WeeChat
 
