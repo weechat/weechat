@@ -148,7 +148,8 @@ weechat_perl_exec (struct t_plugin_script *script,
     (void) length;
     func = (char *) function;
     old_context = PERL_GET_CONTEXT;
-    PERL_SET_CONTEXT (script->interpreter);
+    if (script->interpreter)
+        PERL_SET_CONTEXT (script->interpreter);
 #else
     length = strlen (script->interpreter) + strlen (function) + 3;
     func = (char *) malloc (length);
