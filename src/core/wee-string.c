@@ -50,6 +50,7 @@
 
 #include "weechat.h"
 #include "wee-string.h"
+#include "wee-config.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
 
@@ -1409,4 +1410,80 @@ string_decode_base64 (const char *from, char *to)
     ptr_to[0] = '\0';
     
     return to_length;
+}
+
+/*
+ * string_is_command_char: return 1 if first char of string is a command char,
+ *                         otherwise 0
+ */
+
+int
+string_is_command_char (const char *string)
+{
+    const char *ptr_command_chars;
+    
+    if (!string)
+        return 0;
+    
+    if (string[0] == '/')
+        return 1;
+    
+    ptr_command_chars = CONFIG_STRING(config_look_command_chars);
+    if (!ptr_command_chars || !ptr_command_chars[0])
+        return 0;
+    
+    while (ptr_command_chars && ptr_command_chars[0])
+    {
+        if (utf8_charcmp (ptr_command_chars, string) == 0)
+            return 1;
+        ptr_command_chars = utf8_next_char (ptr_command_chars);
+    }
+    
+    return 0;
+}
+
+/*
+ * string_input_for_buffer: return pointer to input text for buffer (pointer
+ *                          inside "string" argument)
+ *                          or return NULL if it's a command
+ *                          (by default, a command starts with a single '/')
+ */
+
+const char *
+string_input_for_buffer (const char *string)
+{
+    char *pos_slash, *pos_space, *next_char;
+    
+    /* special case for C comments pasted in input line */
+    if (strncmp (string, "/*", 2) == 0)
+        return string;
+    
+    /* special case if string starts with '/': to allow to paste a path line
+       "/path/to/file.txt", we check if next '/' is after a space or not */
+    if (string[0] == '/')
+    {
+        pos_slash = strchr (string + 1, '/');
+        pos_space = strchr (string + 1, ' ');
+        
+        /* if there's no other '/' of if '/' is after first space,
+           then it is a command, and return NULL */
+        if (!pos_slash || (pos_space && pos_slash > pos_space))
+            return NULL;
+        
+        return (string[1] == '/') ? string + 1 : string;
+    }
+    
+    /* if string does not start with a command char, then it's not command */
+    if (!string_is_command_char (string))
+        return string;
+    
+    /* check if first char is doubled: if yes, then it's not a command */
+    next_char = utf8_next_char (string);
+    if (!next_char || !next_char[0])
+        return string;
+    if (utf8_charcmp (string, next_char) == 0)
+        return next_char;
+    
+    /* string is a command */
+    return NULL;
 }

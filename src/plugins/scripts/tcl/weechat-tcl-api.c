@@ -446,7 +446,7 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *replacement, *string;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -469,6 +469,72 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
     result = weechat_string_remove_color (string, replacement);
     
     TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_string_is_command_char: check if first char of string is a
+ *                                         command char
+ */
+
+static int
+weechat_tcl_api_string_is_command_char (ClientData clientData, Tcl_Interp *interp,
+                                        int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    int result, i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        TCL_RETURN_INT(0);
+    }
+    
+    result = weechat_string_is_command_char (Tcl_GetStringFromObj (objv[1], &i)); /* string */
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_string_input_for_buffer: return string with input text
+ *                                          for buffer or empty string if
+ *                                          it's a command
+ */
+
+static int
+weechat_tcl_api_string_input_for_buffer (ClientData clientData, Tcl_Interp *interp,
+                                         int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_input_for_buffer (Tcl_GetStringFromObj (objv[1], &i));
+    
+    TCL_RETURN_STRING(result);
 }
 
 /*
@@ -6552,6 +6618,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_ngettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::string_remove_color",
                           weechat_tcl_api_string_remove_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::string_is_command_char",
+                          weechat_tcl_api_string_is_command_char, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::string_input_for_buffer",
+                          weechat_tcl_api_string_input_for_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::mkdir_home",
                           weechat_tcl_api_mkdir_home, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::mkdir",

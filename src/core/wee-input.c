@@ -31,30 +31,11 @@
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
-
-
-/*
- * input_is_command: return 1 if line is a command, 0 otherwise
- */
-
-int
-input_is_command (const char *line)
-{
-    char *pos_slash, *pos_space;
-
-    if (strncmp (line, "/*", 2) == 0)
-        return 0;
-    
-    pos_slash = strchr (line + 1, '/');
-    pos_space = strchr (line + 1, ' ');
-    
-    return (line[0] == '/')
-        && (!pos_slash || (pos_space && pos_slash > pos_space));
-}
 
 /*
  * input_exec_data: send data to buffer input callbackr
@@ -78,11 +59,9 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 
 /*
  * input_exec_command: execute a command (WeeChat internal or a plugin command)
- *                     returns: 1 if command was executed succesfully
- *                              0 if error (command not executed)
  */
 
-int
+void
 input_exec_command (struct t_gui_buffer *buffer,
                     int any_plugin,
                     struct t_weechat_plugin *plugin,
@@ -91,12 +70,12 @@ input_exec_command (struct t_gui_buffer *buffer,
     int rc;
     char *command, *pos, *ptr_args;
     
-    if ((!string) || (!string[0]) || (string[0] != '/'))
-        return 0;
+    if ((!string) || (!string[0]))
+        return;
     
     command = strdup (string);
     if (!command)
-        return 0;
+        return ;
     
     /* look for end of command */
     ptr_args = NULL;
@@ -166,7 +145,6 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
     }
     free (command);
-    return 0;
 }
 
 /*
@@ -176,8 +154,9 @@ input_exec_command (struct t_gui_buffer *buffer,
 void
 input_data (struct t_gui_buffer *buffer, const char *data)
 {
-    char *pos;
-    const char *ptr_data;
+    char *pos, *buf;
+    const char *ptr_data, *ptr_data_for_buffer;
+    int length, char_size;
     
     if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
         return;
@@ -190,14 +169,32 @@ input_data (struct t_gui_buffer *buffer, const char *data)
         if (pos)
             pos[0] = '\0';
         
-        if (input_is_command (ptr_data))
+        ptr_data_for_buffer = string_input_for_buffer (ptr_data);
+        if (ptr_data_for_buffer)
         {
-            /* WeeChat or plugin command */
-            (void) input_exec_command (buffer, 1, buffer->plugin, ptr_data);
+            /* input string is NOT a command, send it to buffer input
+               callback */
+            if (string_is_command_char (ptr_data_for_buffer))
+            {
+                char_size = utf8_char_size (ptr_data_for_buffer);
+                length = strlen (ptr_data_for_buffer) + char_size + 1;
+                buf = malloc (length);
+                if (buf)
+                {
+                    memcpy (buf, ptr_data_for_buffer, char_size);
+                    snprintf (buf + char_size, length - char_size,
+                              "%s", ptr_data_for_buffer);
+                    input_exec_data (buffer, buf);
+                    free (buf);
+                }
+            }
+            else
+                input_exec_data (buffer, ptr_data_for_buffer);
         }
         else
         {
-            input_exec_data (buffer, ptr_data);
+            /* input string is a command */
+            input_exec_command (buffer, 1, buffer->plugin, ptr_data);
         }
         
         if (pos)

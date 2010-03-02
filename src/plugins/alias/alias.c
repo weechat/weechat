@@ -371,10 +371,10 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                     alias_command = malloc (1 + length1 + 1 + length2 + 1);
                     if (alias_command)
                     {
-                        if (*ptr_cmd[0] != '/')
+                        if (!weechat_string_is_command_char (*ptr_cmd))
                             strcpy (alias_command, "/");
                         else
-                            strcpy (alias_command, "");
+                            alias_command[0] = '\0';
                         
                         strcat (alias_command, *ptr_cmd);
                         strcat (alias_command, " ");
@@ -387,7 +387,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 }
                 else
                 {
-                    if (*ptr_cmd[0] == '/')
+                    if (weechat_string_is_command_char (*ptr_cmd))
                     {
                         alias_run_command (&buffer,
                                            (args_replaced) ? args_replaced : *ptr_cmd);
@@ -497,9 +497,9 @@ alias_new (const char *name, const char *command)
     if (!name || !name[0] || !command || !command[0])
         return NULL;
     
-    while (name[0] == '/')
+    while (weechat_string_is_command_char (name))
     {
-        name++;
+        name = weechat_utf8_next_char (name);
     }
     
     ptr_alias = alias_search (name);
@@ -514,7 +514,8 @@ alias_new (const char *name, const char *command)
         if (str_completion)
         {
             snprintf (str_completion, length, "%%%%%s",
-                      (command[0] == '/') ? command + 1 : command);
+                      (weechat_string_is_command_char (command)) ?
+                       weechat_utf8_next_char (command) : command);
         }
         new_hook = weechat_hook_command (name, command, NULL, NULL,
                                          (str_completion) ? str_completion : NULL,
@@ -587,8 +588,8 @@ alias_get_final_command (struct t_alias *alias)
         return NULL;
     }
     
-    ptr_alias = alias_search ((alias->command[0] == '/') ?
-                             alias->command + 1 : alias->command);
+    ptr_alias = alias_search ((weechat_string_is_command_char (alias->command)) ?
+                              weechat_utf8_next_char (alias->command) : alias->command);
     if (ptr_alias)
     {
         alias->running = 1;
@@ -596,8 +597,8 @@ alias_get_final_command (struct t_alias *alias)
         alias->running = 0;
         return result;
     }
-    return (alias->command[0] == '/') ?
-        alias->command + 1 : alias->command;
+    return (weechat_string_is_command_char (alias->command)) ?
+        weechat_utf8_next_char (alias->command) : alias->command;
 }
 
 /*
@@ -812,7 +813,8 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        alias_name = (argv[1][0] == '/') ? argv[1] + 1 : argv[1];
+        alias_name = (weechat_string_is_command_char (argv[1])) ?
+            weechat_utf8_next_char (argv[1]) : argv[1];
         if (argc > 2)
         {
             /* Define new alias */
@@ -920,7 +922,8 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     {
         for (i = 1; i < argc; i++)
         {
-            alias_name = (argv[i][0] == '/') ? argv[i] + 1 : argv[i];
+            alias_name = (weechat_string_is_command_char (argv[i])) ?
+                weechat_utf8_next_char (argv[i]) : argv[i];
             ptr_alias = alias_search (alias_name);
             if (!ptr_alias)
             {

@@ -346,6 +346,66 @@ XS (XS_weechat_api_string_remove_color)
 }
 
 /*
+ * weechat::string_is_command_char: check if first char of string is a command
+ *                                  char
+ */
+
+XS (XS_weechat_api_string_is_command_char)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_string_is_command_char (SvPV (ST (0), PL_na)); /* string */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::string_input_for_buffer: return string with input text for buffer
+ *                                   or empty string if it's a command
+ */
+
+XS (XS_weechat_api_string_input_for_buffer)
+{
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_input_for_buffer (SvPV (ST (0), PL_na)); /* string */
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
  * weechat::mkdir_home: create a directory in WeeChat home
  */
 
@@ -5790,6 +5850,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::gettext", XS_weechat_api_gettext, "weechat");
     newXS ("weechat::ngettext", XS_weechat_api_ngettext, "weechat");
     newXS ("weechat::string_remove_color", XS_weechat_api_string_remove_color, "weechat");
+    newXS ("weechat::string_is_command_char", XS_weechat_api_string_is_command_char, "weechat");
+    newXS ("weechat::string_input_for_buffer", XS_weechat_api_string_input_for_buffer, "weechat");
     newXS ("weechat::mkdir_home", XS_weechat_api_mkdir_home, "weechat");
     newXS ("weechat::mkdir", XS_weechat_api_mkdir, "weechat");
     newXS ("weechat::mkdir_parents", XS_weechat_api_mkdir_parents, "weechat");

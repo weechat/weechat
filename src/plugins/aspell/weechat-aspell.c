@@ -733,10 +733,10 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         index_result = 0;
         
         /* check if string is a command */
-        if ((ptr_string[0] == '/') && ptr_string[1] && (ptr_string[1] != '/')
-            && (ptr_string[1] != ' '))
+        if (!weechat_string_input_for_buffer (ptr_string))
         {
-            ptr_string++;
+            char_size = weechat_utf8_char_size (ptr_string);
+            ptr_string += char_size;
             pos_space = ptr_string;
             while (pos_space && pos_space[0] && (pos_space[0] != ' '))
             {
@@ -756,10 +756,11 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 free (result);
                 return NULL;
             }
-            result[index_result++] = '/';
+            memcpy (result + index_result, aspell_last_modifier_string, char_size);
+            index_result += char_size;
             strcpy (result + index_result, ptr_string);
             index_result += strlen (ptr_string);
-
+            
             pos_space[0] = ' ';
             ptr_string = pos_space;
         }

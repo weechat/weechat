@@ -386,6 +386,8 @@ plugin_load (const char *filename)
         new_plugin->string_remove_color = &gui_color_decode;
         new_plugin->string_encode_base64 = &string_encode_base64;
         new_plugin->string_decode_base64 = &string_decode_base64;
+        new_plugin->string_is_command_char = &string_is_command_char;
+        new_plugin->string_input_for_buffer = &string_input_for_buffer;
         
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

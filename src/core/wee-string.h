@@ -58,5 +58,7 @@ extern void string_iconv_fprintf (FILE *file, const char *data, ...);
 extern char *string_format_size (unsigned long size);
 extern void string_encode_base64 (const char *from, int length, char *to);
 extern int string_decode_base64 (const char *from, char *to);
+extern int string_is_command_char (const char *string);
+extern const char *string_input_for_buffer (const char *string);
 
 #endif /* wee-string.h */

@@ -74,6 +74,7 @@ struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_nicks_number;
 struct t_config_option *config_look_color_real_white;
+struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_highlight;
@@ -1234,6 +1235,13 @@ config_weechat_init_options ()
            "see real white instead of default term foreground "
            "color)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_look_command_chars = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "command_chars", "string",
+        N_("chars used to determine if input string is a command or not: "
+           "input must start with one of these chars; the slash (\"/\") is "
+           "always considered as command prefix (example: \".$\")"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_day_change = config_file_new_option (
         weechat_config_file, ptr_section,
         "day_change", "boolean",

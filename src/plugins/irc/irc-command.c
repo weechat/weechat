@@ -121,7 +121,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     if (!command || !command[0])
         return;
 
-    if (command[0] != '/')
+    if (!weechat_string_is_command_char (command))
     {
         length = 1 + strlen (command) + 1;
         str_command = malloc (length);
@@ -240,7 +240,7 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
     if (!command || !command[0])
         return;
 
-    if (command[0] != '/')
+    if (!weechat_string_is_command_char (command))
     {
         length = 1 + strlen (command) + 1;
         str_command = malloc (length);

@@ -351,6 +351,73 @@ weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_string_is_command_char: check if first char of string is
+ *                                            a command char
+ */
+
+static PyObject *
+weechat_python_api_string_is_command_char (PyObject *self, PyObject *args)
+{
+    char *string;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_string_is_command_char (string);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_string_input_for_buffer: return string with input text
+ *                                             for buffer or empty string if
+ *                                             it's a command
+ */
+
+static PyObject *
+weechat_python_api_string_input_for_buffer (PyObject *self, PyObject *args)
+{
+    char *string;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_input_for_buffer (string);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
  * weechat_python_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -6081,6 +6148,8 @@ PyMethodDef weechat_python_funcs[] =
     { "gettext", &weechat_python_api_gettext, METH_VARARGS, "" },
     { "ngettext", &weechat_python_api_ngettext, METH_VARARGS, "" },
     { "string_remove_color", &weechat_python_api_string_remove_color, METH_VARARGS, "" },
+    { "string_is_command_char", &weechat_python_api_string_is_command_char, METH_VARARGS, "" },
+    { "string_input_for_buffer", &weechat_python_api_string_input_for_buffer, METH_VARARGS, "" },
     { "mkdir_home", &weechat_python_api_mkdir_home, METH_VARARGS, "" },
     { "mkdir", &weechat_python_api_mkdir, METH_VARARGS, "" },
     { "mkdir_parents", &weechat_python_api_mkdir_parents, METH_VARARGS, "" },

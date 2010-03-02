@@ -932,7 +932,7 @@ command_command (void *data, struct t_gui_buffer *buffer,
                 return WEECHAT_RC_ERROR;
             }
         }
-        if (argv_eol[2][0] == '/')
+        if (string_is_command_char (argv_eol[2]))
         {
             input_exec_command (buffer, 0, ptr_plugin, argv_eol[2]);
         }
@@ -2291,7 +2291,7 @@ command_mute (void *data, struct t_gui_buffer *buffer,
             gui_chat_mute = mute_mode;
             gui_chat_mute_buffer = mute_buffer;
             
-            if (ptr_command[0] == '/')
+            if (string_is_command_char (ptr_command))
             {
                 input_exec_command (buffer, 1, NULL, ptr_command);
             }

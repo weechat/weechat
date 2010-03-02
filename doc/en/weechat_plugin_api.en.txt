@@ -868,7 +868,7 @@ Return value:
 * array of strings, NULL if problem (must be freed by calling
   <<_weechat_string_free_split>> after use)
 
-Examples:
+C examples:
 
 [source,C]
 ----------------------------------------
@@ -1035,7 +1035,7 @@ Return value:
 
 * formatted string (must be freed by calling "free" after use)
 
-Examples:
+C examples:
 
 [source,C]
 ----------------------------------------
@@ -1082,7 +1082,7 @@ Return value:
 
 * string without color (must be freed by calling "free" after use)
 
-Examples:
+C examples:
 
 [source,C]
 ----------------------------------------
@@ -1127,7 +1127,7 @@ Arguments:
 * 'to': pointer to string to store result (must be long enough, result is
   longer than initial string)
 
-Example:
+C example:
 
 [source,C]
 ----------------------------------------
@@ -1158,7 +1158,7 @@ Return value:
 
 * length of string stored in *to (does not count final '\0')
 
-Example:
+C example:
 
 [source,C]
 ----------------------------------------
@@ -1166,6 +1166,89 @@ char *string = "YWJjZGVmZ2g=", result[128];
 int length;
 length = weechat_string_decode_base64 (string, result);
 /* length == 8, result == "abcdefgh" */
+----------------------------------------
+
+weechat_string_is_command_char
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check if first char of string is a command char (default command char is '/').
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_string_is_command_char (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* 1 if first char of string is a command char, otherwise 0
+
+C examples:
+
+[source,C]
+----------------------------------------
+int command_char1 = weechat_string_is_command_char ("/test"); /* == 1 */
+int command_char2 = weechat_string_is_command_char ("test");  /* == 0 */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.string_is_command_char(string)
+
+# examples
+command_char1 = weechat.string_is_command_char("/test") # == 1
+command_char2 = weechat.string_is_command_char("test")  # == 0
+----------------------------------------
+
+weechat_string_input_for_buffer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return pointer to input text for buffer (pointer inside "string" argument), or
+NULL if it's a command.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_string_input_for_buffer (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* pointer into "string", or NULL
+
+C examples:
+
+[source,C]
+----------------------------------------
+const char *str1 = weechat_string_input_for_buffer ("test");   /* "test"  */
+const char *str2 = weechat_string_input_for_buffer ("/test");  /* NULL    */
+const char *str3 = weechat_string_input_for_buffer ("//test"); /* "/test" */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+str = weechat.string_input_for_buffer(string)
+
+# examples
+str1 = weechat.string_input_for_buffer("test")   # "test"
+str2 = weechat.string_input_for_buffer("/test")  # ""
+str3 = weechat.string_input_for_buffer("//test") # "/test"
 ----------------------------------------
 
 [[utf-8]]

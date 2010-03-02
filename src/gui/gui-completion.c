@@ -1546,11 +1546,12 @@ gui_completion_find_context (struct t_gui_completion *completion,
                              const char *data, int size, int pos)
 {
     int i, command, command_arg, pos_start, pos_end;
+    char *prev_char;
     
     /* look for context */
     gui_completion_free_data (completion);
     gui_completion_buffer_init (completion, completion->buffer);
-    command = (data[0] == '/') ? 1 : 0;
+    command = (string_input_for_buffer (data)) ? 0 : 1;
     command_arg = 0;
     i = 0;
     while (i < pos)
@@ -1623,8 +1624,8 @@ gui_completion_find_context (struct t_gui_completion *completion,
         if (completion->context == GUI_COMPLETION_COMMAND)
         {
             pos_start++;
-            if (data[pos_start] == '/')
-                pos_start++;
+            if (string_is_command_char (data + pos_start))
+                pos_start += utf8_char_size (data + pos_start);
         }
         
         completion->base_word_pos = pos_start;
@@ -1648,22 +1649,25 @@ gui_completion_find_context (struct t_gui_completion *completion,
     if (completion->context == GUI_COMPLETION_COMMAND_ARG)
     {
         pos_start = 0;
-        while ((pos_start < size) && (data[pos_start] != '/'))
+        while ((pos_start < size) && !string_is_command_char (data + pos_start))
         {
-            pos_start++;
+            pos_start += utf8_char_size (data + pos_start);
         }
-        if (data[pos_start] == '/')
+        if (string_is_command_char (data + pos_start))
         {
-            pos_start++;
-            if (data[pos_start] == '/')
-                pos_start++;
+            pos_start += utf8_char_size (data + pos_start);
+            if (string_is_command_char (data + pos_start))
+                pos_start += utf8_char_size (data + pos_start);
             pos_end = pos_start;
             while ((pos_end < size) && (data[pos_end] != ' '))
             {
-                pos_end++;
+                pos_end += utf8_char_size (data + pos_end);
             }
             if (data[pos_end] == ' ')
-                pos_end--;
+            {
+                prev_char = utf8_prev_char (data, data + pos_end);
+                pos_end -= utf8_char_size (prev_char);
+            }
             
             completion->base_command = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)

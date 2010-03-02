@@ -572,7 +572,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_for_plugin, *hook_for_other_plugin;
-    char **argv, **argv_eol;
+    char **argv, **argv_eol, *ptr_command_name;
     int argc, rc, number_for_other_plugin;
     
     if (!buffer || !string || !string[0])
@@ -592,6 +592,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     }
     argv_eol = string_split (string, " ", 1, 0, NULL);
     
+    ptr_command_name = utf8_next_char (argv[0]);
+    
     hook_exec_start ();
     
     hook_for_plugin = NULL;
@@ -603,8 +605,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         next_hook = ptr_hook->next_hook;
         
         if (!ptr_hook->deleted
-            && ((argv[0][0] == '/') && (string_strcasecmp (argv[0] + 1,
-                                                           HOOK_COMMAND(ptr_hook, command)) == 0)))
+            && (string_strcasecmp (ptr_command_name,
+                                   HOOK_COMMAND(ptr_hook, command)) == 0))
         {
             if (ptr_hook->plugin == plugin)
             {

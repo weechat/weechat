@@ -408,6 +408,81 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
 }
 
 /*
+ * weechat_ruby_api_string_is_command_char: check if first char of string is a
+ *                                          command char
+ */
+
+static VALUE
+weechat_ruby_api_string_is_command_char (VALUE class, VALUE string)
+{
+    char *c_string;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        RUBY_RETURN_INT(0);
+    }
+    
+    c_string = NULL;
+    
+    if (NIL_P (string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_is_command_char");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (string, T_STRING);
+    
+    c_string = STR2CSTR (string);
+    
+    value = weechat_string_is_command_char (c_string);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_string_input_for_buffer: return string with input text
+ *                                           for buffer or empty string if
+ *                                           it's a command
+ */
+
+static VALUE
+weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
+{
+    char *c_string;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_string = NULL;
+    
+    if (NIL_P (string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (string, T_STRING);
+    
+    c_string = STR2CSTR (string);
+    
+    result = weechat_string_input_for_buffer (c_string);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
  * weechat_ruby_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -7023,6 +7098,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "gettext", &weechat_ruby_api_gettext, 1);
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
     rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 2);
+    rb_define_module_function (ruby_mWeechat, "string_is_command_char", &weechat_ruby_api_string_is_command_char, 1);
+    rb_define_module_function (ruby_mWeechat, "string_input_for_buffer", &weechat_ruby_api_string_input_for_buffer, 1);
     rb_define_module_function (ruby_mWeechat, "mkdir_home", &weechat_ruby_api_mkdir_home, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir", &weechat_ruby_api_mkdir, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir_parents", &weechat_ruby_api_mkdir_parents, 2);
