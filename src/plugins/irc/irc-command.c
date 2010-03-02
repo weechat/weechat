@@ -524,10 +524,12 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if (ptr_server->is_connected)
+            if (ptr_server->buffer)
+            {
                 irc_command_away_server (ptr_server,
                                          (argc > 2) ? argv_eol[2] : NULL,
                                          1);
+            }
         }
         weechat_buffer_set (NULL, "hotlist", "+");
     }

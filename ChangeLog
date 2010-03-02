@@ -43,6 +43,8 @@ Version 0.3.2 (under dev!)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
 * irc: fix PART message received on Undernet server (bug #28825)
+* irc: fix bug with /away -all: set or unset future away for disconnected
+  servers (bug #29022)
 * irc: add option irc.network.connection_timeout (timeout between TCP connection
   to server and reception of message 001)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
