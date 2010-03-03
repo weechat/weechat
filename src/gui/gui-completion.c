@@ -1551,7 +1551,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
     /* look for context */
     gui_completion_free_data (completion);
     gui_completion_buffer_init (completion, completion->buffer);
-    command = (string_input_for_buffer (data)) ? 0 : 1;
+    command = (string_is_command_char (data)) ? 1 : 0;
     command_arg = 0;
     i = 0;
     while (i < pos)
