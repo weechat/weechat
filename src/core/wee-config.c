@@ -1411,7 +1411,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "read_marker_always_show", "boolean",
         N_("always show read marker, even if it is after last buffer line"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_save_config_on_exit = config_file_new_option (
         weechat_config_file, ptr_section,
         "save_config_on_exit", "boolean",
