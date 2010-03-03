@@ -36,6 +36,7 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-raw.h"
 #include "irc-upgrade.h"
 
 
@@ -249,6 +250,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_config_write (0);
         irc_server_disconnect_all ();
     }
+    
+    irc_raw_message_free_all ();
     
     irc_server_free_all ();
     
