@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-02 16:35+0100\n"
+"POT-Creation-Date: 2010-03-03 22:13+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1555,6 +1555,9 @@ msgstr "строка, вставляемая после автодополнен
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "использовать маркер непрочитанных сообщений в окнах серверов и каналов"
+
+msgid "always show read marker, even if it is after last buffer line"
+msgstr ""
 
 #, fuzzy
 msgid "save configuration file on exit"

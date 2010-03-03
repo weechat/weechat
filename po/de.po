@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-02 16:35+0100\n"
+"POT-Creation-Date: 2010-03-03 22:13+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1766,6 +1766,9 @@ msgstr "Nach dem Präfix anzufügende Zeichenfolge"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "Markiere die erste, ungelesene Zeile bei Server- und Channel-Buffern"
+
+msgid "always show read marker, even if it is after last buffer line"
+msgstr ""
 
 msgid "save configuration file on exit"
 msgstr "Konfiguration beim Beenden abspeichern"

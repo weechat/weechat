@@ -926,7 +926,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         }
     }
     
-    if (marker_line && gui_line_get_next_displayed (line))
+    if (marker_line)
     {
         gui_chat_display_horizontal_line (window, simulate);
         gui_chat_display_new_line (window, num_lines, count,

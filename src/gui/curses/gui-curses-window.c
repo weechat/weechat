@@ -586,6 +586,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         ptr_bar_window->bar->bar_refresh_needed = 1;
     }
     
+    if (CONFIG_BOOLEAN(config_look_read_marker_always_show)
+        && set_last_read && !window->buffer->lines->last_read_line)
+    {
+        window->buffer->lines->last_read_line = window->buffer->lines->last_line;
+    }
+    
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }

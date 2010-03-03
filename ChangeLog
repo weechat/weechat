@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-03-02
+v0.3.2-dev, 2010-03-03
 
 
 Version 0.3.2 (under dev!)
@@ -19,6 +19,7 @@ Version 0.3.2 (under dev!)
   weechat_util_get_time_string in plugin API (patch #6914)
 * core: add new option weechat.look.command_chars, add functions
   string_is_command_char and string_input_for_buffer in plugin and script API
+* core: add new option weechat.look.read_marker_always_show
 * core: use arguments for infolist "nicklist" to return only one nick or group
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)

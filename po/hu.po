@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-02 16:35+0100\n"
+"POT-Creation-Date: 2010-03-03 22:13+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1544,6 +1544,9 @@ msgstr "névkiegészítés után beszúrt szöveg"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "jelölje a szerveren/szobában utoljára olvasott sort"
+
+msgid "always show read marker, even if it is after last buffer line"
+msgstr ""
 
 #, fuzzy
 msgid "save configuration file on exit"

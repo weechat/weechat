@@ -100,6 +100,7 @@ struct t_config_option *config_look_prefix_buffer_align_max;
 struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
+struct t_config_option *config_look_read_marker_always_show;
 struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
@@ -1406,6 +1407,11 @@ config_weechat_init_options ()
         N_("use a marker (line or char) on buffers to show first unread line"),
         "none|line|dotted-line|char",
         0, 0, "dotted-line", NULL, 0, NULL, NULL, &config_change_read_marker, NULL, NULL, NULL);
+    config_look_read_marker_always_show = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "read_marker_always_show", "boolean",
+        N_("always show read marker, even if it is after last buffer line"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_save_config_on_exit = config_file_new_option (
         weechat_config_file, ptr_section,
         "save_config_on_exit", "boolean",
