@@ -388,6 +388,16 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             free (output);
                         
                         *x += size_on_screen;
+                        
+                        if ((*x >= bar_window->width)
+                            && (gui_bar_get_filling (bar_window->bar) != GUI_BAR_FILLING_VERTICAL))
+                        {
+                            if (*y >= bar_window->height - 1)
+                                return 0;
+                            *x = 0;
+                            (*y)++;
+                            wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
+                        }
                     }
                 }
                 string = next_char;
@@ -617,10 +627,13 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     
                     if (x < bar_window->width)
                     {
-                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                        wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                        if (filling == GUI_BAR_FILLING_HORIZONTAL)
+                        {
+                            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                            wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                        }
                         while (x < bar_window->width)
                         {
                             gui_bar_window_print_string (bar_window,
@@ -676,7 +689,11 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     if ((!window || (gui_current_window == window))
         && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))
     {
-        wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, 0, 0);
+        y = bar_window->cursor_y - bar_window->y;
+        x = bar_window->cursor_x - bar_window->x;
+        if (x > bar_window->width - 2)
+            x = bar_window->width - 2;
+        wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x);
         wrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
         move (bar_window->cursor_y, bar_window->cursor_x);
     }
