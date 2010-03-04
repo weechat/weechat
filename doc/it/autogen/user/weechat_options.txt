@@ -528,6 +528,11 @@
 ** tipo: intero
 ** valori: none, line, dotted-line, char (valore predefinito: dotted-line)
 
+* *weechat.look.read_marker_always_show*
+** descrizione: always show read marker, even if it is after last buffer line
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
 * *weechat.look.save_config_on_exit*
 ** descrizione: salva file di configurazione all'uscita
 ** tipo: bool

@@ -528,6 +528,11 @@
 ** type: entier
 ** valeurs: none, line, dotted-line, char (valeur par défaut: dotted-line)
 
+* *weechat.look.read_marker_always_show*
+** description: toujours afficher le marqueur de lecture, même s'il est après la dernière ligne du tampon
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *weechat.look.save_config_on_exit*
 ** description: sauvegarder la configuration en quittant
 ** type: booléen
