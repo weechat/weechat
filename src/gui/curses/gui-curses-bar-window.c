@@ -389,16 +389,6 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             free (output);
                         
                         *x += size_on_screen;
-                        
-                        if ((*x >= bar_window->width)
-                            && (filling == GUI_BAR_FILLING_HORIZONTAL))
-                        {
-                            if (*y >= bar_window->height - 1)
-                                return 0;
-                            *x = 0;
-                            (*y)++;
-                            wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
-                        }
                     }
                 }
                 string = next_char;
