@@ -67,6 +67,11 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_line *last_read_line;
     
+    /* marker is disabled in config? */
+    if ((CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
+        && (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
+        return 0;
+    
     /* marker is not set for buffer? */
     if (!buffer->lines->last_read_line)
         return 0;
@@ -78,15 +83,14 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     if (!last_read_line)
         return 0;
     
-    /* marker is disabled in config? */
-    if ((CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
-        && (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
-        return 0;
-    
     while (line)
     {
         if (last_read_line == line)
-            return 1;
+        {
+            if (CONFIG_BOOLEAN(config_look_read_marker_always_show))
+                return 1;
+            return (gui_line_get_next_displayed (line) != NULL) ? 1 : 0;
+        }
         
         if (line->data->displayed)
             break;
