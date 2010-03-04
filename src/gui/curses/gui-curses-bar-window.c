@@ -147,6 +147,7 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 
 int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
+                             enum t_gui_bar_filling filling,
                              int *x, int *y,
                              const char *string,
                              int reset_color_before_display,
@@ -368,7 +369,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                     {
                         if (*x + size_on_screen > bar_window->width)
                         {
-                            if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_VERTICAL)
+                            if (filling == GUI_BAR_FILLING_VERTICAL)
                                 return 0;
                             if (*y >= bar_window->height - 1)
                                 return 0;
@@ -390,7 +391,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         *x += size_on_screen;
                         
                         if ((*x >= bar_window->width)
-                            && (gui_bar_get_filling (bar_window->bar) != GUI_BAR_FILLING_VERTICAL))
+                            && (filling == GUI_BAR_FILLING_HORIZONTAL))
                         {
                             if (*y >= bar_window->height - 1)
                                 return 0;
@@ -619,7 +620,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 if ((bar_window->scroll_y == 0)
                     || (line >= bar_window->scroll_y))
                 {
-                    if (!gui_bar_window_print_string (bar_window, &x, &y,
+                    if (!gui_bar_window_print_string (bar_window, filling,
+                                                      &x, &y,
                                                       items[line], 1, 1))
                     {
                         some_data_not_displayed = 1;
@@ -636,7 +638,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
                         while (x < bar_window->width)
                         {
-                            gui_bar_window_print_string (bar_window,
+                            gui_bar_window_print_string (bar_window, filling,
                                                          &x, &y, " ", 0, 0);
                         }
                     }
