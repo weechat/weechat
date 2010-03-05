@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-03-03 22:13+0100\n"
-"PO-Revision-Date: 2010-02-23 10:43+0100\n"
+"PO-Revision-Date: 2010-03-05 10:43+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Použití: %s [volba...] [plugin:volba...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
@@ -51,6 +50,7 @@ msgstr ""
 "  -k, --keys        zobrazí výchozí klávesy WeeChat\n"
 "  -l, --license     zobrazí licenci WeeChat\n"
 "  -p, --no-plugin   nenačítat plug-iny při startu\n"
+"  -s, --no-script   nenačítat skripty při startu\n"
 "  -v, --version     zobrazí verzi WeeChat\n"
 "  plugin:option     volba pluginu\n"
 "                    například irc plugin se může připojit\n"
@@ -212,7 +212,7 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" nenalezen"
 
 msgid "Raw content of buffers has been written in log file"
-msgstr ""
+msgstr "Hrubý obsah bufferů byl zapsán do logovacího souboru"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -926,11 +926,9 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "spřáva ladění pro jádro/pluginy"
 
-#, fuzzy
 msgid "[list | set plugin level | dump | buffer | windows | term]"
-msgstr "[list | plugin level | dump | buffer | windows]"
+msgstr "[list | set plugin level | dump | buffer | windows | term]"
 
-#, fuzzy
 msgid ""
 "    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -941,13 +939,14 @@ msgid ""
 "windows: display windows tree\n"
 "   term: display infos about terminal and available colors"
 msgstr ""
+"    set: nastavit úroveň logování pro plugin\n"
 " plugin: jméno pluginu (\"core\" pro jádro WeeChat)\n"
 "  level: úroveň ladění pro plugin (0 = vypnout ladění)\n"
 "   dump: uloží výpis paměti do WeeChat log souboru (stejný výpis jako když "
 "Weechat havaruje)\n"
 " buffer: vypíše obsah bufferu s hexadecimálními hodnotami do log souboru\n"
-"windows: zobrazit strom oken   text: pošle \"debug\" signál s \"text\" jako "
-"argument"
+"windows: zobrazit strom oken\n"
+"   term: zobrazit informace o terminálu a dostupných barvách"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1103,12 +1102,11 @@ msgstr ""
 "\n"
 "Pokud je tento příkaz spuštěn bez argumentů je zobrazeno uložené rozložení."
 
-#, fuzzy
 msgid "execute a command silently"
-msgstr "příkazy weechat"
+msgstr "vykonat příkaz v tichosti"
 
 msgid "[-current | -buffer name | -all] command"
-msgstr ""
+msgstr "[-current | -buffer jméno | -all] příkaz"
 
 msgid ""
 "-current: no output on curent buffer\n"
@@ -1128,6 +1126,22 @@ msgid ""
 "  message to #weechat channel: /mute -buffer irc.freenode.#weechat msg "
 "#weechat hi!"
 msgstr ""
+"-current: žádný výpis v aktuálním bufferu\n"
+" -buffer: žádný výpis ve specifikovaném bufferu\n"
+"   jméno: plné jméno bufferu (například: \"irc.server.freenode\", \"irc."
+"freenode.#weechat\")\n"
+"    -all: žádný výpis ve VŠECH bufferech\n"
+"  příkaz: příkaz, který pustit tiše ('/' je automaticky přidáno pokud "
+"není uvedeno na začátku příkazu)\n"
+"\n"
+"Pokud není uveden cíl (-current, -buffer nebo -all), pak je ve výchozím "
+"nastavení utišen pouze hlavní buffer WeeChat.\n"
+"\n"
+"Příklady:\n"
+"  uložení konfigurace: /mute save\n"
+"  zpráva pro aktuální IRC kanál: /mute -current msg * hi!\n"
+"  zpráva pro kanál #weechat: /mute -buffer irc.freenode.#weechat msg "
+"#weechat hi!"
 
 msgid "list/load/unload plugins"
 msgstr "seznam/načíst/odebrat pluginy"
@@ -1224,15 +1238,17 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "ukončit WeeChat"
 
-#, fuzzy
 msgid "[arguments]"
-msgstr "[info [argumenty]]"
+msgstr "[argumenty]"
 
 msgid ""
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
 msgstr ""
+"argumenty: text poslaný se signálem \"quit\"\n"
+"           (například irc plugin používá tento text pro posílání ukončovacích "
+"zpráv serveru)"
 
 msgid "reload configuration files from disk"
 msgstr "znovu načíst konfikurační soubory z disku"
@@ -1336,6 +1352,8 @@ msgid ""
 " -o: send uptime to current buffer as input (english string)\n"
 "-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
+" -o: poslat čas běhu aktuálnímu bufferu jako vstup (anglický řetězec)\n"
+"-ol: poslat čas běhu aktuálnímu bufferu jako vstup (přeložený řetězec)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "zobrazit verzi WeeChat a datum kompilace"
@@ -1344,6 +1362,8 @@ msgid ""
 " -o: send version to current buffer as input (english string)\n"
 "-ol: send version to current buffer as input (translated string)"
 msgstr ""
+" -o: poslat verzi aktuálnímu bufferu jako vstup (anglický řetězec)\n"
+"-ol: poslat verzi aktuálnímu bufferu jako vstup (přeložený řetězec)"
 
 msgid "schedule a command execution in future"
 msgstr "naplánovat spuštění příkazu v budoucnosti"
@@ -1402,7 +1422,6 @@ msgstr ""
 "scroll_up | scroll_down | scroll_top | scroll_bottom | "
 "scroll_previous_highlight | scroll_next_highlight | zoom]"
 
-#, fuzzy
 msgid ""
 "  list: list opened windows (no parameter implies this list)\n"
 "           -1: jump to previous window\n"
@@ -1519,9 +1538,8 @@ msgstr ""
 "výchozí upozorňovací úrovně pro buffery (používano WeeChatem pro určení "
 "jestli má být buffer zobrazen v hotlistu nebo ne, podle důležitosti zprávy)"
 
-#, fuzzy
 msgid "time format for each line displayed in buffers"
-msgstr "formát času pro zobrazení dne při změně dne"
+msgstr "formát času pro každý řádek v bufferu"
 
 msgid "number of colors to use for nicks colors"
 msgstr "počet barev použitých pro barvy přezdívek"
@@ -1541,6 +1559,9 @@ msgid ""
 "start with one of these chars; the slash (\"/\") is always considered as "
 "command prefix (example: \".$\")"
 msgstr ""
+"znaky použité pro určení jestli je nebo není vstupní řetězec příkazem: vstup "
+"musí začínat jedním z těchto znaků; lomítko (\"/\") je vždy považováno za "
+"předponu příkazu (napříkald: \".$\")"
 
 msgid "display special message when day changes"
 msgstr "zobrazit speiální zprávy při změně dne"
@@ -1559,6 +1580,9 @@ msgid ""
 "char used to draw horizontal lines, note that empty value will draw a real "
 "line with ncurses, but may cause bugs with URL selection under some terminals"
 msgstr ""
+"znak použitý pro vykreslení horizontálních čar, všimněte si, že prázdná hodnota "
+"vykreslí skutečnou čáru při použití ncurses, ale může způsobit problém s výběrem "
+"URL v některých terminálech"
 
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
@@ -1681,7 +1705,7 @@ msgstr ""
 "řádky"
 
 msgid "always show read marker, even if it is after last buffer line"
-msgstr ""
+msgstr "vždy zobrazovat značku čtení, i když je až za posledním řádkem bufferu"
 
 msgid "save configuration file on exit"
 msgstr "uložit soubor s nastavením při ukončení"
@@ -1705,9 +1729,8 @@ msgstr "upozornit uživatele, když není hledaný text nalezen v bufferu"
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
 
-#, fuzzy
 msgid "time format for dates converted to strings and displayed in messages"
-msgstr "formát času pro zobrazení dne při změně dne"
+msgstr "formát času pro data konvertovaná v řetězec a zobrazené ve zprávách"
 
 msgid "background color for window separators (when split)"
 msgstr "barva pozadí děliče oken (při rozdělení)"
@@ -1854,9 +1877,8 @@ msgstr "barva textu pro buffer s novými daty (ne zprávami) (status bar)"
 msgid "text color for buffer with new data (status bar)"
 msgstr "barva textu pro buffer s novými daty (status bar)"
 
-#, fuzzy
 msgid "text color for time (status bar)"
-msgstr "barva textu pro status \"aktivní\""
+msgstr "barva textu pro čas (stavový řádek)"
 
 msgid "text color for unsucessful text search in input line"
 msgstr "barva textu pro nepovedené hledání textu ve vstupní rádce"
@@ -1955,7 +1977,7 @@ msgstr ""
 "nekonečno)"
 
 msgid "file containing the certificate authorities"
-msgstr ""
+msgstr "soubor obsahuje certifikační autority"
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -2041,9 +2063,8 @@ msgstr "%sUpozornění: %s, řádek %d: nevalidní hodnota pro nastavení \"%s\"
 msgid "Reloading configuration file %s"
 msgstr "Znovunačítám konfigurační soubor %s"
 
-#, fuzzy
 msgid "Windows tree:"
-msgstr "Seznam oken:"
+msgstr "Strom oken:"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -2207,17 +2228,16 @@ msgstr "Obdržen signál %s, ukončuji WeeChat.."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Obdržen signál SIGHUP, znovunačítám konfigurační soubory"
 
-#, fuzzy
 msgid "Terminal infos:"
-msgstr "Dostupné informace:"
+msgstr "Informace o terminálu:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
-msgstr ""
+msgstr "  TERM='%s', velikost: %dx%d"
 
 #, c-format
 msgid "  %d colors available, %d pairs"
-msgstr ""
+msgstr "  %d dostupných barev, %d párů"
 
 msgid "server"
 msgid_plural "servers"
@@ -2476,12 +2496,11 @@ msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 msgid "list of aliases"
 msgstr "seznam aliasů"
 
-#, fuzzy
 msgid "alias pointer (optional)"
-msgstr "seznam konfiguračních možností"
+msgstr "ukazatel aliasu (volitelné)"
 
 msgid "alias name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno aliasu (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -2672,9 +2691,8 @@ msgid ""
 msgstr ""
 "ukázkový_signál: signál: %s, typ_dat: %s, data_signál: 0x%lx (neznámý typ)"
 
-#, fuzzy
 msgid "print some messages on current buffer"
-msgstr "vypsat nějaké zprávy do aktuálního bufferu"
+msgstr "vypsat některé zprávy do aktuálního bufferu"
 
 msgid "[text]"
 msgstr "[text]"
@@ -2728,9 +2746,9 @@ msgstr ""
 "\n"
 "Spuštění příkazu bez argumetů zobrazí seznam dostupných infolistů"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: removing old fifo pipe \"%s\""
-msgstr "ladění: odstraňuji soubor: %s"
+msgstr "%s: odstraňuji starou fifo rouru \"%s\""
 
 #, c-format
 msgid "%s: pipe opened"
@@ -2906,7 +2924,7 @@ msgstr "%s%s: neznámá volba pro příkaz \"%s\""
 
 #, c-format
 msgid "%s%s: mask must begin with nick"
-msgstr ""
+msgstr "%s%s: maska musí začínat přezdívkou"
 
 #, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
@@ -3015,12 +3033,11 @@ msgstr "[cíl]"
 msgid "target: server"
 msgstr "cíl: server"
 
-#, fuzzy
 msgid "execute a command on all channels of all connected servers"
-msgstr "poslat CTCP akci na všechny kanály všech připojených serverů"
+msgstr "vykonat příkaz na všech kanálech všech připojených serverů"
 
 msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
-msgstr ""
+msgstr "[-current] [-exclude=kanál[,kanál...]] příkaz [argumenty]"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -3038,13 +3055,26 @@ msgid ""
 "#linux:\n"
 "    /allchan -exclude=#weechat,#linux* msg * hello"
 msgstr ""
+" -current: vynechat příkaz pouze pro kanály aktuálního serveru\n"
+" -exclude: vynechat některé kanály ('*' je povolená na začátku nebo konci "
+"jména kanáku pro vynechání více kanálů)\n"
+"   příkaz: příkaz, který spustit\n"
+"argumenty: argumenty příkazu\n"
+"\n"
+"Příkaldy:\n"
+"  vynechat '/me is testing' na všech kanálech:\n"
+"    /allchan me is testing\n"
+"  říct 'hello' všude, kromě #weechat:\n"
+"    /allchan -exclude=#weechat msg * hello\n"
+"  říct 'hello' všude, kromě #weechat a kanálů začínajících "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * hello"
 
-#, fuzzy
 msgid "execute a command on all connected servers"
-msgstr "poslat zprávu na všechny kanály všech připojených serverů"
+msgstr "vykonat příkaz na všech připojených serverech"
 
 msgid "[-exclude=server[,server...]] command [arguments]"
-msgstr ""
+msgstr "[-exclude=server[,server...]] příkaz [argumenty]"
 
 msgid ""
 " -exclude: exclude some servers ('*' is allowed at beginning or end of "
@@ -3058,6 +3088,16 @@ msgid ""
 "  set away on all servers:\n"
 "    /allserv away I'm away"
 msgstr ""
+" -exclude: vynechat některé servery (pro vynechání více serverů je dovoleno "
+"'*' na začátku nebo konci jména serveru)\n"
+"   příkaz: příkaz, který pustit\n"
+"argumenty: argumenty příkazu\n"
+"\n"
+"Příklady:\n"
+"  změnit přezdívku na všech serverech:\n"
+"    /allserv nick newnick\n"
+"  nastavit pryč na věech serverech:\n"
+"    /allserv away I'm away"
 
 msgid "toggle away status"
 msgstr "přepnout status nepřítomnosti"
@@ -3089,15 +3129,13 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "připojit se k IRC serveru/serverům"
 
-#, fuzzy
 msgid ""
 "[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-"
 "option[=value]] [-nooption]]"
 msgstr ""
-"[-all [-nojoin] | jméno_serveru [jméno_serveru ...] [-nojoin] | hostname [-"
-"port port] [-ipv6] [-ssl]]"
+"[-all [-nojoin] | jméno_serveru [jméno_serveru ...] [-nojoin] | jméno_hosta[/port] [-"
+"volba[=hodnota]] [-novolba]]"
 
-#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect (server must have been created "
@@ -3117,13 +3155,22 @@ msgid ""
 "  /connect my.server.org/6697 -ssl -password=test"
 msgstr ""
 "         -all: připojit ke všem serverům\n"
-"jméno_serveru: vnitřní jméno serveru pro přípojení\n"
+"jméno_serveru: vnitřní jméno serveru pro přípojení (server musí být vytvořen "
+"pomocí /server add)\n"
 "      -nojoin: nepřipojovat se na kanály (i pokud je na serveru zpanuto "
 "automatické připojování)\n"
-"     hostname: hostname pro připojení\n"
-"         port: port pro server (celé číslo, výchozí je 6667)\n"
-"         ipv6: použít IPv6 protokol\n"
-"          ssl: použít SSL protokol"
+"  jméno_hosta: jmého hosta (nebo IP adresa) pro připojení\n"
+"         port: port pro server (výchozí je 6667)\n"
+"        volba: nastavit volbu pro server (u boolovských voleb může být hodnota "
+"vynechána)\n"
+"      novolba: nastavit boolovskou volbu na 'vypnuto' (například: -nossl)\n"
+"\n"
+"Příklady:\n"
+"  /connect freenode\n"
+"  /connect irc.oftc.net/6667\n"
+"  /connect irc6.oftc.net/6667 -ipv6\n"
+"  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /connect my.server.org/6697 -ssl -password=test"
 
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "poslat CTCP zprávu (Client-To-Client Protocol)"
@@ -3312,6 +3359,14 @@ msgid ""
 "  /kickban toto!*@host.com\n"
 "  will ban \"*!*@host.com\" and then kick \"toto\"."
 msgstr ""
+"    kanál: kanál na kterém je uživatel\n"
+"přezdívka: přezdívka, kterou vykopnout a zakázat\n"
+" komentář: komentář pro vykopnutí\n"
+"\n"
+"Je možné použít masku pro vykopnutí/zakázání, přezdívka bude extrahována z "
+"masky a nahrazena \"*\", napříkald:\n"
+"  /kickban toto!*@host.com\n"
+"  zakáže \"*!*@host.com\" a pak vykopne \"toto\"."
 
 msgid "close client-server connection"
 msgstr "zavřít spojení klient-server"
@@ -3367,7 +3422,7 @@ msgstr ""
 "  cíl: server pro dopravující požadavek"
 
 msgid "show a graphical map of the IRC network"
-msgstr ""
+msgstr "ukázat grafickou mapu IRC sítě"
 
 msgid "send a CTCP action to the current channel"
 msgstr "poslat CTCP akci na aktuální kanál"
@@ -3585,7 +3640,7 @@ msgid "tell the server to reload its config file"
 msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
 
 msgid "option: extra option, for some servers"
-msgstr ""
+msgstr "volba: extra volba pro některé servery"
 
 msgid "tell the server to restart itself"
 msgstr "říct serveru, aby se restartoval"
@@ -3663,7 +3718,6 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "vypíše, přídá nebo odebere IRC servery"
 
-#, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-temp] [-option[=value]] [-nooption]] | [copy servername "
@@ -3671,11 +3725,10 @@ msgid ""
 "[del servername] | [deloutq] | [jump] | [raw]"
 msgstr ""
 "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
-"jméno_hosta[/port] [-auto | -noauto] [-ipv6] [-ssl] | [copy jméno_serveru "
+"jméno_hosta[/port] [-temp] [-volba[=hodnota]] [-novolba] | [copy jméno_serveru "
 "nové_jméno_serveru] | [rename jméno_serveru nové_jméno_serveru] | [keep "
 "jméno_serveru] | [del jméno_serveru] | [deloutq] | [jump] | [raw]"
 
-#, fuzzy
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
 "  listfull: list servers with detailed info for each server\n"
@@ -3713,12 +3766,11 @@ msgstr ""
 "          add: vytvoří nový server\n"
 "jméno_serveru: jméno serveru pro vnitřní a zobrazovací použití\n"
 "  jméno_hosta: jméno nebo IP adresa serveru s nepovinným portem (výchozí: "
-"6667)\n"
-"         auto: automaticky pripojit k serveru při startu WeeChat\n"
-"       noauto: nepřipojovat k serveru automaticky při startu WeeChat "
-"(výchozí)\n"
-"         ipv6: používat IPv6 protokol\n"
-"          ssl: používat SSL protokol\n"
+"6667), více adres může být odděleno čárkou\n"
+"         temp: vytvoří dočasný server (neukládá se)\n"
+"        volba: nastaví volbu serveru (pro booleovské volby může být hodnota "
+"vynechána)\n"
+"      novolba: nastaví booleovskou volbu na 'vypnuto' (například -nossl)\n"
 "         copy: zkopírovat server\n"
 "       rename: přejmenovat server\n"
 "         keep: zachovat server v konfiguračním souboru (pouze pro dočasné "
@@ -3731,9 +3783,10 @@ msgstr ""
 "\n"
 "Příkladzy:\n"
 "  /server listfull\n"
-"  /server add oftc irc.oftc.net/6697 -ssl\n"
+"  /server add oftc irc.oftc.net/6697 -ssl -autoconnect\n"
 "  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
 "  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667\n"
+"  /server add freenode3 irc.freenode.net -password=mypass\n"
 "  /server copy oftc oftcbis\n"
 "  /server rename oftc newoftc\n"
 "  /server del freenode\n"
@@ -3986,11 +4039,11 @@ msgstr ""
 "paměti, protože se stále používá"
 
 msgid "buffer used to display message received from IRC server"
-msgstr ""
+msgstr "buffer použitý pro zobrazení zprávy obdržené od IRC serveru"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating \"%s\" => \"%s\""
-msgstr "%s%s: chyba vytváření CTCP \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytváření \"%s\" => \"%s\""
 
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
@@ -4024,31 +4077,28 @@ msgid "use SSL for server communication"
 msgstr "použít SSL pro komunikaci se serverem"
 
 msgid "ssl certificate file used to automatically identify your nick"
-msgstr ""
+msgstr "soubor ssl certifikátu použitého pro automatickou identifikaci vaší přezdívky"
 
-#, fuzzy
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
-msgstr ""
-"minimální velikost v bitech pro handshake při použití výměny klíčů Diffie "
-"Hellman"
+msgstr "velikost klíče použitého při použití výměny klíčů Diffie Hellman"
 
 msgid "check that the ssl connection is fully trusted"
-msgstr ""
+msgstr "ověřit, že je ssl spojení zcela důvěryhodné"
 
 msgid "password for server"
 msgstr "heslo pro server"
 
 msgid "mechanism for SASL authentication"
-msgstr ""
+msgstr "mechanismu pro SASL autentizaci"
 
 msgid "username for SASL authentication"
-msgstr ""
+msgstr "uživatelské jméno pro SASL autentizaci"
 
 msgid "password for SASL authentication"
-msgstr ""
+msgstr "heslo pro SASL autentizaci"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
-msgstr ""
+msgstr "časový limit (v sekundách) před vzdaním SASL autentizace"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automaticky připojit k serveru, když je WeeChat spouštěn"
@@ -4098,13 +4148,11 @@ msgstr ""
 "čárkou rozdělený seznam kanálů na které přistoupit po připojení na server "
 "(příklad: \"#kanál1,#kanál2,#kanál3 klíč1,klíč2\")"
 
-#, fuzzy
 msgid "automatically rejoin channels after kick"
-msgstr "automaticky znovu přijít na kanál po vykopnutí"
+msgstr "automaticky znovu přijít na kanály po vykopnutí"
 
-#, fuzzy
 msgid "delay (in seconds) before autorejoin (after kick)"
-msgstr "doba (v sekundách) před novým zkušením znovupřipojení na server"
+msgstr "doba (v sekundách) před novým znovupřipojením (po vykopnutí)"
 
 #, c-format
 msgid "%s%s: error creating server \"%s\""
@@ -4117,9 +4165,8 @@ msgstr "%s%s: chyba při vytváření volby serveru \"%s\""
 msgid "use nick color in messages from server"
 msgstr "použít barvu přezdívky ve zprávách ze serveru"
 
-#, fuzzy
 msgid "use same nick color for channel and private"
-msgstr "barva textu pro jiné přezdívky v soukromém bufferu"
+msgstr "použít stejnou barvu přezdívky pro kanál a soukromý rozhovor"
 
 msgid "merge server buffers"
 msgstr "spojit buffery serverů"
@@ -4143,13 +4190,13 @@ msgid "display message when (un)marking as away"
 msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
 msgid "display CTCP message even if it is blocked"
-msgstr ""
+msgstr "zobrazit CTCP zprávu i když je blokována"
 
 msgid "display CTCP reply sent by WeeChat"
-msgstr ""
+msgstr "zobrazit CTCP odpověď poslanou WeeChat"
 
 msgid "display CTCP message even if it is unknown CTCP"
-msgstr ""
+msgstr "zobrazit CTCP zprávu i když je to neznámé CTCP"
 
 msgid "display old topic when channel topic is changed"
 msgstr "zobrazit staré téma rozhovoru, když se téma změní"
@@ -4161,13 +4208,15 @@ msgid ""
 "hide channel key if modes are displayed in \"buffer_name\" bar item (this "
 "will hide all channel modes arguments if mode +k is set on channel)"
 msgstr ""
+"schovat klíč kanálu pokud jsou zobrazeny módy v \"buffer_name\" položce "
+"panelu (toto schová všechny argumenty módů kanálu pokud je +k nastaveno "
+"na kanálu)"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
 
-#, fuzzy
 msgid "display nick prefix in \"input_prompt\" bar item"
-msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
+msgstr "zobrazovat předponu přezdívky v položce pole \"input_prompt\""
 
 msgid "hide password displayed by nickserv"
 msgstr "schovat heslo zobrazené nickservem"
@@ -4186,6 +4235,8 @@ msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
 msgstr ""
+"výchozí cílový buffer pro volby msgbuffer, když je cíl soukromý a příslušný "
+"soukromý buffer není nalezen"
 
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
@@ -4207,12 +4258,11 @@ msgstr ""
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr "zpoždění pro filtrování zpráv join/part/quit (v minutách)"
 
-#, fuzzy
 msgid "enable smart filter for \"join\" messages"
-msgstr "prefix pro zprávy připojení"
+msgstr "povolit chytrý filter pro \"join\" zprávy"
 
 msgid "enable smart filter for \"part\" and \"quit\" messages"
-msgstr ""
+msgstr "povolit chytrý filter pro \"part\" a \"quit\" zprávy"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -4248,6 +4298,9 @@ msgid ""
 "received, if this timeout is reached before 001 message is received, WeeChat "
 "will disconnect from server"
 msgstr ""
+"časový limit (v sekundác) mezi TCP připojeními k serveru přijetím zprávy 001, "
+"WeeChat se odpojí od serveru, pokud je dosaženo tohoto časového limitu před "
+"přijetím zprávy 001"
 
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
@@ -4284,20 +4337,19 @@ msgstr "minimální lag, který zobrazit (v sekundách)"
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr "odpojit po závažném lagu (v minutách, 0 = nikny neodpojit)"
 
-#, fuzzy
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
 "messages or commands sent to IRC server (0 = no anti-flood)"
 msgstr ""
-"anti-flood: počet sekund mezi dvěmi uživatelovými zprávami (0 = vypnutí anti-"
-"flood)"
+"anti-flood pro frontu s vysokou prioritou: počet sekund mezi dvěmi "
+"zprávami nebo příkazy poslanými na IRC server (0 = vypnutí anti-flood)"
 
-#, fuzzy
 msgid ""
 "anti-flood for low priority queue: number of seconds between two messages "
 "sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
-"anti-flood: počet sekund mezi dvěmi uživatelovými zprávami (0 = vypnutí anti-"
+"anti-flood pro frontu s nízkou prioritou: počet sekund mezi dvěmi zprávami "
+"poslanými na IRC server (zprávy jako automatické CTCP odpovědi) (0 = vypnutí anti-"
 "flood)"
 
 msgid "when off, colors codes are ignored in incoming messages"
@@ -4314,13 +4366,12 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "posílat neznámé příkazy na server"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP požadavek od %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP požadavek od %s%s%s: %s%s%s%s%s%s"
 
-#, fuzzy
 msgid " (blocked)"
-msgstr "(zakázáno)"
+msgstr " (blokováno)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
@@ -4378,68 +4429,62 @@ msgstr[2] "kanálů"
 msgid "1 if string is an IRC channel"
 msgstr "1 pokud je řetězec IRC kanál"
 
-#, fuzzy
 msgid "channel name"
-msgstr "kanál mód"
+msgstr "jméno kanálu"
 
 msgid "get current nick on a server"
 msgstr "získat aktuální přezdívku na serveru"
 
-#, fuzzy
 msgid "server name"
-msgstr "cíl: server jméno"
+msgstr "jméno serveru"
 
 msgid "get nick from IRC host"
 msgstr "získat přezdívku od IRC hosta"
 
 msgid "IRC host (like `:nick!name@server.com`)"
-msgstr ""
+msgstr "IRC host (jako `:nick!name@server.com`)"
 
-#, fuzzy
 msgid "get nick color"
-msgstr "barva textu"
+msgstr "získat barvu barva přezdívky"
 
-#, fuzzy
 msgid "nickname"
-msgstr "[-all] přezdívka"
+msgstr "přezdívka"
 
-#, fuzzy
 msgid "get buffer pointer for an IRC server/channel/nick"
-msgstr "získat ukazatel bufferu od IRC serveru/kanálu"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
 
 msgid "server,channel,nick (channel and nicks are optional)"
-msgstr ""
+msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
 
 msgid "list of IRC servers"
 msgstr "seznam IRC serverů"
 
-#, fuzzy
 msgid "server pointer (optional)"
-msgstr "IRC servery (vnitřní jména)"
+msgstr "ukayatel serveru (volitelný)"
 
 msgid "server name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno serveru (může začínat nebo končit s \"*\") (volitelné)"
 
 msgid "list of channels for an IRC server"
 msgstr "seznam kanálů pro IRC server"
 
 msgid "channel pointer (optional)"
-msgstr ""
+msgstr "ukazatel kanálu (volitelné)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "seznam uživatelů pro IRC kanál"
 
 msgid "nick pointer (optional)"
-msgstr ""
+msgstr "ukazatel přezdívky (volitelné)"
 
 msgid "server,channel,nick (channel and nick are optional)"
-msgstr ""
+msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
 
 msgid "list of IRC ignores"
 msgstr "seznam pro IRC ignorování"
 
 msgid "ignore pointer (optional)"
-msgstr ""
+msgstr "ignorovat ukazatel (volitelné)"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -4453,34 +4498,35 @@ msgstr "%s%s: tenhle buffer není kanál!"
 msgid ""
 "%s%s: error building answer for SASL authentication, using mechanism \"%s\""
 msgstr ""
+"%s%s: chyba vytváření odpovědi pro SASL autentizaci, použitý mechanismus \"%s\""
 
 #, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr ""
+msgstr "%s%s: schopnost klienta, server podporuje: %s"
 
 #, c-format
 msgid "%s%s: client capability, requesting: sasl"
-msgstr ""
+msgstr "%s%s: schopnost klienta, vyžaduji: sasl"
 
 #, c-format
 msgid "%s%s: client capability: sasl not supported"
-msgstr ""
+msgstr "%s%s: schopnost klienta: sasl není podporován"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
-msgstr ""
+msgstr "%s%s: schopnost klienta, povoleno: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
 "WeeChat was not built with libgcrypt support"
 msgstr ""
-"%s%s: nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s "
-"podporou GNUtls"
+"%s%s: nemohu se autentizovat pomocí SASL a mechanismu DH-BLOWFISH, "
+"protže WeeChat nebyl sestaven s podporou libcrypt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, refused: %s"
-msgstr "%s%s: nekorektní znaková sada: \"%s\""
+msgstr "%s%s: vlastnost klienta, odepřena: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -4806,11 +4852,11 @@ msgstr "%s: odpojuji se od serveru..."
 
 #, c-format
 msgid "%s%s: connection timeout (message 001 not received)"
-msgstr ""
+msgstr "%s%s: vypršel čas pro připojení (zpráva 001 nebyla obdržena)"
 
 #, c-format
 msgid "%s%s: sasl authentication timeout"
-msgstr ""
+msgstr "%s%s: vypršel čas pro sasl autentizaci"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -4882,6 +4928,8 @@ msgid ""
 "%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
 "value is %d)"
 msgstr ""
+"%s%s: měl by jste změnit volbu irc.server.%s.ssl_dhkey_size (aktuální "
+"hodnota je %d)"
 
 #, c-format
 msgid "%s%s: not enough memory"
@@ -4889,61 +4937,60 @@ msgstr "%s%s: nedostatek paměti"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
+msgstr "gnutls: připojují se pomocí %d-bit Diffie-Hellman zdílenéhé výměny tajemství"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
-msgstr ""
+msgstr "%sgnutls: chyba při kontrole certifikátu protěška"
 
 #, c-format
 msgid "%sgnutls: peer's certificate is NOT trusted"
-msgstr ""
+msgstr "%sgnutls: certifikát protějška NENÍ důvěryhodný"
 
 msgid "gnutls: peer's certificate is trusted"
-msgstr ""
+msgstr "gnutls: certifikát protějška je důvěryhodný"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
-msgstr ""
+msgstr "%sgnutls: vydavatel certifikátu protějška je neznámý"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: the certificate has been revoked"
-msgstr "%s%s: nemůžu číst soubor \"%s\""
+msgstr "%sgnutls: certifikát byl zrušen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "gnutls: receiving %d certificate"
 msgid_plural "gnutls: receiving %d certificates"
-msgstr[0] "%s%s: nemůžu číst soubor \"%s\""
-msgstr[1] "%s%s: nemůžu číst soubor \"%s\""
-msgstr[2] "%s%s: nemůžu číst soubor \"%s\""
+msgstr[0] "gnutls: přijímám %d certifikát"
+msgstr[1] "gnutls: přijímám %d certifikáty"
+msgstr[2] "gnutls: přijímám %d certifikátů"
 
 #, c-format
 msgid " - certificate[%d] info:"
-msgstr ""
+msgstr " - informace o certifikátu[%d]:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: certificate has expired"
-msgstr "%s%s: nemůžu číst soubor \"%s\""
+msgstr "%sgnutls: certifikát vypršel"
 
 #, c-format
 msgid "%sgnutls: certificate is not yet activated"
-msgstr ""
+msgstr "%sgnutls: certifikát ještě nebyl aktivován"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%s%s: nemůžu číst soubor \"%s\""
+msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
 
-#, fuzzy
 msgid "gnutls: sending one certificate"
-msgstr "%s%s: nemůžu číst soubor \"%s\""
+msgstr "gnutls: posílám jeden certifikát"
 
 #, c-format
 msgid " - client certificate info (%s):"
-msgstr ""
+msgstr " - informace o certifikátu klienta (%s):"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: unable to read certifcate \"%s\""
-msgstr "%s%s: nemůžu číst soubor \"%s\""
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
 
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
@@ -5154,16 +5201,15 @@ msgstr ""
 msgid "use only lower case for log filenames"
 msgstr "používat pouze malé písmena ve jménech logovacích souborů"
 
-#, fuzzy
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
 "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
 "man strftime)"
 msgstr ""
-"cesta pro logovací soubory WeeChat (\"%h\" bude nahrazeno domácím adresářem "
-"WeeChat, \"~/.weechat\" je výchozí)"
+"cesta pro logovací soubory WeeChat; \"%h\" na záčátku řetězce je nahrazeno "
+"domácím adresářem WeeChat (\"~/.weechat\" je výchozí); jsou povoleny "
+"specifikátory data (viz. man strftime)"
 
-#, fuzzy
 msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
 "\"file\", without first \"/\" because \"path\" option is used to build "
@@ -5173,7 +5219,7 @@ msgstr ""
 "výchozí maska jména souboru pro logovací soubory (formát je \"adresář/k/"
 "souboru\" nebo \"soubor\", bez úvoního \"/\", protože pro vytvoření celé "
 "cesty je použito nastavení \"path\"); jsou dovoleny i lokální proměnné "
-"bufferu"
+"bufferu; jsou povoleny specifikátory data (viz. man strftime)"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -5195,16 +5241,14 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "seznam logovacích bufferů"
 
-#, fuzzy
 msgid "logger pointer (optional)"
-msgstr "konfigurace logovacího pluginu"
+msgstr "ukazatel logeru (volitelné)"
 
 msgid "WeeChat version"
 msgstr "verze WeeChat"
 
-#, fuzzy
 msgid "WeeChat version (as number)"
-msgstr "verze WeeChat"
+msgstr "verze WeeChat (jako číslo)"
 
 msgid "WeeChat compilation date"
 msgstr "datum kompilace WeeChat"
@@ -5246,59 +5290,58 @@ msgid "list of bars"
 msgstr "seznam polí"
 
 msgid "bar pointer (optional)"
-msgstr ""
+msgstr "ukazatel pole (volitelný)"
 
 msgid "bar name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno pole (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of bar items"
 msgstr "seznam položek polí"
 
 msgid "bar item pointer (optional)"
-msgstr ""
+msgstr "ukazatel položky pole (volitelný)"
 
 msgid "bar item name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno položky pole (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of bar windows"
 msgstr "seznam oken polí"
 
 msgid "bar window pointer (optional)"
-msgstr ""
+msgstr "ukazatel pole okna (volitelný)"
 
 msgid "list of buffers"
 msgstr "seznam bufferů"
 
 msgid "buffer pointer (optional)"
-msgstr ""
+msgstr "ukazatel bufferu (volitelný)"
 
 msgid "buffer name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno buferu (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "lines of a buffer"
 msgstr "řádků bufferu"
 
-#, fuzzy
 msgid "buffer pointer"
-msgstr "nastavit vlastnost bufferu"
+msgstr "ukazatel bufferu"
 
 msgid "list of filters"
 msgstr "seznam filtrů"
 
 msgid "filter name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno filtru (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "history of commands"
 msgstr "historie příkazů"
 
 msgid "buffer pointer (if not set, return global history) (optional)"
-msgstr ""
+msgstr "ukazatel bufferu (pokud není nastaven, tak vrací globální historii) (volitelné)"
 
 msgid "list of hooks"
 msgstr "seznam napojení"
 
 msgid "hook type: command, timer, .. (optional)"
-msgstr ""
+msgstr "typ napojení: příkaz, časovač, .. (volitelné)"
 
 msgid "list of buffers in hotlist"
 msgstr "seznam bufferů v hotlistu"
@@ -5310,31 +5353,31 @@ msgid "nicks in nicklist for a buffer"
 msgstr "přezdívky v seznamu přezdívek bufferu"
 
 msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
-msgstr ""
+msgstr "nick_xxx nebo group_xxx pro získání pouze přezdívky/skupiny xxx (volitelné)"
 
 msgid "list of options"
 msgstr "seznam konfiguračních možností"
 
 msgid "option name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno volby (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of plugins"
 msgstr "seznam pluginů"
 
 msgid "plugin pointer (optional)"
-msgstr ""
+msgstr "ukazatel pluginu (volitelný)"
 
 msgid "plugin name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno pluginu (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of windows"
 msgstr "seznam oken"
 
 msgid "window pointer (optional)"
-msgstr ""
+msgstr "ukazatel okna (volitelné)"
 
 msgid "window name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno okna (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5410,16 +5453,16 @@ msgstr "  [P] Pročistit ukončené"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Zavřít tento buffer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
-msgstr "%s%s[%s%s%s%s] %s (spuštěn: %s)"
+msgstr "%s%s[%s%s%s%s] %s (spuštěn: %s%s%s%s)"
 
 msgid "ended on: "
-msgstr ""
+msgstr "končí: "
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%-26s protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s obdrženo: %s, posláno: %s"
+msgstr "%s%-26s protokol: %s, obdrženo: %s, posláno: %s"
 
 msgid "List of clients for relay"
 msgstr "Seznam klientů pro přenos"
@@ -5438,59 +5481,57 @@ msgstr "odpojen"
 
 #, c-format
 msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
-msgstr ""
+msgstr "%s: nový klient od %s%s%s na portu %d (přesměrovávám %s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: nedostatek paměti pro nového klienta"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
-msgstr "%s%s: selhala autentizace s klientem @ %s"
+msgstr "%s%s: selhala autentizace s klientem %s%s%s (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
-msgstr "%s: odpojen od klienta @ %s"
+msgstr "%s: odpojen od klienta %s%s%s (%s.%s)"
 
 msgid "Clients for relay:"
 msgstr "Klienti pro přenos:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
 "lu sent"
 msgstr ""
-"%3d. %s, spuštěn v: %s, poslední aktivita: %s, bytů: %lu přijato, %lu "
-"odebráno"
+"%3d. %s%s%s (%s%s%s), spuštěn v: %s, poslední aktivita: %s, bytů: %lu přijato, "
+"%lu odebráno"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3d. %s%s%s, started on: %s"
-msgstr "%3d. %s, spuštěno v: %s"
+msgstr "%3d. %s%s%s, spuštěno v: %s"
 
 msgid "No client for relay"
 msgstr "Žádný klient pro přesměrování"
 
-#, fuzzy
 msgid "Listening on ports:"
-msgstr "Seznam proxy:"
+msgstr "Poslouchám na portech:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "%3d. %s, spuštěno v: %s"
+msgstr "%3d. port %s%d%s, přesměrování: %s%s.%s%s, spuštěno v: %s"
 
-#, fuzzy
 msgid "No server for relay"
-msgstr "Žádný klient pro přesměrování"
+msgstr "Žádný server pro přesměrování"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: relay \"%s\" not found"
-msgstr "%s%s: server \"%s\" nenalezen"
+msgstr "%s%s: přesměrování \"%s\" nenalezeno"
 
 msgid "relay control"
 msgstr "ovládání přesměrování"
 
 msgid "[list | listfull | add protocol.name port | del protocol.name]"
-msgstr ""
+msgstr "[list | listfull | add protocol.name port | del protocol.name]"
 
 msgid ""
 "         list: list relay clients (only active relays)\n"
@@ -5504,26 +5545,33 @@ msgid ""
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+"         list: seznam klientů přesměrování (pouze aktivní přesměrování)\n"
+"     listfull: seznam klientů přesměrování (užvaněný, všechny přesměrování)\n"
+"    listrelay: seznam přesměrování (jméno a port)\n"
+"          add: přidat přesměrování pro protokol + jméno\n"
+"          del: odebrat přesměrování pro protokol + jméno\n"
+"protocol.name: protokol a jméno pro přesměrování\n"
+"               například: irc.freenode\n"
+"         port: port použitý pro přesměrování\n"
+"\n"
+"Pokud je tento příkaz puštěn be argumentů, pak vypíše seznam klientů přesměrování."
 
-#, fuzzy
 msgid "all possible protocol.name for relay plugin"
-msgstr "spřáva ladění pro jádro/pluginy"
+msgstr "všechna možná protocol.name pro plugin přesměrování"
 
-#, fuzzy
 msgid "protocol.name of current relays for relay plugin"
-msgstr "spřáva ladění pro jádro/pluginy"
+msgstr "protocol.name aktuálních přesměrování pro plugin přesměrování"
 
-#, fuzzy
 msgid "first free port for relay plugin"
-msgstr "spřáva ladění pro jádro/pluginy"
+msgstr "první volný port pro plugin přesměrování"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: port \"%d\" is already used"
-msgstr "%sChyba: filtr \"%s\" již existuje"
+msgstr "%s%s: chyba: port \"%d\" je již používán"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
-msgstr "%s%s: neznámá protokol xfer \"%s\""
+msgstr "%s%s: chyba: neznámý protokol \"%s\""
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"
@@ -5553,42 +5601,41 @@ msgid "text color for \"disconnected\" status"
 msgstr "barva textu pro status \"odpojen\""
 
 msgid "maximum number of clients connecting to a port"
-msgstr ""
+msgstr "maximální počet klientů připojených k portu"
 
 msgid "list of relay clients"
 msgstr "seznam klientů přesměrování"
 
-#, fuzzy
 msgid "relay pointer (optional)"
-msgstr "ovládání přesměrování"
+msgstr "ukazatel přesměrování (volitelné)"
 
 #, c-format
 msgid "%s%s: error sending data to client %s"
 msgstr "%s%s: chyba při zasílání dat na klienta %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr "%s%s: proxy \"%s\" nebyla nalezena pro server \"%s\", nelze se spojit"
+msgstr "%s%s: buffer IRC serveru \"%s\", kanálu \"%s\" nenalezen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
-msgstr "%s: roura zavřena"
+msgstr "%s: soket pro %s.%s (port %d) uzavřen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
-msgstr "%s%s: nemohu akceptovat klienta"
+msgstr "%s%s: nemohu akceptovat klienta na portu %d (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
-msgstr "%s%s: nemohu akceptovat klienta"
+msgstr "%s%s: chyba s \"bind\" na portu %d (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
-msgstr "%s: poslouchám na portu %d"
+msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for listening on new port"
-msgstr "%s%s: nedostatek paměti pro nový xfer"
+msgstr "%s%s: nedostatek paměti pro poslouchání na portu"
 
 #, c-format
 msgid ""
@@ -5761,10 +5808,10 @@ msgid "list of scripts"
 msgstr "seznam skriptů"
 
 msgid "script pointer (optional)"
-msgstr ""
+msgstr "ukazatel skriptu (volitelný)"
 
 msgid "script name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "jméno skriptu (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -5824,9 +5871,9 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
-msgstr "%s%s nemůžu spustit funkci \"%s\": %s"
+msgstr "%s%s: nemůžu spustit funkci \"%s\": %s"
 
 #, c-format
 msgid "%s%s: unable to create new interpreter"
@@ -6017,9 +6064,8 @@ msgstr "ne"
 msgid "No xfer"
 msgstr "Žádný xfer"
 
-#, fuzzy
 msgid "send a CTCP action to remote host"
-msgstr "poslat CTCP akci na aktuální kanál"
+msgstr "poslat CTCP akci na vzdálenému hostu"
 
 msgid "xfer control"
 msgstr "ovládání xfer"
@@ -6133,9 +6179,8 @@ msgstr "automaticky akceptovat požadavek o rozhovor (používejte opatrně!)"
 msgid "list of xfer"
 msgstr "seznam xfer"
 
-#, fuzzy
 msgid "xfer pointer (optional)"
-msgstr "ovládání xfer"
+msgstr "ukazatel xfer (volitelné)"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
@@ -6182,20 +6227,16 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
-#, fuzzy
 msgid "Name"
-msgstr "jméno"
+msgstr "Jméno"
 
-#, fuzzy
 msgid "Description"
-msgstr "popis"
+msgstr "Popis"
 
-#, fuzzy
 msgid "Arguments"
-msgstr "[info [argumenty]]"
+msgstr "Argumenty"
 
-#, fuzzy
 msgid "Pointer"
-msgstr "celé číslo"
+msgstr "Ukazatel"
