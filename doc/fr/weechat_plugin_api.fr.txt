@@ -878,7 +878,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être libéré par un appel à
-  <<_weechat_string_free_split>> après utilisation)
+  <<_weechat_string_free_split,weechat_string_free_split>> après utilisation)
 
 Exemples en C :
 
@@ -919,7 +919,8 @@ void weechat_string_free_split (char **split_string);
 
 Paramètres :
 
-* 'split_string' : chaîne découpée par <<_weechat_string_split>>
+* 'split_string' : chaîne découpée par
+  <<_weechat_string_split,weechat_string_split>>
 
 Exemple en C :
 
@@ -947,7 +948,8 @@ char *weechat_string_build_with_split_string (char **split_string
 
 Paramètres :
 
-* 'split_string' : chaîne découpée par la fonction <<_weechat_string_split>>
+* 'split_string' : chaîne découpée par la fonction
+  <<_weechat_string_split,weechat_string_split>>
 * 'separator' : chaîne utilisée pour séparer les différentes chaînes
 
 Valeur de retour :
@@ -989,7 +991,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être libéré par un appel à
-  <<_weechat_free_split_command>> après utilisation)
+  <<_weechat_free_split_command,weechat_free_split_command>> après utilisation)
 
 Exemple en C :
 
@@ -1016,7 +1018,8 @@ void weechat_string_free_split_command (char **split_command);
 
 Paramètres :
 
-* 'split_command' : commande éclatée par <<_weechat_string_split_command>>
+* 'split_command' : commande éclatée par
+  <<_weechat_string_split_command,weechat_string_split_command>>
 
 Exemple en C :
 
@@ -2534,9 +2537,10 @@ Valeur de retour :
 
 [NOTE]
 Le fichier n'est PAS créé sur le disque par cette fonction. Il sera créé par
-l'appel à la fonction <<_weechat_write_config>>. Vous ne devriez appeler cette
-fonction qu'après avoir créé les sections (avec <<_weechat_config_new_section>>)
-et les options (avec <<_weechat_config_new_option>>).
+l'appel à la fonction <<_weechat_write_config,weechat_write_config>>.
+Vous ne devriez appeler cette fonction qu'après avoir créé les sections (avec
+<<_weechat_config_new_section,weechat_config_new_section>>) et les options (avec
+<<_weechat_config_new_option,weechat_config_new_option>>).
 
 Exemple en C :
 
@@ -3321,7 +3325,7 @@ Paramètres :
 
 [NOTE]
 Vous pouvez affecter "null" à une option seulement si c'est autorisé pour
-l'option (voir <<_weechat_config_new_option>>).
+l'option (voir <<_weechat_config_new_option,weechat_config_new_option>>).
 
 Valeur de retour :
 
@@ -5059,9 +5063,7 @@ def my_command_cb(data, buffer, args):
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_command("monfiltre", "description de monfiltre",
-    "[list] | [enable|disable|toggle [name]] | "
-    "[add name plugin.buffer tags regex] | "
-    "[del name|-all]",
+    "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]",
     "description des paramètres...",
     "list"
     " || enable %(filters_names)"
@@ -5881,7 +5883,7 @@ Paramètres :
 
 * 'signal' : signal à envoyer
 * 'type_data' : type de données à envoyer avec le signal (voir
-  <<_weechat_hook_signal>>)
+  <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data' : données envoyées avec le signal
 
 Exemple en C :
@@ -5996,7 +5998,8 @@ Paramètres :
 ** 'const char *completion_item' : nom de la complétion
 ** 'struct t_gui_buffer *buffer' : tampon où la complétion est effectuée
 ** 'struct t_gui_completion *completion' : structure utilisée pour ajouter
-   les mots pour la complétion (voir <<_weechat_hook_completion_list_add>>)
+   les mots pour la complétion (voir
+   <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
 
@@ -6072,7 +6075,7 @@ Paramètres :
 ** 'WEECHAT_LIST_POS_BEGINNING' : au début de la liste
 ** 'WEECHAT_LIST_POS_END' : à la fin de la liste
 
-Exemple en C : voir <<_weechat_hook_completion>>.
+Exemple en C : voir <<_weechat_hook_completion,weechat_hook_completion>>.
 
 Script (Python) :
 
@@ -8160,7 +8163,7 @@ Paramètres :
 * 'bar' : pointeur vers la barre
 * 'property' : name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (voir <<_weechat_bar_new>>)
+  separator, items (voir <<_weechat_bar_new,weechat_bar_new>>)
 * 'value' : nouvelle valeur pour la propriété
 
 Valeur de retour :

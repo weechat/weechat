@@ -866,7 +866,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  <<_weechat_string_free_split>> after use)
+  <<_weechat_string_free_split,weechat_string_free_split>> after use)
 
 C examples:
 
@@ -907,7 +907,8 @@ void weechat_string_free_split (char **split_string);
 
 Arguments:
 
-* 'split_string': string split by function <<_weechat_string_split>>
+* 'split_string': string split by function
+  <<_weechat_string_split,weechat_string_split>>
 
 C example:
 
@@ -935,7 +936,8 @@ char *weechat_string_build_with_split_string (char **split_string,
 
 Arguments:
 
-* 'split_string': string split by function <<_weechat_string_split>>
+* 'split_string': string split by function
+  <<_weechat_string_split,weechat_string_split>>
 * 'separator': string used to separate strings
 
 Return value:
@@ -976,7 +978,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  <<_weechat_free_split_command>> after use)
+  <<_weechat_free_split_command,weechat_free_split_command>> after use)
 
 C example:
 
@@ -1003,7 +1005,8 @@ void weechat_string_free_split_command (char **split_command);
 
 Arguments:
 
-* 'split_command': command split by <<_weechat_string_split_command>>
+* 'split_command': command split by
+  <<_weechat_string_split_command,weechat_string_split_command>>
 
 C example:
 
@@ -2507,9 +2510,10 @@ Return value:
 
 [NOTE]
 File is NOT created on disk by this function. It will be created by call to
-function <<_weechat_write_config>>. You should call this function only after
-adding some sections (with <<_weechat_config_new_section>>) and options (with
-<<_weechat_config_new_option>>).
+function <<_weechat_write_config,weechat_write_config>>.
+You should call this function only after adding some sections (with
+<<_weechat_config_new_section,weechat_config_new_section>>) and options (with
+<<_weechat_config_new_option,weechat_config_new_option>>).
 
 C example:
 
@@ -3282,7 +3286,7 @@ Arguments:
 
 [NOTE]
 You can set value to null only if it is allowed for option (see
-<<_weechat_config_new_option>>).
+<<_weechat_config_new_option,weechat_config_new_option>>).
 
 Return value:
 
@@ -4999,9 +5003,7 @@ def my_command_cb(data, buffer, args):
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_command("myfilter", "description of myfilter",
-    "[list] | [enable|disable|toggle [name]] | "
-    "[add name plugin.buffer tags regex] | "
-    "[del name|-all]",
+    "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]",
     "description of arguments...",
     "list"
     " || enable %(filters_names)"
@@ -5805,7 +5807,8 @@ void weechat_hook_signal_send (const char *signal, const char *type_data,
 Arguments:
 
 * 'signal': signal to send
-* 'type_data': type of data sent with signal (see <<_weechat_hook_signal>>)
+* 'type_data': type of data sent with signal (see
+  <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': data sent with signal
 
 C example:
@@ -5917,7 +5920,8 @@ Arguments:
 ** 'const char *completion_item': name of completion item
 ** 'struct t_gui_buffer *buffer': buffer where completion is made
 ** 'struct t_gui_completion *completion': structure used to add words for
-   completion (see <<_weechat_hook_completion_list_add>>)
+   completion (see
+   <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 [NOTE]
@@ -5992,7 +5996,7 @@ Arguments:
 ** 'WEECHAT_LIST_POS_BEGINNING': beginning of list
 ** 'WEECHAT_LIST_POS_END': end of list
 
-C example: see <<_weechat_hook_completion>>.
+C example: see <<_weechat_hook_completion,weechat_hook_completion>>.
 
 Script (Python):
 
@@ -8032,7 +8036,7 @@ Arguments:
 * 'bar': bar pointer
 * 'property': name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (see <<_weechat_bar_new>>)
+  separator, items (see <<_weechat_bar_new,weechat_bar_new>>)
 * 'value': new value for property
 
 Return value:

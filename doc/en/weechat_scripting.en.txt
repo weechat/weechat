@@ -46,9 +46,9 @@ Some things are specific to languages:
 * tcl:
 ** functions are called with `weechat::xxx arg1 arg2 ...`
 
-[[register]]
-Register
-~~~~~~~~
+[[register_function]]
+Register function
+~~~~~~~~~~~~~~~~~
 
 All WeeChat scripts must "register" themselves to WeeChat, and this must be
 first WeeChat function called in script.
@@ -70,10 +70,6 @@ Arguments:
 * 'shutdown_function': string, name of function called when script is unloaded
 * 'charset': string, script charset (optional, if your script is UTF-8, you
   can use blank value here, because UTF-8 is default charset)
-
-[[script_example]]
-Script example
-~~~~~~~~~~~~~~
 
 Example of script, for each language:
 
@@ -139,11 +135,11 @@ You have to use command, depending on language:
 You can make link in directory 'language/autoload' to autoload script when
 WeeChat is starting.
 
-For example with perl:
+For example with Python:
 
 ----------------------------------------
-$ cd ~/.weechat/perl/autoload
-$ ln -s ../script.pl
+$ cd ~/.weechat/python/autoload
+$ ln -s ../script.py
 ----------------------------------------
 
 [[differences_with_c_api]]
@@ -156,8 +152,8 @@ in API: prototype, arguments, return values, examples.
 
 It's important to make difference between a 'plugin' and a 'script': a
 'plugin' is a binary file compiled and loaded with command `/plugin`, whereas
-a 'script' is a text file loaded with a plugin like 'perl' with command
-`/perl`.
+a 'script' is a text file loaded with a plugin like 'python' with command
+`/python`.
 
 When your script 'test.py' calls a WeeChat API function, path is like that:
 
@@ -176,6 +172,7 @@ previous path:
 WeeChat core  ------->  python plugin (python.so)  ------->  test.py
 ........................................
 
+[[pointers]]
 Pointers
 ~~~~~~~~
 
@@ -202,6 +199,7 @@ In many functions, for speed reasons, WeeChat does not check if your pointer
 is correct or not. It's your job to check you're giving a valid pointer,
 otherwise you may see a nice crash report ;)
 
+[[callbacks]]
 Callbacks
 ~~~~~~~~~
 
@@ -230,206 +228,527 @@ Script API
 For more information about functions in API, please read
 'WeeChat Plugin API Reference'.
 
+[[script_api_functions]]
 Functions
 ~~~~~~~~~
 
 List of functions in script API:
 
-* general:
-** 'register'
-* plugins:
-** 'plugin_get_name'
-* strings:
-** 'charset_set'
-** 'iconv_to_internal'
-** 'iconv_from_internal'
-** 'gettext'
-** 'ngettext'
-** 'string_remove_color'
-* directories:
-** 'mkdir_home'
-** 'mkdir'
-** 'mkdir_parents'
-* sorted lists:
-** 'list_new'
-** 'list_add'
-** 'list_search'
-** 'list_casesearch'
-** 'list_get'
-** 'list_set'
-** 'list_next'
-** 'list_prev'
-** 'list_string'
-** 'list_size'
-** 'list_remove'
-** 'list_remove_all'
-** 'list_free'
-* configuration files:
-** 'config_new'
-** 'config_new_section'
-** 'config_search_section'
-** 'config_new_option'
-** 'config_search_option'
-** 'config_string_to_boolean'
-** 'config_option_reset'
-** 'config_option_set'
-** 'config_option_set_null'
-** 'config_option_unset'
-** 'config_option_rename'
-** 'config_option_is_null'
-** 'config_option_default_is_null'
-** 'config_boolean'
-** 'config_boolean_default'
-** 'config_integer'
-** 'config_integer_default'
-** 'config_string'
-** 'config_string_default'
-** 'config_color'
-** 'config_color_default'
-** 'config_write_option'
-** 'config_write_line'
-** 'config_write'
-** 'config_read'
-** 'config_reload'
-** 'config_option_free'
-** 'config_section_free_options'
-** 'config_section_free'
-** 'config_free'
-** 'config_get'
-** 'config_get_plugin'
-** 'config_is_set_plugin'
-** 'config_set_plugin'
-** 'config_unset_plugin'
-* display:
-** 'prefix'
-** 'color'
-** 'print' (for python: 'prnt')
-** 'print_date_tags' (for python: 'prnt_date_tags')
-** 'print_y' (for python: 'prnt_y')
-** 'log_print'
-* hooks:
-** 'hook_command'
-** 'hook_command_run'
-** 'hook_timer'
-** 'hook_fd'
-** 'hook_process'
-** 'hook_connect'
-** 'hook_print'
-** 'hook_signal'
-** 'hook_signal_send'
-** 'hook_config'
-** 'hook_completion'
-** 'hook_completion_list_add'
-** 'hook_modifier'
-** 'hook_modifier_exec'
-** 'hook_info'
-** 'hook_infolist'
-** 'unhook'
-** 'unhook_all'
-* buffers:
-** 'buffer_new'
-** 'current_buffer'
-** 'buffer_search'
-** 'buffer_search_main'
-** 'buffer_clear'
-** 'buffer_close'
-** 'buffer_merge'
-** 'buffer_unmerge'
-** 'buffer_get_integer'
-** 'buffer_get_string'
-** 'buffer_get_pointer'
-** 'buffer_set'
-** 'buffer_string_replace_local_var'
-* windows:
-** 'current_window'
-** 'window_get_integer'
-** 'window_get_pointer'
-** 'window_set_title'
-* nicklist:
-** 'nicklist_add_group'
-** 'nicklist_search_group'
-** 'nicklist_add_nick'
-** 'nicklist_search_nick'
-** 'nicklist_remove_group'
-** 'nicklist_remove_nick'
-** 'nicklist_remove_all'
-* bars:
-** 'bar_item_search'
-** 'bar_item_new'
-** 'bar_item_update'
-** 'bar_item_remove'
-** 'bar_search'
-** 'bar_new'
-** 'bar_set'
-** 'bar_update'
-** 'bar_remove'
-* commands:
-** 'command'
-* infos:
-** 'info_get'
-* infolists:
-** 'infolist_new'
-** 'infolist_new_item'
-** 'infolist_new_var_integer'
-** 'infolist_new_var_string'
-** 'infolist_new_var_pointer'
-** 'infolist_new_var_time'
-** 'infolist_get'
-** 'infolist_next'
-** 'infolist_prev'
-** 'infolist_reset_item_cursor'
-** 'infolist_fields'
-** 'infolist_integer'
-** 'infolist_string'
-** 'infolist_pointer'
-** 'infolist_time'
-** 'infolist_free'
-* upgrade:
-** 'upgrade_new'
-** 'upgrade_write_object'
-** 'upgrade_read'
-** 'upgrade_close'
+[width="100%",cols="^1,10",options="header"]
+|========================================
+| Category            | Functions
+| general             |
+  register
+| plugins             |
+  plugin_get_name
+| strings             |
+  charset_set, iconv_to_internal, iconv_from_internal, +
+  gettext, ngettext,
+  string_remove_color, +
+  string_is_command_char, string_input_for_buffer
+| directories         |
+  mkdir_home, mkdir, mkdir_parents
+| sorted lists        |
+  list_new, list_add, list_search, list_casesearch, list_get, list_set,
+  list_next, list_prev, list_string, list_size, list_remove, list_remove_all,
+  list_free
+| configuration files |
+  config_new, config_new_section, config_search_section, config_new_option,
+  config_search_option, +
+  config_string_to_boolean, config_option_reset, config_option_set,
+  config_option_set_null, config_option_unset, config_option_rename,
+  config_option_is_null, config_option_default_is_null, +
+  config_boolean, config_boolean_default, config_integer, config_integer_default,
+  config_string, config_string_default, config_color, config_color_default, +
+  config_write_option, config_write_line, config_write, config_read,
+  config_reload, +
+  config_option_free, config_section_free_options, config_section_free,
+  config_free, +
+  config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
+  config_unset_plugin
+| display             |
+  prefix, color, print (for python: prnt), print_date_tags (for python:
+  prnt_date_tags), print_y (for python: prnt_y), log_print
+| hooks               |
+  hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
+  hook_connect, hook_print, hook_signal, hook_signal_send, hook_config,
+  hook_completion, hook_completion_list_add, hook_modifier, hook_modifier_exec,
+  hook_info, hook_infolist, unhook, unhook_all
+| buffers             |
+  buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
+  buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
+  buffer_get_string, buffer_get_pointer, buffer_set,
+  buffer_string_replace_local_var
+| windows             |
+  current_window, window_get_integer, window_get_string, window_get_pointer,
+  window_set_title
+| nicklist            |
+  nicklist_add_group, nicklist_search_group, nicklist_add_nick,
+  nicklist_search_nick, nicklist_remove_group, nicklist_remove_nick,
+  nicklist_remove_all
+| bars                |
+  bar_item_search, bar_item_new, bar_item_update, bar_item_remove, bar_search,
+  bar_new, bar_set, bar_update, bar_remove
+| commands            |
+  command
+| infos               |
+  info_get
+| infolists           |
+  infolist_new, infolist_new_item, infolist_new_var_integer,
+  infolist_new_var_string, infolist_new_var_pointer, infolist_new_var_time, +
+  infolist_get, infolist_next, infolist_prev, infolist_fields, infolist_integer,
+  infolist_string, infolist_pointer, infolist_time, infolist_free
+| upgrade             |
+  upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
+|========================================
 
+[[script_api_constants]]
 Constants
 ~~~~~~~~~
 
 List of constants in script API:
 
-* 'WEECHAT_RC_OK'
-* 'WEECHAT_RC_OK_EAT'
-* 'WEECHAT_RC_ERROR'
-* 'WEECHAT_CONFIG_READ_OK'
-* 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
-* 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'WEECHAT_CONFIG_WRITE_OK'
-* 'WEECHAT_CONFIG_WRITE_ERROR'
-* 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-* 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR'
-* 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
-* 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
-* 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
-* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
-* 'WEECHAT_LIST_POS_SORT'
-* 'WEECHAT_LIST_POS_BEGINNING'
-* 'WEECHAT_LIST_POS_END'
-* 'WEECHAT_HOTLIST_LOW'
-* 'WEECHAT_HOTLIST_MESSAGE'
-* 'WEECHAT_HOTLIST_PRIVATE'
-* 'WEECHAT_HOTLIST_HIGHLIGHT'
-* 'WEECHAT_HOOK_PROCESS_RUNNING'
-* 'WEECHAT_HOOK_PROCESS_ERROR'
-* 'WEECHAT_HOOK_CONNECT_OK'
-* 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND'
-* 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND'
-* 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED'
-* 'WEECHAT_HOOK_CONNECT_PROXY_ERROR'
-* 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR'
-* 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR'
-* 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR'
-* 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR'
-* 'WEECHAT_HOOK_SIGNAL_STRING'
-* 'WEECHAT_HOOK_SIGNAL_INT'
-* 'WEECHAT_HOOK_SIGNAL_POINTER'
+[width="100%",cols="^1,10",options="header"]
+|========================================
+| Category            | Constants
+| return codes        |
+  WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR
+| configuration files |
+  WEECHAT_CONFIG_READ_OK, WEECHAT_CONFIG_READ_MEMORY_ERROR,
+  WEECHAT_CONFIG_READ_FILE_NOT_FOUND, WEECHAT_CONFIG_WRITE_OK,
+  WEECHAT_CONFIG_WRITE_ERROR, WEECHAT_CONFIG_WRITE_MEMORY_ERROR, +
+  WEECHAT_CONFIG_OPTION_SET_OK_CHANGED, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+  WEECHAT_CONFIG_OPTION_SET_ERROR, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND,
+  WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET,
+  WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED, WEECHAT_CONFIG_OPTION_UNSET_ERROR
+| sorted lists        |
+  WEECHAT_LIST_POS_SORT, WEECHAT_LIST_POS_BEGINNING, WEECHAT_LIST_POS_END
+| hotlist             |
+  WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE, WEECHAT_HOTLIST_PRIVATE,
+  WEECHAT_HOTLIST_HIGHLIGHT
+| hook process        |
+  WEECHAT_HOOK_PROCESS_RUNNING, WEECHAT_HOOK_PROCESS_ERROR
+| hook connect        |
+  WEECHAT_HOOK_CONNECT_OK, WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+  WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND, WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED,
+  WEECHAT_HOOK_CONNECT_PROXY_ERROR, WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
+  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+  WEECHAT_HOOK_CONNECT_MEMORY_ERROR
+| hook signal         |
+  WEECHAT_HOOK_SIGNAL_STRING, WEECHAT_HOOK_SIGNAL_INT, WEECHAT_HOOK_SIGNAL_POINTER
+|========================================
+
+[[common_tasks]]
+Common tasks
+------------
+
+This chapter shows some common tasks, with examples.
+Only partial things in API are used here, for full reference, see see
+'WeeChat Plugin API Reference'.
+
+[[buffers]]
+Buffers
+~~~~~~~
+
+[[buffers_display_messages]]
+Display messages
+^^^^^^^^^^^^^^^^
+
+An empty string is often used to work with WeeChat core buffer. For other
+buffers, you must give pointer (as string, see <<pointers,pointers>>).
+
+Examples:
+
+[source,python]
+----------------------------------------
+# display "hello" on core buffer
+weechat.prnt("", "hello")
+
+# display prefix "==>" and message "hello" on current buffer
+# (prefix and message must be separated by tab)
+weechat.prnt(weechat.current_buffer(), "==>\thello")
+
+# display error message on core buffer (with error prefix)
+weechat.prnt("", "%swrong arguments" % weechat.prefix("error"))
+
+# display message with color on core buffer
+weechat.prnt("", "text %syellow on blue" % weechat.color("yellow,blue"))
+
+# search buffer and display message
+# (full name of buffer is plugin.name, for example: "irc.freenode.#weechat")
+buffer = weechat.buffer_search("irc", "freenode.#weechat")
+weechat.prnt(buffer, "message on #weechat channel")
+
+# other solution to find an IRC buffer (better)
+# (note that server and channel are separated by a comma)
+buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+weechat.prnt(buffer, "message on #weechat channel")
+----------------------------------------
+
+[NOTE]
+Print function is called `print` in Perl/Ruby/Lua/Tcl and `prnt` in Python.
+
+[[buffers_send_text]]
+Send text to buffer
+^^^^^^^^^^^^^^^^^^^
+
+You can send text or command to a buffer. This is exactly like if you type text
+on command line and press [Enter].
+
+Examples:
+
+[source,python]
+----------------------------------------
+# execute command "/help" on core buffer
+weechat.command("", "/help")
+
+# send "hello" to #weechat IRC channel (users on channel will see message)
+buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+weechat.command(buffer, "hello")
+----------------------------------------
+
+[[buffers_new]]
+Create new buffer
+^^^^^^^^^^^^^^^^^
+
+You can create a new buffer in your script, then use it for displaying messages.
+
+Two callbacks can be called (they are optional): one for input data (when you
+type some text and press [Enter] on buffer), the other is called when buffer is
+closed (for example by `/buffer close`).
+
+Example:
+
+[source,python]
+----------------------------------------
+# callback for data received in input
+def buffer_input_cb(data, buffer, input_data):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# callback called when buffer is closed
+def buffer_close_cb(data, buffer):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# create buffer
+buffer = weechat.buffer_new("mybuffer", "buffer_input_cb", "", "buffer_close_cb", "")
+
+# set title
+weechat.buffer_set(buffer, "title", "This is title for my buffer.")
+
+# disable logging, by setting local variable "no_log" to "1"
+weechat.buffer_set(buffer, "localvar_set_no_log", "1")
+----------------------------------------
+
+[[buffers_properties]]
+Buffer properties
+^^^^^^^^^^^^^^^^^
+
+You can read buffer properties, as string, integer or pointer.
+
+Examples:
+
+[source,python]
+----------------------------------------
+buffer = weechat.current_buffer()
+
+number     = weechat.buffer_get_integer(buffer, "number")
+name       = weechat.buffer_get_string(buffer, "name")
+short_name = weechat.buffer_get_string(buffer, "short_name")
+----------------------------------------
+
+It is possible to add, read or delete local variables in buffer:
+
+[source,python]
+----------------------------------------
+# add local variable
+weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
+
+# read local variable
+myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
+
+# delete local variable
+weechat.buffer_set(buffer, "localvar_del_myvar", "")
+----------------------------------------
+
+To see local variables of a buffer, do this command in WeeChat:
+
+----------------------------------------
+/buffer localvar
+----------------------------------------
+
+[[hooks]]
+Hooks
+~~~~~
+
+[[hook_command]]
+Add new command
+^^^^^^^^^^^^^^^
+
+Add a custom command with `hook_command`. You can use a custom completion
+template to complete arguments of your command.
+
+Example:
+
+[source,python]
+----------------------------------------
+def my_command_cb(data, buffer, args):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_command("myfilter", "description of myfilter",
+    "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]",
+    "description of arguments...",
+    "list"
+    " || enable %(filters_names)"
+    " || disable %(filters_names)"
+    " || toggle %(filters_names)"
+    " || add %(filters_names) %(buffers_plugins_names)|*"
+    " || del %(filters_names)|-all",
+    "my_command_cb", "")
+----------------------------------------
+
+And then in WeeChat:
+
+----------------------------------------
+/help myfilter
+
+/myfilter arguments...
+----------------------------------------
+
+[[hook_timer]]
+Add a timer
+^^^^^^^^^^^
+
+Add a timer with `hook_timer`.
+
+Example:
+
+[source,python]
+----------------------------------------
+def timer_cb(data, remaining_calls):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# timer called each minute when second is 00
+weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
+----------------------------------------
+
+[[hook_process]]
+Run a background process
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can run a background process with `hook_process`. Your callback will be
+called when data is ready. It may be called many times.
+
+For the last call to your callback, 'rc' is set to 0 or positive value, it's
+return code of command.
+
+Example:
+
+[source,python]
+----------------------------------------
+# Display versions of Linux kernels.
+kernel_txt = ""
+
+def kernel_process_cb(data, command, rc, stdout, stderr):
+    """ Callback reading command output. """
+    global kernel_txt
+    if stdout != "":
+        kernel_txt += stdout
+    if int(rc) >= 0:
+        weechat.prnt("", kernel_txt)
+    return weechat.WEECHAT_RC_OK
+
+weechat.hook_process("python -c \"import urllib; " \
+                     "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
+                     10 * 1000, "kernel_process_cb", "")
+----------------------------------------
+
+[[config_options]]
+Config / options
+~~~~~~~~~~~~~~~~
+
+[[config_options_set_script]]
+Set options for script
+^^^^^^^^^^^^^^^^^^^^^^
+
+Function `config_is_set_plugin` is used to check if an option is set or not,
+and `config_set_plugin` to set option.
+
+Example:
+
+[source,python]
+----------------------------------------
+script_options = {
+    "option1" : "value1",
+    "option2" : "value2",
+    "option3" : "value3",
+}
+for option, default_value in script_options.iteritems():
+    if not weechat.config_is_set_plugin(option):
+        weechat.config_set_plugin(option, default_value)
+----------------------------------------
+
+[[config_options_detect_changes]]
+Detect changes
+^^^^^^^^^^^^^^
+
+You must use `hook_config` to be notified if user changes some script options.
+
+Example:
+
+[source,python]
+----------------------------------------
+SCRIPT_NAME = "myscript"
+
+# ...
+
+def config_cb(data, option, value):
+    """ Callback called when a script option is changed. """
+    # for example, read all script options to script variables...
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# ...
+
+weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
+# for other languages, change "python" with your language ("perl", "ruby", "lua" or "tcl")
+----------------------------------------
+
+[[config_options_weechat]]
+Read WeeChat options
+^^^^^^^^^^^^^^^^^^^^
+
+Function `config_get` returns pointer to option. Then, depending on option type,
+you must call `config_string`, `config_boolean`, `config_integer` or
+`config_color`.
+
+[source,python]
+----------------------------------------
+# string
+weechat.prnt("", "value of option weechat.look.item_time_format is: %s"
+                 % (weechat.config_string(weechat.config_get("weechat.look.item_time_format"))))
+
+# boolean
+weechat.prnt("", "value of option weechat.look.day_change is: %d"
+                 % (weechat.config_boolean(weechat.config_get("weechat.look.day_change"))))
+
+# integer
+weechat.prnt("", "value of option weechat.look.scroll_page_percent is: %d"
+                 % (weechat.config_integer(weechat.config_get("weechat.look.scroll_page_percent"))))
+
+# color
+weechat.prnt("", "value of option weechat.color.chat_delimiters is: %s"
+                 % (weechat.config_color(weechat.config_get("weechat.color.chat_delimiters"))))
+----------------------------------------
+
+[[irc]]
+IRC
+~~~
+
+[[irc_catch_messages]]
+Catch messages
+^^^^^^^^^^^^^^
+
+IRC plugin sends two signals for a message received (`xxx` is IRC internal
+server name, `yyy` is IRC command name like JOIN, QUIT, PRIVMSG, 301, ..):
+
+xxxx,irc_in_yyy::
+    signal sent before processing message
+
+xxx,irc_in2_yyy::
+    signal sent after processing message
+
+[source,python]
+----------------------------------------
+def join_cb(data, signal, signal_data):
+    # signal is for example: "freenode,irc_in2_join"
+    # signal_data is IRC message, for example: ":nick!user@host JOIN :#channel"
+    nick = weechat.info_get("irc_nick_from_host", signal_data)
+    server = signal.split(",")[0]
+    channel = signal_data.split(":")[-1]
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    if buffer:
+        weechat.prnt(buffer, "Eheh, %s has joined this channel!" % nick)
+    return weechat.WEECHAT_RC_OK
+
+# it is useful here to use "*" as server, to catch JOIN messages on all IRC
+# servers
+weechat.hook_signal("*,irc_in2_join", "join_cb", "")
+----------------------------------------
+
+[[infos]]
+Infos
+~~~~~
+
+[[infos_weechat_version]]
+WeeChat version
+^^^^^^^^^^^^^^^
+
+The best way to check version is to ask "version_number" and make integer
+comparison with hexidecimal version number.
+
+Example:
+
+[source,python]
+----------------------------------------
+version = weechat.info_get("version_number", "") or 0
+if int(version) >= 0x00030200:
+    weechat.prnt("", "This is WeeChat 0.3.2 or newer")
+else:
+    weechat.prnt("", "This is WeeChat 0.3.1 or older")
+----------------------------------------
+
+[NOTE]
+Versions < = 0.3.1.1 return empty string for 'info_get("version_number")' so you
+must check that value returned is *not* empty.
+
+To get version as string:
+
+[source,python]
+----------------------------------------
+# this will display for example "Version 0.3.2"
+weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
+----------------------------------------
+
+[[infos_other]]
+Other infos
+^^^^^^^^^^^
+
+[source,python]
+----------------------------------------
+# WeeChat home directory, for example: "/home/xxxx/.weechat"
+weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
+
+# keyboard inactivity
+weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", ""))
+----------------------------------------
+
+[[infolists]]
+Infolists
+~~~~~~~~~
+
+[[infolists_read]]
+Read an infolist
+^^^^^^^^^^^^^^^^
+
+You can read infolist built by WeeChat or other plugins.
+
+Example:
+
+[source,python]
+----------------------------------------
+# read infolist "buffer", to get list of buffers
+infolist = weechat.infolist_get("buffer", "", "")
+if infolist:
+    while weechat.infolist_next(infolist):
+        name = weechat.infolist_string(infolist, "name")
+        weechat.prnt("", "buffer: %s" % name)
+    weechat.infolist_free(infolist)
+----------------------------------------
+
+[IMPORTANT]
+Don't forget to call `infolist_free` to free memory used by infolist, because
+WeeChat will not automatically free memory.
