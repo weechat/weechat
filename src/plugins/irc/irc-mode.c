@@ -61,7 +61,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel, const char *modes)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
-    int modes_count, channel_modes_updated, argc, current_arg;
+    int mode, modes_count, channel_modes_updated, argc, current_arg;
     
     if (!server || !channel || !modes)
         return 0;
@@ -122,9 +122,12 @@ irc_mode_channel_set (struct t_irc_server *server,
                 case 'a': /* channel admin (unrealircd specific flag) */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '~'))
+                    mode = irc_mode_get_nick_prefix (server, "a", '~');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_CHANADMIN);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 case 'b': /* ban (ignored) */
@@ -135,9 +138,12 @@ irc_mode_channel_set (struct t_irc_server *server,
                 case 'h': /* half-op */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '%'))
+                    mode = irc_mode_get_nick_prefix (server, "h", '%');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_HALFOP);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 case 'k': /* channel key */
@@ -172,33 +178,45 @@ irc_mode_channel_set (struct t_irc_server *server,
                 case 'o': /* op */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '@'))
+                    mode = irc_mode_get_nick_prefix (server, "o", '@');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_OP);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 case 'q': /* channel owner (unrealircd specific flag) */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '~'))
+                    mode = irc_mode_get_nick_prefix (server, "q", '~');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_CHANOWNER);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 case 'u': /* channel user */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '-'))
+                    mode = irc_mode_get_nick_prefix (server, "u", '-');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_CHANUSER);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 case 'v': /* voice */
                     ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
                         argv[current_arg] : NULL;
-                    if (irc_mode_nick_prefix_allowed (server, '+'))
+                    mode = irc_mode_get_nick_prefix (server, "v", '+');
+                    if (mode >= 0)
+                    {
                         irc_mode_channel_set_nick (server, channel, ptr_arg,
-                                                   set_flag, IRC_NICK_VOICE);
+                                                   set_flag, mode);
+                    }
                     current_arg++;
                     break;
                 default:
@@ -308,24 +326,85 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes)
 }
 
 /*
- * irc_mode_nick_prefix_allowed: return <> 0 if nick prefix is allowed by server
- *                               for example :
- *                                 IRC:  005 (...) PREFIX=(ov)@+
- *                               => allowed prefixes: @+
+ * irc_mode_get_prefix_value: get internal value for prefix
+ *                            return -1 if prefix is unknown
  */
 
 int
-irc_mode_nick_prefix_allowed (struct t_irc_server *server, char prefix)
+irc_mode_get_prefix_value (char prefix)
 {
-    char str[2];
+    switch (prefix)
+    {
+        case '@': /* op */
+            return IRC_NICK_OP;
+        case '~': /* channel owner */
+            return IRC_NICK_CHANOWNER;
+        case '&': /* channel admin */
+            return IRC_NICK_CHANADMIN;
+        case '!': /* channel admin (2) */
+            return IRC_NICK_CHANADMIN2;
+        case '%': /* half-op */
+            return IRC_NICK_HALFOP;
+        case '+': /* voice */
+            return IRC_NICK_VOICE;
+        case '-': /* channel user */
+            return IRC_NICK_CHANUSER;
+    }
+    
+    return -1;
+}
+
+/*
+ * irc_mode_get_nick_prefix: return nick prefix, if allowed by server
+ *                           return -1 if not allowed
+ *                           for example :
+ *                             IRC:  005 (...) PREFIX=(ov)@+
+ *                           => allowed prefixes: @+
+ */
+
+int
+irc_mode_get_nick_prefix (struct t_irc_server *server, char *mode,
+                          char prefix)
+{
+    char str[2], *pos, *ptr_prefixes, *pos_mode;
+    int index;
     
     /* if server did not send any prefix info, then use default prefixes */
     if (!server->prefix)
     {
         str[0] = prefix;
         str[1] = '\0';
-        return (strpbrk (str, IRC_NICK_DEFAULT_PREFIXES_LIST)) ? 1 : 0;
+        pos = strpbrk (str, IRC_NICK_DEFAULT_PREFIXES_LIST);
+        if (!pos)
+            return -1;
+        return irc_mode_get_prefix_value (pos[0]);
     }
     
-    return (strchr (server->prefix, prefix) != NULL);
+    /* find start of prefixes, after "(...)" */
+    ptr_prefixes = strchr (server->prefix, ')');
+    if (ptr_prefixes)
+        ptr_prefixes++;
+    
+    /* we check if mode is in list and return prefix found */
+    if (mode && ptr_prefixes)
+    {
+        pos_mode = strchr (server->prefix + 1, mode[0]);
+        if (pos_mode)
+        {
+            index = pos_mode - server->prefix - 1;
+            if (pos_mode && (index < (int)strlen (ptr_prefixes)))
+            {
+                return irc_mode_get_prefix_value (ptr_prefixes[index]);
+            }
+        }
+    }
+    
+    if (!ptr_prefixes)
+        ptr_prefixes = server->prefix;
+    
+    pos = strchr (ptr_prefixes, prefix);
+    if (!pos)
+        return -1;
+    
+    return irc_mode_get_prefix_value (pos[0]);
 }

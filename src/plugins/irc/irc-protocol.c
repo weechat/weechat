@@ -1870,13 +1870,6 @@ irc_protocol_cmd_005 (struct t_irc_server *server, const char *command,
     if (pos)
     {
         pos += 7;
-        if (pos[0] == '(')
-        {
-            pos2 = strchr (pos, ')');
-            if (!pos2)
-                return WEECHAT_RC_OK;
-            pos = pos2 + 1;
-        }
         pos2 = strchr (pos, ' ');
         if (pos2)
             pos2[0] = '\0';
@@ -3239,7 +3232,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
         {
             prefix_found = 0;
             
-            if (irc_mode_nick_prefix_allowed (server, pos_nick[0]))
+            if (irc_mode_get_nick_prefix (server, NULL, pos_nick[0]) >= 0)
             {
                 prefix_found = 1;
                 switch (pos_nick[0])
