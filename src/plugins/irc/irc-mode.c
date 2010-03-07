@@ -389,7 +389,7 @@ irc_mode_get_nick_prefix (struct t_irc_server *server, char *mode,
     if (mode && ptr_prefixes)
     {
         pos_mode = strchr (server->prefix + 1, mode[0]);
-        if (pos_mode)
+        if (pos_mode && (pos_mode < ptr_prefixes))
         {
             index = pos_mode - server->prefix - 1;
             if (pos_mode && (index < (int)strlen (ptr_prefixes)))
