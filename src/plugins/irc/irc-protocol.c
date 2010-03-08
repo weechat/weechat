@@ -3191,8 +3191,9 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
     const char *color;
     int args, i, prefix_found;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
-    int has_voice, is_chanuser;
+    int has_voice, is_chanuser, is_away;
     struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* 353 message looks like:
        :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
@@ -3226,6 +3227,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
         is_halfop = 0;
         has_voice = 0;
         is_chanuser = 0;
+        is_away = 0;
         prefix_found = 1;
         
         while (prefix_found)
@@ -3282,9 +3284,12 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
                 nick = strdup (pos_nick);
             if (nick)
             {
+                ptr_nick = irc_nick_search (ptr_channel, nick);
+                is_away = (ptr_nick && (ptr_nick->flags & IRC_NICK_AWAY)) ? 1 : 0;
                 if (!irc_nick_new (server, ptr_channel, nick,
                                    is_chanowner, is_chanadmin, is_chanadmin2,
-                                   is_op, is_halfop, has_voice, is_chanuser, 0))
+                                   is_op, is_halfop, has_voice, is_chanuser,
+                                   is_away))
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot create nick \"%s\" "
