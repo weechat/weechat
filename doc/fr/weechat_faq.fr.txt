@@ -34,6 +34,7 @@ Quelques fonctionnalités (version > = 0.3.x) :
 Plus d'infos sur cette page : http://www.weechat.org/features
 
 
+[[compilation_install]]
 Compilation / installation
 --------------------------
 
@@ -65,10 +66,6 @@ git et qu'il est moins pratique que de cloner la base git pour installer des
 mises à jour.
 
 
-Utilisation de WeeChat
-----------------------
-
-
 [[lost]]
 J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,19 +77,9 @@ Il est recommandé pour les nouveaux utilisateurs de lire le guide de démarrage
 rapide (voir la page de doc sur le site).
 
 
-[[buffer_vs_window]]
-J'ai entendu parler de "buffer" et "window", quelle est la différence ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
-(ainsi que d'autres données).
-
-Une fenêtre ('window') est une zone de l'écran affichant un tampon. Il est
-possible de découper l'écran horizontaleent ou verticalement en plusieurs
-fenêtres.
-
-Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
-aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
+[[display]]
+Affichage
+---------
 
 
 [[charset]]
@@ -159,81 +146,19 @@ Par exemple 'xterm-color' provoque ce genre de problèmes, utilisez
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
 
-[[meta_keys]]
-Quelques touches meta (alt + touche) ne fonctionnent pas, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[buffer_vs_window]]
+J'ai entendu parler de "buffer" et "window", quelle est la différence ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
-meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
-fichier '~/.Xresources':
+Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
+(ainsi que d'autres données).
 
-* pour xterm:
-----------------------------------------
-XTerm*metaSendsEscape: true
-----------------------------------------
-* pour uxterm:
-----------------------------------------
-UXTerm*metaSendsEscape: true
-----------------------------------------
+Une fenêtre ('window') est une zone de l'écran affichant un tampon. Il est
+possible de découper l'écran horizontaleent ou verticalement en plusieurs
+fenêtres.
 
-Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
-
-
-[[key_bindings]]
-Comment puis-je configurer les raccourcis clavier ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Les raccourcis clavier sont modifiables avec la commande `/key`.
-
-La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code d'une
-touche et de l'inclure dans la ligne de commande.
-
-
-[[openbsd_plugins]]
-J'utilise OpenBSD et WeeChat ne charge aucune extension, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sous OpenBSD, le nom des extensions se termine par ".so.0.0" (".so" sous
-Linux).
-
-Vous devez configurer ça :
-
-* avec WeeChat < = 0.2.6 : +
-  `/set plugins_extension = ".so.0.0"`
-* avec WeeChat > = 0.3.x : +
-  `/set weechat.plugin.extension ".so.0.0"`
-
-Puis: `/plugin autoload`.
-
-
-[[scripts]]
-Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Les commandes `/perl`, `/python`, `/ruby`, `/lua` et `/tcl` permettent de
-charger les scripts (le chemin par défaut est '~/.weechat/<langage>/').
-
-Les scripts ne sont pas compatibles avec d'autres clients IRC.
-
-Notes :
-
-* les scripts dans '~/.weechat/<langage>/autoload/' sont automatiquement chargés
-  par WeeChat lorsqu'il démarre.
-* l'extension 'tcl' est disponible à partir de la version 0.3.0.
-
-
-[[change_locale_without_quit]]
-Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Oui, il faut utiliser le script python shell.py (disponible sur le site de
-WeeChat) et taper ces commandes une fois le script chargé :
-
-  /shell setenv LANG=fr_FR.UTF-8
-  /upgrade
-
-Pour avoir des messages anglais avec encodage UTF-8 pour le terminal, pour les
-utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
+Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
+aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 
 
 [[terminal_copy_paste]]
@@ -278,23 +203,58 @@ Liste des scripts manipulant des URLs :
 http://www.weechat.org/scripts/stable/tag/url
 
 
-[[highlight_notification]]
-Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[change_locale_without_quit]]
+Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Selon la version de WeeChat :
+Oui, il faut utiliser le script python shell.py (disponible sur le site de
+WeeChat) et taper ces commandes une fois le script chargé :
 
-* avec WeeChat < = 0.2.6 : utilisez le script 'sound.pl' (disponible sur la
-  page des scripts), puis configurez une commande système (jouant un son,
-  affichant un message à l'écran, etc...) comme ceci : +
-  `/setp perl.sound.cmd_highlight = "/chemin/vers/commande parametres"`
-* avec WeeChat > = 0.3.x : utilisez le script 'launcher.pl' (disponible sur la
-  page des scripts), puis configurez une commande système (jouant un son,
-  affichant un message à l'écran, etc...) comme ceci : +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
+  /shell setenv LANG=fr_FR.UTF-8
+  /upgrade
 
-De nombreux autres scripts de notification existent, merci de consulter la
-liste des extensions/scripts : http://www.weechat.org/scripts
+Pour avoir des messages anglais avec encodage UTF-8 pour le terminal, pour les
+utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
+
+
+[[key_bindings]]
+Raccourcis clavier
+------------------
+
+
+[[meta_keys]]
+Quelques touches meta (alt + touche) ne fonctionnent pas, pourquoi ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
+meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
+fichier '~/.Xresources':
+
+* pour xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* pour uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
+
+
+[[customize_key_bindings]]
+Comment puis-je configurer les raccourcis clavier ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Les raccourcis clavier sont modifiables avec la commande `/key`.
+
+La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code d'une
+touche et de l'inclure dans la ligne de commande.
+
+
+[[irc]]
+IRC
+---
 
 
 [[filter_irc_join_part_quit]]
@@ -342,6 +302,68 @@ de les voir en désactivant les filtres (par défaut, la touche alt + "="
 active/désactive les filtres).
 
 
+[[highlight_notification]]
+Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Selon la version de WeeChat :
+
+* avec WeeChat < = 0.2.6 : utilisez le script 'sound.pl' (disponible sur la
+  page des scripts), puis configurez une commande système (jouant un son,
+  affichant un message à l'écran, etc...) comme ceci : +
+  `/setp perl.sound.cmd_highlight = "/chemin/vers/commande parametres"`
+* avec WeeChat > = 0.3.x : utilisez le script 'launcher.pl' (disponible sur la
+  page des scripts), puis configurez une commande système (jouant un son,
+  affichant un message à l'écran, etc...) comme ceci : +
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
+
+De nombreux autres scripts de notification existent, merci de consulter la
+liste des extensions/scripts : http://www.weechat.org/scripts
+
+
+[[plugins_scripts]]
+Extensions / scripts
+--------------------
+
+
+[[openbsd_plugins]]
+J'utilise OpenBSD et WeeChat ne charge aucune extension, pourquoi ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sous OpenBSD, le nom des extensions se termine par ".so.0.0" (".so" sous
+Linux).
+
+Vous devez configurer ça :
+
+* avec WeeChat < = 0.2.6 : +
+  `/set plugins_extension = ".so.0.0"`
+* avec WeeChat > = 0.3.x : +
+  `/set weechat.plugin.extension ".so.0.0"`
+
+Puis: `/plugin autoload`.
+
+
+[[load_scripts]]
+Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Les commandes `/perl`, `/python`, `/ruby`, `/lua` et `/tcl` permettent de
+charger les scripts (le chemin par défaut est '~/.weechat/<langage>/').
+
+Les scripts ne sont pas compatibles avec d'autres clients IRC.
+
+Notes :
+
+* les scripts dans '~/.weechat/<langage>/autoload/' sont automatiquement chargés
+  par WeeChat lorsqu'il démarre.
+* l'extension 'tcl' est disponible à partir de la version 0.3.0.
+
+
+[[settings]]
+Réglages
+--------
+
+
 [[memory_usage]]
 Comment configurer WeeChat pour consommer moins de mémoire ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -360,6 +382,7 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
   commandes utilisateur sauvées en mémoire)
 
 
+[[development]]
 Développement
 -------------
 

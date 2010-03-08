@@ -3,6 +3,7 @@ WeeChat FAQ (Często zadawane pytania)
 FlashCode <flashcode@flashtux.org>
 
 
+[[general]]
 Ogólne
 ------
 
@@ -34,6 +35,7 @@ Niektóre cechy (wersja > = 0.3.x):
 Więcej informacji na stronie: http://www.weechat.org/features
 
 
+[[compilation_install]]
 Kompilacja / instalacja
 -----------------------
 
@@ -63,10 +65,6 @@ git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
 przy aktualizowaniu jak klonowanie z gita.
 
 
-Używanie WeeChat
-----------------
-
-
 [[lost]]
 Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,18 +76,9 @@ Nowym użytkowniką zaleca się przeczytanie quickstart (szybki start)
 (zobacz stronę z dokumentacją na stronie www).
 
 
-[[buffer_vs_window]]
-Słyszałem o "buforach" i "oknach", jaka jest między nimi różnica?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-'bufor' jest określany przez numer, nazwę, wyświetlane linie (i trochę innych
-danych).
-
-'okno' jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
-ekranu na wiele okien.
-
-Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany przez
-okno) lub wyświetlany w jednym lub więcej oknach.
+[[display]]
+Wyświetlać
+----------
 
 
 [[charset]]
@@ -153,79 +142,18 @@ który działa dobrze (jak wiele innych wartości).
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 
-[[meta_keys]]
-Some meta keys (alt + key) are not working, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[buffer_vs_window]]
+Słyszałem o "buforach" i "oknach", jaka jest między nimi różnica?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using some terminals like xterm or uxterm, some meta keys does not
-work by default. You can add a line in file '~/.Xresources':
+'bufor' jest określany przez numer, nazwę, wyświetlane linie (i trochę innych
+danych).
 
-* for xterm:
-----------------------------------------
-XTerm*metaSendsEscape: true
-----------------------------------------
-* for uxterm:
-----------------------------------------
-UXTerm*metaSendsEscape: true
-----------------------------------------
+'okno' jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
+ekranu na wiele okien.
 
-And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
-
-
-[[key_bindings]]
-Jak mogę zmienić przypisania klawiszy?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Przypisania klawiszy mozna dostosować za pomocą komendy `/key`.
-
-Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
-go w wierszu poleceń.
-
-
-[[openbsd_plugins]]
-Używam OpenBSD,  WeeChat nie ładuje żadnych pluginów, co jest nie tak?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Pod  OpenBSD, nazwy wtyczek kończą się ".so.0.0" (".so" dla Linuksa).
-
-Musisz ustawić:
-
-* dla WeeChat < = 0.2.6: +
-  `/set plugins_extension = ".so.0.0"`
-* dla WeeChat > = 0.3.x: +
-  `/set weechat.plugin.extension ".so.0.0"`
-
-Następnie: `/plugin autoload`.
-
-
-[[scripts]]
-Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować 
-skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
-
-Skrypty nie są kompatybilne z innymi klientami IRC.
-
-Uwagi:
-
-* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy 
-  uruchomieniu WeeChat.
-* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.0.
-
-
-[[change_locale_without_quit]]
-Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Tak, musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
-oraz użyć tych komend po załadowaniu skryptu:
-
-  /shell setenv LANG=pl_PL.UTF-8
-  /upgrade
-
-Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osóby
-używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
+Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany przez
+okno) lub wyświetlany w jednym lub więcej oknach.
 
 
 [[terminal_copy_paste]]
@@ -267,23 +195,57 @@ shortenurl.py::
 Lista skryptów do obsługi adresów URL: http://www.weechat.org/scripts/stable/tag/url
 
 
-[[highlight_notification]]
-Jak mogę zostać powiadomiony, jeśli ktoś będzię chciał przyciągnąć moją uwagę na kanale?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[change_locale_without_quit]]
+Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-W zależnośći od wersji WeeChat:
+Tak, musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
+oraz użyć tych komend po załadowaniu skryptu:
 
-* dla WeeChat < = 0.2.6: użyj skryptu 'sound.pl' (dostępny na stronie ze
-  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
-  wyświetlenia wiadomości, ..) za pomocą komendy: +
-  `/setp perl.sound.cmd_highlight = "/ścieżka/do/komendy argumenty"`
-* dla WeeChat > = 0.3.x: użyj skryptu 'launcher.pl' (dostępny na stronie ze
-  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
-  wyświetlenia wiadomości, ..) za pomocą komendy: +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"`
+  /shell setenv LANG=pl_PL.UTF-8
+  /upgrade
 
-Istnieje wiele innych skryptów do powiadomień, zajrzyj na stronę wtyczek/skryptów:
-http://www.weechat.org/scripts
+Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osóby
+używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
+
+
+[[key_bindings]]
+Przypisania klawiszy
+--------------------
+
+
+[[meta_keys]]
+Some meta keys (alt + key) are not working, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using some terminals like xterm or uxterm, some meta keys does not
+work by default. You can add a line in file '~/.Xresources':
+
+* for xterm:
+----------------------------------------
+XTerm*metaSendsEscape: true
+----------------------------------------
+* for uxterm:
+----------------------------------------
+UXTerm*metaSendsEscape: true
+----------------------------------------
+
+And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+
+
+[[customize_key_bindings]]
+Jak mogę zmienić przypisania klawiszy?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Przypisania klawiszy mozna dostosować za pomocą komendy `/key`.
+
+Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
+go w wierszu poleceń.
+
+
+[[irc]]
+IRC
+---
 
 
 [[filter_irc_join_part_quit]]
@@ -328,6 +290,67 @@ Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączaj
 filtry (domyślnie alt + "=" zmienia stan filtrów).
 
 
+[[highlight_notification]]
+Jak mogę zostać powiadomiony, jeśli ktoś będzię chciał przyciągnąć moją uwagę na kanale?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+W zależnośći od wersji WeeChat:
+
+* dla WeeChat < = 0.2.6: użyj skryptu 'sound.pl' (dostępny na stronie ze
+  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
+  wyświetlenia wiadomości, ..) za pomocą komendy: +
+  `/setp perl.sound.cmd_highlight = "/ścieżka/do/komendy argumenty"`
+* dla WeeChat > = 0.3.x: użyj skryptu 'launcher.pl' (dostępny na stronie ze
+  skryptami), następnie ustawienie komendy systemowej (do odtworzenia dźwięku,
+  wyświetlenia wiadomości, ..) za pomocą komendy: +
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"`
+
+Istnieje wiele innych skryptów do powiadomień, zajrzyj na stronę wtyczek/skryptów:
+http://www.weechat.org/scripts
+
+
+[[plugins_scripts]]
+Pluginów / skrypty
+------------------
+
+
+[[openbsd_plugins]]
+Używam OpenBSD,  WeeChat nie ładuje żadnych pluginów, co jest nie tak?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pod  OpenBSD, nazwy wtyczek kończą się ".so.0.0" (".so" dla Linuksa).
+
+Musisz ustawić:
+
+* dla WeeChat < = 0.2.6: +
+  `/set plugins_extension = ".so.0.0"`
+* dla WeeChat > = 0.3.x: +
+  `/set weechat.plugin.extension ".so.0.0"`
+
+Następnie: `/plugin autoload`.
+
+
+[[load_scripts]]
+Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować 
+skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
+
+Skrypty nie są kompatybilne z innymi klientami IRC.
+
+Uwagi:
+
+* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy 
+  uruchomieniu WeeChat.
+* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.0.
+
+
+[[settings]]
+Ustawienia
+----------
+
+
 [[memory_usage]]
 Jak mogę zmusić WeeChat do zużywania mniejszej ilości pamięci?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -345,6 +368,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
   użytkownika trzymanych w pamięci)
 
 
+[[development]]
 Rozwój
 ------
 
@@ -383,6 +407,7 @@ Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
 Skontaktuj się z nami na IRC lub mailowo, szczegóły:
 http://www.weechat.org/about
+
 
 [[donate]]
 Czy mogę dac pieniądze albo inne rzeczy deweloperą WeeChat?
