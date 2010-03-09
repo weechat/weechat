@@ -15,21 +15,21 @@ Weshalb WeeChat? - X-Chat und Irssi sind sehr gut...
 Weil WeeChat schlank ist und neue Funktionen besitzt.
 Einige Funktionen (Version > = 0.3.x):
 
-* Unterstützung mehrerer Protokolle durch Erweiterungen (IRC, Jabber)
+* Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
 * mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
 * in mehreren Sprachen verfügbar
-* Erweiterungsfähig durch Erweiterungen (C, Perl, Python, Ruby, Lua, Tcl)
+* den eigenen Bedürfnissen anpassbar, durch Erweiterungen (C, Perl, Python, Ruby, Lua, Tcl)
 * Buffer mit unabhängigem Inhalt
 * Filterung der Anzeige mittels Tags und regulären Ausdrücken
-* horizontale und vertikale Teilung der Fenster
-* anpass- und erweiterbare Leisten
+* horizontale und vertikale Einteilung der Fenster
+* anpassbare und erweiterbare Leisten
 * Nickliste in allen GUI's verfügbar
 * inkrementelle Textsuche in Buffern, zu Highlights springen
 * FIFO Pipe für Fernsteuerung
-* Unterstützung für Aspell
+* Unterstützung von Aspell
 * Doppelter Zeichensatz (Kodierung/Dekodierung)
 * Neuentwicklung (basiert auf keinem anderem Programm)
-* Lauffähig auf einer Vielzahl von Plattformen
+* lauffähig auf einer Vielzahl von Plattformen
 * 100% GPL und Frei
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
@@ -42,30 +42,30 @@ Kompilierung / Installation
 
 
 [[gui]]
-Ich habe gehört, es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw nutzen?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw nutzen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Zur Zeit ist nur die GUI für Curses verfügbar.
+Zur Zeit ist nur eine GUI für Curses verfügbar.
 
 Andere GUIs (zur Zeit in der Entwicklung) werden als Remote Clients verfügbar
 sein.
 
 
 [[compile_git]]
-Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - warum?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Der empfohlene Weg WeeChat zu komilieren ist die Nutzung von cmake.
+Der empfohlene Weg um WeeChat zu kompilieren ist die Nutzung von cmake.
 
-Falls Du mit Hilfe der autotools kompilierst (also nicht cmake), stelle sicher,
-dass Du die neueste Version von autoconf und automake besitzt (WeeChat wird mit
-autoconf 2.61 und automake 1.10.1 entwickelt).
+Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (also nicht cmake),
+stelle sicher, dass Du die neueste Version von autoconf und automake besitzt
+(WeeChat wird mit autoconf 2.61 und automake 1.10.1 entwickelt).
 
-Der andere Weg ist, das "Entwickler-Paket" zu installieren, dieses hat weniger
-Abhängigkeiten. Dieses Paket wird quasi täglich aus dem git Repository erstellt.
-Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstimmt
-und daher auch weniger brauchbar sein kann als wenn man selbst das Repository
-klont und daraus Updates installiert.
+Die zweite Möglichkeit besteht darin das "Entwickler-Paket" zu installieren. Dies
+besitzt weniger Abhängigkeiten. Das Paket wird quasi täglich aus dem git Repository erstellt.
+Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstimmen muss
+und daher auch weniger brauchbar sein kann, im Gegensatz zu der Methode dass man selbst
+das Repository klont und daraus Updates installiert.
 
 
 [[lost]]
@@ -73,7 +73,7 @@ Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhältst
-Du durch die Eingabe von: `help Befehlsname`. 
+Du durch die Eingabe von: `/help Befehlsname`. 
 Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 aufgeführt.
 (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige scrollen)
@@ -88,24 +88,24 @@ Anzeige
 
 
 [[charset]]
-Teilweise fehlen den Zeichen die Akzente, was kann ich tun?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Teilweise fehlen den Zeichen die Akzente. Wie kann ich das korrigieren?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies ist ein bekanntes Problem. Bitte lese nachfolgende Erklärungen sorgfältig
-durch und überprüfe *alle* aufgezeigten Lösungsmöglichkeiten.
+Dies ist ein bekanntes Problem. Bitte lese deshalb die nachfolgende Erklärung
+sorgfältig durch und überprüfe *alle* aufgezeigten Lösungsmöglichkeiten.
 
-Für Versionen < 0.2.3, bitte auf die neueste stabile Version wechseln.
+Für Versionen < 0.2.3: Bitte auf die neueste stabile Version von WeeChat wechseln.
 
 Für Versionen > = 0.2.3:
 
 * überprüfe, ob weechat-curses mit libncursesw verlinkt ist (Warnung: nötig bei den
   meisten Distributionen - jedoch nicht bei allen): `ldd /path/to/weechat-curses`
 * prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
-  dies nicht der Fall sein sollte, benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
-* überprüfe die Ausgabe des `/charset` Befehls (auf dem Server-Buffer). Du solltest
-  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz sehen. Falls Du
-  'ANSI_X3.4-1968' oder andere Werte siehst, ist Deine Einstellung der locale
-  möglicherweise falsch.
+  dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
+* überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
+  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz als Antwort erhalten. Falls Du
+  'ANSI_X3.4-1968' oder einen anderen Wert bekommen solltest, ist Deine Einstellung der
+  locale möglicherweise falsch.
 * Einstellen des globalen decode Wertes, z.B.:
 ** WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-15`
 ** WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-15"`
@@ -126,16 +126,16 @@ oder andere locale, bitte vergewissere Dich, dass *alle* Deine Einstellungen
 Bars, z.B. Titel und Status haben keine Hintergrundfarbe bzw. diese endet direkt nach dem Text, warum?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies kann durch einen falschen Wert der Variablen TERM Deiner Shell verursacht
-werden (schaue Dir die Ausgabe von `echo $TERM` in Deinem Terminal an).
+Dies kann durch einen falschen Wert in der Variablen TERM Deiner Shell verursacht
+werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
 
 Abhängig davon von wo WeeChat startet wird, solltest Du folgenden Wert haben:
 
 * falls WeeChat lokal oder auf einem entfernten Rechner läuft, je nach benutztem
-  Terminal: '-term', 'rxvt', ...
+  Terminal: 'xterm', 'rxvt', ...
 * falls WeeChat unter screen läuft, sollte der Wert 'screen' sein.
 
-Wenn nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
+Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 
 [[screen_weird_chars]]
@@ -143,12 +143,12 @@ Wenn ich Weechat unter screen nutze habe ich merkwürdige Zeichen, wie kann ich 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell verursacht
-werden (schaue Dir die Ausgabe von `echo $TERM` in Deinem Terminal an).
+werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
 
-Als Beispiel, '-term-color' könnte solche merkwürdigen Zeichen produzieren.
-Nutzte stattdessen lieber '-term'.
+Als Beispiel, 'xterm-color' könnte solche merkwürdigen Zeichen produzieren.
+Nutzte stattdessen lieber 'xterm'.
 
-Wenn nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
+Falls nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
 
 [[buffer_vs_window]]
@@ -167,14 +167,14 @@ angezeigt.
 
 
 [[terminal_copy_paste]]
-Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste auch eingefügt wird?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit eingefügt wird?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
 ctrl + alt in Verbindung mit der Auswahl durch die Maus.
 
-Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben, z.B.:
+Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben:
 
 * WeeChat < = 0.2.6: +
   `set look_nicklist_position = top`
@@ -188,8 +188,8 @@ Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 
 Da WeeChat sowohl die Uhrzeit als auch einen Präfix für jede Zeile darstellt und
 man optional auch noch Bars nutzen kann, die das Chatfenster zusätzlich
-verkleinern, kann es passieren das sehr lange URLs abgeschnitten und nicht mehr
-aufgerufen werden können.
+verkleinern, kann es passieren dass sehr lange URLs abgeschnitten und dadurch nicht
+mehr aufgerufen werden können.
 
 Deshalb sollte man eines der folgenden Skripten nutzen:
 
@@ -204,7 +204,7 @@ tinyurl.py::
 shortenurl.py::
     URLs werden durch einen Internet-Dienst gekürzt.
 
-Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
+Eine Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[change_locale_without_quit]]
@@ -231,11 +231,12 @@ Tastaturbelegung
 Aus welchem Grund funktionieren manche meta keys (alt + key) nicht?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Wenn Du einen Terminal wie -term oder uxterm nutzten solltest werden einige
+Wenn Du einen Terminal wie xterm oder uxterm nutzten solltest werden einige
 meta keys standardmäßig nicht unterstützt.
-In diesem Fall sollte folgende Zeile in '~/.Xresources' hinzugefügt werden:
+In diesem Fall sollte folgende Zeile der Konfigurationsdatei '~/.Xresources'
+hinzugefügt werden:
 
-* für -term:
+* für xterm:
 ----------------------------------------
 XTerm*metaSendsEscape: true
 ----------------------------------------
@@ -271,7 +272,7 @@ Der Befehl `/ignore` ist ein IRC-Befehl und beeinflusst somit nur die IRC-Buffer
 (Server und Channel).
 Durch den Befehl kann man bestimmte Nicks oder Hostnamen von Usern eines Servers oder
 von Channels ignorieren (Der Befehl wird nicht auf den Inhalt der Meldung angewandt).
-Zutreffende Meldungen werden, bevor sie Angezeigt werden, von der IRC-Erweiterung gelöscht
+Zutreffende Meldungen werden, bevor sie angezeigt werden, von der IRC-Erweiterung gelöscht
 (Du wirst sie niemals zu Gesicht bekommen).
 
 Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
@@ -280,7 +281,7 @@ Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Ta
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
 Die Darstellung von gefilterte Zeilen wird nur unterdrückt, die Zeilen werden nicht gelöscht.
 Du kannst diese Zeilen sichtbar machen indem Du den Filter deaktivierst (Voreinstellung zum
-Aktivieren/Deaktivieren der Filter: Alt-Taste + "=").
+aktivieren/deaktivieren der Filter: Alt-Taste + "=").
 
 
 [[filter_irc_join_part_quit]]
@@ -308,37 +309,39 @@ Entsprechend der WeeChat-Version:
 
 
 [[filter_voice_messages]]
-How can I filter voice messages (eg on Bitlbee server)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich voice Nachrichten filtern (z.B. auf Bitlbee Servern)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's not easy to filter voice messages, because voice mode can be set with other
-modes in same IRC message.
+Voice Nachrichten zu filtern ist nicht einfach, da der Voice-Modus mit anderen
+Modi in der IRC Nachricht kombiniert werden kann.
 
-If you want to do that, it's probably because Bitlbee is using voice to show
-away users, and you are flooded with voice messages. Therefore, you can change
-that and let WeeChat use a special color for away nicks in nicklist.
+Falls Du Voice Nachrichten z.B. bei Bitlbee unterdrücken möchtest da diese
+dazu genutzt werden um den Abwesenheitsstatus anderer User anzuzeigen und Du nicht
+von diesen Mitteilungen überflutet werden möchtest, kannst Du WeeChat anweisen
+den Nick der abwesend ist in einer speziellen Farbe darzustellen.
 
-On channel '&bitlbee', do:
+Im Channel '&bitlbee':
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
-For checking away nicks in WeeChat, see question about
+Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 <<color_away_nicks,away nicks>>.
 
 
 [[color_away_nicks]]
-How can I see away nicks in nicklist?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich mir Nicks in der Nickliste anzeigen lassen, die abwesend sind?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have to set option 'irc.network.away_check' to a positive value (minutes
-between each check of away nicks).
+Dazu musst Du in der Option 'irc.network.away_check' ein Zeitintervall, in Minuten,
+angeben die zwischen zwei Überprüfungen liegen soll.
 
-You can set option 'irc.network.away_check_max_nicks' to limit away check on
-small channels only.
+Mit der Option 'irc.network.away_check_max_nicks' kann festgelegt werden in welchen
+Channels eine Überprüfung stattfinden soll. Hierbei stellt der angegebene Wert die
+maximale Anzahl an Nicks in einem Channel dar, die den Channel gleichzeitig besuchen.
 
-For example, check every 5 minutes for away nicks, for channels with max 25
-nicks:
+In folgendem Beispiel wird der Abwesenheitsstatus alle fünf Minuten überprüft. Dabei
+werden aber nur Channels berücksichtigt die nicht mehr als 25 Teilnehmer haben:
 
 ----------------------------------------
 /set irc.network.away_check 5
@@ -347,13 +350,14 @@ nicks:
 
 
 [[highlight_notification]]
-Wie kann ich informiert werden, wenn jemand in einem Channel highlightet
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich mich darüber informieren lassen falls mich jemand in einem Channel highlighted
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-((A.d.Ü) highlight bedeutet, dass der eigene Nick z.B. im Channel genannt wird.
-Der Nick dessen der ihn schrieb wird farblich hervorgehoben)
+((A.d.Ü) Highlight bedeutet, dass der eigene Nick-Name im Channel genannt wird. Ich also
+direkt, persönlich, angesprochen werde. Der Nick der Person die mich anschreibt wird dabei
+farblich hervorgehoben)
 
-Abhängig der WeeChat Version:
+Die Einstellung geschieht abhängig von der WeeChat Version:
 
 * WeeChat < = 0.2.6: nutze das Skript 'sound.pl' (verfügbar auf der Skript-Seite),
   und nehme Einstellungen für einen System-Befehl (um einen Klang abzuspielen,
@@ -374,10 +378,10 @@ Erweiterungen / Skripten
 
 
 [[openbsd_plugins]]
-Ich benutze OpenBSD, und WeeChat lädt keine Erweiterungen - warum?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich benutze OpenBSD und WeeChat lädt keine Erweiterungen - weshalb?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unter OpenBSD Enden die Dateinamen der Erweiterungen mit ".so.0.0" (".so" bei Linux).
+Unter OpenBSD enden die Dateinamen von Erweiterungen mit ".so.0.0" (".so" bei Linux).
 
 Um dies zu beheben muss folgendes konfiguriert werden:
 
@@ -393,14 +397,16 @@ Danach: `/plugin autoload`.
 Wie kann ich Perl/Python/Ruby/Lua/Tcl Skripten laden? Sind Skripten kompatibel zu anderen IRC-Clients?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Benutze die Befehle: `/perl`, `/python`, `/ruby`, `/lua` und `/tcl` um Skripten
-zu laden (Voreingestellter Pfad zu den Skripten: '~/.weechat/<Skriptsprache>/').
+Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice versa.
 
-Die Skripten sind mit den anderer IRC-Clients nicht kompatibel.
+Um Skripten zu laden nutze den Befehl für die jeweilige Skriptsprache:
+`/perl`, `/python`, `/ruby`, `/lua` und `/tcl`
+
 
 Anmerkung:
 
-* Skripten, die sich unter '~/.weechat/<Skriptsprache>/autoload/' befinden werden
+* Voreingestellter Pfad der Skripten: '~/.weechat/<Skriptsprache>/'
+* Skripten die sich im Verzeichnis '~/.weechat/<Skriptsprache>/autoload/' befinden werden
   beim Start von WeeChat automatisch geladen.
 * Eine 'tcl' Erweiterung ist ab Version > = 0.3.0 verfügbar.
 
@@ -414,7 +420,7 @@ Einstellungen
 Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Du kannst folgende Tipps umsetzen womit WeeChat weniger Speicher benötigt:
+Du kannst folgende Tipps umsetzen damit WeeChat weniger Speicher benötigt:
 
 * nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
   weniger Speicherlecks besitzt, als eine ältere Version)
@@ -441,37 +447,37 @@ Es gibt drei Möglichkeiten:
 . Du kannst zu uns in den IRC kommen: 'irc.freenode.net', channel '#weechat'
 . Du kannst die Internetseite savannah nutzen:
   * Einen Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
-  * Nach einer neuen Funktion fragen: https://savannah.nongnu.org/task/?group=weechat
-  * Einen Patch senden: https://savannah.nongnu.org/patch/?group=weechat
+  * Einen Verbesserungsvorschlag machen: https://savannah.nongnu.org/task/?group=weechat
+  * Einen Patch einsenden: https://savannah.nongnu.org/patch/?group=weechat
 . Du kannst den Entwicklern mailen, entsprechende Mail-Adressen auf der Supportseite:
   http://www.weechat.org/about
   (Um emails an die "support" Mailing-Liste zu schicken, kannst Du diese abonnieren)
 
 
 [[supported_os]]
-Auf welchen Plattformen läuft WeeChat? Wird es noch auf anderen Betriebssystemen portiert?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Auf welchen Plattformen läuft WeeChat? Wird es noch auf andere Betriebssystemen portiert?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Die gesamte Liste gibt es unter: http://www.weechat.org/download
+Eine vollständige Liste der Portierungen findest Du unter: http://www.weechat.org/download
 
-Wir geben unser Bestes um WeeChat auf möglichst vielen Plattformen lauffähig zu
-machen. Um WeeChat auf Betriebssystemen zu testen, zu denen wir keinen Zugang
-haben, ist Hilfe willkommenen.
+Wir geben unser Bestes um WeeChat auf möglichst viele Plattformen zu portieren.
+Aber um WeeChat auf Betriebssystemen zu testen, zu denen wir keinen Zugang haben,
+ist Hilfe gerne gesehen.
 
 
 [[help_developers]]
 Ich möchte den Entwicklern von WeeChat helfen. Was kann ich tun?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Es gibt einiges zu tun z.B. Testen, Programmieren, Dokumentation, ...
+Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
 Bitte kontaktiere uns via IRC oder email, schaue auf die Support-Seite:
 http://www.weechat.org/about
 
 
 [[donate]]
-Kann ich Geld oder Anderes an die Entwickler von WeeChat spenden? 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Kann ich Geld oder anderes an die WeeChat Entwickler spenden? 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.
 Details hierzu gibt es auf: http://www.weechat.org/donate
