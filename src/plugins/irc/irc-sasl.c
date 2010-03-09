@@ -49,6 +49,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
     char *string, *answer_base64;
     int length_username, length;
     
+    answer_base64 = NULL;
     length_username = strlen (sasl_username);
     length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
     string = malloc (length);
