@@ -257,6 +257,26 @@ IRC
 ---
 
 
+[[ignore_vs_filter]]
+Quelle est la différence entre les commandes /ignore et /filter ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La commande `/ignore` est une commande IRC, donc elle s'applique uniquement aux
+tampons IRC (serveurs et canaux).
+Elle permet d'ignorer des pseudos ou nom d'hôtes pour un serveur ou un canal
+(la commande ne s'applique pas au contenu des messages).
+Les messages corespondants sont supprimés par l'extension IRC avant affichage
+(donc vous ne les verrez jamais).
+
+La commande `/filter` est une commande "core", donc elle s'applique à n"importe
+quel tampon.
+Elle permet de filtrer des lignes dans les tampons à l'aide de tags ou
+d'expression régulière pour le préfixe et contenu de la ligne.
+Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
+de les voir en désactivant les filtres (par défaut, la touche alt + "="
+active/désactive les filtres).
+
+
 [[filter_irc_join_part_quit]]
 Comment puis-je filter les messages join/part/quit sur les canaux IRC ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,24 +302,44 @@ Selon la version de WeeChat :
    (`/help filter` pour l'aide)
 
 
-[[ignore_vs_filter]]
-Quelle est la différence entre les commandes /ignore et /filter ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[filter_voice_messages]]
+Comment puis-je filtrer les messages voice (par exemple sur le serveur Bitlbee) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La commande `/ignore` est une commande IRC, donc elle s'applique uniquement aux
-tampons IRC (serveurs et canaux).
-Elle permet d'ignorer des pseudos ou nom d'hôtes pour un serveur ou un canal
-(la commande ne s'applique pas au contenu des messages).
-Les messages corespondants sont supprimés par l'extension IRC avant affichage
-(donc vous ne les verrez jamais).
+Il n'est pas facile de filtrer les messages voice, car le mode voice peut être
+positionné avec d'autres modes dans le même message IRC.
 
-La commande `/filter` est une commande "core", donc elle s'applique à n"importe
-quel tampon.
-Elle permet de filtrer des lignes dans les tampons à l'aide de tags ou
-d'expression régulière pour le préfixe et contenu de la ligne.
-Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
-de les voir en désactivant les filtres (par défaut, la touche alt + "="
-active/désactive les filtres).
+Si vous souhaitez faire cela, c'est probablement parce que Bitlbee utilise le
+voice pour montrer les utilisateurs absents, et vous recevez plein de messages
+voice. Par conséquent, vous pouvez changer cela et laisser WeeChat utiliser une
+couleur spéciale pour les pseudos absents dans la liste des pseudos.
+
+Sur le canal '&bitlbee', faites :
+----------------------------------------
+set away_devoice false
+----------------------------------------
+
+Pour vérifier les pseudos absents dans WeeChat, voir la question à propos des
+<<color_away_nicks,pseudos absents>>.
+
+
+[[color_away_nicks]]
+Comment puis-je voir les pseudos absents dans la liste des pseudos ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous devez positionner l'option 'irc.network.away_check' avec une valeur
+positive (minutes entre chaque vérification des pseudos absents).
+
+Vous pouvez aussi positionner l'option 'irc.network.away_check_max_nicks' pour
+limiter la vérification d'absence sur les petits canaux seulement.
+
+Par exemple, pour vérifier les pseudos absents toutes les 5 minutes, pour les
+canaux avec maximum 25 pseudos :
+
+----------------------------------------
+/set irc.network.away_check 5
+/set irc.network.away_check_max_nicks 25
+----------------------------------------
 
 
 [[highlight_notification]]

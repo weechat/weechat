@@ -252,6 +252,25 @@ IRC
 ---
 
 
+[[ignore_vs_filter]]
+Qual è la differenza tra i comandi /ignore e /filter?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Il comando `/ignore` è un comando IRC, per cui è utile solo per i buffer
+IRC (server e canali).
+Consente di ignorare alcuni nick o nomi host di utenti per un server o per
+un canale (il comando non viene applicato sul contenuto dei messaggi).
+I messaggi corrispondenti vengono eliminati dal plugin IRC prima di
+essere visualizzati (perciò non verranno mai mostrati).
+
+Il comando `/filter` è un comando core, perciò funziona per qualsiasi
+buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
+o espressioni regolari per il prefisso ed il contenuto delle righe.
+Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
+visualizzarle se i filtri vengono disabilitati (il comando predefinito
+alt +  "=" abilita/disabilita i filtri).
+
+
 [[filter_irc_join_part_quit]]
 Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -278,23 +297,43 @@ A seconda della versione di WeeChat:
    (`/help filter` per aiuto)
 
 
-[[ignore_vs_filter]]
-Qual è la differenza tra i comandi /ignore e /filter?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[filter_voice_messages]]
+How can I filter voice messages (eg on Bitlbee server)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Il comando `/ignore` è un comando IRC, per cui è utile solo per i buffer
-IRC (server e canali).
-Consente di ignorare alcuni nick o nomi host di utenti per un server o per
-un canale (il comando non viene applicato sul contenuto dei messaggi).
-I messaggi corrispondenti vengono eliminati dal plugin IRC prima di
-essere visualizzati (perciò non verranno mai mostrati).
+It's not easy to filter voice messages, because voice mode can be set with other
+modes in same IRC message.
 
-Il comando `/filter` è un comando core, perciò funziona per qualsiasi
-buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
-o espressioni regolari per il prefisso ed il contenuto delle righe.
-Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
-visualizzarle se i filtri vengono disabilitati (il comando predefinito
-alt +  "=" abilita/disabilita i filtri).
+If you want to do that, it's probably because Bitlbee is using voice to show
+away users, and you are flooded with voice messages. Therefore, you can change
+that and let WeeChat use a special color for away nicks in nicklist.
+
+On channel '&bitlbee', do:
+----------------------------------------
+set away_devoice false
+----------------------------------------
+
+For checking away nicks in WeeChat, see question about
+<<color_away_nicks,away nicks>>.
+
+
+[[color_away_nicks]]
+How can I see away nicks in nicklist?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You have to set option 'irc.network.away_check' to a positive value (minutes
+between each check of away nicks).
+
+You can set option 'irc.network.away_check_max_nicks' to limit away check on
+small channels only.
+
+For example, check every 5 minutes for away nicks, for channels with max 25
+nicks:
+
+----------------------------------------
+/set irc.network.away_check 5
+/set irc.network.away_check_max_nicks 25
+----------------------------------------
 
 
 [[highlight_notification]]

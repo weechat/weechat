@@ -248,6 +248,24 @@ IRC
 ---
 
 
+[[ignore_vs_filter]]
+Jaka jest różnica między komendami/ignore i /filter ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
+(serwery i kanały).
+Pozwala ignorować niektóre nicki lub hosty użytkowników serwera lub kanału
+(komendy nie stotuje się do treści wiadomości).
+Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (nigdy
+ich nie zobaczysz).
+
+Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
+Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
+regularnych dla przedrostków i zawartości lini.
+Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
+filtry (domyślnie alt + "=" zmienia stan filtrów).
+
+
 [[filter_irc_join_part_quit]]
 Jak moge filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,22 +290,43 @@ W zależności od wersji WeeChat:
    (`/help filter` dla pomocy)
 
 
-[[ignore_vs_filter]]
-Jaka jest różnica między komendami/ignore i /filter ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[filter_voice_messages]]
+How can I filter voice messages (eg on Bitlbee server)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
-(serwery i kanały).
-Pozwala ignorować niektóre nicki lub hosty użytkowników serwera lub kanału
-(komendy nie stotuje się do treści wiadomości).
-Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (nigdy
-ich nie zobaczysz).
+It's not easy to filter voice messages, because voice mode can be set with other
+modes in same IRC message.
 
-Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
-Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
-regularnych dla przedrostków i zawartości lini.
-Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
-filtry (domyślnie alt + "=" zmienia stan filtrów).
+If you want to do that, it's probably because Bitlbee is using voice to show
+away users, and you are flooded with voice messages. Therefore, you can change
+that and let WeeChat use a special color for away nicks in nicklist.
+
+On channel '&bitlbee', do:
+----------------------------------------
+set away_devoice false
+----------------------------------------
+
+For checking away nicks in WeeChat, see question about
+<<color_away_nicks,away nicks>>.
+
+
+[[color_away_nicks]]
+How can I see away nicks in nicklist?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You have to set option 'irc.network.away_check' to a positive value (minutes
+between each check of away nicks).
+
+You can set option 'irc.network.away_check_max_nicks' to limit away check on
+small channels only.
+
+For example, check every 5 minutes for away nicks, for channels with max 25
+nicks:
+
+----------------------------------------
+/set irc.network.away_check 5
+/set irc.network.away_check_max_nicks 25
+----------------------------------------
 
 
 [[highlight_notification]]
