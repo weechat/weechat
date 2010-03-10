@@ -326,7 +326,7 @@ set away_devoice false
 ----------------------------------------
 
 Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
-<<color_away_nicks,away nicks>>.
+<<color_away_nicks,abwesende Nicks>>.
 
 
 [[color_away_nicks]]

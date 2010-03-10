@@ -51,7 +51,7 @@ Altre interfacce saranno disponibili come client remoti (in fase di sviluppo).
 
 [[compile_git]]
 Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il metodo raccomandato per compilare WeeChat è utilizzando cmake.
 
@@ -298,37 +298,38 @@ A seconda della versione di WeeChat:
 
 
 [[filter_voice_messages]]
-How can I filter voice messages (eg on Bitlbee server)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso filtrare i messaggi voice (ad esempio su server Bitlbee)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's not easy to filter voice messages, because voice mode can be set with other
-modes in same IRC message.
+Non è semplice filtrare i messaggi voice, perché la modalità voice può essere
+impostata in altri modi nello stesso messaggio IRC.
 
-If you want to do that, it's probably because Bitlbee is using voice to show
-away users, and you are flooded with voice messages. Therefore, you can change
-that and let WeeChat use a special color for away nicks in nicklist.
+Se si vuole, è probabilmente perché Bitlbee utilizza il voice per visualizzare gli
+utenti assenti, e si viene tempestati di messaggi voice. Perciò, è possibile
+modificare questo comportamento e consentire a WeeChat di utilizzare un
+colore speciale per i nick assenti nella lista nick.
 
-On channel '&bitlbee', do:
+Sul canale '&bitlbee':
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
-For checking away nicks in WeeChat, see question about
-<<color_away_nicks,away nicks>>.
+Per verificare i nick assenti in WeeChat, consultare la domanda
+relativa a <<color_away_nicks,nick assenti>>.
 
 
 [[color_away_nicks]]
-How can I see away nicks in nicklist?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso vedere i nick assenti nella lista nick?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have to set option 'irc.network.away_check' to a positive value (minutes
-between each check of away nicks).
+È necessario impostare l'opzione 'irc.network.away_check' su un valore
+positivo (minuti tra ogni controllo dei nick assenti).
 
-You can set option 'irc.network.away_check_max_nicks' to limit away check on
-small channels only.
+L'opzione 'irc.network.away_check_max_nicks' limita il controllo delle assenze
+solo sui canali più piccoli.
 
-For example, check every 5 minutes for away nicks, for channels with max 25
-nicks:
+Ad esempio, per controllare ogni 5 minuti per i nick assenti, sui canali con
+massimo 25 nick:
 
 ----------------------------------------
 /set irc.network.away_check 5
@@ -464,4 +465,3 @@ Posso donare denaro o altre cose agli sviluppatori di WeeChat?
 
 È possibile donare denaro per aiutare lo sviluppo.
 Maggiori dettagli su http://www.weechat.org/donate
-
