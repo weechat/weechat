@@ -2510,6 +2510,21 @@ irc_protocol_cmd_324 (struct t_irc_server *server, const char *command,
             }
         }
     }
+    else
+    {
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              NULL),
+                             irc_protocol_tags (command, "irc_numeric"),
+                             _("%sMode %s%s %s[%s%s%s]"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT,
+                             (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4],
+                             IRC_COLOR_CHAT_DELIMITERS);
+    }
     
     return WEECHAT_RC_OK;
 }
