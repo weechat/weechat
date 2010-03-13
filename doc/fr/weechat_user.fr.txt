@@ -174,7 +174,100 @@ Si vous utilisez les autotools (et non cmake), exécutez ce script :
 $ ./autogen.sh
 ----------------------------------------
 
-Suivez alors les instructions du paquet source (voir <<source_package>>).
+Suivez alors les instructions du paquet source (voir
+<<source_package,paquet source>>).
+
+[[report_crashs]]
+Rapporter les plantages
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous avez eu des plantages, ou si vous souhaitez rapporter tout plantage
+futur de WeeChat, vous devez :
+
+* compiler avec les infos de debug (ou installer un paquet binaire avec les
+  infos de debug)
+* activer les fichiers 'core' sur votre système
+* installer gdb
+
+[[debug_info]]
+Infos de debug
+^^^^^^^^^^^^^^
+
+Si vous compilez avec cmake :
+
+----------------------------------------
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+----------------------------------------
+
+Si vous compilez avec les autotools, le debug est par défaut (`--with-debug=1`).
+
+Si vous avez installé un paquet binaire, alors installez le paquet
+'weechat-dbg'.
+
+[[core_files]]
+Fichiers core
+^^^^^^^^^^^^^
+
+Pour activer les fichiers 'core', vous devez utiliser la commande `ulimit`.
+
+Par exemple sous Linux avec le shell 'bash', ajoutez cette ligne dans votre
+`~/.bashrc`:
+
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
+
+Ou une taille maximum :
+
+----------------------------------------
+ulimit -c 200000
+----------------------------------------
+
+[[gdb_backtrace]]
+Obtenir la trace avec gdb
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lorsque WeeChat se plante, votre système génère un fichier 'core' ou
+'core.12345' ('12345' est l'identifiant du processus).
+Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
+*pas* le répertoire où WeeChat est installé !).
+
+Par exemple si 'weechat-curses' est installé dans '/usr/bin/' et que le fichier
+'core' est dans '/home/xxx/', alors lancez gdb avec cette commande :
+
+----------------------------------------
+gdb /usr/bin/weechat-curses /home/xxx/core
+----------------------------------------
+
+Puis sous gdb, utilisez la commande `bt` pour afficher la trace.
+Vous verrez quelque chose comme ceci :
+
+----------------------------------------
+(gdb) bt
+#0  0xffffe424 in __kernel_vsyscall ()
+#1  0xb76208e0 in raise () from /lib/i686/cmov/libc.so.6
+#2  0xb7623e15 in abort () from /lib/i686/cmov/libc.so.6
+#3  0x08083940 in weechat_shutdown (return_code=1, crash=1) at /some_path/src/core/weechat.c:357
+#4  0x08098aaa in debug_sigsegv () at /some_path/src/core/wee-debug.c:155
+#5  <signal handler called>
+#6  0xb7656681 in vsnprintf () from /lib/i686/cmov/libc.so.6
+#7  0xb763dd22 in snprintf () from /lib/i686/cmov/libc.so.6
+#8  0xb7258674 in irc_protocol_cmd_join (server=0x8165138, command=0xb727c187 "join", argc=3, argv=0x889e840, argv_eol=0x889e858)
+    at /some_path/src/plugins/irc/irc-protocol.c:520
+#9  0xb7265c6e in irc_protocol_recv_command (server=0x8165138, entire_line=0x889e7e0 ":nick!nick@127.0.0.1 JOIN :#test", 
+    command=0x889d080 "JOIN") at /some_path/src/plugins/irc/irc-protocol.c:4077
+#10 0xb726a2c6 in irc_server_msgq_flush () at /some_path/src/plugins/irc/irc-server.c:1614
+#11 0xb726a4da in irc_server_recv_cb (data=0x8165138, fd=8) at /some_path/src/plugins/irc/irc-server.c:1691
+#12 0x0809a797 in hook_fd_exec (read_fds=0xbfcf8074, write_fds=0xbfcf7ff4, exception_fds=0xbfcf7f74)
+    at /some_path/src/core/wee-hook.c:1133
+#13 0x08060af0 in gui_main_loop () at /some_path/src/gui/curses/gui-curses-main.c:330
+#14 0x08083b10 in main (argc=3, argv=0xbfcf81d4) at /some_path/src/core/weechat.c:419
+----------------------------------------
+
+Vous devez envoyer cette trace aux développeurs, et leur indiquer quelle action
+a été la cause de ce plantage.
+
+Merci pour votre aide !
 
 
 [[usage]]
@@ -229,7 +322,7 @@ Le fichier de configuration par défaut est : '~/.weechat/weechat.conf'.
 
 Vous pouvez éditer ce fichier pour configurer WeeChat à votre convenance ou
 vous pouvez modifier les paramètres dans WeeChat avec la commande `/set`
-(voir <<weechat_commands>>).
+(voir <<weechat_commands,commandes WeeChat>>).
 
 [[screen_layout]]
 Organisation de l'écran
@@ -1072,7 +1165,7 @@ protocole IRC.
 
 Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
 compris la discussion directe (DCC chat) et le transfert de fichier DCC
-(via l'extension xfer, voir <<xfer_plugin>>).
+(via l'extension xfer, voir <<xfer_plugin,extension Xfer>>).
 
 [[irc_command_line_options]]
 Options de ligne de commande

@@ -176,7 +176,97 @@ Se si usano gli autotools (e non cmake), eseguire questo script:
 $ ./autogen.sh
 ----------------------------------------
 
-Poi seguire le istruzioni per i sorgenti (consultare <<source_package>>).
+Poi seguire le istruzioni per i sorgenti (consultare
+<<source_package,sorgenti>>).
+
+[[report_crashs]]
+Report crashs
+~~~~~~~~~~~~~
+
+If you experienced crashs, or if you want to report any future WeeChat crash,
+you have to:
+
+* compile it with debug info (or install binary package with debug info)
+* enable 'core' files on your system
+* install gdb
+
+[[debug_info]]
+Debug info
+^^^^^^^^^^
+
+If you're compiling with cmake:
+
+----------------------------------------
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+----------------------------------------
+
+If you're compiling with autotools, debug is default (`--with-debug=1`).
+
+If you installed a binary package, then install package 'weechat-dbg'.
+
+[[core_files]]
+Core files
+^^^^^^^^^^
+
+To enable 'core' files, you have to use `ulimit` command.
+
+For example under Linux with 'bash' shell, add this line to your `~/.bashrc`:
+
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
+
+Or max size:
+
+----------------------------------------
+ulimit -c 200000
+----------------------------------------
+
+[[gdb_backtrace]]
+Get backtrace with gdb
+^^^^^^^^^^^^^^^^^^^^^^
+
+When WeeChat crashes, your system will create a file 'core' or 'core.12345'
+('12345' is process id).
+This file is created in directory where you have run WeeChat (this is *not*
+directory where WeeChat is installed!).
+
+For example if 'weechat-curses' is installed in '/usr/bin/' and 'core' file is
+in '/home/xxx/', then run gdb with this command:
+
+----------------------------------------
+gdb /usr/bin/weechat-curses /home/xxx/core
+----------------------------------------
+
+Then under gdb, use command `bt` to display backtrace.
+You will see something like that:
+
+----------------------------------------
+(gdb) bt
+#0  0xffffe424 in __kernel_vsyscall ()
+#1  0xb76208e0 in raise () from /lib/i686/cmov/libc.so.6
+#2  0xb7623e15 in abort () from /lib/i686/cmov/libc.so.6
+#3  0x08083940 in weechat_shutdown (return_code=1, crash=1) at /some_path/src/core/weechat.c:357
+#4  0x08098aaa in debug_sigsegv () at /some_path/src/core/wee-debug.c:155
+#5  <signal handler called>
+#6  0xb7656681 in vsnprintf () from /lib/i686/cmov/libc.so.6
+#7  0xb763dd22 in snprintf () from /lib/i686/cmov/libc.so.6
+#8  0xb7258674 in irc_protocol_cmd_join (server=0x8165138, command=0xb727c187 "join", argc=3, argv=0x889e840, argv_eol=0x889e858)
+    at /some_path/src/plugins/irc/irc-protocol.c:520
+#9  0xb7265c6e in irc_protocol_recv_command (server=0x8165138, entire_line=0x889e7e0 ":nick!nick@127.0.0.1 JOIN :#test", 
+    command=0x889d080 "JOIN") at /some_path/src/plugins/irc/irc-protocol.c:4077
+#10 0xb726a2c6 in irc_server_msgq_flush () at /some_path/src/plugins/irc/irc-server.c:1614
+#11 0xb726a4da in irc_server_recv_cb (data=0x8165138, fd=8) at /some_path/src/plugins/irc/irc-server.c:1691
+#12 0x0809a797 in hook_fd_exec (read_fds=0xbfcf8074, write_fds=0xbfcf7ff4, exception_fds=0xbfcf7f74)
+    at /some_path/src/core/wee-hook.c:1133
+#13 0x08060af0 in gui_main_loop () at /some_path/src/gui/curses/gui-curses-main.c:330
+#14 0x08083b10 in main (argc=3, argv=0xbfcf81d4) at /some_path/src/core/weechat.c:419
+----------------------------------------
+
+You must report this trace to developers, and tell them what action caused this
+crash.
+
+Thank you for your help!
 
 
 [[usage]]
@@ -230,7 +320,7 @@ predefinito. Il file di configurazione viene creato nella cartella:
 
 È possibile modificare questo file per configurare WeeChat a seconda delle
 proprie esigenze, oppure impostando i parametri con il comando `/set`
-all'interno di WeeChat (consultare <<weechat_commands>>).
+all'interno di WeeChat (consultare <<weechat_commands,comandi di WeeChat>>).
 
 [[screen_layout]]
 Layout dello schermo
@@ -1060,7 +1150,7 @@ Plugin IRC
 Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre persone.
 
 È multi-server, ed offre tutti i comandi IRC supportati inclusi la chat DCC ed il
-trasferimento file (tramite plugin xfer, consultare <<xfer_plugin>>).
+trasferimento file (tramite plugin xfer, consultare <<xfer_plugin,plugin Xfer>>).
 
 [[irc_command_line_options]]
 Opzioni a riga di comando
@@ -1523,10 +1613,10 @@ Comandi Tcl
 include::autogen/user/tcl_commands.txt[]
 
 [[xfer_plugin]]
-Plugin xfer
+Plugin Xfer
 ~~~~~~~~~~~
 
-Il plugin xfer fornisce:
+Il plugin Xfer fornisce:
 
 * chat diretta (tra due host, senza server): per esempio "DCC Chat"
   tramite plugin IRC
