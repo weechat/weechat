@@ -177,7 +177,7 @@ $ ./autogen.sh
 Suivez alors les instructions du paquet source (voir
 <<source_package,paquet source>>).
 
-[[report_crashs]]
+[[report_crashes]]
 Rapporter les plantages
 ~~~~~~~~~~~~~~~~~~~~~~~
 

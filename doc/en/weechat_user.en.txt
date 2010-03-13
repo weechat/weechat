@@ -175,11 +175,11 @@ $ ./autogen.sh
 Then follow instructions for source package (see
 <<source_package,source package>>).
 
-[[report_crashs]]
-Report crashs
-~~~~~~~~~~~~~
+[[report_crashes]]
+Report crashes
+~~~~~~~~~~~~~~
 
-If you experienced crashs, or if you want to report any future WeeChat crash,
+If you experienced crashes, or if you want to report any future WeeChat crash,
 you have to:
 
 * compile it with debug info (or install binary package with debug info)

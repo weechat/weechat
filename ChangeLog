@@ -435,7 +435,7 @@ Version 0.2.1 (2006-10-01)
 * values yes/no accepted (as on/off) for config boolean values (task #5454)
 * add server default notify level (set by /buffer notify on server buffer)
   (task #5634)
-* fix crashs with /buffer and /charset commands when not connected to any
+* fix crashes with /buffer and /charset commands when not connected to any
   server (bug #17525)
 * add special vars $nick/$channel/$server for server_command, alias and plugin
   command handlers

@@ -27,7 +27,7 @@ make install     (as root for installation in system directories)
 ----------------------------------------------------------------------
 
 
-If you want to report bugs/crashs to developers, please:
+If you want to report bugs/crashes to developers, please:
 
 - compile with debug info (type "Debug" for cmake build, default for autotools),
 - enable core files (for bash shell, add "ulimit -c unlimited" to your ~/.bashrc).
