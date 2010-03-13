@@ -4657,9 +4657,9 @@ msgstr ""
 "%s%s[%s%s%s]%s nečinný: %s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s%"
 "s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sMode %s%s %s[%s%s%s]"
-msgstr "%sMód %s%s %s[%s%s%s]%s od %s%s"
+msgstr "%sMód %s%s %s[%s%s%s]"
 
 #, c-format
 msgid "%sURL for %s%s%s: %s"
