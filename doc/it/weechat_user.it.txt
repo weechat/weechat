@@ -180,66 +180,68 @@ Poi seguire le istruzioni per i sorgenti (consultare
 <<source_package,sorgenti>>).
 
 [[report_crashes]]
-Report crashes
-~~~~~~~~~~~~~~
+Segnalare gli errori
+~~~~~~~~~~~~~~~~~~~~
 
-If you experienced crashes, or if you want to report any future WeeChat crash,
-you have to:
+Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore futuro
+di WeeChat, è necessario:
 
-* compile it with debug info (or install binary package with debug info)
-* enable 'core' files on your system
-* install gdb
+* compilarlo con informazioni di debug (o installare il pacchetto binario con 
+  le informazioni di debug)
+* abilitare i file 'core' sul proprio sistema
+* installare gdb
 
 [[debug_info]]
-Debug info
-^^^^^^^^^^
+Informazioni di debug
+^^^^^^^^^^^^^^^^^^^^^
 
-If you're compiling with cmake:
+Se si compila con cmake:
 
 ----------------------------------------
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----------------------------------------
 
-If you're compiling with autotools, debug is default (`--with-debug=1`).
+Se si compila con gli autotools, il debug è predefinito (`--with-debug=1`).
 
-If you installed a binary package, then install package 'weechat-dbg'.
+Se è stato installato il pacchetto binario, installare il pacchetto 'weechat-gdb'.
 
 [[core_files]]
-Core files
-^^^^^^^^^^
+File core
+^^^^^^^^^
 
-To enable 'core' files, you have to use `ulimit` command.
+Per abilitare i file 'core', è necessario usare il comando `ulimit`.
 
-For example under Linux with 'bash' shell, add this line to your `~/.bashrc`:
+Ad esempio su Linux con la shell 'bash', aggiungere questa riga al proprio
+`~/.bashrc`:
 
 ----------------------------------------
 ulimit -c unlimited
 ----------------------------------------
 
-Or max size:
+Oppure impostare una dimensione massima:
 
 ----------------------------------------
 ulimit -c 200000
 ----------------------------------------
 
 [[gdb_backtrace]]
-Get backtrace with gdb
-^^^^^^^^^^^^^^^^^^^^^^
+Ottenere un backtrace con gdb
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When WeeChat crashes, your system will create a file 'core' or 'core.12345'
-('12345' is process id).
-This file is created in directory where you have run WeeChat (this is *not*
-directory where WeeChat is installed!).
+In caso di errore di WeeChat, il sistema creerà un file 'core' oppure 'core.12345'
+('12345' è l'id del processo).
+Questo file viene creato nella cartella in cui è in esecuzione WeeChat (e
+*non* la cartella dove WeeChat è installato!).
 
-For example if 'weechat-curses' is installed in '/usr/bin/' and 'core' file is
-in '/home/xxx/', then run gdb with this command:
+Ad esempio, se 'weechat-curses' è installato in '/usr/bin/' ed il file 'core'
+si trova in '/home/xxx/', allora eseguire gdb con questo comando:
 
 ----------------------------------------
 gdb /usr/bin/weechat-curses /home/xxx/core
 ----------------------------------------
 
-Then under gdb, use command `bt` to display backtrace.
-You will see something like that:
+All'interno di gdb, usare il comando `bt` per visualizzare
+il backtrace. Verrà mostrato qualcosa di simile a questo:
 
 ----------------------------------------
 (gdb) bt
@@ -263,10 +265,10 @@ You will see something like that:
 #14 0x08083b10 in main (argc=3, argv=0xbfcf81d4) at /some_path/src/core/weechat.c:419
 ----------------------------------------
 
-You must report this trace to developers, and tell them what action caused this
-crash.
+Bisogna riportare l'errore agli sviluppatori, e specificare quale azione ha causato
+l'errore.
 
-Thank you for your help!
+Grazie per il vostro aiuto!
 
 
 [[usage]]
