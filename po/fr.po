@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-11 09:20+0100\n"
-"PO-Revision-Date: 2010-03-11 09:21+0100\n"
+"POT-Creation-Date: 2010-03-14 16:43+0100\n"
+"PO-Revision-Date: 2010-03-14 16:44+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4782,12 +4782,12 @@ msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sLe titre pour %s%s%s est \"%s%s\""
 
 #, c-format
-msgid "%sTopic set by %s%s%s on %s"
-msgstr "%sTitre défini par %s%s%s le %s"
+msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
+msgstr "%sTitre défini par %s%s%s%s%s%s%s%s%s le %s"
 
 #, c-format
-msgid "%sTopic for %s%s%s set by %s%s%s on %s"
-msgstr "%sTitre pour %s%s%s défini par %s%s%s le %s"
+msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
+msgstr "%sTitre pour %s%s%s défini par %s%s%s%s%s%s%s%s%s le %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"

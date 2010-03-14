@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-11 09:20+0100\n"
+"POT-Creation-Date: 2010-03-14 16:43+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4722,12 +4722,12 @@ msgstr "%sBrak tematu dla kanału %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sTemat kanału %s%s%s to \"%s%s\""
 
-#, c-format
-msgid "%sTopic set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTemat ustawiony przez %s%s%s dnia %s"
 
-#, c-format
-msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTemat kanału %s%s%s ustawiony przez %s%s%s dnia %s"
 
 #, c-format

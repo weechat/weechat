@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-11 09:20+0100\n"
+"POT-Creation-Date: 2010-03-14 16:43+0100\n"
 "PO-Revision-Date: 2010-03-05 10:43+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4681,12 +4681,12 @@ msgstr "%sNení nastaveno téma pro kanál %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sTéma pro %s%s%s v \"%s%s\""
 
-#, c-format
-msgid "%sTopic set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTéma nastevil %s%s%s v %s"
 
-#, c-format
-msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTéma pro %s%s%s nastevil %s%s%s v %s"
 
 #, c-format

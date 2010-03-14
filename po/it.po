@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-11 09:20+0100\n"
+"POT-Creation-Date: 2010-03-14 16:43+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4724,12 +4724,12 @@ msgstr "%sNessun argomento impostato per il canale %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sL'argomento per %s%s%s è \"%s%s\""
 
-#, c-format
-msgid "%sTopic set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sArgomento impostato da %s%s%s il %s"
 
-#, c-format
-msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sArgomento per %s%s%s impostato da %s%s%s il %s"
 
 #, c-format
