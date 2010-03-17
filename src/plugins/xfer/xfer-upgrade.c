@@ -20,12 +20,12 @@
 
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
 #include "xfer-upgrade.h"
 #include "xfer-buffer.h"
-
 
 
 /*
@@ -83,6 +83,11 @@ xfer_upgrade_set_buffer_callbacks ()
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
                 weechat_buffer_set_pointer (ptr_buffer, "close_callback", &xfer_buffer_close_cb);
                 weechat_buffer_set_pointer (ptr_buffer, "input_callback", &xfer_buffer_input_cb);
+                if (strcmp (weechat_infolist_string (infolist, "name"),
+                            XFER_BUFFER_NAME) == 0)
+                {
+                    xfer_buffer = ptr_buffer;
+                }
             }
         }
     }

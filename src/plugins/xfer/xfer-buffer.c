@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
+#include "xfer-buffer.h"
 #include "xfer-config.h"
 #include "xfer-network.h"
 
@@ -311,7 +312,7 @@ xfer_buffer_open ()
 {
     if (!xfer_buffer)
     {
-        xfer_buffer = weechat_buffer_new ("xfer.list",
+        xfer_buffer = weechat_buffer_new (XFER_BUFFER_NAME,
                                           &xfer_buffer_input_cb, NULL,
                                           &xfer_buffer_close_cb, NULL);
         

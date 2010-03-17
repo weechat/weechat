@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_XFER_DISPLAY_H
 #define __WEECHAT_XFER_DISPLAY_H 1
 
+#define XFER_BUFFER_NAME "xfer.list"
+
 extern struct t_gui_buffer *xfer_buffer;
 extern int xfer_buffer_selected_line;
 
