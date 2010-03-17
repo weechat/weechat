@@ -1614,7 +1614,8 @@ irc_server_msgq_flush ()
                         irc_protocol_recv_command (irc_recv_msgq->server,
                                                    (msg_decoded_without_color) ?
                                                    msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
-                                                   command);
+                                                   command,
+                                                   channel);
                         
                         if (nick)
                             free (nick);

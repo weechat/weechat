@@ -20,21 +20,26 @@
 #ifndef __WEECHAT_IRC_PROTOCOL_H
 #define __WEECHAT_IRC_PROTOCOL_H 1
 
-#define IRC_PROTOCOL_GET_HOST                                           \
-    const char *nick, *address, *host;                                  \
-    if (argv[0][0] == ':')                                              \
-    {                                                                   \
-        nick = irc_protocol_get_nick_from_host (argv[0]);               \
-        address = irc_protocol_get_address_from_host (argv[0]);         \
-        host = argv[0] + 1;                                             \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        nick = NULL;                                                    \
-        address = NULL;                                                 \
-        host = NULL;                                                    \
-    }
+#define IRC_PROTOCOL_CALLBACK(__command)                                \
+    int                                                                 \
+    irc_protocol_cb_##__command (struct t_irc_server *server,           \
+                                 const char *nick,                      \
+                                 const char *address,                   \
+                                 const char *host,                      \
+                                 const char *command,                   \
+                                 int ignored,                           \
+                                 int argc,                              \
+                                 char **argv,                           \
+                                 char **argv_eol)
+
 #define IRC_PROTOCOL_MIN_ARGS(__min_args)                               \
+    (void) nick;                                                        \
+    (void) address;                                                     \
+    (void) host;                                                        \
+    (void) command;                                                     \
+    (void) ignored;                                                     \
+    (void) argv;                                                        \
+    (void) argv_eol;                                                    \
     if (argc < __min_args)                                              \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
@@ -59,7 +64,10 @@
 
 struct t_irc_server;
 
-typedef int (t_irc_recv_func)(struct t_irc_server *server, const char *command,
+typedef int (t_irc_recv_func)(struct t_irc_server *server,
+                              const char *nick, const char *address,
+                              const char *host, const char *command,
+                              int ignored,
                               int argc, char **argv, char **argv_eol);
 
 struct t_irc_protocol_msg
@@ -72,7 +80,8 @@ struct t_irc_protocol_msg
 extern const char *irc_protocol_get_nick_from_host (const char *host);
 extern const char *irc_protocol_tags (const char *command, const char *tags);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
-                                       const char *entire_line,
-                                       const char *command);
+                                       const char *irc_message,
+                                       const char *msg_command,
+                                       const char *msg_channel);
 
 #endif /* irc-protocol.h */
