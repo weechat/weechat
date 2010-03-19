@@ -1257,9 +1257,11 @@ gui_bar_item_timer_cb (void *data, int remaining_calls)
                   local_time) == 0)
         return WEECHAT_RC_OK;
     
-    /* we update item only if it changed since last time
-       for example if time is only hours:minutes, we'll update
-       only when minute changed */
+    /*
+     * we update item only if it changed since last time
+     * for example if time is only hours:minutes, we'll update
+     * only when minute changed
+     */
     if (strcmp (new_item_time_text, item_time_text) != 0)
     {
         snprintf (item_time_text, sizeof (item_time_text),

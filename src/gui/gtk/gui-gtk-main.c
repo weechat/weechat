@@ -195,8 +195,10 @@ gui_main_init ()
                 gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
         }
         
-        /* create bar windows for root bars (they were read from config,
-           but no window was created (GUI was not initialized) */
+        /*
+         * create bar windows for root bars (they were read from config,
+         * but no window was created (GUI was not initialized)
+         */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)

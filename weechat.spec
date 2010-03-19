@@ -54,10 +54,10 @@ mv $RPM_BUILD_ROOT%{_libdir}/*.* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 %find_lang %name
 
 %clean
-rm -rf $RPM_BUILD_ROOT 
+rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
-%defattr(-,root,root,0755) 
+%defattr(-,root,root,0755)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README UPGRADE_0.3
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*

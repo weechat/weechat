@@ -3395,9 +3395,11 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     (void) data;
     (void) buffer;
     (void) argv;
-
-    /* it's forbidden to upgrade while there are some background process
-       (hook type "process" or "connect") */
+    
+    /*
+     * it is forbidden to upgrade while there are some background process
+     * (hook type "process" or "connect")
+     */
     if (weechat_hooks[HOOK_TYPE_PROCESS] || weechat_hooks[HOOK_TYPE_CONNECT])
     {
         gui_chat_printf (NULL,
@@ -3821,7 +3823,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
     if ((argc == 1)
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
-        /* list all windows */        
+        /* list all windows */
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Windows list:"));
         

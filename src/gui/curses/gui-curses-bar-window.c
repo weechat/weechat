@@ -444,8 +444,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                   GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
     }
     
-    /* these values will be overwritten later (by gui_bar_window_print_string)
-       if cursor has to move somewhere in bar window */
+    /*
+     * these values will be overwritten later (by gui_bar_window_print_string)
+     * if cursor has to move somewhere in bar window
+     */
     bar_window->cursor_x = -1;
     bar_window->cursor_y = -1;
     
@@ -562,12 +564,13 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)
                         {
-                            /* TODO: keep some spaces after end of input
-                               for example by adding something to diff, like:
-                               diff += (9 - (diff % 10));
-                               but then scroll position has to be saved
-                               (in bar window ?)
-                            */
+                            /*
+                             * TODO: keep some spaces after end of input
+                             * for example by adding something to diff, like:
+                             * diff += (9 - (diff % 10));
+                             * but then scroll position has to be saved
+                             *  (in bar window ?)
+                             */
                             
                             /* compute new start for displaying input */
                             new_start_input = pos_after_start_input + gui_chat_string_real_pos (pos_after_start_input, diff);
@@ -676,8 +679,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
 
-    /* move cursor if it was asked in an item content (input_text does that
-       to move cursor in user input text) */
+    /*
+     * move cursor if it was asked in an item content (input_text does that
+     * to move cursor in user input text)
+     */
     if ((!window || (gui_current_window == window))
         && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))
     {

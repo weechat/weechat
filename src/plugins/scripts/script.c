@@ -558,7 +558,7 @@ script_search_path (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_find_pos: find position for a script (for sorting scripts list) 
+ * script_find_pos: find position for a script (for sorting scripts list)
  */
 
 struct t_plugin_script *

@@ -332,8 +332,10 @@ upgrade_weechat_read_cb (void *data,
                 }
                 else
                 {
-                    /* create buffer if it was created by a plugin (ie not
-                       WeeChat main buffer) */
+                    /*
+                     * create buffer if it was created by a plugin (ie not
+                     * WeeChat main buffer)
+                     */
                     ptr_buffer_for_merge = last_gui_buffer;
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,

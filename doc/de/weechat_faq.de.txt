@@ -73,7 +73,7 @@ Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhältst
-Du durch die Eingabe von: `/help Befehlsname`. 
+Du durch die Eingabe von: `/help Befehlsname`.
 Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 aufgeführt.
 (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige scrollen)
@@ -476,7 +476,7 @@ http://www.weechat.org/about
 
 
 [[donate]]
-Kann ich Geld oder anderes an die WeeChat Entwickler spenden? 
+Kann ich Geld oder anderes an die WeeChat Entwickler spenden?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.

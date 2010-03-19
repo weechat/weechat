@@ -436,8 +436,10 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
         }
         else
         {
-            /* server not connected, store away for future usage
-               (when connecting to server) */
+            /*
+             * server not connected, store away for future usage
+             * (when connecting to server)
+             */
             string = irc_color_decode (arguments,
                                        weechat_config_boolean (irc_config_network_colors_receive));
             weechat_printf (server->buffer,
@@ -496,8 +498,10 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
         }
         else
         {
-            /* server not connected, remove away message but do not send
-               anything */
+            /*
+             * server not connected, remove away message but do not send
+             * anything
+             */
             weechat_printf (server->buffer,
                             _("%s: future away removed"),
                             IRC_PLUGIN_NAME);
@@ -2908,7 +2912,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     if (irc_server_connect (server))
     {
         server->reconnect_start = 0;
-        server->reconnect_join = (server->channels) ? 1 : 0;    
+        server->reconnect_join = (server->channels) ? 1 : 0;
     }
     
     /* reconnect ok */

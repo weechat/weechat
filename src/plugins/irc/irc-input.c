@@ -159,8 +159,10 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
-        /* if send unknown commands is enabled and that input data is a command,
-           then send this command to IRC server */
+        /*
+         * if send unknown commands is enabled and that input data is a
+         * command, then send this command to IRC server
+         */
         if (weechat_config_boolean (irc_config_network_send_unknown_commands)
             && !weechat_string_input_for_buffer (input_data))
         {

@@ -363,8 +363,10 @@ gui_line_has_highlight (struct t_gui_line *line)
     int rc, i;
     char *msg_no_color;
     
-    /* highlights are disabled on this buffer? (special value "-" means that
-       buffer does not want any highlight) */
+    /*
+     * highlights are disabled on this buffer? (special value "-" means that
+     * buffer does not want any highlight)
+     */
     if (line->data->buffer->highlight_words
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
         return 0;
@@ -376,8 +378,10 @@ gui_line_has_highlight (struct t_gui_line *line)
             return 0;
     }
     
-    /* check that line matches highlight tags, if any (if no tag is specified,
-       then any tag is allowed) */
+    /*
+     * check that line matches highlight tags, if any (if no tag is specified,
+     * then any tag is allowed)
+     */
     if (line->data->buffer->highlight_tags_count > 0)
     {
         if (!gui_line_match_tags (line,
@@ -391,8 +395,10 @@ gui_line_has_highlight (struct t_gui_line *line)
     if (!msg_no_color)
         return 0;
     
-    /* there is highlight on line if one of global highlight words matches line
-       or one of buffer highlight words matches line */
+    /*
+     * there is highlight on line if one of global highlight words matches line
+     * or one of buffer highlight words matches line
+     */
     rc = (string_has_highlight (msg_no_color,
                                 CONFIG_STRING(config_look_highlight)) ||
           string_has_highlight (msg_no_color,

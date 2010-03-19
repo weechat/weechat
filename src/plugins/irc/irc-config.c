@@ -199,7 +199,7 @@ irc_config_change_look_server_buffer (void *data,
          IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE)
         || (weechat_config_integer (irc_config_look_server_buffer) ==
             IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITHOUT_CORE))
-    {    
+    {
         ptr_buffer =
             (weechat_config_integer (irc_config_look_server_buffer) ==
              IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE) ?
@@ -234,7 +234,7 @@ irc_config_change_look_item_channel_modes (void *data,
 }
 
 /*
- * irc_config_change_look_item_channel_modes_hide_key: called when the 
+ * irc_config_change_look_item_channel_modes_hide_key: called when the
  *                                                     "display channel modes
  *                                                     hide key" option is
  *                                                     changed

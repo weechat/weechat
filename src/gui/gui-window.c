@@ -178,8 +178,10 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             ptr_tree->split_pct = width_pct;
         }
         
-        /* parent window leaf becomes node and we add 2 leafs below
-           (#1 is parent win, #2 is new win) */
+        /*
+         * parent window leaf becomes node and we add 2 leafs below
+         * (#1 is parent win, #2 is new win)
+         */
         
         parent_window->ptr_tree = child1;
         child1->parent_node = ptr_tree;
@@ -685,8 +687,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                                     || (line_date.tm_year != old_line_date.tm_year))
                                     stop = 1;
                             }
-                            /* we consider month is 30 days, who will find I'm too
-                               lazy to code exact date diff ? ;) */
+                            /*
+                             * we consider month is 30 days, who will notice
+                             * I'm too lazy to code exact date diff ? ;)
+                             */
                             else if (diff_date >= number * 60 * 60 * 24 * 30)
                                 stop = 1;
                             break;
@@ -697,8 +701,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                                 if (line_date.tm_year != old_line_date.tm_year)
                                     stop = 1;
                             }
-                            /* we consider year is 365 days, who will find I'm too
-                               lazy to code exact date diff ? ;) */
+                            /*
+                             * we consider year is 365 days, who will notice
+                             * I'm too lazy to code exact date diff ? ;)
+                             */
                             else if (diff_date >= number * 60 * 60 * 24 * 365)
                                 stop = 1;
                             break;

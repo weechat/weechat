@@ -15,7 +15,7 @@
 #
 
 # - Find GnuTLS
-# This module finds if libgnutls is installed and determines where 
+# This module finds if libgnutls is installed and determines where
 # the include files and libraries are.
 #
 # This code sets the following variables:

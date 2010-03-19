@@ -41,8 +41,10 @@ struct t_gui_line;
 #define COLOR_YELLOW  6
 #define COLOR_WHITE   7
 
-/* shift ncurses colors for compatibility with colors
-   in IRC messages (same as other IRC clients) */
+/*
+ * shift ncurses colors for compatibility with colors
+ * in IRC messages (same as other IRC clients)
+ */
 
 #define WEECHAT_COLOR_BLACK   COLOR_BLACK
 #define WEECHAT_COLOR_RED     COLOR_BLUE

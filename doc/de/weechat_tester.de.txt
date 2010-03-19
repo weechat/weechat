@@ -54,7 +54,7 @@ Du könntest Dich ja dazu entscheiden es manuell zu bauen (empfohlen):
 * die GIT Version kann parallel zur stabilen Version gebaut und installiert
   werden.
 * Du benötigst keine Root-Rechte, und opfern brauchst Du Deine stabile Version
-  von WeeChat auch nicht. 
+  von WeeChat auch nicht.
 
 [[get_sources]]
 Beschaffe und baue die Quellen

@@ -1094,10 +1094,11 @@ irc_server_parse_message (const char *message, char **nick, char **host,
         *channel = NULL;
     if (arguments)
         *arguments = NULL;
-
-    /* we'll use this message as example:
-       :FlashCode!n=FlashCod@host.com PRIVMSG #channel :hello!
-    */
+    
+    /*
+     * we will use this message as example:
+     *   :FlashCode!n=FlashCod@host.com PRIVMSG #channel :hello!
+     */
     if (message[0] == ':')
     {
         pos2 = strchr (message, '!');
@@ -1366,7 +1367,7 @@ irc_server_sendf (struct t_irc_server *server, int queue_msg,
     
     va_start (args, format);
     vsnprintf (buffer, sizeof (buffer) - 1, format, args);
-    va_end (args);    
+    va_end (args);
 
     items = weechat_string_split (buffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
@@ -2857,8 +2858,10 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
     
     if (server->is_connected)
     {
-        /* remove all nicks and write disconnection message on each
-           channel/private buffer */
+        /*
+         * remove all nicks and write disconnection message on each
+         * channel/private buffer
+         */
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {

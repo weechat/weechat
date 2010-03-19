@@ -141,7 +141,7 @@ weechat_aspell_speller_new (const char *lang)
     
     /* create a speller instance for the newly created cell */
     config = new_aspell_config();
-    aspell_config_replace (config, "lang", lang);   
+    aspell_config_replace (config, "lang", lang);
     
     ret = new_aspell_speller (config);
     

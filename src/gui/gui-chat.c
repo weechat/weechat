@@ -508,8 +508,10 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                 {
                     if (!new_msg[0] && pos[0])
                     {
-                        /* modifier returned empty message, then we'll not
-                           print anything */
+                        /*
+                         * modifier returned empty message, then we'll not
+                         * print anything
+                         */
                         free (new_msg);
                         return;
                     }

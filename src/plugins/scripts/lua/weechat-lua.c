@@ -48,18 +48,20 @@ struct t_plugin_script *lua_current_script = NULL;
 const char *lua_current_script_filename = NULL;
 lua_State *lua_current_interpreter = NULL;
 
-/* string used to execute action "install":
-   when signal "lua_install_script" is received, name of string
-   is added to this string, to be installed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "install":
+ * when signal "lua_install_script" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *lua_action_install_list = NULL;
 
-/* string used to execute action "remove":
-   when signal "lua_remove_script" is received, name of string
-   is added to this string, to be removed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "remove":
+ * when signal "lua_remove_script" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *lua_action_remove_list = NULL;
 
 
@@ -157,7 +159,7 @@ weechat_lua_exec (struct t_plugin_script *script,
     
     lua_current_script = old_lua_current_script;
     
-    return ret_value; 
+    return ret_value;
 }
 
 int
@@ -218,7 +220,7 @@ weechat_lua_load (const char *filename)
 
 #ifdef LUA_VERSION_NUM
     if (luaL_dostring (lua_current_interpreter, weechat_lua_code) != 0)
-#else    
+#else
     if (lua_dostring (lua_current_interpreter, weechat_lua_code) != 0)
 #endif
     {

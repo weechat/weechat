@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(LUA_CFLAGS) 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(LUA_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 

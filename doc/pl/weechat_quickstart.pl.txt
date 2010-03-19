@@ -66,7 +66,7 @@ na liście "irc" oraz inne wtyczki.
 
 
 [[create_irc_server]]
-Tworzenie serwera IRC 
+Tworzenie serwera IRC
 ---------------------
 
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
@@ -164,7 +164,7 @@ Zarządzanie buforami/oknami
 Bufor jest to element łączący wtyczkę z numerem, kategorią,
 oraz nazwą. Zawiera on dane wyświetlane na ekranie.
 
-Okno jest widokiem na bufor. Domyślnie jedno okno wyświetla jeden bufor. 
+Okno jest widokiem na bufor. Domyślnie jedno okno wyświetla jeden bufor.
 Jeśli podzielisz ekran, ujrzysz wiele okien z wieloma buforami jednocześnie.
 
 Komendy do zarządzania buforami i oknami:
@@ -223,7 +223,7 @@ dokumentacji WeeChat, aby się dowiedzieć jak ładowac/wyładowywać wtyczki lu
 skrypty).
 
 Niektóre pluginy pozwalają na używanie skryptów w WeeChat (w wielu językach jak Perl,
-Python, Ruby, Lua oraz Tcl). Te wtyczki muszą być załadowane za pomoca komendy 
+Python, Ruby, Lua oraz Tcl). Te wtyczki muszą być załadowane za pomoca komendy
 `/plugin`, dostarczają one komendy jak `/perl`, używane do ładowania skryptów.
 
 Wiele zewnętrznych wtyczek/skryptów (od społeczności) jest dostępnych dla

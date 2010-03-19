@@ -701,7 +701,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_HIGHLIGHT);
             }
-        } 
+        }
         
         /* not enough space to display full prefix? => truncate it! */
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
@@ -1293,8 +1293,10 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
 void
 gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
-    /* This function does nothing in Curses GUI,
-       line will be displayed by gui_buffer_draw_chat()  */
+    /*
+     * This function does nothing in Curses GUI,
+     * line will be displayed by gui_buffer_draw_chat()
+     */
     (void) buffer;
     (void) line;
 }

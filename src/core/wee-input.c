@@ -128,8 +128,10 @@ input_exec_command (struct t_gui_buffer *buffer,
                              command + 1);
             break;
         default: /* no command hooked */
-            /* if unknown commands are accepted by this buffer, just send
-               input text as data to buffer, otherwise display error */
+            /*
+             * if unknown commands are accepted by this buffer, just send
+             * input text as data to buffer, otherwise display error
+             */
             if (buffer->input_get_unknown_commands)
             {
                 input_exec_data (buffer, string);
@@ -172,8 +174,10 @@ input_data (struct t_gui_buffer *buffer, const char *data)
         ptr_data_for_buffer = string_input_for_buffer (ptr_data);
         if (ptr_data_for_buffer)
         {
-            /* input string is NOT a command, send it to buffer input
-               callback */
+            /*
+             * input string is NOT a command, send it to buffer input
+             * callback
+             */
             if (string_is_command_char (ptr_data_for_buffer))
             {
                 char_size = utf8_char_size (ptr_data_for_buffer);

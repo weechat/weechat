@@ -61,13 +61,17 @@ struct t_gui_buffer
 {
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
-    /* when upgrading, plugins are not loaded, so we use next variable
-       to store plugin name, then restore plugin pointer when plugin is
-       loaded */
+    /*
+     * when upgrading, plugins are not loaded, so we use next variable
+     * to store plugin name, then restore plugin pointer when plugin is
+     * loaded
+     */
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
-    /* when upgrading, we use this pointer to remember that this buffer
-       must merge with another buffer (it's done when all buffers are
-       restored) */
+    /*
+     * when upgrading, we use this pointer to remember that this buffer
+     * must merge with another buffer (it's done when all buffers are
+     * restored)
+     */
     struct t_gui_buffer *merge_for_upgrade;
     
     int number;                        /* buffer number (for jump/switch)   */
@@ -103,7 +107,7 @@ struct t_gui_buffer
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
     
-    /* nicklist */ 
+    /* nicklist */
     int nicklist;                      /* = 1 if nicklist is enabled        */
     int nicklist_case_sensitive;       /* nicks are case sensitive ?        */
     struct t_gui_nick_group *nicklist_root; /* pointer to groups root       */

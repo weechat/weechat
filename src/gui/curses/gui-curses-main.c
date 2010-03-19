@@ -138,8 +138,10 @@ gui_main_init ()
                 gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
         }
         
-        /* create bar windows for root bars (they were read from config,
-           but no window was created (GUI was not initialized) */
+        /*
+         * create bar windows for root bars (they were read from config,
+         * but no window was created (GUI was not initialized)
+         */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
@@ -190,11 +192,12 @@ gui_main_signal_sigterm ()
 void
 gui_main_signal_sighup ()
 {
-    /* SIGHUP signal is received when terminal is closed (exit of WeeChat
-       without using /quit command), that's why we set only flag to reload
-       config files later (when terminal is closed, config files are NOT
-       reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
-    */
+    /*
+     * SIGHUP signal is received when terminal is closed (exit of WeeChat
+     * without using /quit command), that's why we set only flag to reload
+     * config files later (when terminal is closed, config files are NOT
+     * reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
+     */
     gui_reload_config = 1;
 }
 

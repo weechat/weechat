@@ -83,7 +83,7 @@ fifo_remove_old_pipes ()
     dp = opendir (weechat_home);
     if (dp != NULL)
     {
-        while ((entry = readdir (dp)) != NULL) 
+        while ((entry = readdir (dp)) != NULL)
         {
             if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
                 continue;
@@ -136,8 +136,10 @@ fifo_create ()
         
         if (weechat_strcasecmp (fifo_option, "on") == 0)
         {
-            /* build FIFO filename: "<weechat_home>/weechat_fifo_" + process
-               PID */
+            /*
+             * build FIFO filename:
+             *   "<weechat_home>/weechat_fifo_" + process PID
+             */
             if (!fifo_filename)
             {
                 filename_length = strlen (weechat_home) + 64;
@@ -244,8 +246,10 @@ fifo_exec (const char *text)
     pos = NULL;
     ptr_buffer = NULL;
     
-    /* look for plugin + buffer name at beginning of text
-       text may be: "plugin.buffer *text" or "*text" */
+    /*
+     * look for plugin + buffer name at beginning of text
+     * text may be: "plugin.buffer *text" or "*text"
+     */
     if (text2[0] == '*')
     {
         pos_msg = text2 + 1;

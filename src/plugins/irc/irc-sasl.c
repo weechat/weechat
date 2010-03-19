@@ -187,12 +187,13 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                              password_clear, length_password) != 0)
         goto end;
     
-    /* build answer for server, it is concatenation of:
-         1. key length (2 bytes)
-         2. public key ('length_key' bytes)
-         3. sasl_username ('length_username'+1 bytes)
-         4. encrypted password ('length_password' bytes)
-    */
+    /*
+     * build answer for server, it is concatenation of:
+     *   1. key length (2 bytes)
+     *   2. public key ('length_key' bytes)
+     *   3. sasl_username ('length_username'+1 bytes)
+     *   4. encrypted password ('length_password' bytes)
+     */
     length_username = strlen (sasl_username);
     length_answer = 2 + length_key + length_username + 1 + length_password;
     answer = malloc (length_answer);

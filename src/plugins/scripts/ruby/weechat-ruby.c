@@ -66,18 +66,20 @@ struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 const char *ruby_current_script_filename = NULL;
 
-/* string used to execute action "install":
-   when signal "ruby_install_script" is received, name of string
-   is added to this string, to be installed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "install":
+ * when signal "ruby_install_script" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *ruby_action_install_list = NULL;
 
-/* string used to execute action "remove":
-   when signal "ruby_remove_script" is received, name of string
-   is added to this string, to be removed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "remove":
+ * when signal "ruby_remove_script" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *ruby_action_remove_list = NULL;
 
 VALUE ruby_mWeechat, ruby_mWeechatOutputs;
@@ -95,11 +97,11 @@ typedef struct protect_call_arg {
 } protect_call_arg_t;
 
 
-/* 
+/*
  * protect_funcall0 : used to protect a function call
  */
 
-static VALUE 
+static VALUE
 protect_funcall0 (VALUE arg)
 {
     return rb_funcall2 (((protect_call_arg_t *)arg)->recv,
@@ -108,7 +110,7 @@ protect_funcall0 (VALUE arg)
                         ((protect_call_arg_t *)arg)->argv);
 }
 
-/* 
+/*
  * rb_protect_funcall : function call in protect mode
  */
 
@@ -389,7 +391,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
  * weechat_ruby_output: redirection for stdout and stderr
  */
 
-static VALUE 
+static VALUE
 weechat_ruby_output (VALUE self, VALUE str)
 {
     char *msg, *p, *m;
@@ -436,7 +438,7 @@ weechat_ruby_output (VALUE self, VALUE str)
  * weechat_ruby_output_flush: just for compatibility
  */
 
-static VALUE 
+static VALUE
 weechat_ruby_output_flush (VALUE self)
 {
     /* make C compiler happy */

@@ -90,10 +90,11 @@ struct timeval;
 #define WEECHAT_HOTLIST_PRIVATE                     "2"
 #define WEECHAT_HOTLIST_HIGHLIGHT                   "3"
 
-/* process return code (for callback):
-   if >= 0, then process ended and it's return code of command
-   if  < 0, then it's running or error
-*/
+/*
+ * process return code (for callback):
+ *   if >= 0, then process ended and it's return code of command
+ *   if  < 0, then it's running or error
+ */
 #define WEECHAT_HOOK_PROCESS_RUNNING                -1
 #define WEECHAT_HOOK_PROCESS_ERROR                  -2
 
@@ -130,9 +131,11 @@ struct t_weechat_plugin
     
     /* plugin functions (API) */
     
-    /* IMPORTANT NOTE for WeeChat developers: always add new API functions
-       at the END of functions, for keeping backward compatibility with
-       existing plugins */
+    /*
+     * IMPORTANT NOTE for WeeChat developers: always add new API functions
+     * at the END of functions, for keeping backward compatibility with
+     * existing plugins
+     */
     
     /* plugins */
     const char *(*plugin_get_name) (struct t_weechat_plugin *plugin);

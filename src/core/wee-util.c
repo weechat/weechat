@@ -84,7 +84,7 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * util_timeval_add: add interval (in milliseconds) to a timeval struct 
+ * util_timeval_add: add interval (in milliseconds) to a timeval struct
  */
 
 void

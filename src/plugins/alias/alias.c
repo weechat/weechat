@@ -309,8 +309,10 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
     /* get new current buffer */
     new_current_buffer = weechat_current_buffer();
     
-    /* if current buffer was changed by command, then we'll use this one for
-       next commands in alias */
+    /*
+     * if current buffer was changed by command, then we'll use this one for
+     * next commands in alias
+     */
     if (old_current_buffer != new_current_buffer)
         *buffer = new_current_buffer;
 }
@@ -361,8 +363,11 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 if (args_replaced && (strcmp (args_replaced, *ptr_cmd) != 0))
                     some_args_replaced = 1;
                 
-                /* if alias has arguments, they are now
-                   arguments of the last command in the list (if no $1,$2,..$*) was found */
+                /*
+                 * if alias has arguments, they are now
+                 * arguments of the last command in the list (if no $1,$2,..$*)
+                 * was found
+                 */
                 if ((*ptr_next_cmd == NULL) && argv_eol[1] && (!some_args_replaced))
                 {
                     length1 = strlen (*ptr_cmd);
@@ -1079,7 +1084,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
     
     alias_config_write ();
-    alias_free_all ();    
+    alias_free_all ();
     weechat_config_free (alias_config_file);
     
     return WEECHAT_RC_OK;

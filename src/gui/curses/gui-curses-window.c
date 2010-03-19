@@ -771,7 +771,7 @@ gui_window_scroll_up (struct t_gui_window *window)
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;
-    }   
+    }
 }
 
 /*

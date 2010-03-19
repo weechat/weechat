@@ -488,8 +488,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* set notify level */
         new_buffer->notify = gui_buffer_notify_get (new_buffer);
         
-        /* check if this buffer should be assigned to a window,
-           according to windows layout saved */
+        /*
+         * check if this buffer should be assigned to a window,
+         * according to windows layout saved
+         */
         gui_layout_window_check_buffer (new_buffer);
         
         if (first_buffer_creation)
@@ -1003,9 +1005,11 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "display") == 0)
     {
-        /* if it is auto-switch to a buffer, then we don't set read marker,
-           otherwise we reset it (if current buffer is not displayed) after
-           switch */
+        /*
+         * if it is auto-switch to a buffer, then we don't set read marker,
+         * otherwise we reset it (if current buffer is not displayed) after
+         * switch
+         */
         gui_window_switch_to_buffer (gui_current_window, buffer,
                                      (string_strcasecmp (value, "auto") == 0) ?
                                      0 : 1);
@@ -1376,8 +1380,10 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
     if (buffer_partial_match[0])
         return buffer_partial_match[0];
     
-    /* return buffer partially matching in name
-       (may be NULL if no buffer was found) */
+    /*
+     * return buffer partially matching in name
+     * (may be NULL if no buffer was found)
+     */
     return buffer_partial_match[1];
 }
 
@@ -1538,8 +1544,10 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     
     if (!weechat_quit)
     {
-        /* find other buffer to display: previously visited buffer if current
-           window is displaying buffer, or buffer # - 1 */
+        /*
+         * find other buffer to display: previously visited buffer if current
+         * window is displaying buffer, or buffer # - 1
+         */
         ptr_buffer_visited = NULL;
         if (CONFIG_BOOLEAN(config_look_jump_previous_buffer_when_closing)
             && gui_current_window && (gui_current_window->buffer == buffer))

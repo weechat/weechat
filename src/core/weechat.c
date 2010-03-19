@@ -203,10 +203,12 @@ weechat_parse_args (int argc, char *argv[])
         }
         else if (strcmp (argv[i], "--no-dlclose") == 0)
         {
-            /* tools like valgrind work better when dlclose() is not done
-               after plugins are unloaded, they can display stack for plugins,
-               otherwise you'll see "???" in stack for functions of unloaded
-               plugins -- this option should not be used for other purposes! */
+            /*
+             * tools like valgrind work better when dlclose() is not done
+             * after plugins are unloaded, they can display stack for plugins,
+             * otherwise you'll see "???" in stack for functions of unloaded
+             * plugins -- this option should not be used for other purposes!
+             */
             weechat_plugin_no_dlclose = 1;
         }
         else if ((strcmp (argv[i], "-p") == 0)
@@ -386,7 +388,7 @@ main (int argc, char *argv[])
     util_catch_signal (SIGSEGV,
                        &debug_sigsegv); /* crash dump for SIGSEGV signal    */
     hook_init ();                       /* initialize hooks                 */
-    debug_init ();                      /* hook signals for debug           */ 
+    debug_init ();                      /* hook signals for debug           */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */
@@ -409,7 +411,7 @@ main (int argc, char *argv[])
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
-                 argc, argv); 
+                 argc, argv);
     command_startup (1);                /* command executed after plugins   */
     gui_layout_window_apply (gui_layout_windows, -1); /* apply saved layout */
     if (weechat_upgrading)

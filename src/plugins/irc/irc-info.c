@@ -126,8 +126,10 @@ irc_info_get_info_cb (void *data, const char *info_name,
                     server = strdup (arguments);
             }
             
-            /* replace channel by nick in host if channel is not a channel
-               (private ?) */
+            /*
+             * replace channel by nick in host if channel is not a channel
+             * (private ?)
+             */
             if (channel && host)
             {
                 if (!irc_channel_is_channel (channel))

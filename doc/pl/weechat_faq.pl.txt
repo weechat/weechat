@@ -93,7 +93,7 @@ Dla wersji > = 0.2.3:
 
 * sprawdź czy weechat-curses jest zlinkowany z libncursesw (uwaga: wymagane na
   więkrzości dystrybucji ale nie wszystkich): `ldd /path/to/weechat-curses`
-* sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin` 
+* sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodbniej potrzebujesz pakietu "weechat-plugins")
 * sprawdź ustawienia kodowania (w buforze serwera). Powinieneś ujrzeć 'ISO-XXXXXX'
   lub 'UTF-8' dla kodowania terminala. Jeśli zobaczysz 'ANSI_X3.4-1968' lub inna
@@ -102,7 +102,7 @@ Dla wersji > = 0.2.3:
 ** w WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-2`
 ** w WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-2"`
 * jeśli kożystasz z UTF-8:
-** sprawdź czy twój terminal jest przystosowany dla UTF-8 (zalecanym terminalem 
+** sprawdź czy twój terminal jest przystosowany dla UTF-8 (zalecanym terminalem
    dla UTF-8 jest rxvt-unicode)
 ** jeśli kożystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
@@ -373,14 +373,14 @@ Następnie: `/plugin autoload`.
 Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować 
+Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować
 skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
 Uwagi:
 
-* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy 
+* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy
   uruchomieniu WeeChat.
 * wtyczka 'tcl' jest dostępna dla wersji > = 0.3.0.
 
@@ -398,10 +398,10 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
-* nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python, 
+* nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python,
   ruby, lua, tcl, xfer (używana do DCC)
 * ładować tylko naprawde używane skrypty
-* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość lini trzymanych 
+* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość lini trzymanych
   w pamięci dla każdego bufora)
 * zmniejszyć wartość opcji 'weechat.history.max_commands' (ilość komend
   użytkownika trzymanych w pamięci)

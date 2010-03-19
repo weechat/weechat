@@ -128,7 +128,7 @@ plugin_get_name (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_find_pos: find position for a plugin (for sorting plugins list) 
+ * plugin_find_pos: find position for a plugin (for sorting plugins list)
  */
 
 struct t_weechat_plugin *
@@ -573,8 +573,10 @@ plugin_load (const char *filename)
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
         
-        /* associate orphan buffers with this plugin (if asked during upgrade
-           process) */
+        /*
+         * associate orphan buffers with this plugin (if asked during upgrade
+         * process)
+         */
         gui_buffer_set_plugin_for_upgrade (name, new_plugin);
         
         /* build arguments for plugin */

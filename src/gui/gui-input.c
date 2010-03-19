@@ -368,8 +368,10 @@ gui_input_complete (struct t_gui_buffer *buffer)
                       buffer->completion->position_replace) +
             utf8_strlen (buffer->completion->word_found);
         
-        /* position is < 0 this means only one word was found to complete,
-           so reinit to stop completion */
+        /*
+         * position is < 0 this means only one word was found to complete,
+         * so reinit to stop completion
+         */
         if (buffer->completion->position >= 0)
             buffer->completion->position = utf8_real_pos (buffer->input_buffer,
                                                       buffer->input_buffer_pos);

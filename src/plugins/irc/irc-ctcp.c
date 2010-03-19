@@ -94,8 +94,10 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
     if (ptr_option)
         return weechat_config_string (ptr_option);
     
-    /* no CTCP reply found in config, then return default reply, or NULL
-       for unknown CTCP */
+    /*
+     * no CTCP reply found in config, then return default reply, or NULL
+     * for unknown CTCP
+     */
     return irc_ctcp_get_default_reply (ctcp);
 }
 
@@ -843,7 +845,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                 
                 irc_channel_nick_speaking_add (channel,
                                                nick,
-                                               (pos_args) ? 
+                                               (pos_args) ?
                                                weechat_string_has_highlight (pos_args,
                                                                              server->nick) : 0);
                 irc_channel_nick_speaking_time_remove_old (channel);

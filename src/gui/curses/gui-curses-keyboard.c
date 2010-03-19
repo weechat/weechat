@@ -204,8 +204,10 @@ gui_keyboard_flush ()
     int i, key, insert_ok;
     char key_str[32], *key_utf, *input_old;
     
-    /* if there's no paste pending, then we use buffer and do actions
-       according to keys */
+    /*
+     * if there's no paste pending, then we use buffer and do actions
+     * according to keys
+     */
     if (!gui_keyboard_paste_pending)
     {
         if (gui_keyboard_buffer_size > 0)
@@ -434,8 +436,10 @@ gui_keyboard_read_cb (void *data, int fd)
     }
     else
     {
-        /* detect user paste or large amount of text
-           if so, ask user what to do */
+        /*
+         * detect user paste or large amount of text
+         * if so, ask user what to do
+         */
         if (CONFIG_INTEGER(config_look_paste_max_lines) > 0)
         {
             paste_lines = gui_keyboard_get_paste_lines ();

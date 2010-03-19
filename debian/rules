@@ -12,7 +12,7 @@ builddir/Makefile:
 		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 build: build-stamp
-build-stamp: builddir/Makefile 
+build-stamp: builddir/Makefile
 	dh_testdir
 	$(MAKE) -C builddir
 	touch $@

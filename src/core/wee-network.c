@@ -135,7 +135,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                       "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
                       address, port, authbuf_base64);
     }
-    else 
+    else
     {
         /* no authentification */
         n = snprintf (buffer, sizeof (buffer),
@@ -250,7 +250,7 @@ int
 network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
                           int port)
 {
-    /* 
+    /*
      * socks5 protocol is explained in RFC 1928
      * socks5 authentication with username/pass is explained in RFC 1929
      */
@@ -277,8 +277,9 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
-        /* with authentication */
-        /*   -> socks server must respond with :
+        /*
+         * with authentication
+         *   -> socks server must respond with :
          *       - socks version (buffer[0]) = 5 => socks5
          *       - socks method  (buffer[1]) = 2 => authentication
          */
@@ -310,8 +311,9 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     }
     else
     {
-        /* without authentication */
-        /*   -> socks server must respond with :
+        /*
+         * without authentication
+         *   -> socks server must respond with :
          *       - socks version (buffer[0]) = 5 => socks5
          *       - socks method  (buffer[1]) = 0 => no authentication
          */
@@ -347,7 +349,8 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     switch (buffer[3])
     {
         case 1:
-            /* ipv4 
+            /*
+             * ipv4
              * server socks return server bound address and port
              * address of 4 bytes and port of 2 bytes (= 6 bytes)
              */
@@ -355,19 +358,21 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
                 return 0;
             break;
         case 3:
-            /* domainname
+            /*
+             * domainname
              * server socks return server bound address and port
              */
-            /* reading address length */
+            /* read address length */
             if (recv (sock, buffer, 1, 0) != 1)
-                return 0;    
+                return 0;
             addr_len = buffer[0];
-            /* reading address + port = addr_len + 2 */
+            /* read address + port = addr_len + 2 */
             if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
                 return 0;
             break;
         case 4:
-            /* ipv6
+            /*
+             * ipv6
              * server socks return server bound address and port
              * address of 16 bytes and port of 2 bytes (= 18 bytes)
              */
@@ -856,9 +861,10 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
     
 #ifdef __CYGWIN__
-    /* connection may block under Cygwin, there's no other known way
-       to do better today, since connect() in child process seems not to work
-       any suggestion is welcome to improve that!
+    /*
+     * connection may block under Cygwin, there's no other known way
+     * to do better today, since connect() in child process seems not to work
+     * any suggestion is welcome to improve that!
     */
     network_connect_child (hook_connect);
     network_connect_child_read_cb (hook_connect, 0);

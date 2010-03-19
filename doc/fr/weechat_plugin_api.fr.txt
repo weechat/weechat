@@ -7082,14 +7082,14 @@ Paramètres :
 | notify | "0", "1", "2", "3" |
   définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
   hotlist, "1" = ajouter pour les highlights seulement, "2" = ajouter pour les
-  highlights et les messages, "3" = ajouter pour tous les messages 
+  highlights et les messages, "3" = ajouter pour tous les messages
 
 | title | toute chaîne |
   change le titre du tampon
 
 | time_for_each_line | "0" ou "1" |
   "0" pour cacher l'heure sur toutes les lignes du tampon, "1" pour afficher
-  l'heure sur toutes les lignes (par défaut pour un nouveau tampon) 
+  l'heure sur toutes les lignes (par défaut pour un nouveau tampon)
 
 | nicklist | "0" ou "1" |
   "0" pour supprimer la liste des pseudos du tampon, "1" pour ajouter la liste
@@ -7106,7 +7106,7 @@ Paramètres :
 | highlight_words | "-" ou une liste de mots séparés par des virgules |
   "-" est une valeur spécials pour désactiver tout highlight sur ce tampon, ou
   une liste de mots à mettre en valeur dans ce tampon, par exemple :
-  "abc,def,ghi" 
+  "abc,def,ghi"
 
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   liste d'étiquettes ("tags") à mettre en valeur pour ce tampon

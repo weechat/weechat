@@ -137,7 +137,7 @@ Connessione al server IRC e ingresso automatico nei canali
 
 [NOTE]
 Questo comando può essere usato per creare e connettersi ad un nuovo server
-senza utilizzare il comando `/server` (è necessario ripetere che è possibile 
+senza utilizzare il comando `/server` (è necessario ripetere che è possibile
 visualizzare l'aiuto per questo comando con `/help connect`?).
 
 I buffer dei server vengono uniti al buffer 'core' di WeeChat in modo

@@ -29,7 +29,7 @@ IF(PYTHON_FOUND)
    SET(PYTHON_FIND_QUIETLY TRUE)
 ENDIF(PYTHON_FOUND)
 
-FIND_PROGRAM(PYTHON_EXECUTABLE 
+FIND_PROGRAM(PYTHON_EXECUTABLE
   NAMES python python2.6 python2.5 python2.4 python2.3 python2.2
   PATHS /usr/bin /usr/local/bin /usr/pkg/bin
   )

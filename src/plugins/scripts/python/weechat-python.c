@@ -44,18 +44,20 @@ struct t_plugin_script *python_current_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 
-/* string used to execute action "install":
-   when signal "python_install_script" is received, name of string
-   is added to this string, to be installed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "install":
+ * when signal "python_install_script" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *python_action_install_list = NULL;
 
-/* string used to execute action "remove":
-   when signal "python_remove_script" is received, name of string
-   is added to this string, to be removed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "remove":
+ * when signal "python_remove_script" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *python_action_remove_list = NULL;
 
 char python_buffer_output[128];
@@ -179,10 +181,10 @@ weechat_python_exec (struct t_plugin_script *script,
     
     ret_value = NULL;
     
-    /* 
-       ugly hack : rc = NULL while 'return weechat.WEECHAT_RC_OK .... 
-       because of '#define WEECHAT_RC_OK 0'
-    */
+    /*
+     * ugly hack : rc = NULL while 'return weechat.WEECHAT_RC_OK ....
+     * because of '#define WEECHAT_RC_OK 0'
+     */
     if (rc ==  NULL)
         rc = PyInt_FromLong (0);
     
@@ -259,7 +261,7 @@ weechat_python_output (PyObject *self, PyObject *args)
             python_buffer_output[0] = '\0';
         }
     }
-    else 
+    else
     {
         m = msg;
         while ((p = strchr (m, '\n')) != NULL)
@@ -367,7 +369,7 @@ weechat_python_load (const char *filename)
         return 0;
     }
 
-    /* adding $weechat_dir/python in $PYTHONPATH */    
+    /* adding $weechat_dir/python in $PYTHONPATH */
     python_path = PySys_GetObject ("path");
     weechat_home = weechat_info_get ("weechat_dir", "");
     if (weechat_home)

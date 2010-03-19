@@ -6983,14 +6983,14 @@ Arguments:
 | notify | "0", "1", "2", "3" |
   set notify level for buffer: "0" = never add to hotlist, "1" = add for
   highlights only, "2" = add for highlights and messages, "3" = add for all
-  messages 
+  messages
 
 | title | any string |
   set new title for buffer
 
 | time_for_each_line | "0" or "1" |
   "0" to hide time for all lines in buffer, "1" to see time for all lines
-  (default for a new buffer) 
+  (default for a new buffer)
 
 | nicklist | "0" or "1" |
   "0" to remove nicklist for buffer, "1" to add nicklist for buffer
@@ -7004,7 +7004,7 @@ Arguments:
 | highlight_words | "-" or comma separated list of words |
   "-" is a special value to disable any highlight on this buffer, or comma
   separated list of words to highlight in this buffer, for example:
-  "abc,def,ghi" 
+  "abc,def,ghi"
 
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer

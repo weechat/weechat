@@ -65,7 +65,7 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->base_command_arg_index = 0;
     completion->base_word = NULL;
     completion->base_word_pos = 0;
-    completion->position = -1; 
+    completion->position = -1;
     completion->args = NULL;
     completion->direction = 0;
     completion->add_space = 1;
@@ -603,7 +603,7 @@ gui_completion_list_add_filename_cb (void *data,
                 if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
                     continue;
                 
-                snprintf (buf, buf_len, "%s%s%s", 
+                snprintf (buf, buf_len, "%s%s%s",
                           d_name, DIR_SEPARATOR, entry->d_name);
                 if (stat (buf, &statbuf) == -1)
                     continue;
@@ -916,8 +916,10 @@ gui_completion_list_add_plugins_commands_cb (void *data,
             ptr_plugin = NULL;
             if (string_strcasecmp (plugin_name, PLUGIN_CORE) != 0)
             {
-                /* plugin name is different from "core", then search it in
-                   plugin list */
+                /*
+                 * plugin name is different from "core", then search it in
+                 * plugin list
+                 */
                 ptr_plugin = plugin_search (plugin_name);
                 if (!ptr_plugin)
                     return WEECHAT_RC_OK;
@@ -1425,8 +1427,10 @@ gui_completion_get_template_for_args (struct t_gui_completion *completion,
 {
     int matching_template;
     
-    /* if template refers to another command, search this command and use its
-       template */
+    /*
+     * if template refers to another command, search this command and use its
+     * template
+     */
     if ((HOOK_COMMAND(hook_command, cplt_templates)[0][0] == '%')
         && (HOOK_COMMAND(hook_command, cplt_templates)[0][1] == '%')
         && (HOOK_COMMAND(hook_command, cplt_templates)[0][1]))
@@ -1679,8 +1683,10 @@ gui_completion_find_context (struct t_gui_completion *completion,
         }
     }
     
-    /* auto completion with nothing as base word is disabled,
-       in order to prevent completion when pasting messages with [tab] inside */
+    /*
+     * auto completion with nothing as base word is disabled,
+     * in order to prevent completion when pasting messages with [tab] inside
+     */
     if ((completion->context == GUI_COMPLETION_AUTO)
         && ((!completion->base_word) || (!completion->base_word[0])))
     {
@@ -1931,8 +1937,10 @@ gui_completion_complete (struct t_gui_completion *completion)
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))
                         printf ("\a");
                     
-                    /* send "partial_completion" signal, to display possible
-                       completions in bar item */
+                    /*
+                     * send "partial_completion" signal, to display possible
+                     * completions in bar item
+                     */
                     gui_completion_partial_build_list (completion,
                                                        common_prefix_size);
                     hook_signal_send ("partial_completion",
@@ -1956,8 +1964,10 @@ gui_completion_complete (struct t_gui_completion *completion)
             ptr_item = ptr_item->next_item;
     }
     
-    /* if we was on last completion in list, then recomplete, starting from
-       first matching item */
+    /*
+     * if we was on last completion in list, then recomplete, starting from
+     * first matching item
+     */
     if (completion->word_found && (completion->position >= 0))
     {
         free (completion->word_found);

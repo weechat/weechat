@@ -872,7 +872,7 @@ config_weechat_notify_change_cb (void *data, struct t_config_option *option)
     gui_buffer_notify_set_all ();
 }
 
-/* 
+/*
  * config_weechat_notify_create_option_cb: callback to create option in "notify"
  *                                         section
  */
@@ -1989,7 +1989,7 @@ config_weechat_init_options ()
         ".dll",
 #else
         ".so",
-#endif              
+#endif
         NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_path = config_file_new_option (
         weechat_config_file, ptr_section,

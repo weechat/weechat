@@ -382,7 +382,7 @@ relay_server_free (struct t_relay_server *server)
     
     free (server);
     
-    relay_servers = new_relay_servers;    
+    relay_servers = new_relay_servers;
 }
 
 /*

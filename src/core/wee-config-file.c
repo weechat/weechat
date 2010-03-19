@@ -1294,7 +1294,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
     
-    /* run callback if asked and value was changed */ 
+    /* run callback if asked and value was changed */
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
@@ -1344,7 +1344,7 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
         }
     }
     
-    /* run callback if asked and value was changed */ 
+    /* run callback if asked and value was changed */
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
@@ -1892,8 +1892,10 @@ config_file_write_internal (struct t_config_file *config_file,
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
     
-    /* build temporary filename, this temp file will be renamed to filename
-       after write */
+    /*
+     * build temporary filename, this temp file will be renamed to filename
+     * after write
+     */
     filename2 = malloc (filename_length + 32);
     if (!filename2)
     {

@@ -124,7 +124,7 @@ struct t_config_option
     int (*callback_check_value)            /* called to check value before  */
     (void *data,                           /* assiging new value            */
      struct t_config_option *option,
-     const char *value);             
+     const char *value);
     void *callback_check_value_data;       /* data sent to check callback   */
     void (*callback_change)                /* called when value is changed  */
     (void *data,

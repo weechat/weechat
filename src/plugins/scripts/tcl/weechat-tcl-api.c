@@ -19,7 +19,7 @@
 /* weechat-tcl-api.c: Tcl API functions */
 
 
-#undef _ 
+#undef _
 
 #include <tcl.h>
 #include <stdlib.h>
@@ -234,7 +234,7 @@ weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
     Tcl_Obj* objp;
     char *plugin;
     const char *result;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -267,7 +267,7 @@ weechat_tcl_api_charset_set (ClientData clientData, Tcl_Interp *interp,
                              int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -301,7 +301,7 @@ weechat_tcl_api_iconv_to_internal (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *charset, *string;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -337,7 +337,7 @@ weechat_tcl_api_iconv_from_internal (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *charset, *string;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -372,7 +372,7 @@ weechat_tcl_api_gettext (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     const char *result;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -692,7 +692,7 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *weelist, *data, *where, *user_data;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -733,7 +733,7 @@ weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *weelist, *data;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -769,7 +769,7 @@ weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *weelist, *data;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -844,7 +844,7 @@ weechat_tcl_api_list_set (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *item, *new_value;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -879,7 +879,7 @@ weechat_tcl_api_list_next (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -911,7 +911,7 @@ weechat_tcl_api_list_prev (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -943,7 +943,7 @@ weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     const char *result;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -975,7 +975,7 @@ weechat_tcl_api_list_size (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     int size;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -1007,7 +1007,7 @@ weechat_tcl_api_list_remove (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *weelist, *item;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -1071,7 +1071,7 @@ weechat_tcl_api_list_free (ClientData clientData, Tcl_Interp *interp,
                            int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    int i; 
+    int i;
 
     /* make C compiler happy */
     (void) clientData;
@@ -1145,7 +1145,7 @@ weechat_tcl_api_config_new (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *name, *function, *data;
-    int i; 
+    int i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -1411,7 +1411,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     int i, can_add, can_delete;
     
     /* make C compiler happy */
-    (void) clientData; 
+    (void) clientData;
 
     if (!tcl_current_script)
     {
@@ -1744,7 +1744,7 @@ weechat_tcl_api_config_string_to_boolean (ClientData clientData, Tcl_Interp *int
                                           int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj* objp;
-    int result, i; 
+    int result, i;
     
     /* make C compiler happy */
     (void) clientData;
@@ -2893,7 +2893,7 @@ weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "print_date_tags");
         TCL_RETURN_EMPTY;
-    }   
+    }
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     tags = Tcl_GetStringFromObj (objv[3], &i);
@@ -5259,7 +5259,7 @@ weechat_tcl_api_nicklist_remove_group (ClientData clientData, Tcl_Interp *interp
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     group = Tcl_GetStringFromObj (objv[2], &i);
     
-    weechat_nicklist_remove_group (script_str2ptr (buffer), 
+    weechat_nicklist_remove_group (script_str2ptr (buffer),
                                    script_str2ptr (group));
     
     TCL_RETURN_OK;
@@ -6435,7 +6435,7 @@ weechat_tcl_api_upgrade_read (ClientData clientData, Tcl_Interp *interp,
     int i, rc;
     
     /* make C compiler happy */
-    (void) clientData; 
+    (void) clientData;
     
     if (!tcl_current_script)
     {
@@ -6506,10 +6506,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     int i;
     Tcl_Obj *objp;
 
-    /* standard initializer */ 
+    /* standard initializer */
     Tcl_Init (interp);
     
-    Tcl_Eval (interp,"namespace eval weechat {}"); 
+    Tcl_Eval (interp,"namespace eval weechat {}");
     
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */

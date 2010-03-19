@@ -490,7 +490,7 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
     
     if ((percentage > 0) && (percentage <= 100))
     {
-        new_window = gui_window_new (window, window->buffer, 
+        new_window = gui_window_new (window, window->buffer,
                                      window->win_x, window->win_y,
                                      window->win_width, height1,
                                      100, percentage);

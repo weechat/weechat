@@ -144,7 +144,7 @@ gui_chat_reset_color_style (struct t_gui_window *window)
 void
 gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 {
-    /* TODO: write this function for Gtk */    
+    /* TODO: write this function for Gtk */
     /*if (((fg == -1) || (fg == 99))
         && ((bg == -1) || (bg == 99)))
         wattron (window->win_chat, COLOR_PAIR(63));

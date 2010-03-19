@@ -134,7 +134,7 @@ struct t_aspell_code langs_avail[] =
     { NULL,     NULL}
 };
 
-struct t_aspell_code countries_avail[] = 
+struct t_aspell_code countries_avail[] =
 {
     { "AT", "Austria" },
     { "BR", "Brazil" },
@@ -406,7 +406,7 @@ weechat_aspell_speller_list_dicts ()
     struct AspellConfig *config;
     AspellDictInfoList *list;
     AspellDictInfoEnumeration *el;
-    const AspellDictInfo *dict;    
+    const AspellDictInfo *dict;
     
     config = new_aspell_config();
     list = get_aspell_dict_info_list (config);
@@ -692,9 +692,11 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         && !weechat_config_boolean (weechat_aspell_config_check_during_search))
         return NULL;
     
-    /* for performance: return last stirng built if input string is the
-       same (for example user just change cursor position, or input text is
-       refreshed with same content) */
+    /*
+     * for performance: return last stirng built if input string is the
+     * same (for example user just change cursor position, or input text is
+     * refreshed with same content)
+     */
     if (aspell_last_modifier_string
         && (strcmp (string, aspell_last_modifier_string) == 0))
     {
@@ -855,11 +857,11 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     if (argc > 1)
     {
         if (weechat_strcasecmp (argv[1], "dictlist") == 0)
-        { 
+        {
             weechat_aspell_speller_list_dicts ();
             return WEECHAT_RC_OK;
         }
-        if (weechat_strcasecmp (argv[1], "addword") == 0) 
+        if (weechat_strcasecmp (argv[1], "addword") == 0)
         {
             if (argc > 3)
                 weechat_aspell_add_word (argv[2], argv_eol[3]);
@@ -934,7 +936,7 @@ weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
     return WEECHAT_RC_OK;
 }
 
-/* 
+/*
  * weechat_plugin_init : init aspell plugin
  */
 
@@ -988,7 +990,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     return WEECHAT_RC_OK;
 }
 
-/* 
+/*
  * weechat_plugin_end : end aspell plugin
  */
 

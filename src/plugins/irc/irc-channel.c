@@ -329,7 +329,7 @@ irc_channel_is_channel (const char *string)
     
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return (strpbrk (first_char, IRC_CHANNEL_PREFIX)) ? 1 : 0;    
+    return (strpbrk (first_char, IRC_CHANNEL_PREFIX)) ? 1 : 0;
 }
 
 /*

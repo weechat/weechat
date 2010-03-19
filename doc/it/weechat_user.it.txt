@@ -186,7 +186,7 @@ Segnalare gli errori
 Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore futuro
 di WeeChat, è necessario:
 
-* compilarlo con informazioni di debug (o installare il pacchetto binario con 
+* compilarlo con informazioni di debug (o installare il pacchetto binario con
   le informazioni di debug)
 * abilitare i file 'core' sul proprio sistema
 * installare gdb
@@ -255,7 +255,7 @@ il backtrace. Verrà mostrato qualcosa di simile a questo:
 #7  0xb763dd22 in snprintf () from /lib/i686/cmov/libc.so.6
 #8  0xb7258674 in irc_protocol_cmd_join (server=0x8165138, command=0xb727c187 "join", argc=3, argv=0x889e840, argv_eol=0x889e858)
     at /some_path/src/plugins/irc/irc-protocol.c:520
-#9  0xb7265c6e in irc_protocol_recv_command (server=0x8165138, entire_line=0x889e7e0 ":nick!nick@127.0.0.1 JOIN :#test", 
+#9  0xb7265c6e in irc_protocol_recv_command (server=0x8165138, entire_line=0x889e7e0 ":nick!nick@127.0.0.1 JOIN :#test",
     command=0x889d080 "JOIN") at /some_path/src/plugins/irc/irc-protocol.c:4077
 #10 0xb726a2c6 in irc_server_msgq_flush () at /some_path/src/plugins/irc/irc-server.c:1614
 #11 0xb726a4da in irc_server_recv_cb (data=0x8165138, fd=8) at /some_path/src/plugins/irc/irc-server.c:1691

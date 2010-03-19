@@ -72,13 +72,13 @@
 #
 # Redistribution and use, with or without modification, are permitted
 # provided that the following conditions are met:
-# 
+#
 #    1. Redistributions must retain the above copyright notice, this
 #       list of conditions and the following disclaimer.
 #    2. The name of the author may not be used to endorse or promote
 #       products derived from this software without specific prior
 #       written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 # IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -232,7 +232,7 @@ macro(_pkg_check_modules_internal _is_required _is_silent _prefix)
 
       # create the final query which is of the format:
       # * --atleast-version <version> <pkg-name>
-      # * --exact-version <version> <pkg-name>      
+      # * --exact-version <version> <pkg-name>
       # * --max-version <version> <pkg-name>
       # * --exists <pkg-name>
       if (_pkg_check_modules_pkg_op)
@@ -352,7 +352,7 @@ macro(pkg_search_module _prefix _module0)
     endif(NOT ${_prefix}_FOUND)
     
     _pkgconfig_set(__pkg_config_checked_${_prefix} ${PKG_CONFIG_VERSION})
-  endif(NOT DEFINED __pkg_config_checked_${_prefix} OR __pkg_config_checked_${_prefix} LESS ${PKG_CONFIG_VERSION} OR NOT ${_prefix}_FOUND)  
+  endif(NOT DEFINED __pkg_config_checked_${_prefix} OR __pkg_config_checked_${_prefix} LESS ${PKG_CONFIG_VERSION} OR NOT ${_prefix}_FOUND)
 endmacro(pkg_search_module)
 
 ### Local Variables:

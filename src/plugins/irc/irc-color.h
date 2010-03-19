@@ -22,8 +22,10 @@
 
 #define IRC_NUM_COLORS        16
 
-/* shift ncurses colors for compatibility with colors
-   in IRC messages (same as other IRC clients) */
+/*
+ * shift ncurses colors for compatibility with colors
+ * in IRC messages (same as other IRC clients)
+ */
 
 #define WEECHAT_COLOR_BLACK   COLOR_BLACK
 #define WEECHAT_COLOR_RED     COLOR_BLUE

@@ -253,7 +253,7 @@ if test "x$ac_found_iconv_header" = "xyes" ; then
       ICONV_LFLAGS="-liconv"
       LIBS="$LIBS $ICONV_LFLAGS"
    fi
-   AC_MSG_CHECKING(for iconv usability in programs)   
+   AC_MSG_CHECKING(for iconv usability in programs)
    AC_TRY_RUN([
         #include <iconv.h>
         int main(int argc, char **argv) {
@@ -310,7 +310,7 @@ if test "x$enable_aspell" = "xyes" ; then
     AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
     AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
 
-    AC_MSG_CHECKING(for aspell headers and librairies)    
+    AC_MSG_CHECKING(for aspell headers and librairies)
     if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
        AC_MSG_RESULT(no)
        AC_MSG_WARN([
@@ -491,7 +491,7 @@ if test "x$enable_python" = "xyes" ; then
                AC_MSG_RESULT(found)
             else
                 AC_MSG_WARN([
-*** Python library couldn't be found on your system.            
+*** Python library couldn't be found on your system.
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Python support.])
                 enable_python="no"
@@ -610,7 +610,7 @@ if test "x$enable_lua" = "xyes" ; then
                 fi
             done
         fi
-    fi    
+    fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         LUACONFIG=""
@@ -624,7 +624,7 @@ if test "x$enable_lua" = "xyes" ; then
         fi
     fi
 
-    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
+    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         AC_MSG_CHECKING(for Lua headers and librairies)
         echo
         AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")

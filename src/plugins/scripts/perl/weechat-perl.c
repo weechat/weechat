@@ -46,18 +46,20 @@ struct t_plugin_script *perl_current_script = NULL;
 const char *perl_current_script_filename = NULL;
 int perl_quit_or_upgrade = 0;
 
-/* string used to execute action "install":
-   when signal "perl_install_script" is received, name of string
-   is added to this string, to be installed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "install":
+ * when signal "perl_install_script" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *perl_action_install_list = NULL;
 
-/* string used to execute action "remove":
-   when signal "perl_remove_script" is received, name of string
-   is added to this string, to be removed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "remove":
+ * when signal "perl_remove_script" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *perl_action_remove_list = NULL;
 
 #ifdef NO_PERL_MULTIPLICITY
@@ -329,7 +331,7 @@ weechat_perl_load (const char *filename)
         return 0;
     }
     
-    if (*eval != 0) 
+    if (*eval != 0)
     {
         if (*eval == 2)
         {
@@ -439,7 +441,7 @@ weechat_perl_unload (struct t_plugin_script *script)
     PERL_SET_CONTEXT (script->interpreter);
 #else
     eval_pv (script->interpreter, TRUE);
-#endif        
+#endif
     
     if (script->shutdown_func && script->shutdown_func[0])
     {

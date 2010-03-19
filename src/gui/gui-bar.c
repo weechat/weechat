@@ -430,10 +430,12 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
         }
     }
     
-    /* call a modifier that will tell us if bar is displayed or not,
-       for example it can be used to display nicklist on some buffers
-       only, using a script that implements this modifier and return "1"
-       to display bar, "0" to hide it */
+    /*
+     * call a modifier that will tell us if bar is displayed or not,
+     * for example it can be used to display nicklist on some buffers
+     * only, using a script that implements this modifier and return "1"
+     * to display bar, "0" to hide it
+     */
     snprintf (str_modifier, sizeof (str_modifier),
               "bar_condition_%s", bar->name);
     snprintf (str_window, sizeof (str_window),
@@ -609,7 +611,7 @@ gui_bar_draw (struct t_gui_bar *bar)
     struct t_gui_bar_window *ptr_bar_win;
     
     if (!CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
-    {    
+    {
         if (bar->bar_window)
         {
             /* root bar */

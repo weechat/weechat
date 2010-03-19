@@ -89,11 +89,11 @@ Setzen eigener IRC-Server Optionen
 
 WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs") falls
 Du keine eigenen Werte für entsprechende Server-Optionen bestimmst.
-Diese Vorgabeoptionen sind "irc.server_default.*". 
+Diese Vorgabeoptionen sind "irc.server_default.*".
 
 Für jede Server-Option benutzt WeeChat den entsprechend gesetzten Wert - falls
 definiert (nicht "null"). Andernfalls verwendet WeeChat Vorgabewerte
-("irc.server_default.xxx"). 
+("irc.server_default.xxx").
 
 Als Beispiel erwähnt seien die Vorgabe (default) nicks, die auf dem Un*x Login
 basieren. Diese können nun für oftc-Server mittels folgendem Befehl
@@ -215,7 +215,7 @@ Belegungen kennen:
 - 'alt + A': springe zum Puffer mit Aktivität (aus der Hotlist)
 
 Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kannst Du jede Taste mittels
-des Befehls `/key` neu mit einem Befehl belegen. 
+des Befehls `/key` neu mit einem Befehl belegen.
 Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist meta-k (alt-k).
 
 Beispiel, Belegung von meta-y (alt-y) mit dem Befehl `/buffer close`:

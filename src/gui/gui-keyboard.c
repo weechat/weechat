@@ -540,8 +540,10 @@ gui_keyboard_pressed (const char *key_str)
     
     gui_key_combo_buffer[0] = '\0';
 
-    /* if this is first key and not found (even partial) => return 1
-       else return 0 (= silently discard sequence of bad keys) */
+    /*
+     * if this is first key and not found (even partial) => return 1
+     * else return 0 (= silently discard sequence of bad keys)
+     */
     return first_key;
 }
 
@@ -701,7 +703,7 @@ gui_keyboard_paste_cancel ()
 }
 
 /*
- * gui_keyboard_end: end keyboard (free some data) 
+ * gui_keyboard_end: end keyboard (free some data)
  */
 
 void

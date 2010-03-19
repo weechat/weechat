@@ -160,8 +160,10 @@ logger_tail_file (const char *filename, int n_lines)
             }
             else if (!pos_eol)
             {
-                /* beginning of read buffer reached without EOL, then we
-                   add string to part_of_line, we'll use that later */
+                /*
+                 * beginning of read buffer reached without EOL, then we
+                 * add string to part_of_line, we'll use that later
+                 */
                 if (part_of_line)
                 {
                     new_part_of_line = malloc (strlen (buf) + strlen (part_of_line) + 1);

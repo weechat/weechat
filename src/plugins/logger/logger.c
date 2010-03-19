@@ -318,9 +318,11 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     if (!dir_separator)
         return NULL;
     
-    /* we first replace directory separator (commonly '/') by \01 because
-       buffer mask can contain this char, and will be replaced by replacement
-       char ('_' by default) */
+    /*
+     * we first replace directory separator (commonly '/') by \01 because
+     * buffer mask can contain this char, and will be replaced by replacement
+     * char ('_' by default)
+     */
     mask2 = weechat_string_replace (mask, dir_separator, "\01");
     if (!mask2)
         goto end;
@@ -922,9 +924,11 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         {
             /* initialize structure, because strptime does not do it */
             memset (&tm_line, 0, sizeof (struct tm));
-            /* we get current time to initialize daylight saving time in
-               structure tm_line, otherwise printed time will be shifted
-               and will not use DST used on machine */
+            /*
+             * we get current time to initialize daylight saving time in
+             * structure tm_line, otherwise printed time will be shifted
+             * and will not use DST used on machine
+             */
             time_now = time (NULL);
             localtime_r (&time_now, &tm_line);
             pos_message[0] = '\0';
@@ -1068,8 +1072,10 @@ logger_adjust_log_filenames ()
                 {
                     if (strcmp (log_filename, ptr_logger_buffer->log_filename) != 0)
                     {
-                        /* log filename has changed (probably due to day change),
-                           then we'll use new filename */
+                        /*
+                         * log filename has changed (probably due to day
+                         * change),then we'll use new filename
+                         */
                         logger_stop (ptr_logger_buffer, 1);
                         logger_start_buffer (ptr_buffer, 1);
                     }

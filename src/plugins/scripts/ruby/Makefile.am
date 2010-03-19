@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(RUBY_CFLAGS) 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(RUBY_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 

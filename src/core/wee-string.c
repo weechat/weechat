@@ -653,7 +653,7 @@ string_has_highlight (const char *string, const char *highlight_words)
                 startswith = ((match == msg) || (!string_is_word_char (match_pre)));
                 endswith = ((!match_post[0]) || (!string_is_word_char (match_post)));
                 if ((wildcard_start && wildcard_end) ||
-                    (!wildcard_start && !wildcard_end && 
+                    (!wildcard_start && !wildcard_end &&
                      startswith && endswith) ||
                     (wildcard_start && endswith) ||
                     (wildcard_end && startswith))
@@ -1156,8 +1156,10 @@ string_iconv_to_internal (const char *charset, const char *string)
     if (!input)
         return NULL;
     
-    /* optimize for UTF-8: if charset is NULL => we use term charset =>
-       if ths charset is already UTF-8, then no iconv needed */
+    /*
+     * optimized for UTF-8: if charset is NULL => we use term charset => if
+     * this charset is already UTF-8, then no iconv is needed
+     */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
     
@@ -1194,8 +1196,10 @@ string_iconv_from_internal (const char *charset, const char *string)
     if (!input)
         return NULL;
     
-    /* optimize for UTF-8: if charset is NULL => we use term charset =>
-       if ths charset is already UTF-8, then no iconv needed */
+    /*
+     * optimized for UTF-8: if charset is NULL => we use term charset => if
+     * this charset is already UTF-8, then no iconv needed
+     */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
     
@@ -1458,15 +1462,19 @@ string_input_for_buffer (const char *string)
     if (strncmp (string, "/*", 2) == 0)
         return string;
     
-    /* special case if string starts with '/': to allow to paste a path line
-       "/path/to/file.txt", we check if next '/' is after a space or not */
+    /*
+     * special case if string starts with '/': to allow to paste a path line
+     * "/path/to/file.txt", we check if next '/' is after a space or not
+     */
     if (string[0] == '/')
     {
         pos_slash = strchr (string + 1, '/');
         pos_space = strchr (string + 1, ' ');
         
-        /* if there's no other '/' of if '/' is after first space,
-           then it is a command, and return NULL */
+        /*
+         * if there's no other '/' of if '/' is after first space,
+         * then it is a command, and return NULL
+         */
         if (!pos_slash || (pos_space && pos_slash > pos_space))
             return NULL;
         

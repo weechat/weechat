@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-protocol-irc.c: IRC protocol for client
-                         (relay acting as an IRC proxy/bouncer) */
+/* relay-protocol-irc.c: IRC protocol for client (relay acting as an IRC proxy/bouncer) */
 
 
 #include <stdlib.h>
@@ -330,8 +329,10 @@ relay_protocol_irc_recv_one_msg (struct t_relay_client *client, char *data)
         {
             RELAY_IRC_DATA(client, connected) = 1;
             
-            /* send nick to client if server nick is different of nick asked
-               by client with command NICK */
+            /*
+             * send nick to client if server nick is different of nick asked
+             * by client with command NICK
+             */
             nick = weechat_info_get ("irc_nick", client->protocol_string);
             if (nick && (strcmp (nick, RELAY_IRC_DATA(client, nick)) != 0))
             {
@@ -389,8 +390,10 @@ relay_protocol_irc_recv_one_msg (struct t_relay_client *client, char *data)
                                       RELAY_IRC_DATA(client, address),
                                       RELAY_IRC_DATA(client, nick));
             
-            /* hook signal "xxx,irc_in2_*" to catch IRC data received from
-               this server */
+            /*
+             * hook signal "xxx,irc_in2_*" to catch IRC data received from
+             * this server
+             */
             snprintf (str_signal_name, sizeof (str_signal_name),
                       "%s,irc_in2_*",
                       client->protocol_string);
@@ -399,8 +402,10 @@ relay_protocol_irc_recv_one_msg (struct t_relay_client *client, char *data)
                                      &relay_protocol_irc_signal_irc_in2_cb,
                                      client);
 
-            /* hook signal "xxx,irc_out_*" to catch IRC data sent to
-               this server */
+            /*
+             * hook signal "xxx,irc_out_*" to catch IRC data sent to
+             * this server
+             */
             snprintf (str_signal_name, sizeof (str_signal_name),
                       "%s,irc_out_*",
                       client->protocol_string);

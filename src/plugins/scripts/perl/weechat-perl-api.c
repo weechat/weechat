@@ -4693,7 +4693,7 @@ XS (XS_weechat_api_nicklist_remove_group)
     buffer = SvPV (ST (0), PL_na);
     group = SvPV (ST (1), PL_na);
     
-    weechat_nicklist_remove_group (script_str2ptr (buffer), 
+    weechat_nicklist_remove_group (script_str2ptr (buffer),
                                    script_str2ptr (group));
     
     PERL_RETURN_OK;

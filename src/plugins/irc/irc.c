@@ -100,9 +100,11 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     
     irc_signal_upgrade_received = 1;
     
-    /* FIXME: it's not possible to upgrade with SSL servers connected (GnuTLS
-       lib can't reload data after upgrade), so we close connection for
-       all SSL servers currently connected */
+    /*
+     * FIXME: it's not possible to upgrade with SSL servers connected (GnuTLS
+     * lib can't reload data after upgrade), so we close connection for
+     * all SSL servers currently connected
+     */
     disconnected = 0;
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -116,8 +118,10 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                             weechat_prefix ("error"),
                             IRC_PLUGIN_NAME);
             irc_server_disconnect (ptr_server, 0);
-            /* schedule reconnection: WeeChat will reconnect to this server
-               after restart */
+            /*
+             * schedule reconnection: WeeChat will reconnect to this server
+             * after restart
+             */
             ptr_server->index_current_address = 0;
             ptr_server->reconnect_start = time (NULL) -
                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY) - 1;

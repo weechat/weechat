@@ -118,8 +118,10 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                 num_sent = send (xfer->sock, buffer, num_read, 0);
                 if (num_sent < 0)
                 {
-                    /* socket is temporarily not available (receiver can't receive
-                       amount of data we sent ?!) */
+                    /*
+                     * socket is temporarily not available (receiver can't
+                     * receive amount of data we sent ?!)
+                     */
                     if (errno == EAGAIN)
                         usleep (1000);
                     else
@@ -181,7 +183,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     
     last_sent = time (NULL);
     while (1)
-    {    
+    {
         num_read = recv (xfer->sock, buffer, sizeof (buffer), 0);
         if (num_read == -1)
         {

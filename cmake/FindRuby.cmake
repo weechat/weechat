@@ -28,7 +28,7 @@ IF(RUBY_FOUND)
    SET(RUBY_FIND_QUIETLY TRUE)
 ENDIF(RUBY_FOUND)
 
-FIND_PROGRAM(RUBY_EXECUTABLE 
+FIND_PROGRAM(RUBY_EXECUTABLE
   NAMES ruby ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16
   PATHS /usr/bin /usr/local/bin /usr/pkg/bin
   )

@@ -48,18 +48,20 @@ struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
 const char *tcl_current_script_filename = NULL;
 
-/* string used to execute action "install":
-   when signal "tcl_install_script" is received, name of string
-   is added to this string, to be installed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "install":
+ * when signal "tcl_install_script" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *tcl_action_install_list = NULL;
 
-/* string used to execute action "remove":
-   when signal "tcl_remove_script" is received, name of string
-   is added to this string, to be removed later by a timer (when nothing is
-   running in script)
-*/
+/*
+ * string used to execute action "remove":
+ * when signal "tcl_remove_script" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *tcl_action_remove_list = NULL;
 
 Tcl_Interp* cinterp;
@@ -85,7 +87,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
     tcl_current_script = script;
     interp = (Tcl_Interp*)script->interpreter;
 
-    if (function && function[0]) 
+    if (function && function[0])
     {
         cmdlist = Tcl_NewListObj(0,NULL);
         Tcl_IncrRefCount(cmdlist); /* +1 */

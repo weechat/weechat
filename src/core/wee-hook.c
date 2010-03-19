@@ -394,8 +394,10 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     hook_command->cplt_template_num_args_concat = 0;
     for (i = 0; i < hook_command->cplt_num_templates; i++)
     {
-        /* build static part of template: it's first argument(s) which does not
-           contain "%" or "|" */
+        /*
+         * build static part of template: it's first argument(s) which does not
+         * contain "%" or "|"
+         */
         last_space = NULL;
         ptr_template = hook_command->cplt_templates[i];
         while (ptr_template && ptr_template[0])
@@ -433,10 +435,11 @@ hook_command_build_completion (struct t_hook_command *hook_command)
             hook_command->cplt_template_num_args_concat = hook_command->cplt_template_num_args[i];
     }
     
-    /* build strings with concatentaion of items from different templates
-       for each argument: these strings will be used when completing argument
-       if we can't find which template to use (for example for first argument)
-    */
+    /*
+     * build strings with concatentaion of items from different templates
+     * for each argument: these strings will be used when completing argument
+     * if we can't find which template to use (for example for first argument)
+     */
     if (hook_command->cplt_template_num_args_concat == 0)
         hook_command->cplt_template_args_concat = NULL;
     else
@@ -636,9 +639,11 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     {
         if (!hook_for_plugin && (number_for_other_plugin > 1))
         {
-            /* ambiguous: no command for current plugin, but more than one
-               command was found for other plugins, we don't know which one to
-               run! */
+            /*
+             * ambiguous: no command for current plugin, but more than one
+             * command was found for other plugins, we don't know which one to
+             * run!
+             */
             rc = -2;
         }
         else
@@ -813,9 +818,11 @@ hook_timer_init (struct t_hook *hook)
     if ((HOOK_TIMER(hook, interval) >= 1000)
         && (HOOK_TIMER(hook, align_second) > 0))
     {
-        /* here we should use 0, but with this value timer is sometimes called
-           before second has changed, so for displaying time, it may display
-           2 times the same second, that's why we use 1000 micro seconds */
+        /*
+         * here we should use 0, but with this value timer is sometimes called
+         * before second has changed, so for displaying time, it may display
+         * 2 times the same second, that's why we use 1000 micro seconds
+         */
         HOOK_TIMER(hook, last_exec).tv_usec = 1000;
         HOOK_TIMER(hook, last_exec).tv_sec =
             HOOK_TIMER(hook, last_exec).tv_sec -
@@ -887,8 +894,10 @@ hook_timer_check_system_clock ()
     
     now = time (NULL);
     
-    /* check if difference with previous time is more than 10 seconds
-       If it is, then consider it's clock skew and reinitialize all timers */
+    /*
+     * check if difference with previous time is more than 10 seconds:
+     * if it is, then consider it's clock skew and reinitialize all timers
+     */
     diff_time = now - hook_last_system_time;
     if ((diff_time <= -10) || (diff_time >= 10))
     {
@@ -973,8 +982,10 @@ hook_timer_time_to_next (struct timeval *tv_timeout)
         tv_timeout->tv_usec = 1000000 + diff_usec;
     }
     
-    /* to detect clock skew, we ensure there's a call to timers every
-       2 seconds max */
+    /*
+     * to detect clock skew, we ensure there's a call to timers every
+     * 2 seconds max
+     */
     if (tv_timeout->tv_sec > 2)
     {
         tv_timeout->tv_sec = 2;
@@ -1235,8 +1246,10 @@ hook_process_child (struct t_hook *hook_process)
 {
     char *exec_args[4] = { "sh", "-c", NULL, NULL };
     
-    /* close stdin, so that process will fail to read stdin (process reading
-       stdin should not be run inside WeeChat!) */
+    /*
+     * close stdin, so that process will fail to read stdin (process reading
+     * stdin should not be run inside WeeChat!)
+     */
     close (STDIN_FILENO);
     
     /* redirect stdout/stderr to pipe (so that father process can read them) */
@@ -2371,13 +2384,15 @@ unhook (struct t_hook *hook)
                     free (HOOK_INFOLIST(hook, args_description));
                 break;
             case HOOK_NUM_TYPES:
-                /* this constant is used to count types only,
-                   it is never used as type */
+                /*
+                 * this constant is used to count types only,
+                 * it is never used as type
+                 */
                 break;
         }
         free (hook->hook_data);
         hook->hook_data = NULL;
-    }           
+    }
     
     /* remove hook from list (if there's no hook exec pending) */
     if (hook_exec_recursion == 0)
@@ -2724,8 +2739,10 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                 }
                 break;
             case HOOK_NUM_TYPES:
-                /* this constant is used to count types only,
-                   it is never used as type */
+                /*
+                 * this constant is used to count types only,
+                 * it is never used as type
+                 */
                 break;
         }
     }
@@ -2966,8 +2983,10 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_NUM_TYPES:
-                    /* this constant is used to count types only,
-                       it is never used as type */
+                    /*
+                     * this constant is used to count types only,
+                     * it is never used as type
+                     */
                     break;
             }
             log_printf ("  prev_hook . . . . . . . : 0x%lx", ptr_hook->prev_hook);

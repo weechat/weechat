@@ -187,13 +187,16 @@ void
 gui_color_init_pairs ()
 {
     int i, fg, bg, num_colors;
-
-    /* depending on terminal and $TERM value, we can have for example:
-       terminal  $TERM            colors   pairs
-       urxvt     rxvt-unicode       88      256
-       urxvt     xterm-256color    256    32767
-       screen    screen             8        64
-       screen    screen-256color   256    32767
+    
+    /*
+     * depending on terminal and $TERM value, we can have for example:
+     *
+     *   terminal | $TERM           | colors | pairs
+     *   ---------+-----------------+--------+------
+     *   urxvt    | rxvt-unicode    |     88 |   256
+     *   urxvt    | xterm-256color  |    256 | 32767
+     *   screen   | screen          |      8 |    64
+     *   screen   | screen-256color |    256 | 32767
     */
     
     if (has_colors ())
@@ -211,8 +214,10 @@ gui_color_init_pairs ()
         /* disable white on white, replaced by black on white */
         init_pair (gui_color_last_pair, -1, -1);
         
-        /* white on default bg is default (-1) (for terminals with white/light
-           background) */
+        /*
+         * white on default bg is default (-1) (for terminals with white/light
+         * background)
+         */
         if (!CONFIG_BOOLEAN(config_look_color_real_white))
             init_pair (COLOR_WHITE + 1, -1, -1);
     }

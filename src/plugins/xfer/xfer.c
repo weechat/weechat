@@ -901,7 +901,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                 if (sock > 0)
                 {
                     memset (&addr, 0, sizeof (struct sockaddr_in));
-                    length = sizeof (addr);        
+                    length = sizeof (addr);
                     getsockname (sock, (struct sockaddr *) &addr, &length);
                     addr.sin_family = AF_INET;
                 }

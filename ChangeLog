@@ -646,7 +646,7 @@ Version 0.1.6 (2005-11-11)
 * add colors for input buffer and current channel of status bar
 * add online help for config options (with /set full_option_name)
 * enhanced "smart" hotlist, with names (new options:
-  look_hotlist_names_{count|level|length}) 
+  look_hotlist_names_{count|level|length})
 
 Version 0.1.5 (2005-09-24)
 --------------------------
