@@ -20,6 +20,24 @@
 #ifndef __WEECHAT_IRC_BUFFER_H
 #define __WEECHAT_IRC_BUFFER_H 1
 
+#define IRC_BUFFER_GET_SERVER(__buffer)                                 \
+    struct t_weechat_plugin *buffer_plugin = NULL;                      \
+    struct t_irc_server *ptr_server = NULL;                             \
+    buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
+    if (buffer_plugin == weechat_irc_plugin)                            \
+        irc_buffer_get_server_channel (__buffer, &ptr_server, NULL);
+
+#define IRC_BUFFER_GET_SERVER_CHANNEL(__buffer)                         \
+    struct t_weechat_plugin *buffer_plugin = NULL;                      \
+    struct t_irc_server *ptr_server = NULL;                             \
+    struct t_irc_channel *ptr_channel = NULL;                           \
+    buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
+    if (buffer_plugin == weechat_irc_plugin)                            \
+    {                                                                   \
+        irc_buffer_get_server_channel (__buffer, &ptr_server,           \
+                                       &ptr_channel);                   \
+    }
+
 #define IRC_BUFFER_RAW_NAME            "irc_raw"
 #define IRC_BUFFER_RAW_PREFIX_RECV     "-->"
 #define IRC_BUFFER_RAW_PREFIX_RECV_MOD "==>"

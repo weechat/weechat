@@ -116,7 +116,7 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_irc_channel *next_channel;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;

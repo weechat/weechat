@@ -41,15 +41,6 @@
       /allserv away sono assente
 ........................................
 
-&bull; *`/away`* `[-all] [messaggio]`::
-
-........................................
-  attiva/disattiva lo stato di assenza
-
-       -all: attiva/disattiva lo stato di assenza su tutti i server connessi
-  messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene rimosso)
-........................................
-
 &bull; *`/ban`* `[canale] [nick [nick ...]]`::
 
 ........................................

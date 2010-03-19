@@ -84,7 +84,7 @@ int
 irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("admin", 1);
 
     /* make C compiler happy */
@@ -188,7 +188,7 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
     int i, current_server;
     const char *ptr_exclude_channels, *ptr_command;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -513,7 +513,7 @@ int
 irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -535,12 +535,40 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
-        IRC_COMMAND_CHECK_SERVER("away", 0);
-        
-        weechat_buffer_set (NULL, "hotlist", "-");
-        irc_command_away_server (ptr_server, argv_eol[1], 1);
-        weechat_buffer_set (NULL, "hotlist", "+");
+        if (ptr_server)
+        {
+            weechat_buffer_set (NULL, "hotlist", "-");
+            irc_command_away_server (ptr_server, argv_eol[1], 1);
+            weechat_buffer_set (NULL, "hotlist", "+");
+        }
     }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_run_away: catch command /away when it is run
+ */
+
+int
+irc_command_run_away (void *data, struct t_gui_buffer *buffer,
+                      const char *command)
+{
+    int argc;
+    char **argv, **argv_eol;
+    
+    argv = weechat_string_split (command, " ", 0, 0, &argc);
+    argv_eol = weechat_string_split (command, " ", 1, 0, NULL);
+    
+    if (argv && argv_eol)
+    {
+        irc_command_away (data, buffer, argc, argv, argv_eol);
+    }
+    
+    if (argv)
+        weechat_string_free_split (argv);
+    if (argv_eol)
+        weechat_string_free_split (argv_eol);
     
     return WEECHAT_RC_OK;
 }
@@ -556,7 +584,7 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
     char *pos_channel;
     int pos_args;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("ban", 1);
     
     /* make C compiler happy */
@@ -669,7 +697,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
     int i, nb_connect, connect_ok, all_servers, no_join;
     char *name;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -774,7 +802,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
     char *pos, *irc_cmd, str_time[512];
     struct timeval tv;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("ctcp", 1);
     
     /* make C compiler happy */
@@ -853,7 +881,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
     char **channels;
     int i, num_channels;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("cycle", 1);
     
     /* make C compiler happy */
@@ -959,7 +987,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_infolist_item *item;
     char plugin_id[128], str_address[128], charset_modifier[256];
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("dcc", 1);
     
     /* make C compiler happy */
@@ -1065,7 +1093,7 @@ int
 irc_command_dehalfop (void *data, struct t_gui_buffer *buffer, int argc,
                       char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("dehalfop", 1);
     
     /* make C compiler happy */
@@ -1106,7 +1134,7 @@ int
 irc_command_deop (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("deop", 1);
     
     /* make C compiler happy */
@@ -1147,7 +1175,7 @@ int
 irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("devoice", 1);
     
     /* make C compiler happy */
@@ -1188,7 +1216,7 @@ int
 irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("die", 1);
     
     /* make C compiler happy */
@@ -1280,7 +1308,7 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
 {
     int i, disconnect_ok;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -1342,7 +1370,7 @@ int
 irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("halfop", 1);
     
     /* make C compiler happy */
@@ -1571,7 +1599,7 @@ int
 irc_command_info (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("info", 1);
     
     /* make C compiler happy */
@@ -1600,7 +1628,7 @@ int
 irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("invite", 1);
     
     /* make C compiler happy */
@@ -1643,7 +1671,7 @@ int
 irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("ison", 1);
     
     /* make C compiler happy */
@@ -1690,7 +1718,7 @@ int
 irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("join", 1);
     
     /* make C compiler happy */
@@ -1725,7 +1753,7 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *pos_channel, *pos_nick, *pos_comment;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("kick", 1);
     
     /* make C compiler happy */
@@ -1799,7 +1827,7 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
     char *pos_channel, *pos_nick, *nick_only, *pos_comment, *pos, *mask;
     int length;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("kickban", 1);
     
     /* make C compiler happy */
@@ -1909,7 +1937,7 @@ int
 irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("kill", 1);
     
     /* make C compiler happy */
@@ -1937,7 +1965,7 @@ int
 irc_command_links (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("links", 1);
     
     /* make C compiler happy */
@@ -1966,7 +1994,7 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
     char buf[512];
     int ret;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("list", 1);
     
     /* make C compiler happy */
@@ -2027,7 +2055,7 @@ int
 irc_command_lusers (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("lusers", 1);
     
     /* make C compiler happy */
@@ -2053,7 +2081,7 @@ int
 irc_command_map (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("map", 1);
     
     /* make C compiler happy */
@@ -2079,7 +2107,7 @@ int
 irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("me", 1);
     
     /* make C compiler happy */
@@ -2133,7 +2161,7 @@ int
 irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("mode", 1);
     
     /* make C compiler happy */
@@ -2177,7 +2205,7 @@ int
 irc_command_motd (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("motd", 1);
     
     /* make C compiler happy */
@@ -2209,7 +2237,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_irc_nick *ptr_nick;
     char *string;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2367,7 +2395,7 @@ int
 irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("names", 1);
     
     /* make C compiler happy */
@@ -2427,7 +2455,7 @@ int
 irc_command_nick (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("nick", 0);
     
     /* make C compiler happy */
@@ -2474,7 +2502,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
     int arg_nick, arg_text;
     struct t_irc_channel *ptr_channel;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2528,7 +2556,7 @@ int
 irc_command_op (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("op", 1);
     
     /* make C compiler happy */
@@ -2569,7 +2597,7 @@ int
 irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("oper", 1);
     
     /* make C compiler happy */
@@ -2633,7 +2661,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *channel_name, *pos_args;
 
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("part", 1);
     
     /* make C compiler happy */
@@ -2695,7 +2723,7 @@ int
 irc_command_ping (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("ping", 1);
     
     /* make C compiler happy */
@@ -2723,7 +2751,7 @@ int
 irc_command_pong (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("pong", 0);
     
     /* make C compiler happy */
@@ -2754,7 +2782,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
     char *string;
     int arg_nick, arg_text;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2822,7 +2850,7 @@ int
 irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2897,7 +2925,7 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
 {
     int i, nb_reconnect, reconnect_ok, all_servers, no_join;
 
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2972,7 +3000,7 @@ int
 irc_command_rehash (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("rehash", 1);
     
     /* make C compiler happy */
@@ -2998,7 +3026,7 @@ int
 irc_command_restart (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("restart", 1);
     
     /* make C compiler happy */
@@ -3020,7 +3048,7 @@ int
 irc_command_sajoin (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("sajoin", 1);
     
     /* make C compiler happy */
@@ -3047,7 +3075,7 @@ int
 irc_command_samode (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("samode", 1);
     
     /* make C compiler happy */
@@ -3074,7 +3102,7 @@ int
 irc_command_sanick (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("sanick", 1);
     
     /* make C compiler happy */
@@ -3101,7 +3129,7 @@ int
 irc_command_sapart (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("sapart", 1);
     
     /* make C compiler happy */
@@ -3128,7 +3156,7 @@ int
 irc_command_saquit (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("saquit", 1);
     
     /* make C compiler happy */
@@ -3159,7 +3187,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -3500,7 +3528,7 @@ int
 irc_command_service (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("service", 1);
     
     /* make C compiler happy */
@@ -3528,7 +3556,7 @@ int
 irc_command_servlist (void *data, struct t_gui_buffer *buffer, int argc,
                       char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("servlist", 1);
     
     /* make C compiler happy */
@@ -3557,7 +3585,7 @@ int
 irc_command_squery (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("squery", 1);
     
     /* make C compiler happy */
@@ -3592,7 +3620,7 @@ int
 irc_command_squit (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("squit", 1);
     
     /* make C compiler happy */
@@ -3617,7 +3645,7 @@ int
 irc_command_stats (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("stats", 1);
     
     /* make C compiler happy */
@@ -3644,7 +3672,7 @@ int
 irc_command_summon (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("summon", 1);
     
     /* make C compiler happy */
@@ -3672,7 +3700,7 @@ int
 irc_command_time (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("time", 1);
     
     /* make C compiler happy */
@@ -3700,7 +3728,7 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *channel_name, *new_topic, *new_topic_color;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("topic", 1);
     
     /* make C compiler happy */
@@ -3769,7 +3797,7 @@ int
 irc_command_trace (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("trace", 1);
     
     /* make C compiler happy */
@@ -3798,7 +3826,7 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
     char *pos_channel;
     int pos_args;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("unban", 1);
     
     /* make C compiler happy */
@@ -3862,7 +3890,7 @@ int
 irc_command_userhost (void *data, struct t_gui_buffer *buffer, int argc,
                       char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("userhost", 1);
     
     /* make C compiler happy */
@@ -3890,7 +3918,7 @@ int
 irc_command_users (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("users", 1);
     
     /* make C compiler happy */
@@ -3916,7 +3944,7 @@ int
 irc_command_version (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("version", 1);
     
     /* make C compiler happy */
@@ -3954,7 +3982,7 @@ int
 irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("voice", 1);
     
     /* make C compiler happy */
@@ -3995,7 +4023,7 @@ int
 irc_command_wallops (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("wallops", 1);
     
     /* make C compiler happy */
@@ -4023,7 +4051,7 @@ int
 irc_command_who (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("who", 1);
     
     /* make C compiler happy */
@@ -4049,7 +4077,7 @@ int
 irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("whois", 1);
     
     /* make C compiler happy */
@@ -4086,7 +4114,7 @@ int
 irc_command_whowas (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("whowas", 1);
     
     /* make C compiler happy */
@@ -4155,14 +4183,7 @@ irc_command_init ()
                              "  set away on all servers:\n"
                              "    /allserv away I'm away"),
                           NULL, &irc_command_allserv, NULL);
-    weechat_hook_command ("away",
-                          N_("toggle away status"),
-                          N_("[-all] [message]"),
-                          N_("   -all: toggle away status on all connected "
-                             "servers\n"
-                             "message: message for away (if no message is "
-                             "given, away status is removed)"),
-                          "-all", &irc_command_away, NULL);
+    weechat_hook_command_run ("/away", &irc_command_run_away, NULL);
     weechat_hook_command ("ban",
                           N_("ban nicks or hosts"),
                           N_("[channel] [nickname [nickname ...]]"),

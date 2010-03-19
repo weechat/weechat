@@ -1,3 +1,12 @@
+&bull; *`/away`* `[-all] [message]`::
+
+........................................
+  basculer le statut absent
+
+     -all: basculer le statut absent sur tous les serveurs connectés
+  message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
+........................................
+
 &bull; *`/bar`* `[add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show|toggle nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listfull] | [listitems]`::
 
 ........................................

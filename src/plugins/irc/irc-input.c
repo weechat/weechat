@@ -47,7 +47,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
     text_decoded = irc_color_decode (text,
                                      weechat_config_boolean (irc_config_network_colors_send));
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     if (ptr_channel)
     {
@@ -82,7 +82,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
     int max_length;
     char *pos, *pos_max, *last_space, *pos_next, *next, saved_char;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     if (!ptr_server || !ptr_channel || !text || !text[0])
         return;
@@ -147,7 +147,7 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     const char *ptr_data;
     char *data_with_colors, *msg;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;

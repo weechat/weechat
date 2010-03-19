@@ -41,15 +41,6 @@
       /allserv away Je suis absent
 ........................................
 
-&bull; *`/away`* `[-all] [message]`::
-
-........................................
-  basculer le statut absent
-
-     -all: basculer le statut absent sur tous les serveurs connectés
-  message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
-........................................
-
 &bull; *`/ban`* `[canal] [pseudo [pseudo ...]]`::
 
 ........................................

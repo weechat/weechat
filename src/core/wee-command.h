@@ -20,6 +20,25 @@
 #ifndef __WEECHAT_COMMAND_H
 #define __WEECHAT_COMMAND_H 1
 
+/*
+ * This macro is used to create an "empty" command in WeeChat core:
+ * command does nothing, but plugins or scripts can catch it when it
+ * is used by user, with weechat_hook_command_run("/xxx", ...)
+ * where "xxx" is command name.
+ */
+#define COMMAND_EMPTY(__command)                                        \
+    int                                                                 \
+    command_##__command (void *data, struct t_gui_buffer *buffer,       \
+                         int argc, char **argv, char **argv_eol)        \
+    {                                                                   \
+        (void) data;                                                    \
+        (void) buffer;                                                  \
+        (void) argc;                                                    \
+        (void) argv;                                                    \
+        (void) argv_eol;                                                \
+        return WEECHAT_RC_OK;                                           \
+    }
+
 struct t_gui_buffer;
 
 extern int command_reload (void *data, struct t_gui_buffer *buffer,

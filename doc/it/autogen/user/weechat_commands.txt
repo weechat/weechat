@@ -1,3 +1,12 @@
+&bull; *`/away`* `[-all] [messaggio]`::
+
+........................................
+  attiva/disattiva lo stato di assenza
+
+       -all: attiva/disattiva lo stato di assenza su tutti i server connessi
+  messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene rimosso)
+........................................
+
 &bull; *`/bar`* `[add nome_barra tipo[,cond1,cond2,...] posizione dimensione separatore elemento1,elemento2,...] | [default] | [del nome_barra|-all] | [set nome_barra opzione valore] | [hide|show|toggle nome_barra] | [scroll nome_barra buffer scroll_value] | [list] | [listfull] | [listitems]`::
 
 ........................................

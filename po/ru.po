@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-14 16:43+0100\n"
+"POT-Creation-Date: 2010-03-19 13:59+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -768,6 +768,19 @@ msgid ""
 msgstr ""
 "%s не могу объединить окна, есть другое окно такого-же размера рядом с "
 "текущим.\n"
+
+msgid "toggle away status"
+msgstr "переключает статус \"отошёл\""
+
+msgid "[-all] [message]"
+msgstr "[-all] [сообщение]"
+
+msgid ""
+"   -all: toggle away status on all connected servers\n"
+"message: message for away (if no message is given, away status is removed)"
+msgstr ""
+"     -all: включить режим \"отсутствую\" на всех подключенных серверах\n"
+"сообщение: причина отсутствия (если сообщения нет - статус снимается)"
 
 #, fuzzy
 msgid "manage bars"
@@ -2986,19 +2999,6 @@ msgid ""
 "  set away on all servers:\n"
 "    /allserv away I'm away"
 msgstr ""
-
-msgid "toggle away status"
-msgstr "переключает статус \"отошёл\""
-
-msgid "[-all] [message]"
-msgstr "[-all] [сообщение]"
-
-msgid ""
-"   -all: toggle away status on all connected servers\n"
-"message: message for away (if no message is given, away status is removed)"
-msgstr ""
-"     -all: включить режим \"отсутствую\" на всех подключенных серверах\n"
-"сообщение: причина отсутствия (если сообщения нет - статус снимается)"
 
 #, fuzzy
 msgid "ban nicks or hosts"

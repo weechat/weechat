@@ -1,3 +1,12 @@
+&bull; *`/away`* `[-all] [message]`::
+
+........................................
+  toggle away status
+
+     -all: toggle away status on all connected servers
+  message: message for away (if no message is given, away status is removed)
+........................................
+
 &bull; *`/bar`* `[add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show|toggle barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | [listitems]`::
 
 ........................................

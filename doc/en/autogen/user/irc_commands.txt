@@ -41,15 +41,6 @@
       /allserv away I'm away
 ........................................
 
-&bull; *`/away`* `[-all] [message]`::
-
-........................................
-  toggle away status
-
-     -all: toggle away status on all connected servers
-  message: message for away (if no message is given, away status is removed)
-........................................
-
 &bull; *`/ban`* `[channel] [nickname [nickname ...]]`::
 
 ........................................

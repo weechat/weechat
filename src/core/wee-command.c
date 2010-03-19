@@ -63,6 +63,12 @@
 
 
 /*
+ * command_away: toggle away status
+ */
+
+COMMAND_EMPTY(away)
+
+/*
  * command_bar_list: list bars
  */
 
@@ -4066,6 +4072,14 @@ command_window (void *data, struct t_gui_buffer *buffer,
 void
 command_init ()
 {
+    hook_command (NULL, "away",
+                  N_("toggle away status"),
+                  N_("[-all] [message]"),
+                  N_("   -all: toggle away status on all connected "
+                     "servers\n"
+                     "message: message for away (if no message is "
+                     "given, away status is removed)"),
+                  "-all", &command_away, NULL);
     hook_command (NULL, "bar",
                   N_("manage bars"),
                   N_("[add barname type[,cond1,cond2,...] position size "

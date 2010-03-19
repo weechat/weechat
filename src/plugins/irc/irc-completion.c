@@ -44,7 +44,7 @@ irc_completion_server_cb (void *data, const char *completion_item,
                           struct t_gui_buffer *buffer,
                           struct t_gui_completion *completion)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -69,7 +69,7 @@ irc_completion_server_nick_cb (void *data, const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -96,7 +96,7 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
 {
     struct t_irc_channel *ptr_channel;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -131,7 +131,7 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
 {
     struct t_irc_channel *ptr_channel;
     
-    IRC_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -167,7 +167,7 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
     struct t_irc_channel *ptr_channel2;
     struct t_irc_nick *ptr_nick;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -232,7 +232,7 @@ irc_completion_channel_cb (void *data, const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -289,7 +289,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
 {
     struct t_irc_nick *ptr_nick;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -357,7 +357,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
     char *buf;
     int length;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -417,7 +417,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
 {
     char *topic_color;
     
-    IRC_GET_SERVER_CHANNEL(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
