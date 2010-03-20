@@ -368,6 +368,134 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
 }
 
 /*
+ * weechat_ruby_api_string_match: return 1 if string matches a mask
+ *                                mask can begin or end with "*", no other "*"
+ *                                are allowed inside mask
+ */
+
+static VALUE
+weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
+                               VALUE case_sensitive)
+{
+    char *c_string, *c_mask;
+    int c_case_sensitive, value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_match");
+        RUBY_RETURN_INT(0);
+    }
+    
+    c_string = NULL;
+    c_mask = NULL;
+    c_case_sensitive = 0;
+    
+    if (NIL_P (string) || NIL_P (mask) || NIL_P (case_sensitive))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_match");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (string, T_STRING);
+    Check_Type (mask, T_STRING);
+    Check_Type (case_sensitive, T_FIXNUM);
+    
+    c_string = STR2CSTR (string);
+    c_mask = STR2CSTR (mask);
+    c_case_sensitive = FIX2INT (case_sensitive);
+    
+    value = weechat_string_match (c_string, c_mask, c_case_sensitive);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_string_has_highlight: return 1 if string contains a
+ *                                        highlight (using list of words to
+ *                                        highlight)
+ *                                        return 0 if no highlight is found in
+ *                                        string
+ */
+
+static VALUE
+weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
+                                       VALUE highlight_words)
+{
+    char *c_string, *c_highlight_words;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        RUBY_RETURN_INT(0);
+    }
+    
+    c_string = NULL;
+    c_highlight_words = NULL;
+    
+    if (NIL_P (string) || NIL_P (highlight_words))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (string, T_STRING);
+    Check_Type (highlight_words, T_STRING);
+    
+    c_string = STR2CSTR (string);
+    c_highlight_words = STR2CSTR (highlight_words);
+    
+    value = weechat_string_has_highlight (c_string, c_highlight_words);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_string_mask_to_regex: convert a mask (string with only
+ *                                        "*" as joker) to a regex, paying
+ *                                        attention to special chars in a
+ *                                        regex
+ */
+
+static VALUE
+weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
+{
+    char *c_mask, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_mask = NULL;
+    
+    if (NIL_P (mask))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (mask, T_STRING);
+    
+    c_mask = STR2CSTR (mask);
+    
+    result = weechat_string_mask_to_regex (c_mask);
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_string_remove_color: remove WeeChat color codes from string
  */
 
@@ -7097,6 +7225,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "iconv_from_internal", &weechat_ruby_api_iconv_from_internal, 2);
     rb_define_module_function (ruby_mWeechat, "gettext", &weechat_ruby_api_gettext, 1);
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
+    rb_define_module_function (ruby_mWeechat, "string_match", &weechat_ruby_api_string_match, 3);
+    rb_define_module_function (ruby_mWeechat, "string_has_highlight", &weechat_ruby_api_string_has_highlight, 2);
+    rb_define_module_function (ruby_mWeechat, "string_mask_to_regex", &weechat_ruby_api_string_mask_to_regex, 1);
     rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 2);
     rb_define_module_function (ruby_mWeechat, "string_is_command_char", &weechat_ruby_api_string_is_command_char, 1);
     rb_define_module_function (ruby_mWeechat, "string_input_for_buffer", &weechat_ruby_api_string_input_for_buffer, 1);

@@ -314,6 +314,102 @@ XS (XS_weechat_api_ngettext)
 }
 
 /*
+ * weechat::string_match: return 1 if string matches a mask
+ *                        mask can begin or end with "*", no other "*"
+ *                        are allowed inside mask
+ */
+
+XS (XS_weechat_api_string_match)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_match");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "string_match");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_string_match (SvPV (ST (0), PL_na), /* string */
+                                  SvPV (ST (1), PL_na), /* mask */
+                                  SvIV (ST (2))); /* case_sensitive */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::string_has_highlight: return 1 if string contains a highlight
+ *                                (using list of words to highlight)
+ *                                return 0 if no highlight is found in string
+ */
+
+XS (XS_weechat_api_string_has_highlight)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_string_has_highlight (SvPV (ST (0), PL_na), /* string */
+                                          SvPV (ST (1), PL_na)); /* highlight_words */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::string_mask_to_regex: convert a mask (string with only "*" as
+ *                                joker) to a regex, paying attention to
+ *                                special chars in a regex
+ */
+
+XS (XS_weechat_api_string_mask_to_regex)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_mask_to_regex (SvPV (ST (0), PL_na)); /* mask */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::string_remove_color: remove WeeChat color codes from string
  */
 
@@ -5849,6 +5945,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::iconv_from_internal", XS_weechat_api_iconv_from_internal, "weechat");
     newXS ("weechat::gettext", XS_weechat_api_gettext, "weechat");
     newXS ("weechat::ngettext", XS_weechat_api_ngettext, "weechat");
+    newXS ("weechat::string_match", XS_weechat_api_string_match, "weechat");
+    newXS ("weechat::string_has_highlight", XS_weechat_api_string_has_highlight, "weechat");
+    newXS ("weechat::string_mask_to_regex", XS_weechat_api_string_mask_to_regex, "weechat");
     newXS ("weechat::string_remove_color", XS_weechat_api_string_remove_color, "weechat");
     newXS ("weechat::string_is_command_char", XS_weechat_api_string_is_command_char, "weechat");
     newXS ("weechat::string_input_for_buffer", XS_weechat_api_string_input_for_buffer, "weechat");

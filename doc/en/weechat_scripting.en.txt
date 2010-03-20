@@ -242,10 +242,9 @@ List of functions in script API:
 | plugins             |
   plugin_get_name
 | strings             |
-  charset_set, iconv_to_internal, iconv_from_internal, +
-  gettext, ngettext,
-  string_remove_color, +
-  string_is_command_char, string_input_for_buffer
+  charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
+  string_match, string_has_highlight, string_mask_to_regex,
+  string_remove_color, string_is_command_char, string_input_for_buffer
 | directories         |
   mkdir_home, mkdir, mkdir_parents
 | sorted lists        |

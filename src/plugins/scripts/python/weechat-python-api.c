@@ -318,7 +318,116 @@ weechat_python_api_ngettext (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_string_remove_color: remove WeeChat color codes from string
+ * weechat_python_api_string_match: return 1 if string matches a mask
+ *                                  mask can begin or end with "*", no other
+ *                                  "*" are allowed inside mask
+ */
+
+static PyObject *
+weechat_python_api_string_match (PyObject *self, PyObject *args)
+{
+    char *string, *mask;
+    int case_sensitive, value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_match");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    string = NULL;
+    mask = NULL;
+    case_sensitive = 0;
+    
+    if (!PyArg_ParseTuple (args, "ssi", &string, &mask, &case_sensitive))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "string_match");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_string_match (string, mask, case_sensitive);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_string_has_highlight: return 1 if string contains a
+ *                                          highlight (using list of words to
+ *                                          highlight)
+ *                                          return 0 if no highlight is found
+ *                                          in string
+ */
+
+static PyObject *
+weechat_python_api_string_has_highlight (PyObject *self, PyObject *args)
+{
+    char *string, *highlight_words;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    string = NULL;
+    highlight_words = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &string, &highlight_words))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_string_has_highlight (string, highlight_words);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_string_mask_to_regex: convert a mask (string with only
+ *                                          "*" as joker) to a regex, paying
+ *                                          attention to special chars in a
+ *                                          regex
+ */
+
+static PyObject *
+weechat_python_api_string_mask_to_regex (PyObject *self, PyObject *args)
+{
+    char *mask, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    mask = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &mask))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_string_mask_to_regex (mask);
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_string_remove_color: remove WeeChat color codes from
+ *                                         string
  */
 
 static PyObject *
@@ -6147,6 +6256,9 @@ PyMethodDef weechat_python_funcs[] =
     { "iconv_from_internal", &weechat_python_api_iconv_from_internal, METH_VARARGS, "" },
     { "gettext", &weechat_python_api_gettext, METH_VARARGS, "" },
     { "ngettext", &weechat_python_api_ngettext, METH_VARARGS, "" },
+    { "string_match", &weechat_python_api_string_match, METH_VARARGS, "" },
+    { "string_has_highlight", &weechat_python_api_string_has_highlight, METH_VARARGS, "" },
+    { "string_mask_to_regex", &weechat_python_api_string_mask_to_regex, METH_VARARGS, "" },
     { "string_remove_color", &weechat_python_api_string_remove_color, METH_VARARGS, "" },
     { "string_is_command_char", &weechat_python_api_string_is_command_char, METH_VARARGS, "" },
     { "string_input_for_buffer", &weechat_python_api_string_input_for_buffer, METH_VARARGS, "" },

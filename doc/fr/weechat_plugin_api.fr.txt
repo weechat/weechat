@@ -688,6 +688,20 @@ int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
 int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
 ----------------------------------------
 
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+match = weechat.string_match(string, mask, case_sensitive)
+
+# exemples
+match1 = weechat.string_match("abcdef", "abc*", 0) # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
+match3 = weechat.string_match("abcdef", "*def", 0) # 1
+match4 = weechat.string_match("abcdef", "*de*", 0) # 1
+----------------------------------------
+
 weechat_string_replace
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -818,6 +832,17 @@ Exemple en C :
 int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
 ----------------------------------------
 
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+highlight = weechat.string_has_highlight(string, highlight_words)
+
+# exemple
+highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
+----------------------------------------
+
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -849,6 +874,17 @@ char *str_regex = weechat_string_mask_to_regex ("test*mask");
 /* résultat : "test.*mask" */
 /* ... */
 free (str_regex);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+regex = weechat.string_mask_to_regex(mask)
+
+# exemple
+regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 ----------------------------------------
 
 weechat_string_split
@@ -1219,7 +1255,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-weechat.string_is_command_char(string)
+is_cmdchar = weechat.string_is_command_char(string)
 
 # exemples
 command_char1 = weechat.string_is_command_char("/test") # == 1
@@ -3553,7 +3589,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-weechat.config_option_is_null(option)
+is_null = weechat.config_option_is_null(option)
 
 # exemple
 if weechat.config_option_is_null(option):
@@ -3600,7 +3636,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-weechat.config_option_default_is_null(option)
+is_null = weechat.config_option_default_is_null(option)
 
 # exemple
 if weechat.config_option_default_is_null(option):
@@ -9273,9 +9309,9 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-struct t_upgrade_file *weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
-                                                     int object_id,
-                                                     struct t_infolist *infolist);
+int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
+                                  int object_id,
+                                  struct t_infolist *infolist);
 ----------------------------------------
 
 Paramètres :
@@ -9307,7 +9343,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-weechat.upgrade_write_object(upgrade_file, object_id, infolist)
+rc = weechat.upgrade_write_object(upgrade_file, object_id, infolist)
 
 # exemple
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
@@ -9322,12 +9358,12 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-struct t_upgrade_file *weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
-                                             int (*callback_read)(void *data,
-                                                                  struct t_upgrade_file *upgrade_file,
-                                                                  int object_id,
-                                                                  struct t_infolist *infolist),
-                                             void *callback_read_data);
+int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
+                          int (*callback_read)(void *data,
+                                               struct t_upgrade_file *upgrade_file,
+                                               int object_id,
+                                               struct t_infolist *infolist),
+                          void *callback_read_data);
 ----------------------------------------
 
 Paramètres :
@@ -9363,7 +9399,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
+rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
 
 # exemple
 def my_upgrade_read_cb(upgrade_file, object_id, infolist):

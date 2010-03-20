@@ -33,6 +33,11 @@ struct t_infolist;
 struct t_weelist;
 struct timeval;
 
+/*
+ * IMPORTANT NOTE for WeeChat developers: if you update, add or remove
+ * some functions in this file, then please update API version below.
+ */
+
 /* API version (used to check that plugin has same API and can be loaded) */
 #define WEECHAT_PLUGIN_API_VERSION "20100302-01"
 
@@ -130,12 +135,6 @@ struct t_weechat_plugin
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
     
     /* plugin functions (API) */
-    
-    /*
-     * IMPORTANT NOTE for WeeChat developers: always add new API functions
-     * at the END of functions, for keeping backward compatibility with
-     * existing plugins
-     */
     
     /* plugins */
     const char *(*plugin_get_name) (struct t_weechat_plugin *plugin);

@@ -251,10 +251,9 @@ Liste des fonctions de l'API script :
 | extensions                |
   plugin_get_name
 | chaînes                   |
-  charset_set, iconv_to_internal, iconv_from_internal, +
-  gettext, ngettext,
-  string_remove_color, +
-  string_is_command_char, string_input_for_buffer
+  charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
+  string_match, string_has_highlight, string_mask_to_regex,
+  string_remove_color, string_is_command_char, string_input_for_buffer
 | répertoires               |
   mkdir_home, mkdir, mkdir_parents
 | listes triées             |

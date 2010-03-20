@@ -365,6 +365,130 @@ weechat_lua_api_ngettext (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_string_match: return 1 if string matches a mask
+ *                               mask can begin or end with "*", no other "*"
+ *                               are allowed inside mask
+ */
+
+static int
+weechat_lua_api_string_match (lua_State *L)
+{
+    const char *string, *mask;
+    int n, case_sensitive, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_match");
+        LUA_RETURN_INT(0);
+    }
+    
+    string = NULL;
+    mask = NULL;
+    case_sensitive = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "string_match");
+        LUA_RETURN_INT(0);
+    }
+    
+    string = lua_tostring (lua_current_interpreter, -3);
+    mask = lua_tostring (lua_current_interpreter, -2);
+    case_sensitive = lua_tonumber (lua_current_interpreter, -1);
+    
+    value = weechat_string_match (string, mask, case_sensitive);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_string_has_highlight: return 1 if string contains a
+ *                                       highlight (using list of words to
+ *                                       highlight)
+ *                                       return 0 if no highlight is found in
+ *                                       string
+ */
+
+static int
+weechat_lua_api_string_has_highlight (lua_State *L)
+{
+    const char *string, *highlight_words;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        LUA_RETURN_INT(0);
+    }
+    
+    string = NULL;
+    highlight_words = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "string_has_highlight");
+        LUA_RETURN_INT(0);
+    }
+    
+    string = lua_tostring (lua_current_interpreter, -2);
+    highlight_words = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_string_has_highlight (string, highlight_words);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_string_mask_to_regex: convert a mask (string with only
+ *                                       "*" as joker) to a regex, paying
+ *                                       attention to special chars in a
+ *                                       regex
+ */
+
+static int
+weechat_lua_api_string_mask_to_regex (lua_State *L)
+{
+    const char *mask;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        LUA_RETURN_EMPTY;
+    }
+    
+    mask = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
+        LUA_RETURN_EMPTY;
+    }
+    
+    mask = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_string_mask_to_regex (mask);
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_string_remove_color: remove WeeChat color codes from string
  */
 
@@ -7306,6 +7430,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "iconv_from_internal", &weechat_lua_api_iconv_from_internal },
     { "gettext", &weechat_lua_api_gettext },
     { "ngettext", &weechat_lua_api_ngettext },
+    { "string_match", &weechat_lua_api_string_match },
+    { "string_has_highlight", &weechat_lua_api_string_has_highlight },
+    { "string_mask_to_regex", &weechat_lua_api_string_mask_to_regex },
     { "string_remove_color", &weechat_lua_api_string_remove_color },
     { "string_is_command_char", &weechat_lua_api_string_is_command_char },
     { "string_input_for_buffer", &weechat_lua_api_string_input_for_buffer },
