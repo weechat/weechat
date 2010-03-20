@@ -349,6 +349,17 @@ gui_main_end (int clean_exit)
 {
     if (clean_exit)
     {
+        /*
+         * final refreshs, to see messages just before exiting
+         * (if we are upgrading, don't refresh anything!)
+         */
+        if (!weechat_upgrading)
+        {
+            gui_main_refreshs ();
+            if (gui_window_refresh_needed)
+                gui_main_refreshs ();
+        }
+        
         /* remove bar items and bars */
         gui_bar_item_end ();
         gui_bar_free_all ();

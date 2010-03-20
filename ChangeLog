@@ -22,6 +22,8 @@ Version 0.3.2 (under dev!)
   string_is_command_char and string_input_for_buffer in plugin and script API
 * core: add new option weechat.look.read_marker_always_show
 * core: use arguments for infolist "nicklist" to return only one nick or group
+* gui: refresh screen when exiting WeeChat (to display messages printed after
+  /quit)
 * gui: fix bug with global history, reset pointer to last entry after each user
   input (bug #28754)
 * gui: fix bug with bar background after text with background color (bug #28157)

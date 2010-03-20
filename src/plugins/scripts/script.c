@@ -172,7 +172,7 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_init: initialize script
+ * script_init: initialize script plugin
  */
 
 void
@@ -1236,6 +1236,28 @@ script_infolist_list_scripts (struct t_weechat_plugin *weechat_plugin,
     }
     
     return NULL;
+}
+
+/*
+ * script_end: end script plugin
+ */
+
+void
+script_end (struct t_weechat_plugin *weechat_plugin,
+            struct t_plugin_script **scripts,
+            void (*callback_unload_all)())
+{
+    int scripts_loaded;
+    
+    scripts_loaded = (*scripts) ? 1 : 0;
+    
+    (void)(callback_unload_all) ();
+    
+    if (scripts_loaded)
+    {
+        weechat_printf (NULL, _("%s: scripts unloaded"),
+                        weechat_plugin->name);
+    }
 }
 
 /*

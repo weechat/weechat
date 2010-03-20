@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-19 13:59+0100\n"
+"POT-Creation-Date: 2010-03-20 17:06+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -5489,6 +5489,10 @@ msgstr "Wtyczka \"%s\" wyładowana"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
 
+#, fuzzy
+msgid "Plugins unloaded"
+msgstr "Załadowane pluginy:"
+
 msgid "Actions (letter+enter):"
 msgstr "Akcje (litera+enter)"
 
@@ -5915,6 +5919,10 @@ msgstr "    napisane przez \"%s\", licencja: %s"
 
 msgid "  (none)"
 msgstr "(żaden)"
+
+#, fuzzy, c-format
+msgid "%s: scripts unloaded"
+msgstr "%s: skrypt \"%s\" wyładowano"
 
 #, c-format
 msgid ""

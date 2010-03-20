@@ -432,10 +432,13 @@ weechat_perl_unload (struct t_plugin_script *script)
     int *r;
     char *perl_argv[1] = { NULL };
     void *interpreter;
-    
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: unloading script \"%s\""),
-                    PERL_PLUGIN_NAME, script->name);
+
+    if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: unloading script \"%s\""),
+                        PERL_PLUGIN_NAME, script->name);
+    }
     
 #ifdef MULTIPLICITY
     PERL_SET_CONTEXT (script->interpreter);
@@ -871,11 +874,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
-    (void) plugin;
-    
     /* unload all scripts */
-    weechat_perl_unload_all ();
+    perl_quiet = 1;
+    script_end (plugin, &perl_scripts, &weechat_perl_unload_all);
+    perl_quiet = 0;
     
 #ifndef MULTIPLICITY
     /* free perl intepreter */

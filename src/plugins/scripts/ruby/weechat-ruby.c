@@ -592,9 +592,12 @@ weechat_ruby_unload (struct t_plugin_script *script)
     char *ruby_argv[1] = { NULL };
     void *interpreter;
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: unloading script \"%s\""),
-                    RUBY_PLUGIN_NAME, script->name);
+    if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: unloading script \"%s\""),
+                        RUBY_PLUGIN_NAME, script->name);
+    }
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -1063,11 +1066,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
-    (void) plugin;
-    
     /* unload all scripts */
-    weechat_ruby_unload_all ();
+    ruby_quiet = 1;
+    script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
+    ruby_quiet = 0;
     
     ruby_cleanup (0);
     

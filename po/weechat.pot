@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-19 13:59+0100\n"
+"POT-Creation-Date: 2010-03-20 17:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4604,6 +4604,9 @@ msgstr ""
 msgid "%sError: plugin \"%s\" not found"
 msgstr ""
 
+msgid "Plugins unloaded"
+msgstr ""
+
 msgid "Actions (letter+enter):"
 msgstr ""
 
@@ -5004,6 +5007,10 @@ msgid "    written by \"%s\", license: %s"
 msgstr ""
 
 msgid "  (none)"
+msgstr ""
+
+#, c-format
+msgid "%s: scripts unloaded"
 msgstr ""
 
 #, c-format

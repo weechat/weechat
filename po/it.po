@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-19 13:59+0100\n"
+"POT-Creation-Date: 2010-03-20 17:06+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5499,6 +5499,10 @@ msgstr "Plugin \"%s\" disattivato"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sErrore: plugin \"%s\" non trovato"
 
+#, fuzzy
+msgid "Plugins unloaded"
+msgstr "Plugin caricati:"
+
 msgid "Actions (letter+enter):"
 msgstr "Azioni (lettera+invio)"
 
@@ -5926,6 +5930,10 @@ msgstr "    scritto da \"%s\", licenza: %s"
 
 msgid "  (none)"
 msgstr "  (nessuno)"
+
+#, fuzzy, c-format
+msgid "%s: scripts unloaded"
+msgstr "%s: script \"%s\" disattivato"
 
 #, c-format
 msgid ""

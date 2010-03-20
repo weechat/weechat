@@ -1659,7 +1659,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
          ptr_window = ptr_window->next_window)
     {
         if (ptr_window->buffer == buffer)
-            ptr_window->buffer = NULL;
+            ptr_window->buffer = gui_buffers;
     }
     
     hook_signal_send ("buffer_closed",

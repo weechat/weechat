@@ -537,9 +537,12 @@ weechat_python_unload (struct t_plugin_script *script)
     void *interpreter;
     PyThreadState *old_interpreter;
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: unloading script \"%s\""),
-                    PYTHON_PLUGIN_NAME, script->name);
+    if ((weechat_python_plugin->debug >= 1) || !python_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: unloading script \"%s\""),
+                        PYTHON_PLUGIN_NAME, script->name);
+    }
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -943,11 +946,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
-    (void) plugin;
-    
     /* unload all scripts */
-    weechat_python_unload_all ();
+    python_quiet = 1;
+    script_end (plugin, &python_scripts, &weechat_python_unload_all);
+    python_quiet = 0;
     
     /* free Python interpreter */
     if (python_mainThreadState != NULL)

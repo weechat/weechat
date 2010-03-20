@@ -143,6 +143,9 @@ extern struct t_infolist *script_infolist_list_scripts (struct t_weechat_plugin 
                                                         struct t_plugin_script *scripts,
                                                         void *pointer,
                                                         const char *arguments);
+extern void script_end (struct t_weechat_plugin *weechat_plugin,
+                        struct t_plugin_script **scripts,
+                        void (*callback_unload_all)());
 extern void script_print_log (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts);
 

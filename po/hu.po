@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-19 13:59+0100\n"
+"POT-Creation-Date: 2010-03-20 17:06+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5310,6 +5310,10 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
+#, fuzzy
+msgid "Plugins unloaded"
+msgstr "Betöltött modulok:\n"
+
 msgid "Actions (letter+enter):"
 msgstr ""
 
@@ -5734,6 +5738,10 @@ msgstr ""
 #, fuzzy
 msgid "  (none)"
 msgstr "(ismeretlen)"
+
+#, fuzzy, c-format
+msgid "%s: scripts unloaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy, c-format
 msgid ""

@@ -240,9 +240,12 @@ weechat_tcl_unload (struct t_plugin_script *script)
     Tcl_Interp* interp;
     void *pointer;
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s: unloading script \"%s\""),
-                    TCL_PLUGIN_NAME, script->name);
+    if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: unloading script \"%s\""),
+                        TCL_PLUGIN_NAME, script->name);
+    }
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -611,10 +614,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    (void) plugin;
-
     /* unload all scripts */
-    weechat_tcl_unload_all ();
+    tcl_quiet = 1;
+    script_end (plugin, &tcl_scripts, &weechat_tcl_unload_all);
+    tcl_quiet = 0;
     
     return WEECHAT_RC_OK;
 }

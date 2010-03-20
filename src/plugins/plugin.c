@@ -840,9 +840,12 @@ plugin_unload (struct t_weechat_plugin *plugin)
     
     plugin_remove (plugin);
     
-    gui_chat_printf (NULL,
-                     _("Plugin \"%s\" unloaded"),
-                     (name) ? name : "???");
+    if ((weechat_debug_core >= 1) || !plugin_quiet)
+    {
+        gui_chat_printf (NULL,
+                         _("Plugin \"%s\" unloaded"),
+                         (name) ? name : "???");
+    }
     if (name)
         free (name);
 }
@@ -875,9 +878,20 @@ plugin_unload_name (const char *name)
 void
 plugin_unload_all ()
 {
+    int plugins_loaded;
+    
+    plugins_loaded = (weechat_plugins) ? 1 : 0;
+    
+    plugin_quiet = 1;
     while (weechat_plugins)
     {
         plugin_unload (last_weechat_plugin);
+    }
+    plugin_quiet = 0;
+    
+    if (plugins_loaded)
+    {
+        gui_chat_printf (NULL, _("Plugins unloaded"));
     }
 }
 
