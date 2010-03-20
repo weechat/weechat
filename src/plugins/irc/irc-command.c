@@ -1367,6 +1367,34 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_forcejoin: forces a user to join channel(s)
+ *                        (this is the equivalent to /sajoin on some IRCd's)
+ */
+
+int
+irc_command_forcejoin (void *data, struct t_gui_buffer *buffer, int argc,
+                       char **argv, char **argv_eol)
+{
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("forcejoin", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "FORCEJOIN %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "forcejoin");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_halfop: give half operator privileges to nickname(s)
  */
 
@@ -2547,6 +2575,34 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
     {
         IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
                                       "notice");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_omode: change mode on channel, without having operator status
+ *                    (this is the equivalent to /sajoin on some IRCd's)
+ */
+
+int
+irc_command_omode (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
+{
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("omode", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                          "OMODE %s %s", argv[1], argv_eol[2]);
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "omode");
     }
     
     return WEECHAT_RC_OK;
@@ -4276,6 +4332,12 @@ irc_command_init ()
                           "-all"
                           " || %(irc_servers)|%*",
                           &irc_command_disconnect, NULL);
+    weechat_hook_command ("forcejoin",
+                          N_("forces a user to join channel(s)"),
+                          N_("nickname channel[,channel]"),
+                          N_("nickname: nickname\n"
+                             " channel: channel name"),
+                          "%(nicks) %(irc_server_channels)", &irc_command_forcejoin, NULL);
     weechat_hook_command ("halfop",
                           N_("give half channel operator status to "
                              "nickname(s)"),
@@ -4456,6 +4518,15 @@ irc_command_init ()
                              "nickname: user to send notice to\n"
                              "    text: text to send"),
                           "%(nicks) %-", &irc_command_notice, NULL);
+    weechat_hook_command ("omode",
+                          N_("change mode on channel, without having operator "
+                             "status"),
+                          /* TRANSLATORS: "channel" and "mode" are arguments
+                             for command, translate them separately */
+                          N_("channel mode"),
+                          N_("channel: channel name\n"
+                             "   mode: mode for channel"),
+                          "%(irc_server_channels)", &irc_command_omode, NULL);
     weechat_hook_command ("op",
                           N_("give channel operator status to nickname(s)"),
                           N_("nickname [nickname]"),

@@ -61,6 +61,7 @@ Version 0.3.2 (under dev!)
 * irc: add option irc.look.item_channel_modes_hide_key to hide channel key
   in channel modes (bug #23961)
 * irc: add option irc.look.item_nick_prefix
+* irc: add commands /omode and /forcejoin (patch #7126)
 * irc: add command /map
 * irc: add missing commands 276, 343
 * irc: fix compilation with old GnuTLS versions (bug #28723)
