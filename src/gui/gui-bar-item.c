@@ -1393,6 +1393,8 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     gui_bar_item_hook_signal ("buffer_unmerged",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_closed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     
     /* buffer name */
     gui_bar_item_new (NULL,
