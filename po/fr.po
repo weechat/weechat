@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 16:05+0100\n"
-"PO-Revision-Date: 2010-03-21 18:16+0100\n"
+"POT-Creation-Date: 2010-03-21 18:32+0100\n"
+"PO-Revision-Date: 2010-03-21 18:33+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1430,9 +1430,12 @@ msgstr ""
 "             s: secondes (par défaut)\n"
 "             m: minutes\n"
 "             h: heures\n"
-"commande: commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')\n"
+"commande: commande à exécuter (ou texte à envoyer au tampon si la commande "
+"ne commence pas par '/')\n"
 "\n"
-"Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).\n"
+"Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le "
+"tampon n'est pas trouvé, alors la commande est exécutée sur le tampon "
+"WeeChat principal).\n"
 "\n"
 "Exemples:\n"
 "  rejoindre le canal dans 10 sec: /wait 10 /join #test\n"
@@ -2495,10 +2498,6 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: erreur en création de l'alias \"%s\" => \"%s\""
 
 #, c-format
-msgid "%s%s: error creating completion for alias \"%s\": alias not found"
-msgstr "%s%s: erreur de création de la complétion pour l'alias \"%s\": alias non trouvé"
-
-#, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" créé"
 
@@ -2558,7 +2557,7 @@ msgid ""
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin /quote forcejoin"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "complétion: complétion pour l'alias (optionnel, par défaut la complétion se fait avec la commande cible)\n"
 " nom_alias: nom de l'alias (peut démarrer ou se terminer par \"*\" pour une liste d'alias)\n"
@@ -2584,7 +2583,7 @@ msgstr ""
 "  alias /hello pour dire \"hello\" sur tous les canaux mais pas sur #weechat :\n"
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin pour envoyer la commande IRC \"forcejoin\" avec la complétion de /sajoin :\n"
-"    /alias -completion %%sajoin /quote forcejoin"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 
 msgid "remove aliases"
 msgstr "supprimer des alias"
@@ -2597,6 +2596,12 @@ msgstr "nom_alias: nom de l'alias à supprimer"
 
 msgid "list of aliases"
 msgstr "liste des alias"
+
+#, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr ""
+"%s%s: erreur de création de la complétion pour l'alias \"%s\": alias non "
+"trouvé"
 
 msgid "alias pointer (optional)"
 msgstr "pointeur vers l'alias (optionnel)"
@@ -3341,19 +3346,6 @@ msgstr ""
 "       -all: se déconnecter de tous les serveurs\n"
 "nom_serveur: nom du serveur pour se déconnecter"
 
-msgid "forces a user to join channel(s)"
-msgstr "force un utilisateur à rejoindre un ou plusieurs canaux"
-
-msgid "nickname channel[,channel]"
-msgstr "pseudo canal[,canal]"
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-"pseudo: pseudo\n"
-" canal: canal"
-
 msgid "give half channel operator status to nickname(s)"
 msgstr "donner le statut de demi-opérateur à un/des pseudo(s)"
 
@@ -3654,21 +3646,6 @@ msgstr ""
 " pseudo: pseudo cible pour la notice\n"
 "  texte: texte à envoyer"
 
-msgid "change mode on channel, without having operator status"
-msgstr "changer le mode du canal, sans avoir le statut opérateur"
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr "mode canal"
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
-msgstr ""
-"canal: nom du canal\n"
-" mode: mode pour le canal"
-
 msgid "give channel operator status to nickname(s)"
 msgstr "donner le statut opérateur à un/des pseudo(s)"
 
@@ -3774,6 +3751,34 @@ msgstr "option: option supplémentaire, pour certains serveurs"
 
 msgid "tell the server to restart itself"
 msgstr "demander au serveur de redémarrer"
+
+msgid "forces a user to join channel(s)"
+msgstr "force un utilisateur à rejoindre un ou plusieurs canaux"
+
+msgid "nickname channel[,channel]"
+msgstr "pseudo canal[,canal]"
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"pseudo: pseudo\n"
+" canal: canal"
+
+msgid "change mode on channel, without having operator status"
+msgstr "changer le mode du canal, sans avoir le statut opérateur"
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr "mode canal"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"canal: nom du canal\n"
+" mode: mode pour le canal"
 
 msgid "forces a user to use another nick"
 msgstr "force un utilisateur à utiliser un autre pseudo"

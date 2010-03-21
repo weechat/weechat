@@ -10,7 +10,7 @@
   
   Sans paramètre, cette commande liste tous les alias définis.
   
-  Note: dans la commande, les variables spéciales sont remplacées :
+  Note : dans la commande, les variables spéciales sont remplacées :
           $n: paramètre 'n' (entre 1 et 9)
          $-m: paramètres de 1 à 'm'
          $n-: paramètres de 'n' au dernier
@@ -27,6 +27,6 @@
     alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
       /alias hello /allchan -exclude=#weechat msg * hello
     alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
-      /alias -completion %%sajoin /quote forcejoin
+      /alias -completion %%sajoin forcejoin /quote forcejoin
 ........................................
 

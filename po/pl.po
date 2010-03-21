@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 16:05+0100\n"
+"POT-Creation-Date: 2010-03-21 18:32+0100\n"
 "PO-Revision-Date: 2010-02-23 10:43+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -2464,10 +2464,6 @@ msgstr "%s%s: błąd, cykliczna referencja przy wywoływaniu aliasu \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: błąd podczas tworzenia aliasu \"%s\" => \"%s\""
 
-#, fuzzy, c-format
-msgid "%s%s: error creating completion for alias \"%s\": alias not found"
-msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\" "
-
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Utworzono alias \"%s\" => \"%s\" "
@@ -2529,7 +2525,7 @@ msgid ""
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin /quote forcejoin"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "nazwa_aliasu: nazwa aliasu (może się zaczynać lub kończyć \"*\" dla "
 "wyświetlenia listy aliasów)\n"
@@ -2561,6 +2557,10 @@ msgstr "nazwa_aliasu: nazwa aliasu do usunięcia"
 
 msgid "list of aliases"
 msgstr "lista aliasów"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\" "
 
 #, fuzzy
 msgid "alias pointer (optional)"
@@ -3293,19 +3293,6 @@ msgstr ""
 "      -all: rozłącza się ze wszystkimi serwerami\n"
 "nazwa_serwera: nazwa serwera(ów) do rozłączenia"
 
-msgid "forces a user to join channel(s)"
-msgstr "zmusza użytkownika do wejścia na kanał(y)"
-
-msgid "nickname channel[,channel]"
-msgstr "nick kanał[,kanał]"
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-"nick: nick\n"
-" kanał: nazwa kanału"
-
 msgid "give half channel operator status to nickname(s)"
 msgstr "nadaje status półoperatora (halfopa)"
 
@@ -3605,21 +3592,6 @@ msgstr ""
 "nick: użytkownik, do którego wysłac powiadomienie\n"
 "    tekst: treść"
 
-msgid "change mode on channel, without having operator status"
-msgstr "zmienia atrybuty kanału, bez posiadania statusu operatora"
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr "kanał atrybuty"
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
-msgstr ""
-"kanał: nazwa kanału\n"
-"   atrybuty: atrybuty kanału"
-
 msgid "give channel operator status to nickname(s)"
 msgstr "nadaje uprawienia użytkownika kanału"
 
@@ -3723,6 +3695,34 @@ msgstr "opcje: dodatkowe opcje, dla niektórych serwerów"
 
 msgid "tell the server to restart itself"
 msgstr "mówi serwerowi, aby się ponownie uruchomił"
+
+msgid "forces a user to join channel(s)"
+msgstr "zmusza użytkownika do wejścia na kanał(y)"
+
+msgid "nickname channel[,channel]"
+msgstr "nick kanał[,kanał]"
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"nick: nick\n"
+" kanał: nazwa kanału"
+
+msgid "change mode on channel, without having operator status"
+msgstr "zmienia atrybuty kanału, bez posiadania statusu operatora"
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr "kanał atrybuty"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"kanał: nazwa kanału\n"
+"   atrybuty: atrybuty kanału"
 
 msgid "forces a user to use another nick"
 msgstr "zmusza użytkownika do użycia innego nicku"

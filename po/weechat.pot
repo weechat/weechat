@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 16:05+0100\n"
+"POT-Creation-Date: 2010-03-21 18:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2019,10 +2019,6 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: error creating completion for alias \"%s\": alias not found"
-msgstr ""
-
-#, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr ""
 
@@ -2082,7 +2078,7 @@ msgid ""
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin /quote forcejoin"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 
 msgid "remove aliases"
@@ -2095,6 +2091,10 @@ msgid "alias_name: name of alias to remove"
 msgstr ""
 
 msgid "list of aliases"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
 msgstr ""
 
 msgid "alias pointer (optional)"
@@ -2730,17 +2730,6 @@ msgid ""
 "servername: server name to disconnect"
 msgstr ""
 
-msgid "forces a user to join channel(s)"
-msgstr ""
-
-msgid "nickname channel[,channel]"
-msgstr ""
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-
 msgid "give half channel operator status to nickname(s)"
 msgstr ""
 
@@ -2967,19 +2956,6 @@ msgid ""
 "    text: text to send"
 msgstr ""
 
-msgid "change mode on channel, without having operator status"
-msgstr ""
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr ""
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
-msgstr ""
-
 msgid "give channel operator status to nickname(s)"
 msgstr ""
 
@@ -3067,6 +3043,30 @@ msgid "option: extra option, for some servers"
 msgstr ""
 
 msgid "tell the server to restart itself"
+msgstr ""
+
+msgid "forces a user to join channel(s)"
+msgstr ""
+
+msgid "nickname channel[,channel]"
+msgstr ""
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
 msgstr ""
 
 msgid "forces a user to use another nick"

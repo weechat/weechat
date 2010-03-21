@@ -360,7 +360,7 @@
                h: heures
   commande: commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
   
-  Note: la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
+  Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
   
   Exemples:
     rejoindre le canal dans 10 sec: /wait 10 /join #test

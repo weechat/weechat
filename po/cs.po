@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 16:05+0100\n"
+"POT-Creation-Date: 2010-03-21 18:32+0100\n"
 "PO-Revision-Date: 2010-03-05 10:43+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2435,10 +2435,6 @@ msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: chyba vytváření aliasu \"%s\" => \"%s\""
 
-#, fuzzy, c-format
-msgid "%s%s: error creating completion for alias \"%s\": alias not found"
-msgstr "%sChyba: volba nastavení \"%s\" nenalezena"
-
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" vytvořen"
@@ -2500,7 +2496,7 @@ msgid ""
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin /quote forcejoin"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "jméno_aliasu: jméno aliasu (může začínat i končit \"*\" pro výpis aliasů)\n"
 "      příkaz: jméno příkazu (více příkazů se rozděluje středníky)\n"
@@ -2530,6 +2526,10 @@ msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
 msgid "list of aliases"
 msgstr "seznam aliasů"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr "%sChyba: volba nastavení \"%s\" nenalezena"
 
 msgid "alias pointer (optional)"
 msgstr "ukazatel aliasu (volitelné)"
@@ -3259,19 +3259,6 @@ msgstr ""
 "         -all: odpojit od všech serverů\n"
 "jméno_serveru: jméno serveru pro odpojení"
 
-msgid "forces a user to join channel(s)"
-msgstr "násilně připojit uživatele ke kanálu/kanálům"
-
-msgid "nickname channel[,channel]"
-msgstr "přezdívka kanál[,kanál]"
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-"přezdívka: přezdívka\n"
-"    kanál: jméno kanálu"
-
 msgid "give half channel operator status to nickname(s)"
 msgstr "dát přezdívce (přezdívkám) status polovičního operátora kanálu"
 
@@ -3570,21 +3557,6 @@ msgstr ""
 "přezdívka: uživatel, kterému poslat notifikaci\n"
 "     text: text, který poslat"
 
-msgid "change mode on channel, without having operator status"
-msgstr "změnit mód kanálu, bez nutnosti mít operátorské oprávnění"
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr "kanál mód"
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
-msgstr ""
-"kanál: jméno kanálu\n"
-"  mód: mód pro kanál"
-
 msgid "give channel operator status to nickname(s)"
 msgstr "dát status operátora kanálu přezdívce (přezdívkám)"
 
@@ -3688,6 +3660,34 @@ msgstr "volba: extra volba pro některé servery"
 
 msgid "tell the server to restart itself"
 msgstr "říct serveru, aby se restartoval"
+
+msgid "forces a user to join channel(s)"
+msgstr "násilně připojit uživatele ke kanálu/kanálům"
+
+msgid "nickname channel[,channel]"
+msgstr "přezdívka kanál[,kanál]"
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"přezdívka: přezdívka\n"
+"    kanál: jméno kanálu"
+
+msgid "change mode on channel, without having operator status"
+msgstr "změnit mód kanálu, bez nutnosti mít operátorské oprávnění"
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr "kanál mód"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"kanál: jméno kanálu\n"
+"  mód: mód pro kanál"
 
 msgid "forces a user to use another nick"
 msgstr "násilně přinutit uživatele používat jinou přezdívku"

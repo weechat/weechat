@@ -944,7 +944,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "* hello\n"
                              "  alias /forcejoin to send IRC command "
                              "\"forcejoin\" with completion of /sajoin:\n"
-                             "    /alias -completion %%sajoin /quote forcejoin"),
+                             "    /alias -completion %%sajoin forcejoin /quote forcejoin"),
                           "%(alias)|-completion %(commands)",
                           &alias_command_cb, NULL);
     
