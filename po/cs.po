@@ -4681,13 +4681,13 @@ msgstr "%sNení nastaveno téma pro kanál %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sTéma pro %s%s%s v \"%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTéma nastevil %s%s%s v %s"
+msgstr "%sTéma nastevil %s%s%s%s%s%s%s%s%s v %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTéma pro %s%s%s nastevil %s%s%s v %s"
+msgstr "%sTéma pro %s%s%s nastevil %s%s%s%s%s%s%s%s%s v %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
@@ -5448,9 +5448,8 @@ msgstr "Plugin \"%s\" odebrán"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sChyba: plugin \"%s\" nenalezen"
 
-#, fuzzy
 msgid "Plugins unloaded"
-msgstr "Načtené pluginy:"
+msgstr "Pluginy odebrány"
 
 msgid "Actions (letter+enter):"
 msgstr "Akce (písmeno+enter):"
@@ -5876,9 +5875,9 @@ msgstr "    napsal \"%s\", licence: %s"
 msgid "  (none)"
 msgstr "  (žádný)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: scripts unloaded"
-msgstr "%s: skript \"%s\" odebrán"
+msgstr "%s: skripty odebrány"
 
 #, c-format
 msgid ""
