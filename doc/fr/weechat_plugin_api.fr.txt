@@ -5674,10 +5674,20 @@ Paramètres :
 | Extension | Signal | Paramètres | Description
 
 | irc | xxx,irc_in_yyy ^(1)^ | chaîne : message |
-  message irc du serveur (avant utilisation par l'extension irc)
+  message irc du serveur (avant utilisation par l'extension irc,
+  signal envoyé uniquement si le message n'est *pas* ignoré)
 
 | irc | xxx,irc_in2_yyy ^(1)^ | chaîne : message |
-  message irc du serveur (après utilisation par l'extension irc)
+  message irc du serveur (après utilisation par l'extension irc,
+  signal envoyé uniquement si le message n'est *pas* ignoré)
+
+| irc | xxx,irc_raw_in_yyy ^(1)^ | chaîne : message |
+  message irc du serveur (avant utilisation par l'extension irc,
+  signal envoyé même si le message est ignoré)
+
+| irc | xxx,irc_raw_in2_yyy ^(1)^ | chaîne : message |
+  message irc du serveur (après utilisation par l'extension irc,
+  signal envoyé même si le message est ignoré)
 
 | irc | xxx,irc_out_yyy ^(1)^ | chaîne : message |
   message irc envoyé au serveur

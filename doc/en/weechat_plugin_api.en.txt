@@ -5600,10 +5600,20 @@ Arguments:
 | Plugin | Signal | Arguments | Description
 
 | irc | xxx,irc_in_yyy ^(1)^ | string: message |
-  irc message from server (before irc plugin uses it)
+  irc message from server (before irc plugin uses it,
+  signal sent only if message is *not* ignored)
 
 | irc | xxx,irc_in2_yyy ^(1)^ | string: message |
-  irc message from server (after irc plugin uses it)
+  irc message from server (after irc plugin uses it,
+  signal sent only if message is *not* ignored)
+
+| irc | xxx,irc_raw_in_yyy ^(1)^ | string: message |
+  irc message from server (before irc plugin uses it,
+  signal sent even if message is ignored)
+
+| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: message |
+  irc message from server (after irc plugin uses it,
+  signal sent even if message is ignored)
 
 | irc | xxx,irc_out_yyy ^(1)^ | string: message |
   irc message sent to server

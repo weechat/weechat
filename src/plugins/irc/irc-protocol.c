@@ -3974,7 +3974,10 @@ irc_protocol_recv_command (struct t_irc_server *server,
         ptr_channel = irc_channel_search (server, msg_channel);
     message_ignored = irc_ignore_check (server, ptr_channel, nick, host);
     
-    /* send signal with received command (if message is not ignored) */
+    /* send signal with received command, even if command is ignored */
+    irc_server_send_signal (server, "irc_raw_in", msg_command, irc_message);
+    
+    /* send signal with received command, only if message is not ignored */
     if (!message_ignored)
         irc_server_send_signal (server, "irc_in", msg_command, irc_message);
     
@@ -4054,6 +4057,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
         if (!message_ignored)
             irc_server_send_signal (server, "irc_in2", msg_command, irc_message);
     }
+    
+    /* send signal with received command, even if command is ignored */
+    irc_server_send_signal (server, "irc_raw_in2", msg_command, irc_message);
     
 end:
     if (nick)
