@@ -583,12 +583,20 @@ char *
 gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
+    struct t_gui_buffer_local_var *local_var_nick;
+    
     /* make C compiler happy */
     (void) data;
     (void) item;
-    (void) window;
     
-    return NULL;
+    if (!window)
+        window = gui_current_window;
+    
+    local_var_nick = gui_buffer_local_var_search (window->buffer, "nick");
+    if (!local_var_nick || !local_var_nick->value)
+        return NULL;
+    
+    return strdup (local_var_nick->value);
 }
 
 /*
@@ -1329,7 +1337,7 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_default_input_prompt, NULL);
-    gui_bar_item_hook_signal ("input_prompt_changed",
+    gui_bar_item_hook_signal ("buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     
     /* input search */

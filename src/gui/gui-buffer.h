@@ -186,6 +186,8 @@ extern char *gui_buffer_notify_string[];
 
 /* buffer functions */
 
+extern struct t_gui_buffer_local_var *gui_buffer_local_var_search (struct t_gui_buffer *buffer,
+                                                                   const char *name);
 extern void gui_buffer_notify_set_all ();
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             const char *name,
