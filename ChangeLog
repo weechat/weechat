@@ -41,6 +41,7 @@ Version 0.3.2 (under dev!)
 * api: fix "inactivity" value when no key has been pressed since WeeChat started
   (bug #28930)
 * api: return absolute path for info_get of "weechat_dir" (bug #27936)
+* alias: add custom completion for aliases (task #9479)
 * scripts: allow script commands to reload only one script
 * perl: fix crash when callbacks are called during script initialization
   (bug #29018)

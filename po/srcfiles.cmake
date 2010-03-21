@@ -88,6 +88,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/wxwidgets/gui-input.c
 ./src/plugins/alias/alias.c
 ./src/plugins/alias/alias.h
+./src/plugins/alias/alias-config.c
+./src/plugins/alias/alias-config.h
 ./src/plugins/alias/alias-info.c
 ./src/plugins/alias/alias-info.h
 ./src/plugins/aspell/weechat-aspell.c

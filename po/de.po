@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 10:01+0100\n"
+"POT-Creation-Date: 2010-03-21 16:05+0100\n"
 "PO-Revision-Date: 2010-03-20 22:35+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2541,6 +2541,10 @@ msgstr "%s%s: Fehler,  Zirkelbezug beim Aufruf des Aliases \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: Fehler beim erstellen von alias \"%s\" => \"%s\""
 
+#, fuzzy, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
+
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt"
@@ -2563,13 +2567,21 @@ msgstr "%sAlias \"%s\" nicht gefunden"
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" entfernt"
 
+#, c-format
+msgid "%s%s: error creating configuration file"
+msgstr "%s%s: Fehler beim Erstellen einer Konfigurationsdatei"
+
 msgid "create an alias for a command"
 msgstr "Einem Befehl wird ein Alias zugewiesen"
 
-msgid "[alias_name [command [arguments]]]"
+#, fuzzy
+msgid "[[-completion completion] alias_name [command [arguments]]]"
 msgstr "[Aliasname [Befehl [Argumente]]]"
 
+#, fuzzy, c-format
 msgid ""
+"completion: completion for alias (optional, by default completion is done "
+"with target command)\n"
 "alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
@@ -2585,7 +2597,16 @@ msgid ""
 "        $~: last argument\n"
 "     $nick: current nick\n"
 "  $channel: current channel\n"
-"   $server: current server"
+"   $server: current server\n"
+"\n"
+"Examples:\n"
+"  alias /split to split window horizontally:\n"
+"    /alias split /window splith\n"
+"  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
+"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
+"sajoin:\n"
+"    /alias -completion %%sajoin /quote forcejoin"
 msgstr ""
 "alias_name: Name des Alias (kann mit Joker \"*\" beginnen oder enden für "
 "Alias-Listing)\n"
@@ -2767,10 +2788,6 @@ msgstr "%s%s: Falscher Zeichensatz (De-/Kodieren erwartet)"
 #, c-format
 msgid "%s%s: invalid charset: \"%s\""
 msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
-
-#, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "%s%s: Fehler beim Erstellen einer Konfigurationsdatei"
 
 msgid "change charset for current buffer"
 msgstr "ändere Zeichensatz für aktuellen Buffer"

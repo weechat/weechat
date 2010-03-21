@@ -58,7 +58,7 @@
          -all: connette a tutti i server
   nome_server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)
       -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è attivo sul server)
-    nome_host: nome host (oppure IP) del server 
+    nome_host: nome host (oppure IP) del server
         porta: porta per il server (6667 è la predefinita)
       opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)
      nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)
@@ -130,6 +130,15 @@
 
        -all: disconnetti da tutti i server
   nome_server: nome del server da cui disconnettersi
+........................................
+
+&bull; *`/forcejoin`* `nick canale[,canale]`::
+
+........................................
+  forza un utente ad entrare su uno o più canali
+
+    nick: nick
+  canale: nome del canale
 ........................................
 
 &bull; *`/halfop`* `[nick [nick]]`::
@@ -339,6 +348,15 @@
   server: invia a questo server (nome interno)
     nick: utente a cui inviare la notifica
    testo: testo da inviare
+........................................
+
+&bull; *`/omode`* `canale modalità`::
+
+........................................
+  cambia modalità sul canale, senza avere lo status di operatore
+
+  canale: nome del canale
+  modalità: modalità per il canale
 ........................................
 
 &bull; *`/op`* `nick [nick]`::

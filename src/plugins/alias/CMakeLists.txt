@@ -16,6 +16,7 @@
 
 ADD_LIBRARY(alias MODULE
 alias.c alias.h
+alias-config.c alias-config.h
 alias-info.c alias-info.h)
 SET_TARGET_PROPERTIES(alias PROPERTIES PREFIX "")
 

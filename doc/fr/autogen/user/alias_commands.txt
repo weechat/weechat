@@ -1,8 +1,9 @@
-&bull; *`/alias`* `[nom_alias [commande [paramètres]]]`::
+&bull; *`/alias`* `[[-completion complétion] nom_alias [commande [paramètres]]]`::
 
 ........................................
   créer un alias pour une commande
 
+  complétion: complétion pour l'alias (optionnel, par défaut la complétion se fait avec la commande cible)
    nom_alias: nom de l'alias (peut démarrer ou se terminer par "*" pour une liste d'alias)
     commande: nom de la commande (plusieurs commandes peuvent être séparées par des point-virgules)
   paramètres: paramètres pour la commande
@@ -19,5 +20,13 @@
        $nick: pseudo courant
     $channel: canal courant
      $server: serveur courant
+  
+  Exemples :
+    alias /split pour diviser la fenêtre horizontalement :
+      /alias split /window splith
+    alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
+      /alias hello /allchan -exclude=#weechat msg * hello
+    alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
+      /alias -completion %%sajoin /quote forcejoin
 ........................................
 

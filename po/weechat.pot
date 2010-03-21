@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-20 17:06+0100\n"
+"POT-Creation-Date: 2010-03-21 16:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2019,6 +2019,10 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr ""
 
 #, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr ""
+
+#, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr ""
 
@@ -2040,13 +2044,20 @@ msgstr ""
 msgid "Alias \"%s\" removed"
 msgstr ""
 
+#, c-format
+msgid "%s%s: error creating configuration file"
+msgstr ""
+
 msgid "create an alias for a command"
 msgstr ""
 
-msgid "[alias_name [command [arguments]]]"
+msgid "[[-completion completion] alias_name [command [arguments]]]"
 msgstr ""
 
+#, c-format
 msgid ""
+"completion: completion for alias (optional, by default completion is done "
+"with target command)\n"
 "alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
@@ -2062,7 +2073,16 @@ msgid ""
 "        $~: last argument\n"
 "     $nick: current nick\n"
 "  $channel: current channel\n"
-"   $server: current server"
+"   $server: current server\n"
+"\n"
+"Examples:\n"
+"  alias /split to split window horizontally:\n"
+"    /alias split /window splith\n"
+"  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
+"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
+"sajoin:\n"
+"    /alias -completion %%sajoin /quote forcejoin"
 msgstr ""
 
 msgid "remove aliases"
@@ -2197,10 +2217,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: invalid charset: \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error creating configuration file"
 msgstr ""
 
 msgid "change charset for current buffer"
@@ -2714,6 +2730,17 @@ msgid ""
 "servername: server name to disconnect"
 msgstr ""
 
+msgid "forces a user to join channel(s)"
+msgstr ""
+
+msgid "nickname channel[,channel]"
+msgstr ""
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+
 msgid "give half channel operator status to nickname(s)"
 msgstr ""
 
@@ -2940,6 +2967,19 @@ msgid ""
 "    text: text to send"
 msgstr ""
 
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+
 msgid "give channel operator status to nickname(s)"
 msgstr ""
 
@@ -3027,30 +3067,6 @@ msgid "option: extra option, for some servers"
 msgstr ""
 
 msgid "tell the server to restart itself"
-msgstr ""
-
-msgid "forces a user to join channel(s)"
-msgstr ""
-
-msgid "nickname channel[,channel]"
-msgstr ""
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-
-msgid "change mode on channel, without having operator status"
-msgstr ""
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr ""
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
 msgstr ""
 
 msgid "forces a user to use another nick"

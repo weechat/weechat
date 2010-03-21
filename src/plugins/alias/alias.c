@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "alias.h"
+#include "alias-config.h"
 #include "alias-info.h"
 
 
@@ -37,9 +38,6 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 #define ALIAS_IS_ARG_NUMBER(number) ((number >= '1') && (number <= '9'))
 
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
-
-struct t_config_file *alias_config_file = NULL;
-struct t_config_section *alias_config_section_cmd = NULL;
 
 struct t_alias *alias_list = NULL;
 struct t_alias *last_alias = NULL;
@@ -331,7 +329,6 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     int some_args_replaced, length1, length2;
     
     /* make C compiler happy */
-    (void) argc;
     (void) argv;
     
     ptr_alias = (struct t_alias *)data;
@@ -450,6 +447,8 @@ alias_free (struct t_alias *alias)
         free (alias->name);
     if (alias->command)
         free (alias->command);
+    if (alias->completion)
+        free (alias->completion);
     free (alias);
     
     alias_list = new_alias_list;
@@ -488,16 +487,70 @@ alias_find_pos (const char *name)
 }
 
 /*
+ * alias_hook_command: call weehat_hook_command() for an alias and store result
+ *                     in variable "hook" of alias
+ */
+
+void
+alias_hook_command (struct t_alias *alias)
+{
+    char *str_completion;
+    int length;
+    
+    str_completion = NULL;
+    
+    if (!alias->completion)
+    {
+        /*
+         * if alias has no custom completion, then default is to complete with
+         * completion template of target command, for example if alias is
+         * "/alias test /buffer", then str_completion will be "%%buffer"
+         */
+        length = 2 + strlen (alias->command) + 1;
+        str_completion = malloc (length);
+        if (str_completion)
+        {
+            snprintf (str_completion, length, "%%%%%s",
+                      (weechat_string_is_command_char (alias->command)) ?
+                      weechat_utf8_next_char (alias->command) : alias->command);
+        }
+    }
+    
+    alias->hook = weechat_hook_command (alias->name, alias->command,
+                                        NULL, NULL,
+                                        (str_completion) ? str_completion : alias->completion,
+                                        &alias_cb, alias);
+    
+    if (str_completion)
+        free (str_completion);
+}
+
+/*
+ * alias_update_completion: update completion for an alias
+ */
+
+void
+alias_update_completion (struct t_alias *alias, const char *completion)
+{
+    /* update completion in alias */
+    if (alias->completion)
+        free (alias->completion);
+    alias->completion = (completion) ? strdup (completion) : NULL;
+    
+    /* unhook and hook again command, with new completion */
+    weechat_unhook (alias->hook);
+    alias->hook = NULL;
+    alias_hook_command (alias);
+}
+
+/*
  * alias_new: create new alias and add it to alias list
  */
 
 struct t_alias *
-alias_new (const char *name, const char *command)
+alias_new (const char *name, const char *command, const char *completion)
 {
     struct t_alias *new_alias, *ptr_alias, *pos_alias;
-    struct t_hook *new_hook;
-    char *str_completion;
-    int length;
     
     if (!name || !name[0] || !command || !command[0])
         return NULL;
@@ -514,30 +567,14 @@ alias_new (const char *name, const char *command)
     new_alias = malloc (sizeof (*new_alias));
     if (new_alias)
     {
-        length = 2 + strlen (command) + 1;
-        str_completion = malloc (length);
-        if (str_completion)
-        {
-            snprintf (str_completion, length, "%%%%%s",
-                      (weechat_string_is_command_char (command)) ?
-                       weechat_utf8_next_char (command) : command);
-        }
-        new_hook = weechat_hook_command (name, command, NULL, NULL,
-                                         (str_completion) ? str_completion : NULL,
-                                         alias_cb, new_alias);
-        if (str_completion)
-            free (str_completion);
-        if (!new_hook)
-        {
-            free (new_alias);
-            return NULL;
-        }
-        
-        new_alias->hook = new_hook;
+        new_alias->hook = NULL;
         new_alias->name = strdup (name);
         new_alias->command = strdup (command);
+        new_alias->completion = (completion) ? strdup (completion) : NULL;
         new_alias->running = 0;
-
+        
+        alias_hook_command (new_alias);
+        
         if (alias_list)
         {
             pos_alias = alias_find_pos (name);
@@ -607,199 +644,6 @@ alias_get_final_command (struct t_alias *alias)
 }
 
 /*
- * alias_config_change_cb: callback called when alias option is modified
- */
-
-void
-alias_config_change_cb (void *data, struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    
-    alias_new (weechat_config_option_get_pointer (option, "name"),
-               weechat_config_option_get_pointer (option, "value"));
-}
-
-/*
- * alias_config_delete_cb: callback called when alias option is deleted
- */
-
-void
-alias_config_delete_cb (void *data, struct t_config_option *option)
-{
-    struct t_alias *ptr_alias;
-    
-    /* make C compiler happy */
-    (void) data;
-    
-    ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
-    if (ptr_alias)
-        alias_free (ptr_alias);
-}
-
-/*
- * alias_config_reload: reload alias configuration file
- */
-
-int
-alias_config_reload (void *data, struct t_config_file *config_file)
-{
-    /* make C compiler happy */
-    (void) data;
-
-    weechat_config_section_free_options (alias_config_section_cmd);
-    alias_free_all ();
-    
-    return weechat_config_reload (config_file);
-}
-
-/*
- * alias_config_write_default: write default aliases in configuration file
- */
-
-void
-alias_config_write_default (void *data,
-                            struct t_config_file *config_file,
-                            const char *section_name)
-{
-    /* make C compiler happy */
-    (void) data;
-    
-    weechat_config_write_line (config_file, section_name, NULL);
-    
-    weechat_config_write_line (config_file, "AAWAY", "%s", "\"allserv /away\"");
-    weechat_config_write_line (config_file, "AME", "%s", "\"allchan /me\"");
-    weechat_config_write_line (config_file, "AMSG", "%s", "\"allchan /msg *\"");
-    weechat_config_write_line (config_file, "ANICK", "%s", "\"allserv /nick\"");
-    weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\"");
-    weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\"");
-    weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\"");
-    weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\"");
-    weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "IG", "%s", "\"ignore\"");
-    weechat_config_write_line (config_file, "J", "%s", "\"join\"");
-    weechat_config_write_line (config_file, "K", "%s", "\"kick\"");
-    weechat_config_write_line (config_file, "KB", "%s", "\"kickban\"");
-    weechat_config_write_line (config_file, "LEAVE", "%s", "\"part\"");
-    weechat_config_write_line (config_file, "M", "%s", "\"msg\"");
-    weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\"");
-    weechat_config_write_line (config_file, "N", "%s", "\"names\"");
-    weechat_config_write_line (config_file, "Q", "%s", "\"query\"");
-    weechat_config_write_line (config_file, "REDRAW", "%s", "\"window refresh\"");
-    weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
-    weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
-    weechat_config_write_line (config_file, "UB", "%s", "\"unban\"");
-    weechat_config_write_line (config_file, "V", "%s", "\"command core version\"");
-    weechat_config_write_line (config_file, "W", "%s", "\"who\"");
-    weechat_config_write_line (config_file, "WC", "%s", "\"window merge\"");
-    weechat_config_write_line (config_file, "WI", "%s", "\"whois\"");
-    weechat_config_write_line (config_file, "WII", "%s", "\"whois $1 $1\"");
-    weechat_config_write_line (config_file, "WW", "%s", "\"whowas\"");
-}
-
-/*
- * alias_config_create_option: create an alias
- */
-
-int
-alias_config_create_option (void *data, struct t_config_file *config_file,
-                            struct t_config_section *section,
-                            const char *option_name, const char *value)
-{
-    struct t_alias *ptr_alias;
-    int rc;
-    
-    /* make C compiler happy */
-    (void) data;
-    
-    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
-    /* create config option */
-    weechat_config_new_option (
-        config_file, section,
-        option_name, "string", NULL,
-        NULL, 0, 0, "", value, 0,
-        NULL, NULL,
-        &alias_config_change_cb, NULL,
-        &alias_config_delete_cb, NULL);
-    
-    /* create alias */
-    ptr_alias = alias_search (option_name);
-    if (ptr_alias)
-        alias_free (ptr_alias);
-    if (value && value[0])
-        rc = (alias_new (option_name, value)) ?
-            WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
-    else
-        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-    
-    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
-    {
-        weechat_printf (NULL,
-                        "%s%s: error creating alias \"%s\" => \"%s\"",
-                        weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
-                        option_name, value);
-    }
-    
-    return rc;
-}
-
-/*
- * alias_config_init: init alias configuration file
- *                    return: 1 if ok, 0 if error
- */
-
-int
-alias_config_init ()
-{
-    struct t_config_section *ptr_section;
-    
-    alias_config_file = weechat_config_new (ALIAS_CONFIG_NAME,
-                                            &alias_config_reload, NULL);
-    if (!alias_config_file)
-        return 0;
-    
-    ptr_section = weechat_config_new_section (alias_config_file, "cmd",
-                                              1, 1,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &alias_config_write_default, NULL,
-                                              &alias_config_create_option, NULL,
-                                              NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (alias_config_file);
-        return 0;
-    }
-    
-    alias_config_section_cmd = ptr_section;
-    
-    return 1;
-}
-
-/*
- * alias_config_read: read alias configuration file
- */
-
-int
-alias_config_read ()
-{
-    return weechat_config_read (alias_config_file);
-}
-
-/*
- * alias_config_write: write alias configuration file
- */
-
-int
-alias_config_write ()
-{
-    return weechat_config_write (alias_config_file);
-}
-
-/*
  * alias_command_cb: display or create alias
  */
 
@@ -807,7 +651,7 @@ int
 alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char *alias_name;
+    char *ptr_completion, *ptr_alias_name, *ptr_command;
     struct t_alias *ptr_alias;
     struct t_config_option *ptr_option;
     int alias_found;
@@ -818,47 +662,71 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        alias_name = (weechat_string_is_command_char (argv[1])) ?
-            weechat_utf8_next_char (argv[1]) : argv[1];
         if (argc > 2)
         {
-            /* Define new alias */
-            if (!alias_new (alias_name, argv_eol[2]))
+            /* get pointers to completion, alias name and command (+ args) */
+            ptr_completion = NULL;
+            ptr_alias_name = NULL;
+            ptr_command = NULL;
+            if ((argc > 4) && (weechat_strcasecmp (argv[1], "-completion") == 0))
+            {
+                ptr_completion = argv[2];
+                ptr_alias_name = (weechat_string_is_command_char (argv[3])) ?
+                    weechat_utf8_next_char (argv[3]) : argv[3];
+                ptr_command = argv_eol[4];
+            }
+            else
+            {
+                ptr_alias_name = (weechat_string_is_command_char (argv[1])) ?
+                    weechat_utf8_next_char (argv[1]) : argv[1];
+                ptr_command = argv_eol[2];
+            }
+            
+            /* define new alias */
+            if (!alias_new (ptr_alias_name, ptr_command, ptr_completion))
             {
                 weechat_printf (NULL,
                                 _("%s%s: error creating alias \"%s\" "
                                   "=> \"%s\""),
                                 weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
-                                alias_name, argv_eol[2]);
+                                ptr_alias_name, ptr_command);
                 return WEECHAT_RC_ERROR;
             }
             
-            /* create config option */
+            /* create config option for command */
             ptr_option = weechat_config_search_option (alias_config_file,
                                                        alias_config_section_cmd,
-                                                       alias_name);
+                                                       ptr_alias_name);
             if (ptr_option)
                 weechat_config_option_free (ptr_option);
-            weechat_config_new_option (
-                alias_config_file, alias_config_section_cmd,
-                alias_name, "string", NULL,
-                NULL, 0, 0, "", argv_eol[2], 0,
-                NULL, NULL,
-                &alias_config_change_cb, NULL,
-                &alias_config_delete_cb, NULL);
+            alias_config_cmd_new_option (ptr_alias_name, ptr_command);
             
+            /* create config option for completion */
+            ptr_option = weechat_config_search_option (alias_config_file,
+                                                       alias_config_section_completion,
+                                                       ptr_alias_name);
+            if (ptr_option)
+                weechat_config_option_free (ptr_option);
+            if (ptr_completion)
+                alias_config_completion_new_option (ptr_alias_name, ptr_completion);
+            
+            /* display message */
             weechat_printf (NULL,
                             _("Alias \"%s\" => \"%s\" created"),
-                            alias_name, argv_eol[2]);
+                            ptr_alias_name, ptr_command);
         }
         else
         {
-            /* Display list of aliases */
+            /* get pointer to alias name */
+            ptr_alias_name = (weechat_string_is_command_char (argv[1])) ?
+                weechat_utf8_next_char (argv[1]) : argv[1];
+            
+            /* display list of aliases */
             alias_found = 0;
             for (ptr_alias = alias_list; ptr_alias;
                  ptr_alias = ptr_alias->next_alias)
             {
-                if (weechat_string_match (ptr_alias->name, alias_name, 0))
+                if (weechat_string_match (ptr_alias->name, ptr_alias_name, 0))
                 {
                     if (!alias_found)
                     {
@@ -876,7 +744,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             if (!alias_found)
             {
                 weechat_printf (NULL, _("No alias found matching \"%s\""),
-                                alias_name);
+                                ptr_alias_name);
             }
         }
     }
@@ -942,9 +810,14 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 /* remove alias */
                 alias_free (ptr_alias);
                 
-                /* remove option */
+                /* remove options */
                 ptr_option = weechat_config_search_option (alias_config_file,
                                                            alias_config_section_cmd,
+                                                           alias_name);
+                if (ptr_option)
+                    weechat_config_option_free (ptr_option);
+                ptr_option = weechat_config_search_option (alias_config_file,
+                                                           alias_config_section_completion,
                                                            alias_name);
                 if (ptr_option)
                     weechat_config_option_free (ptr_option);
@@ -1007,6 +880,8 @@ alias_add_to_infolist (struct t_infolist *infolist, struct t_alias *alias)
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "command", alias->command))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "completion", alias->completion))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "running", alias->running))
         return 0;
     
@@ -1029,7 +904,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!alias_config_init ())
     {
         weechat_printf (NULL,
-                        "%s%s: error creating configuration file",
+                        _("%s%s: error creating configuration file"),
                         weechat_prefix("error"), ALIAS_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
@@ -1037,9 +912,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("alias",
                           N_("create an alias for a command"),
-                          N_("[alias_name [command [arguments]]]"),
-                          N_("alias_name: name of alias (can start or end with "
-                             "\"*\" for alias listing)\n"
+                          N_("[[-completion completion] alias_name [command "
+                             "[arguments]]]"),
+                          N_("completion: completion for alias (optional, by "
+                             "default completion is done with target "
+                             "command)\n"
+                             "alias_name: name of alias (can start or end "
+                             "with \"*\" for alias listing)\n"
                              "   command: command name (many commands can be "
                              "separated by semicolons)\n"
                              " arguments: arguments for command\n\n"
@@ -1055,8 +934,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "        $~: last argument\n"
                              "     $nick: current nick\n"
                              "  $channel: current channel\n"
-                             "   $server: current server"),
-                          "%(alias) %(commands)",
+                             "   $server: current server\n\n"
+                             "Examples:\n"
+                             "  alias /split to split window horizontally:\n"
+                             "    /alias split /window splith\n"
+                             "  alias /hello to say \"hello\" on all channels "
+                             "but not on #weechat:\n"
+                             "    /alias hello /allchan -exclude=#weechat msg "
+                             "* hello\n"
+                             "  alias /forcejoin to send IRC command "
+                             "\"forcejoin\" with completion of /sajoin:\n"
+                             "    /alias -completion %%sajoin /quote forcejoin"),
+                          "%(alias)|-completion %(commands)",
                           &alias_command_cb, NULL);
     
     weechat_hook_command ("unalias", N_("remove aliases"),

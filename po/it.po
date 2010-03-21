@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-20 17:06+0100\n"
-"PO-Revision-Date: 2010-02-23 10:43+0100\n"
+"POT-Creation-Date: 2010-03-21 16:05+0100\n"
+"PO-Revision-Date: 2010-03-21 16:48+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2453,6 +2453,10 @@ msgstr "%s%s: errore, riferimento circolare alla chiamata dell'alias \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: errore nella creazione dell'alias \"%s\" => \"%s\""
 
+#, fuzzy, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr "%sErrore: opzione di configurazione \"%s\" non trovata"
+
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" creato"
@@ -2475,13 +2479,21 @@ msgstr "%sAlias \"%s\" non trovato"
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" eliminato"
 
+#, c-format
+msgid "%s%s: error creating configuration file"
+msgstr "%s%s: impossibile creare il file di configurazione"
+
 msgid "create an alias for a command"
 msgstr "crea un alias per un comando"
 
-msgid "[alias_name [command [arguments]]]"
+#, fuzzy
+msgid "[[-completion completion] alias_name [command [arguments]]]"
 msgstr "[nome_alias [comando [argomenti]]]"
 
+#, fuzzy, c-format
 msgid ""
+"completion: completion for alias (optional, by default completion is done "
+"with target command)\n"
 "alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
@@ -2497,7 +2509,16 @@ msgid ""
 "        $~: last argument\n"
 "     $nick: current nick\n"
 "  $channel: current channel\n"
-"   $server: current server"
+"   $server: current server\n"
+"\n"
+"Examples:\n"
+"  alias /split to split window horizontally:\n"
+"    /alias split /window splith\n"
+"  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
+"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
+"sajoin:\n"
+"    /alias -completion %%sajoin /quote forcejoin"
 msgstr ""
 "nome_alias: nome di un alias (può iniziare o terminare con \"*\" per un "
 "elenco di alias)\n"
@@ -2673,10 +2694,6 @@ msgstr "%s%s: tipo set di caratteri errato (decodifica o codifica attesa)"
 #, c-format
 msgid "%s%s: invalid charset: \"%s\""
 msgstr "%s%s: set di caratter invalido: \"%s\""
-
-#, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "%s%s: impossibile creare il file di configurazione"
 
 msgid "change charset for current buffer"
 msgstr "modifica il set di caratteri per il buffer corrente"
@@ -3185,16 +3202,12 @@ msgid ""
 "  /connect my.server.org/6697 -ssl -password=test"
 msgstr ""
 "       -all: connette a tutti i server\n"
-"nome_server: nome interno del server a cui connettersi (il server deve "
-"essere stato creato con /server add)\n"
-"    -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è "
-"attivo sul server)\n"
-"  nome_host: nome host (oppure IP) del server \n"
+"nome_server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)\n"
+"    -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è attivo sul server)\n"
+"  nome_host: nome host (oppure IP) del server\n"
 "      porta: porta per il server (6667 è la predefinita)\n"
-"    opzione: imposta opzione per il server (per le opzioni bool, il valore "
-"può essere omesso)\n"
-"   nooption: imposta il valore bool dell'opzione su off (per esempio: -"
-"nossl)\n"
+"    opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)\n"
+"   nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)\n"
 "Esempi:\n"
 "  /connect freenode\n"
 "  /connect irc.oftc.net/6667\n"
@@ -3272,6 +3285,19 @@ msgid ""
 msgstr ""
 "     -all: disconnetti da tutti i server\n"
 "nome_server: nome del server da cui disconnettersi"
+
+msgid "forces a user to join channel(s)"
+msgstr "forza un utente ad entrare su uno o più canali"
+
+msgid "nickname channel[,channel]"
+msgstr "nick canale[,canale]"
+
+msgid ""
+"nickname: nickname\n"
+" channel: channel name"
+msgstr ""
+"  nick: nick\n"
+"canale: nome del canale"
 
 msgid "give half channel operator status to nickname(s)"
 msgstr "concede lo stato di halfop ad uno (o più) nick"
@@ -3571,6 +3597,21 @@ msgstr ""
 "  nick: utente a cui inviare la notifica\n"
 " testo: testo da inviare"
 
+msgid "change mode on channel, without having operator status"
+msgstr "cambia modalità sul canale, senza avere lo status di operatore"
+
+#. TRANSLATORS: "channel" and "mode" are arguments
+#. for command, translate them separately
+msgid "channel mode"
+msgstr "canale modalità"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+"canale: nome del canale\n"
+"modalità: modalità per il canale"
+
 msgid "give channel operator status to nickname(s)"
 msgstr "concede lo stato di operatore del canale al(ai) nick"
 
@@ -3675,34 +3716,6 @@ msgstr "opzione: opzione extra, per alcuni server"
 
 msgid "tell the server to restart itself"
 msgstr "chiede al server di riavviarsi"
-
-msgid "forces a user to join channel(s)"
-msgstr "forza un utente ad entrare su uno o più canali"
-
-msgid "nickname channel[,channel]"
-msgstr "nick canale[,canale]"
-
-msgid ""
-"nickname: nickname\n"
-" channel: channel name"
-msgstr ""
-"  nick: nick\n"
-"canale: nome del canale"
-
-msgid "change mode on channel, without having operator status"
-msgstr "cambia modalità sul canale, senza avere lo status di operatore"
-
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
-msgstr "canale modalità"
-
-msgid ""
-"channel: channel name\n"
-"   mode: mode for channel"
-msgstr ""
-"canale: nome del canale\n"
-"modalità: modalità per il canale"
 
 msgid "forces a user to use another nick"
 msgstr "forza un utente ad utilizzare un altro nick"
