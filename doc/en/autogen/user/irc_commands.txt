@@ -133,15 +133,6 @@
   servername: server name to disconnect
 ........................................
 
-&bull; *`/forcejoin`* `nickname channel[,channel]`::
-
-........................................
-  forces a user to join channel(s)
-
-  nickname: nickname
-   channel: channel name
-........................................
-
 &bull; *`/halfop`* `[nickname [nickname]]`::
 
 ........................................
@@ -349,15 +340,6 @@
     server: send to this server (internal name)
   nickname: user to send notice to
       text: text to send
-........................................
-
-&bull; *`/omode`* `channel mode`::
-
-........................................
-  change mode on channel, without having operator status
-
-  channel: channel name
-     mode: mode for channel
 ........................................
 
 &bull; *`/op`* `nickname [nickname]`::

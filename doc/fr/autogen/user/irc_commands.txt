@@ -133,15 +133,6 @@
   nom_serveur: nom du serveur pour se déconnecter
 ........................................
 
-&bull; *`/forcejoin`* `pseudo canal[,canal]`::
-
-........................................
-  force un utilisateur à rejoindre un ou plusieurs canaux
-
-  pseudo: pseudo
-   canal: canal
-........................................
-
 &bull; *`/halfop`* `[pseudo [pseudo]]`::
 
 ........................................
@@ -349,15 +340,6 @@
   serveur: envoyer à ce serveur (nom interne)
    pseudo: pseudo cible pour la notice
     texte: texte à envoyer
-........................................
-
-&bull; *`/omode`* `mode canal`::
-
-........................................
-  changer le mode du canal, sans avoir le statut opérateur
-
-  canal: nom du canal
-   mode: mode pour le canal
 ........................................
 
 &bull; *`/op`* `pseudo [pseudo]`::

@@ -132,15 +132,6 @@
   nome_server: nome del server da cui disconnettersi
 ........................................
 
-&bull; *`/forcejoin`* `nick canale[,canale]`::
-
-........................................
-  forza un utente ad entrare su uno o più canali
-
-    nick: nick
-  canale: nome del canale
-........................................
-
 &bull; *`/halfop`* `[nick [nick]]`::
 
 ........................................
@@ -348,15 +339,6 @@
   server: invia a questo server (nome interno)
     nick: utente a cui inviare la notifica
    testo: testo da inviare
-........................................
-
-&bull; *`/omode`* `canale modalità`::
-
-........................................
-  cambia modalità sul canale, senza avere lo status di operatore
-
-  canale: nome del canale
-  modalità: modalità per il canale
 ........................................
 
 &bull; *`/op`* `nick [nick]`::
