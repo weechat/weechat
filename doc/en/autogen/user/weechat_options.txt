@@ -208,10 +208,10 @@
 ** type: color
 ** values: a color name (default value: green)
 
-* *weechat.color.nicklist_more*
-** description: text color for '+' when scrolling nicks in nicklist
+* *weechat.color.nicklist_offline*
+** description: text color for offline nicknames
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: blue)
 
 * *weechat.color.nicklist_prefix1*
 ** description: text color for prefix #1 in nicklist

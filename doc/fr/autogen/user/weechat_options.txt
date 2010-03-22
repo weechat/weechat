@@ -208,10 +208,10 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: green)
 
-* *weechat.color.nicklist_more*
-** description: couleur du texte pour les '+' lors du défilement des pseudos dans la liste des pseudos
+* *weechat.color.nicklist_offline*
+** description: couleur du texte pour les pseudos déconnectés
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+** valeurs: un nom de couleur (valeur par défaut: blue)
 
 * *weechat.color.nicklist_prefix1*
 ** description: couleur du texte pour le préfixe n°1 de la liste des pseudos

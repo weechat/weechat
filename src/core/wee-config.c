@@ -150,6 +150,7 @@ struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_nicklist_group;
 struct t_config_option *config_color_nicklist_away;
+struct t_config_option *config_color_nicklist_offline;
 struct t_config_option *config_color_nicklist_prefix1;
 struct t_config_option *config_color_nicklist_prefix2;
 struct t_config_option *config_color_nicklist_prefix3;
@@ -1781,6 +1782,12 @@ config_weechat_init_options ()
         "nicklist_away", "color",
         N_("text color for away nicknames"),
         NULL, -1, 0, "cyan", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_nicklist_offline = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nicklist_offline", "color",
+        N_("text color for offline nicknames"),
+        NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix1 = config_file_new_option (
         weechat_config_file, ptr_section,

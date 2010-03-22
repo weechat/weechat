@@ -208,10 +208,10 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: green)
 
-* *weechat.color.nicklist_more*
-** descrizione: colore del testo per '+' allo scorrimento dei nick nella lista nick
+* *weechat.color.nicklist_offline*
+** descrizione: text color for offline nicknames
 ** tipo: colore
-** valori: un nome colore (valore predefinito: lightmagenta)
+** valori: un nome colore (valore predefinito: blue)
 
 * *weechat.color.nicklist_prefix1*
 ** descrizione: colore del testo per il prefisso #1 nella nicklist

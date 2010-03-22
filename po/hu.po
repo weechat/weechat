@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 18:32+0100\n"
-"PO-Revision-Date: 2010-02-23 10:43+0100\n"
+"POT-Creation-Date: 2010-03-22 10:51+0100\n"
+"PO-Revision-Date: 2010-03-22 10:52+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1799,6 +1799,10 @@ msgid "text color for away nicknames"
 msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
+msgid "text color for offline nicknames"
+msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
 msgid "text color for prefix #1 in nicklist"
 msgstr "név színe"
 
@@ -1817,10 +1821,6 @@ msgstr "név színe"
 #, fuzzy
 msgid "text color for prefix #5 in nicklist"
 msgstr "név színe"
-
-#, fuzzy
-msgid "text color for '+' when scrolling nicks in nicklist"
-msgstr "a '+' jel színe névlista görgetésekor"
 
 msgid ""
 "default completion template (please see documentation for template codes and "

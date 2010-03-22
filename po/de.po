@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 18:32+0100\n"
-"PO-Revision-Date: 2010-03-20 22:35+0100\n"
+"POT-Creation-Date: 2010-03-22 10:51+0100\n"
+"PO-Revision-Date: 2010-03-22 10:52+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1992,6 +1992,10 @@ msgstr "Textfarbe für Gruppen in Nickliste"
 msgid "text color for away nicknames"
 msgstr "Textfarbe von abwesenden Nicknamen"
 
+#, fuzzy
+msgid "text color for offline nicknames"
+msgstr "Textfarbe von abwesenden Nicknamen"
+
 msgid "text color for prefix #1 in nicklist"
 msgstr "Textfarbe für Präfix #1 in Nickliste"
 
@@ -2006,9 +2010,6 @@ msgstr "Textfarbe für Präfix #4 in Nickliste"
 
 msgid "text color for prefix #5 in nicklist"
 msgstr "Textfarbe für Präfix #5 in Nickliste"
-
-msgid "text color for '+' when scrolling nicks in nicklist"
-msgstr "Farbe des '+' beim scrollen von Nicks in der Nickliste"
 
 msgid ""
 "default completion template (please see documentation for template codes and "

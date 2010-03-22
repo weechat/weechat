@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-21 18:32+0100\n"
-"PO-Revision-Date: 2010-03-05 10:43+0100\n"
+"POT-Creation-Date: 2010-03-22 10:51+0100\n"
+"PO-Revision-Date: 2010-03-22 10:52+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1906,6 +1906,10 @@ msgstr "barva textu pro skupiny v seznamu přezdívek"
 msgid "text color for away nicknames"
 msgstr "barva textu pro nepřítomné přezdíveky"
 
+#, fuzzy
+msgid "text color for offline nicknames"
+msgstr "barva textu pro nepřítomné přezdíveky"
+
 msgid "text color for prefix #1 in nicklist"
 msgstr "barva textu pro 1. prefix v seznamu přezdívek"
 
@@ -1920,9 +1924,6 @@ msgstr "barva textu pro 4. prefix v seznamu přezdívek"
 
 msgid "text color for prefix #5 in nicklist"
 msgstr "barva textu pro 5. prefix v seznamu přezdívek"
-
-msgid "text color for '+' when scrolling nicks in nicklist"
-msgstr "barva textu pro '+' při posouvání přezdívek v seznamu přezdívek"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
