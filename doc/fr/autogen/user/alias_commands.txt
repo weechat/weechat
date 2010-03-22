@@ -21,7 +21,7 @@
     $channel: canal courant
      $server: serveur courant
   
-  Exemples :
+  Exemples:
     alias /split pour diviser la fenêtre horizontalement :
       /alias split /window splith
     alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :

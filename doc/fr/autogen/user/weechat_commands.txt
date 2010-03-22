@@ -133,11 +133,18 @@
   
   La touche par défaut alt+'=' active/désactive le filtrage.
   
+  Les tags les plus couramment utilisés:
+    no_filter, no_highlight, log0..log9 (niveau de log),
+    notify_message, notify_private, notify_highlight,
+    irc_xxx (xxx est un nom de commande ou nombre, voir /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+  
   Exemples:
     utiliser le filtre intelligent IRC pour les messages join/part/quit:
       /filter add irc_smart * irc_smart_filter *
     filtrer tous les messages IRC join/part/quit:
       /filter add joinquit * irc_join,irc_part,irc_quit *
+    filtrer les pseudos afficher en rejoignant les canaux ou avec /names:
+      /filter add nicks * irc_366 *
     filtrer le pseudo "toto" sur le canal IRC #weechat:
       /filter add toto irc.freenode.#weechat * toto\t
     filtrer les lignes contenant le mot "spam":

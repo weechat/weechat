@@ -16,7 +16,7 @@
     commande: commande à exécuter
   paramètres: paramètres pour la commande
   
-  Exemples :
+  Exemples:
     exécuter '/me teste' sur tous les canaux :
       /allchan me teste
     dire 'bonjour' partout sauf sur #weechat :
@@ -34,7 +34,7 @@
     commande: commande à exécuter
   paramètres: paramètres pour la commande
   
-  Exemples :
+  Exemples:
     changer de pseudo sur tous les serveurs :
       /allserv nick newnick
     positionner l'absence sur tous les serveurs :
@@ -215,7 +215,7 @@
        pseudo: pseudo à éliminer et bannir
   commentaire: commentaire pour l'élimination
   
-  Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*", par exemple :
+  Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*", par exemple:
     /kickban toto!*@host.com
     bannira "*!*@host.com" puis éliminera "toto".
 ........................................

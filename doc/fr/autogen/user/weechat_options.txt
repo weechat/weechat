@@ -379,7 +379,7 @@
 ** valeurs: on, off (valeur par défaut: off)
 
 * *weechat.look.command_chars*
-** description: caractères utilisés pour déterminer si la chaîne entrée est une commande ou non: l'entrée doit démarrer avec un de ces caractères; le slash ("/") est toujours considéré comme un préfixe de commande (exemple : ".$")
+** description: caractères utilisés pour déterminer si la chaîne entrée est une commande ou non: l'entrée doit démarrer avec un de ces caractères; le slash ("/") est toujours considéré comme un préfixe de commande (exemple: ".$")
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
 

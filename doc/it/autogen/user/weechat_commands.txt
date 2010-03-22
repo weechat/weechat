@@ -119,31 +119,38 @@
 ........................................
   filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp
 
-           list: elenca tutti i filtri
-         enable: abilita filtri (i filtri sono abilitati di default)
-        disable: disabilita filtri
-         toggle: abilita/disabilita filtri
-           nome: nome del filtro
-            add: aggiungi un filtro
-            del: elimina un filtro
-           -all: elimina tutti i filtri
-  plugin.buffer: plugin e buffer in cui il filtro è attivo ("*" per tutti i buffer)
-            tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
-          regex: espressione regolare da cercare nella riga (utilizzare \t per separare il prefisso dal messaggio, caratteri speciali come "|" devono essere preceduti dal carattere escape: '\|')
+           list: list all filters
+         enable: enable filters (filters are enabled by default)
+        disable: disable filters
+         toggle: toggle filters
+           name: filter name
+            add: add a filter
+            del: delete a filter
+           -all: delete all filters
+  plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
+           tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+          regex: regular expression to search in line (use \t to separate prefix from message, special chars like '|' must be escaped: '\|')
   
-  Il tasto predefinito alt+'=' abilita/disabilita il filtraggio.
+  The default key alt+'=' toggles filtering on/off.
   
-  Esempi:
-    usa il filtro intelligente IRC per i messaggi di entrata/uscita/abbandono:
-     /filter add irc_smart * irc_smart_filter *
-    filtra tutti i messaggi entrata/uscita/abbandono di IRC:
-     /filter add joinquit * irc_join,irc_part,irc_quit *
-    filtra il nick "tizio" sul canale IRC #weechat
-     /filter add tizio irc.freenode.#esempio * tizio\t
-    filtra le righe contententi la parola "spam":
-     /filter add filterspam ** spam
-    filtra le righe contententi "weechat fa schifo" sul canale irc #weechat:
-     /filter add schifo irc.freenode.#weechat * weechat fa schifo
+  Tags most commonly used:
+    no_filter, no_highlight, log0..log9 (log level),
+    notify_message, notify_private, notify_highlight,
+    irc_xxx (xxx is command name or number, see /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+  
+  Examples:
+    use IRC smart filter for join/part/quit messages:
+      /filter add irc_smart * irc_smart_filter *
+    filter all IRC join/part/quit messages:
+      /filter add joinquit * irc_join,irc_part,irc_quit *
+    filter nicks displayed when joining channels or with /names:
+      /filter add nicks * irc_366 *
+    filter nick "toto" on IRC channel #weechat:
+      /filter add toto irc.freenode.#weechat * toto\t
+    filter lines containing word "spam":
+      /filter add filterspam * * spam
+    filter lines containing "weechat sucks" on IRC channel #weechat:
+      /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
 &bull; *`/help`* `[comando | opzione]`::
