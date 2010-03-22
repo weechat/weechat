@@ -155,7 +155,6 @@ struct t_config_option *config_color_nicklist_prefix2;
 struct t_config_option *config_color_nicklist_prefix3;
 struct t_config_option *config_color_nicklist_prefix4;
 struct t_config_option *config_color_nicklist_prefix5;
-struct t_config_option *config_color_nicklist_more;
 
 /* config, completion section */
 
@@ -1812,12 +1811,6 @@ config_weechat_init_options ()
         "nicklist_prefix5", "color",
         N_("text color for prefix #5 in nicklist"),
         NULL, -1, 0, "brown", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_more = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_more", "color",
-        N_("text color for '+' when scrolling nicks in nicklist"),
-        NULL, -1, 0, "lightmagenta", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     
     /* completion */
