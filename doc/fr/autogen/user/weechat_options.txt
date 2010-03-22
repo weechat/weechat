@@ -621,5 +621,5 @@
 * *weechat.startup.weechat_slogan*
 ** description: slogan WeeChat (si vide, le slogan ne sera pas utilisé)
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: "le client de discussion le plus geek !")
+** valeurs: toute chaîne (valeur par défaut: "the geekiest chat client!")
 

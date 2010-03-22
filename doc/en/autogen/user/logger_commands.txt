@@ -15,7 +15,6 @@
       /logger set 5
     disable logging for current buffer:
       /logger disable
-  
     set level to 3 for all IRC buffers:
       /set logger.level.irc 3
     disable logging for main WeeChat buffer:

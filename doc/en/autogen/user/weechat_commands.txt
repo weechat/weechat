@@ -380,7 +380,7 @@
 ........................................
   manage windows
 
-    list: list opened windows (no parameter implies this list)
+           list: list opened windows (no parameter implies this list)
              -1: jump to previous window
              +1: jump to next window
              b#: jump to next window displaying buffer number #
@@ -392,7 +392,6 @@
          splitv: split current window vertically
          resize: resize window size, new size is <pct> percentage of parent window
           merge: merge window with another (all = keep only one window)
-  
         page_up: scroll one page up
       page_down: scroll one page down
         refresh: refresh screen

@@ -1213,7 +1213,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "  set level to 5 for current buffer:\n"
                              "    /logger set 5\n"
                              "  disable logging for current buffer:\n"
-                             "    /logger disable\n\n"
+                             "    /logger disable\n"
                              "  set level to 3 for all IRC buffers:\n"
                              "    /set logger.level.irc 3\n"
                              "  disable logging for main WeeChat buffer:\n"
