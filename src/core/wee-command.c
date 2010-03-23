@@ -4185,15 +4185,22 @@ command_init ()
                      "\"weechat.look.jump_current_to_previous_buffer\"\n"
                      "    name: jump to buffer by (partial) name\n\n"
                      "Examples:\n"
-                     "  clear current buffer: /buffer clear\n"
-                     "     clear all buffers: /buffer clear -all\n"
-                     "           move buffer: /buffer move 5\n"
-                     "merge with core buffer: /buffer merge 1\n"
-                     "        unmerge buffer: /buffer unmerge\n"
-                     "  close current buffer: /buffer close\n"
-                     "  close buffers 5 to 7: /buffer close 5-7\n"
-                     "      jump to #weechat: /buffer #weechat\n"
-                     "   jump to next buffer: /buffer +1"),
+                     "  clear current buffer:\n"
+                     "    /buffer clear\n"
+                     "  move buffer to number 5:\n"
+                     "    /buffer move 5\n"
+                     "  merge with core buffer:\n"
+                     "    /buffer merge 1\n"
+                     "  unmerge buffer:\n"
+                     "    /buffer unmerge\n"
+                     "  close current buffer:\n"
+                     "    /buffer close\n"
+                     "  close buffers 5 to 7:\n"
+                     "    /buffer close 5-7\n"
+                     "  jump to #weechat:\n"
+                     "    /buffer #weechat\n"
+                     "  jump to next buffer:\n"
+                     "    /buffer +1"),
                   "clear -merged|-all|%(buffers_numbers)"
                   " || move %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
@@ -4379,11 +4386,12 @@ command_init ()
                      "If no target is specified (-current, -buffer or -all), "
                      "then default is to mute WeeChat core buffer only.\n\n"
                      "Examples:\n"
-                     "  config save: /mute save\n"
-                     "  message to current IRC channel: "
-                     "/mute -current msg * hi!\n"
-                     "  message to #weechat channel: "
-                     "/mute -buffer irc.freenode.#weechat msg #weechat hi!"),
+                     "  config save:\n"
+                     "    /mute save\n"
+                     "  message to current IRC channel:\n"
+                     "    /mute -current msg * hi!\n"
+                     "  message to #weechat channel:\n"
+                     "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
                   "-current|-buffer|-all|%(commands) %(commands)|%*",
                   &command_mute, NULL);
     hook_command (NULL, "plugin",
@@ -4530,9 +4538,12 @@ command_init ()
                      "been closed before execution of command), then command "
                      "is executed on WeeChat core buffer).\n\n"
                      "Examples:\n"
-                     "  join channel in 10 sec: /wait 10 /join #test\n"
-                     "  set away in 15 min:     /wait 15m /away -all I'm away\n"
-                     "  say 'hello' in 2 min:   /wait 2m hello"),
+                     "  join channel in 10 sec:\n"
+                     "    /wait 10 /join #test\n"
+                     "  set away in 15 min:\n"
+                     "    /wait 15m /away -all I'm away\n"
+                     "  say 'hello' in 2 min:\n"
+                     "    /wait 2m hello"),
                   "%- %(commands)",
                   &command_wait, NULL);
     hook_command (NULL, "window",
@@ -4575,10 +4586,14 @@ command_init ()
                      "window as size reference. For example 25 means create a "
                      "new window with size = current_size / 4\n\n"
                      "Examples:\n"
-                     "  jump to window displaying buffer #1: /window b1\n"
-                     "  scroll 2 lines up: /window scroll -2\n"
-                     "  scroll 2 days up: /window scroll -2d\n"
-                     "  scroll to beginning of current day: /window scroll -d"),
+                     "  jump to window displaying buffer #1:\n"
+                     "    /window b1\n"
+                     "  scroll 2 lines up:\n"
+                     "    /window scroll -2\n"
+                     "  scroll 2 days up:\n"
+                     "    /window scroll -2d\n"
+                     "  scroll to beginning of current day:\n"
+                     "    /window scroll -d"),
                   "list|-1|+1|up|down|left|right|splith|splitv|resize|page_up|"
                   "page_down|refresh|scroll_up|scroll|scroll_down|scroll_top|"
                   "scroll_bottom|scroll_previous_highlight|"

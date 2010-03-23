@@ -58,37 +58,44 @@
 ........................................
   gestione buffer
 
-     clear: pulisce il contenuto del buffero (numero per un buffer, -merged per i buffer uniti, -all per tutti i buffer, o nulla per quello corrente)
-      move: sposta buffer nella lista (può essere relativo, ad esempio -1)
-     merge: unisce il buffer corrente ad un altro (l'area di chat sarà un mix di entrambi)
-            (con ctrl-x alterna i buffer uniti)
-   unmerge: stacca il buffer da quelli con lo stesso numero
-     close: chiudi buffer (numero/range opzionale)
-      list: elenca i buffer (nessun parametro implica questa lista)
-    notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer verrà aggiunto alla hotlist oppure no:
-                 none: mai
-            highlight: solo per le evidenziazioni
-              message: per i messaggi da tutti gli utenti + evidenziazioni
-                  all: tutti i messaggi
-                reset: ripristina il valore predefinito (all (tutti attivi))
-  localvar: visualizza la variabile locale per il buffer corrente
-       set: imposta una proprietà per il buffer corrente
-    number: passa al buffer di numero in numero:
-            '+': passo relativo, aggiunge il numero a quello corrente
-            '-': passo relativo, sottrae il numero a quello corrente
-            '*': passa al numero, utilizzando l'opzione "weechat.look.jump_current_to_previous_buffer"
-      nome: passa al buffer di nome (parziale)
+     clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+      move: move buffer in the list (may be relative, for example -1)
+     merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+            (by default ctrl-x switches between merged buffers)
+   unmerge: unmerge buffer from other buffers which have same number
+     close: close buffer (number/range is optional)
+      list: list buffers (no parameter implies this list)
+    notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+                 none: never
+            highlight: for highlights only
+              message: for messages from users + highlights
+                  all: all messages
+                reset: reset to default value (all)
+  localvar: display local variables for current buffer
+       set: set a property for current buffer
+    number: jump to buffer by number, possible prefix:
+            '+': relative jump, add number to current
+            '-': relative jump, sub number to current
+            '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+      name: jump to buffer by (partial) name
   
-  Esempi:
-     pulisci buffer corrente: /buffer clear
-      pulisci tutti i buffer: /buffer clear -all
-               sposta buffer: /buffer move 5
-       unisci al buffer core: /buffer merge 1
-               stacca buffer: /buffer unmerge
-      chiudi buffer corrente: /buffer close
-      chiudi buffer da 5 a 7: /buffer close 5-7
-            passa a #weechat: /buffer #weechat
-  passa al buffer successivo: /buffer +1
+  Examples:
+    clear current buffer:
+      /buffer clear
+    move buffer to number 5:
+      /buffer move 5
+    merge with core buffer:
+      /buffer merge 1
+    unmerge buffer:
+      /buffer unmerge
+    close current buffer:
+      /buffer close
+    close buffers 5 to 7:
+      /buffer close 5-7
+    jump to #weechat:
+      /buffer #weechat
+    jump to next buffer:
+      /buffer +1
 ........................................
 
 &bull; *`/command`* `plugin comando`::
@@ -220,9 +227,12 @@
   If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
   
   Examples:
-    config save: /mute save
-    message to current IRC channel: /mute -current msg * hi!
-    message to #weechat channel: /mute -buffer irc.freenode.#weechat msg #weechat hi!
+    config save:
+      /mute save
+    message to current IRC channel:
+      /mute -current msg * hi!
+    message to #weechat channel:
+      /mute -buffer irc.freenode.#weechat msg #weechat hi!
 ........................................
 
 &bull; *`/plugin`* `[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload [nome]] | [unload [nome]]`::
@@ -359,20 +369,23 @@
 ........................................
   pianifica l'esecuzione di un comando
 
-   numero: tempo di attesa (numero intero)
-       unità: valori opzionali sono:
-          ms: millisecondi
-           s: secondi (predefinito)
-           m: minuti
-           h: ore
-  comando: comando da eseguire (o testo da inviare al buffer se il comando non inizia con '/')
+   number: amount of time to wait (integer number)
+     unit: optional, values are:
+             ms: milliseconds
+              s: seconds (default)
+              m: minutes
+              h: hours
+  command: command to execute (or text to send to buffer if command does not start with '/')
   
-  Nota: il comando è eseguito sui buffer dove /wait è stato eseguito (se il buffer non viene trovato (per esempio se è stato chiuso prima dell'esecuzione), allora il comando verrà eseguito sul buffer core di WeeChat)
+  Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
   
-  Esempi:
-    entra nel canale tra 10 secondi: /wait 10 /join #test
-       imposta assenza in 15 minuti: /wait 15m /away -all Sono via
-                dì ciao in 2 minuti: /wait 2m ciao
+  Examples:
+    join channel in 10 sec:
+      /wait 10 /join #test
+    set away in 15 min:
+      /wait 15m /away -all I'm away
+    say 'hello' in 2 min:
+      /wait 2m hello
 ........................................
 
 &bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
@@ -407,9 +420,13 @@
   For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
   
   Examples:
-    jump to window displaying buffer #1: /window b1
-    scroll 2 lines up: /window scroll -2
-    scroll 2 days up: /window scroll -2d
-    scroll to beginning of current day: /window scroll -d
+    jump to window displaying buffer #1:
+      /window b1
+    scroll 2 lines up:
+      /window scroll -2
+    scroll 2 days up:
+      /window scroll -2d
+    scroll to beginning of current day:
+      /window scroll -d
 ........................................
 

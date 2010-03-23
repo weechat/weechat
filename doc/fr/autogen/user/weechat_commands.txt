@@ -80,15 +80,22 @@
        nom: saute au tampon par nom (partiel)
   
   Exemples:
-     effacer le tampon courant: /buffer clear
-      effacer tous les tampons: /buffer clear -all
-            déplacer le tampon: /buffer move 5
-  mélanger avec le tampon core: /buffer merge 1
-            détacher le tampon: /buffer unmerge
-      fermer le tampon courant: /buffer close
-      fermer les tampons 5 à 7: /buffer close 5-7
-            aller sur #weechat: /buffer #weechat
-       aller au tampon suivant: /buffer +1
+    effacer le tampon courant:
+      /buffer clear
+    déplacer le tampon vers le numéro 5:
+      /buffer move 5
+    mélanger avec le tampon core:
+      /buffer merge 1
+    détacher le tampon:
+      /buffer unmerge
+    fermer le tampon courant:
+      /buffer close
+    fermer les tampons 5 à 7:
+      /buffer close 5-7
+    aller sur #weechat:
+      /buffer #weechat
+    aller au tampon suivant:
+      /buffer +1
 ........................................
 
 &bull; *`/command`* `extension commande`::
@@ -220,9 +227,12 @@
   Si aucune cible n'est spécifiée (-current, -buffer ou -all), alors par défaut seul le tampon core WeeChat sera silencieux.
   
   Exemples:
-    sauvegarde configuration: /mute save
-    message au canal IRC courant: /mute -current msg * bonjour !
-    message au canal #weechat: /mute -buffer irc.freenode.#weechat msg #weechat bonjour !
+    sauvegarde configuration:
+      /mute save
+    message au canal IRC courant:
+      /mute -current msg * bonjour !
+    message au canal #weechat:
+      /mute -buffer irc.freenode.#weechat msg #weechat bonjour !
 ........................................
 
 &bull; *`/plugin`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]`::
@@ -370,9 +380,12 @@
   Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
   
   Exemples:
-    rejoindre le canal dans 10 sec: /wait 10 /join #test
-    passer absent dans 15 min:      /wait 15m /away -all I'm away
-    dire 'bonjour' dans 2 min:      /wait 2m bonjour
+    rejoindre le canal dans 10 sec:
+      /wait 10 /join #test
+    passer absent dans 15 min:
+      /wait 15m /away -all I'm away
+    dire 'bonjour' dans 2 min:
+      /wait 2m bonjour
 ........................................
 
 &bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
@@ -407,9 +420,13 @@
   Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
   
   Exemples:
-    sauter à la fenêtre affichant le tampon 1: /window b1
-    défilement de 2 lignes vers le haut: /window scroll -2
-    défilement de 2 jours vers le haut:  /window scroll -2d
-    défilement jusqu'au début du jour courant: /window scroll -d
+    sauter à la fenêtre affichant le tampon 1:
+      /window b1
+    défilement de 2 lignes vers le haut:
+      /window scroll -2
+    défilement de 2 jours vers le haut:
+      /window scroll -2d
+    défilement jusqu'au début du jour courant:
+      /window scroll -d
 ........................................
 

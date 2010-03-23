@@ -80,15 +80,22 @@
       name: jump to buffer by (partial) name
   
   Examples:
-    clear current buffer: /buffer clear
-       clear all buffers: /buffer clear -all
-             move buffer: /buffer move 5
-  merge with core buffer: /buffer merge 1
-          unmerge buffer: /buffer unmerge
-    close current buffer: /buffer close
-    close buffers 5 to 7: /buffer close 5-7
-        jump to #weechat: /buffer #weechat
-     jump to next buffer: /buffer +1
+    clear current buffer:
+      /buffer clear
+    move buffer to number 5:
+      /buffer move 5
+    merge with core buffer:
+      /buffer merge 1
+    unmerge buffer:
+      /buffer unmerge
+    close current buffer:
+      /buffer close
+    close buffers 5 to 7:
+      /buffer close 5-7
+    jump to #weechat:
+      /buffer #weechat
+    jump to next buffer:
+      /buffer +1
 ........................................
 
 &bull; *`/command`* `plugin command`::
@@ -220,9 +227,12 @@
   If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
   
   Examples:
-    config save: /mute save
-    message to current IRC channel: /mute -current msg * hi!
-    message to #weechat channel: /mute -buffer irc.freenode.#weechat msg #weechat hi!
+    config save:
+      /mute save
+    message to current IRC channel:
+      /mute -current msg * hi!
+    message to #weechat channel:
+      /mute -buffer irc.freenode.#weechat msg #weechat hi!
 ........................................
 
 &bull; *`/plugin`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]`::
@@ -370,9 +380,12 @@
   Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
   
   Examples:
-    join channel in 10 sec: /wait 10 /join #test
-    set away in 15 min:     /wait 15m /away -all I'm away
-    say 'hello' in 2 min:   /wait 2m hello
+    join channel in 10 sec:
+      /wait 10 /join #test
+    set away in 15 min:
+      /wait 15m /away -all I'm away
+    say 'hello' in 2 min:
+      /wait 2m hello
 ........................................
 
 &bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
@@ -407,9 +420,13 @@
   For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
   
   Examples:
-    jump to window displaying buffer #1: /window b1
-    scroll 2 lines up: /window scroll -2
-    scroll 2 days up: /window scroll -2d
-    scroll to beginning of current day: /window scroll -d
+    jump to window displaying buffer #1:
+      /window b1
+    scroll 2 lines up:
+      /window scroll -2
+    scroll 2 days up:
+      /window scroll -2d
+    scroll to beginning of current day:
+      /window scroll -d
 ........................................
 
