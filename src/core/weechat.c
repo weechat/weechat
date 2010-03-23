@@ -316,21 +316,11 @@ weechat_welcome_message ()
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
     }
-    if (CONFIG_STRING(config_startup_weechat_slogan)
-        && CONFIG_STRING(config_startup_weechat_slogan)[0])
-    {
-        gui_chat_printf (NULL, _("Welcome to %sWeeChat%s, %s"),
-                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         GUI_NO_COLOR,
-                         CONFIG_STRING(config_startup_weechat_slogan));
-    }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
         command_version_display (NULL, 0, 0);
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
-        (CONFIG_STRING(config_startup_weechat_slogan)
-         && CONFIG_STRING(config_startup_weechat_slogan)[0]) ||
         CONFIG_BOOLEAN(config_startup_display_version))
     {
         gui_chat_printf (NULL,

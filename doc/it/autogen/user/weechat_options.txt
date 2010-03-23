@@ -618,8 +618,3 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
-* *weechat.startup.weechat_slogan*
-** descrizione: Slogan WeeChat (se è vuoto, non viene utilizzato)
-** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "le client de discussion le plus geek !")
-

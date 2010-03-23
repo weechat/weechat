@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-23 09:48+0100\n"
-"PO-Revision-Date: 2010-03-22 10:52+0100\n"
+"POT-Creation-Date: 2010-03-23 10:19+0100\n"
+"PO-Revision-Date: 2010-03-23 10:19+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,10 +82,6 @@ msgstr "Chyba: domovský adresář (%s) není adresářem\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Chyba: nemohu vytvořit adresář \"%s\"\n"
-
-#, c-format
-msgid "Welcome to %sWeeChat%s, %s"
-msgstr "Vítejte do %sWeeChat%s, %s"
 
 msgid "List of bars:"
 msgstr "Seznam polí:"
@@ -1567,12 +1563,6 @@ msgstr "zobrazí WeeChat logo při spuštění"
 
 msgid "display WeeChat version at startup"
 msgstr "zobrazí verzi WeeChat při spuštění"
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr "WeeChat slogan (pokud je prázdné, není slogan použit)"
-
-msgid "the geekiest chat client!"
-msgstr "nejgeekovatější povídací klient!"
 
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "

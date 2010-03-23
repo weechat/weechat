@@ -83,7 +83,6 @@ extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
 extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;
-extern struct t_config_option *config_startup_weechat_slogan;
 
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;

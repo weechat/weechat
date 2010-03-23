@@ -66,7 +66,6 @@ struct t_config_option *config_startup_command_after_plugins;
 struct t_config_option *config_startup_command_before_plugins;
 struct t_config_option *config_startup_display_logo;
 struct t_config_option *config_startup_display_version;
-struct t_config_option *config_startup_weechat_slogan;
 
 /* config, look & feel section */
 
@@ -1192,11 +1191,6 @@ config_weechat_init_options ()
         "display_version", "boolean",
         N_("display WeeChat version at startup"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_startup_weechat_slogan = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "weechat_slogan", "string",
-        N_("WeeChat slogan (if empty, slogan is not used)"),
-        NULL, 0, 0, _("the geekiest chat client!"), NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* look */
     ptr_section = config_file_new_section (weechat_config_file, "look",

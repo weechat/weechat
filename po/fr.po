@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-23 09:48+0100\n"
-"PO-Revision-Date: 2010-03-23 09:52+0100\n"
+"POT-Creation-Date: 2010-03-23 10:19+0100\n"
+"PO-Revision-Date: 2010-03-23 10:19+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,10 +84,6 @@ msgstr "Erreur: la base (%s) n'est pas un répertoire\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur: impossible de créer le répertoire \"%s\"\n"
-
-#, c-format
-msgid "Welcome to %sWeeChat%s, %s"
-msgstr "Bienvenue dans %sWeeChat%s, %s"
 
 msgid "List of bars:"
 msgstr "Liste des barres:"
@@ -1611,12 +1607,6 @@ msgstr "afficher le logo WeeChat au démarrage"
 
 msgid "display WeeChat version at startup"
 msgstr "afficher la version de WeeChat au démarrage"
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr "slogan WeeChat (si vide, le slogan ne sera pas utilisé)"
-
-msgid "the geekiest chat client!"
-msgstr "le client de discussion le plus geek !"
 
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
