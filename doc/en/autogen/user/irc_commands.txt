@@ -98,6 +98,12 @@
     action: 'send' (file) or 'chat'
   nickname: nickname to send file or chat
       file: filename (on local host)
+  
+  Examples:
+    chat with nick "toto":
+      /dcc chat toto
+    send file "/home/foo/bar.txt" to nick "toto":
+      /dcc send toto /home/foo/bar.txt
 ........................................
 
 &bull; *`/dehalfop`* `[nickname [nickname]]`::
@@ -215,9 +221,11 @@
   nickname: nickname to kick and ban
    comment: comment for kick
   
-  It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*", for example:
-    /kickban toto!*@host.com
-    will ban "*!*@host.com" and then kick "toto".
+  It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+  
+  Example:
+    ban "*!*@host.com" and then kick "toto":
+      /kickban toto!*@host.com
 ........................................
 
 &bull; *`/kill`* `nickname comment`::

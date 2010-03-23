@@ -94,9 +94,15 @@
 ........................................
   avvia DCC (file o  chat)
 
-  azione: 'send' (invia file) o 'chat' (avvia una conversazione)
-    nick: nick a cui inviare il file o aprire la chat
-    file: nome file (sull'host locale)
+    action: 'send' (file) or 'chat'
+  nickname: nickname to send file or chat
+      file: filename (on local host)
+  
+  Examples:
+    chat with nick "toto":
+      /dcc chat toto
+    send file "/home/foo/bar.txt" to nick "toto":
+      /dcc send toto /home/foo/bar.txt
 ........................................
 
 &bull; *`/dehalfop`* `[nick [nick]]`::
@@ -210,13 +216,15 @@
 ........................................
   caccia e banna un nick da un canale
 
-         canale: canale in cui si trova l'utente
-            nick: nick da cacciare e bannare
-  commento: commento per la cacciata
+   channel: channel where user is
+  nickname: nickname to kick and ban
+   comment: comment for kick
   
-  È possibile cacciare/bannare con una mask, il nick verrà estratto dalla mask e sostituito da "*", per esempio:
-    /kickban tizio!*@host.com
-    banna "*!*@host.com" e poi caccia "tizio".
+  It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+  
+  Example:
+    ban "*!*@host.com" and then kick "toto":
+      /kickban toto!*@host.com
 ........................................
 
 &bull; *`/kill`* `nick commento`::

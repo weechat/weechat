@@ -4242,7 +4242,12 @@ irc_command_init ()
                           N_("action [nickname [file]]"),
                           N_("  action: 'send' (file) or 'chat'\n"
                              "nickname: nickname to send file or chat\n"
-                             "    file: filename (on local host)"),
+                             "    file: filename (on local host)\n\n"
+                             "Examples:\n"
+                             "  chat with nick \"toto\":\n"
+                             "    /dcc chat toto\n"
+                             "  send file \"/home/foo/bar.txt\" to nick \"toto\":\n"
+                             "    /dcc send toto /home/foo/bar.txt"),
                           "chat %(nicks)"
                           " || send %(nicks) %(filename)",
                           &irc_command_dcc, NULL);
@@ -4347,10 +4352,10 @@ irc_command_init ()
                              " comment: comment for kick\n\n"
                              "It is possible to kick/ban with a mask, nick "
                              "will be extracted from mask and replaced by "
-                             "\"*\", for example:\n"
-                             "  /kickban toto!*@host.com\n"
-                             "  will ban \"*!*@host.com\" and then kick "
-                             "\"toto\"."),
+                             "\"*\".\n\n"
+                             "Example:\n"
+                             "  ban \"*!*@host.com\" and then kick \"toto\":\n"
+                             "    /kickban toto!*@host.com"),
                           "%(irc_channel_nicks_hosts) %-", &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),

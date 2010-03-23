@@ -98,6 +98,12 @@
    action: 'send' (envoi de fichier) ou 'chat' (discussion)
    pseudo: pseudo pour envoyer le fichier ou discuter
   fichier: nom du fichier (sur la machine locale)
+  
+  Exemples:
+    discuter avec le pseudo "toto":
+      /dcc chat toto
+    envoyer le fichier "/home/foo/bar.txt" au pseudo "toto":
+      /dcc send toto /home/foo/bar.txt
 ........................................
 
 &bull; *`/dehalfop`* `[pseudo [pseudo]]`::
@@ -215,9 +221,11 @@
        pseudo: pseudo à éliminer et bannir
   commentaire: commentaire pour l'élimination
   
-  Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*", par exemple:
-    /kickban toto!*@host.com
-    bannira "*!*@host.com" puis éliminera "toto".
+  Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
+  
+  Exemple:
+    bannit "*!*@host.com" puis élimine "toto":
+      /kickban toto!*@host.com
 ........................................
 
 &bull; *`/kill`* `pseudo commentaire`::
