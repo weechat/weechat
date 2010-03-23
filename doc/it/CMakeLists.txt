@@ -26,6 +26,18 @@ ADD_CUSTOM_COMMAND(
 ADD_CUSTOM_TARGET(doc-user-it ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.it.html)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.it.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
+# plugin API reference
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.it.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.txt
+  ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.txt
+  COMMENT "Building weechat_plugin_api.it.html"
+)
+ADD_CUSTOM_TARGET(doc-plugin-api-it ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.it.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.it.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
 # FAQ
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html

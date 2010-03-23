@@ -18,6 +18,7 @@ docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
              weechat_user.it.txt \
+             weechat_plugin_api.it.txt \
              weechat_faq.it.txt \
              weechat_quickstart.it.txt \
              weechat_tester.it.txt \
@@ -25,6 +26,7 @@ EXTRA_DIST = CMakeLists.txt \
              $(wildcard autogen/plugin_api/*.txt)
 
 all-local: weechat_user.it.html \
+		weechat_plugin_api.it.html \
 		weechat_faq.it.html \
 		weechat_quickstart.it.html \
 		weechat_tester.it.html
@@ -32,6 +34,10 @@ all-local: weechat_user.it.html \
 # user's guide
 weechat_user.it.html: weechat_user.it.txt $(wildcard autogen/user/*.txt)
 	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_user.it.html weechat_user.it.txt
+
+# plugin API reference
+weechat_plugin_api.it.html: weechat_plugin_api.it.txt $(wildcard autogen/plugin_api/*.txt)
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.it.html weechat_plugin_api.it.txt
 
 # FAQ
 weechat_faq.it.html: weechat_faq.it.txt
