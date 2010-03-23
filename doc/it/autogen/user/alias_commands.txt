@@ -21,6 +21,8 @@
     $channel: current channel
      $server: current server
   
+  To remove an alias, use command /unalias.
+  
   Examples:
     alias /split to split window horizontally:
       /alias split /window splith

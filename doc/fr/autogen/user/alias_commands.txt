@@ -21,6 +21,8 @@
     $channel: canal courant
      $server: serveur courant
   
+  Pour supprimer un alias, utilisez la commande /unalias.
+  
   Exemples:
     alias /split pour diviser la fenêtre horizontalement :
       /alias split /window splith

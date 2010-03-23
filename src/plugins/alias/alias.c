@@ -935,6 +935,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "     $nick: current nick\n"
                              "  $channel: current channel\n"
                              "   $server: current server\n\n"
+                             "To remove an alias, use command /unalias.\n\n"
                              "Examples:\n"
                              "  alias /split to split window horizontally:\n"
                              "    /alias split /window splith\n"
