@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-03-21
+v0.3.2-dev, 2010-03-24
 
 
 Version 0.3.2 (under dev!)
@@ -43,6 +43,7 @@ Version 0.3.2 (under dev!)
 * api: return absolute path for info_get of "weechat_dir" (bug #27936)
 * alias: add custom completion for aliases (task #9479)
 * scripts: allow script commands to reload only one script
+* scripts: fix bug with callbacks when loading a script already loaded
 * perl: fix crash when callbacks are called during script initialization
   (bug #29018)
 * irc: add SASL authentication, with PLAIN and DH-BLOWFISH mechanisms

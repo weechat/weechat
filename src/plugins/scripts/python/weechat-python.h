@@ -31,6 +31,7 @@ extern int python_quiet;
 extern struct t_plugin_script *python_scripts;
 extern struct t_plugin_script *last_python_script;
 extern struct t_plugin_script *python_current_script;
+extern struct t_plugin_script *python_registered_script;
 extern const char *python_current_script_filename;
 
 extern void *weechat_python_exec (struct t_plugin_script *script,

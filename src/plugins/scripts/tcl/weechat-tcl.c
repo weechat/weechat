@@ -46,6 +46,7 @@ int tcl_quiet = 0;
 struct t_plugin_script *tcl_scripts = NULL;
 struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
+struct t_plugin_script *tcl_registered_script = NULL;
 const char *tcl_current_script_filename = NULL;
 
 /*
@@ -181,6 +182,7 @@ weechat_tcl_load (const char *filename)
     }
     
     tcl_current_script = NULL;
+    tcl_registered_script = NULL;
     
     if (!(interp = Tcl_CreateInterp ())) {
         weechat_printf (NULL,
@@ -204,7 +206,7 @@ weechat_tcl_load (const char *filename)
         /* return 0; */
     }
 
-    if (!tcl_current_script)
+    if (!tcl_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
@@ -213,6 +215,7 @@ weechat_tcl_load (const char *filename)
         Tcl_DeleteInterp (interp);
         return 0;
     }
+    tcl_current_script = tcl_registered_script;
     
     return 1;
 }

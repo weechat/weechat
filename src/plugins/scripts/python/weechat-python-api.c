@@ -66,6 +66,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
     (void) self;
     
     python_current_script = NULL;
+    python_registered_script = NULL;
     
     name = NULL;
     author = NULL;
@@ -102,6 +103,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
                                         description, shutdown_func, charset);
     if (python_current_script)
     {
+        python_registered_script = python_current_script;
         if ((weechat_python_plugin->debug >= 1) || !python_quiet)
         {
             weechat_printf (NULL,

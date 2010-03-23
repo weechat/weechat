@@ -43,6 +43,7 @@ int perl_quiet = 0;
 struct t_plugin_script *perl_scripts = NULL;
 struct t_plugin_script *last_perl_script = NULL;
 struct t_plugin_script *perl_current_script = NULL;
+struct t_plugin_script *perl_registered_script = NULL;
 const char *perl_current_script_filename = NULL;
 int perl_quit_or_upgrade = 0;
 
@@ -221,8 +222,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     FREETMPS;
     LEAVE;
     
-    if (old_perl_current_script)
-        perl_current_script = old_perl_current_script;
+    perl_current_script = old_perl_current_script;
 #ifdef MULTIPLICITY
     PERL_SET_CONTEXT (old_context);
 #else
@@ -286,6 +286,7 @@ weechat_perl_load (const char *filename)
     }
     
     perl_current_script = NULL;
+    perl_registered_script = NULL;
     
 #ifdef MULTIPLICITY
     perl_current_interpreter = perl_alloc();
@@ -386,8 +387,8 @@ weechat_perl_load (const char *filename)
     }
     
     free (eval);
-
-    if (!perl_current_script)
+    
+    if (!perl_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
@@ -399,7 +400,8 @@ weechat_perl_load (const char *filename)
 #endif
         return 0;
     }
-
+    perl_current_script = perl_registered_script;
+    
 #ifdef MULTIPLICITY
     perl_current_script->interpreter = (PerlInterpreter *)perl_current_interpreter;
 #else

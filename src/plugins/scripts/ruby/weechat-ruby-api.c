@@ -65,6 +65,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     (void) class;
     
     ruby_current_script = NULL;
+    ruby_registered_script = NULL;
     
     c_name = NULL;
     c_author = NULL;
@@ -120,6 +121,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     
     if (ruby_current_script)
     {
+        ruby_registered_script = ruby_current_script;
         if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
         {
             weechat_printf (NULL,

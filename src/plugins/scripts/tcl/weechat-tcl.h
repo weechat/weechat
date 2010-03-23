@@ -31,6 +31,7 @@ extern int tcl_quiet;
 extern struct t_plugin_script *tcl_scripts;
 extern struct t_plugin_script *last_tcl_script;
 extern struct t_plugin_script *tcl_current_script;
+extern struct t_plugin_script *tcl_registered_script;
 extern const char *tcl_current_script_filename;
 
 extern void *weechat_tcl_exec (struct t_plugin_script *script,

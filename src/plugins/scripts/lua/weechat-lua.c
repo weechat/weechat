@@ -45,6 +45,7 @@ int lua_quiet = 0;
 struct t_plugin_script *lua_scripts = NULL;
 struct t_plugin_script *last_lua_script = NULL;
 struct t_plugin_script *lua_current_script = NULL;
+struct t_plugin_script *lua_registered_script = NULL;
 const char *lua_current_script_filename = NULL;
 lua_State *lua_current_interpreter = NULL;
 
@@ -192,6 +193,7 @@ weechat_lua_load (const char *filename)
     }
     
     lua_current_script = NULL;
+    lua_registered_script = NULL;
     
     lua_current_interpreter = lua_open ();
 
@@ -266,7 +268,7 @@ weechat_lua_load (const char *filename)
     }
     fclose (fp);
     
-    if (lua_current_script == NULL)
+    if (!lua_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
@@ -275,6 +277,7 @@ weechat_lua_load (const char *filename)
         lua_close (lua_current_interpreter);
         return 0;
     }
+    lua_current_script = lua_registered_script;
     
     lua_current_script->interpreter = (lua_State *) lua_current_interpreter;
     

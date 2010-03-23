@@ -170,6 +170,7 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
     (void) clientData;
     
     tcl_current_script = NULL;
+    tcl_registered_script = NULL;
     
     if (objc < 8)
     {
@@ -205,6 +206,7 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
                                      description, shutdown_func, charset);
     if (tcl_current_script)
     {
+        tcl_registered_script = tcl_current_script;
         if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
         {
             weechat_printf (NULL,
@@ -218,7 +220,7 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
     {
         TCL_RETURN_ERROR;
     }
-   
+    
     TCL_RETURN_OK;
 }
 

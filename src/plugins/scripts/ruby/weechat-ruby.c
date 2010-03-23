@@ -64,6 +64,7 @@ int ruby_quiet = 0;
 struct t_plugin_script *ruby_scripts = NULL;
 struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
+struct t_plugin_script *ruby_registered_script = NULL;
 const char *ruby_current_script_filename = NULL;
 
 /*
@@ -476,6 +477,7 @@ weechat_ruby_load (const char *filename)
     }
     
     ruby_current_script = NULL;
+    ruby_registered_script = NULL;
     
     snprintf (modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, ruby_num);
     ruby_num++;
@@ -553,7 +555,7 @@ weechat_ruby_load (const char *filename)
         return 0;
     }
     
-    if (ruby_current_script == NULL)
+    if (!ruby_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
@@ -561,6 +563,7 @@ weechat_ruby_load (const char *filename)
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
         return 0;
     }
+    ruby_current_script = ruby_registered_script;
     
     ruby_current_script->interpreter = (VALUE *) curModule;
     rb_gc_register_address (ruby_current_script->interpreter);

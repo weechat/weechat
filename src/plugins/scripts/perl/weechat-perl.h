@@ -31,6 +31,7 @@ extern int perl_quiet;
 extern struct t_plugin_script *perl_scripts;
 extern struct t_plugin_script *last_perl_script;
 extern struct t_plugin_script *perl_current_script;
+extern struct t_plugin_script *perl_registered_script;
 extern const char *perl_current_script_filename;
 
 extern void *weechat_perl_exec (struct t_plugin_script *script,

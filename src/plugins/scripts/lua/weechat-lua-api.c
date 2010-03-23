@@ -70,6 +70,7 @@ weechat_lua_api_register (lua_State *L)
     (void) L;
     
     lua_current_script = NULL;
+    lua_registered_script = NULL;
     
     name = NULL;
     author = NULL;
@@ -119,6 +120,7 @@ weechat_lua_api_register (lua_State *L)
                                      charset);
     if (lua_current_script)
     {
+        lua_registered_script = lua_current_script;
         if ((weechat_lua_plugin->debug >= 1) || !lua_quiet)
         {
             weechat_printf (NULL,

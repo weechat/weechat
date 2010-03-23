@@ -41,6 +41,7 @@ int python_quiet;
 struct t_plugin_script *python_scripts = NULL;
 struct t_plugin_script *last_python_script = NULL;
 struct t_plugin_script *python_current_script = NULL;
+struct t_plugin_script *python_registered_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 
@@ -228,8 +229,7 @@ weechat_python_exec (struct t_plugin_script *script,
     
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
     
-    if (old_python_current_script)
-        python_current_script = old_python_current_script;
+    python_current_script = old_python_current_script;
     
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
@@ -335,6 +335,7 @@ weechat_python_load (const char *filename)
     }
     
     python_current_script = NULL;
+    python_registered_script = NULL;
     
     /* PyEval_AcquireLock (); */
     python_current_interpreter = Py_NewInterpreter ();
@@ -492,7 +493,7 @@ weechat_python_load (const char *filename)
 
     fclose (fp);
     
-    if (python_current_script == NULL)
+    if (!python_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
@@ -506,6 +507,7 @@ weechat_python_load (const char *filename)
 
         return 0;
     }
+    python_current_script = python_registered_script;
     
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
     /* PyEval_ReleaseThread (python_current_script->interpreter); */

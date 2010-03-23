@@ -76,6 +76,7 @@ XS (XS_weechat_api_register)
     (void) cv;
     
     perl_current_script = NULL;
+    perl_registered_script = NULL;
     
     if (items < 7)
     {
@@ -111,6 +112,7 @@ XS (XS_weechat_api_register)
                                       description, shutdown_func, charset);
     if (perl_current_script)
     {
+        perl_registered_script = perl_current_script;
         if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
         {
             weechat_printf (NULL,
