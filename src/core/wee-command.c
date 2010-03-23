@@ -1906,13 +1906,28 @@ void
 command_key_display (struct t_gui_key *key)
 {
     char *expanded_name;
+    char str_spaces[20 + 1];
+    int length_screen, num_spaces;
     
     expanded_name = gui_keyboard_get_expanded_name (key->key);
-    gui_chat_printf (NULL, "  %20s%s => %s%s",
+    
+    str_spaces[0] = '\0';
+    length_screen = utf8_strlen_screen ((expanded_name) ?
+                                        expanded_name : key->key);
+    num_spaces = 20 - length_screen;
+    if (num_spaces > 0)
+    {
+        memset (str_spaces, ' ', num_spaces);
+        str_spaces[num_spaces] = '\0';
+    }
+    
+    gui_chat_printf (NULL, "  %s%s%s => %s%s",
+                     str_spaces,
                      (expanded_name) ? expanded_name : key->key,
                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                      GUI_COLOR(GUI_COLOR_CHAT),
                      key->command);
+    
     if (expanded_name)
         free (expanded_name);
 }
