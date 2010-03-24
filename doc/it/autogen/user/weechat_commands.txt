@@ -64,7 +64,7 @@
             (by default ctrl-x switches between merged buffers)
    unmerge: unmerge buffer from other buffers which have same number
      close: close buffer (number/range is optional)
-      list: list buffers (no parameter implies this list)
+      list: list buffers (without argument, this list is displayed)
     notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
                  none: never
             highlight: for highlights only
@@ -126,38 +126,38 @@
 ........................................
   filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp
 
-           list: list all filters
-         enable: enable filters (filters are enabled by default)
-        disable: disable filters
-         toggle: toggle filters
-           name: filter name
-            add: add a filter
-            del: delete a filter
-           -all: delete all filters
-  plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
-           tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-          regex: regular expression to search in line (use \t to separate prefix from message, special chars like '|' must be escaped: '\|')
+           list: elenca tutti i filtri
+         enable: abilita filtri (i filtri sono abilitati di default)
+        disable: disabilita filtri
+         toggle: abilita/disabilita filtri
+           nome: nome del filtro
+            add: aggiunge un filtro
+            del: elimina un filtro
+           -all: elimina tutti i filtri
+  plugin.buffer: plugin e buffer in cui il filtro è attivo ("*" per tutti i buffer)
+            tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+          regex: espressione regolare da cercare nella riga (utilizzare \t per separare il prefisso dal messaggio, caratteri speciali come "|" devono essere preceduti dal carattere escape: '\|')
   
-  The default key alt+'=' toggles filtering on/off.
+  Il tasto predefinito alt+'=' abilita/disabilita il filtro.
   
-  Tags most commonly used:
-    no_filter, no_highlight, log0..log9 (log level),
+  Tag utilizzati di frequente:
+    no_filter, no_highlight, log0..log9 (livello di log),
     notify_message, notify_private, notify_highlight,
-    irc_xxx (xxx is command name or number, see /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+    irc_xxx (xxx è il nome comando o il numero, consultare /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
   
-  Examples:
-    use IRC smart filter for join/part/quit messages:
-      /filter add irc_smart * irc_smart_filter *
-    filter all IRC join/part/quit messages:
-      /filter add joinquit * irc_join,irc_part,irc_quit *
-    filter nicks displayed when joining channels or with /names:
+  Esempi:
+    usa il filtro intelligente IRC per i messaggi di entrata/uscita/abbandono:
+       /filter add irc_smart * irc_smart_filter *
+    filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+       /filter add joinquit * irc_join,irc_part,irc_quit *
+    filtra i nick visualizzati all'ingresso in un canale o con /names:
       /filter add nicks * irc_366 *
-    filter nick "toto" on IRC channel #weechat:
-      /filter add toto irc.freenode.#weechat * toto\t
-    filter lines containing word "spam":
+    filtra il nick "tizio" sul canale IRC #weechat
+      /filter add tizio irc.freenode.#esempio * tizio\t
+    filtra le righe contententi la parola "spam":
       /filter add filterspam * * spam
-    filter lines containing "weechat sucks" on IRC channel #weechat:
-      /filter add sucks irc.freenode.#weechat * weechat sucks
+    filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
+      /filter add schifo irc.freenode.#weechat * weechat fa schifo
 ........................................
 
 &bull; *`/help`* `[comando | opzione]`::
@@ -186,17 +186,29 @@
   Questo comando è utilizzato da combinazioni di tasti o plugin.
 ........................................
 
-&bull; *`/key`* `[bind tasto [comando [argomenti]]] | [unbind tasto] | [reset -yes] | [missing]`::
+&bull; *`/key`* `[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] | [reset key] | [resetall -yes] | [missing]`::
 
 ........................................
   associa/disassocia tasti
 
-      bind: associa un comando ad un tasto o visualizza il comando associato al tasto
-    unbind: elimina l'associazione di un tasto
-     reset: ripristina le associazioni ai valori predefiniti ed elimina TUTTE le associazioni personalizzate (attenzione!)
-   missing: aggiunge i tasti mancanti (utilizzando le associazioni predefinite)
+         list: list all current keys (without argument, this list is displayed)
+  listdefault: list default keys
+     listdiff: list differences between current and default keys (keys added, redefined or deleted)
+         bind: bind a command to a key or display command bound to key
+       unbind: remove a key binding
+        reset: reset a key to default binding
+     resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+      missing: add missing keys (using default bindings), useful after installing new WeeChat version
   
-  Quando viene associato un comando ad una chiave, è consigliato utilizzare il tasto alt+k (oppure Esc e k), e poi premere il tasto da associare: il codice tasto verrà inserito nella riga di comando.
+  When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+  
+  Examples:
+    key alt-x to toggle nicklist bar:
+      /key bind meta-x /bar toggle nicklist
+    key alt-r to jump to #weechat IRC channel:
+      /key bind meta-r /buffer #weechat
+    restore default binding for key alt-r:
+      /key reset meta-r
 ........................................
 
 &bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
@@ -213,26 +225,26 @@
   Senza argomenti, il comando visualizza il layout salvato.
 ........................................
 
-&bull; *`/mute`* `[-current | -buffer name | -all] command`::
+&bull; *`/mute`* `[-current | -buffer nome | -all] comando`::
 
 ........................................
-  execute a command silently
+  esegue un comando in silenzio
 
-  -current: no output on curent buffer
-   -buffer: no output on specified buffer
-      name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
-      -all: no output on ALL buffers
-   command: command to execute silently (a '/' is automatically added if not found at beginning of command)
+  -current: nessun output sul buffer corrente
+   -buffer: nessun output sul buffer specificato
+      nome: nome completo del buffer (esempi: "irc.server.freenode", "irc.freenode.#weechat")
+      -all: nessun output su TUTTI i buffer
+   command: comando da eseguire in silenzio (una '/' viene aggiunta automaticamente all'inizio del comando se non trovata)
   
-  If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
+  Se non viene specificata una destinazione (-current, -buffer o -all), la destinazione predefinita è il buffer core di WeeChat.
   
-  Examples:
-    config save:
+  Esempi:
+    salva la configurazione:
       /mute save
-    message to current IRC channel:
-      /mute -current msg * hi!
-    message to #weechat channel:
-      /mute -buffer irc.freenode.#weechat msg #weechat hi!
+    messaggio sul canale IRC corrente:
+      /mute -current msg * ciao!
+    messaggio sul canale #weechat:
+      /mute -buffer irc.freenode.#weechat msg #weechat ciao!
 ........................................
 
 &bull; *`/plugin`* `[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload [nome]] | [unload [nome]]`::
@@ -351,8 +363,8 @@
 ........................................
   mostra l'uptime di WeeChat
 
-   -o: send uptime to current buffer as input (english string)
-  -ol: send uptime to current buffer as input (translated string)
+   -o: invia l'uptime al buffer corrente come input (stringa in inglese)
+  -ol: invia l'uptime al buffer corrente come input (stringa tradotta)
 ........................................
 
 &bull; *`/version`* `[-o | -ol]`::
@@ -360,8 +372,8 @@
 ........................................
   mostra la versione e la data di compilazione di WeeChat
 
-   -o: send version to current buffer as input (english string)
-  -ol: send version to current buffer as input (translated string)
+   -o: invia la versione al buffer corrente come input (stringa inglese)
+  -ol: invia la versione al buffer corrente come input (stringa tradotta)
 ........................................
 
 &bull; *`/wait`* `numero[unità] comando`::
@@ -369,23 +381,23 @@
 ........................................
   pianifica l'esecuzione di un comando
 
-   number: amount of time to wait (integer number)
-     unit: optional, values are:
-             ms: milliseconds
-              s: seconds (default)
-              m: minutes
-              h: hours
-  command: command to execute (or text to send to buffer if command does not start with '/')
+   numero: tempo di attesa (numero intero)
+       unità: valori opzionali sono:
+          ms: millisecondi
+           s: secondi (predefinito)
+           m: minuti
+           h: ore
+  comando: comando da eseguire (o testo da inviare al buffer se il comando non inizia con '/')
   
-  Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
+  Nota: il comando è eseguito sui buffer dove /wait è stato eseguito (se il buffer non viene trovato (per esempio se è stato chiuso prima dell'esecuzione), allora il comando verrà eseguito sul buffer core di WeeChat)
   
-  Examples:
-    join channel in 10 sec:
+  Esempi:
+    entra nel canale tra 10 secondi:
       /wait 10 /join #test
-    set away in 15 min:
-      /wait 15m /away -all I'm away
-    say 'hello' in 2 min:
-      /wait 2m hello
+    imposta assenza tra 15 minuti:
+      /wait 15m /away -all Sono assente
+    scrive ciao tra 2 minuti:
+      /wait 2m ciao
 ........................................
 
 &bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
@@ -393,7 +405,7 @@
 ........................................
   gestione finestre
 
-           list: list opened windows (no parameter implies this list)
+           list: list opened windows (without argument, this list is displayed)
              -1: jump to previous window
              +1: jump to next window
              b#: jump to next window displaying buffer number #

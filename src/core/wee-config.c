@@ -407,7 +407,7 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
     (void) data;
     
     /* remove all keys */
-    gui_keyboard_free_all (&gui_keys, &last_gui_key);
+    gui_keyboard_free_all (&gui_keys, &last_gui_key, &gui_keys_count);
     
     /* remove all proxies */
     proxy_free_all ();

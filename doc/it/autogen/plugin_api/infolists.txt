@@ -1,59 +1,59 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
 |========================================
-| Plugin | Name | Description | Pointer | Arguments
+| Plugin | Nome | Descrizione | Puntatore | Argomenti
 
-| alias | alias | elenco di alias | alias pointer (optional) | alias name (can start or end with "*" as joker) (optional)
+| alias | alias | elenco di alias | puntatore all'alias (opzionale) | nome alias (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| irc | irc_channel | elenco dei canali per un server IRC | channel pointer (optional) | server name
+| irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | nome server
 
-| irc | irc_ignore | elenco di ignore IRC | ignore pointer (optional) | -
+| irc | irc_ignore | elenco di ignore IRC | puntatore all'ignore (opzionale) | -
 
-| irc | irc_nick | elenco dei nick per un canale IRC | nick pointer (optional) | server,channel,nick (channel and nick are optional)
+| irc | irc_nick | elenco dei nick per un canale IRC | puntatore al nick (opzionale) | server,canale,nick (canale e nick sono opzionali)
 
-| irc | irc_server | elenco di server IRC | server pointer (optional) | server name (can start or end with "*" as joker) (optional)
+| irc | irc_server | elenco di server IRC | puntatore al server (opzionale) | nome server (può iniziare o terminare con "*" come carattere jolly)
 
-| logger | logger_buffer | elenco dei buffer logger | logger pointer (optional) | -
+| logger | logger_buffer | elenco dei buffer logger | puntatore al logger (opzionale) | -
 
-| lua | lua_script | elenco degli script | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| lua | lua_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| perl | perl_script | elenco degli script | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| perl | perl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| python | python_script | elenco degli script | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| python | python_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| relay | relay | elenco di client relay | relay pointer (optional) | -
+| relay | relay | elenco di client relay | puntatore al relay (opzionale) | -
 
-| ruby | ruby_script | elenco degli script | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| tcl | tcl_script | elenco degli script | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| tcl | tcl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | bar | elenco delle barre | bar pointer (optional) | bar name (can start or end with "*" as joker) (optional)
+| weechat | bar | elenco delle barre | puntatore alla barra (opzionale) | nome barra (può iniziare o terminare con "*" come carattere jolly (opzionale)
 
-| weechat | bar_item | elenco degli elementi barra | bar item pointer (optional) | bar item name (can start or end with "*" as joker) (optional)
+| weechat | bar_item | elenco degli elementi barra | puntatore all'elemento della barra (opzionale) | nome dell'elemento della barra (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | bar_window | elenco delle finestre barra | bar window pointer (optional) | -
+| weechat | bar_window | elenco delle finestre barra | puntatore alla finestra della barra (opzionale) | -
 
-| weechat | buffer | elenco dei buffer | buffer pointer (optional) | buffer name (can start or end with "*" as joker) (optional)
+| weechat | buffer | elenco dei buffer | puntatore al buffer (opzionale) | nome buffer (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | buffer_lines | righe di un buffer | buffer pointer | -
+| weechat | buffer_lines | righe di un buffer | puntatore al buffer | -
 
-| weechat | filter | elenco dei filtri | - | filter name (can start or end with "*" as joker) (optional)
+| weechat | filter | elenco dei filtri | - | nome filtro (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | history | cronologia dei comandi | buffer pointer (if not set, return global history) (optional) | -
+| weechat | history | cronologia dei comandi | puntatore al buffer (se non impostato, restituisce la cronologia globale) (opzionale) | -
 
-| weechat | hook | elenco di hook | - | hook type: command, timer, .. (optional)
+| weechat | hook | elenco di hook | - | tipo hook: comando, timer, ... (opzionale)
 
 | weechat | hotlist | elenco dei buffer nella hotlist | - | -
 
 | weechat | key | elenco di tasti associati | - | -
 
-| weechat | nicklist | nick nella lista nick per un buffer | buffer pointer | nick_xxx or group_xxx to get only nick/group xxx (optional)
+| weechat | nicklist | nick nella lista nick per un buffer | puntatore al buffer | nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)
 
-| weechat | option | elenco delle opzioni | - | option name (can start or end with "*" as joker) (optional)
+| weechat | option | elenco delle opzioni | - | nome opzione (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | plugin | elenco dei plugin | plugin pointer (optional) | plugin name (can start or end with "*" as joker) (optional)
+| weechat | plugin | elenco dei plugin | puntatore al plugin (opzionale) | nome plugin (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | window | elenco delle finestre | window pointer (optional) | window name (can start or end with "*" as joker) (optional)
+| weechat | window | elenco delle finestre | puntatore alla finestra (opzionale) | nome finestra (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| xfer | xfer | lista di xfer | xfer pointer (optional) | -
+| xfer | xfer | lista di xfer | puntatore a xfer (opzionale) | -
 
 |========================================

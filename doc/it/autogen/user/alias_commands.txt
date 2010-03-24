@@ -1,34 +1,34 @@
-&bull; *`/alias`* `[[-completion completion] alias_name [command [arguments]]]`::
+&bull; *`/alias`* `[[-completion completamento] nome_alias [comando [argomenti]]]`::
 
 ........................................
   crea un alias per un comando
 
-  completion: completion for alias (optional, by default completion is done with target command)
-  alias_name: name of alias (can start or end with "*" for alias listing)
-     command: command name (many commands can be separated by semicolons)
-   arguments: arguments for command
+  completamento: completamento per l'alias (opzionale, il comportamento predefinito include il comando di destinazione)
+  nome_alias: nome di un alias (può iniziare o terminare con "*" per un elenco di alias)
+     comando: nome comando (più comandi possono essere separati da punto e virgola)
+   argomenti: argomenti per un comando
   
-  Without argument, this command lists all defined alias.
+  Senza argomanto, questo comando elenca tutti gli alias definiti.
   
-  Note: in command, special variables are replaced:
-          $n: argument 'n' (between 1 and 9)
-         $-m: arguments from 1 to 'm'
-         $n-: arguments from 'n' to last
-        $n-m: arguments from 'n' to 'm'
-          $*: all arguments
-          $~: last argument
-       $nick: current nick
-    $channel: current channel
-     $server: current server
+  Nota: nel comando, vengono sostituite le variabili speciali:
+          $n: argomento 'n' (tra 1 e 9)
+         $-m: argomenti da 1 a 'm'
+         $n-: argomenti da 'n' alla fine
+        $n-m: argomenti da 'n' a 'm'
+          $*: tutti gli argomenti
+          $~: ultimo argomento
+       $nick: nick corrente
+    $channel: canale corrente
+     $server: server corrente
   
-  To remove an alias, use command /unalias.
+  Per rimuovere un alias, utilizzare il comando /unalias.
   
-  Examples:
-    alias /split to split window horizontally:
+  Esempi:
+    alias /split per dividere la finestra orizzontalmente:
       /alias split /window splith
-    alias /hello to say "hello" on all channels but not on #weechat:
+    alias /hello per dire "ciao" su tutti i canali tranne #weechat:
       /alias hello /allchan -exclude=#weechat msg * hello
-    alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+    alias /forcejoin per inviare il comando IRC "forcejoin" con il completamento di /sajoin:
       /alias -completion %%sajoin forcejoin /quote forcejoin
 ........................................
 

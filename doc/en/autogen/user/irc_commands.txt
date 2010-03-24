@@ -484,7 +484,7 @@
 ........................................
   list, add or remove IRC servers
 
-        list: list servers (no parameter implies this list)
+        list: list servers (without argument, this list is displayed)
     listfull: list servers with detailed info for each server
          add: create a new server
   servername: server name, for internal and display use

@@ -1,6 +1,6 @@
 [width="65%",cols="^1,^2,8",options="header"]
 |========================================
-| Plugin | Name | Description
+| Plugin | Nome | Descrizione
 
 | alias | alias | elenco di alias
 
@@ -72,11 +72,13 @@
 
 | weechat | filters_names | nomi dei filtri
 
-| weechat | infolists | nomi delle liste info in attesa
+| weechat | infolists | nomi degli hook liste info
 
-| weechat | infos | nomi delle info in attesa
+| weechat | infos | nomi degli hook sulle info
 
 | weechat | keys_codes | codici tasti
+
+| weechat | keys_codes_for_reset | key codes that can be reset (keys added, redefined or removed)
 
 | weechat | nicks | nick nella lista nick del buffer corrente
 

@@ -78,6 +78,8 @@
 
 | weechat | keys_codes | codes des touches
 
+| weechat | keys_codes_for_reset | codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies ou supprimées)
+
 | weechat | nicks | pseudos dans la liste des pseudos du tampon courant
 
 | weechat | plugins_commands | commandes définies par les extensions

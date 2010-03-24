@@ -474,6 +474,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* keys */
         new_buffer->keys = NULL;
         new_buffer->last_key = NULL;
+        new_buffer->keys_count = 0;
         
         /* local variables */
         new_buffer->local_variables = NULL;
@@ -1103,7 +1104,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
     {
         if (strcmp (property + 11, "*") == 0)
-            gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
+        {
+            gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
+                                   &buffer->keys_count);
+        }
         else
             gui_keyboard_unbind (buffer, property + 11, 1);
     }
@@ -1642,7 +1646,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_split (buffer->highlight_tags_array);
-    gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
+    gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
+                           &buffer->keys_count);
     gui_buffer_local_var_remove_all (buffer);
     
     /* remove buffer from buffers list */
@@ -2382,6 +2387,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
             return 0;
         i++;
     }
+    if (!infolist_new_var_integer (ptr_item, "keys_count", buffer->keys_count))
+        return 0;
     i = 0;
     for (ptr_local_var = buffer->local_variables; ptr_local_var;
          ptr_local_var = ptr_local_var->next_var)
@@ -2541,6 +2548,7 @@ gui_buffer_print_log ()
         log_printf ("  highlight_tags_array . : 0x%lx", ptr_buffer->highlight_tags_array);
         log_printf ("  keys . . . . . . . . . : 0x%lx", ptr_buffer->keys);
         log_printf ("  last_key . . . . . . . : 0x%lx", ptr_buffer->last_key);
+        log_printf ("  keys_count . . . . . . : %d",    ptr_buffer->keys_count);
         log_printf ("  local_variables. . . . : 0x%lx", ptr_buffer->local_variables);
         log_printf ("  last_local_var . . . . : 0x%lx", ptr_buffer->last_local_var);
         log_printf ("  prev_buffer. . . . . . : 0x%lx", ptr_buffer->prev_buffer);
@@ -2549,16 +2557,14 @@ gui_buffer_print_log ()
         if (ptr_buffer->keys)
         {
             log_printf ("");
-            log_printf ("  => keys = 0x%lx, last_key = 0x%lx:",
-                        ptr_buffer->keys, ptr_buffer->last_key);
+            log_printf ("  => keys:");
             gui_keyboard_print_log (ptr_buffer);
         }
 
         if (ptr_buffer->local_variables)
         {
             log_printf ("");
-            log_printf ("  => local_variables = 0x%lx, last_local_var = 0x%lx:",
-                        ptr_buffer->local_variables, ptr_buffer->last_local_var);
+            log_printf ("  => local_variables:");
             for (ptr_local_var = ptr_buffer->local_variables; ptr_local_var;
                  ptr_local_var = ptr_local_var->next_var)
             {
@@ -2571,7 +2577,7 @@ gui_buffer_print_log ()
         }
         
         log_printf ("");
-        log_printf ("  => nicklist_root (addr:0x%lx):", ptr_buffer->nicklist_root);
+        log_printf ("  => nicklist:");
         gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
         
         log_printf ("");

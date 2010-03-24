@@ -4575,8 +4575,8 @@ irc_command_init ()
                              "[rename servername newservername] | "
                              "[keep servername] | [del servername] | "
                              "[deloutq] | [jump] | [raw]"),
-                          N_("      list: list servers (no parameter implies "
-                             "this list)\n"
+                          N_("      list: list servers (without argument, "
+                             "this list is displayed)\n"
                              "  listfull: list servers with detailed info for "
                              "each server\n"
                              "       add: create a new server\n"

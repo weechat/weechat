@@ -69,7 +69,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.highlight_tags*
-** descrizione: elenco separato da liste di tag per i messaggi che potrebbero generare evidenziazioni (di solito qualsiasi messaggio da altri utenti, non quelli dal server,...)
+** descrizione: elenco separato da liste di tag per i messaggi che potrebbero generare eventi (di solito qualsiasi messaggio da altri utenti, non quelli dal server...)
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "irc_privmsg,irc_notice")
 
@@ -79,7 +79,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.item_channel_modes_hide_key*
-** descrizione: hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)
+** descrizione: nasconde la chiave del canale se le modalità sono visualizzate nell'elemento barra "buffer_name" (in questo modo saranno nascosti tutti gli argomenti delle modalità del canale se la modalità +k è impostata sul canale)
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
@@ -94,7 +94,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.item_nick_prefix*
-** descrizione: display nick prefix in "input_prompt" bar item
+** descrizione: visualizza il prefisso del nick nell'elemento barra "input_prompt"
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
@@ -204,7 +204,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.network.connection_timeout*
-** descrizione: timeout (in seconds) between TCP connection to server and message 001 received, if this timeout is reached before 001 message is received, WeeChat will disconnect from server
+** descrizione: timeout (in secondi) tra la connessione TCP al server ed il messaggio 001 ricevuto, se questo timeout viene raggiunto prima della ricezione del messaggio 001, WeeChat effettuerà la disconnessione
 ** tipo: intero
 ** valori: 1 .. 3600 (valore predefinito: 60)
 
@@ -314,22 +314,22 @@
 ** valori: qualsiasi stringa (valore predefinito: "")
 
 * *irc.server_default.sasl_mechanism*
-** descrizione: mechanism for SASL authentication
+** descrizione: meccanismo per l'autenticazione SASL
 ** tipo: intero
 ** valori: plain, dh-blowfish (valore predefinito: plain)
 
 * *irc.server_default.sasl_password*
-** descrizione: password for SASL authentication
+** descrizione: password per l'autenticazione SASL
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "")
 
 * *irc.server_default.sasl_timeout*
-** descrizione: timeout (in seconds) before giving up SASL authentication
+** descrizione: timeout (in secondi) prima di annullare l'autenticazione SASL
 ** tipo: intero
 ** valori: 1 .. 3600 (valore predefinito: 15)
 
 * *irc.server_default.sasl_username*
-** descrizione: username for SASL authentication
+** descrizione: nome utente per l'autenticazione SASL
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "")
 

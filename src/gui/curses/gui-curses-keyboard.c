@@ -58,7 +58,8 @@ gui_keyboard_default_bind (const char *key, const char *command)
     
     internal_code = gui_keyboard_get_internal_code (key);
     
-    ptr_key = gui_keyboard_search (NULL, (internal_code) ? internal_code : key);
+    ptr_key = gui_keyboard_search (gui_keys,
+                                   (internal_code) ? internal_code : key);
     if (!ptr_key)
     {
         gui_keyboard_new (NULL, key, command);

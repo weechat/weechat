@@ -29,12 +29,12 @@
 ** valori: un nome colore (valore predefinito: green)
 
 * *weechat.color.chat_highlight*
-** descrizione: colore del testo per il prefisso evidenziato
+** descrizione: colore del testo per il prefisso di evento
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: yellow)
 
 * *weechat.color.chat_highlight_bg*
-** descrizione: colore di sfondo per il prefisso evidenziato
+** descrizione: colore di sfondo per il prefisso di evento
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: magenta)
 
@@ -209,7 +209,7 @@
 ** valori: un nome colore (valore predefinito: green)
 
 * *weechat.color.nicklist_offline*
-** descrizione: text color for offline nicknames
+** descrizione: colore del testo per i nick non in linea
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: blue)
 
@@ -244,7 +244,7 @@
 ** valori: un nome colore (valore predefinito: blue)
 
 * *weechat.color.status_data_highlight*
-** descrizione: colore del testo per il buffer con evidenziazione (barra di stato)
+** descrizione: colore del testo per il buffer con evento (barra di stato)
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: lightmagenta)
 
@@ -364,7 +364,7 @@
 ** valori: none, highlight, message, all (valore predefinito: all)
 
 * *weechat.look.buffer_time_format*
-** descrizione: time format for each line displayed in buffers
+** descrizione: formato dell'ora per ogni riga visualizzata nei buffer
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "%H:%M:%S")
 
@@ -379,7 +379,7 @@
 ** valori: on, off (valore predefinito: off)
 
 * *weechat.look.command_chars*
-** descrizione: chars used to determine if input string is a command or not: input must start with one of these chars; the slash ("/") is always considered as command prefix (example: ".$")
+** descrizione: caratteri usati per determinare se la stringa in input è un comando oppure no: l'input deve iniziare con uno di questi caratteri: la barra ("/") è sempre considerata come prefisso per comando (esempio: ".$")
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "")
 
@@ -414,7 +414,7 @@
 ** valori: 0 .. 32 (valore predefinito: 0)
 
 * *weechat.look.hotlist_names_level*
-** descrizione: livello per la visualizzazione dei nomi nella hotlist (combinazione di: 1=entrata/uscita, 2=messaggio, 4=privato, 8=evidenziato, per esempio: 12=privato+evidenziato)
+** descrizione: livello per la visualizzazione dei nomi nella hotlist (combinazione di: 1=entrata/uscita, 2=messaggio, 4=privato, 8=evento, per esempio: 12=privato+evento)
 ** tipo: intero
 ** valori: 1 .. 15 (valore predefinito: 12)
 
@@ -529,7 +529,7 @@
 ** valori: none, line, dotted-line, char (valore predefinito: dotted-line)
 
 * *weechat.look.read_marker_always_show*
-** descrizione: always show read marker, even if it is after last buffer line
+** descrizione: mostra sempre l'evidenziatore di lettura, anche se si trova dopo l'ultima riga del buffer
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
@@ -564,7 +564,7 @@
 ** valori: on, off (valore predefinito: on)
 
 * *weechat.look.time_format*
-** descrizione: time format for dates converted to strings and displayed in messages
+** descrizione: formato dell'ora per le date convertite a stringhe e visualizzate nei messaggi
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "%a, %d %b %Y %T")
 

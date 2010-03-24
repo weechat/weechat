@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-23 15:33+0100\n"
+"POT-Creation-Date: 2010-03-24 19:36+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -365,12 +365,36 @@ msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
 
 #, fuzzy
+msgid "default command:"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy, c-format
+msgid "Key bindings added or redefined (%d):"
+msgstr "Комбинации клавиш:\n"
+
+#, fuzzy, c-format
+msgid "Key bindings deleted (%d):"
+msgstr "Комбинации клавиш:\n"
+
+#, fuzzy
+msgid "No key binding added, redefined or removed"
+msgstr "Комбинации клавиш:\n"
+
+#, fuzzy
 msgid "No key binding defined"
 msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
 msgid "Key bindings (%d):"
 msgstr "Комбинации клавиш:\n"
+
+#, fuzzy
+msgid "No default key binding"
+msgstr "Комбинации клавиш по умолчанию восстановлены\n"
+
+#, fuzzy, c-format
+msgid "Default key bindings (%d):"
+msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy
 msgid "Key:"
@@ -391,6 +415,14 @@ msgstr "Клавиша \"%s\" не привязана\n"
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
+
+#, c-format
+msgid "Key \"%s\" has already default value"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sKey \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy
 msgid "Default key bindings restored"
@@ -857,7 +889,7 @@ msgid ""
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
-"    list: list buffers (no parameter implies this list)\n"
+"    list: list buffers (without argument, this list is displayed)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
 "               none: never\n"
@@ -1047,22 +1079,39 @@ msgid "bind/unbind keys"
 msgstr "установить/снять клавиши"
 
 #, fuzzy
-msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+msgid ""
+"[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
+"| [reset key] | [resetall -yes] | [missing]"
 msgstr ""
 "[клавиша [функция/команда]] [unbind клавиша] [функции] [call функция "
 "[\"аргументы\"]] [reset -yes]"
 
 #, fuzzy
 msgid ""
-"   bind: bind a command to a key or display command bound to key\n"
-" unbind: remove a key binding\n"
-"  reset: restore bindings to the default values and delete ALL personal "
+"       list: list all current keys (without argument, this list is "
+"displayed)\n"
+"listdefault: list default keys\n"
+"   listdiff: list differences between current and default keys (keys added, "
+"redefined or deleted)\n"
+"       bind: bind a command to a key or display command bound to key\n"
+"     unbind: remove a key binding\n"
+"      reset: reset a key to default binding\n"
+"   resetall: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"missing: add missing keys (using default bindings)\n"
+"    missing: add missing keys (using default bindings), useful after "
+"installing new WeeChat version\n"
 "\n"
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
 "then k), and then press the key to bind: this will insert key code in "
-"command line."
+"command line.\n"
+"\n"
+"Examples:\n"
+"  key alt-x to toggle nicklist bar:\n"
+"    /key bind meta-x /bar toggle nicklist\n"
+"  key alt-r to jump to #weechat IRC channel:\n"
+"    /key bind meta-r /buffer #weechat\n"
+"  restore default binding for key alt-r:\n"
+"    /key reset meta-r"
 msgstr ""
 "  клавиша: отобразить или назначить этой клавише функцию или команду "
 "(начинающуюся на \"/\")\n"
@@ -1337,7 +1386,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"         list: list opened windows (no parameter implies this list)\n"
+"         list: list opened windows (without argument, this list is "
+"displayed)\n"
 "           -1: jump to previous window\n"
 "           +1: jump to next window\n"
 "           b#: jump to next window displaying buffer number #\n"
@@ -2352,6 +2402,10 @@ msgstr "Список сокращений:\n"
 
 msgid "key codes"
 msgstr ""
+
+#, fuzzy
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr "Комбинации клавиш:\n"
 
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
@@ -3655,7 +3709,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"      list: list servers (no parameter implies this list)\n"
+"      list: list servers (without argument, this list is displayed)\n"
 "  listfull: list servers with detailed info for each server\n"
 "       add: create a new server\n"
 "servername: server name, for internal and display use\n"
@@ -6178,3 +6232,7 @@ msgstr "адресат тип [аргументы]"
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "No key added or redefined"
+#~ msgstr "Сокращения не заданы.\n"

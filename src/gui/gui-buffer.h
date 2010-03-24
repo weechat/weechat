@@ -156,6 +156,7 @@ struct t_gui_buffer
     /* keys associated to buffer */
     struct t_gui_key *keys;            /* keys specific to buffer           */
     struct t_gui_key *last_key;        /* last key for buffer               */
+    int keys_count;                    /* number of keys in buffer          */
     
     /* local variables */
     struct t_gui_buffer_local_var *local_variables; /* local variables      */

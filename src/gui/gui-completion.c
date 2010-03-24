@@ -1295,6 +1295,61 @@ gui_completion_list_add_keys_codes_cb (void *data,
 }
 
 /*
+ * gui_completion_list_add_keys_codes_for_reset_cb: add keys that can be reset
+ *                                                  (keys added, redefined or
+ *                                                  removed) to completion list
+ */
+
+int
+gui_completion_list_add_keys_codes_for_reset_cb (void *data,
+                                                 const char *completion_item,
+                                                 struct t_gui_buffer *buffer,
+                                                 struct t_gui_completion *completion)
+{
+    struct t_gui_key *ptr_key, *ptr_default_key;
+    char *expanded_name;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    /* keys added or redefined */
+    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        ptr_default_key = gui_keyboard_search (gui_default_keys, ptr_key->key);
+        if (!ptr_default_key
+            || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
+        {
+            expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
+            gui_completion_list_add (completion,
+                                     (expanded_name) ? expanded_name : ptr_key->key,
+                                     0, WEECHAT_LIST_POS_SORT);
+            if (expanded_name)
+                free (expanded_name);
+        }
+    }
+    
+    /* keys deleted */
+    for (ptr_default_key = gui_default_keys; ptr_default_key;
+         ptr_default_key = ptr_default_key->next_key)
+    {
+        ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
+        if (!ptr_key)
+        {
+            expanded_name = gui_keyboard_get_expanded_name (ptr_default_key->key);
+            gui_completion_list_add (completion,
+                                     (expanded_name) ? expanded_name : ptr_default_key->key,
+                                     0, WEECHAT_LIST_POS_SORT);
+            if (expanded_name)
+                free (expanded_name);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * gui_completion_custom: custom completion by a plugin
  */
 
@@ -2215,4 +2270,8 @@ gui_completion_init ()
     hook_completion (NULL, "keys_codes",
                      N_("key codes"),
                      &gui_completion_list_add_keys_codes_cb, NULL);
+    hook_completion (NULL, "keys_codes_for_reset",
+                     N_("key codes that can be reset (keys added, redefined "
+                        "or removed)"),
+                     &gui_completion_list_add_keys_codes_for_reset_cb, NULL);
 }

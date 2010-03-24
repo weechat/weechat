@@ -1374,7 +1374,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                                            _("%sError: filter \"%s\" not found"),
                                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                            argv[2]);
-                    return WEECHAT_RC_ERROR;
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -1903,7 +1903,7 @@ command_input (void *data, struct t_gui_buffer *buffer,
  */
 
 void
-command_key_display (struct t_gui_key *key)
+command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 {
     char *expanded_name;
     char str_spaces[20 + 1];
@@ -1921,17 +1921,131 @@ command_key_display (struct t_gui_key *key)
         str_spaces[num_spaces] = '\0';
     }
     
-    gui_chat_printf (NULL, "  %s%s%s => %s%s",
-                     str_spaces,
-                     (expanded_name) ? expanded_name : key->key,
-                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                     GUI_COLOR(GUI_COLOR_CHAT),
-                     key->command);
+    if (default_key)
+    {
+        gui_chat_printf (NULL, "  %s%s%s => %s%s  %s(%s%s %s%s)",
+                         str_spaces,
+                         (expanded_name) ? expanded_name : key->key,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         key->command,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         _("default command:"),
+                         default_key->command,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    }
+    else
+    {
+        gui_chat_printf (NULL, "  %s%s%s => %s%s",
+                         str_spaces,
+                         (expanded_name) ? expanded_name : key->key,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         key->command);
+    }
     
     if (expanded_name)
         free (expanded_name);
 }
 
+/*
+ * command_key_display_list: display a list of keys
+ */
+
+void
+command_key_display_list (const char *message_no_key,
+                          const char *message_keys,
+                          struct t_gui_key *keys,
+                          int keys_count)
+{
+    struct t_gui_key *ptr_key;
+    
+    if (keys_count == 0)
+        gui_chat_printf (NULL, message_no_key);
+    else
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, message_keys, keys_count);
+        for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
+        {
+            command_key_display (ptr_key, NULL);
+        }
+    }
+}
+
+/*
+ * command_key_display_listdiff: list differences between default and current
+ *                               keys (keys added, redefined or removed)
+ */
+
+void
+command_key_display_listdiff ()
+{
+    struct t_gui_key *ptr_key, *ptr_default_key;
+    int count_added, count_deleted;
+    
+    /* list keys added or redefined */
+    count_added = 0;
+    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        ptr_default_key = gui_keyboard_search (gui_default_keys,
+                                               ptr_key->key);
+        if (!ptr_default_key
+            || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
+        {
+            count_added++;
+        }
+    }
+    if (count_added > 0)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Key bindings added or redefined (%d):"),
+                         count_added);
+        for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+        {
+            ptr_default_key = gui_keyboard_search (gui_default_keys,
+                                                   ptr_key->key);
+            if (!ptr_default_key
+                || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
+            {
+                command_key_display (ptr_key, ptr_default_key);
+            }
+        }
+    }
+    
+    /* list keys deleted */
+    count_deleted = 0;
+    for (ptr_default_key = gui_default_keys; ptr_default_key;
+         ptr_default_key = ptr_default_key->next_key)
+    {
+        ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
+        if (!ptr_key)
+            count_deleted++;
+    }
+    if (count_deleted > 0)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Key bindings deleted (%d):"), count_deleted);
+        for (ptr_default_key = gui_default_keys; ptr_default_key;
+             ptr_default_key = ptr_default_key->next_key)
+        {
+            ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
+            if (!ptr_key)
+            {
+                command_key_display (ptr_default_key, NULL);
+            }
+        }
+    }
+    
+    /* display a message if all key bindings are default bindings */
+    if ((count_added == 0) && (count_deleted == 0))
+    {
+        gui_chat_printf (NULL,
+                         _("No key binding added, redefined or removed"));
+    }
+}
+        
 /*
  * command_key: bind/unbind keys
  */
@@ -1941,28 +2055,37 @@ command_key (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
     char *internal_code;
-    struct t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
     int old_keys_count, keys_added;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     
-    /* display all key bindings */
-    if (argc == 1)
+    /* display all key bindings (current keys) */
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
-        if (gui_keys_count == 0)
-            gui_chat_printf (NULL, _("No key binding defined"));
-        else
-        {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Key bindings (%d):"),
-                             gui_keys_count);
-            for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
-            {
-                command_key_display (ptr_key);
-            }
-        }
+        command_key_display_list (_("No key binding defined"),
+                                  _("Key bindings (%d):"),
+                                  gui_keys,
+                                  gui_keys_count);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* display redefined or key bindings added */
+    if (string_strcasecmp (argv[1], "listdiff") == 0)
+    {
+        command_key_display_listdiff ();
+        return WEECHAT_RC_OK;
+    }
+    
+    /* display default key bindings */
+    if (string_strcasecmp (argv[1], "listdefault") == 0)
+    {
+        command_key_display_list (_("No default key binding"),
+                                  _("Default key bindings (%d):"),
+                                  gui_default_keys,
+                                  gui_default_keys_count);
         return WEECHAT_RC_OK;
     }
     
@@ -1971,15 +2094,15 @@ command_key (void *data, struct t_gui_buffer *buffer,
     {
         if (argc == 3)
         {
-            ptr_key = NULL;
+            ptr_new_key = NULL;
             internal_code = gui_keyboard_get_internal_code (argv[2]);
             if (internal_code)
-                ptr_key = gui_keyboard_search (NULL, internal_code);
-            if (ptr_key)
+                ptr_new_key = gui_keyboard_search (gui_keys, internal_code);
+            if (ptr_new_key)
             {
                 gui_chat_printf (NULL, "");
                 gui_chat_printf (NULL, _("Key:"));
-                command_key_display (ptr_key);
+                command_key_display (ptr_new_key, NULL);
             }
             else
             {
@@ -2003,9 +2126,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
         
         /* bind new key */
         gui_keyboard_verbose = 1;
-        ptr_key = gui_keyboard_bind (NULL, argv[2], argv_eol[3]);
+        ptr_new_key = gui_keyboard_bind (NULL, argv[2], argv_eol[3]);
         gui_keyboard_verbose = 0;
-        if (!ptr_key)
+        if (!ptr_new_key)
         {
             gui_chat_printf (NULL,
                              _("%sError: unable to bind key \"%s\""),
@@ -2039,12 +2162,97 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
-    /* reset keys (only with "-yes", for security reason) */
+    /* reset a key to default binding */
     if (string_strcasecmp (argv[1], "reset") == 0)
+    {
+        if (argc >= 3)
+        {
+            internal_code = gui_keyboard_get_internal_code (argv[2]);
+            if (!internal_code)
+                return WEECHAT_RC_ERROR;
+            
+            ptr_key = gui_keyboard_search (gui_keys, internal_code);
+            ptr_default_key = gui_keyboard_search (gui_default_keys, internal_code);
+            free (internal_code);
+            
+            if (ptr_key || ptr_default_key)
+            {
+                if (ptr_key && ptr_default_key)
+                {
+                    if (strcmp (ptr_key->command, ptr_default_key->command) != 0)
+                    {
+                        gui_keyboard_verbose = 1;
+                        ptr_new_key = gui_keyboard_bind (NULL, argv[2],
+                                                         ptr_default_key->command);
+                        gui_keyboard_verbose = 0;
+                        if (!ptr_new_key)
+                        {
+                            gui_chat_printf (NULL,
+                                             _("%sError: unable to bind key \"%s\""),
+                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                             argv[2]);
+                            return WEECHAT_RC_ERROR;
+                        }
+                    }
+                    else
+                    {
+                        gui_chat_printf (NULL,
+                                         _("Key \"%s\" has already default "
+                                           "value"),
+                                         argv[2]);
+                    }
+                }
+                else if (ptr_key)
+                {
+                    /* no default key, so just unbind key */
+                    if (gui_keyboard_unbind (NULL, argv[2], 1))
+                    {
+                        gui_chat_printf (NULL,
+                                         _("Key \"%s\" unbound"),
+                                         argv[2]);
+                    }
+                    else
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sError: unable to unbind key \"%s\""),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                         argv[2]);
+                        return WEECHAT_RC_ERROR;
+                    }
+                }
+                else
+                {
+                    /* no key, but default key exists */
+                    gui_keyboard_verbose = 1;
+                    ptr_new_key = gui_keyboard_bind (NULL, argv[2],
+                                                     ptr_default_key->command);
+                    gui_keyboard_verbose = 0;
+                    if (!ptr_new_key)
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sError: unable to bind key \"%s\""),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                         argv[2]);
+                        return WEECHAT_RC_ERROR;
+                    }
+                }
+            }
+            else
+            {
+                gui_chat_printf (NULL, _("%sKey \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* reset ALL keys (only with "-yes", for security reason) */
+    if (string_strcasecmp (argv[1], "resetall") == 0)
     {
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
-            gui_keyboard_free_all (&gui_keys, &last_gui_key);
+            gui_keyboard_free_all (&gui_keys, &last_gui_key, &gui_keys_count);
             gui_keyboard_default_bindings ();
             gui_chat_printf (NULL,
                              _("Default key bindings restored"));
@@ -4182,7 +4390,8 @@ command_init ()
                      " unmerge: unmerge buffer from other buffers which have "
                      "same number\n"
                      "   close: close buffer (number/range is optional)\n"
-                     "    list: list buffers (no parameter implies this list)\n"
+                     "    list: list buffers (without argument, this list is "
+                     "displayed)\n"
                      "  notify: set notify level for current buffer: this "
                      "level determines whether buffer will be added to "
                      "hotlist or not:\n"
@@ -4359,20 +4568,39 @@ command_init ()
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("[bind key [command [args]]] | [unbind key] | "
-                     "[reset -yes] | [missing]"),
-                  N_("   bind: bind a command to a key or display command "
+                  N_("[list | listdefault | listdiff] | [bind key [command "
+                     "[args]]] | [unbind key] | [reset key] | "
+                     "[resetall -yes] | [missing]"),
+                  N_("       list: list all current keys (without argument, "
+                     "this list is displayed)\n"
+                     "listdefault: list default keys\n"
+                     "   listdiff: list differences between current and "
+                     "default keys (keys added, redefined or deleted)\n"
+                     "       bind: bind a command to a key or display command "
                      "bound to key\n"
-                     " unbind: remove a key binding\n"
-                     "  reset: restore bindings to the default values and "
+                     "     unbind: remove a key binding\n"
+                     "      reset: reset a key to default binding\n"
+                     "   resetall: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)\n"
-                     "missing: add missing keys (using default bindings)\n\n"
+                     "    missing: add missing keys (using default bindings), "
+                     "useful after installing new WeeChat version\n\n"
                      "When binding a command to a key, it is recommended to "
                      "use key alt+k (or Esc then k), and then press the key "
-                     "to bind: this will insert key code in command line."),
-                  "bind %(keys_codes) %(commands)"
+                     "to bind: this will insert key code in command line.\n\n"
+                     "Examples:\n"
+                     "  key alt-x to toggle nicklist bar:\n"
+                     "    /key bind meta-x /bar toggle nicklist\n"
+                     "  key alt-r to jump to #weechat IRC channel:\n"
+                     "    /key bind meta-r /buffer #weechat\n"
+                     "  restore default binding for key alt-r:\n"
+                     "    /key reset meta-r"),
+                  "list"
+                  " || listdefault"
+                  " || listdiff"
+                  " || bind %(keys_codes) %(commands)"
                   " || unbind %(keys_codes)"
-                  " || reset"
+                  " || reset %(keys_codes_for_reset)"
+                  " || resetall"
                   " || missing",
                   &command_key, NULL);
     hook_command (NULL, "layout",
@@ -4569,8 +4797,8 @@ command_init ()
                      "scroll_up | scroll_down | scroll_top | scroll_bottom | "
                      "scroll_previous_highlight | scroll_next_highlight | "
                      "zoom]"),
-                  N_("         list: list opened windows (no parameter implies "
-                     "this list)\n"
+                  N_("         list: list opened windows (without argument, "
+                     "this list is displayed)\n"
                      "           -1: jump to previous window\n"
                      "           +1: jump to next window\n"
                      "           b#: jump to next window displaying buffer number #\n"

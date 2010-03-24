@@ -64,7 +64,7 @@
             (par défaut ctrl-x bascule entre les tampons mélangés)
    unmerge: détache le tampon courant des autres tampons portant le même numéro
      close: ferme le tampon (nombre/intervalle optionnel)
-      list: liste les tampons ouverts (pas de paramètre affiche cette liste)
+      list: liste les tampons ouverts (sans paramètre, cette liste est affichée)
     notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
                  none: jamais
             highlight: pour les highlights seulement
@@ -186,17 +186,29 @@
   Cette commande est utilisée par les associations de touches ou les extensions.
 ........................................
 
-&bull; *`/key`* `[bind touche [commande [args]]] | [unbind touche] | [reset -yes] | [missing]`::
+&bull; *`/key`* `[list | listdefault | listdiff] | [bind touche [commande [args]]] | [unbind touche] | [reset touche] | [resetall -yes] | [missing]`::
 
 ........................................
   associer/libérer des touches
 
-     bind: associer une commande à une touche ou afficher la commande associée à la touche
-   unbind: supprimer l'association à une touche
-    reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
-  missing: ajoute les touches manquantes (en utilisant les touches par défaut)
+         list: affiche toutes les touches courantes (sans paramètre, cette liste est affichée)
+  listdefault: affiche les touches par défaut
+     listdiff: affiche les différences entre les touches courantes et celles par défaut (touches ajoutées, redéfinies ou supprimées)
+         bind: associe une commande à une touche ou affiche la commande associée à la touche
+       unbind: supprime l'association à une touche
+        reset: réinitialise une touche à son association par défaut
+     resetall: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
+      missing: ajoute les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
   
   Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
+  
+  Exemples:
+    touche alt-x pour activer/désactiver la liste des pseudos:
+      /key bind meta-x /bar toggle nicklist
+    touche alt-r pour aller sur le canal IRC #weechat:
+      /key bind meta-r /buffer #weechat
+    restaure l'association par défaut pour la touche alt-r:
+      /key reset meta-r
 ........................................
 
 &bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
@@ -393,7 +405,7 @@
 ........................................
   gestion des fenêtres
 
-           list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
+           list: liste les fenêtres ouvertes (sans paramètre, cette liste est affichée)
              -1: saute à la fenêtre précédente
              +1: saute à la fenêtre suivante
              b#: saute à la fenêtre affichant le tampon #

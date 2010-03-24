@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-23 15:33+0100\n"
+"POT-Creation-Date: 2010-03-24 19:36+0100\n"
 "PO-Revision-Date: 2010-03-23 15:44+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -351,12 +351,36 @@ msgstr "%sKeine Hilfe verfügbar, \"%s\" ist kein Befehl oder Option"
 msgid "Buffer command history:"
 msgstr "Befehlsverlauf des Buffers:"
 
+#, fuzzy
+msgid "default command:"
+msgstr "WeeChat Befehle"
+
+#, fuzzy, c-format
+msgid "Key bindings added or redefined (%d):"
+msgstr "Tastenbelegungen (%d):"
+
+#, fuzzy, c-format
+msgid "Key bindings deleted (%d):"
+msgstr "Tastenbelegungen (%d):"
+
+#, fuzzy
+msgid "No key binding added, redefined or removed"
+msgstr "Tastenbelegungen (%d):"
+
 msgid "No key binding defined"
 msgstr "Keine Tastenbelegung definiert"
 
 #, c-format
 msgid "Key bindings (%d):"
 msgstr "Tastenbelegungen (%d):"
+
+#, fuzzy
+msgid "No default key binding"
+msgstr "Standardtastenbelegungen wiederhergestellt"
+
+#, fuzzy, c-format
+msgid "Default key bindings (%d):"
+msgstr "Standardtastenbelegungen wiederhergestellt"
 
 msgid "Key:"
 msgstr "Taste:"
@@ -375,6 +399,14 @@ msgstr "Tastenbelegung \"%s\" entfernt"
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%sFehler: kann die Tastenbelegung \"%s\" nicht entfernen"
+
+#, c-format
+msgid "Key \"%s\" has already default value"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sKey \"%s\" not found"
+msgstr "%s%s: Relay \"%s\" nicht gefunden"
 
 msgid "Default key bindings restored"
 msgstr "Standardtastenbelegungen wiederhergestellt"
@@ -866,6 +898,7 @@ msgstr ""
 "[number] | close [n1[-n2]] | list | notify level | localvar | set property "
 "value | number | name]"
 
+#, fuzzy
 msgid ""
 "   clear: clear buffer content (number for a buffer, -merged for merged "
 "buffers, -all for all buffers, or nothing for current buffer)\n"
@@ -875,7 +908,7 @@ msgid ""
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
-"    list: list buffers (no parameter implies this list)\n"
+"    list: list buffers (without argument, this list is displayed)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
 "               none: never\n"
@@ -1126,20 +1159,39 @@ msgstr "Dieser Befehl wird von Tastenbelegungen oder Erweiterungen verwendet"
 msgid "bind/unbind keys"
 msgstr "Einer Taste einen Befehl zuordnen oder entfernen"
 
-msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+#, fuzzy
+msgid ""
+"[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
+"| [reset key] | [resetall -yes] | [missing]"
 msgstr ""
 "[bind Taste [Befehl [Argument]]] | [unbind Taste] | [reset -yes] | [missing]"
 
+#, fuzzy
 msgid ""
-"   bind: bind a command to a key or display command bound to key\n"
-" unbind: remove a key binding\n"
-"  reset: restore bindings to the default values and delete ALL personal "
+"       list: list all current keys (without argument, this list is "
+"displayed)\n"
+"listdefault: list default keys\n"
+"   listdiff: list differences between current and default keys (keys added, "
+"redefined or deleted)\n"
+"       bind: bind a command to a key or display command bound to key\n"
+"     unbind: remove a key binding\n"
+"      reset: reset a key to default binding\n"
+"   resetall: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"missing: add missing keys (using default bindings)\n"
+"    missing: add missing keys (using default bindings), useful after "
+"installing new WeeChat version\n"
 "\n"
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
 "then k), and then press the key to bind: this will insert key code in "
-"command line."
+"command line.\n"
+"\n"
+"Examples:\n"
+"  key alt-x to toggle nicklist bar:\n"
+"    /key bind meta-x /bar toggle nicklist\n"
+"  key alt-r to jump to #weechat IRC channel:\n"
+"    /key bind meta-r /buffer #weechat\n"
+"  restore default binding for key alt-r:\n"
+"    /key reset meta-r"
 msgstr ""
 "   bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf "
 "eine Taste gelegt wurde\n"
@@ -1522,8 +1574,10 @@ msgstr ""
 "scroll_up | scroll_down | scroll_top | scroll_bottom | "
 "scroll_previous_highlight | scroll_next_highlight | zoom]"
 
+#, fuzzy
 msgid ""
-"         list: list opened windows (no parameter implies this list)\n"
+"         list: list opened windows (without argument, this list is "
+"displayed)\n"
 "           -1: jump to previous window\n"
 "           +1: jump to next window\n"
 "           b#: jump to next window displaying buffer number #\n"
@@ -2536,6 +2590,10 @@ msgstr "Optionen für Infobars"
 
 msgid "key codes"
 msgstr "Tastaturcodes"
+
+#, fuzzy
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr "Tastenbelegungen (%d):"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
@@ -3940,8 +3998,9 @@ msgstr ""
 "newservername] | [rename servername newservername] | [keep servername] | "
 "[del servername] | [deloutq] | [jump] | [raw]"
 
+#, fuzzy
 msgid ""
-"      list: list servers (no parameter implies this list)\n"
+"      list: list servers (without argument, this list is displayed)\n"
 "  listfull: list servers with detailed info for each server\n"
 "       add: create a new server\n"
 "servername: server name, for internal and display use\n"
@@ -6548,6 +6607,10 @@ msgstr "Argumente"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#, fuzzy
+#~ msgid "No key added or redefined"
+#~ msgstr "Keine Tastenbelegung definiert"
 
 #~ msgid "Welcome to %sWeeChat%s, %s"
 #~ msgstr "Willkommen in %sWeeChat%s, %s"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-23 15:33+0100\n"
+"POT-Creation-Date: 2010-03-24 19:36+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -343,12 +343,36 @@ msgstr "%sNie ma dostępnej pomocy, \"%s\" nie jest komenda ani opcją"
 msgid "Buffer command history:"
 msgstr "Historia komend bufora:"
 
+#, fuzzy
+msgid "default command:"
+msgstr "komendy weechata"
+
+#, fuzzy, c-format
+msgid "Key bindings added or redefined (%d):"
+msgstr "Powiązania klawiszy (%d):"
+
+#, fuzzy, c-format
+msgid "Key bindings deleted (%d):"
+msgstr "Powiązania klawiszy (%d):"
+
+#, fuzzy
+msgid "No key binding added, redefined or removed"
+msgstr "Powiązania klawiszy (%d):"
+
 msgid "No key binding defined"
 msgstr "Nie zdefiniowano powiązań klawiszy"
 
 #, c-format
 msgid "Key bindings (%d):"
 msgstr "Powiązania klawiszy (%d):"
+
+#, fuzzy
+msgid "No default key binding"
+msgstr "Przywrócono domyślne przypisania klawiszy"
+
+#, fuzzy, c-format
+msgid "Default key bindings (%d):"
+msgstr "Przywrócono domyślne przypisania klawiszy"
 
 msgid "Key:"
 msgstr "Klawisz:"
@@ -367,6 +391,14 @@ msgstr "Klawisz \"%s\" nieprzypisany"
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%sBłąd: nie można odbindować klawisza \"%s\""
+
+#, c-format
+msgid "Key \"%s\" has already default value"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sKey \"%s\" not found"
+msgstr "%s%s: relay \"%s\" nie został znaleziony"
 
 msgid "Default key bindings restored"
 msgstr "Przywrócono domyślne przypisania klawiszy"
@@ -871,7 +903,7 @@ msgid ""
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
-"    list: list buffers (no parameter implies this list)\n"
+"    list: list buffers (without argument, this list is displayed)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
 "               none: never\n"
@@ -1101,21 +1133,40 @@ msgstr "Ta komenda jest używana przez skróty klawiszowe lub wtyczki"
 msgid "bind/unbind keys"
 msgstr "przypisz/usuń przypisanie klawiszy"
 
-msgid "[bind key [command [args]]] | [unbind key] | [reset -yes] | [missing]"
+#, fuzzy
+msgid ""
+"[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
+"| [reset key] | [resetall -yes] | [missing]"
 msgstr ""
 "[bind klawisz [komenda [argumenty]]] | [unbind klawisz] | [reset -yes] | "
 "[missing]"
 
+#, fuzzy
 msgid ""
-"   bind: bind a command to a key or display command bound to key\n"
-" unbind: remove a key binding\n"
-"  reset: restore bindings to the default values and delete ALL personal "
+"       list: list all current keys (without argument, this list is "
+"displayed)\n"
+"listdefault: list default keys\n"
+"   listdiff: list differences between current and default keys (keys added, "
+"redefined or deleted)\n"
+"       bind: bind a command to a key or display command bound to key\n"
+"     unbind: remove a key binding\n"
+"      reset: reset a key to default binding\n"
+"   resetall: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
-"missing: add missing keys (using default bindings)\n"
+"    missing: add missing keys (using default bindings), useful after "
+"installing new WeeChat version\n"
 "\n"
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
 "then k), and then press the key to bind: this will insert key code in "
-"command line."
+"command line.\n"
+"\n"
+"Examples:\n"
+"  key alt-x to toggle nicklist bar:\n"
+"    /key bind meta-x /bar toggle nicklist\n"
+"  key alt-r to jump to #weechat IRC channel:\n"
+"    /key bind meta-r /buffer #weechat\n"
+"  restore default binding for key alt-r:\n"
+"    /key reset meta-r"
 msgstr ""
 "   bind: przypisuje komendę do klawisza lub wyświetla przypisaną do klawisza "
 "komendę\n"
@@ -1482,7 +1533,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"         list: list opened windows (no parameter implies this list)\n"
+"         list: list opened windows (without argument, this list is "
+"displayed)\n"
 "           -1: jump to previous window\n"
 "           +1: jump to next window\n"
 "           b#: jump to next window displaying buffer number #\n"
@@ -2458,6 +2510,10 @@ msgstr "opcje pasków"
 
 msgid "key codes"
 msgstr "kody klawiszowe"
+
+#, fuzzy
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr "Powiązania klawiszy (%d):"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
@@ -3812,8 +3868,9 @@ msgstr ""
 "nowa_nazwa_serwera] | [rename nazwa_serwera nowa_nazwa_serwera] | [keep "
 "nazwa_serwera] | [del nazwa_serwera] | [deloutq] | [jump] | [raw]"
 
+#, fuzzy
 msgid ""
-"      list: list servers (no parameter implies this list)\n"
+"      list: list servers (without argument, this list is displayed)\n"
 "  listfull: list servers with detailed info for each server\n"
 "       add: create a new server\n"
 "servername: server name, for internal and display use\n"
@@ -6352,3 +6409,7 @@ msgstr "[argumenty]"
 #, fuzzy
 msgid "Pointer"
 msgstr "liczba"
+
+#, fuzzy
+#~ msgid "No key added or redefined"
+#~ msgstr "Nie zdefiniowano powiązań klawiszy"

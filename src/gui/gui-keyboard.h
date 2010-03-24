@@ -36,7 +36,10 @@ struct t_gui_key
 
 extern struct t_gui_key *gui_keys;
 extern struct t_gui_key *last_gui_key;
+extern struct t_gui_key *gui_default_keys;
+extern struct t_gui_key *last_gui_default_key;
 extern int gui_keys_count;
+extern int gui_default_keys_count;
 extern int gui_keyboard_verbose;
 extern char gui_key_combo_buffer[];
 extern int gui_key_grab;
@@ -56,7 +59,7 @@ extern char *gui_keyboard_get_expanded_name (const char *key);
 extern struct t_gui_key *gui_keyboard_new (struct t_gui_buffer *buffer,
                                            const char *key,
                                            const char *command);
-extern struct t_gui_key *gui_keyboard_search (struct t_gui_buffer *buffer,
+extern struct t_gui_key *gui_keyboard_search (struct t_gui_key *keys,
                                               const char *key);
 extern struct t_gui_key *gui_keyboard_bind (struct t_gui_buffer *buffer,
                                             const char *key,
@@ -66,9 +69,11 @@ extern int gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key,
 extern int gui_keyboard_pressed (const char *key_str);
 extern void gui_keyboard_free (struct t_gui_key **keys,
                                struct t_gui_key **last_key,
+                               int *keys_count,
                                struct t_gui_key *key);
 extern void gui_keyboard_free_all (struct t_gui_key **keys,
-                                   struct t_gui_key **last_key);
+                                   struct t_gui_key **last_key,
+                                   int *keys_count);
 extern void gui_keyboard_buffer_reset ();
 extern void gui_keyboard_buffer_add (unsigned char key);
 extern int gui_keyboard_get_paste_lines ();

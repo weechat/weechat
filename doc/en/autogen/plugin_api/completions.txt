@@ -78,6 +78,8 @@
 
 | weechat | keys_codes | key codes
 
+| weechat | keys_codes_for_reset | key codes that can be reset (keys added, redefined or removed)
+
 | weechat | nicks | nicks in nicklist of current buffer
 
 | weechat | plugins_commands | commands defined by plugins

@@ -1,18 +1,18 @@
 [width="100%",cols="^1,^2,6,6",options="header"]
 |========================================
-| Plugin | Name | Description | Arguments
+| Plugin | Nome | Descrizione | Argomenti
 
 | fifo | fifo_filename | nome della pipe FIFO | -
 
-| irc | irc_buffer | get buffer pointer for an IRC server/channel/nick | server,channel,nick (channel and nicks are optional)
+| irc | irc_buffer | ottiene puntatore al buffer per un server/canale/nick IRC | server,canale,nick (canale e nick sono opzionali)
 
-| irc | irc_is_channel | 1 se la stringa è un canale IRC | channel name
+| irc | irc_is_channel | 1 se la stringa è un canale IRC | nome canale
 
-| irc | irc_nick | ottiene nick corrente su un server | server name
+| irc | irc_nick | ottiene nick corrente su un server | nome server
 
-| irc | irc_nick_color | riceve colore del nick | nickname
+| irc | irc_nick_color | riceve colore del nick | nick
 
-| irc | irc_nick_from_host | ottiene nick dall'host IRC | IRC host (like `:nick!name@server.com`)
+| irc | irc_nick_from_host | ottiene nick dall'host IRC | host IRC (come `:nick!nome@server.com`)
 
 | weechat | charset_internal | set caratteri interno di WeeChat | -
 
@@ -28,7 +28,7 @@
 
 | weechat | version | versione di WeeChat | -
 
-| weechat | version_number | WeeChat version (as number) | -
+| weechat | version_number | versione di WeeChat (come numero) | -
 
 | weechat | weechat_dir | cartella WeeChat | -
 

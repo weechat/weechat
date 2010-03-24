@@ -7,8 +7,9 @@ v0.3.2-dev, 2010-03-24
 Version 0.3.2 (under dev!)
 --------------------------
 
-* core: add signal "day_changed"
+* core: add new options for command /key: listdefault, listdiff and reset
 * core: add new command /mute
+* core: add signal "day_changed"
 * core: add command line option "-s" (or "--no-script") to start WeeChat
   without loading any script
 * core: remove unneeded space after time on each line if option

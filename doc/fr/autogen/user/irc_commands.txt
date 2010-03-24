@@ -484,7 +484,7 @@
 ........................................
   liste, ajoute ou retire des serveurs IRC
 
-         list: afficher les serveurs (pas de paramètre implique cette liste)
+         list: afficher les serveurs (sans paramètre, cette liste est affichée)
      listfull: afficher les serveurs avec de l'info détaillée pour chaque
           add: créer un nouveau serveur
   nom_serveur: nom du serveur, pour usage interne et affichage

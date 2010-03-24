@@ -62,6 +62,7 @@
         porta: porta per il server (6667 è la predefinita)
       opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)
      nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)
+  
   Esempi:
     /connect freenode
     /connect irc.oftc.net/6667
@@ -266,7 +267,7 @@
 &bull; *`/map`*::
 
 ........................................
-  show a graphical map of the IRC network
+  mostra una mappa grafica della rete IRC
 ........................................
 
 &bull; *`/me`* `messaggio`::
@@ -483,7 +484,7 @@
 ........................................
   elenca, aggiunge o rimuove server IRC
 
-        list: list servers (no parameter implies this list)
+        list: list servers (without argument, this list is displayed)
     listfull: list servers with detailed info for each server
          add: create a new server
   servername: server name, for internal and display use

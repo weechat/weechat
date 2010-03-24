@@ -1134,7 +1134,7 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     
     log_printf ("");
     log_printf ("  [window bar (addr:0x%lx)]",     bar_window);
-    log_printf ("    bar. . . . . . . . . : 0x%lx ('%s')",
+    log_printf ("    bar. . . . . . . . . . : 0x%lx ('%s')",
                 bar_window->bar,
                 (bar_window->bar) ? bar_window->bar->name : "");
     log_printf ("    x. . . . . . . . . . . : %d",    bar_window->x);
