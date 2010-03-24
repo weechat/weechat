@@ -844,7 +844,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->color);
         snprintf (format, sizeof (format),
-                  "%%-%dsprefix. . . . . : '%%c'",
+                  "%%-%dsprefix. . . . . : '%%s'",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->prefix);
         snprintf (format, sizeof (format),
