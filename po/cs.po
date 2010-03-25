@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
 "PO-Revision-Date: 2010-03-23 10:19+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4533,11 +4533,19 @@ msgstr[0] "kanál"
 msgstr[1] "kanály"
 msgstr[2] "kanálů"
 
-msgid "1 if string is an IRC channel"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name"
 msgstr "1 pokud je řetězec IRC kanál"
 
 msgid "channel name"
 msgstr "jméno kanálu"
+
+#, fuzzy
+msgid "1 if string is a valid IRC nick name"
+msgstr "1 pokud je řetězec IRC kanál"
+
+msgid "nickname"
+msgstr "přezdívka"
 
 msgid "get current nick on a server"
 msgstr "získat aktuální přezdívku na serveru"
@@ -4553,9 +4561,6 @@ msgstr "IRC host (jako `:nick!name@server.com`)"
 
 msgid "get nick color"
 msgstr "získat barvu barva přezdívky"
-
-msgid "nickname"
-msgstr "přezdívka"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"

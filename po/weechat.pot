@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3771,10 +3771,16 @@ msgid_plural "channels"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "1 if string is an IRC channel"
+msgid "1 if string is a valid IRC channel name"
 msgstr ""
 
 msgid "channel name"
+msgstr ""
+
+msgid "1 if string is a valid IRC nick name"
+msgstr ""
+
+msgid "nickname"
 msgstr ""
 
 msgid "get current nick on a server"
@@ -3790,9 +3796,6 @@ msgid "IRC host (like `:nick!name@server.com`)"
 msgstr ""
 
 msgid "get nick color"
-msgstr ""
-
-msgid "nickname"
 msgstr ""
 
 msgid "get buffer pointer for an IRC server/channel/nick"

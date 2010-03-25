@@ -57,6 +57,35 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
 }
 
 /*
+ * irc_nick_is_nick: check if string is a valid nick string (RFC 1459)
+ *                   return 1 if string valid nick
+ *                          0 if not a valid nick
+ */
+
+int
+irc_nick_is_nick (const char *string)
+{
+    const char *ptr;
+    
+    if (!string || !string[0])
+        return 0;
+    
+    /* first char must not be a number or hyphen */
+    ptr = string;
+    if (strchr ("0123456789-", *ptr))
+        return 0;
+    
+    while (ptr && ptr[0])
+    {
+        if (!strchr (IRC_NICK_VALID_CHARS, *ptr))
+            return 0;
+        ptr++;
+    }
+    
+    return 1;
+}
+
+/*
  * irc_nick_find_color: find a color for a nick (according to nick letters)
  */
 

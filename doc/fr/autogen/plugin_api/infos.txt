@@ -6,7 +6,9 @@
 
 | irc | irc_buffer | retourne le pointeur vers le tampon pour un serveur/canal/pseudo IRC | serveur,canal,pseudo (canal et pseudo sont optionnels)
 
-| irc | irc_is_channel | 1 si la chaîne est un canal IRC | nom de canal
+| irc | irc_is_channel | 1 si la chaîne est un nom de canal IRC valide | nom de canal
+
+| irc | irc_is_nick | 1 si la chaîne est un pseudo IRC valide | pseudo
 
 | irc | irc_nick | retourne le pseudo utilisé actuellement sur un serveur | nom de serveur
 

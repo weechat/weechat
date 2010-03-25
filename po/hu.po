@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4409,12 +4409,20 @@ msgstr[0] "%d szoba"
 msgstr[1] "%d szoba"
 
 #, fuzzy
-msgid "1 if string is an IRC channel"
+msgid "1 if string is a valid IRC channel name"
 msgstr "felhasználók listája a szobában"
 
 #, fuzzy
 msgid "channel name"
 msgstr "%d szoba"
+
+#, fuzzy
+msgid "1 if string is a valid IRC nick name"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] név"
 
 #, fuzzy
 msgid "get current nick on a server"
@@ -4434,10 +4442,6 @@ msgstr ""
 #, fuzzy
 msgid "get nick color"
 msgstr "üzenetek színe"
-
-#, fuzzy
-msgid "nickname"
-msgstr "[-all] név"
 
 #, fuzzy
 msgid "get buffer pointer for an IRC server/channel/nick"

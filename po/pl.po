@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -4571,12 +4571,21 @@ msgstr[0] "kanał"
 msgstr[1] "kanały"
 msgstr[2] "kanałów"
 
-msgid "1 if string is an IRC channel"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name"
 msgstr "1 jeśli ciąg jest w kanale IRC"
 
 #, fuzzy
 msgid "channel name"
 msgstr "kanał atrybuty"
+
+#, fuzzy
+msgid "1 if string is a valid IRC nick name"
+msgstr "1 jeśli ciąg jest w kanale IRC"
+
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] nick"
 
 msgid "get current nick on a server"
 msgstr "pobiera aktualny nick z serwera"
@@ -4593,10 +4602,6 @@ msgstr ""
 
 msgid "get nick color"
 msgstr "pobiera kolor nicka"
-
-#, fuzzy
-msgid "nickname"
-msgstr "[-all] nick"
 
 #, fuzzy
 msgid "get buffer pointer for an IRC server/channel/nick"

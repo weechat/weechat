@@ -21,6 +21,8 @@
 #define __WEECHAT_IRC_NICK_H 1
 
 #define IRC_NICK_DEFAULT_PREFIXES_LIST "@%+~&!-"
+#define IRC_NICK_VALID_CHARS           "abcdefghijklmnopqrstuvwxyzABCDEFGHI" \
+    "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
 
 #define IRC_NICK_CHANOWNER  1
 #define IRC_NICK_CHANADMIN  2
@@ -61,6 +63,7 @@ struct t_irc_nick
 
 extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
+extern int irc_nick_is_nick (const char *string);
 extern const char *irc_nick_find_color (const char *nickname);
 extern void irc_nick_get_gui_infos (struct t_irc_nick *nick,
                                     char *prefix, int *prefix_color,

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-03-24
+v0.3.2-dev, 2010-03-25
 
 
 Version 0.3.2 (under dev!)
@@ -31,6 +31,8 @@ Version 0.3.2 (under dev!)
 * gui: fix bug with cursor when position is last char of terminal
 * api: add "version_number" for function info_get to get WeeChat version as
   number
+* api: add "irc_is_nick" for function info_get to check if a string is a valid
+  IRC nick name (patch #7133)
 * api: add functions "string_encode_base64" and "string_decode_base64", fix
   bug with base64 encoding
 * api: add functions "string_match", "string_has_highlight" and

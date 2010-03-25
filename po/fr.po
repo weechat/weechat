@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
-"PO-Revision-Date: 2010-03-24 19:39+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
+"PO-Revision-Date: 2010-03-25 10:24+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4683,11 +4683,17 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canaux"
 
-msgid "1 if string is an IRC channel"
-msgstr "1 si la chaîne est un canal IRC"
+msgid "1 if string is a valid IRC channel name"
+msgstr "1 si la chaîne est un nom de canal IRC valide"
 
 msgid "channel name"
 msgstr "nom de canal"
+
+msgid "1 if string is a valid IRC nick name"
+msgstr "1 si la chaîne est un pseudo IRC valide"
+
+msgid "nickname"
+msgstr "pseudo"
 
 msgid "get current nick on a server"
 msgstr "retourne le pseudo utilisé actuellement sur un serveur"
@@ -4703,9 +4709,6 @@ msgstr "host IRC (comme `:pseudo!nom@serveur.com`)"
 
 msgid "get nick color"
 msgstr "retourne la couleur du pseudo"
-
-msgid "nickname"
-msgstr "pseudo"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "retourne le pointeur vers le tampon pour un serveur/canal/pseudo IRC"

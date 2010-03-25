@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-24 19:36+0100\n"
+"POT-Creation-Date: 2010-03-25 10:20+0100\n"
 "PO-Revision-Date: 2010-03-23 15:44+0100\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4734,11 +4734,19 @@ msgid_plural "channels"
 msgstr[0] "Channel"
 msgstr[1] "Channels"
 
-msgid "1 if string is an IRC channel"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name"
 msgstr "1, falls die Zeichenkette ein IRC-Channel ist"
 
 msgid "channel name"
 msgstr "Channelname"
+
+#, fuzzy
+msgid "1 if string is a valid IRC nick name"
+msgstr "1, falls die Zeichenkette ein IRC-Channel ist"
+
+msgid "nickname"
+msgstr "Nickname"
 
 msgid "get current nick on a server"
 msgstr "Aktuellen Nicknamen für den Server erhalten"
@@ -4754,9 +4762,6 @@ msgstr "IRC host (in der Form `:nick!name@server.com`)"
 
 msgid "get nick color"
 msgstr "Hole Farbe für Nick"
-
-msgid "nickname"
-msgstr "Nickname"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "hole Buffer Pointer für einen IRC Server/Channel/Nick"
