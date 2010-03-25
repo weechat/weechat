@@ -23,10 +23,24 @@ FIND_PATH(NCURSES_INCLUDE_PATH
   PATHS /usr/include /usr/local/include /usr/pkg/include
 )
 
-FIND_LIBRARY(NCURSES_LIBRARY
-  NAMES ncursesw ncurses
+FIND_LIBRARY(NCURSESW_LIBRARY
+  NAMES ncursesw
   PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
+
+IF (NCURSESW_LIBRARY)
+  SET(NCURSES_LIBRARY ${NCURSESW_LIBRARY})
+ELSE(NCURSESW_LIBRARY)
+  FIND_LIBRARY(NCURSES_LIBRARY
+    NAMES ncurses
+    PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+  )
+  IF (NCURSES_LIBRARY)
+    MESSAGE("*** WARNING:\n"
+      "*** ncursesw library not found! Falling back to \"ncurses\"\n"
+      "*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.")
+  ENDIF(NCURSES_LIBRARY)
+ENDIF(NCURSESW_LIBRARY)
 
 IF (NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
   SET(NCURSES_FOUND TRUE)
