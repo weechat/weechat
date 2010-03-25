@@ -45,13 +45,36 @@
 
 
 /*
- * gui_nicklist_changed_signal: send "nicklist_changed" signal
+ * gui_nicklist_send_signal: send a signal when something has changed in
+ *                           nicklist
  */
 
 void
-gui_nicklist_changed_signal ()
+gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
+                          const char *arguments)
 {
-    hook_signal_send ("nicklist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    char *str_args;
+    int length;
+    
+    if (buffer)
+    {
+        length = 128 + ((arguments) ? strlen (arguments) : 0) + 1 + 1;
+        str_args = malloc (length);
+        if (str_args)
+        {
+            snprintf (str_args, length,
+                      "0x%lx,%s",
+                      (long unsigned int)(buffer),
+                      (arguments) ? arguments : "");
+            hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, str_args);
+            free (str_args);
+        }
+    }
+    else
+    {
+        hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING,
+                          (char *)arguments);
+    }
 }
 
 /*
@@ -201,7 +224,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     if (buffer->nicklist_display_groups && visible)
         buffer->nicklist_visible_count++;
     
-    gui_nicklist_changed_signal ();
+    gui_nicklist_send_signal ("nicklist_group_added", buffer, name);
     
     return new_group;
 }
@@ -342,7 +365,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     if (visible)
         buffer->nicklist_visible_count++;
     
-    gui_nicklist_changed_signal ();
+    gui_nicklist_send_signal ("nicklist_nick_added", buffer, name);
     
     return new_nick;
 }
@@ -355,8 +378,12 @@ void
 gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
                           struct t_gui_nick *nick)
 {
+    char *nick_removed;
+    
     if (!buffer || !nick)
         return;
+    
+    nick_removed = (nick->name) ? strdup (nick->name) : NULL;
     
     /* remove nick from list */
     if (nick->prev_nick)
@@ -386,7 +413,10 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     
     free (nick);
     
-    gui_nicklist_changed_signal ();
+    gui_nicklist_send_signal ("nicklist_nick_removed", buffer, nick_removed);
+    
+    if (nick_removed)
+        free (nick_removed);
 }
 
 /*
@@ -397,8 +427,12 @@ void
 gui_nicklist_remove_group (struct t_gui_buffer *buffer,
                            struct t_gui_nick_group *group)
 {
+    char *group_removed;
+    
     if (!buffer || !group)
         return;
+    
+    group_removed = (group->name) ? strdup (group->name) : NULL;
     
     /* remove childs first */
     while (group->childs)
@@ -444,7 +478,10 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     
     free (group);
     
-    gui_nicklist_changed_signal ();
+    gui_nicklist_send_signal ("nicklist_group_removed", buffer, group_removed);
+    
+    if (group_removed)
+        free (group_removed);
 }
 
 /*

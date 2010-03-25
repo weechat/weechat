@@ -9,7 +9,6 @@ Version 0.3.2 (under dev!)
 
 * core: add new options for command /key: listdefault, listdiff and reset
 * core: add new command /mute
-* core: add signal "day_changed"
 * core: add command line option "-s" (or "--no-script") to start WeeChat
   without loading any script
 * core: remove unneeded space after time on each line if option
@@ -40,6 +39,8 @@ Version 0.3.2 (under dev!)
 * api: add missing infos in functions buffer_get_integer / buffer_get_string
   and in buffer infolist
 * api: add description of arguments for functions hook_info and hook_infolist
+* api: add signals "day_changed", "nicklist_group_added/removed",
+  "nicklist_nick_added/removed"
 * api: fix function "color" in Lua script API
 * api: fix "inactivity" value when no key has been pressed since WeeChat started
   (bug #28930)

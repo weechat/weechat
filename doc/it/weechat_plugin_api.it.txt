@@ -5553,8 +5553,17 @@ Argomenti:
 | weechat | key_pressed | string: key pressed |
   key pressed
 
-| weechat | nicklist_changed | - |
-  nicklist has changed
+| weechat | nicklist_group_added | string: buffer pointer + "," + group name |
+  group added in nicklist
+
+| weechat | nicklist_group_removed | string: buffer pointer + "," + group name |
+  group removed from nicklist
+
+| weechat | nicklist_nick_added | string: buffer pointer + "," + nick name |
+  nick added in nicklist
+
+| weechat | nicklist_nick_removed | string: buffer pointer + "," + nick name |
+  nick removed from nicklist
 
 | weechat | partial_completion | - |
   partial completion happened

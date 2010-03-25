@@ -5806,8 +5806,17 @@ Paramètres :
 | weechat | key_pressed | chaîne : touche appuyée |
   touche appuyée
 
-| weechat | nicklist_changed | - |
-  la liste des pseudos a changé
+| weechat | nicklist_group_added | chaîne: pointeur tampon + "," + nom du groupe |
+  groupe ajouté dans la liste des pseudos
+
+| weechat | nicklist_group_removed | chaîne: pointeur tampon + "," + nom du groupe |
+  groupe supprimé de la liste des pseudos
+
+| weechat | nicklist_nick_added | chaîne: pointeur tampon + "," + pseudo |
+  pseudo ajouté dans la liste des pseudos
+
+| weechat | nicklist_nick_removed | chaîne: pointeur tampon + "," + pseudo |
+  pseudo supprimé de la liste des pseudos
 
 | weechat | partial_completion | - |
   une complétion partielle a été faite
