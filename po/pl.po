@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-25 10:20+0100\n"
+"POT-Creation-Date: 2010-03-26 10:59+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
@@ -2133,15 +2133,19 @@ msgid "%sError reading configuration"
 msgstr "%sBłąd podczas odczytu konfiguracji"
 
 #, c-format
-msgid "%sError: cannot create file \"%s\""
-msgstr "%sBłąd: nie można utrorzyć pliku \"%s\""
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Zapisuję plik konfiguracyjny %s %s"
 
 msgid "(default options)"
 msgstr "(domyślne opcje)"
+
+#, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr "%sBłąd: nie można utrorzyć pliku \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "%s%s: błąd podczas tworzenia pliku konfiguracyjnego"
 
 #, c-format
 msgid "%sWarning: configuration file \"%s\" not found"

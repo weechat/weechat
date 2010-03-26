@@ -1353,14 +1353,14 @@ weechat_ruby_api_config_read_cb (void *data,
  * weechat_ruby_api_config_section_write_cb: callback for writing section
  */
 
-void
+int
 weechat_ruby_api_config_section_write_cb (void *data,
                                           struct t_config_file *config_file,
                                           const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *ruby_argv[4], empty_arg[1] = { '\0' };
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -1376,11 +1376,20 @@ weechat_ruby_api_config_section_write_cb (void *data,
                                         script_callback->function,
                                         ruby_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_WRITE_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (ruby_argv[1])
             free (ruby_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
 /*
@@ -1388,17 +1397,17 @@ weechat_ruby_api_config_section_write_cb (void *data,
  *                                                   default values for section
  */
 
-void
+int
 weechat_ruby_api_config_section_write_default_cb (void *data,
                                                   struct t_config_file *config_file,
                                                   const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *ruby_argv[4], empty_arg[1] = { '\0' };
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
@@ -1411,11 +1420,20 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
                                         script_callback->function,
                                         ruby_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_WRITE_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (ruby_argv[1])
             free (ruby_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
 /*

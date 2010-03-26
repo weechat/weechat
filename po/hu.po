@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-25 10:20+0100\n"
+"POT-Creation-Date: 2010-03-26 10:59+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1991,15 +1991,19 @@ msgid "%sError reading configuration"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
-msgid "%sError: cannot create file \"%s\""
-msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
-
-#, fuzzy, c-format
 msgid "Writing configuration file %s %s"
 msgstr "beállítások mentése kilépéskor"
 
 msgid "(default options)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
 msgid "%sWarning: configuration file \"%s\" not found"

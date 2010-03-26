@@ -248,13 +248,13 @@ struct t_weechat_plugin
                                                                          const char *option_name,
                                                                          const char *value),
                                                     void *callback_read_data,
-                                                    void (*callback_write)(void *data,
-                                                                           struct t_config_file *config_file,
-                                                                           const char *section_name),
+                                                    int (*callback_write)(void *data,
+                                                                          struct t_config_file *config_file,
+                                                                          const char *section_name),
                                                     void *callback_write_data,
-                                                    void (*callback_write_default)(void *data,
-                                                                                   struct t_config_file *config_file,
-                                                                                   const char *section_name),
+                                                    int (*callback_write_default)(void *data,
+                                                                                  struct t_config_file *config_file,
+                                                                                  const char *section_name),
                                                     void *callback_write_default_data,
                                                     int (*callback_create_option)(void *data,
                                                                                   struct t_config_file *config_file,
@@ -325,11 +325,11 @@ struct t_weechat_plugin
     const char *(*config_string_default) (struct t_config_option *option);
     const char *(*config_color) (struct t_config_option *option);
     const char *(*config_color_default) (struct t_config_option *option);
-    void (*config_write_option) (struct t_config_file *config_file,
-                                 struct t_config_option *option);
-    void (*config_write_line) (struct t_config_file *config_file,
-                               const char *option_name,
-                               const char *value, ...);
+    int (*config_write_option) (struct t_config_file *config_file,
+                                struct t_config_option *option);
+    int (*config_write_line) (struct t_config_file *config_file,
+                              const char *option_name,
+                              const char *value, ...);
     int (*config_write) (struct t_config_file *config_file);
     int (*config_read) (struct t_config_file *config_file);
     int (*config_reload) (struct t_config_file *config_file);

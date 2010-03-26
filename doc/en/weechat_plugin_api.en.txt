@@ -2700,7 +2700,8 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -2709,7 +2710,8 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -2719,7 +2721,8 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
 }
 
 int
@@ -2729,7 +2732,8 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+    /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
 /* standard section, user can not add/delete options */
@@ -5369,7 +5373,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                      int (*callback)(void *data,
                                                      int status,
                                                      int gnutls_rc,
-                                                     const char *errpr,
+                                                     const char *error,
                                                      const char *ip_address),
                                      void *callback_data);
 ----------------------------------------
@@ -5386,6 +5390,7 @@ Arguments:
 * 'gnutls_cb': GnuTLS callback (optional)
 * 'gnutls_dhkey_size': size of the key used during the Diffie-Hellman Key
   Exchange (GnuTLS)
+* 'local_hostname': local hostname to use for connection (optional)
 * 'callback': function called when connection is ok or failed, arguments:
 ** 'void *data': pointer
 ** 'int status': connection status:
@@ -6014,7 +6019,7 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_completion(completion_item, callback, callback_data)
+hook = weechat.hook_completion(completion_item, description, callback, callback_data)
 
 # example
 def my_completion_cb(data, completion_item, buffer, completion):

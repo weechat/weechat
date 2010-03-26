@@ -2741,7 +2741,7 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
     /* ... */
     
     return WEECHAT_CONFIG_WRITE_OK;
-    /* return WEECHAT_CONFIG_WRITE_ERROR; */    
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -2751,7 +2751,7 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
     /* ... */
     
     return WEECHAT_CONFIG_WRITE_OK;
-    /* return WEECHAT_CONFIG_WRITE_ERROR; */ 
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -6981,7 +6981,7 @@ Argomenti:
 * 'buffer': puntatore al buffer
 * 'property': nome proprietà:
 ** 'plugin': nome del plugin che ha creato questo buffer ("core"
-   per il buffer principale di WeeChat) 
+   per il buffer principale di WeeChat)
 ** 'name': nome del buffer
 ** 'short_name': nome breve del buffer
 ** 'tilte': titolo del buffer
@@ -7115,14 +7115,14 @@ Argomenti:
 | notify | "0", "1", "2", "3" |
   set notify level for buffer: "0" = never add to hotlist, "1" = add for
   highlights only, "2" = add for highlights and messages, "3" = add for all
-  messages 
+  messages
 
 | title | any string |
   set new title for buffer
 
 | time_for_each_line | "0" or "1" |
   "0" to hide time for all lines in buffer, "1" to see time for all lines
-  (default for a new buffer) 
+  (default for a new buffer)
 
 | nicklist | "0" or "1" |
   "0" to remove nicklist for buffer, "1" to add nicklist for buffer
@@ -7136,7 +7136,7 @@ Argomenti:
 | highlight_words | "-" or comma separated list of words |
   "-" is a special value to disable any highlight on this buffer, or comma
   separated list of words to highlight in this buffer, for example:
-  "abc,def,ghi" 
+  "abc,def,ghi"
 
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer
@@ -8110,7 +8110,7 @@ Argomenti:
 ** 'vertical': gli elementi sono posizionati in verticale
    (nuova riga dopo ogni elemento)
 ** 'columns_horizontal': gli elementi sono posizionati in orizzontale,
-   visualizzati su colonne 
+   visualizzati su colonne
 ** 'columns_vertical': gli elementi sono posizionati in verticale,
    visualizzati su colonne
 * 'size': dimensione della barra in caratteri
@@ -8797,7 +8797,7 @@ Argomenti:
 
 * 'infolist_name': nome della lista info da leggere:
 include::autogen/plugin_api/infolists.txt[]
-* 'pointer': puntatore ad un elemento, per ricevere solo questo 
+* 'pointer': puntatore ad un elemento, per ricevere solo questo
   elemento nella lista info (opzionale, può essere NULL)
 * 'arguments': argomenti per la lista info richiesta (opzionale, NULL se
   non è necessario alcun argomento)

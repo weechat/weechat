@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-25 10:20+0100\n"
-"PO-Revision-Date: 2010-03-25 10:24+0100\n"
+"POT-Creation-Date: 2010-03-26 10:59+0100\n"
+"PO-Revision-Date: 2010-03-26 11:02+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2185,15 +2185,19 @@ msgid "%sError reading configuration"
 msgstr "%sErreur de lecture de la configuration"
 
 #, c-format
-msgid "%sError: cannot create file \"%s\""
-msgstr "%sErreur: impossible de créer le fichier \"%s\""
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Ecriture du fichier de configuration %s %s"
 
 msgid "(default options)"
 msgstr "(options par défaut)"
+
+#, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr "%sErreur: impossible de créer le fichier \"%s\""
+
+#, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "%sErreur d'écriture du fichier de configuration \"%s\""
 
 #, c-format
 msgid "%sWarning: configuration file \"%s\" not found"

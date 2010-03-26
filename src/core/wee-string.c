@@ -1217,28 +1217,34 @@ string_iconv_from_internal (const char *charset, const char *string)
 
 /*
  * string_iconv_fprintf: encode to terminal charset, then call fprintf on a file
+ *                       return 1 if ok, 0 if error
  */
 
-void
+int
 string_iconv_fprintf (FILE *file, const char *data, ...)
 {
     va_list argptr;
     char *buf, *buf2;
-
+    int rc, num_written;
+    
     buf = malloc (128 * 1024);
     if (!buf)
-        return;
+        return 0;
     
     va_start (argptr, data);
     vsnprintf (buf, 128 * 1024, data, argptr);
     va_end (argptr);
     
     buf2 = string_iconv_from_internal (NULL, buf);
-    fprintf (file, "%s", (buf2) ? buf2 : buf);
+    num_written = fprintf (file, "%s", (buf2) ? buf2 : buf);
+    
+    rc = (num_written == (int)strlen ((buf2) ? buf2 : buf)) ? 1 : 0;
     
     free (buf);
     if (buf2)
         free (buf2);
+    
+    return rc;
 }
 
 /*

@@ -1352,34 +1352,43 @@ weechat_tcl_api_config_section_read_cb (void *data,
  * weechat_tcl_api_config_section_write_cb: callback for writing section
  */
 
-void
+int
 weechat_tcl_api_config_section_write_cb (void *data,
                                           struct t_config_file *config_file,
                                           const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *tcl_argv[4], empty_arg[1] = { '\0' };
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (config_file);
         tcl_argv[2] = (section_name) ? (char *)section_name : empty_arg;
         tcl_argv[3] = NULL;
-
-        rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
         
-        if (rc)
+        rc = (int *) weechat_tcl_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_CONFIG_WRITE_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (tcl_argv[1])
             free (tcl_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
 /*
@@ -1387,17 +1396,17 @@ weechat_tcl_api_config_section_write_cb (void *data,
  *                                                   default values for section
  */
 
-void
+int
 weechat_tcl_api_config_section_write_default_cb (void *data,
                                                   struct t_config_file *config_file,
                                                   const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *tcl_argv[4], empty_arg[1] = { '\0' };
-    int *rc;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
-
+    
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
@@ -1406,15 +1415,24 @@ weechat_tcl_api_config_section_write_default_cb (void *data,
         tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
-        if (rc)
+        if (!rc)
+            ret = WEECHAT_CONFIG_WRITE_ERROR;
+        else
+        {
+            ret = *rc;
             free (rc);
+        }
         if (tcl_argv[1])
             free (tcl_argv[1]);
+        
+        return ret;
     }
+    
+    return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
 /*
@@ -1445,9 +1463,9 @@ weechat_tcl_api_config_section_create_option_cb (void *data,
         tcl_argv[5] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1493,9 +1511,9 @@ weechat_tcl_api_config_section_delete_option_cb (void *data,
         tcl_argv[4] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
@@ -1654,9 +1672,9 @@ weechat_tcl_api_config_option_check_value_cb (void *data,
         tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
         if (!rc)
             ret = 0;
@@ -1695,9 +1713,9 @@ weechat_tcl_api_config_option_change_cb (void *data,
         tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
         if (tcl_argv[1])
             free (tcl_argv[1]);
@@ -1728,9 +1746,9 @@ weechat_tcl_api_config_option_delete_cb (void *data,
         tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       tcl_argv);
         
         if (tcl_argv[1])
             free (tcl_argv[1]);

@@ -70,12 +70,12 @@ struct t_config_section
      const char *option_name,
      const char *value);
     void *callback_read_data;              /* data sent to read callback    */
-    void (*callback_write)                 /* called to write options       */
+    int (*callback_write)                  /* called to write options       */
     (void *data,                           /* in config file (only for some */
      struct t_config_file *config_file,    /* special sections)             */
      const char *section_name);
     void *callback_write_data;             /* data sent to write callback   */
-    void (*callback_write_default)         /* called to write default       */
+    int (*callback_write_default)          /* called to write default       */
     (void *data,                           /* options in config file        */
      struct t_config_file *config_file,
      const char *section_name);
@@ -158,13 +158,13 @@ extern struct t_config_section *config_file_new_section (struct t_config_file *c
                                                                               const char *option_name,
                                                                               const char *value),
                                                          void *callback_read_data,
-                                                         void (*callback_write)(void *data,
-                                                                                struct t_config_file *config_file,
-                                                                                const char *section_name),
+                                                         int (*callback_write)(void *data,
+                                                                               struct t_config_file *config_file,
+                                                                               const char *section_name),
                                                          void *callback_write_data,
-                                                         void (*callback_write_default)(void *data,
-                                                                                        struct t_config_file *config_file,
-                                                                                        const char *section_name),
+                                                         int (*callback_write_default)(void *data,
+                                                                                       struct t_config_file *config_file,
+                                                                                       const char *section_name),
                                                          void *callback_write_default_data,
                                                          int (*callback_create_option)(void *data,
                                                                                        struct t_config_file *config_file,
@@ -234,10 +234,10 @@ extern const char *config_file_option_string (struct t_config_option *option);
 extern const char *config_file_option_string_default (struct t_config_option *option);
 extern const char *config_file_option_color (struct t_config_option *option);
 extern const char *config_file_option_color_default (struct t_config_option *option);
-extern void config_file_write_option (struct t_config_file *config_file,
-                                      struct t_config_option *option);
-extern void config_file_write_line (struct t_config_file *config_file,
-                                    const char *option_name, const char *value, ...);
+extern int config_file_write_option (struct t_config_file *config_file,
+                                     struct t_config_option *option);
+extern int config_file_write_line (struct t_config_file *config_file,
+                                   const char *option_name, const char *value, ...);
 extern int config_file_write (struct t_config_file *config_files);
 extern int config_file_read (struct t_config_file *config_file);
 extern int config_file_reload (struct t_config_file *config_file);

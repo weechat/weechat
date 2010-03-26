@@ -744,15 +744,15 @@ irc_config_ctcp_create_option (void *data, struct t_config_file *config_file,
 }
 
 /*
- * irc_config_ignore_read: read ignore option from configuration file
- *                         return 1 if ok, 0 if error
+ * irc_config_ignore_read_cb: read ignore option from configuration file
+ *                            return 1 if ok, 0 if error
  */
 
 int
-irc_config_ignore_read (void *data,
-                        struct t_config_file *config_file,
-                        struct t_config_section *section,
-                        const char *option_name, const char *value)
+irc_config_ignore_read_cb (void *data,
+                           struct t_config_file *config_file,
+                           struct t_config_section *section,
+                           const char *option_name, const char *value)
 {
     char **argv, **argv_eol;
     int argc;
@@ -783,30 +783,34 @@ irc_config_ignore_read (void *data,
 }
 
 /*
- * irc_config_ignore_write: write ignore section in configuration file
+ * irc_config_ignore_write_cb: write ignore section in configuration file
  */
 
-void
-irc_config_ignore_write (void *data, struct t_config_file *config_file,
-                         const char *section_name)
+int
+irc_config_ignore_write_cb (void *data, struct t_config_file *config_file,
+                            const char *section_name)
 {
     struct t_irc_ignore *ptr_ignore;
     
     /* make C compiler happy */
     (void) data;
     
-    weechat_config_write_line (config_file, section_name, NULL);
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        weechat_config_write_line (config_file,
-                                   "ignore",
-                                   "%s;%s;%s",
-                                   (ptr_ignore->server) ? ptr_ignore->server : "*",
-                                   (ptr_ignore->channel) ? ptr_ignore->channel : "*",
-                                   ptr_ignore->mask);
+        if (!weechat_config_write_line (config_file,
+                                        "ignore",
+                                        "%s;%s;%s",
+                                        (ptr_ignore->server) ? ptr_ignore->server : "*",
+                                        (ptr_ignore->channel) ? ptr_ignore->channel : "*",
+                                        ptr_ignore->mask))
+            return WEECHAT_CONFIG_WRITE_ERROR;
     }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -814,7 +818,7 @@ irc_config_ignore_write (void *data, struct t_config_file *config_file,
  *                                     configuration file
  */
 
-void
+int
 irc_config_server_write_default_cb (void *data,
                                     struct t_config_file *config_file,
                                     const char *section_name)
@@ -825,7 +829,8 @@ irc_config_server_write_default_cb (void *data,
     /* make C compiler happy */
     (void) data;
     
-    weechat_config_write_line (config_file, section_name, NULL);
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
@@ -835,17 +840,21 @@ irc_config_server_write_default_cb (void *data,
         switch (i)
         {
             case IRC_SERVER_OPTION_ADDRESSES:
-                weechat_config_write_line (config_file,
-                                           option_name,
-                                           "%s", "\"chat.freenode.net/6667\"");
+                if (!weechat_config_write_line (config_file,
+                                                option_name,
+                                                "%s", "\"chat.freenode.net/6667\""))
+                    return WEECHAT_CONFIG_WRITE_ERROR;
                 break;
             default:
-                weechat_config_write_line (config_file,
-                                           option_name,
-                                           WEECHAT_CONFIG_OPTION_NULL);
+                if (!weechat_config_write_line (config_file,
+                                                option_name,
+                                                WEECHAT_CONFIG_OPTION_NULL))
+                    return WEECHAT_CONFIG_WRITE_ERROR;
                 break;
         }
     }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -1251,7 +1260,7 @@ irc_config_server_read_cb (void *data, struct t_config_file *config_file,
  * irc_config_server_write_cb: write server section in configuration file
  */
 
-void
+int
 irc_config_server_write_cb (void *data, struct t_config_file *config_file,
                             const char *section_name)
 {
@@ -1261,7 +1270,8 @@ irc_config_server_write_cb (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    weechat_config_write_line (config_file, section_name, NULL);
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -1270,11 +1280,14 @@ irc_config_server_write_cb (void *data, struct t_config_file *config_file,
         {
             for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
             {
-                weechat_config_write_option (config_file,
-                                             ptr_server->options[i]);
+                if (!weechat_config_write_option (config_file,
+                                                  ptr_server->options[i]))
+                    return WEECHAT_CONFIG_WRITE_ERROR;
             }
         }
     }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -1741,9 +1754,9 @@ irc_config_init ()
     /* ignore */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",
                                               0, 0,
-                                              &irc_config_ignore_read, NULL,
-                                              &irc_config_ignore_write, NULL,
-                                              &irc_config_ignore_write, NULL,
+                                              &irc_config_ignore_read_cb, NULL,
+                                              &irc_config_ignore_write_cb, NULL,
+                                              &irc_config_ignore_write_cb, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {

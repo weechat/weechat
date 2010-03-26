@@ -807,33 +807,44 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
  * config_weechat_layout_write: write windows layout in configuration file
  */
 
-void
+int
 config_weechat_layout_write_tree (struct t_config_file *config_file,
                                   struct t_gui_layout_window *layout_window)
 {
-    config_file_write_line (config_file, "window", "\"%d;%d;%d;%d;%s;%s\"",
-                            layout_window->internal_id,
-                            (layout_window->parent_node) ?
-                            layout_window->parent_node->internal_id : 0,
-                            layout_window->split_pct,
-                            layout_window->split_horiz,
-                            (layout_window->plugin_name) ?
-                            layout_window->plugin_name : "-",
-                            (layout_window->buffer_name) ?
-                            layout_window->buffer_name : "-");
+    if (!config_file_write_line (config_file, "window", "\"%d;%d;%d;%d;%s;%s\"",
+                                 layout_window->internal_id,
+                                 (layout_window->parent_node) ?
+                                 layout_window->parent_node->internal_id : 0,
+                                 layout_window->split_pct,
+                                 layout_window->split_horiz,
+                                 (layout_window->plugin_name) ?
+                                 layout_window->plugin_name : "-",
+                                 (layout_window->buffer_name) ?
+                                 layout_window->buffer_name : "-"))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     if (layout_window->child1)
-        config_weechat_layout_write_tree (config_file, layout_window->child1);
+    {
+        if (config_weechat_layout_write_tree (config_file,
+                                              layout_window->child1) != WEECHAT_CONFIG_WRITE_OK)
+            return WEECHAT_CONFIG_WRITE_ERROR;
+    }
     
     if (layout_window->child2)
-        config_weechat_layout_write_tree (config_file, layout_window->child2);
+    {
+        if (config_weechat_layout_write_tree (config_file,
+                                              layout_window->child2) != WEECHAT_CONFIG_WRITE_OK)
+            return WEECHAT_CONFIG_WRITE_ERROR;
+    }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
  * config_weechat_layout_write_cb: write layout section in configuration file
  */
 
-void
+int
 config_weechat_layout_write_cb (void *data, struct t_config_file *config_file,
                                 const char *section_name)
 {
@@ -842,19 +853,27 @@ config_weechat_layout_write_cb (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    config_file_write_line (config_file, section_name, NULL);
+    if (!config_file_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (ptr_layout_buffer = gui_layout_buffers; ptr_layout_buffer;
          ptr_layout_buffer = ptr_layout_buffer->next_layout)
     {
-        config_file_write_line (config_file, "buffer", "\"%s;%s;%d\"",
-                                ptr_layout_buffer->plugin_name,
-                                ptr_layout_buffer->buffer_name,
-                                ptr_layout_buffer->number);
+        if (!config_file_write_line (config_file, "buffer", "\"%s;%s;%d\"",
+                                     ptr_layout_buffer->plugin_name,
+                                     ptr_layout_buffer->buffer_name,
+                                     ptr_layout_buffer->number))
+            return WEECHAT_CONFIG_WRITE_ERROR;
     }
     
     if (gui_layout_windows)
-        config_weechat_layout_write_tree (config_file, gui_layout_windows);
+    {
+        if (config_weechat_layout_write_tree (config_file,
+                                              gui_layout_windows) != WEECHAT_CONFIG_WRITE_OK)
+            return WEECHAT_CONFIG_WRITE_ERROR;
+    }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -1042,7 +1061,7 @@ config_weechat_filter_read_cb (void *data,
  * config_weechat_filter_write_cb: write filter section in configuration file
  */
 
-void
+int
 config_weechat_filter_write_cb (void *data, struct t_config_file *config_file,
                                 const char *section_name)
 {
@@ -1051,21 +1070,25 @@ config_weechat_filter_write_cb (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    config_file_write_line (config_file, section_name, NULL);
+    if (!config_file_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
-        config_file_write_line (config_file,
-                                ptr_filter->name,
-                                "%s;%s%s%s;%s;%s",
-                                (ptr_filter->enabled) ? "on" : "off",
-                                (ptr_filter->plugin_name) ? ptr_filter->plugin_name : "",
-                                (ptr_filter->plugin_name) ? "." : "",
-                                ptr_filter->buffer_name,
-                                ptr_filter->tags,
-                                ptr_filter->regex);
+        if (!config_file_write_line (config_file,
+                                     ptr_filter->name,
+                                     "%s;%s%s%s;%s;%s",
+                                     (ptr_filter->enabled) ? "on" : "off",
+                                     (ptr_filter->plugin_name) ? ptr_filter->plugin_name : "",
+                                     (ptr_filter->plugin_name) ? "." : "",
+                                     ptr_filter->buffer_name,
+                                     ptr_filter->tags,
+                                     ptr_filter->regex))
+            return WEECHAT_CONFIG_WRITE_ERROR;
     }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -1103,31 +1126,37 @@ config_weechat_key_read_cb (void *data, struct t_config_file *config_file,
  * config_weechat_key_write_cb: write key section in configuration file
  */
 
-void
+int
 config_weechat_key_write_cb (void *data, struct t_config_file *config_file,
                              const char *section_name)
 {
     struct t_gui_key *ptr_key;
     char *expanded_name;
+    int rc;
     
     /* make C compiler happy */
     (void) data;
     
-    config_file_write_line (config_file, section_name, NULL);
+    if (!config_file_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
         if (expanded_name)
         {
-            config_file_write_line (config_file,
-                                    (expanded_name) ?
-                                    expanded_name : ptr_key->key,
-                                    "\"%s\"",
-                                    ptr_key->command);
+            rc = config_file_write_line (config_file,
+                                         (expanded_name) ?
+                                         expanded_name : ptr_key->key,
+                                         "\"%s\"",
+                                         ptr_key->command);
             free (expanded_name);
+            if (!rc)
+                return WEECHAT_CONFIG_WRITE_ERROR;
         }
     }
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*

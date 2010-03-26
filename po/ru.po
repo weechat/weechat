@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-25 10:20+0100\n"
+"POT-Creation-Date: 2010-03-26 10:59+0100\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1998,15 +1998,19 @@ msgid "%sError reading configuration"
 msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
-msgid "%sError: cannot create file \"%s\""
-msgstr "%s не могу создать файл \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "Writing configuration file %s %s"
 msgstr "сохранять конфигурационный файл при выходе"
 
 msgid "(default options)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr "%s не могу создать файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
 msgid "%sWarning: configuration file \"%s\" not found"

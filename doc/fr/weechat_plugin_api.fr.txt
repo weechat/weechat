@@ -2735,7 +2735,8 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -2744,7 +2745,8 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
 
 int
@@ -2754,7 +2756,8 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
 }
 
 int
@@ -2764,7 +2767,8 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+    /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
 /* section standard, l'utilisateur ne peut pas ajouter/supprimer des options */
@@ -5454,6 +5458,7 @@ Paramètres :
 * 'gnutls_cb' : callback pour GnuTLS (optionnel)
 * 'gnutls_dhkey_size': taille de clé utilisée pour l'échange de clé
   Diffie-Hellman (GnuTLS)
+* 'local_hostname': nom de machine local à utiliser pour la connexion (optionnel)
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres :
 ** 'void *data' : pointeur
@@ -6093,7 +6098,7 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_completion(completion_item, callback, callback_data)
+hook = weechat.hook_completion(completion_item, description, callback, callback_data)
 
 # exemple
 def my_completion_cb(data, completion_item, buffer, completion):

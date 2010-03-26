@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-25 10:20+0100\n"
+"POT-Creation-Date: 2010-03-26 10:59+0100\n"
 "PO-Revision-Date: 2010-03-23 10:19+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2106,15 +2106,19 @@ msgid "%sError reading configuration"
 msgstr "%sChyba: čtení konfigurace"
 
 #, c-format
-msgid "%sError: cannot create file \"%s\""
-msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Zapisuji soubor s nastavením %s %s"
 
 msgid "(default options)"
 msgstr "(výchozí volby)"
+
+#, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "%s%s: chyba při vytváření konfiguračního souboru"
 
 #, c-format
 msgid "%sWarning: configuration file \"%s\" not found"

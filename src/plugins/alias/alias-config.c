@@ -144,7 +144,7 @@ alias_config_reload (void *data, struct t_config_file *config_file)
  *                                    file in section "cmd" (command)
  */
 
-void
+int
 alias_config_cmd_write_default_cb (void *data,
                                    struct t_config_file *config_file,
                                    const char *section_name)
@@ -152,38 +152,71 @@ alias_config_cmd_write_default_cb (void *data,
     /* make C compiler happy */
     (void) data;
     
-    weechat_config_write_line (config_file, section_name, NULL);
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
     
-    weechat_config_write_line (config_file, "AAWAY", "%s", "\"allserv /away\"");
-    weechat_config_write_line (config_file, "AME", "%s", "\"allchan /me\"");
-    weechat_config_write_line (config_file, "AMSG", "%s", "\"allchan /msg *\"");
-    weechat_config_write_line (config_file, "ANICK", "%s", "\"allserv /nick\"");
-    weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\"");
-    weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\"");
-    weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\"");
-    weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\"");
-    weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "IG", "%s", "\"ignore\"");
-    weechat_config_write_line (config_file, "J", "%s", "\"join\"");
-    weechat_config_write_line (config_file, "K", "%s", "\"kick\"");
-    weechat_config_write_line (config_file, "KB", "%s", "\"kickban\"");
-    weechat_config_write_line (config_file, "LEAVE", "%s", "\"part\"");
-    weechat_config_write_line (config_file, "M", "%s", "\"msg\"");
-    weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\"");
-    weechat_config_write_line (config_file, "N", "%s", "\"names\"");
-    weechat_config_write_line (config_file, "Q", "%s", "\"query\"");
-    weechat_config_write_line (config_file, "REDRAW", "%s", "\"window refresh\"");
-    weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
-    weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
-    weechat_config_write_line (config_file, "UB", "%s", "\"unban\"");
-    weechat_config_write_line (config_file, "V", "%s", "\"command core version\"");
-    weechat_config_write_line (config_file, "W", "%s", "\"who\"");
-    weechat_config_write_line (config_file, "WC", "%s", "\"window merge\"");
-    weechat_config_write_line (config_file, "WI", "%s", "\"whois\"");
-    weechat_config_write_line (config_file, "WII", "%s", "\"whois $1 $1\"");
-    weechat_config_write_line (config_file, "WW", "%s", "\"whowas\"");
+    if (!weechat_config_write_line (config_file, "AAWAY", "%s", "\"allserv /away\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "AME", "%s", "\"allchan /me\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "AMSG", "%s", "\"allchan /msg *\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "ANICK", "%s", "\"allserv /nick\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "BYE", "%s", "\"quit\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "IG", "%s", "\"ignore\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "J", "%s", "\"join\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "K", "%s", "\"kick\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "KB", "%s", "\"kickban\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "LEAVE", "%s", "\"part\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "M", "%s", "\"msg\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "N", "%s", "\"names\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "Q", "%s", "\"query\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "REDRAW", "%s", "\"window refresh\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "T", "%s", "\"topic\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "UB", "%s", "\"unban\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "V", "%s", "\"command core version\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "W", "%s", "\"who\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "WC", "%s", "\"window merge\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "WI", "%s", "\"whois\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "WII", "%s", "\"whois $1 $1\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    if (!weechat_config_write_line (config_file, "WW", "%s", "\"whowas\""))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
