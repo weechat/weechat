@@ -57,6 +57,8 @@ Version 0.3.2 (under dev!)
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
   (bug #28741)
+* irc: add new option irc.look.part_closes_buffer to close buffer when /part
+  is issued on channel (task #10295)
 * irc: fix PART message received on Undernet server (bug #28825)
 * irc: fix bug with /away -all: set or unset future away for disconnected
   servers (bug #29022)

@@ -1255,6 +1255,11 @@ IRC_PROTOCOL_CALLBACK(part)
                     else
                         irc_command_join_server (server, ptr_channel->name);
                 }
+                else
+                {
+                    if (weechat_config_boolean (irc_config_look_part_closes_buffer))
+                        weechat_buffer_close (ptr_channel->buffer);
+                }
             }
             else
                 irc_nick_free (ptr_channel, ptr_nick);

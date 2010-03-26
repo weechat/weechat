@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-26 10:59+0100\n"
+"POT-Creation-Date: 2010-03-26 19:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3640,6 +3640,9 @@ msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
+msgstr ""
+
+msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
 msgid "strip colors in topic (used only when displaying buffer title)"

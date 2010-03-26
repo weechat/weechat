@@ -35,15 +35,15 @@
 
 
 /*
- * irc_buffer_get_server_channel: get IRC server and channel pointers with a
- *                                buffer pointer
- *                                (buffer may be a server or a channel)
+ * irc_buffer_get_server_and_channel: get IRC server and channel pointers with
+ *                                    a buffer pointer
+ *                                    (buffer may be a server or a channel)
  */
 
 void
-irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
-                               struct t_irc_server **server,
-                               struct t_irc_channel **channel)
+irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
+                                   struct t_irc_server **server,
+                                   struct t_irc_channel **channel)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;

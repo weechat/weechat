@@ -25,7 +25,7 @@
     struct t_irc_server *ptr_server = NULL;                             \
     buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
     if (buffer_plugin == weechat_irc_plugin)                            \
-        irc_buffer_get_server_channel (__buffer, &ptr_server, NULL);
+        irc_buffer_get_server_and_channel (__buffer, &ptr_server, NULL);
 
 #define IRC_BUFFER_GET_SERVER_CHANNEL(__buffer)                         \
     struct t_weechat_plugin *buffer_plugin = NULL;                      \
@@ -34,8 +34,8 @@
     buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
     if (buffer_plugin == weechat_irc_plugin)                            \
     {                                                                   \
-        irc_buffer_get_server_channel (__buffer, &ptr_server,           \
-                                       &ptr_channel);                   \
+        irc_buffer_get_server_and_channel (__buffer, &ptr_server,       \
+                                           &ptr_channel);               \
     }
 
 #define IRC_BUFFER_RAW_NAME            "irc_raw"
@@ -48,9 +48,9 @@ struct t_gui_buffer;
 struct t_irc_server;
 struct t_irc_channel;
 
-extern void irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
-                                           struct t_irc_server **server,
-                                           struct t_irc_channel **channel);
+extern void irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
+                                               struct t_irc_server **server,
+                                               struct t_irc_channel **channel);
 extern char *irc_buffer_build_name (const char *server, const char *channel);
 extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *irc_buffer_search_first_for_all_servers ();

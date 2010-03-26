@@ -54,7 +54,7 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, NULL);
+        irc_buffer_get_server_and_channel (buffer, &server, NULL);
         
         if (server && server->is_away)
         {
@@ -140,7 +140,7 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
         name = weechat_plugin_get_name (ptr_plugin);
         if (ptr_plugin == weechat_irc_plugin)
         {
-            irc_buffer_get_server_channel (buffer, &server, &channel);
+            irc_buffer_get_server_and_channel (buffer, &server, &channel);
             if (server && channel
                 && (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN))
             {
@@ -196,7 +196,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, &channel);
+        irc_buffer_get_server_and_channel (buffer, &server, &channel);
         if (server || channel)
         {
             if (server && !channel)
@@ -305,7 +305,7 @@ irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, &channel);
+        irc_buffer_get_server_and_channel (buffer, &server, &channel);
         if (server || channel)
         {
             if (server && !channel)
@@ -375,7 +375,7 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, NULL);
+        irc_buffer_get_server_and_channel (buffer, &server, NULL);
         
         if (server
             && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show) * 1000))
@@ -417,7 +417,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     
     if (buffer)
     {
-        irc_buffer_get_server_channel (buffer, &server, &channel);
+        irc_buffer_get_server_and_channel (buffer, &server, &channel);
         if (!server || !server->nick)
             return NULL;
         

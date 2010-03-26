@@ -133,6 +133,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 
+* *irc.look.part_closes_buffer*
+** descrizione: close buffer when /part is issued on a channel
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
 * *irc.look.raw_messages*
 ** descrizione: numero di messaggi grezzi IRC da salvare quando il buffer dei dati grezzi chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati grezzi)
 ** tipo: intero

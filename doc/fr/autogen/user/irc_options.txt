@@ -133,6 +133,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: off)
 
+* *irc.look.part_closes_buffer*
+** description: fermer le tampon lorsque /part est exécuté sur un canal
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *irc.look.raw_messages*
 ** description: nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)
 ** type: entier
