@@ -698,6 +698,20 @@ int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
 int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
 ----------------------------------------
 
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+match = weechat.string_match(string, mask, case_sensitive)
+
+# esempio
+match1 = weechat.string_match("abcdef", "abc*", 0) # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
+match3 = weechat.string_match("abcdef", "*def", 0) # 1
+match4 = weechat.string_match("abcdef", "*de*", 0) # 1
+----------------------------------------
+
 weechat_string_replace
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -827,6 +841,17 @@ Esempio in C:
 int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
 ----------------------------------------
 
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+highlight = weechat.string_has_highlight(string, highlight_words)
+
+# esempio
+highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
+----------------------------------------
+
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -860,6 +885,17 @@ char *str_regex = weechat_string_mask_to_regex ("test*mask");
 free (str_regex);
 ----------------------------------------
 
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+regex = weechat.string_mask_to_regex(mask)
+
+# esempio
+regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
+----------------------------------------
+
 weechat_string_split
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -886,7 +922,7 @@ Argomenti:
 Valore restituito:
 
 * array di stringhe, NULL se si verifica un problema (deve essere liberata chiamando
-  <<_weechat_string_free_split>> dopo l'uso)
+  <<_weechat_string_free_split,weechat_string_free_split>> dopo l'uso)
 
 Esempi:
 
@@ -927,7 +963,8 @@ void weechat_string_free_split (char **split_string);
 
 Argomenti:
 
-* 'split_string': stringa divisa dalla funzione <<_weechat_string_split>>
+* 'split_string': stringa divisa dalla funzione
+  <<_weechat_string_split,weechat_string_split>>
 
 Esempio in C:
 
@@ -955,7 +992,8 @@ char *weechat_string_build_with_split_string (char **split_string,
 
 Argomenti:
 
-* 'split_string': stringa divisa dalla funzione <<_weechat_string_split>>
+* 'split_string': stringa divisa dalla funzione
+  <<_weechat_string_split,weechat_string_split>>
 * 'separator': stringa usata per separare le stringhe
 
 Valore restituito:
@@ -998,7 +1036,7 @@ Valore restituito:
 
 * array di stringhe, NULL in caso di problemi (deve essere
   liberata chiamando
-  <<_weechat_free_split_command>> dopo l'uso)
+  <<_weechat_free_split_command,weechat_free_split_command>> dopo l'uso)
 
 Esempio in C:
 
@@ -1025,7 +1063,8 @@ void weechat_string_free_split_command (char **split_command);
 
 Argomenti:
 
-* 'split_command': comando diviso da <<_weechat_string_split_command>>
+* 'split_command': comando diviso da
+  <<_weechat_string_split_command,weechat_string_split_command>>
 
 Esempio in C:
 
@@ -1059,7 +1098,7 @@ Valore restituito:
 
 * stringa formattata (deve essere liberata chiamando "free" dopo l'uso)
 
-Examples:
+C examples:
 
 [source,C]
 ----------------------------------------
@@ -1131,6 +1170,149 @@ str = weechat.string_remove_color(string, replacement)
 
 # esempio
 str = weechat.string_remove_color(my_string, "?")
+----------------------------------------
+
+weechat_string_encode_base64
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Encode a string in base64.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_string_encode_base64 (const char *from, int length, char *to);
+----------------------------------------
+
+Arguments:
+
+* 'from': string to encode
+* 'length': length of string to encode (for example `strlen(from)`)
+* 'to': pointer to string to store result (must be long enough, result is
+  longer than initial string)
+
+C example:
+
+[source,C]
+----------------------------------------
+char *string = "abcdefgh", result[128];
+weechat_string_encode_base64 (string, strlen (string), result);
+/* result == "YWJjZGVmZ2g=" */
+----------------------------------------
+
+weechat_string_decode_base64
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Decode a base64 string.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_string_decode_base64 (const char *from, char *to);
+----------------------------------------
+
+Arguments:
+
+* 'from': string to decode
+* 'to': pointer to string to store result (must be long enough, result is
+  shorter than initial string)
+
+Return value:
+
+* length of string stored in *to (does not count final '\0')
+
+C example:
+
+[source,C]
+----------------------------------------
+char *string = "YWJjZGVmZ2g=", result[128];
+int length;
+length = weechat_string_decode_base64 (string, result);
+/* length == 8, result == "abcdefgh" */
+----------------------------------------
+
+weechat_string_is_command_char
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check if first char of string is a command char (default command char is '/').
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_string_is_command_char (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* 1 if first char of string is a command char, otherwise 0
+
+C examples:
+
+[source,C]
+----------------------------------------
+int command_char1 = weechat_string_is_command_char ("/test"); /* == 1 */
+int command_char2 = weechat_string_is_command_char ("test");  /* == 0 */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+is_cmdchar = weechat.string_is_command_char(string)
+
+# examples
+command_char1 = weechat.string_is_command_char("/test") # == 1
+command_char2 = weechat.string_is_command_char("test")  # == 0
+----------------------------------------
+
+weechat_string_input_for_buffer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return pointer to input text for buffer (pointer inside "string" argument), or
+NULL if it's a command.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_string_input_for_buffer (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* pointer into "string", or NULL
+
+C examples:
+
+[source,C]
+----------------------------------------
+const char *str1 = weechat_string_input_for_buffer ("test");   /* "test"  */
+const char *str2 = weechat_string_input_for_buffer ("/test");  /* NULL    */
+const char *str3 = weechat_string_input_for_buffer ("//test"); /* "/test" */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+str = weechat.string_input_for_buffer(string)
+
+# examples
+str1 = weechat.string_input_for_buffer("test")   # "test"
+str2 = weechat.string_input_for_buffer("/test")  # ""
+str3 = weechat.string_input_for_buffer("//test") # "/test"
 ----------------------------------------
 
 [[utf-8]]
@@ -1754,8 +1936,8 @@ Util
 
 Alcune funzioni utili.
 
-weechat_timeval_cmp
-^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_cmp
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Confronta due strutture "timeval".
 
@@ -1763,7 +1945,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-int weechat_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
+int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 ----------------------------------------
 
 Argomenti:
@@ -1781,14 +1963,14 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-if (weechat_timeval_cmp (&tv1, &tv2) > 0)
+if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 {
     /* tv1 > tv2 */
 }
 ----------------------------------------
 
-weechat_timeval_diff
-^^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_diff
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Restituisce la differenza (in millisecondi) tra due strutture "timeval".
 
@@ -1796,7 +1978,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-long weechat_timeval_diff (struct timeval *tv1, struct timeval *tv2);
+long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----------------------------------------
 
 Argomenti:
@@ -1812,11 +1994,11 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-long diff = weechat_timeval_diff (&tv1, &tv2);
+long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----------------------------------------
 
-weechat_timeval_add
-^^^^^^^^^^^^^^^^^^^
+weechat_util_timeval_add
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Aggiungi intervallo (in millisecondi) ad una struttura timeval.
 
@@ -1824,7 +2006,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-void weechat_timeval_add (struct timeval *tv, long interval);
+void weechat_util_timeval_add (struct timeval *tv, long interval);
 ----------------------------------------
 
 Argomenti:
@@ -1836,7 +2018,32 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-weechat_timeval_add (&tv, 2000); /* add 2 seconds */
+weechat_util_timeval_add (&tv, 2000); /* add 2 seconds */
+----------------------------------------
+
+weechat_util_get_time_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get date/time as a string built with "strftime".
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_util_get_time_string (const time_t *date);
+----------------------------------------
+
+Arguments:
+
+* 'date': pointer to date
+
+C example:
+
+[source,C]
+----------------------------------------
+time_t date = time (NULL);
+weechat_printf (NULL, "date: %s",
+                weechat_util_get_time_string (&date));
 ----------------------------------------
 
 [[sorted_lists]]
@@ -2379,9 +2586,10 @@ Valore restituito:
 
 [NOTE]
 Il file NON viene creato su disco da questa funzione. Verrà creato chiamando
-la funzione <<_weechat_write_config>>. Si dovrebbe chiamare questa funzione
-solo dopo aver aggiunto alcune sezioni (con <<_weechat_config_new_section>>)
-e le opzioni (con <<_weechat_config_new_option>>).
+la funzione <<_weechat_write_config,weechat_write_config>>. Si dovrebbe chiamare
+questa funzione solo dopo aver aggiunto alcune sezioni (con
+<<_weechat_config_new_section,weechat_config_new_section>>) e le opzioni (con
+<<_weechat_config_new_option,weechat_config_new_option>>).
 
 Esempio in C:
 
@@ -2532,7 +2740,8 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */    
 }
 
 int
@@ -2541,7 +2750,8 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_WRITE_OK;
+    /* return WEECHAT_CONFIG_WRITE_ERROR; */ 
 }
 
 int
@@ -2551,7 +2761,8 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
 }
 
 int
@@ -2561,7 +2772,8 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+    /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
 /* sezione standart, l'utente non può aggiungere/eliminare opzioni */
@@ -3157,7 +3369,7 @@ Argomenti:
 
 [NOTE]
 È possibile impostare il valore a null solo se è consentito per l'opzione
-(consultare <<_weechat_config_new_option>>).
+(consultare <<_weechat_config_new_option,weechat_config_new_option>>).
 
 Valore restituito:
 
@@ -4454,14 +4666,14 @@ Argomenti:
 
 * 'prefix': nome del prefisso:
 
-[width="70%",cols="^2,^1,^3,5",options="header"]
+[width="70%",cols="^2e,^1l,^3,5",options="header"]
 |========================================
-| Prefisso    | Valore | Colore         | Descrizione
-| 'errore'     | `=!=`  | giallo           | messaggio di errore
-| 'network'  |   `--`    | magenta      | messaggio dalla rete
-| 'action'     |   `*`    | bianco          | azione automatica
-| 'join'         |  `-->`  | verde chiaro | qualcuno entra nella chat corrente
-| 'quit'        |   `<--` | rosso chiaro | qualcuno lascia la chat corrente
+| Prefisso | Valore | Colore       | Descrizione
+| errore   | =!=    | giallo       | messaggio di errore
+| network  | --     | magenta      | messaggio dalla rete
+| action   | *      | bianco       | azione automatica
+| join     | -->    | verde chiaro | qualcuno entra nella chat corrente
+| quit     | <--    | rosso chiaro | qualcuno lascia la chat corrente
 |========================================
 
 [NOTE]
@@ -5206,25 +5418,36 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-struct t_hook *weechat_hook_connect (const char *address,
+struct t_hook *weechat_hook_connect (const char *proxy,
+                                     const char *address,
                                      int port,
                                      int sock,
                                      int ipv6,
                                      void *gnutls_sess,
+                                     void *gnutls_cb,
+                                     int gnutls_dhkey_size,
                                      const char *local_hostname,
                                      int (*callback)(void *data,
                                                      int status,
+                                                     int gnutls_rc,
+                                                     const char *error,
                                                      const char *ip_address),
                                      void *callback_data);
 ----------------------------------------
 
 Argomenti:
 
+* 'proxy': name of proxy to use for connection (optional, NULL means connection
+  without proxy)
 * 'address': nome o indirizzo IP al quale connettersi
 * 'port': numero della porta
 * 'sock': socket utilizzato per la connessione
 * 'ipv6': 1 per usare IPv6, 0 per usare IPv4
 * 'gnutls_sess': sessione GnuTLS (opzionale)
+* 'gnutls_cb': GnuTLS callback (optional)
+* 'gnutls_dhkey_size': size of the key used during the Diffie-Hellman Key
+  Exchange (GnuTLS)
+* 'local_hostname': local hostname to use for connection (opzionale)
 * 'callback': funzione chiamata quando la connessione è avvenuta con
   successo oppure no, argomenti:
 ** 'void *data': puntatore
@@ -5235,9 +5458,11 @@ Argomenti:
 *** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED': connessione rifiutata
 *** 'WEECHAT_HOOK_CONNECT_PROXY_ERROR': errore con il proxy
 *** 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR': errore con il nome host locale
-*** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': errore inizializzazione GnuTLS 
+*** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': errore inizializzazione GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR': errore di handshake GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': memoria insufficiente
+** 'gnutls_rc': result value of 'gnutls_handshake()'
+** 'const char *error': result value of 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address': indirizzo IP trovato
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
@@ -5250,7 +5475,8 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 int
-my_connect_cb (void *data, int status, const char *ip_address)
+my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
+               const char *ip_address)
 {
     switch (status)
     {
@@ -5285,8 +5511,11 @@ my_connect_cb (void *data, int status, const char *ip_address)
     return WEECHAT_RC_OK;
 }
 
-struct t_hook *my_connect_hook = weechat_hook_connect ("my.server.org", 1234,
-                                                       sock, 0, NULL, NULL,
+struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
+                                                       "my.server.org", 1234,
+                                                       sock, 0,
+                                                       NULL, NULL, 0, /* GnuTLS */
+                                                       NULL,
                                                        &my_connect_cb, NULL);
 ----------------------------------------
 
@@ -5295,11 +5524,11 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-hook = weechat.hook_connect(address, port, sock, ipv6, local_hostname,
+hook = weechat.hook_connect(proxy, address, port, sock, ipv6, local_hostname,
     callback, callback_data)
 
 # esempio
-def my_connect_cb(data, status, ip_address):
+def my_connect_cb(data, status, gnutls_rc, error, ip_address):
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -5320,7 +5549,8 @@ def my_connect_cb(data, status, ip_address):
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("my.server.org", 1234, sock, 0, "", "my_connect_cb", "")
+hook = weechat.hook_connect("", "my.server.org", 1234, sock, 0, "",
+                            "my_connect_cb", "")
 ----------------------------------------
 
 weechat_hook_print
@@ -5429,15 +5659,25 @@ Argomenti:
 
 * 'signal': segnale da catturare, può iniziare o terminare con "*":
 
-[width="80%",cols="^1,^3,^3,5",options="header"]
+[width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
 | Plugin | Segnale | Argomenti | Descrizione
 
-| irc | xxx,irc_in_yyy ^1^ | string: message |
-  irc message from server (before irc plugin uses it)
+| irc | xxx,irc_in_yyy ^(1)^ | string: message |
+  irc message from server (before irc plugin uses it,
+  signal sent only if message is *not* ignored)
 
-| irc | xxx,irc_in2_yyy ^1^ | string: message |
-  irc message from server (after irc plugin uses it)
+| irc | xxx,irc_in2_yyy ^(1)^ | string: message |
+  irc message from server (after irc plugin uses it,
+  signal sent only if message is *not* ignored)
+
+| irc | xxx,irc_raw_in_yyy ^(1)^ | string: message |
+  irc message from server (before irc plugin uses it,
+  signal sent even if message is ignored)
+
+| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: message |
+  irc message from server (after irc plugin uses it,
+  signal sent even if message is ignored)
 
 | irc | xxx,irc_out_yyy ^1^ | string: message |
   irc message sent to server
@@ -5516,6 +5756,9 @@ Argomenti:
 
 | weechat | buffer_type_changed | pointer: buffer |
   type of buffer changed
+
+| weechat | day_changed | string: new date, format: "2010-01-31" |
+  day of system date has changed
 
 | weechat | debug_dump | - |
   dump request
@@ -5612,10 +5855,13 @@ Argomenti:
 
 | xfer | xfer_resume_ready | pointer: infolist with xfer info |
   xfer resume ready
+
+| xfer | xfer_ended | pointer: infolist with xfer info |
+  xfer has ended
 |========================================
 
 [NOTE]
-^1^ 'xxx' è il nome del server IRC, 'yyy' è il nome del comando IRC.
+^(1)^ 'xxx' è il nome del server IRC, 'yyy' è il nome del comando IRC.
 
 * 'callback': funzione chiamata a segnale ricevuto, argomenti:
 ** 'void *data': puntatore
@@ -5656,7 +5902,7 @@ Script (Python):
 hook = weechat.hook_signal(signal, callback, callback_data)
 
 # esempio
-def my_signal_cb(data, signal, type_data, signal_data):
+def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -5681,7 +5927,7 @@ Argomenti:
 
 * 'signal': segnale da inviare
 * 'type_data': tipo di dati inviati con il segnale (consultare
-  <<_weechat_hook_signal>>)
+  <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': dati inviati con il segnale
 
 Esempio in C:
@@ -5774,6 +6020,7 @@ Prototipo:
 [source,C]
 ----------------------------------------
 struct t_hook *weechat_hook_completion (const char *completion_item,
+                                        const char *description,
                                         int (*callback)(void *data,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
@@ -5785,6 +6032,7 @@ Argomenti:
 
 * 'completion_item': nome dell'elemento del completamento, è possibile usare
   in seguito '%(name)' in un comando con un hook (argomento 'completion')
+* 'description': descrizione di completamento
 * 'callback': funzione chiamata quando viene usato l'elemento completamento
   (l'utente sta completando qualcosa usando questo elemento), argomenti:
 ** 'void *data': puntatore
@@ -5792,7 +6040,7 @@ Argomenti:
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il completamento
 ** 'struct t_gui_completion *completion': struttura usata per aggiungere
    parole per il completamento (consultare
-   <<_weechat_hook_completion_list_add>>)
+   <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 [NOTE]
@@ -5821,6 +6069,7 @@ my_completion_cb (void *data, const char *completion_item,
 }
 
 struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
+                                                             "my custom completion!",
                                                              &my_completion_cb, NULL);
 ----------------------------------------
 
@@ -5829,7 +6078,7 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-hook = weechat.hook_completion(completion_item, callback, callback_data)
+hook = weechat.hook_completion(completion_item, description, callback, callback_data)
 
 # esempio
 def my_completion_cb(data, completion_item, buffer, completion):
@@ -5837,7 +6086,8 @@ def my_completion_cb(data, completion_item, buffer, completion):
     weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_completion("plugin_item", "my_completion_cb", "")
+hook = weechat.hook_completion("plugin_item", "my custom completion!",
+                               "my_completion_cb", "")
 ----------------------------------------
 
 weechat_hook_completion_list_add
@@ -5866,7 +6116,7 @@ Argomenti:
 ** 'WEECHAT_LIST_POS_BEGINNING': inizio della lista
 ** 'WEECHAT_LIST_POS_END': fine della lista
 
-Esempio in C: consultare <<_weechat_hook_completion>>.
+Esempio in C: consultare <<_weechat_hook_completion,weechat_hook_completion>>.
 
 Script (Python):
 
@@ -6077,6 +6327,7 @@ Prototipo:
 ----------------------------------------
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
+                                  const char *args_description,
                                   const char *(*callback)(void *data,
                                                           const char *info_name,
                                                           const char *arguments),
@@ -6087,6 +6338,7 @@ Argomenti:
 
 * 'info_name': nome della info
 * 'description': descrizione
+* 'args_description': descrizione degli argomenti
 * 'callback': funzione chiamata alla richiesta di una info, argomenti:
 ** 'void *data': puntatore
 ** 'const char *info_name': nome della info
@@ -6110,8 +6362,9 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 
 /* add info "my_info" */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
-                                            "Some info",
-                                            &my_info_cb, NULL);
+                                                 "Some info",
+                                                 "Info about arguments",
+                                                 &my_info_cb, NULL);
 ----------------------------------------
 
 Script (Python):
@@ -6119,13 +6372,14 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-hook = weechat.hook_info(info_name, description, callback, callback_data)
+hook = weechat.hook_info(info_name, description, args_description, callback, callback_data)
 
 # esempio
 def my_info_cb(data, info_name, arguments):
     return "some_info"
 
-hook = weechat.hook_info("my_info", "Some info", "my_info_cb", "")
+hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
+                         "my_info_cb", "")
 ----------------------------------------
 
 weechat_hook_infolist
@@ -6140,6 +6394,8 @@ Prototipo:
 ----------------------------------------
 struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
+                                      const char *pointer_description,
+                                      const char *args_description,
                                       const char *(*callback)(void *data,
                                                               const char *infolist_name,
                                                               void *pointer,
@@ -6151,6 +6407,8 @@ Argomenti:
 
 * 'infolist_name': nome della lista info
 * 'description': descrizione
+* 'pointer_description': descrizione del puntatore (opzionale, può essere NULL)
+* 'args_description': descrizione degli argomenti (opzionale, può essere NULL)
 * 'callback': funzione chiamata alla richiesta della lista info, argomenti:
 ** 'void *data': puntatore
 ** 'const char *infolist_name': nome della lista info
@@ -6182,6 +6440,8 @@ my_infolist_cb (void *data, const char *infolist_name, void *pointer,
 /* add infolist "my_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
+                                                    "Info about pointer",
+                                                    "Info about arguments",
                                                     &my_infolist_cb, NULL);
 ----------------------------------------
 
@@ -6190,7 +6450,8 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-hook = weechat.hook_infolist(infolist_name, description, callback, callback_data)
+hook = weechat.hook_infolist(infolist_name, description, pointer_description,
+                             args_description, callback, callback_data)
 
 # esempio
 def my_infolist_cb(data, infolist_name, pointer, arguments):
@@ -6198,7 +6459,9 @@ def my_infolist_cb(data, infolist_name, pointer, arguments):
     # ...
     return my_infolist
 
-hook = weechat.hook_infolist("my_infolist", "Infolist with some data", "my_infolist_cb", "")
+hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
+                             "Info about pointer", "Info about arguments",
+                             "my_infolist_cb", "")
 ----------------------------------------
 
 weechat_unhook
@@ -6349,7 +6612,7 @@ def my_input_cb(data, buffer, input_data):
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_strinf(buffer, "name"))
+    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
@@ -6646,13 +6909,30 @@ Argomenti:
 * 'buffer': puntatore al buffer
 * 'property': nome della proprietà:
 ** 'number': numero del buffer (inizia da 1)
-** 'num_displayed': numero delle finestre che visualizzano il buffer
+** 'layout_number': number of buffer saved in layout
+** 'type': buffer type (0: formatted, 1: free content)
 ** 'notify': livello di notifica per il buffer
+** 'num_displayed': numero delle finestre che visualizzano il buffer
+** 'active': 1 if buffer is active, 0 if buffer is merged and not selected
+** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
 ** 'prefix_max_length': lunghezza massima del prefisso in questo buffer
 ** 'time_for_each_line': 1 se l'ora è visualizzata per ogni riga nel buffer
    (predefinito), altrimenti 0
+** 'nicklist': 1 if nicklist is enabled, otherwise 0
+** 'nicklist_case_sensitive': 1 if nicks are case sensitive, otherwise 0
+** 'nicklist_max_length': max length for a nick
+** 'nicklist_display_groups': 1 if groups are displayed, otherwise 0
+** 'nicklist_visible_count': number of nicks/groups displayed
+** 'input': 1 if input is enabled, otherwise 0
+** 'input_get_unknown_commands': 1 if unknown commands are sent to input
+   callback, otherwise 0
+** 'input_size': input size (in bytes)
+** 'input_length': input length (number of chars)
+** 'input_pos': cursor position in buffer input
+** 'input_1st_display': first char displayed on screen
+** 'num_history': number of commands in history
 ** 'text_search': tipo di ricerca nel testo:
 *** 0: nessuna ricerca in questo momento
 *** 1: ricerca all'indietro (direzione: messaggi più vecchi)
@@ -6706,6 +6986,9 @@ Argomenti:
 ** 'short_name': nome breve del buffer
 ** 'tilte': titolo del buffer
 ** 'input': testo in ingresso
+** 'text_search_input': input saved before text search
+** 'highlight_words': list of words to highlight
+** 'highlight_tags': list of tags to highlight
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
 
@@ -6808,7 +7091,7 @@ Argomenti:
   utilizzato) +
   priorità: aggiunge il buffer alla hotlist con questa proprietà
 
-| unread | (N/D) |
+| unread | - |
   imposta l'evidenziatore di lettura dopo l'ultima riga del buffer
 
 | display | "1", "auto" |
@@ -6862,11 +7145,14 @@ Argomenti:
   bind a new key 'xxx', specific to this buffer, value is command to execute
   for this key
 
-| key_unbind_xxx | (N/A) |
+| key_unbind_xxx | - |
   unbind key 'xxx' for this buffer
 
 | input | any string |
   set new value for buffer input
+
+| input_pos | position |
+  set cursor position in buffer input
 
 | input_get_unknown_commands | "0" or "1" |
   "0" to disable unknown commands on this buffer (default behaviour), "1" to
@@ -6877,7 +7163,7 @@ Argomenti:
   set new value for local variable 'xxx' (variable is created if it does not
   exist)
 
-| localvar_del_xxx | (N/A) |
+| localvar_del_xxx | - |
   remove local variable 'xxx'
 |========================================
 
@@ -7897,7 +8183,7 @@ Argomenti:
 * 'bar': puntatore alla barra
 * 'property': name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (consultare <<_weechat_bar_new>>)
+  separator, items (consultare <<_weechat_bar_new,weechat_bar_new>>)
 * 'value': nuovo valore per la proprietà
 
 Valore restituito:
@@ -8169,7 +8455,7 @@ weechat_printf (NULL, "Current WeeChat version is: %s (compiled on %s)",
                 weechat_info_get ("version", NULL),
                 weechat_info_get ("date", NULL));
 weechat_printf (NULL, "WeeChat home is: %s",
-                weechat_info_get ("weechat_dir"));
+                weechat_info_get ("weechat_dir", NULL));
 ----------------------------------------
 
 Script (Python):
@@ -9012,9 +9298,9 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-struct t_upgrade_file *weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
-                                                     int object_id,
-                                                     struct t_infolist *infolist);
+int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
+                                  int object_id,
+                                  struct t_infolist *infolist);
 ----------------------------------------
 
 Argomenti:
@@ -9046,7 +9332,7 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-weechat.upgrade_write_object(upgrade_file, object_id, infolist)
+rc = weechat.upgrade_write_object(upgrade_file, object_id, infolist)
 
 # esempio
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
@@ -9061,12 +9347,12 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-struct t_upgrade_file *weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
-                                             int (*callback_read)(void *data,
-                                                                  struct t_upgrade_file *upgrade_file,
-                                                                  int object_id,
-                                                                  struct t_infolist *infolist),
-                                             void *callback_read_data);
+int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
+                          int (*callback_read)(void *data,
+                                               struct t_upgrade_file *upgrade_file,
+                                               int object_id,
+                                               struct t_infolist *infolist),
+                          void *callback_read_data);
 ----------------------------------------
 
 Argomenti:
@@ -9102,7 +9388,7 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
+rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
 
 # esempio
 def my_upgrade_read_cb(upgrade_file, object_id, infolist):
