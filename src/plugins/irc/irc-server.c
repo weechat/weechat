@@ -2777,29 +2777,33 @@ irc_server_connect (struct t_irc_server *server)
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
     }
     
-    /* init SSL if asked */
+    /* init SSL if asked and connect */
     server->ssl_connected = 0;
 #ifdef HAVE_GNUTLS
     if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
         server->ssl_connected = 1;
-#endif
-    
-    
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->addresses_array[server->index_current_address],
                                                  server->ports_array[server->index_current_address],
                                                  server->sock,
                                                  IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-#ifdef HAVE_GNUTLS
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
                                                  (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
                                                  IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
-#else
-                                                 NULL, NULL, 0,
-#endif
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
                                                  &irc_server_connect_cb,
                                                  server);
+#else
+    server->hook_connect = weechat_hook_connect (proxy,
+                                                 server->addresses_array[server->index_current_address],
+                                                 server->ports_array[server->index_current_address],
+                                                 server->sock,
+                                                 IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 NULL, NULL, 0,
+                                                 IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+                                                 &irc_server_connect_cb,
+                                                 server);
+#endif
     
     /* send signal "irc_server_connecting" with server name */
     weechat_hook_signal_send ("irc_server_connecting",
