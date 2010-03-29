@@ -401,6 +401,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->layout_number = gui_layout_buffer_get_number (gui_layout_buffers,
                                                                   plugin_get_name (plugin),
                                                                   name);
+        new_buffer->layout_applied = 0;
         new_buffer->name = strdup (name);
         new_buffer->short_name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;

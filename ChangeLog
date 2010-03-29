@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-03-26
+v0.3.2-dev, 2010-03-29
 
 
 Version 0.3.2 (under dev!)
@@ -24,6 +24,8 @@ Version 0.3.2 (under dev!)
 * core: use arguments for infolist "nicklist" to return only one nick or group
 * core: fix bug with writing of configuration files when disk is full
   (bug #29331)
+* core: fix infinite loop with /layout apply and bug when applying layout,
+  sometimes many /layout apply were needed (bug #26110)
 * gui: refresh screen when exiting WeeChat (to display messages printed after
   /quit)
 * gui: fix bug with global history, reset pointer to last entry after each user

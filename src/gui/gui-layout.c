@@ -205,22 +205,55 @@ gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
 {
     struct t_gui_buffer *ptr_buffer;
     const char *plugin_name;
+    int layout_applied_on_a_buffer;
     
     if (layout_buffers)
     {
+        /* reset flag "layout_applied" on all buffers */
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
-            plugin_name = plugin_get_name (ptr_buffer->plugin);
-            ptr_buffer->layout_number = gui_layout_buffer_get_number (layout_buffers,
-                                                                      plugin_name,
-                                                                      ptr_buffer->name);
-            if ((ptr_buffer->layout_number > 0)
-                && (ptr_buffer->layout_number != ptr_buffer->number))
+            ptr_buffer->layout_applied = 0;
+        }
+        
+        /*
+         * apply layout on all buffers: we start from first buffer each time,
+         * until layout has been applied on all buffers
+         */
+        while (1)
+        {
+            layout_applied_on_a_buffer = 0;
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
             {
-                gui_buffer_move_to_number (ptr_buffer,
-                                           ptr_buffer->layout_number);
+                /* if layout has not been applied on buffer yet */
+                if (!ptr_buffer->layout_applied)
+                {
+                    ptr_buffer->layout_applied = 1;
+                    layout_applied_on_a_buffer = 1;
+                    plugin_name = plugin_get_name (ptr_buffer->plugin);
+                    ptr_buffer->layout_number = gui_layout_buffer_get_number (layout_buffers,
+                                                                              plugin_name,
+                                                                              ptr_buffer->name);
+                    if ((ptr_buffer->layout_number > 0)
+                        && (ptr_buffer->layout_number != ptr_buffer->number))
+                    {
+                        gui_buffer_move_to_number (ptr_buffer,
+                                                   ptr_buffer->layout_number);
+                    }
+                    /*
+                     * exit loop when layout has been applied on buffer, we
+                     * will apply for next buffers in another loop
+                     */
+                    break;
+                }
             }
+            /*
+             * no layout applied: that means layout has been applied on all
+             * buffers, so we exit from loop
+             */
+            if (!layout_applied_on_a_buffer)
+                break;
         }
     }
 }

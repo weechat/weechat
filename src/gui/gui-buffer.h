@@ -77,6 +77,8 @@ struct t_gui_buffer
     int number;                        /* buffer number (for jump/switch)   */
     int layout_number;                 /* the number of buffer saved in     */
                                        /* layout                            */
+    int layout_applied;                /* used when applying layout, to     */
+                                       /* know if layout has been applied   */
     char *name;                        /* buffer name                       */
     char *short_name;                  /* short buffer name                 */
     enum t_gui_buffer_type type;       /* buffer type (formatted, free, ..) */
