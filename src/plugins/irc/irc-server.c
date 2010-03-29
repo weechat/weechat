@@ -1082,7 +1082,7 @@ void
 irc_server_parse_message (const char *message, char **nick, char **host,
                           char **command, char **channel, char **arguments)
 {
-    const char *pos, *pos2, *pos3, *pos4;
+    const char *pos, *pos2, *pos3, *pos4, *pos5;
 
     if (nick)
         *nick = NULL;
@@ -1170,6 +1170,7 @@ irc_server_parse_message (const char *message, char **nick, char **host,
                     }
                     if (pos3)
                     {
+                        pos4 = pos3;
                         pos3++;
                         while (pos3[0] == ' ')
                         {
@@ -1177,14 +1178,18 @@ irc_server_parse_message (const char *message, char **nick, char **host,
                         }
                         if (irc_channel_is_channel (pos3))
                         {
-                            pos4 = strchr (pos3, ' ');
+                            pos5 = strchr (pos3, ' ');
                             if (channel)
                             {
-                                if (pos4)
-                                    *channel = weechat_strndup (pos3, pos4 - pos3);
+                                if (pos5)
+                                    *channel = weechat_strndup (pos3, pos5 - pos3);
                                 else
                                     *channel = strdup (pos3);
                             }
+                        }
+                        else if (channel && !*channel)
+                        {
+                            *channel = weechat_strndup (pos2, pos4 - pos2);
                         }
                     }
                 }

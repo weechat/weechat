@@ -47,8 +47,8 @@ extern struct t_irc_ignore *irc_ignore_new (const char *mask,
                                             const char *server,
                                             const char *channel);
 extern int irc_ignore_check (struct t_irc_server *server,
-                             struct t_irc_channel *channel,
-                             const char *nick, const char *host);
+                             const char *channel, const char *nick,
+                             const char *host);
 extern void irc_ignore_free (struct t_irc_ignore *ignore);
 extern void irc_ignore_free_all ();
 extern int irc_ignore_add_to_infolist (struct t_infolist *infolist,

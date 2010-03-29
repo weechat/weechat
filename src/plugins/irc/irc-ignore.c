@@ -182,7 +182,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
  */
 
 int
-irc_ignore_check (struct t_irc_server *server, struct t_irc_channel *channel,
+irc_ignore_check (struct t_irc_server *server, const char *channel,
                   const char *nick, const char *host)
 {
     struct t_irc_ignore *ptr_ignore;
@@ -215,8 +215,16 @@ irc_ignore_check (struct t_irc_server *server, struct t_irc_channel *channel,
             channel_match = 1;
         else
         {
-            channel_match = (weechat_strcasecmp (ptr_ignore->channel,
-                                                 channel->name) == 0);
+            if (irc_channel_is_channel (channel))
+            {
+                channel_match = (weechat_strcasecmp (ptr_ignore->channel,
+                                                     channel) == 0);
+            }
+            else if (nick)
+            {
+                channel_match = (weechat_strcasecmp (ptr_ignore->channel,
+                                                     nick) == 0);
+            }
         }
         
         if (server_match && channel_match)

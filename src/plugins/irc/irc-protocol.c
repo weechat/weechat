@@ -934,7 +934,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                     }
                     else
                     {
-                        if (!irc_ignore_check (server, ptr_channel, nick, host))
+                        if (!irc_ignore_check (server, ptr_channel->name,
+                                               nick, host))
                         {
                             weechat_printf_tags (ptr_channel->buffer,
                                                  irc_protocol_tags (command, NULL),
@@ -1489,7 +1490,7 @@ IRC_PROTOCOL_CALLBACK(quit)
         if (ptr_nick || (weechat_strcasecmp (ptr_channel->name, nick) == 0))
         {
             /* display quit message */
-            if (!irc_ignore_check (server, ptr_channel, nick, host))
+            if (!irc_ignore_check (server, ptr_channel->name, nick, host))
             {
                 local_quit = (strcmp (nick, server->nick) == 0);
                 ptr_nick_speaking = NULL;
@@ -3977,7 +3978,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
     ptr_channel = NULL;
     if (msg_channel)
         ptr_channel = irc_channel_search (server, msg_channel);
-    message_ignored = irc_ignore_check (server, ptr_channel, nick, host);
+    message_ignored = irc_ignore_check (server,
+                                        (ptr_channel) ? ptr_channel->name : msg_channel,
+                                        nick, host);
     
     /* send signal with received command, even if command is ignored */
     irc_server_send_signal (server, "irc_raw_in", msg_command, irc_message);
