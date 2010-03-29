@@ -246,13 +246,22 @@
   masque_serveur: liste des serveurs correspondant au masque
 ........................................
 
-&bull; *`/list`* `[canal[,canal] [serveur]]`::
+&bull; *`/list`* `[canal[,canal] [serveur] [-re regexp]]`::
 
 ........................................
   lister les canaux et leur titre
 
-  canal: canal à lister (une expression régulière est acceptée)
+    canal: canal à lister
   serveur: nom du serveur
+   regexp: expression régulière utilisée pour filtrer les résultats
+  
+  Exemples:
+    lister tous les canaux du serveur (peut être très lent pour les grands réseaux):
+      /list
+    lister le canal #weechat:
+      /list #weechat
+    lister tous les canaux commençant par "#weechat" (peut être très lent pour les grands réseaux):
+      /list -re #weechat.*
 ........................................
 
 &bull; *`/lusers`* `[masque [cible]]`::

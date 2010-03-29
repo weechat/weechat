@@ -246,13 +246,22 @@
   mask_server: elenco dei server devono corrispondere a questa mask
 ........................................
 
-&bull; *`/list`* `[canale[,canale] [server]`::
+&bull; *`/list`* `[channel[,channel] [server] [-re regexp]]`::
 
 ........................................
   elenca i canali ed i loro argomenti
 
-  canale: canale da elencare (è consentita un'espressione regolare)
-  server: nome del server
+  channel: channel to list
+   server: server name
+   regexp: regular expression used to filter results
+  
+  Examples:
+    list all channels on server (can be very slow on large networks):
+      /list
+    list channel #weechat:
+      /list #weechat
+    list all channels beginning with "#weechat" (can be very slow on large networks):
+      /list -re #weechat.*
 ........................................
 
 &bull; *`/lusers`* `[mask [destinazione]]`::

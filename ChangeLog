@@ -61,6 +61,8 @@ Version 0.3.2 (under dev!)
   (bug #28741)
 * irc: add new option irc.look.part_closes_buffer to close buffer when /part
   is issued on channel (task #10295)
+* irc: fix command /list: send channel and server name given as argument, and
+  use separate option "-re" to allow a regex
 * irc: fix PART message received on Undernet server (bug #28825)
 * irc: fix bug with /away -all: set or unset future away for disconnected
   servers (bug #29022)

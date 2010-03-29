@@ -1995,15 +1995,14 @@ int
 irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char buf[512];
-    int ret;
+    char buf[512], *ptr_channel_name, *ptr_server_name, *ptr_regex;
+    int i, ret;
     
     IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("list", 1);
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
     
     if (ptr_server->cmd_list_regexp)
     {
@@ -2014,35 +2013,66 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
-        if (ptr_server->cmd_list_regexp)
+        ptr_channel_name = NULL;
+        ptr_server_name = NULL;
+        ptr_regex = NULL;
+        for (i = 1; i < argc; i++)
         {
-            if ((ret = regcomp (ptr_server->cmd_list_regexp,
-                                argv_eol[1],
-                                REG_NOSUB | REG_ICASE)) != 0)
+            if (weechat_strcasecmp (argv[i], "-re") == 0)
             {
-                regerror (ret, ptr_server->cmd_list_regexp,
-                          buf, sizeof(buf));
-                weechat_printf (ptr_server->buffer,
-                                _("%s%s: \"%s\" is not a valid regular "
-                                  "expression (%s)"),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                argv_eol, buf);
-                return WEECHAT_RC_OK;
+                if (i < argc - 1)
+                {
+                    ptr_regex = argv_eol[i + 1];
+                    i++;
+                }
             }
             else
             {
-                irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
-                                  "LIST");
+                if (!ptr_channel_name)
+                    ptr_channel_name = argv[i];
+                else if (!ptr_server_name)
+                    ptr_server_name = argv[i];
             }
+        }
+        if (!ptr_channel_name && !ptr_server_name && !ptr_regex)
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH, "LIST");
         }
         else
         {
-            weechat_printf (ptr_server->buffer,
-                            _("%s%s: not enough memory for regular "
-                              "expression"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            if (ptr_regex)
+            {
+                ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
+                if (ptr_server->cmd_list_regexp)
+                {
+                    if ((ret = regcomp (ptr_server->cmd_list_regexp, ptr_regex,
+                                        REG_NOSUB | REG_ICASE)) != 0)
+                    {
+                        regerror (ret, ptr_server->cmd_list_regexp,
+                                  buf, sizeof(buf));
+                        weechat_printf (ptr_server->buffer,
+                                        _("%s%s: \"%s\" is not a valid regular "
+                                          "expression (%s)"),
+                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                        argv_eol[1], buf);
+                        return WEECHAT_RC_OK;
+                    }
+                }
+                else
+                {
+                    weechat_printf (ptr_server->buffer,
+                                    _("%s%s: not enough memory for regular "
+                                      "expression"),
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    return WEECHAT_RC_OK;
+                }
+            }
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "LIST%s%s%s%s",
+                              (ptr_channel_name) ? " " : "",
+                              (ptr_channel_name) ? ptr_channel_name : "",
+                              (ptr_server_name) ? " " : "",
+                              (ptr_server_name) ? ptr_server_name : "");
         }
     }
     else
@@ -4374,9 +4404,20 @@ irc_command_init ()
                           NULL, &irc_command_links, NULL);
     weechat_hook_command ("list",
                           N_("list channels and their topic"),
-                          N_("[channel[,channel] [server]]"),
-                          N_("channel: channel to list (a regexp is allowed)\n"
-                             "server: server name"),
+                          N_("[channel[,channel] [server] [-re regexp]]"),
+                          N_("channel: channel to list\n"
+                             " server: server name\n"
+                             " regexp: regular expression used to filter "
+                             "results\n\n"
+                             "Examples:\n"
+                             "  list all channels on server (can be very slow "
+                             "on large networks):\n"
+                             "    /list\n"
+                             "  list channel #weechat:\n"
+                             "    /list #weechat\n"
+                             "  list all channels beginning with \"#weechat\" "
+                             "(can be very slow on large networks):\n"
+                             "    /list -re #weechat.*"),
                           NULL, &irc_command_list, NULL);
     weechat_hook_command ("lusers",
                           N_("get statistics about the size of the IRC "
