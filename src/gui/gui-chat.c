@@ -55,13 +55,14 @@ struct t_gui_buffer *gui_chat_mute_buffer = NULL; /* mute buffer            */
 
 
 /*
- * gui_chat_prefix_build_empty: build empty prefixes
- *                              (called before reading WeeChat config file)
+ * gui_chat_init: init some variables for chat area
+ *                (called before reading WeeChat config file)
  */
 
 void
-gui_chat_prefix_build_empty ()
+gui_chat_init ()
 {
+    /* build empty prefixes */
     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (gui_chat_prefix_empty);
@@ -651,15 +652,28 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 }
 
 /*
- * gui_chat_free_buffer: free buffer used by chat functions
+ * gui_chat_end: free some variables allocated for chat area
  */
 
 void
-gui_chat_free_buffer ()
+gui_chat_end ()
 {
+    int i;
+    
+    /* free buffer used by chat functions */
     if (gui_chat_buffer)
     {
         free (gui_chat_buffer);
         gui_chat_buffer = NULL;
+    }
+    
+    /* free prefixes */
+    for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
+    {
+        if (gui_chat_prefix[i])
+        {
+            free (gui_chat_prefix[i]);
+            gui_chat_prefix[i] = NULL;
+        }
     }
 }

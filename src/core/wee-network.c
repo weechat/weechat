@@ -67,20 +67,29 @@ const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 /*
  * network_init: init network
  */
+
 void
 network_init ()
 {
 #ifdef HAVE_GNUTLS
-    char *CApath, *CApath2;
+    char *ca_path, *ca_path2;
 
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
-
-    CApath = string_replace (CONFIG_STRING(config_network_gnutls_ca_file),
-                                     "~", getenv ("HOME"));
-    CApath2 = string_replace (CApath, "%h", weechat_home);
-
-    gnutls_certificate_set_x509_trust_file (gnutls_xcred, CApath2, GNUTLS_X509_FMT_PEM);
+    
+    ca_path = string_replace (CONFIG_STRING(config_network_gnutls_ca_file),
+                              "~", getenv ("HOME"));
+    if (ca_path)
+    {
+        ca_path2 = string_replace (ca_path, "%h", weechat_home);
+        if (ca_path2)
+        {
+            gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path2,
+                                                    GNUTLS_X509_FMT_PEM);
+            free (ca_path2);
+        }
+        free (ca_path);
+    }
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
     network_init_ok = 1;
@@ -102,6 +111,7 @@ network_end ()
 #ifdef HAVE_GNUTLS
     if (network_init_ok)
     {
+        network_init_ok = 0;
         gnutls_certificate_free_credentials (gnutls_xcred);
         gnutls_global_deinit();
     }

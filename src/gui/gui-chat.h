@@ -57,7 +57,7 @@ extern struct t_gui_buffer *gui_chat_mute_buffer;
 
 /* chat functions */
 
-extern void gui_chat_prefix_build_empty ();
+extern void gui_chat_init ();
 extern void gui_chat_prefix_build ();
 extern int gui_chat_strlen_screen (const char *string);
 extern char *gui_chat_string_add_offset (const char *string, int offset);
@@ -75,7 +75,7 @@ extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        const char *message, ...);
 extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
                                const char *message, ...);
-extern void gui_chat_free_buffer ();
+extern void gui_chat_end ();
 
 /* chat functions (GUI dependent) */
 

@@ -70,8 +70,8 @@ gui_main_pre_init (int *argc, char **argv[])
     /* pre-init colors */
     gui_color_pre_init ();
     
-    /* build empty prefixes (before reading config) */
-    gui_chat_prefix_build_empty ();
+    /* init some variables for chat area */
+    gui_chat_init ();
     
     /* Initialise Gtk */
     gtk_init (argc, argv);
@@ -277,7 +277,7 @@ gui_main_end (int clean_exit)
         /* end color */
         gui_color_end ();
         
-        /* free chat buffer */
-        gui_chat_free_buffer ();
+        /* free some variables used for chat area */
+        gui_chat_end ();
     }
 }
