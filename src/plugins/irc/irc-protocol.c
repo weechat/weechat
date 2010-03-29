@@ -2761,6 +2761,8 @@ IRC_PROTOCOL_CALLBACK(333)
     
     topic_nick = irc_protocol_get_nick_from_host (argv[4]);
     topic_address = irc_protocol_get_address_from_host (argv[4]);
+    if (topic_nick && topic_address && strcmp (topic_nick, topic_address) == 0)
+        topic_address = NULL;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     ptr_nick = (ptr_channel) ? irc_nick_search (ptr_channel, topic_nick) : NULL;
