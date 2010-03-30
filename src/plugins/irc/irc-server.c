@@ -3746,6 +3746,7 @@ irc_server_print_log ()
         weechat_log_printf ("  unterminated_message : '%s'",  ptr_server->unterminated_message);
         weechat_log_printf ("  nicks_count. . . . . : %d",    ptr_server->nicks_count);
         weechat_log_printf ("  nicks_array. . . . . : 0x%lx", ptr_server->nicks_array);
+        weechat_log_printf ("  nick_first_tried . . : %d",    ptr_server->nick_first_tried);
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
         weechat_log_printf ("  prefix . . . . . . . : '%s'",  ptr_server->prefix);
