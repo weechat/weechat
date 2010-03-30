@@ -273,6 +273,32 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
 }
 
 /*
+ * irc_server_get_nick_index: get index of nick in array "nicks_array"
+ *                            return -1 if nick is not set or not found in
+ *                            "nicks_array"
+ */
+
+int
+irc_server_get_nick_index (struct t_irc_server *server)
+{
+    int i;
+    
+    if (!server->nick)
+        return -1;
+    
+    for (i = 0; i < server->nicks_count; i++)
+    {
+        if (strcmp (server->nick, server->nicks_array[i]) == 0)
+        {
+            return i;
+        }
+    }
+    
+    /* nick not found */
+    return -1;
+}
+
+/*
  * irc_server_alloc: allocate a new server and add it to the servers queue
  */
 
@@ -327,6 +353,7 @@ irc_server_alloc (const char *name)
     new_server->unterminated_message = NULL;
     new_server->nicks_count = 0;
     new_server->nicks_array = NULL;
+    new_server->nick_first_tried = 0;
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
     new_server->prefix = NULL;
@@ -2022,7 +2049,10 @@ irc_server_login (struct t_irc_server *server)
         irc_server_set_nick (server,
                              (server->nicks_array) ?
                              server->nicks_array[0] : "weechat");
+        server->nick_first_tried = 0;
     }
+    else
+        server->nick_first_tried = irc_server_get_nick_index (server);
     
     if (irc_server_sasl_enabled (server))
     {

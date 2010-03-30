@@ -133,6 +133,8 @@ struct t_irc_server
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */
+    int nick_first_tried;           /* first nick tried in list of nicks     */
+                                    /* when (re-)connecting to server        */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *prefix;                   /* nick prefix allowed (from msg 005)    */
@@ -186,6 +188,7 @@ extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
+extern int irc_server_get_nick_index (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,

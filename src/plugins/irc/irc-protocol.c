@@ -3542,7 +3542,7 @@ IRC_PROTOCOL_CALLBACK(368)
 
 IRC_PROTOCOL_CALLBACK(432)
 {
-    int i, nick_found, nick_to_use;
+    int nick_index;
     struct t_gui_buffer *ptr_buffer;
     
     /*
@@ -3559,24 +3559,13 @@ IRC_PROTOCOL_CALLBACK(432)
         ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
                                                       command, NULL, NULL);
         
-        nick_found = -1;
-        nick_to_use = -1;
-        for (i = 0; i < server->nicks_count; i++)
-        {
-            if (strcmp (server->nick, server->nicks_array[i]) == 0)
-            {
-                nick_found = i;
-                break;
-            }
-        }
-        if (nick_found < 0)
-            nick_to_use = 0;
+        nick_index = irc_server_get_nick_index (server);
+        if (nick_index < 0)
+            nick_index = 0;
         else
-        {
-            if (nick_found < server->nicks_count - 1)
-                nick_to_use = nick_found + 1;
-        }
-        if (nick_to_use < 0)
+            nick_index = (nick_index + 1) % server->nicks_count;
+        
+        if (nick_index == server->nick_first_tried)
         {
             weechat_printf (ptr_buffer,
                             _("%s%s: all declared nicknames are "
@@ -3592,10 +3581,10 @@ IRC_PROTOCOL_CALLBACK(432)
                         _("%s%s: nickname \"%s\" is invalid, "
                           "trying nickname #%d (\"%s\")"),
                         weechat_prefix ("error"),
-                        IRC_PLUGIN_NAME, server->nick, nick_to_use + 1,
-                        server->nicks_array[nick_to_use]);
+                        IRC_PLUGIN_NAME, server->nick, nick_index + 1,
+                        server->nicks_array[nick_index]);
         
-        irc_server_set_nick (server, server->nicks_array[nick_to_use]);
+        irc_server_set_nick (server, server->nicks_array[nick_index]);
         
         irc_server_sendf (server, 0, "NICK %s", server->nick);
     }
@@ -3609,7 +3598,7 @@ IRC_PROTOCOL_CALLBACK(432)
 
 IRC_PROTOCOL_CALLBACK(433)
 {
-    int i, nick_found, nick_to_use;
+    int nick_index;
     struct t_gui_buffer *ptr_buffer;
     
     /*
@@ -3621,25 +3610,14 @@ IRC_PROTOCOL_CALLBACK(433)
     {
         ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
                                                       command, NULL, NULL);
-        
-        nick_found = -1;
-        nick_to_use = -1;
-        for (i = 0; i < server->nicks_count; i++)
-        {
-            if (strcmp (server->nick, server->nicks_array[i]) == 0)
-            {
-                nick_found = i;
-                break;
-            }
-        }
-        if (nick_found < 0)
-            nick_to_use = 0;
+
+        nick_index = irc_server_get_nick_index (server);
+        if (nick_index < 0)
+            nick_index = 0;
         else
-        {
-            if (nick_found < server->nicks_count - 1)
-                nick_to_use = nick_found + 1;
-        }
-        if (nick_to_use < 0)
+            nick_index = (nick_index + 1) % server->nicks_count;
+        
+        if (nick_index == server->nick_first_tried)
         {
             weechat_printf (ptr_buffer,
                             _("%s%s: all declared nicknames are "
@@ -3654,10 +3632,10 @@ IRC_PROTOCOL_CALLBACK(433)
         weechat_printf (ptr_buffer,
                         _("%s: nickname \"%s\" is already in use, "
                           "trying nickname #%d (\"%s\")"),
-                        IRC_PLUGIN_NAME, server->nick,
-                        nick_to_use + 1, server->nicks_array[nick_to_use]);
+                        IRC_PLUGIN_NAME, server->nick, nick_index + 1,
+                        server->nicks_array[nick_index]);
         
-        irc_server_set_nick (server, server->nicks_array[nick_to_use]);
+        irc_server_set_nick (server, server->nicks_array[nick_index]);
         
         irc_server_sendf (server, 0, "NICK %s", server->nick);
     }
