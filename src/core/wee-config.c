@@ -1992,9 +1992,10 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "autoload", "string",
         N_("comma separated list of plugins to load automatically "
-           "at startup, \"*\" means all plugins found (names may "
-           "be partial, for example \"perl\" is ok for "
-           "\"perl.so\")"),
+           "at startup, \"*\" means all plugins found, a name beginning with "
+           "\"!\" is a negative value to prevent a plugin from being loaded, "
+           "names can start or end with \"*\" to match several plugins "
+           "(examples: \"*\", \"*,!lua,!tcl\")"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_debug = config_file_new_option (
         weechat_config_file, ptr_section,

@@ -26,6 +26,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <libgen.h>
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
@@ -62,6 +63,10 @@ struct t_weechat_plugin *last_weechat_plugin = NULL;
 
 int plugin_argc;                       /* command line arguments (used only */
 char **plugin_argv;                    /* first time loading plugin)        */
+
+int plugin_autoload_count = 0;         /* number of items in autoload_array */
+char **plugin_autoload_array = NULL;   /* autoload array, this is split of  */
+                                       /* option "weechat.plugin.autoload"  */
 
 
 void plugin_remove (struct t_weechat_plugin *plugin);
@@ -128,6 +133,80 @@ plugin_get_name (struct t_weechat_plugin *plugin)
 }
 
 /*
+ * plugin_check_autoload: check if a plugin can be autoloaded or not
+ *                        return 1 if plugin can be autoloaded
+ *                               0 if plugin can NOT be autoloaded
+ *                        list of autoloaded plugins is set in option
+ *                        "weechat.plugin.autoload"
+ */
+
+int
+plugin_check_autoload (char *plugin_full_name)
+{
+    int i, plugin_authorized, plugin_blacklisted;
+    char *ptr_base_name, *base_name, *plugin_name, *pos;
+    
+    /* by default we can auto load all plugins */
+    if (!plugin_autoload_array)
+        return 1;
+    
+    /* get short name of plugin (filename without extension) */
+    plugin_name = NULL;
+    ptr_base_name = basename (plugin_full_name);
+    if (!ptr_base_name)
+        return 1;
+    
+    base_name = strdup (ptr_base_name);
+    if (!base_name)
+        return 1;
+    
+    if (CONFIG_STRING(config_plugin_extension)
+        && CONFIG_STRING(config_plugin_extension)[0])
+    {
+        pos = strstr (base_name,
+                      CONFIG_STRING(config_plugin_extension));
+        plugin_name = (pos) ?
+            string_strndup (base_name, pos - base_name) :
+            strdup (base_name);
+    }
+    else
+        plugin_name = strdup (base_name);
+    
+    free (base_name);
+    
+    if (!plugin_name)
+        return 1;
+    
+    /* browse array and check if plugin is "authorized" or "blacklisted" */
+    plugin_authorized = 0;
+    plugin_blacklisted = 0;
+    for (i = 0; i < plugin_autoload_count; i++)
+    {
+        if (plugin_autoload_array[i][0] == '!')
+        {
+            /*
+             * negative value: it is used to "blacklist" a plugin
+             * for example with "*,!perl", all plugins are loaded, but not perl
+             */
+            if (string_match (plugin_name, plugin_autoload_array[i] + 1, 0))
+                plugin_blacklisted = 1;
+        }
+        else
+        {
+            if (string_match (plugin_name, plugin_autoload_array[i], 0))
+                plugin_authorized = 1;
+        }
+    }
+    
+    free (plugin_name);
+    
+    if (plugin_blacklisted)
+        return 0;
+    
+    return plugin_authorized;
+}
+
+/*
  * plugin_find_pos: find position for a plugin (for sorting plugins list)
  */
 
@@ -169,6 +248,14 @@ plugin_load (const char *filename)
     full_name = util_search_full_lib_name (filename, "plugins");
     
     if (!full_name)
+        return NULL;
+    
+    /*
+     * if plugin must not be autoloaded, then return immediately
+     * Note: the "plugin_autoload_array" variable is set only during auto-load,
+     * ie when WeeChat is starting or when doing /plugin autoload
+     */
+    if (plugin_autoload_array && !plugin_check_autoload (full_name))
         return NULL;
     
     ptr_home = getenv ("HOME");
@@ -684,74 +771,65 @@ plugin_auto_load_file (void *plugin, const char *filename)
 }
 
 /*
- * plugin_auto_load: auto-load WeeChat plugins
+ * plugin_auto_load: auto-load WeeChat plugins, from user and system
+ *                   directories
  */
 
 void
 plugin_auto_load ()
 {
     char *ptr_home, *dir_name, *plugin_path, *plugin_path2;
-    char *list_plugins, *pos, *pos2;
+    
+    plugin_autoload_array = NULL;
+    plugin_autoload_count = 0;
     
     if (CONFIG_STRING(config_plugin_autoload)
         && CONFIG_STRING(config_plugin_autoload)[0])
     {
-        if (string_strcasecmp (CONFIG_STRING(config_plugin_autoload),
-                               "*") == 0)
-        {
-            /* auto-load plugins in WeeChat home dir */
-            if (CONFIG_STRING(config_plugin_path)
-                && CONFIG_STRING(config_plugin_path)[0])
-            {
-                ptr_home = getenv ("HOME");
-                plugin_path = string_replace (CONFIG_STRING(config_plugin_path),
-                                              "~", ptr_home);
-                plugin_path2 = string_replace ((plugin_path) ?
-                                               plugin_path : CONFIG_STRING(config_plugin_path),
-                                               "%h", weechat_home);
-                util_exec_on_files ((plugin_path2) ?
-                                    plugin_path2 : ((plugin_path) ?
-                                                    plugin_path : CONFIG_STRING(config_plugin_path)),
-                                    0,
-                                    NULL,
-                                    &plugin_auto_load_file);
-                if (plugin_path)
-                    free (plugin_path);
-                if (plugin_path2)
-                    free (plugin_path2);
-            }
-    
-            /* auto-load plugins in WeeChat global lib dir */
-            dir_name = malloc (strlen (WEECHAT_LIBDIR) + 16);
-            if (dir_name)
-            {
-                snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
-                          "%s/plugins", WEECHAT_LIBDIR);
-                util_exec_on_files (dir_name, 0, NULL, &plugin_auto_load_file);
-                free (dir_name);
-            }
-        }
-        else
-        {
-            list_plugins = strdup (CONFIG_STRING(config_plugin_autoload));
-            if (list_plugins)
-            {
-                pos = list_plugins;
-                while (pos && pos[0])
-                {
-                    pos2 = strchr (pos, ',');
-                    if (pos2)
-                        pos2[0] = '\0';
-                    plugin_load (pos);
-                    if (pos2)
-                        pos = pos2 + 1;
-                    else
-                        pos = NULL;
-                }
-                free (list_plugins);
-            }
-        }
+        plugin_autoload_array = string_split (CONFIG_STRING(config_plugin_autoload),
+                                              ",", 0, 0,
+                                              &plugin_autoload_count);
     }
+    
+    /* auto-load plugins in WeeChat home dir */
+    if (CONFIG_STRING(config_plugin_path)
+        && CONFIG_STRING(config_plugin_path)[0])
+    {
+        ptr_home = getenv ("HOME");
+        plugin_path = string_replace (CONFIG_STRING(config_plugin_path),
+                                      "~", ptr_home);
+        plugin_path2 = string_replace ((plugin_path) ?
+                                       plugin_path : CONFIG_STRING(config_plugin_path),
+                                       "%h", weechat_home);
+        util_exec_on_files ((plugin_path2) ?
+                            plugin_path2 : ((plugin_path) ?
+                                            plugin_path : CONFIG_STRING(config_plugin_path)),
+                            0,
+                            NULL,
+                            &plugin_auto_load_file);
+        if (plugin_path)
+            free (plugin_path);
+        if (plugin_path2)
+            free (plugin_path2);
+    }
+    
+    /* auto-load plugins in WeeChat global lib dir */
+    dir_name = malloc (strlen (WEECHAT_LIBDIR) + 16);
+    if (dir_name)
+    {
+        snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
+                  "%s/plugins", WEECHAT_LIBDIR);
+        util_exec_on_files (dir_name, 0, NULL, &plugin_auto_load_file);
+        free (dir_name);
+    }
+    
+    /* free autoload array */
+    if (plugin_autoload_array)
+    {
+        string_free_split (plugin_autoload_array);
+        plugin_autoload_array = NULL;
+    }
+    plugin_autoload_count = 0;
 }
 
 /*
