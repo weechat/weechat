@@ -574,7 +574,7 @@
 ** values: any string (default value: "%h/ssl/CAs.pem")
 
 * *weechat.plugin.autoload*
-** description: comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, names can start or end with "*" to match several plugins (examples: "*", "*,!lua,!tcl")
+** description: comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, names can start or end with "*" to match several plugins (examples: "*" or "*,!lua,!tcl")
 ** type: string
 ** values: any string (default value: "*")
 

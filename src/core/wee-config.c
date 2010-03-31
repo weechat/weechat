@@ -1995,7 +1995,7 @@ config_weechat_init_options ()
            "at startup, \"*\" means all plugins found, a name beginning with "
            "\"!\" is a negative value to prevent a plugin from being loaded, "
            "names can start or end with \"*\" to match several plugins "
-           "(examples: \"*\", \"*,!lua,!tcl\")"),
+           "(examples: \"*\" or \"*,!lua,!tcl\")"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_debug = config_file_new_option (
         weechat_config_file, ptr_section,

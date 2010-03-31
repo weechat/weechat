@@ -574,7 +574,7 @@
 ** valeurs: toute chaîne (valeur par défaut: "%h/ssl/CAs.pem")
 
 * *weechat.plugin.autoload*
-** description: liste des extensions à charger automatiquement au démarrage (séparées par des virgules), "*" signifie toutes les extensions trouvées, un nom commençant par "!" est une valeur négative pour empêcher une extension d'être chargée, les noms peuvent commencer ou se terminer par "*" pour indiquer plusieurs extensions (exemples: "*", "*,!lua,!tcl")
+** description: liste des extensions à charger automatiquement au démarrage (séparées par des virgules), "*" signifie toutes les extensions trouvées, un nom commençant par "!" est une valeur négative pour empêcher une extension d'être chargée, les noms peuvent commencer ou se terminer par "*" pour indiquer plusieurs extensions (exemples: "*" ou "*,!lua,!tcl")
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "*")
 
