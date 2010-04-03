@@ -1,6 +1,14 @@
 WeeChat News
 ============
 
+FlashCode, 2010-04-03::
+    WeeChat 0.3.2 is under development.
+    +
+    If you are using `/upgrade` from a previous release, then you must execute
+    this command on all IRC servers/channels/private buffers and xfer DCC chats
+    (not needed on WeeChat core buffer or buffers from other plugins/scripts):
+    * `/buffer set highlight_words $nick`
+
 FlashCode, 2010-01-23::
     WeeChat 0.3.1 released.
     +
