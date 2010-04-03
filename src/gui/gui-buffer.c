@@ -579,6 +579,9 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
     const char *pos_end_name;
     struct t_gui_buffer_local_var *ptr_local_var;
     
+    if (!string)
+        return NULL;
+    
     length = strlen (string) + 1;
     result = malloc (length);
     if (result)

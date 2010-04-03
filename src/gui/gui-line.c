@@ -361,7 +361,7 @@ int
 gui_line_has_highlight (struct t_gui_line *line)
 {
     int rc, i;
-    char *msg_no_color;
+    char *msg_no_color, *highlight_words;
     
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -396,13 +396,27 @@ gui_line_has_highlight (struct t_gui_line *line)
         return 0;
     
     /*
-     * there is highlight on line if one of global highlight words matches line
-     * or one of buffer highlight words matches line
+     * there is highlight on line if one of buffer highlight words matches line
+     * or one of global highlight words matches line
      */
-    rc = (string_has_highlight (msg_no_color,
-                                CONFIG_STRING(config_look_highlight)) ||
-          string_has_highlight (msg_no_color,
-                                line->data->buffer->highlight_words));
+    highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
+                                                           line->data->buffer->highlight_words);
+    rc = string_has_highlight (msg_no_color,
+                               (highlight_words) ?
+                               highlight_words : line->data->buffer->highlight_words);
+    if (highlight_words)
+        free (highlight_words);
+    
+    if (!rc)
+    {
+        highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
+                                                               CONFIG_STRING(config_look_highlight));
+        rc = string_has_highlight (msg_no_color,
+                                   (highlight_words) ?
+                                   highlight_words : CONFIG_STRING(config_look_highlight));
+        if (highlight_words)
+            free (highlight_words);
+    }
     
     free (msg_no_color);
     
