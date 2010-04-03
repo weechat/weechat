@@ -303,7 +303,9 @@ void
 xfer_chat_open_buffer (struct t_xfer *xfer)
 {
     char *name;
-    int length;
+    int length, buffer_created;
+    
+    buffer_created = 0;
     
     length = strlen (xfer->plugin_name) + 8 + strlen (xfer->remote_nick) + 1;
     name = malloc (length);
@@ -317,26 +319,30 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
             xfer->buffer = weechat_buffer_new (name,
                                                &xfer_chat_buffer_input_cb, NULL,
                                                &xfer_chat_buffer_close_cb, NULL);
+            buffer_created = 1;
             
             /* failed to create buffer ? then return */
             if (!xfer->buffer)
                 return;
         }
-        
-        weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
-        weechat_buffer_set (xfer->buffer, "short_name", xfer->remote_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
-        weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
-        weechat_buffer_set (xfer->buffer, "highlight_words", xfer->local_nick);
-        weechat_printf (xfer->buffer,
-                        _("Connected to %s (%d.%d.%d.%d) via "
-                          "xfer chat"),
-                        xfer->remote_nick,
-                        xfer->address >> 24,
-                        (xfer->address >> 16) & 0xff,
-                        (xfer->address >> 8) & 0xff,
-                        xfer->address & 0xff);
+
+        if (buffer_created)
+        {
+            weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
+            weechat_buffer_set (xfer->buffer, "short_name", xfer->remote_nick);
+            weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
+            weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
+            weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
+            weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
+            weechat_printf (xfer->buffer,
+                            _("Connected to %s (%d.%d.%d.%d) via "
+                              "xfer chat"),
+                            xfer->remote_nick,
+                            xfer->address >> 24,
+                            (xfer->address >> 16) & 0xff,
+                            (xfer->address >> 8) & 0xff,
+                            xfer->address & 0xff);
+        }
         
         free (name);
     }

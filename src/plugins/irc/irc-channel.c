@@ -201,7 +201,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
         
         /* set highlights settings on channel buffer */
-        weechat_buffer_set (new_buffer, "highlight_words", server->nick);
+        weechat_buffer_set(new_buffer, "highlight_words_add", "$nick");
         if (weechat_config_string (irc_config_look_highlight_tags)
             && weechat_config_string (irc_config_look_highlight_tags)[0])
         {

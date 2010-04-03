@@ -258,14 +258,11 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
     
-    weechat_buffer_set (server->buffer, "highlight_words", nick);
-    
     /* set local variable "nick" for server and all channels/pv */
     weechat_buffer_set (server->buffer, "localvar_set_nick", nick);
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        weechat_buffer_set (ptr_channel->buffer, "highlight_words", nick);
         weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
     }
     
@@ -2359,8 +2356,7 @@ irc_server_create_buffer (struct t_irc_server *server)
         weechat_buffer_set (server->buffer, "input_get_unknown_commands", "1");
     
     /* set highlights settings on server buffer */
-    if (server->nick)
-        weechat_buffer_set (server->buffer, "highlight_words", server->nick);
+    weechat_buffer_set (server->buffer, "highlight_words_add", "$nick");
     if (weechat_config_string (irc_config_look_highlight_tags)
         && weechat_config_string (irc_config_look_highlight_tags)[0])
     {
