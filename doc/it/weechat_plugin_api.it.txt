@@ -7138,6 +7138,13 @@ Argomenti:
   separated list of words to highlight in this buffer, for example:
   "abc,def,ghi"
 
+| highlight_words_add | comma separated list of words |
+  comma separated list of words to highlight in this buffer, these words are
+  added to existing highlighted words in buffer
+
+| highlight_words_del | comma separated list of words |
+  comma separated list of words to remove from highlighted words on buffer
+
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer
 

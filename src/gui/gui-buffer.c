@@ -36,6 +36,7 @@
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
+#include "../core/wee-list.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -955,6 +956,148 @@ gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_buffer_set_highlight_words_list: set highlight words for a buffer with a
+ *                                      list
+ */
+
+void
+gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
+                                     struct t_weelist *list)
+{
+    struct t_weelist_item *ptr_list_item;
+    int length;
+    const char *ptr_string;
+    char *words;
+
+    /* compute length */
+    length = 0;
+    for (ptr_list_item = weelist_get (list, 0); ptr_list_item;
+         ptr_list_item = weelist_next (ptr_list_item))
+    {
+        ptr_string = weelist_string (ptr_list_item);
+        if (ptr_string)
+            length += strlen (ptr_string) + 1;
+    }
+    length += 2; /* '\n' + '\0' */
+    
+    /* allocate memory */
+    words = malloc (length);
+    if (!words)
+        return;
+    
+    /* build string */
+    words[0] = '\0';
+    for (ptr_list_item = weelist_get (list, 0); ptr_list_item;
+         ptr_list_item = weelist_next (ptr_list_item))
+    {
+        ptr_string = weelist_string (ptr_list_item);
+        if (ptr_string)
+        {
+            strcat (words, ptr_string);
+            if (weelist_next (ptr_list_item))
+                strcat (words, ",");
+        }
+    }
+    
+    gui_buffer_set_highlight_words (buffer, words);
+}
+
+/*
+ * gui_buffer_add_highlight_words: add highlight words for a buffer
+ */
+
+void
+gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
+                                const char *words_to_add)
+{
+    char **current_words, **add_words;
+    int current_count, add_count, i;
+    struct t_weelist *list;
+    
+    if (!words_to_add)
+        return;
+    
+    list = weelist_new ();
+    if (!list)
+        return;
+    
+    current_words = string_split (buffer->highlight_words, ",", 0, 0,
+                                  &current_count);
+    add_words = string_split (words_to_add, ",", 0, 0,
+                              &add_count);
+    
+    for (i = 0; i < current_count; i++)
+    {
+        if (!weelist_search (list, current_words[i]))
+            weelist_add (list, current_words[i], WEECHAT_LIST_POS_END, NULL);
+    }
+    for (i = 0; i < add_count; i++)
+    {
+        if (!weelist_search (list, add_words[i]))
+            weelist_add (list, add_words[i], WEECHAT_LIST_POS_END, NULL);
+    }
+    
+    gui_buffer_set_highlight_words_list (buffer, list);
+    
+    weelist_free (list);
+    
+    if (current_words)
+        string_free_split (current_words);
+    if (add_words)
+        string_free_split (add_words);
+}
+
+/*
+ * gui_buffer_remove_highlight_words: remove highlight words in a buffer
+ */
+
+void
+gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
+                                   const char *words_to_remove)
+{
+    char **current_words, **remove_words;
+    int current_count, remove_count, i, j, to_remove;
+    struct t_weelist *list;
+    
+    if (!words_to_remove)
+        return;
+    
+    list = weelist_new ();
+    if (!list)
+        return;
+    
+    current_words = string_split (buffer->highlight_words, ",", 0, 0,
+                                  &current_count);
+    remove_words = string_split (words_to_remove, ",", 0, 0,
+                                 &remove_count);
+    
+    for (i = 0; i < current_count; i++)
+    {
+        /* search if word is to be removed or not */
+        to_remove = 0;
+        for (j = 0; j < remove_count; j++)
+        {
+            if (strcmp (current_words[i], remove_words[j]) == 0)
+            {
+                to_remove = 1;
+                break;
+            }
+        }
+        if (!to_remove)
+            weelist_add (list, current_words[i], WEECHAT_LIST_POS_END, NULL);
+    }
+    
+    gui_buffer_set_highlight_words_list (buffer, list);
+    
+    weelist_free (list);
+    
+    if (current_words)
+        string_free_split (current_words);
+    if (remove_words)
+        string_free_split (remove_words);
+}
+
+/*
  * gui_buffer_set_highlight_tags: set highlight tags for a buffer
  */
 
@@ -1146,6 +1289,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "highlight_words") == 0)
     {
         gui_buffer_set_highlight_words (buffer, value);
+    }
+    else if (string_strcasecmp (property, "highlight_words_add") == 0)
+    {
+        gui_buffer_add_highlight_words (buffer, value);
+    }
+    else if (string_strcasecmp (property, "highlight_words_del") == 0)
+    {
+        gui_buffer_remove_highlight_words (buffer, value);
     }
     else if (string_strcasecmp (property, "highlight_tags") == 0)
     {

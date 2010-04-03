@@ -7168,6 +7168,14 @@ Paramètres :
   une liste de mots à mettre en valeur dans ce tampon, par exemple :
   "abc,def,ghi"
 
+| highlight_words_add | liste de mots séparés par des virgules |
+  liste de mots à mettre en valeur dans ce tampon, ces mots sont ajoutés aux
+  mots existants pour le tampon
+
+| highlight_words_del | liste de mots séparés par des virgules |
+  liste de mots à supprimer de la liste des mots à mettre en valeur dans ce
+  tampon
+
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   liste d'étiquettes ("tags") à mettre en valeur pour ce tampon
 
