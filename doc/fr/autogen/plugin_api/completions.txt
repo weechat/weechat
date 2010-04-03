@@ -54,6 +54,10 @@
 
 | weechat | bars_options | options pour les barres
 
+| weechat | buffer_properties_get | propriétés qui peuvent être lues sur un tampon
+
+| weechat | buffer_properties_set | propriétés qui peuvent être changées sur un tampon
+
 | weechat | buffers_names | noms des tampons
 
 | weechat | buffers_numbers | numéros des tampons

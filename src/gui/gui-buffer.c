@@ -68,6 +68,33 @@ int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
+char *gui_buffer_properties_get_integer[] =
+{ "number", "layout_number", "type", "notify", "num_displayed", "active",
+  "print_hooks_enabled", "lines_hidden", "prefix_max_length",
+  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
+  "nicklist_max_length", "nicklist_display_groups", "nicklist_visible_count",
+  "input", "input_get_unknown_commands", "input_size", "input_length",
+  "input_pos", "input_1st_display", "num_history", "text_search",
+  "text_search_exact", "text_search_found",
+  NULL
+};
+char *gui_buffer_properties_get_string[] =
+{ "plugin", "name", "short_name", "title", "input", "text_search_input",
+  "highlight_words", "highlight_tags",
+  NULL
+};
+char *gui_buffer_properties_get_pointer[] =
+{ "plugin",
+  NULL
+};
+char *gui_buffer_properties_set[] =
+{ "unread", "display", "print_hooks_enabled", "number", "name", "short_name",
+  "type", "notify", "title", "time_for_each_line", "nicklist",
+  "nicklist_case_sensitive", "nicklist_display_groups", "highlight_words",
+  "highlight_tags", "input", "input_pos", "input_get_unknown_commands",
+  NULL
+};
+
 
 /*
  * gui_buffer_find_pos: find position for buffer in list
@@ -637,6 +664,29 @@ gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
             ptr_buffer->plugin = plugin;
         }
     }
+}
+
+/*
+ * gui_buffer_property_in_list: return 1 if buffer property name is in a list
+ *                                     0 if property is not in list
+ */
+
+int
+gui_buffer_property_in_list (char *properties[], char *property)
+{
+    int i;
+    
+    if (!properties || !property)
+        return 0;
+    
+    for (i = 0; properties[i]; i++)
+    {
+        if (strcmp (properties[i], property) == 0)
+            return 1;
+    }
+    
+    /* property not found in list */
+    return 0;
 }
 
 /*

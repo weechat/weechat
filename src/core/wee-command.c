@@ -827,6 +827,54 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         
         return WEECHAT_RC_OK;
     }
+
+    /* get a buffer property */
+    if (string_strcasecmp (argv[1], "get") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "buffer");
+            return WEECHAT_RC_ERROR;
+        }
+        if (gui_buffer_property_in_list (gui_buffer_properties_get_integer,
+                                         argv[2]))
+        {
+            gui_chat_printf (NULL, "%s%s.%s%s: (int) %s = %d",
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             plugin_get_name (buffer->plugin),
+                             buffer->name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             argv[2],
+                             gui_buffer_get_integer (buffer, argv[2]));
+        }
+        if (gui_buffer_property_in_list (gui_buffer_properties_get_string,
+                                         argv[2]))
+        {
+            gui_chat_printf (NULL, "%s%s.%s%s: (str) %s = %s",
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             plugin_get_name (buffer->plugin),
+                             buffer->name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             argv[2],
+                             gui_buffer_get_string (buffer, argv[2]));
+        }
+        if (gui_buffer_property_in_list (gui_buffer_properties_get_pointer,
+                                         argv[2]))
+        {
+            gui_chat_printf (NULL, "%s%s.%s%s: (ptr) %s = 0x%lx",
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             plugin_get_name (buffer->plugin),
+                             buffer->name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             argv[2],
+                             gui_buffer_get_pointer (buffer, argv[2]));
+        }
+        return WEECHAT_RC_OK;
+    }
     
     /* relative jump '-' */
     if (argv[1][0] == '-')
@@ -4377,7 +4425,7 @@ command_init ()
                   N_("[clear [number | -merged | -all] | move number | "
                      "merge number | unmerge [number] | close [n1[-n2]] | "
                      "list | notify level | localvar | set property value | "
-                     "number | name]"),
+                     "get property | number | name]"),
                   N_("   clear: clear buffer content (number for a buffer, "
                      "-merged for merged buffers, -all for all buffers, or "
                      "nothing for current buffer)\n"
@@ -4402,6 +4450,7 @@ command_init ()
                      "              reset: reset to default value (all)\n"
                      "localvar: display local variables for current buffer\n"
                      "     set: set a property for current buffer\n"
+                     "     get: display a property of current buffer\n"
                      "  number: jump to buffer by number, possible prefix:\n"
                      "          '+': relative jump, add number to current\n"
                      "          '-': relative jump, sub number to current\n"
@@ -4433,7 +4482,8 @@ command_init ()
                   " || list"
                   " || notify reset|none|highlight|message|all"
                   " || localvar"
-                  " || set"
+                  " || set %(buffer_properties_set)"
+                  " || get %(buffer_properties_get)"
                   " || %(buffers_names)"
                   " || %(irc_channels)"
                   " || %(irc_privates)"

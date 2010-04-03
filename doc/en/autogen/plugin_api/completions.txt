@@ -54,6 +54,10 @@
 
 | weechat | bars_options | options for bars
 
+| weechat | buffer_properties_get | properties that can be read on a buffer
+
+| weechat | buffer_properties_set | properties that can be set on a buffer
+
 | weechat | buffers_names | names of buffers
 
 | weechat | buffers_numbers | numbers of buffers

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-31 23:38+0200\n"
+"POT-Creation-Date: 2010-04-03 12:50+0200\n"
 "PO-Revision-Date: 2010-03-23 10:20+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -875,7 +875,7 @@ msgstr "pufferek kezelése"
 msgid ""
 "[clear [number | -merged | -all] | move number | merge number | unmerge "
 "[number] | close [n1[-n2]] | list | notify level | localvar | set property "
-"value | number | name]"
+"value | get property | number | name]"
 msgstr ""
 
 #, fuzzy
@@ -898,6 +898,7 @@ msgid ""
 "              reset: reset to default value (all)\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
+"     get: display a property of current buffer\n"
 "  number: jump to buffer by number, possible prefix:\n"
 "          '+': relative jump, add number to current\n"
 "          '-': relative jump, sub number to current\n"
@@ -2328,6 +2329,14 @@ msgstr "puffer betöltése sikertelen"
 
 msgid "names of buffers (including plugins names)"
 msgstr ""
+
+#, fuzzy
+msgid "properties that can be set on a buffer"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "properties that can be read on a buffer"
+msgstr "puffer betöltése sikertelen"
 
 #, fuzzy
 msgid "configuration files"

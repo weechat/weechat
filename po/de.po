@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-03-31 23:38+0200\n"
+"POT-Creation-Date: 2010-04-03 12:50+0200\n"
 "PO-Revision-Date: 2010-03-29 22:38+0200\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -887,15 +887,17 @@ msgstr ""
 msgid "manage buffers"
 msgstr "Buffer verwalten"
 
+#, fuzzy
 msgid ""
 "[clear [number | -merged | -all] | move number | merge number | unmerge "
 "[number] | close [n1[-n2]] | list | notify level | localvar | set property "
-"value | number | name]"
+"value | get property | number | name]"
 msgstr ""
 "[clear [number | -merged | -all] | move number | merge number | unmerge "
 "[number] | close [n1[-n2]] | list | notify level | localvar | set property "
 "value | number | name]"
 
+#, fuzzy
 msgid ""
 "   clear: clear buffer content (number for a buffer, -merged for merged "
 "buffers, -all for all buffers, or nothing for current buffer)\n"
@@ -915,6 +917,7 @@ msgid ""
 "              reset: reset to default value (all)\n"
 "localvar: display local variables for current buffer\n"
 "     set: set a property for current buffer\n"
+"     get: display a property of current buffer\n"
 "  number: jump to buffer by number, possible prefix:\n"
 "          '+': relative jump, add number to current\n"
 "          '-': relative jump, sub number to current\n"
@@ -2563,6 +2566,14 @@ msgstr "Anzahl der Buffer"
 
 msgid "names of buffers (including plugins names)"
 msgstr "Liste der Buffer (inkl. der Erweiterungen)"
+
+#, fuzzy
+msgid "properties that can be set on a buffer"
+msgstr "Zeilen des Buffers"
+
+#, fuzzy
+msgid "properties that can be read on a buffer"
+msgstr "Zeilen des Buffers"
 
 msgid "configuration files"
 msgstr "Konfigurationsdateien"

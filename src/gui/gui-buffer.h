@@ -186,6 +186,10 @@ extern int gui_buffers_visited_index;
 extern int gui_buffers_visited_count;
 extern int gui_buffers_visited_frozen;
 extern char *gui_buffer_notify_string[];
+extern char *gui_buffer_properties_get_integer[];
+extern char *gui_buffer_properties_get_string[];
+extern char *gui_buffer_properties_get_pointer[];
+extern char *gui_buffer_properties_set[];
 
 /* buffer functions */
 
@@ -206,6 +210,7 @@ extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                   const char *string);
 extern void gui_buffer_set_plugin_for_upgrade (char *name,
                                                struct t_weechat_plugin *plugin);
+extern int gui_buffer_property_in_list (char *properties[], char *property);
 extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,
                                    const char *property);
 extern const char *gui_buffer_get_string (struct t_gui_buffer *buffer,

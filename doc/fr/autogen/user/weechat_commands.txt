@@ -53,7 +53,7 @@
       /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/buffer`* `[clear [nombre | -merged | -all] | move nombre | merge nombre | unmerge [nombre] | close [n1[-n2]] | list | notify niveau | localvar | set propriété valeur | nombre | nom]`::
+&bull; *`/buffer`* `[clear [nombre | -merged | -all] | move nombre | merge nombre | unmerge [nombre] | close [n1[-n2]] | list | notify niveau | localvar | set propriété valeur | get propriété | nombre | nom]`::
 
 ........................................
   gestion des tampons
@@ -73,6 +73,7 @@
                 reset: réinitialise à valeur par défaut (all)
   localvar: affiche la liste des variables locales pour le tampon courant
        set: modifier une propriété du tampon courant
+       get: afficher une propriété du tampon courant
     nombre: saute au tampon qui a ce numéro, préfixe possible:
             '+': saut relatif, ajoute le numéro au courant,
             '-': saut relatif, soustrait le numéro au courant,

@@ -53,7 +53,7 @@
       /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/buffer`* `[clear [number | -merged | -all] | move number | merge number | unmerge [number] | close [n1[-n2]] | list | notify level | localvar | set property value | number | name]`::
+&bull; *`/buffer`* `[clear [number | -merged | -all] | move number | merge number | unmerge [number] | close [n1[-n2]] | list | notify level | localvar | set property value | get property | number | name]`::
 
 ........................................
   manage buffers
@@ -73,6 +73,7 @@
                 reset: reset to default value (all)
   localvar: display local variables for current buffer
        set: set a property for current buffer
+       get: display a property of current buffer
     number: jump to buffer by number, possible prefix:
             '+': relative jump, add number to current
             '-': relative jump, sub number to current

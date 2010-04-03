@@ -499,6 +499,76 @@ gui_completion_list_add_buffers_plugins_names_cb (void *data,
 }
 
 /*
+ * gui_completion_list_add_buffer_properties_set_cb: add buffer properties
+ *                                                   (that can be set) to
+ *                                                   completion list
+ */
+
+int
+gui_completion_list_add_buffer_properties_set_cb (void *data,
+                                                  const char *completion_item,
+                                                  struct t_gui_buffer *buffer,
+                                                  struct t_gui_completion *completion)
+{
+    int i;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (i = 0; gui_buffer_properties_set[i]; i++)
+    {
+        gui_completion_list_add (completion,
+                                 gui_buffer_properties_set[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * gui_completion_list_add_buffer_properties_get_cb: add buffer properties
+ *                                                   (that can be read) to
+ *                                                   completion list
+ */
+
+int
+gui_completion_list_add_buffer_properties_get_cb (void *data,
+                                                  const char *completion_item,
+                                                  struct t_gui_buffer *buffer,
+                                                  struct t_gui_completion *completion)
+{
+    int i;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (i = 0; gui_buffer_properties_get_integer[i]; i++)
+    {
+        gui_completion_list_add (completion,
+                                 gui_buffer_properties_get_integer[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    for (i = 0; gui_buffer_properties_get_string[i]; i++)
+    {
+        gui_completion_list_add (completion,
+                                 gui_buffer_properties_get_string[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    for (i = 0; gui_buffer_properties_get_pointer[i]; i++)
+    {
+        gui_completion_list_add (completion,
+                                 gui_buffer_properties_get_pointer[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * gui_completion_list_add_config_files_cb: add config files to completion list
  */
 
@@ -2210,55 +2280,61 @@ gui_completion_print_log (struct t_gui_completion *completion)
 void
 gui_completion_init ()
 {
-    hook_completion (NULL, "buffers_names", /* it was %b */
+    hook_completion (NULL, "buffers_names", /* formerly "%b" */
                      N_("names of buffers"),
                      &gui_completion_list_add_buffers_names_cb, NULL);
     hook_completion (NULL, "buffers_numbers",
                      N_("numbers of buffers"),
                      &gui_completion_list_add_buffers_numbers_cb, NULL);
-    hook_completion (NULL, "buffers_plugins_names", /* it was %B */
+    hook_completion (NULL, "buffers_plugins_names", /* formerly "%B" */
                      N_("names of buffers (including plugins names)"),
                      &gui_completion_list_add_buffers_plugins_names_cb, NULL);
-    hook_completion (NULL, "config_files", /* it was %c */
+    hook_completion (NULL, "buffer_properties_set",
+                     N_("properties that can be set on a buffer"),
+                     &gui_completion_list_add_buffer_properties_set_cb, NULL);
+    hook_completion (NULL, "buffer_properties_get",
+                     N_("properties that can be read on a buffer"),
+                     &gui_completion_list_add_buffer_properties_get_cb, NULL);
+    hook_completion (NULL, "config_files", /* formerly "%c" */
                      N_("configuration files"),
                      &gui_completion_list_add_config_files_cb, NULL);
-    hook_completion (NULL, "filename", /* it was %f */
+    hook_completion (NULL, "filename", /* formerly "%f" */
                      N_("filename"),
                      &gui_completion_list_add_filename_cb, NULL);
-    hook_completion (NULL, "filters_names", /* it was %F */
+    hook_completion (NULL, "filters_names", /* formerly "%F" */
                      N_("names of filters"),
                      &gui_completion_list_add_filters_cb, NULL);
-    hook_completion (NULL, "commands", /* it was %h */
+    hook_completion (NULL, "commands", /* formerly "%h" */
                      N_("commands (weechat and plugins)"),
                      &gui_completion_list_add_commands_cb, NULL);
-    hook_completion (NULL, "infos", /* it was %i */
+    hook_completion (NULL, "infos", /* formerly "%i" */
                      N_("names of infos hooked"),
                      &gui_completion_list_add_infos_cb, NULL);
-    hook_completion (NULL, "infolists", /* it was %I */
+    hook_completion (NULL, "infolists", /* formerly "%I" */
                      N_("names of infolists hooked"),
                      &gui_completion_list_add_infolists_cb, NULL);
-    hook_completion (NULL, "nicks", /* it was %n */
+    hook_completion (NULL, "nicks", /* formerly "%n" */
                      N_("nicks in nicklist of current buffer"),
                      &gui_completion_list_add_nicks_cb, NULL);
-    hook_completion (NULL, "config_options", /* it was %o */
+    hook_completion (NULL, "config_options", /* formerly "%o" */
                      N_("configuration options"),
                      &gui_completion_list_add_config_options_cb, NULL);
-    hook_completion (NULL, "plugins_names", /* it was %p */
+    hook_completion (NULL, "plugins_names", /* formerly "%p" */
                      N_("names of plugins"),
                      &gui_completion_list_add_plugins_cb, NULL);
-    hook_completion (NULL, "plugins_commands", /* it was %P */
+    hook_completion (NULL, "plugins_commands", /* formerly "%P" */
                      N_("commands defined by plugins"),
                      &gui_completion_list_add_plugins_commands_cb, NULL);
-    hook_completion (NULL, "bars_names", /* it was %r */
+    hook_completion (NULL, "bars_names", /* formerly "%r" */
                      N_("names of bars"),
                      &gui_completion_list_add_bars_names_cb, NULL);
-    hook_completion (NULL, "config_option_values", /* it was %v */
+    hook_completion (NULL, "config_option_values", /* formerly "%v" */
                      N_("values for a configuration option"),
                      &gui_completion_list_add_config_option_values_cb, NULL);
-    hook_completion (NULL, "weechat_commands", /* it was %w */
+    hook_completion (NULL, "weechat_commands", /* formerly "%w" */
                      N_("weechat commands"),
                      &gui_completion_list_add_weechat_commands_cb, NULL);
-    hook_completion (NULL, "proxies_names", /* it was %y */
+    hook_completion (NULL, "proxies_names", /* formerly "%y" */
                      N_("names of proxies"),
                      &gui_completion_list_add_proxies_names_cb, NULL);
     hook_completion (NULL, "proxies_options",
