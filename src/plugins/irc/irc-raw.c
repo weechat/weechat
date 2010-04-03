@@ -65,6 +65,9 @@ void
 irc_raw_open (int switch_to_buffer)
 {
     struct t_irc_raw_message *ptr_raw_message;
+    int buffer_created;
+    
+    buffer_created = 0;
     
     if (!irc_raw_buffer)
     {
@@ -75,22 +78,26 @@ irc_raw_open (int switch_to_buffer)
             irc_raw_buffer = weechat_buffer_new (IRC_RAW_BUFFER_NAME,
                                                  &irc_input_data_cb, NULL,
                                                  &irc_buffer_close_cb, NULL);
+            buffer_created = 1;
             
             /* failed to create buffer ? then return */
             if (!irc_raw_buffer)
                 return;
-            
-            weechat_buffer_set (irc_raw_buffer,
-                                "title", _("IRC raw messages"));
-            
-            weechat_buffer_set (irc_raw_buffer, "short_name", IRC_RAW_BUFFER_NAME);
-            weechat_buffer_set (irc_raw_buffer, "localvar_set_type", "debug");
-            weechat_buffer_set (irc_raw_buffer, "localvar_set_server", IRC_RAW_BUFFER_NAME);
-            weechat_buffer_set (irc_raw_buffer, "localvar_set_channel", IRC_RAW_BUFFER_NAME);
-            weechat_buffer_set (irc_raw_buffer, "localvar_set_no_log", "1");
-            
-            /* disable all highlights on this debug buffer */
-            weechat_buffer_set (irc_raw_buffer, "highlight_words", "-");
+
+            if (buffer_created)
+            {
+                weechat_buffer_set (irc_raw_buffer,
+                                    "title", _("IRC raw messages"));
+                
+                weechat_buffer_set (irc_raw_buffer, "short_name", IRC_RAW_BUFFER_NAME);
+                weechat_buffer_set (irc_raw_buffer, "localvar_set_type", "debug");
+                weechat_buffer_set (irc_raw_buffer, "localvar_set_server", IRC_RAW_BUFFER_NAME);
+                weechat_buffer_set (irc_raw_buffer, "localvar_set_channel", IRC_RAW_BUFFER_NAME);
+                weechat_buffer_set (irc_raw_buffer, "localvar_set_no_log", "1");
+                
+                /* disable all highlights on this debug buffer */
+                weechat_buffer_set (irc_raw_buffer, "highlight_words", "-");
+            }
             
             if (switch_to_buffer)
                 weechat_buffer_set (irc_raw_buffer, "display", "1");
