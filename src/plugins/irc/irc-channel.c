@@ -197,8 +197,11 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                                   WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
         if (weechat_config_boolean (irc_config_network_send_unknown_commands))
             weechat_buffer_set (new_buffer, "input_get_unknown_commands", "1");
-        weechat_buffer_set (new_buffer, "nicklist", "1");
-        weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
+        if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
+        {
+            weechat_buffer_set (new_buffer, "nicklist", "1");
+            weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
+        }
         
         /* set highlights settings on channel buffer */
         weechat_buffer_set(new_buffer, "highlight_words_add", "$nick");
