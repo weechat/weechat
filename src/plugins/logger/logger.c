@@ -942,13 +942,20 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         if (pos_message)
         {
             if (datetime != 0)
-                weechat_printf_date (buffer, datetime, "%s", pos_message + 1);
+            {
+                weechat_printf_date_tags (buffer, datetime, "no_highlight",
+                                          "%s", pos_message + 1);
+            }
             else
-                weechat_printf (buffer, "%s", ptr_lines->data);
+            {
+                weechat_printf_tags (buffer, "no_highlight",
+                                     "%s", ptr_lines->data);
+            }
         }
         else
         {
-            weechat_printf (buffer, "%s", ptr_lines->data);
+            weechat_printf_tags (buffer, "no_highlight",
+                                 "%s", ptr_lines->data);
         }
         num_lines++;
         ptr_lines = ptr_lines->next_line;
