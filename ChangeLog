@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-03-31
+v0.3.2-dev, 2010-04-05
 
 
 Version 0.3.2 (under dev!)
@@ -74,6 +74,7 @@ Version 0.3.2 (under dev!)
 * irc: bug with prefix "!" for mode "a" (channel admin) (bug #29109)
 * irc: do not send signals "irc_in" and "irc_in2" when messages are ignored,
   add new signals "irc_raw_in" and "irc_raw_in2"
+* irc: add option "-open" for command /connect
 * irc: add option irc.network.connection_timeout (timeout between TCP connection
   to server and reception of message 001)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit

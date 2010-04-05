@@ -50,12 +50,13 @@
   nickname: user or host to ban
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
+&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
 
 ........................................
   connect to IRC server(s)
 
-        -all: connect to all servers
+        -all: connect to all servers defined in configuration
+       -open: connect to all opened servers that are not currently connected
   servername: internal server name to connect (server must have been created by /server add)
      -nojoin: do not join any channel (even if autojoin is enabled on server)
     hostname: hostname (or IP) of a server

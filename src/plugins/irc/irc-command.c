@@ -698,7 +698,7 @@ int
 irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    int i, nb_connect, connect_ok, all_servers, no_join;
+    int i, nb_connect, connect_ok, all_servers, all_opened, no_join;
     char *name;
     
     IRC_BUFFER_GET_SERVER(buffer);
@@ -711,27 +711,44 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
     connect_ok = 1;
     
     all_servers = 0;
+    all_opened = 0;
     no_join = 0;
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-all") == 0)
             all_servers = 1;
-        if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
+        else if (weechat_strcasecmp (argv[i], "-open") == 0)
+            all_opened = 1;
+        else if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
             no_join = 1;
     }
     
-    if (all_servers)
+    if (all_opened)
     {
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            nb_connect++;
+            if (ptr_server->buffer
+                && !ptr_server->is_connected && (!ptr_server->hook_connect))
+            {
+                if (!irc_command_connect_one_server (ptr_server, no_join))
+                    connect_ok = 0;
+            }
+        }
+        return (connect_ok) ? WEECHAT_RC_OK : WEECHAT_RC_ERROR;
+    }
+    else if (all_servers)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
             if (!ptr_server->is_connected && (!ptr_server->hook_connect))
             {
                 if (!irc_command_connect_one_server (ptr_server, no_join))
                     connect_ok = 0;
             }
         }
+        return (connect_ok) ? WEECHAT_RC_OK : WEECHAT_RC_ERROR;
     }
     else
     {
@@ -4226,10 +4243,13 @@ irc_command_init ()
                           "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command ("connect",
                           N_("connect to IRC server(s)"),
-                          N_("[-all [-nojoin] | servername [servername ...] "
-                             "[-nojoin] | hostname[/port] [-option[=value]] "
-                             "[-nooption]]"),
-                          N_("      -all: connect to all servers\n"
+                          N_("[-all [-nojoin] | -open [-nojoin] | servername "
+                             "[servername ...] [-nojoin] | hostname[/port] "
+                             "[-option[=value]] [-nooption]]"),
+                          N_("      -all: connect to all servers defined in "
+                             "configuration\n"
+                             "     -open: connect to all opened servers that "
+                             "are not currently connected\n"
                              "servername: internal server name to connect "
                              "(server must have been created by /server add)\n"
                              "   -nojoin: do not join any channel (even if "
@@ -4246,7 +4266,7 @@ irc_command_init ()
                              "  /connect irc6.oftc.net/6667 -ipv6\n"
                              "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
                              "  /connect my.server.org/6697 -ssl -password=test"),
-                          "-all -nojoin"
+                          "-all|-open -nojoin"
                           " || %(irc_servers)|%*",
                           &irc_command_connect, NULL);
     weechat_hook_command ("ctcp",
