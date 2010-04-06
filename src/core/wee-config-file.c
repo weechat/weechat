@@ -1926,7 +1926,7 @@ config_file_write_internal (struct t_config_file *config_file,
         goto error;
     }
     
-    /* write header with version and date */
+    /* write header with name of config file and WeeChat version */
     if (!string_iconv_fprintf (config_file->file, "#\n"))
         goto error;
     if (!string_iconv_fprintf (config_file->file,
