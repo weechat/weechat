@@ -6129,7 +6129,7 @@ Arguments:
   "1" to display bar, "0" to hide it
 
 | weechat | history_add |
-  - |
+  string with buffer pointer ("0x123..") |
   input buffer (from user) added to command history (buffer and global) |
   string added to command history
 

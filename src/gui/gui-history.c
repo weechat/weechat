@@ -142,10 +142,12 @@ gui_history_global_add (const char *string)
 void
 gui_history_add (struct t_gui_buffer *buffer, const char *string)
 {
-    char *string2;
+    char *string2, str_buffer[128];
     
-    string2 = hook_modifier_exec (NULL, "history_add", NULL, string);
-
+    snprintf (str_buffer, sizeof (str_buffer),
+              "0x%lx", (long unsigned int)(buffer));
+    string2 = hook_modifier_exec (NULL, "history_add", str_buffer, string);
+    
     /*
      * if message was NOT dropped by modifier, then we add it to buffer and
      * global history

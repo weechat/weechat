@@ -6194,7 +6194,7 @@ Argomenti:
   "1" per visualizzare la barra, "0" per nasconderla
 
 | weechat | history_add |
-  - |
+  stringa con puntatore al buffer ("0x123..") |
   input buffer (from user) added to command history (buffer and global) |
   string added to command history
 

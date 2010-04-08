@@ -6211,7 +6211,7 @@ Paramètres :
   "1" pour afficher la barre, "0" pour la cacher
 
 | weechat | history_add |
-  - |
+  chaîne avec un pointeur vers le tampon ("0x123..") |
   chaîne saisie par l'utilisateur ajoutée à l'historique des commandes (tampon
   et global) |
   chaîne ajoutée à l'historique des commandes
