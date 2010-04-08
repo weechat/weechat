@@ -294,9 +294,8 @@ gui_input_return (struct t_gui_window *window)
             command = strdup (window->buffer->input_buffer);
             if (command)
             {
-                gui_history_buffer_add (window->buffer,
-                                        window->buffer->input_buffer);
-                gui_history_global_add (window->buffer->input_buffer);
+                gui_history_add (window->buffer,
+                                 window->buffer->input_buffer);
                 window->buffer->input_buffer[0] = '\0';
                 window->buffer->input_buffer_size = 0;
                 window->buffer->input_buffer_length = 0;
@@ -922,8 +921,8 @@ gui_input_history_previous (struct t_gui_window *window)
                     if (window->buffer->input_buffer_size > 0)
                     {
                         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                        gui_history_buffer_add (window->buffer, window->buffer->input_buffer);
-                        gui_history_global_add (window->buffer->input_buffer);
+                        gui_history_add (window->buffer,
+                                         window->buffer->input_buffer);
                     }
                 }
                 else
@@ -1002,8 +1001,8 @@ gui_input_history_next (struct t_gui_window *window)
                 if (window->buffer->input_buffer_size > 0)
                 {
                     window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    gui_history_buffer_add (window->buffer, window->buffer->input_buffer);
-                    gui_history_global_add (window->buffer->input_buffer);
+                    gui_history_add (window->buffer,
+                                     window->buffer->input_buffer);
                     window->buffer->input_buffer[0] = '\0';
                     window->buffer->input_buffer_size = 0;
                     window->buffer->input_buffer_length = 0;

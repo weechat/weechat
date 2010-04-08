@@ -28,6 +28,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-string.h"
 #include "gui-history.h"
@@ -60,9 +61,6 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
         if (new_history)
         {
             new_history->text = strdup (string);
-            /*if (config_log_hide_nickserv_pwd)
-              irc_display_hide_password (new_history->text, 1);*/
-
             if (buffer->history)
                 buffer->history->prev_history = new_history;
             else
@@ -71,7 +69,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
             new_history->prev_history = NULL;
             buffer->history = new_history;
             buffer->num_history++;
-
+            
             /* remove one command if necessary */
             if ((CONFIG_INTEGER(config_history_max_commands) > 0)
                 && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
@@ -91,7 +89,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * history_global_add: add a text/command to buffer's history
+ * history_global_add: add a text/command to global history
  */
 
 void
@@ -110,9 +108,6 @@ gui_history_global_add (const char *string)
         if (new_history)
         {
             new_history->text = strdup (string);
-            /*if (config_log_hide_nickserv_pwd)
-              irc_display_hide_password (new_history->text, 1);*/
-
             if (history_global)
                 history_global->prev_history = new_history;
             else
@@ -121,7 +116,7 @@ gui_history_global_add (const char *string)
             new_history->prev_history = NULL;
             history_global = new_history;
             num_history_global++;
-
+            
             /* remove one command if necessary */
             if ((CONFIG_INTEGER(config_history_max_commands) > 0)
                 && (num_history_global > CONFIG_INTEGER(config_history_max_commands)))
@@ -138,6 +133,31 @@ gui_history_global_add (const char *string)
             }
         }
     }
+}
+
+/*
+ * gui_history_add: add a text/command to buffer's history + global history
+ */
+
+void
+gui_history_add (struct t_gui_buffer *buffer, const char *string)
+{
+    char *string2;
+    
+    string2 = hook_modifier_exec (NULL, "history_add", NULL, string);
+
+    /*
+     * if message was NOT dropped by modifier, then we add it to buffer and
+     * global history
+     */
+    if (!string2 || string2[0])
+    {
+        gui_history_buffer_add (buffer, (string2) ? string2 : string);
+        gui_history_global_add ((string2) ? string2 : string);
+    }
+    
+    if (string2)
+        free (string2);
 }
 
 /*
