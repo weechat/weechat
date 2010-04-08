@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* logger-config.c: logger configuration options */
+/*
+ * logger-config.c: logger configuration options (file logger.conf)
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-completion.c: completion for IRC commands */
+/*
+ * irc-completion.c: completion for IRC commands
+ */
 
 
 #include <stdlib.h>

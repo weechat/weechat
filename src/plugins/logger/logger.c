@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* logger.c: Logger plugin for WeeChat */
+/*
+ * logger.c: logger plugin for WeeChat: save buffer lines to disk files
+ */
 
 
 #ifndef _GNU_SOURCE

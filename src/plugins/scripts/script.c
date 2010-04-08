@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* script.c: script interface for WeeChat plugins */
+/*
+ * script.c: common functions used by script plugins (perl/python/..)
+ */
 
 
 #include <stdlib.h>

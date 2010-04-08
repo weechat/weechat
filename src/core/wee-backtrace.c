@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-backtrace.c: display backtrace after a segfault */
+/*
+ * wee-backtrace.c: display backtrace after a segfault
+ */
 
 
 #ifdef HAVE_CONFIG_H

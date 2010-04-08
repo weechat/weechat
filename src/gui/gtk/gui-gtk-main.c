@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-main.c: main loop for Gtk GUI */
+/*
+ * gui-gtk-main.c: main loop for Gtk GUI
+ */
 
 
 #ifdef HAVE_CONFIG_H

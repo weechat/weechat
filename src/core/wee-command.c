@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-command.c: WeeChat commands */
+/*
+ * wee-command.c: WeeChat core commands
+ */
 
 
 #ifdef HAVE_CONFIG_H

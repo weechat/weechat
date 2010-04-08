@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-aspell.c: aspell plugin for WeeChat */
+/*
+ * weechat-aspell.c: aspell plugin for WeeChat: use color to show mispelled
+ *                   words in input line
+ */
 
 
 #include <stdio.h>

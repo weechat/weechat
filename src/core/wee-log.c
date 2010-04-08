@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-log.c: WeeChat log file */
+/*
+ * wee-log.c: WeeChat log file
+ */
 
 
 #ifdef HAVE_CONFIG_H

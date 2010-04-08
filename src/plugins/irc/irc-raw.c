@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-raw.c: functions for IRC raw data messages */
+/*
+ * irc-raw.c: functions for IRC raw data messages
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-bar-item.c: bar item functions, used by all GUI */
+/*
+ * gui-bar-item.c: bar item functions (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

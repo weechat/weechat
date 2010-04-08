@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-upgrade.c: save/restore session data */
+/*
+ * wee-upgrade.c: save/restore session data of WeeChat core
+ *                (buffers, command history, hotlist, uptime)
+ */
 
 
 #ifdef HAVE_CONFIG_H

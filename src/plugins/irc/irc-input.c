@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-input.c: IRC input data (read from user) */
+/*
+ * irc-input.c: input data management for IRC buffers
+ */
 
 
 #include <stdlib.h>

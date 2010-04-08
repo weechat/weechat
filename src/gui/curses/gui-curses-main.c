@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-curses-main.c: main loop for Curses GUI */
+/*
+ * gui-curses-main.c: main loop for Curses GUI
+ */
 
 
 #ifdef HAVE_CONFIG_H

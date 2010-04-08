@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-client.c: client functions for relay plugin */
+/*
+ * relay-client.c: client functions for relay plugin
+ */
 
 
 #include <stdlib.h>

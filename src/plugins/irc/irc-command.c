@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-command.c: IRC commands */
+/*
+ * irc-command.c: IRC commands
+ */
 
 
 #include <stdlib.h>

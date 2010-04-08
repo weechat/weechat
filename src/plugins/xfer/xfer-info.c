@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-info.c: info and infolist hooks for xfer plugin */
+/*
+ * xfer-info.c: info and infolist hooks for xfer plugin
+ */
 
 
 #include <stdlib.h>

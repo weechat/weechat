@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-perl-api.c: Perl API functions */
+/*
+ * weechat-perl-api.c: perl API functions
+ */
 
 
 #undef _

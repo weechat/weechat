@@ -31,7 +31,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat.c: core functions for WeeChat */
+/*
+ * weechat.c: core functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

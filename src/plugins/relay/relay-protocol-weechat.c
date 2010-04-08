@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-protocol-weechat.c: WeeChat protocol for client */
+/*
+ * relay-protocol-weechat.c: WeeChat protocol for relay to client
+ */
 
 
 #include <stdlib.h>

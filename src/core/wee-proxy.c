@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-proxy.c: proxy functions */
+/*
+ * wee-proxy.c: proxy functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-ruby-api.c: Ruby API functions */
+/*
+ * weechat-ruby-api.c: ruby API functions
+ */
 
 
 #undef _

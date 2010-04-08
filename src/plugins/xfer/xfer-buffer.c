@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-buffer.c: display xfer list on xfer buffer */
+/*
+ * xfer-buffer.c: display xfer list on xfer buffer
+ */
 
 
 #include <stdlib.h>

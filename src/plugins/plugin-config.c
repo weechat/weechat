@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* plugin-config.c: plugin configuration */
+/*
+ * plugin-config.c: plugin configuration options (file plugins.conf)
+ */
 
 
 #ifdef HAVE_CONFIG_H

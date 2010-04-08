@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-hotlist.c: hotlist management (buffers with activity) */
+/*
+ * gui-hotlist.c: hotlist management (list of buffers with activity)
+ *                (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-completion.c: nick completion for xfer chats */
+/*
+ * xfer-completion.c: nick completion for xfer chats
+ */
 
 
 #include <stdlib.h>

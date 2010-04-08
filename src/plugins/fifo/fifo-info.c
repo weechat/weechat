@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* fifo-info.c: info and infolist hooks for fifo plugin */
+/*
+ * fifo-info.c: info and infolist hooks for fifo plugin
+ */
 
 
 #include <stdlib.h>

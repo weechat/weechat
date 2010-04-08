@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* demo.c: demo plugin for WeeChat */
+/*
+ * demo.c: demo plugin for WeeChat
+ */
 
 
 #include <stdlib.h>

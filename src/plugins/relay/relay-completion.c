@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-completion.c: completion for relay command */
+/*
+ * relay-completion.c: completion for relay command
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-config.c: relay configuration options */
+/*
+ * relay-config.c: relay configuration options (file relay.conf)
+ */
 
 
 #include <stdlib.h>

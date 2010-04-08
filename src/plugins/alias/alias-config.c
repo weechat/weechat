@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* alias-config.c: alias configuration options */
+/*
+ * alias-config.c: alias configuration options (file alias.conf)
+ */
 
 
 #include <stdlib.h>

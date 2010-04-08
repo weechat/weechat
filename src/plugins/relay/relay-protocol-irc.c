@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-protocol-irc.c: IRC protocol for client (relay acting as an IRC proxy/bouncer) */
+/*
+ * relay-protocol-irc.c: IRC protocol for relay to client
+ *                       (relay acting as an IRC proxy/bouncer)
+ */
 
 
 #include <stdlib.h>

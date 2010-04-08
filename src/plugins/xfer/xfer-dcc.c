@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-dcc.c: file transfer via DCC protocol */
+/*
+ * xfer-dcc.c: file transfer via DCC protocol
+ */
 
 
 #include <stdlib.h>

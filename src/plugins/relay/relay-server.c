@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-server.c: server functions for relay plugin */
+/*
+ * relay-server.c: server functions for relay plugin
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* fifo.c: FIFO pipe plugin for WeeChat remote control */
+/*
+ * fifo.c: fifo plugin for WeeChat: remote control with FIFO pipe
+ */
 
 
 #include <stdlib.h>

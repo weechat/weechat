@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-upgrade.c: save/restore xfer plugin data */
+/*
+ * xfer-upgrade.c: save/restore xfer plugin data when upgrading WeeChat
+ */
 
 
 #include <stdlib.h>

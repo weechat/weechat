@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-list.c: sorted lists management */
+/*
+ * wee-list.c: sorted lists management
+ */
 
 
 #ifdef HAVE_CONFIG_H

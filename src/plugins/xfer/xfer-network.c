@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-network.c: network functions for xfer plugin */
+/*
+ * xfer-network.c: network functions for xfer plugin
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* logger-buffer.c: manages logger buffer list */
+/*
+ * logger-buffer.c: logger buffer list management
+ */
 
 
 #ifdef HAVE_CONFIG_H

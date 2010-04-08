@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-config.c: WeeChat configuration options */
+/*
+ * wee-config.c: WeeChat configuration options (file weechat.conf)
+ */
 
 
 #ifdef HAVE_CONFIG_H

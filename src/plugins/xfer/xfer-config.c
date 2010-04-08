@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-config.c: xfer configuration options */
+/*
+ * xfer-config.c: xfer configuration options (file xfer.conf)
+ */
 
 
 #include <stdlib.h>

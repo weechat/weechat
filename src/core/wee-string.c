@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-string.c: string functions for WeeChat */
+/*
+ * wee-string.c: string functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

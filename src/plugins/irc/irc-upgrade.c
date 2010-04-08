@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-upgrade.c: save/restore IRC plugin data */
+/*
+ * irc-upgrade.c: save/restore IRC plugin data when upgrading WeeChat
+ */
 
 
 #include <stdio.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-hook.c: WeeChat hooks management */
+/*
+ * wee-hook.c: WeeChat hooks management
+ */
 
 
 #ifdef HAVE_CONFIG_H

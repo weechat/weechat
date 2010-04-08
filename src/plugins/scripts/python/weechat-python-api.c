@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-python-api.c: Python API functions */
+/*
+ * weechat-python-api.c: python API functions
+ */
 
 
 #undef _

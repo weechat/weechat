@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-command.c: relay command */
+/*
+ * relay-command.c: relay command
+ */
 
 
 #include <stdlib.h>

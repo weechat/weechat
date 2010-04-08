@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-debug.c: debug functions for IRC plugin */
+/*
+ * irc-debug.c: debug functions for IRC plugin
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* plugin.c: manages WeeChat plugins (dynamic C libraries) */
+/*
+ * plugin.c: WeeChat plugins management (load/unload dynamic C libraries)
+ */
 
 
 #ifdef HAVE_CONFIG_H

@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-protocol.c: implementation of IRC protocol, according to RFC 1459, 2810, 2811 2812 */
+/*
+ * irc-protocol.c: implementation of IRC protocol,
+ *                 according to RFC 1459, 2810, 2811 and 2812
+ */
 
 
 #ifndef __USE_XOPEN

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-chat.c: chat functions, used by all GUI */
+/*
+ * gui-chat.c: chat functions (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

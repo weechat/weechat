@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-lua-api.c: Lua API functions */
+/*
+ * weechat-lua-api.c: lua API functions
+ */
 
 
 #undef _

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-upgrade-file.c: save/restore data for upgrading WeeChat */
+/*
+ * wee-upgrade-file.c: save/restore data for upgrading WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

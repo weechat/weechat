@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-ctcp.c: IRC CTCP protocol */
+/*
+ * irc-ctcp.c: IRC CTCP protocol
+ */
 
 
 #include <stdlib.h>

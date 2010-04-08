@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-bar-window.c: bar window functions for Gtk GUI */
+/*
+ * gui-gtk-bar-window.c: bar window functions for Gtk GUI
+ */
 
 
 #ifdef HAVE_CONFIG_H

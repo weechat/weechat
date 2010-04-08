@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-tcl.c: Tcl plugin for WeeChat */
+/*
+ * weechat-tcl.c: tcl plugin for WeeChat
+ */
 
 
 #undef _

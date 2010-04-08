@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-config-file.c: manages options in configuration files */
+/*
+ * wee-config-file.c: configuration files/sections/options management
+ */
 
 
 #ifdef HAVE_CONFIG_H

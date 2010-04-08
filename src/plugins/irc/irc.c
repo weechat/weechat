@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc.c: IRC plugin for WeeChat */
+/*
+ * irc.c: IRC (Internet Relay Chat) plugin for WeeChat
+ */
 
 
 #include <stdlib.h>

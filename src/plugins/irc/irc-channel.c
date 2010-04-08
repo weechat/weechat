@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-channel.c: manages a chat (channel or private chat) for IRC plugin */
+/*
+ * irc-channel.c: channel and private chat management for IRC plugin
+ */
 
 
 #include <stdlib.h>

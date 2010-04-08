@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-util.c: some useful functions for WeeChat */
+/*
+ * wee-util.c: some useful functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

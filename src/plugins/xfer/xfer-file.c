@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-file.c: file functions for xfer plugin */
+/*
+ * xfer-file.c: file functions for xfer plugin
+ */
 
 
 #include <stdlib.h>

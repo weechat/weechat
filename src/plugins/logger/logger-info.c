@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* logger-info.c: info and infolist hooks for logger plugin */
+/*
+ * logger-info.c: info and infolist hooks for logger plugin
+ */
 
 
 #include <stdlib.h>

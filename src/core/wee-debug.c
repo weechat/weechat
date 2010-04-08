@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-debug.c: some debug functions for WeeChat */
+/*
+ * wee-debug.c: debug functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

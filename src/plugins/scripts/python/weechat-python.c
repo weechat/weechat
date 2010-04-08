@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-python.c: Python plugin for WeeChat */
+/*
+ * weechat-python.c: python plugin for WeeChat
+ */
 
 
 #undef _

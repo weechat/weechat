@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-history.c: memorize commands or text for buffers */
+/*
+ * gui-history.c: memorize commands or text for buffers (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

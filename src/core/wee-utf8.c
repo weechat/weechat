@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-utf8.c: UTF-8 string functions for WeeChat */
+/*
+ * wee-utf8.c: UTF-8 string functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

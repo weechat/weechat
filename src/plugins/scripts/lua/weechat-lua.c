@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-lua.c: Lua plugin for WeeChat */
+/*
+ * weechat-lua.c: lua plugin for WeeChat
+ */
 
 
 #undef _

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-server.c: connection and I/O communication with IRC server */
+/*
+ * irc-server.c: I/O communication with IRC servers
+ */
 
 
 #include <stdlib.h>

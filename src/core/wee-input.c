@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-input.c: default callback function to read user input */
+/*
+ * wee-input.c: default callback function to read user input
+ */
 
 
 #ifdef HAVE_CONFIG_H

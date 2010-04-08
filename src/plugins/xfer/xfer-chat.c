@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-chat.c: chat with direct connection to remote host */
+/*
+ * xfer-chat.c: chat with direct connection to remote host
+ */
 
 
 #include <stdlib.h>

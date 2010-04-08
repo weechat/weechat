@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-aspell-speller.c: speller management for aspell plugin */
+/*
+ * weechat-aspell-speller.c: speller management for aspell plugin
+ */
 
 
 #include <stdlib.h>

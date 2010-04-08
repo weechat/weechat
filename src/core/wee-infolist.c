@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-infolist.c: manages info lists */
+/*
+ * wee-infolist.c: info lists management
+ */
 
 
 #ifdef HAVE_CONFIG_H

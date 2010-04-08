@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-ignore.c: manages ignore list (nicks/hosts) on IRC servers/channels */
+/*
+ * irc-ignore.c: ignore (nicks/hosts) management for IRC plugin
+ */
 
 
 #include <stdlib.h>

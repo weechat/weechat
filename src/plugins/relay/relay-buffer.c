@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-buffer.c: display clients list on relay buffer */
+/*
+ * relay-buffer.c: display clients list on relay buffer
+ */
 
 
 #include <stdlib.h>

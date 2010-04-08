@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-nicklist.c: nicklist functions, used by all GUI */
+/*
+ * gui-nicklist.c: nicklist functions (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

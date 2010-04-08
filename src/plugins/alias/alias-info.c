@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* alias-info.c: info and infolist hooks for alias plugin */
+/*
+ * alias-info.c: info and infolist hooks for alias plugin
+ */
 
 
 #include <stdlib.h>

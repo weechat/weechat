@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* logger-tail.c: return last lines of a file */
+/*
+ * logger-tail.c: return last lines of a file
+ */
 
 
 #ifdef HAVE_CONFIG_H

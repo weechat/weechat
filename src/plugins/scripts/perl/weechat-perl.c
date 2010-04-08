@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-perl.c: Perl plugin for WeeChat */
+/*
+ * weechat-perl.c: perl plugin for WeeChat
+ */
 
 
 #undef _

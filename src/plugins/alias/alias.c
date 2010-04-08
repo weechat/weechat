@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* alias.c: Alias plugin for WeeChat */
+/*
+ * alias.c: alias plugin for WeeChat: create "alias" commands to run other
+ *          commands
+ */
 
 
 #include <stdlib.h>

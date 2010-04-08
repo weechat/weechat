@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* script-api.c: script API */
+/*
+ * script-api.c: script API functions, used by script plugins (perl/python/..)
+ */
 
 
 #include <stdlib.h>

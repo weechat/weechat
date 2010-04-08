@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-network.c: network functions for WeeChat */
+/*
+ * wee-network.c: network functions for WeeChat
+ */
 
 
 #ifdef HAVE_CONFIG_H

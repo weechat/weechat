@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-bar-window.c: bar window functions, used by all GUI */
+/*
+ * gui-bar-window.c: bar window functions (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

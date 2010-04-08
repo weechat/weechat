@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-info.c: info and infolist hooks for relay plugin */
+/*
+ * relay-info.c: info and infolist hooks for relay plugin
+ */
 
 
 #include <stdlib.h>

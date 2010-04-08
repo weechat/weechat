@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* script-callback.c: script callbacks */
+/*
+ * script-callback.c: script callbacks management
+ */
 
 
 #include <stdlib.h>

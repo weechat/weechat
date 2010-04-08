@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay.c: network communication between WeeChat and remote application */
+/*
+ * relay.c: network communication between WeeChat and remote client
+ */
 
 
 #include <stdlib.h>

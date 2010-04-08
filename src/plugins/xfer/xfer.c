@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer.c: file transfer and direct chat plugin for WeeChat */
+/*
+ * xfer.c: file transfer and direct chat plugin for WeeChat
+ */
 
 
 #include <stdlib.h>

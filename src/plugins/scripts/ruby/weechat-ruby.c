@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-ruby.c: Ruby plugin for WeeChat */
+/*
+ * weechat-ruby.c: ruby plugin for WeeChat
+ */
 
 
 #undef _

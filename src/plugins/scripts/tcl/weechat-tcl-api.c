@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-tcl-api.c: Tcl API functions */
+/*
+ * weechat-tcl-api.c: tcl API functions
+ */
 
 
 #undef _

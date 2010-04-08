@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-aspell-config.c: aspell configuration options */
+/*
+ * weechat-aspell-config.c: aspell configuration options (file aspell.conf)
+ */
 
 
 #include <stdlib.h>

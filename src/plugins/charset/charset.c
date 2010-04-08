@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* charset.c: Charset plugin for WeeChat */
+/*
+ * charset.c: charset plugin for WeeChat: encode/decode strings to other
+ *            charset, depending on buffer
+ */
 
 
 #include <stdio.h>

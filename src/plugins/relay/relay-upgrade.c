@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* relay-upgrade.c: save/restore relay plugin data */
+/*
+ * relay-upgrade.c: save/restore relay plugin data when upgrading WeeChat
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-sasl.c: SASL authentication with IRC server */
+/*
+ * irc-sasl.c: SASL authentication with IRC server,
+ *             using mechanisms PLAIN or DH-BLOWFISH
+ */
 
 
 #include <stdlib.h>

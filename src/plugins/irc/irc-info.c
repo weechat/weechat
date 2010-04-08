@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-info.c: info and infolist hooks for IRC plugin */
+/*
+ * irc-info.c: info and infolist hooks for IRC plugin
+ */
 
 
 #include <stdlib.h>

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-completion.c: word completion according to context */
+/*
+ * gui-completion.c: word completion according to context (used by all GUI)
+ */
 
 
 #ifdef HAVE_CONFIG_H

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-bar-item.c: bar items for IRC plugin */
+/*
+ * irc-bar-item.c: bar items for IRC plugin
+ */
 
 
 #include <stdlib.h>

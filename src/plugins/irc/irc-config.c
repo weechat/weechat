@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-config.c: IRC configuration options */
+/*
+ * irc-config.c: IRC configuration options (file irc.conf)
+ */
 
 
 #include <stdlib.h>

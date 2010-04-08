@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-curses-window.c: window display functions for Curses GUI */
+/*
+ * gui-curses-window.c: window display functions for Curses GUI
+ */
 
 
 #ifdef HAVE_CONFIG_H

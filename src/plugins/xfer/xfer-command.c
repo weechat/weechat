@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* xfer-command.c: xfer command */
+/*
+ * xfer-command.c: xfer command
+ */
 
 
 #include <stdlib.h>

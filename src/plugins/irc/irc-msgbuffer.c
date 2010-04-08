@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-msgbuffer.c: target buffer for IRC messages (weechat, current, private) */
+/*
+ * irc-msgbuffer.c: target buffer for IRC messages (weechat, current, private)
+ */
 
 
 #include <stdlib.h>
