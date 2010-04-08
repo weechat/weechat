@@ -6212,8 +6212,8 @@ Paramètres :
 
 | weechat | history_add |
   chaîne avec un pointeur vers le tampon ("0x123..") |
-  chaîne saisie par l'utilisateur ajoutée à l'historique des commandes (tampon
-  et global) |
+  chaîne saisie par l'utilisateur à ajouter à l'historique des commandes
+  (tampon et global) |
   chaîne ajoutée à l'historique des commandes
 
 | weechat | input_text_content |

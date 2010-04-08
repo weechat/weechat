@@ -6195,7 +6195,7 @@ Argomenti:
 
 | weechat | history_add |
   stringa con puntatore al buffer ("0x123..") |
-  input buffer (from user) added to command history (buffer and global) |
+  input buffer (from user) to add in command history (buffer and global) |
   string added to command history
 
 | weechat | input_text_content |
