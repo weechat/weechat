@@ -2810,19 +2810,19 @@ def my_section_read_cb(data, config_file, section, option_name, value):
 
 def my_section_write_cb(data, config_file, section_name):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_WRITE_OK
 
 def my_section_write_default_cb(data, config_file, section_name):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_WRITE_OK
 
 def my_section_create_option_cb(data, config_file, section, option_name, value):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
 
 def my_section_delete_option_cb(data, config_file, section, option):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
 
 section = weechat.config_new_section(config_file, "section1", 1, 1,
     "my_section_read_cb", "",

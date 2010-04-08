@@ -134,7 +134,7 @@
 ** valori: on, off (valore predefinito: off)
 
 * *irc.look.part_closes_buffer*
-** descrizione: close buffer when /part is issued on a channel
+** descrizione: chiude buffer quando viene digitato /part nel canale
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 

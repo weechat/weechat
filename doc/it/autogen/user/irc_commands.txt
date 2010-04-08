@@ -50,26 +50,26 @@
       nick: utente o host da bannare
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
+&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | nome_server [nome_server ...] [-nojoin] | nome_host[/porta] [-opzione[=valore]] [-nooption]`::
 
 ........................................
   connette ad uno o più server IRC
 
-        -all: connect to all servers defined in configuration
-       -open: connect to all opened servers that are not currently connected
-  servername: internal server name to connect (server must have been created by /server add)
-     -nojoin: do not join any channel (even if autojoin is enabled on server)
-    hostname: hostname (or IP) of a server
-        port: port for server (6667 by default)
-      option: set option for server (for boolean option, value can be omitted)
-    nooption: set boolean option to 'off' (for example: -nossl)
+         -all: connette a tutti i server definiti nella configurazione
+       -open: connette a tutti i server aperti ai quali non si è attualmente connessi
+  nome_server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)
+      -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è attivo sul server)
+    nome_host: nome host (oppure IP) del server
+        porta: porta per il server (6667 è la predefinita)
+      opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)
+     nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)
   
-  Examples:
+  Esempi:
     /connect freenode
     /connect irc.oftc.net/6667
     /connect irc6.oftc.net/6667 -ipv6
     /connect irc6.oftc.net/6697 -ipv6 -ssl
-    /connect my.server.org/6697 -ssl -password=test
+    /connect mio.server.org/6697 -ssl -password=test
 ........................................
 
 &bull; *`/ctcp`* `destinatario tipo [argomenti]`::
@@ -96,15 +96,15 @@
 ........................................
   avvia DCC (file o  chat)
 
-    action: 'send' (file) or 'chat'
-  nickname: nickname to send file or chat
-      file: filename (on local host)
+  azione: 'send' (invia file) o 'chat' (avvia una conversazione)
+    nick: nick a cui inviare il file o con cui aprire la chat
+    file: nome file (sull'host locale)
   
-  Examples:
-    chat with nick "toto":
-      /dcc chat toto
-    send file "/home/foo/bar.txt" to nick "toto":
-      /dcc send toto /home/foo/bar.txt
+  Esempi:
+    chat con "tizio":
+      /dcc chat tizio
+    invia file "/home/foo/bar.txt al nick "tizio":
+      /dcc send tizio /home/foo/bar.txt
 ........................................
 
 &bull; *`/dehalfop`* `[nick [nick]]`::
@@ -218,15 +218,15 @@
 ........................................
   caccia e banna un nick da un canale
 
-   channel: channel where user is
-  nickname: nickname to kick and ban
-   comment: comment for kick
+         canale: canale in cui si trova l'utente
+            nick: nick da cacciare e bannare
+  commento: commento per la cacciata
   
-  It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+  È possibile cacciare/bannare con una mask, il nick verrà estratto dalla mask e sostituito da "*".
   
-  Example:
-    ban "*!*@host.com" and then kick "toto":
-      /kickban toto!*@host.com
+  Esempio:
+    banna "*!*@host.com" e poi caccia "tizio":
+      /kickban tizio!*@host.com
 ........................................
 
 &bull; *`/kill`* `nick commento`::
@@ -247,21 +247,21 @@
   mask_server: elenco dei server devono corrispondere a questa mask
 ........................................
 
-&bull; *`/list`* `[channel[,channel] [server] [-re regexp]]`::
+&bull; *`/list`* `[canale[,canale] [server] [-re regexp]]`::
 
 ........................................
   elenca i canali ed i loro argomenti
 
-  channel: channel to list
-   server: server name
-   regexp: regular expression used to filter results
+  canale: canale da elencare
+  server: nome del server
+  regexp: espressione regolare utilizzata per filtrare i risultati
   
-  Examples:
-    list all channels on server (can be very slow on large networks):
+  Esempi:
+    elenca tutti i canali sul server (può essere molto lento su grandi network):
       /list
-    list channel #weechat:
-      /list #weechat
-    list all channels beginning with "#weechat" (can be very slow on large networks):
+    elenca il canale #weechat:
+      /list #weechat.*
+    elenca tutti i canali che iniziano con "#weechat" (può essere molto lento su grandi network):
       /list -re #weechat.*
 ........................................
 
@@ -494,28 +494,28 @@
 ........................................
   elenca, aggiunge o rimuove server IRC
 
-        list: list servers (without argument, this list is displayed)
-    listfull: list servers with detailed info for each server
-         add: create a new server
-  servername: server name, for internal and display use
-    hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-        temp: create temporary server (not saved)
-      option: set option for server (for boolean option, value can be omitted)
-    nooption: set boolean option to 'off' (for example: -nossl)
-        copy: duplicate a server
-      rename: rename a server
-        keep: keep server in config file (for temporary servers only)
-         del: delete a server
-     deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-        jump: jump to server buffer
-         raw: open buffer with raw IRC data
+         list: elenca tutti i server (senza argomento, questa lista viene visualizzata)
+     listfull: elenca tutti i server con tutte le informazioni per ogni server
+          add: crea un nuovo server
+  nome_server: nome server, per il solo uso interno e di visualizzazione
+    nome_host: nome o indirizzo IP del server, con porta opzionale (predefinita: 6667), più indirizzi possono essere separati da virgole
+         temp: crea server temporaneo (non salvato)
+       option: imposta opzione per il server (per opzioni bool, il valore può essere omesso)
+     nooption: imposta l'opzione bool su 'off' (per esempio: -nossl)
+         copy: duplica un server
+       rename: rinomina un server
+         keep: salva server nel file di configurazione (solo per server temporanei)
+          del: elimina un server
+      deloutq: elimina i messaggi fuori coda per tutti i server (tutti i messaggi che WeeChat sta inviando)
+         jump: passa al buffer del server
+          raw: apri buffer con dati grezzi IRC 
   
-  Examples:
+  Esempi:
     /server listfull
-    /server add oftc irc.oftc.net/6697 -ssl -autoconnect
+    /server add oftc irc.oftc.net/6697 -ssl
     /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
     /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
-    /server add freenode3 irc.freenode.net -password=mypass
+    /server add freenode3 irc.freenode.net -password=miapassword
     /server copy oftc oftcbis
     /server rename oftc newoftc
     /server del freenode

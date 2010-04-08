@@ -1,12 +1,12 @@
-WeeChat Plugin API Reference
-============================
+Referenze API per Plugin di WeeChat
+===================================
 FlashCode <flashcode@flashtux.org>
 
 
 Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
-È possibile trovare l'ultima versione di questo documento qui:
+La versione più recente di questo documento si trova qui:
 http://www.weechat.org/doc
 
 
@@ -15,10 +15,10 @@ Introduzione
 ------------
 
 WeeChat (Wee Enhanced Environment for Chat) è un client di chat
-libero, veloce e leggero, realizzato per molti diversi operativi.
+libero, veloce e leggero, realizzato per molti sistemi operativi.
 
-Questo manuale documenta le API per i plugin di WeeChat, utilizzati dai plugin
-C per interagire con il core di WeeChat.
+Questo manuale documenta le API per i plugin di WeeChat, utilizzate
+dai plugin C per interagire con il core di WeeChat.
 
 [[plugins_in_weechat]]
 Plugin in WeeChat
@@ -27,8 +27,8 @@ Plugin in WeeChat
 Un plugin è un programma C che può richiamare le funzioni di WeeChat
 definite in un'interfaccia.
 
-Questo programma C non richiede i sorgenti di WeeChat per essere compilato e
-può essere caricato dinamicamente in WeeChat con il comano `/plugin`.
+Questo programma C non richiede i sorgenti di WeeChat per essere compilato
+e può essere caricato dinamicamente in WeeChat con il comano `/plugin`.
 
 Il plugin deve essere una libreria dinamica, per essere caricato dinamicamente
 dal del sistema operativo.
@@ -166,7 +166,7 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_plugin = NULL;
 
 
-/* callback for command "/double" */
+/* callback per il comando "/double" */
 
 int
 command_double_cb (void *data, struct t_gui_buffer *buffer, int argc,
@@ -281,9 +281,9 @@ name = weechat.plugin_get_name(plugin)
 Stringhe
 ~~~~~~~~
 
-Molte delle funzioni stringhe che seguono sono già disponibili tramite
+Molte delle funzioni stringa che seguono sono già disponibili tramite
 funzioni standard in C, ma si raccomanda di utilizzare le funzioni in
-questa API perché vanno d'accordo con UTF-8 e il locale.
+questa API perché compatibili con UTF-8 e il locale.
 
 weechat_charset_set
 ^^^^^^^^^^^^^^^^^^^
@@ -572,8 +572,8 @@ weechat_string_tolower (str); /* str ora è: "ABCDé" */
 weechat_strcasecmp
 ^^^^^^^^^^^^^^^^^^
 
-Locale and case independent string comparison.
-Confronta stringa di li
+Confronta stringa indipendente da caso (maiuscole
+o minuscole) e da locale.
 
 Prototipo:
 
@@ -604,8 +604,8 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 weechat_strcmp_ignore_chars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Locale (and optionally case independent) string comparison, ignoring some
-chars.
+Confronta una stringa locale (ed opzionalmente indipendente
+da maiuscole/minuscole), ignorando alcuni caratteri.
 
 Prototipo:
 
@@ -618,17 +618,18 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 
 Argomenti:
 
-* 'string1': first string for comparison
-* 'string2': second string for comparison
-* 'chars_ignored': string with chars to ignored
-* 'case_sensitive': 1 for case sensitive comparison, otherwise 0
+* 'string1': prima stringa per il confronto
+* 'string2': seconda stringa per il confronto
+* 'chars_ignored': stringa con caratteri da ignorare
+* 'case_sensitive': 1 per il confronto con caso esatto (maiuscole/minuscole),
+  altrimenti 0
 
 Valore restituito:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* differenza tra le due stringhe:
+** negativa se string1 < string2
+** zero se string1 == string2
+** positiva se string1 > string2
 
 Esempio in C:
 
@@ -640,7 +641,8 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1); /* == -3 */
 weechat_strcasestr
 ^^^^^^^^^^^^^^^^^^
 
-Locale and case independent string search.
+Cerca una stringa indipendente da locale e caso esatto
+(maiuscole/minuscole).
 
 Prototipo:
 
@@ -682,7 +684,7 @@ Argomenti:
 
 * 'string': stringa
 * 'mask': mask, può iniziare o terminare con "`*`" (nessun altro "`*`"
-* consentito all'interno della mask)
+  consentito all'interno della mask)
 
 Valore restituito:
 
@@ -734,7 +736,7 @@ Argomenti:
 Valore restituito:
 
 * la stringa dopo 'search' sostituita da 'replace' (deve essere liberata
-* chiamando "free" dopo l'uso)
+  chiamando "free" dopo l'uso)
 
 Esempio in C:
 
@@ -748,8 +750,8 @@ free (str);
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Rimuove le virgolette all'inizio e alla fine della stringa (ignora gli spazi se ce ne prima
-delle prime virgolette o dopo le ultime virgolette).
+Rimuove le virgolette all'inizio e alla fine della stringa (ignora gli
+spazi se presenti prima delle prime virgolette o dopo le ultime virgolette).
 
 Prototipo:
 
@@ -772,8 +774,8 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
-/* result: "I can't" */
+char *str = weechat_string_remove_quotes (string, " 'Non posso' ", "'");
+/* risultato: "Non posso" */
 /* ... */
 free (str);
 ----------------------------------------
@@ -781,7 +783,7 @@ free (str);
 weechat_string_strip
 ^^^^^^^^^^^^^^^^^^^^
 
-Rimuove i caratteri all'inizio/fine della stringa.
+Rimuove i caratteri ad inizio/fine della stringa.
 
 Prototipo:
 
@@ -838,7 +840,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
+int hl = weechat_string_has_highlight ("mia stringa di test", "test,word2"); /* == 1 */
 ----------------------------------------
 
 Script (Python):
@@ -849,7 +851,7 @@ Script (Python):
 highlight = weechat.string_has_highlight(string, highlight_words)
 
 # esempio
-highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
+highlight = weechat.string_has_highlight("mia stringa di test", "test,word2") # 1
 ----------------------------------------
 
 weechat_string_mask_to_regex
@@ -1017,8 +1019,8 @@ free (str);
 weechat_string_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Divide una lista di comandi separata da 'separator' (che può essere omesso "
-"aggiungendo "\" nella stringa).
+Divide una lista di comandi separata da 'separator' (che può essere
+omesso aggiungendo "\" nella stringa).
 
 Prototipo:
 
@@ -1034,8 +1036,7 @@ Argomenti:
 
 Valore restituito:
 
-* array di stringhe, NULL in caso di problemi (deve essere
-  liberata chiamando
+* array di stringhe, NULL in caso di problemi (deve essere liberata chiamando
   <<_weechat_free_split_command,weechat_free_split_command>> dopo l'uso)
 
 Esempio in C:
@@ -1078,8 +1079,6 @@ weechat_free_split_command (argv);
 weechat_string_format_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Build a string with formatted file size and a unit translated to local
-language.
 Compila una stringa con un file di dimensione fissa ed una unità
 tradotta nella lingua locale.
 
@@ -1098,7 +1097,7 @@ Valore restituito:
 
 * stringa formattata (deve essere liberata chiamando "free" dopo l'uso)
 
-C examples:
+Esempi in C:
 
 [source,C]
 ----------------------------------------
@@ -1151,12 +1150,12 @@ Esempi:
 [source,C]
 ----------------------------------------
 /* rimuove i codici colore */
-char *str = weechat_string_remove_color (my_string1, NULL);
+char *str = weechat_string_remove_color (mia_stringa1, NULL);
 /* ... */
 free (str);
 
 /* sostituisce i codici colore con "?" */
-char *str = weechat_string_remove_color (my_string2, "?");
+char *str = weechat_string_remove_color (mia_stringa2, "?");
 /* ... */
 free (str);
 ----------------------------------------
@@ -1169,13 +1168,13 @@ Script (Python):
 str = weechat.string_remove_color(string, replacement)
 
 # esempio
-str = weechat.string_remove_color(my_string, "?")
+str = weechat.string_remove_color(mia_stringa, "?")
 ----------------------------------------
 
 weechat_string_encode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Encode a string in base64.
+Codifica una stringa in base64.
 
 Prototype:
 
@@ -1184,14 +1183,14 @@ Prototype:
 void weechat_string_encode_base64 (const char *from, int length, char *to);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'from': string to encode
-* 'length': length of string to encode (for example `strlen(from)`)
-* 'to': pointer to string to store result (must be long enough, result is
-  longer than initial string)
+* 'from': stringa da codificare
+* 'length': lunghezza della stringa da codificare (ad esempio `strlen(from)`)
+* 'to': puntatore alla stringa per memorizzare il risultato (deve essere
+  sufficientemente lunga, il risultato è più lungo della stringa iniziale)
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -1203,7 +1202,7 @@ weechat_string_encode_base64 (string, strlen (string), result);
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Decode a base64 string.
+Decodifca una stringa in base64.
 
 Prototype:
 
@@ -1214,15 +1213,15 @@ int weechat_string_decode_base64 (const char *from, char *to);
 
 Arguments:
 
-* 'from': string to decode
-* 'to': pointer to string to store result (must be long enough, result is
-  shorter than initial string)
+* 'from': stringa da decodificare
+* 'to': puntatore alla stringa per memorizzare il risultato (deve essere
+  sufficientemente lunga, il risultato è più lungo della stringa iniziale)
 
-Return value:
+Valore restituito:
 
-* length of string stored in *to (does not count final '\0')
+* lunghezza della stringa memorizzata in *to (lo '\0' finale non conta)
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -1235,7 +1234,8 @@ length = weechat_string_decode_base64 (string, result);
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Check if first char of string is a command char (default command char is '/').
+Verifica che il primo carattere della stringa sia un carattere comando
+(il comando carattere predefinito è '/').
 
 Prototype:
 
@@ -1244,13 +1244,14 @@ Prototype:
 int weechat_string_is_command_char (const char *string);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'string': string
+* 'string': stringa
 
-Return value:
+Valore restituito:
 
-* 1 if first char of string is a command char, otherwise 0
+* 1 se il primo carattere della stringa è un comando carattere,
+  altrimenti 0
 
 C examples:
 
@@ -1275,8 +1276,8 @@ command_char2 = weechat.string_is_command_char("test")  # == 0
 weechat_string_input_for_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return pointer to input text for buffer (pointer inside "string" argument), or
-NULL if it's a command.
+Restituisce il puntatore al testo in input per il buffer (puntatore all'interno
+dell'argomento "string"), oppure NULL se è un comando.
 
 Prototype:
 
@@ -1285,13 +1286,13 @@ Prototype:
 const char *weechat_string_input_for_buffer (const char *string);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'string': string
+* 'string': stringa
 
-Return value:
+Valore restituito:
 
-* pointer into "string", or NULL
+* puntatore all'interno di "string", oppure NULL
 
 C examples:
 
@@ -1384,7 +1385,7 @@ if (weechat_utf8_is_valid (string, &error))
 }
 else
 {
-    /* "error" points to first invalid char */
+    /* "error" punta al primo carattere non valido */
 }
 ----------------------------------------
 
@@ -1461,7 +1462,7 @@ Argomenti:
 
 Valore restituito:
 
-* puntaotre al carattere UTF-8 successivo, NULL se non trovato
+* puntatore al carattere UTF-8 successivo, NULL se non trovato
   (raggiunta la fine della stringa)
 
 Esempio in C:
@@ -1753,7 +1754,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-char *string = weechat_utf8_strndup ("chêne", 3); /* returns "chê" */
+char *string = weechat_utf8_strndup ("chêne", 3); /* restituisce "chê" */
 /* ... */
 free (string);
 ----------------------------------------
@@ -1783,8 +1784,7 @@ Argomenti:
 
 Valore restituito:
 
-* 1 se la cartella è stata creata con successo, 0 se si è verificato
-  un errore
+* 1 se la cartella è stata creata con successo, 0 in caso di errore
 
 Esempio in C:
 
@@ -1826,8 +1826,7 @@ Argomenti:
 
 Valore restituito:
 
-* 1 se la cartella è stata creata con successo, 0 se si è verificato
-  un errore
+* 1 se la cartella è stata creata con successo, 0 in caso di errore
 
 Esempio in C:
 
@@ -1869,8 +1868,7 @@ Argomenti:
 
 Valore restituito:
 
-* 1 se la cartella è stata creata con successo, 0 se si è verificato
-  un errore
+* 1 se la cartella è stata creata con successo, 0 in caso di errore
 
 Esempio in C:
 
@@ -1896,7 +1894,7 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 weechat_exec_on_files
 ^^^^^^^^^^^^^^^^^^^^^
 
-Cerca i file in una cartella ed esegue un callback su ogni file.
+Cerca i file in una cartella ed esegue una callback su ogni file.
 
 Prototipo:
 
@@ -1931,8 +1929,8 @@ weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 ----------------------------------------
 
 [[util]]
-Util
-~~~~
+Utilità
+~~~~~~~
 
 Alcune funzioni utili.
 
@@ -2018,26 +2016,26 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-weechat_util_timeval_add (&tv, 2000); /* add 2 seconds */
+weechat_util_timeval_add (&tv, 2000); /* aggiunge 2 secondi */
 ----------------------------------------
 
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Get date/time as a string built with "strftime".
+Riceve data/ora come stringa compilata con "strftime".
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 char *weechat_util_get_time_string (const time_t *date);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'date': pointer to date
+* 'date': puntatore alla data
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2177,7 +2175,8 @@ item = weechat.list_search(list, "miei dati")
 weechat_list_casesearch
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Cerca un elemento nella lista, ignorando maiuscole/minuscole.
+Cerca un elemento nella lista, senza effettuare una ricerca
+esatta.
 
 Prototipo:
 
@@ -2217,7 +2216,7 @@ item = weechat.list_casesearch(list, "my data")
 weechat_list_get
 ^^^^^^^^^^^^^^^^
 
-Return an item in a list by position.
+Restituisce un elemento in una lista in base alla sua posizione.
 
 Prototipo:
 
@@ -2240,7 +2239,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-struct t_weelist_item *item = weechat_list_get (list, 0); /* first item */
+struct t_weelist_item *item = weechat_list_get (list, 0); /* primo elemento */
 ----------------------------------------
 
 Script (Python):
@@ -2286,7 +2285,7 @@ Script (Python):
 weechat.list_set(item, value)
 
 # esempio
-weechat.list_set(item, "new data")
+weechat.list_set(item, "nuovi dati")
 ----------------------------------------
 
 weechat_list_next
@@ -2391,7 +2390,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "value of item: %s", weechat_list_string (item));
+weechat_printf (NULL, "valore dell'elemento: %s", weechat_list_string (item));
 ----------------------------------------
 
 Script (Python):
@@ -2402,7 +2401,7 @@ Script (Python):
 value = weechat.list_string(item)
 
 # esempio
-weechat.prnt("", "value of item: %s" % weechat.list_string(item))
+weechat.prnt("", "valore dell'elemento: %s" % weechat.list_string(item))
 ----------------------------------------
 
 weechat_list_size
@@ -2430,7 +2429,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "size of list: %d", weechat_list_size (list));
+weechat_printf (NULL, "dimensione della lista: %d", weechat_list_size (list));
 ----------------------------------------
 
 Script (Python):
@@ -2441,7 +2440,7 @@ Script (Python):
 size = weechat.list_size(list)
 
 # esempio
-weechat.prnt("", "size of list: %d" % weechat.list_size(list))
+weechat.prnt("", "dimensione della lista: %d" % weechat.list_size(list))
 ----------------------------------------
 
 weechat_list_remove
@@ -2581,15 +2580,14 @@ Argomenti:
 
 Valore restituito:
 
-* puntatore al nuovo file di configurazione, NULL se si è verificato
-  un errore
+* puntatore al nuovo file di configurazione, NULL in caso di errore
 
 [NOTE]
 Il file NON viene creato su disco da questa funzione. Verrà creato chiamando
-la funzione <<_weechat_write_config,weechat_write_config>>. Si dovrebbe chiamare
-questa funzione solo dopo aver aggiunto alcune sezioni (con
-<<_weechat_config_new_section,weechat_config_new_section>>) e le opzioni (con
-<<_weechat_config_new_option,weechat_config_new_option>>).
+la funzione <<_weechat_write_config,weechat_write_config>>.
+Si dovrebbe chiamare questa funzione solo dopo aver aggiunto alcune sezioni
+(con <<_weechat_config_new_section,weechat_config_new_section>>) e le
+opzioni (con <<_weechat_config_new_option,weechat_config_new_option>>).
 
 Esempio in C:
 
@@ -2776,7 +2774,7 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
-/* sezione standart, l'utente non può aggiungere/eliminare opzioni */
+/* sezione standard, l'utente non può aggiungere/rimuovere opzioni */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
                                 NULL, NULL, /* read callback */
@@ -2815,19 +2813,19 @@ def my_section_read_cb(data, config_file, section, option_name, value):
 
 def my_section_write_cb(data, config_file, section_name):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_WRITE_OK
 
 def my_section_write_default_cb(data, config_file, section_name):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_WRITE_OK
 
 def my_section_create_option_cb(data, config_file, section, option_name, value):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
 
 def my_section_delete_option_cb(data, config_file, section, option):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
 
 section = weechat.config_new_section(config_file, "section1", 1, 1,
     "my_section_read_cb", "",
@@ -3249,7 +3247,7 @@ Valore restituito:
   resettato
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' se il valore non è stato
   modificato
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -3311,7 +3309,7 @@ Valore restituito:
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' se il valore dell'opzione è
   cambiato
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' se il valore non è cambiato
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -3376,7 +3374,7 @@ Valore restituito:
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' se il valore dell'opzione è
   cambiato
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' se il valore non è cambiato
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -3416,7 +3414,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
 weechat_config_option_unset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Rimuove/resetta un'opzione.
+Rimuove/ripristina un'opzione.
 
 Prototipo:
 
@@ -3432,11 +3430,11 @@ Argomenti:
 Valore restituito:
 
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET' se il valore dell'opzione non è
-  stato resettato
+  stato ripristinato
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET' se il valore dell'opzione è stato
-  resettato
+  ripristinato
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED' se l'opzione è stata rimossa
-* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -3558,7 +3556,7 @@ char *description = weechat_config_option_get_pointer (option, "description");
 weechat_config_option_is_null
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Verifica se un opzione è "null (valore non definito).
+Verifica se un opzione è "null" (valore non definito).
 
 Prototipo:
 
@@ -4135,7 +4133,7 @@ elif rc == weechat.WEECHAT_CONFIG_WRITE_ERROR:
 weechat_config_read
 ^^^^^^^^^^^^^^^^^^^
 
-Legge il file di configurazione su disco.
+Legge il file di configurazione da disco.
 
 Prototipo:
 
@@ -4536,7 +4534,7 @@ Valore restituito:
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' se il valore dell'opzione è stato modificato
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' se il valore non è cambiato
 * 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND' se l'opzione non è stata trovata
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -4602,7 +4600,7 @@ Valore restituito:
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET' se il valore dell'opzione è stato
   resettato
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED' se l'opzione è stata rimossa
-* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' se si è verificato un errore
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' in caso di errore
 
 Esempio in C:
 
@@ -4645,8 +4643,8 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 ----------------------------------------
 
 [[display]]
-Display
-~~~~~~~
+Visualizzazione
+~~~~~~~~~~~~~~~
 
 Funzioni per visualizzare il testo nei buffer.
 
@@ -4669,7 +4667,7 @@ Argomenti:
 [width="70%",cols="^2e,^1l,^3,5",options="header"]
 |========================================
 | Prefisso | Valore | Colore       | Descrizione
-| errore   | =!=    | giallo       | messaggio di errore
+| error    | =!=    | giallo       | messaggio di errore
 | network  | --     | magenta      | messaggio dalla rete
 | action   | *      | bianco       | azione automatica
 | join     | -->    | verde chiaro | qualcuno entra nella chat corrente
@@ -4688,7 +4686,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "%sThis is an error...", weechat_prefix ("error"));
+weechat_printf (NULL, "%sQuesto è un errore...", weechat_prefix ("error"));
 ----------------------------------------
 
 Script (Python):
@@ -4699,7 +4697,7 @@ Script (Python):
 value = weechat.prefix(prefix)
 
 # esempio
-weechat.prnt("", "%sThis is an error..." % weechat.prefix("error"))
+weechat.prnt("", "%sQuesto è un errore..." % weechat.prefix("error"))
 ----------------------------------------
 
 weechat_color
@@ -5237,7 +5235,7 @@ def my_timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer called each 20 seconds
+# timer chiamato ogni 20 secondi
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----------------------------------------
 
@@ -5287,7 +5285,7 @@ my_fd_cb (void *data, int fd)
 }
 
 int sock = socket (AF_INET, SOCK_STREAM, 0);
-/* set socket options */
+/* imposta le opzioni del socket */
 /* ... */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
 ----------------------------------------
@@ -5360,7 +5358,7 @@ my_process_cb (void *data, const char *command, int return_code,
 {
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
     {
-        weechat_printf (NULL, "Error with command '%s'", command);
+        weechat_printf (NULL, "Errore con il comando '%s'", command);
         return WEECHAT_RC_OK;
     }
     
@@ -5437,17 +5435,18 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 
 Argomenti:
 
-* 'proxy': name of proxy to use for connection (optional, NULL means connection
-  without proxy)
+* 'proxy': nome del proxy da utilizzare per la connessione (opzionale,
+  NULL significa connessione senza proxy)
 * 'address': nome o indirizzo IP al quale connettersi
 * 'port': numero della porta
 * 'sock': socket utilizzato per la connessione
 * 'ipv6': 1 per usare IPv6, 0 per usare IPv4
 * 'gnutls_sess': sessione GnuTLS (opzionale)
-* 'gnutls_cb': GnuTLS callback (optional)
-* 'gnutls_dhkey_size': size of the key used during the Diffie-Hellman Key
-  Exchange (GnuTLS)
-* 'local_hostname': local hostname to use for connection (opzionale)
+* 'gnutls_cb' callback GnuTLS (opzionale)
+* 'gnutls_dhkey_size': dimensione della chiave utilizzata nello Scambio
+  Chiavi Diffie-Hellman (GnuTLS)
+* 'local_hostname': nome host locale da utilizzare per la connessione
+  (opzionale)
 * 'callback': funzione chiamata quando la connessione è avvenuta con
   successo oppure no, argomenti:
 ** 'void *data': puntatore
@@ -5461,8 +5460,8 @@ Argomenti:
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': errore inizializzazione GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR': errore di handshake GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': memoria insufficiente
-** 'gnutls_rc': result value of 'gnutls_handshake()'
-** 'const char *error': result value of 'gnutls_strerror(gnutls_rc)'
+** 'gnutls_rc': valore del risultato di 'gnutls_handshake()'
+** 'const char *error': valore del risultato di 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address': indirizzo IP trovato
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
@@ -5634,7 +5633,7 @@ def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message)
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch all messages, on all buffers, without color
+# cattura tutti i messaggi, su tutti i buffer, senza colore
 hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----------------------------------------
 
@@ -5663,138 +5662,142 @@ Argomenti:
 |========================================
 | Plugin | Segnale | Argomenti | Descrizione
 
-| irc | xxx,irc_in_yyy ^(1)^ | string: message |
-  irc message from server (before irc plugin uses it,
-  signal sent only if message is *not* ignored)
+| irc | xxx,irc_in_yyy ^(1)^ | string: messaggio |
+  messaggio irc dal server (prima di essere utilizzato
+  dal plugin irc, il segnale viene inviato solo se il
+  messaggio *non* viene ignorato)
 
-| irc | xxx,irc_in2_yyy ^(1)^ | string: message |
-  irc message from server (after irc plugin uses it,
-  signal sent only if message is *not* ignored)
+| irc | xxx,irc_in2_yyy ^(1)^ | string: messaggio |
+  messaggio irc dal server (dopo essere stato
+  utilizzato dal plugin irc, il segnale viene inviato
+  solo se il messaggio *non* viene ignorato)
 
-| irc | xxx,irc_raw_in_yyy ^(1)^ | string: message |
-  irc message from server (before irc plugin uses it,
-  signal sent even if message is ignored)
+| irc | xxx,irc_raw_in_yyy ^(1)^ | string: messaggio |
+  messaggio irc dal server (prima di essere utilizzato
+  dal plugin irc, il segnale viene inviato anche se il
+  messaggio è stato ignorato)
 
-| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: message |
-  irc message from server (after irc plugin uses it,
-  signal sent even if message is ignored)
+| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: messaggio |
+  messaggio irc dal server (dopo essere stato
+  utilizzato dal plugin irc, il segnale viene inviato
+  anche se il messaggio è stato ignorato)
 
-| irc | xxx,irc_out_yyy ^1^ | string: message |
-  irc message sent to server
+| irc | xxx,irc_out_yyy ^1^ | string: messaggio |
+  messaggio irc inviato al server
 
-| irc | irc_ctcp | string: message |
-  CTCP received
+| irc | irc_ctcp | string: messaggio |
+  CTCP ricevuto
 
-| irc | irc_dcc | string: message |
-  new DCC
+| irc | irc_dcc | string: messaggio |
+  nuova DCC
 
-| irc | irc_pv | string: message |
-  private message received
+| irc | irc_pv | string: messaggio |
+  messaggio privato ricevuto
 
-| irc | irc_channel_opened | pointer: buffer |
-  channel opened
+| irc | irc_channel_opened | puntatore: buffer |
+  canale aperto
 
-| irc | irc_pv_opened | pointer: buffer |
-  private opened
+| irc | irc_pv_opened | puntatore: buffer |
+  chat privata aperta
 
-| irc | irc_server_connecting | string: server name |
-  connecting to server
+| irc | irc_server_connecting | string: nome server |
+  connessione al server
 
-| irc | irc_server_connected | string: server name |
-  connected to server
+| irc | irc_server_connected | string: nome server |
+  connesso al server
 
-| irc | irc_server_disconnected | string: server name |
-  disconnected from server
+| irc | irc_server_disconnected | string: nome server |
+  disconnesso dal server
 
-| irc | irc_ignore_removing | pointer: ignore |
-  removing ignore
+| irc | irc_ignore_removing | puntatore: ignore |
+  rimozione dell'ignore
 
 | irc | irc_ignore_removed | - |
-  ignore removed
+  ignore rimosso
 
-| logger | logger_start | pointer: buffer |
-  start logging for buffer
+| logger | logger_start | puntatore: buffer
+  avvia il logging per il buffer
 
-| logger | logger_stop | pointer: buffer |
-  stop logging for buffer
+| logger | logger_stop | puntatore: buffer |
+  ferma il logging per il buffer
 
-| logger | logger_backlog | pointer: buffer |
-  display backlog for buffer
+| logger | logger_backlog | puntatore: buffer |
+  visualizza log precedenti per il buffer
 
-| weechat | buffer_closing | pointer: buffer |
-  closing buffer
+| weechat | buffer_closing | puntatore: buffer |
+  chiusura del buffer
 
-| weechat | buffer_closed | pointer: buffer |
-  buffer closed
+| weechat | buffer_closed | puntatore: buffer |
+  buffer chiuso
 
-| weechat | buffer_lines_hidden | pointer: buffer |
-  lines hidden in buffer
+| weechat | buffer_lines_hidden | puntatore: buffer |
+  righe nascoste nel buffer
 
-| weechat | buffer_localvar_added | pointer: buffer |
-  local variable has been added
+| weechat | buffer_localvar_added | puntatore: buffer |
+  variabili locali aggiunte
 
-| weechat | buffer_localvar_changed | pointer: buffer |
-  local variable has changed
+| weechat | buffer_localvar_changed | puntatore: buffer |
+  variabili locali modificate
 
-| weechat | buffer_localvar_removed | pointer: buffer |
-  local variable has been removed
+| weechat | buffer_localvar_removed | puntatore: buffer |
+  variabili locali rimosse
 
-| weechat | buffer_moved | pointer: buffer |
-  buffer moved
+| weechat | buffer_moved | puntatore: buffer |
+  buffer spostato
 
-| weechat | buffer_opened | pointer: buffer |
-  buffer opened
+| weechat | buffer_opened | puntatore: buffer |
+  buffer aperto
 
-| weechat | buffer_renamed | pointer: buffer |
-  buffer renamed
+| weechat | buffer_renamed | puntatore: buffer |
+  buffer rinominato
 
-| weechat | buffer_switch | pointer: buffer |
-  switching buffer
+| weechat | buffer_switch | puntatore: buffer |
+  passaggio tra buffer
 
-| weechat | buffer_title_changed | pointer: buffer |
-  title of buffer changed
+| weechat | buffer_title_changed | puntatore: buffer |
+  titolo del buffer modificato
 
-| weechat | buffer_type_changed | pointer: buffer |
-  type of buffer changed
-
-| weechat | day_changed | string: new date, format: "2010-01-31" |
-  day of system date has changed
+| weechat | buffer_type_changed | puntatore: buffer |
+  tipo di buffer modificato
 
 | weechat | debug_dump | - |
-  dump request
+  richiesta di dump
 
-| weechat | filter_added | pointer: filter |
-  filter added
+| weechat | day_changed | string: nuova data, formato: "2010-01-31" |
+  data di sistema modificata
 
-| weechat | filter_removing | pointer: filter |
-  removing filter
+| weechat | filter_added | puntatore: filtro
+  filtro aggiunto
+
+| weechat | filter_removing | puntatore: filtro |
+  rimozione del filtro
 
 | weechat | filter_removed | - |
-  filter added
+  filtro rimosso
 
 | weechat | filter_enabled | - |
-  filters enabled
+  filtri abilitati
 
 | weechat | filter_disabled | - |
-  filters disabled
+  filtri disabilitati
 
 | weechat | hotlist_changed | - |
-  hotlist changed
+  hotlist modificata
 
 | weechat | input_paste_pending | - |
-  paste pending
+  incolla testo in attesa
 
 | weechat | input_search | - |
-  text search in buffer
+  ricerca testo nel buffer
 
 | weechat | input_text_changed | - |
-  input text changed
+  testo in input modificato
 
 | weechat | input_text_cursor_moved | - |
-  input text cursor moved
+  cursore del testo di input spostato
 
-| weechat | key_pressed | string: key pressed |
-  key pressed
+| weechat | key_pressed | string: tasto digitato |
+  tasto digitato
 
 | weechat | nicklist_group_added | string: buffer pointer + "," + group name |
   group added in nicklist
@@ -5809,55 +5812,57 @@ Argomenti:
   nick removed from nicklist
 
 | weechat | partial_completion | - |
-  partial completion happened
+  completamento parziale avvenuto
 
-| weechat | quit | string: arguments for /quit |
-  command `/quit` issued by user
+| weechat | quit | string: argomenti per /quit |
+  comando `/quit` digitato dall'utente
 
 | weechat | upgrade | - |
-  command `/upgrade` issued by user
+  comando `/upgrade` digitato dall'utente
 
-| weechat | weechat_highlight | string: message with prefix |
-  highlight happened
+| weechat | weechat_highlight | string: messaggio con prefisso |
+  evento accaduto
 
-| weechat | weechat_pv | string: message with prefix |
-  private message displayed
+| weechat | weechat_pv | string: messaggio con prefisso |
+  messaggio privato visualizzato
 
-| weechat | window_scrolled | pointer: window |
-  scroll in window
+| weechat | window_scrolled | puntatore: finestra |
+  scroll nella finestra
 
-| weechat | window_unzooming | pointer: current window |
-  unzooming window
+| weechat | window_unzooming | puntatore: finestra corrente |
+  minimizzazione della finestra
 
-| weechat | window_unzoomed | pointer: current window |
+| weechat | window_unzoomed | puntatore: finestra corrente |
   window unzoomed
+  finestra minimizzata
 
-| weechat | window_zooming | pointer: current window |
-  zomming window
+| weechat | window_zooming | puntatore: finestra corrente |
+  massimizzazione della finestra
 
-| weechat | window_zoomed | pointer: current window |
-  window zoomed
+| weechat | window_zoomed | puntatore: finestra corrente |
+  finestra massimizzata
 
-| xfer | xfer_add | pointer: infolist with xfer info |
-  new xfer
+| xfer | xfer_add | puntatore: lista info con info per xfer|
+  nuovo xfer
 
-| xfer | xfer_send_ready | pointer: infolist with xfer info |
-  xfer ready
+| xfer | xfer_send_ready | puntatore: lista info xon info per xfer |
+  xfer pronto
 
-| xfer | xfer_accept_resume | pointer: infolist with xfer info |
-  xfer accepts resume (send)
+| xfer | xfer_accept_resume | puntatore: lista info con info per xfer |
+  xfer accetta la ripresa
 
-| xfer | xfer_send_accept_resume | pointer: infolist with xfer info |
-  xfer accepts resume (send)
+| xfer | xfer_send_accept_resume | puntatore: lista info con info per xfer |
+  xfer accetta la ripresa (invio)
 
-| xfer | xfer_start_resume | pointer: infolist with xfer info |
-  start resume
+| xfer | xfer_start_resume |  puntatore: lista info con info per xfer |
+  avvia ripresa
 
-| xfer | xfer_resume_ready | pointer: infolist with xfer info |
-  xfer resume ready
+| xfer | xfer_resume_ready | puntatore: lista info con info per xfer |
+  ripresa xfer pronta
 
-| xfer | xfer_ended | pointer: infolist with xfer info |
-  xfer has ended
+| xfer | xfer_ended | puntatore: lista info con info per xfer |
+  xfer terminato
+
 |========================================
 
 [NOTE]
@@ -5889,7 +5894,7 @@ my_signal_cb (void *data, const char *signal, const char *type_data,
     return WEECHAT_RC_OK;
 }
 
-/* catch signal "quit" */
+/* cattura il segnale "quit" */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
                                                      &my_signal_cb, NULL);
 ----------------------------------------
@@ -5906,7 +5911,7 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signal "quit"
+# cattura il segnale "quit"
 hook = weechat.hook_signal("quit", "my_signal_cb", "")
 ----------------------------------------
 
@@ -6032,7 +6037,6 @@ Argomenti:
 
 * 'completion_item': nome dell'elemento del completamento, è possibile usare
   in seguito '%(name)' in un comando con un hook (argomento 'completion')
-* 'description': descrizione di completamento
 * 'callback': funzione chiamata quando viene usato l'elemento completamento
   (l'utente sta completando qualcosa usando questo elemento), argomenti:
 ** 'void *data': puntatore
@@ -6125,7 +6129,7 @@ Script (Python):
 # prototipo
 weechat.hook_completion_list_add(completion, word, nick_completion, where)
 
-# esempio: see function hook_completion above
+# esempio: consultare function hook_completion precedente
 ----------------------------------------
 
 weechat_hook_modifier
@@ -6161,53 +6165,55 @@ Argomenti:
 
 | charset | charset_encode |
   plugin.buffer_name |
-  any string |
-  string encoded from UTF-8 to charset found for plugin/buffer
+  qualsiasi stringa |
+  stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer
 
 | irc | irc_color_decode |
-  "1" to keep colors, "0" to remove colors |
-  any string |
-  string with WeeChat color codes, or without color
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  qualsiasi stringa |
+  stringa con i codici colori di Weechat, o senza colore
 
 | irc | irc_color_encode |
-  "1" to keep colors, "0" to remove colors |
-  any string |
-  string with IRC color codes, or without color
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  qualsiasi stringa |
+  stringa con i codici colori IRC, o senza colore
 
 | irc | irc_in_xxx ^1^ |
-  server name |
-  content of message received from IRC server |
-  new content of message
+  nome server |
+  contenuto del messaggio ricevuto dal server IRC |
+  nuovo contenuto del messaggio
 
 | irc | irc_out_xxx ^1^ |
-  server name |
-  content of message about to be sent to IRC server |
-  new content of message
+  nome server |
+  contenuto del messaggio che sta per essere inviato al server IRC |
+  nuovo contenuto del messaggio
 
 | weechat | bar_condition_yyy ^2^ |
-  string with window pointer ("0x123..") |
-  empty string |
-  "1" to display bar, "0" to hide it
+  stringa con puntatore alla finestra ("0x123..") |
+  stringa vuota |
+  "1" per visualizzare la barra, "0" per nasconderla
 
 | weechat | input_text_content |
-  string with buffer pointer ("0x123..") |
-  input buffer (from user) |
-  new content of input buffer
+  stringa con puntatore al buffer ("0x123..") |
+  input buffer (dall'utente) |
+  nuovo contenuto del buffer di input
 
 | weechat | input_text_display |
-  string with buffer pointer ("0x123..") |
-  input buffer (from user), without cursor tag |
-  new content of input buffer, for display only (input buffer is not changed)
+  stringa con puntatore al buffer ("0x123..") |
+  buffer di input (dall'utente), senza tag di cursore |
+  nuovo contenuto del buffer di input, solo per visualizzazione (il buffer
+  di input non è modificato)
 
 | weechat | input_text_display_with_cursor |
-  string with buffer pointer ("0x123..") |
-  input buffer (from user), with cursor tag |
-  new content of input buffer, for display only (input buffer is not changed)
+  stringa con puntatore al buffer ("0x123..") |
+  buffer di input (dall'utente), con tag di cursore |
+  nuovo contenuto del buffer di input, solo per la visualizzazione (buffer di
+  input non è modificato)
 
 | weechat | weechat_print |
   plugin;buffer_name;tags |
-  message printed |
-  new message printed
+  messaggio stampato |
+  nuovo messaggio stampato
 |========================================
 
 [NOTE]
@@ -6360,7 +6366,7 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
     return pointer_to_string;
 }
 
-/* add info "my_info" */
+/* aggiunge informazione "my_info" */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
                                                  "Some info",
                                                  "Info about arguments",
@@ -6431,13 +6437,13 @@ my_infolist_cb (void *data, const char *infolist_name, void *pointer,
 {
     struct t_infolist *my_infolist;
     
-    /* build infolist */
+    /* compila lista info */
     /* ... */
     
     return my_infolist;
 }
 
-/* add infolist "my_infolist" */
+/* aggiunge lista info "my_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
                                                     "Info about pointer",
@@ -6467,7 +6473,7 @@ hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
 weechat_unhook
 ^^^^^^^^^^^^^^
 
-Rimuove l'hook.
+Rimuove un hook.
 
 Prototipo:
 
@@ -6532,8 +6538,8 @@ weechat.unhook_all()
 ----------------------------------------
 
 [[buffers]]
-Buffers
-~~~~~~~
+Buffer
+~~~~~~
 
 Funzioni per creare/richiedere/chiudere buffer.
 
@@ -6581,14 +6587,14 @@ Esempio in C:
 int
 my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
 {
-    weechat_printf (buffer, "Text: %s", input_data);
+    weechat_printf (buffer, "Testo: %s", input_data);
     return WEECHAT_RC_OK;
 }
 
 int
 my_close_cb (void *data, struct t_gui_buffer *buffer)
 {
-    weechat_printf (NULL, "Buffer '%s' will be closed!",
+    weechat_printf (NULL, "Il buffer '%s' verrà chiuso!",
                     weechat_buffer_get_string (buffer, "name"));
     return WEECHAT_RC_OK;
 }
@@ -6608,11 +6614,11 @@ buffer = weechat.buffer_new(name, input_callback, input_callback_data,
 
 # esempio
 def my_input_cb(data, buffer, input_data):
-    weechat.prnt(buffer, "Text: %s" % input_data)
+    weechat.prnt(buffer, "Testo: %s" % input_data)
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
+    weechat.prnt("", "Il buffer '%s' verrà chiuso!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
@@ -6909,30 +6915,30 @@ Argomenti:
 * 'buffer': puntatore al buffer
 * 'property': nome della proprietà:
 ** 'number': numero del buffer (inizia da 1)
-** 'layout_number': number of buffer saved in layout
-** 'type': buffer type (0: formatted, 1: free content)
+** 'layout_number': numero del buffer salvato nel layout
+** 'type': tipo dibuffer (0: formattato, 1: contenuto libero)
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer
-** 'active': 1 if buffer is active, 0 if buffer is merged and not selected
-** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
+** 'active': 1 se il buffer è attivo, 0 se il buffer è unito e non selezionato
+** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati, altrimenti 0
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
 ** 'prefix_max_length': lunghezza massima del prefisso in questo buffer
 ** 'time_for_each_line': 1 se l'ora è visualizzata per ogni riga nel buffer
    (predefinito), altrimenti 0
-** 'nicklist': 1 if nicklist is enabled, otherwise 0
-** 'nicklist_case_sensitive': 1 if nicks are case sensitive, otherwise 0
-** 'nicklist_max_length': max length for a nick
-** 'nicklist_display_groups': 1 if groups are displayed, otherwise 0
-** 'nicklist_visible_count': number of nicks/groups displayed
-** 'input': 1 if input is enabled, otherwise 0
-** 'input_get_unknown_commands': 1 if unknown commands are sent to input
-   callback, otherwise 0
-** 'input_size': input size (in bytes)
-** 'input_length': input length (number of chars)
-** 'input_pos': cursor position in buffer input
-** 'input_1st_display': first char displayed on screen
-** 'num_history': number of commands in history
+** 'nicklist': 1 se la lista nick è abilitata, altrimenti 0
+** 'nicklist_case_sensitive': 1 se i nick sono in maiuscole/minuscole, altrimenti 0
+** 'nicklist_max_length': lunghezza massima per un nick
+** 'nicklist_display_groups': 1 se i gruppi vengono visualizzati, altrimenti 0
+** 'nicklist_visible_count': numero di nick/gruppi visualizzati
+** 'input': 1 se l'input è abilitato, altrimenti 0
+** 'input_get_unknown_commands': 1 se i comandi sconosciuti vengono inviati
+   alla callback di input, altrimenti 0
+** 'input_size': dimensione per l'input (in byte)
+** 'input_length': lunghezza dell'input (numero di caratteri)
+** 'input_pos': posizione del cursore nell'input del buffer
+** 'input_1st_display': primo carattere visualizzato su schermo
+** 'num_history': numero di comandi nella cronologia
 ** 'text_search': tipo di ricerca nel testo:
 *** 0: nessuna ricerca in questo momento
 *** 1: ricerca all'indietro (direzione: messaggi più vecchi)
@@ -6984,11 +6990,11 @@ Argomenti:
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
 ** 'short_name': nome breve del buffer
-** 'tilte': titolo del buffer
+** 'title': titolo del buffer
 ** 'input': testo in ingresso
-** 'text_search_input': input saved before text search
-** 'highlight_words': list of words to highlight
-** 'highlight_tags': list of tags to highlight
+** 'text_search_input': input salvato prima della ricerca nel testo
+** 'highlight_words': elenco di parole da evidenziare
+** 'highlight_tags': elenco di tag da evidenziare
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
 
@@ -7081,7 +7087,7 @@ Argomenti:
 
 [width="100%",cols="^2,4,8",options="header"]
 |========================================
-| Name | Value | Description
+| Nome | Valore | Descrizione
 
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
@@ -7108,70 +7114,77 @@ Argomenti:
 | short_name | qualsiasi stringa |
   imposta nuovo nome breve per il buffer
 
-| type | "formatted" o "free" |
+| type | "formatted" oppure "free" |
   imposta tipo per il: "formatted" (per stampare i messaggi di chat),
   oppure "free" (per contenuto libero)
 
 | notify | "0", "1", "2", "3" |
-  set notify level for buffer: "0" = never add to hotlist, "1" = add for
-  highlights only, "2" = add for highlights and messages, "3" = add for all
-  messages
+  imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
+  "1" = aggiungere solo per gli eventi, "2" = aggiungere per eventi e
+  messaggi, "3" = aggiungere per tutti i messaggi
 
-| title | any string |
-  set new title for buffer
+| title | qualsiasi stringa |
+  imposta nuovo titolo per il buffer
 
-| time_for_each_line | "0" or "1" |
-  "0" to hide time for all lines in buffer, "1" to see time for all lines
-  (default for a new buffer)
+| time_for_each_line | "0" oppure "1" |
+  "0" per nascondere l'orario in tutte le righe del buffer, "1" per
+  visualizzarlo su tutte le righe (predefinito per un nuovo buffer)
 
-| nicklist | "0" or "1" |
-  "0" to remove nicklist for buffer, "1" to add nicklist for buffer
+| nicklist | "0" oppure "1" |
+  "0" per rimuovere la lista nick per il buffer, "1" per aggiungere
+  la lista nick per il buffer
 
-| nicklist_case_sensitive | "0" or "1" |
-  "0" to have case insensitive nicklist, "1" to have case sensitive nicklist
+| nicklist_case_sensitive | "0" oppure "1" |
+  "0" per avere una lista nick case insenstive (maiuscole/minuscole
+  ignorate), "1" per avere una lista nick case sensitive
+  (maiuscole/minuscole non ignorate)
 
-| nicklist_display_groups | "0" or "1" |
-  "0" to hide nicklist groups, "1" to display nicklist groups
+| nicklist_display_groups | "0" oppure "1" |
+  "0" per nascondere i gruppi nella lista nick, "1" per visualizzare
+  i gruppi della lista nick
 
-| highlight_words | "-" or comma separated list of words |
-  "-" is a special value to disable any highlight on this buffer, or comma
-  separated list of words to highlight in this buffer, for example:
-  "abc,def,ghi"
+| highlight_words | "-" oppure elenco di parole separato da virgole |
+  "-" è un valore speciale per disabilitare qualsiasi evento su questo
+  buffer, o un elenco di parole separate da virgole da evidenziare in
+  questo buffer, ad esempio: "abc,def,ghi"
 
-| highlight_words_add | comma separated list of words |
-  comma separated list of words to highlight in this buffer, these words are
-  added to existing highlighted words in buffer
+| highlight_words_add | elenco di parole separate da virgole |
+  elenco di parole separate da virgole da evidenziare in questo buffer,
+  queste parole vengono aggiunte alle parole evidenziate esistenti nel
+  buffer
 
-| highlight_words_del | comma separated list of words |
-  comma separated list of words to remove from highlighted words on buffer
+| highlight_words_del | elenco di parole separate da virgole|
+  elenco di parole separate da virgole da rimuovere dalle
+  parole evidenziate nel buffer
 
-| highlight_tags | comma separated list of tags |
-  comma separated list of tags to highlight in this buffer
+| highlight_tags | elenco separato da virgole di tag |
+  elenco separato da virgole di tag da evidenziare in questo buffer
 
-| key_bind_xxx | any string |
-  bind a new key 'xxx', specific to this buffer, value is command to execute
-  for this key
+| key_bind_xxx | qualsiasi stringa |
+  assegna un nuovo tasto 'xxx', specifico per questo buffer, il valore è il
+  comando da eseguire per questo tasto
 
 | key_unbind_xxx | - |
-  unbind key 'xxx' for this buffer
+  rimuove l'assegnazione del tasto 'xxx' per questo buffer
 
-| input | any string |
-  set new value for buffer input
+| input | qualsiasi stringa |
+  imposta un nuovo valore per l'input del buffer
 
-| input_pos | position |
-  set cursor position in buffer input
+| input_pos | posizione |
+  imposta la posizione del cursore per l'input del buffer
 
-| input_get_unknown_commands | "0" or "1" |
-  "0" to disable unknown commands on this buffer (default behaviour), "1" to
-  get unknown commands, for example if user type "/unknowncmd", buffer will
-  receive it (no error about unknown command)
+| input_get_unknown_commands | "0" oppure "1" |
+  "0" per disabilitare i comandi sconosciuti per questo buffer (comportamento
+  predefinito), "1" per ricevere i comandi sconosciuti, ad esempio se l'utente
+  digita "/unknowncmd", verrà ricevuto dal buffer (nessun errore riguardo il
+  comando sconosciuto)
 
-| localvar_set_xxx | any string |
-  set new value for local variable 'xxx' (variable is created if it does not
-  exist)
+| localvar_set_xxx | qualsiasi stringa |
+  imposta il nuovo valore per la variabile locale 'xxx' (la variabile verrà
+  creata se non esiste)
 
 | localvar_del_xxx | - |
-  remove local variable 'xxx'
+  rimuove la variabile locale 'xxx'
 |========================================
 
 Esempio in C:
@@ -7216,7 +7229,7 @@ weechat.buffet_set(my_buffer, "name", "my_new_name")
 weechat.buffet_set(my_buffer, "localvar_set_tizio", "abc")
 
 # rimuove la variabile locale "tizio"
-weechat.buffet_set(my_buffer, "localvar_del_toto", "")
+weechat.buffet_set(my_buffer, "localvar_del_tizio", "")
 ----------------------------------------
 
 weechat_buffer_set_pointer
@@ -7286,7 +7299,7 @@ weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
 char *str = weechat_buffer_string_replace_local_var (my_buffer,
                                                      "test with $toto");
-/* str contains "test with abc" */
+/* str contiene "test with abc" */
 ----------------------------------------
 
 Script (Python):
@@ -7303,10 +7316,10 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 ----------------------------------------
 
 [[windows]]
-Windows
-~~~~~~~
+Finestre
+~~~~~~~~
 
-Functions to query windows.
+Funzioni per richiedere finestre.
 
 weechat_current_window
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -7345,7 +7358,7 @@ current_window = weechat.current_window()
 weechat_window_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
- il valore intero della proprietà di una finestra.
+Restituisce il valore intero della proprietà di una finestra.
 
 Prototipo:
 
@@ -7479,7 +7492,7 @@ weechat.prnt("", "buffer displayed in current window: %lx"
 weechat_window_set_title
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
- il titolo per il terminale.
+Imposta il titolo per il terminale.
 
 Prototipo:
 
@@ -7511,15 +7524,15 @@ weechat.window_set_title("nuovo titolo qui")
 ----------------------------------------
 
 [[nicklist]]
-Nicklist
-~~~~~~~~
+Lista nick
+~~~~~~~~~~
 
- per il buffer nicklist.
+Funzioni per il buffer nicklist.
 
 weechat_nicklist_add_group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Aggiunge un gruppo in una nicklist.
+Aggiunge un gruppo in una lista nick.
 
 Prototipo:
 
@@ -7536,7 +7549,7 @@ Argomenti:
 
 * 'buffer': puntatore al buffer
 * 'parent_group': puntatore al genitore del gruppo, NULL se il gruppo non ha genitore
-  (nicklist radice)
+  (lista nick radice)
 * 'name': nome del gruppo
 * 'visible':
 ** '1': gruppi e sottogruppi/nick sono visibili
@@ -7855,7 +7868,7 @@ weechat.nicklist_remove_all(my_buffer)
 Barre
 ~~~~~
 
-Functions for bars.
+Funzioni per le barre.
 
 weechat_bar_item_search
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -8370,7 +8383,7 @@ if (weechat_network_pass_proxy ("my_proxy", sock, "irc.freenode.net", 6667))
 }
 else
 {
-    /* error */
+    /* errore */
 }
 ----------------------------------------
 
@@ -9249,8 +9262,8 @@ weechat.infolist_free(infolist)
 ----------------------------------------
 
 [[upgrade]]
-Upgrade
-~~~~~~~
+Aggiornamento
+~~~~~~~~~~~~~
 
 Funzioni per l'aggiornamento di WeeChat (comando "/upgrade").
 
@@ -9383,7 +9396,7 @@ my_upgrade_read_cb (struct t_upgrade_file *upgrade_file,
                     int object_id,
                     struct t_infolist *infolist)
 {
-    /* read variables... */
+    /* lettura variabili... */
     return WEECHAT_RC_OK;
 }
 
@@ -9399,7 +9412,7 @@ rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
 
 # esempio
 def my_upgrade_read_cb(upgrade_file, object_id, infolist):
-    # read variables...
+    # lettura variabili...
     return weechat.WEECHAT_RC_OK
 
 weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))

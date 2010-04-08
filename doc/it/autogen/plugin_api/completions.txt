@@ -54,9 +54,9 @@
 
 | weechat | bars_options | opzioni per le barre
 
-| weechat | buffer_properties_get | properties that can be read on a buffer
+| weechat | buffer_properties_get | proprietà che possono essere lette su un buffer
 
-| weechat | buffer_properties_set | properties that can be set on a buffer
+| weechat | buffer_properties_set | proprietà che possono essere impostate su un buffer
 
 | weechat | buffers_names | nomi dei buffer
 
@@ -82,7 +82,7 @@
 
 | weechat | keys_codes | codici tasti
 
-| weechat | keys_codes_for_reset | key codes that can be reset (keys added, redefined or removed)
+| weechat | keys_codes_for_reset | codici tasti che possono essere ripristinati (tasti aggiunti, ridefiniti o rimossi)
 
 | weechat | nicks | nick nella lista nick del buffer corrente
 

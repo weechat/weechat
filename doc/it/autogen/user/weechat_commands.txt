@@ -53,49 +53,49 @@
       /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/buffer`* `[clear [number | -merged | -all] | move number | merge number | unmerge [number] | close [n1[-n2]] | list | notify level | localvar | set property value | get property | number | name]`::
+&bull; *`/buffer`* `[clear [numero | -merged | -all] | move numero | merge numero | unmerge [numero] | close [n1[-n2]] | list | notify livello | localvar | set proprietà valore | get proprietà |numero | nome]`::
 
 ........................................
   gestione buffer
 
-     clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-      move: move buffer in the list (may be relative, for example -1)
-     merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-            (by default ctrl-x switches between merged buffers)
-   unmerge: unmerge buffer from other buffers which have same number
-     close: close buffer (number/range is optional)
-      list: list buffers (without argument, this list is displayed)
-    notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-                 none: never
-            highlight: for highlights only
-              message: for messages from users + highlights
-                  all: all messages
-                reset: reset to default value (all)
-  localvar: display local variables for current buffer
-       set: set a property for current buffer
-       get: display a property of current buffer
-    number: jump to buffer by number, possible prefix:
-            '+': relative jump, add number to current
-            '-': relative jump, sub number to current
-            '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-      name: jump to buffer by (partial) name
+     clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer uniti, -all per tutti i buffer, o nulla per quello corrente)
+      move: sposta buffer nella lista (può essere relativo, ad esempio -1)
+     merge: unisce il buffer corrente ad un altro (l'area di chat sarà un mix di entrambi)
+            (con ctrl-x si alterna tra i buffer uniti)
+   unmerge: stacca il buffer da altri buffer con lo stesso numero
+     close: chiudi buffer (numero/range opzionale)
+      list: elenca i buffer (nessun parametro implica questa lista)
+    notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer verrà aggiunto alla hotlist oppure no:
+                 none: mai
+            highlight: solo per gli eventi
+              message: per i messaggi da tutti gli utenti + eventi
+                  all: tutti i messaggi
+                reset: ripristina il valore predefinito (tutto)
+  localvar: visualizza la variabile locale per il buffer corrente
+       set: imposta una proprietà per il buffer corrente
+       get: visualizza una proprietà del buffer corrente
+    number: passa al buffer di numero in numero:
+            '+': passo relativo, aggiunge il numero a quello corrente
+            '-': passo relativo, sottrae il numero da quello corrente
+            '*': passa al numero, utilizzando l'opzione "weechat.look.jump_current_to_previous_buffer"
+      nome: passa al buffer di nome (parziale)
   
-  Examples:
-    clear current buffer:
+  Esempi:
+   pulisci buffer corrente:
       /buffer clear
-    move buffer to number 5:
+    sposta buffer al numero 5:
       /buffer move 5
-    merge with core buffer:
+    unisci al buffer core:
       /buffer merge 1
-    unmerge buffer:
+    stacca buffer:
       /buffer unmerge
-    close current buffer:
+    chiudi buffer corrente:
       /buffer close
-    close buffers 5 to 7:
+    chiudi buffer da 5 a 7:
       /buffer close 5-7
-    jump to #weechat:
+    salta a #weechat:
       /buffer #weechat
-    jump to next buffer:
+    salta al buffer successivo:
       /buffer +1
 ........................................
 
@@ -187,28 +187,28 @@
   Questo comando è utilizzato da combinazioni di tasti o plugin.
 ........................................
 
-&bull; *`/key`* `[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] | [reset key] | [resetall -yes] | [missing]`::
+&bull; *`/key`* `[list | listdefault | listdiff] | [bind tasto [comando [args]]] | [unbind tasto] | [reset tasto] | [resetall -yes] | [missing]`::
 
 ........................................
   associa/disassocia tasti
 
-         list: list all current keys (without argument, this list is displayed)
-  listdefault: list default keys
-     listdiff: list differences between current and default keys (keys added, redefined or deleted)
-         bind: bind a command to a key or display command bound to key
-       unbind: remove a key binding
-        reset: reset a key to default binding
-     resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-      missing: add missing keys (using default bindings), useful after installing new WeeChat version
+         list: elenca tutti i tasti correnti (senza argomento, viene visualizzata questa lista)
+  listdefault: elenca i tasti predefiniti
+     listdiff: elenca le differenze tra tasti attuali e predefiniti (tasti aggiunti, ridefiniti o eliminati)
+         bind: associa un comando ad un tasto o visualizza il comando associato al tasto
+       unbind: rimuove una associazione di tasti
+        reset: ripristina un tasto all'assegnazione predefinita
+     resetall: ripristina le associazioni ai valori predefiniti ed elimina TUTTE le associazioni personalizzate (usare con cautela!)
+      missing: aggiunge tasti mancanti (utilizzando le associazioni predefinite), utile dopo l'installazione di una nuova versione di WeeChat
   
-  When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+  Al momento di associare un comando ad un tasto si raccomanda di utilizzare il tasto alt+k (oppure Esc e k), e digitare il tasto da associare: il codice tasto verrà inserito nella riga di comando.
   
-  Examples:
-    key alt-x to toggle nicklist bar:
+  Esempi:
+    il tasto alt-x per alternare la barra della nicklist:
       /key bind meta-x /bar toggle nicklist
-    key alt-r to jump to #weechat IRC channel:
+    il tasto alt-r per passare al canale IRC #weechat:
       /key bind meta-r /buffer #weechat
-    restore default binding for key alt-r:
+    ripristinare l'associazione predefinita per il tasto alt-r:
       /key reset meta-r
 ........................................
 
@@ -406,40 +406,40 @@
 ........................................
   gestione finestre
 
-           list: list opened windows (without argument, this list is displayed)
-             -1: jump to previous window
-             +1: jump to next window
-             b#: jump to next window displaying buffer number #
-             up: switch to window above current one
-           down: switch to window below current one
-           left: switch to window on the left
-          right: switch to window on the right
-         splith: split current window horizontally
-         splitv: split current window vertically
-         resize: resize window size, new size is <pct> percentage of parent window
-          merge: merge window with another (all = keep only one window)
-        page_up: scroll one page up
-      page_down: scroll one page down
-        refresh: refresh screen
-         scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
-      scroll_up: scroll a few lines up
-    scroll_down: scroll a few lines down
-     scroll_top: scroll to top of buffer
-  scroll_bottom: scroll to bottom of buffer
-  scroll_previous_highlight: scroll to previous highlight
-  scroll_next_highlight: scroll to next highlight
-           zoom: zoom on window
+           list: elenca le finestre aperte (senza argomento, questa lista viene visualizzata)
+             -1: salta alla finestra precedente
+             +1: salta alla finestra successiva
+             b#: salta alla finestra successiva che visualizza il buffer numero #
+             up: passa alla finestra superiore a quella corrente
+           down: passa alla finestra inferiore a quella attiva
+           left: passa alla finestra a sinistra
+          right: passa alla finestra a destra
+         splith: divide la finestra attiva orizzontalmente
+         splitv: divide la finestra attiva verticalmente
+         resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
+          merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
+        page_up: scorre di una pagina in alto
+      page_down: scorre di una pagina in basso
+        refresh: aggiorna lo schermo
+         scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
+      scroll_up: scorre di alcune righe in alto
+    scroll_down: scorre di alcune righe in basso
+     scroll_top: scorre fino all'inizio del buffer
+  scroll_bottom: scorre fino alla fine del buffer buffer
+  scroll_previous_highlight: passa all'evento precedente
+      scroll_next_highlight: passa all'evento successivo
+           zoom: ingrandimento sulla finestra
   
-  For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+  Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
   
-  Examples:
-    jump to window displaying buffer #1:
+  Esempi:
+    salta alla finestra che visualizza il buffer #1:
       /window b1
-    scroll 2 lines up:
+    scorre di due righe in alto:
       /window scroll -2
-    scroll 2 days up:
+    scorre all'indietro di due giorni:
       /window scroll -2d
-    scroll to beginning of current day:
-      /window scroll -d
+    scorre all'inizio del giorno attuale:
+       /window scroll -d
 ........................................
 
