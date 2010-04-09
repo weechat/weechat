@@ -22,6 +22,7 @@ AC_INIT(WeeChat, 0.3.2-dev, flashcode@flashtux.org)
 AC_CONFIG_SRCDIR([src/core/weechat.c])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([weechat], [0.3.2-dev])
+LICENSE="GPL3"
 
 # Checks for programs
 AC_PROG_CC
@@ -958,7 +959,7 @@ gnu*)
         ;;
 esac
 
-CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\""
+CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
 
 # ------------------------------------------------------------------------------
 #                                output Makefiles

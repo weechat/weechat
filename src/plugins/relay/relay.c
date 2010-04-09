@@ -40,7 +40,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Network communication between WeeChat and "
                            "remote application");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL3");
+WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 

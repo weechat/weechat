@@ -60,7 +60,7 @@
 
 /* license */
 
-#define WEECHAT_LICENSE \
+#define WEECHAT_LICENSE_TEXT \
     PACKAGE_STRING " (c) Copyright 2003-2010, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \

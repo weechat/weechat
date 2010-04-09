@@ -200,7 +200,7 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
-            string_iconv_fprintf (stdout, "\n%s%s", WEECHAT_LICENSE);
+            string_iconv_fprintf (stdout, "\n%s%s", WEECHAT_LICENSE_TEXT);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if (strcmp (argv[i], "--no-dlclose") == 0)
