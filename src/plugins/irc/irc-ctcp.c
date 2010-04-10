@@ -258,7 +258,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
     if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
     {
         weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
-                             irc_protocol_tags (command, "irc_ctcp,irc_ctcp_reply"),
+                             irc_protocol_tags (command,
+                                                "irc_ctcp,irc_ctcp_reply,no_highlight"),
                              _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_NICK,
