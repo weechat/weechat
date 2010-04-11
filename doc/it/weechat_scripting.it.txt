@@ -11,7 +11,7 @@ http://www.weechat.org/doc
 
 
 [[introduction]]
-Introduction
+Introduzione
 ------------
 
 WeeChat (Wee Enhanced Environment for Chat) è un client di chat libero,
@@ -122,8 +122,8 @@ weechat::print "" "Hello, from tcl script!"
 ----------------------------------------
 
 [[load_script]]
-Load script
-~~~~~~~~~~~
+Caricare uno script
+~~~~~~~~~~~~~~~~~~~
 
 Il comando da utilizzare, in base al linguaggio:
 
@@ -234,10 +234,8 @@ def my_timer_cb(data, remaining_calls):
 Script API
 ----------
 
-For more information about functions in API, please read
-'WeeChat Plugin API Reference'.
-Per maggiori informazioni sulle funzioni nelle API, per
-favore consultare
+Per maggiori informazioni sulle funzioni nelle API,
+consultare 'Referenze API per Plugin di WeeChat'.
 
 [[script_api_functions]]
 Funzioni
@@ -349,8 +347,8 @@ Elenco di costanti nelle API per gli script:
 |========================================
 
 [[common_tasks]]
-Common tasks
-------------
+Compiti comuni
+--------------
 
 Questo capitolo spiega alcuni compiti comuni, con degli esempi.
 Verranno utilizzati soltanto degli elementi parziali contenuti
@@ -733,8 +731,8 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 ----------------------------------------
 
 [[infos_other]]
-Other infos
-^^^^^^^^^^^
+Altre informazioni
+^^^^^^^^^^^^^^^^^^
 
 [source,python]
 ----------------------------------------
