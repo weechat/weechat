@@ -1918,7 +1918,7 @@ config_file_write_internal (struct t_config_file *config_file,
                 (default_options) ? _("(default options)") : "");
     
     /* open temp file in write mode */
-    config_file->file = fopen (filename2, "w");
+    config_file->file = fopen (filename2, "wb");
     if (!config_file->file)
     {
         gui_chat_printf (NULL,
