@@ -288,6 +288,7 @@ weechat_perl_load (const char *filename)
     }
     
     perl_current_script = NULL;
+    perl_current_script_filename = filename;
     perl_registered_script = NULL;
     
 #ifdef MULTIPLICITY
@@ -301,8 +302,6 @@ weechat_perl_load (const char *filename)
                         weechat_prefix ("error"), PERL_PLUGIN_NAME);
         return 0;
     }
-    
-    perl_current_script_filename = filename;
     
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
