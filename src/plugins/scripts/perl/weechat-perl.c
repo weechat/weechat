@@ -120,8 +120,8 @@ char *perl_weechat_code =
     "    }"
     "    return 0;"
     "}"
-    "$SIG{__WARN__} = sub { weechat::print(\"\", \"perl error: $_[0]\"); };"
-    "$SIG{__DIE__} = sub { weechat::print(\"\", \"perl error: $_[0]\"); };"
+    "$SIG{__WARN__} = sub { weechat::print(\"\", \"\tperl error: $_[0]\"); };"
+    "$SIG{__DIE__} = sub { weechat::print(\"\", \"\tperl error: $_[0]\"); };"
 };
 
 
