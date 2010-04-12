@@ -892,8 +892,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         perl_main = NULL;
     }
 #endif
-
-#ifdef PERL_SYS_TERM
+    
+#if defined(PERL_SYS_TERM) && !defined(__FreeBSD__) && !defined(WIN32) && !defined(__CYGWIN__)
+    /*
+     * we call this function on all OS, but NOT on FreeBSD or Cygwin,
+     * because it crashes with no reason (bug in Perl?)
+     */
     if (perl_quit_or_upgrade)
         PERL_SYS_TERM ();
 #endif

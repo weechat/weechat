@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.2-dev, 2010-04-05
+v0.3.2-dev, 2010-04-12
 
 
 Version 0.3.2 (under dev!)
@@ -57,6 +57,8 @@ Version 0.3.2 (under dev!)
 * scripts: fix bug with callbacks when loading a script already loaded
 * perl: fix crash when callbacks are called during script initialization
   (bug #29018)
+* perl: fix crash on /quit or unload of plugin under FreeBSD and Cygwin
+  (bug #29467)
 * irc: add SASL authentication, with PLAIN and DH-BLOWFISH mechanisms
   (task #8829)
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
