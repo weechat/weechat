@@ -633,7 +633,6 @@ void
 gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_line *ptr_line;
-    struct t_gui_window *ptr_win;
     
     /* first remove mixed line if it exists */
     if (buffer->mixed_lines)
