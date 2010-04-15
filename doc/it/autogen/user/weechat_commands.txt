@@ -215,7 +215,7 @@
 &bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
 
 ........................................
-  salva/applica/resetta il layout per i buffer e le finestre
+  salva/applica/ripristina il layout per i buffer e le finestre
 
      save: salva il layout corrente
     apply: applica il layout salvato
@@ -296,7 +296,7 @@
 &bull; *`/quit`* `[argomenti]`::
 
 ........................................
-  esci da WeeChat
+  esce da WeeChat
 
   argomenti: testo inviato con il segnale "quit"
              (ad esempio il plugin irc usa questo testo per inviare il messaggio di uscita al server)
@@ -342,11 +342,11 @@
 &bull; *`/unset`* `[opzione]`::
 
 ........................................
-  annulla/resetta opzione
+  annulla/ripristina opzione
 
-  opzione: nome di un'opzione (può cominciare o finire con "*" per il reset di più opzioni, attenzione!)
+  opzione: nome di un'opzione (può cominciare o finire con "*" per il ripristino di più opzioni, attenzione!)
   
-  A seconda dell'opzione, viene resettata (per le opzioni standard) o rimossa (per le impostazioni opzionali, come i valori del server)
+  A seconda dell'opzione, essa viene ripristinata (per le opzioni standard) o rimossa (per le impostazioni opzionali, come i valori del server)
 ........................................
 
 &bull; *`/upgrade`* `[percorso_del_binario]`::

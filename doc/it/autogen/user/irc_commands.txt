@@ -423,7 +423,7 @@
 &bull; *`/reconnect`* `[-all [-nojoin] | nome_server [nome_server ...] [-nojoin]]`::
 
 ........................................
-  riconnetti a uno (o più) server
+  riconnette a uno (o più) server
 
          -all: riconnetti a tutti i server
   nome_server: nome del server a cui riconnettersi
