@@ -33,7 +33,7 @@ Script in WeeChat
 Specifiche per i linguaggi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Alcune cose sono specifiche per le lingue:
+Alcune cose sono specifiche per i linguaggi:
 
 * perl:
 ** le funzioni sono chiamate con `weechat::xxx(arg1, arg2, ...);`

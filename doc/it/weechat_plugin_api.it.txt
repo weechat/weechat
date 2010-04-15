@@ -840,7 +840,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-int hl = weechat_string_has_highlight ("mia stringa di test", "test,word2"); /* == 1 */
+int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
 ----------------------------------------
 
 Script (Python):
@@ -851,7 +851,7 @@ Script (Python):
 highlight = weechat.string_has_highlight(string, highlight_words)
 
 # esempio
-highlight = weechat.string_has_highlight("mia stringa di test", "test,word2") # 1
+highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----------------------------------------
 
 weechat_string_mask_to_regex
@@ -1150,12 +1150,12 @@ Esempi:
 [source,C]
 ----------------------------------------
 /* rimuove i codici colore */
-char *str = weechat_string_remove_color (mia_stringa1, NULL);
+char *str = weechat_string_remove_color (my_string1, NULL);
 /* ... */
 free (str);
 
 /* sostituisce i codici colore con "?" */
-char *str = weechat_string_remove_color (mia_stringa2, "?");
+char *str = weechat_string_remove_color (my_string2, "?");
 /* ... */
 free (str);
 ----------------------------------------
@@ -1168,7 +1168,7 @@ Script (Python):
 str = weechat.string_remove_color(string, replacement)
 
 # esempio
-str = weechat.string_remove_color(mia_stringa, "?")
+str = weechat.string_remove_color(my_string, "?")
 ----------------------------------------
 
 weechat_string_encode_base64
@@ -1874,7 +1874,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-if (!weechat_mkdir_parents ("/tmp/mia/cartella", 0755))
+if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
     /* errore */
 }
@@ -2129,7 +2129,7 @@ Script (Python):
 item = weechat.list_add(list, data, where, user_data)
 
 # esempio
-item = weechat.list_add(list, "miei dati", weechat.WEECHAT_LIST_POS_SORT, "")
+item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 ----------------------------------------
 
 weechat_list_search
@@ -2169,7 +2169,7 @@ Script (Python):
 item = weechat.list_search(list, data)
 
 # esempio
-item = weechat.list_search(list, "miei dati")
+item = weechat.list_search(list, "my data")
 ----------------------------------------
 
 weechat_list_casesearch
@@ -9060,7 +9060,7 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "integer = %d",
-                weechat_infolist_integer (infolist, "mio_intero"));
+                weechat_infolist_integer (infolist, "my_integer"));
 ----------------------------------------
 
 Script (Python):
@@ -9071,7 +9071,7 @@ Script (Python):
 value = weechat.infolist_integer(infolist, var)
 
 # esempio
-weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "mio_intero"))
+weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
 ----------------------------------------
 
 weechat_infolist_string
@@ -9101,7 +9101,7 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "string = %s",
-                weechat_infolist_string (infolist, "mia_stringa"));
+                weechat_infolist_string (infolist, "my_string"));
 ----------------------------------------
 
 Script (Python):
@@ -9112,7 +9112,7 @@ Script (Python):
 value = weechat.infolist_string(infolist, var)
 
 # esempio
-weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "mia_stringa"))
+weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 ----------------------------------------
 
 weechat_infolist_pointer
@@ -9142,7 +9142,7 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "pointer = 0x%lx",
-                weechat_infolist_pointer (infolist, "mio_puntatore"));
+                weechat_infolist_pointer (infolist, "my_pointer"));
 ----------------------------------------
 
 Script (Python):
@@ -9153,7 +9153,7 @@ Script (Python):
 value = weechat.infolist_pointer(infolist, var)
 
 # esempio
-weechat.prnt("", "pointer = 0x%lx" % weechat.infolist_pointer(infolist, "mio_puntatore"))
+weechat.prnt("", "pointer = 0x%lx" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----------------------------------------
 
 weechat_infolist_buffer
@@ -9300,7 +9300,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("mio_file", 1);
+struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
 ----------------------------------------
 
 Script (Python):
@@ -9311,7 +9311,7 @@ Script (Python):
 upgrade_file = weechat.upgrade_new(filename, write)
 
 # esempio
-upgrade_file = weechat.upgrade_new("mio_file", 1)
+upgrade_file = weechat.upgrade_new("my_file", 1)
 ----------------------------------------
 
 weechat_upgrade_write_object
