@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-04-05 12:44+0200\n"
-"PO-Revision-Date: 2010-03-23 10:20+0100\n"
+"PO-Revision-Date: 2010-04-16 22:03+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -6263,14 +6263,3 @@ msgstr "адресат тип [аргументы]"
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
-
-#~ msgid ""
-#~ "channel: channel to list (a regexp is allowed)\n"
-#~ "server: server name"
-#~ msgstr ""
-#~ " канал: перечисляемый канал (возможно регулярное выражение)\n"
-#~ "сервер: название сервера"
-
-#, fuzzy
-#~ msgid "No key added or redefined"
-#~ msgstr "Сокращения не заданы.\n"

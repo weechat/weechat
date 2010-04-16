@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-05 12:44+0200\n"
-"PO-Revision-Date: 2010-03-23 10:20+0100\n"
+"POT-Creation-Date: 2010-04-14 19:26+0200\n"
+"PO-Revision-Date: 2010-04-16 22:02+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Użycie: %s [argumenty...] [wtyczka:opcje...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
@@ -57,6 +56,7 @@ msgstr ""
 "  -k, --keys        wyświetla domyślne skróty klawiszowe WeeChat\n"
 "  -l, --license     wyświetla licencje WeeChat\n"
 "  -p, --no-plugin   nie ładuj wtyczek przy starcie\n"
+"  -s, --no-script   nie ładuj skryptów przy starcie\n"
 "  -v, --version     pokaż wersję  WeeChat\n"
 "  wtyczka:opcje     opcje dla wtyczki\n"
 "                    na przykład, wtyczka irc może połączyć się\n"
@@ -343,21 +343,19 @@ msgstr "%sNie ma dostępnej pomocy, \"%s\" nie jest komenda ani opcją"
 msgid "Buffer command history:"
 msgstr "Historia komend bufora:"
 
-#, fuzzy
 msgid "default command:"
-msgstr "komendy weechata"
+msgstr "domyślna komenda:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Key bindings added or redefined (%d):"
-msgstr "Powiązania klawiszy (%d):"
+msgstr "Dodane lub przedefiniowane skróty klawiszowe (%d):"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Key bindings deleted (%d):"
-msgstr "Powiązania klawiszy (%d):"
+msgstr "Usunięte skróty klawiszowe (%d):"
 
-#, fuzzy
 msgid "No key binding added, redefined or removed"
-msgstr "Powiązania klawiszy (%d):"
+msgstr "Nie dodano, przedefiniowano lub zmieniono żadnego skrótu klawiszowego"
 
 msgid "No key binding defined"
 msgstr "Nie zdefiniowano powiązań klawiszy"
@@ -366,13 +364,12 @@ msgstr "Nie zdefiniowano powiązań klawiszy"
 msgid "Key bindings (%d):"
 msgstr "Powiązania klawiszy (%d):"
 
-#, fuzzy
 msgid "No default key binding"
-msgstr "Przywrócono domyślne przypisania klawiszy"
+msgstr "Brak domyślnych skrótów klawiszowych"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Default key bindings (%d):"
-msgstr "Przywrócono domyślne przypisania klawiszy"
+msgstr "Domyślne skróty klawiszowe (%d):"
 
 msgid "Key:"
 msgstr "Klawisz:"
@@ -394,11 +391,11 @@ msgstr "%sBłąd: nie można odbindować klawisza \"%s\""
 
 #, c-format
 msgid "Key \"%s\" has already default value"
-msgstr ""
+msgstr "Klawisz \"%s\" juz ma domyślną wartość"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sKey \"%s\" not found"
-msgstr "%s%s: relay \"%s\" nie został znaleziony"
+msgstr "%sKlawisz \"%s\" nie znaleziony"
 
 msgid "Default key bindings restored"
 msgstr "Przywrócono domyślne przypisania klawiszy"
@@ -842,8 +839,6 @@ msgstr ""
 "               nicklist: w oknach z listą nicków\n"
 "               bez warunku pasek jest zawsze wyświetlany\n"
 "     pozycja: dół (bottom), góra (top), lewo (left) lub prawo (right)\n"
-"      wypełnienie: poziomo (horizontal), pionowo (vertical), kolumny poziomo "
-"(columns_horizontal) lub kolumny pionowo (columns_vertical)\n"
 "         rozmiar: rozmiar paska (w znakach)\n"
 "    separator: 1 dla użycia separatora (linia), 0  - brak separatora\n"
 "    element1,...: elementy dla tego paska (elementy mogą być oddzielone "
@@ -884,7 +879,6 @@ msgstr ""
 msgid "manage buffers"
 msgstr "zarządzaj buforami"
 
-#, fuzzy
 msgid ""
 "[clear [number | -merged | -all] | move number | merge number | unmerge "
 "[number] | close [n1[-n2]] | list | notify level | localvar | set property "
@@ -892,9 +886,8 @@ msgid ""
 msgstr ""
 "[clear [numer | -merged | -all] | move numer | merge numer | unmerge [numer] "
 "| close [n1[-n2]] | list | notify pozom | localvar | set własność wartość | "
-"numer | nazwa]"
+"get własność | numer | nazwa]"
 
-#, fuzzy
 msgid ""
 "   clear: clear buffer content (number for a buffer, -merged for merged "
 "buffers, -all for all buffers, or nothing for current buffer)\n"
@@ -958,6 +951,7 @@ msgstr ""
 "              reset: przywraca wartości domyślne (all)\n"
 "localvar: wyświetla zmienne lokalne obecnego bufora\n"
 "     set: ustawia właściwość obecnego bufora\n"
+"     get: wyświetla właściwości obecnego bufora\n"
 "  numer: przechodzi do bufora o numerze, dostępne prefiksy:\n"
 "          '+': przejście względne, dodaje numer do obecnego\n"
 "          '-': przejście względne, odejmuje numer od obecnego\n"
@@ -966,15 +960,22 @@ msgstr ""
 "    nazwa: przejście do bufora o (częściowej) nazwie\n"
 "\n"
 "Przykłady:\n"
-"  czyści zawartość obecnego bufora: /buffer clear\n"
-"     czyści zawartość wszystkich biforów: /buffer clear -all\n"
-"           przenosi bufor: /buffer move 5\n"
-"łączy z głównym buforem: /buffer merge 1\n"
-"        odłącza bufory: /buffer unmerge\n"
-"  zamyka obecny bufor: /buffer close\n"
-"  zamyka bufory od 5 do 7: /buffer close 5-7\n"
-"      przechodzi do #weechat: /buffer #weechat\n"
-"   przechodzi do następnego buforu: /buffer +1"
+"  czyści zawartość obecnego bufora:\n"
+"    /buffer clear\n"
+"  przenosi bufor na numer 5:\n"
+"    /buffer move 5\n"
+"  łączy z głównym buforem:\n"
+"    /buffer merge 1\n"
+"  odłącza bufory:\n"
+"    /buffer unmerge\n"
+"  zamyka obecny bufor:\n"
+"    /buffer close\n"
+"  zamyka bufory od 5 do 7:\n"
+"    /buffer close 5-7\n"
+"  przechodzi do #weechat:\n"
+"    /buffer #weechat\n"
+"  przechodzi do następnego buforu:\n"
+"    /buffer +1"
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "wywołaj wyraźnie komendę WeeChat lub pluginu"
@@ -1030,7 +1031,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [nazwa]] | [add nazwa wtyczka.bufor tagi "
 "regex] | [del nazwa|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1088,11 +1088,20 @@ msgstr ""
 "\n"
 "domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.\n"
 "\n"
+"Najczęściej używane tagi:\n"
+"  no_filter, no_highlight, log0..log9 (poziom logowania),\n"
+"  notify_message, notify_private, notify_highlight,\n"
+"  irc_xxx (xxx to nazwa komendy lub numer, zobacz /server raw), irc_numeric, "
+"irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, "
+"away_info.\n"
+"\n"
 "Przykłady:\n"
 "  użyj inteligentnego filtru na  IRCu dla wiadomości o join/part/quit:\n"
 "    /filter add irc_smart * irc_smart_filter *\n"
 "  filtruj wszystkie wiadomości IRC o join/part/quit:\n"
 "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
+"  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:\n"
+"    /filter add nicks * irc_366 *\n"
 "  filtruj nick \"toto\" na IRCowym kanale #weechat:\n"
 "    /filter add toto irc.freenode.#weechat * toto\\t\n"
 "  filtruj linie zawierające \"spam\":\n"
@@ -1135,15 +1144,13 @@ msgstr "Ta komenda jest używana przez skróty klawiszowe lub wtyczki"
 msgid "bind/unbind keys"
 msgstr "przypisz/usuń przypisanie klawiszy"
 
-#, fuzzy
 msgid ""
 "[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
 "| [reset key] | [resetall -yes] | [missing]"
 msgstr ""
-"[bind klawisz [komenda [argumenty]]] | [unbind klawisz] | [reset -yes] | "
-"[missing]"
+"[list | listdefault | listdiff] | [bind klawisz [komenda [argumenty]]] | "
+"[unbind klawisz] | [reset -yes] | [missing]"
 
-#, fuzzy
 msgid ""
 "       list: list all current keys (without argument, this list is "
 "displayed)\n"
@@ -1170,16 +1177,31 @@ msgid ""
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r"
 msgstr ""
-"   bind: przypisuje komendę do klawisza lub wyświetla przypisaną do klawisza "
-"komendę\n"
-" unbind: usuń przypisanie do klawisza\n"
-"  reset: przywraca domyślne skróty klawiszowe i usuwa WSZYSTKIE osobiste "
-"skróty (używaj z ostrożnością!)\n"
-"missing: dodaje brakujące klawisze (używając domyślnych przypisań)\n"
+"       list: wyświetla wszystkie obecne skróty (bez podanego argumentu, "
+"pokazywana jest ta lista)\n"
+"listdefault: wyświetla domyślne skróty klawiszowe\n"
+"   listdiff: wyświetla różnice pomiędzy obecnymi a domyślnymi skrótami "
+"klawiszowymi (dodane, zredefiniowane oraz usunięte)\n"
+"       bind: przypisuje komende do klawisza lub wyświetla komende przypisaną "
+"do klawisza\n"
+"     unbind: usuwa przypisanie dla klawisza\n"
+"      reset: przywraca domyślne ustawienia dla klawisza\n"
+"   resetall: przywraca przypisania do domyślnych wartości oraz kasuje "
+"WSZYSTKIE własne przypisania (używaj uważnie!)\n"
+"    missing: dodaje brakujące przypisania (kożystając z domyślnych "
+"wartości), przydatne po instalacji nowej wersji WeeChat\n"
 "\n"
-"Przyspisując komendę do klawisza, zaleca się używanie kombinacji alt+k (lub "
-"Esc następnie k), dopiero wtedy wciśnięcie kombinacji do przypisania: pokaże "
-"to kod kombinacji w lini komend."
+"Podczas przypisania komendy do klawisza, zaleca się użycie alt+k (lub Esc "
+"następnie k), następnie wciśnięcie porządanej kombinacji: umieści to kod "
+"klawiszowy w lini poleceń.\n"
+"\n"
+"Przykłady:\n"
+"  kombinacja alt-x przełączająca wyświetlanie listy nicków:\n"
+"    /key bind meta-x /bar toggle nicklist\n"
+"  kombinacja alt-r przechodząca do kanału IRC #weechat IRCl:\n"
+"    /key bind meta-r /buffer #weechat\n"
+"  przywrócenie domyślnego przypisania dla kombinacji alt-r:\n"
+"    /key reset meta-r"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "zapisz/zatwierdź/zresetuj układ buforów i okien"
@@ -1210,7 +1232,6 @@ msgstr "wykonuje komende po cichu"
 msgid "[-current | -buffer name | -all] command"
 msgstr "[-current | -buffer nazwa | -all] komenda"
 
-#, fuzzy
 msgid ""
 "-current: no output on curent buffer\n"
 " -buffer: no output on specified buffer\n"
@@ -1243,10 +1264,12 @@ msgstr ""
 "wyciszany tylko bufor rdzenia WeeChat.\n"
 "\n"
 "Przykłady:\n"
-"  zapisanie konfiguracji: /mute save\n"
-"  wiadomość do obecnego kanału IRC: /mute -current msg * hej!\n"
-"  wiadomość na kanał #weechat: /mute -buffer irc.freenode.#weechat msg "
-"#weechat hej!"
+"  zapisanie konfiguracji:\n"
+"    /mute save\n"
+"  wiadomość do obecnego kanału IRC:\n"
+"    /mute -current msg * hej!\n"
+"  wiadomość na kanał #weechat:\n"
+"    /mute -buffer irc.freenode.#weechat msg #weechat hej!"
 
 msgid "list/load/unload plugins"
 msgstr "lista/załaduj/wyładuj wtyczke"
@@ -1462,6 +1485,8 @@ msgid ""
 " -o: send uptime to current buffer as input (english string)\n"
 "-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
+" -o: wysyła uptime jako wejscie do obecnego bufora (po angielsku)\n"
+"-ol: wysyła uptime jako wejscie do obecnego bufora (przetłumaczony)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "pokazuje wersję i datę, kiedy skompilowano WeeChat"
@@ -1470,6 +1495,8 @@ msgid ""
 " -o: send version to current buffer as input (english string)\n"
 "-ol: send version to current buffer as input (translated string)"
 msgstr ""
+" -o: wysyła wersje jako wejście do obecnego bufora (po angielsku)\n"
+"-ol: wysyła wersje jako wejście do obecnego bufora (przetłumaczony)"
 
 msgid "schedule a command execution in future"
 msgstr "kolejkuje komendę do wykonania w przyszłości"
@@ -1477,7 +1504,6 @@ msgstr "kolejkuje komendę do wykonania w przyszłości"
 msgid "number[unit] command"
 msgstr "liczba[jednostka] komenda"
 
-#, fuzzy
 msgid ""
 " number: amount of time to wait (integer number)\n"
 "   unit: optional, values are:\n"
@@ -1515,9 +1541,12 @@ msgstr ""
 "WeeChat).\n"
 "\n"
 "Przykłady:\n"
-"  wejdzie na kanł za 10 sek: /wait 10 /join #test\n"
-"  ustawi stan nieobecności za 15 min:     /wait 15m /away -all I'm away\n"
-"  napisze 'hello' za 2 min:   /wait 2m hello"
+"  wejdzie na kanł za 10 sek:\n"
+"    /wait 10 /join #test\n"
+"  ustawi stan nieobecności za 15 min:\n"
+"    /wait 15m /away -all I'm away\n"
+"  napisze 'hello' za 2 min:\n"
+"    /wait 2m hello"
 
 msgid "manage windows"
 msgstr "zarządza oknami"
@@ -1533,7 +1562,6 @@ msgstr ""
 "scroll_up | scroll_down | scroll_top | scroll_bottom | "
 "scroll_previous_highlight | scroll_next_highlight | zoom]"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -1576,7 +1604,8 @@ msgid ""
 "  scroll to beginning of current day:\n"
 "    /window scroll -d"
 msgstr ""
-"  list: lista otwartych okien (żaden parametr nie wpływa na tą listę)\n"
+"         list: lista otwartych okien (bez argumentu wyświetlana jest ta "
+"lista)\n"
 "           -1: skok do poprzedniego okna\n"
 "           +1: skok do następnego okna\n"
 "           b#: skok do następnego okna pokazującego bufor o numerze #\n"
@@ -1589,7 +1618,6 @@ msgstr ""
 "       resize: zmienia rozmiar okna, nowy rozmiar to <pct> procent okna "
 "nadrzędnego\n"
 "        merge: łączy okno z innym (all = posiadanie tylko jednego okna)\n"
-"\n"
 "      page_up: przewija stronę do góry\n"
 "    page_down: przewija stronę w dół\n"
 "      refresh: odswierza ekran\n"
@@ -1608,10 +1636,14 @@ msgstr ""
 "utworzenie nowego okna o rozmiarze = obecny_rozmiar / 4\n"
 "\n"
 "Przykłady:\n"
-"  skok do okna wyświetlającego bufor #1: /window b1\n"
-"  przewiń 2 linie do góry: /window scroll -2\n"
-"  przewiń 2 dni do góry: /window scroll -2d\n"
-"  przewiń do początku obecnego dnia: /window scroll -d"
+"  skok do okna wyświetlającego bufor #1:\n"
+"    /window b1\n"
+"  przewiń 2 linie do góry:\n"
+"    /window scroll -2\n"
+"  przewiń 2 dni do góry:\n"
+"    /window scroll -2d\n"
+"  przewiń do początku obecnego dnia:\n"
+"    /window scroll -d"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -1652,9 +1684,8 @@ msgstr ""
 "bufor musi byc wyświetlany na hotliście czy nie, w zależności od wagi "
 "wiadomości)"
 
-#, fuzzy
 msgid "time format for each line displayed in buffers"
-msgstr "format czasu wyświetlanej daty przy zmianie dnia"
+msgstr "format czasu dla każej lini wyświetlanej w buforze"
 
 msgid "number of colors to use for nicks colors"
 msgstr "liczba kolorów do użycia dla kolorowania nicków"
@@ -1674,6 +1705,9 @@ msgid ""
 "start with one of these chars; the slash (\"/\") is always considered as "
 "command prefix (example: \".$\")"
 msgstr ""
+"znaki użyte do określenia czy wprowadzony ciąg jest komendą czy nie: "
+"wprowadzony ciąg musi się zaczynać od jednego z tych znaków; slasz (\"/\") "
+"jest zawsze uważany za prefix komendy (np: \".$\")"
 
 msgid "display special message when day changes"
 msgstr "wyświetlaj specjalną wiadomość, kiedy zmienia się dzień"
@@ -1819,6 +1853,8 @@ msgstr ""
 
 msgid "always show read marker, even if it is after last buffer line"
 msgstr ""
+"zawsze pokazuj wskaźnik przeczytania, nawet jeśli jest po ostatniej lini w "
+"buforze"
 
 msgid "save configuration file on exit"
 msgstr "zapisz plik konfiguracyjny przy wyjściu"
@@ -1844,9 +1880,9 @@ msgstr ""
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr "ustaw tytuł okna (terminal dla GUI w Curses) na nazwe i wersję"
 
-#, fuzzy
 msgid "time format for dates converted to strings and displayed in messages"
-msgstr "format czasu wyświetlanej daty przy zmianie dnia"
+msgstr ""
+"format czasu dla dat, konwertowany do ciągu i wyświetlany w wiadomościach"
 
 msgid "background color for window separators (when split)"
 msgstr "kolor tła dla separatorów okna (kiedy podzielone)"
@@ -2007,9 +2043,8 @@ msgstr "kolor grup na liście nicków"
 msgid "text color for away nicknames"
 msgstr "kolor nicków ze statusem nieobecności"
 
-#, fuzzy
 msgid "text color for offline nicknames"
-msgstr "kolor nicków ze statusem nieobecności"
+msgstr "kolor dla nieobecnych nicków"
 
 msgid "text color for prefix #1 in nicklist"
 msgstr "kolor przedrostka #1 na liście nicków"
@@ -2094,7 +2129,6 @@ msgstr ""
 msgid "file containing the certificate authorities"
 msgstr "plik zawierający dane centrum uwieżytelniającego (CA)"
 
-#, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found, a name beginning with \"!\" is a negative value to "
@@ -2102,8 +2136,10 @@ msgid ""
 "match several plugins (examples: \"*\" or \"*,!lua,!tcl\")"
 msgstr ""
 "oddzielona przecinkami lista wtyczek do automatycznego załadowania podczas "
-"startu, \"*\" oznacza wszystkie znalezione wtyczki (nazwy mogą być "
-"częściowe, na przykład \"perl\" wystarczy dla \"perl.so\")"
+"startu, \"*\" oznacza wszystkie znalezione wtyczki, nazwa zaczynająca się od "
+"\"!\" powoduje nie ładowanie tej wtyczki, nazwy mogą zaczynać się lub "
+"kończyć \"*\" w celu dopasowania kilku wtyczek (przykłady: \"*\" lub \"*,!"
+"lua,!tcl\")"
 
 msgid ""
 "enable debug messages by default in all plugins (option disabled by default, "
@@ -2147,9 +2183,9 @@ msgstr "(domyślne opcje)"
 msgid "%sError: cannot create file \"%s\""
 msgstr "%sBłąd: nie można utrorzyć pliku \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError writing configuration file \"%s\""
-msgstr "%s%s: błąd podczas tworzenia pliku konfiguracyjnego"
+msgstr "%sBłąd podczas zapisu pliku konfiguracyjnego \"%s\""
 
 #, c-format
 msgid "%sWarning: configuration file \"%s\" not found"
@@ -2468,13 +2504,11 @@ msgstr "numery buforów"
 msgid "names of buffers (including plugins names)"
 msgstr "nazwy buforów (włącznie z nazwami wtyczek)"
 
-#, fuzzy
 msgid "properties that can be set on a buffer"
-msgstr "linie w buforze"
+msgstr "właściwości, jakie mogą być ustawione w buforze"
 
-#, fuzzy
 msgid "properties that can be read on a buffer"
-msgstr "linie w buforze"
+msgstr "właściwości, jakie moga być przeczytane w buforze"
 
 msgid "configuration files"
 msgstr "pliki konfiguracyjne"
@@ -2527,9 +2561,10 @@ msgstr "opcje pasków"
 msgid "key codes"
 msgstr "kody klawiszowe"
 
-#, fuzzy
 msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr "Powiązania klawiszy (%d):"
+msgstr ""
+"kody klawiszy, które mogą być zresetowane (klawisze dodane, zredefiniowane "
+"lub udunięte)"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
@@ -2585,11 +2620,10 @@ msgstr "%s%s: błąd podczas tworzenia pliku konfiguracyjnego"
 msgid "create an alias for a command"
 msgstr "tworzy alias do komendy"
 
-#, fuzzy
 msgid "[[-completion completion] alias_name [command [arguments]]]"
-msgstr "[nazwa_aliasu [komenda [argumenty]]]"
+msgstr "[[-completion dopełnienie] nazwa_aliasu [komenda [argumenty]]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
@@ -2621,6 +2655,8 @@ msgid ""
 "sajoin:\n"
 "    /alias -completion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
+"completion: opełnienie dla aliasu (opcjonalne, domyślnie dopełnienie "
+"wykonuje się z docelową komendą)\n"
 "nazwa_aliasu: nazwa aliasu (może się zaczynać lub kończyć \"*\" dla "
 "wyświetlenia listy aliasów)\n"
 "   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)\n"
@@ -2638,7 +2674,18 @@ msgstr ""
 "        $~: ostatni argument\n"
 "     $nick: aktualny nick\n"
 "  $channel: aktualny kanał\n"
-"   $server: aktualny serwer"
+"   $server: aktualny serwer\n"
+"\n"
+"Do usunięcia aliasu służy komenda /unalias.\n"
+"\n"
+"Przykłay:\n"
+"  alias /split do poziomego podziału:\n"
+"    /alias split /window splith\n"
+"  alias /hello pisze \"hello\" na wszystkich kanałach poza #weechat:\n"
+"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"  alias /forcejoin wysyłający komende IRC \"forcejoin\" z dopełnieniem dla /"
+"sajoin:\n"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
 
 msgid "remove aliases"
 msgstr "usuwa aliasy"
@@ -2652,16 +2699,17 @@ msgstr "nazwa_aliasu: nazwa aliasu do usunięcia"
 msgid "list of aliases"
 msgstr "lista aliasów"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
-msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\" "
+msgstr ""
+"%s%s: błąd podczas tworzenia dopełnienia dla aliasu \"%s\": nie znaleziono "
+"aliasu"
 
-#, fuzzy
 msgid "alias pointer (optional)"
-msgstr "lista opcji"
+msgstr "wskaźnik aliasu (opcjonalny)"
 
 msgid "alias name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa aliasu (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -2946,7 +2994,7 @@ msgid "away"
 msgstr "nieobecny"
 
 msgid "Lag"
-msgstr "opóźnienie"
+msgstr "Lag"
 
 #, c-format
 msgid ""
@@ -3273,15 +3321,13 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "łączy się z serwerem(ami) IRC"
 
-#, fuzzy
 msgid ""
 "[-all [-nojoin] | -open [-nojoin] | servername [servername ...] [-nojoin] | "
 "hostname[/port] [-option[=value]] [-nooption]]"
 msgstr ""
-"[-all [-nojoin] | nazwa_serwera [nazwa_serwera ...] [-nojoin] | nazwa_hosta[/"
-"port] [-opcja[=wartość]] [-noopcja]]"
+"[-all [-nojoin] | -open [-nojoin] | nazwa_serwera [nazwa_serwera ...] [-"
+"nojoin] | nazwa_hosta[/port] [-opcja[=wartość]] [-noopcja]]"
 
-#, fuzzy
 msgid ""
 "      -all: connect to all servers defined in configuration\n"
 "     -open: connect to all opened servers that are not currently connected\n"
@@ -3301,9 +3347,10 @@ msgid ""
 "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
 "  /connect my.server.org/6697 -ssl -password=test"
 msgstr ""
-"      -all: łączy się ze wszystkimi serwerami\n"
-"nazwa_serwera: wewnętrzna nazwa serwera do połączenia (serwer musi być "
-"stworzony za pomocą /server add)\n"
+"      -all: łączy się ze wszystkimi serwerami zdefiniowanymi w konfiguracji\n"
+"     -open: łączy się ze wszystkimi otwartymi ale nie połączonymi serwerami\n"
+"nazwa_serwera: wewnętrzna nazwa serwera do połączenia (serwer stworzony za "
+"pomocą /server add)\n"
 "   -nojoin: nie wchodz na żaden kanał (nawet jeśli autojoin jest włączony "
 "dla tego serwera)\n"
 "  host: nazwa hosta (lub adres  IP) serwera\n"
@@ -3353,7 +3400,6 @@ msgstr "rozpocznij DCC (przesył pliku lub romowę)"
 msgid "action [nickname [file]]"
 msgstr "akcja [nick [plik]]"
 
-#, fuzzy
 msgid ""
 "  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
@@ -3367,7 +3413,13 @@ msgid ""
 msgstr ""
 "  akcja: 'send' (plik) lub 'chat'\n"
 "nick: osoba, do której wysyłamy plik lub chcemy rozpocząć rozmowę\n"
-"    file: filename (on local host)"
+"    file: nazwa pliku (na lokalnym hoście)\n"
+"\n"
+"Przykłady:\n"
+"  rozmowa z użytkownikeim \"toto\":\n"
+"    /dcc chat toto\n"
+"  wyśle plik \"/home/foo/bar.txt\" użytkownikowi \"toto\":\n"
+"    /dcc send toto /home/foo/bar.txt"
 
 msgid "remove half channel operator status from nickname(s)"
 msgstr "usuwa status półoperatora kanału (halfopa)"
@@ -3503,7 +3555,6 @@ msgstr ""
 msgid "kicks and bans a nick from a channel"
 msgstr "wykopuje i banuje użytkownika na kanale"
 
-#, fuzzy
 msgid ""
 " channel: channel where user is\n"
 "nickname: nickname to kick and ban\n"
@@ -3521,9 +3572,11 @@ msgstr ""
 " komentarz: komentarz do wykopania\n"
 "\n"
 "Możliwe jest kopanie/banowanie za pomocą maski, nick zostanie wyciągnięty z "
-"maski i zastapiony \"*\", na przykład:\n"
-"  /kickban toto!*@host.com\n"
-"  zbanuje ban \"*!*@host.com\", następnie wykopująć \"toto\"."
+"maski i zastapiony \"*\".\n"
+"\n"
+"Przykłady:\n"
+"  zbanuje \"*!*@host.com\", następnie wykopie \"toto\":\n"
+"    /kickban toto!*@host.com"
 
 msgid "close client-server connection"
 msgstr "zamyka połączenie klient-serwer"
@@ -3556,9 +3609,8 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr "wyświetla kanały i ich tematy"
 
-#, fuzzy
 msgid "[channel[,channel] [server] [-re regexp]]"
-msgstr "[kanał[,kanał] [serwer]]"
+msgstr "[kanał[,kanał] [serwer] [-re regexp]]"
 
 msgid ""
 "channel: channel to list\n"
@@ -3574,6 +3626,19 @@ msgid ""
 "networks):\n"
 "    /list -re #weechat.*"
 msgstr ""
+"kanał: nazwa kanału do listowania\n"
+" serwer: nazwa serwera\n"
+" regexp: wyrażenie regularne użyte do filtrowania wyników\n"
+"\n"
+"Przykłady:\n"
+"  wyświetla wszystkie kanały na serwerze (może być bardzo wolny w dużych "
+"sieciach):\n"
+"    /list\n"
+" wyświetla kanał #weechat:\n"
+"    /list #weechat\n"
+"  wyświetla wszystkie kanały zaczynające się od \"#weechat\" (może być "
+"bardzo wolny w dużych sieciach):\n"
+"    /list -re #weechat.*"
 
 msgid "get statistics about the size of the IRC network"
 msgstr "pobiera statystyki o wielkości sieci IRC"
@@ -3896,7 +3961,6 @@ msgstr ""
 "nowa_nazwa_serwera] | [rename nazwa_serwera nowa_nazwa_serwera] | [keep "
 "nazwa_serwera] | [del nazwa_serwera] | [deloutq] | [jump] | [raw]"
 
-#, fuzzy
 msgid ""
 "      list: list servers (without argument, this list is displayed)\n"
 "  listfull: list servers with detailed info for each server\n"
@@ -3928,18 +3992,18 @@ msgid ""
 "  /server del freenode\n"
 "  /server deloutq"
 msgstr ""
-"      list: wyświetla listę serwerów (żaden parametr nie wpływa na tą "
-"listę)\n"
+"      list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta "
+"lista)\n"
 "  listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla "
 "każdego serwera\n"
-"       add: dodaje nowy serwer\n"
+"       add: tworzy nowy serwer\n"
 "nazwa_serwera: nazwa serwera, do użytku wewnętrznego i  wyświetlania\n"
-"  host: nazwa albo adres IP serwera, opcjonalnie jego port (domyślnie: "
-"6667)\n"
+"  host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: "
+"6667), wiele adresów należy rozdzielić przecinkiem\n"
 "      temp: tworzy serwer tymczasowy (nie zapisany)\n"
 "    opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może "
 "zostać pominięta)\n"
-"  noopcja: ustawia opcje boolowskie na 'off' (na przykładd: -nossl)\n"
+"  noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)\n"
 "      copy: duplikuje serwer\n"
 "    rename: zmienia nazwę serwera\n"
 "      keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów "
@@ -3947,7 +4011,7 @@ msgstr ""
 "       del: usuwa serwer\n"
 "   deloutq: usuń wiadomości z kolejki dla wszyskich serwerów (wszystkie "
 "wiadomości jakie WeeChat obecnie wysyła)\n"
-"      jump: jump to server buffer\n"
+"      jump: przechodzi do bufora serwera\n"
 "       raw: otwiera bufor z nieprzetworzonymi danymi IRC\n"
 "\n"
 "Przykłady:\n"
@@ -4257,16 +4321,17 @@ msgid "password for server"
 msgstr "hasło dla serwera"
 
 msgid "mechanism for SASL authentication"
-msgstr ""
+msgstr "mechanizm uwieżytelniania SASL"
 
 msgid "username for SASL authentication"
-msgstr ""
+msgstr "nazwa użytkownika dla uwieytelniania SASL"
 
 msgid "password for SASL authentication"
-msgstr ""
+msgstr "hasło dla uwieżytelniania SASL"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
+"czas oczekiwania (w sekundach) przed zaprzestaniem uwieżytelniania SASL"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automatycznie połącz się z serwerem przy uruchamianiu WeeChat"
@@ -4445,7 +4510,7 @@ msgstr ""
 "prywatnego bufora jeśli taki istnieje)"
 
 msgid "close buffer when /part is issued on a channel"
-msgstr ""
+msgstr "zamyka bufor, kiedy na kanale wykonamy /part"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr "usuń kolory w tematach (używane przy wuświetlaniu tytyłu bufora)"
@@ -4473,6 +4538,9 @@ msgid ""
 "received, if this timeout is reached before 001 message is received, WeeChat "
 "will disconnect from server"
 msgstr ""
+"czas oczekiwania (w sekundach) pomiędzy połączeniem TCP z serwerem a "
+"otrzymaniem wiadomości 001, jeśli czas zostanie przekroczony przed "
+"odebraniem wiadomości 001, WeeChat rozłączy się z serwerem"
 
 msgid ""
 "default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
@@ -4602,75 +4670,68 @@ msgstr[0] "kanał"
 msgstr[1] "kanały"
 msgstr[2] "kanałów"
 
-#, fuzzy
 msgid "1 if string is a valid IRC channel name"
-msgstr "1 jeśli ciąg jest w kanale IRC"
+msgstr "1 jeśli ciąg jest poprawną nazwą kanału IRC"
 
-#, fuzzy
 msgid "channel name"
-msgstr "kanał atrybuty"
+msgstr "nazwa kanału"
 
-#, fuzzy
 msgid "1 if string is a valid IRC nick name"
-msgstr "1 jeśli ciąg jest w kanale IRC"
+msgstr "1 jeśli ciąg jest poprawną nazwą użytkownika IRC"
 
-#, fuzzy
 msgid "nickname"
-msgstr "[-all] nick"
+msgstr "nazwa użytkownika"
 
 msgid "get current nick on a server"
 msgstr "pobiera aktualny nick z serwera"
 
-#, fuzzy
 msgid "server name"
-msgstr "cel: nazwa srwera"
+msgstr "nazwa srwera"
 
 msgid "get nick from IRC host"
 msgstr "pobiera nick z hosta IRC"
 
 msgid "IRC host (like `:nick!name@server.com`)"
-msgstr ""
+msgstr "host IRC (jak `:nick!nazwa@serwer.com`)"
 
 msgid "get nick color"
 msgstr "pobiera kolor nicka"
 
-#, fuzzy
 msgid "get buffer pointer for an IRC server/channel/nick"
-msgstr "pobiera wskaźnik bufora kanału/serwera IRC"
+msgstr "pobiera wskaźnik dla serwera/kanału/nicku IRC"
 
 msgid "server,channel,nick (channel and nicks are optional)"
-msgstr ""
+msgstr "serwer,kanał,nick (kanał oraz nick są opcjonalne)"
 
 msgid "list of IRC servers"
 msgstr "lista serwerów IRC"
 
-#, fuzzy
 msgid "server pointer (optional)"
-msgstr "serwery IRC (nazwy wewnętrzne)"
+msgstr "wskaźnik serwera (opcjonalny)"
 
 msgid "server name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa serwera (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "list of channels for an IRC server"
 msgstr "lista kanałów IRC"
 
 msgid "channel pointer (optional)"
-msgstr ""
+msgstr "wskaźnik kanału (opcjonalne)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "lista nicków na kanale IRC"
 
 msgid "nick pointer (optional)"
-msgstr ""
+msgstr "wskaźnik nicka (opcjonalne)"
 
 msgid "server,channel,nick (channel and nick are optional)"
-msgstr ""
+msgstr "serwer,kanał,nick (kanał oraz nick są opcjonalne)"
 
 msgid "list of IRC ignores"
 msgstr "lista ignorów IRC"
 
 msgid "ignore pointer (optional)"
-msgstr ""
+msgstr "wskaźnik ignorowania (opcjonalne)"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -4684,34 +4745,36 @@ msgstr "%s%s: to nie jest bufor kanału"
 msgid ""
 "%s%s: error building answer for SASL authentication, using mechanism \"%s\""
 msgstr ""
+"%s%s: błąd podczas tworzenia opowiedzi dla uwieżytelniania SASL, używając "
+"mechanizmu \"%s\""
 
 #, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr ""
+msgstr "%s%s: możliwości klienta, serwer wspiera: %s"
 
 #, c-format
 msgid "%s%s: client capability, requesting: sasl"
-msgstr ""
+msgstr "%s%s: możliwości klienta, żądanie: sasl"
 
 #, c-format
 msgid "%s%s: client capability: sasl not supported"
-msgstr ""
+msgstr "%s%s: możliwości klienta: sasl nie wspierany"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
-msgstr ""
+msgstr "%s%s: możliwości klienta, włączone: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
 "WeeChat was not built with libgcrypt support"
 msgstr ""
-"%s%s: nie można połączyć używając SSL, ponieważ WeeChat został skompilowany "
-"bez wsparcia dla GnuTLS"
+"%s%s: nie można uwierzytelnić za pomocą SASL oraz mechanizmu DH-BLOWFISH, "
+"ponieważ WeeChat został skompilowany bez wsparcia dla libgcrypt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, refused: %s"
-msgstr "%s%s: nieprawidłowe kodowanie: \"%s\""
+msgstr "%s%s: możliwości klienta, odrzucone: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -4840,9 +4903,9 @@ msgstr ""
 "%s%s[%s%s%s]%s bezczynność: %s%02d %s%s %s%02d %s%s %s%02d %s%s, na IRCu od: "
 "%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sMode %s%s %s[%s%s%s]"
-msgstr "%sTryb %s%s %s[%s%s%s]%s ustawiony przez %s%s"
+msgstr "%sTryb %s%s %s[%s%s%s]"
 
 #, c-format
 msgid "%sURL for %s%s%s: %s"
@@ -4864,13 +4927,13 @@ msgstr "%sBrak tematu dla kanału %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sTemat kanału %s%s%s to \"%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTemat ustawiony przez %s%s%s dnia %s"
+msgstr "%sTemat ustawiony przez %s%s%s%s%s%s%s%s%s dnia %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTemat kanału %s%s%s ustawiony przez %s%s%s dnia %s"
+msgstr "%sTemat kanału %s%s%s ustawiony przez %s%s%s%s%s%s%s%s%s dnia %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
@@ -5035,11 +5098,11 @@ msgstr "%s: rozłączam z serwerem"
 
 #, c-format
 msgid "%s%s: connection timeout (message 001 not received)"
-msgstr ""
+msgstr "%s%s: przekroczono czas połączenia (nie otrzymano wiadomości 001)"
 
 #, c-format
 msgid "%s%s: sasl authentication timeout"
-msgstr ""
+msgstr "%s%s: przekroczono czas uwieżyteniania sasl"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
@@ -5300,7 +5363,6 @@ msgstr "konfiguracja pluginu logera"
 msgid "[list | set level | disable]"
 msgstr "[list | set poziom | disable]"
 
-#, fuzzy
 msgid ""
 "   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
@@ -5330,8 +5392,8 @@ msgid ""
 "  4: join/part/quit\n"
 "  9: all other messages"
 msgstr ""
-"   list: pokaż status logów dla otwartych buforów\n"
-"    set: ustaw poziom logowania dla obecnego bufora\n"
+"   list: pokauje status logów dla otwartych buforów\n"
+"    set: ustawia poziom logowania dla obecnego bufora\n"
 "  poziom: poziom logowanych wiadomości (0 = wyłączone, 1 = kilka wiadomości "
 "(najważniejsze) .. 9 = wszystkie wiadomości)\n"
 "disable: wyłacza logowanie dla obecnego bufora (ustawia poziom na 0)\n"
@@ -5344,7 +5406,6 @@ msgstr ""
 "    /logger set 5\n"
 "  wyłącza logowanie w obecnym buforze:\n"
 "    /logger disable\n"
-"\n"
 "  ustawia poziom na 3 dla wszystkich buforów IRC:\n"
 "    /set logger.level.irc 3\n"
 "  wyłącza logowanie głównego bufora WeeChat:\n"
@@ -5353,10 +5414,10 @@ msgstr ""
 "kanałów:\n"
 "    /set logger.mask.irc \"$server/$channel.weechatlog\"\n"
 "\n"
-"poziomy logowania używane przez wtyczkę IRC:\n"
+"Poziomy logowania używane przez wtyczkę IRC:\n"
 "  1: wiadomości użytkowników, powiadomienia, wiadomości prywatne\n"
 "  2: zmiany nicków\n"
-"  3: wiadomości od serwera\n"
+"  3: wiadomości serwera\n"
 "  4: wejścia/opuszczenia/wyjścia\n"
 "  9: wszystkie pozostałe wiadomości"
 
@@ -5426,16 +5487,14 @@ msgstr ""
 msgid "list of logger buffers"
 msgstr "lista logowanych buforów"
 
-#, fuzzy
 msgid "logger pointer (optional)"
-msgstr "konfiguracja pluginu logera"
+msgstr "wskaźnik logger (opcjonalny)"
 
 msgid "WeeChat version"
 msgstr "wersja WeeChat"
 
-#, fuzzy
 msgid "WeeChat version (as number)"
-msgstr "wersja WeeChat"
+msgstr "wersja WeeChat (jako liczba)"
 
 msgid "WeeChat compilation date"
 msgstr "data kompilacji WeeChat"
@@ -5477,59 +5536,60 @@ msgid "list of bars"
 msgstr "lista pasków"
 
 msgid "bar pointer (optional)"
-msgstr ""
+msgstr "wskaźnik paska (opcjonalne)"
 
 msgid "bar name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa paska (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "list of bar items"
 msgstr "lista elementów pasków"
 
 msgid "bar item pointer (optional)"
-msgstr ""
+msgstr "wskaźnik elementu paska (opcjonalne)"
 
 msgid "bar item name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+"nazwa elementu paska (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "list of bar windows"
 msgstr "lista pasków okien"
 
 msgid "bar window pointer (optional)"
-msgstr ""
+msgstr "wskaźnik paska okna (opcjonalne)"
 
 msgid "list of buffers"
 msgstr "lista buforów"
 
 msgid "buffer pointer (optional)"
-msgstr ""
+msgstr "wzkaźnik bufora (opcjonalne)"
 
 msgid "buffer name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa bufora (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "lines of a buffer"
 msgstr "linie w buforze"
 
-#, fuzzy
 msgid "buffer pointer"
-msgstr "ustaw właściwośc bufora"
+msgstr "wskaźnik bufora"
 
 msgid "list of filters"
 msgstr "lista filtrów"
 
 msgid "filter name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa filtru (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "history of commands"
 msgstr "historia komend"
 
 msgid "buffer pointer (if not set, return global history) (optional)"
 msgstr ""
+"wskaźnik bufora (jeśli nie ustawiony, zwraca globalną historię) (opcjonalne)"
 
 msgid "list of hooks"
 msgstr "lista powiązań"
 
 msgid "hook type: command, timer, .. (optional)"
-msgstr ""
+msgstr "typ uchwytu: komenda, timer, .. (opcjonalne)"
 
 msgid "list of buffers in hotlist"
 msgstr "lista buforów w hotliście"
@@ -5542,30 +5602,31 @@ msgstr "licki na liście nicków bufora"
 
 msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
 msgstr ""
+"nick_xxx lub group_xxx w celu pozyskania tylko nick/group xxx (opopcjonalne)"
 
 msgid "list of options"
 msgstr "lista opcji"
 
 msgid "option name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa opcji (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "list of plugins"
 msgstr "lista wtyczek"
 
 msgid "plugin pointer (optional)"
-msgstr ""
+msgstr "wskaźnik wtyczki (opcjonalne)"
 
 msgid "plugin name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa wtyczki (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 msgid "list of windows"
 msgstr "lista okien"
 
 msgid "window pointer (optional)"
-msgstr ""
+msgstr "wskaźnik okna (opcjonalne)"
 
 msgid "window name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa okna (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -5631,9 +5692,8 @@ msgstr "Wtyczka \"%s\" wyładowana"
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
 
-#, fuzzy
 msgid "Plugins unloaded"
-msgstr "Załadowane pluginy:"
+msgstr "Wyładowano pluginy"
 
 msgid "Actions (letter+enter):"
 msgstr "Akcje (litera+enter)"
@@ -5803,9 +5863,8 @@ msgstr "maksymalna ilość klientów łączących się na port"
 msgid "list of relay clients"
 msgstr "lista zdalnych klientów"
 
-#, fuzzy
 msgid "relay pointer (optional)"
-msgstr "zarządzanie przesyłaniem"
+msgstr "wskaźnik relay (opcjonalny)"
 
 #, c-format
 msgid "%s%s: error sending data to client %s"
@@ -6007,10 +6066,10 @@ msgid "list of scripts"
 msgstr "lista skryptów"
 
 msgid "script pointer (optional)"
-msgstr ""
+msgstr "wskaźnik skryptu (opcjonalne)"
 
 msgid "script name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
+msgstr "nazwa skryptu (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -6062,9 +6121,9 @@ msgstr "    napisane przez \"%s\", licencja: %s"
 msgid "  (none)"
 msgstr "(żaden)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: scripts unloaded"
-msgstr "%s: skrypt \"%s\" wyładowano"
+msgstr "%s: skryptów wyładowano"
 
 #, c-format
 msgid ""
@@ -6379,9 +6438,8 @@ msgstr "automatycznie akceptuj proźby o rozmowę (ostrożnie!)"
 msgid "list of xfer"
 msgstr "lista xfer"
 
-#, fuzzy
 msgid "xfer pointer (optional)"
-msgstr "kontrola xfer"
+msgstr "wskaźnik xfer (opcjonalny)"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
@@ -6428,31 +6486,16 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 
 msgid "Plugin"
-msgstr ""
+msgstr "Wtyczka"
 
-#, fuzzy
 msgid "Name"
-msgstr "nazwa"
+msgstr "Nazwa"
 
-#, fuzzy
 msgid "Description"
-msgstr "opis"
+msgstr "Opis"
 
-#, fuzzy
 msgid "Arguments"
-msgstr "[argumenty]"
+msgstr "Argumenty"
 
-#, fuzzy
 msgid "Pointer"
-msgstr "liczba"
-
-#~ msgid ""
-#~ "channel: channel to list (a regexp is allowed)\n"
-#~ "server: server name"
-#~ msgstr ""
-#~ "kanał: kanał do wyświetlenia (dozwolone wyrażenie regularne)\n"
-#~ "serwer: nazwa serwera"
-
-#, fuzzy
-#~ msgid "No key added or redefined"
-#~ msgstr "Nie zdefiniowano powiązań klawiszy"
+msgstr "Wskaźnik"

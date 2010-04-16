@@ -77,8 +77,8 @@ Nowym użytkowniką zaleca się przeczytanie quickstart (szybki start)
 
 
 [[display]]
-Wyświetlać
-----------
+Wyświetlanie
+------------
 
 
 [[charset]]
@@ -92,7 +92,7 @@ Dla wersji < 0.2.3, zaleca się uaktualnienie do najnowszej stabilnej wersji.
 Dla wersji > = 0.2.3:
 
 * sprawdź czy weechat-curses jest zlinkowany z libncursesw (uwaga: wymagane na
-  więkrzości dystrybucji ale nie wszystkich): `ldd /path/to/weechat-curses`
+  więkrzości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat-curses`
 * sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodbniej potrzebujesz pakietu "weechat-plugins")
 * sprawdź ustawienia kodowania (w buforze serwera). Powinieneś ujrzeć 'ISO-XXXXXX'
@@ -215,22 +215,22 @@ Przypisania klawiszy
 
 
 [[meta_keys]]
-Some meta keys (alt + key) are not working, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Niektóre skróty klawiszowe (alt + klawisz) nie działają, dlaczego?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using some terminals like xterm or uxterm, some meta keys does not
-work by default. You can add a line in file '~/.Xresources':
+Jeśli używasz terminali jak xterm lub uxterm, niektóre skróty domyślnie 
+nie będą działać. Możesz dodać następujące linie do pliku '~/.Xresources':
 
-* for xterm:
+* dla xterm:
 ----------------------------------------
 XTerm*metaSendsEscape: true
 ----------------------------------------
-* for uxterm:
+* dla uxterm:
 ----------------------------------------
 UXTerm*metaSendsEscape: true
 ----------------------------------------
 
-And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
 
 [[customize_key_bindings]]
@@ -291,37 +291,37 @@ W zależności od wersji WeeChat:
 
 
 [[filter_voice_messages]]
-How can I filter voice messages (eg on Bitlbee server)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak moge filtrować informacje o przyznaniu voice (np na serwerze Bitlbee)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's not easy to filter voice messages, because voice mode can be set with other
-modes in same IRC message.
+Filtrowanie wiadomości o przyznaiu voice nie jest proste, ponieważ może on
+zostać nadany wraz z innymi atrybutami w jednej wiadomości IRC.
 
-If you want to do that, it's probably because Bitlbee is using voice to show
-away users, and you are flooded with voice messages. Therefore, you can change
-that and let WeeChat use a special color for away nicks in nicklist.
+Zapewne chcesz to zrobić, ponieważ Bitlbee używa voice do wskazania nieobecnych
+użytkowników, oraz jesteś zasypywany takimi wiadomościami. Możesz to zmienić oraz
+pozwolić WeeChat używać specjalnego koloru dla nieobecnych nicków.
 
-On channel '&bitlbee', do:
+Na kanale '&bitlbee', wykonaj:
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
-For checking away nicks in WeeChat, see question about
-<<color_away_nicks,away nicks>>.
+Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie o
+<<color_away_nicks,nieobecnych osobach>>.
 
 
 [[color_away_nicks]]
-How can I see away nicks in nicklist?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę zobaczyć kto jest aktualnie nieobecny ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have to set option 'irc.network.away_check' to a positive value (minutes
-between each check of away nicks).
+Należy ustawić opcję 'irc.network.away_check' na wartość większą od zera
+(minuty pomiędzy sprawdzaniem czy nick jest nieobecny).
 
-You can set option 'irc.network.away_check_max_nicks' to limit away check on
-small channels only.
+Możesz ustawić opcję 'irc.network.away_check_max_nicks' w celu ustalenia
+sprawdzania nieobecności dla małych kanałów.
 
-For example, check every 5 minutes for away nicks, for channels with max 25
-nicks:
+Na przykład, aby sprawdzać nieonecność nicków co 5, dla kanałów z maksymalnie 25
+osobami:
 
 ----------------------------------------
 /set irc.network.away_check 5

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-04-05 12:44+0200\n"
-"PO-Revision-Date: 2010-03-23 10:20+0100\n"
+"PO-Revision-Date: 2010-04-16 22:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -6265,14 +6265,3 @@ msgstr "fogadó típusa [paraméterek]"
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
-
-#~ msgid ""
-#~ "channel: channel to list (a regexp is allowed)\n"
-#~ "server: server name"
-#~ msgstr ""
-#~ "  szoba: listázandó szoba (regexp engedélyezett)\n"
-#~ "szerver: szerver neve"
-
-#, fuzzy
-#~ msgid "No key added or redefined"
-#~ msgstr "Nincs aliasz definiálva.\n"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-04-13 17:02+0200\n"
-"PO-Revision-Date: 2010-03-23 10:20+0100\n"
+"PO-Revision-Date: 2010-04-16 22:02+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -6566,14 +6566,3 @@ msgstr "Argumentos"
 
 msgid "Pointer"
 msgstr "Puntero"
-
-#~ msgid ""
-#~ "channel: channel to list (a regexp is allowed)\n"
-#~ "server: server name"
-#~ msgstr ""
-#~ "   canal: canal a listar (se permite una expresión regular)\n"
-#~ "servidor: nombre del servidor"
-
-#, fuzzy
-#~ msgid "No key added or redefined"
-#~ msgstr "Ningún atajo definido"
