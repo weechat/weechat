@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: 2010-04-18 10:50+0200\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2773,7 +2773,8 @@ msgstr ""
 msgid "alias pointer (optional)"
 msgstr "Alias Pointer (optional)"
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "Alias Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 #, c-format
@@ -4835,7 +4836,8 @@ msgstr "Liste der IRC-Server"
 msgid "server pointer (optional)"
 msgstr "Server Pointer (optional)"
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "Servername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of channels for an IRC server"
@@ -5683,7 +5685,8 @@ msgstr "Auflistung der Bars"
 msgid "bar pointer (optional)"
 msgstr "Bar Pointer (optional)"
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "Bar Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "list of bar items"
@@ -5692,7 +5695,8 @@ msgstr "Liste der Bar-Items"
 msgid "bar item pointer (optional)"
 msgstr "Bar Item Pointer (optional)"
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Bar-Item Name (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
@@ -5708,7 +5712,8 @@ msgstr "Liste der Buffer"
 msgid "buffer pointer (optional)"
 msgstr "Buffer Pointer (optional)"
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "Buffername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "lines of a buffer"
@@ -5720,7 +5725,8 @@ msgstr "Buffer Pointer"
 msgid "list of filters"
 msgstr "Liste der Filter"
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "Filtername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
 msgid "history of commands"
@@ -5753,7 +5759,8 @@ msgstr ""
 msgid "list of options"
 msgstr "Liste der Optionen"
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Name einer Option (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
@@ -5763,7 +5770,8 @@ msgstr "Auflistung der Erweiterungen"
 msgid "plugin pointer (optional)"
 msgstr "Pointer der Erweiterung (optional)"
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Name einer Erweiterung (darf mit einem Joker \"*\" beginnen oder enden) "
 "(optional)"
@@ -5774,7 +5782,8 @@ msgstr "Auflistung der Windows"
 msgid "window pointer (optional)"
 msgstr "Fenster Pointer (optional)"
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Fenstername (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 
@@ -6224,7 +6233,8 @@ msgstr "Liste der Skripten:"
 msgid "script pointer (optional)"
 msgstr "Skript Pointer (optional)"
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Name des Skripts (darf mit einem Joker \"*\" beginnen oder enden) (optional)"
 

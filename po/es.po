@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: 2010-04-18 10:50+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2713,7 +2713,8 @@ msgstr ""
 msgid "alias pointer (optional)"
 msgstr "puntero del alias (opcional)"
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del alias (puede empezar o terminar con \"*\" como comodín) (opcional)"
 
@@ -4729,7 +4730,8 @@ msgstr "lista de servidores IRC"
 msgid "server pointer (optional)"
 msgstr "puntero del servidor (opcional)"
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del servidor (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -5574,7 +5576,8 @@ msgstr "lista de barras"
 msgid "bar pointer (optional)"
 msgstr "puntero de la barra (opcional)"
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre de barra (puede empezar o terminar con \"*\" como comodín) (opcional)"
 
@@ -5584,7 +5587,8 @@ msgstr "lista de elementos de barra"
 msgid "bar item pointer (optional)"
 msgstr "puntero del elemento de barra (opcional)"
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del elemento de barra (puede empezar o terminar con \"*\" como "
 "comodín) (opcional)"
@@ -5601,7 +5605,8 @@ msgstr "lista de buffers"
 msgid "buffer pointer (optional)"
 msgstr "puntero del buffer (opcional)"
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del buffer (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -5615,7 +5620,8 @@ msgstr "puntero del buffer"
 msgid "list of filters"
 msgstr "lista de filtros"
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del filtro (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -5649,7 +5655,8 @@ msgstr "nick_xxx o group_xxx para obtener solo el apodo/grupo xxx (opcional)"
 msgid "list of options"
 msgstr "lista de opciones"
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre de la opción (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -5660,7 +5667,8 @@ msgstr "lista de plugins"
 msgid "plugin pointer (optional)"
 msgstr "puntero del plugin (opcional)"
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del plugin (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -5671,7 +5679,8 @@ msgstr "lista de ventanas"
 msgid "window pointer (optional)"
 msgstr "puntero de la ventana (opcional)"
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre de la ventana (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
@@ -6119,7 +6128,8 @@ msgstr "lista de scripts"
 msgid "script pointer (optional)"
 msgstr "puntero del script (opcional)"
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nombre del script (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"

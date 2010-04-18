@@ -969,11 +969,11 @@ plugin_api_init ()
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar", N_("list of bars"),
                    N_("bar pointer (optional)"),
-                   N_("bar name (can start or end with \"*\" as joker) (optional)"),
+                   N_("bar name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_item", N_("list of bar items"),
                    N_("bar item pointer (optional)"),
-                   N_("bar item name (can start or end with \"*\" as joker) (optional)"),
+                   N_("bar item name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_window", N_("list of bar windows"),
                    N_("bar window pointer (optional)"),
@@ -981,7 +981,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer", N_("list of buffers"),
                    N_("buffer pointer (optional)"),
-                   N_("buffer name (can start or end with \"*\" as joker) (optional)"),
+                   N_("buffer name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
                    N_("buffer pointer"),
@@ -989,7 +989,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "filter", N_("list of filters"),
                    NULL,
-                   N_("filter name (can start or end with \"*\" as joker) (optional)"),
+                   N_("filter name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "history", N_("history of commands"),
                    N_("buffer pointer (if not set, return global history) (optional)"),
@@ -1014,14 +1014,14 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "option", N_("list of options"),
                    NULL,
-                   N_("option name (can start or end with \"*\" as joker) (optional)"),
+                   N_("option name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "plugin", N_("list of plugins"),
                    N_("plugin pointer (optional)"),
-                   N_("plugin name (can start or end with \"*\" as joker) (optional)"),
+                   N_("plugin name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "window", N_("list of windows"),
                    N_("window pointer (optional)"),
-                   N_("window name (can start or end with \"*\" as joker) (optional)"),
+                   N_("window name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
 }

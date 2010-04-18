@@ -97,6 +97,6 @@ alias_info_init ()
     /* alias infolist hooks */
     weechat_hook_infolist ("alias", N_("list of aliases"),
                            N_("alias pointer (optional)"),
-                           N_("alias name (can start or end with \"*\" as joker) (optional)"),
+                           N_("alias name (can start or end with \"*\" as wildcard) (optional)"),
                            &alias_info_get_infolist_cb, NULL);
 }

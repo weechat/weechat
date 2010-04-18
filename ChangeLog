@@ -12,7 +12,7 @@ Version 0.3.2 (2010-04-18)
 * core: add command line option "-s" (or "--no-script") to start WeeChat
   without loading any script
 * core: improve plugins autoload (option weechat.plugin.autoload): allow to
-  use "*" as joker and "!" to prevent a plugin from being autoloaded
+  use "*" as wildcard and "!" to prevent a plugin from being autoloaded
   (task #6361)
 * core: remove unneeded space after time on each line if option
   weechat.look.buffer_time_format is set to empty value (bug #28751)

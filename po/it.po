@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2712,7 +2712,8 @@ msgstr ""
 msgid "alias pointer (optional)"
 msgstr "puntatore all'alias (opzionale)"
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome alias (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -4735,7 +4736,8 @@ msgstr "elenco di server IRC"
 msgid "server pointer (optional)"
 msgstr "puntatore al server (opzionale)"
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "nome server (può iniziare o terminare con \"*\" come carattere jolly)"
 
 msgid "list of channels for an IRC server"
@@ -5570,7 +5572,8 @@ msgstr "elenco delle barre"
 msgid "bar pointer (optional)"
 msgstr "puntatore alla barra (opzionale)"
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome barra (può iniziare o terminare con \"*\" come carattere jolly "
 "(opzionale)"
@@ -5581,7 +5584,8 @@ msgstr "elenco degli elementi barra"
 msgid "bar item pointer (optional)"
 msgstr "puntatore all'elemento della barra (opzionale)"
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome dell'elemento della barra (può iniziare o terminare con \"*\" come "
 "carattere jolly) (opzionale)"
@@ -5598,7 +5602,8 @@ msgstr "elenco dei buffer"
 msgid "buffer pointer (optional)"
 msgstr "puntatore al buffer (opzionale)"
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome buffer (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -5612,7 +5617,8 @@ msgstr "puntatore al buffer"
 msgid "list of filters"
 msgstr "elenco dei filtri"
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome filtro (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -5646,7 +5652,8 @@ msgstr "nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)"
 msgid "list of options"
 msgstr "elenco delle opzioni"
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome opzione (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -5657,7 +5664,8 @@ msgstr "elenco dei plugin"
 msgid "plugin pointer (optional)"
 msgstr "puntatore al plugin (opzionale)"
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome plugin (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -5668,7 +5676,8 @@ msgstr "elenco delle finestre"
 msgid "window pointer (optional)"
 msgstr "puntatore alla finestra (opzionale)"
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome finestra (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
@@ -6113,7 +6122,8 @@ msgstr "elenco degli script"
 msgid "script pointer (optional)"
 msgstr "puntatore allo script (opzionale)"
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome script (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"

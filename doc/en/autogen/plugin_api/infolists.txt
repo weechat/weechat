@@ -2,7 +2,7 @@
 |========================================
 | Plugin | Name | Description | Pointer | Arguments
 
-| alias | alias | list of aliases | alias pointer (optional) | alias name (can start or end with "*" as joker) (optional)
+| alias | alias | list of aliases | alias pointer (optional) | alias name (can start or end with "*" as wildcard) (optional)
 
 | irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server name
 
@@ -10,33 +10,33 @@
 
 | irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (channel and nick are optional)
 
-| irc | irc_server | list of IRC servers | server pointer (optional) | server name (can start or end with "*" as joker) (optional)
+| irc | irc_server | list of IRC servers | server pointer (optional) | server name (can start or end with "*" as wildcard) (optional)
 
 | logger | logger_buffer | list of logger buffers | logger pointer (optional) | -
 
-| lua | lua_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| lua | lua_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
-| perl | perl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| perl | perl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
-| python | python_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| python | python_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
 | relay | relay | list of relay clients | relay pointer (optional) | -
 
-| ruby | ruby_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| ruby | ruby_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
-| tcl | tcl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as joker) (optional)
+| tcl | tcl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
-| weechat | bar | list of bars | bar pointer (optional) | bar name (can start or end with "*" as joker) (optional)
+| weechat | bar | list of bars | bar pointer (optional) | bar name (can start or end with "*" as wildcard) (optional)
 
-| weechat | bar_item | list of bar items | bar item pointer (optional) | bar item name (can start or end with "*" as joker) (optional)
+| weechat | bar_item | list of bar items | bar item pointer (optional) | bar item name (can start or end with "*" as wildcard) (optional)
 
 | weechat | bar_window | list of bar windows | bar window pointer (optional) | -
 
-| weechat | buffer | list of buffers | buffer pointer (optional) | buffer name (can start or end with "*" as joker) (optional)
+| weechat | buffer | list of buffers | buffer pointer (optional) | buffer name (can start or end with "*" as wildcard) (optional)
 
 | weechat | buffer_lines | lines of a buffer | buffer pointer | -
 
-| weechat | filter | list of filters | - | filter name (can start or end with "*" as joker) (optional)
+| weechat | filter | list of filters | - | filter name (can start or end with "*" as wildcard) (optional)
 
 | weechat | history | history of commands | buffer pointer (if not set, return global history) (optional) | -
 
@@ -48,11 +48,11 @@
 
 | weechat | nicklist | nicks in nicklist for a buffer | buffer pointer | nick_xxx or group_xxx to get only nick/group xxx (optional)
 
-| weechat | option | list of options | - | option name (can start or end with "*" as joker) (optional)
+| weechat | option | list of options | - | option name (can start or end with "*" as wildcard) (optional)
 
-| weechat | plugin | list of plugins | plugin pointer (optional) | plugin name (can start or end with "*" as joker) (optional)
+| weechat | plugin | list of plugins | plugin pointer (optional) | plugin name (can start or end with "*" as wildcard) (optional)
 
-| weechat | window | list of windows | window pointer (optional) | window name (can start or end with "*" as joker) (optional)
+| weechat | window | list of windows | window pointer (optional) | window name (can start or end with "*" as wildcard) (optional)
 
 | xfer | xfer | list of xfer | xfer pointer (optional) | -
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: 2010-04-18 10:50+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2669,7 +2669,8 @@ msgstr "%s%s: chyba vytváření doplňování pro alias \"%s\": alias nenalezen
 msgid "alias pointer (optional)"
 msgstr "ukazatel aliasu (volitelné)"
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno aliasu (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format
@@ -4660,7 +4661,8 @@ msgstr "seznam IRC serverů"
 msgid "server pointer (optional)"
 msgstr "ukayatel serveru (volitelný)"
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno serveru (může začínat nebo končit s \"*\") (volitelné)"
 
 msgid "list of channels for an IRC server"
@@ -5494,7 +5496,8 @@ msgstr "seznam polí"
 msgid "bar pointer (optional)"
 msgstr "ukazatel pole (volitelný)"
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno pole (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of bar items"
@@ -5503,7 +5506,8 @@ msgstr "seznam položek polí"
 msgid "bar item pointer (optional)"
 msgstr "ukazatel položky pole (volitelný)"
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno položky pole (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of bar windows"
@@ -5518,7 +5522,8 @@ msgstr "seznam bufferů"
 msgid "buffer pointer (optional)"
 msgstr "ukazatel bufferu (volitelný)"
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno buferu (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "lines of a buffer"
@@ -5530,7 +5535,8 @@ msgstr "ukazatel bufferu"
 msgid "list of filters"
 msgstr "seznam filtrů"
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno filtru (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "history of commands"
@@ -5563,7 +5569,8 @@ msgstr ""
 msgid "list of options"
 msgstr "seznam konfiguračních možností"
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno volby (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of plugins"
@@ -5572,7 +5579,8 @@ msgstr "seznam pluginů"
 msgid "plugin pointer (optional)"
 msgstr "ukazatel pluginu (volitelný)"
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno pluginu (může začínat nebo končit \"*\") (volitelné)"
 
 msgid "list of windows"
@@ -5581,7 +5589,8 @@ msgstr "seznam oken"
 msgid "window pointer (optional)"
 msgstr "ukazatel okna (volitelné)"
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno okna (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format
@@ -6019,7 +6028,8 @@ msgstr "seznam skriptů"
 msgid "script pointer (optional)"
 msgstr "ukazatel skriptu (volitelný)"
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+#, fuzzy
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "jméno skriptu (může začínat nebo končit \"*\") (volitelné)"
 
 #, c-format

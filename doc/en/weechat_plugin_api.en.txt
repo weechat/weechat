@@ -5072,7 +5072,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Arguments:
 
-* 'command': command to hook, can start or end with "*" as joker
+* 'command': command to hook, can start or end with "*" as wildcard
 * 'callback': function called when command is run, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed

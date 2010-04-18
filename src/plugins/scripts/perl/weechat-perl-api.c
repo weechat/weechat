@@ -384,7 +384,7 @@ XS (XS_weechat_api_string_has_highlight)
 
 /*
  * weechat::string_mask_to_regex: convert a mask (string with only "*" as
- *                                joker) to a regex, paying attention to
+ *                                wildcard) to a regex, paying attention to
  *                                special chars in a regex
  */
 

@@ -426,7 +426,7 @@ irc_info_init ()
     /* infolist hooks */
     weechat_hook_infolist ("irc_server", N_("list of IRC servers"),
                            N_("server pointer (optional)"),
-                           N_("server name (can start or end with \"*\" as joker) (optional)"),
+                           N_("server name (can start or end with \"*\" as wildcard) (optional)"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),
                            N_("channel pointer (optional)"),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2178,7 +2178,7 @@ msgstr ""
 msgid "alias pointer (optional)"
 msgstr ""
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, c-format
@@ -3836,7 +3836,7 @@ msgstr ""
 msgid "server pointer (optional)"
 msgstr ""
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "list of channels for an IRC server"
@@ -4582,7 +4582,7 @@ msgstr ""
 msgid "bar pointer (optional)"
 msgstr ""
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "list of bar items"
@@ -4591,7 +4591,7 @@ msgstr ""
 msgid "bar item pointer (optional)"
 msgstr ""
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "list of bar windows"
@@ -4606,7 +4606,7 @@ msgstr ""
 msgid "buffer pointer (optional)"
 msgstr ""
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "lines of a buffer"
@@ -4618,7 +4618,7 @@ msgstr ""
 msgid "list of filters"
 msgstr ""
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "history of commands"
@@ -4648,7 +4648,7 @@ msgstr ""
 msgid "list of options"
 msgstr ""
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "list of plugins"
@@ -4657,7 +4657,7 @@ msgstr ""
 msgid "plugin pointer (optional)"
 msgstr ""
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 msgid "list of windows"
@@ -4666,7 +4666,7 @@ msgstr ""
 msgid "window pointer (optional)"
 msgstr ""
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, c-format
@@ -5078,7 +5078,7 @@ msgstr ""
 msgid "script pointer (optional)"
 msgstr ""
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, c-format

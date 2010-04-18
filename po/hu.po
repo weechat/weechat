@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 09:21+0200\n"
+"POT-Creation-Date: 2010-04-18 15:13+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2538,7 +2538,7 @@ msgstr "%s a \"%s\" opció nem található\n"
 msgid "alias pointer (optional)"
 msgstr "konfigurációs paraméterek beállítása"
 
-msgid "alias name (can start or end with \"*\" as joker) (optional)"
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4484,7 +4484,7 @@ msgstr "IRC szerver portja"
 msgid "server pointer (optional)"
 msgstr ""
 
-msgid "server name (can start or end with \"*\" as joker) (optional)"
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5274,7 +5274,7 @@ msgstr "Aliaszok listája:\n"
 msgid "bar pointer (optional)"
 msgstr ""
 
-msgid "bar name (can start or end with \"*\" as joker) (optional)"
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5284,7 +5284,7 @@ msgstr "Aliaszok listája:\n"
 msgid "bar item pointer (optional)"
 msgstr ""
 
-msgid "bar item name (can start or end with \"*\" as joker) (optional)"
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5301,7 +5301,7 @@ msgstr "Aliaszok listája:\n"
 msgid "buffer pointer (optional)"
 msgstr ""
 
-msgid "buffer name (can start or end with \"*\" as joker) (optional)"
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5316,7 +5316,7 @@ msgstr "szöveg keresése a puffertörténetben"
 msgid "list of filters"
 msgstr "Aliaszok listája:\n"
 
-msgid "filter name (can start or end with \"*\" as joker) (optional)"
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5352,7 +5352,7 @@ msgstr ""
 msgid "list of options"
 msgstr "konfigurációs paraméterek beállítása"
 
-msgid "option name (can start or end with \"*\" as joker) (optional)"
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5362,7 +5362,7 @@ msgstr "konfigurációs paraméterek beállítása"
 msgid "plugin pointer (optional)"
 msgstr ""
 
-msgid "plugin name (can start or end with \"*\" as joker) (optional)"
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
@@ -5372,7 +5372,7 @@ msgstr "Mellőzések listája:\n"
 msgid "window pointer (optional)"
 msgstr ""
 
-msgid "window name (can start or end with \"*\" as joker) (optional)"
+msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5813,7 +5813,7 @@ msgstr "Aliaszok listája:\n"
 msgid "script pointer (optional)"
 msgstr ""
 
-msgid "script name (can start or end with \"*\" as joker) (optional)"
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, c-format

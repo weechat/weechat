@@ -525,7 +525,7 @@ weechat_tcl_api_string_has_highlight (ClientData clientData,
 
 /*
  * weechat_tcl_api_string_mask_to_regex: convert a mask (string with only
- *                                       "*" as joker) to a regex, paying
+ *                                       "*" as wildcard) to a regex, paying
  *                                       attention to special chars in a
  *                                       regex
  */

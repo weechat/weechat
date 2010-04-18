@@ -680,7 +680,7 @@ string_has_highlight (const char *string, const char *highlight_words)
 }
 
 /*
- * string_mask_to_regex: convert a mask (string with only "*" as joker) to a
+ * string_mask_to_regex: convert a mask (string with only "*" as wildcard) to a
  *                       regex, paying attention to special chars in a regex
  */
 
