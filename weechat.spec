@@ -17,7 +17,7 @@
 #
 
 %define name weechat
-%define version 0.3.1
+%define version 0.3.2
 %define release 1
 
 Name:      %{name}
@@ -28,7 +28,7 @@ Source:    http://www.weechat.org/files/src/%{name}-%{version}.tar.gz
 URL:       http://www.weechat.org/
 Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-Requires:  perl, python, ruby, gnutls, ncurses
+Requires:  perl, python, ruby, lua, tcl, gcrypt, gnutls, ncurses
 License:   GPL
 Vendor:    FlashCode <flashcode@flashtux.org>
 Packager:  [Odin] <odin@dtdm.org>
@@ -67,6 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
+* Sun Apr 18 2010 FlashCode <flashcode@flashtux.org> 0.3.2-1
+- Released version 0.3.2
 * Sat Jan 23 2010 FlashCode <flashcode@flashtux.org> 0.3.1-1
 - Released version 0.3.1
 * Sun Sep 06 2009 FlashCode <flashcode@flashtux.org> 0.3.0-1
