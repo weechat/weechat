@@ -3653,6 +3653,66 @@ IRC_PROTOCOL_CALLBACK(433)
 }
 
 /*
+ * irc_protocol_cb_437: '437' command received (nick/channel temporarily
+ *                      unavailable)
+ */
+
+IRC_PROTOCOL_CALLBACK(437)
+{
+    int nick_index;
+    struct t_gui_buffer *ptr_buffer;
+    
+    /*
+     * 437 message looks like:
+     *   :server 437 * mynick :Nick/channel is temporarily unavailable
+     */
+    
+    irc_protocol_cb_error (server,
+                           nick, address, host, command,
+                           ignored, argc, argv, argv_eol);
+    
+    if (!server->is_connected)
+    {
+        if ((argc >= 4) && (strcmp (server->nick, argv[3]) == 0))
+        {
+            ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
+                                                          command, NULL, NULL);
+            
+            nick_index = irc_server_get_nick_index (server);
+            if (nick_index < 0)
+                nick_index = 0;
+            else
+                nick_index = (nick_index + 1) % server->nicks_count;
+            
+            if (nick_index == server->nick_first_tried)
+            {
+                weechat_printf (ptr_buffer,
+                                _("%s%s: all declared nicknames are "
+                                  "already in use or invalid, closing "
+                                  "connection with server"),
+                                weechat_prefix ("error"),
+                                IRC_PLUGIN_NAME);
+                irc_server_disconnect (server, 1);
+                return WEECHAT_RC_OK;
+            }
+            
+            weechat_printf (ptr_buffer,
+                            _("%s%s: nickname \"%s\" is unavailable, "
+                              "trying nickname #%d (\"%s\")"),
+                            weechat_prefix ("error"),
+                            IRC_PLUGIN_NAME, server->nick, nick_index + 1,
+                            server->nicks_array[nick_index]);
+            
+            irc_server_set_nick (server, server->nicks_array[nick_index]);
+            
+            irc_server_sendf (server, 0, "NICK %s", server->nick);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cb_438: '438' command received (not authorized to change
  *                      nickname)
  */
@@ -3890,7 +3950,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "432", /* erroneous nickname */ 1, &irc_protocol_cb_432 },
           { "433", /* nickname already in use */ 1, &irc_protocol_cb_433 },
           { "436", /* nickname collision */ 1, &irc_protocol_cb_error },
-          { "437", /* resource unavailable */ 1, &irc_protocol_cb_error },
+          { "437", /* nick/channel unavailable */ 1, &irc_protocol_cb_437 },
           { "438", /* not authorized to change nickname */ 1, &irc_protocol_cb_438 },
           { "441", /* user not in channel */ 1, &irc_protocol_cb_error },
           { "442", /* not on channel */ 1, &irc_protocol_cb_error },
