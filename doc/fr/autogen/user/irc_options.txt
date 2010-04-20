@@ -8,6 +8,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: yellow)
 
+* *irc.color.item_buffer_name_ssl*
+** description: couleur pour le nom du tampon lorsque la connexion au serveur utilise SSL
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
 * *irc.color.item_channel_modes*
 ** description: couleur pour les modes du canal, à côté du nom du canal
 ** type: couleur

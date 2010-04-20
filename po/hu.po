@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 15:13+0200\n"
+"POT-Creation-Date: 2010-04-20 22:08+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4307,6 +4307,10 @@ msgstr "távollevő felhasználók nevének színe"
 msgid "color for channel modes, near channel name"
 msgstr "szobanevek színe az eseményekben"
 
+#, fuzzy
+msgid "color for buffer name when connected using SSL to server"
+msgstr "%s nincs csatlakozva szerverhez!\n"
+
 msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
 "received, if this timeout is reached before 001 message is received, WeeChat "
@@ -4799,6 +4803,10 @@ msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
 #, fuzzy, c-format
 msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 #, fuzzy, c-format

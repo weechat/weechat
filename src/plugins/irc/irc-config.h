@@ -105,6 +105,7 @@ extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_input_nick;
 extern struct t_config_option *irc_config_color_item_away;
 extern struct t_config_option *irc_config_color_item_channel_modes;
+extern struct t_config_option *irc_config_color_item_buffer_name_ssl;
 
 extern struct t_config_option *irc_config_network_connection_timeout;
 extern struct t_config_option *irc_config_network_default_msg_part;

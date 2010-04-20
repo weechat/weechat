@@ -8,6 +8,11 @@
 ** type: color
 ** values: a color name (default value: yellow)
 
+* *irc.color.item_buffer_name_ssl*
+** description: color for buffer name when connected using SSL to server
+** type: color
+** values: a color name (default value: lightgreen)
+
 * *irc.color.item_channel_modes*
 ** description: color for channel modes, near channel name
 ** type: color

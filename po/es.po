@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 15:13+0200\n"
+"POT-Creation-Date: 2010-04-20 22:08+0200\n"
 "PO-Revision-Date: 2010-04-18 10:50+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4556,6 +4556,10 @@ msgstr "color para el texto \"ausente\" en al barra de entrada"
 msgid "color for channel modes, near channel name"
 msgstr "color para los modos del canal, junto al nombre del canal"
 
+#, fuzzy
+msgid "color for buffer name when connected using SSL to server"
+msgstr "%s%s: no estas conectado a ningún servidor"
+
 msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
 "received, if this timeout is reached before 001 message is received, WeeChat "
@@ -5048,6 +5052,10 @@ msgstr ""
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr "%s: el apodo \"%s\" ya está en uso, probando con apodo #%d (\"%s\")"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+msgstr "%s%s: el apodo \"%s\" es inválido, probando con apodo #%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

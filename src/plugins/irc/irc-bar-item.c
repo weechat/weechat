@@ -206,7 +206,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
                           _("server"),
                           IRC_COLOR_BAR_DELIM,
-                          IRC_COLOR_STATUS_NAME,
+                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
                           server->name,
                           IRC_COLOR_BAR_DELIM);
             }
@@ -220,11 +220,11 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                               "%s%s%s%s%s%s%s%s%s%s",
                               (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                               (part_from_channel) ? "(" : "",
-                              IRC_COLOR_STATUS_NAME,
+                              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
                               (display_server) ? server->name : "",
                               (display_server) ? IRC_COLOR_BAR_DELIM : "",
                               (display_server) ? "/" : "",
-                              IRC_COLOR_STATUS_NAME,
+                              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
                               channel->name,
                               (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                               (part_from_channel) ? ")" : "");
@@ -267,7 +267,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
         }
         
         snprintf (buf, sizeof (buf), "%s%s%s",
-                  IRC_COLOR_STATUS_NAME,
+                  (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
                   buf_name,
                   modes);
         return strdup (buf);

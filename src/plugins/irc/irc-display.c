@@ -29,6 +29,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-channel.h"
+#include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-nick.h"

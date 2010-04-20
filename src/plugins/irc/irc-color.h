@@ -55,6 +55,38 @@
 #define IRC_COLOR_UNDERLINE_CHAR  '\x1F'
 #define IRC_COLOR_UNDERLINE_STR   "\x1F"
 
+/* macros for WeeChat core and IRC colors */
+
+#define IRC_COLOR_CHAT weechat_color("chat")
+#define IRC_COLOR_CHAT_CHANNEL weechat_color("chat_channel")
+#define IRC_COLOR_CHAT_DELIMITERS weechat_color("chat_delimiters")
+#define IRC_COLOR_CHAT_HOST weechat_color("chat_host")
+#define IRC_COLOR_CHAT_NICK weechat_color("chat_nick")
+#define IRC_COLOR_CHAT_NICK_SELF weechat_color("chat_nick_self")
+#define IRC_COLOR_CHAT_NICK_OTHER weechat_color("chat_nick_other")
+#define IRC_COLOR_CHAT_SERVER weechat_color("chat_server")
+#define IRC_COLOR_CHAT_VALUE weechat_color("chat_value")
+#define IRC_COLOR_NICKLIST_PREFIX1 weechat_color("nicklist_prefix1")
+#define IRC_COLOR_NICKLIST_PREFIX2 weechat_color("nicklist_prefix2")
+#define IRC_COLOR_NICKLIST_PREFIX3 weechat_color("nicklist_prefix3")
+#define IRC_COLOR_NICKLIST_PREFIX4 weechat_color("nicklist_prefix4")
+#define IRC_COLOR_NICKLIST_PREFIX5 weechat_color("nicklist_prefix5")
+#define IRC_COLOR_BAR_FG weechat_color("bar_fg")
+#define IRC_COLOR_BAR_BG weechat_color("bar_bg")
+#define IRC_COLOR_BAR_DELIM weechat_color("bar_delim")
+#define IRC_COLOR_STATUS_NUMBER weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_number")))
+#define IRC_COLOR_STATUS_NAME weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_name")))
+#define IRC_COLOR_STATUS_NAME_SSL weechat_color(weechat_config_string(irc_config_color_item_buffer_name_ssl))
+#define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
+#define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
+#define IRC_COLOR_NOTICE weechat_color(weechat_config_string(irc_config_color_notice))
+#define IRC_COLOR_INPUT_NICK weechat_color(weechat_config_string(irc_config_color_input_nick))
+#define IRC_COLOR_ITEM_AWAY weechat_color(weechat_config_string(irc_config_color_item_away))
+#define IRC_COLOR_ITEM_CHANNEL_MODES weechat_color(weechat_config_string(irc_config_color_item_channel_modes))
+#define IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick)                          \
+    ((nick && weechat_config_boolean(irc_config_look_color_nicks_in_server_messages)) ? \
+     nick->color : IRC_COLOR_CHAT_NICK)
+
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern char *irc_color_decode_for_user_entry (const char *string);
 extern char *irc_color_encode (const char *string, int keep_colors);

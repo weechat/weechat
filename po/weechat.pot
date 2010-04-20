@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-18 15:13+0200\n"
+"POT-Creation-Date: 2010-04-20 22:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3685,6 +3685,9 @@ msgstr ""
 msgid "color for channel modes, near channel name"
 msgstr ""
 
+msgid "color for buffer name when connected using SSL to server"
+msgstr ""
+
 msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
 "received, if this timeout is reached before 001 message is received, WeeChat "
@@ -4136,6 +4139,10 @@ msgstr ""
 
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
 msgstr ""
 
 #, c-format
