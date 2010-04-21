@@ -91,6 +91,8 @@ struct t_config_option *irc_config_color_item_buffer_name_ssl;
 
 /* IRC config, network section */
 
+struct t_config_option *irc_config_network_autoreconnect_delay_growing;
+struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_connection_timeout;
 struct t_config_option *irc_config_network_default_msg_part;
 struct t_config_option *irc_config_network_default_msg_quit;
@@ -1056,7 +1058,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "integer",
                 N_("delay (in seconds) before trying again to reconnect to server"),
-                NULL, 0, 65535,
+                NULL, 1, 65535,
                 default_value, value,
                 null_value_allowed,
                 NULL, NULL,
@@ -1655,6 +1657,19 @@ irc_config_init ()
         return 0;
     }
     
+    irc_config_network_autoreconnect_delay_growing = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "autoreconnect_delay_growing", "integer",
+        N_("growing factor for autoreconnect delay to server (1 = always same "
+           "delay, 2 = delay*2 for each retry, ..)"),
+        NULL, 1, 100, "2", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_network_autoreconnect_delay_max = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "autoreconnect_delay_max", "integer",
+        N_("maximum autoreconnect delay to server (in seconds, 0 = no maximum)"),
+        NULL, 0, 3600 * 24, "1800", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_network_connection_timeout = weechat_config_new_option (
         irc_config_file, ptr_section,
         "connection_timeout", "integer",

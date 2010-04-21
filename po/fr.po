@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-20 22:08+0200\n"
-"PO-Revision-Date: 2010-04-20 22:03+0200\n"
+"POT-Creation-Date: 2010-04-21 23:20+0200\n"
+"PO-Revision-Date: 2010-04-21 22:17+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4595,6 +4595,17 @@ msgstr ""
 "couleur pour le nom du tampon lorsque la connexion au serveur utilise SSL"
 
 msgid ""
+"growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
+"delay*2 for each retry, ..)"
+msgstr ""
+"facteur de croissance du délai d'autoreconnection au serveur (1 = toujours "
+"le même délai, 2 = délai*2 pour chaque tentative, etc...)"
+
+msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgstr ""
+"délai maximum d'autoreconnection au serveur (en secondes, 0 = pas de maximum)"
+
+msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
 "received, if this timeout is reached before 001 message is received, WeeChat "
 "will disconnect from server"
@@ -5176,6 +5187,10 @@ msgstr "%s%s: délai d'authentification sasl dépassé"
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s: le lag est élevé, déconnexion du serveur..."
+
+#, c-format
+msgid "%s: reconnecting to server in %d %s, %d %s"
+msgstr "%s: reconnexion au serveur dans %d %s, %d %s"
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s"

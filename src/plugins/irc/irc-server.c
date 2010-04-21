@@ -73,7 +73,7 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 { "", "", "off",
   "off", "", "2048", "on",
   "", "plain", "", "", "15",
-  "off", "on", "30",
+  "off", "on", "10",
   "", "", "", "",
   "", "0", "", "off", "30",
 };
@@ -356,6 +356,7 @@ irc_server_alloc (const char *name)
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
     new_server->prefix = NULL;
+    new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
     new_server->reconnect_join = 0;
@@ -1858,9 +1859,10 @@ irc_server_timer_cb (void *data, int remaining_calls)
         /* check if reconnection is pending */
         if ((!ptr_server->is_connected)
             && (ptr_server->reconnect_start > 0)
-            && (new_time >= (ptr_server->reconnect_start +
-                             IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY))))
+            && (new_time >= (ptr_server->reconnect_start + ptr_server->reconnect_delay)))
+        {
             irc_server_reconnect (ptr_server);
+        }
         else
         {
             if (ptr_server->is_connected)
@@ -2010,21 +2012,57 @@ irc_server_close_connection (struct t_irc_server *server)
 void
 irc_server_reconnect_schedule (struct t_irc_server *server)
 {
-    int delay;
+    int minutes, seconds;
     
     server->index_current_address = 0;
+    
     if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
     {
+        /* growing reconnect delay */
+        if (server->reconnect_delay == 0)
+            server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
+        else
+            server->reconnect_delay = server->reconnect_delay * weechat_config_integer (irc_config_network_autoreconnect_delay_growing);
+        if ((weechat_config_integer (irc_config_network_autoreconnect_delay_max) > 0)
+            && (server->reconnect_delay > weechat_config_integer (irc_config_network_autoreconnect_delay_max)))
+            server->reconnect_delay = weechat_config_integer (irc_config_network_autoreconnect_delay_max);
+        
         server->reconnect_start = time (NULL);
-        delay = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
-        weechat_printf (server->buffer,
-                        _("%s: reconnecting to server in %d %s"),
-                        IRC_PLUGIN_NAME,
-                        delay,
-                        NG_("second", "seconds", delay));
+        
+        minutes = server->reconnect_delay / 60;
+        seconds = server->reconnect_delay % 60;
+        if ((minutes > 0) && (seconds > 0))
+        {
+            weechat_printf (server->buffer,
+                            _("%s: reconnecting to server in %d %s, %d %s"),
+                            IRC_PLUGIN_NAME,
+                            minutes,
+                            NG_("minute", "minutes", minutes),
+                            seconds,
+                            NG_("second", "seconds", seconds));
+        }
+        else if (minutes > 0)
+        {
+            weechat_printf (server->buffer,
+                            _("%s: reconnecting to server in %d %s"),
+                            IRC_PLUGIN_NAME,
+                            minutes,
+                            NG_("minute", "minutes", minutes));
+        }
+        else
+        {
+            weechat_printf (server->buffer,
+                            _("%s: reconnecting to server in %d %s"),
+                            IRC_PLUGIN_NAME,
+                            seconds,
+                            NG_("second", "seconds", seconds));
+        }
     }
     else
+    {
+        server->reconnect_delay = 0;
         server->reconnect_start = 0;
+    }
 }
 
 /*
@@ -2855,6 +2893,7 @@ irc_server_reconnect (struct t_irc_server *server)
     weechat_printf (server->buffer,
                     _("%s: reconnecting to server..."),
                     IRC_PLUGIN_NAME);
+    
     server->reconnect_start = 0;
     server->index_current_address = 0;
     
@@ -2943,7 +2982,10 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
         && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
         irc_server_reconnect_schedule (server);
     else
+    {
+        server->reconnect_delay = 0;
         server->reconnect_start = 0;
+    }
     
     /* discard current nick if no reconnection asked */
     if (!reconnect && server->nick)
@@ -3513,6 +3555,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", server->prefix))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
+        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", server->reconnect_start))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "command_time", server->command_time))
@@ -3748,6 +3792,7 @@ irc_server_print_log ()
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
         weechat_log_printf ("  prefix . . . . . . . : '%s'",  ptr_server->prefix);
+        weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);
         weechat_log_printf ("  reconnect_join . . . : %d",    ptr_server->reconnect_join);

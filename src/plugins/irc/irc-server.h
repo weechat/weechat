@@ -138,6 +138,7 @@ struct t_irc_server
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *prefix;                   /* nick prefix allowed (from msg 005)    */
+    int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
                                     /* autojoin channels                     */

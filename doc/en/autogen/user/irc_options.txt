@@ -193,6 +193,16 @@
 ** type: integer
 ** values: 0 .. 60 (default value: 2)
 
+* *irc.network.autoreconnect_delay_growing*
+** description: growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, ..)
+** type: integer
+** values: 1 .. 100 (default value: 2)
+
+* *irc.network.autoreconnect_delay_max*
+** description: maximum autoreconnect delay to server (in seconds, 0 = no maximum)
+** type: integer
+** values: 0 .. 86400 (default value: 1800)
+
 * *irc.network.away_check*
 ** description: interval between two checks for away (in minutes, 0 = never check)
 ** type: integer
@@ -271,7 +281,7 @@
 * *irc.server_default.autoreconnect_delay*
 ** description: delay (in seconds) before trying again to reconnect to server
 ** type: integer
-** values: 0 .. 65535 (default value: 30)
+** values: 1 .. 65535 (default value: 10)
 
 * *irc.server_default.autorejoin*
 ** description: automatically rejoin channels after kick

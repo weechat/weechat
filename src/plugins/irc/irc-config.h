@@ -107,6 +107,8 @@ extern struct t_config_option *irc_config_color_item_away;
 extern struct t_config_option *irc_config_color_item_channel_modes;
 extern struct t_config_option *irc_config_color_item_buffer_name_ssl;
 
+extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
+extern struct t_config_option *irc_config_network_autoreconnect_delay_max;
 extern struct t_config_option *irc_config_network_connection_timeout;
 extern struct t_config_option *irc_config_network_default_msg_part;
 extern struct t_config_option *irc_config_network_default_msg_quit;

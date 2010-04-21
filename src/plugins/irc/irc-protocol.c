@@ -1784,6 +1784,7 @@ IRC_PROTOCOL_CALLBACK(001)
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
+    server->reconnect_delay = 0;
     if (server->hook_timer_connection)
     {
         weechat_unhook (server->hook_timer_connection);

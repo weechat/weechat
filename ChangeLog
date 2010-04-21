@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-04-20
+v0.3.3-dev, 2010-04-21
 
 
 Version 0.3.3 (under dev!)
 --------------------------
 
+* irc: add new options irc.network.autoreconnect_delay_growing and
+  irc.network.autoreconnect_delay_max (task #10338)
 * irc: add new option irc.color.item_buffer_name_ssl (task #10339)
 * irc: try other nick when connecting to server and receiving message 437
   (nick unavailable)

@@ -125,8 +125,8 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
              * after restart
              */
             ptr_server->index_current_address = 0;
-            ptr_server->reconnect_start = time (NULL) -
-                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY) - 1;
+            ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
+            ptr_server->reconnect_start = time (NULL) - ptr_server->reconnect_delay - 1;
         }
     }
     if (disconnected > 0)

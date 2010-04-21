@@ -256,6 +256,7 @@ irc_upgrade_read_cb (void *data,
                     str = weechat_infolist_string (infolist, "prefix");
                     if (str)
                         irc_upgrade_current_server->prefix = strdup (str);
+                    irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
                     irc_upgrade_current_server->reconnect_join = weechat_infolist_integer (infolist, "reconnect_join");

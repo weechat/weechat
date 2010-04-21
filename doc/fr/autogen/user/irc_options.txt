@@ -193,6 +193,16 @@
 ** type: entier
 ** valeurs: 0 .. 60 (valeur par défaut: 2)
 
+* *irc.network.autoreconnect_delay_growing*
+** description: facteur de croissance du délai d'autoreconnection au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)
+** type: entier
+** valeurs: 1 .. 100 (valeur par défaut: 2)
+
+* *irc.network.autoreconnect_delay_max*
+** description: délai maximum d'autoreconnection au serveur (en secondes, 0 = pas de maximum)
+** type: entier
+** valeurs: 0 .. 86400 (valeur par défaut: 1800)
+
 * *irc.network.away_check*
 ** description: intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)
 ** type: entier
@@ -271,7 +281,7 @@
 * *irc.server_default.autoreconnect_delay*
 ** description: délai (en secondes) avant de tenter une reconnexion au serveur
 ** type: entier
-** valeurs: 0 .. 65535 (valeur par défaut: 30)
+** valeurs: 1 .. 65535 (valeur par défaut: 10)
 
 * *irc.server_default.autorejoin*
 ** description: rejoindre automatiquement les canaux après un "kick"

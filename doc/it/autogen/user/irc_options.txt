@@ -193,6 +193,16 @@
 ** tipo: intero
 ** valori: 0 .. 60 (valore predefinito: 2)
 
+* *irc.network.autoreconnect_delay_growing*
+** descrizione: growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, ..)
+** tipo: intero
+** valori: 1 .. 100 (valore predefinito: 2)
+
+* *irc.network.autoreconnect_delay_max*
+** descrizione: maximum autoreconnect delay to server (in seconds, 0 = no maximum)
+** tipo: intero
+** valori: 0 .. 86400 (valore predefinito: 1800)
+
 * *irc.network.away_check*
 ** descrizione: intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)
 ** tipo: intero
@@ -271,7 +281,7 @@
 * *irc.server_default.autoreconnect_delay*
 ** descrizione: ritardo (in secondi) prima di effettuare una nuova connessione al server
 ** tipo: intero
-** valori: 0 .. 65535 (valore predefinito: 30)
+** valori: 1 .. 65535 (valore predefinito: 10)
 
 * *irc.server_default.autorejoin*
 ** descrizione: rientra automaticamente nei canali dopo il kick

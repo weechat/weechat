@@ -684,6 +684,7 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
     server->disable_autojoin = no_join;
     if (irc_server_connect (server))
     {
+        server->reconnect_delay = 0;
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
     }
@@ -2960,6 +2961,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     server->disable_autojoin = no_join;
     if (irc_server_connect (server))
     {
+        server->reconnect_delay = 0;
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
     }
