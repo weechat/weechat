@@ -88,6 +88,8 @@ gui_keyboard_default_bindings ()
     BIND(/* ^R              */ "ctrl-R",             "/input search_text");
     BIND(/* basckpace       */ "ctrl-H",             "/input delete_previous_char");
     BIND(/* basckpace       */ "ctrl-?",             "/input delete_previous_char");
+    BIND(/* ^_              */ "ctrl-_",             "/input undo");
+    BIND(/* m-_             */ "meta-_",             "/input redo");
     BIND(/* del             */ "meta2-3~",           "/input delete_next_char");
     BIND(/* ^D              */ "ctrl-D",             "/input delete_next_char");
     BIND(/* ^W              */ "ctrl-W",             "/input delete_previous_word");
@@ -338,11 +340,12 @@ gui_keyboard_flush ()
                 if (strcmp (key_str, "^^") == 0)
                     key_str[1] = '\0';
                 
+                gui_buffer_undo_snap (gui_current_window->buffer);
                 gui_input_insert_string (gui_current_window->buffer,
                                          key_str, -1);
                 if (gui_current_window->buffer->completion)
                     gui_completion_stop (gui_current_window->buffer->completion, 0);
-                gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
+                gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
             }
             
             /* incremental text search in buffer */
@@ -435,7 +438,7 @@ gui_keyboard_read_cb (void *data, int fd)
         else if (cancel_paste)
             gui_keyboard_paste_cancel ();
         else if (text_added_to_buffer)
-            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 0);
     }
     else
     {

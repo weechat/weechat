@@ -433,6 +433,11 @@
 ** type: entier
 ** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: group_time_asc)
 
+* *weechat.look.input_undo_max*
+** description: nombre maximum de "undo" pour la ligne de commande, par tampon (0 = undo désactivé)
+** type: entier
+** valeurs: 0 .. 65535 (valeur par défaut: 32)
+
 * *weechat.look.item_time_format*
 ** description: format de date/heure pour l'objet de barre "time"
 ** type: chaîne

@@ -541,6 +541,14 @@ Touches pour la ligne de commande
   Coller le contenu du presse-papiers +
   `/input clipboard_paste`
 
+| Ctrl + _ |
+  Défaire la dernière action sur la ligne de commande +
+  `/input undo`
+
+| Alt + _ |
+  Refaire la dernière action sur la ligne de commande +
+  `/input redo`
+
 | Tab |
   Compléter la commande ou le pseudo (Tab de nouveau : trouver la complétion
   suivante) +

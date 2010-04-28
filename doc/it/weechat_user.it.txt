@@ -538,6 +538,14 @@ Tasti per la riga di comando
   Incolla il contenuto degli appunti +
   `/input clipboard_paste`
 
+| Ctrl + _ |
+  Undo last action on command line +
+  `/input undo`
+
+| Alt + _ |
+  Redo last action on command line +
+  `/input redo`
+
 | Tab |
   Completa comando o nick (Tab di nuovo: trova prossimo completamento) +
   `/input complete_next`

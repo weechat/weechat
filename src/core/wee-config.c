@@ -86,6 +86,7 @@ struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
+struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
@@ -1329,6 +1330,12 @@ config_weechat_init_options ()
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, "group_time_asc", NULL, 0, NULL, NULL, &config_change_hotlist, NULL, NULL, NULL);
+    config_look_input_undo_max = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "input_undo_max", "integer",
+        N_("max number of \"undo\" for command line, by buffer (0 = undo "
+           "disabled)"),
+        NULL, 0, 65535, "32", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_item_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_time_format", "string",

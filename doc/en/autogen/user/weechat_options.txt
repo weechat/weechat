@@ -433,6 +433,11 @@
 ** type: integer
 ** values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (default value: group_time_asc)
 
+* *weechat.look.input_undo_max*
+** description: max number of "undo" for command line, by buffer (0 = undo disabled)
+** type: integer
+** values: 0 .. 65535 (default value: 32)
+
 * *weechat.look.item_time_format*
 ** description: time format for "time" bar item
 ** type: string

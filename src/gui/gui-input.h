@@ -29,8 +29,11 @@ extern char *gui_input_clipboard;
 
 /* input functions */
 
+extern void gui_input_replace_input (struct t_gui_buffer *buffer,
+                                     const char *new_input);
 extern void gui_input_paste_pending_signal ();
-extern void gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer);
+extern void gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
+                                                        int save_undo);
 extern void gui_input_move (struct t_gui_buffer *buffer, char *target,
                             const char *source, int size);
 extern void gui_input_set_pos (struct t_gui_buffer *buffer, int pos);
@@ -72,5 +75,7 @@ extern void gui_input_set_unread_buffer (struct t_gui_buffer *buffer);
 extern void gui_input_switch_active_buffer (struct t_gui_window *window);
 extern void gui_input_switch_active_buffer_previous (struct t_gui_window *window);
 extern void gui_input_insert (struct t_gui_buffer *buffer, const char *args);
+extern void gui_input_undo (struct t_gui_buffer *buffer);
+extern void gui_input_redo (struct t_gui_buffer *buffer);
 
 #endif /* gui-input.h */

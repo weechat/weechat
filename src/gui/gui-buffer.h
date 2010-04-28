@@ -57,6 +57,14 @@ struct t_gui_buffer_local_var
     struct t_gui_buffer_local_var *next_var; /* link to next variable       */
 };
 
+struct t_gui_input_undo
+{
+    char *data;                        /* content of input buffer           */
+    int pos;                           /* position of cursor in buffer      */
+    struct t_gui_input_undo *prev_undo;/* link to previous undo             */
+    struct t_gui_input_undo *next_undo;/* link to next undo                 */
+};
+
 struct t_gui_buffer
 {
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
@@ -132,6 +140,13 @@ struct t_gui_buffer
     int input_buffer_length;           /* number of chars in buffer         */
     int input_buffer_pos;              /* position into buffer              */
     int input_buffer_1st_display;      /* first char displayed on screen    */
+    
+    /* undo/redo for input */
+    struct t_gui_input_undo input_undo_snap;  /* snapshot of input buffer   */
+    struct t_gui_input_undo *input_undo;      /* undo for input             */
+    struct t_gui_input_undo *last_input_undo; /* last undo for input        */
+    struct t_gui_input_undo *ptr_input_undo;  /* pointer to current undo    */
+    int input_undo_count;              /* number of undos                   */
     
     /* completion */
     struct t_gui_completion *completion; /* completion                      */
@@ -252,6 +267,12 @@ extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
+extern void gui_buffer_undo_snap (struct t_gui_buffer *buffer);
+extern void gui_buffer_undo_snap_free (struct t_gui_buffer *buffer);
+extern void gui_buffer_undo_add (struct t_gui_buffer *buffer);
+extern void gui_buffer_undo_free (struct t_gui_buffer *buffer,
+                                  struct t_gui_input_undo *undo);
+extern void gui_buffer_undo_free_all (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_search_by_number (int number);
 extern void gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited);
 extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);

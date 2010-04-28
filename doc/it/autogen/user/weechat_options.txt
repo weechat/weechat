@@ -433,6 +433,11 @@
 ** tipo: intero
 ** valori: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valore predefinito: group_time_asc)
 
+* *weechat.look.input_undo_max*
+** descrizione: max number of "undo" for command line, by buffer (0 = undo disabled)
+** tipo: intero
+** valori: 0 .. 65535 (valore predefinito: 32)
+
 * *weechat.look.item_time_format*
 ** descrizione: formato dell'ora per l'elemento della barra "tempo"
 ** tipo: stringa

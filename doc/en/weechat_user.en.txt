@@ -529,6 +529,14 @@ Keys for command line
   Paste clipboard content +
   `/input clipboard_paste`
 
+| Ctrl + _ |
+  Undo last action on command line +
+  `/input undo`
+
+| Alt + _ |
+  Redo last action on command line +
+  `/input redo`
+
 | Tab |
   Complete command or nick (Tab again: find next completion) +
   `/input complete_next`

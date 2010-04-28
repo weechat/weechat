@@ -99,6 +99,7 @@ extern struct t_config_option *config_look_hotlist_names_level;
 extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
+extern struct t_config_option *config_look_input_undo_max;
 extern struct t_config_option *config_look_item_time_format;
 extern struct t_config_option *config_look_jump_current_to_previous_buffer;
 extern struct t_config_option *config_look_jump_previous_buffer_when_closing;

@@ -477,6 +477,16 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input_buffer_pos = 0;
         new_buffer->input_buffer_1st_display = 0;
         
+        /* undo for input */
+        (new_buffer->input_undo_snap).data = NULL;
+        (new_buffer->input_undo_snap).pos = 0;
+        (new_buffer->input_undo_snap).prev_undo = NULL; /* not used */
+        (new_buffer->input_undo_snap).next_undo = NULL; /* not used */
+        new_buffer->input_undo = NULL;
+        new_buffer->last_input_undo = NULL;
+        new_buffer->ptr_input_undo = NULL;
+        new_buffer->input_undo_count = 0;
+        
         /* init completion */
         new_completion = malloc (sizeof (*new_completion));
         if (new_completion)
@@ -1321,9 +1331,9 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "input") == 0)
     {
-        gui_input_delete_line (buffer);
-        gui_input_insert_string (buffer, value, 0);
-        gui_input_text_changed_modifier_and_signal (buffer);
+        gui_buffer_undo_snap (buffer);
+        gui_input_replace_input (buffer, value);
+        gui_input_text_changed_modifier_and_signal (buffer, 1);
     }
     else if (string_strcasecmp (property, "input_pos") == 0)
     {
@@ -1841,6 +1851,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->short_name);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
+    gui_buffer_undo_free_all (buffer);
     if (buffer->completion)
         gui_completion_free (buffer->completion);
     gui_history_buffer_free (buffer);
@@ -2303,6 +2314,178 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 }
 
 /*
+ * gui_buffer_undo_snap: do a "snapshot" of buffer input (save content and
+ *                       position)
+ */
+
+void
+gui_buffer_undo_snap (struct t_gui_buffer *buffer)
+{
+    if ((buffer->input_undo_snap).data)
+    {
+        free ((buffer->input_undo_snap).data);
+        (buffer->input_undo_snap).data = NULL;
+    }
+    (buffer->input_undo_snap).pos = 0;
+    
+    if (CONFIG_INTEGER(config_look_input_undo_max) > 0)
+    {
+        (buffer->input_undo_snap).data = (buffer->input_buffer) ?
+            strdup (buffer->input_buffer) : NULL;
+        (buffer->input_undo_snap).pos = buffer->input_buffer_pos;
+    }
+}
+
+/*
+ * gui_buffer_undo_snap_free: free "snapshot" of buffer input
+ */
+
+void
+gui_buffer_undo_snap_free (struct t_gui_buffer *buffer)
+{
+    if ((buffer->input_undo_snap).data)
+    {
+        free ((buffer->input_undo_snap).data);
+        (buffer->input_undo_snap).data = NULL;
+    }
+    (buffer->input_undo_snap).pos = 0;
+}
+
+/*
+ * gui_buffer_undo_add: add undo in list, with current input buffer + postion
+ *                      if before_undo is not NULL, then undo is added before
+ *                      this undo, otherwise it is added to the end of list
+ */
+
+void
+gui_buffer_undo_add (struct t_gui_buffer *buffer)
+{
+    struct t_gui_input_undo *new_undo;
+    
+    /* undo disabled by config */
+    if (CONFIG_INTEGER(config_look_input_undo_max) == 0)
+        goto end;
+    
+    /*
+     * if nothing has changed since snapshot of input buffer, then do nothing
+     * (just discard snapshot)
+     */
+    if ((buffer->input_undo_snap).data
+        && (strcmp (buffer->input_buffer, (buffer->input_undo_snap).data) == 0))
+    {
+        goto end;
+    }
+    
+    /* max number of undo reached? */
+    if ((buffer->input_undo_count > 0)
+        && (buffer->input_undo_count >= CONFIG_INTEGER(config_look_input_undo_max) + 1))
+    {
+        /* remove older undo in buffer (first in list) */
+        gui_buffer_undo_free (buffer, buffer->input_undo);
+    }
+    
+    /* remove all undos after current undo */
+    if (buffer->ptr_input_undo)
+    {
+        while (buffer->ptr_input_undo->next_undo)
+        {
+            gui_buffer_undo_free (buffer, buffer->ptr_input_undo->next_undo);
+        }
+    }
+    
+    /* if input is the same as current undo, then do not add it */
+    if (buffer->ptr_input_undo
+        && (buffer->ptr_input_undo)->data
+        && (buffer->input_undo_snap).data
+        && (strcmp ((buffer->input_undo_snap).data, (buffer->ptr_input_undo)->data) == 0))
+    {
+        goto end;
+    }
+    
+    new_undo = (struct t_gui_input_undo *)malloc (sizeof (*new_undo));
+    if (!new_undo)
+        goto end;
+    
+    if ((buffer->input_undo_snap).data)
+    {
+        new_undo->data = strdup ((buffer->input_undo_snap).data);
+        new_undo->pos = (buffer->input_undo_snap).pos;
+    }
+    else
+    {
+        new_undo->data = (buffer->input_buffer) ?
+            strdup (buffer->input_buffer) : NULL;
+        new_undo->pos = buffer->input_buffer_pos;
+    }
+    
+    /* add undo to the list */
+    new_undo->prev_undo = buffer->last_input_undo;
+    new_undo->next_undo = NULL;
+    if (buffer->input_undo)
+        (buffer->last_input_undo)->next_undo = new_undo;
+    else
+        buffer->input_undo = new_undo;
+    buffer->last_input_undo = new_undo;
+    
+    buffer->ptr_input_undo = new_undo;
+    buffer->input_undo_count++;
+    
+end:
+    gui_buffer_undo_snap_free (buffer);
+}
+
+/*
+ * gui_buffer_undo_free: free undo and remove it from list
+ */
+
+void
+gui_buffer_undo_free (struct t_gui_buffer *buffer,
+                      struct t_gui_input_undo *undo)
+{
+    /* update current undo if needed */
+    if (buffer->ptr_input_undo == undo)
+    {
+        if ((buffer->ptr_input_undo)->next_undo)
+            buffer->ptr_input_undo = (buffer->ptr_input_undo)->next_undo;
+        else
+            buffer->ptr_input_undo = (buffer->ptr_input_undo)->prev_undo;
+    }
+    
+    /* free data */
+    if (undo->data)
+        free (undo->data);
+    
+    /* remove undo from list */
+    if (undo->prev_undo)
+        (undo->prev_undo)->next_undo = undo->next_undo;
+    if (undo->next_undo)
+        (undo->next_undo)->prev_undo = undo->prev_undo;
+    if (buffer->input_undo == undo)
+        buffer->input_undo = undo->next_undo;
+    if (buffer->last_input_undo == undo)
+        buffer->last_input_undo = undo->prev_undo;
+    
+    free (undo);
+    
+    buffer->input_undo_count--;
+}
+
+/*
+ * gui_buffer_undo_free_all: free all undos of a buffer
+ */
+
+void
+gui_buffer_undo_free_all (struct t_gui_buffer *buffer)
+{
+    gui_buffer_undo_snap_free (buffer);
+    
+    while (buffer->input_undo)
+    {
+        gui_buffer_undo_free (buffer, buffer->input_undo);
+    }
+}
+
+/*
  * gui_buffer_visited_search: search a visited buffer in list of visited buffers
  */
 
@@ -2695,6 +2878,7 @@ gui_buffer_print_log ()
     struct t_gui_buffer_local_var *ptr_local_var;
     struct t_gui_line *ptr_line;
     struct t_gui_buffer_visited *ptr_buffer_visited;
+    struct t_gui_input_undo *ptr_undo;
     char *tags;
     int num;
     
@@ -2742,6 +2926,20 @@ gui_buffer_print_log ()
         log_printf ("  input_buffer_length. . : %d",    ptr_buffer->input_buffer_length);
         log_printf ("  input_buffer_pos . . . : %d",    ptr_buffer->input_buffer_pos);
         log_printf ("  input_buffer_1st_disp. : %d",    ptr_buffer->input_buffer_1st_display);
+        log_printf ("  input_undo_snap.data . : '%s'",  (ptr_buffer->input_undo_snap).data);
+        log_printf ("  input_undo_snap.pos. . : %d",    (ptr_buffer->input_undo_snap).pos);
+        log_printf ("  input_undo . . . . . . : 0x%lx", ptr_buffer->input_undo);
+        log_printf ("  last_input_undo. . . . : 0x%lx", ptr_buffer->last_input_undo);
+        log_printf ("  ptr_input_undo . . . . : 0x%lx", ptr_buffer->ptr_input_undo);
+        log_printf ("  input_undo_count . . . : %d",    ptr_buffer->input_undo_count);
+        num = 0;
+        for (ptr_undo = ptr_buffer->input_undo; ptr_undo;
+             ptr_undo = ptr_undo->next_undo)
+        {
+            log_printf ("    undo[%04d] . . . . . : 0x%lx ('%s' / %d)",
+                        num, ptr_undo, ptr_undo->data, ptr_undo->pos);
+            num++;
+        }
         log_printf ("  completion . . . . . . : 0x%lx", ptr_buffer->completion);
         log_printf ("  history. . . . . . . . : 0x%lx", ptr_buffer->history);
         log_printf ("  last_history . . . . . : 0x%lx", ptr_buffer->last_history);

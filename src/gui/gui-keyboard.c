@@ -136,7 +136,7 @@ gui_keyboard_grab_end ()
             }
             if (gui_current_window->buffer->completion)
                 gui_completion_stop (gui_current_window->buffer->completion, 1);
-            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer);
+            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
         }
         free (expanded_key);
     }

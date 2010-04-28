@@ -1943,6 +1943,10 @@ command_input (void *data, struct t_gui_buffer *buffer,
             if (argc > 2)
                 gui_input_insert (gui_current_window->buffer, argv_eol[2]);
         }
+        else if (string_strcasecmp (argv[1], "undo") == 0)
+            gui_input_undo (gui_current_window->buffer);
+        else if (string_strcasecmp (argv[1], "redo") == 0)
+            gui_input_redo (gui_current_window->buffer);
     }
     
     return WEECHAT_RC_OK;
@@ -4592,7 +4596,7 @@ command_init ()
                   "delete_previous_word | delete_next_word | "
                   "delete_beginning_of_line | delete_end_of_line | "
                   "delete_line | clipboard_paste | transpose_chars | "
-                  "move_beginning_of_line | move_end_of_line | "
+                  "undo | redo | move_beginning_of_line | move_end_of_line | "
                   "move_previous_char | move_next_char | move_previous_word | "
                   "move_next_word | history_previous | history_next | "
                   "history_global_previous | history_global_next | "
@@ -4607,7 +4611,7 @@ command_init ()
                   "delete_previous_char|delete_next_char|"
                   "delete_previous_word|delete_next_word|"
                   "delete_beginning_of_line|delete_end_of_line|"
-                  "delete_line|clipboard_paste|transpose_chars|"
+                  "delete_line|clipboard_paste|transpose_chars|undo|redo|"
                   "move_beginning_of_line|move_end_of_line|"
                   "move_previous_char|move_next_char|move_previous_word|"
                   "move_next_word|history_previous|history_next|"

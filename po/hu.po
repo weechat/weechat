@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-21 23:20+0200\n"
+"POT-Creation-Date: 2010-04-28 15:04+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1544,6 +1544,11 @@ msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
+
+#, fuzzy
+msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
+msgstr ""
+"felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
 #, fuzzy
 msgid "time format for \"time\" bar item"
