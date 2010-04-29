@@ -539,11 +539,11 @@ Tasti per la riga di comando
   `/input clipboard_paste`
 
 | Ctrl + _ |
-  Undo last action on command line +
+  Annulla l'ultima azione sulla riga di comando +
   `/input undo`
 
 | Alt + _ |
-  Redo last action on command line +
+  Ripete l'ultima azione sulla riga di comando +
   `/input redo`
 
 | Tab |
