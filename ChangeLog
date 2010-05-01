@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-04-28
+v0.3.3-dev, 2010-05-01
 
 
 Version 0.3.3 (under dev!)
@@ -9,6 +9,8 @@ Version 0.3.3 (under dev!)
 
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
+* core: fix crash with hook_process (when timer is called on a deleted hook
+  process)
 * irc: add new options irc.network.autoreconnect_delay_growing and
   irc.network.autoreconnect_delay_max (task #10338)
 * irc: add new option irc.color.item_buffer_name_ssl (task #10339)

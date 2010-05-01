@@ -1290,6 +1290,9 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
     char buffer[4096];
     int num_read;
     
+    if (hook_process->deleted)
+        return;
+    
     num_read = read (fd, buffer, sizeof (buffer) - 1);
     if (num_read > 0)
     {
@@ -1354,6 +1357,9 @@ hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
     (void) remaining_calls;
     
     hook_process = (struct t_hook *)arg_hook_process;
+    
+    if (hook_process->deleted)
+        return WEECHAT_RC_OK;
     
     if (remaining_calls == 0)
     {
