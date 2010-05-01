@@ -278,6 +278,11 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: white)
 
+* *weechat.color.status_name_ssl*
+** descrizione: text color for current buffer name in status bar, if data are secured with a protocol like SSL
+** tipo: colore
+** valori: un nome colore (valore predefinito: lightgreen)
+
 * *weechat.color.status_number*
 ** descrizione: colore del testo per il numero del buffer corrente nella barra di stato
 ** tipo: colore

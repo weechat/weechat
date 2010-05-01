@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-28 15:04+0200\n"
+"POT-Creation-Date: 2010-05-01 12:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1557,6 +1557,11 @@ msgid "text color for current buffer number in status bar"
 msgstr ""
 
 msgid "text color for current buffer name in status bar"
+msgstr ""
+
+msgid ""
+"text color for current buffer name in status bar, if data are secured with a "
+"protocol like SSL"
 msgstr ""
 
 msgid "text color for filter indicator in status bar"
@@ -3686,9 +3691,6 @@ msgid "color for away item"
 msgstr ""
 
 msgid "color for channel modes, near channel name"
-msgstr ""
-
-msgid "color for buffer name when connected using SSL to server"
 msgstr ""
 
 msgid ""

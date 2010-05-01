@@ -87,7 +87,6 @@ struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
 struct t_config_option *irc_config_color_item_channel_modes;
-struct t_config_option *irc_config_color_item_buffer_name_ssl;
 
 /* IRC config, network section */
 
@@ -1637,12 +1636,6 @@ irc_config_init ()
         "item_channel_modes", "color",
         N_("color for channel modes, near channel name"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
-        &irc_config_change_color_item_buffer_name, NULL, NULL, NULL);
-    irc_config_color_item_buffer_name_ssl = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "item_buffer_name_ssl", "color",
-        N_("color for buffer name when connected using SSL to server"),
-        NULL, -1, 0, "lightgreen", NULL, 0, NULL, NULL,
         &irc_config_change_color_item_buffer_name, NULL, NULL, NULL);
     
     /* network */

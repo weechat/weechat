@@ -141,6 +141,7 @@ struct t_config_option *config_color_chat_text_found_bg;
 struct t_config_option *config_color_chat_value;
 struct t_config_option *config_color_status_number;
 struct t_config_option *config_color_status_name;
+struct t_config_option *config_color_status_name_ssl;
 struct t_config_option *config_color_status_filter;
 struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_private;
@@ -1745,6 +1746,13 @@ config_weechat_init_options ()
         "status_name", "color",
         N_("text color for current buffer name in status bar"),
         NULL, -1, 0, "white", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_name_ssl = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_name_ssl", "color",
+        N_("text color for current buffer name in status bar, if data are "
+           "secured with a protocol like SSL"),
+        NULL, -1, 0, "lightgreen", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_filter = config_file_new_option (
         weechat_config_file, ptr_section,

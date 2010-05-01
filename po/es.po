@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-28 15:04+0200\n"
+"POT-Creation-Date: 2010-05-01 12:22+0200\n"
 "PO-Revision-Date: 2010-04-18 10:50+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2011,6 +2011,12 @@ msgid "text color for current buffer number in status bar"
 msgstr "color para el número del buffer actual en la barra de estado"
 
 msgid "text color for current buffer name in status bar"
+msgstr "color para el nombre del buffer actual en la barra de estado"
+
+#, fuzzy
+msgid ""
+"text color for current buffer name in status bar, if data are secured with a "
+"protocol like SSL"
 msgstr "color para el nombre del buffer actual en la barra de estado"
 
 msgid "text color for filter indicator in status bar"
@@ -4560,10 +4566,6 @@ msgstr "color para el texto \"ausente\" en al barra de entrada"
 msgid "color for channel modes, near channel name"
 msgstr "color para los modos del canal, junto al nombre del canal"
 
-#, fuzzy
-msgid "color for buffer name when connected using SSL to server"
-msgstr "%s%s: no estas conectado a ningún servidor"
-
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -6600,3 +6602,7 @@ msgstr "Argumentos"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#, fuzzy
+#~ msgid "color for buffer name when connected using SSL to server"
+#~ msgstr "%s%s: no estas conectado a ningún servidor"

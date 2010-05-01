@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-28 15:04+0200\n"
+"POT-Creation-Date: 2010-05-01 12:22+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1831,6 +1831,12 @@ msgstr "цвет текущего канала в строке состояни�
 
 #, fuzzy
 msgid "text color for current buffer name in status bar"
+msgstr "цвет текущего канала в строке состояния"
+
+#, fuzzy
+msgid ""
+"text color for current buffer name in status bar, if data are secured with a "
+"protocol like SSL"
 msgstr "цвет текущего канала в строке состояния"
 
 #, fuzzy
@@ -4312,10 +4318,6 @@ msgstr "цвет отошедших ников"
 msgid "color for channel modes, near channel name"
 msgstr "цвет имён при действиях"
 
-#, fuzzy
-msgid "color for buffer name when connected using SSL to server"
-msgstr "%s вы не подключены к серверу\n"
-
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -6287,3 +6289,7 @@ msgstr "адресат тип [аргументы]"
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "color for buffer name when connected using SSL to server"
+#~ msgstr "%s вы не подключены к серверу\n"

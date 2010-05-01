@@ -278,6 +278,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: white)
 
+* *weechat.color.status_name_ssl*
+** description: couleur du texte pour le nom du tampon courant dans la barre de statut, si les données sont sécurisées avec un protocole tel que SSL
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
 * *weechat.color.status_number*
 ** description: couleur du texte pour le numéro du tampon courant dans la barre de statut
 ** type: couleur

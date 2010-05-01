@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-04-28 15:04+0200\n"
+"POT-Creation-Date: 2010-05-01 12:22+0200\n"
 "PO-Revision-Date: 2010-04-18 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1822,6 +1822,12 @@ msgstr "aktuális szoba színe a státuszsorban"
 
 #, fuzzy
 msgid "text color for current buffer name in status bar"
+msgstr "aktuális szoba színe a státuszsorban"
+
+#, fuzzy
+msgid ""
+"text color for current buffer name in status bar, if data are secured with a "
+"protocol like SSL"
 msgstr "aktuális szoba színe a státuszsorban"
 
 #, fuzzy
@@ -4312,10 +4318,6 @@ msgstr "távollevő felhasználók nevének színe"
 msgid "color for channel modes, near channel name"
 msgstr "szobanevek színe az eseményekben"
 
-#, fuzzy
-msgid "color for buffer name when connected using SSL to server"
-msgstr "%s nincs csatlakozva szerverhez!\n"
-
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -6290,3 +6292,7 @@ msgstr "fogadó típusa [paraméterek]"
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "color for buffer name when connected using SSL to server"
+#~ msgstr "%s nincs csatlakozva szerverhez!\n"
