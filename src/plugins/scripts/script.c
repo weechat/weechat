@@ -482,19 +482,7 @@ script_search_path (struct t_weechat_plugin *weechat_plugin,
     struct stat st;
     
     if (filename[0] == '~')
-    {
-        dir_home = getenv ("HOME");
-        if (!dir_home)
-            return NULL;
-        length = strlen (dir_home) + strlen (filename + 1) + 1;
-        final_name = malloc (length);
-        if (final_name)
-        {
-            snprintf (final_name, length, "%s%s", dir_home, filename + 1);
-            return final_name;
-        }
-        return NULL;
-    }
+        return weechat_string_expand_home (filename);
     
     dir_home = weechat_info_get ("weechat_dir", "");
     if (dir_home)

@@ -728,6 +728,38 @@ char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
 free (str);
 ----------------------------------------
 
+weechat_string_expand_home
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Replace leading `~` by string with home directory. If string does not start
+with `~`, then same string is returned.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_string_expand_home (const char *path);
+----------------------------------------
+
+Arguments:
+
+* 'path': path
+
+Return value:
+
+* path with leading `~` replaced by home directory (must be freed by calling
+  "free" after use)
+
+C example:
+
+[source,C]
+----------------------------------------
+char *str = weechat_string_expand_home ("~/file.txt");
+/* result: "/home/xxx/file.txt" */
+/* ... */
+free (str);
+----------------------------------------
+
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

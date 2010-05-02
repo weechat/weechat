@@ -84,9 +84,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (!XFER_IS_FILE(xfer->type))
         return;
     
-    dir1 = weechat_string_replace (weechat_config_string (xfer_config_file_download_path),
-                                                          "~",
-                                                          getenv ("HOME"));
+    dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_download_path));
     if (!dir1)
         return;
     

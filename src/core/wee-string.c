@@ -396,6 +396,36 @@ string_replace (const char *string, const char *search, const char *replace)
 }
 
 /*
+ * string_expand_home: expand home in a PATH
+ *                     (for example: "~/file.txt" => "/home/xxx/file.txt")
+ *                     note: returned value has to be free() after use
+ */
+
+char *
+string_expand_home (const char *path)
+{
+    char *ptr_home, *str;
+    int length;
+    
+    if (!path)
+        return NULL;
+    
+    if (!path[0] || (path[0] != '~') || (path[1] != DIR_SEPARATOR_CHAR))
+        return strdup (path);
+    
+    ptr_home = getenv ("HOME");
+    
+    length = strlen (ptr_home) + strlen (path + 1) + 1;
+    str = malloc (length);
+    if (!str)
+        return strdup (path);
+    
+    snprintf (str, length, "%s%s", ptr_home, path + 1);
+    
+    return str;
+}
+
+/*
  * string_remove_quotes: remove quotes at beginning/end of string
  *                       (ignore spaces if there are before first quote or
  *                        after last quote)

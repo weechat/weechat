@@ -39,7 +39,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20100302-01"
+#define WEECHAT_PLUGIN_API_VERSION "20100502-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -134,7 +134,11 @@ struct t_weechat_plugin
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
     
-    /* plugin functions (API) */
+    /*
+     * plugin functions (API)
+     * WeeChat developers: if you add functions in API, update value of
+     * constant WEECHAT_PLUGIN_API_VERSION
+     */
     
     /* plugins */
     const char *(*plugin_get_name) (struct t_weechat_plugin *plugin);
@@ -157,6 +161,7 @@ struct t_weechat_plugin
                          int case_sensitive);
     char *(*string_replace) (const char *string, const char *search,
                              const char *replace);
+    char *(*string_expand_home) (const char *path);
     char *(*string_remove_quotes) (const char *string, const char *quotes);
     char *(*string_strip) (const char *string, int left, int right,
                            const char *chars);
@@ -644,8 +649,6 @@ struct t_weechat_plugin
                                               struct t_infolist *infolist),
                          void *callback_read_data);
     void (*upgrade_close) (struct t_upgrade_file *upgrade_file);
-    
-    /* WeeChat developers: ALWAYS add new functions at the end */
 };
 
 extern int weechat_plugin_init (struct t_weechat_plugin *plugin,
@@ -697,6 +700,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_match(__string, __mask, __case_sensitive)
 #define weechat_string_replace(__string, __search, __replace)           \
     weechat_plugin->string_replace(__string, __search, __replace)
+#define weechat_string_expand_home(__path)      \
+    weechat_plugin->string_expand_home(__path)
 #define weechat_string_remove_quotes(__string, __quotes)                \
     weechat_plugin->string_remove_quotes(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \

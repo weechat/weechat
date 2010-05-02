@@ -79,8 +79,7 @@ network_init ()
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
     
-    ca_path = string_replace (CONFIG_STRING(config_network_gnutls_ca_file),
-                              "~", getenv ("HOME"));
+    ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
     if (ca_path)
     {
         ca_path2 = string_replace (ca_path, "%h", weechat_home);

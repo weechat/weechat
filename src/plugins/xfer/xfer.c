@@ -134,8 +134,7 @@ xfer_create_directories ()
     weechat_dir = weechat_info_get ("weechat_dir", "");
     if (weechat_dir)
     {
-        dir1 = weechat_string_replace (weechat_config_string (xfer_config_file_download_path),
-                                       "~", getenv ("HOME"));
+        dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_download_path));
         dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
         if (dir2)
             (void) weechat_mkdir (dir2, 0700);
@@ -817,12 +816,10 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         if (filename[0] == '/')
             filename2 = strdup (filename);
         else if (filename[0] == '~')
-            filename2 = weechat_string_replace (filename, "~", getenv ("HOME"));
+            filename2 = weechat_string_expand_home (filename);
         else
         {
-            dir1 = weechat_string_replace (weechat_config_string (xfer_config_file_upload_path),
-                                           "~",
-                                           getenv ("HOME"));
+            dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_upload_path));
             if (!dir1)
             {
                 weechat_printf (NULL,

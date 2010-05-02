@@ -2572,8 +2572,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
         weechat_dir = weechat_info_get ("weechat_dir", "");
         cert_path1 = weechat_string_replace (cert_path0, "%h", weechat_dir);
         cert_path2 = (cert_path1) ?
-            weechat_string_replace (cert_path1, "~", getenv ("HOME")) : NULL;
-
+            weechat_string_expand_home (cert_path1) : NULL;
+        
         if (cert_path2)
         {
             cert_str = weechat_file_get_content (cert_path2);

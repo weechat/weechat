@@ -35,6 +35,7 @@ extern int string_match (const char *string, const char *mask,
                          int case_sensitive);
 extern char *string_replace (const char *string, const char *search,
                              const char *replace);
+extern char *string_expand_home (const char *path);
 extern char *string_remove_quotes (const char *string, const char *quotes);
 extern char *string_strip (const char *string, int left, int right,
                            const char *chars);

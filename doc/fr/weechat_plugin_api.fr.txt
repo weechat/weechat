@@ -735,6 +735,38 @@ char *str = weechat_string_replace ("test, test", "s", "x"); /* résultat : "tex
 free (str);
 ----------------------------------------
 
+weechat_string_expand_home
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remplace le `~` en début de chaîne par le répertoire "home". Si la chaîne ne
+débute pas par `~`, alors une chaîne identique est retournée.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+char *weechat_string_expand_home (const char *path);
+----------------------------------------
+
+Paramètres :
+
+* 'path': chemin
+
+Valeur de retour :
+
+* chemin avec le `~` en début remplacé par le répertoire "home" (doit être
+  libéré par un appel à "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+char *str = weechat_string_expand_home ("~/fichier.txt");
+/* résultat: "/home/xxx/fichier.txt" */
+/* ... */
+free (str);
+----------------------------------------
+
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

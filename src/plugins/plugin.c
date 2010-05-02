@@ -234,7 +234,7 @@ plugin_find_pos (struct t_weechat_plugin *plugin)
 struct t_weechat_plugin *
 plugin_load (const char *filename)
 {
-    char *ptr_home, *full_name, *full_name2;
+    char *full_name, *full_name2;
     void *handle;
     char *name, *api_version, *author, *description, *version;
     char *license, *charset;
@@ -260,9 +260,7 @@ plugin_load (const char *filename)
     if (plugin_autoload_array && !plugin_check_autoload (full_name))
         return NULL;
     
-    ptr_home = getenv ("HOME");
-    full_name2 = string_replace (full_name, "~", ptr_home);
-    
+    full_name2 = string_expand_home (full_name);
     if (full_name2)
     {
         free (full_name);
@@ -462,6 +460,7 @@ plugin_load (const char *filename)
         new_plugin->strcasestr = &string_strcasestr;
         new_plugin->string_match = &string_match;
         new_plugin->string_replace = &string_replace;
+        new_plugin->string_expand_home = &string_expand_home;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
         new_plugin->string_has_highlight = &string_has_highlight;
@@ -780,7 +779,7 @@ plugin_auto_load_file (void *plugin, const char *filename)
 void
 plugin_auto_load ()
 {
-    char *ptr_home, *dir_name, *plugin_path, *plugin_path2;
+    char *dir_name, *plugin_path, *plugin_path2;
     
     plugin_autoload_array = NULL;
     plugin_autoload_count = 0;
@@ -797,9 +796,7 @@ plugin_auto_load ()
     if (CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
-        ptr_home = getenv ("HOME");
-        plugin_path = string_replace (CONFIG_STRING(config_plugin_path),
-                                      "~", ptr_home);
+        plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
         plugin_path2 = string_replace ((plugin_path) ?
                                        plugin_path : CONFIG_STRING(config_plugin_path),
                                        "%h", weechat_home);

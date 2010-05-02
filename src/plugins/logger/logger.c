@@ -82,8 +82,7 @@ logger_get_file_path ()
         goto end;
     
     /* replace "~" with user home */
-    file_path = weechat_string_replace (weechat_config_string (logger_config_file_path),
-                                        "~", getenv ("HOME"));
+    file_path = weechat_string_expand_home (weechat_config_string (logger_config_file_path));
     if (!file_path)
         goto end;
     

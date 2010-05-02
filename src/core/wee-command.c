@@ -3688,8 +3688,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     
     if (argc > 1)
     {
-        ptr_binary = string_replace (argv_eol[1], "~", getenv ("HOME"));
-
+        ptr_binary = string_expand_home (argv_eol[1]);
         if (ptr_binary)
         {
             /* check if weechat binary is here and executable by user */
