@@ -194,13 +194,17 @@
   nick: nick
 ........................................
 
-&bull; *`/join`* `[canale[,canale ] [chiave[,chiave]]]`::
+&bull; *`/join`* `[channel1[,channel2[,channel3]] [key1[,key2]]]`::
 
 ........................................
   entra in un canale
 
-  canale: nome del canale in cui entrare
-  chiave: chiave per entrare nel canale
+  channel: channel name to join
+      key: key to join the channel (channels with a key must be the first in list)
+  
+  Examples:
+    /join #weechat
+    /join #protectedchan,#weechat key
 ........................................
 
 &bull; *`/kick`* `[canale] nick [commento]`::

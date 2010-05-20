@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-01 12:22+0200\n"
+"POT-Creation-Date: 2010-05-20 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2881,12 +2882,17 @@ msgstr ""
 msgid "join a channel"
 msgstr ""
 
-msgid "[channel[,channel] [key[,key]]]"
+msgid "[channel1[,channel2[,channel3]] [key1[,key2]]]"
 msgstr ""
 
 msgid ""
 "channel: channel name to join\n"
-"    key: key to join the channel"
+"    key: key to join the channel (channels with a key must be the first in "
+"list)\n"
+"\n"
+"Examples:\n"
+"  /join #weechat\n"
+"  /join #protectedchan,#weechat key"
 msgstr ""
 
 msgid "forcibly remove a user from a channel"
@@ -4713,8 +4719,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%"
-"s\"), failed to load"
+"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
+"\"%s\"), failed to load"
 msgstr ""
 
 #, c-format
@@ -4811,8 +4817,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
-"lu sent"
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
+"%lu sent"
 msgstr ""
 
 #, c-format

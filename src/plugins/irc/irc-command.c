@@ -4387,9 +4387,13 @@ irc_command_init ()
                           "%(nicks)|%*", &irc_command_ison, NULL);
     weechat_hook_command ("join",
                           N_("join a channel"),
-                          N_("[channel[,channel] [key[,key]]]"),
+                          N_("[channel1[,channel2[,channel3]] [key1[,key2]]]"),
                           N_("channel: channel name to join\n"
-                             "    key: key to join the channel"),
+                             "    key: key to join the channel (channels with "
+                             "a key must be the first in list)\n\n"
+                             "Examples:\n"
+                             "  /join #weechat\n"
+                             "  /join #protectedchan,#weechat key"),
                           "%(irc_channels)", &irc_command_join, NULL);
     weechat_hook_command ("kick",
                           N_("forcibly remove a user from a channel"),

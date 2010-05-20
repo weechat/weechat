@@ -275,7 +275,7 @@ sub get_completions
             $ignore = 1 if ($completion_item =~ /${mask}/);
         }
         
-        if ($ignore ne 1)
+        if (($ignore ne 1) && ($completion_item ne ""))
         {
             $completions{$plugin}{$completion_item}{"description"} = weechat::infolist_string($infolist, "description");
         }

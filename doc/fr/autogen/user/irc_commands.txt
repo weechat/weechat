@@ -194,13 +194,17 @@
   pseudo: pseudo
 ........................................
 
-&bull; *`/join`* `[canal[,canal] [clé[,clé]]]`::
+&bull; *`/join`* `[canal1[,canal2[,canal3]] [clé1[,clé2]]]`::
 
 ........................................
   joindre un canal
 
   canal: nom du canal à rejoindre
-    clé: clé pour rejoindre le canal
+    clé: clé pour rejoindre le canal (les canaux avec une clé doivent être les premiers dans la liste)
+  
+  Exemples:
+    /join #weechat
+    /join #protectedchan,#weechat key
 ........................................
 
 &bull; *`/kick`* `[canal] pseudo [commentaire]`::
