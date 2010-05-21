@@ -63,6 +63,16 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
+* *irc.look.display_pv_away_once*
+** descrizione: display remote away message only once in private
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_pv_back*
+** descrizione: display a message in private when user is back (after quit on server)
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
 * *irc.look.hide_nickserv_pwd*
 ** descrizione: nascondi password visualizzata da nickserv
 ** tipo: bool
@@ -147,11 +157,6 @@
 ** descrizione: unisci i buffer dei server
 ** tipo: intero
 ** valori: merge_with_core, merge_without_core, independent (valore predefinito: merge_with_core)
-
-* *irc.look.show_away_once*
-** descrizione: mostra il messaggio di assenza remoto solo una volta in privato
-** tipo: bool
-** valori: on, off (valore predefinito: on)
 
 * *irc.look.smart_filter*
 ** descrizione: filtra i messaggi di entrata/uscita/abbandono per un nick se inattivo per alcuni minuti sul canale (è necessario creare un filtro sul tag "irc_smart_filter")

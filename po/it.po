@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-20 11:47+0200\n"
+"POT-Creation-Date: 2010-05-21 18:07+0200\n"
 "PO-Revision-Date: 2010-05-20 12:26+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -48,7 +48,8 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect      disabilta la connessione automatica all'avvio\n"
-"  -d, --dir <percorso>  imposta la cartella principale di WeeChat (predefinita: ~/.weechat)\n"
+"  -d, --dir <percorso>  imposta la cartella principale di WeeChat "
+"(predefinita: ~/.weechat)\n"
 "  -h, --help            mostra questo aiuto\n"
 "  -k, --keys            visualizza i tasti principali di WeeChat\n"
 "  -l,  --license        visualizza la licenza di WeeChat\n"
@@ -58,7 +59,8 @@ msgstr ""
 "  plugin:opzione        opzione per il plugin\n"
 "                        per esempio, il plugin irc può connettersi\n"
 "                        al server con un url del tipo:\n"
-"                        [irc][6][s]://[nick[:password]@]irc.esempio.org[/porta][//#canale1][,#canale2[...]]\n"
+"                        [irc][6][s]://[nick[:password]@]irc.esempio.org[/"
+"porta][//#canale1][,#canale2[...]]\n"
 "                        (consultare la documentazione per maggiori\n"
 "                        informazioni sulle opzioni disponibili)\n"
 
@@ -3050,6 +3052,10 @@ msgstr ""
 msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: impossibile allocare un nuovo canale"
 
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr "%s%s%s %s(%s%s%s)%s è entrato in %s%s%s"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: prossima assenza: %s"
@@ -4473,6 +4479,13 @@ msgstr "visualizza messaggio CTCP anche se è CTCP sconosciuto"
 msgid "display old topic when channel topic is changed"
 msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
 
+#, fuzzy
+msgid "display remote away message only once in private"
+msgstr "mostra il messaggio di assenza remoto solo una volta in privato"
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "visualizza le modalità canale nell'elemento barra \"buffer_name\""
 
@@ -4520,9 +4533,6 @@ msgstr ""
 "numero di messaggi grezzi IRC da salvare quando il buffer dei dati grezzi "
 "chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati "
 "grezzi)"
-
-msgid "show remote away message only once in private"
-msgstr "mostra il messaggio di assenza remoto solo una volta in privato"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "

@@ -297,6 +297,7 @@ irc_upgrade_read_cb (void *data,
                         str = weechat_infolist_string (infolist, "away_message");
                         if (str)
                             irc_upgrade_current_channel->away_message = strdup (str);
+                        irc_upgrade_current_channel->has_quit_server = weechat_infolist_integer (infolist, "has_quit_server");
                         irc_upgrade_current_channel->cycle = weechat_infolist_integer (infolist, "cycle");
                         irc_upgrade_current_channel->display_creation_date = weechat_infolist_integer (infolist, "display_creation_date");
                         irc_upgrade_current_channel->nick_completion_reset = weechat_infolist_integer (infolist, "nick_completion_reset");

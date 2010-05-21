@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-20 11:47+0200\n"
-"PO-Revision-Date: 2010-05-20 12:20+0200\n"
+"POT-Creation-Date: 2010-05-21 18:07+0200\n"
+"PO-Revision-Date: 2010-05-21 18:08+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3076,6 +3076,10 @@ msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: impossible d'allouer un nouveau canal"
 
 #, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr "%s%s%s %s(%s%s%s)%s est de retour sur le serveur"
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr "%s: future absence: %s"
 
@@ -4513,6 +4517,14 @@ msgstr "afficher le message CTCP même si le CTCP est inconnu"
 msgid "display old topic when channel topic is changed"
 msgstr "afficher l'ancien titre lorsque le titre du canal est changé"
 
+msgid "display remote away message only once in private"
+msgstr "afficher le message d'absence distant une seule fois en privé"
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+"afficher un message en privé lorsque l'utilisateur est de retour (après "
+"avoir quitté le serveur)"
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
 
@@ -4560,9 +4572,6 @@ msgstr ""
 "nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des "
 "données brutes est fermé (ces messages seront affichés lors de l'ouverture "
 "du tampon des données brutes)"
-
-msgid "show remote away message only once in private"
-msgstr "voir le message d'absence distant une seule fois en privé"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "

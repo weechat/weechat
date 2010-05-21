@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-20 11:47+0200\n"
+"POT-Creation-Date: 2010-05-21 18:07+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3039,6 +3039,10 @@ msgstr ""
 msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: nie można przydzielic nowego kanału"
 
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr "%s%s%s %s(%s%s%s)%s wszedł na %s%s%s"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: przyszła nieobecność: %s"
@@ -4452,6 +4456,13 @@ msgstr "wyświetl wiadomość CTCP nawet jeśli jest to nieznana CTCP"
 msgid "display old topic when channel topic is changed"
 msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
 
+#, fuzzy
+msgid "display remote away message only once in private"
+msgstr "pokazuj wiadomości o nieobecności rozmówcy tylko raz "
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""
 
@@ -4497,9 +4508,6 @@ msgstr ""
 "ilość nieprzetworzonych wiadomośći IRC do zachowania w pamięci, kiedy "
 "zamknięty jest bufor takich danych (wiadomości zostaną wyświetlone, po "
 "otworzeniu dla nich bufora)"
-
-msgid "show remote away message only once in private"
-msgstr "pokazuj wiadomości o nieobecności rozmówcy tylko raz "
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "

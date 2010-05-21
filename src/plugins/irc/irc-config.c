@@ -61,6 +61,8 @@ struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
 struct t_config_option *irc_config_look_display_old_topic;
+struct t_config_option *irc_config_look_display_pv_away_once;
+struct t_config_option *irc_config_look_display_pv_back;
 struct t_config_option *irc_config_look_item_channel_modes;
 struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 struct t_config_option *irc_config_look_item_nick_modes;
@@ -72,7 +74,6 @@ struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_raw_messages;
-struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
@@ -1486,6 +1487,17 @@ irc_config_init ()
         N_("display old topic when channel topic is changed"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_display_pv_away_once = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_pv_away_once", "boolean",
+        N_("display remote away message only once in private"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_pv_back = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_pv_back", "boolean",
+        N_("display a message in private when user is back (after quit on "
+           "server)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_item_channel_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_channel_modes", "boolean",
@@ -1544,11 +1556,6 @@ irc_config_init ()
         N_("number of IRC raw messages to save in memory when raw data buffer "
            "is closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_show_away_once = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "show_away_once", "boolean",
-        N_("show remote away message only once in private"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter", "boolean",

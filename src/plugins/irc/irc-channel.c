@@ -31,6 +31,7 @@
 #include "irc.h"
 #include "irc-channel.h"
 #include "irc-buffer.h"
+#include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-nick.h"
@@ -246,6 +247,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->key = NULL;
     new_channel->checking_away = 0;
     new_channel->away_message = NULL;
+    new_channel->has_quit_server = 0;
     new_channel->cycle = 0;
     new_channel->display_creation_date = 0;
     new_channel->nick_completion_reset = 0;
@@ -682,6 +684,47 @@ irc_channel_autorejoin_cb (void *data, int remaining_calls)
 }
 
 /*
+ * irc_channel_display_nick_back_in_pv: display a message in pv buffer if nick
+ *                                      is back and if private has flag
+ *                                      "has_quit_server"
+ */
+
+void
+irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
+                                     struct t_irc_nick *nick,
+                                     const char *nickname)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    if (!server || (!nick && !nickname))
+        return;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+            && ptr_channel->has_quit_server
+            && (strcmp (ptr_channel->name, (nick) ? nick->name : nickname) == 0))
+        {
+            if (weechat_config_boolean (irc_config_look_display_pv_back))
+            {
+                weechat_printf (ptr_channel->buffer,
+                                _("%s%s%s %s(%s%s%s)%s is back on server"),
+                                weechat_prefix ("join"),
+                                IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick),
+                                (nick) ? nick->name : nickname,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_HOST,
+                                (nick) ? nick->host : "",
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_MESSAGE_JOIN);
+            }
+            ptr_channel->has_quit_server = 0;
+        }
+    }
+}
+
+/*
  * irc_channel_free: free a channel and remove it from channels list
  */
 
@@ -801,6 +844,8 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "away_message", channel->away_message))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "has_quit_server", channel->has_quit_server))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "cycle", channel->cycle))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "display_creation_date", channel->display_creation_date))
@@ -869,6 +914,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       key. . . . . . . . . . . : '%s'",  channel->key);
     weechat_log_printf ("       checking_away. . . . . . : %d",    channel->checking_away);
     weechat_log_printf ("       away_message . . . . . . : '%s'",  channel->away_message);
+    weechat_log_printf ("       has_quit_server. . . . . : %d",    channel->has_quit_server);
     weechat_log_printf ("       cycle. . . . . . . . . . : %d",    channel->cycle);
     weechat_log_printf ("       display_creation_date. . : %d",    channel->display_creation_date);
     weechat_log_printf ("       nick_completion_reset. . : %d",    channel->nick_completion_reset);

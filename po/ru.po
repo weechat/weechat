@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-20 11:47+0200\n"
+"POT-Creation-Date: 2010-05-21 18:07+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2856,6 +2856,10 @@ msgid "%s%s: cannot allocate new channel"
 msgstr "%s не могу расположить новый канал"
 
 #, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr "%s%s %s(%s%s%s)%s зашёл на канал %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "Планирование статуса на %s%s%s: %s\n"
 
@@ -4234,6 +4238,13 @@ msgstr ""
 msgid "display old topic when channel topic is changed"
 msgstr ""
 
+#, fuzzy
+msgid "display remote away message only once in private"
+msgstr "отображать уведомление об отсутствии единожды в привате"
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
@@ -4268,9 +4279,6 @@ msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
-
-msgid "show remote away message only once in private"
-msgstr "отображать уведомление об отсутствии единожды в привате"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "

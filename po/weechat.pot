@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-20 11:47+0200\n"
+"POT-Creation-Date: 2010-05-21 18:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2472,6 +2472,10 @@ msgid "%s%s: cannot allocate new channel"
 msgstr ""
 
 #, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr ""
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr ""
 
@@ -3619,6 +3623,12 @@ msgstr ""
 msgid "display old topic when channel topic is changed"
 msgstr ""
 
+msgid "display remote away message only once in private"
+msgstr ""
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
@@ -3652,9 +3662,6 @@ msgstr ""
 msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
-msgstr ""
-
-msgid "show remote away message only once in private"
 msgstr ""
 
 msgid ""

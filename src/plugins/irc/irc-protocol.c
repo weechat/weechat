@@ -603,6 +603,10 @@ IRC_PROTOCOL_CALLBACK(join)
                              IRC_COLOR_CHAT_CHANNEL,
                              pos_channel,
                              IRC_COLOR_MESSAGE_JOIN);
+        
+        /* display message in private if private has flag "has_quit_server" */ 
+        if (!local_join)
+            irc_channel_display_nick_back_in_pv (server, ptr_nick, nick);
     }
     
     return WEECHAT_RC_OK;
@@ -873,7 +877,7 @@ IRC_PROTOCOL_CALLBACK(mode)
 IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_nick, *ptr_nick_found;
     char *new_nick, *old_color, *buffer_name;
     int local_nick;
     
@@ -888,6 +892,8 @@ IRC_PROTOCOL_CALLBACK(nick)
     new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
     
     local_nick = (strcmp (nick, server->nick) == 0) ? 1 : 0;
+    
+    ptr_nick_found = NULL;
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -918,6 +924,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                 ptr_nick = irc_nick_search (ptr_channel, nick);
                 if (ptr_nick)
                 {
+                    ptr_nick_found = ptr_nick;
+                    
                     /* temporary disable hotlist */
                     weechat_buffer_set (NULL, "hotlist", "-");
                     
@@ -971,6 +979,8 @@ IRC_PROTOCOL_CALLBACK(nick)
     
     if (local_nick)
         irc_server_set_nick (server, new_nick);
+    else
+        irc_channel_display_nick_back_in_pv (server, ptr_nick_found, new_nick);
     
     return WEECHAT_RC_OK;
 }
@@ -1079,6 +1089,11 @@ IRC_PROTOCOL_CALLBACK(notice)
                                      irc_nick_as_prefix (NULL, nick,
                                                          irc_nick_color_for_pv (ptr_channel, nick)),
                                      pos_args);
+                if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                    && ptr_channel->has_quit_server)
+                {
+                    ptr_channel->has_quit_server = 0;
+                }
             }
             else
             {
@@ -1451,6 +1466,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                                  IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick)),
                              pos_args);
         
+        if (ptr_channel->has_quit_server)
+            ptr_channel->has_quit_server = 0;
+        
         weechat_hook_signal_send ("irc_pv",
                                   WEECHAT_HOOK_SIGNAL_STRING,
                                   argv_eol[0]);
@@ -1502,6 +1520,10 @@ IRC_PROTOCOL_CALLBACK(quit)
                     ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                          && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
                         irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                }
+                if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                {
+                    ptr_channel->has_quit_server = 1;
                 }
                 if (pos_comment && pos_comment[0])
                 {
@@ -1933,7 +1955,7 @@ IRC_PROTOCOL_CALLBACK(301)
         
         /* look for private buffer to display message */
         ptr_channel = irc_channel_search (server, argv[3]);
-        if (!weechat_config_boolean (irc_config_look_show_away_once)
+        if (!weechat_config_boolean (irc_config_look_display_pv_away_once)
             || !ptr_channel
             || !(ptr_channel->away_message)
             || (strcmp (ptr_channel->away_message, pos_away_msg) != 0))

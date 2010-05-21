@@ -63,6 +63,16 @@
 ** type: boolean
 ** values: on, off (default value: on)
 
+* *irc.look.display_pv_away_once*
+** description: display remote away message only once in private
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_pv_back*
+** description: display a message in private when user is back (after quit on server)
+** type: boolean
+** values: on, off (default value: on)
+
 * *irc.look.hide_nickserv_pwd*
 ** description: hide password displayed by nickserv
 ** type: boolean
@@ -147,11 +157,6 @@
 ** description: merge server buffers
 ** type: integer
 ** values: merge_with_core, merge_without_core, independent (default value: merge_with_core)
-
-* *irc.look.show_away_once*
-** description: show remote away message only once in private
-** type: boolean
-** values: on, off (default value: on)
 
 * *irc.look.smart_filter*
 ** description: filter join/part/quit messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")

@@ -63,6 +63,16 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 
+* *irc.look.display_pv_away_once*
+** description: afficher le message d'absence distant une seule fois en privé
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_pv_back*
+** description: afficher un message en privé lorsque l'utilisateur est de retour (après avoir quitté le serveur)
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
 * *irc.look.hide_nickserv_pwd*
 ** description: masquer le mot de passe affiché par nickserv
 ** type: booléen
@@ -147,11 +157,6 @@
 ** description: mélange des tampons de serveur
 ** type: entier
 ** valeurs: merge_with_core, merge_without_core, independent (valeur par défaut: merge_with_core)
-
-* *irc.look.show_away_once*
-** description: voir le message d'absence distant une seule fois en privé
-** type: booléen
-** valeurs: on, off (valeur par défaut: on)
 
 * *irc.look.smart_filter*
 ** description: filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")
