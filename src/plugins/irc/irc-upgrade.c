@@ -253,6 +253,9 @@ irc_upgrade_read_cb (void *data,
                     str = weechat_infolist_string (infolist, "nick_modes");
                     if (str)
                         irc_upgrade_current_server->nick_modes = strdup (str);
+                    str = weechat_infolist_string (infolist, "isupport");
+                    if (str)
+                        irc_upgrade_current_server->isupport = strdup (str);
                     str = weechat_infolist_string (infolist, "prefix");
                     if (str)
                         irc_upgrade_current_server->prefix = strdup (str);

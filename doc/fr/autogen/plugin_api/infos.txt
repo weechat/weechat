@@ -16,6 +16,10 @@
 
 | irc | irc_nick_from_host | retourne le pseudo à partir d'un host IRC | host IRC (comme `:pseudo!nom@serveur.com`)
 
+| irc | irc_server_isupport | 1 si le serveur supporte cette fonctionnalité (du message IRC 005) | serveur,fonctionnalité
+
+| irc | irc_server_isupport_value | valeur de la fonctionnalité, si supportée par le serveur (du message IRC 005) | serveur,fonctionnalité
+
 | weechat | charset_internal | charset interne à WeeChat | -
 
 | weechat | charset_terminal | charset du terminal | -

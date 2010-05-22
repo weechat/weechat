@@ -1868,7 +1868,8 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2;
+    char *pos, *pos2, *pos_start;
+    int length_isupport, length;
 
     /*
      * 005 message looks like:
@@ -1883,7 +1884,8 @@ IRC_PROTOCOL_CALLBACK(005)
     irc_protocol_cb_numeric (server,
                              nick, address, host, command,
                              ignored, argc, argv, argv_eol);
-    
+
+    /* save prefix */
     pos = strstr (argv_eol[3], "PREFIX=");
     if (pos)
     {
@@ -1896,6 +1898,33 @@ IRC_PROTOCOL_CALLBACK(005)
         server->prefix = strdup (pos);
         if (pos2)
             pos2[0] = ' ';
+    }
+    
+    /* save whole message (concatenate to existing isupport, if any) */
+    pos_start = NULL;
+    pos = strstr (argv_eol[3], " :");
+    length = (pos) ? pos - argv_eol[3] : (int)strlen (argv_eol[3]);
+    if (server->isupport)
+    {
+        length_isupport = strlen (server->isupport);
+        server->isupport = realloc (server->isupport,
+                                    length_isupport + /* existing */
+                                    1 + length + 1); /* new */
+        if (server->isupport)
+            pos_start = server->isupport + length_isupport;
+    }
+    else
+    {
+        server->isupport = malloc (1 + length + 1);
+        if (server->isupport)
+            pos_start = server->isupport;
+    }
+
+    if (pos_start)
+    {
+        pos_start[0] = ' ';
+        memcpy (pos_start + 1, argv_eol[3], length);
+        pos_start[length + 1] = '\0';
     }
     
     return WEECHAT_RC_OK;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-21 18:07+0200\n"
+"POT-Creation-Date: 2010-05-22 09:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3857,6 +3857,15 @@ msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr ""
 
 msgid "server,channel,nick (channel and nicks are optional)"
+msgstr ""
+
+msgid "1 if server supports this feature (from IRC message 005)"
+msgstr ""
+
+msgid "server,feature"
+msgstr ""
+
+msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr ""
 
 msgid "list of IRC servers"

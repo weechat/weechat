@@ -16,6 +16,10 @@
 
 | irc | irc_nick_from_host | get nick from IRC host | IRC host (like `:nick!name@server.com`)
 
+| irc | irc_server_isupport | 1 if server supports this feature (from IRC message 005) | server,feature
+
+| irc | irc_server_isupport_value | value of feature, if supported by server (from IRC message 005) | server,feature
+
 | weechat | charset_internal | WeeChat internal charset | -
 
 | weechat | charset_terminal | terminal charset | -

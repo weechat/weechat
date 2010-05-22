@@ -298,6 +298,57 @@ irc_server_get_nick_index (struct t_irc_server *server)
 }
 
 /*
+ * irc_server_get_isupport_value: return value of an item in "isupport" (copy
+ *                                of IRC message 005)
+ *                                if featureis found but has no value, empty
+ *                                  string is returned
+ *                                if feature is not found, NULL is returned
+ */
+
+const char *
+irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
+{
+    char feature2[64], *pos_feature, *pos_equal, *pos_space;
+    int length;
+    static char value[256];
+    
+    if (!server || !server->isupport || !feature)
+        return NULL;
+
+    /* search feature with value */
+    snprintf (feature2, sizeof (feature2), " %s=", feature);
+    pos_feature = strstr (server->isupport, feature2);
+    if (pos_feature)
+    {
+        /* feature found with value, return value */
+        pos_feature++;
+        pos_equal = strchr (pos_feature, '=');
+        pos_space = strchr (pos_feature, ' ');
+        if (pos_space)
+            length = pos_space - pos_equal - 1;
+        else
+            length = strlen (pos_equal) + 1;
+        if (length > (int)sizeof (value) - 1)
+            length = (int)sizeof (value) - 1;
+        memcpy (value, pos_equal + 1, length);
+        value[length] = '\0';
+        return value;
+    }
+    
+    /* search feature without value */
+    feature2[strlen (feature2) - 1] = ' ';
+    pos_feature = strstr (server->isupport, feature2);
+    if (pos_feature)
+    {
+        value[0] = '\0';
+        return value;
+    }
+    
+    /* feature not found in isupport */
+    return NULL;
+}
+
+/*
  * irc_server_alloc: allocate a new server and add it to the servers queue
  */
 
@@ -355,6 +406,7 @@ irc_server_alloc (const char *name)
     new_server->nick_first_tried = 0;
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
+    new_server->isupport = NULL;
     new_server->prefix = NULL;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
@@ -754,6 +806,8 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->nick);
     if (server->nick_modes)
         free (server->nick_modes);
+    if (server->isupport)
+        free (server->isupport);
     if (server->prefix)
         free (server->prefix);
     if (server->away_message)
@@ -2965,6 +3019,11 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
         server->nick_modes = NULL;
         weechat_bar_item_update ("input_prompt");
     }
+    if (server->isupport)
+    {
+        free (server->isupport);
+        server->isupport = NULL;
+    }
     if (server->prefix)
     {
         free (server->prefix);
@@ -3553,6 +3612,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", server->prefix))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
@@ -3791,6 +3852,7 @@ irc_server_print_log ()
         weechat_log_printf ("  nick_first_tried . . : %d",    ptr_server->nick_first_tried);
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
+        weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
         weechat_log_printf ("  prefix . . . . . . . : '%s'",  ptr_server->prefix);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);

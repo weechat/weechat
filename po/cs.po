@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-21 18:07+0200\n"
+"POT-Creation-Date: 2010-05-22 09:52+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4685,6 +4685,16 @@ msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
 
 msgid "server,channel,nick (channel and nicks are optional)"
 msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
+
+msgid "1 if server supports this feature (from IRC message 005)"
+msgstr ""
+
+#, fuzzy
+msgid "server,feature"
+msgstr "jméno serveru"
+
+msgid "value of feature, if supported by server (from IRC message 005)"
+msgstr ""
 
 msgid "list of IRC servers"
 msgstr "seznam IRC serverů"

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-05-21
+v0.3.3-dev, 2010-05-22
 
 
 Version 0.3.3 (under dev!)
@@ -13,6 +13,8 @@ Version 0.3.3 (under dev!)
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: add isupport value in servers (content of IRC message 005), with new
+  infos: irc_server_isupport and irc_server_isupport_value
 * irc: add message in private buffer when nick is back on server after a /quit
 * irc: add new options irc.network.autoreconnect_delay_growing and
   irc.network.autoreconnect_delay_max (task #10338)

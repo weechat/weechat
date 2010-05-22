@@ -67,7 +67,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
                       const char *arguments)
 {
     char *pos_comma, *pos_comma2, *server, *channel, *host;
-    const char *nick;
+    const char *nick, *isupport_value;
     static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -179,6 +179,46 @@ irc_info_get_info_cb (void *data, const char *info_name,
                 return ptr_server->buffer_as_string;
             }
         }
+    }
+    else if (weechat_strcasecmp (info_name, "irc_server_isupport") == 0)
+    {
+        isupport_value = NULL;
+        pos_comma = strchr (arguments, ',');
+        if (pos_comma)
+        {
+            server = weechat_strndup (arguments, pos_comma - arguments);
+            if (server)
+            {
+                ptr_server = irc_server_search (server);
+                if (ptr_server)
+                {
+                    isupport_value = irc_server_get_isupport_value (ptr_server,
+                                                                    pos_comma + 1);
+                }
+            }
+        }
+        if (isupport_value)
+            return str_true;
+        return NULL;
+    }
+    else if (weechat_strcasecmp (info_name, "irc_server_isupport_value") == 0)
+    {
+        isupport_value = NULL;
+        pos_comma = strchr (arguments, ',');
+        if (pos_comma)
+        {
+            server = weechat_strndup (arguments, pos_comma - arguments);
+            if (server)
+            {
+                ptr_server = irc_server_search (server);
+                if (ptr_server)
+                {
+                    isupport_value = irc_server_get_isupport_value (ptr_server,
+                                                                    pos_comma + 1);
+                }
+            }
+        }
+        return isupport_value;
     }
     
     return NULL;
@@ -421,6 +461,12 @@ irc_info_init ()
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel/nick"),
                        N_("server,channel,nick (channel and nicks are optional)"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_server_isupport", N_("1 if server supports this feature (from IRC message 005)"),
+                       N_("server,feature"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_server_isupport_value", N_("value of feature, if supported by server (from IRC message 005)"),
+                       N_("server,feature"),
                        &irc_info_get_info_cb, NULL);
     
     /* infolist hooks */

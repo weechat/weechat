@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-21 18:07+0200\n"
+"POT-Creation-Date: 2010-05-22 09:52+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4506,6 +4506,16 @@ msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
 
 msgid "server,channel,nick (channel and nicks are optional)"
+msgstr ""
+
+msgid "1 if server supports this feature (from IRC message 005)"
+msgstr ""
+
+#, fuzzy
+msgid "server,feature"
+msgstr "cél: szerver neve"
+
+msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr ""
 
 #, fuzzy

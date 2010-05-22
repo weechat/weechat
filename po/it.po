@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-21 18:07+0200\n"
+"POT-Creation-Date: 2010-05-22 09:52+0200\n"
 "PO-Revision-Date: 2010-05-20 12:26+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4761,6 +4761,16 @@ msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
 
 msgid "server,channel,nick (channel and nicks are optional)"
 msgstr "server,canale,nick (canale e nick sono opzionali)"
+
+msgid "1 if server supports this feature (from IRC message 005)"
+msgstr ""
+
+#, fuzzy
+msgid "server,feature"
+msgstr "nome server"
+
+msgid "value of feature, if supported by server (from IRC message 005)"
+msgstr ""
 
 msgid "list of IRC servers"
 msgstr "elenco di server IRC"
