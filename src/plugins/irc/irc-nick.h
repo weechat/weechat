@@ -38,6 +38,12 @@
     else \
         nick->flags &= 0xFFFF - flag;
 
+#define IRC_NICK_IS_OP(__nick)                                   \
+    ((__nick->flags & IRC_NICK_CHANOWNER) ||                     \
+     (__nick->flags & IRC_NICK_CHANADMIN) ||                     \
+     (__nick->flags & IRC_NICK_CHANADMIN2) ||                    \
+     (__nick->flags & IRC_NICK_OP))
+
 #define IRC_NICK_GROUP_CHANOWNER  "01|chanowner"
 #define IRC_NICK_GROUP_CHANADMIN  "02|chanadmin"
 #define IRC_NICK_GROUP_CHANADMIN2 "03|chanadmin2"

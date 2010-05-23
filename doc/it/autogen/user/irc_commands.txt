@@ -646,6 +646,15 @@
   concede il voice ad uno (o più) utenti
 ........................................
 
+&bull; *`/wallchops`* `[channel] text`::
+
+........................................
+  send a notice to channel ops
+
+  channel: channel name
+     test: text to send
+........................................
+
 &bull; *`/wallops`* `testo`::
 
 ........................................

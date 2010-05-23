@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-22 09:52+0200\n"
+"POT-Creation-Date: 2010-05-23 09:58+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3051,6 +3051,10 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
+#, fuzzy, c-format
+msgid "%s%s: you are not on channel \"%s\""
+msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
+
 msgid "find information about the administrator of the server"
 msgstr "információ lekérdezése a szerver adminisztrátorról"
 
@@ -3934,6 +3938,22 @@ msgstr ""
 #, fuzzy
 msgid "give voice to nickname(s)"
 msgstr "voice jog biztosítása a felhasználó(k)nak"
+
+#, fuzzy
+msgid "send a notice to channel ops"
+msgstr "üzenet küldése egy felhasználónak vagy szobának"
+
+#, fuzzy
+msgid "[channel] text"
+msgstr "[szoba] [téma]"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   test: text to send"
+msgstr ""
+"szoba: a szoba neve, ahová csatlakozni szeretnénk\n"
+"kulcs: a csatlakozáshoz szükséges kulcs"
 
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "

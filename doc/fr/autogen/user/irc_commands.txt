@@ -646,6 +646,15 @@
   donne la voix à/aux pseudo(s)
 ........................................
 
+&bull; *`/wallchops`* `[canal] texte`::
+
+........................................
+  envoyer une notice aux opérateurs du canal
+
+  canal: nom du canal
+  texte: texte à envoyer
+........................................
+
 &bull; *`/wallops`* `texte`::
 
 ........................................

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-22 09:52+0200\n"
+"POT-Creation-Date: 2010-05-23 09:58+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3246,6 +3246,10 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr "%s%s: niewłaściwa ilość argumentów dla komędy \"%s\" "
 
+#, fuzzy, c-format
+msgid "%s%s: you are not on channel \"%s\""
+msgstr "%s%s: nie można utworzyć nowego kanału \"%s\""
+
 msgid "find information about the administrator of the server"
 msgstr "wyszukuje informacje o administratorze serwera"
 
@@ -4171,6 +4175,22 @@ msgstr ""
 
 msgid "give voice to nickname(s)"
 msgstr "daje głos (voice) nickowi"
+
+#, fuzzy
+msgid "send a notice to channel ops"
+msgstr "wysyła wiadomość do użytkownika albo kanału"
+
+#, fuzzy
+msgid "[channel] text"
+msgstr "[kanał] [temat]"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   test: text to send"
+msgstr ""
+"kanał: nazwa kanału\n"
+"   atrybuty: atrybuty kanału"
 
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "

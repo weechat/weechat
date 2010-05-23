@@ -1233,7 +1233,7 @@ irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_die: shotdown the server
+ * irc_command_die: shutdown the server
  */
 
 int
@@ -3992,7 +3992,8 @@ irc_command_users (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_version: gives the version info of nick or server (current or specified)
+ * irc_command_version: gives the version info of nick or server (current or
+ *                      specified)
  */
 
 int
@@ -4070,8 +4071,118 @@ irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_wallchops: send a notice to channel ops
+ */
+
+int
+irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
+                       char **argv, char **argv_eol)
+{
+    char *pos_channel;
+    int pos_args;
+    const char *support_wallchops, *support_statusmsg;
+    struct t_irc_nick *ptr_nick;
+    
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("wallchops", 1);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 1)
+    {
+        if (irc_channel_is_channel (argv[1]))
+        {
+            pos_channel = argv[1];
+            pos_args = 2;
+        }
+        else
+        {
+            pos_channel = NULL;
+            pos_args = 1;
+        }
+        
+        /* channel not given, use default buffer */
+        if (!pos_channel)
+        {
+            if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+                pos_channel = ptr_channel->name;
+            else
+            {
+                weechat_printf (ptr_server->buffer,
+                                _("%s%s: \"%s\" command can only be "
+                                  "executed in a channel buffer"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                "wallchops");
+                return WEECHAT_RC_OK;
+            }
+        }
+        
+        ptr_channel = irc_channel_search (ptr_server, pos_channel);
+        if (!ptr_channel)
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("%s%s: you are not on channel \"%s\""),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            pos_channel);
+            return WEECHAT_RC_OK;
+        }
+        
+        weechat_printf (ptr_channel->buffer,
+                        "%s%sNoticeOp%s -> %s%s%s: %s",
+                        weechat_prefix ("network"),
+                        IRC_COLOR_NOTICE,
+                        IRC_COLOR_CHAT,
+                        IRC_COLOR_CHAT_CHANNEL,
+                        ptr_channel->name,
+                        IRC_COLOR_CHAT,
+                        argv_eol[pos_args]);
+        
+        support_wallchops = irc_server_get_isupport_value (ptr_server,
+                                                           "WALLCHOPS");
+        support_statusmsg = irc_server_get_isupport_value (ptr_server,
+                                                           "STATUSMSG");
+        if (support_wallchops
+            || (support_statusmsg && strchr (support_statusmsg, '@')))
+        {
+            /*
+             * if WALLCHOPS is supported, or if STATUSMSG includes '@',
+             * then send a notice to @#channel
+             */
+            irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                              "NOTICE @%s :%s",
+                              ptr_channel->name, argv_eol[pos_args]);
+        }
+        else
+        {
+            /*
+             * if WALLCHOPS is not supported and '@' not in STATUSMSG,
+             * then send a notice to each op of channel
+             */
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                if (IRC_NICK_IS_OP(ptr_nick)
+                    && (strcmp (ptr_nick->name, ptr_server->nick) != 0))
+                {
+                    irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                                      "NOTICE %s :%s",
+                                      ptr_nick->name, argv_eol[pos_args]);
+                }
+            }
+        }
+    }
+    else
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "wallchops");
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_wallops: send a message to all currently connected users who
- *                       have set the 'w' user mode for themselves
+ *                      have set the 'w' user mode for themselves
  */
 
 int
@@ -4771,6 +4882,12 @@ irc_command_init ()
                           N_("[nickname [nickname]]"),
                           "",
                           "%(nicks)|%*", &irc_command_voice, NULL);
+    weechat_hook_command ("wallchops",
+                          N_("send a notice to channel ops"),
+                          N_("[channel] text"),
+                          N_("channel: channel name\n"
+                             "   test: text to send"),
+                          NULL, &irc_command_wallchops, NULL);
     weechat_hook_command ("wallops",
                           N_("send a message to all currently connected users "
                              "who have set the 'w' user mode for themselves"),

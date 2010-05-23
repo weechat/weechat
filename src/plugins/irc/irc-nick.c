@@ -517,10 +517,7 @@ irc_nick_count (struct t_irc_channel *channel, int *total, int *count_op,
          ptr_nick = ptr_nick->next_nick)
     {
         (*total)++;
-        if ((ptr_nick->flags & IRC_NICK_CHANOWNER) ||
-            (ptr_nick->flags & IRC_NICK_CHANADMIN) ||
-            (ptr_nick->flags & IRC_NICK_CHANADMIN2) ||
-            (ptr_nick->flags & IRC_NICK_OP))
+        if (IRC_NICK_IS_OP(ptr_nick))
             (*count_op)++;
         else
         {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-22 09:52+0200\n"
+"POT-Creation-Date: 2010-05-23 09:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2671,6 +2671,10 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr ""
 
+#, c-format
+msgid "%s%s: you are not on channel \"%s\""
+msgstr ""
+
 msgid "find information about the administrator of the server"
 msgstr ""
 
@@ -3369,6 +3373,17 @@ msgid ""
 msgstr ""
 
 msgid "give voice to nickname(s)"
+msgstr ""
+
+msgid "send a notice to channel ops"
+msgstr ""
+
+msgid "[channel] text"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"   test: text to send"
 msgstr ""
 
 msgid ""

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-05-22
+v0.3.3-dev, 2010-05-23
 
 
 Version 0.3.3 (under dev!)
@@ -13,6 +13,8 @@ Version 0.3.3 (under dev!)
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: add command /wallchops, fix bug with display of notice for ops
+  (task #10021, bug #29932)
 * irc: add isupport value in servers (content of IRC message 005), with new
   infos: irc_server_isupport and irc_server_isupport_value
 * irc: add message in private buffer when nick is back on server after a /quit

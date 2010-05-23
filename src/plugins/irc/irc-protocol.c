@@ -994,7 +994,7 @@ IRC_PROTOCOL_CALLBACK(notice)
     char *pos_target, *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int notify_private;
+    int notify_private, notice_op;
     struct t_gui_buffer *ptr_buffer;
     
     /*
@@ -1009,10 +1009,19 @@ IRC_PROTOCOL_CALLBACK(notice)
     if (ignored)
         return WEECHAT_RC_OK;
     
+    notice_op = 0;
+    
     if (argv[0][0] == ':')
     {
         pos_target = argv[2];
+        if ((pos_target[0] == '@') && (irc_channel_is_channel (pos_target + 1)))
+        {
+            pos_target++;
+            notice_op = 1;
+        }
         pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
+        if (notice_op && (pos_args[0] == '@') && (pos_args[1] == ' '))
+            pos_args += 2;
     }
     else
     {
@@ -1034,9 +1043,10 @@ IRC_PROTOCOL_CALLBACK(notice)
             ptr_nick = irc_nick_search (ptr_channel, nick);
             weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                  irc_protocol_tags (command, "notify_message"),
-                                 "%s%sNotice%s(%s%s%s)%s: %s",
+                                 "%s%sNotice%s%s(%s%s%s)%s: %s",
                                  weechat_prefix ("network"),
                                  IRC_COLOR_NOTICE,
+                                 (notice_op) ? "Op" : "",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  (nick && nick[0]) ? nick : "?",
