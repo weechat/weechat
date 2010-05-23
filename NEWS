@@ -1,8 +1,14 @@
 WeeChat News
 ============
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-04-18
+v0.3.3-dev, 2010-05-23
 
+
+Version 0.3.3 (under dev!)
+--------------------------
+
+If you are using `/upgrade` from a previous release, then you must reconnect
+to IRC servers in order to use new command /wallchops.
 
 Version 0.3.2 (2010-04-18)
 --------------------------
