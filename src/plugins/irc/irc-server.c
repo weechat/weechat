@@ -1925,7 +1925,8 @@ irc_server_timer_cb (void *data, int remaining_calls)
                 irc_server_outqueue_send (ptr_server);
                 
                 /* check for lag */
-                if ((ptr_server->lag_check_time.tv_sec == 0)
+                if ((weechat_config_integer (irc_config_network_lag_check) > 0)
+                    && (ptr_server->lag_check_time.tv_sec == 0)
                     && (new_time >= ptr_server->lag_next_check))
                 {
                     irc_server_sendf (ptr_server, 0, "PING %s",

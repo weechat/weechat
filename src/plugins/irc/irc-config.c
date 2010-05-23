@@ -439,6 +439,32 @@ irc_config_change_network_away_check (void *data,
 }
 
 /*
+ * irc_config_change_network_lag_check: called when lag check is changed
+ */
+
+void
+irc_config_change_network_lag_check (void *data,
+                                     struct t_config_option *option)
+{
+    time_t time_next_check;
+    struct t_irc_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    time_next_check = (weechat_config_integer (irc_config_network_lag_check) > 0) ?
+        time (NULL) : 0;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected)
+            ptr_server->lag_next_check = time_next_check;
+    }
+}
+
+/*
  * irc_config_change_network_send_unknown_commands: called when "send_unknown_commands"
  *                                                  is changed
  */
@@ -1709,7 +1735,8 @@ irc_config_init ()
         "lag_check", "integer",
         N_("interval between two checks for lag (in seconds, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "60", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "60", NULL, 0, NULL, NULL,
+        &irc_config_change_network_lag_check, NULL, NULL, NULL);
     irc_config_network_lag_min_show = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_min_show", "integer",
