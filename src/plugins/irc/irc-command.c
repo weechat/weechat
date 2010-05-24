@@ -4886,7 +4886,7 @@ irc_command_init ()
                           N_("send a notice to channel ops"),
                           N_("[channel] text"),
                           N_("channel: channel name\n"
-                             "   test: text to send"),
+                             "   text: text to send"),
                           NULL, &irc_command_wallchops, NULL);
     weechat_hook_command ("wallops",
                           N_("send a message to all currently connected users "

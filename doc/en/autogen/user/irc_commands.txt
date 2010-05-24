@@ -652,7 +652,7 @@
   send a notice to channel ops
 
   channel: channel name
-     test: text to send
+     text: text to send
 ........................................
 
 &bull; *`/wallops`* `text`::
