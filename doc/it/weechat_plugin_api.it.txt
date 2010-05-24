@@ -750,26 +750,26 @@ free (str);
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Replace leading `~` by string with home directory. If string does not start
-with `~`, then same string is returned.
+Sostituisce la `~` iniziale con la stringa con la cartella home. Se la stringa
+non inizia con `~`, viene restituita la stessa stringa.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 char *weechat_string_expand_home (const char *path);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'path': path
+* 'path': percorso
 
-Return value:
+Valore restituito:
 
-* path with leading `~` replaced by home directory (must be freed by calling
-  "free" after use)
+* percorso con la `~` iniziale sostituita dalla cartella home (deve essere
+  liberata chiamando "free" dopo l'uso)
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------

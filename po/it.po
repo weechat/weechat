@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-23 09:58+0200\n"
-"PO-Revision-Date: 2010-05-20 12:26+0200\n"
+"POT-Creation-Date: 2010-05-24 09:54+0200\n"
+"PO-Revision-Date: 2010-05-23 18:33+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -1757,7 +1757,6 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-#, fuzzy
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "numero massimo di righe nella cronologia per buffer (0 = nessun limite)"
@@ -2009,11 +2008,12 @@ msgstr ""
 msgid "text color for current buffer name in status bar"
 msgstr "colore del testo per il nome del buffer corrente nella barra di stato"
 
-#, fuzzy
 msgid ""
 "text color for current buffer name in status bar, if data are secured with a "
 "protocol like SSL"
-msgstr "colore del testo per il nome del buffer corrente nella barra di stato"
+msgstr ""
+"colore del testo per il nome del buffer corrente nella barra di stato, se i "
+"dati sono messi al sicuro con un protocollo come SSL"
 
 msgid "text color for filter indicator in status bar"
 msgstr "colore del testo per l'indicatore di filtro nella barra di stato"
@@ -2724,7 +2724,6 @@ msgstr ""
 msgid "alias pointer (optional)"
 msgstr "puntatore all'alias (opzionale)"
 
-#, fuzzy
 msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome alias (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -3052,9 +3051,9 @@ msgstr ""
 msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: impossibile allocare un nuovo canale"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
-msgstr "%s%s%s %s(%s%s%s)%s è entrato in %s%s%s"
+msgstr "%s%s%s %s(%s%s%s)%s è tornato sul server"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -3261,9 +3260,9 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr "%s%s: argomento contatore errato per il comando \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: you are not on channel \"%s\""
-msgstr "%s%s: impossibile creare il nuovo canale \"%s\""
+msgstr "%s%s: non sei sul canale \"%s\""
 
 msgid "find information about the administrator of the server"
 msgstr "informazioni sull'amministratore del server"
@@ -3564,9 +3563,8 @@ msgstr "nick: nick"
 msgid "join a channel"
 msgstr "entra in un canale"
 
-#, fuzzy
 msgid "[channel1[,channel2[,channel3]] [key1[,key2]]]"
-msgstr "[canale[,canale ] [chiave[,chiave]]]"
+msgstr "[canale1[,canale2[,canale3]] [chiave1[,chiave2]]]"
 
 msgid ""
 "channel: channel name to join\n"
@@ -3577,6 +3575,13 @@ msgid ""
 "  /join #weechat\n"
 "  /join #protectedchan,#weechat key"
 msgstr ""
+"canale: nome del canale in cui entrare\n"
+"chiave: chiave per entrare nel canale (i canali con una chiave devono essere "
+"primi nella lista)\n"
+"\n"
+"Esempi:\n"
+"  /join #weechat\n"
+"  /join #canaleprotetto,#weechat chiave"
 
 msgid "forcibly remove a user from a channel"
 msgstr "caccia forzatamente un utente da un canale"
@@ -4197,21 +4202,18 @@ msgstr ""
 msgid "give voice to nickname(s)"
 msgstr "concede il voice ad uno (o più) utenti"
 
-#, fuzzy
 msgid "send a notice to channel ops"
-msgstr "invia un messaggio ad un nick o a un canale"
+msgstr "invia una notifica agli operatori del canale"
 
-#, fuzzy
 msgid "[channel] text"
-msgstr "[canale] [argomento]"
+msgstr "[canale] testo"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   test: text to send"
 msgstr ""
 "canale: nome del canale\n"
-"modalità: modalità per il canale"
+"  testo: testo da inviare"
 
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "
@@ -4499,12 +4501,13 @@ msgstr "visualizza messaggio CTCP anche se è CTCP sconosciuto"
 msgid "display old topic when channel topic is changed"
 msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
 
-#, fuzzy
 msgid "display remote away message only once in private"
-msgstr "mostra il messaggio di assenza remoto solo una volta in privato"
+msgstr "mostra il messaggio di assenza remota una sola volta in privato"
 
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
+"visualizza un messaggio in privato quando l'utente è tornato (dopo l'uscita "
+"dal server)"
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "visualizza le modalità canale nell'elemento barra \"buffer_name\""
@@ -4611,9 +4614,13 @@ msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
 msgstr ""
+"fattore di crescita per il ritardo della riconnessione automatica al server "
+"(1 = sempre identico, 2 = ritardo*2 per ogni tentativo, ...)"
 
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
+"ritardo massimo per la riconnessione automatica al server (in secondi, 0 = "
+"nessun massimo)"
 
 msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
@@ -4783,14 +4790,14 @@ msgid "server,channel,nick (channel and nicks are optional)"
 msgstr "server,canale,nick (canale e nick sono opzionali)"
 
 msgid "1 if server supports this feature (from IRC message 005)"
-msgstr ""
+msgstr "1 se il server supporta questa caratteristica (dal messaggio IRC 005)"
 
-#, fuzzy
 msgid "server,feature"
-msgstr "nome server"
+msgstr "server,caratteristica"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr ""
+"valore della caratteristica, se supportata dal servre (dal messaggio IRC 005)"
 
 msgid "list of IRC servers"
 msgstr "elenco di server IRC"
@@ -4798,9 +4805,10 @@ msgstr "elenco di server IRC"
 msgid "server pointer (optional)"
 msgstr "puntatore al server (opzionale)"
 
-#, fuzzy
 msgid "server name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "nome server (può iniziare o terminare con \"*\" come carattere jolly)"
+msgstr ""
+"nome server (può iniziare o terminare con \"*\" come carattere jolly) "
+"(opzionale)"
 
 msgid "list of channels for an IRC server"
 msgstr "elenco dei canali per un server IRC"
@@ -5115,9 +5123,10 @@ msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: il nick \"%s\" è già utilizzato, tentativo con il nick #%d (\"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
-msgstr "%s%s: il nick \"%s\" è invalido, tentativo con il nick #%d (\"%s\")"
+msgstr ""
+"%s%s: il nick \"%s\" non è disponibile, tentativo con il nick #%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -5202,9 +5211,9 @@ msgstr "%s%s: timeout dell'autenticazione sasl"
 msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s: ritardo eccessivo, disconnessione dal server..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s: riconnessione al server tra %d %s"
+msgstr "%s: riconnessione al server tra %d %s, %d %s"
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s"
@@ -5642,7 +5651,6 @@ msgstr "elenco delle barre"
 msgid "bar pointer (optional)"
 msgstr "puntatore alla barra (opzionale)"
 
-#, fuzzy
 msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome barra (può iniziare o terminare con \"*\" come carattere jolly "
@@ -5654,7 +5662,6 @@ msgstr "elenco degli elementi barra"
 msgid "bar item pointer (optional)"
 msgstr "puntatore all'elemento della barra (opzionale)"
 
-#, fuzzy
 msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome dell'elemento della barra (può iniziare o terminare con \"*\" come "
@@ -5672,7 +5679,6 @@ msgstr "elenco dei buffer"
 msgid "buffer pointer (optional)"
 msgstr "puntatore al buffer (opzionale)"
 
-#, fuzzy
 msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome buffer (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -5687,7 +5693,6 @@ msgstr "puntatore al buffer"
 msgid "list of filters"
 msgstr "elenco dei filtri"
 
-#, fuzzy
 msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome filtro (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -5722,7 +5727,6 @@ msgstr "nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)"
 msgid "list of options"
 msgstr "elenco delle opzioni"
 
-#, fuzzy
 msgid "option name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome opzione (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -5734,7 +5738,6 @@ msgstr "elenco dei plugin"
 msgid "plugin pointer (optional)"
 msgstr "puntatore al plugin (opzionale)"
 
-#, fuzzy
 msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome plugin (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -5746,7 +5749,6 @@ msgstr "elenco delle finestre"
 msgid "window pointer (optional)"
 msgstr "puntatore alla finestra (opzionale)"
 
-#, fuzzy
 msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome finestra (può iniziare o terminare con \"*\" come carattere jolly) "
@@ -6192,7 +6194,6 @@ msgstr "elenco degli script"
 msgid "script pointer (optional)"
 msgstr "puntatore allo script (opzionale)"
 
-#, fuzzy
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nome script (può iniziare o terminare con \"*\" come carattere jolly) "

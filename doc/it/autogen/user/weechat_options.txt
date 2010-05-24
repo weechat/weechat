@@ -279,7 +279,7 @@
 ** valori: un nome colore (valore predefinito: white)
 
 * *weechat.color.status_name_ssl*
-** descrizione: text color for current buffer name in status bar, if data are secured with a protocol like SSL
+** descrizione: colore del testo per il nome del buffer corrente nella barra di stato, se i dati sono messi al sicuro con un protocollo come SSL
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: lightgreen)
 
@@ -439,7 +439,7 @@
 ** valori: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valore predefinito: group_time_asc)
 
 * *weechat.look.input_undo_max*
-** descrizione: max number of "undo" for command line, by buffer (0 = undo disabled)
+** descrizione: numero massimo di righe nella cronologia per buffer (0 = nessun limite)
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: 32)
 
