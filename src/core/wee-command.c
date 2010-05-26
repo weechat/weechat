@@ -1573,7 +1573,8 @@ command_help (void *data, struct t_gui_buffer *buffer,
                          GUI_COLOR(GUI_COLOR_CHAT));
         gui_chat_printf (NULL, "  %s: %s",
                          _("description"),
-                         (ptr_option->description) ? _(ptr_option->description) : "");
+                         (ptr_option->description && ptr_option->description[0]) ?
+                         _(ptr_option->description) : "");
         switch (ptr_option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
