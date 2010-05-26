@@ -3148,17 +3148,44 @@ int
 command_quit (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
+    int confirm_ok;
+    char *pos_args;
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv;
     
-    /* send quit signal (used by plugins to disconnect from servers,..) */
-    hook_signal_send ("quit",
-                      WEECHAT_HOOK_SIGNAL_STRING,
-                      (argc > 1) ? argv_eol[1] : NULL);
+    confirm_ok = 0;
+    pos_args = NULL;
+    if (argc > 1)
+    {
+        if (string_strcasecmp (argv[1], "-yes") == 0)
+        {
+            confirm_ok = 1;
+            if (argc > 2)
+                pos_args = argv_eol[2];
+        }
+        else
+            pos_args = argv_eol[1];
+    }
     
-    /* force end of main loop */
+    /* if confirmation is required, check that "-yes" is given */
+    if (CONFIG_BOOLEAN(config_look_confirm_quit) && !confirm_ok)
+    {
+        gui_chat_printf (NULL,
+                         _("%sYou must confirm quit command with extra "
+                           "argument \"-yes\" (see /help quit)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
+    
+    /*
+     * send quit signal: some plugins like irc use this signal to disconnect
+     * from servers
+     */
+    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, pos_args);
+    
+    /* force end of WeeChat main loop */
     weechat_quit = 1;
     
     return WEECHAT_RC_OK;
@@ -4746,8 +4773,10 @@ command_init ()
                   &command_proxy, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
-                  N_("[arguments]"),
-                  N_("arguments: text sent with signal \"quit\"\n"
+                  N_("[-yes] [arguments]"),
+                  N_("     -yes: required if option weechat.look.confirm_quit "
+                     "is enabled\n"
+                     "arguments: text sent with signal \"quit\"\n"
                      "           (for example irc plugin uses this text to "
                      "send quit message to server)"),
                   "",

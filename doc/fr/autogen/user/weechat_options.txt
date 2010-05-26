@@ -388,6 +388,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "")
 
+* *weechat.look.confirm_quit*
+** description: si activé, la commande /quit doit être confirmée par le paramètre supplémentaire "-yes" (voir /help quit)
+** type: booléen
+** valeurs: on, off (valeur par défaut: off)
+
 * *weechat.look.day_change*
 ** description: affiche un message quand le jour change
 ** type: booléen

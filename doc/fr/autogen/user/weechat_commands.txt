@@ -293,11 +293,12 @@
       /proxy del myproxy
 ........................................
 
-&bull; *`/quit`* `[paramètres]`::
+&bull; *`/quit`* `[-yes] [paramètres]`::
 
 ........................................
   quitter WeeChat
 
+        -yes: requis si l'option weechat.look.confirm_quit est activée
   paramètres: texte envoyé avec le signal "quit"
               (par exemple l'extension irc utilise ce texte pour envoyer le message de quit au serveur)
 ........................................

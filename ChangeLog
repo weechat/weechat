@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-05-23
+v0.3.3-dev, 2010-05-26
 
 
 Version 0.3.3 (under dev!)
@@ -9,6 +9,7 @@ Version 0.3.3 (under dev!)
 
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
+* core: add new option weechat.look.confirm_quit
 * core: fix crash with hook_process (when timer is called on a deleted hook
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-24 10:00+0200\n"
+"POT-Creation-Date: 2010-05-26 13:16+0200\n"
 "PO-Revision-Date: 2010-05-20 12:31+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -592,6 +592,11 @@ msgstr "Proxy eliminado"
 #, c-format
 msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
 msgstr "%sError: no se pudo configurar la opción \"%s\" para el proxy \"%s\""
+
+#, c-format
+msgid ""
+"%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
+msgstr ""
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1363,10 +1368,13 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "cerrar WeeChat"
 
-msgid "[arguments]"
+#, fuzzy
+msgid "[-yes] [arguments]"
 msgstr "[argumentos]"
 
+#, fuzzy
 msgid ""
+"     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
@@ -1701,6 +1709,11 @@ msgstr ""
 "caracteres usados para determinar si la cadena de entrada es un comando o "
 "no: el comando debe empezar con uno de estos caracteres; la barra (\"/\") es "
 "siempre considerado como prefijo de comando (ejemplo: \".$\")"
+
+msgid ""
+"if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
+"help quit)"
+msgstr ""
 
 msgid "display special message when day changes"
 msgstr "mostrar un mensaje especial cuando el día cambia"

@@ -76,6 +76,7 @@ struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_nicks_number;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
+struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_highlight;
@@ -1270,6 +1271,12 @@ config_weechat_init_options ()
            "input must start with one of these chars; the slash (\"/\") is "
            "always considered as command prefix (example: \".$\")"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_confirm_quit = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "confirm_quit", "boolean",
+        N_("if set, /quit command must be confirmed with extra argument "
+           "\"-yes\" (see /help quit)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_day_change = config_file_new_option (
         weechat_config_file, ptr_section,
         "day_change", "boolean",

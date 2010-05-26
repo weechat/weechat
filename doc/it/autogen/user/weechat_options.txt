@@ -388,6 +388,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "")
 
+* *weechat.look.confirm_quit*
+** descrizione: if set, /quit command must be confirmed with extra argument "-yes" (see /help quit)
+** tipo: bool
+** valori: on, off (valore predefinito: off)
+
 * *weechat.look.day_change*
 ** descrizione: mostra un messaggio speciale al cambio di data
 ** tipo: bool

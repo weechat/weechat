@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-24 10:00+0200\n"
+"POT-Creation-Date: 2010-05-26 13:16+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -652,6 +652,11 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
+#, c-format
+msgid ""
+"%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
 msgstr "Modul beállítások elmentve\n"
@@ -1237,10 +1242,11 @@ msgid "quit WeeChat"
 msgstr ""
 
 #, fuzzy
-msgid "[arguments]"
+msgid "[-yes] [arguments]"
 msgstr "fogadó típusa [paraméterek]"
 
 msgid ""
+"     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
@@ -1500,6 +1506,11 @@ msgid ""
 "chars used to determine if input string is a command or not: input must "
 "start with one of these chars; the slash (\"/\") is always considered as "
 "command prefix (example: \".$\")"
+msgstr ""
+
+msgid ""
+"if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
+"help quit)"
 msgstr ""
 
 msgid "display special message when day changes"

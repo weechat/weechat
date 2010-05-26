@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-24 10:00+0200\n"
+"POT-Creation-Date: 2010-05-26 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -570,6 +570,11 @@ msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
 msgstr ""
 
 #, c-format
+msgid ""
+"%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
+msgstr ""
+
+#, c-format
 msgid "Options reloaded from %s"
 msgstr ""
 
@@ -1071,10 +1076,11 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr ""
 
-msgid "[arguments]"
+msgid "[-yes] [arguments]"
 msgstr ""
 
 msgid ""
+"     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
@@ -1294,6 +1300,11 @@ msgid ""
 "chars used to determine if input string is a command or not: input must "
 "start with one of these chars; the slash (\"/\") is always considered as "
 "command prefix (example: \".$\")"
+msgstr ""
+
+msgid ""
+"if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
+"help quit)"
 msgstr ""
 
 msgid "display special message when day changes"

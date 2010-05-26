@@ -293,11 +293,12 @@
       /proxy del myproxy
 ........................................
 
-&bull; *`/quit`* `[arguments]`::
+&bull; *`/quit`* `[-yes] [arguments]`::
 
 ........................................
   quit WeeChat
 
+       -yes: required if option weechat.look.confirm_quit is enabled
   arguments: text sent with signal "quit"
              (for example irc plugin uses this text to send quit message to server)
 ........................................

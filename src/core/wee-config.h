@@ -87,6 +87,7 @@ extern struct t_config_option *config_startup_display_version;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_command_chars;
+extern struct t_config_option *config_look_confirm_quit;
 extern struct t_config_option *config_look_color_nicks_number;
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_day_change;
