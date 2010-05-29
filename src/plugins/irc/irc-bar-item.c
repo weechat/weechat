@@ -434,8 +434,8 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
             {
                 prefix[0] = '\0';
                 prefix[1] = '\0';
-                irc_nick_get_gui_infos (ptr_nick, &prefix[0], &prefix_color,
-                                        NULL, NULL);
+                irc_nick_get_gui_infos (server, ptr_nick,
+                                        &prefix[0], &prefix_color, NULL, NULL);
                 if (prefix[0] != ' ')
                 {
                     snprintf (str_prefix_color, sizeof (str_prefix_color),

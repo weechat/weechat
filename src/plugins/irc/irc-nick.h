@@ -20,8 +20,7 @@
 #ifndef __WEECHAT_IRC_NICK_H
 #define __WEECHAT_IRC_NICK_H 1
 
-#define IRC_NICK_DEFAULT_PREFIXES_LIST "@%+~&!-"
-#define IRC_NICK_VALID_CHARS           "abcdefghijklmnopqrstuvwxyzABCDEFGHI" \
+#define IRC_NICK_VALID_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHI"      \
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
 
 #define IRC_NICK_CHANOWNER  1
@@ -71,7 +70,8 @@ extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
 extern int irc_nick_is_nick (const char *string);
 extern const char *irc_nick_find_color (const char *nickname);
-extern void irc_nick_get_gui_infos (struct t_irc_nick *nick,
+extern void irc_nick_get_gui_infos (struct t_irc_server *server,
+                                    struct t_irc_nick *nick,
                                     char *prefix, int *prefix_color,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_nick_group **group);
@@ -92,9 +92,11 @@ extern void irc_nick_change (struct t_irc_server *server,
 extern void irc_nick_set (struct t_irc_server *server,
                           struct t_irc_channel *channel,
                           struct t_irc_nick *nick, int set, int flag);
-extern void irc_nick_free (struct t_irc_channel *channel,
+extern void irc_nick_free (struct t_irc_server *server,
+                           struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
-extern void irc_nick_free_all (struct t_irc_channel *channel);
+extern void irc_nick_free_all (struct t_irc_server *server,
+                               struct t_irc_channel *channel);
 extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *channel,
                                            const char *nickname);
 extern void irc_nick_count (struct t_irc_channel *channel, int *total,
@@ -103,7 +105,9 @@ extern void irc_nick_count (struct t_irc_channel *channel, int *total,
 extern void irc_nick_set_away (struct t_irc_server *server,
                                struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);
-extern char *irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
+extern char *irc_nick_as_prefix (struct t_irc_server *server,
+                                 struct t_irc_nick *nick,
+                                 const char *nickname,
                                  const char *force_color);
 extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
                                            const char *nickname);

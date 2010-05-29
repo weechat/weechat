@@ -2996,7 +2996,7 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            irc_nick_free_all (ptr_channel);
+            irc_nick_free_all (server, ptr_channel);
             weechat_printf (ptr_channel->buffer,
                             _("%s%s: disconnected from server"),
                             "",

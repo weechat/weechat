@@ -687,7 +687,7 @@ IRC_PROTOCOL_CALLBACK(kick)
          * my nick was kicked => free all nicks, channel is not active any
          * more
          */
-        irc_nick_free_all (ptr_channel);
+        irc_nick_free_all (server, ptr_channel);
         if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN))
         {
             if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
@@ -713,7 +713,7 @@ IRC_PROTOCOL_CALLBACK(kick)
          * nick
          */
         if (ptr_nick_kicked)
-            irc_nick_free (ptr_channel, ptr_nick_kicked);
+            irc_nick_free (server, ptr_channel, ptr_nick_kicked);
     }
     
     return WEECHAT_RC_OK;
@@ -782,7 +782,7 @@ IRC_PROTOCOL_CALLBACK(kill)
              * my nick was killed => free all nicks, channel is not active any
              * more
              */
-            irc_nick_free_all (ptr_channel);
+            irc_nick_free_all (server, ptr_channel);
         }
         else
         {
@@ -791,7 +791,7 @@ IRC_PROTOCOL_CALLBACK(kill)
              * nick
              */
             if (ptr_nick_killed)
-                irc_nick_free (ptr_channel, ptr_nick_killed);
+                irc_nick_free (server, ptr_channel, ptr_nick_killed);
         }
     }
     
@@ -1096,7 +1096,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                      irc_protocol_tags (command,
                                                         "notify_private"),
                                      "%s%s",
-                                     irc_nick_as_prefix (NULL, nick,
+                                     irc_nick_as_prefix (server, NULL, nick,
                                                          irc_nick_color_for_pv (ptr_channel, nick)),
                                      pos_args);
                 if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
@@ -1259,7 +1259,7 @@ IRC_PROTOCOL_CALLBACK(part)
             /* part request was issued by local client ? */
             if (local_part)
             {
-                irc_nick_free_all (ptr_channel);
+                irc_nick_free_all (server, ptr_channel);
                 
                 /* cycling ? => rejoin channel immediately */
                 if (ptr_channel->cycle)
@@ -1291,7 +1291,7 @@ IRC_PROTOCOL_CALLBACK(part)
                 }
             }
             else
-                irc_nick_free (ptr_channel, ptr_nick);
+                irc_nick_free (server, ptr_channel, ptr_nick);
         }
     }
     
@@ -1402,7 +1402,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                  irc_protocol_tags (command,
                                                     "notify_message"),
                                  "%s%s",
-                                 irc_nick_as_prefix (ptr_nick,
+                                 irc_nick_as_prefix (server, ptr_nick,
                                                      (ptr_nick) ? NULL : nick,
                                                      NULL),
                                  pos_args);
@@ -1470,8 +1470,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                                 "notify_private,no_highlight" :
                                                 "notify_private"),
                              "%s%s",
-                             irc_nick_as_prefix (NULL,
-                                                 nick,
+                             irc_nick_as_prefix (server, NULL, nick,
                                                  (nick_is_me) ?
                                                  IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick)),
                              pos_args);
@@ -1584,7 +1583,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                 }
             }
             if (ptr_nick)
-                irc_nick_free (ptr_channel, ptr_nick);
+                irc_nick_free (server, ptr_channel, ptr_nick);
         }
     }
     
@@ -3268,7 +3267,7 @@ IRC_PROTOCOL_CALLBACK(353)
         {
             prefix_found = 0;
             
-            if (irc_mode_get_nick_prefix (server, NULL, pos_nick[0]) >= 0)
+            if (irc_mode_get_nick_attr (server, NULL, pos_nick[0]) >= 0)
             {
                 prefix_found = 1;
                 switch (pos_nick[0])
@@ -3278,6 +3277,10 @@ IRC_PROTOCOL_CALLBACK(353)
                         color = IRC_COLOR_NICKLIST_PREFIX1;
                         break;
                     case '~': /* channel owner */
+                        is_chanowner = 1;
+                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        break;
+                    case '*': /* channel owner */
                         is_chanowner = 1;
                         color = IRC_COLOR_NICKLIST_PREFIX1;
                         break;

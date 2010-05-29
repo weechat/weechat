@@ -82,10 +82,8 @@ enum t_irc_server_option
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
-#define IRC_SERVER_DEFAULT_PORT          6667
-#define IRC_SERVER_DEFAULT_PREFIXES_LIST "@%+~&!-"
-#define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
-    "weechat4,weechat5"
+#define IRC_SERVER_DEFAULT_PORT  6667
+#define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
 #define IRC_SERVER_OUTQUEUE_PRIO_HIGH 1
 #define IRC_SERVER_OUTQUEUE_PRIO_LOW  2
