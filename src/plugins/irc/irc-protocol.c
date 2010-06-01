@@ -3016,6 +3016,113 @@ IRC_PROTOCOL_CALLBACK(345)
 }
 
 /*
+ * irc_protocol_cb_346: '346' command received (channel invite list)
+ */
+
+IRC_PROTOCOL_CALLBACK(346)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    time_t datetime;
+    
+    /*
+     * 346 message looks like:
+     *   :server 346 mynick #channel invitemask nick!user@host 1205590879
+     */
+    
+    IRC_PROTOCOL_MIN_ARGS(5);
+    
+    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+        ptr_channel->buffer : server->buffer;
+    if (argc >= 7)
+    {
+        datetime = (time_t)(atol (argv[6]));
+        weechat_printf_tags (ptr_buffer,
+                             irc_protocol_tags (command, "irc_numeric"),
+                             _("%s%s[%s%s%s] %s%s%s invited by "
+                               "%s%s %s(%s%s%s)%s on %s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             argv[4],
+                             IRC_COLOR_CHAT,
+                             IRC_COLOR_CHAT_NICK,
+                             irc_protocol_get_nick_from_host (argv[5]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             irc_protocol_get_address_from_host (argv[5]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT,
+                             weechat_util_get_time_string (&datetime));
+    }
+    else
+    {
+        weechat_printf_tags (ptr_buffer,
+                             irc_protocol_tags (command, "irc_numeric"),
+                             _("%s%s[%s%s%s] %s%s%s invited by "
+                               "%s%s %s(%s%s%s)"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             argv[4],
+                             IRC_COLOR_CHAT,
+                             IRC_COLOR_CHAT_NICK,
+                             irc_protocol_get_nick_from_host (argv[5]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             irc_protocol_get_address_from_host (argv[5]),
+                             IRC_COLOR_CHAT_DELIMITERS);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cb_347: '347' command received (end of channel invite list)
+ */
+
+IRC_PROTOCOL_CALLBACK(347)
+{
+    char *pos_args;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    
+    /*
+     * 347 message looks like:
+     *   :server 347 mynick #channel :End of Channel Invite List
+     */
+    
+    IRC_PROTOCOL_MIN_ARGS(4);
+    
+    pos_args = (argc > 4) ?
+        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    
+    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+        ptr_channel->buffer : server->buffer;
+    weechat_printf_tags (ptr_buffer,
+                         irc_protocol_tags (command, "irc_numeric"),
+                         "%s%s[%s%s%s]%s%s%s",
+                         weechat_prefix ("network"),
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT_CHANNEL,
+                         argv[3],
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT,
+                         (pos_args) ? " " : "",
+                         (pos_args) ? pos_args : "");
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cb_348: '348' command received (channel exception list)
  */
 
@@ -4008,6 +4115,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "343", /* is opered as */ 1, &irc_protocol_cb_330_343 },
           { "344", /* channel reop */ 1, &irc_protocol_cb_344 },
           { "345", /* end of channel reop list */ 1, &irc_protocol_cb_345 },
+          { "346", /* invite list */ 1, &irc_protocol_cb_346 },
+          { "347", /* end of invite list */ 1, &irc_protocol_cb_347 },
           { "348", /* channel exception list */ 1, &irc_protocol_cb_348 },
           { "349", /* end of channel exception list */ 1, &irc_protocol_cb_349 },
           { "351", /* server version */ 1, &irc_protocol_cb_351 },

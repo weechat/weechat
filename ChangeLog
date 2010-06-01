@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-05-29
+v0.3.3-dev, 2010-06-01
 
 
 Version 0.3.3 (under dev!)
@@ -22,6 +22,8 @@ Version 0.3.3 (under dev!)
 * irc: add new options irc.network.autoreconnect_delay_growing and
   irc.network.autoreconnect_delay_max (task #10338)
 * irc: add new option weechat.color.status_name_ssl (task #10339)
+* irc: add missing commands 346, 347 (channel invite list)
+* irc: fix display of message 330 on some servers
 * irc: fix bug with nick prefix '*' (chan founder) on some IRC servers
   (bug #29890)
 * irc: fix bug with option irc.network.lag_check when value is 0 (zero)

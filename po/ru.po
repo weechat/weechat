@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-05-26 13:16+0200\n"
+"POT-Creation-Date: 2010-06-01 15:22+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4789,6 +4789,14 @@ msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 #, fuzzy, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "Реоп канала %s%s%s: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
