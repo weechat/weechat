@@ -55,10 +55,13 @@ display WeeChat version
 Options for plugins depend on plugins, you can look at plugins documentation on WeeChat website for more information.
 .TP
 For example, with irc plugin, you can connect to temporary server with an url like:
-.B irc[6][s]://[[nickname][:password]@]server[/port][//#channel1[,#channel2...]]
+.B irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 .TP
-To join WeeChat IRC channel support with nick "MyNick":
-irc://MyNick@irc.freenode.net//#weechat
+To join WeeChat IRC channel support with nick "mynick":
+irc://mynick@irc.freenode.net/#weechat
+.TP
+IPv6 address can be enclosed in brackets to add a port after address, for example:
+irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
 .SH FILES
 .TP

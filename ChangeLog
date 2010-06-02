@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-06-01
+v0.3.3-dev, 2010-06-02
 
 
 Version 0.3.3 (under dev!)
@@ -14,6 +14,8 @@ Version 0.3.3 (under dev!)
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: fix bug with command-line option "irc://" (bug #29990), new format for
+  port and channels
 * irc: add command /wallchops, fix bug with display of notice for ops
   (task #10021, bug #29932)
 * irc: add isupport value in servers (content of IRC message 005), with new
