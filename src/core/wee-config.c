@@ -155,11 +155,6 @@ struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_nicklist_group;
 struct t_config_option *config_color_nicklist_away;
 struct t_config_option *config_color_nicklist_offline;
-struct t_config_option *config_color_nicklist_prefix1;
-struct t_config_option *config_color_nicklist_prefix2;
-struct t_config_option *config_color_nicklist_prefix3;
-struct t_config_option *config_color_nicklist_prefix4;
-struct t_config_option *config_color_nicklist_prefix5;
 
 /* config, completion section */
 
@@ -1835,36 +1830,6 @@ config_weechat_init_options ()
         "nicklist_offline", "color",
         N_("text color for offline nicknames"),
         NULL, -1, 0, "blue", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_prefix1 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_prefix1", "color",
-        N_("text color for prefix #1 in nicklist"),
-        NULL, -1, 0, "lightgreen", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_prefix2 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_prefix2", "color",
-        N_("text color for prefix #2 in nicklist"),
-        NULL, -1, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_prefix3 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_prefix3", "color",
-        N_("text color for prefix #3 in nicklist"),
-        NULL, -1, 0, "yellow", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_prefix4 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_prefix4", "color",
-        N_("text color for prefix #4 in nicklist"),
-        NULL, -1, 0, "blue", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_prefix5 = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_prefix5", "color",
-        N_("text color for prefix #5 in nicklist"),
-        NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     
     /* completion */

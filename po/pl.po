@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2069,21 +2069,6 @@ msgstr "kolor nicków ze statusem nieobecności"
 
 msgid "text color for offline nicknames"
 msgstr "kolor dla nieobecnych nicków"
-
-msgid "text color for prefix #1 in nicklist"
-msgstr "kolor przedrostka #1 na liście nicków"
-
-msgid "text color for prefix #2 in nicklist"
-msgstr "kolor przedrostka #2 na liście nicków"
-
-msgid "text color for prefix #3 in nicklist"
-msgstr "kolor przedrostka #3 na liście nicków"
-
-msgid "text color for prefix #4 in nicklist"
-msgstr "kolor przedrostka #4 na liście nicków"
-
-msgid "text color for prefix #5 in nicklist"
-msgstr "kolor przedrostka #5 na liście nicków"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4578,6 +4563,18 @@ msgstr "kolor tekstu w wiadomościach o wejsciu na kanał"
 msgid "color for text in part/quit messages"
 msgstr "kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
 msgid "color for text \"Notice\" in notices"
 msgstr "kolor tekstu \"Notice\" w podświetleniach"
 
@@ -6599,6 +6596,21 @@ msgstr "Argumenty"
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "kolor przedrostka #1 na liście nicków"
+
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "kolor przedrostka #2 na liście nicków"
+
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "kolor przedrostka #3 na liście nicków"
+
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "kolor przedrostka #4 na liście nicków"
+
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "kolor przedrostka #5 na liście nicków"
 
 #~ msgid ""
 #~ "channel: channel name to join\n"

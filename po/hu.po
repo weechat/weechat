@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1889,26 +1889,6 @@ msgstr "távollevő felhasználók nevének színe"
 #, fuzzy
 msgid "text color for offline nicknames"
 msgstr "távollevő felhasználók nevének színe"
-
-#, fuzzy
-msgid "text color for prefix #1 in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color for prefix #2 in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color for prefix #3 in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color for prefix #4 in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color for prefix #5 in nicklist"
-msgstr "név színe"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4345,6 +4325,18 @@ msgstr "új üzenetet tartalmazó ablak színe"
 msgid "color for text in part/quit messages"
 msgstr "alapértelmezett kilépő üzenet"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
 #, fuzzy
 msgid "color for text \"Notice\" in notices"
 msgstr "új üzenetet tartalmazó ablak színe"
@@ -6353,6 +6345,26 @@ msgstr "fogadó típusa [paraméterek]"
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "név színe"
 
 #~ msgid ""
 #~ "channel: channel name to join\n"

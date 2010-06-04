@@ -75,6 +75,7 @@ extern void irc_nick_get_gui_infos (struct t_irc_server *server,
                                     char *prefix, int *prefix_color,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_nick_group **group);
+extern const char *irc_nick_get_prefix_color_name (int prefix_color);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *nickname,

@@ -85,6 +85,10 @@ struct t_config_option *irc_config_look_topic_strip_colors;
 
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
+struct t_config_option *irc_config_color_nick_prefix_op;
+struct t_config_option *irc_config_color_nick_prefix_halfop;
+struct t_config_option *irc_config_color_nick_prefix_voice;
+struct t_config_option *irc_config_color_nick_prefix_user;
 struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
@@ -406,6 +410,23 @@ irc_config_change_color_item_buffer_name (void *data,
     (void) option;
     
     weechat_bar_item_update ("buffer_name");
+}
+
+/*
+ * irc_config_change_color_nick_prefix: called when the color of a nick prefix
+ *                                      is changed
+ */
+
+void
+irc_config_change_color_nick_prefix (void *data,
+                                     struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("input_prompt");
+    weechat_bar_item_update ("nicklist");
 }
 
 /*
@@ -1647,6 +1668,30 @@ irc_config_init ()
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_color_nick_prefix_op = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_prefix_op", "color",
+        N_("color for prefix of nick which is op/admin/owner on channel"),
+        NULL, -1, 0, "lightgreen", NULL, 0, NULL, NULL,
+        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
+    irc_config_color_nick_prefix_halfop = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_prefix_halfop", "color",
+        N_("color for prefix of nick which is halfop on channel"),
+        NULL, -1, 0, "lightmagenta", NULL, 0, NULL, NULL,
+        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
+    irc_config_color_nick_prefix_voice = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_prefix_voice", "color",
+        N_("color for prefix of nick which has voice on channel"),
+        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
+        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
+    irc_config_color_nick_prefix_user = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_prefix_user", "color",
+        N_("color for prefix of nick which is user on channel"),
+        NULL, -1, 0, "blue", NULL, 0, NULL, NULL,
+        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
     irc_config_color_notice = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice", "color",

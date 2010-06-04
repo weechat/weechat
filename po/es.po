@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: 2010-05-20 12:31+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2068,21 +2068,6 @@ msgstr "color para apodos ausentes"
 
 msgid "text color for offline nicknames"
 msgstr "color para apodos desconectados"
-
-msgid "text color for prefix #1 in nicklist"
-msgstr "color para el prefijo #1 en la lista de apodos"
-
-msgid "text color for prefix #2 in nicklist"
-msgstr "color para el prefijo #2 en la lista de apodos"
-
-msgid "text color for prefix #3 in nicklist"
-msgstr "color para el prefijo #3 en la lista de apodos"
-
-msgid "text color for prefix #4 in nicklist"
-msgstr "color para el prefijo #4 en la lista de apodos"
-
-msgid "text color for prefix #5 in nicklist"
-msgstr "color para el prefijo #5 en la lista de apodos"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4600,6 +4585,18 @@ msgstr "color para el texto en mensajes de unión"
 msgid "color for text in part/quit messages"
 msgstr "color para el texto en mensajes de salida/abandono"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
 msgid "color for text \"Notice\" in notices"
 msgstr "color para el texto \"Notice\" en los mensajes de aviso"
 
@@ -6666,6 +6663,21 @@ msgstr "Argumentos"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "color para el prefijo #1 en la lista de apodos"
+
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "color para el prefijo #2 en la lista de apodos"
+
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "color para el prefijo #3 en la lista de apodos"
+
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "color para el prefijo #4 en la lista de apodos"
+
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "color para el prefijo #5 en la lista de apodos"
 
 #~ msgid ""
 #~ "channel: channel name to join\n"

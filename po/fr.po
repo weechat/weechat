@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
-"PO-Revision-Date: 2010-06-01 15:23+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
+"PO-Revision-Date: 2010-06-04 11:47+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -2088,21 +2088,6 @@ msgstr "couleur du texte pour les pseudos absents"
 
 msgid "text color for offline nicknames"
 msgstr "couleur du texte pour les pseudos déconnectés"
-
-msgid "text color for prefix #1 in nicklist"
-msgstr "couleur du texte pour le préfixe n°1 de la liste des pseudos"
-
-msgid "text color for prefix #2 in nicklist"
-msgstr "couleur du texte pour le préfixe n°2 de la liste des pseudos"
-
-msgid "text color for prefix #3 in nicklist"
-msgstr "couleur du texte pour le préfixe n°3 de la liste des pseudos"
-
-msgid "text color for prefix #4 in nicklist"
-msgstr "couleur du texte pour le préfixe n°4 de la liste des pseudos"
-
-msgid "text color for prefix #5 in nicklist"
-msgstr "couleur du texte pour le préfixe n°5 de la liste des pseudos"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4643,6 +4628,19 @@ msgstr "couleur pour le texte dans les messages join"
 msgid "color for text in part/quit messages"
 msgstr "couleur pour le texte dans les messages part/quit"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+"couleur pour le préfixe d'un pseudo qui est op/admin/owner sur le canal"
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr "couleur pour le préfixe d'un pseudo qui est halfop sur le canal"
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr "couleur pour le préfixe d'un pseudo qui a le voice sur le canal"
+
+msgid "color for prefix of nick which is user on channel"
+msgstr "couleur pour le préfixe d'un pseudo qui est user sur le canal"
+
 msgid "color for text \"Notice\" in notices"
 msgstr "couleur pour le texte \"Notice\" dans les notices"
 
@@ -6702,6 +6700,21 @@ msgstr "Paramètres"
 
 msgid "Pointer"
 msgstr "Pointeur"
+
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "couleur du texte pour le préfixe n°1 de la liste des pseudos"
+
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "couleur du texte pour le préfixe n°2 de la liste des pseudos"
+
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "couleur du texte pour le préfixe n°3 de la liste des pseudos"
+
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "couleur du texte pour le préfixe n°4 de la liste des pseudos"
+
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "couleur du texte pour le préfixe n°5 de la liste des pseudos"
 
 #~ msgid ""
 #~ "channel: channel name to join\n"

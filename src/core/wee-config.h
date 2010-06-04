@@ -166,11 +166,6 @@ extern struct t_config_option *config_color_input_actions;
 extern struct t_config_option *config_color_nicklist_group;
 extern struct t_config_option *config_color_nicklist_away;
 extern struct t_config_option *config_color_nicklist_offline;
-extern struct t_config_option *config_color_nicklist_prefix1;
-extern struct t_config_option *config_color_nicklist_prefix2;
-extern struct t_config_option *config_color_nicklist_prefix3;
-extern struct t_config_option *config_color_nicklist_prefix4;
-extern struct t_config_option *config_color_nicklist_prefix5;
 
 extern struct t_config_option *config_completion_default_template;
 extern struct t_config_option *config_completion_nick_add_space;

@@ -213,31 +213,6 @@
 ** type: color
 ** values: a color name (default value: blue)
 
-* *weechat.color.nicklist_prefix1*
-** description: text color for prefix #1 in nicklist
-** type: color
-** values: a color name (default value: lightgreen)
-
-* *weechat.color.nicklist_prefix2*
-** description: text color for prefix #2 in nicklist
-** type: color
-** values: a color name (default value: lightmagenta)
-
-* *weechat.color.nicklist_prefix3*
-** description: text color for prefix #3 in nicklist
-** type: color
-** values: a color name (default value: yellow)
-
-* *weechat.color.nicklist_prefix4*
-** description: text color for prefix #4 in nicklist
-** type: color
-** values: a color name (default value: blue)
-
-* *weechat.color.nicklist_prefix5*
-** description: text color for prefix #5 in nicklist
-** type: color
-** values: a color name (default value: brown)
-
 * *weechat.color.separator*
 ** description: background color for window separators (when split)
 ** type: color

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1610,21 +1610,6 @@ msgid "text color for away nicknames"
 msgstr ""
 
 msgid "text color for offline nicknames"
-msgstr ""
-
-msgid "text color for prefix #1 in nicklist"
-msgstr ""
-
-msgid "text color for prefix #2 in nicklist"
-msgstr ""
-
-msgid "text color for prefix #3 in nicklist"
-msgstr ""
-
-msgid "text color for prefix #4 in nicklist"
-msgstr ""
-
-msgid "text color for prefix #5 in nicklist"
 msgstr ""
 
 msgid ""
@@ -3718,6 +3703,18 @@ msgid "color for text in join messages"
 msgstr ""
 
 msgid "color for text in part/quit messages"
+msgstr ""
+
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
 msgstr ""
 
 msgid "color for text \"Notice\" in notices"

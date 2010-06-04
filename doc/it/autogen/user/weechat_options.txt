@@ -213,31 +213,6 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: blue)
 
-* *weechat.color.nicklist_prefix1*
-** descrizione: colore del testo per il prefisso #1 nella nicklist
-** tipo: colore
-** valori: un nome colore (valore predefinito: lightgreen)
-
-* *weechat.color.nicklist_prefix2*
-** descrizione: colore del testo per il prefisso #2 nella nicklist
-** tipo: colore
-** valori: un nome colore (valore predefinito: lightmagenta)
-
-* *weechat.color.nicklist_prefix3*
-** descrizione: colore del testo per il prefisso #3 nella nicklist
-** tipo: colore
-** valori: un nome colore (valore predefinito: yellow)
-
-* *weechat.color.nicklist_prefix4*
-** descrizione: colore del testo per il prefisso #4 nella nicklist
-** tipo: colore
-** valori: un nome colore (valore predefinito: blue)
-
-* *weechat.color.nicklist_prefix5*
-** descrizione: colore del testo per il prefisso #5 nella nicklist
-** tipo: colore
-** valori: un nome colore (valore predefinito: brown)
-
 * *weechat.color.separator*
 ** descrizione: colore di sfondo per i separatori delle finestre (quando divise)
 ** tipo: colore

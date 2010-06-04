@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: 2010-05-24 10:01+0200\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2118,21 +2118,6 @@ msgstr "Textfarbe von abwesenden Nicknamen"
 
 msgid "text color for offline nicknames"
 msgstr "Textfarbe von Nicknamen die Offline sind"
-
-msgid "text color for prefix #1 in nicklist"
-msgstr "Textfarbe für Präfix #1 in Nickliste"
-
-msgid "text color for prefix #2 in nicklist"
-msgstr "Textfarbe für Präfix #2 in Nickliste"
-
-msgid "text color for prefix #3 in nicklist"
-msgstr "Textfarbe für Präfix #3 in Nickliste"
-
-msgid "text color for prefix #4 in nicklist"
-msgstr "Textfarbe für Präfix #4 in Nickliste"
-
-msgid "text color for prefix #5 in nicklist"
-msgstr "Textfarbe für Präfix #5 in Nickliste"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4718,6 +4703,18 @@ msgstr ""
 "Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
 "angezeigt werden soll"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
 msgid "color for text \"Notice\" in notices"
 msgstr "Farbe des \"Notice\"-Textes in Notizen"
 
@@ -6799,3 +6796,18 @@ msgstr "Argumente"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "Textfarbe für Präfix #1 in Nickliste"
+
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "Textfarbe für Präfix #2 in Nickliste"
+
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "Textfarbe für Präfix #3 in Nickliste"
+
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "Textfarbe für Präfix #4 in Nickliste"
+
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "Textfarbe für Präfix #5 in Nickliste"

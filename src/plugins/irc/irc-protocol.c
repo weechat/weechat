@@ -3406,35 +3406,35 @@ IRC_PROTOCOL_CALLBACK(353)
                 {
                     case '@': /* op */
                         is_op = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        color = IRC_COLOR_NICK_PREFIX_OP;
                         break;
                     case '~': /* channel owner */
                         is_chanowner = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        color = IRC_COLOR_NICK_PREFIX_OP;
                         break;
                     case '*': /* channel owner */
                         is_chanowner = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        color = IRC_COLOR_NICK_PREFIX_OP;
                         break;
                     case '&': /* channel admin */
                         is_chanadmin = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        color = IRC_COLOR_NICK_PREFIX_OP;
                         break;
                     case '!': /* channel admin (2) */
                         is_chanadmin2 = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX1;
+                        color = IRC_COLOR_NICK_PREFIX_OP;
                         break;
                     case '%': /* half-op */
                         is_halfop = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX2;
+                        color = IRC_COLOR_NICK_PREFIX_HALFOP;
                         break;
                     case '+': /* voice */
                         has_voice = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX3;
+                        color = IRC_COLOR_NICK_PREFIX_VOICE;
                         break;
                     case '-': /* channel user */
                         is_chanuser = 1;
-                        color = IRC_COLOR_NICKLIST_PREFIX4;
+                        color = IRC_COLOR_NICK_PREFIX_USER;
                         break;
                     default:
                         color = IRC_COLOR_CHAT;

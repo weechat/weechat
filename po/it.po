@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-01 15:22+0200\n"
+"POT-Creation-Date: 2010-06-04 11:47+0200\n"
 "PO-Revision-Date: 2010-05-24 10:01+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2065,21 +2065,6 @@ msgstr "colore del testo per i nick assenti"
 
 msgid "text color for offline nicknames"
 msgstr "colore del testo per i nick non in linea"
-
-msgid "text color for prefix #1 in nicklist"
-msgstr "colore del testo per il prefisso #1 nella nicklist"
-
-msgid "text color for prefix #2 in nicklist"
-msgstr "colore del testo per il prefisso #2 nella nicklist"
-
-msgid "text color for prefix #3 in nicklist"
-msgstr "colore del testo per il prefisso #3 nella nicklist"
-
-msgid "text color for prefix #4 in nicklist"
-msgstr "colore del testo per il prefisso #4 nella nicklist"
-
-msgid "text color for prefix #5 in nicklist"
-msgstr "colore del testo per il prefisso #5 nella nicklist"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4611,6 +4596,18 @@ msgstr "colore per il testo nei messaggi di entrata"
 msgid "color for text in part/quit messages"
 msgstr "colore per il testo nei messaggi di uscita/abbandono"
 
+msgid "color for prefix of nick which is op/admin/owner on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is halfop on channel"
+msgstr ""
+
+msgid "color for prefix of nick which has voice on channel"
+msgstr ""
+
+msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
 msgid "color for text \"Notice\" in notices"
 msgstr "colore per il testo \"Notifica\" nelle notifiche"
 
@@ -6651,3 +6648,18 @@ msgstr "Argomenti"
 
 msgid "Pointer"
 msgstr "Puntatore"
+
+#~ msgid "text color for prefix #1 in nicklist"
+#~ msgstr "colore del testo per il prefisso #1 nella nicklist"
+
+#~ msgid "text color for prefix #2 in nicklist"
+#~ msgstr "colore del testo per il prefisso #2 nella nicklist"
+
+#~ msgid "text color for prefix #3 in nicklist"
+#~ msgstr "colore del testo per il prefisso #3 nella nicklist"
+
+#~ msgid "text color for prefix #4 in nicklist"
+#~ msgstr "colore del testo per il prefisso #4 nella nicklist"
+
+#~ msgid "text color for prefix #5 in nicklist"
+#~ msgstr "colore del testo per il prefisso #5 nella nicklist"

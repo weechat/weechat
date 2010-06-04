@@ -213,31 +213,6 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: blue)
 
-* *weechat.color.nicklist_prefix1*
-** description: couleur du texte pour le préfixe n°1 de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: lightgreen)
-
-* *weechat.color.nicklist_prefix2*
-** description: couleur du texte pour le préfixe n°2 de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
-
-* *weechat.color.nicklist_prefix3*
-** description: couleur du texte pour le préfixe n°3 de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: yellow)
-
-* *weechat.color.nicklist_prefix4*
-** description: couleur du texte pour le préfixe n°4 de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: blue)
-
-* *weechat.color.nicklist_prefix5*
-** description: couleur du texte pour le préfixe n°5 de la liste des pseudos
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: brown)
-
 * *weechat.color.separator*
 ** description: couleur du fond pour les séparateurs de fenêtres (quand divisé)
 ** type: couleur

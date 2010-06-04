@@ -23,6 +23,26 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: red)
 
+* *irc.color.nick_prefix_halfop*
+** description: couleur pour le préfixe d'un pseudo qui est halfop sur le canal
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightmagenta)
+
+* *irc.color.nick_prefix_op*
+** description: couleur pour le préfixe d'un pseudo qui est op/admin/owner sur le canal
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: lightgreen)
+
+* *irc.color.nick_prefix_user*
+** description: couleur pour le préfixe d'un pseudo qui est user sur le canal
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: blue)
+
+* *irc.color.nick_prefix_voice*
+** description: couleur pour le préfixe d'un pseudo qui a le voice sur le canal
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
 * *irc.color.notice*
 ** description: couleur pour le texte "Notice" dans les notices
 ** type: couleur

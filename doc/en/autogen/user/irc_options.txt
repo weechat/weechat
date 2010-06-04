@@ -23,6 +23,26 @@
 ** type: color
 ** values: a color name (default value: red)
 
+* *irc.color.nick_prefix_halfop*
+** description: color for prefix of nick which is halfop on channel
+** type: color
+** values: a color name (default value: lightmagenta)
+
+* *irc.color.nick_prefix_op*
+** description: color for prefix of nick which is op/admin/owner on channel
+** type: color
+** values: a color name (default value: lightgreen)
+
+* *irc.color.nick_prefix_user*
+** description: color for prefix of nick which is user on channel
+** type: color
+** values: a color name (default value: blue)
+
+* *irc.color.nick_prefix_voice*
+** description: color for prefix of nick which has voice on channel
+** type: color
+** values: a color name (default value: yellow)
+
 * *irc.color.notice*
 ** description: color for text "Notice" in notices
 ** type: color
