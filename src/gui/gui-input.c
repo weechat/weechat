@@ -1260,6 +1260,11 @@ gui_input_scroll_unread (struct t_gui_window *window)
                 window->start_line = window->buffer->lines->first_line;
             else
                 window->start_line = window->buffer->lines->last_read_line->next_line;
+            if (window->start_line)
+            {
+                if (!gui_line_is_displayed (window->start_line))
+                    window->start_line = gui_line_get_next_displayed (window->start_line);
+            }
             window->start_line_pos = 0;
             window->first_line_displayed =
                 (window->start_line == gui_line_get_first_displayed (window->buffer));

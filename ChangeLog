@@ -10,6 +10,8 @@ Version 0.3.3 (under dev!)
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
 * core: add new option weechat.look.confirm_quit
+* core: fix bug with scroll_unread: do not scroll to a filtered line
+  (bug #29991)
 * core: fix crash with hook_process (when timer is called on a deleted hook
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
