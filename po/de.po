@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-04 11:47+0200\n"
-"PO-Revision-Date: 2010-05-24 10:01+0200\n"
+"POT-Creation-Date: 2010-06-08 14:51+0200\n"
+"PO-Revision-Date: 2010-06-08 14:16+0200\n"
 "Last-Translator: Nils G <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: German\n"
@@ -4602,6 +4602,24 @@ msgstr "CTCP Antworten, die durch WeeChat versendet wurden, werden angezeigt"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "unbekannte CTCP Nachrichten werden angezeigt."
 
+#, fuzzy
+msgid "display host in join messages"
+msgstr ""
+"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
+"werden soll"
+
+#, fuzzy
+msgid "display host in join messages from local client"
+msgstr ""
+"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
+"werden soll"
+
+#, fuzzy
+msgid "display host in part/quit messages"
+msgstr ""
+"Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
+"angezeigt werden soll"
+
 msgid "display old topic when channel topic is changed"
 msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
 
@@ -4726,6 +4744,12 @@ msgstr "Farbe des Abwesenheit-Textes in der Eingabezeile"
 
 msgid "color for channel modes, near channel name"
 msgstr "Farbe der Channel-Modes (neben dem Channelnamen)"
+
+#, fuzzy
+msgid "color for reason in part/quit messages"
+msgstr ""
+"Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
+"angezeigt werden soll"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -5007,8 +5031,8 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: Konnte den neuen Channel \"%s\" nicht erzeugen"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s ist in den Channel %s%s%s gekommen"
+msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s ist in den Channel %s%s%s gekommen"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
@@ -5047,20 +5071,20 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s ist nun als %s%s%s bekannt"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s%s %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s verlässt %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s verlässt %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s verlässt %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s hat den IRC verlassen %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit"
-msgstr "%s%s%s %s(%s%s%s)%s hat den IRC verlassen"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

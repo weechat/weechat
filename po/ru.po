@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-04 11:47+0200\n"
+"POT-Creation-Date: 2010-06-08 14:51+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4246,6 +4246,18 @@ msgstr ""
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr ""
 
+#, fuzzy
+msgid "display host in join messages"
+msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+msgid "display host in join messages from local client"
+msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+msgid "display host in part/quit messages"
+msgstr "сообщение о выходе по-умолчанию"
+
 msgid "display old topic when channel topic is changed"
 msgstr ""
 
@@ -4352,6 +4364,10 @@ msgstr "цвет отошедших ников"
 #, fuzzy
 msgid "color for channel modes, near channel name"
 msgstr "цвет имён при действиях"
+
+#, fuzzy
+msgid "color for reason in part/quit messages"
+msgstr "сообщение о выходе по-умолчанию"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -4626,7 +4642,7 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s не могу создать новый канал \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s зашёл на канал %s%s\n"
 
 #, fuzzy, c-format
@@ -4666,19 +4682,19 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s теперь известен как %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format

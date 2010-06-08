@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-04 11:47+0200\n"
-"PO-Revision-Date: 2010-05-20 12:22+0200\n"
+"POT-Creation-Date: 2010-06-08 14:51+0200\n"
+"PO-Revision-Date: 2010-06-08 14:20+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -4471,6 +4471,18 @@ msgstr "wyświetlaj odpowiedź CTCP wysłaną przez WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "wyświetl wiadomość CTCP nawet jeśli jest to nieznana CTCP"
 
+#, fuzzy
+msgid "display host in join messages"
+msgstr "kolor tekstu w wiadomościach o wejsciu na kanał"
+
+#, fuzzy
+msgid "display host in join messages from local client"
+msgstr "kolor tekstu w wiadomościach o wejsciu na kanał"
+
+#, fuzzy
+msgid "display host in part/quit messages"
+msgstr "kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
+
 msgid "display old topic when channel topic is changed"
 msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
 
@@ -4586,6 +4598,10 @@ msgstr "kolor elementu nieobecności"
 
 msgid "color for channel modes, near channel name"
 msgstr "kolor trybów kanału, przy nazwie kanału"
+
+#, fuzzy
+msgid "color for reason in part/quit messages"
+msgstr "kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -4858,8 +4874,8 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: nie można utworzyć nowego kanału \"%s\""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s wszedł na %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s wszedł na %s%s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
@@ -4898,20 +4914,20 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s zmienił nick na %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s opuścił %s%s%s %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s opuścił %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s opuścił %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s opuścił %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s wyszedł z IRC %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s wyszedł z IRC %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit"
-msgstr "%s%s%s %s(%s%s%s)%s wyszedł z IRC"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s wyszedł z IRC"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

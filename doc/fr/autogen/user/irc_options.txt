@@ -48,6 +48,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: green)
 
+* *irc.color.reason_quit*
+** description: couleur pour la raison dans les messages part/quit
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
 * *irc.look.color_nicks_in_server_messages*
 ** description: utiliser la couleur du pseudo dans les messages du serveur
 ** type: booléen
@@ -75,6 +80,21 @@
 
 * *irc.look.display_ctcp_unknown*
 ** description: afficher le message CTCP même si le CTCP est inconnu
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_host_join*
+** description: afficher le nom d'hôte dans les messages join
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_host_join_local*
+** description: afficher le nom d'hôte dans les messages join du client local
+** type: booléen
+** valeurs: on, off (valeur par défaut: on)
+
+* *irc.look.display_host_quit*
+** description: afficher le nom d'hôte dans les messages part/quit
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: on)
 

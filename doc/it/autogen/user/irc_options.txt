@@ -48,6 +48,11 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: green)
 
+* *irc.color.reason_quit*
+** descrizione: color for reason in part/quit messages
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
 * *irc.look.color_nicks_in_server_messages*
 ** descrizione: utilizza i colori dei nick nei messaggi dal server
 ** tipo: bool
@@ -75,6 +80,21 @@
 
 * *irc.look.display_ctcp_unknown*
 ** descrizione: visualizza messaggio CTCP anche se è CTCP sconosciuto
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_host_join*
+** descrizione: display host in join messages
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_host_join_local*
+** descrizione: display host in join messages from local client
+** tipo: bool
+** valori: on, off (valore predefinito: on)
+
+* *irc.look.display_host_quit*
+** descrizione: display host in part/quit messages
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 

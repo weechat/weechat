@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-04 11:47+0200\n"
-"PO-Revision-Date: 2010-05-20 12:20+0200\n"
+"POT-Creation-Date: 2010-06-08 14:51+0200\n"
+"PO-Revision-Date: 2010-06-08 14:17+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -4428,6 +4428,18 @@ msgstr "zobrazit CTCP odpověď poslanou WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "zobrazit CTCP zprávu i když je to neznámé CTCP"
 
+#, fuzzy
+msgid "display host in join messages"
+msgstr "barva textu vezprávách připojení"
+
+#, fuzzy
+msgid "display host in join messages from local client"
+msgstr "barva textu vezprávách připojení"
+
+#, fuzzy
+msgid "display host in part/quit messages"
+msgstr "barva textu ve zprávách odchodu/ukončení"
+
 msgid "display old topic when channel topic is changed"
 msgstr "zobrazit staré téma rozhovoru, když se téma změní"
 
@@ -4541,6 +4553,10 @@ msgstr "barva položek, které jsou pryč"
 
 msgid "color for channel modes, near channel name"
 msgstr "barva módů kanálu, blízko jména kanálu"
+
+#, fuzzy
+msgid "color for reason in part/quit messages"
+msgstr "barva textu ve zprávách odchodu/ukončení"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -4809,8 +4825,8 @@ msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: nemohu vytvořit nový kanál \"%s\""
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s se připojil %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s se připojil %s%s%s"
 
 #, c-format
 msgid "%s%s: channel \"%s\" not found for \"%s\" command"
@@ -4849,20 +4865,20 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s je nyní známý jako %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s opustil %s%s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s%s"
-msgstr "%s%s%s %s(%s%s%s)%s opustil %s%s%s"
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s opustil %s%s%s"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s skončil %s(%s%s%s)"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s skončil %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit"
-msgstr "%s%s%s %s(%s%s%s)%s skončil"
+msgid "%s%s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s skončil"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

@@ -80,6 +80,9 @@ extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_ctcp_blocked;
 extern struct t_config_option *irc_config_look_display_ctcp_reply;
 extern struct t_config_option *irc_config_look_display_ctcp_unknown;
+extern struct t_config_option *irc_config_look_display_host_join;
+extern struct t_config_option *irc_config_look_display_host_join_local;
+extern struct t_config_option *irc_config_look_display_host_quit;
 extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_display_pv_away_once;
 extern struct t_config_option *irc_config_look_display_pv_back;
@@ -110,6 +113,7 @@ extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_input_nick;
 extern struct t_config_option *irc_config_color_item_away;
 extern struct t_config_option *irc_config_color_item_channel_modes;
+extern struct t_config_option *irc_config_color_reason_quit;
 
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;

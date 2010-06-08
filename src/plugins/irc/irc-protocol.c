@@ -539,7 +539,7 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
     char *pos_channel;
-    int local_join;
+    int local_join, display_host;
     
     /*
      * JOIN message looks like:
@@ -584,6 +584,9 @@ IRC_PROTOCOL_CALLBACK(join)
         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                              && (weechat_config_boolean (irc_config_look_smart_filter_join))) ?
             irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+        display_host = (local_join) ?
+            weechat_config_boolean (irc_config_look_display_host_join_local) :
+            weechat_config_boolean (irc_config_look_display_host_join);
         weechat_printf_tags (ptr_channel->buffer,
                              irc_protocol_tags (command,
                                                 (local_join
@@ -591,14 +594,16 @@ IRC_PROTOCOL_CALLBACK(join)
                                                  || !weechat_config_boolean (irc_config_look_smart_filter_join)
                                                  || ptr_nick_speaking) ?
                                                 NULL : "irc_smart_filter"),
-                             _("%s%s%s %s(%s%s%s)%s has joined %s%s%s"),
+                             _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
                              weechat_prefix ("join"),
                              IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                              nick,
                              IRC_COLOR_CHAT_DELIMITERS,
+                             (display_host) ? " (" : "",
                              IRC_COLOR_CHAT_HOST,
-                             address,
+                             (display_host) ? address : "",
                              IRC_COLOR_CHAT_DELIMITERS,
+                             (display_host) ? ")" : "",
                              IRC_COLOR_MESSAGE_JOIN,
                              IRC_COLOR_CHAT_CHANNEL,
                              pos_channel,
@@ -1164,7 +1169,7 @@ IRC_PROTOCOL_CALLBACK(notice)
 IRC_PROTOCOL_CALLBACK(part)
 {
     char *pos_comment, *join_string;
-    int join_length, local_part;
+    int join_length, local_part, display_host;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
@@ -1202,6 +1207,7 @@ IRC_PROTOCOL_CALLBACK(part)
                                          && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
                         irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                 }
+                display_host = weechat_config_boolean (irc_config_look_display_host_quit);
                 if (pos_comment)
                 {
                     weechat_printf_tags (ptr_channel->buffer,
@@ -1212,21 +1218,23 @@ IRC_PROTOCOL_CALLBACK(part)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
-                                         _("%s%s%s %s(%s%s%s)%s has left %s%s%s "
+                                         _("%s%s%s%s%s%s%s%s%s%s has left %s%s%s "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
                                          IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? " (" : "",
                                          IRC_COLOR_CHAT_HOST,
-                                         address,
+                                         (display_host) ? address : "",
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? ")" : "",
                                          IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_CHANNEL,
                                          ptr_channel->name,
                                          IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_REASON_QUIT,
                                          pos_comment,
                                          IRC_COLOR_CHAT_DELIMITERS);
                 }
@@ -1240,15 +1248,17 @@ IRC_PROTOCOL_CALLBACK(part)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
-                                         _("%s%s%s %s(%s%s%s)%s has left "
+                                         _("%s%s%s%s%s%s%s%s%s%s has left "
                                            "%s%s%s"),
                                          weechat_prefix ("quit"),
                                          IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? " (" : "",
                                          IRC_COLOR_CHAT_HOST,
-                                         address,
+                                         (display_host) ? address : "",
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? ")" : "",
                                          IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_CHANNEL,
                                          ptr_channel->name,
@@ -1496,7 +1506,7 @@ IRC_PROTOCOL_CALLBACK(quit)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    int local_quit;
+    int local_quit, display_host;
     
     /*
      * QUIT message looks like:
@@ -1534,6 +1544,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                 {
                     ptr_channel->has_quit_server = 1;
                 }
+                display_host = weechat_config_boolean (irc_config_look_display_host_quit);
                 if (pos_comment && pos_comment[0])
                 {
                     weechat_printf_tags (ptr_channel->buffer,
@@ -1544,19 +1555,21 @@ IRC_PROTOCOL_CALLBACK(quit)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
-                                         _("%s%s%s %s(%s%s%s)%s has quit "
+                                         _("%s%s%s%s%s%s%s%s%s%s has quit "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
                                          (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
                                          irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? " (" : "",
                                          IRC_COLOR_CHAT_HOST,
-                                         address,
+                                         (display_host) ? address : "",
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? ")" : "",
                                          IRC_COLOR_MESSAGE_QUIT,
                                          IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_REASON_QUIT,
                                          pos_comment,
                                          IRC_COLOR_CHAT_DELIMITERS);
                 }
@@ -1570,15 +1583,17 @@ IRC_PROTOCOL_CALLBACK(quit)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter"),
-                                         _("%s%s%s %s(%s%s%s)%s has quit"),
+                                         _("%s%s%s%s%s%s%s%s%s%s has quit"),
                                          weechat_prefix ("quit"),
                                          (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
                                          irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? " (" : "",
                                          IRC_COLOR_CHAT_HOST,
-                                         address,
+                                         (display_host) ? address : "",
                                          IRC_COLOR_CHAT_DELIMITERS,
+                                         (display_host) ? ")" : "",
                                          IRC_COLOR_MESSAGE_QUIT);
                 }
             }

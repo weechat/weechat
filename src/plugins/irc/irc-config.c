@@ -61,6 +61,9 @@ struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
+struct t_config_option *irc_config_look_display_host_join;
+struct t_config_option *irc_config_look_display_host_join_local;
+struct t_config_option *irc_config_look_display_host_quit;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
@@ -93,6 +96,7 @@ struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
 struct t_config_option *irc_config_color_item_channel_modes;
+struct t_config_option *irc_config_color_reason_quit;
 
 /* IRC config, network section */
 
@@ -1529,6 +1533,24 @@ irc_config_init ()
         N_("display CTCP message even if it is unknown CTCP"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_display_host_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_host_join", "boolean",
+        N_("display host in join messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_display_host_join_local = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_host_join_local", "boolean",
+        N_("display host in join messages from local client"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_display_host_quit = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_host_quit", "boolean",
+        N_("display host in part/quit messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_display_old_topic = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_old_topic", "boolean",
@@ -1716,6 +1738,12 @@ irc_config_init ()
         N_("color for channel modes, near channel name"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
         &irc_config_change_color_item_buffer_name, NULL, NULL, NULL);
+    irc_config_color_reason_quit = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "reason_quit", "color",
+        N_("color for reason in part/quit messages"),
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     
     /* network */
     ptr_section = weechat_config_new_section (irc_config_file, "network",

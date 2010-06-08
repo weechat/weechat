@@ -48,6 +48,11 @@
 ** type: color
 ** values: a color name (default value: green)
 
+* *irc.color.reason_quit*
+** description: color for reason in part/quit messages
+** type: color
+** values: a color name (default value: default)
+
 * *irc.look.color_nicks_in_server_messages*
 ** description: use nick color in messages from server
 ** type: boolean
@@ -75,6 +80,21 @@
 
 * *irc.look.display_ctcp_unknown*
 ** description: display CTCP message even if it is unknown CTCP
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_host_join*
+** description: display host in join messages
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_host_join_local*
+** description: display host in join messages from local client
+** type: boolean
+** values: on, off (default value: on)
+
+* *irc.look.display_host_quit*
+** description: display host in part/quit messages
 ** type: boolean
 ** values: on, off (default value: on)
 

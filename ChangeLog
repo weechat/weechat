@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-06-04
+v0.3.3-dev, 2010-06-08
 
 
 Version 0.3.3 (under dev!)
@@ -10,12 +10,15 @@ Version 0.3.3 (under dev!)
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
 * core: add new option weechat.look.confirm_quit
+* core: add new option weechat.color.status_name_ssl (task #10339)
 * core: fix bug with scroll_unread: do not scroll to a filtered line
   (bug #29991)
 * core: fix crash with hook_process (when timer is called on a deleted hook
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: add new options irc.look.display_host_join/join_local/quit and
+  irc.color.reason_quit
 * irc: move options weechat.color.nicklist_prefix to irc plugin
 * irc: fix bug with command-line option "irc://" (bug #29990), new format for
   port and channels
@@ -26,7 +29,6 @@ Version 0.3.3 (under dev!)
 * irc: add message in private buffer when nick is back on server after a /quit
 * irc: add new options irc.network.autoreconnect_delay_growing and
   irc.network.autoreconnect_delay_max (task #10338)
-* irc: add new option weechat.color.status_name_ssl (task #10339)
 * irc: add missing commands 346, 347 (channel invite list)
 * irc: fix display of message 330 on some servers
 * irc: fix bug with nick prefix '*' (chan founder) on some IRC servers
