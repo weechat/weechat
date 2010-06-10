@@ -133,6 +133,7 @@ xfer_command_xfer_list (int full)
                 strftime (date, sizeof (date),
                           "%a, %d %b %Y %H:%M:%S", date_tmp);
                 weechat_printf (NULL,
+                                /* TRANSLATORS: "%s" after "started on" is date */
                                 _("%3d. %s, chat with %s (local nick: %s), "
                                   "started on %s, status: %s%s"),
                                 i,
@@ -168,6 +169,7 @@ xfer_command_xfer_list (int full)
                     strftime (date, sizeof (date),
                               "%a, %d %b %Y %H:%M:%S", date_tmp);
                     weechat_printf (NULL,
+                                    /* TRANSLATORS: "%s" after "started on" is date */
                                     _("     fast_send: %s, blocksize: %d, "
                                       "started on %s"),
                                     (ptr_xfer->fast_send) ? _("yes") : _("no"),

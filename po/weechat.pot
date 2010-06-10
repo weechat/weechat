@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 11:36+0200\n"
+"POT-Creation-Date: 2010-06-10 12:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2010, compiled on %s %s\n"
@@ -45,7 +46,7 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr ""
@@ -259,7 +260,7 @@ msgstr ""
 msgid "Filter \"%s\" deleted"
 msgstr ""
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s internal commands:"
 msgstr ""
@@ -674,6 +675,7 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr ""
@@ -683,6 +685,7 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
+#. TRANSLATORS: "%s%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -2190,7 +2193,7 @@ msgstr ""
 msgid "%s: \"%s\" removed"
 msgstr ""
 
-#. TRANSLATORS: %s is "aspell"
+#. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr ""
@@ -2447,7 +2450,7 @@ msgid ""
 "connected via SSL"
 msgstr ""
 
-#. TRANSLATORS: %s after %d is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -4101,10 +4104,12 @@ msgstr ""
 msgid "%sURL for %s%s%s: %s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel created on %s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr ""
@@ -4117,18 +4122,22 @@ msgstr ""
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic set on %s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr ""
@@ -4141,6 +4150,7 @@ msgstr ""
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -4149,6 +4159,7 @@ msgstr ""
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -4199,6 +4210,7 @@ msgid_plural "normals"
 msgstr[0] ""
 msgstr[1] ""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -5208,7 +5220,7 @@ msgstr ""
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr ""
 
-#. TRANSLATORS: %s is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
 msgstr ""
@@ -5396,6 +5408,7 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -5406,6 +5419,7 @@ msgid ""
 "%d (port %d)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""

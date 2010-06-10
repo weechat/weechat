@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 11:36+0200\n"
+"POT-Creation-Date: 2010-06-10 12:39+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -22,6 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2010, compiled on %s %s\n"
@@ -65,7 +66,7 @@ msgstr ""
 "  -v, --version           WeeChat verziójának mutatása\n"
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s alapértelmezett billentyűk:\n"
@@ -294,7 +295,7 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "Filter \"%s\" deleted"
 msgstr "a felhasználók le lettek tiltva"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, fuzzy, c-format
 msgid "%s internal commands:"
 msgstr "%s belső parancsok:\n"
@@ -761,6 +762,7 @@ msgstr "%s nem sikerült a folyamatot menteni\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
@@ -770,6 +772,7 @@ msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
 
+#. TRANSLATORS: "%s%s" after "started on" is date
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -2548,7 +2551,7 @@ msgstr ""
 msgid "%s: \"%s\" removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
-#. TRANSLATORS: %s is "aspell"
+#. TRANSLATORS: "%s" is "aspell"
 #, fuzzy, c-format
 msgid "%s dictionaries list:"
 msgstr "a /who lista vége"
@@ -2816,7 +2819,7 @@ msgid ""
 "connected via SSL"
 msgstr ""
 
-#. TRANSLATORS: %s after %d is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -4763,10 +4766,12 @@ msgstr "A %s%s %s[%s%s%s]%s üzemmódot bekapcsolta: %s%s\n"
 msgid "%sURL for %s%s%s: %s"
 msgstr "A %s%s%s szoba témája: "
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, fuzzy, c-format
 msgid "%sChannel created on %s"
 msgstr "Szoba létrehozva: %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "Szoba létrehozva: %s"
@@ -4779,18 +4784,22 @@ msgstr "Nincs téma beállítva a %s%s szobában\n"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "A %s%s%s szoba témája: "
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set on %s"
 msgstr "Nincs téma beállítva a %s%s szobában\n"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "A %s%s%s szoba témája: "
@@ -4803,6 +4812,7 @@ msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%s szoba: %s> %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
@@ -4811,6 +4821,7 @@ msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
@@ -4867,6 +4878,7 @@ msgid_plural "normals"
 msgstr[0] "normál"
 msgstr[1] "normál"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
@@ -5950,7 +5962,7 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 
-#. TRANSLATORS: %s is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl")
 #, fuzzy, c-format
 msgid "%s scripts loaded:"
 msgstr "FIFO cső bezárva\n"
@@ -6160,6 +6172,7 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -6170,6 +6183,7 @@ msgid ""
 "%d (port %d)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""

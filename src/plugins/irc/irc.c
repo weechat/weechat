@@ -132,7 +132,7 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     if (disconnected > 0)
     {
         weechat_printf (NULL,
-                        /* TRANSLATORS: %s after %d is "server" or "servers" */
+                        /* TRANSLATORS: "%s" after "%d" is "server" or "servers" */
                         _("%s%s: disconnected from %d %s (SSL connection "
                           "not supported with upgrade)"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,

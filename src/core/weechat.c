@@ -97,6 +97,7 @@ weechat_display_usage (char *exec_name)
 {
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
+                          /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
                           _("%s (c) Copyright 2003-2010, compiled on %s %s\n"
                             "Developed by FlashCode <flashcode@flashtux.org> "
                             "- %s"),
@@ -137,7 +138,7 @@ weechat_display_keys ()
     
     gui_keyboard_default_bindings ();
     string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "weechat" */
+                          /* TRANSLATORS: "%s" is "weechat" */
                           _("%s default keys:\n"),
                           PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");

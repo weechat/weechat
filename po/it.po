@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 11:36+0200\n"
+"POT-Creation-Date: 2010-06-10 12:39+0200\n"
 "PO-Revision-Date: 2010-06-08 14:15+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2010, compiled on %s %s\n"
@@ -64,7 +65,7 @@ msgstr ""
 "                        (consultare la documentazione per maggiori\n"
 "                        informazioni sulle opzioni disponibili)\n"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "tasti predefiniti di %s:\n"
@@ -280,7 +281,7 @@ msgstr "Tutti i filtri sono stati eliminati"
 msgid "Filter \"%s\" deleted"
 msgstr "Filtro \"%s\" eliminato"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s internal commands:"
 msgstr "comandi interni di %s:"
@@ -704,6 +705,7 @@ msgstr "%sErrore: impossibile salvare la sessione su file"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** Errore: exec fallito (programma: \"%s\"), chiusura di WeeChat"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Uptime di WeeChat: %d %s %02d:%02d:%02d, avviato il %s"
@@ -713,6 +715,7 @@ msgid_plural "days"
 msgstr[0] "giorno"
 msgstr[1] "giorni"
 
+#. TRANSLATORS: "%s%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -2731,7 +2734,7 @@ msgstr ""
 msgid "%s: \"%s\" removed"
 msgstr "%s; \"%s\" eliminato"
 
-#. TRANSLATORS: %s is "aspell"
+#. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "elenco dizionari %s"
@@ -3026,7 +3029,7 @@ msgstr ""
 "%s%s; disconnesso dal server poiché l'upgrade non funziona per i server "
 "connessi via SSL"
 
-#. TRANSLATORS: %s after %d is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5033,10 +5036,12 @@ msgstr "%sModalità %s%s %s[%s%s%s]"
 msgid "%sURL for %s%s%s: %s"
 msgstr "%sURL per %s%s%s: %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel created on %s"
 msgstr "%sCanale creato %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "%sCanale %s%s%s creato %s"
@@ -5049,18 +5054,22 @@ msgstr "%sNessun argomento impostato per il canale %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sL'argomento per %s%s%s è \"%s%s\""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sArgomento impostato da  %s%s%s%s%s%s%s%s%s il %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set on %s"
 msgstr "%sNessun argomento impostato per il canale %s%s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sArgomento per %s%s%s impostato da  %s%s%s%s%s%s%s%s%s il %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "%sL'argomento per %s%s%s è \"%s%s\""
@@ -5073,6 +5082,7 @@ msgstr "%s%s%s%s ha invitato %s%s%s in %s%s%s"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop sul canale %s%s%s: %s%s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)%s su %s"
@@ -5081,6 +5091,7 @@ msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)%s su %s"
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s]%s eccezione %s%s%s da %s%s %s(%s%s%s)%s su %s"
@@ -5132,6 +5143,7 @@ msgid_plural "normals"
 msgstr[0] "normale"
 msgstr[1] "normali"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)%s su %s"
@@ -6276,7 +6288,7 @@ msgstr "%s: script \"%s\" non trovato, nessuna rimozione eseguita"
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr "%s%s: impossibile spostare lo script %s in %s (%s)"
 
-#. TRANSLATORS: %s is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
 msgstr "script %s caricati:"
@@ -6472,6 +6484,7 @@ msgid ""
 msgstr ""
 "%3d, %s (%s), file: \"%s\" (locale: \"%s\"), %s %s, stato: %s%s%s (%lu %%)"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr "%3d. %s, chat con %s (nick locale: %s), avviata il %s, stato: %s%s"
@@ -6484,6 +6497,7 @@ msgstr ""
 "     plugin: %s (id: %s), file: %lu byte (posizione: %lu), indirizzo: %d.%d."
 "%d.%d (porta %d)"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""

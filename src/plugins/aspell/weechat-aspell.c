@@ -417,7 +417,7 @@ weechat_aspell_speller_list_dicts ()
     
     weechat_printf (NULL, "");
     weechat_printf (NULL,
-                    /* TRANSLATORS: %s is "aspell" */
+                    /* TRANSLATORS: "%s" is "aspell" */
                     _( "%s dictionaries list:"),
                     ASPELL_PLUGIN_NAME);
     

@@ -2686,6 +2686,7 @@ IRC_PROTOCOL_CALLBACK(329)
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command, "irc_numeric"),
+                                 /* TRANSLATORS: "%s" after "created on" is date */
                                  _("%sChannel created on %s"),
                                  weechat_prefix ("network"),
                                  weechat_util_get_time_string (&datetime));
@@ -2696,6 +2697,7 @@ IRC_PROTOCOL_CALLBACK(329)
     {
         weechat_printf_tags (server->buffer,
                              irc_protocol_tags (command, "irc_numeric"),
+                             /* TRANSLATORS: "%s" after "created on" is date */
                              _("%sChannel %s%s%s created on %s"),
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
@@ -2886,6 +2888,7 @@ IRC_PROTOCOL_CALLBACK(333)
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command, "irc_numeric"),
+                                 /* TRANSLATORS: "%s" after "on" is date */
                                  _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
                                  weechat_prefix ("network"),
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
@@ -2903,6 +2906,7 @@ IRC_PROTOCOL_CALLBACK(333)
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command, "irc_numeric"),
+                                 /* TRANSLATORS: "%s" after "on" is date */
                                  _("%sTopic set on %s"),
                                  weechat_prefix ("network"),
                                  weechat_util_get_time_string (&datetime));
@@ -2914,6 +2918,7 @@ IRC_PROTOCOL_CALLBACK(333)
         {
             weechat_printf_tags (server->buffer,
                                  irc_protocol_tags (command, "irc_numeric"),
+                                 /* TRANSLATORS: "%s" after "on" is date */
                                  _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
                                  weechat_prefix ("network"),
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -2934,6 +2939,7 @@ IRC_PROTOCOL_CALLBACK(333)
         {
             weechat_printf_tags (server->buffer,
                                  irc_protocol_tags (command, "irc_numeric"),
+                                 /* TRANSLATORS: "%s" after "on" is date */
                                  _("%sTopic for %s%s%s set on %s"),
                                  weechat_prefix ("network"),
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -3088,6 +3094,7 @@ IRC_PROTOCOL_CALLBACK(346)
         datetime = (time_t)(atol (argv[6]));
         weechat_printf_tags (ptr_buffer,
                              irc_protocol_tags (command, "irc_numeric"),
+                             /* TRANSLATORS: "%s" after "on" is date */
                              _("%s%s[%s%s%s] %s%s%s invited by "
                                "%s%s %s(%s%s%s)%s on %s"),
                              weechat_prefix ("network"),
@@ -3196,6 +3203,7 @@ IRC_PROTOCOL_CALLBACK(348)
         datetime = (time_t)(atol (argv[6]));
         weechat_printf_tags (ptr_buffer,
                              irc_protocol_tags (command, "irc_numeric"),
+                             /* TRANSLATORS: "%s" after "on" is date */
                              _("%s%s[%s%s%s]%s exception %s%s%s "
                                "by %s%s %s(%s%s%s)%s on %s"),
                              weechat_prefix ("network"),
@@ -3702,6 +3710,7 @@ IRC_PROTOCOL_CALLBACK(367)
         datetime = (time_t)(atol (argv[6]));
         weechat_printf_tags (ptr_buffer,
                              irc_protocol_tags (command, "irc_numeric"),
+                             /* TRANSLATORS: "%s" after "on" is date */
                              _("%s%s[%s%s%s] %s%s%s banned by "
                                "%s%s %s(%s%s%s)%s on %s"),
                              weechat_prefix ("network"),

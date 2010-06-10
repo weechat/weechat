@@ -1052,7 +1052,7 @@ script_display_list (struct t_weechat_plugin *weechat_plugin,
     
     weechat_printf (NULL, "");
     weechat_printf (NULL,
-                    /* TRANSLATORS: %s is language (for example "perl") */
+                    /* TRANSLATORS: "%s" is language (for example "perl") */
                     _("%s scripts loaded:"),
                     weechat_plugin->name);
     if (scripts)
@@ -1101,7 +1101,7 @@ script_display_short_list (struct t_weechat_plugin *weechat_plugin,
     
     if (scripts)
     {
-        /* TRANSLATORS: %s is language (for example "perl") */
+        /* TRANSLATORS: "%s" is language (for example "perl") */
         scripts_loaded = _("%s scripts loaded:");
         
         length = strlen (scripts_loaded) + strlen (weechat_plugin->name) + 1;

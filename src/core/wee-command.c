@@ -1473,7 +1473,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 {
                     gui_chat_printf (NULL, "");
                     gui_chat_printf (NULL,
-                                     /* TRANSLATORS: %s is "weechat" */
+                                     /* TRANSLATORS: "%s" is "weechat" */
                                      _("%s internal commands:"),
                                      PACKAGE_NAME);
                     command_found = 1;
@@ -3841,6 +3841,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
     else if ((argc >= 2) && (string_strcasecmp (argv[1], "-ol") == 0))
     {
         snprintf (string, sizeof (string),
+                  /* TRANSLATORS: "%s" after "started on" is date */
                   _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
                   day,
                   NG_("day", "days", day),
@@ -3853,6 +3854,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
     else
     {
         gui_chat_printf (NULL,
+                         /* TRANSLATORS: "%s%s" after "started on" is date */
                          _("WeeChat uptime: %s%d %s%s "
                            "%s%02d%s:%s%02d%s:%s%02d%s, "
                            "started on %s%s"),

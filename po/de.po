@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 11:36+0200\n"
+"POT-Creation-Date: 2010-06-10 12:39+0200\n"
 "PO-Revision-Date: 2010-06-10 09:46+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -22,6 +22,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2010, compiled on %s %s\n"
@@ -71,7 +72,7 @@ msgstr ""
 "zusätzliche Informationen\n"
 "                          zu den mögliche Optionen zu erhalten.)\n"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s Standardtastenbelegungen:\n"
@@ -291,7 +292,7 @@ msgstr "Alle Filter wurden gelöscht"
 msgid "Filter \"%s\" deleted"
 msgstr "Filter \"%s\" gelöscht"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s internal commands:"
 msgstr "Interne %s Befehle:"
@@ -720,6 +721,7 @@ msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 "***** Fehler: Ausführung schlug fehl (Programm: \"%s\"), WeeChat wird beendet"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
@@ -729,6 +731,7 @@ msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
 
+#. TRANSLATORS: "%s%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -2800,7 +2803,7 @@ msgstr ""
 msgid "%s: \"%s\" removed"
 msgstr "%s: \"%s\" entfernt"
 
-#. TRANSLATORS: %s is "aspell"
+#. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "%s Wörterbücher:"
@@ -3102,7 +3105,7 @@ msgstr ""
 "%s%s: Verbindung zum Server wird getrennt. Ein Upgrade ist über eine SSL-"
 "Verbindung nicht möglich"
 
-#. TRANSLATORS: %s after %d is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5149,10 +5152,12 @@ msgstr "%sModus %s%s %s[%s%s%s]"
 msgid "%sURL for %s%s%s: %s"
 msgstr "%sURL für %s%s%s: %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel created on %s"
 msgstr "%sChannel erstellt am %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "%sChannel %s%s%s erstellt am %s"
@@ -5165,18 +5170,22 @@ msgstr "%sKein Topic für %s%s gesetzt"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set on %s"
 msgstr "%sKein Topic für %s%s gesetzt"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic für %s%s%s festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
@@ -5189,6 +5198,7 @@ msgstr "%s%s%s%s hat %s%s%s in den Channel %s%s%s eingeladen"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sChannel-Reop %s%s%s: %s%s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
@@ -5197,6 +5207,7 @@ msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s]%s Exception %s%s%s von %s%s %s(%s%s%s)%s auf %s"
@@ -5249,6 +5260,7 @@ msgid_plural "normals"
 msgstr[0] "normal"
 msgstr[1] "normale"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s wurde gebannt von %s%s %s(%s%s%s)%s auf %s"
@@ -6411,7 +6423,7 @@ msgstr "%s: Skript \"%s\" nicht gefunden. Es wurde nichts entfernt"
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr "%s%s: Fehler beim Verschieben des Skripts %s nach %s (%s)"
 
-#. TRANSLATORS: %s is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
 msgstr "Installierte \"%s\" Skripten:"
@@ -6612,6 +6624,7 @@ msgid ""
 msgstr ""
 "%3d. %s (%s), Datei: \"%s\" (lokal: \"%s\"), %s %s, Status: %s%s%s (%lu %%)"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -6626,6 +6639,7 @@ msgstr ""
 "     Erweiterung: %s (id: %s), Datei: %lu Bytes (Position: %lu), Adresse: %d."
 "%d.%d.%d (Port %d)"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr "     schnelles_senden: %s, Blockgröße: %d, gestartet am %s"

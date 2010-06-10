@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 11:36+0200\n"
+"POT-Creation-Date: 2010-06-10 12:39+0200\n"
 "PO-Revision-Date: 2010-05-20 12:22+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2010, compiled on %s %s\n"
@@ -62,7 +63,7 @@ msgstr ""
 "  -v, --version           отобразить версию WeeChat\n"
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s клавиши по умолчанию:\n"
@@ -291,7 +292,7 @@ msgstr "команда users отключена"
 msgid "Filter \"%s\" deleted"
 msgstr "команда users отключена"
 
-#. TRANSLATORS: %s is "weechat"
+#. TRANSLATORS: "%s" is "weechat"
 #, fuzzy, c-format
 msgid "%s internal commands:"
 msgstr "Внутренние команды %s:\n"
@@ -762,6 +763,7 @@ msgstr "%s не могу сохранить сессию в файл\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat работает: %d %s %02d:%02d:%02d, запущен %s"
@@ -772,6 +774,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+#. TRANSLATORS: "%s%s" after "started on" is date
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "WeeChat работает: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, запущен %s%s"
@@ -2558,7 +2561,7 @@ msgstr ""
 msgid "%s: \"%s\" removed"
 msgstr "Сокращение \"%s\" удалено\n"
 
-#. TRANSLATORS: %s is "aspell"
+#. TRANSLATORS: "%s" is "aspell"
 #, fuzzy, c-format
 msgid "%s dictionaries list:"
 msgstr "конец списка /who"
@@ -2826,7 +2829,7 @@ msgid ""
 "connected via SSL"
 msgstr ""
 
-#. TRANSLATORS: %s after %d is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -4766,10 +4769,12 @@ msgstr "Режим %s%s %s[%s%s%s]%s установлен пользовател
 msgid "%sURL for %s%s%s: %s"
 msgstr "Тема канала %s%s%s: "
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, fuzzy, c-format
 msgid "%sChannel created on %s"
 msgstr "Канал создан %s"
 
+#. TRANSLATORS: "%s" after "created on" is date
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "Канал создан %s"
@@ -4782,18 +4787,22 @@ msgstr "Не установлена тема канала для %s%s\n"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "Тема канала %s%s%s: "
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "Тема установлена пользователем %s%s%s, %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic set on %s"
 msgstr "Не установлена тема канала для %s%s\n"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "Тема установлена пользователем %s%s%s, %s"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "Тема канала %s%s%s: "
@@ -4806,6 +4815,7 @@ msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "Реоп канала %s%s%s: %s%s\n"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
@@ -4814,6 +4824,7 @@ msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
@@ -4875,6 +4886,7 @@ msgstr[0] "обычные"
 msgstr[1] "обычные"
 msgstr[2] "обычные"
 
+#. TRANSLATORS: "%s" after "on" is date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
@@ -5952,7 +5964,7 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr "%s DCC: не могу создать pipe\n"
 
-#. TRANSLATORS: %s is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl")
 #, fuzzy, c-format
 msgid "%s scripts loaded:"
 msgstr "FIFO pipe закрыт\n"
@@ -6155,6 +6167,7 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -6165,6 +6178,7 @@ msgid ""
 "%d (port %d)"
 msgstr ""
 
+#. TRANSLATORS: "%s" after "started on" is date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""
