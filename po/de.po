@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-08 14:51+0200\n"
+"POT-Creation-Date: 2010-06-10 11:36+0200\n"
 "PO-Revision-Date: 2010-06-10 09:46+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5169,9 +5169,17 @@ msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
+#, fuzzy, c-format
+msgid "%sTopic set on %s"
+msgstr "%sKein Topic für %s%s gesetzt"
+
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic für %s%s%s festgelegt von %s%s%s%s%s%s%s%s%s am %s"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set on %s"
+msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"

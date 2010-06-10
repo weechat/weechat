@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-08 14:51+0200\n"
+"POT-Creation-Date: 2010-06-10 11:36+0200\n"
 "PO-Revision-Date: 2010-05-20 12:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4784,8 +4784,16 @@ msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
 #, fuzzy, c-format
+msgid "%sTopic set on %s"
+msgstr "Nincs téma beállítva a %s%s szobában\n"
+
+#, fuzzy, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set on %s"
+msgstr "A %s%s%s szoba témája: "
 
 #, fuzzy, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"

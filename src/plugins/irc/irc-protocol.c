@@ -2855,59 +2855,92 @@ IRC_PROTOCOL_CALLBACK(333)
     struct t_irc_nick *ptr_nick;
     time_t datetime;
     const char *topic_nick, *topic_address;
+    int arg_date;
     
     /*
      * 333 message looks like:
      *   :server 333 mynick #channel nick!user@host 1205428096
+     *   or:
+     *   :server 333 mynick #channel 1205428096
      */
     
-    IRC_PROTOCOL_MIN_ARGS(6);
+    IRC_PROTOCOL_MIN_ARGS(5);
     
-    topic_nick = irc_protocol_get_nick_from_host (argv[4]);
-    topic_address = irc_protocol_get_address_from_host (argv[4]);
+    topic_nick = (argc > 5) ? irc_protocol_get_nick_from_host (argv[4]) : NULL;
+    topic_address = (argc > 5) ? irc_protocol_get_address_from_host (argv[4]) : NULL;
     if (topic_nick && topic_address && strcmp (topic_nick, topic_address) == 0)
         topic_address = NULL;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     ptr_nick = (ptr_channel) ? irc_nick_search (ptr_channel, topic_nick) : NULL;
-    datetime = (time_t)(atol ((argv_eol[5][0] == ':') ?
-                              argv_eol[5] + 1 : argv_eol[5]));
+    arg_date = (argc > 5) ? 5 : 4;
+    datetime = (time_t)(atol ((argv_eol[arg_date][0] == ':') ?
+                              argv_eol[arg_date] + 1 : argv_eol[arg_date]));
+    
+    if (!topic_nick && (datetime == 0))
+        return WEECHAT_RC_OK;
+    
     if (ptr_channel && ptr_channel->nicks)
     {
-        weechat_printf_tags (ptr_channel->buffer,
-                             irc_protocol_tags (command, "irc_numeric"),
-                             _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                             topic_nick,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             (topic_address && topic_address[0]) ? " (" : "",
-                             IRC_COLOR_CHAT_HOST,
-                             (topic_address) ? topic_address : "",
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             (topic_address && topic_address[0]) ? ")" : "",
-                             IRC_COLOR_CHAT,
-                             weechat_util_get_time_string (&datetime));
+        if (topic_nick)
+        {
+            weechat_printf_tags (ptr_channel->buffer,
+                                 irc_protocol_tags (command, "irc_numeric"),
+                                 _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 topic_nick,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 (topic_address && topic_address[0]) ? " (" : "",
+                                 IRC_COLOR_CHAT_HOST,
+                                 (topic_address) ? topic_address : "",
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 (topic_address && topic_address[0]) ? ")" : "",
+                                 IRC_COLOR_CHAT,
+                                 weechat_util_get_time_string (&datetime));
+        }
+        else
+        {
+            weechat_printf_tags (ptr_channel->buffer,
+                                 irc_protocol_tags (command, "irc_numeric"),
+                                 _("%sTopic set on %s"),
+                                 weechat_prefix ("network"),
+                                 weechat_util_get_time_string (&datetime));
+        }
     }
     else
     {
-        weechat_printf_tags (server->buffer,
-                             irc_protocol_tags (command, "irc_numeric"),
-                             _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_CHANNEL,
-                             argv[3],
-                             IRC_COLOR_CHAT,
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                             topic_nick,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             (topic_address && topic_address[0]) ? " (" : "",
-                             IRC_COLOR_CHAT_HOST,
-                             (topic_address) ? topic_address : "",
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             (topic_address && topic_address[0]) ? ")" : "",
-                             IRC_COLOR_CHAT,
-                             weechat_util_get_time_string (&datetime));
+        if (topic_nick)
+        {
+            weechat_printf_tags (server->buffer,
+                                 irc_protocol_tags (command, "irc_numeric"),
+                                 _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[3],
+                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 topic_nick,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 (topic_address && topic_address[0]) ? " (" : "",
+                                 IRC_COLOR_CHAT_HOST,
+                                 (topic_address) ? topic_address : "",
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 (topic_address && topic_address[0]) ? ")" : "",
+                                 IRC_COLOR_CHAT,
+                                 weechat_util_get_time_string (&datetime));
+        }
+        else
+        {
+            weechat_printf_tags (server->buffer,
+                                 irc_protocol_tags (command, "irc_numeric"),
+                                 _("%sTopic for %s%s%s set on %s"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[3],
+                                 IRC_COLOR_CHAT,
+                                 weechat_util_get_time_string (&datetime));
+        }
     }
     
     return WEECHAT_RC_OK;
