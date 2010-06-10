@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-06-08 14:51+0200\n"
-"PO-Revision-Date: 2010-06-08 14:16+0200\n"
-"Last-Translator: Nils G <weechatter@arcor.de>\n"
+"PO-Revision-Date: 2010-06-10 09:46+0200\n"
+"Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
-"Language: German\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -610,6 +610,8 @@ msgstr "%sFehler: Option \"%s\" kann für den Proxy \"%s\" nicht setzt werden"
 msgid ""
 "%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
 msgstr ""
+"%sUm WeeChat zu beenden muss der \"/quit\" Befehl mit der Option \"-yes\" "
+"ausgeführt werden (siehe /help quit)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1394,17 +1396,17 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "WeeChat beenden"
 
-#, fuzzy
 msgid "[-yes] [arguments]"
-msgstr "[arguments]"
+msgstr "[-yes] [arguments]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
 msgstr ""
+"     -yes: Option muß genutzt werden falls weechat.look.confirm_quit "
+"aktiviert sein sollte\n"
 "arguments: Text der beim Signal \"quit\" verschickt wird\n"
 "           (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-"
 "Nachricht an den Server)"
@@ -1758,6 +1760,8 @@ msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
+"Falls diese Einstellung aktiviert ist muss der \"/quit\" Befehl mit der "
+"Option \"-yes\" ausgeführt werden (siehe /help quit)"
 
 msgid "display special message when day changes"
 msgstr "Wenn ein neuer Tag beginnt wird eine entsprechende Nachricht angezeigt"
@@ -1992,7 +1996,7 @@ msgid "text color for '+' when prefix is too long"
 msgstr "Farbe des '+' falls Präfix zu lang sein sollte"
 
 msgid "text color for suffix (after prefix)"
-msgstr "Textfarbe für den Suffix"
+msgstr "Textfarbe für den Suffix (senkrechter Strich)"
 
 msgid "text color for buffer names"
 msgstr "Textfarbe für den Namen des Buffers"
@@ -3336,9 +3340,9 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr "%s%s: Fehlerhafte Anzahl von Argumenten für den Befehl \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: you are not on channel \"%s\""
-msgstr "%s%s: Konnte den neuen Channel \"%s\" nicht erzeugen"
+msgstr "%s%s: Du befindest dich nicht in einem Channel \"%s\""
 
 msgid "find information about the administrator of the server"
 msgstr "Information über den Server-Administrator abfragen"
@@ -4128,7 +4132,7 @@ msgstr ""
 "       add: erstellt einen neuen Server\n"
 "servername: Servername, dient der internen Nutzung und zur Darstellung\n"
 "  hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port "
-"festgelegt werden (Standard-Port: 6667), mehrere Ports können durch eine "
+"festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch "
 "Kommata getrennt werden\n"
 "      temp: erstellt temporären Server (wird nicht gespeichert)\n"
 "    option: legt die Optionen für den Server fest (die Boolean-Optionen "
@@ -4286,21 +4290,18 @@ msgstr ""
 msgid "give voice to nickname(s)"
 msgstr "Voice an Nickname(n) vergeben"
 
-#, fuzzy
 msgid "send a notice to channel ops"
-msgstr "Nachricht an Nick/Channel verschicken"
+msgstr "Nachricht an Channel-Operator verschicken"
 
-#, fuzzy
 msgid "[channel] text"
-msgstr "[Channel] [Topic]"
+msgstr "[channel] text"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   text: text to send"
 msgstr ""
-"Channel: Name des Channel\n"
-"   Mode: neuer Modus für Channel"
+"channel: Name des Channel\n"
+"   text: Text der versendet werden soll"
 
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "
@@ -4602,23 +4603,14 @@ msgstr "CTCP Antworten, die durch WeeChat versendet wurden, werden angezeigt"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "unbekannte CTCP Nachrichten werden angezeigt."
 
-#, fuzzy
 msgid "display host in join messages"
-msgstr ""
-"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
-"werden soll"
+msgstr "Zeigt den Host in einer join Nachricht an"
 
-#, fuzzy
 msgid "display host in join messages from local client"
-msgstr ""
-"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
-"werden soll"
+msgstr "Zeigt den Host in join Nachrichten des lokalen Client an"
 
-#, fuzzy
 msgid "display host in part/quit messages"
-msgstr ""
-"Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
-"angezeigt werden soll"
+msgstr "Zeigt den Host in einer part/quit Nachricht an"
 
 msgid "display old topic when channel topic is changed"
 msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
@@ -4722,16 +4714,18 @@ msgstr ""
 "angezeigt werden soll"
 
 msgid "color for prefix of nick which is op/admin/owner on channel"
-msgstr ""
+msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
 
 msgid "color for prefix of nick which is halfop on channel"
-msgstr ""
+msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
 
 msgid "color for prefix of nick which has voice on channel"
 msgstr ""
+"Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
+"Channel"
 
 msgid "color for prefix of nick which is user on channel"
-msgstr ""
+msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "Farbe des \"Notice\"-Textes in Notizen"
@@ -4745,11 +4739,10 @@ msgstr "Farbe des Abwesenheit-Textes in der Eingabezeile"
 msgid "color for channel modes, near channel name"
 msgstr "Farbe der Channel-Modes (neben dem Channelnamen)"
 
-#, fuzzy
 msgid "color for reason in part/quit messages"
 msgstr ""
-"Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
-"angezeigt werden soll"
+"Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden "
+"soll"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -5072,11 +5065,11 @@ msgstr "%s%s%s%s ist nun als %s%s%s bekannt"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s%s%s%s%s%s%s verlässt %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s verließ %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s verlässt %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s verließ %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
@@ -5188,13 +5181,13 @@ msgstr "%s%s%s%s hat %s%s%s in den Channel %s%s%s eingeladen"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sChannel-Reop %s%s%s: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde gebannt von %s%s %s(%s%s%s)%s auf %s"
+msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s wurde gebannt von %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
@@ -6820,18 +6813,3 @@ msgstr "Argumente"
 
 msgid "Pointer"
 msgstr "Pointer"
-
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "Textfarbe für Präfix #1 in Nickliste"
-
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "Textfarbe für Präfix #2 in Nickliste"
-
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "Textfarbe für Präfix #3 in Nickliste"
-
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "Textfarbe für Präfix #4 in Nickliste"
-
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "Textfarbe für Präfix #5 in Nickliste"
