@@ -1356,12 +1356,12 @@ void
 irc_config_server_create_default_options (struct t_config_section *section)
 {
     int i, length;
-    char *nicks, *username, *realname, *pos, *default_value;
+    char *nicks, *username, *realname, *default_value;
     struct passwd *my_passwd;
     
     nicks = NULL;
     username = NULL;
-    realname = NULL;
+    realname = strdup ("");
     
     /* Get the user's name from /etc/passwd */
     if ((my_passwd = getpwuid (geteuid ())) != NULL)
@@ -1378,25 +1378,12 @@ irc_config_server_create_default_options (struct t_config_section *section)
                       my_passwd->pw_name);
         }
         username = strdup (my_passwd->pw_name);
-        if ((!my_passwd->pw_gecos)
-            || (my_passwd->pw_gecos[0] == '\0')
-            || (my_passwd->pw_gecos[0] == ',')
-            || (my_passwd->pw_gecos[0] == ' '))
-            realname = strdup (my_passwd->pw_name);
-        else
-        {
-            realname = strdup (my_passwd->pw_gecos);
-            pos = strchr (realname, ',');
-            if (pos)
-                pos[0] = '\0';
-        }
     }
     else
     {
         /* default values if /etc/passwd can't be read */
         nicks = strdup (IRC_SERVER_DEFAULT_NICKS);
         username = strdup ("weechat");
-        realname = strdup ("weechat");
     }
     
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)

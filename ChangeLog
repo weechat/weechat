@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-06-10
+v0.3.3-dev, 2010-06-11
 
 
 Version 0.3.3 (under dev!)
@@ -17,6 +17,8 @@ Version 0.3.3 (under dev!)
   process)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: use empty real name by default in config, instead of reading real name
+  in /etc/passwd (bug #30111)
 * irc: add new options irc.look.display_host_join/join_local/quit and
   irc.color.reason_quit
 * irc: move options weechat.color.nicklist_prefix to irc plugin

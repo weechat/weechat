@@ -2195,8 +2195,7 @@ irc_server_login (struct t_irc_server *server)
                       (username && username[0]) ? username : "weechat",
                       (username && username[0]) ? username : "weechat",
                       server->addresses_array[server->index_current_address],
-                      (realname && realname[0]) ?
-                      realname : "weechat");
+                      (realname && realname[0]) ? realname : ((username && username[0]) ? username : "weechat"));
     
     if (server->hook_timer_connection)
         weechat_unhook (server->hook_timer_connection);
