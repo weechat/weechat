@@ -448,19 +448,13 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
         return NULL;
     
     snprintf (reinit_color, sizeof (reinit_color),
-              "%c%c%02d,%02d",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+              "%c",
+              GUI_COLOR_RESET_CHAR);
     length_reinit_color = strlen (reinit_color);
     
     snprintf (reinit_color_space, sizeof (reinit_color_space),
-              "%c%c%02d,%02d ",
-              GUI_COLOR_COLOR_CHAR,
-              GUI_COLOR_FG_BG_CHAR,
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+              "%c ",
+              GUI_COLOR_RESET_CHAR);
     length_reinit_color_space = strlen (reinit_color_space);
     
     content = NULL;

@@ -285,6 +285,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                 CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                 CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                               A_BOLD | A_UNDERLINE | A_REVERSE);
                 string++;
                 break;
             case GUI_COLOR_SET_WEECHAT_CHAR:
@@ -629,6 +631,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                            gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                           A_BOLD | A_UNDERLINE | A_REVERSE);
                             wclrtobot (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         }
                         while (x < bar_window->width)
