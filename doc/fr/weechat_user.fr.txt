@@ -239,6 +239,11 @@ Par exemple si 'weechat-curses' est installé dans '/usr/bin/' et que le fichier
 gdb /usr/bin/weechat-curses /home/xxx/core
 ----------------------------------------
 
+[NOTE]
+Si vous avez installé le paquet binaire 'weechat-dbg' (par exemple sous Debian),
+alors vous pouvez utiliser ce chemin pour l'exécutable WeeChat :
+'/usr/lib/debug/usr/bin/weechat-curses'
+
 Puis sous gdb, utilisez la commande `bt full` pour afficher la trace.
 Vous verrez quelque chose comme ceci :
 

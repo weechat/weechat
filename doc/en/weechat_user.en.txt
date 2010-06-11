@@ -234,6 +234,10 @@ in '/home/xxx/', then run gdb with this command:
 gdb /usr/bin/weechat-curses /home/xxx/core
 ----------------------------------------
 
+[NOTE]
+If you installed binary package 'weechat-dbg' (for example under Debian), then
+you can use this path for WeeChat binary: '/usr/lib/debug/usr/bin/weechat-curses'
+
 Then under gdb, use command `bt full` to display backtrace.
 You will see something like that:
 
