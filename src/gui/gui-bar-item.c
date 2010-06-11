@@ -452,30 +452,38 @@ gui_bar_item_update (const char *item_name)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        gui_bar_get_item_index (ptr_bar, item_name, &index_item, &index_subitem);
-        if ((index_item >= 0) && (index_subitem >= 0))
+        for (index_item = 0; index_item < ptr_bar->items_count; index_item++)
         {
-            if (ptr_bar->bar_window)
+            for (index_subitem = 0;
+                 index_subitem < ptr_bar->items_subcount[index_item];
+                 index_subitem++)
             {
-                ptr_bar->bar_window->items_refresh_needed[index_item][index_subitem] = 1;
-            }
-            else
-            {
-                for (ptr_window = gui_windows; ptr_window;
-                     ptr_window = ptr_window->next_window)
+                if (gui_bar_item_string_is_item (ptr_bar->items_array[index_item][index_subitem],
+                                                 item_name))
                 {
-                    for (ptr_bar_window = ptr_window->bar_windows;
-                         ptr_bar_window;
-                         ptr_bar_window = ptr_bar_window->next_bar_window)
+                    if (ptr_bar->bar_window)
                     {
-                        if (ptr_bar_window->bar == ptr_bar)
+                        ptr_bar->bar_window->items_refresh_needed[index_item][index_subitem] = 1;
+                    }
+                    else
+                    {
+                        for (ptr_window = gui_windows; ptr_window;
+                             ptr_window = ptr_window->next_window)
                         {
-                            ptr_bar_window->items_refresh_needed[index_item][index_subitem] = 1;
+                            for (ptr_bar_window = ptr_window->bar_windows;
+                                 ptr_bar_window;
+                                 ptr_bar_window = ptr_bar_window->next_bar_window)
+                            {
+                                if (ptr_bar_window->bar == ptr_bar)
+                                {
+                                    ptr_bar_window->items_refresh_needed[index_item][index_subitem] = 1;
+                                }
+                            }
                         }
                     }
+                    gui_bar_ask_refresh (ptr_bar);
                 }
             }
-            gui_bar_ask_refresh (ptr_bar);
         }
     }
 }

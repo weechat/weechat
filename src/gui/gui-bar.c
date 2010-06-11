@@ -299,45 +299,6 @@ gui_bar_get_filling (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_get_item_index: return index of item and sub item in bar (position
- *                         of item in items list)
- *                         for example, if items are:
- *                            item1,sub1+sub2+sub3,item3
- *                         index of sub3 is 1, sub index is 2
- *                         return -1 for index and sub index if item is not
- *                         found in bar
- */
-
-void
-gui_bar_get_item_index (struct t_gui_bar *bar, const char *item_name,
-                        int *index_item, int *index_subitem)
-{
-    int i, j;
-    
-    *index_item = -1;
-    *index_subitem = -1;
-    
-    if (!bar || !item_name || !item_name[0])
-        return;
-    
-    for (i = 0; i < bar->items_count; i++)
-    {
-        for (j = 0; j < bar->items_subcount[i]; j++)
-        {
-            /* skip non letters chars at beginning (prefix) */
-            if (gui_bar_item_string_is_item (bar->items_array[i][j], item_name))
-            {
-                *index_item = i;
-                *index_subitem = j;
-                return;
-            }
-        }
-    }
-    
-    /* item is not in bar */
-}
-
-/*
  * gui_bar_find_pos: find position for a bar in list (keeping list sorted
  *                   by priority)
  */
