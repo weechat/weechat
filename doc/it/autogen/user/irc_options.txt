@@ -24,22 +24,22 @@
 ** valori: un nome colore (valore predefinito: red)
 
 * *irc.color.nick_prefix_halfop*
-** descrizione: color for prefix of nick which is halfop on channel
+** descrizione: colore per il prefisso del nick che è halfop sul canale
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: lightmagenta)
 
 * *irc.color.nick_prefix_op*
-** descrizione: color for prefix of nick which is op/admin/owner on channel
+** descrizione: colore per il prefisso del nick che è operatore/amministratore/proprietario del canale
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: lightgreen)
 
 * *irc.color.nick_prefix_user*
-** descrizione: color for prefix of nick which is user on channel
+** descrizione: colore per il prefisso del nick che è utente sul canale
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: blue)
 
 * *irc.color.nick_prefix_voice*
-** descrizione: color for prefix of nick which has voice on channel
+** descrizione: colore per il prefisso del nick che ha il voice sul canale
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: yellow)
 
@@ -49,7 +49,7 @@
 ** valori: un nome colore (valore predefinito: green)
 
 * *irc.color.reason_quit*
-** descrizione: color for reason in part/quit messages
+** descrizione: colore per il motivo nei messaggi di uscita/abbandono
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: default)
 
@@ -84,17 +84,17 @@
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.display_host_join*
-** descrizione: display host in join messages
+** descrizione: visualizza l'host nei messaggi di entrata
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.display_host_join_local*
-** descrizione: display host in join messages from local client
+** descrizione: visualizza l'host nei messaggi di entrata dal client locale
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
 * *irc.look.display_host_quit*
-** descrizione: display host in part/quit messages
+** descrizione: visualizza host nei messaggi di uscita/abbandono
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 

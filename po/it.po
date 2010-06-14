@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 12:39+0200\n"
-"PO-Revision-Date: 2010-06-08 14:15+0200\n"
+"POT-Creation-Date: 2010-06-14 09:57+0200\n"
+"PO-Revision-Date: 2010-06-10 17:36+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -598,6 +598,8 @@ msgstr "%sErrore: impossibile impostare l'opzione \"%s\" per il proxy \"%s\""
 msgid ""
 "%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
 msgstr ""
+"%sBisogna confermare il comando quit con l'argomento extra \"-yes\" "
+"consultare /help quit)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1364,17 +1366,17 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "esce da WeeChat"
 
-#, fuzzy
 msgid "[-yes] [arguments]"
-msgstr "[argomenti]"
+msgstr "[-yes] [argomenti]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
 msgstr ""
+"     -yes: richiesto se l'opzione option weechat.look.confirm_quit è "
+"abilitata\n"
 "argomenti: testo inviato con il segnale \"quit\"\n"
 "           (ad esempio il plugin irc usa questo testo per inviare il "
 "messaggio di uscita al server)"
@@ -1713,6 +1715,8 @@ msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
+"se impostata, il comando /quit deve essere confermato con l'argomento extra "
+"\"-yes\" (consultare /help quit)"
 
 msgid "display special message when day changes"
 msgstr "mostra un messaggio speciale al cambio di data"
@@ -4499,17 +4503,14 @@ msgstr "visualizza risposta CTCP inviata da WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "visualizza messaggio CTCP anche se è CTCP sconosciuto"
 
-#, fuzzy
 msgid "display host in join messages"
-msgstr "colore per il testo nei messaggi di entrata"
+msgstr "visualizza l'host nei messaggi di entrata"
 
-#, fuzzy
 msgid "display host in join messages from local client"
-msgstr "colore per il testo nei messaggi di entrata"
+msgstr "visualizza l'host nei messaggi di entrata dal client locale"
 
-#, fuzzy
 msgid "display host in part/quit messages"
-msgstr "colore per il testo nei messaggi di uscita/abbandono"
+msgstr "visualizza host nei messaggi di uscita/abbandono"
 
 msgid "display old topic when channel topic is changed"
 msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
@@ -4613,15 +4614,17 @@ msgstr "colore per il testo nei messaggi di uscita/abbandono"
 
 msgid "color for prefix of nick which is op/admin/owner on channel"
 msgstr ""
+"colore per il prefisso del nick che è operatore/amministratore/proprietario "
+"del canale"
 
 msgid "color for prefix of nick which is halfop on channel"
-msgstr ""
+msgstr "colore per il prefisso del nick che è halfop sul canale"
 
 msgid "color for prefix of nick which has voice on channel"
-msgstr ""
+msgstr "colore per il prefisso del nick che ha il voice sul canale"
 
 msgid "color for prefix of nick which is user on channel"
-msgstr ""
+msgstr "colore per il prefisso del nick che è utente sul canale"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "colore per il testo \"Notifica\" nelle notifiche"
@@ -4635,9 +4638,8 @@ msgstr "colore per l'elemento assenza"
 msgid "color for channel modes, near channel name"
 msgstr "colore per le modalità dei canali, vicino ai nomi dei canali"
 
-#, fuzzy
 msgid "color for reason in part/quit messages"
-msgstr "colore per il testo nei messaggi di uscita/abbandono"
+msgstr "colore per il motivo nei messaggi di uscita/abbandono"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -4953,19 +4955,19 @@ msgstr "%s%s%s%s ora è conosciuto come %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s%s%s%s%s%s%s è uscito da %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s %s%s%s%s%s%s%s è uscito da %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s è uscito da %s%s%s"
+msgstr "%s%s%s %s%s%s%s%s%s%s è uscito da %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
-msgstr "%s%s%s%s%s%s%s%s%s%s si è disconnesso %s(%s%s%s)"
+msgstr "%s%s%s %s%s%s%s%s%s%s si è disconnesso %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s%s%s%s%s%s%s%s si è disconnesso"
+msgstr "%s%s%s %s%s%s%s%s%s%s si è disconnesso"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -5060,19 +5062,19 @@ msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sArgomento impostato da  %s%s%s%s%s%s%s%s%s il %s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic set on %s"
-msgstr "%sNessun argomento impostato per il canale %s%s"
+msgstr "%sArgomento impostato il %s"
 
 #. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sArgomento per %s%s%s impostato da  %s%s%s%s%s%s%s%s%s il %s"
+msgstr "%sArgomento per %s%s%s impostato da %s%s%s%s%s%s%s%s%s il %s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s set on %s"
-msgstr "%sL'argomento per %s%s%s è \"%s%s\""
+msgstr "%sArgomento per %s%s%s impostato il %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
@@ -5083,13 +5085,13 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop sul canale %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)%s su %s"
+msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)%s su %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)"
 
 #. TRANSLATORS: "%s" after "on" is date
 #, c-format

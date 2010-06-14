@@ -364,7 +364,7 @@
 ** valori: qualsiasi stringa (valore predefinito: "")
 
 * *weechat.look.confirm_quit*
-** descrizione: if set, /quit command must be confirmed with extra argument "-yes" (see /help quit)
+** descrizione: se impostata, il comando /quit deve essere confermato con l'argomento extra "-yes" (consultare /help quit)
 ** tipo: bool
 ** valori: on, off (valore predefinito: off)
 

@@ -293,14 +293,14 @@
       /proxy del mioproxy
 ........................................
 
-&bull; *`/quit`* `[-yes] [arguments]`::
+&bull; *`/quit`* `[-yes] [argomenti]`::
 
 ........................................
   esce da WeeChat
 
-       -yes: required if option weechat.look.confirm_quit is enabled
-  arguments: text sent with signal "quit"
-             (for example irc plugin uses this text to send quit message to server)
+       -yes: richiesto se l'opzione option weechat.look.confirm_quit è abilitata
+  argomenti: testo inviato con il segnale "quit"
+             (ad esempio il plugin irc usa questo testo per inviare il messaggio di uscita al server)
 ........................................
 
 &bull; *`/reload`* `[file [file....]]`::

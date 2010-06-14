@@ -241,8 +241,9 @@ gdb /usr/bin/weechat-curses /home/xxx/core
 ----------------------------------------
 
 [NOTE]
-If you installed binary package 'weechat-dbg' (for example under Debian), then
-you can use this path for WeeChat binary: '/usr/lib/debug/usr/bin/weechat-curses'
+Se è stato installato il pacchetto binario 'weechat-dbg' (ad esempio in Debian), è
+possibile usare questo percorso per il binario di WeeChat:
+'/usr/lib/debug/usr/bin/weechat-curses'
 
 All'interno di gdb, usare il comando `bt full` per visualizzare
 il backtrace. Verrà mostrato qualcosa di simile a questo:
