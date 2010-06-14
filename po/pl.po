@@ -3,15 +3,17 @@
 #
 # Polish translations for WeeChat
 # This file is put in the public domain.
-#  <soltys@szluug.org>, 2009.
+#
+# Krzysztof Koroscik <soltys@szluug.org>, 2009-2010.
+# B.J. Stobiecki <bartek@stobiecki.eu>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-10 12:39+0200\n"
-"PO-Revision-Date: 2010-06-08 14:20+0200\n"
-"Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
+"POT-Creation-Date: 2010-06-13 11:24+0200\n"
+"PO-Revision-Date: 2010-06-13 10:51+0100\n"
+"Last-Translator: B.J. Stobiecki <bartek@stobiecki.eu>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
 "MIME-Version: 1.0\n"
@@ -452,7 +454,7 @@ msgid "Layout reset for windows"
 msgstr "Zresetowano układ dla okien"
 
 msgid "Plugins loaded:"
-msgstr "Załadowane pluginy:"
+msgstr "Załadowane wtyczki:"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
@@ -1030,7 +1032,7 @@ msgstr ""
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
-"filtruje wiadomości w buforach, aby je uktyć/pokazać w zależności do tagów "
+"filtruje wiadomości w buforach, aby je ukryć/pokazać w zależności do tagów "
 "lub wyrażeń regularnych"
 
 msgid ""
@@ -4579,16 +4581,16 @@ msgid "color for text in part/quit messages"
 msgstr "kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
 
 msgid "color for prefix of nick which is op/admin/owner on channel"
-msgstr ""
+msgstr "kolor prefiksu dla nicka który, jest opem/adminem/ownerem kanału"
 
 msgid "color for prefix of nick which is halfop on channel"
-msgstr ""
+msgstr "kolor prefiksu dla nicka, który posiada halfopa na kanale"
 
 msgid "color for prefix of nick which has voice on channel"
-msgstr ""
+msgstr "kolor prefiksu dla nicka, który posiada voice na kanale"
 
 msgid "color for prefix of nick which is user on channel"
-msgstr ""
+msgstr "kolor prefiksu dla nicka, który jest zwykłym użytkownikiem kanału"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "kolor tekstu \"Notice\" w podświetleniach"
@@ -5825,7 +5827,7 @@ msgid "%sError: plugin \"%s\" not found"
 msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
 
 msgid "Plugins unloaded"
-msgstr "Wyładowano pluginy"
+msgstr "Wyładowano wtyczki"
 
 msgid "Actions (letter+enter):"
 msgstr "Akcje (litera+enter)"
@@ -5949,7 +5951,7 @@ msgid "all possible protocol.name for relay plugin"
 msgstr "wszystkie możliwe protokół.nazwa dla wtyczki relay"
 
 msgid "protocol.name of current relays for relay plugin"
-msgstr "protokół.nazwa dla obecnych relayów dla pluginu relay"
+msgstr "protokół.nazwa dla obecnych przekaźników dla wtyczki relay"
 
 msgid "first free port for relay plugin"
 msgstr "pierwszy wolny port dla wtyczki relay"
@@ -6126,7 +6128,7 @@ msgstr "%s%s: funkcja \"%s\" musi zwrócić poprawną wartość"
 
 #, c-format
 msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: błąd w funckji \"%s\""
+msgstr "%s%s: błąd w funkcji \"%s\""
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
@@ -6241,7 +6243,7 @@ msgstr "%s%s: nie udało się przenieść skryptu %s do %s (%s)"
 #. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
-msgstr "załadowano sktypt %s:"
+msgstr "załadowano skrypt %s:"
 
 #, c-format
 msgid "    file: %s"
