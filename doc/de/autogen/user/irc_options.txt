@@ -1,0 +1,420 @@
+* *irc.color.input_nick*
+** Beschreibung: Farbe des eigenen Nicknamens in der Eingabezeile
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: lightcyan)
+
+* *irc.color.item_away*
+** Beschreibung: Farbe des Abwesenheit-Textes in der Eingabezeile
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: yellow)
+
+* *irc.color.item_channel_modes*
+** Beschreibung: Farbe der Channel-Modes (neben dem Channelnamen)
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: default)
+
+* *irc.color.message_join*
+** Beschreibung: Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt werden soll
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: green)
+
+* *irc.color.message_quit*
+** Beschreibung: Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels angezeigt werden soll
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: red)
+
+* *irc.color.nick_prefix_halfop*
+** Beschreibung: Textfarbe für den Nick-Präfix des halfop in einem Channel
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: lightmagenta)
+
+* *irc.color.nick_prefix_op*
+** Beschreibung: Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: lightgreen)
+
+* *irc.color.nick_prefix_user*
+** Beschreibung: Textfarbe für den Nick-Präfix eines Users in einem Channel
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: blue)
+
+* *irc.color.nick_prefix_voice*
+** Beschreibung: Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem Channel
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: yellow)
+
+* *irc.color.notice*
+** Beschreibung: Farbe des "Notice"-Textes in Notizen
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: green)
+
+* *irc.color.reason_quit*
+** Beschreibung: Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden soll
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: default)
+
+* *irc.look.color_nicks_in_server_messages*
+** Beschreibung: Nutze Nick-Farbe bei Nachrichten vom Server
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.color_pv_nick_like_channel*
+** Beschreibung: Nutzt die selbe Farbe für die Darstellung des Nicks im Channel als auch Privat
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_away*
+** Beschreibung: Bei Abwesenheit und Rückkehr eine Nachricht anzeigen
+** Typ: integer
+** Werte: off, local, channel (Standardwert: local)
+
+* *irc.look.display_ctcp_blocked*
+** Beschreibung: CTCP Nachrichten werden angezeigt, obwohl sie unterdrückt werden
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_ctcp_reply*
+** Beschreibung: CTCP Antworten, die durch WeeChat versendet wurden, werden angezeigt
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_ctcp_unknown*
+** Beschreibung: unbekannte CTCP Nachrichten werden angezeigt.
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_host_join*
+** Beschreibung: Zeigt den Host in einer join Nachricht an
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_host_join_local*
+** Beschreibung: Zeigt den Host in join Nachrichten des lokalen Client an
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_host_quit*
+** Beschreibung: Zeigt den Host in einer part/quit Nachricht an
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_old_topic*
+** Beschreibung: Zeige den alten Topic, falls der Channel-Topic geändert wurde
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_pv_away_once*
+** Beschreibung: In einer privaten Unterhaltung nur einmal eine Abwesenheitsnachricht anzeigen
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.display_pv_back*
+** Beschreibung: Es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der User wieder zurück ist  (falls der User sich beim Server abgemeldet hat)
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.hide_nickserv_pwd*
+** Beschreibung: Von NickServ angezeigte Passwörter verstecken
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.highlight_tags*
+** Beschreibung: Eine durch Kommata getrennte Liste von tags die bei einer Nachricht diese dann hervorhebt (Highlight).  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "irc_privmsg,irc_notice")
+
+* *irc.look.item_channel_modes*
+** Beschreibung: Zeige die Channel-Modi mittels "buffer_name" in der Bar-Item an
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.item_channel_modes_hide_key*
+** Beschreibung: Unterdrückt Channel-Key falls die Modi in der Bar-Item mittels "buffer_name" dargestellt werden (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.look.item_display_server*
+** Beschreibung: Name der Bar-Item in dem der IRC Server angezeigt wird (für Status-Bar)
+** Typ: integer
+** Werte: buffer_plugin, buffer_name (Standardwert: buffer_plugin)
+
+* *irc.look.item_nick_modes*
+** Beschreibung: Zeige Nick-Modi in "input_prompt" Bar-Item
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.item_nick_prefix*
+** Beschreibung: Der Nick-Präfix wird in "input_prompt" Bar-Item angezeigt
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.msgbuffer_fallback*
+** Beschreibung: Standardbuffer der für Ausgaben genutzt werden soll falls ein privater Buffer nicht gefunden wird.
+** Typ: integer
+** Werte: current, server (Standardwert: current)
+
+* *irc.look.nick_completion_smart*
+** Beschreibung: Intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den letzten Nick, mit dem gesprochen wurde)
+** Typ: integer
+** Werte: off, speakers, speakers_highlights (Standardwert: speakers)
+
+* *irc.look.nick_prefix*
+** Beschreibung: Text, der im Chatfenster vor dem Nickname erscheinen soll
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.look.nick_suffix*
+** Beschreibung: Text, der im Chatfenster nach dem Nickname erscheinen soll
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.look.notice_as_pv*
+** Beschreibung: Zeigt Notizen als private Nachricht an (wird die "auto" Option verwendet dann wird ein privater Buffer genutzt, falls vorhanden)
+** Typ: integer
+** Werte: auto, never, always (Standardwert: auto)
+
+* *irc.look.open_channel_near_server*
+** Beschreibung: Öffne neue Channels neben dem Server-Buffer
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.look.open_pv_near_server*
+** Beschreibung: Öffne neue private Channels neben dem Server-Buffer
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.look.part_closes_buffer*
+** Beschreibung: Schließt den Buffer wenn "/part" im Channel ausgeführt wird
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.look.raw_messages*
+** Beschreibung: Anzahl der IRC-RAW-Nachrichten die im Speicher gehalten werden sollen falls der RAW-Daten-Buffer geschlossen ist (die Nachrichten werden umgehend angezeigt, wenn ein RAW-Daten-Buffer geöffnet wird)
+** Typ: integer
+** Werte: 0 .. 65535 (Standardwert: 256)
+
+* *irc.look.server_buffer*
+** Beschreibung: Server-Buffer zusammenlegen
+** Typ: integer
+** Werte: merge_with_core, merge_without_core, independent (Standardwert: merge_with_core)
+
+* *irc.look.smart_filter*
+** Beschreibung: Filtert join/part/quit Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter im tag "irc_smart_filter" erstellt werden.
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.smart_filter_delay*
+** Beschreibung: Verzögerung, in Minuten, in denen join/part/quit Nachrichten gefiltert werden
+** Typ: integer
+** Werte: 1 .. 10080 (Standardwert: 5)
+
+* *irc.look.smart_filter_join*
+** Beschreibung: aktiviert einen Filter für "join" Nachrichten
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.smart_filter_quit*
+** Beschreibung: aktiviert einen Filter für "part" und "quit" Nachrichten
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.look.topic_strip_colors*
+** Beschreibung: Farben werden im Topic gestrippt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.network.anti_flood_prio_high*
+** Beschreibung: Anti-Flood für dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten oder Befehlen die zum IRC Server versendet wurden (0 = Anti-Flood deaktivieren)
+** Typ: integer
+** Werte: 0 .. 60 (Standardwert: 2)
+
+* *irc.network.anti_flood_prio_low*
+** Beschreibung: Anti-Flood für weniger dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten, die zum IRC Server versendet wurden. Beispiel: automatische CTCP Antworten. (0 = Anti-Flood deaktivieren)
+** Typ: integer
+** Werte: 0 .. 60 (Standardwert: 2)
+
+* *irc.network.autoreconnect_delay_growing*
+** Beschreibung: Multiplikator für die Verzögerung bei der automatischen Wiederverbindung zum Server (1 = immer die selbe Verzögerung nutzen, 2 = Verzögerung*2 für jeden weiteren Versuch, ..)
+** Typ: integer
+** Werte: 1 .. 100 (Standardwert: 2)
+
+* *irc.network.autoreconnect_delay_max*
+** Beschreibung: maximale Verzögerung bei der automatischen wiederverbindung zum Server (in Sekunden, 0 = keine Begrenzung)
+** Typ: integer
+** Werte: 0 .. 86400 (Standardwert: 1800)
+
+* *irc.network.away_check*
+** Beschreibung: Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall  (in Minuten, 0 = nicht überprüfen)
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 0)
+
+* *irc.network.away_check_max_nicks*
+** Beschreibung: Die Abwesenheit von Nutzern in Channels wird nicht überprüft wenn die Anzahl der Nutzer höher ist, als der angegebene Wert (0 = unbegrenzte Anzahl an Nutzern im Channel)
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 25)
+
+* *irc.network.colors_receive*
+** Beschreibung: Falls deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert.
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.network.colors_send*
+** Beschreibung: Erlaube Benutzern, spezielle Codes zu versenden (ctrl-c + Code und optional Farbe: b=fett, cxx=Farbe, cxx,yy=Farbe+Hintergrund, u=unterstrichen, r=invertiert)
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.network.connection_timeout*
+** Beschreibung: Wartezeit (in Sekunden) zwischen einer TCP Verbindung mit dem Server und des Empfanges der message 001. Falls die Wartezeit verstreichen sollte bevor die message 001 empfangen wurde dann wird WeeChat die Verbindung zum Server trennen.
+** Typ: integer
+** Werte: 1 .. 3600 (Standardwert: 60)
+
+* *irc.network.default_msg_part*
+** Beschreibung: Standardnachricht beim Verlassen eines Channels ("%v": wird durch die WeeChat-Version ersetzt)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "WeeChat %v")
+
+* *irc.network.default_msg_quit*
+** Beschreibung: Standardnachricht beim Beenden (Verbindung zum Server trennen) ("%v": wird durch die WeeChat-Version ersetzt)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "WeeChat %v")
+
+* *irc.network.lag_check*
+** Beschreibung: Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine Überprüfung)
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 60)
+
+* *irc.network.lag_disconnect*
+** Beschreibung: Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 0)
+
+* *irc.network.lag_min_show*
+** Beschreibung: Mindest-Lag, der angezeigt werden soll (in Sekunden)
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 1)
+
+* *irc.network.send_unknown_commands*
+** Beschreibung: Sende unbekannte Befehle an den Server
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.server_default.addresses*
+** Beschreibung: Liste der Hostnamen/Ports oder IP/Ports des Servers (durch Komma getrennt)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.autoconnect*
+** Beschreibung: Automatisch mit dem Server verbinden, wenn WeeChat gestartet wird
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.server_default.autojoin*
+** Beschreibung: Durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2")
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.autoreconnect*
+** Beschreibung: Nach einer Trennung vom Server die Verbindung automatisch wiederherstellen
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.server_default.autoreconnect_delay*
+** Beschreibung: Zeit die gewartet werden soll bevor ein Verbindungsneuaufbau versucht wird (in Sekunden)
+** Typ: integer
+** Werte: 1 .. 65535 (Standardwert: 10)
+
+* *irc.server_default.autorejoin*
+** Beschreibung: Channels automatisch betreten, falls man ge-kickt wurde.
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.server_default.autorejoin_delay*
+** Beschreibung: Wartezeit, in Sekunden, die verstreichen soll bevor man den Channel automatisch erneut betritt (nachdem man ge-kickt wurde)
+** Typ: integer
+** Werte: 0 .. 86400 (Standardwert: 30)
+
+* *irc.server_default.command*
+** Beschreibung: Enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon schreiben muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.command_delay*
+** Beschreibung: Wartezeit in Sekunden nach Ausführung des Befehls, um z.B. eine Authentifizierung zu ermöglichen
+** Typ: integer
+** Werte: 0 .. 3600 (Standardwert: 0)
+
+* *irc.server_default.ipv6*
+** Beschreibung: Server über IPv6 ansprechen
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.server_default.local_hostname*
+** Beschreibung: Angepasster lokaler Hostname oder angepasste IP-Adresse für den Server (optional, wenn nichts eingetragen ist, wird der lokale Hostname verwendet)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.nicks*
+** Beschreibung: Nicknamen, die auf dem IRC-Server benutzt werden sollen (durch Komma getrennt)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.password*
+** Beschreibung: Passwort für den Server
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.proxy*
+** Beschreibung: Proxy, der für diesen Server verwendet wird (optional)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.realname*
+** Beschreibung: Realen Namen bei diesem Server nutzen
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.sasl_mechanism*
+** Beschreibung: Vorrichtung zur SASL Authentifizierung
+** Typ: integer
+** Werte: plain, dh-blowfish (Standardwert: plain)
+
+* *irc.server_default.sasl_password*
+** Beschreibung: Passwort für SASL Authentifizierung
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.sasl_timeout*
+** Beschreibung: Zeitüberschreitung (in Sekunden) bis zum Abbruch der SASL Authentifizierung
+** Typ: integer
+** Werte: 1 .. 3600 (Standardwert: 15)
+
+* *irc.server_default.sasl_username*
+** Beschreibung: Username für SASL Authentifizierung
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.ssl*
+** Beschreibung: Server über SSL ansprechen
+** Typ: boolesch
+** Werte: on, off (Standardwert: off)
+
+* *irc.server_default.ssl_cert*
+** Beschreibung: SSL-Zertifikat Datei wurde genutzt um automatisch Deinen Nick zu identifizieren.
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+
+* *irc.server_default.ssl_dhkey_size*
+** Beschreibung: Größe des Schlüssels der während des Diffie-Hellman-Schlüsselaustausches genutzt wurde
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: 2048)
+
+* *irc.server_default.ssl_verify*
+** Beschreibung: Überprüfe ob die SSL-Verbindung vertrauenswürdig ist.
+** Typ: boolesch
+** Werte: on, off (Standardwert: on)
+
+* *irc.server_default.username*
+** Beschreibung: Benutzername für diesen Server
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+

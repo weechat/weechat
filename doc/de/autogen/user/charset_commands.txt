@@ -1,0 +1,11 @@
+&bull; *`/charset`* `[[dekodiere | kodieren] Zeichensatz] | [Reset]`::
+
+........................................
+  ändere Zeichensatz für aktuellen Buffer
+
+   decode: ändere Zeichensatz zum dekodieren
+   encode: ändere Zeichensatz zum kodieren
+  charset: wähle neuen Zeichensatz für aktuellen Buffer
+    reset: setze im aktuellen Buffer den Zeichensatz zurück
+........................................
+

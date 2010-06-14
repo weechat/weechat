@@ -1,0 +1,51 @@
+[width="100%",cols="^1,^2,6,6",options="header"]
+|========================================
+| Erweiterung | Name | Beschreibung | Argumente
+
+| fifo | fifo_filename | Name der FIFO-Pipe | -
+
+| irc | irc_buffer | hole Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
+
+| irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channel ist | Channelname
+
+| irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | Nickname
+
+| irc | irc_nick | Aktuellen Nicknamen für den Server erhalten | Servername
+
+| irc | irc_nick_color | Hole Farbe für Nick | Nickname
+
+| irc | irc_nick_from_host | Nicknamen des IRC-Hosts erhalten | IRC host (in der Form `:nick!name@server.com`)
+
+| irc | irc_server_isupport | 1 falls der Server die Funktion unterstützen sollte (durch IRC Message 005) | Server,Funktion
+
+| irc | irc_server_isupport_value | Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message 005) | Server,Funktion
+
+| weechat | charset_internal | Interner WeeChat Zeichensatz | -
+
+| weechat | charset_terminal | Terminal Zeichensatz | -
+
+| weechat | date | Datum der WeeChat Kompilierung | -
+
+| weechat | dir_separator | Verzeichnis-Trennzeichen | -
+
+| weechat | filters_enabled | 1, falls Filter aktiviert sind | -
+
+| weechat | inactivity | Inaktivität der Tastatur (Sekunden) | -
+
+| weechat | version | WeeChat Version | -
+
+| weechat | version_number | WeeChat Version (als Nummer) | -
+
+| weechat | weechat_dir | WeeChat Verzeichnis | -
+
+| weechat | weechat_libdir | WeeChat "lib" Verzeichnis | -
+
+| weechat | weechat_localedir | "Lokales" Verzeichnis von WeeChat | -
+
+| weechat | weechat_sharedir | WeeChat "share" Verzeichnis | -
+
+| weechat | weechat_site | WeeChat Seite | -
+
+| weechat | weechat_site_download | Download-Seite von WeeChat | -
+
+|========================================

@@ -1,0 +1,11 @@
+&bull; *`/lua`* `[list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload [Name]] | [unload [Name]]`::
+
+........................................
+  auflisten/installieren/deinstallieren von Skripten
+
+  Dateiname: Skript (Datei) die geladen werden soll
+  Name: Name des Skripts
+  
+  Wird der Befehl ohne Argumente aufgerufen werden alle geladenen Skripten aufgelistet.
+........................................
+

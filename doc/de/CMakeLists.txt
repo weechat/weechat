@@ -14,6 +14,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# user's guide
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.de.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.de.txt
+  ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.txt
+  COMMENT "Building weechat_user.de.html"
+)
+ADD_CUSTOM_TARGET(doc-user-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
 # FAQ
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.de.html

@@ -1,0 +1,1708 @@
+WeeChat User Anleitung
+======================
+FlashCode <flashcode@flashtux.org>
+
+
+Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
+
+Die aktuelle Version dieser Anleitung finden Sie auf:
+http://www.weechat.org/doc
+
+
+[[introduction]]
+Einleitung
+----------
+
+WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
+schlanker Chat-Client der für viele Betriebssysteme entwickelt wird.
+
+[[features]]
+Funktionen
+~~~~~~~~~~
+
+wesentliche Merkmale:
+
+* Multi-Protokoll fähig (IRC, andere Protokolle folgen)
+* Multi-Server Verbindungen (mittels SSL, IPv6, proxy)
+* verschiedene GUIs: Curses (wxWidgets, Gtk und Qt sind in der Entwicklung)
+* klein, schnell und schlank
+* den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
+* IRC RFCs konform http://www.ietf.org/rfc/rfc1459.txt[1459],
+  http://www.ietf.org/rfc/rfc2810.txt[2810],
+  http://www.ietf.org/rfc/rfc2811.txt[2811],
+  http://www.ietf.org/rfc/rfc2812.txt[2812] and
+  http://www.ietf.org/rfc/rfc2813.txt[2813]
+* Betriebssystemunabhängig (GNU/Linux, *BSD, MacOS X, Windows und weitere)
+* 100% GPL, freie Software
+
+Die WeeChat Homepage findet man unter: http://www.weechat.org/
+
+[[pre-requisites]]
+Vorbereitung
+~~~~~~~~~~~~
+
+Um WeeChat zu installieren wird folgendes benötigt:
+
+* ein laufendes GNU/Linux System (mit Kompiler-Tools für Quellpakete),
+  oder ein kompatibles OS
+* 'root' Privilegien (um WeeChat im Systemverzeichnis zu installieren)
+* ncurses library
+
+
+[[install]]
+Installation
+------------
+
+[[binary_packages]]
+Binärpaket
+~~~~~~~~~~
+
+Binärpakete sind für folgende Distributionen erhältlich:
+
+* Debian (oder Debian kompatible Distribution):
+  `apt-get install weechat-curses`
+* Mandriva/RedHat (oder eine RPM kompatible Distribution):
+  `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
+* Gentoo: `emerge weechat`
+* Arch Linux: `pacman -S weechat`
+* Fedora Core: `yum install weechat`
+* Sourcemage: `cast weechat`
+
+zusätzliche Pakete können/sollten installiert werden. Zum Beispiel: weechat-plugins.
+
+Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung der Distribution,
+wie man Pakete installiert.
+
+[[source_package]]
+Quellpakete
+~~~~~~~~~~~
+
+WeeChat kann mittels cmake oder autotools kompiliert werden (cmake sollte dabei die bevorzugte Methode sein).
+
+[[dependencies]]
+Abhängigkeiten
+^^^^^^^^^^^^^^
+
+folgende Tabelle beschreibt welche Pakete zwingend notwendig sind um WeeChat zu kompilieren und
+welche Pakete optional genutzt werden können.
+
+[width="80%",cols="4,^2,13",options="header"]
+|========================================
+| Paket   ^(1)^          | benötigt | Funktion
+| cmake                  | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+| libncursesw5-dev ^(2)^ | *ja*     | ncurses Oberfläche
+| libgcrypt11-dev        | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
+| libgnutls-dev          | nein     | SSL Verbindung zu einem IRC Server
+| libaspell-dev          | nein     | aspell Erweiterung
+| libperl-dev            | nein     | perl Erweiterung
+| python-dev             | nein     | python Erweiterung
+| ruby1.8-dev            | nein     | ruby Erweiterung
+| liblua5.1-0-dev        | nein     | lua Erweiterung
+| tcl-dev                | nein     | tcl Erweiterung
+| asciidoc (>= 8.2)      | nein     | erstellt Dokumentation (HTML Dateien)
+| source-highlight       | nein     | Syntax highlight für Quelltext in HTML Dokumentation
+|========================================
+
+[NOTE]
+^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen. Versions- und Paketnamen
+können für andere Distributionen abweichend sein. +
+^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
+treten dabei Darstellungsfehler mit breiten Zeichen auf).
+
+[[compile_with_cmake]]
+Kompilieren mit cmake
+^^^^^^^^^^^^^^^^^^^^^
+
+* Installation in das Systemverzeichnis (benötigt 'root' Privilegien):
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+% make install    (als root)
+----------------------------------------
+
+* Installation in ein benutzerdefiniertes Verzeichnis:
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=/Pfad/zum/Verzeichnis
+$ make
+$ make install
+----------------------------------------
+
+[[compile_with_autotools]]
+Kompilieren mit autotools
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Installation in das Systemverzeichnis (benötigt 'root' Privilegien):
+
+----------------------------------------
+$ ./configure
+$ make
+% make install    (als root)
+----------------------------------------
+
+* Installation in ein benutzerdefiniertes Verzeichnis:
+
+----------------------------------------
+$ ./configure --prefix=/Pfad/zum/Verzeichnis
+$ make
+$ make install
+----------------------------------------
+
+[[git_sources]]
+Git Quellen
+~~~~~~~~~~~
+
+Warnung: GIT Quellen sollten nur von erfahrenen Nutzern verwendet werden: evtl. lassen sich
+die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewarnt!
+
+Um die GIT Quellen zu beziehen, nutzen Sie folgende Befehle:
+
+----------------------------------------
+$ git clone git://git.sv.gnu.org/weechat.git
+----------------------------------------
+
+Sollten die autotools genutzt werden (und nicht cmake), muss dieses Skript ausgeführt werden:
+
+----------------------------------------
+$ ./autogen.sh
+----------------------------------------
+
+Dann folgen Sie der Anleitung für Quellpakete (siehe <<source_package,Quellpakete>>).
+
+[[report_crashes]]
+Abstürze melden
+~~~~~~~~~~~~~~~
+
+Falls ein Absturz mit WeeChat aufgetreten ist und Sie diesen Fehler melden wollen:
+
+* kompilieren Sie WeeChat mit Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
+* aktivieren Sie 'core' Dateien auf Ihrem System
+* installieren Sie gdb
+
+[[debug_info]]
+Debug info
+^^^^^^^^^^
+
+Bei der Kompilierung mit cmake muss folgende Option gesetzt werden:
+
+----------------------------------------
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+----------------------------------------
+
+Bei der Kompilierung mit autotools, ist debug standardmäßig aktiviert (`--with-debug=1`).
+
+Wird ein Binärpaket genutzt dann muss zusätzlich das Paket 'weechat-dbg' installiert werden.
+
+[[core_files]]
+Core Dateien
+^^^^^^^^^^^^
+
+Um 'core' Dateien zu aktivieren muss der `ulimit` Befehl genutzt werden.
+
+Zum Beispiel muss unter Linux in einer 'bash' Shell folgender Befehl in die `~/.bashrc`
+Datei eingetragen werden:
+
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
+
+optional kann noch die maximale Dateigröße bestimmt werden:
+
+----------------------------------------
+ulimit -c 200000
+----------------------------------------
+
+[[gdb_backtrace]]
+Rückverfolgung mit gdb
+^^^^^^^^^^^^^^^^^^^^^^
+
+Falls WeeChat abstürzen sollte wird auf Ihrem System eine 'core' bzw. 'core.12345' Datei
+('12345' ist die Prozess-Id) erzeugt.
+Diese Datei wird in dem Verzeichnis erzeugt aus welchem Sie WeeChat gestartet haben (dies
+ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
+
+Beispiel: 'weechat-curses' ist installiert in '/usr/bin/' und die 'core' Datei befindet sich
+in '/home/xxx/'. Nun wird gdb mit folgendem Befehl aufgerufen:
+
+----------------------------------------
+gdb /usr/bin/weechat-curses /home/xxx/core
+----------------------------------------
+
+[NOTE]
+Ist das Binärpaket 'weechat-dbg' (z.B. Debian) installiert dann sollte dieser Pfad zum
+starten von WeeChat genutzt werden: '/usr/lib/debug/usr/bin/weechat-curses'
+
+Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb gdb aus um die Fehlermeldung
+auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
+
+----------------------------------------
+(gdb) bt full
+#0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
+#1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6
+#2  0x0000000000437f66 in weechat_shutdown (return_code=1, crash=1) at /some_path/src/core/weechat.c:351
+#3  <signal handler called>
+#4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90, remaining_calls=<value optimized out>)
+    at /some_path/src/core/wee-hook.c:1364
+        hook_process = 0x254eb90
+        status = <value optimized out>
+#5  0x000000000044cc7d in hook_timer_exec () at /some_path/src/core/wee-hook.c:1025
+        tv_time = {tv_sec = 1272693881, tv_usec = 212665}
+        ptr_hook = 0x2811f40
+        next_hook = 0x0
+#6  0x000000000041b5b0 in gui_main_loop () at /some_path/src/gui/curses/gui-curses-main.c:319
+        hook_fd_keyboard = 0x173b600
+        tv_timeout = {tv_sec = 0, tv_usec = 0}
+        read_fds = {fds_bits = {0 <repeats 16 times>}}
+        write_fds = {fds_bits = {0 <repeats 16 times>}}
+        except_fds = {fds_bits = {0 <repeats 16 times>}}
+        max_fd = <value optimized out>
+----------------------------------------
+
+Diese Fehlermeldung senden Sie bitte an den Entwickler und beschreiben was den Fehler ausgelöst hat.
+
+Danke für Ihre Mithilfe!
+
+
+[[usage]]
+Nutzung
+-------
+
+[[running_weechat]]
+WeeChat starten
+~~~~~~~~~~~~~~~
+
+Befehlszeile:
+
+-a, --no-connect::
+    deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat
+
+-d, --dir 'path'::
+    legt den Konfigurationsordner für WeeChat fest (Voreinstellung: ~/.weechat) in
+    dem die Erweiterungen, Skripten, Protokolldateien etc.pp. gesichert werden.
+    Sollte das Verzeichnis nicht existieren wird es beim Start angelegt.
+
+-h, --help::
+    zeigt einen Hilfstext an
+
+-k, --keys::
+    zeigt die Standard-Tastaturbelegung an
+
+-l, --license::
+    zeigt die Lizenz von WeeChat an
+
+-p, --no-plugin::
+    unterbindet das Laden der Erweiterungen beim Programmstart
+
+-s, --no-script::
+    Skripten werden beim Programmstart nicht geladen
+
+-v, --version::
+    zeigt die Version von WeeChat an
+
+plugin:option::
+    Option für Erweiterung (siehe Dokumentation für weitere Einzelheiten)
+
+Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
+
+Wird WeeChat zum ersten mal gestartet wird eine Konfigurationsdatei
+mit Standardparametern erstellt. Die Konfigurationsdatei heisst:
+'~/.weechat/weechat.conf'.
+
+Die Einstellungen für WeeChat können an die eigenen Bedürfnissen angepasst werden. Dazu sollten
+Sie veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführen. (siehe
+<<weechat_commands,WeeChat Befehle>>).
+
+[[screen_layout]]
+Screen layout
+~~~~~~~~~~~~~
+
+Beispiel des WeeChat-Terminals:
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                                                 │
+│12:52:27    --> | flashy (n=flashcod@hellix.flashtux.org) has joined #test    │@ChanServ │
+│12:52:27     -- | Nicks #test: [@ChanServ @flashy +_FlashB0t joe mike]        │@flashy   │
+│12:52:27     -- | Channel #test: 5 nicks (2 ops, 0 halfop, 1 voice, 2 normal) │+_FlashB0t│
+│12:52:27     -- | Channel created on Tue Jan 27 06:30:17 2009                 │joe       │
+│12:54:15 flashy | hey!                                                        │mike      │
+│12:55:01    joe | hi flashy!                                                  │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│                                                                              │          │
+│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
+│[flashy] hi joe!█                                                                        │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
+
+* Chat-Bereich (in der Mitte des Bildschirms) enthält den geschrieben Text und für jede Zeile:
+** die Zeit
+** Prefix (vor dem "|")
+** Nachricht (nach dem "|")
+* Bars können um den Chat-Bereich angeordnet werden. standard Bars sind:
+** 'title' Bar, über dem Chat-Bereich
+** 'status' Bar, unter dem Chat-Bereich
+** 'input' Bar, unter der Status-Bar
+** 'nicklist' Bar, auf der rechten Seite
+
+Die 'status'-Bar besitzt als Standardeinträge:
+
+[width="100%",cols="^3,^3l,10",options="header"]
+|========================================
+| Item                  | Beispiel       | Beschreibung
+
+| time                  | [12:55]        |
+  Uhrzeit
+
+| buffer_count          | [4]            |
+  Anzahl der geöffneten Buffer
+
+| buffer_plugin         | [irc/freenode] |
+  Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
+
+| buffer_number         | 3              |
+  aktuelle Nummer des Buffers
+
+| buffer_name           | #test(+n)      |
+  Name des aktuellen Buffers
+
+| buffer_nicklist_count | {5}            |
+  Anzahl der Nicks in Nickliste
+
+| buffer_filter         | *              |
+  Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag
+  zeigt an dass alle Zeilen dargestellt werden
+
+| lag                   | [Lag: 2.5]     |
+  Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
+
+| hotlist               | [Act: 4,2]     |
+  Liste der Buffer mit Aktivität (ungelesene Nachrichten)
+
+| completion            | abc(2) def(5)  |
+  Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich
+  sind
+
+| scroll                | -MORE(50)-     |
+  Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile
+  vorhanden sind
+|========================================
+
+In der 'input' Bar lautet die Standardeinstellung:
+
+[width="100%",cols="^3,^6m,8",options="header"]
+|========================================
+| Item             | Beispiel| Beschreibung
+
+| input_paste      | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] |
+  Nachfrage ob sieben Zeilen eingefügt werden sollen
+
+| input_prompt     | [nick] |
+  input prompt (Nickname für den IRC)
+
+| away             | (away) |
+  Abwesenheitsanzeige
+
+| input_search     | [Text search] |
+  Textsuche
+
+| input_text       | bla bla... |
+  Text der eingegeben wird
+|========================================
+
+[[key_bindings]]
+Standard Tastenbelegung
+~~~~~~~~~~~~~~~~~~~~~~~
+
+[[key_bindings_command_line]]
+Tastenbefehle für die Befehlszeile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|========================================
+| Taste| Beschreibung und Befehl
+
+| Pfeil links +
+  Ctrl + B |
+  setzt den Cursor eine Position nach links +
+  `/input move_previous_char`
+
+| Pfeil rechts +
+  Ctrl + F |
+  setzt den Cursor eine Position nach rechts +
+  `/input move_next_char`
+
+| Ctrl + Pfeil links +
+  Alt + B |
+  springt zum Anfang des vorherigen Wortes in der Befehlszeile +
+  `/input move_previous_word`
+
+| Ctrl + Pfeil rechts +
+  Alt + F |
+  sprint zum Anfang des nächsten Wortes in der Befehlszeile +
+  `/input move_next_word`
+
+| Home +
+  Ctrl + A |
+  sprint zum Anfang der Befehlszeile +
+  `/input move_beginning_of_line`
+
+| End +
+  Ctrl + E |
+  springt ans Ende der Befehlszeile +
+  `/input move_end_of_line`
+
+| Ctrl + C dann B  |
+  Fügt Steuerzeichen für fett geschrieben Text ein +
+  `/input insert \x02`
+
+| Ctrl + C dann C |
+  Fügt Steuerzeichen für Textfarbe ein +
+  `/input insert \x03`
+
+| Ctrl + C dann I |
+  Fügt Steuerzeichen für kursiven Text ein +
+  `/input insert \x1D`
+
+| Ctrl + C dann O |
+  Fügt Steuerzeichen für Standardfarbe ein +
+  `/input insert \x0F`
+
+| Ctrl + C dann R |
+  Fügt Steuerzeichen für Hintergrundfarbe ein +
+  `/input insert \x12`
+
+| Ctrl + C dann U |
+  Fügt Steuerzeichen für unterstrichenen Text ein +
+  `/input insert \x15`
+
+| Delete +
+  Ctrl + D |
+  entfernt nächstes Zeichen in der Befehlszeile +
+  `/input delete_next_char`
+
+| Backspace +
+  Ctrl + H |
+  entfernt vorheriges Zeichen in der Befehlszeile +
+  `/input delete_previous_char`
+
+| Ctrl + K |
+  entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage
+  kopiert) +
+  `/input delete_end_of_line`
+
+| Ctrl + R |
+  Sucht nach einem Text in der Protokolldatei (zweimaliges Drücken: sucht nach exaktem Text) +
+  `/input search_text`
+
+| Ctrl + T |
+  Zeichen austauschen +
+  `/input transpose_chars`
+
+| Ctrl + U |
+  entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage
+  kopiert) +
+  `/input delete_beginning_of_line`
+
+| Ctrl + W |
+  entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) +
+  `/input delete_previous_word`
+
+| Ctrl + Y |
+  fügt Zeichenkette aus Zwischenablage ein +
+  `/input clipboard_paste`
+
+| Ctrl + _ |
+  Rückgängig machen in Befehlszeile +
+  `/input undo`
+
+| Alt + _ |
+  Wiederherstellen in der Befehlszeile +
+  `/input redo`
+
+| Tab |
+  Vervollständigung von Befehlen oder Nicks (nochmaliges Tab: findet nächste Vervollständigung) +
+  `/input complete_next`
+
+| Shift + Tab |
+  ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung :
+   wird die vorherige Vervollständigung genutzt +
+  `/input complete_previous`
+
+| Any char |
+  Schreibt ein Zeichen in die Befehlszeile
+
+| Enter +
+  Ctrl + J +
+  Ctrl + M |
+  führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) +
+  `/input return`
+
+| Up arrow |
+  ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen) +
+  `/input history_previous`
+
+| Down arrow |
+  ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen) +
+  `/input history_next`
+
+| Ctrl + up arrow |
+  ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
+  `/input history_global_previous`
+
+| Ctrl + down arrow |
+  ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
+  `/input history_global_next`
+
+| Alt + D |
+  löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) +
+  `/input delete_next_word`
+
+| Alt + K |
+  zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in
+  die Befehlszeile ein +
+  `/input grab_key_command`
+
+| Alt + R |
+  löscht komplette Eingabezeile +
+  `/input delete_line`
+|========================================
+
+[[key_bindings_buffers_windows]]
+Tastenbefehle für Buffer / Fenster
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|========================================
+| Keys | Description and command
+
+| Ctrl + L |
+  zeichnet das Fenster neu +
+  `/window refresh`
+
+| Ctrl + S dann Ctrl + U |
+  Setzt die ungelesen Markierung für alle Buffer +
+  `/input set_unread`
+
+| Ctrl + X |
+  sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch +
+  `/input switch_active_buffer`
+
+| Page up |
+  Eine Seite im Buffer Verlaufsspeicher hoch blättern +
+  `/window page_up`
+
+| Page down |
+  Eine Seite im Buffer Verlaufsspeicher runter blättern +
+  `/window page_down`
+
+| Alt + Page up |
+  einige Zeilen im Buffer Verlaufsspeicher hoch blättern +
+  `/window scroll_up`
+
+| Alt + Page down |
+  einige Zeilen im Buffer Verlaufsspeicher runter blättern +
+  `/window scroll_down`
+
+| Alt + Home |
+  springt zur ersten Zeile im Buffer Verlaufsspeicher +
+  `/window scroll_top`
+
+| Alt + End |
+  springt zur letzten Zeile im Buffer Verlaufsspeicher +
+  `/window scroll_bottom`
+
+| Alt + left arrow +
+  Alt + up arrow +
+  Ctrl + P +
+  F5 |
+  zum vorherigen Buffer springen +
+  `/buffer -1`
+
+| Alt + right arrow +
+  Alt + down arrow +
+  Ctrl + N +
+  F6 |
+  zum nächsten Buffer springen +
+  `/buffer +1`
+
+| F7 |
+  zum vorherigen Fenster wechseln +
+  `/window -1`
+
+| F8 |
+  zum nächsten Fenster wechseln +
+  `/window +1`
+
+| F9 |
+  Buffer Title nach links verschieben +
+  `/bar scroll title * x-50%`
+
+| F10 |
+  Buffer Titel nach rechts verschieben +
+  `/bar scroll title * x+50%`
+
+| F11 |
+  Nickliste um eine Seite nach oben scrollen +
+  `/bar scroll nicklist * y-100%`
+
+| F12 |
+  Nickliste um eine Seite nach unten scrollen +
+  `/bar scroll nicklist * y+100%`
+
+| Alt + F11 |
+  springt zum Anfang der Nickliste +
+  `/bar scroll nicklist * yb`
+
+| Alt + F12 |
+  springt zum Ende der Nickliste +
+  `/bar scroll nicklist * ye`
+
+| Alt + A |
+  wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht,
+  ...) +
+  `/input jump_smart`
+
+| Alt + J dann Alt + L |
+  wechselt zum letzten Buffer +
+  `/input jump_last_buffer`
+
+| Alt + J dann Alt + R |
+  wechselt zum IRC raw Buffer +
+  `/server raw`
+
+| Alt + J dann Alt + S |
+  wechselt zum IRC Server Buffer +
+  `/server jump`
+
+| Alt + Ziffer (0-9) |
+  wechselt zum Buffer mit der Nummer (0 = 10) +
+  `/buffer *N`
+
+| Alt + J dann Ziffern (01-99) |
+  wechselt zum Buffer mit der Nummer +
+  `/buffer NN`
+
+| Alt + N |
+  springe zur nächsten Highlight Nachricht +
+  `/window scroll_next_highlight`
+
+| Alt + P |
+  springe zur vorherigen Highlight Nachricht +
+  `/window scroll_previous_highlight`
+
+| Alt + U |
+  springe zur ersten ungelesenen Zeile im Buffer +
+  `/input scroll_unread`
+
+| Alt + W dann Alt + Pfeiltaste |
+  wechselt zum Fenster durch Richtungsanweisung +
+  `/window up` +
+  `/window down` +
+  `/window left` +
+  `/window right`
+
+| Alt + Z |
+  Zoom für aktuelles Fenster (nochmals Alt + Z: stellt die vorherigen Einstellungen wieder her) +
+  `/window zoom`
+
+| Alt + < |
+  wechselt zum vorherigen Buffer der letzten aufgerufenen Buffer +
+  `/input jump_previously_visited_buffer`
+
+| Alt + > |
+  wechselt zum nächsten Buffer der letzten aufgerufenen Buffer +
+  `/input jump_next_visited_buffer`
+|========================================
+
+[[key_bindings_other]]
+andere Tastenbefehle
+^^^^^^^^^^^^^^^^^^^^
+
+[width="100%",cols="^.^4,.^15",options="header"]
+|========================================
+|Tasten| Beschreibung und Befehl
+
+| Alt + H |
+  lösche Hotliste (Aktivitätsanzeige für die Buffer) +
+  `/input hotlist_clear` +
+
+| Alt + = |
+  schaltet Filterfunktion an/aus +
+  `/filter toggle` +
+|========================================
+
+[[command_line]]
+Befehlszeile
+~~~~~~~~~~~~
+
+In der WeeChat Befehlszeile (am unteren Rand des Fensters) können Befehle ausgeführt oder
+ein Text in den Buffer geschickt werden.
+
+[[command_line_syntax]]
+Syntax
+^^^^^^
+
+Ein Befehl wird durch das Zeichen "/" eingeleitet, gefolgt von dem Namen des Befehls. In folgendem
+Beispiel werden alle Konfigurationsoptionen angezeigt:
+
+----------------------------------------
+/set
+----------------------------------------
+
+Jeder Text der nicht mit dem Zeichen "/" beginnt wird in den Buffer geschickt.
+In folgendem Beispiel wird der Text 'Hallo' in den aktuellen Buffer geschickt:
+
+----------------------------------------
+Hallo
+----------------------------------------
+
+Dennoch ist es möglich einen Text in den Buffer zu schicken der mit dem Zeichen "/" beginnt.
+Dazu muss ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu senden:
+
+----------------------------------------
+//set
+----------------------------------------
+
+[[command_line_colors]]
+Farben
+^^^^^^
+
+Für einige Erweiterungen wie z.B. die IRC Erweiterung können Farbcodes und Attribute für den Text
+gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C" gefolgt von einem der folgenden Zeichen
+genutzt werden:
+
+^Cb::
+    fett dargestellter Text
+
+^Ccxx::
+    Textfarbe `xx` (siehe Farbtabelle)
+
+^Ccxx,yy::
+    Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
+
+^Co::
+    deaktiviert Farben und Attribute
+
+^Cr::
+    Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
+
+^Cu::
+    Text wird mit unterstrich dargestellt
+
+[NOTE]
+Der selbe Befehl (ohne den Wert für ^Cc) sollte genutzt werden um die Farbcodes bzw. Attribute
+wieder zu deaktivieren.
+
+Farbtabelle für ^Cc:
+
+[width="35%",cols="^1m,3,3",options="header"]
+|========================================
+| Code | IRC           | WeeChat (curses)
+| 00   | weiß          | white
+| 01   | schwarz       | black
+| 02   | dunkelblau    | blue
+| 03   | dunkelgrün    | green
+| 04   | hellrot       | lightred
+| 05   | dunkelrot     | red
+| 06   | magenta       | magenta
+| 07   | orange        | brown
+| 08   | gelb          | yellow
+| 09   | hellgrün      | lightgreen
+| 10   | türkis        | cyan
+| 11   | hell türkis   | lightcyan
+| 12   | hellblau      | lightblue
+| 13   | hell magenta  | lightmagenta
+| 14   | grau          | default
+| 15   | hellgrau      | white
+|========================================
+
+Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
+und "an alle" wird rot-unterstrichen dargestellt.
+
+----------------------------------------
+^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
+----------------------------------------
+
+[[weechat_options]]
+WeeChat Optionen (weechat.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_options.txt[]
+
+[[curses_colors]]
+Farben für Curses GUI
+^^^^^^^^^^^^^^^^^^^^^
+
+[width="50%",cols="^3m,8"]
+|========================================
+| default      | Standard Terminalfarbe (transparent für Hintergrund)
+| black        | schwarz
+| darkgray     | dunkelgrau
+| red          | dunkelrot
+| lightred     | hellrot
+| green        | dunkelgrün
+| lightgreen   | hellgrün
+| brown        | braun
+| yellow       | gelb
+| blue         | dunkelblau
+| lightblue    | hellblau
+| magenta      | dunkel magenta
+| lightmagenta | hell magenta
+| cyan         | dunkel türkis
+| lightcyan    | hell türkis
+| white        | weiß
+|========================================
+
+[[weechat_commands]]
+WeeChat Befehle
+~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_commands.txt[]
+
+
+[[plugins]]
+Erweiterungen
+-------------
+
+Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
+sollten Sie die 'WeeChat Plugin API Reference' oder 'WeeChat Scripting Guide' lesen.
+
+[[plugins_in_weechat]]
+Erweiterungen in WeeChat
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Eine WeeChat Erweiterung ist eine dynamische Bibliothek (library), die in C geschrieben
+und kompiliert wurde. Unter GNU/Linux hat eine Erweiterung ".so" als Dateiendung, unter
+Windows ".dll".
+
+Erweiterungen die gefunden werden, werden beim Start von WeeChat automatisch geladen.
+Natürlich ist es möglich während einer laufenden Session von WeeChat Erweiterungen
+nachträglich zu laden oder zu entfernen.
+
+Es ist wichtig zwischen 'Erweiterung' und 'Skript' zu unterscheiden. Eine Erweiterung
+ist eine Binärdatei die kompiliert wurde und mit dem Befehl `/plugin` geladen wird.
+Dem gegenüber ist ein 'Skript' eine Textdatei die durch eine Erweiterung z.B. 'perl'
+mittels dem Befehl `/perl` geladen wird.
+
+Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
+mit dem Befehl alle installierten Erweiterungen aufgelistet werden. Wird eine Erweiterung
+entfernt hat dies Einfluss auf die von dieser Erweiterung geöffneten Buffer.
+Diese Buffer werden dann geschlossen.
+
+Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
+
+----------------------------------------
+/plugin load irc
+/plugin unload irc
+/plugin list
+----------------------------------------
+
+Standarderweiterungen:
+
+[width="50%",cols="^1,5",options="header"]
+|========================================
+| Erweit. | Beschreibung
+| alias   | definiert Alias für Befehle
+| aspell  | Rechtschreibprüfung für Befehlszeile
+| charset | Zeichensatz (de)-kodierung in Buffern
+| demo    | Demo Erweiterung (nicht standardmäßig kompiliert)
+| fifo    | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
+| irc     | IRC Chat-Protokoll
+| logger  | erstellt Protokolldateien von Buffern
+| perl    | Perl-Skript API
+| python  | Python-Skript API
+| ruby    | Ruby-Skript API
+| lua     | Lua-Skript API
+| tcl     | Tcl-Skript API
+| xfer    | Datentransfer und Direktchat
+|========================================
+
+[[alias_plugin]]
+Alias Erweiterung
+~~~~~~~~~~~~~~~~~
+
+Die Alias-Erweiterung erlaubt es für Befehle sogenannte Kurzbefehle (Alias) zu erstellen.
+
+[[alias_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/alias_commands.txt[]
+
+[[aspell_plugin]]
+Aspell Erweiterung
+~~~~~~~~~~~~~~~~~~
+
+Mit der ASpell Erweiterung findet eine Rechtschreibprüfung einzug in WeeChat.
+Dabei ist es möglich mehrere Wörterbücher in einem Buffer zu nutzen.
+
+[[aspell_options]]
+Optionen (aspell.conf)
+^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/aspell_options.txt[]
+
+[[aspell_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/aspell_commands.txt[]
+
+[[charset_plugin]]
+Charset Erweiterung
+~~~~~~~~~~~~~~~~~~~
+
+Die Charset Erweiterung übernimmt das de-/kodieren der Zeichensätze.
+
+Es existiert ein Standardzeichensatz zum de-/kodieren und spezielle Zeichensätze
+für Buffer (oder Gruppen von Buffern).
+
+Diese Erweiterung ist optional, sie wird aber empfohlen. Wenn diese Erweiterung
+nicht genutzt wird steht WeeChat lediglich UTF-8 zur Verfügung.
+
+Die Charset Erweiterung wird automatisch von WeeChat geladen. Um sicher zu gehen
+dass diese Erweiterung geladen wurde führen Sie folgenden Befehl aus:
+
+----------------------------------------
+/charset
+----------------------------------------
+
+Wird der Befehl nicht gefunden dann kann die Erweiterung mit dem nachfolgenden
+Befehl nachgeladen werden:
+
+----------------------------------------
+/plugin load charset
+----------------------------------------
+
+Wird die Erweiterung nicht geladen dann sollten Sie WeeChat nochmals mit allen
+Erweiterungen und der Charset Unterstützung kompilieren.
+
+Wird die Charset Erweiterung gestartet dann wird der Terminal und der interne
+Zeichensatz genutzt. Welcher Terminal Zeichensatz genutzt wird hängt davon ab
+welchen Zeichensatz Sie lokal nutzen. Intern wird UTF-8 genutzt.
+
+Beispiel:
+
+........................................
+charset: terminal: ISO-8859-15, internal: UTF-8
+........................................
+
+[[charset_options]]
+Optionen (charset.conf)
+^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/charset_options.txt[]
+
+[[charset_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/charset_commands.txt[]
+
+[[charset_set]]
+Zeichensatz auswählen
+^^^^^^^^^^^^^^^^^^^^^
+
+Um den Zeichensatz zum kodieren und dekodieren zu bestimmen wird der
+Befehl `/set` genutzt.
+
+Beispiel:
+
+----------------------------------------
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----------------------------------------
+
+Wenn der globale Zeichensatz zum dekodieren nicht gesetzt ist (dies tritt beim
+ersten Aufruf des Charset Erweiterung auf) dann wird automatisch der Zeichensatz
+genutzt der vom Terminal verwendet wird (sofern dieser nicht UTF-8 ist) oder
+der Standardzeichensatz 'ISO-8859-1'.
+
+Der Standardwert zum kodieren ist nicht gesetzt. Deshalb wird der interne Zeichensatz
+(UTF-8) genutzt.
+
+Um einen Zeichensatz für IRC Server einzustellen wird der Befehl `/charset` im Server
+Buffer ausgeführt. Wird nur der Zeichensatz als Argument übergeben wird dieser sowohl
+zum kodieren als auch dekodieren genutzt.
+
+Beispiel:
+
+----------------------------------------
+/charset ISO-8859-15
+----------------------------------------
+
+ist identisch mit den Befehlen:
+
+----------------------------------------
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----------------------------------------
+
+Um den Zeichensatz im einem IRC-Channel (oder in einem privaten Buffer) zu ändern
+wird der selbe Befehl im entsprechenden Buffer genutzt.
+
+Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl genutzt:
+
+----------------------------------------
+/set charset.*
+----------------------------------------
+
+[[charset_troubleshooting]]
+Fehlersuche
+^^^^^^^^^^^
+
+sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
+einen Blick in die 'WeeChat FAQ'.
+
+[[fifo_plugin]]
+Fifo Erweiterung
+~~~~~~~~~~~~~~~~
+
+Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
+schicken (dazu muss die Option "plugins.var.fifo.fifo" aktiviert sein (Standardmäßig
+ist diese Option aktiviert).
+
+Die FIFO pipe findet man in '~/.weechat/' und heisst 'weechat_fifo_xxxx'
+('xxxx' ist dabei die ID (PID) der laufenden WeeChat Session).
+
+Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
+
+........................................
+  plugin.buffer *hier Text oder Befehl
+  *hier Text oder Befehl
+........................................
+
+einige Beispiele:
+
+* Auf dem IRC Server freenode den eigenen Nick in "newnick" ändern:
+
+----------------------------------------
+$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* Den Text 'Hallo!' in den Channel #weechat schreiben:
+
+----------------------------------------
+$ echo 'irc.freenode.#weechat *Hallo!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* Einen Text im aktuellen Buffer ausgeben:
+
+----------------------------------------
+$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* sendet zwei Befehle um alle Perl-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
+  mit "\n" getrennt werden):
+
+----------------------------------------
+$ echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+Das nachfolgende Skript sendet einen Befehl an alle laufenden WeeChat Instanzen:
+
+[source,shell]
+----------------------------------------
+#!/bin/sh
+if [ $# -eq 1 ]; then
+    for fifo in ~/.weechat/weechat_fifo_*
+    do
+        echo -e "$1" >$fifo
+    done
+fi
+----------------------------------------
+
+Falls man das Skript "auto_weechat_command" benennt ruft man es wie folgt auf:
+
+----------------------------------------
+$ ./auto_weechat_command 'irc.freenode.#weechat *Hallo'
+----------------------------------------
+
+[[irc_plugin]]
+IRC Erweiterung
+~~~~~~~~~~~~~~~
+
+Die IRC Erweiterung ist konzipiert um mittels dem IRC Protokoll mit anderen Menschen zu chatten.
+
+Die Erweiterung ist Multi-Server fähig und verfügt über alle IRC Befehle, einschließlich DCC Chat
+und Datenübertragung (via xfer Erweiterung, siehe <<xfer_plugin,Xfer Erweiterung>>).
+
+[[irc_command_line_options]]
+Kommandozeilen Befehle
+^^^^^^^^^^^^^^^^^^^^^^
+
+Es ist möglich eine oder mehrere URL von IRC Servern zu übergeben:
+
+----------------------------------------
+irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]
+----------------------------------------
+
+Beispiel: Anmelden beim Server 'irc.freenode.net' mit dem Nick 'nono' und betreten
+der Channels '#weechat' und '#toto' (Standardport (6667) wird genutzt):
+
+----------------------------------------
+$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+----------------------------------------
+
+[[irc_options]]
+Optionen (irc.conf)
+^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/irc_options.txt[]
+
+[[irc_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/irc_commands.txt[]
+
+[[irc_ssl_certificates]]
+SSL Zertifikate
+^^^^^^^^^^^^^^^
+
+Wenn eine Verbindung mittels SSL zu einem IRC Server hergestellt wird dann überprüft
+WeeChat immer ob dieser Verbindung sicher ist.
+
+Einige Optionen dienen dazu eine SSL Verbindung zu nutzen:
+
+weechat.network.gnutls_ca_file::
+    Pfad zu einer Datei mit SSL Zertifikaten (Standardpfad: "%h/ssl/CAs.pem")
+
+irc.server.xxx.ssl_cert::
+    Datei mit den SSL Zertifikaten die genutzt werden um automatisch Ihren Nick
+    zu identifizieren (zum Beispiel CertFP auf oftc, siehe unten)
+
+irc.server.xxx.ssl_dhkey_size::
+    Größe des Schlüssels der genutzt werden soll beim Schlüsseltausch mittels
+    der Diffie-Hellman Methode (Standardwert: 2048)
+
+irc.server.xxx.ssl_verify::
+    überprüft ob der SSL Verbindung uneingeschränkt vertraut werden kann (Standardwert: AN)
+
+[NOTE]
+Die Option "ssl_verify" ist Vorgabe mäßig immer eingeschaltet. Das gewährleistet dass
+die Verifizierung sehr streng genommen wird und dadurch vielleicht versagt. Auch wenn
+die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
+
+[[irc_connect_oftc_with_certificate]]
+erstes Beispiel: Verbindung zu oftc und Überprüfung der Zertifikate
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Importieren Sie die Zertifikate in einer Shell:
+
+----------------------------------------
+$ mkdir ~/.weechat/ssl
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+----------------------------------------
+
+Hinweis: es ist möglich mehrere Zertifikate in der Datei CAs.pem zu halten.
+
+* In WeeChat startet man nun eine Verbindung zum "oftc" Server (der vorher angelegt
+  werden musste):
+
+----------------------------------------
+/connect oftc
+----------------------------------------
+
+[[irc_connect_oftc_with_certfp]]
+zweites Beispiel: Verbindung zu oftc mittels CertFP
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Erstellen Sie ein Zertifikate in der Shell:
+
+----------------------------------------
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
+$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+----------------------------------------
+
+* In WeeChat startet man nun eine Verbindung zum "oftc" Server (der vorher angelegt
+  werden musste):
+
+----------------------------------------
+/set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----------------------------------------
+
+Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/NickServ/CertFP
+
+[[irc_smart_filter_join_part_quit]]
+einfacher Filter für join/part/quit Nachrichten
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Es gibt einen einfachen Filter für join/part/quit Nachrichten falls ein Nick für
+eine vorgegebene Zeit in einem Channel inaktiv gewesen ist.
+
+Diese Funktion ist passe aktiviert aber Sie müssen einen Filter erstellen damit
+solche Nachrichten im Buffer unterdrückt werden. Ein Beispiel:
+
+----------------------------------------
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
+
+Dabei ist es natürlich möglich den Filter in der Form einzurichten dass er nur
+für einen Channel Gültigkeit besitzt oder aber für mehrere Channels die mit dem
+selben Namen beginnen (siehe `/help filter`):
+
+----------------------------------------
+/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+----------------------------------------
+
+Sie können auch nur join oder part/quit Nachrichten unterdrücken:
+
+----------------------------------------
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----------------------------------------
+
+Zusätzlich kann auch eine Verzögerung (in Minuten) eingestellt werden:
+
+----------------------------------------
+/set irc.look.smart_filter_delay 5
+----------------------------------------
+
+Falls ein Nick in den letzten fünf Minuten nicht aktiv gewesen ist werden seine
+join und/oder part/quit Nachrichten im Channel unterdrückt.
+
+[[irc_ctcp_replies]]
+CTCP Antworten
+^^^^^^^^^^^^^^
+
+Sie haben die Möglichkeit CTCP Antworten anzupassen oder aber bestimmte CTCP
+Anfragen zu sperren (es wird nicht darauf geantwortet).
+
+Beispiel: Um eine Antwort auf die CTCP Anfrage "VERSION" anzupassen nutzen Sie
+folgenden Befehl:
+
+----------------------------------------
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----------------------------------------
+
+Wenn Sie die Anfrage CTCP "VERSION" blockieren möchten (es wird nicht darauf
+geantwortet) dann löschen Sie einfach den Rückgabe-String:
+
+----------------------------------------
+/set irc.ctcp.version ""
+----------------------------------------
+
+Selbst bisher unbekannte CTCP Anfragen können beantwortet werden. Nehmen wir
+zum Beispiel die Anfrage CTCP "BLABLA":
+
+----------------------------------------
+/set irc.ctcp.blabla "Dies ist meine Antwort auf CTCP BLABLA"
+----------------------------------------
+
+Auch kann man CTCP Antworten für jeden einzelnen Server anpassen. Dazu muss
+man lediglich den internen Servernamen vor die CTCP Anfrage setzen:
+
+----------------------------------------
+/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+----------------------------------------
+
+Sollen die CTCP Antworten wieder auf die Standardeinstellungen zurück gesetzt werden
+dann müssen Sie lediglich die Option löschen:
+
+----------------------------------------
+/unset irc.ctcp.version
+----------------------------------------
+
+Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
+mit dem entsprechenden Wert ersetzt:
+
+[width="100%",cols="^2l,4,8l",options="header"]
+|========================================
+| Platzhalter  | Beschreibung                | Wert/Beispiel
+| $clientinfo  | Liste der CTCP Antworten    | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat Version             | 0.3.0
+| $compilation | Datum der Kompilierung      | Sep 13 2009
+| $osinfo      | Info über das genutzte OS   | Linux 2.6.31 / i686
+| $site        | WeeChat Seite               | http://www.weechat.org
+| $download    | WeeChat, download Seite     | http://www.weechat.org/download
+| $time        | aktuelle Uhrzeit/Datum      | Sun Sep 13 15:48:31 2009
+| $username    | Username beim IRC Server    | Nick
+| $realname    | Realname beim IRC Server    | mein Name
+|========================================
+
+Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
+
+[width="100%",cols="^2,4l,8l",options="header"]
+|========================================
+| CTCP         | Antwortformat                   | Beispiel
+| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER       | WeeChat $version                | WeeChat 0.3.0
+| SOURCE       | $download                       | http://www.weechat.org/download
+| TIME         | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO     | $username ($realname)           | Nick (mein Name)
+| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+|========================================
+
+[[irc_target_buffer]]
+Zielbuffer für IRC Nachrichten
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sie können einen Zielbuffer einstellen in dem IRC Nachrichten dargestellt werden sollen.
+Dazu dienen die Optionen `irc.msgbuffer.*`.
+
+Für einige IRC Nachrichten (siehe unten) können zusätzliche Werte angepasst werden:
+
+current::
+    aktueller Buffer (falls es ein IRC Buffer ist, ansonsten im entsprechenden Server Buffer)
+
+private::
+    privaten Buffer, oder im aktuellen/Server Buffer falls nicht vorhanden (gemäß der Einstellung
+    in der Option 'irc.look.msgbuffer_fallback')
+
+weechat::
+    WeeChat "core" Buffer
+
+Vorgegeben ist der Server-Buffer falls keine Option ausgewählt wurde.
+
+Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
+
+[width="50%",cols="^1m,^1m,3",options="header"]
+|========================================
+|Nachricht| alias  | Beschreibung
+| invite  |        | Einladung in einen Channel
+| notice  |        | Mitteilung
+| wallops |        | wallops
+| 221     |        | User mode string
+| 275     | whois  | whois (sichere Verbindung)
+| 301     | whois  | whois (abwesend)
+| 303     |        | ison
+| 305     | unaway | nicht abwesend
+| 306     | away   | abwesend
+| 307     | whois  | whois (registrierter Nick)
+| 310     | whois  | whois (Hilfe Modus)
+| 311     | whois  | whois (User)
+| 312     | whois  | whois (Server)
+| 313     | whois  | whois (Operator)
+| 314     | whowas | whowas
+| 315     | who    | who (Ende)
+| 317     | whois  | whois (inaktiv)
+| 318     | whois  | whois (ende)
+| 319     | whois  | whois (Channels)
+| 320     | whois  | whois (User identifizieren)
+| 321     | list   | list (Start)
+| 322     | list   | list (Channel)
+| 323     | list   | list (Ende)
+| 326     | whois  | whois (hat oper privs)
+| 327     | whois  | whois (Host)
+| 330     | whois  | whois (eingelogged als)
+| 335     | whois  | whois (ist ein Bot auf)
+| 338     | whois  | whois (Host)
+| 341     |        | inviting
+| 344     | reop   | channel reop
+| 345     | reop   | channel reop (Ende)
+| 351     |        | Server Version
+| 352     | who    | who
+| 369     | whowas | whowas (Ende)
+| 378     | whois  | whois (Verbindung von)
+| 379     | whois  | whois (genutzte Modi)
+| 432     |        | fehlerhafter Nickname
+| 433     |        | Nickname wird schon verwendet
+| 438     |        | nicht autorisiert um Nicknamen zu ändern
+| 671     | whois  | whois (sichere Verbindung)
+| 901     |        | Sie sind nun eingelogged
+|========================================
+
+andere nummerische Befehle können angepasst werden.
+
+Den IRC Nachrichten kann der Servername vorangestellt sein um zu spezifizieren
+von welchem IRC Server die Nachricht gekommen ist. Zum Beispiel: `freenode.whois`.
+
+einige Beispiele:
+
+* gibt die Antwort von `/whois` im privaten Buffer aus:
+
+----------------------------------------
+/set irc.msgbuffer.whois private
+----------------------------------------
+
+* stellt die Ausgabe von whois wieder auf Standardbuffer zurück (Server Buffer):
+
+----------------------------------------
+/unset irc.msgbuffer.whois
+----------------------------------------
+
+* zeigt Einladungen im aktuellen Buffer an, nur für den "freenode" Server:
+
+----------------------------------------
+/set irc.msgbuffer.freenode.invite current
+----------------------------------------
+
+* die Nachricht "303" (ison) wird im WeeChat "core" Buffer angezeigt:
+
+----------------------------------------
+/set irc.msgbuffer.303 weechat
+----------------------------------------
+
+[[logger_plugin]]
+Logger Erweiterung
+~~~~~~~~~~~~~~~~~~
+
+Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
+Dabei kann man über Optionen einfluß darauf nehmen was und wie es gesichert
+werden soll.
+
+[[logger_options]]
+Optionen (logger.conf)
+^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/logger_options.txt[]
+
+[[logger_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/logger_commands.txt[]
+
+[[logger_log_levels]]
+Log Levels
+^^^^^^^^^^
+
+Die Protokollierung wird durch Level für jeden Buffer sichergestellt. Der
+Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer
+angezeigt werden protokolliert).
+Der Grad einer Protokollierung kann separat für jeden einzelnen Buffer
+oder aber für eine Anzahl von Buffern festgelegt werden.
+
+Mögliche Level sind hierbei 0 bis 9. Null bedeutet, es findet keine Protokollierung
+statt und neun dass alle Nachrichten protokolliert werden.
+
+Erweiterungen nutzen unterschiedliche Level um Nachrichten anzuzeigen.
+Die IRC Erweiterung nutzt folgende Level:
+
+* Level 1: Nachrichten eines Users (im Channel oder privat)
+* Level 2: Nick wurde geändert (der eigene oder von einer anderen Person)
+* Level 3: jedwede Server Nachricht (ausgenommen join/part/quit)
+* Level 4: Server Nachrichten join/part/quit
+
+Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3" 
+wird Weechat alle Nachrichten protokollieren, ausgenommen join/part/quit
+Nachrichten.
+
+weitere Beispiele:
+
+* Level 3 für IRC Channel #weechat nutzen:
+
+----------------------------------------
+/set logger.level.irc.freenode.#weechat 3
+----------------------------------------
+
+* Level 3 für freenode Server Buffer nutzen:
+
+----------------------------------------
+/set logger.level.irc.server.freenode 3
+----------------------------------------
+
+* Level 3 für alle Channels auf dem Server freenode nutzen:
+
+----------------------------------------
+/set logger.level.irc.freenode 3
+----------------------------------------
+
+* Level 2 für alle IRC Buffers nutzen:
+
+----------------------------------------
+/set logger.level.irc 2
+----------------------------------------
+
+[[logger_filenames_masks]]
+Dateinamenmaske
+^^^^^^^^^^^^^^^
+
+Es ist möglich eine Dateinamenmaske für jeden Buffer zu erstellen und diese Maske
+mit lokalen Buffervariablen zu füllen. Um zu sehen welche lokalen Variabel es gibt:
+
+----------------------------------------
+/buffer localvar
+----------------------------------------
+
+Möchten Sie zum Beispiel ein Verzeichnis für jeden IRC Server in dem eine Datei
+für jeden Channel erstellt wird nutzen Sie:
+
+----------------------------------------
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----------------------------------------
+
+In einer Baumstruktur sieht es dann wie folgt aus:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- irc/
+            |--- freenode/
+            |       freenode.weechatlog
+            |       #weechat.weechatlog
+            |       #mychan.weechatlog
+            |--- oftc/
+            |       oftc.weechatlog
+            |       #chan1.weechatlog
+            |       #chan2.weechatlog
+........................................
+
+[[scripts_plugins]]
+Skripten Erweiterungen
+~~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat unterstützt fünf Erweiterungen für Skripten: Perl, Python, Ruby, Lua und Tcl.
+Diese Erweiterungen können für die jeweilige Sprache die Skripten laden, ausführen und
+entfernen.
+
+Sollten Sie Interesse daran haben wie man Skripten schreibt dann lesen Sie bitte
+die 'WeeChat Scripting Guide'.
+
+Skripten für WeeChat finden Sie auf: http://www.weechat.org/scripts
+
+[[perl_commands]]
+Perl Befehle
+^^^^^^^^^^^^
+
+include::autogen/user/perl_commands.txt[]
+
+[[python_commands]]
+Python Befehle
+^^^^^^^^^^^^^^
+
+include::autogen/user/python_commands.txt[]
+
+[[ruby_commands]]
+Ruby Befehle
+^^^^^^^^^^^^
+
+include::autogen/user/ruby_commands.txt[]
+
+[[lua_commands]]
+Lua Befehle
+^^^^^^^^^^^
+
+include::autogen/user/lua_commands.txt[]
+
+[[tcl_commands]]
+Tcl Befehle
+^^^^^^^^^^^
+
+include::autogen/user/tcl_commands.txt[]
+
+[[xfer_plugin]]
+Xfer Erweiterung
+~~~~~~~~~~~~~~~~
+
+Mit der Xfer Erweiterung kann man:
+
+* einen direkten Chat nutzen (zwischen zwei Hosts, ohne Server): zum Beispiel "DCC Chat"
+  mittels IRC Erweiterung
+* Datentransfer, zum Beispiel "DCC" mittels IRC Erweiterung
+
+[[xfer_options]]
+Optionen (xfer.conf)
+^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/xfer_options.txt[]
+
+[[xfer_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/xfer_commands.txt[]
+
+
+[[authors]]
+Autoren
+-------
+
+[[developers]]
+Entwickler
+~~~~~~~~~~
+
+FlashCode (Sébastien Helleu)::
+    Hauptentwickler
+
+[[contributors]]
+Liste der Beitragenden
+~~~~~~~~~~~~~~~~~~~~~~
+
+Kolter (Emmanuel Bouthenot)::
+    Debian Paket Ersteller
+
+Ptitlouis::
+    Debian Paket Ersteller (alt)
+
+Jiri Golembiovsky::
+    tschechische Übersetzung, Patches
+
+soltys::
+    polnische Übersetzung
+
+Nils Görs::
+rettub::
+Frank Zacharias::
+    deutsche Übersetzung
+
+Pavel Shevchuk::
+    russische Übersetzung
+
+m4v::
+    spanische Übersetzung
+
+Voroskoi::
+    ungarische Übersetzung
+
+Marco Paolone::
+    italienische Übersetzung
+
+Dmitry Kobylin::
+    tcl Erweiterung
+
+Rudolf Polzer::
+Jim Ramsay::
+Pistos::
+Gwenn::
+Dominik Honnef::
+    Patches
+
+Odin::
+    SuSE RPM
+
+
+[[support]]
+Unterstützung
+-------------
+
+Bevor Sie um Unterstützung bitten lesen Sie bitte die Dokumentation und die FAQ
+von WeeChat durch (mit Dokumentation ist dieses Dokument gemeint. Falls Sie nicht
+alles gelesen haben sollten und trotzdem diese Zeilen lesen, dann beginnen Sie
+bitte noch mal von vorne!).
+
+Wie erhalte ich Unterstützung:
+
+* IRC: Server 'irc.freenode.net', Channels '#weechat' (englisch) und
+  '#weechat-fr' (französisch)
+* WeeChat Forum: http://forums.flashtux.org/
+* Mailing Liste:
+** eintragen: http://mail.nongnu.org/mailman/listinfo/weechat-support
+** sende email an: weechat-support@nongnu.org
+** Archiv: http://mail.nongnu.org/archive/html/weechat-support

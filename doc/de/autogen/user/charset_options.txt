@@ -1,0 +1,10 @@
+* *charset.default.decode*
+** Beschreibung: globaler Zeichensatz zum dekodieren
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "iso-8859-1")
+
+* *charset.default.encode*
+** Beschreibung: globaler Zeichensatz zum kodieren
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+

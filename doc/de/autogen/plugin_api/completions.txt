@@ -1,0 +1,101 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|========================================
+| Erweiterung | Name | Beschreibung
+
+| alias | alias | Liste der Alias
+
+| aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für aspell
+
+| irc | irc_channel | Aktueller IRC-Channel
+
+| irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Channels
+
+| irc | irc_channel_topic | Topic des aktuellen IRC-Channels
+
+| irc | irc_channels | Channels auf allen IRC Servern
+
+| irc | irc_ignores_numbers | Anzahl für festgelegte /ignores
+
+| irc | irc_msg_part | Standardnachricht beim Verlassen (/part) eines IRC-Channels
+
+| irc | irc_privates | Private auf allen IRC Servern
+
+| irc | irc_server | aktueller IRC-Server
+
+| irc | irc_server_channels | Channels des derzeitigen IRC-Server
+
+| irc | irc_server_nick | Nick beim derzeitigen IRC-Server
+
+| irc | irc_server_nicks | Nicks in allen Channels, auf dem aktuellen IRC-Server
+
+| irc | irc_server_privates | Privat auf aktuellem IRC Server
+
+| irc | irc_servers | IRC-Server (interne Namen)
+
+| irc | nick | Liste der Nicks im aktuellen Channel
+
+| lua | lua_script | Liste der Skripten:
+
+| perl | perl_script | Liste der Skripten:
+
+| python | python_script | Liste der Skripten:
+
+| relay | relay_free_port | Erster freier Port für Relay-Erweiterung
+
+| relay | relay_protocol_name | Alle möglichen Protokoll.Namen der Relay-Erweiterung
+
+| relay | relay_relays | Protokoll.Name des aktuellen Relays von der Relay-Erweiterung
+
+| ruby | ruby_script | Liste der Skripten:
+
+| tcl | tcl_script | Liste der Skripten:
+
+| weechat | bars_names | Namen der Infobars
+
+| weechat | bars_options | Optionen für Infobars
+
+| weechat | buffer_properties_get | Eigenschaften die für den Buffer gelesen werden können
+
+| weechat | buffer_properties_set | Eigenschaften die für den Buffer gesetzt werden können
+
+| weechat | buffers_names | Auflistung der vorhandenen Buffer
+
+| weechat | buffers_numbers | Anzahl der Buffer
+
+| weechat | buffers_plugins_names | Liste der Buffer (inkl. der Erweiterungen)
+
+| weechat | commands | Befehle (WeeChat und Erweiterungen)
+
+| weechat | config_files | Konfigurationsdateien
+
+| weechat | config_option_values | Werte für eine Konfigurationsoption
+
+| weechat | config_options | Konfigurationsoptionen
+
+| weechat | filename | Dateinamen
+
+| weechat | filters_names | Liste der Filter
+
+| weechat | infolists | Namem der ge-hook-ten Infolisten
+
+| weechat | infos | Namen der ge-hook-ten Infos
+
+| weechat | keys_codes | Tastaturcodes
+
+| weechat | keys_codes_for_reset | Tastenbelegungen die zurückgesetzt werden können (hinzugefügte/verändert/gelöschte Tastenbelegungen)
+
+| weechat | nicks | Nicks in Nickliste des aktuellen Buffers
+
+| weechat | plugins_commands | Befehle, definiert durch Erweiterungen
+
+| weechat | plugins_names | Liste der Erweiterungen
+
+| weechat | proxies_names | Namen der Proxies
+
+| weechat | proxies_options | Optionen für Proxies
+
+| weechat | weechat_commands | WeeChat Befehle
+
+| xfer | nick | Nicks vom DCC Chat
+
+|========================================

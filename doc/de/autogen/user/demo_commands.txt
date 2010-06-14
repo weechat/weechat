@@ -1,0 +1,42 @@
+&bull; *`/demo_buffer`* `Name`::
+
+........................................
+  Öffne einen neuen Buffer
+........................................
+
+&bull; *`/demo_buffer_set`* `Eigenschaft eines Wertes`::
+
+........................................
+  Bestimme eine Eigenschaft des Buffers
+........................................
+
+&bull; *`/demo_info`* `[Info [Argumente]]`::
+
+........................................
+  Hole eine Info und zeige sie an
+
+       Info: Information die dargestellt werden soll
+  Argumente: optionale Argumente für Info
+  
+  Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen angezeigt
+........................................
+
+&bull; *`/demo_infolist`* `[Infolist [Argumente]]`::
+
+........................................
+  Hole eine Infolist und zeige sie an
+
+   Infolist: Infoliste die dargestellt werden soll
+  Argumente: optionale Argumente für Infoliste
+  
+  Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen der Infoliste angezeigt
+........................................
+
+&bull; *`/demo_printf`* `[Text]`::
+
+........................................
+  Gibt ein paar Nachrichten im aktuellen Buffer aus
+
+  Text: schreibe diesen Text
+........................................
+
