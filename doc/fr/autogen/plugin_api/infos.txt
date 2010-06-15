@@ -12,7 +12,9 @@
 
 | irc | irc_nick | retourne le pseudo utilisé actuellement sur un serveur | nom de serveur
 
-| irc | irc_nick_color | retourne la couleur du pseudo | pseudo
+| irc | irc_nick_color | retourne le code couleur du pseudo | pseudo
+
+| irc | irc_nick_color_name | retourne le nom de la couleur du pseudo | pseudo
 
 | irc | irc_nick_from_host | retourne le pseudo à partir d'un host IRC | host IRC (comme `:pseudo!nom@serveur.com`)
 

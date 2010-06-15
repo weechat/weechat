@@ -90,7 +90,8 @@ irc_nick_is_nick (const char *string)
 }
 
 /*
- * irc_nick_find_color: find a color for a nick (according to nick letters)
+ * irc_nick_find_color: find a color code for a nick
+ *                      (according to nick letters)
  */
 
 const char *
@@ -114,6 +115,34 @@ irc_nick_find_color (const char *nickname)
               "chat_nick_color%02d", color + 1);
     
     return weechat_color (color_name);
+}
+
+/*
+ * irc_nick_find_color_name: find a color name for a nick
+ *                           (according to nick letters)
+ */
+
+const char *
+irc_nick_find_color_name (const char *nickname)
+{
+    int color;
+    char color_name[128];
+    const char *ptr_nick;
+    
+    color = 0;
+    ptr_nick = nickname;
+    while (ptr_nick && ptr_nick[0])
+    {
+        color += weechat_utf8_char_int (ptr_nick);
+        ptr_nick = weechat_utf8_next_char (ptr_nick);
+    }
+    color = (color %
+             weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
+    
+    snprintf (color_name, sizeof (color_name),
+              "weechat.color.chat_nick_color%02d", color + 1);
+    
+    return weechat_config_color (weechat_config_get (color_name));
 }
 
 /*

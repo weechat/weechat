@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-14 09:57+0200\n"
+"POT-Creation-Date: 2010-06-15 13:26+0200\n"
 "PO-Revision-Date: 2010-06-10 17:36+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4811,7 +4811,12 @@ msgstr "ottiene nick dall'host IRC"
 msgid "IRC host (like `:nick!name@server.com`)"
 msgstr "host IRC (come `:nick!nome@server.com`)"
 
-msgid "get nick color"
+#, fuzzy
+msgid "get nick color code"
+msgstr "riceve colore del nick"
+
+#, fuzzy
+msgid "get nick color name"
 msgstr "riceve colore del nick"
 
 msgid "get buffer pointer for an IRC server/channel/nick"

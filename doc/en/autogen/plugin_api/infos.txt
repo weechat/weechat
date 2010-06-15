@@ -12,7 +12,9 @@
 
 | irc | irc_nick | get current nick on a server | server name
 
-| irc | irc_nick_color | get nick color | nickname
+| irc | irc_nick_color | get nick color code | nickname
+
+| irc | irc_nick_color_name | get nick color name | nickname
 
 | irc | irc_nick_from_host | get nick from IRC host | IRC host (like `:nick!name@server.com`)
 
