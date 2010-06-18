@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 FlashCode <flashcode@flashtux.org>
-v0.3.3-dev, 2010-06-11
+v0.3.3-dev, 2010-06-18
 
 
 Version 0.3.3 (under dev!)
@@ -40,6 +40,7 @@ Version 0.3.3 (under dev!)
 * irc: try other nick when connecting to server and receiving message 437
   (nick unavailable)
 * irc: set buffer local variable "away" when opening new channel (bug #29618)
+* fifo: fix bug with fifo pipe when setting fifo option to "on"
 
 Version 0.3.2 (2010-04-18)
 --------------------------

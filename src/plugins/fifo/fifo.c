@@ -58,6 +58,9 @@ char *fifo_filename;
 char *fifo_unterminated = NULL;
 
 
+int fifo_read();
+
+
 /*
  * fifo_remove_old_pipes: remove old fifo pipes in directory
  */
@@ -111,17 +114,13 @@ fifo_remove_old_pipes ()
 
 /*
  * fifo_create: create FIFO pipe for remote control
- *              return: 1 if ok
- *                      0 if error
  */
 
-int
+void
 fifo_create ()
 {
-    int rc, filename_length;
+    int filename_length;
     const char *fifo_option, *weechat_home;
-    
-    rc = 0;
     
     fifo_option = weechat_config_get_plugin ("fifo");
     if (!fifo_option)
@@ -166,7 +165,8 @@ fifo_create ()
                                         _("%s: pipe opened"),
                                         FIFO_PLUGIN_NAME);
                     }
-                    rc = 1;
+                    fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
+                                                    &fifo_read, NULL);
                 }
                 else
                     weechat_printf (NULL,
@@ -183,8 +183,6 @@ fifo_create ()
                                 fifo_filename);
         }
     }
-    
-    return rc;
 }
 
 /*
@@ -438,9 +436,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     fifo_quiet = 1;
     
-    if (fifo_create ())
-        fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
-                                        &fifo_read, NULL);
+    fifo_create ();
     
     weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
     
