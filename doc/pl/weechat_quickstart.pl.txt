@@ -1,6 +1,6 @@
 WeeChat szybki start
 ====================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[start]]

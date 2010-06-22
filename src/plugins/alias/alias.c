@@ -1,26 +1,26 @@
 /*
- * Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
- * See README for License detail, AUTHORS for developers list.
+ * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * WeeChat is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /*
  * alias.c: alias plugin for WeeChat: create "alias" commands to run other
  *          commands
  */
-
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,7 +34,7 @@
 
 WEECHAT_PLUGIN_NAME(ALIAS_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Alias plugin for WeeChat");
-WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 

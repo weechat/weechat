@@ -288,52 +288,52 @@ weechat (0.0.9-1) unstable; urgency=low
 
   * WeeChat version 0.0.9, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 01 Jan 2005 13:00:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 01 Jan 2005 13:00:00 +0200
 
 weechat (0.0.8-1) unstable; urgency=low
 
   * WeeChat version 0.0.8, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
 
 weechat (0.0.7-1) unstable; urgency=low
 
   * WeeChat version 0.0.7, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 08 Aug 2004 21:00:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 08 Aug 2004 21:00:00 +0200
 
 weechat (0.0.6-1) unstable; urgency=low
 
   * WeeChat version 0.0.6, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 05 Jun 2004 11:30:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 05 Jun 2004 11:30:00 +0200
 
 weechat (0.0.5-1) unstable; urgency=low
 
   * WeeChat version 0.0.5, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 07 Feb 2004 20:30:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 07 Feb 2004 20:30:00 +0200
 
 weechat (0.0.4-1) unstable; urgency=low
 
   * WeeChat version 0.0.4, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Thu, 01 Jan 2004 13:00:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Thu, 01 Jan 2004 13:00:00 +0200
 
 weechat (0.0.3-1) unstable; urgency=low
 
   * WeeChat version 0.0.3, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Mon, 03 Nov 2003 23:15:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Mon, 03 Nov 2003 23:15:00 +0200
 
 weechat (0.0.2-1) unstable; urgency=low
 
   * WeeChat version 0.0.2, see ChangeLog for detail.
   
- -- FlashCode <flashcode@flashtux.org>  Sun, 05 Oct 2003 12:00:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sun, 05 Oct 2003 12:00:00 +0200
 
 weechat (0.0.1-1) unstable; urgency=low
 
   * First version.
   
- -- FlashCode <flashcode@flashtux.org>  Sat, 27 Sep 2003 12:00:00 +0200
+ -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 27 Sep 2003 12:00:00 +0200

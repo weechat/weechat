@@ -1,15 +1,28 @@
-# WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
-# This file is distributed under the same license as the WeeChat package.
 #
-# Roberto González Cardenete <robert.glez@gmail.com>, 2009.
-# Elián Hanisch <lambdae2@gmail.com>, 2009-2010.
+# Copyright (C) 2009 Roberto González Cardenete <robert.glez@gmail.com>
+# Copyright (C) 2009-2010 Elián Hanisch <lambdae2@gmail.com>
+#
+# This file is part of WeeChat, the extensible chat client.
+#
+# WeeChat is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# WeeChat is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-15 13:26+0200\n"
-"PO-Revision-Date: 2010-06-08 14:19+0200\n"
+"POT-Creation-Date: 2010-06-22 19:24+0200\n"
+"PO-Revision-Date: 2010-06-20 21:24+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -21,11 +34,11 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"%s (c) Copyright 2003-2010, compiled on %s %s\n"
-"Developed by FlashCode <flashcode@flashtux.org> - %s"
+"%s Copyright (C) 2003-2010, compiled on %s %s\n"
+"Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s (c) Copyright 2003-2010, compilado en %s %s\n"
-"Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
+"%s Copyright (C) 2003-2010, compilado en %s %s\n"
+"Desarrollado por Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"

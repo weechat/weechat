@@ -1,6 +1,6 @@
 WeeChat Scripting Guide
 =======================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 This manual documents WeeChat chat client, it is part of WeeChat.

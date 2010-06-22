@@ -1,6 +1,6 @@
 Referenze API per Plugin di WeeChat
 ===================================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 Questo manuale documenta il client di chat WeeChat, ed è parte
@@ -159,7 +159,7 @@ comando due volte (ok, non sarà molto utile, ma è solo un esempio!):
 
 WEECHAT_PLUGIN_NAME("double");
 WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
-WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION("0.1");
 WEECHAT_PLUGIN_LICENSE("GPL3");
 

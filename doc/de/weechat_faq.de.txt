@@ -1,6 +1,6 @@
 WeeChat FAQ (häufig gestellte Fragen)
 =====================================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[general]]

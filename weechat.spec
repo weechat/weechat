@@ -1,17 +1,23 @@
-# Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
 #
-# This program is free software; you can redistribute it and/or modify
+# Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
+#
+# This file is part of WeeChat, the extensible chat client.
+#
+# WeeChat is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# WeeChat is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
 #
 # This RPM spec file is designed for SuSE
 #
@@ -30,7 +36,7 @@ Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires:  perl, python, ruby, lua, tcl, gcrypt, gnutls, ncurses
 License:   GPL
-Vendor:    FlashCode <flashcode@flashtux.org>
+Vendor:    Sebastien Helleu <flashcode@flashtux.org>
 Packager:  [Odin] <odin@dtdm.org>
 
 %description
@@ -67,61 +73,61 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
-* Sun Apr 18 2010 FlashCode <flashcode@flashtux.org> 0.3.2-1
+* Sun Apr 18 2010 Sebastien Helleu <flashcode@flashtux.org> 0.3.2-1
 - Released version 0.3.2
-* Sat Jan 23 2010 FlashCode <flashcode@flashtux.org> 0.3.1-1
+* Sat Jan 23 2010 Sebastien Helleu <flashcode@flashtux.org> 0.3.1-1
 - Released version 0.3.1
-* Sun Sep 06 2009 FlashCode <flashcode@flashtux.org> 0.3.0-1
+* Sun Sep 06 2009 Sebastien Helleu <flashcode@flashtux.org> 0.3.0-1
 - Released version 0.3.0
-* Thu Sep 06 2007 FlashCode <flashcode@flashtux.org> 0.2.6-1
+* Thu Sep 06 2007 Sebastien Helleu <flashcode@flashtux.org> 0.2.6-1
 - Released version 0.2.6
-* Thu Jun 07 2007 FlashCode <flashcode@flashtux.org> 0.2.5-1
+* Thu Jun 07 2007 Sebastien Helleu <flashcode@flashtux.org> 0.2.5-1
 - Released version 0.2.5
-* Thu Mar 29 2007 FlashCode <flashcode@flashtux.org> 0.2.4-1
+* Thu Mar 29 2007 Sebastien Helleu <flashcode@flashtux.org> 0.2.4-1
 - Released version 0.2.4
-* Wed Jan 10 2007 FlashCode <flashcode@flashtux.org> 0.2.3-1
+* Wed Jan 10 2007 Sebastien Helleu <flashcode@flashtux.org> 0.2.3-1
 - Released version 0.2.3
-* Sat Jan 06 2007 FlashCode <flashcode@flashtux.org> 0.2.2-1
+* Sat Jan 06 2007 Sebastien Helleu <flashcode@flashtux.org> 0.2.2-1
 - Released version 0.2.2
-* Sun Oct 01 2006 FlashCode <flashcode@flashtux.org> 0.2.1-1
+* Sun Oct 01 2006 Sebastien Helleu <flashcode@flashtux.org> 0.2.1-1
 - Released version 0.2.1
-* Sat Aug 19 2006 FlashCode <flashcode@flashtux.org> 0.2.0-1
+* Sat Aug 19 2006 Sebastien Helleu <flashcode@flashtux.org> 0.2.0-1
 - Released version 0.2.0
-* Thu May 25 2006 FlashCode <flashcode@flashtux.org> 0.1.9-1
+* Thu May 25 2006 Sebastien Helleu <flashcode@flashtux.org> 0.1.9-1
 - Released version 0.1.9
-* Sat Mar 18 2006 FlashCode <flashcode@flashtux.org> 0.1.8-1
+* Sat Mar 18 2006 Sebastien Helleu <flashcode@flashtux.org> 0.1.8-1
 - Released version 0.1.8
-* Sat Jan 14 2006 FlashCode <flashcode@flashtux.org> 0.1.7-1
+* Sat Jan 14 2006 Sebastien Helleu <flashcode@flashtux.org> 0.1.7-1
 - Released version 0.1.7
-* Fri Nov 11 2005 FlashCode <flashcode@flashtux.org> 0.1.6-1
+* Fri Nov 11 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.6-1
 - Released version 0.1.6
-* Sat Sep 24 2005 FlashCode <flashcode@flashtux.org> 0.1.5-1
+* Sat Sep 24 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.5-1
 - Released version 0.1.5
-* Sat Jul 30 2005 FlashCode <flashcode@flashtux.org> 0.1.4-1
+* Sat Jul 30 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.4-1
 - Released version 0.1.4
-* Sat Jul 02 2005 FlashCode <flashcode@flashtux.org> 0.1.3-1
+* Sat Jul 02 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.3-1
 - Released version 0.1.3
-* Sat May 21 2005 FlashCode <flashcode@flashtux.org> 0.1.2-1
+* Sat May 21 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.2-1
 - Released version 0.1.2
-* Sat Mar 20 2005 FlashCode <flashcode@flashtux.org> 0.1.1-1
+* Sat Mar 20 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.1-1
 - Released version 0.1.1
-* Sat Feb 12 2005 FlashCode <flashcode@flashtux.org> 0.1.0-1
+* Sat Feb 12 2005 Sebastien Helleu <flashcode@flashtux.org> 0.1.0-1
 - Released version 0.1.0
-* Sat Jan 01 2005 FlashCode <flashcode@flashtux.org> 0.0.9-1
+* Sat Jan 01 2005 Sebastien Helleu <flashcode@flashtux.org> 0.0.9-1
 - Released version 0.0.9
-* Sat Oct 30 2004 FlashCode <flashcode@flashtux.org> 0.0.8-1
+* Sat Oct 30 2004 Sebastien Helleu <flashcode@flashtux.org> 0.0.8-1
 - Released version 0.0.8
-* Sat Aug 08 2004 FlashCode <flashcode@flashtux.org> 0.0.7-1
+* Sat Aug 08 2004 Sebastien Helleu <flashcode@flashtux.org> 0.0.7-1
 - Released version 0.0.7
-* Sat Jun 05 2004 FlashCode <flashcode@flashtux.org> 0.0.6-1
+* Sat Jun 05 2004 Sebastien Helleu <flashcode@flashtux.org> 0.0.6-1
 - Released version 0.0.6
-* Thu Feb 02 2004 FlashCode <flashcode@flashtux.org> 0.0.5-1
+* Thu Feb 02 2004 Sebastien Helleu <flashcode@flashtux.org> 0.0.5-1
 - Released version 0.0.5
-* Thu Jan 01 2004 FlashCode <flashcode@flashtux.org> 0.0.4-1
+* Thu Jan 01 2004 Sebastien Helleu <flashcode@flashtux.org> 0.0.4-1
 - Released version 0.0.4
-* Mon Nov 03 2003 FlashCode <flashcode@flashtux.org> 0.0.3-1
+* Mon Nov 03 2003 Sebastien Helleu <flashcode@flashtux.org> 0.0.3-1
 - Released version 0.0.3
-* Sun Oct 05 2003 FlashCode <flashcode@flashtux.org> 0.0.2-1
+* Sun Oct 05 2003 Sebastien Helleu <flashcode@flashtux.org> 0.0.2-1
 - Released version 0.0.2
-* Sat Sep 27 2003 FlashCode <flashcode@flashtux.org> 0.0.1-1
+* Sat Sep 27 2003 Sebastien Helleu <flashcode@flashtux.org> 0.0.1-1
 - Released version 0.0.1

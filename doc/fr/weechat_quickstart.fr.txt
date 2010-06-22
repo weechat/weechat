@@ -1,6 +1,6 @@
 Guide de Démarrage Rapide WeeChat
 =================================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[start]]

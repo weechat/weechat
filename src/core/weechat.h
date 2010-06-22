@@ -1,21 +1,22 @@
 /*
- * Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
- * See README for License detail, AUTHORS for developers list.
+ * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * WeeChat is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #ifndef __WEECHAT_H
 #define __WEECHAT_H 1
@@ -50,7 +51,7 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE   "(c) 2003-2010"
+#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2010"
 #define WEECHAT_WEBSITE          "http://www.weechat.org/"
 #define WEECHAT_WEBSITE_DOWNLOAD "http://www.weechat.org/download"
 
@@ -61,21 +62,21 @@
 /* license */
 
 #define WEECHAT_LICENSE_TEXT \
-    PACKAGE_STRING " (c) Copyright 2003-2010, compiled on " __DATE__ " " __TIME__ \
-    "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
-    "This program is free software; you can redistribute it and/or modify\n" \
+    "WeeChat " PACKAGE_VERSION " Copyright (C) 2003-2010, compiled on " __DATE__ " " __TIME__ \
+    "\nDeveloped by Sebastien Helleu <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
+    "WeeChat is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
     "the Free Software Foundation; either version 3 of the License, or\n" \
     "(at your option) any later version.\n" \
     "\n", \
     \
-    "This program is distributed in the hope that it will be useful,\n" \
+    "WeeChat is distributed in the hope that it will be useful,\n" \
     "but WITHOUT ANY WARRANTY; without even the implied warranty of\n" \
     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" \
     "GNU General Public License for more details.\n" \
     "\n" \
     "You should have received a copy of the GNU General Public License\n" \
-    "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n"
+    "along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.\n\n"
     
 /* directory separator, depending on OS */
 

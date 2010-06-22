@@ -1,6 +1,6 @@
 WeeChat Plugin API Reference
 ============================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 This manual documents WeeChat chat client, it is part of WeeChat.
@@ -153,7 +153,7 @@ very useful, but that's just an example!):
 
 WEECHAT_PLUGIN_NAME("double");
 WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
-WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION("0.1");
 WEECHAT_PLUGIN_LICENSE("GPL3");
 

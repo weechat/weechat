@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-15 13:26+0200\n"
+"POT-Creation-Date: 2010-06-22 19:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,8 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"%s (c) Copyright 2003-2010, compiled on %s %s\n"
-"Developed by FlashCode <flashcode@flashtux.org> - %s"
+"%s Copyright (C) 2003-2010, compiled on %s %s\n"
+"Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 
 #, c-format

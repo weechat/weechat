@@ -8,33 +8,33 @@
  * ##             WeeChat - Wee Enhanced Environment for Chat              ##
  * ##                 Fast, light, extensible chat client                  ##
  * ##                                                                      ##
- * ##                By FlashCode <flashcode@flashtux.org>                 ##
+ * ##             By Sebastien Helleu <flashcode@flashtux.org>             ##
  * ##                                                                      ##
  * ##                      http://www.weechat.org/                         ##
  * ##                                                                      ##
  * ##########################################################################
  *
- * Copyright (c) 2003-2010 by FlashCode <flashcode@flashtux.org>
- * See README for License detail, AUTHORS for developers list.
+ * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * WeeChat is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /*
  * weechat.c: core functions for WeeChat
  */
-
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -98,8 +98,8 @@ weechat_display_usage (char *exec_name)
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("%s (c) Copyright 2003-2010, compiled on %s %s\n"
-                            "Developed by FlashCode <flashcode@flashtux.org> "
+                          _("%s Copyright (C) 2003-2010, compiled on %s %s\n"
+                            "Developed by Sebastien Helleu <flashcode@flashtux.org> "
                             "- %s"),
                           PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
     string_iconv_fprintf (stdout, "\n\n");

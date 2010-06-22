@@ -1,6 +1,6 @@
 Guide du testeur WeeChat
 ========================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[purpose]]

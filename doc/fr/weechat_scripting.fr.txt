@@ -1,6 +1,6 @@
 WeeChat Guide pour Scripts
 ==========================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait

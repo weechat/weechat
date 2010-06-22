@@ -1,6 +1,6 @@
 WeeChat User Anleitung
 ======================
-FlashCode <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
@@ -1638,14 +1638,14 @@ Autoren
 Entwickler
 ~~~~~~~~~~
 
-FlashCode (Sébastien Helleu)::
+Sébastien Helleu (FlashCode)::
     Hauptentwickler
 
 [[contributors]]
 Liste der Beitragenden
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Kolter (Emmanuel Bouthenot)::
+Emmanuel Bouthenot (kolter)::
     Debian Paket Ersteller
 
 Ptitlouis::
