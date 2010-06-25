@@ -42,4 +42,4 @@ extern void gui_history_buffer_free (struct t_gui_buffer *buffer);
 extern int gui_history_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_history *history);
 
-#endif /* gui-history.h */
+#endif /* __WEECHAT_GUI_HISTORY_H */

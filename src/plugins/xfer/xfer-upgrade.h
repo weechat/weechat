@@ -32,4 +32,4 @@ enum t_xfer_upgrade_type
 extern int xfer_upgrade_save ();
 extern int xfer_upgrade_load ();
 
-#endif /* xfer-upgrade.h */
+#endif /* __WEECHAT_XFER_UPGRADE_H */

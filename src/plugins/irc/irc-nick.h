@@ -117,4 +117,4 @@ extern int irc_nick_add_to_infolist (struct t_infolist *infolist,
                                      struct t_irc_nick *nick);
 extern void irc_nick_print_log (struct t_irc_nick *nick);
 
-#endif /* irc-nick.h */
+#endif /* __WEECHAT_IRC_NICK_H */

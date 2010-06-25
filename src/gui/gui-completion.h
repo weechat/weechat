@@ -79,4 +79,4 @@ extern void gui_completion_search (struct t_gui_completion *completion,
 extern void gui_completion_print_log (struct t_gui_completion *completion);
 extern void gui_completion_init ();
 
-#endif /* gui-completion.h */
+#endif /* __WEECHAT_GUI_COMPLETION_H */

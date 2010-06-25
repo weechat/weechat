@@ -436,4 +436,4 @@ extern int hook_add_to_infolist (struct t_infolist *infolist,
                                  const char *type);
 extern void hook_print_log ();
 
-#endif /* wee-hook.h */
+#endif /* __WEECHAT_HOOK_H */

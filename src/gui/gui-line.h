@@ -106,4 +106,4 @@ extern int gui_line_add_to_infolist (struct t_infolist *infolist,
                                      struct t_gui_line *line);
 extern void gui_lines_print_log (struct t_gui_lines *lines);
 
-#endif /* gui-line.h */
+#endif /* __WEECHAT_GUI_LINE_H */

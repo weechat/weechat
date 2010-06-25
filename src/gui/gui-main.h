@@ -27,4 +27,4 @@ extern void gui_main_pre_init (int *argc, char **argv[]);
 extern void gui_main_init ();
 extern void gui_main_end (int clean_exit);
 
-#endif /* gui-main.h */
+#endif /* __WEECHAT_GUI_MAIN_H */

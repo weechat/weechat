@@ -86,4 +86,4 @@ extern void gui_chat_draw (struct t_gui_buffer *buffer, int erase);
 extern void gui_chat_draw_line (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);
 
-#endif /* gui-chat.h */
+#endif /* __WEECHAT_GUI_CHAT_H */

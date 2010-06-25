@@ -39,4 +39,4 @@ extern struct t_aspell_speller *weechat_aspell_speller_new (const char *lang);
 extern void weechat_aspell_speller_free (struct t_aspell_speller *speller);
 extern void weechat_aspell_speller_free_all ();
 
-#endif /* weechat-aspell-speller.h */
+#endif /* __WEECHAT_ASPELL_SPELLER_H */

@@ -112,4 +112,4 @@ extern int weechat_plugin_no_dlclose;
 
 extern void weechat_shutdown (int return_code, int crash);
 
-#endif /* weechat.h */
+#endif /* __WEECHAT_H */

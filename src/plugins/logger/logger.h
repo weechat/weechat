@@ -32,4 +32,4 @@ extern void logger_start_buffer_all (int write_info_line);
 extern void logger_stop_all (int write_info_line);
 extern void logger_adjust_log_filenames ();
 
-#endif /* logger.h */
+#endif /* __WEECHAT_LOGGER_H */

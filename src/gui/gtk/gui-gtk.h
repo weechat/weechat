@@ -107,4 +107,4 @@ extern void gui_keyboard_flush ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_set_title (const char *title);
 
-#endif /* gui-gtk.h */
+#endif /* __WEECHAT_GUI_GTK_H */

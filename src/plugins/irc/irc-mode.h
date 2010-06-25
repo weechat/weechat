@@ -34,4 +34,4 @@ extern int irc_mode_get_nick_attr (struct t_irc_server *server, char *mode,
 extern char irc_mode_get_prefix (struct t_irc_server *server, char mode,
                                  char default_prefix);
 
-#endif /* irc-mode.h */
+#endif /* __WEECHAT_IRC_MODE_H */

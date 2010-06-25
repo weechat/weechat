@@ -37,4 +37,5 @@ extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
 extern char *util_file_get_content (const char *filename);
 extern int util_version_number (const char *version);
-#endif /* wee-util.h */
+
+#endif /* __WEECHAT_UTIL_H */

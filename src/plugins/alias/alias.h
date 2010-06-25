@@ -52,4 +52,4 @@ extern void alias_free_all ();
 extern int alias_add_to_infolist (struct t_infolist *infolist,
                                   struct t_alias *alias);
 
-#endif /* alias.h */
+#endif /* __WEECHAT_ALIAS_H */

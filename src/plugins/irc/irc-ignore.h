@@ -54,4 +54,4 @@ extern void irc_ignore_free_all ();
 extern int irc_ignore_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_ignore *ignore);
     
-#endif /* irc-ignore.h */
+#endif /* __WEECHAT_IRC_IGNORE_H */

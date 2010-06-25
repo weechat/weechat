@@ -25,4 +25,4 @@ extern void irc_display_away (struct t_irc_server *server, const char *string1,
                               const char *string2);
 extern void irc_display_server (struct t_irc_server *server, int with_detail);
 
-#endif /* irc-display.h */
+#endif /* __WEECHAT_IRC_DISPLAY_H */

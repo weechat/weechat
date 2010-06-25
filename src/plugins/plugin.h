@@ -46,4 +46,4 @@ extern int plugin_add_to_infolist (struct t_infolist *infolist,
                                    struct t_weechat_plugin *plugin);
 extern void plugin_print_log ();
 
-#endif /* plugin.h */
+#endif /* __WEECHAT_PLUGIN_H */

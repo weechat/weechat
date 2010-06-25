@@ -29,4 +29,4 @@ extern void input_exec_command (struct t_gui_buffer *buffer,
                                 const char *string);
 extern void input_data (struct t_gui_buffer *buffer, const char *data);
 
-#endif /* wee-input.h */
+#endif /* __WEECHAT_INPUT_H */

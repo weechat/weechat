@@ -22,4 +22,4 @@
 
 extern void xfer_info_init ();
 
-#endif /* xfer-info.h */
+#endif /* __WEECHAT_XFER_INFO_H */

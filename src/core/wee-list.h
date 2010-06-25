@@ -56,4 +56,4 @@ extern void weelist_remove_all (struct t_weelist *weelist);
 extern void weelist_free (struct t_weelist *weelist);
 extern void weelist_print_log (struct t_weelist *weelist, const char *name);
 
-#endif /* wee-list.h */
+#endif /* __WEECHAT_LIST_H */

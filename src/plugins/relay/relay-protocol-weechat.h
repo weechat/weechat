@@ -41,4 +41,4 @@ extern void relay_protocol_weechat_alloc (struct t_relay_client *client);
 extern void relay_protocol_weechat_free (struct t_relay_client *client);
 extern void relay_protocol_weechat_print_log (struct t_relay_client *client);
 
-#endif /* relay-protocol-weechat.h */
+#endif /* __WEECHAT_RELAY_PROTOCOL_WEECHAT_H */

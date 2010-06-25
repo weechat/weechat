@@ -82,4 +82,4 @@ extern int relay_client_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_client *client);
 extern void relay_client_print_log ();
 
-#endif /* relay-client.h */
+#endif /* __WEECHAT_RELAY_CLIENT_H */

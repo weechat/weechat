@@ -1230,4 +1230,4 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_upgrade_close(__upgrade_file)                           \
     weechat_plugin->upgrade_close(__upgrade_file)
 
-#endif /* weechat-plugin.h */
+#endif /* __WEECHAT_WEECHAT_PLUGIN_H */

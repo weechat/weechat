@@ -41,4 +41,4 @@ extern int logger_config_read ();
 extern int logger_config_write ();
 extern void logger_config_free ();
 
-#endif /* logger-config.h */
+#endif /* __WEECHAT_LOGGER_CONFIG_H */

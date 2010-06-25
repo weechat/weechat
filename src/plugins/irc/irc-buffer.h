@@ -55,4 +55,4 @@ extern char *irc_buffer_build_name (const char *server, const char *channel);
 extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *irc_buffer_search_first_for_all_servers ();
 
-#endif /* irc-buffer.h */
+#endif /* __WEECHAT_IRC_BUFFER_H */

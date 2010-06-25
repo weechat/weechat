@@ -22,4 +22,4 @@
 
 extern void xfer_command_init ();
 
-#endif /* xfer-command.h */
+#endif /* __WEECHAT_XFER_COMMAND_H */

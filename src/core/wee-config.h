@@ -203,4 +203,4 @@ extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();
 
-#endif /* wee-config.h */
+#endif /* __WEECHAT_CONFIG_H */

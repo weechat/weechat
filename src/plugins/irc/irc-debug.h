@@ -22,4 +22,4 @@
 
 extern void irc_debug_init ();
 
-#endif /* irc-debug.h */
+#endif /* __WEECHAT_IRC_DEBUG_H */

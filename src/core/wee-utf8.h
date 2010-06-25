@@ -52,4 +52,4 @@ extern int utf8_real_pos (const char *string, int pos);
 extern int utf8_pos (const char *string, int real_pos);
 extern char *utf8_strndup (const char *string, int length);
 
-#endif /* wee-utf8.h */
+#endif /* __WEECHAT_UTF8_H */

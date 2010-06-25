@@ -102,4 +102,4 @@ extern time_t infolist_time (struct t_infolist *infolist,
 extern void infolist_free (struct t_infolist *infolist);
 extern void infolist_print_log ();
 
-#endif /* wee-infolist.h */
+#endif /* __WEECHAT_INFOLIST_H */

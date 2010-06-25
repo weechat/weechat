@@ -39,4 +39,4 @@ extern void irc_ctcp_recv (struct t_irc_server *server, const char *command,
                            const char *nick, const char *remote_nick,
                            char *arguments, char *message);
 
-#endif /* irc-ctcp.h */
+#endif /* __WEECHAT_IRC_CTCP_H */

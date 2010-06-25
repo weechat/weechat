@@ -22,4 +22,4 @@
 
 extern void xfer_completion_init ();
 
-#endif /* xfer-completion.h */
+#endif /* __WEECHAT_XFER_COMPLETION_H */

@@ -28,4 +28,4 @@ extern int weechat_tcl_api_buffer_close_cb (void *data,
                                             struct t_gui_buffer *buffer);
 extern void weechat_tcl_api_init (Tcl_Interp *interp);
 
-#endif /* weechat-tcl.h */
+#endif /* __WEECHAT_TCL_API_H */

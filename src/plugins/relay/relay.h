@@ -43,4 +43,4 @@ extern char *relay_protocol_string[];
 
 extern int relay_protocol_search (const char *name);
 
-#endif /* relay.h */
+#endif /* __WEECHAT_RELAY_H */

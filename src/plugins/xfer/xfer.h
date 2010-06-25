@@ -167,4 +167,4 @@ extern void xfer_free (struct t_xfer *xfer);
 extern int xfer_add_to_infolist (struct t_infolist *infolist,
                                  struct t_xfer *xfer);
 
-#endif /* xfer.h */
+#endif /* __WEECHAT_XFER_H */

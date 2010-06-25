@@ -27,4 +27,4 @@ extern void xfer_network_child_kill (struct t_xfer *xfer);
 extern int xfer_network_connect (struct t_xfer *xfer);
 extern void xfer_network_accept (struct t_xfer *xfer);
 
-#endif /* xfer-network.h */
+#endif /* __WEECHAT_XFER_NETWORK_H */

@@ -44,4 +44,4 @@ extern struct t_gui_buffer *irc_msgbuffer_get_target_buffer (struct t_irc_server
                                                              const char *alias,
                                                              struct t_gui_buffer *default_buffer);
 
-#endif /* irc-msgbuffer.h */
+#endif /* __WEECHAT_IRC_MSGBUFFER_H */

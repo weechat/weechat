@@ -32,4 +32,4 @@ enum t_relay_upgrade_type
 extern int relay_upgrade_save ();
 extern int relay_upgrade_load ();
 
-#endif /* relay-upgrade.h */
+#endif /* __WEECHAT_RELAY_UPGRADE_H */

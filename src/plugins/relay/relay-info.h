@@ -22,4 +22,4 @@
 
 extern void relay_info_init ();
 
-#endif /* relay-info.h */
+#endif /* __WEECHAT_RELAY_INFO_H */

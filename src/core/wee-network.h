@@ -48,4 +48,4 @@ extern int network_connect_to (const char *proxy, int sock,
                                unsigned long address, int port);
 extern void network_connect_with_fork (struct t_hook *hook_connect);
 
-#endif /* wee-network.h */
+#endif /* __WEECHAT_NETWORK_H */

@@ -121,4 +121,4 @@ extern int irc_channel_add_to_infolist (struct t_infolist *infolist,
                                         struct t_irc_channel *channel);
 extern void irc_channel_print_log (struct t_irc_channel *channel);
 
-#endif /* irc-channel.h */
+#endif /* __WEECHAT_IRC_CHANNEL_H */

@@ -29,4 +29,4 @@ extern void log_close ();
 extern void log_printf (const char *message, ...);
 extern int log_crash_rename ();
 
-#endif /* wee-log.h */
+#endif /* __WEECHAT_LOG_H */

@@ -27,4 +27,4 @@ extern int weechat_perl_api_buffer_close_cb (void *data,
                                              struct t_gui_buffer *buffer);
 extern void weechat_perl_api_init (pTHX);
 
-#endif /* weechat-perl.h */
+#endif /* __WEECHAT_PERL_API_H */

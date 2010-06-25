@@ -49,4 +49,4 @@ extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();
 extern void relay_server_print_log ();
 
-#endif /* relay-server.h */
+#endif /* __WEECHAT_RELAY_SERVER_H */

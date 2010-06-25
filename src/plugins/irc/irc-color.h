@@ -94,4 +94,4 @@ extern char *irc_color_modifier_cb (void *data, const char *modifier,
                                     const char *modifier_data,
                                     const char *string);
 
-#endif /* irc-color.h */
+#endif /* __WEECHAT_IRC_COLOR_H */

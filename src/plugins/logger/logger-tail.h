@@ -30,4 +30,4 @@ extern struct t_logger_line *logger_tail_file (const char *filename,
                                                int n_lines);
 extern void logger_tail_free (struct t_logger_line *lines);
 
-#endif /* logger-tail.h */
+#endif /* __WEECHAT_LOGGER_TAIL_H */

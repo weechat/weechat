@@ -32,4 +32,4 @@ extern int alias_config_init ();
 extern int alias_config_read ();
 extern int alias_config_write ();
 
-#endif /* alias-config.h */
+#endif /* __WEECHAT_ALIAS_CONFIG_H */

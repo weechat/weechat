@@ -142,4 +142,4 @@ extern const char *gui_color_get_name (int num_color);
 extern void gui_color_init_pairs ();
 extern void gui_color_init_weechat ();
 
-#endif /* gui-color.h */
+#endif /* __WEECHAT_GUI_COLOR_H */

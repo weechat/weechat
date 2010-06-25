@@ -22,4 +22,4 @@
 
 extern void logger_info_init ();
 
-#endif /* logger-info.h */
+#endif /* __WEECHAT_LOGGER_INFO_H */

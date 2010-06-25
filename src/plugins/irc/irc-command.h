@@ -65,4 +65,4 @@ extern void irc_command_quit_server (struct t_irc_server *server,
                                      const char *arguments);
 extern void irc_command_init ();
 
-#endif /* irc-command.h */
+#endif /* __WEECHAT_IRC_COMMAND_H */

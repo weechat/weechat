@@ -54,4 +54,4 @@ extern int xfer_config_init ();
 extern int xfer_config_read ();
 extern int xfer_config_write ();
 
-#endif /* xfer-config.h */
+#endif /* __WEECHAT_XFER_CONFIG_H */

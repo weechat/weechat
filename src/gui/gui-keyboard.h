@@ -88,4 +88,4 @@ extern void gui_keyboard_print_log (struct t_gui_buffer *buffer);
 
 extern void gui_keyboard_default_bindings ();
 
-#endif /* gui-keyboard.h */
+#endif /* __WEECHAT_GUI_KEYBOARD_H */

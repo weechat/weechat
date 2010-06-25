@@ -22,4 +22,4 @@
 
 extern void relay_command_init ();
 
-#endif /* relay-command.h */
+#endif /* __WEECHAT_RELAY_COMMAND_H */

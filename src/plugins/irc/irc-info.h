@@ -22,4 +22,4 @@
 
 extern void irc_info_init ();
 
-#endif /* irc-info.h */
+#endif /* __WEECHAT_IRC_INFO_H */

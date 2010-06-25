@@ -34,4 +34,4 @@ extern int plugin_config_read ();
 extern int plugin_config_write ();
 extern void plugin_config_end ();
 
-#endif /* plugin-config.h */
+#endif /* __WEECHAT_PLUGIN_CONFIG_H */

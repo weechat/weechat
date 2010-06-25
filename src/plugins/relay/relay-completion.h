@@ -22,4 +22,4 @@
 
 extern void relay_completion_init ();
 
-#endif /* relay-completion.h */
+#endif /* __WEECHAT_RELAY_COMPLETION_H */

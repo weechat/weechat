@@ -92,4 +92,4 @@ extern void gui_window_set_custom_color_bg (WINDOW *window, int bg);
 extern void gui_window_clrtoeol_with_current_bg (WINDOW *window);
 extern void gui_window_set_title (const char *title);
 
-#endif /* gui-curses.h */
+#endif /* __WEECHAT_GUI_CURSES_H */

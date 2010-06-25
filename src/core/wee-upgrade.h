@@ -40,4 +40,4 @@ int upgrade_weechat_save ();
 int upgrade_weechat_load ();
 void upgrade_weechat_remove_files ();
 
-#endif /* wee-upgrade.h */
+#endif /* __WEECHAT_UPGRADE_H */

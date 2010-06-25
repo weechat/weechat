@@ -43,4 +43,4 @@ extern int weechat_aspell_config_read ();
 extern int weechat_aspell_config_write ();
 extern void weechat_aspell_config_free ();
 
-#endif /* weechat-aspell-config.h */
+#endif /* __WEECHAT_ASPELL_CONFIG_H */

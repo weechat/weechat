@@ -20,4 +20,4 @@
 #ifndef __WEECHAT_GUI_QT_H
 #define __WEECHAT_GUI_QT_H 1
 
-#endif /* gui-qt.h */
+#endif /* __WEECHAT_GUI_QT_H */

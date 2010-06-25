@@ -22,4 +22,4 @@
 
 extern void alias_info_init ();
 
-#endif /* alias-info.h */
+#endif /* __WEECHAT_ALIAS_INFO_H */

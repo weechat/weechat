@@ -84,4 +84,4 @@ extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *msg_command,
                                        const char *msg_channel);
 
-#endif /* irc-protocol.h */
+#endif /* __WEECHAT_IRC_PROTOCOL_H */

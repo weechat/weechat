@@ -27,4 +27,4 @@ extern void irc_input_user_message_display (struct t_gui_buffer *buffer,
 extern int irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
                               const char *input_data);
 
-#endif /* irc-input.h */
+#endif /* __WEECHAT_IRC_INPUT_H */

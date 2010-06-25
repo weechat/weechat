@@ -252,4 +252,4 @@ extern int config_file_add_to_infolist (struct t_infolist *infolist,
                                         const char *option_name);
 extern void config_file_print_log ();
 
-#endif /* wee-config-file.h */
+#endif /* __WEECHAT_CONFIG_FILE_H */

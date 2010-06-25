@@ -47,4 +47,4 @@ extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
 extern int logger_buffer_add_to_infolist (struct t_infolist *infolist,
                                           struct t_logger_buffer *logger_buffer);
 
-#endif /* logger-buffer.h */
+#endif /* __WEECHAT_LOGGER_BUFFER_H */

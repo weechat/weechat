@@ -57,4 +57,4 @@ extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_hotlist *hotlist);
 extern void gui_hotlist_print_log ();
 
-#endif /* gui-hotlist.h */
+#endif /* __WEECHAT_GUI_HOTLIST_H */

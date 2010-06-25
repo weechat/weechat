@@ -66,4 +66,4 @@ extern void plugin_api_infolist_free (struct t_infolist *infolist);
 
 extern void plugin_api_init ();
 
-#endif /* plugin-api.h */
+#endif /* __WEECHAT_PLUGIN_API_H */

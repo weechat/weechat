@@ -284,4 +284,4 @@ extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
 
-#endif /* gui-buffer.h */
+#endif /* __WEECHAT_GUI_BUFFER_H */

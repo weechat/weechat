@@ -63,4 +63,4 @@ extern int upgrade_file_read (struct t_upgrade_file *upgrade_file,
                               void *callback_read_data);
 extern void upgrade_file_close (struct t_upgrade_file *upgrade_file);
 
-#endif /* wee-upgrade-file.h */
+#endif /* __WEECHAT_UPGRADE_FILE_H */

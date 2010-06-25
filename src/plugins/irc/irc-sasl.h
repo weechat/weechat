@@ -38,4 +38,4 @@ extern char *irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                                              const char *sasl_username,
                                              const char *sasl_password);
 
-#endif /* irc-sasl.h */
+#endif /* __WEECHAT_IRC_SASL_H */

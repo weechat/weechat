@@ -27,4 +27,4 @@
 extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_hook_timer_check_away;
 
-#endif /* irc.h */
+#endif /* __WEECHAT_IRC_H */

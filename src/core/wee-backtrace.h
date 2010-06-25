@@ -24,4 +24,4 @@
 
 extern void weechat_backtrace ();
 
-#endif /* wee-backtrace.h */
+#endif /* __WEECHAT_BACKTACE_H */

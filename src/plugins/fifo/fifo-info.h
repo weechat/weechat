@@ -22,4 +22,4 @@
 
 extern void fifo_info_init ();
 
-#endif /* fifo-info.h */
+#endif /* __WEECHAT_FIFO_INFO_H */

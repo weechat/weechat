@@ -85,4 +85,4 @@ extern void gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                  struct t_gui_window *window);
 extern void gui_bar_window_objects_print_log (struct t_gui_bar_window *bar_window);
 
-#endif /* gui-bar-window.h */
+#endif /* __WEECHAT_GUI_BAR_WINDOW_H */

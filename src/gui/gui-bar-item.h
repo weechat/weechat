@@ -96,4 +96,4 @@ extern int gui_bar_item_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_bar_item *bar_item);
 extern void gui_bar_item_print_log ();
 
-#endif /* gui-bar-item.h */
+#endif /* __WEECHAT_GUI_BAR_ITEM_H */

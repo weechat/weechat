@@ -22,4 +22,4 @@
 
 extern void irc_completion_init ();
 
-#endif /* irc-completion.h */
+#endif /* __WEECHAT_IRC_COMPLETION_H */

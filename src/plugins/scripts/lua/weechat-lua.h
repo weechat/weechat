@@ -40,4 +40,4 @@ extern void *weechat_lua_exec (struct t_plugin_script *script,
                                int ret_type, const char *function,
                                char **argv);
 
-#endif /* weechat-lua.h */
+#endif /* __WEECHAT_LUA_H */

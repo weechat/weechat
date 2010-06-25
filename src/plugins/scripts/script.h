@@ -150,4 +150,4 @@ extern void script_end (struct t_weechat_plugin *weechat_plugin,
 extern void script_print_log (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts);
 
-#endif /* script.h */
+#endif /* __WEECHAT_SCRIPT_H */

@@ -75,4 +75,4 @@ extern int gui_filter_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_filter *filter);
 extern void gui_filter_print_log ();
 
-#endif /* gui-filter.h */
+#endif /* __WEECHAT_GUI_FILTER_H */

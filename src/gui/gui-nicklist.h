@@ -86,4 +86,4 @@ extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                                          const char *name);
 extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
 
-#endif /* gui-nicklist.h */
+#endif /* __WEECHAT_GUI_NICKLIST_H */

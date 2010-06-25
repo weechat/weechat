@@ -43,4 +43,4 @@ extern void relay_protocol_irc_alloc (struct t_relay_client *client);
 extern void relay_protocol_irc_free (struct t_relay_client *client);
 extern void relay_protocol_irc_print_log (struct t_relay_client *client);
 
-#endif /* relay-protocol-irc.h */
+#endif /* __WEECHAT_RELAY_PROTOCOL_IRC_H */

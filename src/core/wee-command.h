@@ -50,4 +50,4 @@ extern void command_version_display (struct t_gui_buffer *buffer,
                                      int send_to_buffer_as_input,
                                      int translated_string);
 
-#endif /* wee-command.h */
+#endif /* __WEECHAT_COMMAND_H */

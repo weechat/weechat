@@ -26,4 +26,4 @@ extern void debug_sigsegv ();
 extern void debug_windows_tree ();
 extern void debug_init ();
 
-#endif /* wee-debug.h */
+#endif /* __WEECHAT_DEBUG_H */

@@ -35,4 +35,4 @@ enum t_irc_upgrade_type
 extern int irc_upgrade_save ();
 extern int irc_upgrade_load ();
 
-#endif /* irc-upgrade.h */
+#endif /* __WEECHAT_IRC_UPGRADE_H */

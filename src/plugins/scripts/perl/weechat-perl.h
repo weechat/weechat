@@ -38,4 +38,4 @@ extern void *weechat_perl_exec (struct t_plugin_script *script,
                                 int ret_type, const char *function,
                                 char **argv);
 
-#endif /* weechat-perl.h */
+#endif /* __WEECHAT_PERL_H */

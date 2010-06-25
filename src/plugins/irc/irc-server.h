@@ -235,4 +235,4 @@ extern int irc_server_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_server *server);
 extern void irc_server_print_log ();
 
-#endif /* irc-server.h */
+#endif /* __WEECHAT_IRC_SERVER_H */

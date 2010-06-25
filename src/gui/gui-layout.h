@@ -92,4 +92,4 @@ extern void gui_layout_save_on_exit ();
 
 extern void gui_layout_print_log ();
 
-#endif /* gui-layout.h */
+#endif /* __WEECHAT_GUI_LAYOUT_H */

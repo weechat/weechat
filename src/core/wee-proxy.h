@@ -81,4 +81,4 @@ extern void proxy_free (struct t_proxy *proxy);
 extern void proxy_free_all ();
 extern void proxy_print_log ();
 
-#endif /* wee-proxy.h */
+#endif /* __WEECHAT_PROXY_H */

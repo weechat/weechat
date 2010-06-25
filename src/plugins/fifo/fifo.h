@@ -26,4 +26,4 @@
 extern struct t_weechat_plugin *weechat_fifo_plugin;
 extern char *fifo_filename;
 
-#endif /* fifo.h */
+#endif /* __WEECHAT_FIFO_H */

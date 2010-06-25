@@ -175,4 +175,4 @@ extern void gui_window_set_title (const char *title);
 extern void gui_window_term_display_infos ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);
 
-#endif /* gui-window.h */
+#endif /* __WEECHAT_GUI_WINDOW_H */

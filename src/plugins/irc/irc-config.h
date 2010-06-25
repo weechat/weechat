@@ -148,4 +148,4 @@ extern int irc_config_read ();
 extern int irc_config_write (int write_temp_servers);
 extern void irc_config_free ();
 
-#endif /* irc-config.h */
+#endif /* __WEECHAT_IRC_CONFIG_H */

@@ -311,4 +311,4 @@ extern int script_api_upgrade_read (struct t_weechat_plugin *weechat_plugin,
                                     const char *function,
                                     const char *data);
 
-#endif /* script-api.h */
+#endif /* __WEECHAT_SCRIPT_API_H */

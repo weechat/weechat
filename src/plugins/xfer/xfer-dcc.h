@@ -23,4 +23,4 @@
 extern void xfer_dcc_send_file_child (struct t_xfer *xfer);
 extern void xfer_dcc_recv_file_child (struct t_xfer *xfer);
 
-#endif /* xfer-dcc.h */
+#endif /* __WEECHAT_XFER_DCC_H */

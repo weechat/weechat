@@ -43,4 +43,4 @@ extern int relay_config_init ();
 extern int relay_config_read ();
 extern int relay_config_write ();
 
-#endif /* relay-config.h */
+#endif /* __WEECHAT_RELAY_CONFIG_H */

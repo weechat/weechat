@@ -51,4 +51,4 @@ extern void irc_raw_message_free_all ();
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
                                     struct t_irc_raw_message *raw_message);
 
-#endif /* irc-raw.h */
+#endif /* __WEECHAT_IRC_RAW_H */
