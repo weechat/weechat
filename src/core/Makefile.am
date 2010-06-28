@@ -33,6 +33,8 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-config-file.h \
                              wee-debug.c \
                              wee-debug.h \
+                             wee-hashtable.c \
+                             wee-hashtable.h \
                              wee-hook.c \
                              wee-hook.h \
                              wee-infolist.c \

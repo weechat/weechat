@@ -38,6 +38,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
@@ -519,6 +520,16 @@ plugin_load (const char *filename)
         new_plugin->list_remove = &weelist_remove;
         new_plugin->list_remove_all = &weelist_remove_all;
         new_plugin->list_free = &weelist_free;
+        
+        new_plugin->hashtable_new = &hashtable_new;
+        new_plugin->hashtable_set_with_size = &hashtable_set_with_size;
+        new_plugin->hashtable_set = &hashtable_set;
+        new_plugin->hashtable_get = &hashtable_get;
+        new_plugin->hashtable_map = &hashtable_map;
+        new_plugin->hashtable_get_integer = &hashtable_get_integer;
+        new_plugin->hashtable_remove = &hashtable_remove;
+        new_plugin->hashtable_remove_all = &hashtable_remove_all;
+        new_plugin->hashtable_free = &hashtable_free;
         
         new_plugin->config_new = &config_file_new;
         new_plugin->config_new_section = &config_file_new_section;

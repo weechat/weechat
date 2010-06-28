@@ -2541,6 +2541,305 @@ weechat.list_free(list)
 weechat.list_free(list)
 ----------------------------------------
 
+[[hashtables]]
+Hashtables
+~~~~~~~~~~
+
+Hashtable functions.
+
+weechat_hashtable_new
+^^^^^^^^^^^^^^^^^^^^^
+
+Create a new hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *weechat_hashtable_new (int size,
+                                           const char *type_keys,
+                                           const char *type_values,
+                                           unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                             const void *key),
+                                           int (*callback_keycmp)(struct t_hashtable *hashtable,
+                                                                  const void *key1,
+                                                                  const void *key2));
+----------------------------------------
+
+Arguments:
+
+* 'size': size of internal array to store hashed keys, a high value uses more
+  memory, but has better performance (this is *not* a limit for number of items
+  in hashtable)
+* 'type_keys': type for keys in hashtable:
+** 'WEECHAT_HASHTABLE_INTEGER'
+** 'WEECHAT_HASHTABLE_STRING'
+** 'WEECHAT_HASHTABLE_POINTER'
+** 'WEECHAT_HASHTABLE_BUFFER'
+** 'WEECHAT_HASHTABLE_TIME'
+* 'type_values': type for values in hashtable:
+** 'WEECHAT_HASHTABLE_INTEGER'
+** 'WEECHAT_HASHTABLE_STRING'
+** 'WEECHAT_HASHTABLE_POINTER'
+** 'WEECHAT_HASHTABLE_BUFFER'
+** 'WEECHAT_HASHTABLE_TIME'
+* 'callback_hash_key': callback used to "hash" a key (key as integer value), can
+  be NULL if key type is "string" (a default function is used for strings, and
+  only for strings)
+* 'callback_keycmp': callback used to compare two keys, can be NULL if value
+  type is "string" (a default comparison function is used for strings, and only
+  for strings)
+
+Return value:
+
+* pointer to new hashtable, NULL if an error occured
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+----------------------------------------
+
+weechat_hashtable_set_with_size
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add or update item in a hashtable with size for key and value.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
+                                     void *key, int key_size,
+                                     void *value, int value_size);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'key': key pointer
+* 'key_size': size of key (in bytes), used only if type of keys in hashtable
+  is "buffer"
+* 'value': value pointer
+* 'value_size': size of value (in bytes), used only if type of values in
+  hashtable is "buffer"
+
+Return value:
+
+* 1 if ok, 0 if error
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_set_with_size (hashtable, "my_key", 0,
+                                 my_buffer, sizeof (my_buffer_struct));
+----------------------------------------
+
+weechat_hashtable_set
+^^^^^^^^^^^^^^^^^^^^^
+
+Add or update item in a hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_set (struct t_hashtable *hashtable,
+                           void *key, void *value);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'key': key pointer
+* 'value': value pointer
+
+Return value:
+
+* 1 if ok, 0 if error
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_set (hashtable, "my_key", "my_value");
+----------------------------------------
+
+weechat_hashtable_get
+^^^^^^^^^^^^^^^^^^^^^
+
+Get value associated with a key in a hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'key': key pointer
+
+Return value:
+
+* value for key, NULL if key is not found
+
+C example:
+
+[source,C]
+----------------------------------------
+void *value = weechat_hashtable_get (hashtable, "my_key");
+----------------------------------------
+
+weechat_hashtable_map
+^^^^^^^^^^^^^^^^^^^^^
+
+Call a function on all hashtable entries.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void hashtable_map (struct t_hashlist *hashlist,
+                    int (*callback_map)(void *data,
+                                        struct t_hashtable *hashtable,
+                                        const void *key,
+                                        const void *value),
+                    void *callback_map_data);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'callback_map': function called for each entry in hashtable
+* 'callback_map_data': pointer given to map callback when it is called
+
+C example:
+
+[source,C]
+----------------------------------------
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* display key and value (they are both strings here) */
+    weechat_printf (NULL, "key: '%s', value: '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map (hashtable, &map_cb, NULL);
+----------------------------------------
+
+weechat_hashtable_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return integer value of a hashtable property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
+                                   void *property);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'property': property name:
+** 'size': size of internal array "htable" in hashtable
+** 'items_count': number of items in hashtable
+
+Return value:
+
+* integer value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
+----------------------------------------
+
+weechat_hashtable_remove
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove an item in a hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'key': key pointer
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_remove (hashtable, "my_key");
+----------------------------------------
+
+weechat_hashtable_remove_all
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove all items in a hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_remove_all (hashtable);
+----------------------------------------
+
+weechat_hashtable_free
+^^^^^^^^^^^^^^^^^^^^^^
+
+Free a hashtable.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_free (struct t_hashtable *hashtable);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_free (hashtable);
+----------------------------------------
+
 [[configuration_files]]
 Configuration files
 ~~~~~~~~~~~~~~~~~~~

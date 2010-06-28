@@ -2567,6 +2567,308 @@ weechat.list_free(list)
 weechat.list_free(list)
 ----------------------------------------
 
+[[hashtables]]
+Hashtables
+~~~~~~~~~~
+
+Hashtable functions.
+
+weechat_hashtable_new
+^^^^^^^^^^^^^^^^^^^^^
+
+Crée une nouvelle hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *weechat_hashtable_new (int size,
+                                           const char *type_keys,
+                                           const char *type_values,
+                                           unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                             const void *key),
+                                           int (*callback_keycmp)(struct t_hashtable *hashtable,
+                                                                  const void *key1,
+                                                                  const void *key2));
+----------------------------------------
+
+Paramètres :
+
+* 'size' : taille du tableau interne pour stocker les clés sous forme de "hash",
+  une grande valeur utilise plus de mémoire mais présente une meilleure
+  performance (cela n'est *pas* une limite sur le nombre d'entrées de la
+  hashtable)
+* 'type_keys' : type pour les clés dans la hashtable :
+** 'WEECHAT_HASHTABLE_INTEGER'
+** 'WEECHAT_HASHTABLE_STRING'
+** 'WEECHAT_HASHTABLE_POINTER'
+** 'WEECHAT_HASHTABLE_BUFFER'
+** 'WEECHAT_HASHTABLE_TIME'
+* 'type_values' : type pour les valeurs dans la hashtable :
+** 'WEECHAT_HASHTABLE_INTEGER'
+** 'WEECHAT_HASHTABLE_STRING'
+** 'WEECHAT_HASHTABLE_POINTER'
+** 'WEECHAT_HASHTABLE_BUFFER'
+** 'WEECHAT_HASHTABLE_TIME'
+* 'callback_hash_key' : fonction appelée pour rendre le "hash" d'une clé (la clé
+  sous forme de nombre entier), peut être NULL si le type de clé est "string"
+  (une fonction par défaut est utilisée pour les chaînes, et seulement pour les
+  chaînes)
+* 'callback_keycmp' : fonction appelée pour comparer deux clés, peut être NULL
+  si le type de valeur est "string" (une fonction par défaut est utilisée pour
+  les chaînes, et seulement pour les chaînes)
+
+Valeur de retour :
+
+* pointeur vers la nouvelle hashtable, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+----------------------------------------
+
+weechat_hashtable_set_with_size
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ajoute ou met à jour une entrée dans une hashtable avec une taille pour la clé
+et la valeur.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
+                                     void *key, int key_size,
+                                     void *value, int value_size);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'key' : pointeur vers la clé
+* 'key_size' : taille de la clé (en octets), utilisée seulement si le type de
+  clés dans la hashtable est "buffer"
+* 'value' : pointeur vers la valeur
+* 'value_size' : taille de la valeur (en octets), utilisée seulement si le type
+  de valeurs dans la hashtable est "buffer"
+
+Valeur de retour :
+
+* 1 si ok, 0 en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hashtable_set_with_size (hashtable, "ma_cle", 0,
+                                 my_buffer, sizeof (my_buffer_struct));
+----------------------------------------
+
+weechat_hashtable_set
+^^^^^^^^^^^^^^^^^^^^^
+
+Ajoute ou met à jour une entrée dans la hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_set (struct t_hashtable *hashtable,
+                           void *key, void *value);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'key' : pointeur vers la clé
+* 'value' : pointeur vers la valeur
+
+Valeur de retour :
+
+* 1 si ok, 0 en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hashtable_set (hashtable, "ma_cle", "ma_valeur");
+----------------------------------------
+
+weechat_hashtable_get
+^^^^^^^^^^^^^^^^^^^^^
+
+Retourne la valeur associée à une clé dans une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'key' : pointeur vers la clé
+
+Valeur en retour :
+
+* valeur pour la clé, NULL si la clé n'est pas trouvée
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+void *value = weechat_hashtable_get (hashtable, "ma_cle");
+----------------------------------------
+
+weechat_hashtable_map
+^^^^^^^^^^^^^^^^^^^^^
+
+Appelle une fonction pour chaque entrée d'une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void hashtable_map (struct t_hashlist *hashlist,
+                    int (*callback_map)(void *data,
+                                        struct t_hashtable *hashtable,
+                                        const void *key,
+                                        const void *value),
+                    void *callback_map_data);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'callback_map' : fonction appelée pour chaque entrée de la hashtable
+* 'callback_map_data' : pointeur donné au "callback" lorsqu'il est appelé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* afficher la clé et la valeur (elles sont des chaînes ici) */
+    weechat_printf (NULL, "clé: '%s', valeur: '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map (hashtable, &map_cb, NULL);
+----------------------------------------
+
+weechat_hashtable_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retourne une valeur entière pour une propriété d'une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
+                                   void *property);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'property' : nom de propriété :
+** 'size' : taille du tableau interne "htable" dans la hashtable
+** 'items_count' : nombre d'éléments dans la hashtable
+
+Valeur en retour :
+
+* valeur entière de l'option
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
+----------------------------------------
+
+weechat_hashtable_remove
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supprime un élément d'une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'key' : pointeur vers la clé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hashtable_remove (hashtable, "ma_cle");
+----------------------------------------
+
+weechat_hashtable_remove_all
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supprime tous les éléments d'une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hashtable_remove_all (hashtable);
+----------------------------------------
+
+weechat_hashtable_free
+^^^^^^^^^^^^^^^^^^^^^^
+
+Supprime une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_free (struct t_hashtable *hashtable);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hashtable_free (hashtable);
+----------------------------------------
+
 [[configuration_files]]
 Fichiers de configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~

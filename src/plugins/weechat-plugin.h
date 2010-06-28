@@ -35,6 +35,7 @@ struct t_gui_bar_item;
 struct t_gui_completion;
 struct t_infolist;
 struct t_weelist;
+struct t_hashtable;
 struct timeval;
 
 /*
@@ -92,6 +93,13 @@ struct timeval;
 #define WEECHAT_LIST_POS_SORT                       "sort"
 #define WEECHAT_LIST_POS_BEGINNING                  "beginning"
 #define WEECHAT_LIST_POS_END                        "end"
+
+/* type for keys and values in hashtable */
+#define WEECHAT_HASHTABLE_INTEGER                   "integer"
+#define WEECHAT_HASHTABLE_STRING                    "string"
+#define WEECHAT_HASHTABLE_POINTER                   "pointer"
+#define WEECHAT_HASHTABLE_BUFFER                    "buffer"
+#define WEECHAT_HASHTABLE_TIME                      "time"
 
 /* buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
@@ -240,6 +248,33 @@ struct t_weechat_plugin
                          struct t_weelist_item *item);
     void (*list_remove_all) (struct t_weelist *weelist);
     void (*list_free) (struct t_weelist *weelist);
+    
+    /* hash tables */
+    struct t_hashtable *(*hashtable_new) (int size,
+                                          const char *type_keys,
+                                          const char *type_values,
+                                          unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                            const void *key),
+                                          int (*callback_keycmp)(struct t_hashtable *hashtable,
+                                                                 const void *key1,
+                                                                 const void *key2));
+    int (*hashtable_set_with_size) (struct t_hashtable *hashtable,
+                                    void *key, int key_size,
+                                    void *value, int value_size);
+    int (*hashtable_set) (struct t_hashtable *hashtable, void *key,
+                          void *value);
+    void *(*hashtable_get) (struct t_hashtable *hashtable, const void *key);
+    void (*hashtable_map) (struct t_hashtable *hashtable,
+                           void (*callback_map) (void *data,
+                                                 struct t_hashtable *hashtable,
+                                                 const void *key,
+                                                 const void *value),
+                           void *callback_map_data);
+    int (*hashtable_get_integer) (struct t_hashtable *hashtable,
+                                  const char *property);
+    void (*hashtable_remove) (struct t_hashtable *hashtable, const void *key);
+    void (*hashtable_remove_all) (struct t_hashtable *hashtable);
+    void (*hashtable_free) (struct t_hashtable *hashtable);
     
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
@@ -828,6 +863,31 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->list_remove_all(__list)
 #define weechat_list_free(__list)                                       \
     weechat_plugin->list_free(__list)
+
+/* hash tables */
+#define weechat_hashtable_new(__size, __type_keys, __type_values,       \
+                              __hash_key_cb, __keycmp_cb)               \
+    weechat_plugin->hashtable_new(__size, __type_keys, __type_values,   \
+                                  __hash_key_cb, __keycmp_cb)
+#define weechat_hashtable_set_with_size(__hashtable, __key, __key_size, \
+                                        __value, __value_size)          \
+    weechat_plugin->hashtable_set_with_size(__hashtable, __key,         \
+                                            __key_size, __value,        \
+                                            __value_size)
+#define weechat_hashtable_set(__hashtable, __key, __value)              \
+    weechat_plugin->hashtable_set(__hashtable, __key, __value)
+#define weechat_hashtable_get(__hashtable, __key)                       \
+    weechat_plugin->hashtable_get(__hashtable, __key)
+#define weechat_hashtable_map(__hashtable, __cb_map, __cb_map_data)     \
+    weechat_plugin->hashtable_map(__hashtable, __cb_map, __cb_map_data)
+#define weechat_hashtable_get_integer(__hashtable, __property)          \
+    weechat_plugin->hashtable_get_integer(__hashtable, __property)
+#define weechat_hashtable_remove(__hashtable, __key)                    \
+    weechat_plugin->hashtable_remove(__hashtable, __key)
+#define weechat_hashtable_remove_all(__hashtable)                       \
+    weechat_plugin->hashtable_remove_all(__hashtable)
+#define weechat_hashtable_free(__hashtable)                             \
+    weechat_plugin->hashtable_free(__hashtable)
 
 /* config files */
 #define weechat_config_new(__name, __callback_reload,                   \
