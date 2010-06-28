@@ -371,7 +371,7 @@ weelist_print_log (struct t_weelist *weelist, const char *name)
 {
     struct t_weelist_item *ptr_item;
     
-    log_printf ("[%s (addr:0x%lx)]", name, weelist);
+    log_printf ("[weelist %s (addr:0x%lx)]", name, weelist);
     
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
