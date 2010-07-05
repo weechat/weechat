@@ -2770,6 +2770,47 @@ C example:
 int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 ----------------------------------------
 
+weechat_hashtable_add_to_infolist
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add hashtable items to an infolist item.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
+                                       struct t_infolist_item *infolist_item,
+                                       const char *prefix);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'infolist_item': infolist item pointer
+* 'prefix': string used as prefix for names in infolist
+
+Return value:
+
+* 1 if ok, 0 if error
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
+
+/* if hashtable contains:
+     "key1" => "value 1"
+     "key2" => "value 2"
+   then following variables will be added to infolist item:
+     "testhash_name_00001"  = "key1"
+     "testhash_value_00001" = "value 1"
+     "testhash_name_00002"  = "key2"
+     "testhash_value_00002" = "value 2"
+*/
+----------------------------------------
+
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
