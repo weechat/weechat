@@ -36,6 +36,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
@@ -125,76 +126,24 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_buffer_local_var_search: search a local variable with name
- */
-
-struct t_gui_buffer_local_var *
-gui_buffer_local_var_search (struct t_gui_buffer *buffer, const char *name)
-{
-    struct t_gui_buffer_local_var *ptr_local_var;
-    
-    if (!buffer || !name)
-        return NULL;
-    
-    for (ptr_local_var = buffer->local_variables; ptr_local_var;
-         ptr_local_var = ptr_local_var->next_var)
-    {
-        if (strcmp (ptr_local_var->name, name) == 0)
-            return ptr_local_var;
-    }
-    
-    /* local variable not found */
-    return NULL;
-}
-
-/*
  * gui_buffer_local_var_add: add a new local variable to a buffer
  */
 
-struct t_gui_buffer_local_var *
+void
 gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
                           const char *value)
 {
-    struct t_gui_buffer_local_var *new_local_var;
+    void *ptr_value;
     
-    if (!buffer || !name || !value)
-        return NULL;
+    if (!buffer || !buffer->local_variables || !name || !value)
+        return;
     
-    new_local_var = gui_buffer_local_var_search (buffer, name);
-    if (new_local_var)
-    {
-        if (new_local_var->name)
-            free (new_local_var->name);
-        if (new_local_var->value)
-            free (new_local_var->value);
-        new_local_var->name = strdup (name);
-        new_local_var->value = strdup (value);
-        
-        hook_signal_send ("buffer_localvar_changed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-    }
-    else
-    {
-        new_local_var = malloc (sizeof (*new_local_var));
-        if (new_local_var)
-        {
-            new_local_var->name = strdup (name);
-            new_local_var->value = strdup (value);
-            
-            new_local_var->prev_var = buffer->last_local_var;
-            new_local_var->next_var = NULL;
-            if (buffer->local_variables)
-                buffer->last_local_var->next_var = new_local_var;
-            else
-                buffer->local_variables = new_local_var;
-            buffer->last_local_var = new_local_var;
-            
-            hook_signal_send ("buffer_localvar_added",
-                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-        }
-    }
-    
-    return new_local_var;
+    ptr_value = hashtable_get (buffer->local_variables, name);
+    hashtable_set (buffer->local_variables,
+                   (void *)name, (void *)value);
+    hook_signal_send ((ptr_value) ?
+                      "buffer_localvar_changed" : "buffer_localvar_added",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -202,32 +151,20 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
  */
 
 void
-gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
-                             struct t_gui_buffer_local_var *local_var)
+gui_buffer_local_var_remove (struct t_gui_buffer *buffer, const char *name)
 {
-    if (!buffer || !local_var)
+    void *ptr_value;
+    
+    if (!buffer || !buffer->local_variables || !name)
         return;
     
-    /* free data */
-    if (local_var->name)
-        free (local_var->name);
-    if (local_var->value)
-        free (local_var->value);
-    
-    /* remove local variable from list */
-    if (local_var->prev_var)
-        (local_var->prev_var)->next_var = local_var->next_var;
-    if (local_var->next_var)
-        (local_var->next_var)->prev_var = local_var->prev_var;
-    if (buffer->local_variables == local_var)
-        buffer->local_variables = local_var->next_var;
-    if (buffer->last_local_var == local_var)
-        buffer->last_local_var = local_var->prev_var;
-    
-    free (local_var);
-
-    hook_signal_send ("buffer_localvar_removed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    ptr_value = hashtable_get (buffer->local_variables, name);
+    if (ptr_value)
+    {
+        hashtable_remove (buffer->local_variables, name);
+        hook_signal_send ("buffer_localvar_removed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    }
 }
 
 /*
@@ -237,12 +174,11 @@ gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
 void
 gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
 {
-    if (buffer)
+    if (buffer && buffer->local_variables)
     {
-        while (buffer->local_variables)
-        {
-            gui_buffer_local_var_remove (buffer, buffer->local_variables);
-        }
+        hashtable_remove_all (buffer->local_variables);
+        hook_signal_send ("buffer_localvar_removed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -519,10 +455,15 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->keys_count = 0;
         
         /* local variables */
-        new_buffer->local_variables = NULL;
-        new_buffer->last_local_var = NULL;
-        gui_buffer_local_var_add (new_buffer, "plugin", plugin_get_name (plugin));
-        gui_buffer_local_var_add (new_buffer, "name", name);
+        new_buffer->local_variables = hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+        hashtable_set (new_buffer->local_variables,
+                       "plugin", (void *)plugin_get_name (plugin));
+        hashtable_set (new_buffer->local_variables,
+                       "name", (void *)name);
         
         /* add buffer to buffers list */
         first_buffer_creation = (gui_buffers == NULL);
@@ -590,8 +531,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 {
     int length, length_var, index_string, index_result;
     char *result, *local_var;
-    const char *pos_end_name;
-    struct t_gui_buffer_local_var *ptr_local_var;
+    const char *pos_end_name, *ptr_value;
     
     if (!string)
         return NULL;
@@ -623,11 +563,11 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                 pos_end_name - (string + index_string + 1));
                     if (local_var)
                     {
-                        ptr_local_var = gui_buffer_local_var_search (buffer,
-                                                                     local_var);
-                        if (ptr_local_var)
+                        ptr_value = (const char *)hashtable_get (buffer->local_variables,
+                                                                 local_var);
+                        if (ptr_value)
                         {
-                            length_var = strlen (ptr_local_var->value);
+                            length_var = strlen (ptr_value);
                             length += length_var;
                             result = realloc (result, length);
                             if (!result)
@@ -635,7 +575,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                 free (local_var);
                                 return NULL;
                             }
-                            strcpy (result + index_result, ptr_local_var->value);
+                            strcpy (result + index_result, ptr_value);
                             index_result += length_var;
                             index_string += strlen (local_var) + 1;
                         }
@@ -777,7 +717,7 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 const char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
-    struct t_gui_buffer_local_var *ptr_local_var;
+    const char *ptr_value;
     
     if (buffer && property)
     {
@@ -799,9 +739,10 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->highlight_tags;
         else if (string_strncasecmp (property, "localvar_", 9) == 0)
         {
-            ptr_local_var = gui_buffer_local_var_search (buffer, property + 9);
-            if (ptr_local_var)
-                return ptr_local_var->value;
+            ptr_value = (const char *)hashtable_get (buffer->local_variables,
+                                                     property + 9);
+            if (ptr_value)
+                return ptr_value;
         }
     }
     
@@ -1185,7 +1126,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
 {
     long number;
     char *error;
-    struct t_gui_buffer_local_var *ptr_local_var;
     
     if (!property || !value)
         return;
@@ -1356,9 +1296,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strncasecmp (property, "localvar_del_", 13) == 0)
     {
-        ptr_local_var = gui_buffer_local_var_search (buffer, property + 13);
-        if (ptr_local_var)
-            gui_buffer_local_var_remove (buffer, ptr_local_var);
+        gui_buffer_local_var_remove (buffer, property + 13);
     }
 }
 
@@ -2682,7 +2620,6 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
-    struct t_gui_buffer_local_var *ptr_local_var;
     char option_name[64];
     int i;
     
@@ -2780,20 +2717,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     }
     if (!infolist_new_var_integer (ptr_item, "keys_count", buffer->keys_count))
         return 0;
-    i = 0;
-    for (ptr_local_var = buffer->local_variables; ptr_local_var;
-         ptr_local_var = ptr_local_var->next_var)
-    {
-        snprintf (option_name, sizeof (option_name), "localvar_name_%05d", i);
-        if (!infolist_new_var_string (ptr_item, option_name,
-                                      ptr_local_var->name))
-            return 0;
-        snprintf (option_name, sizeof (option_name), "localvar_value_%05d", i);
-        if (!infolist_new_var_string (ptr_item, option_name,
-                                      ptr_local_var->value))
-            return 0;
-        i++;
-    }
+    if (!hashtable_add_to_infolist (buffer->local_variables, ptr_item, "localvar"))
+        return 0;
     
     return 1;
 }
@@ -2875,7 +2800,6 @@ void
 gui_buffer_print_log ()
 {
     struct t_gui_buffer *ptr_buffer;
-    struct t_gui_buffer_local_var *ptr_local_var;
     struct t_gui_line *ptr_line;
     struct t_gui_buffer_visited *ptr_buffer_visited;
     struct t_gui_input_undo *ptr_undo;
@@ -2957,7 +2881,6 @@ gui_buffer_print_log ()
         log_printf ("  last_key . . . . . . . : 0x%lx", ptr_buffer->last_key);
         log_printf ("  keys_count . . . . . . : %d",    ptr_buffer->keys_count);
         log_printf ("  local_variables. . . . : 0x%lx", ptr_buffer->local_variables);
-        log_printf ("  last_local_var . . . . : 0x%lx", ptr_buffer->last_local_var);
         log_printf ("  prev_buffer. . . . . . : 0x%lx", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%lx", ptr_buffer->next_buffer);
         
@@ -2967,20 +2890,11 @@ gui_buffer_print_log ()
             log_printf ("  => keys:");
             gui_keyboard_print_log (ptr_buffer);
         }
-
+        
         if (ptr_buffer->local_variables)
         {
-            log_printf ("");
-            log_printf ("  => local_variables:");
-            for (ptr_local_var = ptr_buffer->local_variables; ptr_local_var;
-                 ptr_local_var = ptr_local_var->next_var)
-            {
-                log_printf ("");
-                log_printf ("    [local variable (addr:0x%lx)]",
-                            ptr_local_var);
-                log_printf ("      name . . . . . . . : '%s'", ptr_local_var->name);
-                log_printf ("      value. . . . . . . : '%s'", ptr_local_var->value);
-            }
+            hashtable_print_log (ptr_buffer->local_variables,
+                                 "local_variables");
         }
         
         log_printf ("");

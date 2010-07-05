@@ -39,6 +39,7 @@
 #include "wee-config.h"
 #include "wee-config-file.h"
 #include "wee-debug.h"
+#include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-list.h"
@@ -496,6 +497,28 @@ command_bar (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_buffer_display_localvar: display local variable for a buffer
+ */
+
+void
+command_buffer_display_localvar (void *data,
+                                 struct t_hashtable *hashtable,
+                                 const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    
+    if (key && value)
+    {
+        gui_chat_printf (NULL,
+                         "  %s: \"%s\"",
+                         (const char *)key,
+                         (const char *)value);
+    }
+}
+
+/*
  * command_buffer: manage buffers
  */
 
@@ -504,7 +527,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_gui_buffer *ptr_buffer;
-    struct t_gui_buffer_local_var *ptr_local_var;
     long number, number1, number2;
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, target_buffer;
@@ -789,19 +811,14 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* display local variables on buffer */
     if (string_strcasecmp (argv[1], "localvar") == 0)
     {
-        if (buffer->local_variables)
+        if (buffer->local_variables
+            && (buffer->local_variables->items_count > 0))
         {
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL, _("Local variables for buffer \"%s\":"),
                              buffer->name);
-            for (ptr_local_var = buffer->local_variables; ptr_local_var;
-                 ptr_local_var = ptr_local_var->next_var)
-            {
-                gui_chat_printf (NULL,
-                                 "  %s: \"%s\"",
-                                 ptr_local_var->name,
-                                 ptr_local_var->value);
-            }
+            hashtable_map (buffer->local_variables,
+                           &command_buffer_display_localvar, NULL);
         }
         else
         {

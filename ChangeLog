@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-06-18
+v0.3.3-dev, 2010-07-05
 
 
 Version 0.3.3 (under dev!)
@@ -16,6 +16,7 @@ Version 0.3.3 (under dev!)
 * core: fix crash with hook_process (when timer is called on a deleted hook
   process)
 * core: fix display bug with attributes like underlined in bars (bug #29889)
+* core: add hashtables with new functions in plugin API
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
 * irc: use empty real name by default in config, instead of reading real name

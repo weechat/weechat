@@ -31,6 +31,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -593,7 +594,7 @@ char *
 gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
-    struct t_gui_buffer_local_var *local_var_nick;
+    const char *nick;
     
     /* make C compiler happy */
     (void) data;
@@ -602,11 +603,12 @@ gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    local_var_nick = gui_buffer_local_var_search (window->buffer, "nick");
-    if (!local_var_nick || !local_var_nick->value)
+    nick = (const char *)hashtable_get (window->buffer->local_variables,
+                                        "nick");
+    if (!nick)
         return NULL;
     
-    return strdup (local_var_nick->value);
+    return strdup (nick);
 }
 
 /*

@@ -527,6 +527,7 @@ plugin_load (const char *filename)
         new_plugin->hashtable_get = &hashtable_get;
         new_plugin->hashtable_map = &hashtable_map;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
+        new_plugin->hashtable_add_to_infolist = &hashtable_add_to_infolist;
         new_plugin->hashtable_remove = &hashtable_remove;
         new_plugin->hashtable_remove_all = &hashtable_remove_all;
         new_plugin->hashtable_free = &hashtable_free;

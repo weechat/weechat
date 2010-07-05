@@ -21,6 +21,7 @@
 #define __WEECHAT_HASHTABLE_H 1
 
 struct t_hashtable;
+struct t_infolist_item;
 
 typedef unsigned int (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                             const void *key);
@@ -114,6 +115,9 @@ extern void hashtable_map (struct t_hashtable *hashtable,
                            void *callback_map_data);
 extern int hashtable_get_integer (struct t_hashtable *hashtable,
                                   const char *property);
+extern int hashtable_add_to_infolist (struct t_hashtable *hashtable,
+                                      struct t_infolist_item *infolist_item,
+                                      const char *prefix);
 extern void hashtable_remove (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_remove_all (struct t_hashtable *hashtable);
 extern void hashtable_free (struct t_hashtable *hashtable);

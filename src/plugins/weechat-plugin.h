@@ -34,6 +34,7 @@ struct t_gui_bar;
 struct t_gui_bar_item;
 struct t_gui_completion;
 struct t_infolist;
+struct t_infolist_item;
 struct t_weelist;
 struct t_hashtable;
 struct timeval;
@@ -272,6 +273,9 @@ struct t_weechat_plugin
                            void *callback_map_data);
     int (*hashtable_get_integer) (struct t_hashtable *hashtable,
                                   const char *property);
+    int (*hashtable_add_to_infolist) (struct t_hashtable *hashtable,
+                                      struct t_infolist_item *infolist_item,
+                                      const char *prefix);
     void (*hashtable_remove) (struct t_hashtable *hashtable, const void *key);
     void (*hashtable_remove_all) (struct t_hashtable *hashtable);
     void (*hashtable_free) (struct t_hashtable *hashtable);
@@ -882,6 +886,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hashtable_map(__hashtable, __cb_map, __cb_map_data)
 #define weechat_hashtable_get_integer(__hashtable, __property)          \
     weechat_plugin->hashtable_get_integer(__hashtable, __property)
+#define weechat_hashtable_add_to_infolist(__hashtable, __infolist_item, \
+                                          __prefix)                     \
+    weechat_plugin->hashtable_add_to_infolist(__hashtable,              \
+                                              __infolist_item,          \
+                                              __prefix)
 #define weechat_hashtable_remove(__hashtable, __key)                    \
     weechat_plugin->hashtable_remove(__hashtable, __key)
 #define weechat_hashtable_remove_all(__hashtable)                       \

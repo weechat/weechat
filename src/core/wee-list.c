@@ -32,7 +32,7 @@
 #include "wee-list.h"
 #include "wee-log.h"
 #include "wee-string.h"
-#include "../plugins/weechat-plugin.h"
+#include "../plugins/plugin.h"
 
 
 /*

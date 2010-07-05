@@ -31,12 +31,13 @@
 
 #include "weechat.h"
 #include "wee-hashtable.h"
+#include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-string.h"
-#include "../plugins/weechat-plugin.h"
+#include "../plugins/plugin.h"
 
 
-char *hashtable_type_names[HASHTABLE_NUM_TYPES] =
+char *hashtable_type_string[HASHTABLE_NUM_TYPES] =
 { "integer", "string", "pointer", "buffer", "time" };
 
 
@@ -54,7 +55,7 @@ hashtable_get_type (const char *type)
     
     for (i = 0; i < HASHTABLE_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (hashtable_type_names[i], type) == 0)
+        if (string_strcasecmp (hashtable_type_string[i], type) == 0)
             return i;
     }
     
@@ -247,7 +248,10 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     /* replace value if item is already in hash table */
     if (ptr_item && (hashtable->callback_keycmp (hashtable, key, ptr_item->key) == 0))
     {
-        ptr_item->value = value;
+        hashtable_free_type (hashtable->type_values, ptr_item->value);
+        hashtable_alloc_type (hashtable->type_values,
+                              value, value_size,
+                              &ptr_item->value, &ptr_item->value_size);
         return 1;
     }
     
@@ -399,6 +403,74 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
+ * hashtable_add_to_infolist: add hashtable keys and values to infolist
+ *                            return 1 if ok, 0 if error
+ */
+
+int
+hashtable_add_to_infolist (struct t_hashtable *hashtable,
+                           struct t_infolist_item *infolist_item,
+                           const char *prefix)
+{
+    int i, item_number;
+    struct t_hashtable_item *ptr_item;
+    char option_name[128];
+    
+    if (!hashtable || (hashtable->type_keys != HASHTABLE_STRING)
+        || !infolist_item || !prefix)
+        return 0;
+    
+    item_number = 0;
+    for (i = 0; i < hashtable->size; i++)
+    {
+        for (ptr_item = hashtable->htable[i]; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "%s_name_%05d", prefix, item_number);
+            if (!infolist_new_var_string (infolist_item, option_name,
+                                          (const char *)ptr_item->key))
+                return 0;
+            snprintf (option_name, sizeof (option_name),
+                      "%s_value_%05d", prefix, item_number);
+            switch (hashtable->type_values)
+            {
+                case HASHTABLE_INTEGER:
+                    if (!infolist_new_var_integer (infolist_item, option_name,
+                                                   *((int *)ptr_item->value)))
+                        return 0;
+                    break;
+                case HASHTABLE_STRING:
+                    if (!infolist_new_var_string (infolist_item, option_name,
+                                                  (const char *)ptr_item->value))
+                        return 0;
+                    break;
+                case HASHTABLE_POINTER:
+                    if (!infolist_new_var_pointer (infolist_item, option_name,
+                                                   ptr_item->value))
+                        return 0;
+                    break;
+                case HASHTABLE_BUFFER:
+                    if (!infolist_new_var_buffer (infolist_item, option_name,
+                                                  ptr_item->value,
+                                                  ptr_item->value_size))
+                        return 0;
+                    break;
+                case HASHTABLE_TIME:
+                    if (!infolist_new_var_time (infolist_item, option_name,
+                                                *((time_t *)ptr_item->value)))
+                        return 0;
+                    break;
+                case HASHTABLE_NUM_TYPES:
+                    break;
+            }
+            item_number++;
+        }
+    }
+    return 1;
+}
+
+/*
  * hashtable_remove_item: remove an item from hashmap
  */
 
@@ -488,8 +560,12 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
     log_printf ("  size . . . . . . . . . : %d",    hashtable->size);
     log_printf ("  htable . . . . . . . . : 0x%lx", hashtable->htable);
     log_printf ("  items_count. . . . . . : %d",    hashtable->items_count);
-    log_printf ("  type_keys. . . . . . . : %d",    hashtable->type_keys);
-    log_printf ("  type_values. . . . . . : %d",    hashtable->type_values);
+    log_printf ("  type_keys. . . . . . . : %d (%s)",
+                hashtable->type_keys,
+                hashtable_type_string[hashtable->type_keys]);
+    log_printf ("  type_values. . . . . . : %d (%s)",
+                hashtable->type_values,
+                hashtable_type_string[hashtable->type_values]);
     log_printf ("  callback_hash_key. . . : 0x%lx", hashtable->callback_hash_key);
     log_printf ("  callback_keycmp. . . . : 0x%lx", hashtable->callback_keycmp);
     

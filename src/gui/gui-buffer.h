@@ -20,6 +20,7 @@
 #ifndef __WEECHAT_GUI_BUFFER_H
 #define __WEECHAT_GUI_BUFFER_H 1
 
+struct t_hashtable;
 struct t_gui_window;
 struct t_infolist;
 
@@ -48,14 +49,6 @@ enum t_gui_buffer_notify
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
 /* buffer structures */
-
-struct t_gui_buffer_local_var
-{
-    char *name;                        /* variable name                     */
-    char *value;                       /* value                             */
-    struct t_gui_buffer_local_var *prev_var; /* link to previous variable   */
-    struct t_gui_buffer_local_var *next_var; /* link to next variable       */
-};
 
 struct t_gui_input_undo
 {
@@ -176,8 +169,7 @@ struct t_gui_buffer
     int keys_count;                    /* number of keys in buffer          */
     
     /* local variables */
-    struct t_gui_buffer_local_var *local_variables; /* local variables      */
-    struct t_gui_buffer_local_var *last_local_var;  /* last local variable  */
+    struct t_hashtable *local_variables; /* local variables                 */
     
     /* link to previous/next buffer */
     struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
@@ -208,8 +200,6 @@ extern char *gui_buffer_properties_set[];
 
 /* buffer functions */
 
-extern struct t_gui_buffer_local_var *gui_buffer_local_var_search (struct t_gui_buffer *buffer,
-                                                                   const char *name);
 extern void gui_buffer_notify_set_all ();
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             const char *name,
