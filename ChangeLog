@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-05
+v0.3.3-dev, 2010-07-06
 
 
 Version 0.3.3 (under dev!)
@@ -19,6 +19,8 @@ Version 0.3.3 (under dev!)
 * core: add hashtables with new functions in plugin API
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: improve lag indicator: two colors (counting and finished), update item
+  even when pong has not been received, lag_min_show is now in milliseconds
 * irc: use empty real name by default in config, instead of reading real name
   in /etc/passwd (bug #30111)
 * irc: add new options irc.look.display_host_join/join_local/quit and

@@ -13,6 +13,16 @@
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: default)
 
+* *irc.color.item_lag_counting*
+** Beschreibung: color for lag indicator, when counting (pong not received from server, lag is increasing)
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: default)
+
+* *irc.color.item_lag_finished*
+** Beschreibung: color for lag indicator, when pong has been received from server
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: yellow)
+
 * *irc.color.message_join*
 ** Beschreibung: Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt werden soll
 ** Typ: Farbe
@@ -246,12 +256,12 @@
 * *irc.network.away_check*
 ** Beschreibung: Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall  (in Minuten, 0 = nicht überprüfen)
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 0)
+** Werte: 0 .. 10080 (Standardwert: 0)
 
 * *irc.network.away_check_max_nicks*
 ** Beschreibung: Die Abwesenheit von Nutzern in Channels wird nicht überprüft wenn die Anzahl der Nutzer höher ist, als der angegebene Wert (0 = unbegrenzte Anzahl an Nutzern im Channel)
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 25)
+** Werte: 0 .. 1000000 (Standardwert: 25)
 
 * *irc.network.colors_receive*
 ** Beschreibung: Falls deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert.
@@ -281,17 +291,22 @@
 * *irc.network.lag_check*
 ** Beschreibung: Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine Überprüfung)
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 60)
+** Werte: 0 .. 604800 (Standardwert: 60)
 
 * *irc.network.lag_disconnect*
 ** Beschreibung: Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 0)
+** Werte: 0 .. 10080 (Standardwert: 0)
 
 * *irc.network.lag_min_show*
-** Beschreibung: Mindest-Lag, der angezeigt werden soll (in Sekunden)
+** Beschreibung: minimum lag to show (in milliseconds)
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 1)
+** Werte: 0 .. 86400000 (Standardwert: 500)
+
+* *irc.network.lag_refresh_interval*
+** Beschreibung: interval between two refreshs of lag item, when lag is increasing (in seconds)
+** Typ: integer
+** Werte: 1 .. 3600 (Standardwert: 1)
 
 * *irc.network.send_unknown_commands*
 ** Beschreibung: Sende unbekannte Befehle an den Server

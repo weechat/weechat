@@ -96,6 +96,8 @@ struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_input_nick;
 struct t_config_option *irc_config_color_item_away;
 struct t_config_option *irc_config_color_item_channel_modes;
+struct t_config_option *irc_config_color_item_lag_counting;
+struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_reason_quit;
 
 /* IRC config, network section */
@@ -110,6 +112,7 @@ struct t_config_option *irc_config_network_away_check_max_nicks;
 struct t_config_option *irc_config_network_lag_check;
 struct t_config_option *irc_config_network_lag_min_show;
 struct t_config_option *irc_config_network_lag_disconnect;
+struct t_config_option *irc_config_network_lag_refresh_interval;
 struct t_config_option *irc_config_network_anti_flood[2];
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
@@ -417,6 +420,22 @@ irc_config_change_color_item_buffer_name (void *data,
 }
 
 /*
+ * irc_config_change_color_item_lag: called when the color of lag item is
+ *                                   changed
+ */
+
+void
+irc_config_change_color_item_lag (void *data,
+                                  struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("lag");
+}
+
+/*
  * irc_config_change_color_nick_prefix: called when the color of a nick prefix
  *                                      is changed
  */
@@ -488,6 +507,21 @@ irc_config_change_network_lag_check (void *data,
         if (ptr_server->is_connected)
             ptr_server->lag_next_check = time_next_check;
     }
+}
+
+/*
+ * irc_config_change_network_lag_min_show: called when lag min show is changed
+ */
+
+void
+irc_config_change_network_lag_min_show (void *data,
+                                        struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("lag");
 }
 
 /*
@@ -1725,6 +1759,19 @@ irc_config_init ()
         N_("color for channel modes, near channel name"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
         &irc_config_change_color_item_buffer_name, NULL, NULL, NULL);
+    irc_config_color_item_lag_counting = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_lag_counting", "color",
+        N_("color for lag indicator, when counting (pong not received from "
+           "server, lag is increasing)"),
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        &irc_config_change_color_item_lag, NULL, NULL, NULL);
+    irc_config_color_item_lag_finished = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_lag_finished", "color",
+        N_("color for lag indicator, when pong has been received from server"),
+        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
+        &irc_config_change_color_item_lag, NULL, NULL, NULL);
     irc_config_color_reason_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "reason_quit", "color",
@@ -1782,33 +1829,40 @@ irc_config_init ()
         "away_check", "integer",
         N_("interval between two checks for away (in minutes, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL,
+        NULL, 0, 60 * 24 * 7, "0", NULL, 0, NULL, NULL,
         &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_away_check_max_nicks = weechat_config_new_option (
         irc_config_file, ptr_section,
         "away_check_max_nicks", "integer",
         N_("do not check away nicks on channels with high number of nicks "
            "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "25", NULL, 0, NULL, NULL,
+        NULL, 0, 1000000, "25", NULL, 0, NULL, NULL,
         &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_check", "integer",
         N_("interval between two checks for lag (in seconds, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "60", NULL, 0, NULL, NULL,
+        NULL, 0, 3600 * 24 * 7, "60", NULL, 0, NULL, NULL,
         &irc_config_change_network_lag_check, NULL, NULL, NULL);
     irc_config_network_lag_min_show = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_min_show", "integer",
-        N_("minimum lag to show (in seconds)"),
-        NULL, 0, INT_MAX, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        N_("minimum lag to show (in milliseconds)"),
+        NULL, 0, 1000 * 3600 * 24, "500", NULL, 0, NULL, NULL,
+        &irc_config_change_network_lag_min_show, NULL, NULL, NULL);
     irc_config_network_lag_disconnect = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_disconnect", "integer",
         N_("disconnect after important lag (in minutes, 0 = never "
            "disconnect)"),
-        NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 60 * 24 * 7, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_network_lag_refresh_interval = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "lag_refresh_interval", "integer",
+        N_("interval between two refreshs of lag item, when lag is increasing "
+           "(in seconds)"),
+        NULL, 1, 3600, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_anti_flood[0] = weechat_config_new_option (
         irc_config_file, ptr_section,
         "anti_flood_prio_high", "integer",

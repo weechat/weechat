@@ -13,6 +13,16 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: default)
 
+* *irc.color.item_lag_counting*
+** descrizione: color for lag indicator, when counting (pong not received from server, lag is increasing)
+** tipo: colore
+** valori: un nome colore (valore predefinito: default)
+
+* *irc.color.item_lag_finished*
+** descrizione: color for lag indicator, when pong has been received from server
+** tipo: colore
+** valori: un nome colore (valore predefinito: yellow)
+
 * *irc.color.message_join*
 ** descrizione: colore per il testo nei messaggi di entrata
 ** tipo: colore
@@ -246,12 +256,12 @@
 * *irc.network.away_check*
 ** descrizione: intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 0)
+** valori: 0 .. 10080 (valore predefinito: 0)
 
 * *irc.network.away_check_max_nicks*
 ** descrizione: non verificare l'assenza su canali con un elevato numero di nick (0 = illimitato)
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 25)
+** valori: 0 .. 1000000 (valore predefinito: 25)
 
 * *irc.network.colors_receive*
 ** descrizione: se disabilitato, i codici colori vengono ignorati nei messaggi in entrata
@@ -281,17 +291,22 @@
 * *irc.network.lag_check*
 ** descrizione: intervallo tra due controlli per il ritardo (in secondi, 0 = nessun controllo)
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 60)
+** valori: 0 .. 604800 (valore predefinito: 60)
 
 * *irc.network.lag_disconnect*
 ** descrizione: disconnetti dopo un ritardo eccessivo (in minuti, 0 = nessuna disconnessione)
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 0)
+** valori: 0 .. 10080 (valore predefinito: 0)
 
 * *irc.network.lag_min_show*
-** descrizione: ritardo minimo da visualizzare (in secondi)
+** descrizione: minimum lag to show (in milliseconds)
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 1)
+** valori: 0 .. 86400000 (valore predefinito: 500)
+
+* *irc.network.lag_refresh_interval*
+** descrizione: interval between two refreshs of lag item, when lag is increasing (in seconds)
+** tipo: intero
+** valori: 1 .. 3600 (valore predefinito: 1)
 
 * *irc.network.send_unknown_commands*
 ** descrizione: invia comandi sconosciuti al server

@@ -422,6 +422,7 @@ irc_server_alloc (const char *name)
     new_server->lag_check_time.tv_usec = 0;
     new_server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
+    new_server->lag_last_refresh = 0;
     new_server->cmd_list_regexp = NULL;
     new_server->last_user_message = 0;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
@@ -1937,7 +1938,6 @@ irc_server_timer_cb (void *data, int remaining_calls)
     struct t_irc_server *ptr_server;
     time_t new_time;
     static struct timeval tv;
-    int diff;
     
     /* make C compiler happy */
     (void) data;
@@ -1970,6 +1970,8 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     irc_server_sendf (ptr_server, 0, "PING %s",
                                       ptr_server->addresses_array[ptr_server->index_current_address]);
                     gettimeofday (&(ptr_server->lag_check_time), NULL);
+                    ptr_server->lag = 0;
+                    ptr_server->lag_last_refresh = 0;
                 }
                 
                 /* check if it's time to autojoin channels (after command delay) */
@@ -1981,14 +1983,23 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     ptr_server->command_time = 0;
                 }
                 
-                /* lag timeout => disconnect */
-                if ((ptr_server->lag_check_time.tv_sec != 0)
-                    && (weechat_config_integer (irc_config_network_lag_disconnect) > 0))
+                /* compute lag */
+                if (ptr_server->lag_check_time.tv_sec != 0)
                 {
                     gettimeofday (&tv, NULL);
-                    diff = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
-                                                            &tv);
-                    if (diff / 1000 > weechat_config_integer (irc_config_network_lag_disconnect) * 60)
+                    ptr_server->lag = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
+                                                                       &tv);
+                    /* refresh lag item if needed */
+                    if (((ptr_server->lag_last_refresh == 0)
+                         || (new_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))
+                        && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
+                    {
+                        ptr_server->lag_last_refresh = new_time;
+                        weechat_bar_item_update ("lag");
+                    }
+                    /* lag timeout? => disconnect */
+                    if ((weechat_config_integer (irc_config_network_lag_disconnect) > 0)
+                        && (ptr_server->lag / 1000 > weechat_config_integer (irc_config_network_lag_disconnect) * 60))
                     {
                         weechat_printf (ptr_server->buffer,
                                         _("%s: lag is high, disconnecting "
@@ -3074,6 +3085,7 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
     server->lag_check_time.tv_usec = 0;
     server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
+    server->lag_last_refresh = 0;
     
     if (reconnect
         && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
@@ -3676,6 +3688,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", server->lag_next_check))
         return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", server->lag_last_refresh))
+        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
         return 0;
     
@@ -3905,6 +3919,7 @@ irc_server_print_log ()
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);
         weechat_log_printf ("  lag_next_check . . . : %ld",   ptr_server->lag_next_check);
+        weechat_log_printf ("  lag_last_refresh . . : %ld",   ptr_server->lag_last_refresh);
         weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
         weechat_log_printf ("  last_user_message. . : %ld",   ptr_server->last_user_message);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)

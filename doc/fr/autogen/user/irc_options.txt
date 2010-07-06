@@ -13,6 +13,16 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: default)
 
+* *irc.color.item_lag_counting*
+** description: couleur pour l'indicateur de lag, lorsque le décompte est en cours (pong non reçu du serveur, le lag augmente)
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: default)
+
+* *irc.color.item_lag_finished*
+** description: couleur pour l'indicateur de lag, lorsque le pong a été reçu du serveur
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: yellow)
+
 * *irc.color.message_join*
 ** description: couleur pour le texte dans les messages join
 ** type: couleur
@@ -246,12 +256,12 @@
 * *irc.network.away_check*
 ** description: intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 0)
+** valeurs: 0 .. 10080 (valeur par défaut: 0)
 
 * *irc.network.away_check_max_nicks*
 ** description: ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 25)
+** valeurs: 0 .. 1000000 (valeur par défaut: 25)
 
 * *irc.network.colors_receive*
 ** description: si désactivé, les codes couleurs des messages entrants sont ignorés
@@ -281,17 +291,22 @@
 * *irc.network.lag_check*
 ** description: intervalle entre deux vérifications du lag (en secondes, 0 = ne jamais vérifier)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 60)
+** valeurs: 0 .. 604800 (valeur par défaut: 60)
 
 * *irc.network.lag_disconnect*
 ** description: déconnexion après un lag important (en minutes, 0 = ne jamais se déconnecter)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 0)
+** valeurs: 0 .. 10080 (valeur par défaut: 0)
 
 * *irc.network.lag_min_show*
-** description: lag minimum à afficher (en secondes)
+** description: lag minimum à afficher (en millisecondes)
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: 1)
+** valeurs: 0 .. 86400000 (valeur par défaut: 500)
+
+* *irc.network.lag_refresh_interval*
+** description: intervalle entre deux rafraichissements du lag, lorsque le lag augmente (en secondes)
+** type: entier
+** valeurs: 1 .. 3600 (valeur par défaut: 1)
 
 * *irc.network.send_unknown_commands*
 ** description: envoie les commandes inconnues au serveur

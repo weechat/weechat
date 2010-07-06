@@ -149,6 +149,7 @@ struct t_irc_server
     int lag;                        /* lag (in milliseconds)                 */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent) */
     time_t lag_next_check;          /* time for next check                   */
+    time_t lag_last_refresh;        /* last refresh of lag item              */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     time_t last_user_message;       /* time of last user message (anti flood)*/
     struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */

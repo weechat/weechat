@@ -13,6 +13,16 @@
 ** type: color
 ** values: a color name (default value: default)
 
+* *irc.color.item_lag_counting*
+** description: color for lag indicator, when counting (pong not received from server, lag is increasing)
+** type: color
+** values: a color name (default value: default)
+
+* *irc.color.item_lag_finished*
+** description: color for lag indicator, when pong has been received from server
+** type: color
+** values: a color name (default value: yellow)
+
 * *irc.color.message_join*
 ** description: color for text in join messages
 ** type: color
@@ -246,12 +256,12 @@
 * *irc.network.away_check*
 ** description: interval between two checks for away (in minutes, 0 = never check)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 0)
+** values: 0 .. 10080 (default value: 0)
 
 * *irc.network.away_check_max_nicks*
 ** description: do not check away nicks on channels with high number of nicks (0 = unlimited)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 25)
+** values: 0 .. 1000000 (default value: 25)
 
 * *irc.network.colors_receive*
 ** description: when off, colors codes are ignored in incoming messages
@@ -281,17 +291,22 @@
 * *irc.network.lag_check*
 ** description: interval between two checks for lag (in seconds, 0 = never check)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 60)
+** values: 0 .. 604800 (default value: 60)
 
 * *irc.network.lag_disconnect*
 ** description: disconnect after important lag (in minutes, 0 = never disconnect)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 0)
+** values: 0 .. 10080 (default value: 0)
 
 * *irc.network.lag_min_show*
-** description: minimum lag to show (in seconds)
+** description: minimum lag to show (in milliseconds)
 ** type: integer
-** values: 0 .. 2147483647 (default value: 1)
+** values: 0 .. 86400000 (default value: 500)
+
+* *irc.network.lag_refresh_interval*
+** description: interval between two refreshs of lag item, when lag is increasing (in seconds)
+** type: integer
+** values: 1 .. 3600 (default value: 1)
 
 * *irc.network.send_unknown_commands*
 ** description: send unknown commands to server

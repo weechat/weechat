@@ -274,6 +274,7 @@ irc_upgrade_read_cb (void *data,
                     if (buf)
                         memcpy (&(irc_upgrade_current_server->lag_check_time), buf, size);
                     irc_upgrade_current_server->lag_next_check = weechat_infolist_time (infolist, "lag_next_check");
+                    irc_upgrade_current_server->lag_last_refresh = weechat_infolist_time (infolist, "lag_last_refresh");
                     irc_upgrade_current_server->last_user_message = weechat_infolist_time (infolist, "last_user_message");
                 }
                 break;

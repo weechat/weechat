@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-06-22 19:24+0200\n"
+"POT-Creation-Date: 2010-07-06 11:58+0200\n"
 "PO-Revision-Date: 2010-06-20 21:24+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4637,6 +4637,14 @@ msgstr "color para el texto \"ausente\" en al barra de entrada"
 msgid "color for channel modes, near channel name"
 msgstr "color para los modos del canal, junto al nombre del canal"
 
+msgid ""
+"color for lag indicator, when counting (pong not received from server, lag "
+"is increasing)"
+msgstr ""
+
+msgid "color for lag indicator, when pong has been received from server"
+msgstr ""
+
 #, fuzzy
 msgid "color for reason in part/quit messages"
 msgstr "color para el texto en mensajes de salida/abandono"
@@ -4687,12 +4695,21 @@ msgstr ""
 "intervalo entre dos comprobaciones de retraso (en segundos, 0 = nunca "
 "comprobar)"
 
-msgid "minimum lag to show (in seconds)"
+#, fuzzy
+msgid "minimum lag to show (in milliseconds)"
 msgstr "retraso mínimo a mostrar (en segundos)"
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "desconexión tras un retraso importante (en minutos, 0 = no desconectar nunca)"
+
+#, fuzzy
+msgid ""
+"interval between two refreshs of lag item, when lag is increasing (in "
+"seconds)"
+msgstr ""
+"intervalo entre dos comprobaciones de retraso (en segundos, 0 = nunca "
+"comprobar)"
 
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "

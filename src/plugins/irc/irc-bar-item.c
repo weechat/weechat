@@ -365,7 +365,7 @@ char *
 irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
                   struct t_gui_window *window)
 {
-    char buf[32];
+    char buf[128];
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     
@@ -380,11 +380,14 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
         irc_buffer_get_server_and_channel (buffer, &server, NULL);
         
         if (server
-            && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show) * 1000))
+            && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
         {
             snprintf (buf, sizeof (buf),
-                      "%s: %.1f",
+                      ((server->lag_check_time.tv_sec == 0) || (server->lag < 1000)) ?
+                      "%s: %s%.3f" : "%s: %s%.0f",
                       _("Lag"),
+                      (server->lag_check_time.tv_sec == 0) ?
+                      IRC_COLOR_ITEM_LAG_FINISHED : IRC_COLOR_ITEM_LAG_COUNTING,
                       ((float)(server->lag)) / 1000);
             return strdup (buf);
         }
