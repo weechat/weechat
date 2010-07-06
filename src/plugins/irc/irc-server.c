@@ -2706,11 +2706,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
                 /* client certificate info */
 #if LIBGNUTLS_VERSION_NUMBER < 0x020400
-                rinfo = gnutls_x509_crt_print (cert_temp,
+                rinfo = gnutls_x509_crt_print (server->tls_cert,
                                                GNUTLS_X509_CRT_ONELINE,
                                                &cinfo);
 #else
-                rinfo = gnutls_x509_crt_print (cert_temp,
+                rinfo = gnutls_x509_crt_print (server->tls_cert,
                                                GNUTLS_CRT_PRINT_ONELINE,
                                                &cinfo);
 #endif
@@ -2723,7 +2723,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                     gnutls_free (cinfo.data);
                 }
 #endif
-                memcpy(answer, &tls_struct, sizeof (gnutls_retr_st));
+                memcpy (answer, &tls_struct, sizeof (gnutls_retr_st));
                 free (cert_str);
             }
             else
