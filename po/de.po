@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-06 11:58+0200\n"
-"PO-Revision-Date: 2010-06-20 21:24+0200\n"
+"POT-Creation-Date: 2010-07-06 17:58+0200\n"
+"PO-Revision-Date: 2010-07-06 18:18+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -71,7 +71,7 @@ msgstr ""
 "  -h, --help              zeigt diese Hilfe an\n"
 "  -k, --keys              zeigt die Standard-Tastaturbelegung an\n"
 "  -l, --license           zeigt die Lizenz von WeeChat an\n"
-"  -p, --no-plugin         verhindert das Laden der Erweiterungen, beim "
+"  -p, --no-plugin         unterbindet das Laden der Erweiterungen, beim "
 "Programmstart\n"
 "  -s, --no-script         Skripten werden beim Programmstart nicht geladen\n"
 "  -v, --version           zeigt die Version von WeeChat an\n"
@@ -80,7 +80,7 @@ msgstr ""
 "                          folgender URL verbinden:\n"
 "                          irc[6][s]://[nickname[:password]@]irc.beispiel.org"
 "[/port][//#channel1][,#channel2[...]]\n"
-"                          (siehe Dokumentation zu der IRC-Erweiterungen um "
+"                          (siehe Dokumentation zu den IRC-Erweiterungen um "
 "zusätzliche Informationen\n"
 "                          zu den mögliche Optionen zu erhalten.)\n"
 
@@ -453,7 +453,7 @@ msgid "Saved layout for buffers:"
 msgstr "Layout gespeichert für die Buffer:"
 
 msgid "Saved layout for windows:"
-msgstr "gespeicherte Layouts  für Fenster:"
+msgstr "gespeicherte Layouts für Fenster:"
 
 msgid "No layout saved"
 msgstr "Kein Layout gespeichert"
@@ -1738,9 +1738,9 @@ msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message)"
 msgstr ""
-"Standardeinstellung der Benachrichtigungsstufe  für Buffer (dies wird "
-"genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden "
-"soll oder nicht, entsprechend der Wichtigkeit der Nachricht)"
+"Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt "
+"um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll "
+"oder nicht, entsprechend der Wichtigkeit der Nachricht)"
 
 msgid "time format for each line displayed in buffers"
 msgstr ""
@@ -4637,7 +4637,7 @@ msgstr ""
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 "Es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der "
-"User wieder zurück ist  (falls der User sich beim Server abgemeldet hat)"
+"User wieder zurück ist (falls der User sich beim Server abgemeldet hat)"
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "Zeige die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
@@ -4758,9 +4758,14 @@ msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
 msgstr ""
+"Farbe in der der Lag-Indikator dargestellt werden soll wenn auf Antwort "
+"gewartet wird (\"pong\" wurde vom Server nicht empfangen und die "
+"Verzögerungszeit wird erhöht)"
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
+"Farbe in der der Lag-Indikator dargestellt werden soll, falls ein \"pong\" "
+"vom Server empfangen wurde"
 
 msgid "color for reason in part/quit messages"
 msgstr ""
@@ -4821,21 +4826,20 @@ msgstr ""
 "Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine "
 "Überprüfung)"
 
-#, fuzzy
 msgid "minimum lag to show (in milliseconds)"
-msgstr "Mindest-Lag, der angezeigt werden soll (in Sekunden)"
+msgstr ""
+"geringste Verzögerungszeit (Lag) die angezeigt werden soll (in Millisekunden)"
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)"
 
-#, fuzzy
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
 "seconds)"
 msgstr ""
-"Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine "
-"Überprüfung)"
+"Intervall zwischen zwei Aktualisierungen des Lag-Items, wenn die "
+"Verzögerungszeit sich erhöht (in Sekunden)"
 
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
@@ -4951,13 +4955,11 @@ msgstr "Nicknamen des IRC-Hosts erhalten"
 msgid "IRC host (like `:nick!name@server.com`)"
 msgstr "IRC host (in der Form `:nick!name@server.com`)"
 
-#, fuzzy
 msgid "get nick color code"
-msgstr "Hole Farbe für Nick"
+msgstr "Hole Farbe-Code des Nick"
 
-#, fuzzy
 msgid "get nick color name"
-msgstr "Hole Farbe für Nick"
+msgstr "Hole Namen der Farbe des Nick"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "hole Buffer Pointer für einen IRC Server/Channel/Nick"
@@ -5210,19 +5212,20 @@ msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic set on %s"
-msgstr "%sKein Topic für %s%s gesetzt"
+msgstr "%sTopic festgelegt am %s"
 
 #. TRANSLATORS: "%s" after "on" is date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTopic für %s%s%s festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
+# "%s" nach "on" ist ein Datum
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s set on %s"
-msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
+msgstr "%sDas Topic von %s%s%s wurde festgelegt am: %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
