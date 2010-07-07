@@ -267,58 +267,52 @@ gui_color_decode (const char *string, const char *replacement)
         {
             case GUI_COLOR_COLOR_CHAR:
                 ptr_string++;
+                switch (ptr_string[0])
+                {
+                    case GUI_COLOR_FG_CHAR:
+                    case GUI_COLOR_BG_CHAR:
+                        if (ptr_string[1] && ptr_string[2])
+                            ptr_string += 3;
+                        break;
+                    case GUI_COLOR_FG_BG_CHAR:
+                        if (ptr_string[1] && ptr_string[2] && (ptr_string[3] == ',')
+                            && ptr_string[4] && ptr_string[5])
+                            ptr_string += 6;
+                        break;
+                    case GUI_COLOR_BAR_CHAR:
+                        ptr_string++;
+                        switch (ptr_string[0])
+                        {
+                            case GUI_COLOR_BAR_FG_CHAR:
+                            case GUI_COLOR_BAR_BG_CHAR:
+                            case GUI_COLOR_BAR_DELIM_CHAR:
+                            case GUI_COLOR_BAR_START_INPUT_CHAR:
+                            case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
+                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                                ptr_string++;
+                                break;
+                        }
+                        break;
+                    default:
+                        if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+                            ptr_string += 2;
+                        break;
+                }
                 if (replacement && replacement[0])
                 {
                     out[out_pos] = replacement[0];
                     out_pos++;
-                }
-                else
-                {
-                    switch (ptr_string[0])
-                    {
-                        case GUI_COLOR_FG_CHAR:
-                        case GUI_COLOR_BG_CHAR:
-                            if (ptr_string[1] && ptr_string[2])
-                                ptr_string += 3;
-                            break;
-                        case GUI_COLOR_FG_BG_CHAR:
-                            if (ptr_string[1] && ptr_string[2] && (ptr_string[3] == ',')
-                                && ptr_string[4] && ptr_string[5])
-                                ptr_string += 6;
-                            break;
-                        case GUI_COLOR_BAR_CHAR:
-                            ptr_string++;
-                            switch (ptr_string[0])
-                            {
-                                case GUI_COLOR_BAR_FG_CHAR:
-                                case GUI_COLOR_BAR_BG_CHAR:
-                                case GUI_COLOR_BAR_DELIM_CHAR:
-                                case GUI_COLOR_BAR_START_INPUT_CHAR:
-                                case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
-                                case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                                    ptr_string++;
-                                    break;
-                            }
-                            break;
-                        default:
-                            if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
-                                ptr_string += 2;
-                            break;
-                    }
                 }
                 break;
             case GUI_COLOR_SET_WEECHAT_CHAR:
             case GUI_COLOR_REMOVE_WEECHAT_CHAR:
                 ptr_string++;
+                if (ptr_string[0])
+                    ptr_string++;
                 if (replacement && replacement[0])
                 {
                     out[out_pos] = replacement[0];
                     out_pos++;
-                }
-                else
-                {
-                    if (ptr_string[0])
-                        ptr_string++;
                 }
                 break;
             case GUI_COLOR_RESET_CHAR:

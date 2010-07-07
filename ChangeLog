@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-06
+v0.3.3-dev, 2010-07-07
 
 
 Version 0.3.3 (under dev!)
@@ -17,6 +17,8 @@ Version 0.3.3 (under dev!)
   process)
 * core: fix display bug with attributes like underlined in bars (bug #29889)
 * core: add hashtables with new functions in plugin API
+* api: fix bug with replacement char in function string_remove_color
+  (bug #30296)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
 * irc: fix display of local SSL certificate when it is sent to server
