@@ -2643,19 +2643,23 @@ command_plugin_list (const char *name, int full)
         {
             plugins_found++;
             
-            /* plugin info */
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL,
-                             "  %s%s%s v%s - %s (%s)",
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             ptr_plugin->name,
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             ptr_plugin->version,
-                             ptr_plugin->description,
-                             ptr_plugin->filename);
-            
             if (full)
             {
+                gui_chat_printf (NULL, "");
+                
+                /* plugin info */
+                gui_chat_printf (NULL,
+                                 "  %s%s %s[%sv%s%s]%s: %s (%s)",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 ptr_plugin->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 ptr_plugin->version,
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 ptr_plugin->description,
+                                 ptr_plugin->filename);
+                
                 /* second line of plugin info */
                 gui_chat_printf (NULL,
                                  _("  written by \"%s\", license: %s"),
@@ -2887,6 +2891,16 @@ command_plugin_list (const char *name, int full)
                                          HOOK_MODIFIER(ptr_hook, modifier));
                     }
                 }
+            }
+            else
+            {
+                /* plugin info */
+                gui_chat_printf (NULL,
+                                 "  %s%s%s: %s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 ptr_plugin->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 ptr_plugin->description);
             }
         }
     }
