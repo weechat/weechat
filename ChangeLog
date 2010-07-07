@@ -22,6 +22,7 @@ Version 0.3.3 (under dev!)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
 * irc: fix display of local SSL certificate when it is sent to server
+  (patch #7218)
 * irc: improve lag indicator: two colors (counting and finished), update item
   even when pong has not been received, lag_min_show is now in milliseconds
 * irc: use empty real name by default in config, instead of reading real name
