@@ -71,7 +71,7 @@ Create an IRC server
 
 You can add an IRC server with `/server` command, for example:
 
-  /server add oftc irc.oftc.org/6667
+  /server add oftc irc.oftc.net/6667
 
 As usual, help is available if you're lost: `/help server`
 

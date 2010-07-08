@@ -68,7 +68,7 @@ IRCのようにすべてのネットワークプロトコルはそれぞれ異�
 
 `/server` コマンドでIRCサーバを追加できます。例:
 
-  /server add oftc irc.oftc.org/6667
+  /server add oftc irc.oftc.net/6667
 
 書式が思い出せない場合はヘルプを利用してください: `/help server`
 

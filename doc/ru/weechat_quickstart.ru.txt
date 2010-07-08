@@ -70,7 +70,7 @@ WeeChat после изменений в настройках)
 
 Вы можете добавить сервер используя команду `/server`, на пример:
 
-  /server add oftc irc.oftc.org/6667
+  /server add oftc irc.oftc.net/6667
 
 Вы всегда можете обратиться к справке набрав: `/help server`
 

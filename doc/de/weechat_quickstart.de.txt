@@ -77,7 +77,7 @@ Einen IRC-Server erstellen
 
 Du kannst einen IRC-Server mit dem Befehl `/server` hinzufügen, z.B.:
 
-  /server add oftc irc.oftc.org/6667
+  /server add oftc irc.oftc.net/6667
 
 Wie immer, wenn Du nicht mehr weiter weißt, kannst Du mit `/help server` Hilfe
 erlangen.
