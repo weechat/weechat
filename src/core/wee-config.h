@@ -35,6 +35,15 @@ enum t_config_look_nicklist
     CONFIG_LOOK_NICKLIST_BOTTOM,
 };
 
+enum t_config_look_align_end_of_lines
+{
+    CONFIG_LOOK_ALIGN_END_OF_LINES_TIME = 0,
+    CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER,
+    CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX,
+    CONFIG_LOOK_ALIGN_END_OF_LINES_SUFFIX,
+    CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
+};
+
 enum t_config_look_prefix_align
 {
     CONFIG_LOOK_PREFIX_ALIGN_NONE = 0,
@@ -85,6 +94,7 @@ extern struct t_config_option *config_startup_command_before_plugins;
 extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;
 
+extern struct t_config_option *config_look_align_end_of_lines;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_command_chars;

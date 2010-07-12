@@ -72,6 +72,7 @@ struct t_config_option *config_startup_display_version;
 
 /* config, look & feel section */
 
+struct t_config_option *config_look_align_end_of_lines;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_nicks_number;
@@ -1233,6 +1234,13 @@ config_weechat_init_options ()
         return 0;
     }
     
+    config_look_align_end_of_lines = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "align_end_of_lines", "integer",
+        N_("alignment for end of lines (all lines after the first): they "
+           "are starting under this data (time, buffer, prefix, suffix, "
+           "message (default))"),
+        "time|buffer|prefix|suffix|message", 0, 0, "message", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_notify_default", "integer",

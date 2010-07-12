@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-07
+v0.3.3-dev, 2010-07-12
 
 
 Version 0.3.3 (under dev!)
@@ -9,6 +9,7 @@ Version 0.3.3 (under dev!)
 
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
+* core: add new option weechat.look.align_end_of_lines
 * core: add new option weechat.look.confirm_quit
 * core: add new option weechat.color.status_name_ssl (task #10339)
 * core: fix bug with scroll_unread: do not scroll to a filtered line

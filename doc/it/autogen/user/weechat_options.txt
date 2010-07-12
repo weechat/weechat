@@ -338,6 +338,11 @@
 ** tipo: intero
 ** valori: 0 .. 1000 (valore predefinito: 50)
 
+* *weechat.look.align_end_of_lines*
+** descrizione: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** tipo: intero
+** valori: time, buffer, prefix, suffix, message (valore predefinito: message)
+
 * *weechat.look.buffer_notify_default*
 ** descrizione: livello predefinito di notifica per i buffer (utilizzato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio)
 ** tipo: intero

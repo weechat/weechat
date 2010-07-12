@@ -338,8 +338,13 @@
 ** Typ: integer
 ** Werte: 0 .. 1000 (Standardwert: 50)
 
+* *weechat.look.align_end_of_lines*
+** Beschreibung: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** Typ: integer
+** Werte: time, buffer, prefix, suffix, message (Standardwert: message)
+
 * *weechat.look.buffer_notify_default*
-** Beschreibung: Standardeinstellung der Benachrichtigungsstufe  für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht)
+** Beschreibung: Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht)
 ** Typ: integer
 ** Werte: none, highlight, message, all (Standardwert: all)
 

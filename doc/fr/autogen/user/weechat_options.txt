@@ -338,6 +338,11 @@
 ** type: entier
 ** valeurs: 0 .. 1000 (valeur par défaut: 50)
 
+* *weechat.look.align_end_of_lines*
+** description: alignement pour la fin des lignes (toutes les lignes après la première): elles démarrent sous cette donnée (time, buffer, prefix, suffix, message (par défaut))
+** type: entier
+** valeurs: time, buffer, prefix, suffix, message (valeur par défaut: message)
+
 * *weechat.look.buffer_notify_default*
 ** description: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)
 ** type: entier

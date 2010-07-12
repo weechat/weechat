@@ -14,12 +14,12 @@
 ** Werte: ein Farbname (Standardwert: default)
 
 * *irc.color.item_lag_counting*
-** Beschreibung: color for lag indicator, when counting (pong not received from server, lag is increasing)
+** Beschreibung: Farbe in der der Lag-Indikator dargestellt werden soll wenn auf Antwort gewartet wird ("pong" wurde vom Server nicht empfangen und die Verzögerungszeit wird erhöht)
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: default)
 
 * *irc.color.item_lag_finished*
-** Beschreibung: color for lag indicator, when pong has been received from server
+** Beschreibung: Farbe in der der Lag-Indikator dargestellt werden soll, falls ein "pong" vom Server empfangen wurde
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: yellow)
 
@@ -119,7 +119,7 @@
 ** Werte: on, off (Standardwert: on)
 
 * *irc.look.display_pv_back*
-** Beschreibung: Es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der User wieder zurück ist  (falls der User sich beim Server abgemeldet hat)
+** Beschreibung: Es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der User wieder zurück ist (falls der User sich beim Server abgemeldet hat)
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: on)
 
@@ -299,12 +299,12 @@
 ** Werte: 0 .. 10080 (Standardwert: 0)
 
 * *irc.network.lag_min_show*
-** Beschreibung: minimum lag to show (in milliseconds)
+** Beschreibung: geringste Verzögerungszeit (Lag) die angezeigt werden soll (in Millisekunden)
 ** Typ: integer
 ** Werte: 0 .. 86400000 (Standardwert: 500)
 
 * *irc.network.lag_refresh_interval*
-** Beschreibung: interval between two refreshs of lag item, when lag is increasing (in seconds)
+** Beschreibung: Intervall zwischen zwei Aktualisierungen des Lag-Items, wenn die Verzögerungszeit sich erhöht (in Sekunden)
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: 1)
 

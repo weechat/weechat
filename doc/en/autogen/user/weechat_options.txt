@@ -338,6 +338,11 @@
 ** type: integer
 ** values: 0 .. 1000 (default value: 50)
 
+* *weechat.look.align_end_of_lines*
+** description: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** type: integer
+** values: time, buffer, prefix, suffix, message (default value: message)
+
 * *weechat.look.buffer_notify_default*
 ** description: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message)
 ** type: integer

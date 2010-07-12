@@ -449,13 +449,13 @@ gui_chat_display_word (struct t_gui_window *window,
     
     while (data && data[0])
     {
-        /* insert spaces for align text under time/nick */
-        length_align = gui_line_get_align (window->buffer, line, 0);
-        if ((length_align > 0) &&
-            (window->win_chat_cursor_x == 0) &&
-            (*lines_displayed > 0) &&
+        /* insert spaces for aligning text under time/nick */
+        length_align = gui_line_get_align (window->buffer, line, 0, 0);
+        if ((length_align > 0)
+            && (window->win_chat_cursor_x == 0)
+            && (*lines_displayed > 0)
             /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-            (length_align < (window->win_chat_width - 5)))
+            && (length_align < (window->win_chat_width - 5)))
         {
             if (!simulate)
             {
@@ -465,7 +465,8 @@ gui_chat_display_word (struct t_gui_window *window,
                 wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
             }
             window->win_chat_cursor_x += length_align;
-            if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+            if ((CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
+                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
                 && (CONFIG_STRING(config_look_prefix_suffix)
                     && CONFIG_STRING(config_look_prefix_suffix)[0]))
             {
@@ -869,7 +870,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             if (word_length > 0)
             {
                 /* spaces + word too long for current line but ok for next line */
-                line_align = gui_line_get_align (window->buffer, line, 1);
+                line_align = gui_line_get_align (window->buffer, line, 1,
+                                                 (lines_displayed == 0) ? 1 : 0);
                 if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
                     && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {

@@ -69,7 +69,7 @@ extern struct t_gui_lines *gui_lines_alloc ();
 extern void gui_lines_free (struct t_gui_lines *lines);
 extern int gui_line_get_align (struct t_gui_buffer *buffer,
                                struct t_gui_line *line,
-                               int with_suffix);
+                               int with_suffix, int first_line);
 extern int gui_line_is_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_first_displayed (struct t_gui_buffer *buffer);
 extern struct t_gui_line *gui_line_get_last_displayed (struct t_gui_buffer *buffer);

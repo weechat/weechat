@@ -85,9 +85,16 @@ gui_lines_free (struct t_gui_lines *lines)
 
 int
 gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
-                    int with_suffix)
+                    int with_suffix, int first_line)
 {
     int length_time, length_buffer, length_suffix;
+    
+    /* return immediately if alignment for end of lines is "time" */
+    if (!first_line
+        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))
+    {
+        return 0;
+    }
     
     /* length of time */
     if (buffer->time_for_each_line)
@@ -96,6 +103,13 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
     else
         length_time = 0;
+    
+    /* return immediately if alignment for end of lines is "buffer" */
+    if (!first_line
+        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER))
+    {
+        return length_time;
+    }
     
     /* length of buffer name (when many buffers are merged) */
     if (buffer->mixed_lines)
@@ -116,9 +130,18 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     else
         length_buffer = 0;
     
+    /* return immediately if alignment for end of lines is "prefix" */
+    if (!first_line
+        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX))
+    {
+        return length_time + length_buffer;
+    }
+    
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
+    {
         return length_time + length_buffer + line->data->prefix_length
             + ((line->data->prefix_length > 0) ? 1 : 0);
+    }
     
     length_suffix = 0;
     if (with_suffix)
