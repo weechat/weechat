@@ -6347,7 +6347,7 @@ Arguments:
   a command hooked (argument 'completion')
 * 'description': description of completion
 * 'callback': function called when completion item is used (user is completing
-  something using this item), artuments:
+  something using this item), arguments:
 ** 'void *data': pointer
 ** 'const char *completion_item': name of completion item
 ** 'struct t_gui_buffer *buffer': buffer where completion is made
