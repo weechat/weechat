@@ -550,8 +550,8 @@ Tastenbefehle für die Befehlszeile
    wird die vorherige Vervollständigung genutzt +
   `/input complete_previous`
 
-| Any char |
-  Schreibt ein Zeichen in die Befehlszeile
+| jedwedes Zeichen |
+  schreibt das Zeichen in die Befehlszeile
 
 | Enter +
   Ctrl + J +
@@ -559,19 +559,19 @@ Tastenbefehle für die Befehlszeile
   führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) +
   `/input return`
 
-| Up arrow |
+| Pfeil hoch |
   ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen) +
   `/input history_previous`
 
-| Down arrow |
+| Pfeil runter |
   ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen) +
   `/input history_next`
 
-| Ctrl + up arrow |
+| Ctrl + Pfeil hoch |
   ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
   `/input history_global_previous`
 
-| Ctrl + down arrow |
+| Ctrl + Pfeil runter |
   ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
   `/input history_global_next`
 
@@ -609,20 +609,20 @@ Tastenbefehle für Buffer / Fenster
   sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch +
   `/input switch_active_buffer`
 
-| Page up |
-  Eine Seite im Buffer Verlaufsspeicher hoch blättern +
+| Seite hoch |
+  Eine Seite im Buffer Verlaufsspeicher nach oben blättern +
   `/window page_up`
 
-| Page down |
-  Eine Seite im Buffer Verlaufsspeicher runter blättern +
+| Seite runter |
+  Eine Seite im Buffer Verlaufsspeicher nach unten blättern +
   `/window page_down`
 
-| Alt + Page up |
-  einige Zeilen im Buffer Verlaufsspeicher hoch blättern +
+| Alt + Seite hoch |
+  einige Zeilen im Buffer Verlaufsspeicher nach oben blättern +
   `/window scroll_up`
 
-| Alt + Page down |
-  einige Zeilen im Buffer Verlaufsspeicher runter blättern +
+| Alt + Seite runter |
+  einige Zeilen im Buffer Verlaufsspeicher nach unten blättern +
   `/window scroll_down`
 
 | Alt + Home |
@@ -633,15 +633,15 @@ Tastenbefehle für Buffer / Fenster
   springt zur letzten Zeile im Buffer Verlaufsspeicher +
   `/window scroll_bottom`
 
-| Alt + left arrow +
-  Alt + up arrow +
+| Alt + Pfeil links +
+  Alt + Pfeil hoch +
   Ctrl + P +
   F5 |
   zum vorherigen Buffer springen +
   `/buffer -1`
 
-| Alt + right arrow +
-  Alt + down arrow +
+| Alt + Pfeil rechts +
+  Alt + Pfeil runter +
   Ctrl + N +
   F6 |
   zum nächsten Buffer springen +
@@ -745,7 +745,7 @@ andere Tastenbefehle
 |Tasten| Beschreibung und Befehl
 
 | Alt + H |
-  lösche Hotliste (Aktivitätsanzeige für die Buffer) +
+  löscht Hotliste (Aktivitätsanzeige für die Buffer) +
   `/input hotlist_clear` +
 
 | Alt + = |
@@ -838,8 +838,8 @@ Farbtabelle für ^Cc:
 | 15   | hellgrau      | white
 |========================================
 
-Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
-und "an alle" wird rot-unterstrichen dargestellt.
+Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett,hellblau
+und "an alle" wird rot,unterstrichen dargestellt.
 
 ----------------------------------------
 ^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
@@ -894,7 +894,7 @@ Erweiterungen in WeeChat
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Eine WeeChat Erweiterung ist eine dynamische Bibliothek (library), die in C geschrieben
-und kompiliert wurde. Unter GNU/Linux hat eine Erweiterung ".so" als Dateiendung, unter
+und kompiliert wurde. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".so", unter
 Windows ".dll".
 
 Erweiterungen die gefunden werden, werden beim Start von WeeChat automatisch geladen.
