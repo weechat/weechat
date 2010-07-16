@@ -1239,7 +1239,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     {
         if (argc > 2)
         {
-            /* enable a filter */
+            /* disable a filter */
             ptr_filter = gui_filter_search_by_name (argv[2]);
             if (ptr_filter)
             {
@@ -4605,9 +4605,11 @@ command_init ()
                      "(\"*\" for all buffers)\n"
                      "         tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
-                     "        regex: regular expression to search in "
-                     "line (use \\t to separate prefix from message, special "
-                     "chars like '|' must be escaped: '\\|')\n\n"
+                     "        regex: regular expression to search in line\n"
+                     "               - use '\\t' to separate prefix from message, special "
+                     "chars like '|' must be escaped: '\\|'\n"
+                     "               - if regex starts with '!', then matching "
+                     "result is reversed (use '\\!' to start with '!')\n\n"
                      "The default key alt+'=' toggles filtering on/off.\n\n"
                      "Tags most commonly used:\n"
                      "  no_filter, no_highlight, log0..log9 (log level),\n"
@@ -4624,6 +4626,8 @@ command_init ()
                      "    /filter add nicks * irc_366 *\n"
                      "  filter nick \"toto\" on IRC channel #weechat:\n"
                      "    /filter add toto irc.freenode.#weechat * toto\\t\n"
+                     "  keep only nick \"titi\" on IRC channel #test:\n"
+                     "    /filter add titi irc.freenode.#test * !titi\\t\n"
                      "  filter lines containing word \"spam\":\n"
                      "    /filter add filterspam * * spam\n"
                      "  filter lines containing \"weechat sucks\" on IRC "

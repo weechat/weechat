@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-12
+v0.3.3-dev, 2010-07-16
 
 
 Version 0.3.3 (under dev!)
 --------------------------
 
+* core: use '!' to reverse a regex in a filter (to keep lines matching regex
+  and hide other lines)
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
 * core: add new option weechat.look.align_end_of_lines

@@ -76,6 +76,7 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_filter *ptr_filter;
     const char *buffer_plugin_name;
+    int rc;
     
     /* line is always displayed if filters are disabled */
     if (!gui_filters_enabled)
@@ -103,12 +104,18 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
                                              ptr_filter->tags_array)))
                 {
                     /* check line with regex */
+                    rc = 1;
                     if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
-                        return 0;
-                    
+                        rc = 0;
                     if (gui_line_match_regex (line,
                                               ptr_filter->regex_prefix,
                                               ptr_filter->regex_message))
+                    {
+                        rc = 0;
+                    }
+                    if (ptr_filter->regex && (ptr_filter->regex[0] == '!'))
+                        rc ^= 1;
+                    if (rc == 0)
                         return 0;
                 }
             }
@@ -291,28 +298,36 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
     char *pos_tab, *pos_point, *regex_prefix;
-    const char *pos_regex_message;
-
+    const char *ptr_start_regex, *pos_regex_message;
+    
     if (!name || !buffer_name || !tags || !regex)
         return NULL;
     
     if (gui_filter_search_by_name (name))
         return NULL;
     
+    ptr_start_regex = regex;
+    if ((ptr_start_regex[0] == '!')
+        || ((ptr_start_regex[0] == '\\') && (ptr_start_regex[1] == '!')))
+    {
+        ptr_start_regex++;
+    }
+    
     regex1 = NULL;
     regex2 = NULL;
-    if (strcmp (regex, "*") != 0)
+    if (strcmp (ptr_start_regex, "*") != 0)
     {
-        pos_tab = strstr (regex, "\\t");
+        pos_tab = strstr (ptr_start_regex, "\\t");
         if (pos_tab)
         {
-            regex_prefix = string_strndup (regex, pos_tab - regex);
+            regex_prefix = string_strndup (ptr_start_regex,
+                                           pos_tab - ptr_start_regex);
             pos_regex_message = pos_tab + 2;
         }
         else
         {
             regex_prefix = NULL;
-            pos_regex_message = regex;
+            pos_regex_message = ptr_start_regex;
         }
         
         if (regex_prefix)
