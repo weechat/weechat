@@ -584,6 +584,38 @@ C example:
 int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 ----------------------------------------
 
+weechat_strncasecmp
+^^^^^^^^^^^^^^^^^^^
+
+Locale and case independent string comparison, for 'max' chars.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_strncasecmp (const char *string1, const char *string2, int max);
+----------------------------------------
+
+Arguments:
+
+* 'string1': first string for comparison
+* 'string2': second string for comparison
+* 'max': max chars to compare
+
+Return value:
+
+* difference between two strings:
+** negative if string1 < string2
+** zero if string1 == string2
+** positive if string1 > string2
+
+C example:
+
+[source,C]
+----------------------------------------
+int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
+----------------------------------------
+
 weechat_strcmp_ignore_chars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -730,6 +762,8 @@ free (str);
 
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.3._
 
 Replace leading `~` by string with home directory. If string does not start
 with `~`, then same string is returned.
@@ -1182,6 +1216,8 @@ str = weechat.string_remove_color(my_string, "?")
 weechat_string_encode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.2._
+
 Encode a string in base64.
 
 Prototype:
@@ -1209,6 +1245,8 @@ weechat_string_encode_base64 (string, strlen (string), result);
 
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.2._
 
 Decode a base64 string.
 
@@ -1241,6 +1279,8 @@ length = weechat_string_decode_base64 (string, result);
 
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.2._
 
 Check if first char of string is a command char (default command char is '/').
 
@@ -1281,6 +1321,8 @@ command_char2 = weechat.string_is_command_char("test")  # == 0
 
 weechat_string_input_for_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.2._
 
 Return pointer to input text for buffer (pointer inside "string" argument), or
 NULL if it's a command.
@@ -1475,6 +1517,33 @@ C example:
 char *next_char = weechat_utf8_next_char (string);
 ----------------------------------------
 
+weechat_utf8_char_int
+^^^^^^^^^^^^^^^^^^^^^
+
+Return UTF-8 char as integer.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_utf8_char_int (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* UTF-8 char as integer
+
+C example:
+
+[source,C]
+----------------------------------------
+int char_int = weechat_utf8_char_int ("être"); /* "ê" as integer */
+----------------------------------------
+
 weechat_utf8_char_size
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1582,6 +1651,37 @@ C example:
 [source,C]
 ----------------------------------------
 int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
+----------------------------------------
+
+weechat_utf8_charcmp
+^^^^^^^^^^^^^^^^^^^^
+
+Compare two UTF-8 chars.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_utf8_charcmp (const char *string1, const char *string2);
+----------------------------------------
+
+Arguments:
+
+* 'string1': first string for comparison
+* 'string2': second string for comparison
+
+Return value:
+
+* difference between first char of each string:
+** negative if char1 < char2
+** zero if char1 == char2
+** positive if char1 > char2
+
+C example:
+
+[source,C]
+----------------------------------------
+int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 ----------------------------------------
 
 weechat_utf8_charcasecmp
@@ -1926,6 +2026,39 @@ void callback (void *data, const char *filename)
 weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 ----------------------------------------
 
+weechat_file_get_content
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.1._
+
+Get content of text file in a string.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_file_get_content (const char *filename);
+----------------------------------------
+
+Arguments:
+
+* 'filename': path and file name
+
+Return value:
+
+* content of file as string (must be freed by calling "free" after use)
+
+C example:
+
+[source,C]
+----------------------------------------
+char *content;
+
+content = weechat_file_get_content ("/tmp/test.txt");
+/* ... */
+free (content);
+----------------------------------------
+
 [[util]]
 Util
 ~~~~
@@ -2019,6 +2152,8 @@ weechat_util_timeval_add (&tv, 2000); /* add 2 seconds */
 
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.2._
 
 Get date/time as a string built with "strftime".
 
@@ -2550,6 +2685,8 @@ Hashtable functions.
 weechat_hashtable_new
 ^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Create a new hashtable.
 
 Prototype:
@@ -2608,6 +2745,8 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Add or update item in a hashtable with size for key and value.
 
 Prototype:
@@ -2644,6 +2783,8 @@ weechat_hashtable_set_with_size (hashtable, "my_key", 0,
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Add or update item in a hashtable.
 
 Prototype:
@@ -2674,6 +2815,8 @@ weechat_hashtable_set (hashtable, "my_key", "my_value");
 weechat_hashtable_get
 ^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Get value associated with a key in a hashtable.
 
 Prototype:
@@ -2701,6 +2844,8 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.3._
 
 Call a function on all hashtable entries.
 
@@ -2742,6 +2887,8 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Return integer value of a hashtable property.
 
 Prototype:
@@ -2772,6 +2919,8 @@ int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.3._
 
 Add hashtable items to an infolist item.
 
@@ -2814,6 +2963,8 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Remove an item in a hashtable.
 
 Prototype:
@@ -2838,6 +2989,8 @@ weechat_hashtable_remove (hashtable, "my_key");
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+_New in version 0.3.3._
+
 Remove all items in a hashtable.
 
 Prototype:
@@ -2860,6 +3013,8 @@ weechat_hashtable_remove_all (hashtable);
 
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.3._
 
 Free a hashtable.
 
@@ -3460,6 +3615,54 @@ option = weechat.config_search_option(config_file, section, option_name)
 
 # example
 option = weechat.config_search_option(config_file, section, "option")
+----------------------------------------
+
+weechat_config_search_section_option
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Search a section and an option in a configuration file or section.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_config_search_section_option (struct t_config_file *config_file,
+                                           struct t_config_section *section,
+                                           const char *option_name,
+                                           struct t_config_section **section_found,
+                                           struct t_config_option **option_found);
+----------------------------------------
+
+Arguments:
+
+* 'config_file': configuration file pointer
+* 'section': section pointer
+* 'option_name': option name
+* 'section_found': pointer to section pointer, will be set to section of option,
+  if found
+* 'option_found': pointer to an option pointer, will be set to option pointer,
+  if found
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_config_section *ptr_section;
+struct t_config_option *ptr_option;
+
+weechat_config_search_section_option(config_file,
+                                     section,
+                                     "option",
+                                     &ptr_section,
+                                     &ptr_option);
+if (ptr_option)
+{
+    /* option found */
+}
+else
+{
+    /* option not found */
+}
 ----------------------------------------
 
 weechat_config_search_with_string
