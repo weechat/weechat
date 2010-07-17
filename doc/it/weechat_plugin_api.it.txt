@@ -2580,17 +2580,17 @@ weechat.list_free(list)
 ----------------------------------------
 
 [[hashtables]]
-Hashtables
-~~~~~~~~~~
+Tabelle hash
+~~~~~~~~~~~~
 
-Hashtable functions.
+Funzioni per le tabelle hash.
 
 weechat_hashtable_new
 ^^^^^^^^^^^^^^^^^^^^^
 
-Create a new hashtable.
+Crea una nuova tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2606,33 +2606,34 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 Arguments:
 
-* 'size': size of internal array to store hashed keys, a high value uses more
-  memory, but has better performance (this is *not* a limit for number of items
-  in hashtable)
-* 'type_keys': type for keys in hashtable:
+* 'size': dimensione dell'array interno per memorizzare le chiavi con hash, un
+  valore più alto usa più memoria, ma ha migliori performance. (questo *non* è
+  un limite per il numero di elementi nella tabella hash)
+* 'type_keys': tipo per le chiavi nella tabella hash:
 ** 'WEECHAT_HASHTABLE_INTEGER'
 ** 'WEECHAT_HASHTABLE_STRING'
 ** 'WEECHAT_HASHTABLE_POINTER'
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
-* 'type_values': type for values in hashtable:
+* 'type_values': tipo per i valori nella tabella hash:
 ** 'WEECHAT_HASHTABLE_INTEGER'
 ** 'WEECHAT_HASHTABLE_STRING'
 ** 'WEECHAT_HASHTABLE_POINTER'
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
-* 'callback_hash_key': callback used to "hash" a key (key as integer value), can
-  be NULL if key type is "string" (a default function is used for strings, and
-  only for strings)
-* 'callback_keycmp': callback used to compare two keys, can be NULL if value
-  type is "string" (a default comparison function is used for strings, and only
-  for strings)
+* 'callback_hash_key': callback utilizzata per effettuare un "hash" di una
+  chiave (chiave come valore intero), può essere NULL se il tipo della chiave è
+  "string" (viene usata una funzione predefinita per le stringhe, e solo per le
+  stringhe)
+* 'callback_keycmp': callback utilizzata per comparare due chiavi, può essere
+  NULL se il tipo di valore è "string" (una funzione di confronto predefinita è
+  usata per le stringhe e solo per le stringhe)
 
 Return value:
 
-* pointer to new hashtable, NULL if an error occured
+* puntatore alla nuova tabella hash, NULL in caso di errore
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2646,9 +2647,10 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Add or update item in a hashtable with size for key and value.
+Aggiunge o aggiorna un elemento nella tabella hash con la dimensione per la
+chiave ed il valore.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2659,19 +2661,19 @@ int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
 
 Arguments:
 
-* 'hashtable': hashtable pointer
-* 'key': key pointer
-* 'key_size': size of key (in bytes), used only if type of keys in hashtable
-  is "buffer"
-* 'value': value pointer
-* 'value_size': size of value (in bytes), used only if type of values in
-  hashtable is "buffer"
+* 'hashtable': puntatore alla tabella hash
+* 'key': puntatore alla chiave
+* 'key_size': dimensione della chiave (in byte), usata solo se il tipo delle
+   chiavi nella tabella hash è "buffer"
+* 'value': puntatore al valore
+* 'value_size': dimensione del valore (in byte), utilizzata solo se il tipo dei
+   valori nella tabella è "buffer"
 
-Return value:
+Valore restituito:
 
-* 1 if ok, 0 if error
+* 1 se ok, 0 in caso di errore
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2682,9 +2684,9 @@ weechat_hashtable_set_with_size (hashtable, "my_key", 0,
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
-Add or update item in a hashtable.
+Aggiunge o aggiorna un elemento nella tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2692,17 +2694,17 @@ int weechat_hashtable_set (struct t_hashtable *hashtable,
                            void *key, void *value);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'key': key pointer
-* 'value': value pointer
+* 'hashtable': puntatore alla tabella hash
+* 'key': puntatore alla chiave
+* 'value': puntatore al valore
 
-Return value:
+Valore restituito:
 
-* 1 if ok, 0 if error
+* 1 se ok, 0 in caso di errore
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2712,25 +2714,25 @@ weechat_hashtable_set (hashtable, "my_key", "my_value");
 weechat_hashtable_get
 ^^^^^^^^^^^^^^^^^^^^^
 
-Get value associated with a key in a hashtable.
+Ottiene il valore associato ad una chiave in una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'key': key pointer
+* 'hashtable': puntatore alla tabella hash
+* 'key': puntatore alla chiave
 
-Return value:
+Valore restituito:
 
-* value for key, NULL if key is not found
+* valore per la chiave, NULL se non trovata
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2740,9 +2742,9 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 
-Call a function on all hashtable entries.
+Chiama una funzione su tutte le voci della tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2754,13 +2756,13 @@ void hashtable_map (struct t_hashlist *hashlist,
                     void *callback_map_data);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'callback_map': function called for each entry in hashtable
-* 'callback_map_data': pointer given to map callback when it is called
+* 'hashtable': puntatore alla tabella hash
+* 'callback_map': funzione chiamata per ogni voce nella tabella hash
+* 'callback_map_data': puntatore fornito alla mappa di callback quando chiamata
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2780,9 +2782,9 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return integer value of a hashtable property.
+Restituisce un valore intero per la proprietà di una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2790,18 +2792,18 @@ int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
                                    void *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'property': property name:
-** 'size': size of internal array "htable" in hashtable
-** 'items_count': number of items in hashtable
+* 'hashtable': puntatore alla tabella hash
+* 'property': nome della proprietà:
+** 'size': dimensione dell'array interno "htable" nella tabella hash
+** 'items_count': numero di elementi nella tabella hash
 
-Return value:
+Valore restituito:
 
-* integer value of property
+* valore intero della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2811,9 +2813,9 @@ int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Add hashtable items to an infolist item.
+Aggiunge elementi della tabella hash ad un elemento della lista info.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2822,26 +2824,26 @@ int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                        const char *prefix);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'infolist_item': infolist item pointer
-* 'prefix': string used as prefix for names in infolist
+* 'hashtable': puntatore alla tabella hash
+* 'infolist_item': puntatore all'elemento della lista info
+* 'prefix': stringa usata come prefisso per i nomi nella lista info
 
-Return value:
+Valore restituito:
 
-* 1 if ok, 0 if error
+* 1 se ok, 0 in caso di errore
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
-/* if hashtable contains:
+/* se la tabella hash contiene:
      "key1" => "value 1"
      "key2" => "value 2"
-   then following variables will be added to infolist item:
+   allora le seguenti variabili verranno aggiunti all'elemento  della lista info:
      "testhash_name_00001"  = "key1"
      "testhash_value_00001" = "value 1"
      "testhash_name_00002"  = "key2"
@@ -2852,21 +2854,21 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Remove an item in a hashtable.
+Rimuove un elemento in una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'key': key pointer
+* 'hashtable': puntatore alla tabella hash
+* 'key': puntatore alla chiave
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2876,20 +2878,20 @@ weechat_hashtable_remove (hashtable, "my_key");
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Remove all items in a hashtable.
+Rimuove tutti gli elementi in una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
+* 'hashtable': puntatore alla tabella hash
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2899,20 +2901,20 @@ weechat_hashtable_remove_all (hashtable);
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Free a hashtable.
+Libera una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 void weechat_hashtable_free (struct t_hashtable *hashtable);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
+* 'hashtable': puntatore alla tabella hash
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
