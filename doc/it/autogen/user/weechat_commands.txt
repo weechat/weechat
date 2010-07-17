@@ -155,6 +155,8 @@
       /filter add nicks * irc_366 *
     filtra il nick "tizio" sul canale IRC #weechat
       /filter add tizio irc.freenode.#esempio * tizio\t
+    filtra solo il nick "caio" sul canale IRC #test:
+      /filter add caio irc.freenode.#test * !caio\t
     filtra le righe contententi la parola "spam":
       /filter add filterspam * * spam
     filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:

@@ -163,6 +163,11 @@
 ** Typ: integer
 ** Werte: current, server (Standardwert: current)
 
+* *irc.look.nick_color_stop_chars*
+** Beschreibung: chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "_nick_away" with "_" in chars will return color of nick "_nick")
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "_|[")
+
 * *irc.look.nick_completion_smart*
 ** Beschreibung: Intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den letzten Nick, mit dem gesprochen wurde)
 ** Typ: integer

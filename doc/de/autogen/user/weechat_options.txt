@@ -339,7 +339,7 @@
 ** Werte: 0 .. 1000 (Standardwert: 50)
 
 * *weechat.look.align_end_of_lines*
-** Beschreibung: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** Beschreibung: Einstellung bei einem Zeilenumbruch (betrifft alle Zeilen, außer der ersten Zeile). Die Darstellung der nachfolgenden Zeile beginnt unter: (Zeit = time, Buffer = buffer, Präfix = prefix, Suffix = suffix, Nachricht = message (Standardwert))
 ** Typ: integer
 ** Werte: time, buffer, prefix, suffix, message (Standardwert: message)
 
@@ -464,7 +464,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: " *")
 
 * *weechat.look.prefix_align*
-** Beschreibung: Präfix-Position (none, left, right (Standard))
+** Beschreibung: Einstellung für Präfix (keine = none, links = left, rechts = right (Standard))
 ** Typ: integer
 ** Werte: none, left, right (Standardwert: right)
 
@@ -479,7 +479,7 @@
 ** Werte: on, off (Standardwert: on)
 
 * *weechat.look.prefix_buffer_align*
-** Beschreibung: Präfix Einstellung für den Buffer-Namen falls viele Buffer zu der selben Nummer zusammengefügt wurden (none, left, right (Standardwert))
+** Beschreibung: Einstellung des Präfix für den Buffer-Namen falls viele Buffer zu einem Buffer zusammengefügt wurden (keine = none, links = left, rechts = right (Standardwert))
 ** Typ: integer
 ** Werte: none, left, right (Standardwert: right)
 

@@ -137,7 +137,9 @@
            -all: delete all filters
   plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
            tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-          regex: regular expression to search in line (use \t to separate prefix from message, special chars like '|' must be escaped: '\|')
+          regex: regular expression to search in line
+                 - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+                 - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
   
   The default key alt+'=' toggles filtering on/off.
   
@@ -155,6 +157,8 @@
       /filter add nicks * irc_366 *
     filter nick "toto" on IRC channel #weechat:
       /filter add toto irc.freenode.#weechat * toto\t
+    keep only nick "titi" on IRC channel #test:
+      /filter add titi irc.freenode.#test * !titi\t
     filter lines containing word "spam":
       /filter add filterspam * * spam
     filter lines containing "weechat sucks" on IRC channel #weechat:

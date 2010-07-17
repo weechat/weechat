@@ -339,7 +339,7 @@
 ** valori: 0 .. 1000 (valore predefinito: 50)
 
 * *weechat.look.align_end_of_lines*
-** descrizione: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** descrizione: allineamento per la fine delle righe (tutte le righe tranne la prima): iniziano al di sotto di questi dati (data, buffer, prefissio, suffisso, messaggio (predefinito))
 ** tipo: intero
 ** valori: time, buffer, prefix, suffix, message (valore predefinito: message)
 

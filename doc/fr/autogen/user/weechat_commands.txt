@@ -137,7 +137,9 @@
               -all: supprime tous les filtres
   extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
               tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
-             regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|')
+             regex: expression régulière à rechercher dans la ligne
+                    - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
+                    - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
   
   La touche par défaut alt+'=' active/désactive le filtrage.
   
@@ -155,6 +157,8 @@
       /filter add nicks * irc_366 *
     filtrer le pseudo "toto" sur le canal IRC #weechat:
       /filter add toto irc.freenode.#weechat * toto\t
+    garder uniquement le pseudo "titi" sur le canal IRC #test:
+      /filter add titi irc.freenode.#test * !titi\t
     filtrer les lignes contenant le mot "spam":
       /filter add filtrespam * * spam
     filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
