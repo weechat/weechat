@@ -7,7 +7,7 @@ v0.3.3-dev, 2010-07-17
 Version 0.3.3 (under dev!)
 --------------------------
 
-* core: use '!' to reverse a regex in a filter (to keep lines matching regex
+* core: use "!" to reverse a regex in a filter (to keep lines matching regex
   and hide other lines)
 * core: add keys for undo/redo changes on command line
   (default: ctrl/alt + underscore) (task #9483)
@@ -45,7 +45,7 @@ Version 0.3.3 (under dev!)
   irc.network.autoreconnect_delay_max (task #10338)
 * irc: add missing commands 346, 347 (channel invite list)
 * irc: fix display of messages 330 and 333 on some servers
-* irc: fix bug with nick prefix '*' (chan founder) on some IRC servers
+* irc: fix bug with nick prefix "*" (chan founder) on some IRC servers
   (bug #29890)
 * irc: fix bug with option irc.network.lag_check when value is 0 (zero)
 * irc: try other nick when connecting to server and receiving message 437
