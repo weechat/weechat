@@ -94,6 +94,7 @@ extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
+extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_raw_messages;

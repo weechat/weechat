@@ -90,15 +90,55 @@ irc_nick_is_nick (const char *string)
 }
 
 /*
- * irc_nick_find_color: find a color code for a nick
- *                      (according to nick letters)
+ * irc_nick_strdup_for_color: duplicate a nick and stop at first char in list
+ *                            (using option irc.look.nick_color_stop_chars)
  */
 
-const char *
-irc_nick_find_color (const char *nickname)
+char *
+irc_nick_strdup_for_color (const char *nickname)
+{
+    int char_size, other_char_seen;
+    char *result, *pos, utf_char[16];
+    
+    result = malloc (strlen (nickname) + 1);
+    pos = result;
+    other_char_seen = 0;
+    while (nickname[0])
+    {
+        char_size = weechat_utf8_char_size (nickname);
+        memcpy (utf_char, nickname, char_size);
+        utf_char[char_size] = '\0';
+        
+        if (strstr (weechat_config_string (irc_config_look_nick_color_stop_chars),
+                    utf_char))
+        {
+            if (other_char_seen)
+            {
+                pos[0] = '\0';
+                return result;
+            }
+        }
+        else
+        {
+            other_char_seen = 1;
+        }
+        memcpy (pos, utf_char, char_size);
+        pos += char_size;
+        
+        nickname += char_size;
+    }
+    pos[0] = '\0';
+    return result;
+}
+
+/*
+ * irc_nick_hash_color: hash a nickname to find color
+ */
+
+int
+irc_nick_hash_color (const char *nickname)
 {
     int color;
-    char color_name[64];
     const char *ptr_nick;
     
     color = 0;
@@ -108,8 +148,25 @@ irc_nick_find_color (const char *nickname)
         color += weechat_utf8_char_int (ptr_nick);
         ptr_nick = weechat_utf8_next_char (ptr_nick);
     }
-    color = (color %
-             weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
+    return (color %
+            weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
+}
+
+/*
+ * irc_nick_find_color: find a color code for a nick
+ *                      (according to nick letters)
+ */
+
+const char *
+irc_nick_find_color (const char *nickname)
+{
+    int color;
+    char *nickname2, color_name[64];
+    
+    nickname2 = irc_nick_strdup_for_color (nickname);
+    color = irc_nick_hash_color ((nickname2) ? nickname2 : nickname);
+    if (nickname2)
+        free (nickname2);
     
     snprintf (color_name, sizeof (color_name),
               "chat_nick_color%02d", color + 1);
@@ -126,18 +183,12 @@ const char *
 irc_nick_find_color_name (const char *nickname)
 {
     int color;
-    char color_name[128];
-    const char *ptr_nick;
+    char *nickname2, color_name[128];
     
-    color = 0;
-    ptr_nick = nickname;
-    while (ptr_nick && ptr_nick[0])
-    {
-        color += weechat_utf8_char_int (ptr_nick);
-        ptr_nick = weechat_utf8_next_char (ptr_nick);
-    }
-    color = (color %
-             weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
+    nickname2 = irc_nick_strdup_for_color (nickname);
+    color = irc_nick_hash_color ((nickname2) ? nickname2 : nickname);
+    if (nickname2)
+        free (nickname2);
     
     snprintf (color_name, sizeof (color_name),
               "weechat.color.chat_nick_color%02d", color + 1);

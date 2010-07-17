@@ -75,6 +75,7 @@ struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
+struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_raw_messages;
@@ -153,23 +154,16 @@ irc_config_get_server_from_option_name (const char *name)
 }
 
 /*
- * irc_config_change_look_color_nicks_number: called when the
- *                                            "weechat.look.color_nicks_number"
- *                                            option is changed
+ * irc_config_compute_nick_colors: compute nick colors for all servers and
+ *                                 channels
  */
 
-int
-irc_config_change_look_color_nicks_number (void *data, const char *option,
-                                           const char *value)
+void
+irc_config_compute_nick_colors ()
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    (void) value;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -184,6 +178,24 @@ irc_config_change_look_color_nicks_number (void *data, const char *option,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_color_nicks_number: called when the
+ *                                            "weechat.look.color_nicks_number"
+ *                                            option is changed
+ */
+
+int
+irc_config_change_look_color_nicks_number (void *data, const char *option,
+                                           const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    (void) value;
+    
+    irc_config_compute_nick_colors ();
     
     return WEECHAT_RC_OK;
 }
@@ -335,6 +347,22 @@ irc_config_change_look_highlight_tags (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_nick_color_stop_chars: called when the "nick color
+ *                                               stop chars" option is changed
+ */
+
+void
+irc_config_change_look_nick_color_stop_chars (void *data,
+                                              struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    irc_config_compute_nick_colors ();
 }
 
 /*
@@ -1641,6 +1669,26 @@ irc_config_init ()
            "private and that private buffer is not found"),
         "current|server", 0, 0, "current", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_nick_color_stop_chars = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_color_stop_chars", "string",
+        N_("chars used to stop in nick when computing color with letters of "
+           "nick (at least one char outside this list must be in string before "
+           "stopping) (example: nick \"_nick_away\" with \"_\" in chars will "
+           "return color of nick \"_nick\")"),
+        NULL, 0, 0, "_|[", NULL, 0, NULL, NULL,
+        &irc_config_change_look_nick_color_stop_chars, NULL, NULL, NULL);
+    irc_config_look_notice_as_pv = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notice_as_pv", "integer",
+        N_("display notices as private messages (if auto, use private buffer "
+           "if found)"),
+        "auto|never|always", 0, 0, "auto", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_part_closes_buffer = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "part_closes_buffer", "boolean",
+        N_("close buffer when /part is issued on a channel"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_raw_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "raw_messages", "integer",
@@ -1669,17 +1717,6 @@ irc_config_init ()
         "smart_filter_quit", "boolean",
         N_("enable smart filter for \"part\" and \"quit\" messages"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_notice_as_pv = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "notice_as_pv", "integer",
-        N_("display notices as private messages (if auto, use private buffer "
-           "if found)"),
-        "auto|never|always", 0, 0, "auto", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_part_closes_buffer = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "part_closes_buffer", "boolean",
-        N_("close buffer when /part is issued on a channel"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (
         irc_config_file, ptr_section,
         "topic_strip_colors", "boolean",

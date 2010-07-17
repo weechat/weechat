@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-16 15:42+0200\n"
+"POT-Creation-Date: 2010-07-17 10:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3693,6 +3693,20 @@ msgid ""
 msgstr ""
 
 msgid ""
+"chars used to stop in nick when computing color with letters of nick (at "
+"least one char outside this list must be in string before stopping) "
+"(example: nick \"_nick_away\" with \"_\" in chars will return color of nick "
+"\"_nick\")"
+msgstr ""
+
+msgid ""
+"display notices as private messages (if auto, use private buffer if found)"
+msgstr ""
+
+msgid "close buffer when /part is issued on a channel"
+msgstr ""
+
+msgid ""
 "number of IRC raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
@@ -3709,13 +3723,6 @@ msgid "enable smart filter for \"join\" messages"
 msgstr ""
 
 msgid "enable smart filter for \"part\" and \"quit\" messages"
-msgstr ""
-
-msgid ""
-"display notices as private messages (if auto, use private buffer if found)"
-msgstr ""
-
-msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
 msgid "strip colors in topic (used only when displaying buffer title)"
