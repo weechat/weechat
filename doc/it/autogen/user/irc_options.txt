@@ -164,7 +164,7 @@
 ** valori: current, server (valore predefinito: current)
 
 * *irc.look.nick_color_stop_chars*
-** descrizione: chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "_nick_away" with "_" in chars will return color of nick "_nick")
+** descrizione: chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick")
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: "_|[")
 

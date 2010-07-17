@@ -1674,8 +1674,8 @@ irc_config_init ()
         "nick_color_stop_chars", "string",
         N_("chars used to stop in nick when computing color with letters of "
            "nick (at least one char outside this list must be in string before "
-           "stopping) (example: nick \"_nick_away\" with \"_\" in chars will "
-           "return color of nick \"_nick\")"),
+           "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
+           "return color of nick \"|nick\")"),
         NULL, 0, 0, "_|[", NULL, 0, NULL, NULL,
         &irc_config_change_look_nick_color_stop_chars, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (

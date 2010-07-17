@@ -164,7 +164,7 @@
 ** valeurs: current, server (valeur par défaut: current)
 
 * *irc.look.nick_color_stop_chars*
-** description: caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple: le pseudo "_nick_away" avec "_" dans les caractères retournera la couleur du pseudo "_nick")
+** description: caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple: le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: "_|[")
 
