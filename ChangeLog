@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-17
+v0.3.3-dev, 2010-07-18
 
 
 Version 0.3.3 (under dev!)
@@ -52,6 +52,7 @@ Version 0.3.3 (under dev!)
   (nick unavailable)
 * irc: set buffer local variable "away" when opening new channel (bug #29618)
 * fifo: fix bug with fifo pipe when setting fifo option to "on"
+* xfer: fix bug with double quotes in DCC filenames (bug #30471)
 
 Version 0.3.2 (2010-04-18)
 --------------------------

@@ -372,6 +372,25 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 }
 
 /*
+ * irc_ctcp_dcc_filename_without_quotes: return filename for DCC, without
+ *                                       double quotes
+ */
+
+char *
+irc_ctcp_dcc_filename_without_quotes (const char *filename)
+{
+    int length;
+
+    length = strlen (filename);
+    if (length > 0)
+    {
+        if ((filename[0] == '\"') && (filename[length - 1] == '\"'))
+            return weechat_strndup (filename + 1, length - 2);
+    }
+    return strdup (filename);
+}
+
+/*
  * irc_ctcp_recv_dcc: parse CTCP DCC
  */
 
@@ -379,7 +398,8 @@ void
 irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                    const char *arguments, char *message)
 {
-    char *dcc_args, *pos, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;
+    char *dcc_args, *pos, *pos_file, *pos_addr, *pos_port, *pos_size;
+    char *pos_start_resume, *filename;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     char plugin_id[128], charset_modifier[256];
@@ -473,6 +493,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         pos[1] = '\0';
         
+        /* remove double quotes around filename */
+        filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
+        
         /* add DCC file via xfer plugin */
         infolist = weechat_infolist_new ();
         if (infolist)
@@ -488,7 +511,8 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                 weechat_infolist_new_var_string (item, "protocol", "dcc");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);
-                weechat_infolist_new_var_string (item, "filename", pos_file);
+                weechat_infolist_new_var_string (item, "filename",
+                                                 (filename) ? filename : pos_file);
                 weechat_infolist_new_var_string (item, "size", pos_size);
                 weechat_infolist_new_var_string (item, "proxy",
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
@@ -504,6 +528,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         weechat_hook_signal_send ("irc_dcc",
                                   WEECHAT_HOOK_SIGNAL_STRING,
                                   message);
+        
+        if (filename)
+            free (filename);
         
         free (dcc_args);
     }
@@ -571,6 +598,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         pos[1] = '\0';
         
+        /* remove double quotes around filename */
+        filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
+        
         /* accept resume via xfer plugin */
         infolist = weechat_infolist_new ();
         if (infolist)
@@ -583,7 +613,8 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                           "%lx", (long unsigned int)server);
                 weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                 weechat_infolist_new_var_string (item, "type", "file_recv");
-                weechat_infolist_new_var_string (item, "filename", pos_file);
+                weechat_infolist_new_var_string (item, "filename",
+                                                 (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
                 weechat_hook_signal_send ("xfer_accept_resume",
@@ -596,6 +627,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         weechat_hook_signal_send ("irc_dcc",
                                   WEECHAT_HOOK_SIGNAL_STRING,
                                   message);
+        
+        if (filename)
+            free (filename);
         
         free (dcc_args);
     }
@@ -663,6 +697,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         pos[1] = '\0';
         
+        /* remove double quotes around filename */
+        filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
+        
         /* resume file via xfer plugin */
         infolist = weechat_infolist_new ();
         if (infolist)
@@ -675,7 +712,8 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                           "%lx", (long unsigned int)server);
                 weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                 weechat_infolist_new_var_string (item, "type", "file_recv");
-                weechat_infolist_new_var_string (item, "filename", pos_file);
+                weechat_infolist_new_var_string (item, "filename",
+                                                 (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
                 weechat_hook_signal_send ("xfer_start_resume",
@@ -688,6 +726,9 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         weechat_hook_signal_send ("irc_dcc",
                                   WEECHAT_HOOK_SIGNAL_STRING,
                                   message);
+        
+        if (filename)
+            free (filename);
         
         free (dcc_args);
     }
