@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-07-17 21:34+0200\n"
-"PO-Revision-Date: 2010-06-20 21:24+0200\n"
+"PO-Revision-Date: 2010-07-18 17:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -73,8 +73,8 @@ msgstr ""
 "                    k serveru pomocí url jako:\n"
 "                    irc[6][s]://[přezdívka[:heslo]@]irc.example.org[/port][//"
 "#kanál][,#kanál2[...]]\n"
-"                    (více informací o možných volbách v dokumentacích "
-"pluginů)\n"
+"                    (více informací o možných volbách najdete v dokumentacích \n"
+"                    k pluginům)\n"
 
 #. TRANSLATORS: "%s" is "weechat"
 #, c-format
@@ -613,6 +613,7 @@ msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro proxy \"%s\""
 msgid ""
 "%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
 msgstr ""
+"%sMusíte potvrdit příkaz quit speciálním argumentem \"-yes\" (viz /help quit)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1040,7 +1041,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [name]] | [add jméno plugin.buffer tags "
 "regex] | [del name|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1097,8 +1097,11 @@ msgstr ""
 "buffery)\n"
 "         tags: čárkami rozdělený seznam tagů, například: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"        regex: regulární výraz hledaný v řádku (použíjte \\t pro oddělení "
-"prefixu od zprávy, speciální znaky jako '|' musí být eskejpovány '\\|')\n"
+"        regex: regulární výraz hledaný v řádku\n"
+"               - použijte '\\t' pro oddělení prefixu od zprávy, speciální znaky "
+"jako '|' musí být zalomeny: '\\|'\n"
+"               - pokud je '!' na začátku regex, pak je výsledek obrácen "
+"(použíjte '\\!' pokud chcete '!' na začátku)\n"
 "\n"
 "Výchozí klávesa pro zapnutí/vypnutí filtrování je alt+'='.\n"
 "\n"
@@ -1119,6 +1122,8 @@ msgstr ""
 "    /filter add nicks * irc_366 *\n"
 "  filtrovat přezdívku \"toto\" na IRC kanálu #weechat:\n"
 "    /filter add toto irc.freenode.#weechat * toto\\t\n"
+"  ponechat pouze přezdívku \"titi\" na IRC kanálu #test:\n"
+"    /filter add titi irc.freenode.#test * !titi\\t\n"
 "  filtrovat řádky obsahující slovo \"spam\":\n"
 "    /filter add filterspam * * spam\n"
 "  filtrovat řádky obsahující \"weechat sucks\" na IRC kanálu #weechat:\n"
@@ -1380,17 +1385,16 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "ukončit WeeChat"
 
-#, fuzzy
 msgid "[-yes] [arguments]"
-msgstr "[argumenty]"
+msgstr "[-yes] [argumenty]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option weechat.look.confirm_quit is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
 "           (for example irc plugin uses this text to send quit message to "
 "server)"
 msgstr ""
+"     -yes: vyžadováno pokud je povolena volba weechat.look.confirm_quit\n"
 "argumenty: text poslaný se signálem \"quit\"\n"
 "           (například irc plugin používá tento text pro posílání "
 "ukončovacích zpráv serveru)"
@@ -1687,6 +1691,8 @@ msgid ""
 "alignment for end of lines (all lines after the first): they are starting "
 "under this data (time, buffer, prefix, suffix, message (default))"
 msgstr ""
+"zarovnání pro konce řádků (všechny řádky po prvím): začínají pod těmito "
+"daty (time, buffer, prefix, suffix, message (výchozí))"
 
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
@@ -1724,6 +1730,8 @@ msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
+"pokud je nastaveno musí být příkaz /quit potvrzen speciálním argumentem "
+"\"-yes\" (viz /help quit)"
 
 msgid "display special message when day changes"
 msgstr "zobrazit speiální zprávy při změně dne"
@@ -1782,9 +1790,8 @@ msgstr ""
 "[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
 "number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
 
-#, fuzzy
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
-msgstr "maximální počet řádků v historii bufferu (0 = nekonečně)"
+msgstr "maximální počet \"undo\" pro příkazovou řádku pro bufferu (0 = vypnuto)"
 
 msgid "time format for \"time\" bar item"
 msgstr "formát času pro \"time\" položu pole"
@@ -2025,11 +2032,12 @@ msgstr "barva textu pro aktuální číslo bufferu ve stavovém řádku"
 msgid "text color for current buffer name in status bar"
 msgstr "barva textu pro aktuální jméno bufferu ve stavovém řádku"
 
-#, fuzzy
 msgid ""
 "text color for current buffer name in status bar, if data are secured with a "
 "protocol like SSL"
-msgstr "barva textu pro aktuální jméno bufferu ve stavovém řádku"
+msgstr ""
+"barva textu pro aktuální jméno bufferu ve stavovém řádku, pokud jsou data "
+"zabezpečeny protokolem jako je SSL"
 
 msgid "text color for filter indicator in status bar"
 msgstr "barva textu pro indikátor filtru ve stavovém řádku"
@@ -2678,6 +2686,8 @@ msgstr ""
 "  $channel: aktuální kanál\n"
 "   $server: aktuální server\n"
 "\n"
+"Pro odebrání aliasu použijte příkaz /unalias.\n"
+"\n"
 "Příklady:\n"
 "  alias /split pro horizontální rozdělení okna:\n"
 "    /alias split /window splith\n"
@@ -2706,9 +2716,8 @@ msgstr "%s%s: chyba vytváření doplňování pro alias \"%s\": alias nenalezen
 msgid "alias pointer (optional)"
 msgstr "ukazatel aliasu (volitelné)"
 
-#, fuzzy
 msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno aliasu (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno aliasu (může začínat nebo končit \"*\" jako zástupný znak) (volitelné)"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -3026,9 +3035,9 @@ msgstr ""
 msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s: nemohu přidělit nový kanál"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
-msgstr "%s%s%s %s(%s%s%s)%s se připojil %s%s%s"
+msgstr "%s%s%s %s(%s%s%s)%s se zpet na serveru"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -3232,9 +3241,9 @@ msgstr ""
 msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr "%s%s: špatný počet parametrů pro příkaz \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: you are not on channel \"%s\""
-msgstr "%s%s: nemohu vytvořit nový kanál \"%s\""
+msgstr "%s%s: nejste na kanálu \"%s\""
 
 msgid "find information about the administrator of the server"
 msgstr "najít informace o administrátorovi serveru"
@@ -3420,6 +3429,7 @@ msgstr ""
 "    akce: 'send' (soubor) nebo 'chat'\n"
 "nickname: přezdívka, které poslat soubor nebo rozhovor\n"
 "  soubor: jméno souboru (na lokálním počítači)\n"
+"\n"
 "Příklady:\n"
 "  rozhovor s přezdívkou \"toto\":\n"
 "    /dcc chat toto\n"
@@ -3532,9 +3542,8 @@ msgstr "přezdívka: přezdívka"
 msgid "join a channel"
 msgstr "připojit se ke kanálu"
 
-#, fuzzy
 msgid "[channel1[,channel2[,channel3]] [key1[,key2]]]"
-msgstr "[kanál[,kanál] [klíč[,klíč]]]"
+msgstr "[kanál1[,kanál2[,kanál3]] [klíč1[,klíč2]]]"
 
 msgid ""
 "channel: channel name to join\n"
@@ -3545,6 +3554,12 @@ msgid ""
 "  /join #weechat\n"
 "  /join #protectedchan,#weechat key"
 msgstr ""
+"kanál: jméno kanálu pro připojení\n"
+" klíč: klíč pro připojení ke kanálu (kanál s klíčem musí být v seznamu první)\n"
+"\n"
+"Příklady:\n"
+"  /join #weechat\n"
+"  /join #protectedchan,#weechat key"
 
 msgid "forcibly remove a user from a channel"
 msgstr "násilně odebrat uživatele z kanálu"
@@ -4161,21 +4176,18 @@ msgstr ""
 msgid "give voice to nickname(s)"
 msgstr "dá hlas přezdívce (přezdívkám)"
 
-#, fuzzy
 msgid "send a notice to channel ops"
-msgstr "poslat zprávu přezdívce nebo kanálu"
+msgstr "poslat notifikaci operátorům kanálu"
 
-#, fuzzy
 msgid "[channel] text"
-msgstr "[kanál] [téma]"
+msgstr "[kanál] text"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   text: text to send"
 msgstr ""
 "kanál: jméno kanálu\n"
-"  mód: mód pro kanál"
+" text: text pro poslání"
 
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "
@@ -4456,27 +4468,23 @@ msgstr "zobrazit CTCP odpověď poslanou WeeChat"
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "zobrazit CTCP zprávu i když je to neznámé CTCP"
 
-#, fuzzy
 msgid "display host in join messages"
-msgstr "barva textu vezprávách připojení"
+msgstr "zobrazovat hosta ve vezprávách o připojení"
 
-#, fuzzy
 msgid "display host in join messages from local client"
-msgstr "barva textu vezprávách připojení"
+msgstr "zobrazovat hosta ve vezprávách o připojení z lokálního klienta"
 
-#, fuzzy
 msgid "display host in part/quit messages"
-msgstr "barva textu ve zprávách odchodu/ukončení"
+msgstr "zobrazovat hosta ve zprávách o odchodu/ukončení"
 
 msgid "display old topic when channel topic is changed"
 msgstr "zobrazit staré téma rozhovoru, když se téma změní"
 
-#, fuzzy
 msgid "display remote away message only once in private"
-msgstr "zobrazit vzdálený zprávu o nepřítomnosti pouze jednou v soukromém okně"
+msgstr "v soukromém okně zobrazit vzdálenou zprávu o nepřítomnosti pouze jednou"
 
 msgid "display a message in private when user is back (after quit on server)"
-msgstr ""
+msgstr "zobrazit v soukromém okně zprávu po tom co se uživatel vráti (po odpojení od serveru)"
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "zobrazit módy kanálu v položce pole \"buffer_name\""
@@ -4521,6 +4529,10 @@ msgid ""
 "(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
 "\"|nick\")"
 msgstr ""
+"znaky zastavující výpočet barvy přezdívky ze znaků přezdívky (alespoň jeden "
+"mimo tento list musí být v řetězci před zastavením) "
+"(example: přezdívka \"|nick|away\" s \"|\" ve znacích vrátí barvu přezdívky "
+"\"|nick\")"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -4566,16 +4578,16 @@ msgid "color for text in part/quit messages"
 msgstr "barva textu ve zprávách odchodu/ukončení"
 
 msgid "color for prefix of nick which is op/admin/owner on channel"
-msgstr ""
+msgstr "barva prefixu přezdívky, která je operátorem/administratorem/vlastníkem na kanálu"
 
 msgid "color for prefix of nick which is halfop on channel"
-msgstr ""
+msgstr "barva prefixu přezdívky, která je částečným operátorem na kanálu"
 
 msgid "color for prefix of nick which has voice on channel"
-msgstr ""
+msgstr "barva prefixu přezdívky, která může mluvit na kanálu"
 
 msgid "color for prefix of nick which is user on channel"
-msgstr ""
+msgstr "barva prefixu přezdívky, která je uživatelem na kanálu"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "barva textu \"Notice\" v upozorněních"
@@ -4593,21 +4605,26 @@ msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
 msgstr ""
+"barva ukazatele lagu, při počítání (pokud není od serveru obdrženo pong, pak "
+"se lag zvětšuje)"
 
 msgid "color for lag indicator, when pong has been received from server"
-msgstr ""
+msgstr "barva ukazatele lagu, pokud bylo od serveru obdrženo pong"
 
-#, fuzzy
 msgid "color for reason in part/quit messages"
-msgstr "barva textu ve zprávách odchodu/ukončení"
+msgstr "barva textu důvodu ve zprávách odchodu/ukončení"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
 msgstr ""
+"faktor zvyšování pro zpoždění automatického znovupřipojení k serveru (1 = vždy "
+"stejná prodleva, 2 = prodleva*2 pro každý pokus, ...)"
 
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
+"maximální délka prodlevy automatíckého znovupřipojení k serveru (v sekundách, "
+"0 = žádné maximum)"
 
 msgid ""
 "timeout (in seconds) between TCP connection to server and message 001 "
@@ -4647,19 +4664,18 @@ msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 "interval mezi dvěmi knotrolami pro lag (v sekundách, 0 = nikdy nekontrolovat)"
 
-#, fuzzy
 msgid "minimum lag to show (in milliseconds)"
-msgstr "minimální lag, který zobrazit (v sekundách)"
+msgstr "minimální lag, který zobrazit (v milisekundách)"
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr "odpojit po závažném lagu (v minutách, 0 = nikny neodpojit)"
 
-#, fuzzy
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
 "seconds)"
 msgstr ""
-"interval mezi dvěmi knotrolami pro lag (v sekundách, 0 = nikdy nekontrolovat)"
+"interval mezi dvěmi knotrolami pro lag, kdyz se lag zvětšuje (v "
+"sekundách)"
 
 msgid ""
 "anti-flood for high priority queue: number of seconds between two user "
@@ -4774,13 +4790,11 @@ msgstr "získat přezdívku od IRC hosta"
 msgid "IRC host (like `:nick!name@server.com`)"
 msgstr "IRC host (jako `:nick!name@server.com`)"
 
-#, fuzzy
 msgid "get nick color code"
-msgstr "získat barvu barva přezdívky"
+msgstr "získat kód barvy přezdívky"
 
-#, fuzzy
 msgid "get nick color name"
-msgstr "získat barvu barva přezdívky"
+msgstr "získat jméno barvy přezdívky"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
@@ -4789,14 +4803,13 @@ msgid "server,channel,nick (channel and nicks are optional)"
 msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
 
 msgid "1 if server supports this feature (from IRC message 005)"
-msgstr ""
+msgstr "1 pokud server podporuje tuto funkci (z IRC zprávy 005)"
 
-#, fuzzy
 msgid "server,feature"
-msgstr "jméno serveru"
+msgstr "server,funkce"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
-msgstr ""
+msgstr "hodnota funkce, pokud je podporována serverem (z IRC zprávy 005)"
 
 msgid "list of IRC servers"
 msgstr "seznam IRC serverů"
@@ -4804,9 +4817,8 @@ msgstr "seznam IRC serverů"
 msgid "server pointer (optional)"
 msgstr "ukayatel serveru (volitelný)"
 
-#, fuzzy
 msgid "server name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno serveru (může začínat nebo končit s \"*\") (volitelné)"
+msgstr "jméno serveru (může začínat nebo končit s \"*\" jako zástupný znakem) (volitelné)"
 
 msgid "list of channels for an IRC server"
 msgstr "seznam kanálů pro IRC server"
@@ -5031,9 +5043,9 @@ msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTéma nastevil %s%s%s%s%s%s%s%s%s v %s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic set on %s"
-msgstr "%sNení nastaveno téma pro kanál %s%s"
+msgstr "%sTéma nasteveno %s"
 
 #. TRANSLATORS: "%s" after "on" is date
 #, c-format
@@ -5041,9 +5053,9 @@ msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTéma pro %s%s%s nastevil %s%s%s%s%s%s%s%s%s v %s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s set on %s"
-msgstr "%sTéma pro %s%s%s v \"%s%s\""
+msgstr "%sTéma pro %s%s%s nastaveno %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
@@ -5054,13 +5066,13 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop kanálu %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s%s %s(%s%s%s)%s v %s"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)%s v %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #. TRANSLATORS: "%s" after "on" is date
 #, c-format
@@ -5154,10 +5166,10 @@ msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším přezdívku číslo %d (\"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
 msgstr ""
-"%s%s: přezdívka \"%s\" je nevalidní, zkouším přezdívku číslo %d (\"%s\")"
+"%s%s: přezdívka \"%s\" je nedostupná, zkouším přezdívku číslo %d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -5240,9 +5252,9 @@ msgstr "%s%s: vypršel čas pro sasl autentizaci"
 msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s: zpoždění je veliké, odpojuji se od serveru..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s: navazuji nové spojení se serverem za %d %s"
+msgstr "%s: navazuji nové spojení se serverem za %d %s, %d %s"
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s"
@@ -5673,9 +5685,8 @@ msgstr "seznam polí"
 msgid "bar pointer (optional)"
 msgstr "ukazatel pole (volitelný)"
 
-#, fuzzy
 msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno pole (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno pole (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "list of bar items"
 msgstr "seznam položek polí"
@@ -5683,9 +5694,8 @@ msgstr "seznam položek polí"
 msgid "bar item pointer (optional)"
 msgstr "ukazatel položky pole (volitelný)"
 
-#, fuzzy
 msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno položky pole (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno položky pole (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "list of bar windows"
 msgstr "seznam oken polí"
@@ -5699,9 +5709,8 @@ msgstr "seznam bufferů"
 msgid "buffer pointer (optional)"
 msgstr "ukazatel bufferu (volitelný)"
 
-#, fuzzy
 msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno buferu (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno buferu (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "lines of a buffer"
 msgstr "řádků bufferu"
@@ -5712,9 +5721,8 @@ msgstr "ukazatel bufferu"
 msgid "list of filters"
 msgstr "seznam filtrů"
 
-#, fuzzy
 msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno filtru (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno filtru (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "history of commands"
 msgstr "historie příkazů"
@@ -5746,9 +5754,8 @@ msgstr ""
 msgid "list of options"
 msgstr "seznam konfiguračních možností"
 
-#, fuzzy
 msgid "option name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno volby (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno volby (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "list of plugins"
 msgstr "seznam pluginů"
@@ -5756,9 +5763,8 @@ msgstr "seznam pluginů"
 msgid "plugin pointer (optional)"
 msgstr "ukazatel pluginu (volitelný)"
 
-#, fuzzy
 msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno pluginu (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno pluginu (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 msgid "list of windows"
 msgstr "seznam oken"
@@ -5766,9 +5772,8 @@ msgstr "seznam oken"
 msgid "window pointer (optional)"
 msgstr "ukazatel okna (volitelné)"
 
-#, fuzzy
 msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno okna (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno okna (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -6205,9 +6210,8 @@ msgstr "seznam skriptů"
 msgid "script pointer (optional)"
 msgstr "ukazatel skriptu (volitelný)"
 
-#, fuzzy
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "jméno skriptu (může začínat nebo končit \"*\") (volitelné)"
+msgstr "jméno skriptu (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -6642,29 +6646,3 @@ msgstr "Argumenty"
 
 msgid "Pointer"
 msgstr "Ukazatel"
-
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "barva textu pro 1. prefix v seznamu přezdívek"
-
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "barva textu pro 2. prefix v seznamu přezdívek"
-
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "barva textu pro 3. prefix v seznamu přezdívek"
-
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "barva textu pro 4. prefix v seznamu přezdívek"
-
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "barva textu pro 5. prefix v seznamu přezdívek"
-
-#~ msgid ""
-#~ "channel: channel name to join\n"
-#~ "    key: key to join the channel"
-#~ msgstr ""
-#~ "kanál: jméno kanálu na který se připojit\n"
-#~ " klíč: klíč pro připojení ke kanálu"
-
-#, fuzzy
-#~ msgid "color for buffer name when connected using SSL to server"
-#~ msgstr "%s%s: nejste připojen k serveru"
