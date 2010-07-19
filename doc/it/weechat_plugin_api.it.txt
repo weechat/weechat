@@ -193,11 +193,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
     weechat_plugin = plugin;
     
     weechat_hook_command ("double",
-			  "Visualizza due volte un messaggio "
-			  "oppure esegue un comando due volte",
-			  "messaggio | comando",
-			  "messaggio: messaggio da visualizzare due volte\n"
-			  "comando: comando da eseguire due volte",
+                          "Visualizza due volte un messaggio "
+                          "oppure esegue un comando due volte",
+                          "messaggio | comando",
+                          "messaggio: messaggio da visualizzare due volte\n"
+                          "comando: comando da eseguire due volte",
                           NULL,
                           &command_double_cb, NULL);
     
@@ -5728,7 +5728,7 @@ my_command_run_cb (void *data, struct t_gui_buffer *buffer,
                    const char *command)
 {
     weechat_printf (NULL,
-		    "Vuoi completare? Sto mangiando il completamento, ahah!);
+                    "Vuoi completare? Sto mangiando il completamento, ahah!);
     return WEECHAT_RC_OK_EAT;
 }
 

@@ -1500,7 +1500,7 @@ Die IRC Erweiterung nutzt folgende Level:
 * Level 3: jedwede Server Nachricht (ausgenommen join/part/quit)
 * Level 4: Server Nachrichten join/part/quit
 
-Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3" 
+Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3"
 wird Weechat alle Nachrichten protokollieren, ausgenommen join/part/quit
 Nachrichten.
 

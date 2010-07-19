@@ -610,7 +610,7 @@ IRC_PROTOCOL_CALLBACK(join)
                              pos_channel,
                              IRC_COLOR_MESSAGE_JOIN);
         
-        /* display message in private if private has flag "has_quit_server" */ 
+        /* display message in private if private has flag "has_quit_server" */
         if (!local_join)
             irc_channel_display_nick_back_in_pv (server, ptr_nick, nick);
     }

@@ -36,12 +36,12 @@ typedef void (t_hashtable_map)(void *data,
  * to a linked list, and it is read with hashed key (as unsigned int).
  * Keys with same hashed key are grouped in a linked list pointed by htable.
  * htable is not sorted, linked list is sorted.
- * 
+ *
  * Example of a hashtable with size 8 and 6 items added inside, items are:
  * "weechat", "fast", "light", "extensible", "chat", "client"
  * Keys "fast" and "light" have same hashed value, so they are together in
  * linked list.
- * 
+ *
  * Result is:
  * +-----+
  * |   0 |

@@ -512,7 +512,7 @@
           del: elimina un server
       deloutq: elimina i messaggi fuori coda per tutti i server (tutti i messaggi che WeeChat sta inviando)
          jump: passa al buffer del server
-          raw: apri buffer con dati grezzi IRC 
+          raw: apri buffer con dati grezzi IRC
   
   Esempi:
     /server listfull

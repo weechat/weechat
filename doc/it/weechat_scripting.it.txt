@@ -204,7 +204,7 @@ weechat.prnt("", "hi!")
 In molte funzioni, per motivi legati alla velocità, WeeChat non verifica se
 il puntatore è corretto oppure no. È il proprio lavoro controllare che si
 stia fornendo un puntatore valido, altrimenti potrebbe comparire una
-bella segnalazione per un errore ;) 
+bella segnalazione per un errore ;)
 
 [[callbacks]]
 Callback

@@ -218,7 +218,7 @@ Przypisania klawiszy
 Niektóre skróty klawiszowe (alt + klawisz) nie działają, dlaczego?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Jeśli używasz terminali jak xterm lub uxterm, niektóre skróty domyślnie 
+Jeśli używasz terminali jak xterm lub uxterm, niektóre skróty domyślnie
 nie będą działać. Możesz dodać następujące linie do pliku '~/.Xresources':
 
 * dla xterm:

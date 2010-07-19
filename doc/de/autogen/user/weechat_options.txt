@@ -194,7 +194,7 @@
 ** Werte: ein Farbname (Standardwert: lightgreen)
 
 * *weechat.color.input_text_not_found*
-** Beschreibung: Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche 
+** Beschreibung: Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: red)
 
