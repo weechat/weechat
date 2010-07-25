@@ -604,8 +604,8 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
 
-Confronta stringa indipendente da caso (maiuscole
-o minuscole) e da locale, for 'max' chars.
+Confronta stringa indipendente da caso (maiuscole o minuscole) e da locale, per
+un numero 'max' di caratteri.
 
 Prototipo:
 
@@ -618,7 +618,7 @@ Argomenti:
 
 * 'string1': prima stringa da comparare
 * 'string2': seconda stringa da comparare
-* 'max': max chars to compare
+* 'max': numero massimo di caratteri da comparare
 
 Valore restituito:
 
@@ -783,7 +783,7 @@ free (str);
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Sostituisce la `~` iniziale con la stringa con la cartella home. Se la stringa
 non inizia con `~`, viene restituita la stessa stringa.
@@ -1241,7 +1241,7 @@ str = weechat.string_remove_color(my_string, "?")
 weechat_string_encode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.2._
+_Novità nella versione 0.3.2._
 
 Codifica una stringa in base64.
 
@@ -1271,18 +1271,18 @@ weechat_string_encode_base64 (string, strlen (string), result);
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.2._
+_Novità nella versione 0.3.2._
 
-Decodifca una stringa in base64.
+Decodifica una stringa in base64.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 int weechat_string_decode_base64 (const char *from, char *to);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
 * 'from': stringa da decodificare
 * 'to': puntatore alla stringa per memorizzare il risultato (deve essere
@@ -1305,7 +1305,7 @@ length = weechat_string_decode_base64 (string, result);
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.2._
+_Novità nella versione 0.3.2._
 
 Verifica che il primo carattere della stringa sia un carattere comando
 (il comando carattere predefinito è '/').
@@ -1349,7 +1349,7 @@ command_char2 = weechat.string_is_command_char("test")  # == 0
 weechat_string_input_for_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.2._
+_Novità nella versione 0.3.2._
 
 Restituisce il puntatore al testo in input per il buffer (puntatore all'interno
 dell'argomento "string"), oppure NULL se è un comando.
@@ -1550,7 +1550,7 @@ char *next_char = weechat_utf8_next_char (string);
 weechat_utf8_char_int
 ^^^^^^^^^^^^^^^^^^^^^
 
-Return UTF-8 char as integer.
+Restituisce un carattere UTF-8 come intero.
 
 Prototipo:
 
@@ -1565,13 +1565,13 @@ Argomenti:
 
 Valore restituito:
 
-* UTF-8 char as integer
+* carattere UTF-8 come intero
 
 Esempio in C:
 
 [source,C]
 ----------------------------------------
-int char_int = weechat_utf8_char_int ("être"); /* "ê" as integer */
+int char_int = weechat_utf8_char_int ("être"); /* "ê" come intero */
 ----------------------------------------
 
 weechat_utf8_char_size
@@ -2064,9 +2064,9 @@ weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 weechat_file_get_content
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.1._
+_Novità nella versione 0.3.1._
 
-Get content of text file in a string.
+Ottiene il contenuto del file di testo in una stringa.
 
 Prototipo:
 
@@ -2077,11 +2077,12 @@ char *weechat_file_get_content (const char *filename);
 
 Argomenti:
 
-* 'filename': path and file name
+* 'filename': percorso e nome file
 
 Valore restituito:
 
-* content of file as string (must be freed by calling "free" after use)
+* contenuto del file come stringa (deve essere liberata chiamando "free dopo
+  l'uso)
 
 Esempio in C:
 
@@ -2188,7 +2189,7 @@ weechat_util_timeval_add (&tv, 2000); /* aggiunge 2 secondi */
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.2._
+_Novità nella versione 0.3.2._
 
 Riceve data/ora come stringa compilata con "strftime".
 
@@ -2724,7 +2725,7 @@ Funzioni per le tabelle hash.
 weechat_hashtable_new
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Crea una nuova tabella hash.
 
@@ -2767,7 +2768,7 @@ Arguments:
   NULL se il tipo di valore è "string" (una funzione di confronto predefinita è
   usata per le stringhe e solo per le stringhe)
 
-Return value:
+Valore restituito:
 
 * puntatore alla nuova tabella hash, NULL in caso di errore
 
@@ -2785,7 +2786,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Aggiunge o aggiorna un elemento nella tabella hash con la dimensione per la
 chiave ed il valore.
@@ -2824,7 +2825,7 @@ weechat_hashtable_set_with_size (hashtable, "my_key", 0,
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Aggiunge o aggiorna un elemento nella tabella hash.
 
@@ -2856,7 +2857,7 @@ weechat_hashtable_set (hashtable, "my_key", "my_value");
 weechat_hashtable_get
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Ottiene il valore associato ad una chiave in una tabella hash.
 
@@ -2886,7 +2887,7 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Chiama una funzione su tutte le voci della tabella hash.
 
@@ -2928,7 +2929,7 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Restituisce un valore intero per la proprietà di una tabella hash.
 
@@ -2961,7 +2962,7 @@ int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Aggiunge elementi della tabella hash ad un elemento della lista info.
 
@@ -3004,7 +3005,7 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Rimuove un elemento in una tabella hash.
 
@@ -3030,7 +3031,7 @@ weechat_hashtable_remove (hashtable, "my_key");
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Rimuove tutti gli elementi in una tabella hash.
 
@@ -3055,7 +3056,7 @@ weechat_hashtable_remove_all (hashtable);
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
 
-_Nuovo nella versione 0.3.3._
+_Novità nella versione 0.3.3._
 
 Libera una tabella hash.
 
@@ -3661,7 +3662,7 @@ option = weechat.config_search_option(config_file, section, "option")
 weechat_config_search_section_option
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Search a section and an option in a configuration file or section.
+Cerca una sezione ed un'opzione in un file di configurazione o sezione.
 
 Prototipo:
 
@@ -3678,7 +3679,7 @@ Arguments:
 
 * 'config_file': puntatore al file di configurazione
 * 'section': puntatore alla sezione
-* 'option_name': option name
+* 'option_name': nome dell'opzione
 * 'section_found': puntatore al puntatore della sezione, sarà impostato alla
   sezione dell'opzione, se viene trovata
 * 'option_found': puntatore al puntatore dell'opzione, sarà impostato al
