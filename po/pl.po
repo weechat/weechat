@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-19 15:16+0200\n"
+"POT-Creation-Date: 2010-07-25 12:52+0200\n"
 "PO-Revision-Date: 2010-06-20 21:25+0200\n"
 "Last-Translator: B.J. Stobiecki <bartek@stobiecki.eu>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5406,6 +5406,10 @@ msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
 
 msgid "gnutls: sending one certificate"
 msgstr "gnutls: wysyłam jeden certyfikat"
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid certificate \"%s\", error: %s"
+msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
 
 #, c-format
 msgid " - client certificate info (%s):"

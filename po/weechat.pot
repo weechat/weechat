@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-19 15:16+0200\n"
+"POT-Creation-Date: 2010-07-25 12:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4469,6 +4469,10 @@ msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr ""
 
 msgid "gnutls: sending one certificate"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr ""
 
 #, c-format

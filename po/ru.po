@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-19 15:16+0200\n"
+"POT-Creation-Date: 2010-07-25 12:52+0200\n"
 "PO-Revision-Date: 2010-06-20 21:25+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5169,6 +5169,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 msgid "gnutls: sending one certificate"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format

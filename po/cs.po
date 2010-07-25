@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-19 15:16+0200\n"
+"POT-Creation-Date: 2010-07-25 12:52+0200\n"
 "PO-Revision-Date: 2010-07-18 17:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5387,6 +5387,10 @@ msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
 
 msgid "gnutls: sending one certificate"
 msgstr "gnutls: posílám jeden certifikát"
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid certificate \"%s\", error: %s"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
 
 #, c-format
 msgid " - client certificate info (%s):"
