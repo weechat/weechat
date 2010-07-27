@@ -164,7 +164,7 @@
 ** Werte: current, server (Standardwert: current)
 
 * *irc.look.nick_color_stop_chars*
-** Beschreibung: chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick")
+** Beschreibung: Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt).
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: "_|[")
 
@@ -324,7 +324,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: "")
 
 * *irc.server_default.autoconnect*
-** Beschreibung: Automatisch mit dem Server verbinden, wenn WeeChat gestartet wird
+** Beschreibung: Beim Programmstart von Weechat automatisch mit dem Server verbinden
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: off)
 
@@ -339,7 +339,7 @@
 ** Werte: on, off (Standardwert: on)
 
 * *irc.server_default.autoreconnect_delay*
-** Beschreibung: Zeit die gewartet werden soll bevor ein Verbindungsneuaufbau versucht wird (in Sekunden)
+** Beschreibung: Zeit (in Sekunden) die gewartet werden soll bevor ein neuer Verbindungsaufbau durchgeführt werden soll
 ** Typ: integer
 ** Werte: 1 .. 65535 (Standardwert: 10)
 
@@ -369,7 +369,7 @@
 ** Werte: on, off (Standardwert: off)
 
 * *irc.server_default.local_hostname*
-** Beschreibung: Angepasster lokaler Hostname oder angepasste IP-Adresse für den Server (optional, wenn nichts eingetragen ist, wird der lokale Hostname verwendet)
+** Beschreibung: benutzerdefinierter lokaler Hostname bzw. IP-Adresse für den entsprechenden Server (optional). Falls kein Eintrag vorhanden sein sollte wird der lokale Hostname verwendet
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: "")
 
@@ -429,7 +429,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: 2048)
 
 * *irc.server_default.ssl_verify*
-** Beschreibung: Überprüfe ob die SSL-Verbindung vertrauenswürdig ist.
+** Beschreibung: Überprüfe ob die SSL-Verbindung vertrauenswürdig ist
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: on)
 

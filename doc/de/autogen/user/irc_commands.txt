@@ -405,23 +405,23 @@
   Daemon2: Nachricht an diesen Daemon weiterleiten
 ........................................
 
-&bull; *`/query`* `[-server Server] Nickname [Text]`::
+&bull; *`/query`* `[-server server] nickname [text]`::
 
 ........................................
   Eine private Nachricht an einen Nick schicken
 
-    Server: sende an diesen Server (interner Name)
-  Nickname: Nickname für privaten Chat
-      Text: zu sendender Text
+    server: an diesen Server senden (interner Name)
+  nickname: Nickname für privaten Chat
+      text: zu sendender Text
 ........................................
 
-&bull; *`/quote`* `[-server Server] Daten`::
+&bull; *`/quote`* `[-server server] data`::
 
 ........................................
   Daten direkt an Server senden (siehe RFC 2812)
 
-  Server: sendet an diesen Server (interner Name)
-  Daten: unbearbeitete Daten die gesendet werden sollen
+  server: an diesen Server senden (interner Name)
+  data: unbearbeitete Daten die gesendet werden sollen
 ........................................
 
 &bull; *`/reconnect`* `[-all [-nojoin] | Servername [Servername ...] [-nojoin]]`::
@@ -448,19 +448,19 @@
   Den Server dazu bringen sich selbst neu zu starten
 ........................................
 
-&bull; *`/sajoin`* `Nickname Channel[,Channel...]`::
+&bull; *`/sajoin`* `nickname channel[,channel]`::
 
 ........................................
   Zwingt einen User einen oder mehrere Channel zu betreten
 
-  Nickname: Nickname
-   Channel: Name des Channels
+  nickname: Nickname
+   channel: Name des Channels
 ........................................
 
 &bull; *`/samode`* `Channel Modus`::
 
 ........................................
-  Ändert den Modus des Channels, ohne das Operator-Privilegien vorliegen
+  Ändert den Modus des Channels ohne das Operator-Privilegien vorliegen
 
   Channel: Name des Channel
      Mode: neuer Modus für Channel
@@ -475,13 +475,13 @@
   new_nickname: neuer Nickname
 ........................................
 
-&bull; *`/sapart`* `Nickname Channel[,Channel...]`::
+&bull; *`/sapart`* `nickname channel[,channel]`::
 
 ........................................
   Zwingt einen User den/die Channel(s) zu verlassen
 
-  Nickname: Nickname
-   Channel: Name des Channels
+  nickname: Nickname
+   channel: Name des Channels
 ........................................
 
 &bull; *`/saquit`* `nickname reason`::
@@ -526,59 +526,59 @@
     /server deloutq
 ........................................
 
-&bull; *`/service`* `Nickname reserviert Distribution Typ reserviert Info`::
+&bull; *`/service`* `nickname reserved distribution type reserved info`::
 
 ........................................
   Einen neuen Service eintragen
 
-  Distribution: Sichtbarkeit des Services
-          Typ: für spätere Verwendung reserviert
+  distribution: Sichtbarkeit des Services
+         type: für spätere Verwendung reserviert
 ........................................
 
-&bull; *`/servlist`* `[Maske [Typ]]`::
+&bull; *`/servlist`* `[mask [type]]`::
 
 ........................................
   Zur Zeit verbundene Services auflisten
 
-  Maske: nur zutreffende Services auflisten
-  Typ: nur Services von diesem Typ auflisten
+  mask: nur zutreffende Services auflisten
+  type: nur Services von diesem Typ auflisten
 ........................................
 
-&bull; *`/squery`* `Service Text`::
+&bull; *`/squery`* `service text`::
 
 ........................................
   Nachricht an einen Service senden
 
-  Service: Name des Service
-  Text: zu sendender Text
+  service: Name des Service
+  text: zu sendender Text
 ........................................
 
-&bull; *`/squit`* `Server Kommentar`::
+&bull; *`/squit`* `server comment`::
 
 ........................................
   Serververbindungen trennen
 
-  Server: Servername
-  Kommentar: Trennungsgrund
+  server: Servername
+  comment: Trennungsgrund
 ........................................
 
-&bull; *`/stats`* `[Anfrage [Server]]`::
+&bull; *`/stats`* `[query [server]]`::
 
 ........................................
   Serverstatistik abfragen
 
-   Anfrage: c/h/i/k/l/m/o/y/u (siehe RFC1459)
-  Server: zu befragender Server
+   query: c/h/i/k/l/m/o/y/u (siehe RFC1459)
+  server: Name des Servers
 ........................................
 
-&bull; *`/summon`* `User [Ziel [Channel]]`::
+&bull; *`/summon`* `user [target [channel]]`::
 
 ........................................
   Nutzer die auf dem IRC-Server arbeiten darum bitten auf den IRC-Server zu kommen
 
-     User: Benutzername
-  Ziel: Servername
-  Channel: Channelname
+     user: Benutzername
+  target: Servername
+  channel: Channelname
 ........................................
 
 &bull; *`/time`* `[Ziel]`::
@@ -589,13 +589,13 @@
   Ziel: Zeit des angegebenen Servers abfragen.
 ........................................
 
-&bull; *`/topic`* `[Channel] [Topic]`::
+&bull; *`/topic`* `[channel] [topic]`::
 
 ........................................
-  Channeltopic abfragen/setzen
+  Thema des Channels abfragen/setzen
 
-  Channel: Channelname
-  Topic: neues Topic (oder "-delete" zum entfernen des Topics)
+  channel: Channelname
+  topic: Thema für den Channel (oder "-delete" zum entfernen des Themas)
 ........................................
 
 &bull; *`/trace`* `[Ziel]`::
@@ -606,13 +606,13 @@
   Ziel: Server
 ........................................
 
-&bull; *`/unban`* `[Channel] nickname [nickname ...]`::
+&bull; *`/unban`* `[channel] nickname [nickname ...]`::
 
 ........................................
   Bann aufheben (Nicks oder Hosts)
 
-   Channel: Channel, in dem der Bann aufzuheben ist
-  Nickname: User, für den der Bann aufzuheben ist
+   Channel: Channel in dem der Bann aufzuheben ist
+  Nickname: User für den der Bann aufzuheben ist
 ........................................
 
 &bull; *`/userhost`* `Nickname [Nickname ...]`::
@@ -631,13 +631,13 @@
   Ziel: Server
 ........................................
 
-&bull; *`/version`* `[Server | Nickname]`::
+&bull; *`/version`* `[server | nickname]`::
 
 ........................................
-  Versionsinformation des Nicknamen oder Servers ermitteln (des aktuellen oder angegebenen Nicks/Servers)
+  Versionsinformation des Nicknamen oder Servers ermitteln (des aktuellen oder angegebenen Nick/Server)
 
-    Server: Servername
-  Nickname: Nickname
+    server: Servername
+  nickname: Nickname
 ........................................
 
 &bull; *`/voice`* `Nickname [Nickname]`::
@@ -658,7 +658,7 @@
 &bull; *`/wallops`* `Text`::
 
 ........................................
-  Nachricht an alle User schicken, die den 'w'-Mode gesetzt haben
+  Nachricht an alle User schicken die den 'w'-Mode gesetzt haben
 
   zu sendender Text
 ........................................
@@ -666,25 +666,25 @@
 &bull; *`/who`* `[Maske ["o"]]`::
 
 ........................................
-  Erstellung einer Anfrage, die eine Anzahl von Informationen zurück gibt.
+  Erstellung einer Anfrage die eine Anzahl von Informationen zurück gibt.
 
   Maske: nur Information über betreffende Nicknamen abfragen
      o: nur Operatoren ausgeben, die dem Filter entsprechen
 ........................................
 
-&bull; *`/whois`* `[Server] Nickname[,Nickname]`::
+&bull; *`/whois`* `[server] nickname[,nickname]`::
 
 ........................................
   Information über User abfragen
 
-    Server: Servername
-  Nickname: Nickname (oder eine Maske)
+    server: Servername
+  nickname: Nickname (oder eine Maske)
 ........................................
 
 &bull; *`/whowas`* `nickname [,nickname [,nickname ...]] [count [target]]`::
 
 ........................................
-  Informationen eines Nicknamen abfragen, welcher nicht mehr existiert
+  Informationen eines Nicknamen abfragen welcher nicht mehr existiert
 
   Nickname: Nickname, welcher gesucht werden soll
      count: maximale Anzahl an Antworten (negative Zahl für eine vollständige Liste)

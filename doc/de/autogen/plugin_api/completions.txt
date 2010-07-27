@@ -26,7 +26,7 @@
 
 | irc | irc_server_nick | Nick beim derzeitigen IRC-Server
 
-| irc | irc_server_nicks | Nicks in allen Channels, auf dem aktuellen IRC-Server
+| irc | irc_server_nicks | Nicks für alle Channels auf dem aktuellen IRC-Server
 
 | irc | irc_server_privates | Privat auf aktuellem IRC Server
 
