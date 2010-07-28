@@ -373,6 +373,10 @@ Exemples :
 # afficher "bonjour" sur le tampon core
 weechat.prnt("", "bonjour")
 
+# afficher "bonjour" sur le tampon core, mais ne pas l'écrire dans le fichier de log
+# (version >= 0.3.3 seulement)
+weechat.prnt_date_tags("", 0, "no_log", "bonjour")
+
 # afficher le préfixe "==>" et le message "bonjour" sur le tampon courant
 # (le préfixe et le message doivent être séparés par une tabulation)
 weechat.prnt(weechat.current_buffer(), "==>\tbonjour")

@@ -363,6 +363,10 @@ Examples:
 # display "hello" on core buffer
 weechat.prnt("", "hello")
 
+# display "hello" on core buffer, but do not write it to log file
+# (version >= 0.3.3 only)
+weechat.prnt_date_tags("", 0, "no_log", "hello")
+
 # display prefix "==>" and message "hello" on current buffer
 # (prefix and message must be separated by tab)
 weechat.prnt(weechat.current_buffer(), "==>\thello")
