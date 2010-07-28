@@ -1862,10 +1862,12 @@ command_history (void *data, struct t_gui_buffer *buffer,
                 continue;
             if (!displayed)
             {
-                gui_chat_printf (buffer, "");
-                gui_chat_printf (buffer, _("Buffer command history:"));
+                gui_chat_printf_date_tags (buffer, 0, "no_log,cmd_history", "");
+                gui_chat_printf_date_tags (buffer, 0, "no_log,cmd_history",
+                                           _("Buffer command history:"));
             }
-            gui_chat_printf (buffer, "%s", ptr_history->text);
+            gui_chat_printf_date_tags (buffer, 0, "no_log,cmd_history",
+                                       "%s", ptr_history->text);
             displayed = 1;
         }
     }
