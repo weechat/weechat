@@ -1125,6 +1125,11 @@ logger_line_log_level (int tags_count, const char **tags)
     
     for (i = 0; i < tags_count; i++)
     {
+        /* log disabled on line? return -1 */
+        if (strcmp (tags[i], "no_log") == 0)
+            return -1;
+        
+        /* log level for line? return it */
         if (strncmp (tags[i], "log", 3) == 0)
         {
             if (isdigit (tags[i][3]))
@@ -1134,7 +1139,8 @@ logger_line_log_level (int tags_count, const char **tags)
         }
     }
     
-    return 9;
+    /* return default log level for line */
+    return LOGGER_LEVEL_DEFAULT;
 }
 
 /*
@@ -1158,27 +1164,29 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
     (void) highlight;
     
     line_log_level = logger_line_log_level (tags_count, tags);
-    
-    ptr_logger_buffer = logger_buffer_search_buffer (buffer);
-    if (ptr_logger_buffer
-        && ptr_logger_buffer->log_enabled
-        && (date > 0)
-        && (line_log_level <= ptr_logger_buffer->log_level))
+    if (line_log_level >= 0)
     {
-        date_tmp = localtime (&date);
-        buf_time[0] = '\0';
-        if (date_tmp)
+        ptr_logger_buffer = logger_buffer_search_buffer (buffer);
+        if (ptr_logger_buffer
+            && ptr_logger_buffer->log_enabled
+            && (date > 0)
+            && (line_log_level <= ptr_logger_buffer->log_level))
         {
-            strftime (buf_time, sizeof (buf_time) - 1,
-                      weechat_config_string (logger_config_file_time_format),
-                      date_tmp);
+            date_tmp = localtime (&date);
+            buf_time[0] = '\0';
+            if (date_tmp)
+            {
+                strftime (buf_time, sizeof (buf_time) - 1,
+                          weechat_config_string (logger_config_file_time_format),
+                          date_tmp);
+            }
+            
+            logger_write_line (ptr_logger_buffer,
+                               "%s\t%s\t%s",
+                               buf_time,
+                               (prefix) ? prefix : "",
+                               message);
         }
-        
-        logger_write_line (ptr_logger_buffer,
-                           "%s\t%s\t%s",
-                           buf_time,
-                           (prefix) ? prefix : "",
-                           message);
     }
     
     return WEECHAT_RC_OK;
