@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-07-25 12:52+0200\n"
-"PO-Revision-Date: 2010-07-19 15:12+0200\n"
+"POT-Creation-Date: 2010-07-28 11:46+0200\n"
+"PO-Revision-Date: 2010-07-28 09:49+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -4596,6 +4596,10 @@ msgid ""
 "(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
 "\"|nick\")"
 msgstr ""
+"caratteri usati per fermare il calcolo del colore con le lettere del nick "
+"(almeno un carattere al di fuori di questa lista deve essere nella lista "
+"prima di fermarlo) (esempio: nick \"|nick|away\" con \"|\" nei caratteri "
+"restituisce il colore del nick \"|nick\")"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -5448,9 +5452,9 @@ msgstr "%sgnutls: il nome host nel certificato NON coincide \"%s\""
 msgid "gnutls: sending one certificate"
 msgstr "gnutls: invio di un certificato"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
-msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
+msgstr "%sgnutls: certificato \"%s\" non valido, errore: %s"
 
 #, c-format
 msgid " - client certificate info (%s):"

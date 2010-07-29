@@ -371,11 +371,11 @@ Esempi:
 
 [source,python]
 ----------------------------------------
-# display "hello" on core buffer
+# visualizza "hello" sul buffer core
 weechat.prnt("", "hello")
 
-# display "hello" on core buffer, but do not write it to log file
-# (version >= 0.3.3 only)
+# visualizza "hello" sul buffer core, ma non salva sul file di log
+# (solo versioni >= 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "hello")
 
 # visualizza il prefisso "==>" ed il messaggio "hello" sul buffer corrente
