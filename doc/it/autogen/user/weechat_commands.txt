@@ -137,7 +137,9 @@
            -all: elimina tutti i filtri
   plugin.buffer: plugin e buffer in cui il filtro è attivo ("*" per tutti i buffer)
             tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
-          regex: espressione regolare da cercare nella riga (utilizzare \t per separare il prefisso dal messaggio, caratteri speciali come "|" devono essere preceduti dal carattere escape: '\|')
+          regex: espressione regolare da cercare nella riga
+                 - utilizzare '	' per separare il prefisso dal messaggio, caratteri speciali come "|" devono essere preceduti dal carattere escape: '\|')
+                 - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
   
   Il tasto predefinito alt+'=' abilita/disabilita il filtro.
   
