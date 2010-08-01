@@ -551,16 +551,6 @@ gui_keyboard_pressed (const char *key_str)
                 }
             }
             
-            if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-            {
-                /* TODO: execute keyboard hooks */
-                /*(void) plugin_keyboard_handler_exec (
-                    (ptr_key->command) ?
-                    ptr_key->command : gui_keyboard_function_search_by_ptr (ptr_key->function),
-                    buffer_before_key,
-                    gui_current_window->buffer->input_buffer);*/
-            }
-            
             if (buffer_before_key)
                 free (buffer_before_key);
         }
