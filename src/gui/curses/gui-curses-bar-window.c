@@ -569,7 +569,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         if (diff > 0)
                         {
                             /*
-                             * TODO: keep some spaces after end of input
+                             * FIXME: keep some spaces after end of input
                              * for example by adding something to diff, like:
                              * diff += (9 - (diff % 10));
                              * but then scroll position has to be saved

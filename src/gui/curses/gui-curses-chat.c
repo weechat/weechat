@@ -454,7 +454,7 @@ gui_chat_display_word (struct t_gui_window *window,
         if ((length_align > 0)
             && (window->win_chat_cursor_x == 0)
             && (*lines_displayed > 0)
-            /* TODO: modify arbitraty value for non aligning messages on time/nick? */
+            /* FIXME: modify arbitraty value for non aligning messages on time/nick? */
             && (length_align < (window->win_chat_width - 5)))
         {
             if (!simulate)
