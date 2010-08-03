@@ -1315,6 +1315,11 @@ irc_server_parse_message (const char *message, char **nick, char **host,
                 }
             }
         }
+        else
+        {
+            if (command)
+                *command = strdup (pos);
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.3-dev, 2010-07-28
+v0.3.3-dev, 2010-08-03
 
 
 Version 0.3.3 (under dev!)
@@ -24,6 +24,8 @@ Version 0.3.3 (under dev!)
   (bug #30296)
 * api: add function "string_expand_home", fix bug with replacement of home in
   paths
+* irc: fix bug in parser when no argument is received after command, no
+  callback was called, and message was silently ignored (bug #30640)
 * irc: add new option irc.look.nick_color_stop_chars
 * irc: fix import of certificates created by openssl >= 1.0.0 (bug #30316)
 * irc: fix display of local SSL certificate when it is sent to server
