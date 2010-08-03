@@ -417,6 +417,7 @@ util_file_get_content (const char *filename)
  *                      (non-digit chars like "-dev" are ignored)
  *                      for example:
  *                        "0.3.2-dev" ==> 197120 (== 0x00030200)
+ *                        "0.3.2-rc1" ==> 197120 (== 0x00030200)
  *                        "0.3.2"     ==> 197120 (== 0x00030200)
  *                        "0.3.1.1"   ==> 196865 (== 0x00030101)
  *                        "0.3.1"     ==> 196864 (== 0x00030100)
@@ -440,6 +441,8 @@ util_version_number (const char *version)
             index_buf = 0;
             while (ptr_item && ptr_item[0] && (index_buf < (int)sizeof (buf) - 1))
             {
+                if (ptr_item[0] == '-')
+                    break;
                 if (isdigit (ptr_item[0]))
                 {
                     buf[index_buf] = ptr_item[0];
