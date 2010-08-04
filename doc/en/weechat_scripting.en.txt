@@ -342,7 +342,7 @@ Common tasks
 ------------
 
 This chapter shows some common tasks, with examples.
-Only partial things in API are used here, for full reference, see see
+Only partial things in API are used here, for full reference, see
 'WeeChat Plugin API Reference'.
 
 [[buffers]]
