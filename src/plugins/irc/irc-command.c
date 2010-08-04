@@ -3348,8 +3348,11 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         new_server->name,
                         IRC_COLOR_CHAT);
         
+        /* do not connect to server after creating it */
+        /*
         if (IRC_SERVER_OPTION_BOOLEAN(new_server, IRC_SERVER_OPTION_AUTOCONNECT))
             irc_server_connect (new_server);
+        */
         
         return WEECHAT_RC_OK;
     }
