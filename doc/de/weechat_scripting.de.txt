@@ -22,17 +22,17 @@ ruby, lua und tcl.
 
 [NOTE]
 Beinahe alle Beispiele in dieser Dokumentation beziehen sich auf Python.
-Allerdings ist dieser API für andere Skriptsprachen identisch.
+Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 
 [[scripts_in_weechat]]
-Scripten in WeeChat
+Skripten in WeeChat
 -------------------
 
 [[languages_specifities]]
 Besonderheiten der einzelnen Skriptsprachen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Es existieren einige Besonderheiten in jeder Skriptsprache:
+Es existieren einige Besonderheiten für jede Skriptsprache:
 
 * perl:
 ** Funktionen werden im Format `weechat::xxx(arg1, arg2, ...);` ausgeführt
@@ -54,7 +54,7 @@ Die "Register" Funktion
 Jedes WeeChat Skript muss sich bei WeeChat "registrieren". Die "register" Funktion
 muss deshalb der erste WeeChat Befehl sein der durch das Skript genutzt wird.
 
-Prototype:
+Prototyp:
 
 [source,python]
 ----------------------------------------
@@ -67,7 +67,7 @@ Argumente:
 * 'author': Name des Authors (String)
 * 'version': Version des Skripts (String)
 * 'license': Lizenz für das Skripts (String)
-* 'description': string, short description of script
+* 'description': kurze Beschreibung des Skripts (String)
 * 'shutdown_function': Name der Funktion die beim Beenden des Skripts aufgerufen werden soll (String)
 * 'charset': Skript Zeichensatz (optional, liegt das Skript im UTF-8 Format vor kann dieser Wert
   leer bleiben. UTF-8 ist der Standardzeichensatz) (String)
@@ -134,7 +134,7 @@ genutzt werden soll:
 /tcl load tcl/skript.tcl
 ----------------------------------------
 
-Um Skripten automatisch beim Start von WeeChat zu laden kann mal einen Link
+Um Skripten automatisch beim Start von WeeChat zu laden kann man einen Link
 in das Verzeichnis 'Skriptsprache/autoload' setzen.
 
 Ein Beispiel für ein Python-Skript:
@@ -148,7 +148,7 @@ $ ln -s ../script.py
 Unterschiede zur C API
 ----------------------
 
-Die Skripten API ist nahezu identisch mit der C Erweiterung API.
+Die Skripten API ist nahezu identisch mit der API der C Erweiterung.
 Um einen Überblick über alle API Funktionen (Prototyp, Argumente,
 Rückgabe werte, Beispiele) zu erhalten werfen Sie einen Blick in
 die 'WeeChat Plugin API Reference'.
@@ -179,19 +179,19 @@ WeeChat core  ------->  python Erweiterung (python.so)  ------->  test.py
 Pointer
 ~~~~~~~
 
-Wie Sie vermutlich wissen existieren in Skripten keine "Pointer". Wird nun
-von der API Funktion ein Pointer als Rückgabewert an das Skript weitergereicht
-wird der Pointer in einen String konvertiert.
+Wie Sie vermutlich wissen existieren in Skripten keine "Pointer". Sendet nun
+die API Funktion einen Pointer als Rückgabewert an das Skript, dann wird der
+Pointer in einen String konvertiert.
 
-Beispiel: Wenn eine Funktion den Pointer 0x1234ab56 zurück gibt erhält das
+Beispiel: Falls eine Funktion den Pointer 0x1234ab56 zurück gibt erhält das
 Skript einen String in der Form "0x1234ab56".
 
-Erwartet die API Funktionen einen Pointer als Argument muss das Skript diesen
+Erwartet die API Funktion als Argument einen Pointer, dann muss das Skript diesen
 Pointer als String übergeben. Die C Erweiterung konvertiert den String in einen
 echten Pointer bevor die C API Funktion ausgeführt wird.
 
-Ein leerer String oder "0x0" sind erlaubt. Beides wird in C als NULL interpretiert.
-Beispiel: Um Daten im Core Buffer (WeeChat Hauptbuffer) auszugeben:
+Ein leerer String oder "0x0" sind hierbei erlaubt. Beides wird in C als NULL interpretiert.
+Im folgenden ein Beispiel um Daten im Core Buffer (WeeChat Hauptbuffer) auszugeben:
 
 [source,python]
 ----------------------------------------
@@ -200,16 +200,16 @@ weechat.prnt("", "Hi!")
 
 [WARNING]
 Aus Gründen der Geschwindigkeit wird in vielen Funktionen darauf verzichtet
-die Pointer auf Korrektheit zu überprüfen. Es obliegt Ihrer Verantwortung
-einen gültigen Pointer zu übergeben. Sollte Sie dies nicht beachten werden
+die Pointer auf ihre Korrektheit zu überprüfen. Es obliegt Ihrer Verantwortung
+einen gültigen Pointer zu übergeben. Sollten Sie dies nicht beachten dann werden
 Sie mit einem netten Crash-Report belohnt ;)
 
 [[callbacks]]
 Callbacks
 ~~~~~~~~~
 
-Beinahe alle WeeChat Callbacks müssen WEECHAT_RC_OK oder WEECHAT_RC_ERROR
-zurück geben. Eine Ausnahme bildet das modifier Callback, hier wird ein
+Beinahe alle WeeChat Callbacks müssen entweder WEECHAT_RC_OK oder WEECHAT_RC_ERROR als
+Ergebnis zurück liefern. Eine Ausnahme bildet das modifier Callback, hier wird ein
 String als Rückgabewert erwartet.
 
 C Callbacks nutzen ein "Data" Argument welches ein Pointer ist. In der
@@ -361,8 +361,8 @@ Nachrichten anzeigen
 ^^^^^^^^^^^^^^^^^^^^
 
 Eine leere Zeichenkette wird häufig verwendet um den WeeChat Core Buffer zu nutzen.
-Soll ein anderer Buffer genutzt werden dann muss der Pointer dieses Buffers verwendet
-werden (Übergabe als String, siehe <<Pointers,pointers>>).
+Möchten Sie einen anderen Buffer nutzen dann muss der Pointer dieses Buffers verwendet
+werden (Übergabe als String, siehe <<pointers,Pointer>>).
 
 Beispiele:
 
@@ -371,7 +371,7 @@ Beispiele:
 # Gibt den Text "Hallo" im Core Buffer aus
 weechat.prnt("", "Hallo")
 
-# Gibt den Text "Hallo" im Core Buffer aus, schreibt ihn aber nicht in die Protokolldatei
+# Gibt den Text "Hallo" im Core Buffer aus, schreibt diesen aber nicht in die Protokolldatei
 # (nur Version >= 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "hello")
 
@@ -390,8 +390,8 @@ weechat.prnt("", "Text %sGeld auf Blau" % weechat.color("yellow,blue"))
 buffer = weechat.buffer_search("irc", "freenode.#weechat")
 weechat.prnt(buffer, "Nachricht im #weechat Channel")
 
-# die zweite Möglichkeit einen Buffer zu suchen (zu empfehlen)
-# (bitte beachten dass der Server- und Channelname durch ein Komma zu trennen sind)
+# die zweite Möglichkeit einen Buffer zu suchen (empfohlen!)
+# (bitte beachten Sie dass der Server- und Channelname durch ein Komma zu trennen sind)
 buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.prnt(buffer, "Nachricht im #weechat Channel")
 ----------------------------------------
@@ -404,8 +404,8 @@ Text in einen Buffer senden
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sie können einen Text oder einen Befehl zu einem Buffer senden. Dies entspricht exakt dem
-Verhalten wenn Sie einen Text oder ein Befehl in der Befehlszeile eingeben und die [Enter]
-Taste drücken.
+Verhalten als ob Sie einen Text oder einen Befehl in der Befehlszeile eingeben und diesen
+mit der [Enter] Taste bestätigen.
 
 Beispiele:
 
@@ -414,7 +414,7 @@ Beispiele:
 # führt den Befehl "/help" im Core Buffer aus
 weechat.command("", "/help")
 
-# sendet den Text "Hallo" in den #weechat IRC Channel (die Teilnehmer des Channels sehen diese Nachricht)
+# sendet den Text "Hallo" in den IRC Channel #weechat (die Teilnehmer des Channels sehen diese Nachricht)
 buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.command(buffer, "Hallo")
 ----------------------------------------
@@ -425,10 +425,10 @@ neuen Buffer öffnen
 
 Sie können aus Ihrem Skript einen neuen Buffer öffnen um dort Nachrichten auszugeben.
 
-Zwei Callbacks können aufgerufen werden (diese sind optional): der erste dient dazu
-eine Routine aufzurufen wenn ein Text eingegeben und mit [Enter] bestätigt wird. Der
-zweite ruft eine Routine auf die beim Schließen des Buffers ausgeführt wird (zum
-Beispiel wenn `/buffer close` genutzt wurde).
+Zwei Callbacks können aufgerufen werden (diese sind optional): der erste Callback dient dazu
+eine Routine aufzurufen sobald ein Text eingegeben und mit [Enter] bestätigt wird. Der zweite
+Callback ruft eine Routine auf die beim Schließen des Buffers ausgeführt wird (zum Beispiel
+wenn `/buffer close` genutzt wurde).
 
 Beispiele:
 
@@ -450,7 +450,7 @@ buffer = weechat.buffer_new("Mein_Buffer", "buffer_input_cb", "", "buffer_close_
 # Überschrift für Buffer bestimmen
 weechat.buffer_set(buffer, "Titel", "Dies ist die Überschrift für meinen Buffer")
 
-# deaktiviert die Protokollierung, dazu wird die lokale Variable "no_log" auf "1" gesetzt
+# deaktiviert die Protokollierung. Dazu wird die lokale Variable "no_log" auf "1" gesetzt
 weechat.buffer_set(buffer, "localvar_set_no_log", "1")
 ----------------------------------------
 
@@ -458,7 +458,7 @@ weechat.buffer_set(buffer, "localvar_set_no_log", "1")
 Eigenschaften von Buffern
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Die Eigenschaften von Buffern können in Form eines Strings, Integer oder als Pointer
+Die verschiedenen Eigenschaften von Buffern können in Form eines Strings, Integer oder als Pointer
 vorliegen und gelesen werden.
 
 Beispiele:
@@ -505,7 +505,7 @@ neuen Befehl hinzufügen
 Erstellt mittels `hook_command` einen benutzerdefinierten Befehl. Dabei kann
 eine benutzerdefinierte Vervollständigung der Argumente genutzt werden.
 
-Beispiele:
+Beispiel:
 
 [source,python]
 ----------------------------------------
@@ -612,7 +612,7 @@ for option, default_value in skript_optionen.iteritems():
 Veränderungen bemerken
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Die Funktion `hook_config` wird dazu benutzt um festzustellen wenn ein Anwender
+Die Funktion `hook_config` wird dazu benutzt um festzustellen falls ein Anwender
 eine Option des Skripts verändert hat.
 
 Beispiele:
