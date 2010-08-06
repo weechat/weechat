@@ -119,6 +119,28 @@ gui_chat_prefix_build ()
 }
 
 /*
+ * gui_chat_utf_char_valid: return 1 if utf char is valid for screen
+ *                          otherwise return 0
+ */
+
+int
+gui_chat_utf_char_valid (const char *utf_char)
+{
+    /* chars below 32 are not valid */
+    if ((unsigned char)utf_char[0] < 32)
+        return 0;
+    
+    /* 146 or 0x7F are not valid */
+    if ((((unsigned char)(utf_char[0]) == 146)
+         || ((unsigned char)(utf_char[0]) == 0x7F))
+        && (!utf_char[1]))
+        return 0;
+    
+    /* any other char is valid */
+    return 1;
+}
+
+/*
  * gui_chat_strlen_screen: returns number of char needed on sreen to display a
  *                         word special chars like color, bold, .. are ignored
  */
@@ -134,7 +156,7 @@ gui_chat_strlen_screen (const char *string)
         string = gui_chat_string_next_char (NULL, (unsigned char *)string, 0);
         if (string)
         {
-            size_on_screen = (((unsigned char)string[0]) < 32) ? 1 : utf8_char_size_screen (string);
+            size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
             if (size_on_screen > 0)
                 length += size_on_screen;
             string = utf8_next_char (string);

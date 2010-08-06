@@ -145,24 +145,6 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator)
 }
 
 /*
- * gui_window_utf_char_valid: return 1 if utf char is valid for screen
- *                            otherwise return 0
- */
-
-int
-gui_window_utf_char_valid (const char *utf_char)
-{
-    /* 146 or 0x7F are not valid */
-    if ((((unsigned char)(utf_char[0]) == 146)
-         || ((unsigned char)(utf_char[0]) == 0x7F))
-        && (!utf_char[1]))
-        return 0;
-    
-    /* any other char is valid */
-    return 1;
-}
-
-/*
  * gui_window_get_hline_char: get char used to draw horizontal lines
  *                            Note: ACS_HLINE from ncurses is better for
  *                                  render, but it introduces bug with URLs

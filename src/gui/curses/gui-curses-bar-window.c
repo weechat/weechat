@@ -356,8 +356,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 else
                 {
                     low_char = 0;
-                    if (!gui_window_utf_char_valid (utf_char))
-                        snprintf (utf_char, sizeof (utf_char), ".");
+                    if (!gui_chat_utf_char_valid (utf_char))
+                        snprintf (utf_char, sizeof (utf_char), " ");
                 }
                 
                 size_on_screen = utf8_char_size_screen (utf_char);

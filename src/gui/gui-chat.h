@@ -59,6 +59,7 @@ extern struct t_gui_buffer *gui_chat_mute_buffer;
 
 extern void gui_chat_init ();
 extern void gui_chat_prefix_build ();
+extern int gui_chat_utf_char_valid (const char *utf_char);
 extern int gui_chat_strlen_screen (const char *string);
 extern char *gui_chat_string_add_offset (const char *string, int offset);
 extern int gui_chat_string_real_pos (const char *string, int pos);
