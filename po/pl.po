@@ -19,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.3-dev\n"
+"Project-Id-Version: WeeChat 0.3.3\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2010-08-06 20:08+0200\n"
-"PO-Revision-Date: 2010-08-06 20:50+0200\n"
+"PO-Revision-Date: 2010-08-07 09:09+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -6186,7 +6186,7 @@ msgstr "%s%s: funkcja \"%s\" musi zwrócić poprawną wartość"
 
 #, c-format
 msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: błąd w funckji \"%s\""
+msgstr "%s%s: błąd w funkcji \"%s\""
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
@@ -6300,7 +6300,7 @@ msgstr "%s%s: nie udało się przenieść skryptu %s do %s (%s)"
 #. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
-msgstr "załadowano sktypt %s:"
+msgstr "załadowano skrypt %s:"
 
 #, c-format
 msgid "    file: %s"
