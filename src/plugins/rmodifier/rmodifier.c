@@ -247,7 +247,7 @@ rmodifier_create_regex (struct t_rmodifier *rmodifier)
 void
 rmodifier_hook_modifiers (struct t_rmodifier *rmodifier)
 {
-    char **argv;
+    char **argv, str_modifier[128];
     int argc, i;
     
     argv = weechat_string_split (rmodifier->modifiers, ",", 0, 0, &argc);
@@ -259,7 +259,13 @@ rmodifier_hook_modifiers (struct t_rmodifier *rmodifier)
         {
             for (i = 0; i < argc; i++)
             {
-                rmodifier->hooks[i] = weechat_hook_modifier (argv[i],
+                /*
+                 * we use a high priority here, so that other modifiers
+                 * (from other plugins) will be called after this one
+                 */
+                snprintf (str_modifier, sizeof (str_modifier) - 1,
+                          "5000|%s", argv[i]);
+                rmodifier->hooks[i] = weechat_hook_modifier (str_modifier,
                                                              &rmodifier_modifier_cb,
                                                              rmodifier);
             }

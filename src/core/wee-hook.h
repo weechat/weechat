@@ -51,6 +51,12 @@ enum t_hook_type
     HOOK_NUM_TYPES,
 };
 
+/*
+ * default priority: higher value means higher priority, ie added at the
+ * beginning of the hook list
+ */
+#define HOOK_PRIORITY_DEFAULT   1000
+
 /* max calls that can be done for a command (recursive calls) */
 #define HOOK_COMMAND_MAX_CALLS  5
 
@@ -82,6 +88,7 @@ struct t_hook
     enum t_hook_type type;             /* hook type                         */
     int deleted;                       /* hook marked for deletion ?        */
     int running;                       /* 1 if hook is currently running    */
+    int priority;                      /* priority (to sort hooks)          */
     void *callback_data;               /* data sent to callback             */
     
     /* hook data (depends on hook type) */
