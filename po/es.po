@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-06 20:08+0200\n"
+"POT-Creation-Date: 2010-08-11 14:49+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6143,6 +6143,107 @@ msgstr "%s: escuchando en el puerto %d (repetidor: %s.%s, max %d clientes)"
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: no hay memoria suficiente para escuchar en un nuevo puerto"
 
+#, fuzzy, c-format
+msgid "%s%s: error compiling regular expression \"%s\""
+msgstr "%s%s: error al crear la opción \"%s\" del servidor"
+
+#, fuzzy
+msgid "No rmodifier defined"
+msgstr "Ningún filtro definido"
+
+#, fuzzy
+msgid "List of rmodifiers:"
+msgstr "lista de filtros"
+
+#, fuzzy
+msgid "Default rmodifiers:"
+msgstr "Atajos predefinidos restaurados"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating rmodifier \"%s\""
+msgstr "%s%s: error al crear el servidor \"%s\""
+
+#, fuzzy, c-format
+msgid "Rmodifier \"%s\" created"
+msgstr "Barra \"%s\" creada"
+
+#, fuzzy, c-format
+msgid "%d rmodifiers removed"
+msgstr "    modificadores enganchados:"
+
+#, fuzzy, c-format
+msgid "Rmodifier \"%s\" removed"
+msgstr "Alias \"%s\" eliminado"
+
+#, fuzzy, c-format
+msgid "%sRmodifier \"%s\" not found"
+msgstr "%sError: filtro \"%s\" no encontrado"
+
+#, fuzzy
+msgid "Default rmodifiers restored:"
+msgstr "Atajos predefinidos restaurados"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default rmodifiers "
+"(security reason)"
+msgstr "%sError: se requiere el argumento \"-yes\" para restaurar los atajos"
+
+#, fuzzy
+msgid "alter modifier strings with regular expressions"
+msgstr "%s%s: error al crear la opción \"%s\" del servidor"
+
+#, fuzzy
+msgid ""
+"[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
+"[name...]] | [default -yes]"
+msgstr ""
+"[list] | [enable|disable|toggle [nombre]] | [add nombre plugin.buffer "
+"etiquetas regex] | [del nombre|-all]"
+
+msgid ""
+"       list: list all rmodifiers\n"
+"listdefault: list default rmodifiers\n"
+"        add: add a rmodifier\n"
+"       name: name of rmodifier\n"
+"  modifiers: comma separated list of modifiers\n"
+"     groups: action on groups found: comma separated list of groups (from 1 "
+"to 9) with optional \"*\" after number to hide group\n"
+"      regex: regular expression\n"
+"        del: delete a rmodifier\n"
+"       -all: delete all rmodifiers\n"
+"    default: restore default rmodifiers\n"
+"\n"
+"Examples:\n"
+"  hide everything typed after a command /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  delete rmodifier \"password\":\n"
+"    /rmodifier del password\n"
+"  delete all rmodifiers:\n"
+"    /rmodifier del -all"
+msgstr ""
+
+#, fuzzy
+msgid "list of rmodifiers"
+msgstr "lista de filtros"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
+msgstr "%s%s: error al crear \"%s\" => \"%s\""
+
+msgid "char used to hide part of a string"
+msgstr ""
+
+#, fuzzy
+msgid "rmodifier pointer (optional)"
+msgstr "puntero del xfer (optional)"
+
+#, fuzzy
+msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+"nombre del filtro (puede empezar o terminar con \"*\" como comodín) "
+"(opcional)"
+
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -6766,6 +6867,14 @@ msgstr "Argumentos"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#, fuzzy
+#~ msgid "list of regex modifiers"
+#~ msgstr "lista de transferencias"
+
+#, fuzzy
+#~ msgid "List of regex modifiers:"
+#~ msgstr "Lista de proxies:"
 
 #~ msgid "text color for prefix #1 in nicklist"
 #~ msgstr "color para el prefijo #1 en la lista de apodos"

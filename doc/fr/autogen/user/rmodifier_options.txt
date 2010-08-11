@@ -1,0 +1,5 @@
+* *rmodifier.look.hide_char*
+** description: caractère utilisé pour cacher une partie de la chaîne
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "*")
+

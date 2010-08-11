@@ -23,7 +23,7 @@ Fonctionnalités
 
 Ses principales fonctionnalités sont les suivantes :
 
-* multi-protocoles (IRC et bientôt d'autres)
+* multi-protocoles (IRC, Jabber)
 * connexion multi-serveurs (avec SSL, IPv6, proxy)
 * plusieurs interfaces : Curses (wxWidgets, Gtk et Qt en développement)
 * petit, rapide et léger
@@ -954,6 +954,7 @@ Les extensions par défaut sont :
 | fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
+| rmodifier | Modification des chaînes de "modifier" avec des expressions régulières
 | perl      | Interface (API) pour scripts Perl
 | python    | Interface (API) pour scripts Python
 | ruby      | Interface (API) pour scripts Ruby
@@ -1594,6 +1595,71 @@ Vous obtiendrez les fichiers suivants :
             |       #chan2.weechatlog
 ........................................
 
+[[rmodifier_plugin]]
+Extension Rmodifier
+~~~~~~~~~~~~~~~~~~~
+
+L'extension Rmodifier vous permet de modifier les chaînes de "modifier" avec
+des expressions régulières.
+
+L'utilisation typique est pour cacher les mots de passe lorsque vous les tapez,
+ou lorsque WeeChat les sauvegarde dans l'historique des commandes. Il est
+possible par exemple de remplacer chaque lettre de ces mots de passe par "*".
+
+[[rmodifier_options]]
+Options (rmodifier.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/rmodifier_options.txt[]
+
+[[rmodifier_commands]]
+Commandes
+^^^^^^^^^
+
+include::autogen/user/rmodifier_commands.txt[]
+
+[[rmodifier_creation]]
+Création d'un rmodifier
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Un rmodifier se compose de trois éléments :
+
+. un ou plusieurs "modifiers"
+. une expression régulière, permettant de capturer des "groupes"
+. une chaîne décrivant la sortie en utilisant les numéros de "groupes" capturés
+  dans l'expression régulière
+
+Pour la liste des modifiers utilisés par WeeChat ou des extensions, voir la
+'Référence API Extension WeeChat', fonction 'weechat_hook_modifier'.
+
+Pour chaque groupe capturé, les actions suivantes sont possibles :
+
+* garder le groupe tel quel (en utilisant son numéro)
+* remplacer tous les caractères du groupe pour cacher le contenu
+  (numéro du groupe + "*")
+* supprimer le groupe (si le groupe n'est pas utilisé dans la chaîne)
+
+Exemple du rmodifier par défaut pour la commande `/oper` :
+
+* modifiers : `history_add,input_text_display`
+** `history_add` : appelé lorsque WeeChat stocke la commande dans l'historique
+** `input_text_display` : appelé lorsque la ligne de commande a changé
+   (agit uniquement sur l'affichage, pas le contenu de la ligne de commande)
+* expression régulière : `^(/oper +\S+ +)(.*)`
+* groupes : `1,2*`
+
+A chaque fois que les modifiers "history_add" ou "input_text_display" sont
+appelés, l'expression régulière est vérifiée. Si la chaîne correspont, alors
+elle est remplacée par les groupes capturés, tels que définis dans la chaîne
+des groupes.
+
+Dans cet exemple, on garde le groupe numéro 1 tel quel, et on remplace tous les
+caractères du groupe 2 par le caractère de remplacement défini dans la
+configuration (option 'rmodifier.look.hide_char').
+
+Si la ligne de commande contient : `/oper nick password` alors l'affichage
+sera : `/oper nick ********`.
+
 [[scripts_plugins]]
 Extensions Scripts
 ~~~~~~~~~~~~~~~~~~
@@ -1650,7 +1716,7 @@ L'extension Xfer permet :
 
 [[xfer_options]]
 Options (xfer.conf)
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/xfer_options.txt[]
 

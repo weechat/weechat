@@ -63,14 +63,14 @@ my @all_locale_list = qw(en_US fr_FR it_IT de_DE);
 # if plugin is listed without "c", that means plugin has only one command
 # /name (where "name" # is name of plugin)
 # Note: we consider core is a plugin called "weechat"
-my %plugin_list = ("weechat" => "co", "alias"   => "",
-                   "aspell"  => "o",  "charset" => "co",
-                   "demo"    => "co", "fifo"    => "co",
-                   "irc"     => "co", "logger"  => "co",
-                   "relay"   => "co", "perl"    => "",
-                   "python"  => "",   "ruby"    => "",
-                   "lua"     => "",   "tcl"     => "",
-                   "xfer"    => "co");
+my %plugin_list = ("weechat"   => "co", "alias"     => "",
+                   "aspell"    => "o",  "charset"   => "co",
+                   "demo"      => "co", "fifo"      => "co",
+                   "irc"       => "co", "logger"    => "co",
+                   "relay"     => "co", "rmodifier" => "co",
+                   "perl"      => "",   "python"    => "",
+                   "ruby"      => "",   "lua"       => "",
+                   "tcl"       => "",   "xfer"      => "co");
 
 # options to ignore
 my @ignore_options = ("aspell\\.dict\\..*",
@@ -84,6 +84,7 @@ my @ignore_options = ("aspell\\.dict\\..*",
                       "logger\\.level\\..*",
                       "logger\\.mask\\..*",
                       "relay\\.port\\..*",
+                      "rmodifier\\.modifier\\..*",
                       "weechat\\.proxy\\..*",
                       "weechat\\.bar\\..*",
                       "weechat\\.debug\\..*",

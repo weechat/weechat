@@ -46,6 +46,8 @@
 
 | relay | relay_relays | protocole.nom des relais courants pour l'extension relay
 
+| rmodifier | rmodifier | liste des rmodifiers
+
 | ruby | ruby_script | liste des scripts
 
 | tcl | tcl_script | liste des scripts

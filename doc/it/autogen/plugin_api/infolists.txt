@@ -22,6 +22,8 @@
 
 | relay | relay | elenco di client relay | puntatore al relay (opzionale) | -
 
+| rmodifier | rmodifier | list of rmodifiers | rmodifier pointer (optional) | rmodifier name (can start or end with "*" as joker) (optional)
+
 | ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | tcl | tcl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)

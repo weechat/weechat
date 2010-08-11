@@ -22,6 +22,8 @@
 
 | relay | relay | Liste der Relay-Clients | Relay Pointer (optional) | -
 
+| rmodifier | rmodifier | list of rmodifiers | rmodifier pointer (optional) | rmodifier name (can start or end with "*" as joker) (optional)
+
 | ruby | ruby_script | Liste der Skripten: | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | tcl | tcl_script | Liste der Skripten: | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)

@@ -22,7 +22,7 @@ Funktionen
 
 wesentliche Merkmale:
 
-* Multi-Protokoll fähig (IRC, andere Protokolle folgen)
+* Multi-Protokoll fähig (IRC, Jabber)
 * Multi-Server Verbindungen (mittels SSL, IPv6, proxy)
 * verschiedene GUIs: Curses (wxWidgets, Gtk und Qt sind in der Entwicklung)
 * klein, schnell und schlank
@@ -923,20 +923,22 @@ Standarderweiterungen:
 
 [width="50%",cols="^1,5",options="header"]
 |========================================
-| Erweit. | Beschreibung
-| alias   | definiert Alias für Befehle
-| aspell  | Rechtschreibprüfung für Befehlszeile
-| charset | Zeichensatz (de)-kodierung in Buffern
-| demo    | Demo Erweiterung (nicht standardmäßig kompiliert)
-| fifo    | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
-| irc     | IRC Chat-Protokoll
-| logger  | erstellt Protokolldateien von Buffern
-| perl    | Perl-Skript API
-| python  | Python-Skript API
-| ruby    | Ruby-Skript API
-| lua     | Lua-Skript API
-| tcl     | Tcl-Skript API
-| xfer    | Datentransfer und Direktchat
+| Erweit.   | Beschreibung
+| alias     | definiert Alias für Befehle
+| aspell    | Rechtschreibprüfung für Befehlszeile
+| charset   | Zeichensatz (de)-kodierung in Buffern
+| demo      | Demo Erweiterung (nicht standardmäßig kompiliert)
+| fifo      | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
+| irc       | IRC Chat-Protokoll
+| logger    | erstellt Protokolldateien von Buffern
+// TRANSLATION MISSING
+| rmodifier | Alter modifier strings with regular expressions
+| perl      | Perl-Skript API
+| python    | Python-Skript API
+| ruby      | Ruby-Skript API
+| lua       | Lua-Skript API
+| tcl       | Tcl-Skript API
+| xfer      | Datentransfer und Direktchat
 |========================================
 
 [[alias_plugin]]
@@ -1563,6 +1565,67 @@ In einer Baumstruktur sieht es dann wie folgt aus:
             |       #chan1.weechatlog
             |       #chan2.weechatlog
 ........................................
+
+// TRANSLATION MISSING
+[[rmodifier_plugin]]
+Rmodifier plugin
+~~~~~~~~~~~~~~~~
+
+The Rmodifier plugin lets you alter modifier strings using regular expressions.
+Typical use is to hide password when you type them, or when WeeChat saves
+them in command history. For example, it is possible to replace each char in
+these passwords by "*".
+
+[[rmodifier_options]]
+Options (rmodifier.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/rmodifier_options.txt[]
+
+[[rmodifier_commands]]
+Commands
+^^^^^^^^
+
+include::autogen/user/rmodifier_commands.txt[]
+
+[[rmodifier_creation]]
+Rmodifier creation
+^^^^^^^^^^^^^^^^^^
+
+A rmodifier consists of three elements:
+
+. one or more "modifiers"
+. a regular expression, to capture "groups"
+. a string that describes output using number of "groups" captured in regular
+  expression
+
+For list of modifiers used by WeeChat or plugins, see 
+''WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
+
+For each captured group, following actions are possible:
+
+* keep group as-is (by using group number)
+* replace all chars in group to hide content (group number + "*")
+* remove group (if group is not used in string)
+
+Example of default rmodifier for command `/oper`:
+
+* modifiers: `history_add,input_text_display`
+** `history_add`: called when WeeChat stores command in history
+** `input_text_display`: called when command line has changed
+   (applies only on display, not content of command line)
+* regular expression: `^(/oper +\S+ +)(.*)`
+* groupes: `1,2*`
+
+Each time modifiers "history_add" or "input_text_display" are called, regular
+expression is checked. If string matches, then it is replaced by captured groups,
+as defined in string with groups.
+
+In this example, we keep number 1 as-is, and we replace all chars of group 2 by
+replacement char defined in configuration (option 'rmodifier.look.hide_char').
+
+If command line contains: `/oper nick password` then display becomes:
+`/oper nick ********`.
 
 [[scripts_plugins]]
 Skripten Erweiterungen

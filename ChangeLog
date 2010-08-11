@@ -1,11 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-08-07
+v0.3.4-dev, 2010-08-11
 
 
 Version 0.3.4 (under dev!)
 --------------------------
+
+* rmodifier: new plugin "rmodifier": alter modifier strings with regular
+  expressions (bug #26964)
 
 Version 0.3.3 (2010-08-07)
 --------------------------

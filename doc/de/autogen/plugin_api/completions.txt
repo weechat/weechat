@@ -46,6 +46,8 @@
 
 | relay | relay_relays | Protokoll.Name des aktuellen Relays von der Relay-Erweiterung
 
+| rmodifier | rmodifier | list of rmodifiers
+
 | ruby | ruby_script | Liste der Skripten:
 
 | tcl | tcl_script | Liste der Skripten:

@@ -23,7 +23,7 @@ Caratteristiche
 
 Le caratteristiche principali:
 
-* multi-protocollo (IRC ed altri presto in arrivo)
+* multi-protocollo (IRC, Jabber)
 * connessione a server multipli (con SSL, IPv6, proxy)
 * molte interfacce: Curses (wxWidgets, Gtk e Qt in fase di sviluppo)
 * piccolo, veloce e leggero
@@ -940,20 +940,22 @@ I plugin predefiniti sono:
 
 [width="50%",cols="^1,5",options="header"]
 |=======================================
-| Plugin  | Descrizione
-| alias   | Definisce gli alias per i comandi
-| aspell  | Controllo ortografico per la riga di comando
-| charset | Set di caratteri per la codifica/decodifica nei buffer
-| demo    | Plugin Demo (non viene compilato per default)
-| fifo    | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
-| irc     | protocollo chat per IRC
-| logger  | Registra i buffer su file
-| perl    | API per lo scripting in Perl
-| python  | API per lo scripting in Python
-| ruby    | API per lo scripting in Ruby
-| lua     | API per lo scripting in Lua
-| tcl     | API per lo scripting in TCL
-| xfer    | Trasferimento file e chat diretta
+| Plugin    | Descrizione
+| alias     | Definisce gli alias per i comandi
+| aspell    | Controllo ortografico per la riga di comando
+| charset   | Set di caratteri per la codifica/decodifica nei buffer
+| demo      | Plugin Demo (non viene compilato per default)
+| fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
+| irc       | protocollo chat per IRC
+| logger    | Registra i buffer su file
+// TRANSLATION MISSING
+| rmodifier | Alter modifier strings with regular expressions
+| perl      | API per lo scripting in Perl
+| python    | API per lo scripting in Python
+| ruby      | API per lo scripting in Ruby
+| lua       | API per lo scripting in Lua
+| tcl       | API per lo scripting in TCL
+| xfer      | Trasferimento file e chat diretta
 |=======================================
 
 [[alias_plugin]]
@@ -1584,6 +1586,67 @@ Si avranno i seguenti file:
             |       #canale1.weechatlog
             |       #canale2.weechatlog
 ........................................
+
+// TRANSLATION MISSING
+[[rmodifier_plugin]]
+Rmodifier plugin
+~~~~~~~~~~~~~~~~
+
+The Rmodifier plugin lets you alter modifier strings using regular expressions.
+Typical use is to hide password when you type them, or when WeeChat saves
+them in command history. For example, it is possible to replace each char in
+these passwords by "*".
+
+[[rmodifier_options]]
+Options (rmodifier.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/rmodifier_options.txt[]
+
+[[rmodifier_commands]]
+Commands
+^^^^^^^^
+
+include::autogen/user/rmodifier_commands.txt[]
+
+[[rmodifier_creation]]
+Rmodifier creation
+^^^^^^^^^^^^^^^^^^
+
+A rmodifier consists of three elements:
+
+. one or more "modifiers"
+. a regular expression, to capture "groups"
+. a string that describes output using number of "groups" captured in regular
+  expression
+
+For list of modifiers used by WeeChat or plugins, see 
+''WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
+
+For each captured group, following actions are possible:
+
+* keep group as-is (by using group number)
+* replace all chars in group to hide content (group number + "*")
+* remove group (if group is not used in string)
+
+Example of default rmodifier for command `/oper`:
+
+* modifiers: `history_add,input_text_display`
+** `history_add`: called when WeeChat stores command in history
+** `input_text_display`: called when command line has changed
+   (applies only on display, not content of command line)
+* regular expression: `^(/oper +\S+ +)(.*)`
+* groupes: `1,2*`
+
+Each time modifiers "history_add" or "input_text_display" are called, regular
+expression is checked. If string matches, then it is replaced by captured groups,
+as defined in string with groups.
+
+In this example, we keep number 1 as-is, and we replace all chars of group 2 by
+replacement char defined in configuration (option 'rmodifier.look.hide_char').
+
+If command line contains: `/oper nick password` then display becomes:
+`/oper nick ********`.
 
 [[scripts_plugins]]
 Plugin per gli script

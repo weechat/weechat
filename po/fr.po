@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-06 20:08+0200\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-08-11 14:49+0200\n"
+"PO-Revision-Date: 2010-08-11 13:16+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6179,6 +6179,120 @@ msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: pas assez de mémoire pour écouter sur le nouveau port"
 
 #, c-format
+msgid "%s%s: error compiling regular expression \"%s\""
+msgstr "%s%s: erreur de compilation de l'expression régulière \"%s\""
+
+msgid "No rmodifier defined"
+msgstr "Pas de rmodifier défini"
+
+msgid "List of rmodifiers:"
+msgstr "Liste des rmodifiers:"
+
+msgid "Default rmodifiers:"
+msgstr "Rmodifiers par défaut:"
+
+#, c-format
+msgid "%s%s: error creating rmodifier \"%s\""
+msgstr "%s%s: erreur de création du rmodifier \"%s\""
+
+#, c-format
+msgid "Rmodifier \"%s\" created"
+msgstr "Rmodifier \"%s\" créé"
+
+#, c-format
+msgid "%d rmodifiers removed"
+msgstr "%d rmodifiers supprimés"
+
+#, c-format
+msgid "Rmodifier \"%s\" removed"
+msgstr "Rmodifier \"%s\" supprimé"
+
+#, c-format
+msgid "%sRmodifier \"%s\" not found"
+msgstr "%sRmodifier \"%s\" non trouvé"
+
+msgid "Default rmodifiers restored:"
+msgstr "Rmodifiers par défaut restaurés:"
+
+#, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default rmodifiers "
+"(security reason)"
+msgstr ""
+"%sErreur: le paramètre \"-yes\" est requis pour la restauration des "
+"rmodifiers par défaut (raison de sécurité)"
+
+msgid "alter modifier strings with regular expressions"
+msgstr "modifie des chaînes de \"modifier\" avec des expressions régulières"
+
+msgid ""
+"[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
+"[name...]] | [default -yes]"
+msgstr ""
+"[list] | [listdefault] | [add nom modifiers groupes regex] | [del nom|-all "
+"[nom...]] | [default -yes]"
+
+msgid ""
+"       list: list all rmodifiers\n"
+"listdefault: list default rmodifiers\n"
+"        add: add a rmodifier\n"
+"       name: name of rmodifier\n"
+"  modifiers: comma separated list of modifiers\n"
+"     groups: action on groups found: comma separated list of groups (from 1 "
+"to 9) with optional \"*\" after number to hide group\n"
+"      regex: regular expression\n"
+"        del: delete a rmodifier\n"
+"       -all: delete all rmodifiers\n"
+"    default: restore default rmodifiers\n"
+"\n"
+"Examples:\n"
+"  hide everything typed after a command /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  delete rmodifier \"password\":\n"
+"    /rmodifier del password\n"
+"  delete all rmodifiers:\n"
+"    /rmodifier del -all"
+msgstr ""
+"       list: liste les rmodifiers\n"
+"listdefault: liste les rmodifiers par défaut\n"
+"        add: ajoute un rmodifier\n"
+"       name: nom du rmodifier\n"
+"  modifiers: liste de modifiers (séparés par une virgule)\n"
+"    groupes: action sur les groupes trouvés: liste de groupes (séparés par "
+"une virgule) (de 1 à 9) avec en option \"*\" après le nombre pour cacher le "
+"groupe\n"
+"      regex: expression régulière\n"
+"        del: supprime un rmodifier\n"
+"       -all: supprime tous les rmodifiers\n"
+"    default: restaure les rmodifiers par défaut\n"
+"\n"
+"Exemples:\n"
+"  cacher tout ce qui est tapé après la commande /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  supprimer le rmodifier \"password\":\n"
+"    /rmodifier del password\n"
+"  supprimer tous les rmodifiers:\n"
+"    /rmodifier del -all"
+
+msgid "list of rmodifiers"
+msgstr "liste des rmodifiers"
+
+#, c-format
+msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
+msgstr "%s%s: erreur de création du rmodifier \"%s\" => \"%s\""
+
+msgid "char used to hide part of a string"
+msgstr "caractère utilisé pour cacher une partie de la chaîne"
+
+msgid "rmodifier pointer (optional)"
+msgstr "pointeur vers le rmodifieur (optionnel)"
+
+msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+"nom du rmodifier (peut démarrer ou se terminer par \"*\" comme caractère "
+"joker) (optionnel)"
+
+#, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
 "this name)"
@@ -6802,25 +6916,3 @@ msgstr "Paramètres"
 
 msgid "Pointer"
 msgstr "Pointeur"
-
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "couleur du texte pour le préfixe n°1 de la liste des pseudos"
-
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "couleur du texte pour le préfixe n°2 de la liste des pseudos"
-
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "couleur du texte pour le préfixe n°3 de la liste des pseudos"
-
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "couleur du texte pour le préfixe n°4 de la liste des pseudos"
-
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "couleur du texte pour le préfixe n°5 de la liste des pseudos"
-
-#~ msgid ""
-#~ "channel: channel name to join\n"
-#~ "    key: key to join the channel"
-#~ msgstr ""
-#~ "canal: nom du canal à rejoindre\n"
-#~ "  clé: clé pour rejoindre le canal"
