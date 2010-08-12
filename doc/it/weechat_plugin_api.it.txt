@@ -5557,6 +5557,36 @@ La funzione è chiamata "log_print" negli script.
 Hook
 ~~~~
 
+// TRANSLATION MISSING
+[[hook_priority]]
+[float]
+Hook priority
+^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.4._
+
+In some hooks, you can set a priority. A hook with higher priority is at the
+beginning of hooks list, so it will be found and executed before other hooks.
+It's useful for modifiers, because execution order is important.
+
+To set a priority, you must use this syntax, for argument where priority is
+allowed: "nnn|name" where "nnn" is nonnegative integer with priority and "name"
+the name for argument (priority does not appear in name, it is automatically
+removed from string).
+
+Default priority is 1000.
+
+C example:
+
+[source,C]
+----------------------------------------
+/* hook modifier with priority = 2000 */
+weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
+----------------------------------------
+
+Following hook types allow priority: command, command_run, signal, config,
+completion, modifier, info, infolist.
+
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -5582,6 +5612,8 @@ struct t_hook *weechat_hook_command (const char *command,
 Argomenti:
 
 * 'command': nome del comando
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': descrizione per il comando (visualizzata con `/help comando`)
 * 'args': argomenti per il comando (visualizzati con `/help command`)
 * 'args_description': descrizione degli argomenti (visualizzata con `/help command`)
@@ -5706,6 +5738,8 @@ struct t_hook *weechat_hook_command_run (const char *command,
 Argomenti:
 
 * 'command': comando su cui eseguire l'hook, può iniziare o terminare con "*"
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando il comando è in esecuzione, argomenti:
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il comando
@@ -6235,7 +6269,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Argomenti:
 
-* 'signal': segnale da catturare, può iniziare o terminare con "*":
+* 'signal': segnale da catturare, può iniziare o terminare con "*"
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
@@ -6552,6 +6588,8 @@ Argomenti:
 
 * 'option': opzione, il formato è il nome completo, come usato con il comando
   `/set` (ad esempio: `weechat.look.item_time_format`)
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': function called when configuration option is changed, arguments:
 ** 'void *data': pointer
 ** 'const char *option': name of option
@@ -6616,6 +6654,8 @@ Argomenti:
 
 * 'completion_item': nome dell'elemento del completamento, è possibile usare
   in seguito '%(name)' in un comando con un hook (argomento 'completion')
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando viene usato l'elemento completamento
   (l'utente sta completando qualcosa usando questo elemento), argomenti:
 ** 'void *data': puntatore
@@ -6731,7 +6771,9 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 Argomenti:
 
 * 'modifier': nome modificatore, lista di modificatori utilizzati da
-  Weechat o dai plugin:
+  Weechat o dai plugin
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^2,3,4,4",options="header"]
 |========================================
@@ -6927,6 +6969,8 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Argomenti:
 
 * 'info_name': nome della info
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': descrizione
 * 'args_description': descrizione degli argomenti
 * 'callback': funzione chiamata alla richiesta di una info, argomenti:
@@ -6996,6 +7040,8 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Argomenti:
 
 * 'infolist_name': nome della lista info
+// TRANSLATION MISSING
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': descrizione
 * 'pointer_description': descrizione del puntatore (opzionale, può essere NULL)
 * 'args_description': descrizione degli argomenti (opzionale, può essere NULL)

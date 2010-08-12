@@ -5564,6 +5564,36 @@ La fonction s'appelle "log_print" dans les scripts.
 Hooks
 ~~~~~
 
+[[hook_priority]]
+[float]
+Hook priority
+^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Pour certains "hooks", vous pouvez définir une priorité. Un "hook" avec une
+priorité plus élevée sera au début de la liste des "hooks", et donc il sera
+trouvé et exécuté avant les autres "hooks". Cela est pratique pour les
+"modifieurs", car l'ordre d'exécution est important.
+
+Pour définir une priorité, vous devez utiliser cette syntaxe, pour un paramètre
+où la priorité est autorisée : "nnn|nom" où "nnn" est un entier positif ou nul
+avec la priorité et "nom" le nom pour le paramètre (la priorité n'apparaît pas
+dans le nom, elle est automatiquement retirée de la chaîne).
+
+La priorité par défaut est 1000.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+/* accroche un modifieur avec priorité = 2000 */
+weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
+----------------------------------------
+
+Les types de "hooks" suivants autorisent une priorité : command, command_run,
+signal, config, completion, modifier, info, infolist.
+
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -5589,6 +5619,7 @@ struct t_hook *weechat_hook_command (const char *command,
 Paramètres :
 
 * 'command' : nom de la commande
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'description' : description de la commande (affiché avec `/help command`)
 * 'args' : paramètres pour la commande (affichés avec `/help command`)
 * 'args_description' : description des paramètres (affichée avec
@@ -5715,6 +5746,7 @@ Paramètres :
 
 * 'command' : commande à intercepter, peut commencer ou se terminer par le
   caractère joker "*"
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque la commande est exécutée, paramètres :
 ** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : tampon où la command est exécutée
@@ -6253,7 +6285,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Paramètres :
 
-* 'signal' : signal à intercepter, peut commencer ou se terminer par "*" :
+* 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
@@ -6565,6 +6598,7 @@ Paramètres :
 
 * 'option' : option, le format est le nom complet, celui utilisé avec la
   commande `/set` (par exemple : `weechat.look.item_time_format`)
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque l'option de configuration est modifiée,
   paramètres :
 ** 'void *data' : pointeur
@@ -6631,6 +6665,7 @@ Paramètres :
 
 * 'completion_item' : nom de l'objet de complétion, après vous pouvez utiliser
   '%(nom)' dans une commande (paramètre 'completion')
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'description': description de la complétion
 * 'callback' : fonction appelée lorsque la complétion est utilisée
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
@@ -6748,7 +6783,8 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 Paramètres :
 
 * 'modifier' : nom du "modifieur", liste des "modifieurs" utilisés par WeeChat
-  ou des extensions :
+  ou des extensions
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
 
 [width="100%",cols="^1,^2,3,4,4",options="header"]
 |========================================
@@ -6946,6 +6982,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Paramètres :
 
 * 'info_name' : nom de l'information
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'description' : description
 * 'args_description' : description des paramètres (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres :
@@ -7018,6 +7055,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Paramètres :
 
 * 'infolist_name' : nom de l'infolist
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'description' : description
 * 'pointer_description' : description du pointeur (optionnel, peut être NULL)
 * 'args_description' : description des paramètres (optionnel, peut être NULL)

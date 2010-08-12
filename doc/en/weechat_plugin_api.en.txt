@@ -5501,6 +5501,35 @@ Function is called "log_print" in scripts.
 Hooks
 ~~~~~
 
+[[hook_priority]]
+[float]
+Hook priority
+^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+In some hooks, you can set a priority. A hook with higher priority is at the
+beginning of hooks list, so it will be found and executed before other hooks.
+It's useful for modifiers, because execution order is important.
+
+To set a priority, you must use this syntax, for argument where priority is
+allowed: "nnn|name" where "nnn" is nonnegative integer with priority and "name"
+the name for argument (priority does not appear in name, it is automatically
+removed from string).
+
+Default priority is 1000.
+
+C example:
+
+[source,C]
+----------------------------------------
+/* hook modifier with priority = 2000 */
+weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
+----------------------------------------
+
+Following hook types allow priority: command, command_run, signal, config,
+completion, modifier, info, infolist.
+
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -5526,6 +5555,7 @@ struct t_hook *weechat_hook_command (const char *command,
 Arguments:
 
 * 'command': command name
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description for command (displayed with `/help command`)
 * 'args': arguments for command (displayed with `/help command`)
 * 'args_description': description of arguments (displayed with `/help command`)
@@ -5648,6 +5678,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 Arguments:
 
 * 'command': command to hook, can start or end with "*" as wildcard
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': function called when command is run, arguments:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
@@ -6173,7 +6204,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Arguments:
 
-* 'signal': signal to catch, can begin or end with "*":
+* 'signal': signal to catch, can begin or end with "*"
+  (priority allowed, see note about <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
@@ -6484,6 +6516,7 @@ Arguments:
 
 * 'option': option, format is full name, as used with command `/set` (for
   example: `weechat.look.item_time_format`)
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': function called when configuration option is changed, arguments:
 ** 'void *data': pointer
 ** 'const char *option': name of option
@@ -6548,6 +6581,7 @@ Arguments:
 
 * 'completion_item': name of completion item, after you can use '%(name)' in
   a command hooked (argument 'completion')
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description of completion
 * 'callback': function called when completion item is used (user is completing
   something using this item), arguments:
@@ -6662,7 +6696,8 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Arguments:
 
-* 'modifier': modifier name, list of modifiers used by Weechat or plugins:
+* 'modifier': modifier name, list of modifiers used by Weechat or plugins
+  (priority allowed, see note about <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^2,3,4,4",options="header"]
 |========================================
@@ -6853,6 +6888,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Arguments:
 
 * 'info_name': name of info
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description
 * 'args_description': description of arguments (optional, can be NULL)
 * 'callback': function called when info is asked, arguments:
@@ -6921,6 +6957,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Arguments:
 
 * 'infolist_name': name of infolist
+  (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description
 * 'pointer_description': description of pointer (optional, can be NULL)
 * 'args_description': description of arguments (optional, can be NULL)
