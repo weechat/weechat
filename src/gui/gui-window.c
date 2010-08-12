@@ -879,7 +879,7 @@ gui_window_search_start (struct t_gui_window *window)
     if (window->buffer->input_buffer && window->buffer->input_buffer[0])
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
-    gui_input_delete_line (window->buffer);
+    gui_input_delete_line (window);
 }
 
 /*
@@ -916,7 +916,7 @@ gui_window_search_stop (struct t_gui_window *window)
 {
     window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
-    gui_input_delete_line (window->buffer);
+    gui_input_delete_line (window);
     if (window->buffer->text_search_input)
     {
         gui_input_insert_string (window->buffer,

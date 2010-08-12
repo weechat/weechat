@@ -263,19 +263,20 @@ gui_input_clipboard_copy (const char *buffer, int size)
 
 /*
  * gui_action_clipboard_paste: paste clipboard at cursor pos in input line
+ *                             (default key: ctrl-y)
  */
 
 void
-gui_input_clipboard_paste (struct t_gui_buffer *buffer)
+gui_input_clipboard_paste (struct t_gui_window *window)
 {
-    if (buffer->input && gui_input_clipboard)
+    if (window->buffer->input && gui_input_clipboard)
     {
-        gui_buffer_undo_snap (buffer);
-        gui_input_insert_string (buffer,
+        gui_buffer_undo_snap (window->buffer);
+        gui_input_insert_string (window->buffer,
                                  gui_input_clipboard, -1);
-        gui_completion_stop (buffer->completion, 1);
+        gui_completion_stop (window->buffer->completion, 1);
         
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -326,76 +327,76 @@ gui_input_return (struct t_gui_window *window)
  */
 
 void
-gui_input_complete (struct t_gui_buffer *buffer)
+gui_input_complete (struct t_gui_window *window)
 {
     int i;
     
-    if (!buffer->completion)
+    if (!window->buffer->completion)
         return;
     
-    if (buffer->completion->word_found)
+    if (window->buffer->completion->word_found)
     {
         /* replace word with new completed word into input buffer */
-        if (buffer->completion->diff_size > 0)
+        if (window->buffer->completion->diff_size > 0)
         {
-            buffer->input_buffer_size +=
-                buffer->completion->diff_size;
-            buffer->input_buffer_length +=
-                buffer->completion->diff_length;
-            gui_input_optimize_size (buffer);
-            buffer->input_buffer[buffer->input_buffer_size] = '\0';
-            for (i = buffer->input_buffer_size - 1;
-                 i >=  buffer->completion->position_replace +
-                     (int)strlen (buffer->completion->word_found); i--)
+            window->buffer->input_buffer_size +=
+                window->buffer->completion->diff_size;
+            window->buffer->input_buffer_length +=
+                window->buffer->completion->diff_length;
+            gui_input_optimize_size (window->buffer);
+            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+            for (i = window->buffer->input_buffer_size - 1;
+                 i >= window->buffer->completion->position_replace +
+                     (int)strlen (window->buffer->completion->word_found); i--)
             {
-                buffer->input_buffer[i] =
-                    buffer->input_buffer[i - buffer->completion->diff_size];
+                window->buffer->input_buffer[i] =
+                    window->buffer->input_buffer[i - window->buffer->completion->diff_size];
             }
         }
         else
         {
-            for (i = buffer->completion->position_replace +
-                     strlen (buffer->completion->word_found);
-                 i < buffer->input_buffer_size; i++)
+            for (i = window->buffer->completion->position_replace +
+                     strlen (window->buffer->completion->word_found);
+                 i < window->buffer->input_buffer_size; i++)
             {
-                buffer->input_buffer[i] =
-                    buffer->input_buffer[i - buffer->completion->diff_size];
+                window->buffer->input_buffer[i] =
+                    window->buffer->input_buffer[i - window->buffer->completion->diff_size];
             }
-            buffer->input_buffer_size += buffer->completion->diff_size;
-            buffer->input_buffer_length += buffer->completion->diff_length;
-            gui_input_optimize_size (buffer);
-            buffer->input_buffer[buffer->input_buffer_size] = '\0';
+            window->buffer->input_buffer_size += window->buffer->completion->diff_size;
+            window->buffer->input_buffer_length += window->buffer->completion->diff_length;
+            gui_input_optimize_size (window->buffer);
+            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
         }
             
-        strncpy (buffer->input_buffer + buffer->completion->position_replace,
-                 buffer->completion->word_found,
-                 strlen (buffer->completion->word_found));
-        buffer->input_buffer_pos =
-            utf8_pos (buffer->input_buffer,
-                      buffer->completion->position_replace) +
-            utf8_strlen (buffer->completion->word_found);
+        strncpy (window->buffer->input_buffer + window->buffer->completion->position_replace,
+                 window->buffer->completion->word_found,
+                 strlen (window->buffer->completion->word_found));
+        window->buffer->input_buffer_pos =
+            utf8_pos (window->buffer->input_buffer,
+                      window->buffer->completion->position_replace) +
+            utf8_strlen (window->buffer->completion->word_found);
         
         /*
          * position is < 0 this means only one word was found to complete,
          * so reinit to stop completion
          */
-        if (buffer->completion->position >= 0)
-            buffer->completion->position = utf8_real_pos (buffer->input_buffer,
-                                                      buffer->input_buffer_pos);
+        if (window->buffer->completion->position >= 0)
+            window->buffer->completion->position = utf8_real_pos (window->buffer->input_buffer,
+                                                                  window->buffer->input_buffer_pos);
         
         /* add space if needed after completion */
-        if (buffer->completion->add_space)
+        if (window->buffer->completion->add_space)
         {
-            if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
-                                                    buffer->input_buffer_pos)] != ' ')
+            if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
+                                                            window->buffer->input_buffer_pos)] != ' ')
             {
-                gui_input_insert_string (buffer, " ",
-                                         buffer->input_buffer_pos);
+                gui_input_insert_string (window->buffer, " ",
+                                         window->buffer->input_buffer_pos);
             }
             else
-                buffer->input_buffer_pos++;
-            if (buffer->completion->position >= 0)
-                buffer->completion->position++;
+                window->buffer->input_buffer_pos++;
+            if (window->buffer->completion->position >= 0)
+                window->buffer->completion->position++;
         }
     }
 }
@@ -405,19 +406,20 @@ gui_input_complete (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_complete_next (struct t_gui_buffer *buffer)
+gui_input_complete_next (struct t_gui_window *window)
 {
-    if (buffer->input && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window->buffer->input
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        gui_buffer_undo_snap (buffer);
-        gui_completion_search (buffer->completion,
+        gui_buffer_undo_snap (window->buffer);
+        gui_completion_search (window->buffer->completion,
                                1,
-                               buffer->input_buffer,
-                               buffer->input_buffer_size,
-                               utf8_real_pos (buffer->input_buffer,
-                                              buffer->input_buffer_pos));
-        gui_input_complete (buffer);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+                               window->buffer->input_buffer,
+                               window->buffer->input_buffer_size,
+                               utf8_real_pos (window->buffer->input_buffer,
+                                              window->buffer->input_buffer_pos));
+        gui_input_complete (window);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -426,19 +428,20 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_complete_previous (struct t_gui_buffer *buffer)
+gui_input_complete_previous (struct t_gui_window *window)
 {
-    if (buffer->input && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window->buffer->input
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        gui_buffer_undo_snap (buffer);
-        gui_completion_search (buffer->completion,
+        gui_buffer_undo_snap (window->buffer);
+        gui_completion_search (window->buffer->completion,
                                -1,
-                               buffer->input_buffer,
-                               buffer->input_buffer_size,
-                               utf8_real_pos (buffer->input_buffer,
-                                              buffer->input_buffer_pos));
-        gui_input_complete (buffer);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+                               window->buffer->input_buffer,
+                               window->buffer->input_buffer_size,
+                               utf8_real_pos (window->buffer->input_buffer,
+                                              window->buffer->input_buffer_pos));
+        gui_input_complete (window);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -468,27 +471,27 @@ gui_input_search_text (struct t_gui_window *window)
  */
 
 void
-gui_input_delete_previous_char (struct t_gui_buffer *buffer)
+gui_input_delete_previous_char (struct t_gui_window *window)
 {
     char *pos, *pos_last;
     int char_size, size_to_move;
     
-    if (buffer->input && (buffer->input_buffer_pos > 0))
+    if (window->buffer->input && (window->buffer->input_buffer_pos > 0))
     {
-        gui_buffer_undo_snap (buffer);
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos);
-        pos_last = utf8_prev_char (buffer->input_buffer, pos);
+        gui_buffer_undo_snap (window->buffer);
+        pos = utf8_add_offset (window->buffer->input_buffer,
+                               window->buffer->input_buffer_pos);
+        pos_last = utf8_prev_char (window->buffer->input_buffer, pos);
         char_size = pos - pos_last;
         size_to_move = strlen (pos);
-        gui_input_move (buffer, pos_last, pos, size_to_move);
-        buffer->input_buffer_size -= char_size;
-        buffer->input_buffer_length--;
-        buffer->input_buffer_pos--;
-        buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_move (window->buffer, pos_last, pos, size_to_move);
+        window->buffer->input_buffer_size -= char_size;
+        window->buffer->input_buffer_length--;
+        window->buffer->input_buffer_pos--;
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -497,27 +500,27 @@ gui_input_delete_previous_char (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_next_char (struct t_gui_buffer *buffer)
+gui_input_delete_next_char (struct t_gui_window *window)
 {
     char *pos, *pos_next;
     int char_size, size_to_move;
     
-    if (buffer->input
-        && (buffer->input_buffer_pos < buffer->input_buffer_length))
+    if (window->buffer->input
+        && (window->buffer->input_buffer_pos < window->buffer->input_buffer_length))
     {
-        gui_buffer_undo_snap (buffer);
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos);
+        gui_buffer_undo_snap (window->buffer);
+        pos = utf8_add_offset (window->buffer->input_buffer,
+                               window->buffer->input_buffer_pos);
         pos_next = utf8_next_char (pos);
         char_size = pos_next - pos;
         size_to_move = strlen (pos_next);
-        gui_input_move (buffer, pos, pos_next, size_to_move);
-        buffer->input_buffer_size -= char_size;
-        buffer->input_buffer_length--;
-        buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_move (window->buffer, pos, pos_next, size_to_move);
+        window->buffer->input_buffer_size -= char_size;
+        window->buffer->input_buffer_length--;
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -526,32 +529,32 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_previous_word (struct t_gui_buffer *buffer)
+gui_input_delete_previous_word (struct t_gui_window *window)
 {
     int length_deleted, size_deleted;
     char *start, *string;
     
-    if (buffer->input && (buffer->input_buffer_pos > 0))
+    if (window->buffer->input && (window->buffer->input_buffer_pos > 0))
     {
-        gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos - 1);
+        gui_buffer_undo_snap (window->buffer);
+        start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_pos - 1);
         string = start;
         while (string && (string[0] == ' '))
         {
-            string = utf8_prev_char (buffer->input_buffer, string);
+            string = utf8_prev_char (window->buffer->input_buffer, string);
         }
         if (string)
         {
             while (string && (string[0] != ' '))
             {
-                string = utf8_prev_char (buffer->input_buffer, string);
+                string = utf8_prev_char (window->buffer->input_buffer, string);
             }
             if (string)
             {
                 while (string && (string[0] == ' '))
                 {
-                    string = utf8_prev_char (buffer->input_buffer, string);
+                    string = utf8_prev_char (window->buffer->input_buffer, string);
                 }
             }
         }
@@ -559,23 +562,23 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
         if (string)
             string = utf8_next_char (utf8_next_char (string));
         else
-            string = buffer->input_buffer;
+            string = window->buffer->input_buffer;
         
         size_deleted = utf8_next_char (start) - string;
         length_deleted = utf8_strnlen (string, size_deleted);
         
         gui_input_clipboard_copy (string, size_deleted);
         
-        gui_input_move (buffer, string, string + size_deleted,
+        gui_input_move (window->buffer, string, string + size_deleted,
                         strlen (string + size_deleted));
         
-        buffer->input_buffer_size -= size_deleted;
-        buffer->input_buffer_length -= length_deleted;
-        buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        buffer->input_buffer_pos -= length_deleted;
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        window->buffer->input_buffer_size -= size_deleted;
+        window->buffer->input_buffer_length -= length_deleted;
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        window->buffer->input_buffer_pos -= length_deleted;
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -584,16 +587,16 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_next_word (struct t_gui_buffer *buffer)
+gui_input_delete_next_word (struct t_gui_window *window)
 {
     int size_deleted, length_deleted;
     char *start, *string;
     
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
+        gui_buffer_undo_snap (window->buffer);
+        start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_pos);
         string = start;
         length_deleted = 0;
         while (string[0])
@@ -607,14 +610,14 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
         
         gui_input_clipboard_copy (start, size_deleted);
         
-        gui_input_move (buffer, start, string, strlen (string));
+        gui_input_move (window->buffer, start, string, strlen (string));
         
-        buffer->input_buffer_size -= size_deleted;
-        buffer->input_buffer_length -= length_deleted;
-        buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        window->buffer->input_buffer_size -= size_deleted;
+        window->buffer->input_buffer_length -= length_deleted;
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -625,31 +628,32 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
+gui_input_delete_beginning_of_line (struct t_gui_window *window)
 {
     int length_deleted, size_deleted, pos_start;
     char *start;
     
-    if (buffer->input && (buffer->input_buffer_pos > 0))
+    if (window->buffer->input && (window->buffer->input_buffer_pos > 0))
     {
-        gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
-        pos_start = start - buffer->input_buffer;
-        size_deleted = start - buffer->input_buffer;
-        length_deleted = utf8_strnlen (buffer->input_buffer, size_deleted);
-        gui_input_clipboard_copy (buffer->input_buffer,
-                                  start - buffer->input_buffer);
+        gui_buffer_undo_snap (window->buffer);
+        start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_pos);
+        pos_start = start - window->buffer->input_buffer;
+        size_deleted = start - window->buffer->input_buffer;
+        length_deleted = utf8_strnlen (window->buffer->input_buffer, size_deleted);
+        gui_input_clipboard_copy (window->buffer->input_buffer,
+                                  start - window->buffer->input_buffer);
         
-        gui_input_move (buffer, buffer->input_buffer, start, strlen (start));
+        gui_input_move (window->buffer, window->buffer->input_buffer,
+                        start, strlen (start));
         
-        buffer->input_buffer_size -= size_deleted;
-        buffer->input_buffer_length -= length_deleted;
-        buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        buffer->input_buffer_pos = 0;
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        window->buffer->input_buffer_size -= size_deleted;
+        window->buffer->input_buffer_length -= length_deleted;
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        window->buffer->input_buffer_pos = 0;
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -659,26 +663,26 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
+gui_input_delete_end_of_line (struct t_gui_window *window)
 {
     char *start;
     int size_deleted, length_deleted, pos_start;
     
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
-        pos_start = start - buffer->input_buffer;
+        gui_buffer_undo_snap (window->buffer);
+        start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_pos);
+        pos_start = start - window->buffer->input_buffer;
         size_deleted = strlen (start);
         length_deleted = utf8_strlen (start);
         gui_input_clipboard_copy (start, size_deleted);
         start[0] = '\0';
-        buffer->input_buffer_size = strlen (buffer->input_buffer);
-        buffer->input_buffer_length = utf8_strlen (buffer->input_buffer);
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        window->buffer->input_buffer_size = strlen (window->buffer->input_buffer);
+        window->buffer->input_buffer_length = utf8_strlen (window->buffer->input_buffer);
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -687,18 +691,18 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_delete_line (struct t_gui_buffer *buffer)
+gui_input_delete_line (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        gui_buffer_undo_snap (buffer);
-        buffer->input_buffer[0] = '\0';
-        buffer->input_buffer_size = 0;
-        buffer->input_buffer_length = 0;
-        buffer->input_buffer_pos = 0;
-        gui_input_optimize_size (buffer);
-        gui_completion_stop (buffer->completion, 1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_buffer_undo_snap (window->buffer);
+        window->buffer->input_buffer[0] = '\0';
+        window->buffer->input_buffer_size = 0;
+        window->buffer->input_buffer_length = 0;
+        window->buffer->input_buffer_pos = 0;
+        gui_input_optimize_size (window->buffer);
+        gui_completion_stop (window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -708,25 +712,25 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_transpose_chars (struct t_gui_buffer *buffer)
+gui_input_transpose_chars (struct t_gui_window *window)
 {
     char *start, *prev_char, saved_char[5];
     int size_prev_char, size_start_char;
     int pos_prev_char, pos_start;
     
-    if (buffer->input && (buffer->input_buffer_pos > 0)
-        && (buffer->input_buffer_length > 1))
+    if (window->buffer->input && (window->buffer->input_buffer_pos > 0)
+        && (window->buffer->input_buffer_length > 1))
     {
-        gui_buffer_undo_snap (buffer);
+        gui_buffer_undo_snap (window->buffer);
         
-        if (buffer->input_buffer_pos == buffer->input_buffer_length)
-            buffer->input_buffer_pos--;
+        if (window->buffer->input_buffer_pos == window->buffer->input_buffer_length)
+            window->buffer->input_buffer_pos--;
         
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
-        pos_start = start - buffer->input_buffer;
-        prev_char = utf8_prev_char (buffer->input_buffer, start);
-        pos_prev_char = prev_char - buffer->input_buffer;
+        start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_pos);
+        pos_start = start - window->buffer->input_buffer;
+        prev_char = utf8_prev_char (window->buffer->input_buffer, start);
+        pos_prev_char = prev_char - window->buffer->input_buffer;
         size_prev_char = start - prev_char;
         size_start_char = utf8_char_size (start);
         
@@ -734,11 +738,11 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
         memcpy (prev_char, start, size_start_char);
         memcpy (prev_char + size_start_char, saved_char, size_prev_char);
         
-        buffer->input_buffer_pos++;
+        window->buffer->input_buffer_pos++;
         
-        gui_completion_stop (buffer->completion, 1);
+        gui_completion_stop (window->buffer->completion, 1);
         
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
     }
 }
 
@@ -747,14 +751,13 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
+gui_input_move_beginning_of_line (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos > 0)
+        if (window->buffer->input_buffer_pos > 0)
         {
-            buffer->input_buffer_pos = 0;
-            
+            window->buffer->input_buffer_pos = 0;
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -765,14 +768,13 @@ gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_end_of_line (struct t_gui_buffer *buffer)
+gui_input_move_end_of_line (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos < buffer->input_buffer_length)
+        if (window->buffer->input_buffer_pos < window->buffer->input_buffer_length)
         {
-            buffer->input_buffer_pos = buffer->input_buffer_length;
-            
+            window->buffer->input_buffer_pos = window->buffer->input_buffer_length;
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -783,14 +785,13 @@ gui_input_move_end_of_line (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_previous_char (struct t_gui_buffer *buffer)
+gui_input_move_previous_char (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos > 0)
+        if (window->buffer->input_buffer_pos > 0)
         {
-            buffer->input_buffer_pos--;
-            
+            window->buffer->input_buffer_pos--;
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -801,14 +802,13 @@ gui_input_move_previous_char (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_next_char (struct t_gui_buffer *buffer)
+gui_input_move_next_char (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos < buffer->input_buffer_length)
+        if (window->buffer->input_buffer_pos < window->buffer->input_buffer_length)
         {
-            buffer->input_buffer_pos++;
-            
+            window->buffer->input_buffer_pos++;
             gui_input_text_cursor_moved_signal ();
         }
     }
@@ -820,35 +820,35 @@ gui_input_move_next_char (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_previous_word (struct t_gui_buffer *buffer)
+gui_input_move_previous_word (struct t_gui_window *window)
 {
     char *pos;
     
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos > 0)
+        if (window->buffer->input_buffer_pos > 0)
         {
-            pos = utf8_add_offset (buffer->input_buffer,
-                                   buffer->input_buffer_pos - 1);
+            pos = utf8_add_offset (window->buffer->input_buffer,
+                                   window->buffer->input_buffer_pos - 1);
             while (pos && (pos[0] == ' '))
             {
-                pos = utf8_prev_char (buffer->input_buffer, pos);
+                pos = utf8_prev_char (window->buffer->input_buffer, pos);
             }
             if (pos)
             {
                 while (pos && (pos[0] != ' '))
                 {
-                    pos = utf8_prev_char (buffer->input_buffer, pos);
+                    pos = utf8_prev_char (window->buffer->input_buffer, pos);
                 }
                 if (pos)
                     pos = utf8_next_char (pos);
                 else
-                    pos = buffer->input_buffer;
-                buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
-                                                     pos - buffer->input_buffer);
+                    pos = window->buffer->input_buffer;
+                window->buffer->input_buffer_pos = utf8_pos (window->buffer->input_buffer,
+                                                             pos - window->buffer->input_buffer);
             }
             else
-                buffer->input_buffer_pos = 0;
+                window->buffer->input_buffer_pos = 0;
             
             gui_input_text_cursor_moved_signal ();
         }
@@ -861,16 +861,16 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move_next_word (struct t_gui_buffer *buffer)
+gui_input_move_next_word (struct t_gui_window *window)
 {
     char *pos;
     
-    if (buffer->input)
+    if (window->buffer->input)
     {
-        if (buffer->input_buffer_pos < buffer->input_buffer_length)
+        if (window->buffer->input_buffer_pos < window->buffer->input_buffer_length)
         {
-            pos = utf8_add_offset (buffer->input_buffer,
-                                   buffer->input_buffer_pos);
+            pos = utf8_add_offset (window->buffer->input_buffer,
+                                   window->buffer->input_buffer_pos);
             while (pos[0] && (pos[0] == ' '))
             {
                 pos = utf8_next_char (pos);
@@ -882,16 +882,20 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
                     pos = utf8_next_char (pos);
                 }
                 if (pos[0])
-                    buffer->input_buffer_pos =
-                        utf8_pos (buffer->input_buffer,
-                                  pos - buffer->input_buffer);
+                {
+                    window->buffer->input_buffer_pos =
+                        utf8_pos (window->buffer->input_buffer,
+                                  pos - window->buffer->input_buffer);
+                }
                 else
-                    buffer->input_buffer_pos = buffer->input_buffer_length;
+                    window->buffer->input_buffer_pos = window->buffer->input_buffer_length;
             }
             else
-                buffer->input_buffer_pos =
-                    utf8_pos (buffer->input_buffer,
-                              utf8_prev_char (buffer->input_buffer, pos) - buffer->input_buffer);
+            {
+                window->buffer->input_buffer_pos =
+                    utf8_pos (window->buffer->input_buffer,
+                              utf8_prev_char (window->buffer->input_buffer, pos) - window->buffer->input_buffer);
+            }
             
             gui_input_text_cursor_moved_signal ();
         }
@@ -1218,9 +1222,9 @@ gui_input_hotlist_clear (struct t_gui_window *window)
  */
 
 void
-gui_input_grab_key (struct t_gui_buffer *buffer)
+gui_input_grab_key (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
         gui_keyboard_grab_init (0);
 }
 
@@ -1230,9 +1234,9 @@ gui_input_grab_key (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_grab_key_command (struct t_gui_buffer *buffer)
+gui_input_grab_key_command (struct t_gui_window *window)
 {
-    if (buffer->input)
+    if (window->buffer->input)
         gui_keyboard_grab_init (1);
 }
 
@@ -1293,9 +1297,9 @@ gui_input_set_unread ()
  */
 
 void
-gui_input_set_unread_buffer (struct t_gui_buffer *buffer)
+gui_input_set_unread_current (struct t_gui_window *window)
 {
-    gui_buffer_set_unread (buffer);
+    gui_buffer_set_unread (window->buffer);
 }
 
 /*
@@ -1341,16 +1345,16 @@ gui_input_switch_active_buffer_previous (struct t_gui_window *window)
  */
 
 void
-gui_input_insert (struct t_gui_buffer *buffer, const char *args)
+gui_input_insert (struct t_gui_window *window, const char *args)
 {
     char *args2;
     
     if (args)
     {
-        gui_buffer_undo_snap (buffer);
+        gui_buffer_undo_snap (window->buffer);
         args2 = string_convert_hex_chars (args);
-        gui_input_insert_string (buffer, (args2) ? args2 : args, -1);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_insert_string (window->buffer, (args2) ? args2 : args, -1);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 1);
         if (args2)
             free (args2);
     }
@@ -1376,27 +1380,28 @@ gui_input_undo_use (struct t_gui_buffer *buffer, struct t_gui_input_undo *undo)
  */
 
 void
-gui_input_undo (struct t_gui_buffer *buffer)
+gui_input_undo (struct t_gui_window *window)
 {
-    if (buffer->ptr_input_undo)
+    if (window->buffer->ptr_input_undo)
     {
         /*
          * if we are doing undo and that undo pointer is to the end of list
          * (for example first time undo is used), then save current input
          * content in undo list
          */
-        if ((buffer->ptr_input_undo == buffer->last_input_undo)
-            && (buffer->ptr_input_undo)->data
-            && (strcmp (buffer->input_buffer, (buffer->ptr_input_undo)->data) != 0))
+        if ((window->buffer->ptr_input_undo == window->buffer->last_input_undo)
+            && (window->buffer->ptr_input_undo)->data
+            && (strcmp (window->buffer->input_buffer, (window->buffer->ptr_input_undo)->data) != 0))
         {
-            gui_buffer_undo_snap_free (buffer);
-            gui_buffer_undo_add (buffer);
+            gui_buffer_undo_snap_free (window->buffer);
+            gui_buffer_undo_add (window->buffer);
         }
         
-        if (buffer->ptr_input_undo && (buffer->ptr_input_undo)->prev_undo)
+        if (window->buffer->ptr_input_undo
+            && (window->buffer->ptr_input_undo)->prev_undo)
         {
-            buffer->ptr_input_undo = (buffer->ptr_input_undo)->prev_undo;
-            gui_input_undo_use (buffer, buffer->ptr_input_undo);
+            window->buffer->ptr_input_undo = (window->buffer->ptr_input_undo)->prev_undo;
+            gui_input_undo_use (window->buffer, window->buffer->ptr_input_undo);
         }
     }
 }
@@ -1406,11 +1411,12 @@ gui_input_undo (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_redo (struct t_gui_buffer *buffer)
+gui_input_redo (struct t_gui_window *window)
 {
-    if (buffer->ptr_input_undo && (buffer->ptr_input_undo)->next_undo)
+    if (window->buffer->ptr_input_undo
+        && (window->buffer->ptr_input_undo)->next_undo)
     {
-        buffer->ptr_input_undo = (buffer->ptr_input_undo)->next_undo;
-        gui_input_undo_use (buffer, buffer->ptr_input_undo);
+        window->buffer->ptr_input_undo = (window->buffer->ptr_input_undo)->next_undo;
+        gui_input_undo_use (window->buffer, window->buffer->ptr_input_undo);
     }
 }
