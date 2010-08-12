@@ -126,7 +126,7 @@ hook_find_pos (struct t_hook *hook)
                                             HOOK_COMMAND(ptr_hook, command));
                 if (rc_cmp < 0)
                     return ptr_hook;
-                if ((rc_cmp == 0) && (hook->priority >= ptr_hook->priority))
+                if ((rc_cmp == 0) && (hook->priority > ptr_hook->priority))
                     return ptr_hook;
             }
         }
