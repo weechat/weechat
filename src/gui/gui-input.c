@@ -899,202 +899,199 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_input_history_previous: recall previous command (default key: up)
+ * gui_input_history_previous: recall previous command from local or global
+ *                             history
  */
 
 void
-gui_input_history_previous (struct t_gui_window *window)
+gui_input_history_previous (struct t_gui_window *window,
+                            struct t_gui_history *history,
+                            struct t_gui_history **ptr_history)
 {
-    if (window->buffer->input)
+    if (!window->buffer->input)
+        return;
+    
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+        if (*ptr_history)
         {
-            if (window->buffer->ptr_history)
+            if (!(*ptr_history)->next_history)
+                return;
+            *ptr_history = (*ptr_history)->next_history;
+        }
+        if (!(*ptr_history))
+            *ptr_history = history;
+        
+        if (!(*ptr_history))
+            return;
+        
+        /* bash/readline like use of history */
+        if (window->buffer->input_buffer_size > 0)
+        {
+            if ((*ptr_history)->prev_history)
             {
-                if (!window->buffer->ptr_history->next_history)
-                    return;
-                window->buffer->ptr_history = window->buffer->ptr_history->next_history;
-                if (!window->buffer->ptr_history)
-                    window->buffer->ptr_history = window->buffer->history;
+                /* replace text in history with current input */
+                window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                if ((*ptr_history)->prev_history->text)
+                    free ((*ptr_history)->prev_history->text);
+                (*ptr_history)->prev_history->text =
+                    strdup (window->buffer->input_buffer);
             }
             else
-                window->buffer->ptr_history = window->buffer->history;
-            if (window->buffer->ptr_history)
             {
-                /* bash/readline like use of history */
-                if (window->buffer->ptr_history->prev_history == NULL)
-                {
-                    if (window->buffer->input_buffer_size > 0)
-                    {
-                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                        gui_history_add (window->buffer,
-                                         window->buffer->input_buffer);
-                    }
-                }
-                else
-                {
-                    if (window->buffer->input_buffer_size > 0)
-                    {
-                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                        if (window->buffer->ptr_history->prev_history->text)
-                            free(window->buffer->ptr_history->prev_history->text);
-                        window->buffer->ptr_history->prev_history->text =
-                            strdup (window->buffer->input_buffer);
-                    }
-                }
+                /* add current input in history */
+                window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                gui_history_add (window->buffer,
+                                 window->buffer->input_buffer);
+            }
+        }
+        window->buffer->input_buffer_size =
+            strlen ((*ptr_history)->text);
+        window->buffer->input_buffer_length =
+            utf8_strlen ((*ptr_history)->text);
+        gui_input_optimize_size (window->buffer);
+        window->buffer->input_buffer_pos = window->buffer->input_buffer_length;
+        window->buffer->input_buffer_1st_display = 0;
+        strcpy (window->buffer->input_buffer, (*ptr_history)->text);
+        gui_input_text_changed_modifier_and_signal (window->buffer, 0);
+        gui_buffer_undo_free_all (window->buffer);
+    }
+    else
+    {
+        /* search backward in buffer history */
+        window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+        (void) gui_window_search_text (window);
+    }
+}
+
+/*
+ * gui_input_history_next: recall next command from local or global history
+ */
+
+void
+gui_input_history_next (struct t_gui_window *window,
+                        struct t_gui_history *history,
+                        struct t_gui_history **ptr_history)
+{
+    int input_changed;
+    
+    /* make C compiler happy */
+    (void) history;
+    
+    input_changed = 0;
+    
+    if (!window->buffer->input)
+        return;
+    
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    {
+        if (*ptr_history)
+        {
+            *ptr_history = (*ptr_history)->prev_history;
+            if (*ptr_history)
+            {
                 window->buffer->input_buffer_size =
-                    strlen (window->buffer->ptr_history->text);
+                    strlen ((*ptr_history)->text);
                 window->buffer->input_buffer_length =
-                    utf8_strlen (window->buffer->ptr_history->text);
-                gui_input_optimize_size (window->buffer);
-                window->buffer->input_buffer_pos = window->buffer->input_buffer_length;
-                window->buffer->input_buffer_1st_display = 0;
-                strcpy (window->buffer->input_buffer,
-                        window->buffer->ptr_history->text);
-            }
-            gui_input_text_changed_modifier_and_signal (window->buffer, 0);
-            gui_buffer_undo_free_all (window->buffer);
-        }
-        else
-        {
-            /* search backward in buffer history */
-            window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-            (void) gui_window_search_text (window);
-        }
-    }
-}
-
-/*
- * gui_input_history_next: recall next command (default key: down)
- */
-
-void
-gui_input_history_next (struct t_gui_window *window)
-{
-    if (window->buffer->input)
-    {
-        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-        {
-            if (window->buffer->ptr_history)
-            {
-                window->buffer->ptr_history =
-                    window->buffer->ptr_history->prev_history;
-                if (window->buffer->ptr_history)
-                {
-                    window->buffer->input_buffer_size =
-                        strlen (window->buffer->ptr_history->text);
-                    window->buffer->input_buffer_length =
-                        utf8_strlen (window->buffer->ptr_history->text);
-                }
-                else
-                {
-                    window->buffer->input_buffer[0] = '\0';
-                    window->buffer->input_buffer_size = 0;
-                    window->buffer->input_buffer_length = 0;
-                }
-                gui_input_optimize_size (window->buffer);
-                window->buffer->input_buffer_pos =
-                    window->buffer->input_buffer_length;
-                window->buffer->input_buffer_1st_display = 0;
-                if (window->buffer->ptr_history)
-                {
-                    strcpy (window->buffer->input_buffer,
-                            window->buffer->ptr_history->text);
-                }
+                    utf8_strlen ((*ptr_history)->text);
             }
             else
             {
-                /* add line to history then clear input */
-                if (window->buffer->input_buffer_size > 0)
-                {
-                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    gui_history_add (window->buffer,
-                                     window->buffer->input_buffer);
-                    window->buffer->input_buffer[0] = '\0';
-                    window->buffer->input_buffer_size = 0;
-                    window->buffer->input_buffer_length = 0;
-                    window->buffer->input_buffer_pos = 0;
-                    window->buffer->input_buffer_1st_display = 0;
-                    gui_input_optimize_size (window->buffer);
-                }
+                window->buffer->input_buffer[0] = '\0';
+                window->buffer->input_buffer_size = 0;
+                window->buffer->input_buffer_length = 0;
             }
-            gui_input_text_changed_modifier_and_signal (window->buffer, 0);
-            gui_buffer_undo_free_all (window->buffer);
+            gui_input_optimize_size (window->buffer);
+            window->buffer->input_buffer_pos =
+                window->buffer->input_buffer_length;
+            window->buffer->input_buffer_1st_display = 0;
+            if (*ptr_history)
+            {
+                strcpy (window->buffer->input_buffer, (*ptr_history)->text);
+            }
+            input_changed = 1;
         }
         else
         {
-            /* search forward in buffer history */
-            window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
-            (void) gui_window_search_text (window);
+            /* add line to history then clear input */
+            if (window->buffer->input_buffer_size > 0)
+            {
+                window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                gui_history_add (window->buffer,
+                                 window->buffer->input_buffer);
+                window->buffer->input_buffer[0] = '\0';
+                window->buffer->input_buffer_size = 0;
+                window->buffer->input_buffer_length = 0;
+                window->buffer->input_buffer_pos = 0;
+                window->buffer->input_buffer_1st_display = 0;
+                gui_input_optimize_size (window->buffer);
+                input_changed = 1;
+            }
         }
+        if (input_changed)
+        {
+            gui_input_text_changed_modifier_and_signal (window->buffer, 0);
+            gui_buffer_undo_free_all (window->buffer);
+        }
+    }
+    else
+    {
+        /* search forward in buffer history */
+        window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
+        (void) gui_window_search_text (window);
     }
 }
 
 /*
- * gui_input_history_global_previous: recall previous command in global history
+ * gui_input_history_local_previous: recall previous command from local history
+ *                                   (default key: up)
+ */
+
+void
+gui_input_history_local_previous (struct t_gui_window *window)
+{
+    gui_input_history_previous (window,
+                                window->buffer->history,
+                                &(window->buffer->ptr_history));
+}
+
+/*
+ * gui_input_history_local_next: recall next command from local history
+ *                               (default key: down)
+ */
+
+void
+gui_input_history_local_next (struct t_gui_window *window)
+{
+    gui_input_history_next (window,
+                            window->buffer->history,
+                            &(window->buffer->ptr_history));
+}
+
+/*
+ * gui_input_history_global_previous: recall previous command from global history
  *                                    (default key: ctrl-up)
  */
 
 void
-gui_input_history_global_previous (struct t_gui_buffer *buffer)
+gui_input_history_global_previous (struct t_gui_window *window)
 {
-    if (buffer->input && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
-    {
-        if (history_global_ptr)
-        {
-            history_global_ptr = history_global_ptr->next_history;
-            if (!history_global_ptr)
-                history_global_ptr = history_global;
-        }
-        else
-            history_global_ptr = history_global;
-        if (history_global_ptr)
-        {
-            buffer->input_buffer_size = strlen (history_global_ptr->text);
-            buffer->input_buffer_length = utf8_strlen (history_global_ptr->text);
-            gui_input_optimize_size (buffer);
-            buffer->input_buffer_pos = buffer->input_buffer_length;
-            buffer->input_buffer_1st_display = 0;
-            strcpy (buffer->input_buffer, history_global_ptr->text);
-            gui_input_text_changed_modifier_and_signal (buffer, 0);
-            gui_buffer_undo_free_all (buffer);
-        }
-    }
+    gui_input_history_previous (window,
+                                history_global,
+                                &history_global_ptr);
 }
 
 /*
- * gui_history_global_next: recall next command in global history
+ * gui_history_global_next: recall next command from global history
  *                          (default key: ctrl-down)
  */
 
 void
-gui_input_history_global_next (struct t_gui_buffer *buffer)
+gui_input_history_global_next (struct t_gui_window *window)
 {
-    if (buffer->input && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-        && history_global_ptr)
-    {
-        history_global_ptr = history_global_ptr->prev_history;
-        if (history_global_ptr)
-        {
-            buffer->input_buffer_size = strlen (history_global_ptr->text);
-            buffer->input_buffer_length = utf8_strlen (history_global_ptr->text);
-        }
-        else
-        {
-            buffer->input_buffer[0] = '\0';
-            buffer->input_buffer_size = 0;
-            buffer->input_buffer_length = 0;
-        }
-        gui_input_optimize_size (buffer);
-        buffer->input_buffer_pos = buffer->input_buffer_length;
-        buffer->input_buffer_1st_display = 0;
-        if (history_global_ptr)
-        {
-            strcpy (buffer->input_buffer, history_global_ptr->text);
-        }
-        gui_input_text_changed_modifier_and_signal (buffer, 0);
-        gui_buffer_undo_free_all (buffer);
-    }
+    gui_input_history_next (window,
+                            history_global,
+                            &history_global_ptr);
 }
 
 /*

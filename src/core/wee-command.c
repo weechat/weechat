@@ -1928,13 +1928,13 @@ command_input (void *data, struct t_gui_buffer *buffer,
         else if (string_strcasecmp (argv[1], "move_next_word") == 0)
             gui_input_move_next_word (gui_current_window->buffer);
         else if (string_strcasecmp (argv[1], "history_previous") == 0)
-            gui_input_history_previous (gui_current_window);
+            gui_input_history_local_previous (gui_current_window);
         else if (string_strcasecmp (argv[1], "history_next") == 0)
-            gui_input_history_next (gui_current_window);
+            gui_input_history_local_next (gui_current_window);
         else if (string_strcasecmp (argv[1], "history_global_previous") == 0)
-            gui_input_history_global_previous (gui_current_window->buffer);
+            gui_input_history_global_previous (gui_current_window);
         else if (string_strcasecmp (argv[1], "history_global_next") == 0)
-            gui_input_history_global_next (gui_current_window->buffer);
+            gui_input_history_global_next (gui_current_window);
         else if (string_strcasecmp (argv[1], "jump_smart") == 0)
             gui_input_jump_smart (gui_current_window);
         else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
