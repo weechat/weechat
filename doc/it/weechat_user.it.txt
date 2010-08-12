@@ -522,8 +522,10 @@ Tasti per la riga di comando
   viene copiata negli appunti) +
   `/input delete_end_of_line`
 
+// TRANSLATION MISSING
 | Ctrl + R |
-  Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto) +
+  Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto),
+  next/previous occurences can be found with up and down arrows +
   `/input search_text`
 
 | Ctrl + T |

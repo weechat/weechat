@@ -512,8 +512,10 @@ Tastenbefehle für die Befehlszeile
   kopiert) +
   `/input delete_end_of_line`
 
+// TRANSLATION MISSING
 | Ctrl + R |
-  Sucht nach einem Text in der Protokolldatei (zweimaliges Drücken: sucht nach exaktem Text) +
+  Sucht nach einem Text in der Protokolldatei (zweimaliges Drücken: sucht nach exaktem Text),
+  next/previous occurences can be found with up and down arrows +
   `/input search_text`
 
 | Ctrl + T |

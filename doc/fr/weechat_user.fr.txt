@@ -526,7 +526,8 @@ Touches pour la ligne de commande
 
 | Ctrl + R |
   Chercher du texte dans l'historique du tampon (deux appuis successifs pour
-  rechercher du texte exact) +
+  rechercher du texte exact), les occurences suivantes/précédentes peuvent être
+  trouvées avec les flèches haut et bas +
   `/input search_text`
 
 | Ctrl + T |

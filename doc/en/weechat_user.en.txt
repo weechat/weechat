@@ -514,7 +514,8 @@ Keys for command line
   `/input delete_end_of_line`
 
 | Ctrl + R |
-  Search for text in buffer history (two times: search exact text) +
+  Search for text in buffer history (two times: search exact text),
+  next/previous occurences can be found with up and down arrows +
   `/input search_text`
 
 | Ctrl + T |
