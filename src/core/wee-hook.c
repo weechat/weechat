@@ -137,7 +137,7 @@ hook_find_pos (struct t_hook *hook)
         for (ptr_hook = weechat_hooks[hook->type]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
-            if (!ptr_hook->deleted && (hook->priority >= ptr_hook->priority))
+            if (!ptr_hook->deleted && (hook->priority > ptr_hook->priority))
                 return ptr_hook;
         }
     }
