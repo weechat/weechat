@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_DOC)
+IF(ENABLE_DOC)
 
   FIND_PACKAGE(Sourcehighlight)
   FIND_PACKAGE(Asciidoc)
@@ -32,6 +32,6 @@ IF(NOT DISABLE_DOC)
     ADD_SUBDIRECTORY( it )
   ENDIF(ASCIIDOC_FOUND AND SOURCEHIGHLIGHT_FOUND)
 
-ENDIF(NOT DISABLE_DOC)
+ENDIF(ENABLE_DOC)
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1 DESTINATION ${SHAREDIR}/man/man1)
