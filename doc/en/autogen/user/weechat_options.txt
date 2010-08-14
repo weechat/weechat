@@ -344,7 +344,7 @@
 ** values: time, buffer, prefix, suffix, message (default value: message)
 
 * *weechat.look.buffer_notify_default*
-** description: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message)
+** description: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist
 ** type: integer
 ** values: none, highlight, message, all (default value: all)
 

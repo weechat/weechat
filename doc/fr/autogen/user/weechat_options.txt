@@ -344,7 +344,7 @@
 ** valeurs: time, buffer, prefix, suffix, message (valeur par défaut: message)
 
 * *weechat.look.buffer_notify_default*
-** description: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message)
+** description: niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jemais afficher dans la hotlist
 ** type: entier
 ** valeurs: none, highlight, message, all (valeur par défaut: all)
 

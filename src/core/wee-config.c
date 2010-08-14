@@ -1246,7 +1246,9 @@ config_weechat_init_options ()
         "buffer_notify_default", "integer",
         N_("default notify level for buffers (used to tell WeeChat if buffer "
            "must be displayed in hotlist or not, according to importance "
-           "of message)"),
+           "of message): all=all messages (default), "
+           "message=messages+highlights, highlight=highlights only, "
+           "none=never display in hotlist"),
         "none|highlight|message|all", 0, 0, "all", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
