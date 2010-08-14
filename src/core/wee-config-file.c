@@ -2641,6 +2641,13 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                             return 0;
                         }
                         if (!infolist_new_var_integer (ptr_item,
+                                                       "null_value_allowed",
+                                                       ptr_option->null_value_allowed))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_integer (ptr_item,
                                                        "value_is_null",
                                                        (ptr_option->value) ?
                                                        0 : 1))

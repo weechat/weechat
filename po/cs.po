@@ -20,14 +20,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-11 14:49+0200\n"
+"POT-Creation-Date: 2010-08-14 11:40+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
-"Language: Czech\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: Czech\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -347,6 +347,10 @@ msgstr "barva"
 
 msgid "a color name"
 msgstr "jméno barvy"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5017,8 +5021,8 @@ msgstr[2] "minut"
 msgid ""
 "%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
-"%s%s[%s%s%s]%s nečinný: %s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s"
-"%s"
+"%s%s[%s%s%s]%s nečinný: %s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s%"
+"s"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]"
@@ -5822,8 +5826,8 @@ msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný"
 
 #, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%"
+"s\"), failed to load"
 msgstr ""
 "%sChyba: chyba API v pluginu \"%s\" (aktuální API: \"%s\", API pluginu: \"%s"
 "\"), načtení selhalo"
@@ -5924,8 +5928,8 @@ msgstr "Klienti pro přenos:"
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 "%3d. %s%s%s (%s%s%s), spuštěn v: %s, poslední aktivita: %s, bytů: %lu "
 "přijato, %lu odebráno"
@@ -6569,8 +6573,8 @@ msgstr "Xfer seznam:"
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
-"%3d. %s (%s), soubor: \"%s\" (lokální: \"%s\"), %s %s, status: %s%s%s (%lu "
-"%%)"
+"%3d. %s (%s), soubor: \"%s\" (lokální: \"%s\"), %s %s, status: %s%s%s (%lu %"
+"%)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
@@ -6583,8 +6587,8 @@ msgid ""
 "     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
 "%d (port %d)"
 msgstr ""
-"     plugin: %s (id: %s), soubor: %lu bytů (pozice: %lu), adresa: %d.%d.%d."
-"%d (port %d)"
+"     plugin: %s (id: %s), soubor: %lu bytů (pozice: %lu), adresa: %d.%d.%d.%"
+"d (port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
@@ -6697,8 +6701,8 @@ msgstr "konvertovat mezery na podtržítka při odesílání souborů"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
-"přejmenovat příchozí soubory, jestliže již existují (přídat \".1\", "
-"\".2\", ...)"
+"přejmenovat příchozí soubory, jestliže již existují (přídat \".1\", \".2"
+"\", ...)"
 
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"

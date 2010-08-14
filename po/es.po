@@ -21,14 +21,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-11 14:49+0200\n"
+"POT-Creation-Date: 2010-08-14 11:40+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
-"Language: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -350,6 +350,10 @@ msgstr "color"
 
 msgid "a color name"
 msgstr "nombre de un color"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5897,8 +5901,8 @@ msgstr "%sSi el plugin \"%s\" es viejo/obsoleto, puedes borrar este archivo."
 
 #, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%"
+"s\"), failed to load"
 msgstr ""
 "%sError: API del plugin \"%s\" es incompatible (API actual: \"%s\", API del "
 "plugin: \"%s\"), no se puede cargar"
@@ -6002,8 +6006,8 @@ msgstr "Clientes para retransmitir:"
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %"
+"lu sent"
 msgstr ""
 "%3d. %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
 "recibidos, %lu enviados"
@@ -6670,8 +6674,8 @@ msgid ""
 "     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
 "%d (port %d)"
 msgstr ""
-"     plugin: %s (id: %s), archivo: %lu bytes (posición: %lu), dirección: %d."
-"%d.%d.%d (puerto %d)"
+"     plugin: %s (id: %s), archivo: %lu bytes (posición: %lu), dirección: %d.%"
+"d.%d.%d (puerto %d)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format

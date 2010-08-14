@@ -1806,6 +1806,12 @@ command_help (void *data, struct t_gui_buffer *buffer,
             case CONFIG_NUM_OPTION_TYPES:
                 break;
         }
+        if (ptr_option->null_value_allowed)
+        {
+            gui_chat_printf (NULL, "  %s",
+                             /* TRANSLATORS: please do not translate "(null)" */
+                             _("undefined value allowed (null)"));
+        }
         return WEECHAT_RC_OK;
     }
     

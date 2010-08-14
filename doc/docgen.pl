@@ -181,6 +181,7 @@ sub get_options
                 $options{$config}{$section}{$option}{"default_value"} = weechat::infolist_string($infolist, "default_value");
                 $options{$config}{$section}{$option}{"min"} = weechat::infolist_integer($infolist, "min");
                 $options{$config}{$section}{$option}{"max"} = weechat::infolist_integer($infolist, "max");
+                $options{$config}{$section}{$option}{"null_value_allowed"} = weechat::infolist_integer($infolist, "null_value_allowed");
                 $options{$config}{$section}{$option}{"description"} = weechat::infolist_string($infolist, "description");
             }
         }
@@ -416,6 +417,7 @@ sub docgen
                             my $default_value = $plugin_options{$config}{$section}{$option}{"default_value"};
                             my $min = $plugin_options{$config}{$section}{$option}{"min"};
                             my $max = $plugin_options{$config}{$section}{$option}{"max"};
+                            my $null_value_allowed = $plugin_options{$config}{$section}{$option}{"null_value_allowed"};
                             my $description = $plugin_options{$config}{$section}{$option}{"description"};
                             $description = $d->get($description) if ($description ne "");
                             my $type_nls = $type;
@@ -453,7 +455,12 @@ sub docgen
                             print FILE "** ".weechat_gettext("description").": ".$description."\n";
                             print FILE "** ".weechat_gettext("type").": ".$type_nls."\n";
                             print FILE "** ".weechat_gettext("values").": ".$values." "
-                                ."(".weechat_gettext("default value").": ".$default_value.")\n\n";
+                                ."(".weechat_gettext("default value").": ".$default_value.")\n";
+                            if ($null_value_allowed eq 1)
+                            {
+                                print FILE "** ".weechat_gettext("undefined value allowed (null)")."\n";
+                            }
+                            print FILE "\n";
                         }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
