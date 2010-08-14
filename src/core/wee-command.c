@@ -4875,7 +4875,13 @@ command_init ()
                      "current binary)\n\n"
                      "This command run again a WeeChat binary, so it should "
                      "have been compiled or installed with a package manager "
-                     "before running this command."),
+                     "before running this command.\n\n"
+                     "Upgrade process has 4 steps:\n"
+                     "  1. save session into files for core and plugins "
+                     "(buffers, history, ..)\n"
+                     "  2. unload all plugins (configs *.conf are saved)\n"
+                     "  3. save WeeChat config (weechat.conf)\n"
+                     "  4. exec new WeeChat binary."),
                   "%(filename)",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
