@@ -140,6 +140,7 @@
              regex: expression régulière à rechercher dans la ligne
                     - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
                     - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
+                    note: deux regex sont créées: une pour le préfixe et une pour le message
   
   La touche par défaut alt+'=' active/désactive le filtrage.
   

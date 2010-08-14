@@ -140,6 +140,7 @@
           regex: regular expression to search in line
                  - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
                  - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+                 note: two regex are created: one for prefix and one for message
   
   The default key alt+'=' toggles filtering on/off.
   
