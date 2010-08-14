@@ -359,9 +359,15 @@
 ........................................
   aggiorna WeeChat senza disconnettere dai server
 
-  percorso_del_binario: percorso del binario di WeeChat (quello corrente è il predefinito)
+  path_to_binary: path to WeeChat binary (default is current binary)
   
-  Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
+  This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+  
+  Upgrade process has 4 steps:
+    1. save session into files for core and plugins (buffers, history, ..)
+    2. unload all plugins (configs *.conf are saved)
+    3. save WeeChat config (weechat.conf)
+    4. exec new WeeChat binary.
 ........................................
 
 &bull; *`/uptime`* `[-o | -ol]`::

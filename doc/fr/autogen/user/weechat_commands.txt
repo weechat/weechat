@@ -362,6 +362,12 @@
   chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
   
   Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+  
+  Le processus de mise à jour comporte 4 étapes :
+    1. sauvegarde de la session pour le coeur et les extensions (tampons, historique, ...)
+    2. déchargement de toutes les extensions (les configs *.conf sont sauvegardées)
+    3. sauvegarde de la config WeeChat (weechat.conf)
+    4. exécution du nouveau binaire WeeChat.
 ........................................
 
 &bull; *`/uptime`* `[-o | -ol]`::

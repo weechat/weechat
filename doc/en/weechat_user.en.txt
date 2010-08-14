@@ -1583,8 +1583,8 @@ A rmodifier consists of three elements:
 . a string that describes output using number of "groups" captured in regular
   expression
 
-For list of modifiers used by WeeChat or plugins, see 
-''WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
+For list of modifiers used by WeeChat or plugins, see
+'WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
 
 For each captured group, following actions are possible:
 
