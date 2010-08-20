@@ -4108,7 +4108,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            const char *msg_channel)
 {
     int i, cmd_found, return_code, argc, decode_color, message_ignored;
-    char *dup_irc_message;
+    char *dup_irc_message, *pos_space;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
     const char *cmd_name;
@@ -4273,6 +4273,12 @@ irc_protocol_recv_command (struct t_irc_server *server,
     nick = (nick1) ? strdup (nick1) : NULL;
     address = (address1) ? strdup (address1) : NULL;
     host = (host1) ? strdup (host1) : NULL;
+    if (host)
+    {
+        pos_space = strchr (host, ' ');
+        if (pos_space)
+            pos_space[0] = '\0';
+    }
     
     /* check if message is ignored or not */
     ptr_channel = NULL;
