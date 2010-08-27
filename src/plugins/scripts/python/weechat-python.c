@@ -68,12 +68,100 @@ char python_buffer_output[128];
 
 
 /*
- * weechat_python_exec: execute a Python script
+ * weechat_python_hashtable_map_cb: callback called for each key/value in a
+ *                                  hashtable
+ */
+
+void
+weechat_python_hashtable_map_cb (void *data,
+                                 struct t_hashtable *hashtable,
+                                 const void *key,
+                                 const void *value)
+{
+    PyObject *dict, *dict_key, *dict_value;
+
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    dict = (PyObject *)data;
+    
+    dict_key = Py_BuildValue ("s", (const char *)key);
+    dict_value = Py_BuildValue ("s", (const char *)value);
+    
+    PyDict_SetItem (dict, dict_key, dict_value);
+    
+    Py_DECREF (dict_key);
+    Py_DECREF (dict_value);
+}
+
+/*
+ * weechat_python_hashtable_to_dict: get python dictionary with a WeeChat
+ *                                   hashtable
+ */
+
+PyObject *
+weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
+{
+    PyObject *dict;
+    
+    dict = PyDict_New ();
+    if (!dict)
+    {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    weechat_hashtable_map (hashtable,
+                           &weechat_python_hashtable_map_cb,
+                           dict);
+    
+    return dict;
+}
+
+/*
+ * weechat_python_dict_to_hashtable: get WeeChat hashtable with python
+ *                                   dictionary
+ *                                   Hashtable returned has type string for
+ *                                   both keys and values
+ *                                   Note: hashtable has to be released after
+ *                                   use with call to weechat_hashtable_free()
+ */
+
+struct t_hashtable *
+weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
+{
+    struct t_hashtable *hashtable;
+    PyObject *key, *value;
+    Py_ssize_t pos;
+    char *str_key, *str_value;
+    
+    hashtable = weechat_hashtable_new (hashtable_size,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    pos = 0;
+    while (PyDict_Next (dict, &pos, &key, &value))
+    {
+        str_key = PyString_AsString (key);
+        str_value = PyString_AsString (value);
+        weechat_hashtable_set (hashtable, (void *)str_key, (void *)str_value);
+    }
+    
+    return hashtable;
+}
+
+/*
+ * weechat_python_exec: execute a python function
  */
 
 void *
 weechat_python_exec (struct t_plugin_script *script,
-                     int ret_type, const char *function, char **argv)
+                     int ret_type, const char *function,
+                     char *format, void **argv)
 {
     struct t_plugin_script *old_python_current_script;
     PyThreadState *old_interpreter;
@@ -81,8 +169,8 @@ weechat_python_exec (struct t_plugin_script *script,
     PyObject *evDict;
     PyObject *evFunc;
     PyObject *rc;
-    void *ret_value;
-    int *ret_i;
+    void *argv2[16], *ret_value;
+    int i, argc, *ret_int;
     
     /* PyEval_AcquireLock (); */
     
@@ -110,78 +198,28 @@ weechat_python_exec (struct t_plugin_script *script,
     }
     
     python_current_script = script;
-    
+
     if (argv && argv[0])
     {
-        if (argv[1])
+        argc = strlen (format);
+        for (i = 0; i < 16; i++)
         {
-            if (argv[2])
-            {
-                if (argv[3])
-                {
-                    if (argv[4])
-                    {
-                        if (argv[5])
-                        {
-                            if (argv[6])
-                            {
-                                if (argv[7])
-                                {
-                                    rc = PyObject_CallFunction (evFunc, "ssssssss",
-                                                                argv[0], argv[1],
-                                                                argv[2], argv[3],
-                                                                argv[4], argv[5],
-                                                                argv[6], argv[7]);
-                                }
-                                else
-                                {
-                                    rc = PyObject_CallFunction (evFunc, "sssssss",
-                                                                argv[0], argv[1],
-                                                                argv[2], argv[3],
-                                                                argv[4], argv[5],
-                                                                argv[6]);
-                                }
-                            }
-                            else
-                            {
-                                rc = PyObject_CallFunction (evFunc, "ssssss",
-                                                            argv[0], argv[1],
-                                                            argv[2], argv[3],
-                                                            argv[4], argv[5]);
-                            }
-                        }
-                        else
-                        {
-                            rc = PyObject_CallFunction (evFunc, "sssss",
-                                                        argv[0], argv[1],
-                                                        argv[2], argv[3],
-                                                        argv[4]);
-                        }
-                    }
-                    else
-                    {
-                        rc = PyObject_CallFunction (evFunc, "ssss", argv[0],
-                                                    argv[1], argv[2], argv[3]);
-                    }
-                }
-                else
-                {
-                    rc = PyObject_CallFunction (evFunc, "sss", argv[0],
-                                                argv[1], argv[2]);
-                }
-            }
-            else
-            {
-                rc = PyObject_CallFunction (evFunc, "ss", argv[0], argv[1]);
-            }
+            argv2[i] = (i < argc) ? argv[i] : NULL;
         }
-        else
-        {
-            rc = PyObject_CallFunction (evFunc, "s", argv[0]);
-        }
+        rc = PyObject_CallFunction (evFunc, format,
+                                    argv2[0], argv2[1],
+                                    argv2[2], argv2[3],
+                                    argv2[4], argv2[5],
+                                    argv2[6], argv2[7],
+                                    argv2[8], argv2[9],
+                                    argv2[10], argv2[11],
+                                    argv2[12], argv2[13],
+                                    argv2[14], argv2[15]);
     }
     else
+    {
         rc = PyObject_CallFunction (evFunc, NULL);
+    }
     
     ret_value = NULL;
     
@@ -197,22 +235,26 @@ weechat_python_exec (struct t_plugin_script *script,
         PyErr_Print ();
         Py_XDECREF(rc);
     }
-    else if (PyString_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_STRING))
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (PyString_Check (rc)))
     {
         if (PyString_AsString (rc))
             ret_value = strdup (PyString_AsString(rc));
         else
             ret_value = NULL;
-
         Py_XDECREF(rc);
     }
-    else if (PyInt_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_INT))
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (PyInt_Check (rc)))
     {
-        ret_i = malloc (sizeof (*ret_i));
-        if (ret_i)
-            *ret_i = (int) PyInt_AsLong(rc);
-        ret_value = ret_i;
-        
+        ret_int = malloc (sizeof (*ret_int));
+        if (ret_int)
+            *ret_int = (int) PyInt_AsLong(rc);
+        ret_value = ret_int;
+        Py_XDECREF(rc);
+    }
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+    {
+        ret_value = weechat_python_dict_to_hashtable (rc,
+                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
         Py_XDECREF(rc);
     }
     else
@@ -241,7 +283,7 @@ weechat_python_exec (struct t_plugin_script *script,
 }
 
 /*
- * weechat_python_output : redirection for stdout and stderr
+ * weechat_python_output: redirection for stdout and stderr
  */
 
 static PyObject *
@@ -552,7 +594,7 @@ weechat_python_unload (struct t_plugin_script *script)
     if (script->shutdown_func && script->shutdown_func[0])
     {
         r = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
-                                         script->shutdown_func, NULL);
+                                         script->shutdown_func, NULL, NULL);
         if (r)
             free (r);
     }

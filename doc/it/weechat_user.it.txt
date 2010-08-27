@@ -102,7 +102,7 @@ compilare WeeChat.
 | python-dev             | no        | plugin python
 | ruby1.8-dev            | no        | plugin ruby
 | liblua5.1-0-dev        | no        | plugin lua
-| tcl-dev                | no        | plugin tcl
+| tcl-dev (>= 8.5)       | no        | plugin tcl
 | asciidoc (>= 8.2)      | no        | compilazione della documentazione (file HTML)
 | source-highlight       | no        | evidenziazione della sintassi per i sorgenti nella documentazione HTML
 |========================================
@@ -525,7 +525,7 @@ Tasti per la riga di comando
 // TRANSLATION MISSING
 | Ctrl + R |
   Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto),
-  next/previous occurences can be found with up and down arrows +
+  next/previous occurrences can be found with up and down arrows +
   `/input search_text`
 
 | Ctrl + T |

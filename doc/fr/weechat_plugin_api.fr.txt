@@ -512,6 +512,9 @@ char *str = weechat_strndup ("abcdef", 3); /* résultat : "abc" */
 free (str);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_tolower
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -536,6 +539,9 @@ char *str = "AbCdé";
 weechat_string_tolower (str); /* str vaut maintenant : "abcdé" */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_toupper
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -559,6 +565,9 @@ Exemple en C :
 char *str = "AbCdé";
 weechat_string_tolower (str); /* str vaut maintenant : "ABCDé" */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_strcasecmp
 ^^^^^^^^^^^^^^^^^^
@@ -590,6 +599,9 @@ Exemple en C :
 ----------------------------------------
 int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
@@ -623,6 +635,9 @@ Exemple en C :
 ----------------------------------------
 int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_strcmp_ignore_chars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -660,6 +675,9 @@ Exemple en C :
 int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1); /* == -3 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_strcasestr
 ^^^^^^^^^^^^^^^^^^
 
@@ -687,6 +705,9 @@ Exemple en C :
 ----------------------------------------
 char *pos = weechat_strcasestr ("aBcDeF", "de"); /* résultat : pointeur vers "DeF" */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_match
 ^^^^^^^^^^^^^^^^^^^^
@@ -738,7 +759,7 @@ match4 = weechat.string_match("abcdef", "*de*", 0) # 1
 weechat_string_replace
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Remplace toutes les occurences d'une chaîne par une autre chaîne.
+Remplace toutes les occurrences d'une chaîne par une autre chaîne.
 
 Prototype :
 
@@ -767,6 +788,9 @@ char *str = weechat_string_replace ("test, test", "s", "x"); /* résultat : "tex
 /* ... */
 free (str);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -802,6 +826,9 @@ char *str = weechat_string_expand_home ("~/fichier.txt");
 free (str);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -834,6 +861,9 @@ char *str = weechat_string_remove_quotes (string, " 'aujourd'hui' ", "'");
 /* ... */
 free (str);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_strip
 ^^^^^^^^^^^^^^^^^^^^
@@ -868,6 +898,9 @@ char *str = weechat_string_strip (".abc -", 0, 1, "- ."); /* résultat : ".abc" 
 /* ... */
 free (str);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_has_highlight
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1008,6 +1041,9 @@ argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
 weechat_string_free_split (argv);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_free_split
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1035,6 +1071,9 @@ argv = weechat_string_split (string, " ", 0, 0, &argc);
 /* ... */
 weechat_string_free_split (argv);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_build_with_split_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1073,6 +1112,9 @@ char *str = weechat_string_build_with_split_string (argv, ";");
 free (str);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1107,6 +1149,9 @@ char **argv = weechat_string_split_command ("/commande1 arg;/commande2", ';');
 weechat_free_split_command (argv);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_free_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1132,6 +1177,9 @@ char **argv = weechat_string_split_command ("/commande1 arg;/commande2", ';');
 /* ... */
 weechat_free_split_command (argv);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_format_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1176,6 +1224,9 @@ char *str = weechat_string_format_size (2097152); /* str == "2 Mo" */
 /* ... */
 free (str);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_remove_color
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1258,6 +1309,9 @@ weechat_string_encode_base64 (string, strlen (string), result);
 /* result == "YWJjZGVmZ2g=" */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1291,6 +1345,9 @@ int length;
 length = weechat_string_decode_base64 (string, result);
 /* length == 8, result == "abcdefgh" */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1417,6 +1474,9 @@ if (weechat_utf8_has_8bits (string))
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_is_valid
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -1454,6 +1514,9 @@ else
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_normalize
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1478,6 +1541,9 @@ Exemple en C :
 ----------------------------------------
 weechat_utf8_normalize (string, '?');
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_prev_char
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1509,6 +1575,9 @@ Exemple en C :
 char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_next_char
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1537,6 +1606,9 @@ Exemple en C :
 char *next_char = weechat_utf8_next_char (string);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_char_int
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -1563,6 +1635,9 @@ Exemple en C :
 ----------------------------------------
 int char_int = weechat_utf8_char_int ("être"); /* "ê" comme entier */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_char_size
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1591,6 +1666,9 @@ Exemple en C :
 int char_size = weechat_utf8_char_size ("être"); /* == 2 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_strlen
 ^^^^^^^^^^^^^^^^^^^
 
@@ -1617,6 +1695,9 @@ Exemple en C :
 ----------------------------------------
 int length = weechat_utf8_strlen ("chêne"); /* == 5 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_strnlen
 ^^^^^^^^^^^^^^^^^^^^
@@ -1647,6 +1728,9 @@ Exemple en C :
 int length = weechat_utf8_strnlen ("chêne", 4); /* == 3 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_strlen_screen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1674,6 +1758,9 @@ Exemple en C :
 ----------------------------------------
 int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_charcmp
 ^^^^^^^^^^^^^^^^^^^^
@@ -1706,6 +1793,9 @@ Exemple en C :
 int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_charcasecmp
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1737,6 +1827,9 @@ Exemple en C :
 int diff = weechat_utf8_charcasecmp ("aaa", "CCC"); /* == -2 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_char_size_screen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1764,6 +1857,9 @@ Exemple en C :
 ----------------------------------------
 int length_on_screen = weechat_utf8_char_size_screen ("é"); /* == 1 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_add_offset
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1795,6 +1891,9 @@ char *str = "chêne";
 char *str2 = weechat_utf8_add_offset (str, 3); /* pointe vers "ne" */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_real_pos
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -1823,6 +1922,9 @@ Exemple en C :
 int pos = weechat_utf8_real_pos ("chêne", 3); /* == 4 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_utf8_pos
 ^^^^^^^^^^^^^^^^
 
@@ -1850,6 +1952,9 @@ Exemple en C :
 ----------------------------------------
 int pos = weechat_utf8_pos ("chêne", 4); /* == 3 */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_utf8_strndup
 ^^^^^^^^^^^^^^^^^^^^
@@ -1880,6 +1985,9 @@ char *string = weechat_utf8_strndup ("chêne", 3); /* retourne "chê" */
 /* ... */
 free (str);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 [[directories]]
 Répertoires
@@ -2051,6 +2159,9 @@ void callback (void *data, const char *filename)
 weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_file_get_content
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2084,6 +2195,9 @@ contenu = weechat_file_get_content ("/tmp/test.txt");
 /* ... */
 free (contenu);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 [[util]]
 Util
@@ -2124,6 +2238,9 @@ if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_util_timeval_diff
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2152,6 +2269,9 @@ Exemple en C :
 long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_util_timeval_add
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2175,6 +2295,9 @@ Exemple en C :
 ----------------------------------------
 weechat_util_timeval_add (&tv, 2000); /* ajoute 2 secondes */
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2202,6 +2325,9 @@ time_t date = time (NULL);
 weechat_printf (NULL, "date: %s",
                 weechat_util_get_time_string (&date));
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 [[sorted_lists]]
 Listes triées
@@ -2772,6 +2898,9 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        NULL);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2811,6 +2940,9 @@ weechat_hashtable_set_with_size (hashtable, "ma_cle", 0,
                                  my_buffer, sizeof (my_buffer_struct));
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -2843,6 +2975,9 @@ Exemple en C :
 weechat_hashtable_set (hashtable, "ma_cle", "ma_valeur");
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_get
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -2872,6 +3007,9 @@ Exemple en C :
 ----------------------------------------
 void *value = weechat_hashtable_get (hashtable, "ma_cle");
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
@@ -2915,6 +3053,9 @@ map_cb (void *data, struct t_hashtable *hashtable,
 weechat_hashtable_map (hashtable, &map_cb, NULL);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2939,7 +3080,7 @@ Paramètres :
 
 Valeur en retour :
 
-* valeur entière de l'option
+* valeur de la propriété sous forme d'entier
 
 Exemple en C :
 
@@ -2947,6 +3088,55 @@ Exemple en C :
 ----------------------------------------
 int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hashtable_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne une valeur pour une propriété d'une hashtable sous forme de chaîne.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
+                                          void *property);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable' : pointeur vers la hashtable
+* 'property' : nom de la propriété :
+** 'type_keys' : type pour les clés :
+*** 'integer' : entier
+*** 'string' : chaîne
+*** 'pointer' : pointeur
+*** 'buffer' : buffer
+*** 'time' : heure
+** 'type_values': type pour les valeurs :
+*** 'integer' : entier
+*** 'string' : chaîne
+*** 'pointer' : pointeur
+*** 'buffer' : buffer
+*** 'time' : heure
+
+Valeur en retour :
+
+* valeur de la propriété sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+const char *type_keys = weechat_hashtable_get_string (hashtable, "type_keys");
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2991,6 +3181,9 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 */
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3017,6 +3210,9 @@ Exemple en C :
 weechat_hashtable_remove (hashtable, "ma_cle");
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3042,6 +3238,9 @@ Exemple en C :
 weechat_hashtable_remove_all (hashtable);
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3066,6 +3265,9 @@ Exemple en C :
 ----------------------------------------
 weechat_hashtable_free (hashtable);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 [[configuration_files]]
 Fichiers de configuration
@@ -3708,6 +3910,9 @@ else
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_config_search_with_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3755,6 +3960,9 @@ else
     /* option non trouvée */
 }
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_config_string_to_boolean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4133,6 +4341,9 @@ Exemple en C :
 ----------------------------------------
 char *description = weechat_config_option_get_pointer (option, "description");
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_config_option_is_null
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4917,6 +5128,8 @@ Exemple en C :
 weechat_config_section_free (section);
 ----------------------------------------
 
+Script (Python) :
+
 [source,python]
 ----------------------------------------
 # prototype
@@ -5408,6 +5621,9 @@ Exemple en C :
 weechat_printf_date (NULL, time (NULL) - 120, "Bonjour, il y a 2 minutes");
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_printf_tags
 ^^^^^^^^^^^^^^^^^^^
 
@@ -5435,6 +5651,9 @@ Exemple en C :
 weechat_printf_tags (NULL, "notify_message",
                      "Message avec une étiquette 'notify_message'");
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_printf_date_tags
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -6964,7 +7183,7 @@ weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
 weechat_hook_info
 ^^^^^^^^^^^^^^^^^
 
-Accroche une information.
+Accroche une information (le "callback" prend et retourne une chaîne).
 
 Prototype :
 
@@ -7029,6 +7248,84 @@ def my_info_cb(data, info_name, arguments):
 
 hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètres",
                          "my_info_cb", "")
+----------------------------------------
+
+weechat_hook_info_hashtable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Accroche une information (le "callback" prend et retourne une hashtable).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_info_hashtable (const char *info_name,
+                                            const char *description,
+                                            const char *args_description,
+                                            const char *output_description,
+                                            struct t_hashtable *(*callback)(void *data,
+                                                                            const char *info_name,
+                                                                            struct t_hashtable *hashtable),
+                                            void *callback_data);
+----------------------------------------
+
+Paramètres :
+
+* 'info_name' : nom de l'information
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+* 'description' : description
+* 'args_description' : description de la hashtable attendue
+  (optionnel, peut être NULL)
+* 'output_description' : description de la hashtable retournée par le "callback"
+  (optionnel, peut être NULL)
+* 'callback' : fonction appelée quand l'information est demandée, paramètres :
+** 'void *data' : pointeur
+** 'const char *info_name': nom de l'information
+** 'struct t_hashtable *hashtable' : hashtable, dépendant de l'information
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *
+my_info_hashtable_cb (void *data, const char *info_name, struct t_hashtable *hashtable)
+{
+    /* ... */
+    return pointer_vers_nouvelle_hashtable;
+}
+
+/* ajoute l'information "mon_info_hashtable" */
+struct t_hook *my_info_hook = weechat_hook_info_hashtable ("mon_info_hashtable",
+                                                           "Une information",
+                                                           "Info sur la hashtable en entrée",
+                                                           "Info sur la hashtable en sortie",
+                                                           &my_info_hashtable_cb, NULL);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+hook = weechat.hook_info_hashtable(info_name, description, args_description,
+                                   output_description, callback, callback_data)
+
+# exemple
+def my_info_hashtable_cb(data, info_name, hashtable):
+    return { "test_cle": "test_valeur" }
+
+hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
+                                   "Info sur la hashtable en entrée",
+                                   "Info sur la hashtable en sortie",
+                                   "my_info_hashtable_cb", "")
 ----------------------------------------
 
 weechat_hook_infolist
@@ -7914,6 +8211,9 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
 
 weechat_buffer_set_pointer (mon_tampon, "close_callback", &my_close_cb);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_buffer_string_replace_local_var
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -9039,6 +9339,9 @@ else
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_network_connect_to
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -9089,6 +9392,9 @@ else
 }
 ----------------------------------------
 
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[infos]]
 Infos
 ~~~~~
@@ -9098,7 +9404,7 @@ Fonctions pour obtenir des informations.
 weechat_info_get
 ^^^^^^^^^^^^^^^^
 
-Retourne une information de WeeChat ou d'une extension.
+Retourne une information, sous forme de chaîne, de WeeChat ou d'une extension.
 
 Prototype :
 
@@ -9140,6 +9446,75 @@ value = weechat.info_get(info_name, arguments)
 weechat.prnt("", "La version de WeeChat est : %s (compilée le %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
 weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weechat_dir", ""))
+----------------------------------------
+
+weechat_info_get_hashtable
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne une information, sous forme de hashtable, de WeeChat ou d'une extension.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
+                                                struct t_hashtable *hashtable);
+----------------------------------------
+
+Paramètres :
+
+* 'info_name' : nom de l'information à lire :
+include::autogen/plugin_api/infos_hashtable.txt[]
+* 'hashtable' : hashtable avec les paramètres (dépendant de l'information
+  demandée) (optionnel, NULL si aucun paramètre n'est nécessaire)
+
+Valeur de retour :
+
+* hashtable avec l'information demandée, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable_in, *hashtable_out;
+
+hashtable_in = weechat_hashtable_new (8,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      NULL,
+                                      NULL);
+if (hashtable_in)
+{
+    weechat_hashtable_set (hashtable_in, "message",
+                           ":nick!user@host PRIVMSG #weechat :message ici");
+    hashtable_out = weechat_info_get_hashtable ("irc_parse_message",
+                                                hashtable_in);
+    /*
+     * maintenant hashtable_out a les clés/valeurs suivantes :
+     *   "nick"     : "nick"
+     *   "host"     : "nick!user@host"
+     *   "command"  : "PRIVMSG"
+     *   "channel"  : "#weechat"
+     *   "arguments": "#weechat :message ici"
+     */
+    weechat_hashtable_free (hashtable_in);
+    weechat_hashtable_free (hashtable_out);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+dict = weechat.info_get_hashtable(info_name, dict_in)
+
+# example
+dict_in = { "message": ":nick!user@host PRIVMSG #weechat :message ici" }
+weechat.prnt("", "message analysé: %s"
+             % weechat.info_get_hashtable("irc_parse_message", dict_in))
 ----------------------------------------
 
 [[infolists]]
@@ -9403,6 +9778,9 @@ struct t_infolist_var *var = weechat_infolist_new_var_buffer (item,
                                                               buffer,
                                                               sizeof (buffer));
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_infolist_new_var_time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -9833,6 +10211,9 @@ void *pointer = weechat_infolist_buffer (infolist, "mon_buffer", &size);
 weechat_printf (NULL, "buffer = 0x%lx, taille = %d",
                 pointer, size);
 ----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_infolist_time
 ^^^^^^^^^^^^^^^^^^^^^

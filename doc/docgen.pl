@@ -93,6 +93,9 @@ my @ignore_options = ("aspell\\.dict\\..*",
 # infos to ignore
 my @ignore_infos_plugins = ();
 
+# infos (hashtable) to ignore
+my @ignore_infos_hashtable_plugins = ();
+
 # infolists to ignore
 my @ignore_infolists_plugins = ();
 
@@ -204,7 +207,7 @@ sub get_infos
         my $plugin = weechat::infolist_string($infolist, "plugin_name");
         $plugin = "weechat" if ($plugin eq "");
         
-        # check if infolist is ignored or not
+        # check if info is ignored or not
         my $ignore = 0;
         foreach my $mask (@ignore_infos_plugins)
         {
@@ -220,6 +223,38 @@ sub get_infos
     weechat::infolist_free($infolist);
     
     return %infos;
+}
+
+# get list of infos (hashtable) hooked by plugins in a hash with 3 indexes: plugin, name, xxx
+sub get_infos_hashtable
+{
+    my %infos_hashtable;
+    
+    # get infos hooked
+    my $infolist = weechat::infolist_get("hook", "", "info_hashtable");
+    while (weechat::infolist_next($infolist))
+    {
+        my $info_name = weechat::infolist_string($infolist, "info_name");
+        my $plugin = weechat::infolist_string($infolist, "plugin_name");
+        $plugin = "weechat" if ($plugin eq "");
+        
+        # check if info_hashtable is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_infos_hashtable_plugins)
+        {
+            $ignore = 1 if ($plugin =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            $infos_hashtable{$plugin}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+            $infos_hashtable{$plugin}{$info_name}{"args_description"} = weechat::infolist_string($infolist, "args_description");
+            $infos_hashtable{$plugin}{$info_name}{"output_description"} = weechat::infolist_string($infolist, "output_description");
+        }
+    }
+    weechat::infolist_free($infolist);
+    
+    return %infos_hashtable;
 }
 
 # get list of infolists hooked by plugins in a hash with 3 indexes: plugin, name, xxx
@@ -313,6 +348,7 @@ sub docgen
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
     my %plugin_infos = get_infos();
+    my %plugin_infos_hashtable = get_infos_hashtable();
     my %plugin_infolists = get_infolists();
     my %plugin_completions = get_completions();
     
@@ -335,6 +371,8 @@ sub docgen
         my $num_files_options_updated = 0;
         my $num_files_infos = 0;
         my $num_files_infos_updated = 0;
+        my $num_files_infos_hashtable = 0;
+        my $num_files_infos_hashtable_updated = 0;
         my $num_files_infolists = 0;
         my $num_files_infolists_updated = 0;
         my $num_files_completions = 0;
@@ -529,6 +567,55 @@ sub docgen
                 weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
             }
             
+            # write infos (hashtable) hooked
+            $filename = $dir."plugin_api/infos_hashtable.txt";
+            if (open(FILE, ">".$filename.".tmp"))
+            {
+                print FILE "[width=\"100%\",cols=\"^1,^2,6,6,6\",options=\"header\"]\n";
+                print FILE "|========================================\n";
+                print FILE "| ".weechat_gettext("Plugin")." | ".weechat_gettext("Name")
+                    ." | ".weechat_gettext("Description")." | ".weechat_gettext("Hashtable (input)")
+                    ." | ".weechat_gettext("Hashtable (output)")."\n\n";
+                foreach my $plugin (sort keys %plugin_infos_hashtable)
+                {
+                    foreach my $info (sort keys %{$plugin_infos_hashtable{$plugin}})
+                    {
+                        my $description = $plugin_infos_hashtable{$plugin}{$info}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        my $args_description = $plugin_infos_hashtable{$plugin}{$info}{"args_description"};
+                        $args_description = $d->get($args_description) if ($args_description ne "");
+                        $args_description = "-" if ($args_description eq "");
+                        my $output_description = $plugin_infos_hashtable{$plugin}{$info}{"output_description"};
+                        $output_description = $d->get($output_description) if ($output_description ne "");
+                        $output_description = "-" if ($output_description eq "");
+                        
+                        print FILE "| ".escape_table($plugin)." | ".escape_table($info)
+                            ." | ".escape_table($description)." | ".escape_table($args_description)
+                            ." | ".escape_table($output_description)."\n\n";
+                    }
+                }
+                print FILE "|========================================\n";
+                #weechat::print("", "docgen: file ok: '$filename'");
+                my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                if ($rc != 0)
+                {
+                    system("mv -f ".$filename.".tmp ".$filename);
+                    $num_files_updated++;
+                    $num_files_infos_hashtable_updated++;
+                }
+                else
+                {
+                    system("rm ".$filename.".tmp");
+                }
+                $num_files++;
+                $num_files_infos_hashtable++;
+                close(FILE);
+            }
+            else
+            {
+                weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+            }
+            
             # write infolists hooked
             $filename = $dir."plugin_api/infolists.txt";
             if (open(FILE, ">".$filename.".tmp"))
@@ -624,20 +711,24 @@ sub docgen
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
         my $total_files = $num_files_commands + $num_files_options
-            + $num_files_infos + $num_files_infolists + $num_files_completions;
+            + $num_files_infos + $num_files_infos_hashtable
+            + $num_files_infolists + $num_files_completions;
         my $total_files_updated = $num_files_commands_updated
             + $num_files_options_updated + $num_files_infos_updated
-            + $num_files_infolists_updated + $num_files_completions_updated;
+            + $num_files_infos_hashtable_updated + $num_files_infolists_updated
+            + $num_files_completions_updated;
         weechat::print("", "docgen: ".$locale.": ".$total_files." files ("
                        .$num_files_commands." cmd, "
                        .$num_files_options." opt, "
                        .$num_files_infos." infos, "
+                       .$num_files_infos." infos (hashtable), "
                        .$num_files_infolists." infolists, "
                        .$num_files_completions." complt) -- "
                        .$total_files_updated." updated ("
                        .$num_files_commands_updated." cmd, "
                        .$num_files_options_updated." opt, "
                        .$num_files_infos_updated." infos, "
+                       .$num_files_infos_hashtable_updated." infos (hashtable), "
                        .$num_files_infolists_updated." infolists, "
                        .$num_files_completions_updated." complt)");
     }

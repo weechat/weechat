@@ -156,6 +156,11 @@
             Tcl_SetIntObj (objp, __int);          \
         return TCL_OK;                            \
     }
+#define TCL_RETURN_OBJ(__obj)                     \
+    {                                             \
+        Tcl_SetObjResult (interp, __obj);         \
+        return TCL_OK;                            \
+    }
 
 
 /*
@@ -1229,7 +1234,8 @@ weechat_tcl_api_config_reload_cb (void *data,
                                   struct t_config_file *config_file)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1239,12 +1245,11 @@ weechat_tcl_api_config_reload_cb (void *data,
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (config_file);
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       "ss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
@@ -1315,7 +1320,8 @@ weechat_tcl_api_config_section_read_cb (void *data,
                                         const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[6], empty_arg[1] = { '\0' };
+    void *tcl_argv[5];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1327,12 +1333,11 @@ weechat_tcl_api_config_section_read_cb (void *data,
         tcl_argv[2] = script_ptr2str (section);
         tcl_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         tcl_argv[4] = (value) ? (char *)value : empty_arg;
-        tcl_argv[5] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       "sssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1362,7 +1367,8 @@ weechat_tcl_api_config_section_write_cb (void *data,
                                           const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1372,12 +1378,11 @@ weechat_tcl_api_config_section_write_cb (void *data,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (config_file);
         tcl_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
@@ -1406,7 +1411,8 @@ weechat_tcl_api_config_section_write_default_cb (void *data,
                                                   const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1416,12 +1422,11 @@ weechat_tcl_api_config_section_write_default_cb (void *data,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (config_file);
         tcl_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
@@ -1452,7 +1457,8 @@ weechat_tcl_api_config_section_create_option_cb (void *data,
                                                   const char *value)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[6], empty_arg[1] = { '\0' };
+    void *tcl_argv[5];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1464,12 +1470,11 @@ weechat_tcl_api_config_section_create_option_cb (void *data,
         tcl_argv[2] = script_ptr2str (section);
         tcl_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         tcl_argv[4] = (value) ? (char *)value : empty_arg;
-        tcl_argv[5] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1501,7 +1506,8 @@ weechat_tcl_api_config_section_delete_option_cb (void *data,
                                                  struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], empty_arg[1] = { '\0' };
+    void *tcl_argv[4];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1512,12 +1518,11 @@ weechat_tcl_api_config_section_delete_option_cb (void *data,
         tcl_argv[1] = script_ptr2str (config_file);
         tcl_argv[2] = script_ptr2str (section);
         tcl_argv[3] = script_ptr2str (option);
-        tcl_argv[4] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
@@ -1663,7 +1668,8 @@ weechat_tcl_api_config_option_check_value_cb (void *data,
                                                const char *value)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1673,12 +1679,11 @@ weechat_tcl_api_config_option_check_value_cb (void *data,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (option);
         tcl_argv[2] = (value) ? (char *)value : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = 0;
@@ -1705,7 +1710,8 @@ weechat_tcl_api_config_option_change_cb (void *data,
                                           struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -1714,12 +1720,11 @@ weechat_tcl_api_config_option_change_cb (void *data,
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (option);
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ss", tcl_argv);
         
         if (tcl_argv[1])
             free (tcl_argv[1]);
@@ -1738,7 +1743,8 @@ weechat_tcl_api_config_option_delete_cb (void *data,
                                           struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -1747,12 +1753,11 @@ weechat_tcl_api_config_option_delete_cb (void *data,
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (option);
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ss", tcl_argv);
         
         if (tcl_argv[1])
             free (tcl_argv[1]);
@@ -3141,7 +3146,8 @@ weechat_tcl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
                                  int argc, char **argv, char **argv_eol)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     /* make C compiler happy */
@@ -3154,12 +3160,11 @@ weechat_tcl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (buffer);
         tcl_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3236,7 +3241,8 @@ weechat_tcl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
                                      const char *command)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3246,12 +3252,11 @@ weechat_tcl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (buffer);
         tcl_argv[2] = (command) ? (char *)command : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3318,7 +3323,8 @@ int
 weechat_tcl_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], str_remaining_calls[32], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char str_remaining_calls[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3330,12 +3336,11 @@ weechat_tcl_api_hook_timer_cb (void *data, int remaining_calls)
         
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = str_remaining_calls;
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3407,7 +3412,8 @@ int
 weechat_tcl_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], str_fd[32], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char str_fd[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3418,12 +3424,11 @@ weechat_tcl_api_hook_fd_cb (void *data, int fd)
         
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = str_fd;
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3498,7 +3503,8 @@ weechat_tcl_api_hook_process_cb (void *data,
                                  const char *out, const char *err)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[6], str_rc[32], empty_arg[1] = { '\0' };
+    void *tcl_argv[5];
+    char str_rc[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3512,12 +3518,11 @@ weechat_tcl_api_hook_process_cb (void *data,
         tcl_argv[2] = str_rc;
         tcl_argv[3] = (out) ? (char *)out : empty_arg;
         tcl_argv[4] = (err) ? (char *)err : empty_arg;
-        tcl_argv[5] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3590,7 +3595,8 @@ weechat_tcl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
                                  const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[6], str_status[32], str_gnutls_rc[32];
+    void *tcl_argv[5];
+    char str_status[32], str_gnutls_rc[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
     
@@ -3606,12 +3612,11 @@ weechat_tcl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
         tcl_argv[2] = str_gnutls_rc;
         tcl_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
         tcl_argv[4] = (error) ? (char *)error : empty_arg;
-        tcl_argv[5] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3698,7 +3703,8 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[9], empty_arg[1] = { '\0' };
+    void *tcl_argv[8];
+    char empty_arg[1] = { '\0' };
     static char timebuffer[64];
     int *rc, ret;
     
@@ -3721,12 +3727,11 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         tcl_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
         tcl_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         tcl_argv[7] = (message) ? (char *)message : empty_arg;
-        tcl_argv[8] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ssssssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3811,7 +3816,8 @@ weechat_tcl_api_hook_signal_cb (void *data, const char *signal, const char *type
                                  void *signal_data)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     static char value_str[64];
     int *rc, ret, free_needed;
     
@@ -3839,12 +3845,11 @@ weechat_tcl_api_hook_signal_cb (void *data, const char *signal, const char *type
         }
         else
             tcl_argv[2] = empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3970,7 +3975,8 @@ int
 weechat_tcl_api_hook_config_cb (void *data, const char *option, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3980,12 +3986,11 @@ weechat_tcl_api_hook_config_cb (void *data, const char *option, const char *valu
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = (option) ? (char *)option : empty_arg;
         tcl_argv[2] = (value) ? (char *)value : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4052,7 +4057,8 @@ weechat_tcl_api_hook_completion_cb (void *data, const char *completion_item,
                                      struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], empty_arg[1] = { '\0' };
+    void *tcl_argv[4];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4063,12 +4069,11 @@ weechat_tcl_api_hook_completion_cb (void *data, const char *completion_item,
         tcl_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
         tcl_argv[2] = script_ptr2str (buffer);
         tcl_argv[3] = script_ptr2str (completion);
-        tcl_argv[4] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4185,7 +4190,8 @@ weechat_tcl_api_hook_modifier_cb (void *data, const char *modifier,
                                    const char *modifier_data, const char *string)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], empty_arg[1] = { '\0' };
+    void *tcl_argv[4];
+    char empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
@@ -4195,12 +4201,11 @@ weechat_tcl_api_hook_modifier_cb (void *data, const char *modifier,
         tcl_argv[1] = (modifier) ? (char *)modifier : empty_arg;
         tcl_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
         tcl_argv[3] = (string) ? (char *)string : empty_arg;
-        tcl_argv[4] = NULL;
         
         return (char *)weechat_tcl_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_STRING,
                                          script_callback->function,
-                                         tcl_argv);
+                                         "ssss", tcl_argv);
     }
     
     return NULL;
@@ -4292,7 +4297,8 @@ weechat_tcl_api_hook_info_cb (void *data, const char *info_name,
                                const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
@@ -4301,12 +4307,11 @@ weechat_tcl_api_hook_info_cb (void *data, const char *info_name,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         tcl_argv[2] = (arguments) ? (char *)arguments : empty_arg;
-        tcl_argv[3] = NULL;
         
         return (const char *)weechat_tcl_exec (script_callback->script,
                                                WEECHAT_SCRIPT_EXEC_STRING,
                                                script_callback->function,
-                                               tcl_argv);
+                                               "sss", tcl_argv);
     }
     
     return NULL;
@@ -4358,6 +4363,83 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hook_info_hashtable_cb: callback for info_hashtable hooked
+ */
+
+struct t_hashtable *
+weechat_tcl_api_hook_info_hashtable_cb (void *data, const char *info_name,
+                                        struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        tcl_argv[1] = (info_name) ? (char *)info_name : empty_arg;
+        tcl_argv[2] = hashtable;
+        
+        return (struct t_hashtable *)weechat_tcl_exec (script_callback->script,
+                                                       WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                       script_callback->function,
+                                                       "ssh", tcl_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_tcl_api_hook_info_hashtable: hook an info_hashtable
+ */
+
+static int
+weechat_tcl_api_hook_info_hashtable (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result, *info_name, *description, *args_description;
+    char *output_description, *function, *data;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 7)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
+        TCL_RETURN_EMPTY;
+    }
+    
+    info_name = Tcl_GetStringFromObj (objv[1], &i);
+    description = Tcl_GetStringFromObj (objv[2], &i);
+    args_description = Tcl_GetStringFromObj (objv[3], &i);
+    output_description = Tcl_GetStringFromObj (objv[4], &i);
+    function = Tcl_GetStringFromObj (objv[5], &i);
+    data = Tcl_GetStringFromObj (objv[6], &i);
+    
+    result = script_ptr2str (script_api_hook_info_hashtable (weechat_tcl_plugin,
+                                                             tcl_current_script,
+                                                             info_name,
+                                                             description,
+                                                             args_description,
+                                                             output_description,
+                                                             &weechat_tcl_api_hook_info_hashtable_cb,
+                                                             function,
+                                                             data));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_hook_infolist_cb: callback for infolist hooked
  */
 
@@ -4366,7 +4448,8 @@ weechat_tcl_api_hook_infolist_cb (void *data, const char *infolist_name,
                                    void *pointer, const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], empty_arg[1] = { '\0' };
+    void *tcl_argv[4];
+    char empty_arg[1] = { '\0' };
     struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
@@ -4377,12 +4460,11 @@ weechat_tcl_api_hook_infolist_cb (void *data, const char *infolist_name,
         tcl_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
         tcl_argv[2] = script_ptr2str (pointer);
         tcl_argv[3] = (arguments) ? (char *)arguments : empty_arg;
-        tcl_argv[4] = NULL;
         
         result = (struct t_infolist *)weechat_tcl_exec (script_callback->script,
                                                         WEECHAT_SCRIPT_EXEC_STRING,
                                                         script_callback->function,
-                                                        tcl_argv);
+                                                        "ssss", tcl_argv);
         
         if (tcl_argv[2])
             free (tcl_argv[2]);
@@ -4509,7 +4591,8 @@ weechat_tcl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
                                        const char *input_data)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' };
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4519,12 +4602,11 @@ weechat_tcl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (buffer);
         tcl_argv[2] = (input_data) ? (char *)input_data : empty_arg;
-        tcl_argv[3] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "sss", tcl_argv);
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -4549,7 +4631,8 @@ int
 weechat_tcl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[3], empty_arg[1] = { '\0' };
+    void *tcl_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4558,12 +4641,11 @@ weechat_tcl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     {
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (buffer);
-        tcl_argv[2] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       tcl_argv);
+                                       "ss", tcl_argv);
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -5518,7 +5600,8 @@ weechat_tcl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[4], empty_arg[1] = { '\0' }, *ret;
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' }, *ret;
     
     script_callback = (struct t_script_callback *)data;
 
@@ -5527,12 +5610,11 @@ weechat_tcl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
         tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         tcl_argv[1] = script_ptr2str (item);
         tcl_argv[2] = script_ptr2str (window);
-        tcl_argv[3] = NULL;
         
         ret = (char *)weechat_tcl_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_STRING,
                                         script_callback->function,
-                                        tcl_argv);
+                                        "sss", tcl_argv);
         
         if (tcl_argv[1])
             free (tcl_argv[1]);
@@ -5883,7 +5965,7 @@ weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
- * weechat_tcl_api_info_get: get info about WeeChat
+ * weechat_tcl_api_info_get: get info (as string)
  */
 
 static int
@@ -5913,6 +5995,48 @@ weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
                                Tcl_GetStringFromObj (objv[2], &i));
     
     TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_info_get_hashtable: get info (as hashtable)
+ */
+
+static int
+weechat_tcl_api_info_get_hashtable (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp, *result_dict;
+    struct t_hashtable *hashtable, *result_hashtable;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "info_get_hashtable");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "info_get_hashtable");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    result_hashtable = weechat_info_get_hashtable (Tcl_GetStringFromObj (objv[1], &i),
+                                                   hashtable);
+    result_dict = weechat_tcl_hashtable_to_dict (interp, result_hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    if (result_hashtable)
+        weechat_hashtable_free (result_hashtable);
+    
+    TCL_RETURN_OBJ(result_dict);
 }
 
 /*
@@ -6529,7 +6653,8 @@ weechat_tcl_api_upgrade_read_cb (void *data,
                                  struct t_infolist *infolist)
 {
     struct t_script_callback *script_callback;
-    char *tcl_argv[5], empty_arg[1] = { '\0' }, str_object_id[32];
+    void *tcl_argv[4];
+    char empty_arg[1] = { '\0' }, str_object_id[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -6542,12 +6667,11 @@ weechat_tcl_api_upgrade_read_cb (void *data,
         tcl_argv[1] = script_ptr2str (upgrade_file);
         tcl_argv[2] = str_object_id;
         tcl_argv[3] = script_ptr2str (infolist);
-        tcl_argv[4] = NULL;
         
         rc = (int *) weechat_tcl_exec (script_callback->script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        script_callback->function,
-                                        tcl_argv);
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       "ssss", tcl_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -6917,6 +7041,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_hook_modifier_exec, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_info",
                           weechat_tcl_api_hook_info, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hook_info_hashtable",
+                          weechat_tcl_api_hook_info_hashtable, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_infolist",
                           weechat_tcl_api_hook_infolist, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::unhook",
@@ -6995,6 +7121,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::info_get",
                           weechat_tcl_api_info_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::info_get_hashtable",
+                          weechat_tcl_api_info_get_hashtable, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_new",
                           weechat_tcl_api_infolist_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_new_item",

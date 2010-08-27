@@ -35,8 +35,11 @@ extern struct t_plugin_script *ruby_current_script;
 extern struct t_plugin_script *ruby_registered_script;
 extern const char *ruby_current_script_filename;
 
-extern void *weechat_ruby_exec (struct t_plugin_script *script,
-                                int ret_type, const char *function,
-                                char **argv);
+extern VALUE weechat_ruby_hashtable_to_hash (struct t_hashtable *hashtable);
+extern struct t_hashtable *weechat_ruby_hash_to_hashtable (VALUE dict,
+                                                           int hashtable_size);
+void *weechat_ruby_exec (struct t_plugin_script *script,
+                         int ret_type, const char *function,
+                         const char *format, void **argv);
 
 #endif /* __WEECHAT_RUBY_H */

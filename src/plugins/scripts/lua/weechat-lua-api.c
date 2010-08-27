@@ -1218,7 +1218,8 @@ weechat_lua_api_config_reload_cb (void *data,
                                   struct t_config_file *config_file)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1232,7 +1233,7 @@ weechat_lua_api_config_reload_cb (void *data,
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
@@ -1307,7 +1308,8 @@ weechat_lua_api_config_read_cb (void *data,
                                 const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[6], empty_arg[1] = { '\0' };
+    void *lua_argv[5];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1319,12 +1321,11 @@ weechat_lua_api_config_read_cb (void *data,
         lua_argv[2] = script_ptr2str (section);
         lua_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         lua_argv[4] = (value) ? (char *)value : empty_arg;
-        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1354,7 +1355,8 @@ weechat_lua_api_config_section_write_cb (void *data,
                                          const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1364,12 +1366,11 @@ weechat_lua_api_config_section_write_cb (void *data,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (config_file);
         lua_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
@@ -1398,7 +1399,8 @@ weechat_lua_api_config_section_write_default_cb (void *data,
                                                  const char *section_name)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1408,12 +1410,11 @@ weechat_lua_api_config_section_write_default_cb (void *data,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (config_file);
         lua_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
@@ -1443,7 +1444,8 @@ weechat_lua_api_config_section_create_option_cb (void *data,
                                                  const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[6], empty_arg[1] = { '\0' };
+    void *lua_argv[5];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1455,12 +1457,11 @@ weechat_lua_api_config_section_create_option_cb (void *data,
         lua_argv[2] = script_ptr2str (section);
         lua_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         lua_argv[4] = (value) ? (char *)value : empty_arg;
-        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1491,7 +1492,8 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
                                                  struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    void *lua_argv[4];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1502,12 +1504,11 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
         lua_argv[1] = script_ptr2str (config_file);
         lua_argv[2] = script_ptr2str (section);
         lua_argv[3] = script_ptr2str (option);
-        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
@@ -1667,7 +1668,8 @@ weechat_lua_api_config_option_check_value_cb (void *data,
                                               const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -1677,12 +1679,11 @@ weechat_lua_api_config_option_check_value_cb (void *data,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (option);
         lua_argv[2] = (value) ? (char *)value : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = 0;
@@ -1709,7 +1710,8 @@ weechat_lua_api_config_option_change_cb (void *data,
                                          struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -1718,12 +1720,11 @@ weechat_lua_api_config_option_change_cb (void *data,
     {
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (option);
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (lua_argv[1])
             free (lua_argv[1]);
@@ -1742,7 +1743,8 @@ weechat_lua_api_config_option_delete_cb (void *data,
                                          struct t_config_option *option)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
@@ -1751,12 +1753,11 @@ weechat_lua_api_config_option_delete_cb (void *data,
     {
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (option);
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (lua_argv[1])
             free (lua_argv[1]);
@@ -3276,7 +3277,8 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
                                  int argc, char **argv, char **argv_eol)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
 
     /* make C compiler happy */
@@ -3289,12 +3291,11 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (buffer);
         lua_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3380,7 +3381,8 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
                                      const char *command)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3390,12 +3392,11 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (buffer);
         lua_argv[2] = (command) ? (char *)command : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3467,7 +3468,8 @@ int
 weechat_lua_api_hook_timer_cb (void *data, int remaining_calls)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], str_remaining_calls[32], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char str_remaining_calls[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3479,12 +3481,11 @@ weechat_lua_api_hook_timer_cb (void *data, int remaining_calls)
         
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = str_remaining_calls;
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3560,7 +3561,8 @@ int
 weechat_lua_api_hook_fd_cb (void *data, int fd)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], str_fd[32], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char str_fd[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3571,12 +3573,11 @@ weechat_lua_api_hook_fd_cb (void *data, int fd)
         
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = str_fd;
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3657,7 +3658,8 @@ weechat_lua_api_hook_process_cb (void *data,
                                  const char *out, const char *err)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[6], str_rc[32], empty_arg[1] = { '\0' };
+    void *lua_argv[5];
+    char str_rc[32], empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -3671,12 +3673,11 @@ weechat_lua_api_hook_process_cb (void *data,
         lua_argv[2] = str_rc;
         lua_argv[3] = (out) ? (char *)out : empty_arg;
         lua_argv[4] = (err) ? (char *)err : empty_arg;
-        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3749,7 +3750,8 @@ weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
                                  const char *error, const char *ip_address)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[6], str_status[32], str_gnutls_rc[32];
+    void *lua_argv[5];
+    char str_status[32], str_gnutls_rc[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
     
@@ -3765,12 +3767,11 @@ weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
         lua_argv[2] = str_gnutls_rc;
         lua_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
         lua_argv[4] = (error) ? (char *)error : empty_arg;
-        lua_argv[5] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3862,7 +3863,8 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[9], empty_arg[1] = { '\0' };
+    void *lua_argv[8];
+    char empty_arg[1] = { '\0' };
     static char timebuffer[64];
     int *rc, ret;
     
@@ -3885,12 +3887,11 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         lua_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
         lua_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         lua_argv[7] = (message) ? (char *)message : empty_arg;
-        lua_argv[8] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ssssssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3978,7 +3979,8 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
                                 const char *type_data, void *signal_data)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     static char value_str[64];
     int *rc, ret, free_needed;
     
@@ -4006,12 +4008,11 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
         }
         else
             lua_argv[2] = empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4141,7 +4142,8 @@ weechat_lua_api_hook_config_cb (void *data, const char *option,
                                 const char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4151,12 +4153,11 @@ weechat_lua_api_hook_config_cb (void *data, const char *option,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = (option) ? (char *)option : empty_arg;
         lua_argv[2] = (value) ? (char *)value : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4229,7 +4230,8 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
                                     struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    void *lua_argv[4];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4240,12 +4242,11 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
         lua_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
         lua_argv[2] = script_ptr2str (buffer);
         lua_argv[3] = script_ptr2str (completion);
-        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4369,7 +4370,8 @@ weechat_lua_api_hook_modifier_cb (void *data, const char *modifier,
                                   const char *string)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    void *lua_argv[4];
+    char empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
@@ -4379,12 +4381,11 @@ weechat_lua_api_hook_modifier_cb (void *data, const char *modifier,
         lua_argv[1] = (modifier) ? (char *)modifier : empty_arg;
         lua_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
         lua_argv[3] = (string) ? (char *)string : empty_arg;
-        lua_argv[4] = NULL;
         
         return (char *)weechat_lua_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_STRING,
                                          script_callback->function,
-                                         lua_argv);
+                                         "ssss", lua_argv);
     }
     
     return NULL;
@@ -4486,7 +4487,8 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
                               const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     
     script_callback = (struct t_script_callback *)data;
 
@@ -4495,12 +4497,11 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         lua_argv[2] = (arguments) ? (char *)arguments : empty_arg;
-        lua_argv[3] = NULL;
         
         return (const char *)weechat_lua_exec (script_callback->script,
                                                WEECHAT_SCRIPT_EXEC_STRING,
                                                script_callback->function,
-                                               lua_argv);
+                                               "sss", lua_argv);
     }
     
     return NULL;
@@ -4559,6 +4560,91 @@ weechat_lua_api_hook_info (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hook_info_hashtable_cb: callback for info_hashtable hooked
+ */
+
+struct t_hashtable *
+weechat_lua_api_hook_info_hashtable_cb (void *data, const char *info_name,
+                                        struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (info_name) ? (char *)info_name : empty_arg;
+        lua_argv[2] = hashtable;
+        
+        return (struct t_hashtable *)weechat_lua_exec (script_callback->script,
+                                                       WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                       script_callback->function,
+                                                       "ssh", lua_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_lua_api_hook_info_hashtable: hook an info_hashtable
+ */
+
+static int
+weechat_lua_api_hook_info_hashtable (lua_State *L)
+{
+    const char *info_name, *description, *args_description;
+    const char *output_description, *function, *data;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = NULL;
+    description = NULL;
+    args_description = NULL;
+    output_description = NULL;
+    function = NULL;
+    data = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 6)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = lua_tostring (lua_current_interpreter, -6);
+    description = lua_tostring (lua_current_interpreter, -5);
+    args_description = lua_tostring (lua_current_interpreter, -4);
+    output_description = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_info_hashtable (weechat_lua_plugin,
+                                                             lua_current_script,
+                                                             info_name,
+                                                             description,
+                                                             args_description,
+                                                             output_description,
+                                                             &weechat_lua_api_hook_info_hashtable_cb,
+                                                             function,
+                                                             data));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_hook_infolist_cb: callback for infolist hooked
  */
 
@@ -4567,7 +4653,8 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
                                   void *pointer, const char *arguments)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' };
+    void *lua_argv[4];
+    char empty_arg[1] = { '\0' };
     struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
@@ -4578,12 +4665,11 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
         lua_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         lua_argv[2] = script_ptr2str (pointer);
         lua_argv[3] = (arguments) ? (char *)arguments : empty_arg;
-        lua_argv[4] = NULL;
         
         result = (struct t_infolist *)weechat_lua_exec (script_callback->script,
                                                         WEECHAT_SCRIPT_EXEC_STRING,
                                                         script_callback->function,
-                                                        lua_argv);
+                                                        "ssss", lua_argv);
         
         if (lua_argv[2])
             free (lua_argv[2]);
@@ -4718,7 +4804,8 @@ weechat_lua_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
                                       const char *input_data)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' };
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4728,12 +4815,11 @@ weechat_lua_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (buffer);
         lua_argv[2] = (input_data) ? (char *)input_data : empty_arg;
-        lua_argv[3] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "sss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -4759,7 +4845,8 @@ int
 weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[3], empty_arg[1] = { '\0' };
+    void *lua_argv[2];
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -4768,12 +4855,11 @@ weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     {
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (buffer);
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -5806,7 +5892,8 @@ weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4], empty_arg[1] = { '\0' }, *ret;
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' }, *ret;
     
     script_callback = (struct t_script_callback *)data;
 
@@ -5815,12 +5902,11 @@ weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (item);
         lua_argv[2] = script_ptr2str (window);
-        lua_argv[3] = NULL;
         
         ret = (char *)weechat_lua_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_STRING,
                                         script_callback->function,
-                                        lua_argv);
+                                        "sss", lua_argv);
         
         if (lua_argv[1])
             free (lua_argv[1]);
@@ -6226,7 +6312,7 @@ weechat_lua_api_command (lua_State *L)
 }
 
 /*
- * weechat_lua_api_info_get: get info about WeeChat
+ * weechat_lua_api_info_get: get info (as string)
  */
 
 static int
@@ -6261,6 +6347,53 @@ weechat_lua_api_info_get (lua_State *L)
     result = weechat_info_get (info_name, arguments);
     
     LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_info_get_hashtable: get info (as hashtable)
+ */
+
+static int
+weechat_lua_api_info_get_hashtable (lua_State *L)
+{
+    const char *info_name;
+    struct t_hashtable *table, *result_hashtable;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "info_get_hashtable");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = NULL;
+    table = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "info_get_hashtable");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = lua_tostring (lua_current_interpreter, -2);
+    table = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    result_hashtable = weechat_info_get_hashtable (info_name, table);
+    
+    weechat_lua_pushhashtable (lua_current_interpreter, result_hashtable);
+    
+    if (table)
+        weechat_hashtable_free (table);
+    if (result_hashtable)
+        weechat_hashtable_free (result_hashtable);
+    
+    return 1;
 }
 
 /*
@@ -6938,7 +7071,8 @@ weechat_lua_api_upgrade_read_cb (void *data,
                                  struct t_infolist *infolist)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5], empty_arg[1] = { '\0' }, str_object_id[32];
+    void *lua_argv[4];
+    char empty_arg[1] = { '\0' }, str_object_id[32];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
@@ -6951,12 +7085,11 @@ weechat_lua_api_upgrade_read_cb (void *data,
         lua_argv[1] = script_ptr2str (upgrade_file);
         lua_argv[2] = str_object_id;
         lua_argv[3] = script_ptr2str (infolist);
-        lua_argv[4] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       lua_argv);
+                                       "ssss", lua_argv);
         
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -7531,6 +7664,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_modifier", &weechat_lua_api_hook_modifier },
     { "hook_modifier_exec", &weechat_lua_api_hook_modifier_exec },
     { "hook_info", &weechat_lua_api_hook_info },
+    { "hook_info_hashtable", &weechat_lua_api_hook_info_hashtable },
     { "hook_infolist", &weechat_lua_api_hook_infolist },
     { "unhook", &weechat_lua_api_unhook },
     { "unhook_all", &weechat_lua_api_unhook_all },
@@ -7570,6 +7704,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "bar_remove", &weechat_lua_api_bar_remove },
     { "command", &weechat_lua_api_command },
     { "info_get", &weechat_lua_api_info_get },
+    { "info_get_hashtable", &weechat_lua_api_info_get_hashtable },
     { "infolist_new", &weechat_lua_api_infolist_new },
     { "infolist_new_item", &weechat_lua_api_infolist_new_item },
     { "infolist_new_var_integer", &weechat_lua_api_infolist_new_var_integer },

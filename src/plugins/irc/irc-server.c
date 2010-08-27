@@ -1215,6 +1215,9 @@ irc_server_parse_message (const char *message, char **nick, char **host,
     if (arguments)
         *arguments = NULL;
     
+    if (!message)
+        return;
+    
     /*
      * we will use this message as example:
      *   :FlashCode!n=FlashCod@host.com PRIVMSG #channel :hello!
@@ -1321,6 +1324,46 @@ irc_server_parse_message (const char *message, char **nick, char **host,
                 *command = strdup (pos);
         }
     }
+}
+
+/*
+ * irc_server_parse_message_to_hashtable: parse IRC message and return hashtable
+ *                                        with keys: nick, host, command,
+ *                                        channel, arguments
+ *                                        Note: hashtable has to be free()
+ *                                        after use
+ */
+
+struct t_hashtable *
+irc_server_parse_message_to_hashtable (const char *message)
+{
+    char *nick, *host, *command, *channel, *arguments;
+    char empty_str[1] = { '\0' };
+    struct t_hashtable *hashtable;
+    
+    irc_server_parse_message (message, &nick, &host, &command, &channel,
+                              &arguments);
+    
+    hashtable = weechat_hashtable_new (8,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    weechat_hashtable_set (hashtable, "nick",
+                           (nick) ? (void *)nick : (void *)empty_str);
+    weechat_hashtable_set (hashtable, "host",
+                           (host) ? (void *)host : (void *)empty_str);
+    weechat_hashtable_set (hashtable, "command",
+                           (command) ? (void *)command : (void *)empty_str);
+    weechat_hashtable_set (hashtable, "channel",
+                           (channel) ? (void *)channel : (void *)empty_str);
+    weechat_hashtable_set (hashtable, "arguments",
+                           (arguments) ? (void *)arguments : (void *)empty_str);
+    
+    return hashtable;
 }
 
 /*

@@ -28,6 +28,7 @@ struct t_gui_buffer;
 struct t_gui_line;
 struct t_gui_completion;
 struct t_weelist;
+struct t_hashtable;
 struct t_infolist;
 
 /* hook types */
@@ -46,6 +47,7 @@ enum t_hook_type
     HOOK_TYPE_COMPLETION,              /* custom completions                */
     HOOK_TYPE_MODIFIER,                /* string modifier                   */
     HOOK_TYPE_INFO,                    /* get some info as string           */
+    HOOK_TYPE_INFO_HASHTABLE,          /* get some info as hashtable        */
     HOOK_TYPE_INFOLIST,                /* get some info as infolist         */
     /* number of hook types */
     HOOK_NUM_TYPES,
@@ -78,6 +80,7 @@ enum t_hook_type
 #define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
 #define HOOK_MODIFIER(hook, var) (((struct t_hook_modifier *)hook->hook_data)->var)
 #define HOOK_INFO(hook, var) (((struct t_hook_info *)hook->hook_data)->var)
+#define HOOK_INFO_HASHTABLE(hook, var) (((struct t_hook_info_hashtable *)hook->hook_data)->var)
 #define HOOK_INFOLIST(hook, var) (((struct t_hook_infolist *)hook->hook_data)->var)
 
 struct t_hook
@@ -300,6 +303,21 @@ struct t_hook_info
     char *args_description;            /* description of arguments          */
 };
 
+/* hook info (hashtable) */
+
+typedef struct t_hashtable *(t_hook_callback_info_hashtable)(void *data,
+                                                             const char *info_name,
+                                                             struct t_hashtable *hashtable);
+
+struct t_hook_info_hashtable
+{
+    t_hook_callback_info_hashtable *callback; /* info_hashtable callback    */
+    char *info_name;                   /* name of info returned             */
+    char *description;                 /* description                       */
+    char *args_description;            /* description of arguments          */
+    char *output_description;          /* description of output (hashtable) */
+};
+
 /* hook infolist */
 
 typedef struct t_infolist *(t_hook_callback_infolist)(void *data,
@@ -425,6 +443,16 @@ extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
 extern const char *hook_info_get (struct t_weechat_plugin *plugin,
                                   const char *info_name,
                                   const char *arguments);
+extern struct t_hook *hook_info_hashtable (struct t_weechat_plugin *plugin,
+                                           const char *info_name,
+                                           const char *description,
+                                           const char *args_description,
+                                           const char *output_description,
+                                           t_hook_callback_info_hashtable *callback,
+                                           void *callback_data);
+extern struct t_hashtable *hook_info_get_hashtable (struct t_weechat_plugin *plugin,
+                                                    const char *info_name,
+                                                    struct t_hashtable *hashtable);
 extern struct t_hook *hook_infolist (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
                                      const char *description,

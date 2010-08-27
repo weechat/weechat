@@ -70,15 +70,87 @@ char *lua_action_remove_list = NULL;
 
 
 /*
- * weechat_lua_exec: execute a Lua script
+ * weechat_lua_hashtable_map_cb: callback called for each key/value in a
+ *                               hashtable
+ */
+
+void
+weechat_lua_hashtable_map_cb (void *data,
+                              struct t_hashtable *hashtable,
+                              const void *key,
+                              const void *value)
+{
+    lua_State *interpreter;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    interpreter = (lua_State *)data;
+    
+    lua_pushstring (interpreter, (char *)key);
+    lua_pushstring (interpreter, (char *)value);
+    lua_rawset (interpreter, -3);
+}
+
+/*
+ * weechat_lua_pushhashtable: put a WeeChat hashtable on lua stack, as lua table
+ */
+
+void
+weechat_lua_pushhashtable (lua_State *interpreter, struct t_hashtable *hashtable)
+{
+    lua_newtable (interpreter);
+    
+    weechat_hashtable_map (hashtable,
+                           &weechat_lua_hashtable_map_cb,
+                           interpreter);
+}
+
+/*
+ * weechat_lua_hash_to_hashtable: get WeeChat hashtable with lua hash (on stack)
+ *                                Hashtable returned has type string for
+ *                                both keys and values
+ *                                Note: hashtable has to be released after use
+ *                                with call to weechat_hashtable_free()
+ */
+
+struct t_hashtable *
+weechat_lua_tohashtable (lua_State *interpreter, int index, int hashtable_size)
+{
+    struct t_hashtable *hashtable;
+    
+    hashtable = weechat_hashtable_new (hashtable_size,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    lua_pushnil (interpreter);
+    while (lua_next (interpreter, index - 1) != 0)
+    {
+        weechat_hashtable_set (hashtable,
+                               (char *)lua_tostring (interpreter, -2),
+                               (char *)lua_tostring (interpreter, -1));
+        /* remove value from stack (keep key for next iteration) */
+        lua_pop (interpreter, 1);
+    }
+    
+    return hashtable;
+}
+
+/*
+ * weechat_lua_exec: execute a lua function
  */
 
 void *
-weechat_lua_exec (struct t_plugin_script *script,
-                  int ret_type, const char *function, char **argv)
+weechat_lua_exec (struct t_plugin_script *script, int ret_type,
+                  const char *function,
+                  const char *format, void **argv)
 {
     void *ret_value;
-    int argc, *ret_i;
+    int argc, i, *ret_i;
     struct t_plugin_script *old_lua_current_script;
     
     lua_current_interpreter = script->interpreter;
@@ -87,47 +159,24 @@ weechat_lua_exec (struct t_plugin_script *script,
 
     old_lua_current_script = lua_current_script;
     lua_current_script = script;
-    
+
     argc = 0;
-    if (argv && argv[0])
+    if (format && format[0])
     {
-        lua_pushstring (lua_current_interpreter, argv[0]);
-        argc = 1;
-        if (argv[1])
+        argc = strlen (format);
+        for (i = 0; i < argc; i++)
         {
-            argc = 2;
-            lua_pushstring (lua_current_interpreter, argv[1]);
-            if (argv[2])
+            switch (format[i])
             {
-                argc = 3;
-                lua_pushstring (lua_current_interpreter, argv[2]);
-                if (argv[3])
-                {
-                    argc = 4;
-                    lua_pushstring (lua_current_interpreter, argv[3]);
-                    if (argv[4])
-                    {
-                        argc = 5;
-                        lua_pushstring (lua_current_interpreter, argv[4]);
-                        if (argv[5])
-                        {
-                            argc = 6;
-                            lua_pushstring (lua_current_interpreter, argv[5]);
-                            if (argv[6])
-                            {
-                                argc = 7;
-                                lua_pushstring (lua_current_interpreter,
-                                                argv[6]);
-                                if (argv[7])
-                                {
-                                    argc = 8;
-                                    lua_pushstring (lua_current_interpreter,
-                                                    argv[7]);
-                                }
-                            }
-                        }
-                    }
-                }
+                case 's': /* string */
+                    lua_pushstring (lua_current_interpreter, (char *)argv[i]);
+                    break;
+                case 'i': /* integer */
+                    lua_pushnumber (lua_current_interpreter, *((int *)argv[i]));
+                    break;
+                case 'h': /* hash */
+                    weechat_lua_pushhashtable (lua_current_interpreter, (struct t_hashtable *)argv[i]);
+                    break;
             }
         }
     }
@@ -154,6 +203,11 @@ weechat_lua_exec (struct t_plugin_script *script,
             *ret_i = lua_tonumber (lua_current_interpreter, -1);
         ret_value = ret_i;
     }
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+    {
+        ret_value = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    }
     else
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, function);
@@ -165,6 +219,10 @@ weechat_lua_exec (struct t_plugin_script *script,
     
     return ret_value;
 }
+
+/*
+ * weechat_lua_load: load a Lua script
+ */
 
 int
 weechat_lua_load (const char *filename)
@@ -308,7 +366,6 @@ void
 weechat_lua_unload (struct t_plugin_script *script)
 {
     int *r;
-    char *lua_argv[1] = { NULL };
     void *interpreter;
     
     if ((weechat_lua_plugin->debug >= 1) || !lua_quiet)
@@ -323,7 +380,7 @@ weechat_lua_unload (struct t_plugin_script *script)
         r = weechat_lua_exec (script,
                               WEECHAT_SCRIPT_EXEC_INT,
                               script->shutdown_func,
-                              lua_argv);
+                              NULL, NULL);
         if (r)
             free (r);
     }

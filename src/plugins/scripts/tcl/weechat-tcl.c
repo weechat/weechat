@@ -72,14 +72,106 @@ Tcl_Interp* cinterp;
 
 
 /*
- * weechat_tcl_exec: execute a Tcl script
+ * weechat_tcl_hashtable_map_cb: callback called for each key/value in a
+ *                               hashtable
+ */
+
+void
+weechat_tcl_hashtable_map_cb (void *data,
+                              struct t_hashtable *hashtable,
+                              const void *key,
+                              const void *value)
+{
+    void **data_array;
+    Tcl_Interp *interp;
+    Tcl_Obj *dict;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    data_array = (void **)data;
+    interp = data_array[0];
+    dict = data_array[1];
+    
+    Tcl_DictObjPut (interp, dict,
+                    Tcl_NewStringObj ((char *)key, -1),
+                    Tcl_NewStringObj ((char *)value, -1));
+}
+
+/*
+ * weechat_tcl_hashtable_to_dict: get tcl dict with a WeeChat hashtable
+ */
+
+Tcl_Obj *
+weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
+                               struct t_hashtable *hashtable)
+{
+    Tcl_Obj *dict;
+    void *data[2];
+    
+    dict = Tcl_NewDictObj ();
+    if (!dict)
+        return NULL;
+    
+    data[0] = interp;
+    data[1] = dict;
+    
+    weechat_hashtable_map (hashtable,
+                           &weechat_tcl_hashtable_map_cb,
+                           data);
+    
+    return dict;
+}
+
+/*
+ * weechat_tcl_dict_to_hashtable: get WeeChat hashtable with tcl dict
+ *                                Hashtable returned has type string for
+ *                                both keys and values
+ *                                Note: hashtable has to be released after
+ *                                use with call to weechat_hashtable_free()
+ */
+
+struct t_hashtable *
+weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
+                               int hashtable_size)
+{
+    struct t_hashtable *hashtable;
+    Tcl_DictSearch search;
+    Tcl_Obj *key, *value;
+    int done;
+    
+    hashtable = weechat_hashtable_new (hashtable_size,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    if (Tcl_DictObjFirst (interp, dict, &search, &key, &value, &done) == TCL_OK)
+    {
+        for (; !done ; Tcl_DictObjNext(&search, &key, &value, &done))
+        {
+            weechat_hashtable_set (hashtable,
+                                   (void *)Tcl_GetString (key),
+                                   (void *)Tcl_GetString (value));
+        }
+    }
+    Tcl_DictObjDone(&search);
+    
+    return hashtable;
+}
+
+/*
+ * weechat_tcl_exec: execute a tcl function
  */
 
 void *
 weechat_tcl_exec (struct t_plugin_script *script,
-                  int ret_type, const char *function, char **argv)
+                  int ret_type, const char *function,
+                  const char *format, void **argv)
 {
-    int i, llength;
+    int argc, i, llength;
     int *ret_i;
     char *ret_cv;
     void *ret_val;
@@ -90,12 +182,12 @@ weechat_tcl_exec (struct t_plugin_script *script,
     old_tcl_script = tcl_current_script;
     tcl_current_script = script;
     interp = (Tcl_Interp*)script->interpreter;
-
+    
     if (function && function[0])
     {
-        cmdlist = Tcl_NewListObj(0,NULL);
-        Tcl_IncrRefCount(cmdlist); /* +1 */
-        Tcl_ListObjAppendElement(interp,cmdlist,Tcl_NewStringObj(function,-1));
+        cmdlist = Tcl_NewListObj (0, NULL);
+        Tcl_IncrRefCount (cmdlist); /* +1 */
+        Tcl_ListObjAppendElement (interp, cmdlist, Tcl_NewStringObj (function,-1));
     }
     else
     {
@@ -103,20 +195,35 @@ weechat_tcl_exec (struct t_plugin_script *script,
         return NULL;
     }
     
-    if (argv)
+    if (format && format[0])
     {
-        for (i = 0; argv[i]; i++)
+        argc = strlen (format);
+        for (i = 0; i < argc; i++)
         {
-            Tcl_ListObjAppendElement(interp,cmdlist,Tcl_NewStringObj(argv[i],-1));
+            switch (format[i])
+            {
+                case 's': /* string */
+                    Tcl_ListObjAppendElement (interp, cmdlist,
+                                              Tcl_NewStringObj (argv[i], -1));
+                    break;
+                case 'i': /* integer */
+                    Tcl_ListObjAppendElement (interp, cmdlist,
+                                              Tcl_NewStringObj (argv[i], -1));
+                    break;
+                case 'h': /* hash */
+                    Tcl_ListObjAppendElement (interp, cmdlist,
+                                              weechat_tcl_hashtable_to_dict (interp, argv[i]));
+                    break;
+            }
         }
     }
-
-    if (Tcl_ListObjLength(interp,cmdlist,&llength) != TCL_OK)
+    
+    if (Tcl_ListObjLength (interp, cmdlist, &llength) != TCL_OK)
         llength = 0;
-
+    
     if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
     {
-        Tcl_ListObjReplace(interp,cmdlist,0,llength,0,NULL); /* remove elements, decrement their ref count */
+        Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
         Tcl_DecrRefCount (cmdlist); /* -1 */
         ret_val = NULL;
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
@@ -135,6 +242,12 @@ weechat_tcl_exec (struct t_plugin_script *script,
                 *ret_i = i;
             ret_val = (void *)ret_i;
         }
+        else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+        {
+            ret_val = weechat_tcl_dict_to_hashtable (interp,
+                                                     Tcl_GetObjResult (interp),
+                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+        }
         
         tcl_current_script = old_tcl_script;
         if (ret_val)
@@ -147,8 +260,8 @@ weechat_tcl_exec (struct t_plugin_script *script,
         return NULL;
     }
     
-    Tcl_ListObjReplace(interp,cmdlist,0,llength,0,NULL); /* remove elements, decrement their ref count */
-    Tcl_DecrRefCount(cmdlist); /* -1 */
+    Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
+    Tcl_DecrRefCount (cmdlist); /* -1 */
     weechat_printf (NULL,
                     weechat_gettext ("%s%s: unable to run function \"%s\": %s"),
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
@@ -258,7 +371,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
         pointer = weechat_tcl_exec (script,
                                     WEECHAT_SCRIPT_EXEC_INT,
                                     script->shutdown_func,
-                                    NULL);
+                                    NULL, NULL);
         if (pointer)
             free (pointer);
     }

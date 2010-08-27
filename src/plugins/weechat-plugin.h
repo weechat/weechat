@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20100717-01"
+#define WEECHAT_PLUGIN_API_VERSION "20100827-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -273,6 +273,8 @@ struct t_weechat_plugin
                            void *callback_map_data);
     int (*hashtable_get_integer) (struct t_hashtable *hashtable,
                                   const char *property);
+    const char *(*hashtable_get_string) (struct t_hashtable *hashtable,
+                                         const char *property);
     int (*hashtable_add_to_infolist) (struct t_hashtable *hashtable,
                                       struct t_infolist_item *infolist_item,
                                       const char *prefix);
@@ -521,6 +523,15 @@ struct t_weechat_plugin
                                                          const char *info_name,
                                                          const char *arguments),
                                  void *callback_data);
+    struct t_hook *(*hook_info_hashtable) (struct t_weechat_plugin *plugin,
+                                           const char *info_name,
+                                           const char *description,
+                                           const char *args_description,
+                                           const char *output_description,
+                                           struct t_hashtable *(*callback)(void *data,
+                                                                           const char *info_name,
+                                                                           struct t_hashtable *hashtable),
+                                           void *callback_data);
     struct t_hook *(*hook_infolist) (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
                                      const char *description,
@@ -643,6 +654,9 @@ struct t_weechat_plugin
     const char *(*info_get) (struct t_weechat_plugin *plugin,
                              const char *info_name,
                              const char *arguments);
+    struct t_hashtable *(*info_get_hashtable) (struct t_weechat_plugin *plugin,
+                                               const char *info_name,
+                                               struct t_hashtable *hashtable);
     
     /* infolists */
     struct t_infolist *(*infolist_new) ();
@@ -886,6 +900,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hashtable_map(__hashtable, __cb_map, __cb_map_data)
 #define weechat_hashtable_get_integer(__hashtable, __property)          \
     weechat_plugin->hashtable_get_integer(__hashtable, __property)
+#define weechat_hashtable_get_string(__hashtable, __property)           \
+    weechat_plugin->hashtable_get_string(__hashtable, __property)
 #define weechat_hashtable_add_to_infolist(__hashtable, __infolist_item, \
                                           __prefix)                     \
     weechat_plugin->hashtable_add_to_infolist(__hashtable,              \
@@ -1117,6 +1133,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_info(weechat_plugin, __info_name,              \
                               __description, __args_description,        \
                               __callback, __data)
+#define weechat_hook_info_hashtable(__info_name, __description,         \
+                                    __args_description,                 \
+                                    __output_description,               \
+                                    __callback,                         \
+                                    __data)                             \
+    weechat_plugin->hook_info_hashtable(weechat_plugin, __info_name,    \
+                                        __description,                  \
+                                        __args_description,             \
+                                        __output_description,           \
+                                        __callback, __data)
 #define weechat_hook_infolist(__infolist_name, __description,           \
                               __pointer_description,                    \
                               __args_description, __callback, __data)   \
@@ -1243,6 +1269,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 /* infos */
 #define weechat_info_get(__info_name, __arguments)                      \
     weechat_plugin->info_get(weechat_plugin, __info_name, __arguments)
+#define weechat_info_get_hashtable(__info_name, __hashtable)            \
+    weechat_plugin->info_get_hashtable(weechat_plugin, __info_name,     \
+                                       __hashtable)
 
 /* infolists */
 #define weechat_infolist_new()                                          \

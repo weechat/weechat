@@ -38,7 +38,9 @@
 
 
 char *hashtable_type_string[HASHTABLE_NUM_TYPES] =
-{ "integer", "string", "pointer", "buffer", "time" };
+{ WEECHAT_HASHTABLE_INTEGER, WEECHAT_HASHTABLE_STRING,
+  WEECHAT_HASHTABLE_POINTER, WEECHAT_HASHTABLE_BUFFER,
+  WEECHAT_HASHTABLE_TIME };
 
 
 /*
@@ -400,6 +402,24 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
     }
     
     return 0;
+}
+
+/*
+ * hashtable_get_string: get a hashtable property as string
+ */
+
+const char *
+hashtable_get_string (struct t_hashtable *hashtable, const char *property)
+{
+    if (hashtable && property)
+    {
+        if (string_strcasecmp (property, "type_keys") == 0)
+            return hashtable_type_string[hashtable->type_keys];
+        else if (string_strcasecmp (property, "type_values") == 0)
+            return hashtable_type_string[hashtable->type_values];
+    }
+    
+    return NULL;
 }
 
 /*

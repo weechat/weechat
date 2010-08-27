@@ -98,7 +98,7 @@ welche Pakete optional genutzt werden können.
 | python-dev             | nein     | python Erweiterung
 | ruby1.8-dev            | nein     | ruby Erweiterung
 | liblua5.1-0-dev        | nein     | lua Erweiterung
-| tcl-dev                | nein     | tcl Erweiterung
+| tcl-dev (>= 8.5)       | nein     | tcl Erweiterung
 | asciidoc (>= 8.2)      | nein     | erstellt Dokumentation (HTML Dateien)
 | source-highlight       | nein     | Syntax highlight für Quelltext in HTML Dokumentation
 |========================================
@@ -515,7 +515,7 @@ Tastenbefehle für die Befehlszeile
 // TRANSLATION MISSING
 | Ctrl + R |
   Sucht nach einem Text in der Protokolldatei (zweimaliges Drücken: sucht nach exaktem Text),
-  next/previous occurences can be found with up and down arrows +
+  next/previous occurrences can be found with up and down arrows +
   `/input search_text`
 
 | Ctrl + T |

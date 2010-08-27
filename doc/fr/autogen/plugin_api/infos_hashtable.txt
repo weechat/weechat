@@ -1,0 +1,7 @@
+[width="100%",cols="^1,^2,6,6,6",options="header"]
+|========================================
+| Extension | Nom | Description | Hashtable (entrée) | Hashtable (sortie)
+
+| irc | irc_parse_message | analyse un message IRC | "message": message IRC | "nick": pseudo, "host": nom d'hôte, "command": commande, "channel": canal, "arguments": paramètres (inclut le canal)
+
+|========================================

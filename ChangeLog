@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-08-20
+v0.3.4-dev, 2010-08-27
 
 
 Version 0.3.4 (under dev!)
@@ -10,6 +10,9 @@ Version 0.3.4 (under dev!)
 * core: use similar behaviour for keys bound to local or global history
   (bug #30759)
 * api: add priority for hooks (task #10550)
+* api: add new functions: hashtable_get_string, hook_info_hashtable,
+  info_get_hashtable
+* irc: add new info_hashtable "irc_parse_message"
 * irc: fix bug with hostmasks in command /ignore (bug #30716)
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)

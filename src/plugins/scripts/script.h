@@ -21,8 +21,15 @@
 #define __WEECHAT_SCRIPT_H 1
 
 /* constants which defines return types for weechat_<lang>_exec functions */
-#define WEECHAT_SCRIPT_EXEC_INT    1
-#define WEECHAT_SCRIPT_EXEC_STRING 2
+
+enum t_weechat_script_exec_type
+{
+    WEECHAT_SCRIPT_EXEC_INT = 0,
+    WEECHAT_SCRIPT_EXEC_STRING,
+    WEECHAT_SCRIPT_EXEC_HASHTABLE,
+};
+
+#define WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE 16
 
 #define WEECHAT_SCRIPT_MSG_NOT_INIT(__current_script,                   \
                                     __function)                         \

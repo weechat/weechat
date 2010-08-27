@@ -281,7 +281,7 @@ Liste des fonctions de l'API script :
   hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
   hook_connect, hook_print, hook_signal, hook_signal_send, hook_config,
   hook_completion, hook_completion_list_add, hook_modifier, hook_modifier_exec,
-  hook_info, hook_infolist, unhook, unhook_all
+  hook_info, hook_info_hashtable, hook_infolist, unhook, unhook_all
 | tampons                   |
   buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
   buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
@@ -300,7 +300,7 @@ Liste des fonctions de l'API script :
 | commandes                 |
   command
 | infos                     |
-  info_get
+  info_get, info_get_hashtable
 | infolists                 |
   infolist_new, infolist_new_item, infolist_new_var_integer,
   infolist_new_var_string, infolist_new_var_pointer, infolist_new_var_time, +

@@ -127,12 +127,130 @@ char *perl_weechat_code =
 
 
 /*
- * weechat_perl_exec: execute a Perl script
+ * weechat_perl_hashtable_map_cb: callback called for each key/value in a
+ *                                hashtable
+ */
+
+void
+weechat_perl_hashtable_map_cb (void *data,
+                               struct t_hashtable *hashtable,
+                               const void *key,
+                               const void *value)
+{
+    HV *hash;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hash = (HV *)data;
+    
+    (void) hv_store (hash, (char *)key, strlen ((char *)key),
+                     newSVpv ((char *)value, 0), 0);
+}
+
+/*
+ * weechat_perl_hashtable_to_hash: get perl hash with a WeeChat hashtable
+ */
+
+HV *
+weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
+{
+    HV *hash;
+    
+    hash = (HV *)newHV ();
+    if (!hash)
+        return NULL;
+    
+    weechat_hashtable_map (hashtable,
+                           &weechat_perl_hashtable_map_cb,
+                           hash);
+    
+    return hash;
+}
+
+/*
+ * weechat_perl_hash_to_hashtable: get WeeChat hashtable with perl hash
+ *                                 Hashtable returned has type string for
+ *                                 both keys and values
+ *                                 Note: hashtable has to be released after use
+ *                                 with call to weechat_hashtable_free()
+ */
+
+struct t_hashtable *
+weechat_perl_hash_to_hashtable (SV *hash, int hashtable_size)
+{
+    struct t_hashtable *hashtable;
+    HV *hash2;
+    SV *value;
+    char *str_key;
+    I32 retlen;
+    
+    hashtable = weechat_hashtable_new (hashtable_size,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    if ((hash) && SvROK(hash) && SvRV(hash) && (SvTYPE(SvRV(hash)) == SVt_PVHV))
+    {
+        hash2 = (HV *) SvRV(hash);
+        hv_iterinit (hash2);
+        while ((value = hv_iternextsv (hash2, &str_key, &retlen)))
+        {
+            weechat_hashtable_set (hashtable, str_key, SvPV (value, PL_na));
+        }
+    }
+    
+    return hashtable;
+}
+
+/*
+ * weechat_perl_exec_pv: encapsulation of call to perl_call_pv
+ */
+
+int
+weechat_perl_exec_pv (const char *func, const char *format, void **argv)
+{
+    int i, argc;
+    HV *hash;
+    
+    dSP;
+    
+    PUSHMARK(SP);
+    if (format && format[0])
+    {
+        argc = strlen (format);
+        for (i = 0; i < argc; i++)
+        {
+            switch (format[i])
+            {
+                case 's': /* string */
+                    XPUSHs(sv_2mortal(newSVpv((char *)argv[i], 0)));
+                    break;
+                case 'i': /* integer */
+                    XPUSHs(sv_2mortal(newSViv(*((int *)argv[i]))));
+                    break;
+                case 'h': /* hash */
+                    hash = weechat_perl_hashtable_to_hash (argv[i]);
+                    XPUSHs(sv_2mortal((SV *)hash));
+                    break;
+            }
+        }
+        PUTBACK;
+    }
+    return perl_call_pv (func, G_EVAL | G_SCALAR);
+}
+
+/*
+ * weechat_perl_exec: execute a perl function
  */
 
 void *
 weechat_perl_exec (struct t_plugin_script *script,
-                   int ret_type, const char *function, char **argv)
+                   int ret_type, const char *function,
+                   const char *format, void **argv)
 {
     char *func;
     unsigned int count;
@@ -166,12 +284,12 @@ weechat_perl_exec (struct t_plugin_script *script,
     
     ENTER;
     SAVETMPS;
-    PUSHMARK(sp);
     
-    count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
+    count = weechat_perl_exec_pv (func, format, argv);
+    
     ret_value = NULL;
     mem_err = 1;
-
+    
     SPAGAIN;
     
     if (SvTRUE (ERRSV))
@@ -209,6 +327,11 @@ weechat_perl_exec (struct t_plugin_script *script,
                     *ret_i = POPi;
                 ret_value = ret_i;
             }
+            else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+            {
+                ret_value = weechat_perl_hash_to_hashtable (POPs,
+                                                            WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+            }
             else
             {
                 weechat_printf (NULL,
@@ -221,7 +344,6 @@ weechat_perl_exec (struct t_plugin_script *script,
         }
     }
     
-    PUTBACK;
     FREETMPS;
     LEAVE;
     
@@ -255,7 +377,7 @@ weechat_perl_load (const char *filename)
     struct t_plugin_script temp_script;
     int *eval;
     struct stat buf;
-    char *perl_argv[2];
+    void *perl_argv[2];
     
 #ifdef MULTIPLICITY
     PerlInterpreter *perl_current_interpreter;
@@ -311,20 +433,22 @@ weechat_perl_load (const char *filename)
                 perl_args_count, perl_args, NULL);
     
     eval_pv (perl_weechat_code, TRUE);
-    perl_argv[0] = (char *)filename;
-    perl_argv[1] = NULL;
+    perl_argv[0] = (void *)filename;
+    eval = weechat_perl_exec (&temp_script,
+                              WEECHAT_SCRIPT_EXEC_INT,
+                              "weechat_perl_load_eval_file",
+                              "s", perl_argv);
 #else
     snprintf (pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
     temp_script.interpreter = "WeechatPerlScriptLoader";
-    perl_argv[0] = (char *)filename;
+    perl_argv[0] = (void *)filename;
     perl_argv[1] = pkgname;
-    perl_argv[2] = NULL;
-#endif
     eval = weechat_perl_exec (&temp_script,
                               WEECHAT_SCRIPT_EXEC_INT,
                               "weechat_perl_load_eval_file",
-                              perl_argv);
+                              "ss", perl_argv);
+#endif
     if (!eval)
     {
         weechat_printf (NULL,
@@ -434,7 +558,6 @@ void
 weechat_perl_unload (struct t_plugin_script *script)
 {
     int *r;
-    char *perl_argv[1] = { NULL };
     void *interpreter;
 
     if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
@@ -455,7 +578,7 @@ weechat_perl_unload (struct t_plugin_script *script)
         r = (int *) weechat_perl_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script->shutdown_func,
-                                       perl_argv);
+                                       NULL, NULL);
         if (r)
             free (r);
     }
@@ -470,8 +593,11 @@ weechat_perl_unload (struct t_plugin_script *script)
                    script);
     
 #ifdef MULTIPLICITY
-    perl_destruct (interpreter);
-    perl_free (interpreter);
+    if (interpreter)
+    {
+        perl_destruct (interpreter);
+        perl_free (interpreter);
+    }
 #else
     if (interpreter)
         free (interpreter);

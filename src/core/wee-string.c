@@ -377,7 +377,7 @@ string_replace (const char *string, const char *search, const char *replace)
     if (!new_string)
         return strdup (string);
     
-    /* replace all occurences */
+    /* replace all occurrences */
     new_string[0] = '\0';
     while (string && string[0])
     {

@@ -35,8 +35,13 @@ extern struct t_plugin_script *tcl_current_script;
 extern struct t_plugin_script *tcl_registered_script;
 extern const char *tcl_current_script_filename;
 
+extern Tcl_Obj *weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
+                                               struct t_hashtable *hashtable);
+extern struct t_hashtable *weechat_tcl_dict_to_hashtable (Tcl_Interp *interp,
+                                                          Tcl_Obj *dict,
+                                                          int hashtable_size);
 extern void *weechat_tcl_exec (struct t_plugin_script *script,
-                                int ret_type, const char *function,
-                                char **argv);
+                               int ret_type, const char *function,
+                               const char *format, void **argv);
 
 #endif /* __WEECHAT_TCL_H */

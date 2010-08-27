@@ -229,6 +229,38 @@ irc_info_get_info_cb (void *data, const char *info_name,
 }
 
 /*
+ * irc_info_get_info_hashtable_cb: callback called when IRC info_hashtable is
+ *                                 asked
+ */
+
+struct t_hashtable *
+irc_info_get_info_hashtable_cb (void *data, const char *info_name,
+                                struct t_hashtable *hashtable)
+{
+    const char *message;
+    struct t_hashtable *value;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (weechat_strcasecmp (info_name, "irc_parse_message") == 0)
+    {
+        if (hashtable)
+        {
+            message = (const char *)weechat_hashtable_get (hashtable,
+                                                           "message");
+            if (message)
+            {
+                value = irc_server_parse_message_to_hashtable (message);
+                return value;
+            }
+        }
+    }
+    
+    return NULL;
+}
+
+/*
  * irc_info_get_infolist_cb: callback called when IRC infolist is asked
  */
 
@@ -448,48 +480,71 @@ void
 irc_info_init ()
 {
     /* info hooks */
-    weechat_hook_info ("irc_is_channel", N_("1 if string is a valid IRC channel name"),
+    weechat_hook_info ("irc_is_channel",
+                       N_("1 if string is a valid IRC channel name"),
                        N_("channel name"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_is_nick", N_("1 if string is a valid IRC nick name"),
+    weechat_hook_info ("irc_is_nick",
+                       N_("1 if string is a valid IRC nick name"),
                        N_("nickname"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_nick", N_("get current nick on a server"),
+    weechat_hook_info ("irc_nick",
+                       N_("get current nick on a server"),
                        N_("server name"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
+    weechat_hook_info ("irc_nick_from_host",
+                       N_("get nick from IRC host"),
                        N_("IRC host (like `:nick!name@server.com`)"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_nick_color", N_("get nick color code"),
+    weechat_hook_info ("irc_nick_color",
+                       N_("get nick color code"),
                        N_("nickname"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_nick_color_name", N_("get nick color name"),
+    weechat_hook_info ("irc_nick_color_name",
+                       N_("get nick color name"),
                        N_("nickname"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel/nick"),
+    weechat_hook_info ("irc_buffer",
+                       N_("get buffer pointer for an IRC server/channel/nick"),
                        N_("server,channel,nick (channel and nicks are optional)"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_server_isupport", N_("1 if server supports this feature (from IRC message 005)"),
+    weechat_hook_info ("irc_server_isupport",
+                       N_("1 if server supports this feature (from IRC message 005)"),
                        N_("server,feature"),
                        &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_server_isupport_value", N_("value of feature, if supported by server (from IRC message 005)"),
+    weechat_hook_info ("irc_server_isupport_value",
+                       N_("value of feature, if supported by server (from IRC message 005)"),
                        N_("server,feature"),
                        &irc_info_get_info_cb, NULL);
     
+    /* info_hashtable hooks */
+    weechat_hook_info_hashtable ("irc_parse_message",
+                                 N_("parse an IRC message"),
+                                 N_("\"message\": IRC message"),
+                                 /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+                                 N_("\"nick\": nick, \"host\": host, "
+                                    "\"command\": command, \"channel\": channel, "
+                                    "\"arguments\": arguments (includes channel)"),
+                                 &irc_info_get_info_hashtable_cb, NULL);
+    
     /* infolist hooks */
-    weechat_hook_infolist ("irc_server", N_("list of IRC servers"),
+    weechat_hook_infolist ("irc_server",
+                           N_("list of IRC servers"),
                            N_("server pointer (optional)"),
                            N_("server name (can start or end with \"*\" as wildcard) (optional)"),
                            &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),
+    weechat_hook_infolist ("irc_channel",
+                           N_("list of channels for an IRC server"),
                            N_("channel pointer (optional)"),
                            N_("server name"),
                            &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_nick", N_("list of nicks for an IRC channel"),
+    weechat_hook_infolist ("irc_nick",
+                           N_("list of nicks for an IRC channel"),
                            N_("nick pointer (optional)"),
                            N_("server,channel,nick (channel and nick are optional)"),
                            &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_ignore", N_("list of IRC ignores"),
+    weechat_hook_infolist ("irc_ignore",
+                           N_("list of IRC ignores"),
                            N_("ignore pointer (optional)"),
                            NULL,
                            &irc_info_get_infolist_cb, NULL);

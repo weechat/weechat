@@ -203,6 +203,7 @@ extern int irc_server_rename (struct t_irc_server *server, const char *new_name)
 extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,
                                     const char *full_message);
+extern struct t_hashtable *irc_server_parse_message_to_hashtable (const char *message);
 extern void irc_server_sendf (struct t_irc_server *server, int queue_msg,
                               const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);

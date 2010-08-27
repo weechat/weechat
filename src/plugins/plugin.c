@@ -527,6 +527,7 @@ plugin_load (const char *filename)
         new_plugin->hashtable_get = &hashtable_get;
         new_plugin->hashtable_map = &hashtable_map;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
+        new_plugin->hashtable_get_string = &hashtable_get_string;
         new_plugin->hashtable_add_to_infolist = &hashtable_add_to_infolist;
         new_plugin->hashtable_remove = &hashtable_remove;
         new_plugin->hashtable_remove_all = &hashtable_remove_all;
@@ -592,6 +593,7 @@ plugin_load (const char *filename)
         new_plugin->hook_modifier = &hook_modifier;
         new_plugin->hook_modifier_exec = &hook_modifier_exec;
         new_plugin->hook_info = &hook_info;
+        new_plugin->hook_info_hashtable = &hook_info_hashtable;
         new_plugin->hook_infolist = &hook_infolist;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
@@ -639,6 +641,7 @@ plugin_load (const char *filename)
         new_plugin->network_connect_to = &network_connect_to;
         
         new_plugin->info_get = &hook_info_get;
+        new_plugin->info_get_hashtable = &hook_info_get_hashtable;
         
         new_plugin->infolist_new = &infolist_new;
         new_plugin->infolist_new_item = &infolist_new_item;

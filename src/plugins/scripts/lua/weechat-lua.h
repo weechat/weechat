@@ -36,8 +36,13 @@ extern struct t_plugin_script *lua_registered_script;
 extern const char *lua_current_script_filename;
 extern lua_State *lua_current_interpreter;
 
-extern void *weechat_lua_exec (struct t_plugin_script *script,
-                               int ret_type, const char *function,
-                               char **argv);
+extern void weechat_lua_pushhashtable (lua_State *interpreter,
+                                       struct t_hashtable *hashtable);
+extern struct t_hashtable *weechat_lua_tohashtable (lua_State *interpreter,
+                                                    int index,
+                                                    int hashtable_size);
+extern void *weechat_lua_exec (struct t_plugin_script *script, int ret_type,
+                               const char *function,
+                               const char *format, void **argv);
 
 #endif /* __WEECHAT_LUA_H */

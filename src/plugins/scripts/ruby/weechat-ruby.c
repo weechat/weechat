@@ -102,6 +102,88 @@ typedef struct protect_call_arg {
 
 
 /*
+ * weechat_ruby_hashtable_map_cb: callback called for each key/value in a
+ *                                hashtable
+ */
+
+void
+weechat_ruby_hashtable_map_cb (void *data,
+                               struct t_hashtable *hashtable,
+                               const void *key,
+                               const void *value)
+{
+    VALUE *hash;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hash = (VALUE *)data;
+    
+    rb_hash_aset (hash[0], rb_str_new2 ((char *)key), rb_str_new2 ((char *)value));
+}
+
+/*
+ * weechat_ruby_hashtable_to_hash: get ruby hash with a WeeChat hashtable
+ */
+
+VALUE
+weechat_ruby_hashtable_to_hash (struct t_hashtable *hashtable)
+{
+    VALUE hash;
+
+    hash = rb_hash_new ();
+    if (NIL_P (hash))
+        return Qnil;
+
+    weechat_hashtable_map (hashtable,
+                           &weechat_ruby_hashtable_map_cb,
+                           &hash);
+    
+    return hash;
+}
+
+int
+weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
+{
+    struct t_hashtable *hashtable;
+    
+    hashtable = (struct t_hashtable *)arg;
+    if ((TYPE(key) == T_STRING) && (TYPE(value) == T_STRING))
+    {
+        weechat_hashtable_set (hashtable, STR2CSTR(key), STR2CSTR(value));
+    }
+    return 0;
+}
+
+/*
+ * weechat_ruby_hash_to_hashtable: get WeeChat hashtable with ruby hashtable
+ *                                 Hashtable returned has type string for
+ *                                 both keys and values
+ *                                 Note: hashtable has to be released after use
+ *                                 with call to weechat_hashtable_free()
+ */
+
+struct t_hashtable *
+weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
+{
+    struct t_hashtable *hashtable;
+    struct st_table *st;
+    
+    hashtable = weechat_hashtable_new (hashtable_size,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return NULL;
+    
+    st = RHASH_TBL(hash);
+    rb_hash_foreach (hash, &weechat_ruby_hash_foreach_cb, (unsigned long)hashtable);
+    
+    return hashtable;
+}
+
+/*
  * protect_funcall0 : used to protect a function call
  */
 
@@ -115,32 +197,19 @@ protect_funcall0 (VALUE arg)
 }
 
 /*
- * rb_protect_funcall : function call in protect mode
+ * rb_protect_funcall: function call in protect mode
  */
 
 VALUE
-rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, ...)
+rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, VALUE *argv)
 {
-    va_list ap;
-    VALUE *argv;
     struct protect_call_arg arg;
-
-    if (argc > 0)
-    {
-        int i;
-        argv = ALLOCA_N(VALUE, argc);
-        va_start(ap, argc);
-        for (i = 0; i < argc; i++)
-            argv[i] = va_arg(ap, VALUE);
-        va_end(ap);
-    }
-    else
-        argv = 0;
+    
     arg.recv = recv;
     arg.mid = mid;
     arg.argc = argc;
     arg.argv = argv;
-    return rb_protect(protect_funcall0, (VALUE) &arg, state);
+    return rb_protect (protect_funcall0, (VALUE) &arg, state);
 }
 
 /*
@@ -159,13 +228,13 @@ weechat_ruby_print_exception (VALUE err)
     char* err_class;
     
     backtrace = rb_protect_funcall (err, rb_intern("backtrace"),
-                                    &ruby_error, 0);
+                                    &ruby_error, 0, NULL);
     err_msg = STR2CSTR(rb_protect_funcall(err, rb_intern("message"),
-                                          &ruby_error, 0));
+                                          &ruby_error, 0, NULL));
     err_class = STR2CSTR(rb_protect_funcall(rb_protect_funcall(err,
                                                                rb_intern("class"),
-                                                               &ruby_error, 0),
-                                            rb_intern("name"), &ruby_error, 0));
+                                                               &ruby_error, 0, NULL),
+                                            rb_intern("name"), &ruby_error, 0, NULL));
     
     if (strcmp (err_class, "SyntaxError") == 0)
     {
@@ -222,122 +291,55 @@ weechat_ruby_print_exception (VALUE err)
 }
 
 /*
- * weechat_ruby_exec: call a ruby command
+ * weechat_ruby_exec: execute a ruby function
  */
 
 void *
 weechat_ruby_exec (struct t_plugin_script *script,
-                   int ret_type, const char *function, char **argv)
+                   int ret_type, const char *function,
+                   const char *format, void **argv)
 {
     VALUE rc, err;
-    int ruby_error, *ret_i;
+    int ruby_error, i, argc, *ret_i;
+    VALUE argv2[16];
     void *ret_value;
     struct t_plugin_script *old_ruby_current_script;
-
+    
     old_ruby_current_script = ruby_current_script;
     ruby_current_script = script;
     
-    if (argv && argv[0])
+    argc = 0;
+    if (format && format[0])
     {
-        if (argv[1])
+        argc = strlen (format);
+        for (i = 0; i < argc; i++)
         {
-            if (argv[2])
+            switch (format[i])
             {
-                if (argv[3])
-                {
-                    if (argv[4])
-                    {
-                        if (argv[5])
-                        {
-                            if (argv[6])
-                            {
-                                if (argv[7])
-                                {
-                                    rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                             &ruby_error, 8,
-                                                             rb_str_new2(argv[0]),
-                                                             rb_str_new2(argv[1]),
-                                                             rb_str_new2(argv[2]),
-                                                             rb_str_new2(argv[3]),
-                                                             rb_str_new2(argv[4]),
-                                                             rb_str_new2(argv[5]),
-                                                             rb_str_new2(argv[6]),
-                                                             rb_str_new2(argv[7]));
-                                }
-                                else
-                                {
-                                    rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                             &ruby_error, 7,
-                                                             rb_str_new2(argv[0]),
-                                                             rb_str_new2(argv[1]),
-                                                             rb_str_new2(argv[2]),
-                                                             rb_str_new2(argv[3]),
-                                                             rb_str_new2(argv[4]),
-                                                             rb_str_new2(argv[5]),
-                                                             rb_str_new2(argv[6]));
-                                }
-                            }
-                            else
-                            {
-                                rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                         &ruby_error, 6,
-                                                         rb_str_new2(argv[0]),
-                                                         rb_str_new2(argv[1]),
-                                                         rb_str_new2(argv[2]),
-                                                         rb_str_new2(argv[3]),
-                                                         rb_str_new2(argv[4]),
-                                                         rb_str_new2(argv[5]));
-                            }
-                        }
-                        else
-                        {
-                            rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                     &ruby_error, 5,
-                                                     rb_str_new2(argv[0]),
-                                                     rb_str_new2(argv[1]),
-                                                     rb_str_new2(argv[2]),
-                                                     rb_str_new2(argv[3]),
-                                                     rb_str_new2(argv[4]));
-                        }
-                    }
-                    else
-                    {
-                        rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                 &ruby_error, 4,
-                                                 rb_str_new2(argv[0]),
-                                                 rb_str_new2(argv[1]),
-                                                 rb_str_new2(argv[2]),
-                                                 rb_str_new2(argv[3]));
-                    }
-                }
-                else
-                {
-                    rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                             &ruby_error, 3,
-                                             rb_str_new2(argv[0]),
-                                             rb_str_new2(argv[1]),
-                                             rb_str_new2(argv[2]));
-                }
-            }
-            else
-            {
-                rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                         &ruby_error, 2,
-                                         rb_str_new2(argv[0]),
-                                         rb_str_new2(argv[1]));
+                case 's': /* string */
+                    argv2[i] = rb_str_new2 ((char *)argv[i]);
+                    break;
+                case 'i': /* integer */
+                    argv2[i] = INT2FIX (*((int *)argv[i]));
+                    break;
+                case 'h': /* hash */
+                    argv2[i] = (VALUE)argv[i];
+                    break;
             }
         }
-        else
-        {
-            rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                     &ruby_error, 1,
-                                     rb_str_new2(argv[0]));
-        }
+    }
+    
+    if (argc > 0)
+    {
+        rc = rb_protect_funcall ((VALUE) script->interpreter,
+                                 rb_intern(function),
+                                 &ruby_error, argc, argv2);
     }
     else
     {
-        rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                 &ruby_error, 0);
+        rc = rb_protect_funcall ((VALUE) script->interpreter,
+                                 rb_intern(function),
+                                 &ruby_error, 0, NULL);
     }
     
     if (ruby_error)
@@ -365,6 +367,11 @@ weechat_ruby_exec (struct t_plugin_script *script,
         if (ret_i)
             *ret_i = NUM2INT(rc);
         ret_value = ret_i;
+    }
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+    {
+        ret_value = weechat_ruby_hash_to_hashtable (rc,
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
     }
     else
     {
@@ -451,7 +458,6 @@ weechat_ruby_output_flush (VALUE self)
     return Qnil;
 }
 
-
 /*
  * weechat_ruby_load: load a Ruby script
  */
@@ -460,7 +466,7 @@ int
 weechat_ruby_load (const char *filename)
 {
     char modname[64];
-    VALUE curModule, ruby_retcode, err;
+    VALUE curModule, ruby_retcode, err, argv[1];
     int ruby_error;
     struct stat buf;
     
@@ -488,9 +494,10 @@ weechat_ruby_load (const char *filename)
     curModule = rb_define_module(modname);
 
     ruby_current_script_filename = filename;
-    
+
+    argv[0] = rb_str_new2 (filename);
     ruby_retcode = rb_protect_funcall (curModule, rb_intern("load_eval_file"),
-                                       &ruby_error, 1, rb_str_new2(filename));
+                                       &ruby_error, 1, argv);
     
     if (ruby_retcode == Qnil)
     {
@@ -536,7 +543,7 @@ weechat_ruby_load (const char *filename)
     }
     
     ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"),
-                                       &ruby_error, 0);
+                                       &ruby_error, 0, NULL);
     
     if (ruby_error)
     {
@@ -595,7 +602,6 @@ void
 weechat_ruby_unload (struct t_plugin_script *script)
 {
     int *r;
-    char *ruby_argv[1] = { NULL };
     void *interpreter;
     
     if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
@@ -610,7 +616,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
         r = (int *) weechat_ruby_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script->shutdown_func,
-                                       ruby_argv);
+                                       0, NULL);
         if (r)
             free (r);
     }

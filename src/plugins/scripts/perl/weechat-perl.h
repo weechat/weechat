@@ -34,8 +34,11 @@ extern struct t_plugin_script *perl_current_script;
 extern struct t_plugin_script *perl_registered_script;
 extern const char *perl_current_script_filename;
 
+extern HV *weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable);
+extern struct t_hashtable *weechat_perl_hash_to_hashtable (SV *hash,
+                                                           int hashtable_size);
 extern void *weechat_perl_exec (struct t_plugin_script *script,
                                 int ret_type, const char *function,
-                                char **argv);
+                                const char *format, void **argv);
 
 #endif /* __WEECHAT_PERL_H */

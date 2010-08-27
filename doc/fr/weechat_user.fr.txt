@@ -100,7 +100,7 @@ compiler WeeChat.
 | python-dev             | non    | extension python
 | ruby1.8-dev            | non    | extension ruby
 | liblua5.1-0-dev        | non    | extension lua
-| tcl-dev                | non    | extension tcl
+| tcl-dev (>= 8.5)       | non    | extension tcl
 | asciidoc (>= 8.2)      | non    | construction de la documentation (fichiers HTML)
 | source-highlight       | non    | coloration des sources dans la documentation HTML
 |========================================
@@ -526,7 +526,7 @@ Touches pour la ligne de commande
 
 | Ctrl + R |
   Chercher du texte dans l'historique du tampon (deux appuis successifs pour
-  rechercher du texte exact), les occurences suivantes/précédentes peuvent être
+  rechercher du texte exact), les occurrences suivantes/précédentes peuvent être
   trouvées avec les flèches haut et bas +
   `/input search_text`
 

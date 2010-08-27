@@ -115,6 +115,8 @@ extern void hashtable_map (struct t_hashtable *hashtable,
                            void *callback_map_data);
 extern int hashtable_get_integer (struct t_hashtable *hashtable,
                                   const char *property);
+extern const char *hashtable_get_string (struct t_hashtable *hashtable,
+                                         const char *property);
 extern int hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                       struct t_infolist_item *infolist_item,
                                       const char *prefix);
