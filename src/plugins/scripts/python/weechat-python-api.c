@@ -4100,7 +4100,9 @@ weechat_python_api_hook_info_hashtable_cb (void *data, const char *info_name,
                                              "ssO", python_argv);
         
         if (python_argv[2])
-            Py_XDECREF(python_argv[2]);
+        {
+            Py_XDECREF((PyObject *)python_argv[2]);
+        }
         
         return ret_hashtable;
     }
