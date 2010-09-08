@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2010 Nils G. <weechatter@arcor.de>
+# Copyright (C) 2009-2010 Nils G <weechatter@arcor.de>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -20,13 +20,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.4-dev\n"
+"Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
-"Last-Translator: Nils G. <weechatter@arcor.de>\n"
+"POT-Creation-Date: 2010-09-08 22:09+0200\n"
+"PO-Revision-Date: 2010-09-08 22:15+0200\n"
+"Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
-"Language: German\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -360,7 +360,7 @@ msgstr "ein Farbname"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
-msgstr ""
+msgstr "undefinierter Wert erlaubt (NULL)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -658,7 +658,7 @@ msgid ""
 "%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
 "option to see a sublist)"
 msgstr ""
-"%sOption \"%s\" nicht gefunden (Tipp: Der Platzhalter  \"*\" kann zu Beginn "
+"%sOption \"%s\" nicht gefunden (Tipp: Der Platzhalter \"*\" kann zu Beginn "
 "und/oder am Ende genutzt werden um Gruppen von Optionen anzusprechen)"
 
 msgid "No configuration option found"
@@ -975,7 +975,7 @@ msgstr ""
 " unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe "
 "Nummer teilen\n"
 "   close: Buffer schließen (Nummer oder Bereich ist optional)\n"
-"    list: alle offenen Buffer auflisten (Standardvorgabe)\n"
+"    list: alle geöffneten Buffer werden aufgelistet (Standardvorgabe)\n"
 "  notify: setzt Benachrichtigung-Status für aktuellen Buffer. Folgende "
 "Möglichkeiten bestimmen den Grad der Benachrichtigung:\n"
 "            none: keine Benachrichtigung\n"
@@ -999,7 +999,7 @@ msgstr ""
 " /buffer clear\n"
 " verschiebt Buffer auf Position 5:\n"
 " /buffer move 5\n"
-" verbindetn Buffer mit dem Core-Buffer:\n"
+" verbindet Buffer mit dem Core-Buffer:\n"
 " /buffer merge 1\n"
 " trennt Buffer voneinander:\n"
 " /buffer unmerge\n"
@@ -1066,7 +1066,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags "
 "regex] | [del name|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1117,7 +1116,7 @@ msgstr ""
 "       enable: aktiviert den Filter (Filter sind standardmäßig aktiviert)\n"
 "      disable: deaktiviert den Filter\n"
 "       toggle: Filterfunktion ein-/ausschalten\n"
-"         name: Filtername\n"
+"         name: Name für den Filter\n"
 "          add: fügt einen Filter hinzu\n"
 "          del: entfernt einen Filter\n"
 "         -all: entfernt alle Filter\n"
@@ -1126,20 +1125,23 @@ msgstr ""
 "         tags: durch Kommata  getrennte Liste mit Tags, Beispiel: \"irc_join,"
 "irc_part,irc_quit\"\n"
 "        regex: regulärer Ausdruck um in einer Zeile zu suchen\n"
-"               - nutze '\\t' um Präfix von Nachricht zu trennen. "
-"Sonderzeichen wie '|' müssen in einer Escapesequenz : '\\|' eingebunden "
+"               - das Präfix wird mittels '\\t' von der Nachricht getrennt. "
+"Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\\|' eingebunden "
 "werden)\n"
-"               - falls ein regulärer Ausdruck mit '!' beginnt dann wird das "
-"übereinstimmende Ergebnis umgekehrt  (nutze '\\!' um mit '!' zu beginnen)\n"
+"               - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird "
+"das übereinstimmende Ergebnis umgekehrt  (nutze '\\!' um mit '!' zu "
+"beginnen)\n"
+"               Hinweis: Es werden zwei reguläre Ausdrücke erstellt. Der "
+"erste für den Präfix und der zweite für die Nachricht\n"
 "\n"
 "Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.\n"
 "\n"
 "Die am häufigsten gebrauchten Tags lauten:\n"
 "  no_filter, no_highlight, log0..log9 (log level),\n"
 "  notify_message, notify_private, notify_highlight,\n"
-"  irc_xxx (xxx ist der IRC Befehl oder die IRC Nummer, siehe /server raw), "
-"irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
-"irc_smart_filter, away_info.\n"
+"  irc_xxx (xxx ist durch einen IRC Befehl oder die IRC Nummer zu ersetzen, "
+"siehe /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, "
+"irc_ctcp_reply, irc_smart_filter, away_info.\n"
 "\n"
 "Beispiele:\n"
 "  aktiviert einen einfachen IRC Filter für join/part/quit Nachrichten:\n"
@@ -1228,7 +1230,7 @@ msgid ""
 "    /key reset meta-r"
 msgstr ""
 "       list: Zeigt die aktuelle Tastenbelegungen an (Standardaufruf)\n"
-"listdefault: Zeigt die die Standardeinstellung der Tastenbelegung an\n"
+"listdefault: Zeigt die Standardeinstellung der Tastenbelegung an\n"
 "   listdiff: Zeigt die Unterschiede zwischen der aktuell genutzten "
 "Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/"
 "gelöschte Tastenbelegungen)\n"
@@ -1531,7 +1533,6 @@ msgstr "Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen"
 msgid "[path_to_binary]"
 msgstr "[Pfad_zur_Binärdatei]"
 
-#, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "\n"
@@ -1548,8 +1549,16 @@ msgstr ""
 "(Standardeinstellung ist die aktuell ausführbare Datei)\n"
 "\n"
 "Dieser Befehl startet eine weitere WeeChat-Binärdatei. Aus diesem Grund muss "
-"diese kompiliert oder mit einem Paketmanager installiert sein, bevor der "
-"Befehl ausgeführt wird."
+"diese kompiliert oder mit einem Paketmanager installiert sein bevor der "
+"Befehl ausgeführt wird.\n"
+"\n"
+"Der Upgrade Vorgang besteht aus vier Schritten:\n"
+"  1. Speicherung der Session in Dateien für Core und Erweiterungen (buffers, "
+"history, ..)\n"
+"  2. alle Erweiterungen werden ausgeschaltet (Konfigurationen *.conf werden "
+"gesichert)\n"
+"  3. Speicherung der WeeChat Konfiguration (weechat.conf)\n"
+"  4. ausführen einer neuen WeeChat Session."
 
 msgid "show WeeChat uptime"
 msgstr "Zeigt die Uptime von Weechat an"
@@ -1732,7 +1741,7 @@ msgstr ""
 
 #, c-format
 msgid "\t\tDay changed to %s"
-msgstr "\t\tEin neuer Tag bricht an. Heute ist  %s"
+msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
@@ -1767,7 +1776,6 @@ msgstr ""
 "Buffer = buffer, Präfix = prefix, Suffix = suffix, Nachricht = message "
 "(Standardwert))"
 
-#, fuzzy
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
@@ -1776,7 +1784,9 @@ msgid ""
 msgstr ""
 "Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt "
 "um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll "
-"oder nicht, entsprechend der Wichtigkeit der Nachricht)"
+"oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle "
+"Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur "
+"Highlights, none=Hotlist wird niemals angezeigt."
 
 msgid "time format for each line displayed in buffers"
 msgstr ""
@@ -1956,8 +1966,8 @@ msgid ""
 "display '+' if buffer name is truncated (when many buffers are merged with "
 "same number)"
 msgstr ""
-"Stellt das Symbol '+' dar falls der Buffername zu lang sein sollte (falls "
-"viele Buffer zusammengefügt wurden und die somit selbe Nummer besitzen)"
+"Stellt das Symbol '+' dar falls der Buffername gekürzt wurde (wenn mehrere "
+"Buffer zusammengefügt wurden und diese somit die selbe Nummer besitzen)"
 
 msgid "string displayed after prefix"
 msgstr "Nach dem Präfix anzufügende Zeichenfolge"
@@ -2273,8 +2283,8 @@ msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
-"Standard Dateinamenserweiterung  (Beispiel: \".so\" unter Linux oder \".dll"
-"\" unter Microsoft Windows)"
+"Standard Dateinamenserweiterung (Beispiel: \".so\" unter Linux oder \".dll\" "
+"unter Microsoft Windows)"
 
 msgid ""
 "path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
@@ -2373,7 +2383,7 @@ msgid ""
 "\" plugin"
 msgstr ""
 "%sFehler: mehrdeutiger Befehl \"%s\": existiert für mehrere Erweiterungen "
-"aber nicht für die Erweiterung  \"%s\""
+"aber nicht für die Erweiterung \"%s\""
 
 #, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
@@ -4703,9 +4713,9 @@ msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
 msgstr ""
-"Eine durch Kommata getrennte Liste von tags die bei einer Nachricht diese "
-"dann hervorhebt (Highlight).  (normalerweise trifft dies auf jede Nachricht "
-"eines Users zu, ausgenommen Nachrichten vom Server,..)"
+"Eine durch Kommata getrennte Liste von Tags die bei einer Nachricht selbige "
+"hervorhebt (Highlight). (normalerweise trifft dies auf jede Nachricht eines "
+"Users zu, ausgenommen Nachrichten vom Server,..)"
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
@@ -4865,7 +4875,7 @@ msgstr ""
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
-"Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall  "
+"Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall "
 "(in Minuten, 0 = nicht überprüfen)"
 
 msgid ""
@@ -5033,19 +5043,19 @@ msgstr ""
 "Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message "
 "005)"
 
-#, fuzzy
 msgid "parse an IRC message"
-msgstr "Message: zu sendende Nachricht"
+msgstr "Parse eine IRC Nachricht"
 
-#, fuzzy
 msgid "\"message\": IRC message"
-msgstr "Message: zu sendende Nachricht"
+msgstr "\"message\": IRC Nachricht"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
 "\"nick\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel)"
 msgstr ""
+"\"nick\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (beinhaltet Channel)"
 
 msgid "list of IRC servers"
 msgstr "Liste der IRC-Server"
@@ -6049,7 +6059,7 @@ msgstr ""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
-msgstr "%sFehler: Kann Erweiterung  \"%s\" nicht installieren: %s"
+msgstr "%sFehler: Kann Erweiterung \"%s\" nicht installieren: %s"
 
 #, c-format
 msgid ""
@@ -6318,65 +6328,61 @@ msgstr "%s: Lausche am Port %d (Relay: %s.%s, Max. %d Clients)"
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: Nicht genug Speicher um an dem neuen Port zu lauschen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: Fehler bei der Erstellung der Server-Option \"%s\""
+msgstr "%s%s: Fehler bei der Kompilierung des regulären Ausdruckes \"%s\""
 
-#, fuzzy
 msgid "No rmodifier defined"
-msgstr "Kein Nachrichtenfilter definiert"
+msgstr "Kein rmodifier definiert"
 
-#, fuzzy
 msgid "List of rmodifiers:"
-msgstr "Liste der Filter"
+msgstr "Liste der rmodifier:"
 
-#, fuzzy
 msgid "Default rmodifiers:"
-msgstr "Standardtastenbelegungen wiederhergestellt"
+msgstr "Standard rmodifier:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: Fehler bei der Erstellung des Servers \"%s\""
+msgstr "%s%s: Fehler bei der Erstellung von rmodifier \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" created"
-msgstr "Infobar \"%s\" erstellt"
+msgstr "rmodifier \"%s\" erstellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d rmodifiers removed"
-msgstr "    modifiers ge-hooked:"
+msgstr "%d rmodifiers entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" removed"
-msgstr "Alias \"%s\" entfernt"
+msgstr "rmodifier \"%s\" entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sRmodifier \"%s\" not found"
-msgstr "%sFehler: Filter \"%s\" nicht gefunden"
+msgstr "%srmodifier \"%s\" nicht gefunden"
 
-#, fuzzy
 msgid "Default rmodifiers restored:"
-msgstr "Standardtastenbelegungen wiederhergestellt"
+msgstr "Standard rmodifier wiederhergestellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sError: \"-yes\" argument is required for restoring default rmodifiers "
 "(security reason)"
 msgstr ""
-"%sFehler: \"-yes\" Argument ist aus Sicherheitsgründen für den Reset der "
-"Tastenbelegung notwendig"
+"%sFehler: Das Argument \"-yes\" ist aus Sicherheitsgründen zum zurücksetzen "
+"auf die Standardeinstellungen von rmodifier notwendig."
 
-#, fuzzy
 msgid "alter modifier strings with regular expressions"
-msgstr "%s%s: Fehler bei der Erstellung der Server-Option \"%s\""
+msgstr ""
+"wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Sichtbarkeit "
+"von Texten in WeeChat)"
 
-#, fuzzy
 msgid ""
 "[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
 "[name...]] | [default -yes]"
 msgstr ""
-"[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags "
-"regex] | [del name|-all]"
+"[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
+"[name...]] | [default -yes]"
 
 msgid ""
 "       list: list all rmodifiers\n"
@@ -6399,26 +6405,45 @@ msgid ""
 "  delete all rmodifiers:\n"
 "    /rmodifier del -all"
 msgstr ""
+"       list: zeigt alle rmodifier an\n"
+"listdefault: zeigt die Standardeinstellung für rmodifier an\n"
+"        add: einen rmodifier hinzufügen\n"
+"       name: Name des rmodifier\n"
+"  modifiers: durch Kommata getrennte Liste der modifier\n"
+"     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der "
+"Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein \"*"
+"\" gesetzt werden um diese Gruppe zu verbergen\n"
+"      regex: regulärer Ausdruck\n"
+"        del: löscht einen rmodifier Eintrag\n"
+"       -all: löscht alle rmodifiers Einträge\n"
+"    default: setzt die rmodifier auf Standardwerte zurück\n"
+"\n"
+"Beispiele:\n"
+"  verbirgt die Eingabe nach dem Befehl /passwort:\n"
+"    /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)\n"
+"  lösche rmodifier \"passwort\":\n"
+"    /rmodifier del passwort\n"
+"  lösche alle rmodifiers:\n"
+"    /rmodifier del -all"
 
-#, fuzzy
 msgid "list of rmodifiers"
-msgstr "Liste der Filter"
+msgstr "Liste der rmodifier"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: Fehler beim Erstellen von \"%s\" => \"%s\""
+msgstr "%s%s: Fehler beim Erstellen des rmodifier \"%s\" => \"%s\""
 
 msgid "char used to hide part of a string"
 msgstr ""
+"Zeichen welches benutzt werden soll um die Eingabe einer Zeichenkette zu "
+"verbergen"
 
-#, fuzzy
 msgid "rmodifier pointer (optional)"
-msgstr "xfer Pointer (optional)"
+msgstr "rmodifier Pointer (optional)"
 
-#, fuzzy
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
-"Name des Filters (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
+"rmodifier Name (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
 "(optional)"
 
 #, c-format
@@ -6967,7 +6992,7 @@ msgstr "Beim Verschicken von Dateien, Leerzeichen in Unterstrich umwandeln"
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden "
-"(fügt  dabei '.1', '.2', ... dem Dateinamen hinzu)"
+"(fügt dabei '.1', '.2', ... dem Dateinamen hinzu)"
 
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"
@@ -7046,18 +7071,10 @@ msgid "Arguments"
 msgstr "Argumente"
 
 msgid "Hashtable (input)"
-msgstr ""
+msgstr "Hashtable (Eingabe)"
 
 msgid "Hashtable (output)"
-msgstr ""
+msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
-
-#, fuzzy
-#~ msgid "list of regex modifiers"
-#~ msgstr "Transfer-Liste"
-
-#, fuzzy
-#~ msgid "List of regex modifiers:"
-#~ msgstr "Liste der Proxys:"

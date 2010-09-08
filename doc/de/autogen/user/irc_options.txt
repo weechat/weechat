@@ -129,7 +129,7 @@
 ** Werte: on, off (Standardwert: on)
 
 * *irc.look.highlight_tags*
-** Beschreibung: Eine durch Kommata getrennte Liste von tags die bei einer Nachricht diese dann hervorhebt (Highlight).  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)
+** Beschreibung: Eine durch Kommata getrennte Liste von Tags die bei einer Nachricht selbige hervorhebt (Highlight). (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: "irc_privmsg,irc_notice")
 
@@ -259,7 +259,7 @@
 ** Werte: 0 .. 86400 (Standardwert: 1800)
 
 * *irc.network.away_check*
-** Beschreibung: Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall  (in Minuten, 0 = nicht überprüfen)
+** Beschreibung: Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall (in Minuten, 0 = nicht überprüfen)
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: 0)
 

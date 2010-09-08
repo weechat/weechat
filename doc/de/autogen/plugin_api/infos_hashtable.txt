@@ -1,7 +1,7 @@
 [width="100%",cols="^1,^2,6,6,6",options="header"]
 |========================================
-| Erweiterung | Name | Beschreibung | Hashtable (input) | Hashtable (output)
+| Erweiterung | Name | Beschreibung | Hashtable (Eingabe) | Hashtable (Ausgabe)
 
-| irc | irc_parse_message | parse an IRC message | "message": IRC message | "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
+| irc | irc_parse_message | Parse eine IRC Nachricht | "message": IRC Nachricht | "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (beinhaltet Channel)
 
 |========================================

@@ -64,7 +64,7 @@
            (Bei der Standardtastenbelegung kann mittels "CTRL-x" zwischen zusammengefügten Buffern umgeschaltet werden)
    unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
      close: Buffer schließen (Nummer oder Bereich ist optional)
-      list: alle offenen Buffer auflisten (Standardvorgabe)
+      list: alle geöffneten Buffer werden aufgelistet (Standardvorgabe)
     notify: setzt Benachrichtigung-Status für aktuellen Buffer. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung:
               none: keine Benachrichtigung
          highlight: Benachrichtigung bei hervorgehobenen Nachrichten (Highlights)
@@ -85,7 +85,7 @@
    /buffer clear
    verschiebt Buffer auf Position 5:
    /buffer move 5
-   verbindetn Buffer mit dem Core-Buffer:
+   verbindet Buffer mit dem Core-Buffer:
    /buffer merge 1
    trennt Buffer voneinander:
    /buffer unmerge
@@ -127,42 +127,42 @@
 ........................................
   Filterfunktion um Nachrichten in Buffern zu verbergen oder anzuzeigen, dazu können Tags oder regulären Ausdrücken verwendet werden
 
-           list: list all filters
-         enable: enable filters (filters are enabled by default)
-        disable: disable filters
-         toggle: toggle filters
-           name: filter name
-            add: add a filter
-            del: delete a filter
-           -all: delete all filters
-  plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
-           tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-          regex: regular expression to search in line
-                 - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-                 - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-                 note: two regex are created: one for prefix and one for message
+           list: alle Filter auflisten
+         enable: aktiviert den Filter (Filter sind standardmäßig aktiviert)
+        disable: deaktiviert den Filter
+         toggle: Filterfunktion ein-/ausschalten
+           name: Name für den Filter
+            add: fügt einen Filter hinzu
+            del: entfernt einen Filter
+           -all: entfernt alle Filter
+  plugin.buffer: Erweiterung und Buffer in denen die Filterfunktion aktiviert ist ("*" betrifft alle Buffer)
+           tags: durch Kommata  getrennte Liste mit Tags, Beispiel: "irc_join,irc_part,irc_quit"
+          regex: regulärer Ausdruck um in einer Zeile zu suchen
+                 - das Präfix wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+                 - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+                 Hinweis: Es werden zwei reguläre Ausdrücke erstellt. Der erste für den Präfix und der zweite für die Nachricht
   
-  The default key alt+'=' toggles filtering on/off.
+  Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.
   
-  Tags most commonly used:
+  Die am häufigsten gebrauchten Tags lauten:
     no_filter, no_highlight, log0..log9 (log level),
     notify_message, notify_private, notify_highlight,
-    irc_xxx (xxx is command name or number, see /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+    irc_xxx (xxx ist durch einen IRC Befehl oder die IRC Nummer zu ersetzen, siehe /server raw), irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
   
-  Examples:
-    use IRC smart filter for join/part/quit messages:
+  Beispiele:
+    aktiviert einen einfachen IRC Filter für join/part/quit Nachrichten:
       /filter add irc_smart * irc_smart_filter *
-    filter all IRC join/part/quit messages:
+    filtert alle IRC join/part/quit Nachrichten:
       /filter add joinquit * irc_join,irc_part,irc_quit *
-    filter nicks displayed when joining channels or with /names:
+    filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names:" angezeigt werden:
       /filter add nicks * irc_366 *
-    filter nick "toto" on IRC channel #weechat:
+    filtert Nick "toto" im IRC Channel #weechat:
       /filter add toto irc.freenode.#weechat * toto\t
-    keep only nick "titi" on IRC channel #test:
-      /filter add titi irc.freenode.#test * !titi\t
-    filter lines containing word "spam":
+    nur der Nick "tutu" wird im IRC Channel #test angezeigt:
+      /filter add tutu irc.freenode.#test * !tutu\t
+    filtert Zeilen die das Wort "spam" enthalten:
       /filter add filterspam * * spam
-    filter lines containing "weechat sucks" on IRC channel #weechat:
+    filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
       /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
@@ -198,7 +198,7 @@
   Einer Taste einen Befehl zuordnen oder entfernen
 
          list: Zeigt die aktuelle Tastenbelegungen an (Standardaufruf)
-  listdefault: Zeigt die die Standardeinstellung der Tastenbelegung an
+  listdefault: Zeigt die Standardeinstellung der Tastenbelegung an
      listdiff: Zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
          bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde
        unbind: hebt eine Tastenbelegung auf
@@ -360,15 +360,15 @@
 ........................................
   Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen
 
-  path_to_binary: path to WeeChat binary (default is current binary)
+  Pfad_zur_Binärdatei: Pfad zu einer ausführbaren WeeChat Version (Standardeinstellung ist die aktuell ausführbare Datei)
   
-  This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+  Dieser Befehl startet eine weitere WeeChat-Binärdatei. Aus diesem Grund muss diese kompiliert oder mit einem Paketmanager installiert sein bevor der Befehl ausgeführt wird.
   
-  Upgrade process has 4 steps:
-    1. save session into files for core and plugins (buffers, history, ..)
-    2. unload all plugins (configs *.conf are saved)
-    3. save WeeChat config (weechat.conf)
-    4. exec new WeeChat binary.
+  Der Upgrade Vorgang besteht aus vier Schritten:
+    1. Speicherung der Session in Dateien für Core und Erweiterungen (buffers, history, ..)
+    2. alle Erweiterungen werden ausgeschaltet (Konfigurationen *.conf werden gesichert)
+    3. Speicherung der WeeChat Konfiguration (weechat.conf)
+    4. ausführen einer neuen WeeChat Session.
 ........................................
 
 &bull; *`/uptime`* `[-o | -ol]`::

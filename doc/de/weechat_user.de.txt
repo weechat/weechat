@@ -512,10 +512,9 @@ Tastenbefehle für die Befehlszeile
   kopiert) +
   `/input delete_end_of_line`
 
-// TRANSLATION MISSING
 | Ctrl + R |
-  Sucht nach einem Text in der Protokolldatei (zweimaliges Drücken: sucht nach exaktem Text),
-  next/previous occurrences can be found with up and down arrows +
+  Sucht in der Protokolldatei nach einem Text (zweimaliges Drücken: sucht nach exaktem Text),
+  mittels Pfeiltaste hoch/runter kann zum nächsten/vorherigen Treffer gesprungen werden +
   `/input search_text`
 
 | Ctrl + T |
@@ -933,8 +932,7 @@ Standarderweiterungen:
 | fifo      | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc       | IRC Chat-Protokoll
 | logger    | erstellt Protokolldateien von Buffern
-// TRANSLATION MISSING
-| rmodifier | Alter modifier strings with regular expressions
+| rmodifier | wandelt Schlüsselwörter mit regulären Ausdrücken
 | perl      | Perl-Skript API
 | python    | Python-Skript API
 | ruby      | Ruby-Skript API
@@ -1568,15 +1566,15 @@ In einer Baumstruktur sieht es dann wie folgt aus:
             |       #chan2.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[rmodifier_plugin]]
 Rmodifier plugin
 ~~~~~~~~~~~~~~~~
 
-The Rmodifier plugin lets you alter modifier strings using regular expressions.
-Typical use is to hide password when you type them, or when WeeChat saves
-them in command history. For example, it is possible to replace each char in
-these passwords by "*".
+Mittels der Rmodifer Erweiterung kann man Schlüsselwörter mittels regulären Ausdrücken
+wandeln. Ein typischer Anwendungsfall ist das Passwörter bei der Eingabe verborgen werden,
+oder das WeeChat diese verbirgt wenn sie im Befehlsverlauf gesichert werden.
+Ein einfaches Anwendungsbeispiel. Es ist möglich jedes einzelne Zeichen eines Passwortes
+durch das Zeichen "*" zu ersetzen.
 
 [[rmodifier_options]]
 Options (rmodifier.conf)

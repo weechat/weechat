@@ -1,5 +1,5 @@
 * *rmodifier.look.hide_char*
-** Beschreibung: char used to hide part of a string
+** Beschreibung: Zeichen welches benutzt werden soll um die Eingabe einer Zeichenkette zu verbergen
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: "*")
 

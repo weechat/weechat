@@ -344,7 +344,7 @@
 ** Werte: time, buffer, prefix, suffix, message (Standardwert: message)
 
 * *weechat.look.buffer_notify_default*
-** Beschreibung: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist
+** Beschreibung: Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt.
 ** Typ: integer
 ** Werte: none, highlight, message, all (Standardwert: all)
 
@@ -489,7 +489,7 @@
 ** Werte: 0 .. 128 (Standardwert: 0)
 
 * *weechat.look.prefix_buffer_align_more*
-** Beschreibung: Stellt das Symbol '+' dar falls der Buffername zu lang sein sollte (falls viele Buffer zusammengefügt wurden und die somit selbe Nummer besitzen)
+** Beschreibung: Stellt das Symbol '+' dar falls der Buffername gekürzt wurde (wenn mehrere Buffer zusammengefügt wurden und diese somit die selbe Nummer besitzen)
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: on)
 
@@ -579,7 +579,7 @@
 ** Werte: on, off (Standardwert: off)
 
 * *weechat.plugin.extension*
-** Beschreibung: Standard Dateinamenserweiterung  (Beispiel: ".so" unter Linux oder ".dll" unter Microsoft Windows)
+** Beschreibung: Standard Dateinamenserweiterung (Beispiel: ".so" unter Linux oder ".dll" unter Microsoft Windows)
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: ".so")
 

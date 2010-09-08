@@ -1,25 +1,25 @@
 &bull; *`/rmodifier`* `[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all [name...]] | [default -yes]`::
 
 ........................................
-  alter modifier strings with regular expressions
+  wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Sichtbarkeit von Texten in WeeChat)
 
-         list: list all rmodifiers
-  listdefault: list default rmodifiers
-          add: add a rmodifier
-         name: name of rmodifier
-    modifiers: comma separated list of modifiers
-       groups: action on groups found: comma separated list of groups (from 1 to 9) with optional "*" after number to hide group
-        regex: regular expression
-          del: delete a rmodifier
-         -all: delete all rmodifiers
-      default: restore default rmodifiers
+         list: zeigt alle rmodifier an
+  listdefault: zeigt die Standardeinstellung für rmodifier an
+          add: einen rmodifier hinzufügen
+         name: Name des rmodifier
+    modifiers: durch Kommata getrennte Liste der modifier
+       groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe zu verbergen
+        regex: regulärer Ausdruck
+          del: löscht einen rmodifier Eintrag
+         -all: löscht alle rmodifiers Einträge
+      default: setzt die rmodifier auf Standardwerte zurück
   
-  Examples:
-    hide everything typed after a command /password:
-      /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-    delete rmodifier "password":
-      /rmodifier del password
-    delete all rmodifiers:
+  Beispiele:
+    verbirgt die Eingabe nach dem Befehl /passwort:
+      /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)
+    lösche rmodifier "passwort":
+      /rmodifier del passwort
+    lösche alle rmodifiers:
       /rmodifier del -all
 ........................................
 

@@ -54,7 +54,7 @@
 ** Werte: on, off (Standardwert: off)
 
 * *xfer.file.auto_rename*
-** Beschreibung: Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden (fügt  dabei '.1', '.2', ... dem Dateinamen hinzu)
+** Beschreibung: Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden (fügt dabei '.1', '.2', ... dem Dateinamen hinzu)
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: on)
 
