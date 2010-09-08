@@ -177,7 +177,13 @@ weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
     if (!hashtable)
         return NULL;
     
+    /* RHASH_TBL exists in ruby 1.8.7 but not ruby 1.8.6 */
+#ifdef RHASH_TBL
     st = RHASH_TBL(hash);
+#else
+    st = RHASH(hash)->tbl;
+#endif
+    
     rb_hash_foreach (hash, &weechat_ruby_hash_foreach_cb, (unsigned long)hashtable);
     
     return hashtable;
