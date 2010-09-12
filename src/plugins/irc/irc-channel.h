@@ -90,7 +90,7 @@ extern int irc_channel_is_channel (const char *string);
 extern void irc_channel_remove_away (struct t_irc_server *server,
                                      struct t_irc_channel *channel);
 extern void irc_channel_check_away (struct t_irc_server *server,
-                                    struct t_irc_channel *channel, int force);
+                                    struct t_irc_channel *channel);
 extern void irc_channel_set_away (struct t_irc_server *server,
                                   struct t_irc_channel *channel,
                                   const char *nick_name,

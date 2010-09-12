@@ -3669,7 +3669,7 @@ IRC_PROTOCOL_CALLBACK(366)
                              IRC_COLOR_CHAT_DELIMITERS);
         
         irc_command_mode_server (server, ptr_channel, NULL);
-        irc_channel_check_away (server, ptr_channel, 1);
+        irc_channel_check_away (server, ptr_channel);
     }
     else
     {

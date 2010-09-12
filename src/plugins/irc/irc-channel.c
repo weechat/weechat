@@ -364,13 +364,13 @@ irc_channel_remove_away (struct t_irc_server *server,
 
 void
 irc_channel_check_away (struct t_irc_server *server,
-                        struct t_irc_channel *channel, int force)
+                        struct t_irc_channel *channel)
 {
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        if (force
-            || (weechat_config_integer (irc_config_network_away_check_max_nicks) == 0)
-            || (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks)))
+        if ((weechat_config_integer (irc_config_network_away_check) > 0)
+            && ((weechat_config_integer (irc_config_network_away_check_max_nicks) == 0)
+                || (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks))))
         {
             channel->checking_away++;
             irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,

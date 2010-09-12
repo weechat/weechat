@@ -81,7 +81,6 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 
 
 void irc_server_reconnect (struct t_irc_server *server);
-void irc_server_check_away ();
 void irc_server_free_data (struct t_irc_server *server);
 
 
@@ -3383,7 +3382,7 @@ irc_server_check_away ()
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                    irc_channel_check_away (ptr_server, ptr_channel, 0);
+                    irc_channel_check_away (ptr_server, ptr_channel);
             }
         }
     }

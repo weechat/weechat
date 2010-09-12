@@ -223,6 +223,7 @@ extern int irc_server_get_pv_count (struct t_irc_server *server);
 extern void irc_server_set_away (struct t_irc_server *server, const char *nick,
                                  int is_away);
 extern void irc_server_remove_away ();
+extern void irc_server_check_away ();
 extern void irc_server_disconnect (struct t_irc_server *server, int reconnect);
 extern void irc_server_disconnect_all ();
 extern void irc_server_free (struct t_irc_server *server);
