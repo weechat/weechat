@@ -492,13 +492,26 @@ irc_config_change_network_away_check (void *data,
     (void) data;
     (void) option;
     
+    /*
+     * if away check was disabled and is now enabled, check now away for all
+     * servers/channels
+     */
+    if (!irc_hook_timer_check_away
+        && (weechat_config_integer (irc_config_network_away_check) > 0))
+    {
+        irc_server_check_away ();
+    }
+    
+    /* remove old timer */
     if (irc_hook_timer_check_away)
     {
         weechat_unhook (irc_hook_timer_check_away);
         irc_hook_timer_check_away = NULL;
     }
+    
     if (weechat_config_integer (irc_config_network_away_check) > 0)
     {
+        /* create new timer */
         irc_hook_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_network_away_check) * 60 * 1000,
                                                         0, 0,
                                                         &irc_server_timer_check_away_cb,
@@ -506,7 +519,7 @@ irc_config_change_network_away_check (void *data,
     }
     else
     {
-        /* reset away flag for all nicks/chans/servers */
+        /* reset away flag for all servers/channels */
         irc_server_remove_away ();
     }
 }
