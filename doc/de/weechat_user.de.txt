@@ -1589,43 +1589,43 @@ Commands
 include::autogen/user/rmodifier_commands.txt[]
 
 [[rmodifier_creation]]
-Rmodifier creation
-^^^^^^^^^^^^^^^^^^
+Erstellen eines Rmodifier
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A rmodifier consists of three elements:
+Ein rmodifier besteht aus drei Elementen:
 
-. one or more "modifiers"
-. a regular expression, to capture "groups"
-. a string that describes output using number of "groups" captured in regular
-  expression
+. ein oder mehrere "modifiers"
+. ein regulärer Ausdruck  um "Gruppen" zu erkennen
+. eine Zeichenkette die als Textausgabe von "Gruppen" erkannt werden soll
 
-For list of modifiers used by WeeChat or plugins, see
-'WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
+Um eine Auflistung der modifiers zu erhalten die von WeeChat oder einer
+Erweiterung genutzt werden siehe ''WeeChat Plugin API Reference', Funktion 'weechat_hook_modifier'.
 
-For each captured group, following actions are possible:
+Für jede erkannte Gruppe sind folgende Aktionen möglich:
 
-* keep group as-is (by using group number)
-* replace all chars in group to hide content (group number + "*")
-* remove group (if group is not used in string)
+* Gruppe wird in der vorliegenden Form beibehalten (wenn man die Gruppennummer nutzt)
+* alle Zeichen der Gruppe werden ersetzt um deren Inhalt zu verbergen (Gruppennummer + "*")
+* Gruppe wird entfernt (falls Gruppe nicht in Zeichenkette genutzt wird)
 
-Example of default rmodifier for command `/oper`:
+Beispiel der rmodifier-Standardeinstellung für den Befehl `/oper`:
 
 * modifiers: `history_add,input_text_display`
-** `history_add`: called when WeeChat stores command in history
-** `input_text_display`: called when command line has changed
-   (applies only on display, not content of command line)
-* regular expression: `^(/oper +\S+ +)(.*)`
-* groupes: `1,2*`
+** `history_add`: wird aufgerufen sobald WeeChat einen Befehl im Befehlsverlauf sichert
+** `input_text_display`: wird aufgerufen sobald sich die Eingabezeile ändert
+   (dies hat nur Einfluss auf die Darstellung aber nicht auf den Inhalt der Befehlszeile)
+* regulärer Ausdruck: `^(/oper +\S+ +)(.*)`
+* Gruppen: `1,2*`
 
-Each time modifiers "history_add" or "input_text_display" are called, regular
-expression is checked. If string matches, then it is replaced by captured groups,
-as defined in string with groups.
+Bei jedem Aufruf von "history_add" oder "input_text_display" durch modifier wird der
+reguläre Ausdruck überprüft. Stimmen die Zeichenketten überein wird die Zeichenkette
+durch das definierte Zeichen ersetzt.
 
-In this example, we keep number 1 as-is, and we replace all chars of group 2 by
-replacement char defined in configuration (option 'rmodifier.look.hide_char').
+In obigem Beispiel wird die Ausgabe für Gruppe 1 beibehalten und für die Gruppe 2
+werden alle Zeichen ersetzt. Das Zeichen welches zum Ersetzten genutzt werden soll
+kann in der Konfiguration bestimmt werden (Option: 'rmodifier.look.hide_char').
 
-If command line contains: `/oper nick password` then display becomes:
-`/oper nick ********`.
+Lautet die Befehlszeile `/oper nick password` wird diese in der Befehlszeile als
+`/oper nick ********` dargestellt.
 
 [[scripts_plugins]]
 Skripten Erweiterungen
