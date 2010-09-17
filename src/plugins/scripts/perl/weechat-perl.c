@@ -817,9 +817,12 @@ weechat_perl_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
     
-    script_print_log (weechat_perl_plugin, perl_scripts);
+    if (!signal_data
+        || (weechat_strcasecmp ((char *)signal_data, PERL_PLUGIN_NAME) == 0))
+    {
+        script_print_log (weechat_perl_plugin, perl_scripts);
+    }
     
     return WEECHAT_RC_OK;
 }

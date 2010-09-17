@@ -117,9 +117,9 @@ debug_dump_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
     
-    debug_dump (0);
+    if (!signal_data || (string_strcasecmp ((char *)signal_data, "core") == 0))
+        debug_dump (0);
     
     return WEECHAT_RC_OK;
 }
@@ -263,7 +263,7 @@ debug_windows_cb (void *data, const char *signal, const char *type_data,
 void
 debug_init ()
 {
-    hook_signal (NULL, "debug_dump", debug_dump_cb, NULL);
-    hook_signal (NULL, "debug_buffer", debug_buffer_cb, NULL);
-    hook_signal (NULL, "debug_windows", debug_windows_cb, NULL);
+    hook_signal (NULL, "debug_dump", &debug_dump_cb, NULL);
+    hook_signal (NULL, "debug_buffer", &debug_buffer_cb, NULL);
+    hook_signal (NULL, "debug_windows", &debug_windows_cb, NULL);
 }

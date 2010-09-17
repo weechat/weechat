@@ -6598,7 +6598,7 @@ Argomenti:
 | irc | irc_ignore_removed | - |
   ignore rimosso
 
-| logger | logger_start | puntatore: buffer
+| logger | logger_start | puntatore: buffer |
   avvia il logging per il buffer
 
 | logger | logger_stop | puntatore: buffer |
@@ -6643,13 +6643,14 @@ Argomenti:
 | weechat | buffer_type_changed | puntatore: buffer |
   tipo di buffer modificato
 
-| weechat | debug_dump | - |
+// TRANSLATION MISSING
+| weechat | debug_dump | string: plugin name |
   richiesta di dump
 
 | weechat | day_changed | string: nuova data, formato: "2010-01-31" |
   data di sistema modificata
 
-| weechat | filter_added | puntatore: filtro
+| weechat | filter_added | puntatore: filtro |
   filtro aggiunto
 
 | weechat | filter_removing | puntatore: filtro |

@@ -609,9 +609,12 @@ weechat_lua_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
     
-    script_print_log (weechat_lua_plugin, lua_scripts);
+    if (!signal_data
+        || (weechat_strcasecmp ((char *)signal_data, LUA_PLUGIN_NAME) == 0))
+    {
+        script_print_log (weechat_lua_plugin, lua_scripts);
+    }
     
     return WEECHAT_RC_OK;
 }

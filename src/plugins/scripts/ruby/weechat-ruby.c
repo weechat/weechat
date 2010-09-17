@@ -853,9 +853,12 @@ weechat_ruby_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
     
-    script_print_log (weechat_ruby_plugin, ruby_scripts);
+    if (!signal_data
+        || (weechat_strcasecmp ((char *)signal_data, RUBY_PLUGIN_NAME) == 0))
+    {
+        script_print_log (weechat_ruby_plugin, ruby_scripts);
+    }
     
     return WEECHAT_RC_OK;
 }

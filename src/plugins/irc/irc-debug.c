@@ -42,17 +42,20 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
     
-    weechat_log_printf ("");
-    weechat_log_printf ("***** \"%s\" plugin dump *****",
-                        weechat_plugin->name);
-    
-    irc_server_print_log ();
-    
-    weechat_log_printf ("");
-    weechat_log_printf ("***** End of \"%s\" plugin dump *****",
-                        weechat_plugin->name);
+    if (!signal_data
+        || (weechat_strcasecmp ((char *)signal_data, IRC_PLUGIN_NAME) == 0))
+    {
+        weechat_log_printf ("");
+        weechat_log_printf ("***** \"%s\" plugin dump *****",
+                            weechat_plugin->name);
+        
+        irc_server_print_log ();
+        
+        weechat_log_printf ("");
+        weechat_log_printf ("***** End of \"%s\" plugin dump *****",
+                            weechat_plugin->name);
+    }
     
     return WEECHAT_RC_OK;
 }

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-17 14:38+0200\n"
+"POT-Creation-Date: 2010-09-17 16:09+0200\n"
 "PO-Revision-Date: 2010-09-08 22:15+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1030,7 +1030,8 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
-msgid "[list | set plugin level | dump | buffer | windows | term]"
+#, fuzzy
+msgid "[list | set plugin level | dump [plugin] | buffer | windows | term]"
 msgstr "[list | set plugin level | dump | buffer | windows | term]"
 
 msgid ""

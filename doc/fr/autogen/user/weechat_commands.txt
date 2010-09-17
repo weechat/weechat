@@ -108,7 +108,7 @@
    commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ........................................
 
-&bull; *`/debug`* `[list | set extension niveau | dump | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set extension niveau | dump [extension] | buffer | windows | term]`::
 
 ........................................
   contrôle du debug pour le coeur/les extensions

@@ -1063,9 +1063,13 @@ command_debug (void *data, struct t_gui_buffer *buffer,
     
     if (string_strcasecmp (argv[1], "dump") == 0)
     {
-        log_printf ("Dump request for WeeChat core and plugins");
+        if (argc > 2)
+            log_printf ("Dump request for plugin: \"%s\"", argv_eol[2]);
+        else
+            log_printf ("Dump request for WeeChat core and plugins");
         weechat_log_use_time = 0;
-        hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING,
+                          (argc > 2) ? argv_eol[2] : NULL);
         weechat_log_use_time = 1;
     }
     else if (string_strcasecmp (argv[1], "buffer") == 0)
@@ -4575,8 +4579,8 @@ command_init ()
                   &command_command, NULL);
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
-                  N_("[list | set plugin level | dump | buffer | windows | "
-                     "term]"),
+                  N_("[list | set plugin level | dump [plugin] | buffer | "
+                     "windows | term]"),
                   N_("    set: set log level for plugin\n"
                      " plugin: name of plugin (\"core\" for WeeChat core)\n"
                      "  level: debug level for plugin (0 = disable debug)\n"
@@ -4588,11 +4592,11 @@ command_init ()
                      "   term: display infos about terminal and available "
                      "colors"),
                   "list"
-                  "|| set %(plugins_names)|core"
-                  "|| dump"
-                  "|| buffer"
-                  "|| windows"
-                  "|| term",
+                  " || set %(plugins_names)|core"
+                  " || dump %(plugins_names)|core"
+                  " || buffer"
+                  " || windows"
+                  " || term",
                   &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "

@@ -6611,7 +6611,7 @@ Paramètres :
 | weechat | day_changed | chaîne : nouvelle date, format : "2010-01-31" |
   le jour de la date système a changé
 
-| weechat | debug_dump | - |
+| weechat | debug_dump | chaîne: nom d'extension |
   requête de "dump"
 
 | weechat | filter_added | pointeur : filtre |

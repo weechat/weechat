@@ -108,7 +108,7 @@
       Befehl: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
 ........................................
 
-&bull; *`/debug`* `[list | set plugin level | dump | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term]`::
 
 ........................................
   Debug-Kontrolle für Hauptprogramm und/oder Erweiterung

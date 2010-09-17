@@ -6528,7 +6528,7 @@ Arguments:
 | weechat | day_changed | string: new date, format: "2010-01-31" |
   day of system date has changed
 
-| weechat | debug_dump | - |
+| weechat | debug_dump | string: plugin name |
   dump request
 
 | weechat | filter_added | pointer: filter |

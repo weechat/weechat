@@ -108,7 +108,7 @@
   comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trovata all'inizio del comando)
 ........................................
 
-&bull; *`/debug`* `[list | set plugin livello | dump | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term]`::
 
 ........................................
   attiva debug per core/plugin
