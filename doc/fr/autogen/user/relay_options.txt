@@ -53,3 +53,8 @@
 ** type: entier
 ** valeurs: 1 .. 1024 (valeur par défaut: 5)
 
+* *relay.network.password*
+** description: mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+

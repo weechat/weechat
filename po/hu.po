@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-17 16:09+0200\n"
+"POT-Creation-Date: 2010-09-17 16:39+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5819,6 +5819,11 @@ msgid "text color for \"disconnected\" status"
 msgstr "\"connecting\" dcc státusz színe"
 
 msgid "maximum number of clients connecting to a port"
+msgstr ""
+
+msgid ""
+"password required by clients to access this relay (empty value means no "
+"password required)"
 msgstr ""
 
 #, fuzzy

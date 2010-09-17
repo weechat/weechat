@@ -53,3 +53,8 @@
 ** Typ: integer
 ** Werte: 1 .. 1024 (Standardwert: 5)
 
+* *relay.network.password*
+** Beschreibung: password required by clients to access this relay (empty value means no password required)
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: "")
+

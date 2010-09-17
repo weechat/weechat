@@ -34,6 +34,7 @@ extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_color_status[];
 
 extern struct t_config_option *relay_config_network_max_clients;
+extern struct t_config_option *relay_config_network_password;
 
 extern int relay_config_create_option_port (void *data,
                                             struct t_config_file *config_file,

@@ -53,3 +53,8 @@
 ** type: integer
 ** values: 1 .. 1024 (default value: 5)
 
+* *relay.network.password*
+** description: password required by clients to access this relay (empty value means no password required)
+** type: string
+** values: any string (default value: "")
+

@@ -35,6 +35,7 @@
 #include "relay.h"
 #include "relay-client-irc.h"
 #include "relay-client.h"
+#include "relay-config.h"
 #include "relay-raw.h"
 
 
@@ -639,6 +640,18 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
     }
     if (!RELAY_IRC_DATA(client, connected))
     {
+        if (irc_command && (weechat_strcasecmp (irc_command, "pass") == 0))
+        {
+            if (!RELAY_IRC_DATA(client, password_ok))
+            {
+                if (irc_args && irc_args[0]
+                    && (strcmp (weechat_config_string (relay_config_network_password),
+                                irc_args) == 0))
+                {
+                    RELAY_IRC_DATA(client, password_ok) = 1;
+                }
+            }
+        }
         if (irc_command && (weechat_strcasecmp (irc_command, "user") == 0))
         {
             /* check if connection to server is ok */
@@ -671,8 +684,20 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
                 weechat_infolist_free (infolist_server);
             }
         }
-        if (RELAY_IRC_DATA(client, nick) && RELAY_IRC_DATA(client, user_received))
+        if (RELAY_IRC_DATA(client, nick)
+            && RELAY_IRC_DATA(client, user_received))
         {
+            /* disconnect client if password was not received or wrong */
+            if (!RELAY_IRC_DATA(client, password_ok))
+            {
+                relay_client_irc_sendf (client,
+                                        ":%s ERROR :WeeChat: password error",
+                                        RELAY_IRC_DATA(client, address));
+                relay_client_set_status (client,
+                                         RELAY_STATUS_DISCONNECTED);
+                return;
+            }
+            
             RELAY_IRC_DATA(client, connected) = 1;
             
             /*
@@ -923,11 +948,15 @@ void
 relay_client_irc_alloc (struct t_relay_client *client)
 {
     struct t_relay_client_irc_data *irc_data;
+    const char *password;
+    
+    password = weechat_config_string (relay_config_network_password);
     
     client->protocol_data = malloc (sizeof (*irc_data));
     if (client->protocol_data)
     {
         RELAY_IRC_DATA(client, address) = strdup ("weechat.relay.irc");
+        RELAY_IRC_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
         RELAY_IRC_DATA(client, nick) = NULL;
         RELAY_IRC_DATA(client, user_received) = 0;
         RELAY_IRC_DATA(client, connected) = 0;
@@ -974,6 +1003,7 @@ relay_client_irc_print_log (struct t_relay_client *client)
     if (client->protocol_data)
     {
         weechat_log_printf ("    address. . . . . . . . : '%s'",  RELAY_IRC_DATA(client, address));
+        weechat_log_printf ("    password_ok. . . . . . : %d",    RELAY_IRC_DATA(client, password_ok));
         weechat_log_printf ("    nick . . . . . . . . . : '%s'",  RELAY_IRC_DATA(client, nick));
         weechat_log_printf ("    user_received. . . . . : %d",    RELAY_IRC_DATA(client, user_received));
         weechat_log_printf ("    connected. . . . . . . : %d",    RELAY_IRC_DATA(client, connected));

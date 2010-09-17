@@ -50,6 +50,7 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 /* relay config, network section */
 
 struct t_config_option *relay_config_network_max_clients;
+struct t_config_option *relay_config_network_password;
 
 
 /*
@@ -342,6 +343,12 @@ relay_config_init ()
         N_("maximum number of clients connecting to a port"),
         NULL, 1, 1024, "5", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_network_password = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "password", "string",
+        N_("password required by clients to access this relay (empty value "
+            "means no password required)"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (relay_config_file, "port",
                                               1, 1,
