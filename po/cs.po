@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
+"POT-Creation-Date: 2010-09-17 14:38+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3183,6 +3183,10 @@ msgstr ""
 "%s%s: příkaz \"%s\" může být spuštěn pouze v bufferu kanálu nebo soukromého "
 "rozhovoru"
 
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nemohu vytvořít nový soukromý buffer\"%s\""
@@ -3889,9 +3893,10 @@ msgstr "poslat čistá data na server bez pársování"
 msgid "[-server server] data"
 msgstr "[-server server] data"
 
+#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"data: raw data to send"
+"  data: raw data to send"
 msgstr ""
 "server: poslat na tento server (vnitřní jméno)\n"
 "  data: čistá data, která poslat"
@@ -4566,8 +4571,9 @@ msgstr ""
 msgid "close buffer when /part is issued on a channel"
 msgstr "zavřít buffer, když je na kanálu spuštěn /part"
 
+#, fuzzy
 msgid ""
-"number of IRC raw messages to save in memory when raw data buffer is closed "
+"number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 "počet čistých IRC zpráv uložených v paměti při zavření bufferu s čistými "
@@ -5915,8 +5921,8 @@ msgstr "%s%s[%s%s%s%s] %s (spuštěn: %s%s%s%s)"
 msgid "ended on: "
 msgstr "končí: "
 
-#, c-format
-msgid "%s%-26s protocol: %s, received: %s, sent: %s"
+#, fuzzy, c-format
+msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
 msgstr "%s%-26s protokol: %s, obdrženo: %s, posláno: %s"
 
 msgid "List of clients for relay"
@@ -5934,8 +5940,8 @@ msgstr "autorizace selhala"
 msgid "disconnected"
 msgstr "odpojen"
 
-#, c-format
-msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+#, fuzzy, c-format
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
 msgstr "%s: nový klient od %s%s%s na portu %d (přesměrovávám %s.%s)"
 
 #, c-format
@@ -5950,19 +5956,31 @@ msgstr "%s%s: selhala autentizace s klientem %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: odpojen od klienta %s%s%s (%s.%s)"
 
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: nedostatek paměti pro získání zprávy"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
 msgid "Clients for relay:"
 msgstr "Klienti pro přenos:"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
+"recv, %lu sent"
 msgstr ""
 "%3d. %s%s%s (%s%s%s), spuštěn v: %s, poslední aktivita: %s, bytů: %lu "
 "přijato, %lu odebráno"
 
-#, c-format
-msgid "%3d. %s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  id: %d, %s%s%s, started on: %s"
 msgstr "%3d. %s%s%s, spuštěno v: %s"
 
 msgid "No client for relay"
@@ -5971,8 +5989,8 @@ msgstr "Žádný klient pro přesměrování"
 msgid "Listening on ports:"
 msgstr "Poslouchám na portech:"
 
-#, c-format
-msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
 msgstr "%3d. port %s%d%s, přesměrování: %s%s.%s%s, spuštěno v: %s"
 
 msgid "No server for relay"
@@ -5985,9 +6003,11 @@ msgstr "%s%s: přesměrování \"%s\" nenalezeno"
 msgid "relay control"
 msgstr "ovládání přesměrování"
 
-msgid "[list | listfull | add protocol.name port | del protocol.name]"
+#, fuzzy
+msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
 msgstr "[list | listfull | add protocol.name port | del protocol.name]"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -5997,6 +6017,7 @@ msgid ""
 "protocol.name: protocol and name to relay\n"
 "               for example: irc.freenode\n"
 "         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
@@ -6065,13 +6086,9 @@ msgstr "seznam klientů přesměrování"
 msgid "relay pointer (optional)"
 msgstr "ukazatel přesměrování (volitelné)"
 
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: chyba při zasílání dat na klienta %s"
-
-#, c-format
-msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr "%s%s: buffer IRC serveru \"%s\", kanálu \"%s\" nenalezen"
+#, fuzzy
+msgid "Relay raw messages"
+msgstr "čisté zprávy IRC"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6813,6 +6830,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+#~ msgstr "%s%s: buffer IRC serveru \"%s\", kanálu \"%s\" nenalezen"
 
 #, fuzzy
 #~ msgid "list of regex modifiers"

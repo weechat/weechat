@@ -38,6 +38,7 @@ struct t_config_section *relay_config_section_port = NULL;
 /* relay config, look section */
 
 struct t_config_option *relay_config_look_auto_open_buffer;
+struct t_config_option *relay_config_look_raw_messages;
 
 /* relay config, color section */
 
@@ -257,6 +258,12 @@ relay_config_init ()
         "auto_open_buffer", "boolean",
         N_("auto open relay buffer when a new client is connecting"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_look_raw_messages = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "raw_messages", "integer",
+        N_("number of raw messages to save in memory when raw data buffer is "
+           "closed (messages will be displayed when opening raw data buffer)"),
+        NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (relay_config_file, "color",
                                               0, 0,

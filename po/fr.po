@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
-"PO-Revision-Date: 2010-08-20 15:30+0200\n"
+"POT-Creation-Date: 2010-09-17 14:38+0200\n"
+"PO-Revision-Date: 2010-09-14 13:37+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3269,6 +3269,10 @@ msgstr ""
 "%s%s: la commande \"%s\" peut seulement être exécutée dans un tampon canal "
 "ou privé"
 
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr "Notice"
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: impossible de créer le tampon privé \"%s\""
@@ -3984,7 +3988,7 @@ msgstr "[-server serveur] données"
 
 msgid ""
 "server: send to this server (internal name)\n"
-"data: raw data to send"
+"  data: raw data to send"
 msgstr ""
 "serveur: envoyer à ce serveur (nom interne)\n"
 "données: données brutes à envoyer"
@@ -4674,10 +4678,10 @@ msgid "close buffer when /part is issued on a channel"
 msgstr "fermer le tampon lorsque /part est exécuté sur un canal"
 
 msgid ""
-"number of IRC raw messages to save in memory when raw data buffer is closed "
+"number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
-"nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des "
+"nombre de messages bruts à sauvegarder en mémoire lorsque le tampon des "
 "données brutes est fermé (ces messages seront affichés lors de l'ouverture "
 "du tampon des données brutes)"
 
@@ -6039,8 +6043,8 @@ msgid "ended on: "
 msgstr "terminé le: "
 
 #, c-format
-msgid "%s%-26s protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s protocole: %s, reçu: %s, envoyé: %s"
+msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+msgstr "%s%-26s id: %d, protocole: %s, reçu: %s, envoyé: %s"
 
 msgid "List of clients for relay"
 msgstr "Liste des clients pour le relai"
@@ -6058,8 +6062,8 @@ msgid "disconnected"
 msgstr "déconnecté"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
-msgstr "%s: nouveau client de %s%s%s sur le port %d (relai: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
+msgstr "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -6073,20 +6077,32 @@ msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: déconnecté du client %s%s%s (%s.%s)"
 
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: mémoire insuffisante pour analyser le message"
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: erreur d'envoi de données au client: %s"
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: erreur d'envoi de données au client %s"
+
 msgid "Clients for relay:"
 msgstr "Clients pour le relai:"
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
+"recv, %lu sent"
 msgstr ""
-"%3d. %s%s%s (%s%s%s), démarré le: %s, dernière activité: %s, octets: %lu "
-"reçus, %lu envoyés"
+"  id: %d, %s%s%s (%s%s%s), démarré le: %s, dernière activité: %s, octets: "
+"%lu reçus, %lu envoyés"
 
 #, c-format
-msgid "%3d. %s%s%s, started on: %s"
-msgstr "%3d. %s%s%s, démarré le: %s"
+msgid "  id: %d, %s%s%s, started on: %s"
+msgstr "  id: %d, %s%s%s, démarré le: %s"
 
 msgid "No client for relay"
 msgstr "Pas de client pour le relai"
@@ -6095,8 +6111,8 @@ msgid "Listening on ports:"
 msgstr "Ecoute sur les ports:"
 
 #, c-format
-msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "%3d. port %s%d%s, relai: %s%s.%s%s, démarré le: %s"
+msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgstr "  port %s%d%s, relai: %s%s.%s%s, démarré le: %s"
 
 msgid "No server for relay"
 msgstr "Pas de serveur pour le relai"
@@ -6108,8 +6124,8 @@ msgstr "%s%s: relai \"%s\" non trouvé"
 msgid "relay control"
 msgstr "contrôle du relai"
 
-msgid "[list | listfull | add protocol.name port | del protocol.name]"
-msgstr "[list | listfull | add protocole.nom port | del protocole.nom]"
+msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
+msgstr "[list | listfull | add protocole.nom port | del protocole.nom | raw]"
 
 msgid ""
 "         list: list relay clients (only active relays)\n"
@@ -6120,6 +6136,7 @@ msgid ""
 "protocol.name: protocol and name to relay\n"
 "               for example: irc.freenode\n"
 "         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
@@ -6131,6 +6148,7 @@ msgstr ""
 "protocole.nom: protocole et nom à relayer\n"
 "               par exemple: irc.freenode\n"
 "         port: port utilisé pour le relai\n"
+"          raw: ouvre le tampon avec les données brutes Relay\n"
 "\n"
 "Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
 "pour le relai."
@@ -6190,13 +6208,8 @@ msgstr "liste des clients pour le relai"
 msgid "relay pointer (optional)"
 msgstr "pointeur vers le relay (optionnel)"
 
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: erreur d'envoi de données au client %s"
-
-#, c-format
-msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr "%s%s: tampon non trouvé pour le serveur IRC \"%s\", canal \"%s\""
+msgid "Relay raw messages"
+msgstr "Messages bruts Relay"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6962,3 +6975,6 @@ msgstr "Hashtable (sortie)"
 
 msgid "Pointer"
 msgstr "Pointeur"
+
+#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+#~ msgstr "%s%s: tampon non trouvé pour le serveur IRC \"%s\", canal \"%s\""

@@ -21,12 +21,13 @@ ADD_LIBRARY(relay MODULE
 relay.c relay.h
 relay-buffer.c relay-buffer.h
 relay-client.c relay-client.h
+relay-client-irc.c relay-client-irc.h
+relay-client-weechat.c relay-client-weechat.h
 relay-command.c relay-command.h
 relay-completion.c relay-completion.h
 relay-config.c relay-config.h
 relay-info.c relay-info.h
-relay-protocol-irc.c relay-protocol-irc.h
-relay-protocol-weechat.c relay-protocol-weechat.h
+relay-raw.c relay-raw.h
 relay-server.c relay-server.h
 relay-upgrade.c relay-upgrade.h)
 SET_TARGET_PROPERTIES(relay PROPERTIES PREFIX "")

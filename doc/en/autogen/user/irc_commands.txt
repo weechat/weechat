@@ -421,7 +421,7 @@
   send raw data to server without parsing
 
   server: send to this server (internal name)
-  data: raw data to send
+    data: raw data to send
 ........................................
 
 &bull; *`/reconnect`* `[-all [-nojoin] | servername [servername ...] [-nojoin]]`::

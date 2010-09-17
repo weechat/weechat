@@ -26,6 +26,7 @@ extern struct t_config_file *relay_config_file;
 extern struct t_config_section *relay_config_section_port;
 
 extern struct t_config_option *relay_config_look_auto_open_buffer;
+extern struct t_config_option *relay_config_look_raw_messages;
 
 extern struct t_config_option *relay_config_color_text;
 extern struct t_config_option *relay_config_color_text_bg;

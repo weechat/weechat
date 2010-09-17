@@ -125,9 +125,10 @@ relay_buffer_refresh (const char *hotlist)
             str_recv = weechat_string_format_size (ptr_client->bytes_recv);
             str_sent = weechat_string_format_size (ptr_client->bytes_sent);
             weechat_printf_y (relay_buffer, (line * 2) + 3,
-                              _("%s%-26s protocol: %s, received: %s, sent: %s"),
+                              _("%s%-26s id: %d, protocol: %s, received: %s, sent: %s"),
                               weechat_color(str_color),
                               " ",
+                              ptr_client->id,
                               relay_protocol_string[ptr_client->protocol],
                               (str_recv) ? str_recv : "?",
                               (str_sent) ? str_sent : "?");

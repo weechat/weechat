@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
+"POT-Creation-Date: 2010-09-17 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2620,6 +2620,10 @@ msgid ""
 "%s%s: \"%s\" command can only be executed in a channel or private buffer"
 msgstr ""
 
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
@@ -3163,7 +3167,7 @@ msgstr ""
 
 msgid ""
 "server: send to this server (internal name)\n"
-"data: raw data to send"
+"  data: raw data to send"
 msgstr ""
 
 msgid "reconnect to server(s)"
@@ -3721,7 +3725,7 @@ msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
 msgid ""
-"number of IRC raw messages to save in memory when raw data buffer is closed "
+"number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
@@ -4920,7 +4924,7 @@ msgid "ended on: "
 msgstr ""
 
 #, c-format
-msgid "%s%-26s protocol: %s, received: %s, sent: %s"
+msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
 msgstr ""
 
 msgid "List of clients for relay"
@@ -4939,7 +4943,7 @@ msgid "disconnected"
 msgstr ""
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
 msgstr ""
 
 #, c-format
@@ -4954,17 +4958,29 @@ msgstr ""
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr ""
 
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr ""
+
 msgid "Clients for relay:"
 msgstr ""
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
+"recv, %lu sent"
 msgstr ""
 
 #, c-format
-msgid "%3d. %s%s%s, started on: %s"
+msgid "  id: %d, %s%s%s, started on: %s"
 msgstr ""
 
 msgid "No client for relay"
@@ -4974,7 +4990,7 @@ msgid "Listening on ports:"
 msgstr ""
 
 #, c-format
-msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
 msgstr ""
 
 msgid "No server for relay"
@@ -4987,7 +5003,7 @@ msgstr ""
 msgid "relay control"
 msgstr ""
 
-msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
 msgstr ""
 
 msgid ""
@@ -4999,6 +5015,7 @@ msgid ""
 "protocol.name: protocol and name to relay\n"
 "               for example: irc.freenode\n"
 "         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
@@ -5056,12 +5073,7 @@ msgstr ""
 msgid "relay pointer (optional)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+msgid "Relay raw messages"
 msgstr ""
 
 #, c-format

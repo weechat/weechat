@@ -79,6 +79,9 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "", "0", "", "off", "30",
 };
 
+const char *irc_server_send_default_tags = NULL;  /* default tags when       */
+                                                  /* sending a message       */
+
 
 void irc_server_reconnect (struct t_irc_server *server);
 void irc_server_free_data (struct t_irc_server *server);
@@ -730,7 +733,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
 void
 irc_server_outqueue_add (struct t_irc_server *server, int priority,
                          const char *command, const char *msg1,
-                         const char *msg2, int modified)
+                         const char *msg2, int modified, const char *tags)
 {
     struct t_irc_outqueue *new_outqueue;
 
@@ -741,6 +744,7 @@ irc_server_outqueue_add (struct t_irc_server *server, int priority,
         new_outqueue->message_before_mod = (msg1) ? strdup (msg1) : NULL;
         new_outqueue->message_after_mod = (msg2) ? strdup (msg2) : NULL;
         new_outqueue->modified = modified;
+        new_outqueue->tags = (tags) ? strdup (tags) : NULL;
         
         new_outqueue->prev_outqueue = server->last_outqueue[priority];
         new_outqueue->next_outqueue = NULL;
@@ -776,7 +780,7 @@ irc_server_outqueue_free (struct t_irc_server *server,
     
     if (outqueue->next_outqueue)
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
-
+    
     /* free data */
     if (outqueue->command)
         free (outqueue->command);
@@ -784,6 +788,8 @@ irc_server_outqueue_free (struct t_irc_server *server,
         free (outqueue->message_before_mod);
     if (outqueue->message_after_mod)
         free (outqueue->message_after_mod);
+    if (outqueue->tags)
+        free (outqueue->tags);
     free (outqueue);
     server->outqueue[priority] = new_outqueue;
 }
@@ -1052,10 +1058,11 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
 
 void
 irc_server_send_signal (struct t_irc_server *server, const char *signal,
-                        const char *command, const char *full_message)
+                        const char *command, const char *full_message,
+                        const char *tags)
 {
     int length;
-    char *str_signal;
+    char *str_signal, *full_message_tags;
     
     length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
     str_signal = malloc (length);
@@ -1063,8 +1070,25 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
     {
         snprintf (str_signal, length,
                   "%s,%s_%s", server->name, signal, command);
-        weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                                  (void *)full_message);
+        if (tags)
+        {
+            length = strlen (tags) + 1 + strlen (full_message) + 1;
+            full_message_tags = malloc (length);
+            if (full_message_tags)
+            {
+                snprintf (full_message_tags, length,
+                          "%s;%s", tags, full_message);
+                weechat_hook_signal_send (str_signal,
+                                          WEECHAT_HOOK_SIGNAL_STRING,
+                                          (void *)full_message_tags);
+                free (full_message_tags);
+            }
+        }
+        else
+        {
+            weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
+                                      (void *)full_message);
+        }
         free (str_signal);
     }
 }
@@ -1130,6 +1154,46 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 }
 
 /*
+ * irc_server_set_send_default_tags: set default tags used when sending message
+ */
+
+void
+irc_server_set_send_default_tags (const char *tags)
+{
+    irc_server_send_default_tags = tags;
+}
+
+/*
+ * irc_server_get_tags_to_send: get tags to send by concatenation of tags
+ *                              and irc_server_send_default_tags (if set)
+ *                              If returned value is not NULL, then it must be
+ *                              free() after use.
+ */
+
+char *
+irc_server_get_tags_to_send (const char *tags)
+{
+    int length;
+    char *buf;
+    
+    if (!tags && !irc_server_send_default_tags)
+        return NULL;
+    
+    if (!tags)
+        return strdup (irc_server_send_default_tags);
+    
+    if (!irc_server_send_default_tags)
+        return strdup (tags);
+    
+    /* concatenate tags and irc_server_send_default_tags */
+    length = strlen (tags) + 1 + strlen (irc_server_send_default_tags) + 1;
+    buf = malloc (length);
+    if (buf)
+        snprintf (buf, length, "%s,%s", tags, irc_server_send_default_tags);
+    return buf;
+}
+
+/*
  * irc_server_outqueue_send: send a message from outqueue
  */
 
@@ -1137,7 +1201,7 @@ void
 irc_server_outqueue_send (struct t_irc_server *server)
 {
     time_t time_now;
-    char *pos;
+    char *pos, *tags_to_send;
     int priority;
     
     time_now = time (NULL);
@@ -1177,7 +1241,15 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 /* send signal with command that will be sent to server */
                 irc_server_send_signal (server, "irc_out",
                                         server->outqueue[priority]->command,
-                                        server->outqueue[priority]->message_after_mod);
+                                        server->outqueue[priority]->message_after_mod,
+                                        NULL);
+                tags_to_send = irc_server_get_tags_to_send (server->outqueue[priority]->tags);
+                irc_server_send_signal (server, "irc_outtags",
+                                        server->outqueue[priority]->command,
+                                        server->outqueue[priority]->message_after_mod,
+                                        (tags_to_send) ? tags_to_send : "");
+                if (tags_to_send)
+                    free (tags_to_send);
                 
                 /* send command */
                 irc_server_send (server, server->outqueue[priority]->message_after_mod,
@@ -1367,9 +1439,10 @@ irc_server_parse_message_to_hashtable (const char *message)
 
 /*
  * irc_server_send_one_msg: send one message to IRC server
- *                          if queue_msg > 0, then messages are in a queue and
- *                          sent slowly (to be sure there will not be any
- *                          "excess flood"), value of queue_msg is priority:
+ *                          if flag contains outqueue priority value, then
+ *                          messages are in a queue and sent slowly (to be sure
+ *                          there will not be any "excess flood"), value of
+ *                          queue_msg is priority:
  *                            1 = higher priority, for user messages
  *                            2 = lower priority, for other messages (like
  *                                auto reply to CTCP queries)
@@ -1377,15 +1450,15 @@ irc_server_parse_message_to_hashtable (const char *message)
  */
 
 int
-irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
-                         const char *message)
+irc_server_send_one_msg (struct t_irc_server *server, int flags,
+                         const char *message, const char *tags)
 {
     static char buffer[4096];
     const char *ptr_msg;
-    char *new_msg, *pos, *nick, *command, *channel;
+    char *new_msg, *pos, *nick, *command, *channel, *tags_to_send;
     char *ptr_chan_nick, *msg_encoded;
     char str_modifier[64], modifier_data[256];
-    int rc, add_to_queue, first_message;
+    int rc, queue_msg, add_to_queue, first_message;
     time_t time_now;
     
     rc = 1;
@@ -1450,13 +1523,24 @@ irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
             if (server->last_user_message > time_now)
                 server->last_user_message = time_now;
             
+            /* get queue from flags */
+            queue_msg = 0;
+            if (flags && IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
+                queue_msg = 1;
+            else if (flags && IRC_SERVER_SEND_OUTQ_PRIO_LOW)
+                queue_msg = 2;
+            
             add_to_queue = 0;
             if ((queue_msg > 0)
                 && (server->outqueue[queue_msg - 1]
                     || ((weechat_config_integer (irc_config_network_anti_flood[queue_msg - 1]) > 0)
                         && (time_now - server->last_user_message <
                             weechat_config_integer (irc_config_network_anti_flood[queue_msg - 1])))))
+            {
                 add_to_queue = queue_msg;
+            }
+            
+            tags_to_send = irc_server_get_tags_to_send (tags);
             
             if (add_to_queue > 0)
             {
@@ -1464,7 +1548,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
                 irc_server_outqueue_add (server, add_to_queue - 1, command,
                                          (new_msg && first_message) ? message : NULL,
                                          buffer,
-                                         (new_msg) ? 1 : 0);
+                                         (new_msg) ? 1 : 0,
+                                         tags_to_send);
             }
             else
             {
@@ -1476,7 +1561,12 @@ irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
                 /* send signal with command that will be sent to server */
                 irc_server_send_signal (server, "irc_out",
                                         (command) ? command : "unknown",
-                                        ptr_msg);
+                                        ptr_msg,
+                                        NULL);
+                irc_server_send_signal (server, "irc_outtags",
+                                        (command) ? command : "unknown",
+                                        ptr_msg,
+                                        (tags_to_send) ? tags_to_send : "");
                 
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
@@ -1486,6 +1576,10 @@ irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
                         server->last_user_message = time_now;
                 }
             }
+            
+            if (tags_to_send)
+                    free (tags_to_send);
+            
             if (pos)
             {
                 pos[0] = '\n';
@@ -1517,16 +1611,10 @@ irc_server_send_one_msg (struct t_irc_server *server, int queue_msg,
 /*
  * irc_server_sendf: send formatted data to IRC server
  *                   many messages may be sent, separated by '\n'
- *                   if queue_msg > 0, then messages are in a queue and sent
- *                   slowly (to be sure there will not be any "excess flood"),
- *                   value of queue_msg is priority:
- *                     1 = higher priority, for user messages
- *                     2 = lower priority, for other messages (like auto reply
- *                         to CTCP queries)
  */
 
 void
-irc_server_sendf (struct t_irc_server *server, int queue_msg,
+irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
     va_list args;
@@ -1544,7 +1632,7 @@ irc_server_sendf (struct t_irc_server *server, int queue_msg,
     items = weechat_string_split (buffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
-        if (!irc_server_send_one_msg (server, queue_msg, items[i]))
+        if (!irc_server_send_one_msg (server, flags, items[i], tags))
             break;
     }
     if (items)
@@ -1968,7 +2056,7 @@ irc_server_timer_sasl_cb (void *data, int remaining_calls)
         weechat_printf (server->buffer,
                         _("%s%s: sasl authentication timeout"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        irc_server_sendf (server, 0, "CAP END");
+        irc_server_sendf (server, 0, NULL, "CAP END");
     }
     
     return WEECHAT_RC_OK;
@@ -2014,7 +2102,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     && (ptr_server->lag_check_time.tv_sec == 0)
                     && (new_time >= ptr_server->lag_next_check))
                 {
-                    irc_server_sendf (ptr_server, 0, "PING %s",
+                    irc_server_sendf (ptr_server, 0, NULL, "PING %s",
                                       ptr_server->addresses_array[ptr_server->index_current_address]);
                     gettimeofday (&(ptr_server->lag_check_time), NULL);
                     ptr_server->lag = 0;
@@ -2230,7 +2318,7 @@ irc_server_login (struct t_irc_server *server)
     realname = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME);
     
     if (password && password[0])
-        irc_server_sendf (server, 0, "PASS %s", password);
+        irc_server_sendf (server, 0, NULL, "PASS %s", password);
     
     if (!server->nick)
     {
@@ -2244,10 +2332,10 @@ irc_server_login (struct t_irc_server *server)
     
     if (irc_server_sasl_enabled (server))
     {
-        irc_server_sendf (server, 0, "CAP LS");
+        irc_server_sendf (server, 0, NULL, "CAP LS");
     }
     
-    irc_server_sendf (server, 0,
+    irc_server_sendf (server, 0, NULL,
                       "NICK %s\n"
                       "USER %s %s %s :%s",
                       server->nick,
@@ -3210,13 +3298,15 @@ irc_server_autojoin_channels (struct t_irc_server *server)
             {
                 if (ptr_channel->key)
                 {
-                    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                    irc_server_sendf (server,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                                       "JOIN %s %s",
                                       ptr_channel->name, ptr_channel->key);
                 }
                 else
                 {
-                    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                    irc_server_sendf (server,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                                       "JOIN %s",
                                       ptr_channel->name);
                 }
@@ -3468,7 +3558,8 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     {
                         filename = weechat_infolist_string (infolist, "filename");
                         spaces_in_name = (strchr (filename, ' ') != NULL);
-                        irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                        irc_server_sendf (server,
+                                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                           "PRIVMSG %s :\01DCC SEND %s%s%s "
                                           "%s %d %s\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
@@ -3481,7 +3572,8 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     }
                     else if (strcmp (type, "chat_send") == 0)
                     {
-                        irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                        irc_server_sendf (server,
+                                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                           "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
                                           weechat_infolist_string (infolist, "address"),
@@ -3538,7 +3630,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",
@@ -3597,7 +3689,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   "PRIVMSG %s :\01DCC ACCEPT %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",

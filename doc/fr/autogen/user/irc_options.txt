@@ -204,7 +204,7 @@
 ** valeurs: on, off (valeur par défaut: off)
 
 * *irc.look.raw_messages*
-** description: nombre de messages IRC bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)
+** description: nombre de messages bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: 256)
 

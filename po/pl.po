@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
+"POT-Creation-Date: 2010-09-17 14:38+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3218,6 +3218,10 @@ msgid ""
 msgstr ""
 "%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
 
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nie można utworzyć nowego bufora prywatnego \"%s\""
@@ -3925,9 +3929,10 @@ msgstr "wyślij nieprzetworzone dane do serwera bez parsowania"
 msgid "[-server server] data"
 msgstr "[-server serwer] dane"
 
+#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"data: raw data to send"
+"  data: raw data to send"
 msgstr ""
 "serwer: wyśłij do tego serwera (nazwa wewnętrzna)\n"
 "dane: nieprzetworzone dane do wysłania"
@@ -4602,8 +4607,9 @@ msgstr ""
 msgid "close buffer when /part is issued on a channel"
 msgstr "zamyka bufor, kiedy na kanale wykonamy /part"
 
+#, fuzzy
 msgid ""
-"number of IRC raw messages to save in memory when raw data buffer is closed "
+"number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 "ilość nieprzetworzonych wiadomośći IRC do zachowania w pamięci, kiedy "
@@ -5940,8 +5946,8 @@ msgstr "%s%s[%s%s%s%s] %s (rozpoczęto: %s%s%s%s)"
 msgid "ended on: "
 msgstr "zakończono:"
 
-#, c-format
-msgid "%s%-26s protocol: %s, received: %s, sent: %s"
+#, fuzzy, c-format
+msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
 msgstr "%s%-26s protokół: %s, odebrano: %s, wysłano: %s"
 
 msgid "List of clients for relay"
@@ -5959,8 +5965,8 @@ msgstr "autoryzacja nie powiodła się"
 msgid "disconnected"
 msgstr "rozłączono"
 
-#, c-format
-msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+#, fuzzy, c-format
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
 msgstr "%s: nowy klient z %s%s%s na porcie %d (przekazuję: %s.%s)"
 
 #, c-format
@@ -5975,19 +5981,31 @@ msgstr "%s%s: nie powiodła się autentyfikacja z klientem %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: rozłączono od klienta %s%s%s (%s.%s)"
 
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: za mało pamięci dla otrzymanych wiadomości"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
+
+#, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
+
 msgid "Clients for relay:"
 msgstr "Klienci do przekazania:"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
+"recv, %lu sent"
 msgstr ""
 "%3d. %s%s%s (%s%s%s), rozpoczęto: %s,ostatnia aktywność: %s, bajtów: %lu "
 "odebrano, %lu wysłano"
 
-#, c-format
-msgid "%3d. %s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  id: %d, %s%s%s, started on: %s"
 msgstr "%3d. %s%s%s, rozpoczęto: %s"
 
 msgid "No client for relay"
@@ -5996,8 +6014,8 @@ msgstr "Brak klientów do przesłania"
 msgid "Listening on ports:"
 msgstr "Nasłuchuję na portach:"
 
-#, c-format
-msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
 msgstr "%3d. port %s%d%s, relay: %s%s.%s%s, rozpoczęte: %s"
 
 msgid "No server for relay"
@@ -6010,9 +6028,11 @@ msgstr "%s%s: relay \"%s\" nie został znaleziony"
 msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
-msgid "[list | listfull | add protocol.name port | del protocol.name]"
+#, fuzzy
+msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
 msgstr "[list | listfull | add protokół.nazwa port | del protokół.nazwa]"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -6022,6 +6042,7 @@ msgid ""
 "protocol.name: protocol and name to relay\n"
 "               for example: irc.freenode\n"
 "         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
@@ -6089,13 +6110,9 @@ msgstr "lista zdalnych klientów"
 msgid "relay pointer (optional)"
 msgstr "wskaźnik relay (opcjonalny)"
 
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
-
-#, c-format
-msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr "%s%s: nie znaleziono bufora dla serwera IRC \"%s\", kanał \"%s\""
+#, fuzzy
+msgid "Relay raw messages"
+msgstr "nieprzetworzone wiadomości IRC"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6831,6 +6848,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+#~ msgstr "%s%s: nie znaleziono bufora dla serwera IRC \"%s\", kanał \"%s\""
 
 #, fuzzy
 #~ msgid "list of regex modifiers"

@@ -17,15 +17,15 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_PROTOCOL_WEECHAT_H
-#define __WEECHAT_RELAY_PROTOCOL_WEECHAT_H 1
+#ifndef __WEECHAT_RELAY_CLIENT_WEECHAT_H
+#define __WEECHAT_RELAY_CLIENT_WEECHAT_H 1
 
 struct t_relay_client;
 
 #define RELAY_WEECHAT_DATA(client, var)                                 \
-    (((struct t_relay_protocol_weechat_data *)client->protocol_data)->var)
+    (((struct t_relay_client_weechat_data *)client->protocol_data)->var)
 
-struct t_relay_protocol_weechat_data
+struct t_relay_client_weechat_data
 {
     char *address;                     /* client address (used when sending */
                                        /* data to client)                   */
@@ -35,10 +35,10 @@ struct t_relay_protocol_weechat_data
                                        /* client                            */
 };
 
-extern void relay_protocol_weechat_recv (struct t_relay_client *client,
-                                         const char *data);
-extern void relay_protocol_weechat_alloc (struct t_relay_client *client);
-extern void relay_protocol_weechat_free (struct t_relay_client *client);
-extern void relay_protocol_weechat_print_log (struct t_relay_client *client);
+extern void relay_client_weechat_recv (struct t_relay_client *client,
+                                       const char *data);
+extern void relay_client_weechat_alloc (struct t_relay_client *client);
+extern void relay_client_weechat_free (struct t_relay_client *client);
+extern void relay_client_weechat_print_log (struct t_relay_client *client);
 
-#endif /* __WEECHAT_RELAY_PROTOCOL_WEECHAT_H */
+#endif /* __WEECHAT_RELAY_CLIENT_WEECHAT_H */

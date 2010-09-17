@@ -44,6 +44,7 @@ enum t_relay_status
 
 struct t_relay_client
 {
+    int id;                            /* unique id (diff. for each client) */
     int sock;                          /* socket for connection             */
     char *address;                     /* string with IP address            */
     enum t_relay_status status;        /* status (connecting, active,..)    */

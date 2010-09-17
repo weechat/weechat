@@ -43,6 +43,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: on)
 
+* *relay.look.raw_messages*
+** descrizione: number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** tipo: intero
+** valori: 0 .. 65535 (valore predefinito: 256)
+
 * *relay.network.max_clients*
 ** descrizione: numero massimo di client connessi ad una porta
 ** tipo: intero

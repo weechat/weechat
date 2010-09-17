@@ -85,9 +85,12 @@ enum t_irc_server_option
 #define IRC_SERVER_DEFAULT_PORT  6667
 #define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
-#define IRC_SERVER_OUTQUEUE_PRIO_HIGH 1
-#define IRC_SERVER_OUTQUEUE_PRIO_LOW  2
+/* number of queues for sending messages */
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
+
+/* flags for irc_server_sendf() */
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH 1
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW  2
 
 /* output queue of messages to server (for sending slowly to server) */
 
@@ -97,6 +100,7 @@ struct t_irc_outqueue
     char *message_before_mod;             /* msg before any modifier         */
     char *message_after_mod;              /* msg after modifier(s)           */
     int modified;                         /* msg was modified by modifier(s) */
+    char *tags;                           /* tags (used by Relay plugin)     */
     struct t_irc_outqueue *next_outqueue; /* link to next msg in queue       */
     struct t_irc_outqueue *prev_outqueue; /* link to prev msg in queue       */
 };
@@ -202,10 +206,12 @@ extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
 extern int irc_server_rename (struct t_irc_server *server, const char *new_name);
 extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,
-                                    const char *full_message);
+                                    const char *full_message,
+                                    const char *tags);
 extern struct t_hashtable *irc_server_parse_message_to_hashtable (const char *message);
-extern void irc_server_sendf (struct t_irc_server *server, int queue_msg,
-                              const char *format, ...);
+extern void irc_server_set_send_default_tags (const char *tags);
+extern void irc_server_sendf (struct t_irc_server *server, int flags,
+                              const char *tags, const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);

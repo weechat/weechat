@@ -30,6 +30,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-raw.h"
 #include "relay-server.h"
 
 
@@ -64,9 +65,10 @@ relay_command_client_list (int full)
             if (full)
             {
                 weechat_printf (NULL,
-                                _("%3d. %s%s%s (%s%s%s), started on: %s, last "
-                                  "activity: %s, bytes: %lu recv, %lu sent"),
-                                i,
+                                _("  id: %d, %s%s%s (%s%s%s), "
+                                  "started on: %s, last activity: %s, "
+                                  "bytes: %lu recv, %lu sent"),
+                                ptr_client->id,
                                 RELAY_COLOR_CHAT_HOST,
                                 ptr_client->address,
                                 RELAY_COLOR_CHAT,
@@ -83,8 +85,8 @@ relay_command_client_list (int full)
                 if (!RELAY_CLIENT_HAS_ENDED(ptr_client->status))
                 {
                     weechat_printf (NULL,
-                                    _("%3d. %s%s%s, started on: %s"),
-                                    i,
+                                    _("  id: %d, %s%s%s, started on: %s"),
+                                    ptr_client->id,
                                     RELAY_COLOR_CHAT_HOST,
                                     ptr_client->address,
                                     RELAY_COLOR_CHAT,
@@ -124,8 +126,7 @@ relay_command_server_list ()
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
             
             weechat_printf (NULL,
-                            _("%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"),
-                            i,
+                            _("  port %s%d%s, relay: %s%s.%s%s, started on: %s"),
                             RELAY_COLOR_CHAT_BUFFER,
                             ptr_server->port,
                             RELAY_COLOR_CHAT,
@@ -223,6 +224,11 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             }
             return WEECHAT_RC_OK;
         }
+        if (weechat_strcasecmp (argv[1], "raw") == 0)
+        {
+            relay_raw_open (1);
+            return WEECHAT_RC_OK;
+        }
     }
     
     if (!relay_buffer)
@@ -262,7 +268,7 @@ relay_command_init ()
     weechat_hook_command ("relay",
                           N_("relay control"),
                           N_("[list | listfull | add protocol.name port | "
-                             "del protocol.name]"),
+                             "del protocol.name | raw]"),
                           N_("         list: list relay clients (only active "
                              "relays)\n"
                              "     listfull: list relay clients (verbose, all "
@@ -272,13 +278,15 @@ relay_command_init ()
                              "          del: remove relay for a protocol + name\n"
                              "protocol.name: protocol and name to relay\n"
                              "               for example: irc.freenode\n"
-                             "         port: port used for relay\n\n"
+                             "         port: port used for relay\n"
+                             "          raw: open buffer with raw Relay data\n\n"
                              "Without argument, this command opens buffer "
                              "with list of relay clients."),
                           "list %(relay_relays)"
                           " || listfull %(relay_relays)"
                           " || listrelay"
                           " || add %(relay_protocol_name) %(relay_free_port)"
-                          " || del %(relay_relays)",
+                          " || del %(relay_relays)"
+                          " || raw",
                           &relay_command_relay, NULL);
 }

@@ -204,7 +204,7 @@
 ** values: on, off (default value: off)
 
 * *irc.look.raw_messages*
-** description: number of IRC raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** description: number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
 ** type: integer
 ** values: 0 .. 65535 (default value: 256)
 

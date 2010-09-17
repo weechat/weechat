@@ -310,7 +310,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         }
         if (answer)
         {
-            irc_server_sendf (server, 0, "AUTHENTICATE %s", answer);
+            irc_server_sendf (server, 0, NULL, "AUTHENTICATE %s", answer);
             free (answer);
         }
         else
@@ -320,7 +320,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                               "SASL authentication, using mechanism \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
-            irc_server_sendf (server, 0, "CAP END");
+            irc_server_sendf (server, 0, NULL, "CAP END");
         }
     }
     
@@ -375,7 +375,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                 _("%s%s: client capability, requesting: sasl"),
                                 weechat_prefix ("network"),
                                 IRC_PLUGIN_NAME);
-                irc_server_sendf (server, 0, "CAP REQ :sasl");
+                irc_server_sendf (server, 0, NULL, "CAP REQ :sasl");
             }
             else
             {
@@ -383,7 +383,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                 _("%s%s: client capability: sasl not supported"),
                                 weechat_prefix ("network"),
                                 IRC_PLUGIN_NAME);
-                irc_server_sendf (server, 0, "CAP END");
+                irc_server_sendf (server, 0, NULL, "CAP END");
             }
         }
     }
@@ -403,7 +403,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 {
                     case IRC_SASL_MECHANISM_DH_BLOWFISH:
 #ifdef HAVE_GCRYPT
-                        irc_server_sendf (server, 0, "AUTHENTICATE DH-BLOWFISH");
+                        irc_server_sendf (server, 0, NULL,
+                                          "AUTHENTICATE DH-BLOWFISH");
 #else
                         weechat_printf (server->buffer,
                                         _("%s%s: cannot authenticate with SASL "
@@ -412,12 +413,13 @@ IRC_PROTOCOL_CALLBACK(cap)
                                           "libgcrypt support"),
                                         weechat_prefix ("error"),
                                         IRC_PLUGIN_NAME);
-                        irc_server_sendf (server, 0, "CAP END");
+                        irc_server_sendf (server, 0, NULL, "CAP END");
 #endif
                         break;
                     case IRC_SASL_MECHANISM_PLAIN:
                     default:
-                        irc_server_sendf (server, 0, "AUTHENTICATE PLAIN");
+                        irc_server_sendf (server, 0, NULL,
+                                          "AUTHENTICATE PLAIN");
                         break;
                 }
                 if (server->hook_timer_sasl)
@@ -441,7 +443,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             ptr_caps);
             if (!server->is_connected)
-                irc_server_sendf (server, 0, "CAP END");
+                irc_server_sendf (server, 0, NULL, "CAP END");
         }
     }
     
@@ -831,7 +833,7 @@ IRC_PROTOCOL_CALLBACK(mode)
         {
             if (irc_mode_channel_set (server, ptr_channel, pos_modes))
             {
-                irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                                   "MODE %s", ptr_channel->name);
             }
         }
@@ -1049,9 +1051,11 @@ IRC_PROTOCOL_CALLBACK(notice)
             ptr_nick = irc_nick_search (ptr_channel, nick);
             weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                  irc_protocol_tags (command, "notify_message"),
-                                 "%s%sNotice%s%s(%s%s%s)%s: %s",
+                                 "%s%s%s%s%s(%s%s%s)%s: %s",
                                  weechat_prefix ("network"),
                                  IRC_COLOR_NOTICE,
+                                 /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                                 _("Notice"),
                                  (notice_op) ? "Op" : "",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
@@ -1116,44 +1120,67 @@ IRC_PROTOCOL_CALLBACK(notice)
                 ptr_buffer = irc_msgbuffer_get_target_buffer (server, nick,
                                                               command, NULL,
                                                               NULL);
-                if (address && address[0])
+                /*
+                 * if notice is sent from myself (for example another WeeChat
+                 * via relay), then display message of outgoing notice
+                 */
+                if (nick && strcmp (server->nick, nick) == 0)
                 {
                     weechat_printf_tags (ptr_buffer,
                                          irc_protocol_tags (command,
                                                             (notify_private) ? "notify_private" : NULL),
-                                         "%s%s%s %s(%s%s%s)%s: %s",
+                                         "%s%s%s%s -> %s%s%s: %s",
                                          weechat_prefix ("network"),
+                                         IRC_COLOR_NOTICE,
+                                         /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                                         _("Notice"),
+                                         IRC_COLOR_CHAT,
                                          IRC_COLOR_CHAT_NICK,
-                                         nick,
-                                         IRC_COLOR_CHAT_DELIMITERS,
-                                         IRC_COLOR_CHAT_HOST,
-                                         address,
-                                         IRC_COLOR_CHAT_DELIMITERS,
+                                         pos_target,
                                          IRC_COLOR_CHAT,
                                          pos_args);
                 }
                 else
                 {
-                    if (nick && nick[0])
+                    if (address && address[0])
                     {
                         weechat_printf_tags (ptr_buffer,
                                              irc_protocol_tags (command,
                                                                 (notify_private) ? "notify_private" : NULL),
-                                             "%s%s%s%s: %s",
+                                             "%s%s%s %s(%s%s%s)%s: %s",
                                              weechat_prefix ("network"),
                                              IRC_COLOR_CHAT_NICK,
                                              nick,
+                                             IRC_COLOR_CHAT_DELIMITERS,
+                                             IRC_COLOR_CHAT_HOST,
+                                             address,
+                                             IRC_COLOR_CHAT_DELIMITERS,
                                              IRC_COLOR_CHAT,
                                              pos_args);
                     }
                     else
                     {
-                        weechat_printf_tags (ptr_buffer,
-                                             irc_protocol_tags (command,
-                                                                (notify_private) ? "notify_private" : NULL),
-                                             "%s%s",
-                                             weechat_prefix ("network"),
-                                             pos_args);
+                        if (nick && nick[0])
+                        {
+                            weechat_printf_tags (ptr_buffer,
+                                                 irc_protocol_tags (command,
+                                                                    (notify_private) ? "notify_private" : NULL),
+                                                 "%s%s%s%s: %s",
+                                                 weechat_prefix ("network"),
+                                                 IRC_COLOR_CHAT_NICK,
+                                                 nick,
+                                                 IRC_COLOR_CHAT,
+                                                 pos_args);
+                        }
+                        else
+                        {
+                            weechat_printf_tags (ptr_buffer,
+                                                 irc_protocol_tags (command,
+                                                                    (notify_private) ? "notify_private" : NULL),
+                                                 "%s%s",
+                                                 weechat_prefix ("network"),
+                                                 pos_args);
+                        }
                     }
                 }
             }
@@ -1322,7 +1349,7 @@ IRC_PROTOCOL_CALLBACK(ping)
     
     IRC_PROTOCOL_MIN_ARGS(2);
     
-    irc_server_sendf (server, 0, "PONG :%s",
+    irc_server_sendf (server, 0, NULL, "PONG :%s",
                       (argv[1][0] == ':') ? argv[1] + 1 : argv[1]);
     
     return WEECHAT_RC_OK;
@@ -1438,10 +1465,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     }
     else
     {
-        if (strcmp (server->nick, nick) == 0)
-            remote_nick = argv[2];
-        else
-            remote_nick = nick;
+        nick_is_me = (strcmp (server->nick, nick) == 0);
+        
+        remote_nick = (nick_is_me) ? argv[2] : nick;
         
         /* CTCP to user */
         if ((pos_args[0] == '\01')
@@ -1454,8 +1480,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         }
         
         /* private message received => display it */
-        nick_is_me = (strcmp (server->nick, nick) == 0);
-        
         ptr_channel = irc_channel_search (server, remote_nick);
         
         if (!ptr_channel)
@@ -3844,7 +3868,7 @@ IRC_PROTOCOL_CALLBACK(432)
         
         irc_server_set_nick (server, server->nicks_array[nick_index]);
         
-        irc_server_sendf (server, 0, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
     }
     
     return WEECHAT_RC_OK;
@@ -3895,7 +3919,7 @@ IRC_PROTOCOL_CALLBACK(433)
         
         irc_server_set_nick (server, server->nicks_array[nick_index]);
         
-        irc_server_sendf (server, 0, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
     }
     else
     {
@@ -3960,7 +3984,7 @@ IRC_PROTOCOL_CALLBACK(437)
             
             irc_server_set_nick (server, server->nicks_array[nick_index]);
             
-            irc_server_sendf (server, 0, "NICK %s", server->nick);
+            irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
         }
     }
     
@@ -4088,7 +4112,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end)
                              ignored, argc, argv, argv_eol);
     
     if (!server->is_connected)
-        irc_server_sendf (server, 0, "CAP END");
+        irc_server_sendf (server, 0, NULL, "CAP END");
     
     return WEECHAT_RC_OK;
 }
@@ -4289,11 +4313,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                         nick, host);
     
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in", msg_command, irc_message);
+    irc_server_send_signal (server, "irc_raw_in", msg_command,
+                            irc_message, NULL);
     
     /* send signal with received command, only if message is not ignored */
     if (!message_ignored)
-        irc_server_send_signal (server, "irc_in", msg_command, irc_message);
+    {
+        irc_server_send_signal (server, "irc_in", msg_command,
+                                irc_message, NULL);
+    }
     
     /* look for IRC command */
     cmd_found = -1;
@@ -4369,11 +4397,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
         
         /* send signal with received command (if message is not ignored) */
         if (!message_ignored)
-            irc_server_send_signal (server, "irc_in2", msg_command, irc_message);
+        {
+            irc_server_send_signal (server, "irc_in2", msg_command,
+                                    irc_message, NULL);
+        }
     }
     
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in2", msg_command, irc_message);
+    irc_server_send_signal (server, "irc_raw_in2", msg_command,
+                            irc_message, NULL);
     
 end:
     if (nick)

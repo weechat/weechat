@@ -6447,6 +6447,9 @@ Arguments:
 | irc | xxx,irc_out_yyy ^(1)^ | string: message |
   irc message sent to server
 
+| irc | xxx,irc_outtags_yyy ^(1)^ | string: tags + ";" + message |
+  tags + irc message sent to server
+
 | irc | irc_ctcp | string: message |
   CTCP received
 

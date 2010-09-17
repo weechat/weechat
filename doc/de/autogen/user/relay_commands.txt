@@ -1,17 +1,18 @@
-&bull; *`/relay`* `[list | listfull | add protocol.name port | del protocol.name]`::
+&bull; *`/relay`* `[list | listfull | add protocol.name port | del protocol.name | raw]`::
 
 ........................................
   Relay-Kontrolle
 
-           list: Auflistung der Relay-Clients (nur aktive Relays)
-       listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
-      listrelay: Auflistung der Relays (Name und Port)
-            add: füge ein Relay, für ein Protokoll + Name, hinzu
-            del: entferne Relay für ein Protokoll + Name
-  protocol.name: Protokoll und Name des Relays
-                 Beispiel: irc.freenode
-           port: Port den der Relay nutzen soll
+           list: list relay clients (only active relays)
+       listfull: list relay clients (verbose, all relays)
+      listrelay: list relays (name and port)
+            add: add relay for a protocol + name
+            del: remove relay for a protocol + name
+  protocol.name: protocol and name to relay
+                 for example: irc.freenode
+           port: port used for relay
+            raw: open buffer with raw Relay data
   
-  Ohne Angabe von Argumenten werden alle Relay-Clients, in einem neuen Buffer, dargestellt.
+  Without argument, this command opens buffer with list of relay clients.
 ........................................
 

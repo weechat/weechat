@@ -249,7 +249,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                         const char *nick, const char *ctcp,
                         const char *arguments)
 {
-    irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                       "NOTICE %s :\01%s%s%s\01",
                       nick, ctcp,
                       (arguments) ? " " : "",

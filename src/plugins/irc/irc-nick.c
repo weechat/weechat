@@ -741,9 +741,11 @@ irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
 
 int
 irc_nick_add_to_infolist (struct t_infolist *infolist,
+                          struct t_irc_server *server,
                           struct t_irc_nick *nick)
 {
     struct t_infolist_item *ptr_item;
+    char prefix[2];
     
     if (!infolist || !nick)
         return 0;
@@ -759,6 +761,11 @@ irc_nick_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "flags", nick->flags))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "color", nick->color))
+        return 0;
+    prefix[0] = ' ';
+    prefix[1] = '\0';
+    irc_nick_get_gui_infos (server, nick, prefix, NULL, NULL, NULL);
+    if (!weechat_infolist_new_var_string (ptr_item, "prefix", prefix))
         return 0;
     
     return 1;

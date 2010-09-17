@@ -407,7 +407,9 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
                         if (pointer)
                         {
                             /* build list with only one nick */
-                            if (!irc_nick_add_to_infolist (ptr_infolist, pointer))
+                            if (!irc_nick_add_to_infolist (ptr_infolist,
+                                                           ptr_server,
+                                                           pointer))
                             {
                                 weechat_infolist_free (ptr_infolist);
                                 return NULL;
@@ -421,6 +423,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
                                  ptr_nick = ptr_nick->next_nick)
                             {
                                 if (!irc_nick_add_to_infolist (ptr_infolist,
+                                                               ptr_server,
                                                                ptr_nick))
                                 {
                                     weechat_infolist_free (ptr_infolist);

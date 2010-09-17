@@ -420,8 +420,8 @@
 ........................................
   Daten direkt an Server senden (siehe RFC 2812)
 
-  server: an diesen Server senden (interner Name)
-  data: unbearbeitete Daten die gesendet werden sollen
+  server: send to this server (internal name)
+    data: raw data to send
 ........................................
 
 &bull; *`/reconnect`* `[-all [-nojoin] | Servername [Servername ...] [-nojoin]]`::

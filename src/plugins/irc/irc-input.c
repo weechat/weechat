@@ -73,21 +73,22 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 }
 
 /*
- * irc_input_send_user_message: send a PRIVMSG message, and split it
- *                              if > 512 bytes
- *                              warning: this function makes temporarirly
- *                                       changes in "text"
+ * irc_input_send_user_message: send a PRIVMSG message, and split it it message
+ *                              size is > 512 bytes
+ *                              Warning: this function makes temporarirly
+ *                                       changes in "message"
  */
 
 void
-irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
+irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
+                             const char *tags, char *message)
 {
     int max_length;
     char *pos, *pos_max, *last_space, *pos_next, *next, saved_char;
     
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
-    if (!ptr_server || !ptr_channel || !text || !text[0])
+    if (!ptr_server || !ptr_channel || !message || !message[0])
         return;
     
     if (!ptr_server->is_connected)
@@ -107,10 +108,10 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
     
     if (max_length > 0)
     {
-        if ((int)strlen (text) > max_length)
+        if ((int)strlen (message) > max_length)
         {
-            pos = text;
-            pos_max = text + max_length;
+            pos = message;
+            pos_max = message + max_length;
             while (pos && pos[0])
             {
                 if (pos[0] == ' ')
@@ -128,14 +129,14 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
         }
     }
     
-    irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
-                      "PRIVMSG %s :%s", ptr_channel->name, text);
-    irc_input_user_message_display (buffer, text);
+    irc_server_sendf (ptr_server, flags, tags,
+                      "PRIVMSG %s :%s", ptr_channel->name, message);
+    irc_input_user_message_display (buffer, message);
     
     if (next)
     {
         next[0] = saved_char;
-        irc_input_send_user_message (buffer, next);
+        irc_input_send_user_message (buffer, flags, tags, next);
     }
 }
 
@@ -170,7 +171,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
             && !weechat_string_input_for_buffer (input_data))
         {
             if (ptr_server)
-                irc_server_sendf (ptr_server, IRC_SERVER_OUTQUEUE_PRIO_HIGH,
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   weechat_utf8_next_char (input_data));
             return WEECHAT_RC_OK;
         }
@@ -186,7 +188,10 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
             msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
             if (msg)
             {
-                irc_input_send_user_message (buffer, msg);
+                irc_input_send_user_message (buffer,
+                                             IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                                             NULL,
+                                             msg);
                 free (msg);
             }
             
@@ -200,6 +205,144 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         }
     }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_input_send_cb: callback for "irc_input_send" signal
+ *                    This signal can be used by other plugins/scripts, it
+ *                    simulates input or command from user on an IRC buffer
+ *                    (it is used for example by Relay plugin)
+ *                    Format of signal_data (string) is:
+ *                      "server;channel;flags;tags;text"
+ *                      - server: server name (required)
+ *                      - channel: channel name (optional)
+ *                      - flags: flags for irc_server_sendf() (optional)
+ *                      - tags: tags for irc_server_sendf() (optional)
+ *                      - text: text or command (required)
+ */
+
+int
+irc_input_send_cb (void *data, const char *signal,
+                   const char *type_data, void *signal_data)
+{
+    const char *ptr_string, *ptr_message;
+    char *pos_semicol1, *pos_semicol2, *pos_semicol3, *pos_semicol4, *error;
+    char *server, *channel, *flags, *tags;
+    long flags_value;
+    char *data_with_colors;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    ptr_string = (const char *)signal_data;
+    
+    server = NULL;
+    channel = NULL;
+    flags = NULL;
+    tags = NULL;
+    ptr_message = NULL;
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    
+    pos_semicol1 = strchr (ptr_string, ';');
+    if (pos_semicol1)
+    {
+        if (pos_semicol1 > ptr_string + 1)
+        {
+            server = weechat_strndup (ptr_string, pos_semicol1 - ptr_string);
+        }
+        pos_semicol2 = strchr (pos_semicol1 + 1, ';');
+        if (pos_semicol2)
+        {
+            if (pos_semicol2 > pos_semicol1 + 1)
+            {
+                channel = weechat_strndup (pos_semicol1 + 1,
+                                           pos_semicol2 - pos_semicol1 - 1);
+            }
+            pos_semicol3 = strchr (pos_semicol2 + 1, ';');
+            if (pos_semicol3)
+            {
+                if (pos_semicol3 > pos_semicol2 + 1)
+                {
+                    flags = weechat_strndup (pos_semicol2 + 1,
+                                             pos_semicol3 - pos_semicol2 - 1);
+                }
+                pos_semicol4 = strchr (pos_semicol3 + 1, ';');
+                if (pos_semicol4)
+                {
+                    if (pos_semicol4 > pos_semicol3 + 1)
+                    {
+                        tags = weechat_strndup (pos_semicol3 + 1,
+                                                pos_semicol4 - pos_semicol3 - 1);
+                    }
+                    ptr_message = pos_semicol4 + 1;
+                }
+            }
+        }
+    }
+    
+    flags_value = 0;
+    if (flags)
+    {
+        error = NULL;
+        flags_value = strtol (flags, &error, 10);
+        if (flags_value < 0)
+            flags_value = 0;
+    }
+    
+    if (server && ptr_message)
+    {
+        ptr_server = irc_server_search (server);
+        if (ptr_server)
+        {
+            ptr_buffer = ptr_server->buffer;
+            if (channel)
+            {
+                ptr_channel = irc_channel_search (ptr_server, channel);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
+            }
+            
+            /* set tags to use by default */
+            irc_server_set_send_default_tags (tags);
+            
+            /* send text to buffer, or execute command */
+            if (weechat_string_input_for_buffer (ptr_message))
+            {
+                /* text as input */
+                irc_input_data_cb (NULL, ptr_buffer, ptr_message);
+            }
+            else
+            {
+                /* command */
+                data_with_colors = irc_color_encode (ptr_message,
+                                                     weechat_config_boolean (irc_config_network_colors_send));
+                weechat_command (ptr_buffer,
+                                 (data_with_colors) ? data_with_colors : ptr_message);
+                if (data_with_colors)
+                    free (data_with_colors);
+            }
+            
+            /* reset tags to use by default */
+            irc_server_set_send_default_tags (NULL);
+        }
+    }
+    
+    if (server)
+        free (server);
+    if (channel)
+        free (channel);
+    if (flags)
+        free (flags);
+    if (tags)
+        free (tags);
     
     return WEECHAT_RC_OK;
 }

@@ -99,7 +99,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                 infolist = weechat_infolist_new ();
                 if (!infolist)
                     return 0;
-                if (!irc_nick_add_to_infolist (infolist, ptr_nick))
+                if (!irc_nick_add_to_infolist (infolist, ptr_server, ptr_nick))
                 {
                     weechat_infolist_free (infolist);
                     return 0;

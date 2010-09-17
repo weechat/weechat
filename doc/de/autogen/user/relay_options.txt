@@ -43,6 +43,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: on)
 
+* *relay.look.raw_messages*
+** Beschreibung: number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** Typ: integer
+** Werte: 0 .. 65535 (Standardwert: 256)
+
 * *relay.network.max_clients*
 ** Beschreibung: Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen
 ** Typ: integer

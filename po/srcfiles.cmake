@@ -167,6 +167,10 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/relay.c
 ./src/plugins/relay/relay-client.c
 ./src/plugins/relay/relay-client.h
+./src/plugins/relay/relay-client-irc.c
+./src/plugins/relay/relay-client-irc.h
+./src/plugins/relay/relay-client-weechat.c
+./src/plugins/relay/relay-client-weechat.h
 ./src/plugins/relay/relay-command.c
 ./src/plugins/relay/relay-command.h
 ./src/plugins/relay/relay-completion.c
@@ -176,10 +180,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/relay.h
 ./src/plugins/relay/relay-info.c
 ./src/plugins/relay/relay-info.h
-./src/plugins/relay/relay-protocol-irc.c
-./src/plugins/relay/relay-protocol-irc.h
-./src/plugins/relay/relay-protocol-weechat.c
-./src/plugins/relay/relay-protocol-weechat.h
+./src/plugins/relay/relay-raw.c
+./src/plugins/relay/relay-raw.h
 ./src/plugins/relay/relay-server.c
 ./src/plugins/relay/relay-server.h
 ./src/plugins/relay/relay-upgrade.c

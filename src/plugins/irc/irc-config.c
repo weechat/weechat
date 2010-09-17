@@ -1705,8 +1705,8 @@ irc_config_init ()
     irc_config_look_raw_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "raw_messages", "integer",
-        N_("number of IRC raw messages to save in memory when raw data buffer "
-           "is closed (messages will be displayed when opening raw data buffer)"),
+        N_("number of raw messages to save in memory when raw data buffer is "
+           "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter = weechat_config_new_option (
         irc_config_file, ptr_section,

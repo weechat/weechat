@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-08-27 12:41+0200\n"
+"POT-Creation-Date: 2010-09-17 14:38+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3015,6 +3015,10 @@ msgid ""
 msgstr ""
 "%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s невозможно создать новый буфер привата \"%s\"\n"
@@ -3658,10 +3662,13 @@ msgstr "отправить сырые (raw) данные серверу"
 msgid "[-server server] data"
 msgstr "сервер1 [сервер2]"
 
+#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"data: raw data to send"
+"  data: raw data to send"
 msgstr ""
+"  ник: адресат уведомления\n"
+"текст: отправляемый текст"
 
 msgid "reconnect to server(s)"
 msgstr "переподключиться к серверу(-ам)"
@@ -4356,7 +4363,7 @@ msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
 msgid ""
-"number of IRC raw messages to save in memory when raw data buffer is closed "
+"number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
@@ -5665,7 +5672,7 @@ msgid "ended on: "
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%-26s protocol: %s, received: %s, sent: %s"
+msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
 msgstr "DCC: файл %s%s%s"
 
 msgid "List of clients for relay"
@@ -5688,7 +5695,7 @@ msgid "disconnected"
 msgstr "подключен"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (relaying: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5703,17 +5710,29 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "Отключен от сервера!\n"
 
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s недостаточно памяти для полученного сообщения\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
 msgid "Clients for relay:"
 msgstr ""
 
 #, c-format
 msgid ""
-"%3d. %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, "
-"%lu sent"
+"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
+"recv, %lu sent"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%3d. %s%s%s, started on: %s"
+msgid "  id: %d, %s%s%s, started on: %s"
 msgstr "Канал создан %s"
 
 msgid "No client for relay"
@@ -5724,7 +5743,7 @@ msgid "Listening on ports:"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "%3d. port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
 msgstr "%s%s%s отсутствует: %s\n"
 
 #, fuzzy
@@ -5738,7 +5757,7 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "relay control"
 msgstr ""
 
-msgid "[list | listfull | add protocol.name port | del protocol.name]"
+msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
 msgstr ""
 
 msgid ""
@@ -5750,6 +5769,7 @@ msgid ""
 "protocol.name: protocol and name to relay\n"
 "               for example: irc.freenode\n"
 "         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
@@ -5817,13 +5837,9 @@ msgstr "Список сокращений:\n"
 msgid "relay pointer (optional)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s ошибка при отправке данных IRC серверу\n"
-
-#, fuzzy, c-format
-msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
+#, fuzzy
+msgid "Relay raw messages"
+msgstr "выводить отладочные сообщения"
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6566,6 +6582,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
+#~ msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy
 #~ msgid "list of regex modifiers"

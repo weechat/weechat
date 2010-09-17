@@ -6530,6 +6530,9 @@ Paramètres :
 | irc | xxx,irc_out_yyy ^(1)^ | chaîne : message |
   message irc envoyé au serveur
 
+| irc | xxx,irc_outtags_yyy ^(1)^ | chaîne : étiquettes + ";" + message |
+  étiquettes + message irc envoyé au serveur
+
 | irc | irc_ctcp | chaîne : message |
   CTCP reçu
 

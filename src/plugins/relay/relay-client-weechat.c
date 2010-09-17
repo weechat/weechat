@@ -18,7 +18,7 @@
  */
 
 /*
- * relay-protocol-weechat.c: WeeChat protocol for relay to client
+ * relay-client-weechat.c: WeeChat protocol for relay to client
  */
 
 #include <stdlib.h>
@@ -31,17 +31,17 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
-#include "relay-protocol-weechat.h"
+#include "relay-client-weechat.h"
 #include "relay-client.h"
 
 
 /*
- * relay_protocol_weechat_sendf: send formatted data to client
+ * relay_client_weechat_sendf: send formatted data to client
  */
 
 int
-relay_protocol_weechat_sendf (struct t_relay_client *client,
-                              const char *format, ...)
+relay_client_weechat_sendf (struct t_relay_client *client,
+                            const char *format, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -75,19 +75,19 @@ relay_protocol_weechat_sendf (struct t_relay_client *client,
 }
 
 /*
- * relay_protocol_weechat_send_infolist: send infolist to client
+ * relay_client_weechat_send_infolist: send infolist to client
  */
 
 void
-relay_protocol_weechat_send_infolist (struct t_relay_client *client,
-                                      const char *name,
-                                      struct t_infolist *infolist)
+relay_client_weechat_send_infolist (struct t_relay_client *client,
+                                    const char *name,
+                                    struct t_infolist *infolist)
 {
     const char *fields;
     char **argv;
     int i, argc, size;
     
-    relay_protocol_weechat_sendf (client, "name %s", name);
+    relay_client_weechat_sendf (client, "name %s", name);
     
     while (weechat_infolist_next (infolist))
     {
@@ -102,34 +102,34 @@ relay_protocol_weechat_send_infolist (struct t_relay_client *client,
                     switch (argv[i][0])
                     {
                         case 'i':
-                            relay_protocol_weechat_sendf (client, "%s %c %d",
-                                                          argv[i] + 2, argv[i][0],
-                                                          weechat_infolist_integer (infolist,
-                                                                                    argv[i] + 2));
+                            relay_client_weechat_sendf (client, "%s %c %d",
+                                                        argv[i] + 2, argv[i][0],
+                                                        weechat_infolist_integer (infolist,
+                                                                                  argv[i] + 2));
                             break;
                         case 's':
-                            relay_protocol_weechat_sendf (client, "%s %c %s",
-                                                          argv[i] + 2, argv[i][0],
-                                                          weechat_infolist_string (infolist,
-                                                                                   argv[i] + 2));
+                            relay_client_weechat_sendf (client, "%s %c %s",
+                                                        argv[i] + 2, argv[i][0],
+                                                        weechat_infolist_string (infolist,
+                                                                                 argv[i] + 2));
                             break;
                         case 'p':
-                            relay_protocol_weechat_sendf (client, "%s %c %lx",
-                                                          argv[i] + 2, argv[i][0],
-                                                          (long unsigned int)weechat_infolist_pointer (infolist,
-                                                                                                       argv[i] + 2));
+                            relay_client_weechat_sendf (client, "%s %c %lx",
+                                                        argv[i] + 2, argv[i][0],
+                                                        (long unsigned int)weechat_infolist_pointer (infolist,
+                                                                                                     argv[i] + 2));
                             break;
                         case 'b':
-                            relay_protocol_weechat_sendf (client, "%s %c %lx",
-                                                          argv[i] + 2, argv[i][0],
-                                                          (long unsigned int)weechat_infolist_buffer (infolist,
-                                                                                                      argv[i] + 2,
+                            relay_client_weechat_sendf (client, "%s %c %lx",
+                                                        argv[i] + 2, argv[i][0],
+                                                        (long unsigned int)weechat_infolist_buffer (infolist,
+                                                                                                    argv[i] + 2,
                                                                                                       &size));
                             break;
                         case 't':
-                            relay_protocol_weechat_sendf (client, "%s %c %ld",
-                                                          argv[i] + 2, argv[i][0],
-                                                          weechat_infolist_time (infolist, argv[i] + 2));
+                            relay_client_weechat_sendf (client, "%s %c %ld",
+                                                        argv[i] + 2, argv[i][0],
+                                                        weechat_infolist_time (infolist, argv[i] + 2));
                             break;
                     }
                 }
@@ -141,11 +141,11 @@ relay_protocol_weechat_send_infolist (struct t_relay_client *client,
 }
 
 /*
- * relay_protocol_weechat_recv_one_msg: read one message from client
+ * relay_client_weechat_recv_one_msg: read one message from client
  */
 
 void
-relay_protocol_weechat_recv_one_msg (struct t_relay_client *client, char *data)
+relay_client_weechat_recv_one_msg (struct t_relay_client *client, char *data)
 {
     char *pos;
     struct t_infolist *infolist;
@@ -166,18 +166,18 @@ relay_protocol_weechat_recv_one_msg (struct t_relay_client *client, char *data)
         infolist = weechat_infolist_get (data, NULL, NULL);
         if (infolist)
         {
-            relay_protocol_weechat_send_infolist (client, data, infolist);
+            relay_client_weechat_send_infolist (client, data, infolist);
             weechat_infolist_free (infolist);
         }
     }
 }
 
 /*
- * relay_protocol_weechat_recv: read data from client
+ * relay_client_weechat_recv: read data from client
  */
 
 void
-relay_protocol_weechat_recv (struct t_relay_client *client, const char *data)
+relay_client_weechat_recv (struct t_relay_client *client, const char *data)
 {
     char **items;
     int items_count, i;
@@ -185,20 +185,20 @@ relay_protocol_weechat_recv (struct t_relay_client *client, const char *data)
     items = weechat_string_split (data, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
-        relay_protocol_weechat_recv_one_msg (client, items[i]);
+        relay_client_weechat_recv_one_msg (client, items[i]);
     }
     if (items)
         weechat_string_free_split (items);
 }
 
 /*
- * relay_protocol_weechat_alloc: init relay data specific to weechat protocol
+ * relay_client_weechat_alloc: init relay data specific to weechat protocol
  */
 
 void
-relay_protocol_weechat_alloc (struct t_relay_client *client)
+relay_client_weechat_alloc (struct t_relay_client *client)
 {
-    struct t_relay_protocol_weechat_data *weechat_data;
+    struct t_relay_client_weechat_data *weechat_data;
     
     client->protocol_data = malloc (sizeof (*weechat_data));
     if (client->protocol_data)
@@ -208,23 +208,23 @@ relay_protocol_weechat_alloc (struct t_relay_client *client)
 }
 
 /*
- * relay_protocol_weechat_free: free relay data specific to weechat protocol
+ * relay_client_weechat_free: free relay data specific to weechat protocol
  */
 
 void
-relay_protocol_weechat_free (struct t_relay_client *client)
+relay_client_weechat_free (struct t_relay_client *client)
 {
     if (client->protocol_data)
         free (client->protocol_data);
 }
 
 /*
- * relay_protocol_weechat_print_log: print weechat client infos in log (usually
- *                                   for crash dump)
+ * relay_client_weechat_print_log: print weechat client infos in log (usually
+ *                                 for crash dump)
  */
 
 void
-relay_protocol_weechat_print_log (struct t_relay_client *client)
+relay_client_weechat_print_log (struct t_relay_client *client)
 {
     if (client->protocol_data)
     {

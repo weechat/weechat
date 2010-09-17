@@ -420,8 +420,8 @@
 ........................................
   invia dati grezzi al server senza analisi
 
-  server: invia a questo server (nome interno)
-    dati: dati grezzi da inviare
+  server: send to this server (internal name)
+    data: raw data to send
 ........................................
 
 &bull; *`/reconnect`* `[-all [-nojoin] | nome_server [nome_server ...] [-nojoin]]`::

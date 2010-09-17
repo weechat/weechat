@@ -373,7 +373,7 @@ irc_channel_check_away (struct t_irc_server *server,
                 || (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks))))
         {
             channel->checking_away++;
-            irc_server_sendf (server, IRC_SERVER_OUTQUEUE_PRIO_LOW,
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                               "WHO %s", channel->name);
         }
         else

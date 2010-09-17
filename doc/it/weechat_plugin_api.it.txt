@@ -6564,6 +6564,10 @@ Argomenti:
 | irc | xxx,irc_out_yyy ^1^ | string: messaggio |
   messaggio irc inviato al server
 
+// TRANSLATION MISSING
+| irc | xxx,irc_outtags_yyy ^(1)^ | string: tags + ";" + message |
+  tags + irc message sent to server
+
 | irc | irc_ctcp | string: messaggio |
   CTCP ricevuto
 
