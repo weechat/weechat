@@ -248,7 +248,15 @@ relay_server_create_socket (struct t_relay_server *server)
     
     memset(&server_addr, 0, sizeof(struct sockaddr_in));
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
+    if (weechat_config_string (relay_config_network_bind_address)
+        && weechat_config_string (relay_config_network_bind_address)[0])
+    {
+        server_addr.sin_addr.s_addr = inet_addr (weechat_config_string (relay_config_network_bind_address));
+    }
+    else
+    {
+        server_addr.sin_addr.s_addr = INADDR_ANY;
+    }
     server_addr.sin_port = htons (server->port);
     
     if (bind (server->sock, (struct sockaddr *) &server_addr,

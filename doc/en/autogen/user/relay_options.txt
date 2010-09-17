@@ -48,6 +48,11 @@
 ** type: integer
 ** values: 0 .. 65535 (default value: 256)
 
+* *relay.network.bind_address*
+** description: address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)
+** type: string
+** values: any string (default value: "")
+
 * *relay.network.max_clients*
 ** description: maximum number of clients connecting to a port
 ** type: integer

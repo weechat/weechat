@@ -49,6 +49,7 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 
 /* relay config, network section */
 
+struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 
@@ -67,6 +68,29 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
     
     if (relay_buffer)
         relay_buffer_refresh (NULL);
+}
+
+/*
+ * relay_config_change_network_bind_address_cb: callback called when user changes
+ *                                              network bind address option
+ */
+
+void
+relay_config_change_network_bind_address_cb (void *data,
+                                             struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    for (ptr_server = relay_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        relay_server_close_socket (ptr_server);
+        relay_server_create_socket (ptr_server);
+    }
 }
 
 /*
@@ -336,7 +360,15 @@ relay_config_init ()
         weechat_config_free (relay_config_file);
         return 0;
     }
-    
+
+    relay_config_network_bind_address = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "bind_address", "string",
+        N_("address for bind (if empty, connection is possible on all "
+           "interfaces, use \"127.0.0.1\" to allow connections from "
+            "local machine only)"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &relay_config_change_network_bind_address_cb, NULL, NULL, NULL);
     relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
         "max_clients", "integer",

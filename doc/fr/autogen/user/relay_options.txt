@@ -48,6 +48,11 @@
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: 256)
 
+* *relay.network.bind_address*
+** description: addresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: "")
+
 * *relay.network.max_clients*
 ** description: nombre maximum de clients qui se connectent sur un port
 ** type: entier

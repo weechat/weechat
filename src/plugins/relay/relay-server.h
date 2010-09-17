@@ -41,6 +41,8 @@ extern void relay_server_get_protocol_string (const char *protocol_and_string,
                                               char **protocol_string);
 extern struct t_relay_server *relay_server_search (const char *protocol_and_string);
 extern struct t_relay_server *relay_server_search_port (int port);
+extern void relay_server_close_socket (struct t_relay_server *server);
+extern int relay_server_create_socket (struct t_relay_server *server);
 extern struct t_relay_server *relay_server_new (enum t_relay_protocol protocol,
                                                 const char *protocol_string,
                                                 int port);

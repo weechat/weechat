@@ -33,6 +33,7 @@ extern struct t_config_option *relay_config_color_text_bg;
 extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_color_status[];
 
+extern struct t_config_option *relay_config_network_bind_address;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
 
