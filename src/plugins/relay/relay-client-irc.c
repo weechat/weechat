@@ -319,12 +319,16 @@ relay_client_irc_signal_irc_outtags_cb (void *data, const char *signal,
     
     client = (struct t_relay_client *)data;
     
+    tags = NULL;
+    
     message = strdup ((char *)signal_data);
     if (!message)
         goto end;
     pos = strchr (message, '\r');
     if (pos)
         pos[0] = '\0';
+    
+    ptr_message = message;
     
     if (weechat_relay_plugin->debug >= 2)
     {
@@ -333,9 +337,6 @@ relay_client_irc_signal_irc_outtags_cb (void *data, const char *signal,
                         client->protocol_string,
                         message);
     }
-    
-    tags = NULL;
-    ptr_message = message;
     
     pos = strchr (ptr_message, ';');
     if (pos)
