@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-17 20:12+0200\n"
+"POT-Creation-Date: 2010-09-18 09:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4997,6 +4997,14 @@ msgid "No server for relay"
 msgstr ""
 
 #, c-format
+msgid "%s: relay \"%s\" (port %s) added"
+msgstr ""
+
+#, c-format
+msgid "%s: relay \"%s\" (port %d) removed"
+msgstr ""
+
+#, c-format
 msgid "%s%s: relay \"%s\" not found"
 msgstr ""
 
@@ -5035,6 +5043,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr ""
 
 msgid "auto open relay buffer when a new client is connecting"

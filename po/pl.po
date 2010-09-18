@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-17 20:12+0200\n"
+"POT-Creation-Date: 2010-09-18 09:24+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6022,6 +6022,14 @@ msgstr "%3d. port %s%d%s, relay: %s%s.%s%s, rozpoczęte: %s"
 msgid "No server for relay"
 msgstr "Brak serwera dla relay"
 
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (port %s) added"
+msgstr "%s%s: relay \"%s\" nie został znaleziony"
+
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (port %d) removed"
+msgstr "%s%s: relay \"%s\" nie został znaleziony"
+
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: relay \"%s\" nie został znaleziony"
@@ -6074,6 +6082,10 @@ msgstr "%s%s: błąd: port \"%d\" jest już w użyciu"
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: błąd: nieznany protokół \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%sBłąd: filtr \"%s\" już istnieje"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"

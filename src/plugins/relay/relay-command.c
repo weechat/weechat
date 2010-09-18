@@ -151,12 +151,13 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
     struct t_relay_server *ptr_server;
+    struct t_config_option *ptr_option;
+    int port;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv_eol;
-
+    
     if (argc > 1)
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
@@ -180,19 +181,25 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
         {
             if (argc >= 4)
             {
-                relay_config_create_option_port (NULL,
-                                                 relay_config_file,
-                                                 relay_config_section_port,
-                                                 argv[2],
-                                                 argv_eol[3]);
+                if (relay_config_create_option_port (NULL,
+                                                     relay_config_file,
+                                                     relay_config_section_port,
+                                                     argv[2],
+                                                     argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
+                {
+                    weechat_printf (NULL,
+                                    _("%s: relay \"%s\" (port %s) added"),
+                                    RELAY_PLUGIN_NAME,
+                                    argv[2], argv_eol[3]);
+                }
             }
             else
             {
                 weechat_printf (NULL,
-                            _("%s%s: missing arguments for \"%s\" "
-                              "command"),
-                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                            "relay add");
+                                _("%s%s: missing arguments for \"%s\" "
+                                  "command"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                "relay add");
             }
             return WEECHAT_RC_OK;
         }
@@ -203,7 +210,17 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
                 ptr_server = relay_server_search (argv_eol[2]);
                 if (ptr_server)
                 {
+                    port = ptr_server->port;
                     relay_server_free (ptr_server);
+                    ptr_option = weechat_config_search_option (relay_config_file,
+                                                               relay_config_section_port,
+                                                               argv_eol[2]);
+                    if (ptr_option)
+                        weechat_config_option_free (ptr_option);
+                    weechat_printf (NULL,
+                                    _("%s: relay \"%s\" (port %d) removed"),
+                                    RELAY_PLUGIN_NAME,
+                                    argv[2], port);
                 }
                 else
                 {

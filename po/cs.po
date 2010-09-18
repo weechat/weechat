@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-17 20:12+0200\n"
+"POT-Creation-Date: 2010-09-18 09:24+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5997,6 +5997,14 @@ msgstr "%3d. port %s%d%s, přesměrování: %s%s.%s%s, spuštěno v: %s"
 msgid "No server for relay"
 msgstr "Žádný server pro přesměrování"
 
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (port %s) added"
+msgstr "%s%s: přesměrování \"%s\" nenalezeno"
+
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (port %d) removed"
+msgstr "%s%s: přesměrování \"%s\" nenalezeno"
+
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: přesměrování \"%s\" nenalezeno"
@@ -6050,6 +6058,10 @@ msgstr "%s%s: chyba: port \"%d\" je již používán"
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: chyba: neznámý protokol \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%sChyba: filtr \"%s\" již existuje"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"

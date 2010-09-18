@@ -200,6 +200,14 @@ relay_config_create_option_port (void *data,
                         RELAY_PLUGIN_NAME, protocol);
         rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
+
+    if (weechat_config_search_option (config_file, section, option_name))
+    {
+        weechat_printf (NULL, _("%s%s: error: relay for \"%s\" already exists"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME, option_name);
+        rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    }
     
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
@@ -226,9 +234,10 @@ relay_config_create_option_port (void *data,
             &relay_config_change_port_cb, NULL,
             &relay_config_delete_port_cb, NULL);
         
-        relay_server_new (protocol_number, protocol_string, port);
-        
-        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        if (relay_server_new (protocol_number, protocol_string, port))
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        else
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
     
     if (protocol)
