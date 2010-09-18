@@ -79,6 +79,8 @@ int
 relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                          void *signal_data)
 {
+    struct t_relay_server *ptr_server;
+    
     /* make C compiler happy */
     (void) data;
     (void) signal;
@@ -86,6 +88,12 @@ relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     (void) signal_data;
     
     relay_signal_upgrade_received = 1;
+    
+    for (ptr_server = relay_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        relay_server_close_socket (ptr_server);
+    }
     
     return WEECHAT_RC_OK;
 }

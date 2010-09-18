@@ -142,13 +142,16 @@ relay_server_close_socket (struct t_relay_server *server)
     {
         close (server->sock);
         server->sock = -1;
-        
-        weechat_printf (NULL,
-                        _("%s: socket closed for %s.%s (port %d)"),
-                        RELAY_PLUGIN_NAME,
-                        relay_protocol_string[server->protocol],
-                        server->protocol_string,
-                        server->port);
+
+        if (!relay_signal_upgrade_received)
+        {
+            weechat_printf (NULL,
+                            _("%s: socket closed for %s.%s (port %d)"),
+                            RELAY_PLUGIN_NAME,
+                            relay_protocol_string[server->protocol],
+                            server->protocol_string,
+                            server->port);
+        }
     }
 }
 

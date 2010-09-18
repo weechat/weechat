@@ -25,6 +25,8 @@
 
 extern struct t_weechat_plugin *weechat_relay_plugin;
 
+extern int relay_signal_upgrade_received;
+
 /* relay protocol */
 
 enum t_relay_protocol
