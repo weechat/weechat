@@ -48,8 +48,8 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     int rc;
 
     /* save clients */
-    for (ptr_client = relay_clients; ptr_client;
-         ptr_client = ptr_client->next_client)
+    for (ptr_client = last_relay_client; ptr_client;
+         ptr_client = ptr_client->prev_client)
     {
         infolist = weechat_infolist_new ();
         if (!infolist)
