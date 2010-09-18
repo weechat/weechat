@@ -90,7 +90,7 @@ relay_completion_relays_cb (void *data, const char *completion_item,
     {
         snprintf (protocol_name, sizeof (protocol_name), "%s.%s",
                   relay_protocol_string[ptr_server->protocol],
-                  ptr_server->protocol_string);
+                  ptr_server->protocol_args);
         weechat_hook_completion_list_add (completion, protocol_name,
                                           0, WEECHAT_LIST_POS_SORT);
     }

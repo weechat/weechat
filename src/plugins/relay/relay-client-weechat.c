@@ -208,6 +208,27 @@ relay_client_weechat_alloc (struct t_relay_client *client)
 }
 
 /*
+ * relay_client_weechat_alloc_with_infolist: init relay data specific to
+ *                                           weechat protocol with an infolist
+ */
+
+void
+relay_client_weechat_alloc_with_infolist (struct t_relay_client *client,
+                                          struct t_infolist *infolist)
+{
+    struct t_relay_client_weechat_data *weechat_data;
+    
+    /* make C compiler happy */
+    (void) infolist;
+    
+    client->protocol_data = malloc (sizeof (*weechat_data));
+    if (client->protocol_data)
+    {
+        /* ... */
+    }
+}
+
+/*
  * relay_client_weechat_free: free relay data specific to weechat protocol
  */
 
@@ -216,6 +237,22 @@ relay_client_weechat_free (struct t_relay_client *client)
 {
     if (client->protocol_data)
         free (client->protocol_data);
+}
+
+/*
+ * relay_client_weechat_add_to_infolist: add client weechat data in an
+ *                                       infolist item
+ *                                       return 1 if ok, 0 if error
+ */
+
+int
+relay_client_weechat_add_to_infolist (struct t_infolist_item *item,
+                                      struct t_relay_client *client)
+{
+    if (!item || !client)
+        return 0;    
+    
+    return 1;
 }
 
 /*

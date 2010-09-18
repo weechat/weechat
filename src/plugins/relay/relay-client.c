@@ -158,12 +158,11 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
         new_client->address = strdup ((address) ? address : "?");
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
-        new_client->protocol_string = strdup (server->protocol_string);
+        new_client->protocol_args = strdup (server->protocol_args);
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
         new_client->end_time = 0;
         new_client->hook_fd = NULL;
-        new_client->hook_timer = NULL;
         new_client->last_activity = new_client->start_time;
         new_client->bytes_recv = 0;
         new_client->bytes_sent = 0;
@@ -198,7 +197,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
                         server->port,
                         new_client->id,
                         relay_protocol_string[new_client->protocol],
-                        new_client->protocol_string);
+                        new_client->protocol_args);
         
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
@@ -244,11 +243,6 @@ relay_client_set_status (struct t_relay_client *client,
             weechat_unhook (client->hook_fd);
             client->hook_fd = NULL;
         }
-        if (client->hook_timer)
-        {
-            weechat_unhook (client->hook_timer);
-            client->hook_timer = NULL;
-        }
         switch (client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
@@ -270,7 +264,7 @@ relay_client_set_status (struct t_relay_client *client,
                                 client->address,
                                 RELAY_COLOR_CHAT,
                                 relay_protocol_string[client->protocol],
-                                client->protocol_string);
+                                client->protocol_args);
                 break;
             case RELAY_STATUS_DISCONNECTED:
                 weechat_printf (NULL,
@@ -280,7 +274,7 @@ relay_client_set_status (struct t_relay_client *client,
                                 client->address,
                                 RELAY_COLOR_CHAT,
                                 relay_protocol_string[client->protocol],
-                                client->protocol_string);
+                                client->protocol_args);
                 break;
             default:
                 break;
@@ -324,12 +318,10 @@ relay_client_free (struct t_relay_client *client)
     /* free data */
     if (client->address)
         free (client->address);
-    if (client->protocol_string)
-        free (client->protocol_string);
+    if (client->protocol_args)
+        free (client->protocol_args);
     if (client->hook_fd)
         weechat_unhook (client->hook_fd);
-    if (client->hook_timer)
-        weechat_unhook (client->hook_timer);
     if (client->protocol_data)
     {
         switch (client->protocol)
@@ -417,7 +409,9 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
+    if (!weechat_infolist_new_var_integer (ptr_item, "id", client->id))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
@@ -426,11 +420,19 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_client_status_string[client->status]))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "protocol", client->protocol))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_string", relay_protocol_string[client->protocol]))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", client->protocol_args))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "listen_start_time", client->listen_start_time))
+        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", client->start_time))
         return 0;
-    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", client->hook_fd))
+    if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
         return 0;
-    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer", client->hook_timer))
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", client->hook_fd))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_activity", client->last_activity))
         return 0;
@@ -440,6 +442,18 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     snprintf (value, sizeof (value), "%lu", client->bytes_sent);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_sent", value))
         return 0;
+    
+    switch (client->protocol)
+    {
+        case RELAY_PROTOCOL_WEECHAT:
+            relay_client_weechat_add_to_infolist (ptr_item, client);
+            break;
+        case RELAY_PROTOCOL_IRC:
+            relay_client_irc_add_to_infolist (ptr_item, client);
+            break;
+        case RELAY_NUM_PROTOCOLS:
+            break;
+    }
     
     return 1;
 }
@@ -467,12 +481,11 @@ relay_client_print_log ()
         weechat_log_printf ("  protocol. . . . . . . : %d (%s)",
                             ptr_client->protocol,
                             relay_protocol_string[ptr_client->protocol]);
-        weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
+        weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
         weechat_log_printf ("  listen_start_time . . : %ld",   ptr_client->listen_start_time);
         weechat_log_printf ("  start_time. . . . . . : %ld",   ptr_client->start_time);
         weechat_log_printf ("  end_time. . . . . . . : %ld",   ptr_client->end_time);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_client->hook_fd);
-        weechat_log_printf ("  hook_timer. . . . . . : 0x%lx", ptr_client->hook_timer);
         weechat_log_printf ("  last_activity . . . . : %ld",   ptr_client->last_activity);
         weechat_log_printf ("  bytes_recv. . . . . . : %lu",   ptr_client->bytes_recv);
         weechat_log_printf ("  bytes_sent. . . . . . : %lu",   ptr_client->bytes_sent);

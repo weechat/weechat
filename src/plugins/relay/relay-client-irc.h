@@ -43,7 +43,11 @@ extern void relay_client_irc_recv (struct t_relay_client *client,
                                    const char *data);
 extern void relay_client_irc_close_connection (struct t_relay_client *client);
 extern void relay_client_irc_alloc (struct t_relay_client *client);
+extern void relay_client_irc_alloc_with_infolist (struct t_relay_client *client,
+                                                  struct t_infolist *infolist);
 extern void relay_client_irc_free (struct t_relay_client *client);
+extern int relay_client_irc_add_to_infolist (struct t_infolist_item *item,
+                                             struct t_relay_client *client);
 extern void relay_client_irc_print_log (struct t_relay_client *client);
 
 #endif /* __WEECHAT_RELAY_CLIENT_IRC_H */

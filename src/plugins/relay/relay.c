@@ -136,6 +136,8 @@ relay_debug_dump_cb (void *data, const char *signal, const char *type_data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int i, upgrading;
+    
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -157,6 +159,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL);
     
     relay_info_init ();
+    
+    /* look at arguments */
+    upgrading = 0;
+    for (i = 0; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
+        {
+            upgrading = 1;
+        }
+    }
+    
+    if (upgrading)
+        relay_upgrade_load ();
     
     return WEECHAT_RC_OK;
 }

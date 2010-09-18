@@ -175,7 +175,7 @@ relay_config_create_option_port (void *data,
                                  const char *value)
 {
     int rc, protocol_number;
-    char *error, *protocol, *protocol_string;
+    char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
     
@@ -184,13 +184,13 @@ relay_config_create_option_port (void *data,
     
     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     
-    relay_server_get_protocol_string (option_name,
-                                      &protocol, &protocol_string);
+    relay_server_get_protocol_args (option_name,
+                                    &protocol, &protocol_args);
     
     protocol_number = -1;
     port = -1;
     
-    if (protocol && protocol_string)
+    if (protocol && protocol_args)
         protocol_number = relay_protocol_search (protocol);
     
     if (protocol_number < 0)
@@ -234,7 +234,7 @@ relay_config_create_option_port (void *data,
             &relay_config_change_port_cb, NULL,
             &relay_config_delete_port_cb, NULL);
         
-        if (relay_server_new (protocol_number, protocol_string, port))
+        if (relay_server_new (protocol_number, protocol_args, port))
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         else
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -242,8 +242,8 @@ relay_config_create_option_port (void *data,
     
     if (protocol)
         free (protocol);
-    if (protocol_string)
-        free (protocol_string);
+    if (protocol_args)
+        free (protocol_args);
     
     return rc;
 }

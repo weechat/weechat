@@ -49,13 +49,12 @@ struct t_relay_client
     char *address;                     /* string with IP address            */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
-    char *protocol_string;             /* string used for protocol          */
+    char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     time_t listen_start_time;          /* when listening started            */
     time_t start_time;                 /* time of client connection         */
     time_t end_time;                   /* time of client disconnection      */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
-    struct t_hook *hook_timer;         /* timeout for recever accept        */
     time_t last_activity;              /* time of last byte received/sent   */
     unsigned long bytes_recv;          /* bytes received from client        */
     unsigned long bytes_sent;          /* bytes sent to client              */
@@ -71,6 +70,7 @@ extern int relay_client_count;
 
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
+extern int relay_client_recv_cb (void *arg_client, int fd);
 extern struct t_relay_client *relay_client_new (int sock, char *address,
                                                 struct t_relay_server *server);
 extern void relay_client_set_status (struct t_relay_client *client,

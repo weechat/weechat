@@ -28,8 +28,10 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-raw.h"
 
 
 struct t_gui_buffer *relay_buffer = NULL;
@@ -158,42 +160,50 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) data;
     
-    client = relay_client_search_by_number (relay_buffer_selected_line);
-    
-    /* disconnect client */
-    if (weechat_strcasecmp (input_data, "d") == 0)
+    if (buffer == relay_raw_buffer)
     {
-        if (client && !RELAY_CLIENT_HAS_ENDED(client->status))
+        if (weechat_strcasecmp (input_data, "q") == 0)
+            weechat_buffer_close (buffer);
+    }
+    else if (buffer == relay_buffer)
+    {
+        client = relay_client_search_by_number (relay_buffer_selected_line);
+        
+        /* disconnect client */
+        if (weechat_strcasecmp (input_data, "d") == 0)
         {
-            relay_client_disconnect (client);
+            if (client && !RELAY_CLIENT_HAS_ENDED(client->status))
+            {
+                relay_client_disconnect (client);
+                relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            }
+        }
+        /* purge old clients */
+        else if (weechat_strcasecmp (input_data, "p") == 0)
+        {
+            ptr_client = relay_clients;
+            while (ptr_client)
+            {
+                next_client = ptr_client->next_client;
+                if (RELAY_CLIENT_HAS_ENDED(ptr_client->status))
+                    relay_client_free (ptr_client);
+                ptr_client = next_client;
+            }
             relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
-    }
-    /* purge old clients */
-    else if (weechat_strcasecmp (input_data, "p") == 0)
-    {
-        ptr_client = relay_clients;
-        while (ptr_client)
+        /* quit relay buffer (close it) */
+        else if (weechat_strcasecmp (input_data, "q") == 0)
         {
-            next_client = ptr_client->next_client;
-            if (RELAY_CLIENT_HAS_ENDED(ptr_client->status))
-                relay_client_free (ptr_client);
-            ptr_client = next_client;
+            weechat_buffer_close (buffer);
         }
-        relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
-    }
-    /* quit relay buffer (close it) */
-    else if (weechat_strcasecmp (input_data, "q") == 0)
-    {
-        weechat_buffer_close (buffer);
-    }
-    /* remove client */
-    else if (weechat_strcasecmp (input_data, "r") == 0)
-    {
-        if (client && RELAY_CLIENT_HAS_ENDED(client->status))
+        /* remove client */
+        else if (weechat_strcasecmp (input_data, "r") == 0)
         {
-            relay_client_free (client);
-            relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            if (client && RELAY_CLIENT_HAS_ENDED(client->status))
+            {
+                relay_client_free (client);
+                relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            }
         }
     }
     
@@ -209,9 +219,15 @@ relay_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
     
-    relay_buffer = NULL;
+    if (buffer == relay_raw_buffer)
+    {
+        relay_raw_buffer = NULL;
+    }
+    else if (buffer == relay_buffer)
+    {
+        relay_buffer = NULL;
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -225,7 +241,7 @@ relay_buffer_open ()
 {
     if (!relay_buffer)
     {
-        relay_buffer = weechat_buffer_new ("relay.list",
+        relay_buffer = weechat_buffer_new (RELAY_BUFFER_NAME,
                                            &relay_buffer_input_cb, NULL,
                                            &relay_buffer_close_cb, NULL);
         

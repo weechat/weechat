@@ -132,7 +132,7 @@ relay_command_server_list ()
                             RELAY_COLOR_CHAT,
                             RELAY_COLOR_CHAT_BUFFER,
                             relay_protocol_string[ptr_server->protocol],
-                            ptr_server->protocol_string,
+                            ptr_server->protocol_args,
                             RELAY_COLOR_CHAT,
                             date_start);
             i++;

@@ -38,7 +38,11 @@ struct t_relay_client_weechat_data
 extern void relay_client_weechat_recv (struct t_relay_client *client,
                                        const char *data);
 extern void relay_client_weechat_alloc (struct t_relay_client *client);
+extern void relay_client_weechat_alloc_with_infolist (struct t_relay_client *client,
+                                                      struct t_infolist *infolist);
 extern void relay_client_weechat_free (struct t_relay_client *client);
+extern int relay_client_weechat_add_to_infolist (struct t_infolist_item *item,
+                                                 struct t_relay_client *client);
 extern void relay_client_weechat_print_log (struct t_relay_client *client);
 
 #endif /* __WEECHAT_RELAY_CLIENT_WEECHAT_H */

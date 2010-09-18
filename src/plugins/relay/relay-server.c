@@ -44,54 +44,54 @@ struct t_relay_server *last_relay_server = NULL;
 
 
 /*
- * relay_server_get_protocol_string: get protocol and string from a string with
- *                                   format "protocol.string"
- *                                   Note: *protocol and *string must be freed
- *                                   after use
+ * relay_server_get_protocol_args: get protocol and arguments from a string
+ *                                 with format "protocol.args"
+ *                                 Note: *protocol and *protocol_args must be
+ *                                 freed after use
  */
 
 void
-relay_server_get_protocol_string (const char *protocol_and_string,
-                                  char **protocol, char **protocol_string)
+relay_server_get_protocol_args (const char *protocol_and_args,
+                                char **protocol, char **protocol_args)
 {
     char *pos;
     
-    pos = strchr (protocol_and_string, '.');
+    pos = strchr (protocol_and_args, '.');
     if (pos)
     {
-        *protocol = weechat_strndup (protocol_and_string,
-                                     pos - protocol_and_string);
-        *protocol_string = strdup (pos + 1);
+        *protocol = weechat_strndup (protocol_and_args,
+                                     pos - protocol_and_args);
+        *protocol_args = strdup (pos + 1);
     }
     else
     {
-        *protocol = strdup (protocol_and_string);
-        *protocol_string = strdup ("*");
+        *protocol = strdup (protocol_and_args);
+        *protocol_args = strdup ("*");
     }
 }
 
 /*
- * relay_server_search: search server by protocol.string
+ * relay_server_search: search server by protocol.args
  */
 
 struct t_relay_server *
-relay_server_search (const char *protocol_and_string)
+relay_server_search (const char *protocol_and_args)
 {
-    char *protocol, *protocol_string;
+    char *protocol, *protocol_args;
     struct t_relay_server *ptr_server;
     
-    relay_server_get_protocol_string (protocol_and_string,
-                                      &protocol, &protocol_string);
+    relay_server_get_protocol_args (protocol_and_args,
+                                    &protocol, &protocol_args);
     
     ptr_server = NULL;
     
-    if (protocol && protocol_string)
+    if (protocol && protocol_args)
     {
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
             if ((strcmp (protocol, relay_protocol_string[ptr_server->protocol]) == 0)
-                && (strcmp (protocol_string, ptr_server->protocol_string) == 0))
+                && (strcmp (protocol_args, ptr_server->protocol_args) == 0))
             {
                 break;
             }
@@ -100,8 +100,8 @@ relay_server_search (const char *protocol_and_string)
     
     if (protocol)
         free (protocol);
-    if (protocol_string)
-        free (protocol_string);
+    if (protocol_args)
+        free (protocol_args);
     
     return ptr_server;
 }
@@ -149,7 +149,7 @@ relay_server_close_socket (struct t_relay_server *server)
                             _("%s: socket closed for %s.%s (port %d)"),
                             RELAY_PLUGIN_NAME,
                             relay_protocol_string[server->protocol],
-                            server->protocol_string,
+                            server->protocol_args,
                             server->port);
         }
     }
@@ -186,7 +186,7 @@ relay_server_sock_cb (void *data, int fd)
                         RELAY_PLUGIN_NAME,
                         server->port,
                         relay_protocol_string[server->protocol],
-                        server->protocol_string);
+                        server->protocol_args);
         return WEECHAT_RC_OK;
     }
     
@@ -270,7 +270,7 @@ relay_server_create_socket (struct t_relay_server *server)
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         server->port,
                         relay_protocol_string[server->protocol],
-                        server->protocol_string);
+                        server->protocol_args);
         close (server->sock);
         server->sock = -1;
         return 0;
@@ -285,7 +285,7 @@ relay_server_create_socket (struct t_relay_server *server)
                     RELAY_PLUGIN_NAME,
                     server->port,
                     relay_protocol_string[server->protocol],
-                    server->protocol_string,
+                    server->protocol_args,
                     max_clients);
     
     server->hook_fd = weechat_hook_fd (server->sock,
@@ -304,7 +304,7 @@ relay_server_create_socket (struct t_relay_server *server)
 
 struct t_relay_server *
 relay_server_new (enum t_relay_protocol protocol,
-                  const char *protocol_string,
+                  const char *protocol_args,
                   int port)
 {
     struct t_relay_server *new_server;
@@ -321,8 +321,8 @@ relay_server_new (enum t_relay_protocol protocol,
     if (new_server)
     {
         new_server->protocol = protocol;
-        new_server->protocol_string =
-            (protocol_string) ? strdup (protocol_string) : strdup ("*");
+        new_server->protocol_args =
+            (protocol_args) ? strdup (protocol_args) : strdup ("*");
         new_server->port = port;
         new_server->sock = -1;
         new_server->hook_fd = NULL;
@@ -390,8 +390,8 @@ relay_server_free (struct t_relay_server *server)
     
     /* free data */
     relay_server_close_socket (server);
-    if (server->protocol_string)
-        free (server->protocol_string);
+    if (server->protocol_args)
+        free (server->protocol_args);
     
     free (server);
     
@@ -428,7 +428,7 @@ relay_server_print_log ()
         weechat_log_printf ("  protocol. . . . . . : %d (%s)",
                             ptr_server->protocol,
                             relay_protocol_string[ptr_server->protocol]);
-        weechat_log_printf ("  protocol_string . . : '%s'",  ptr_server->protocol_string);
+        weechat_log_printf ("  protocol_args . . . : '%s'",  ptr_server->protocol_args);
         weechat_log_printf ("  port. . . . . . . . : %d",    ptr_server->port);
         weechat_log_printf ("  sock. . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . : 0x%lx", ptr_server->hook_fd);

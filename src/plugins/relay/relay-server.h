@@ -23,7 +23,7 @@
 struct t_relay_server
 {
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
-    char *protocol_string;             /* string used for protocol          */
+    char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     int port;                          /* listening on this port            */
     int sock;                          /* socket for connection             */
@@ -36,15 +36,15 @@ struct t_relay_server
 extern struct t_relay_server *relay_servers;
 extern struct t_relay_server *last_relay_server;
 
-extern void relay_server_get_protocol_string (const char *protocol_and_string,
-                                              char **protocol,
-                                              char **protocol_string);
-extern struct t_relay_server *relay_server_search (const char *protocol_and_string);
+extern void relay_server_get_protocol_args (const char *protocol_and_string,
+                                            char **protocol,
+                                            char **protocol_args);
+extern struct t_relay_server *relay_server_search (const char *protocol_and_args);
 extern struct t_relay_server *relay_server_search_port (int port);
 extern void relay_server_close_socket (struct t_relay_server *server);
 extern int relay_server_create_socket (struct t_relay_server *server);
 extern struct t_relay_server *relay_server_new (enum t_relay_protocol protocol,
-                                                const char *protocol_string,
+                                                const char *protocol_args,
                                                 int port);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);

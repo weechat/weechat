@@ -29,6 +29,7 @@
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-raw.h"
+#include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
 
@@ -58,39 +59,6 @@ relay_raw_message_print (struct t_relay_raw_message *raw_message)
 }
 
 /*
- * relay_raw_input_data_cb: callback for input data in Relay raw buffer
- */
-
-int
-relay_raw_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                         const char *input_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    
-    if (weechat_strcasecmp (input_data, "q") == 0)
-        weechat_buffer_close (buffer);
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
- * relay_raw_buffer_close_cb: callback called when Relay raw buffer is closed
- */
-
-int
-relay_raw_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
-    
-    relay_raw_buffer = NULL;
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
  * relay_raw_open: open Relay raw buffer
  */
 
@@ -106,8 +74,8 @@ relay_raw_open (int switch_to_buffer)
         if (!relay_raw_buffer)
         {
             relay_raw_buffer = weechat_buffer_new (RELAY_RAW_BUFFER_NAME,
-                                                   &relay_raw_input_data_cb, NULL,
-                                                   &relay_raw_buffer_close_cb, NULL);
+                                                   &relay_buffer_input_cb, NULL,
+                                                   &relay_buffer_close_cb, NULL);
             
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)
@@ -288,7 +256,7 @@ relay_raw_message_add (struct t_relay_client *client, int send,
                   client->id,
                   weechat_color ("chat_delimiters"),
                   weechat_color ("chat_server"),
-                  client->protocol_string,
+                  client->protocol_args,
                   (send) ?
                   weechat_color ("chat_prefix_quit") :
                   weechat_color ("chat_prefix_join"),

@@ -22,22 +22,71 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-upgrade.h"
 #include "relay-buffer.h"
+#include "relay-client.h"
+#include "relay-client-irc.h"
+#include "relay-client-weechat.h"
+#include "relay-raw.h"
 
 
 /*
- * relay_upgrade_save_clients: save clients info to upgrade file
+ * relay_upgrade_save_all_data: save relay data to upgrade file
  */
 
 int
-relay_upgrade_save_clients (struct t_upgrade_file *upgrade_file)
+relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
 {
-    /* TODO: save relay data */
-    (void) upgrade_file;
+    struct t_infolist *infolist;
+    struct t_relay_client *ptr_client;
+    struct t_relay_raw_message *ptr_raw_message;
+    int rc;
+
+    /* save clients */
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
+    {
+        infolist = weechat_infolist_new ();
+        if (!infolist)
+            return 0;
+        if (!relay_client_add_to_infolist (infolist, ptr_client))
+        {
+            weechat_infolist_free (infolist);
+            return 0;
+        }
+        rc = weechat_upgrade_write_object (upgrade_file,
+                                           RELAY_UPGRADE_TYPE_CLIENT,
+                                           infolist);
+        weechat_infolist_free (infolist);
+        if (!rc)
+            return 0;
+    }
+    
+    /* save raw messages */
+    for (ptr_raw_message = relay_raw_messages; ptr_raw_message;
+         ptr_raw_message = ptr_raw_message->next_message)
+    {
+        infolist = weechat_infolist_new ();
+        if (!infolist)
+            return 0;
+        if (!relay_raw_add_to_infolist (infolist, ptr_raw_message))
+        {
+            weechat_infolist_free (infolist);
+            return 0;
+        }
+        rc = weechat_upgrade_write_object (upgrade_file,
+                                           RELAY_UPGRADE_TYPE_RAW_MESSAGE,
+                                           infolist);
+        weechat_infolist_free (infolist);
+        if (!rc)
+            return 0;
+    }
+    
     return 1;
 }
 
@@ -56,7 +105,7 @@ relay_upgrade_save ()
     if (!upgrade_file)
         return 0;
     
-    rc = relay_upgrade_save_clients (upgrade_file);
+    rc = relay_upgrade_save_all_data (upgrade_file);
     
     weechat_upgrade_close (upgrade_file);
     
@@ -84,6 +133,16 @@ relay_upgrade_set_buffer_callbacks ()
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
                 weechat_buffer_set_pointer (ptr_buffer, "close_callback", &relay_buffer_close_cb);
                 weechat_buffer_set_pointer (ptr_buffer, "input_callback", &relay_buffer_input_cb);
+                if (strcmp (weechat_infolist_string (infolist, "name"),
+                            RELAY_BUFFER_NAME) == 0)
+                {
+                    relay_buffer = ptr_buffer;
+                }
+                if (strcmp (weechat_infolist_string (infolist, "name"),
+                            RELAY_RAW_BUFFER_NAME) == 0)
+                {
+                    relay_raw_buffer = ptr_buffer;
+                }
             }
         }
     }
@@ -99,11 +158,72 @@ relay_upgrade_read_cb (void *data,
                        int object_id,
                        struct t_infolist *infolist)
 {
-    /* TODO: write relay read cb */
+    struct t_relay_client *new_client;
+    
+    /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
-    (void) object_id;
-    (void) infolist;
+    
+    weechat_infolist_reset_item_cursor (infolist);
+    while (weechat_infolist_next (infolist))
+    {
+        switch (object_id)
+        {
+            case RELAY_UPGRADE_TYPE_CLIENT:
+                new_client = malloc (sizeof (*new_client));
+                if (new_client)
+                {
+                    new_client->id = weechat_infolist_integer (infolist, "id");
+                    new_client->sock = weechat_infolist_integer (infolist, "sock");
+                    new_client->address = strdup (weechat_infolist_string (infolist, "address"));
+                    new_client->status = weechat_infolist_integer (infolist, "status");
+                    new_client->protocol = weechat_infolist_integer (infolist, "protocol");
+                    new_client->protocol_args = strdup (weechat_infolist_string (infolist, "protocol_args"));
+                    new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
+                    new_client->start_time = weechat_infolist_time (infolist, "start_time");
+                    new_client->end_time = weechat_infolist_time (infolist, "end_time");
+                    new_client->hook_fd = weechat_hook_fd (new_client->sock,
+                                                           1, 0, 0,
+                                                           &relay_client_recv_cb,
+                                                           new_client);
+                    new_client->last_activity = weechat_infolist_time (infolist, "last_activity");
+                    sscanf (weechat_infolist_string (infolist, "bytes_recv"),
+                            "%lu", &(new_client->bytes_recv));
+                    sscanf (weechat_infolist_string (infolist, "bytes_sent"),
+                            "%lu", &(new_client->bytes_sent));
+                    
+                    switch (new_client->protocol)
+                    {
+                        case RELAY_PROTOCOL_WEECHAT:
+                            relay_client_weechat_alloc_with_infolist (new_client,
+                                                                      infolist);
+                            break;
+                        case RELAY_PROTOCOL_IRC:
+                            relay_client_irc_alloc_with_infolist (new_client,
+                                                                  infolist);
+                            break;
+                        case RELAY_NUM_PROTOCOLS:
+                            break;
+                    }
+                    
+                    new_client->prev_client = NULL;
+                    new_client->next_client = relay_clients;
+                    if (relay_clients)
+                        relay_clients->prev_client = new_client;
+                    else
+                        last_relay_client = new_client;
+                    relay_clients = new_client;
+                    
+                    relay_client_count++;
+                }
+                break;
+            case RELAY_UPGRADE_TYPE_RAW_MESSAGE:
+                relay_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),
+                                               weechat_infolist_string (infolist, "prefix"),
+                                               weechat_infolist_string (infolist, "message"));
+                break;
+        }
+    }
     
     return WEECHAT_RC_OK;
 }

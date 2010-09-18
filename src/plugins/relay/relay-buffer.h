@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_RELAY_BUFFER_H
 #define __WEECHAT_RELAY_BUFFER_H 1
 
+#define RELAY_BUFFER_NAME "relay.list"
+
 extern struct t_gui_buffer *relay_buffer;
 extern int relay_buffer_selected_line;
 
