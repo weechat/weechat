@@ -989,7 +989,6 @@ relay_client_irc_alloc_with_infolist (struct t_relay_client *client,
                                       struct t_infolist *infolist)
 {
     struct t_relay_client_irc_data *irc_data;
-    const char *password;
     
     client->protocol_data = malloc (sizeof (*irc_data));
     if (client->protocol_data)
