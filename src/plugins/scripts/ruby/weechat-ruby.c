@@ -119,7 +119,8 @@ weechat_ruby_hashtable_map_cb (void *data,
     
     hash = (VALUE *)data;
     
-    rb_hash_aset (hash[0], rb_str_new2 ((char *)key), rb_str_new2 ((char *)value));
+    rb_hash_aset (hash[0], rb_str_new2 ((char *)key),
+                  rb_str_new2 ((char *)value));
 }
 
 /*
@@ -150,7 +151,8 @@ weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
     hashtable = (struct t_hashtable *)arg;
     if ((TYPE(key) == T_STRING) && (TYPE(value) == T_STRING))
     {
-        weechat_hashtable_set (hashtable, STR2CSTR(key), STR2CSTR(value));
+        weechat_hashtable_set (hashtable, StringValuePtr(key),
+                               StringValuePtr(value));
     }
     return 0;
 }
@@ -184,7 +186,8 @@ weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
     st = RHASH(hash)->tbl;
 #endif
     
-    rb_hash_foreach (hash, &weechat_ruby_hash_foreach_cb, (unsigned long)hashtable);
+    rb_hash_foreach (hash, &weechat_ruby_hash_foreach_cb,
+                     (unsigned long)hashtable);
     
     return hashtable;
 }
@@ -225,7 +228,7 @@ rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, VALUE *argv)
 int
 weechat_ruby_print_exception (VALUE err)
 {
-    VALUE backtrace;
+    VALUE backtrace, tmp1, tmp2, tmp3;
     int i;
     int ruby_error;
     char* line;
@@ -235,25 +238,28 @@ weechat_ruby_print_exception (VALUE err)
     
     backtrace = rb_protect_funcall (err, rb_intern("backtrace"),
                                     &ruby_error, 0, NULL);
-    err_msg = STR2CSTR(rb_protect_funcall(err, rb_intern("message"),
-                                          &ruby_error, 0, NULL));
-    err_class = STR2CSTR(rb_protect_funcall(rb_protect_funcall(err,
-                                                               rb_intern("class"),
-                                                               &ruby_error, 0, NULL),
-                                            rb_intern("name"), &ruby_error, 0, NULL));
+
+    tmp1 = rb_protect_funcall(err, rb_intern("message"), &ruby_error, 0, NULL);
+    err_msg = StringValueCStr(tmp1);
+
+    tmp2 = rb_protect_funcall(rb_protect_funcall(err, rb_intern("class"),
+                                                 &ruby_error, 0, NULL),
+                              rb_intern("name"), &ruby_error, 0, NULL);
+    err_class = StringValuePtr(tmp2);
     
     if (strcmp (err_class, "SyntaxError") == 0)
     {
+	tmp3 = rb_inspect(err);
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        STR2CSTR(rb_inspect(err)));
+                        StringValuePtr(tmp3));
     }
     else
     {
         for (i = 0; i < RARRAY_LEN(backtrace); i++)
         {
-            line = STR2CSTR(RARRAY_PTR(backtrace)[i]);
+            line = StringValuePtr(RARRAY_PTR(backtrace)[i]);
             cline = NULL;
             if (i == 0)
             {
@@ -362,8 +368,8 @@ weechat_ruby_exec (struct t_plugin_script *script,
     
     if ((TYPE(rc) == T_STRING) && (ret_type == WEECHAT_SCRIPT_EXEC_STRING))
     {
-        if (STR2CSTR (rc))
-            ret_value = strdup (STR2CSTR (rc));
+        if (StringValuePtr (rc))
+            ret_value = strdup (StringValuePtr (rc));
         else
             ret_value = NULL;
     }
@@ -416,7 +422,7 @@ weechat_ruby_output (VALUE self, VALUE str)
     /* make C compiler happy */
     (void) self;
     
-    msg = strdup(STR2CSTR(str));
+    msg = strdup(StringValuePtr(str));
     
     m = msg;
     while ((p = strchr (m, '\n')) != NULL)

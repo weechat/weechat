@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-09-17
+v0.3.4-dev, 2010-09-19
 
 
 Version 0.3.4 (under dev!)
@@ -17,6 +17,7 @@ Version 0.3.4 (under dev!)
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
 * relay: beta version of IRC proxy
+* ruby: fix compilation with Ruby 1.9.2
 
 Version 0.3.3 (2010-08-07)
 --------------------------
