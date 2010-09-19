@@ -17,7 +17,7 @@ Version 0.3.4 (under dev!)
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
 * relay: beta version of IRC proxy
-* ruby: fix compilation with Ruby 1.9.2
+* ruby: fix compilation with Ruby 1.9.2 (patch #7316)
 
 Version 0.3.3 (2010-08-07)
 --------------------------
