@@ -4,7 +4,7 @@
 
 | alias | alias | list of aliases | alias pointer (optional) | alias name (can start or end with "*" as wildcard) (optional)
 
-| irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server name
+| irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server,channel (channel is optional)
 
 | irc | irc_ignore | list of IRC ignores | ignore pointer (optional) | -
 

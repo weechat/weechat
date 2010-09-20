@@ -4,7 +4,7 @@
 
 | alias | alias | elenco di alias | puntatore all'alias (opzionale) | nome alias (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | nome server
+| irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | server,channel (channel is optional)
 
 | irc | irc_ignore | elenco di ignore IRC | puntatore all'ignore (opzionale) | -
 

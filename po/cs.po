@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-18 09:24+0200\n"
+"POT-Creation-Date: 2010-09-20 22:26+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4872,6 +4872,10 @@ msgstr "seznam kanálů pro IRC server"
 
 msgid "channel pointer (optional)"
 msgstr "ukazatel kanálu (volitelné)"
+
+#, fuzzy
+msgid "server,channel (channel is optional)"
+msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "seznam uživatelů pro IRC kanál"

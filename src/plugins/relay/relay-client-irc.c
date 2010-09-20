@@ -444,10 +444,10 @@ relay_client_irc_send_join (struct t_relay_client *client,
                             const char *channel)
 {
     char *infolist_name, *nicks;
-    const char *nick, *prefix;
+    const char *nick, *prefix, *topic;
     char *host;
     int length, length_nicks;
-    struct t_infolist *infolist_nick, *infolist_nicks;
+    struct t_infolist *infolist_nick, *infolist_channel, *infolist_nicks;
     
     length = strlen (client->protocol_args) + 1 + strlen (channel) + 1
         + strlen (RELAY_IRC_DATA(client, nick)) + 1;
@@ -481,7 +481,26 @@ relay_client_irc_send_join (struct t_relay_client *client,
         snprintf (infolist_name, length, "%s,%s",
                   client->protocol_args,
                   channel);
-        infolist_nicks = weechat_infolist_get ("irc_nick", NULL, infolist_name);
+        infolist_channel = weechat_infolist_get ("irc_channel", NULL,
+                                                 infolist_name);
+        if (infolist_channel)
+        {
+            if (weechat_infolist_next (infolist_channel))
+            {
+                topic = weechat_infolist_string (infolist_channel, "topic");
+                if (topic && topic[0])
+                {
+                    relay_client_irc_sendf (client,
+                                            ":%s 332 %s %s :%s",
+                                            RELAY_IRC_DATA(client, address),
+                                            RELAY_IRC_DATA(client, nick),
+                                            channel, topic);
+                }
+            }
+            weechat_infolist_free (infolist_channel);
+        }
+        infolist_nicks = weechat_infolist_get ("irc_nick", NULL,
+                                               infolist_name);
         if (infolist_nicks)
         {
             length_nicks = 0;

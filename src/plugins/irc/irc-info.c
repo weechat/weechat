@@ -324,39 +324,65 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     {
         if (arguments && arguments[0])
         {
-            ptr_server = irc_server_search (arguments);
-            if (ptr_server)
+            ptr_server = NULL;
+            ptr_channel = NULL;
+            argv = weechat_string_split (arguments, ",", 0, 0, &argc);
+            if (argv)
             {
-                if (pointer && !irc_channel_valid (ptr_server, pointer))
-                    return NULL;
-                
-                ptr_infolist = weechat_infolist_new ();
-                if (ptr_infolist)
+                if (argc >= 1)
                 {
-                    if (pointer)
+                    ptr_server = irc_server_search (argv[0]);
+                    if (!ptr_server)
                     {
-                        /* build list with only one channel */
-                        if (!irc_channel_add_to_infolist (ptr_infolist, pointer))
+                        weechat_string_free_split (argv);
+                        return NULL;
+                    }
+                    if (!pointer && (argc >= 2))
+                    {
+                        pointer = irc_channel_search (ptr_server, argv[1]);
+                        if (!pointer)
                         {
-                            weechat_infolist_free (ptr_infolist);
+                            weechat_string_free_split (argv);
                             return NULL;
                         }
-                        return ptr_infolist;
                     }
-                    else
+                }
+                weechat_string_free_split (argv);
+                if (ptr_server)
+                {
+                    if (pointer && !irc_channel_valid (ptr_server, pointer))
+                        return NULL;
+                    
+                    ptr_infolist = weechat_infolist_new ();
+                    if (ptr_infolist)
                     {
-                        /* build list with all channels of server */
-                        for (ptr_channel = ptr_server->channels; ptr_channel;
-                             ptr_channel = ptr_channel->next_channel)
+                        if (pointer)
                         {
+                            /* build list with only one channel */
                             if (!irc_channel_add_to_infolist (ptr_infolist,
-                                                              ptr_channel))
+                                                              pointer))
                             {
                                 weechat_infolist_free (ptr_infolist);
                                 return NULL;
                             }
+                            return ptr_infolist;
                         }
-                        return ptr_infolist;
+                        else
+                        {
+                            /* build list with all channels of server */
+                            for (ptr_channel = ptr_server->channels;
+                                 ptr_channel;
+                                 ptr_channel = ptr_channel->next_channel)
+                            {
+                                if (!irc_channel_add_to_infolist (ptr_infolist,
+                                                                  ptr_channel))
+                                {
+                                    weechat_infolist_free (ptr_infolist);
+                                    return NULL;
+                                }
+                            }
+                            return ptr_infolist;
+                        }
                     }
                 }
             }
@@ -539,7 +565,7 @@ irc_info_init ()
     weechat_hook_infolist ("irc_channel",
                            N_("list of channels for an IRC server"),
                            N_("channel pointer (optional)"),
-                           N_("server name"),
+                           N_("server,channel (channel is optional)"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_nick",
                            N_("list of nicks for an IRC channel"),

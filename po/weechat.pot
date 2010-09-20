@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-18 09:24+0200\n"
+"POT-Creation-Date: 2010-09-20 22:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3982,6 +3982,9 @@ msgid "list of channels for an IRC server"
 msgstr ""
 
 msgid "channel pointer (optional)"
+msgstr ""
+
+msgid "server,channel (channel is optional)"
 msgstr ""
 
 msgid "list of nicks for an IRC channel"
