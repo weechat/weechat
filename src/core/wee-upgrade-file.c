@@ -698,6 +698,9 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
 {
     char *signature;
     
+    if (!upgrade_file)
+        return 0;
+    
     upgrade_file->callback_read = callback_read;
     upgrade_file->callback_read_data = callback_read_data;
     
