@@ -1,30 +1,30 @@
 * *aspell.check.commands*
-** Beschreibung: Durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)
+** Beschreibung: `Durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic")
+** Werte: beliebige Zeichenkette (Standardwert: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
 * *aspell.check.default_dict*
-** Beschreibung: Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde. Wird kein Wörterbuch angegeben dann ist Aspell in allen Buffer deaktiviert, für die nicht explizit ein Wörterbuch angegeben wurde.
+** Beschreibung: `Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde. Wird kein Wörterbuch angegeben dann ist Aspell in allen Buffer deaktiviert, für die nicht explizit ein Wörterbuch angegeben wurde.`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "")
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *aspell.check.during_search*
-** Beschreibung: Überprüfe Wörter während im Buffer nach einem Text gesucht wird
+** Beschreibung: `Überprüfe Wörter während im Buffer nach einem Text gesucht wird`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: off)
+** Werte: on, off (Standardwert: `off`)
 
 * *aspell.check.real_time*
-** Beschreibung: Echtzeit Korrektur während der Texteingabe (da dies langsamer ist, ist diese Funktion standardmäßig deaktiviert. Wörter werden erst überprüft wenn ein Leerzeichen dem Wort folgt)
+** Beschreibung: `Echtzeit Korrektur während der Texteingabe (da dies langsamer ist, ist diese Funktion standardmäßig deaktiviert. Wörter werden erst überprüft wenn ein Leerzeichen dem Wort folgt)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: off)
+** Werte: on, off (Standardwert: `off`)
 
 * *aspell.check.word_min_length*
-** Beschreibung: Minimallänge für ein Wort welches auf Rechtschreibung überprüft werden soll (bei 0 werden alle Wörter überprüft)
+** Beschreibung: `Minimallänge für ein Wort welches auf Rechtschreibung überprüft werden soll (bei 0 werden alle Wörter überprüft)`
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 2)
+** Werte: 0 .. 2147483647 (Standardwert: `2`)
 
 * *aspell.look.color*
-** Beschreibung: In dieser Farbe wird ein Wort mit einem Rechtschreibfehler hervorgehoben
+** Beschreibung: `In dieser Farbe wird ein Wort mit einem Rechtschreibfehler hervorgehoben`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightred)
+** Werte: ein Farbname (Standardwert: `lightred`)
 

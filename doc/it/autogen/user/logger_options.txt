@@ -1,40 +1,40 @@
 * *logger.file.auto_log*
-** descrizione: salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)
+** descrizione: `salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)`
 ** tipo: bool
-** valori: on, off (valore predefinito: on)
+** valori: on, off (valore predefinito: `on`)
 
 * *logger.file.info_lines*
-** descrizione: scrive una riga informativa nel file di log quando il log inizia o termina per un buffer
+** descrizione: `scrive una riga informativa nel file di log quando il log inizia o termina per un buffer`
 ** tipo: bool
-** valori: on, off (valore predefinito: off)
+** valori: on, off (valore predefinito: `off`)
 
 * *logger.file.mask*
-** descrizione: mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è utilizzata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)
+** descrizione: `mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è utilizzata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "$plugin.$name.weechatlog")
+** valori: qualsiasi stringa (valore predefinito: `"$plugin.$name.weechatlog"`)
 
 * *logger.file.name_lower_case*
-** descrizione: utilizzare solo lettere minuscole per i nomi dei file di log
+** descrizione: `utilizzare solo lettere minuscole per i nomi dei file di log`
 ** tipo: bool
-** valori: on, off (valore predefinito: on)
+** valori: on, off (valore predefinito: `on`)
 
 * *logger.file.path*
-** descrizione: percorso per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla cartella home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)
+** descrizione: `percorso per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla cartella home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "%h/logs/")
+** valori: qualsiasi stringa (valore predefinito: `"%h/logs/"`)
 
 * *logger.file.replacement_char*
-** descrizione: carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di cartella)
+** descrizione: `carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di cartella)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "_")
+** valori: qualsiasi stringa (valore predefinito: `"_"`)
 
 * *logger.file.time_format*
-** descrizione: data e ora utilizzati nei file di log (consultare man strftime per gli specificatori di data/ora)
+** descrizione: `data e ora utilizzati nei file di log (consultare man strftime per gli specificatori di data/ora)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "%Y-%m-%d %H:%M:%S")
+** valori: qualsiasi stringa (valore predefinito: `"%Y-%m-%d %H:%M:%S"`)
 
 * *logger.look.backlog*
-** descrizione: numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessun backlog)
+** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessun backlog)`
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: 20)
+** valori: 0 .. 2147483647 (valore predefinito: `20`)
 

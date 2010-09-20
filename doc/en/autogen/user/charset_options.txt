@@ -1,10 +1,10 @@
 * *charset.default.decode*
-** description: global decoding charset
+** description: `global decoding charset`
 ** type: string
-** values: any string (default value: "iso-8859-1")
+** values: any string (default value: `"iso-8859-1"`)
 
 * *charset.default.encode*
-** description: global encoding charset
+** description: `global encoding charset`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 

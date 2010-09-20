@@ -1,65 +1,65 @@
 * *relay.color.status_active*
-** descrizione: colore del testo per lo status "connesso"
+** descrizione: `colore del testo per lo status "connesso"`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: lightblue)
+** valori: un nome colore (valore predefinito: `lightblue`)
 
 * *relay.color.status_auth_failed*
-** descrizione: colore del testo per lo status "autenticazione fallita"
+** descrizione: `colore del testo per lo status "autenticazione fallita"`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: lightred)
+** valori: un nome colore (valore predefinito: `lightred`)
 
 * *relay.color.status_connecting*
-** descrizione: colore del testo per lo status "connessione in corso"
+** descrizione: `colore del testo per lo status "connessione in corso"`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: yellow)
+** valori: un nome colore (valore predefinito: `yellow`)
 
 * *relay.color.status_disconnected*
-** descrizione: colore del testo per lo status "disconnesso"
+** descrizione: `colore del testo per lo status "disconnesso"`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: lightred)
+** valori: un nome colore (valore predefinito: `lightred`)
 
 * *relay.color.status_waiting_auth*
-** descrizione: colore del testo per lo status "in attesa dell'autenticazione"
+** descrizione: `colore del testo per lo status "in attesa dell'autenticazione"`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: brown)
+** valori: un nome colore (valore predefinito: `brown`)
 
 * *relay.color.text*
-** descrizione: colore del testo
+** descrizione: `colore del testo`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: default)
+** valori: un nome colore (valore predefinito: `default`)
 
 * *relay.color.text_bg*
-** descrizione: colore di sfondo
+** descrizione: `colore di sfondo`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: default)
+** valori: un nome colore (valore predefinito: `default`)
 
 * *relay.color.text_selected*
-** descrizione: colore della riga del client selezionato
+** descrizione: `colore della riga del client selezionato`
 ** tipo: colore
-** valori: un nome colore (valore predefinito: white)
+** valori: un nome colore (valore predefinito: `white`)
 
 * *relay.look.auto_open_buffer*
-** descrizione: apre automaticamente il buffer relay alla connessione di un nuovo client
+** descrizione: `apre automaticamente il buffer relay alla connessione di un nuovo client`
 ** tipo: bool
-** valori: on, off (valore predefinito: on)
+** valori: on, off (valore predefinito: `on`)
 
 * *relay.look.raw_messages*
-** descrizione: number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** descrizione: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`
 ** tipo: intero
-** valori: 0 .. 65535 (valore predefinito: 256)
+** valori: 0 .. 65535 (valore predefinito: `256`)
 
 * *relay.network.bind_address*
-** descrizione: address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)
+** descrizione: `address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "")
+** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *relay.network.max_clients*
-** descrizione: numero massimo di client connessi ad una porta
+** descrizione: `numero massimo di client connessi ad una porta`
 ** tipo: intero
-** valori: 1 .. 1024 (valore predefinito: 5)
+** valori: 1 .. 1024 (valore predefinito: `5`)
 
 * *relay.network.password*
-** descrizione: password required by clients to access this relay (empty value means no password required)
+** descrizione: `password required by clients to access this relay (empty value means no password required)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "")
+** valori: qualsiasi stringa (valore predefinito: `""`)
 

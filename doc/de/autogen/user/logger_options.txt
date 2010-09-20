@@ -1,40 +1,40 @@
 * *logger.file.auto_log*
-** Beschreibung: Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren, für den Buffer nicht deaktiviert sein sollte)
+** Beschreibung: `Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren, für den Buffer nicht deaktiviert sein sollte)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *logger.file.info_lines*
-** Beschreibung: Fügt eine Information in die Protokoll-Datei ein, falls die Protokollierung gestartet oder beendet wird
+** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, falls die Protokollierung gestartet oder beendet wird`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: off)
+** Werte: on, off (Standardwert: `off`)
 
 * *logger.file.mask*
-** Beschreibung: Standardmaske für Protokolldateien (Format: "Verzeichnis/zu/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig
+** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zu/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "$plugin.$name.weechatlog")
+** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
 
 * *logger.file.name_lower_case*
-** Beschreibung: Benutze ausschließlich Kleinschreibung für Protokoll-Dateien
+** Beschreibung: `Benutze ausschließlich Kleinschreibung für Protokoll-Dateien`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *logger.file.path*
-** Beschreibung: Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime)
+** Beschreibung: `Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "%h/logs/")
+** Werte: beliebige Zeichenkette (Standardwert: `"%h/logs/"`)
 
 * *logger.file.replacement_char*
-** Beschreibung: Ersatzzeichen für Dateinamen, falls der Dateiname Sonderzeichen beinhaltet (z.B. das Trennzeichen bei Verzeichnissen "/")
+** Beschreibung: `Ersatzzeichen für Dateinamen, falls der Dateiname Sonderzeichen beinhaltet (z.B. das Trennzeichen bei Verzeichnissen "/")`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "_")
+** Werte: beliebige Zeichenkette (Standardwert: `"_"`)
 
 * *logger.file.time_format*
-** Beschreibung: Zeitstempel in Protokoll-Datei nutzen (bitte dazu die Anleitung zu "strftime" (man strftime) durchlesen)
+** Beschreibung: `Zeitstempel in Protokoll-Datei nutzen (bitte dazu die Anleitung zu "strftime" (man strftime) durchlesen)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "%Y-%m-%d %H:%M:%S")
+** Werte: beliebige Zeichenkette (Standardwert: `"%Y-%m-%d %H:%M:%S"`)
 
 * *logger.look.backlog*
-** Beschreibung: maximale Anzahl der Zeilen die aus der Protokoll-Datei dargestellt werden sollen, wenn ein Buffer geöffnet wird (0 = kein Darstellung)
+** Beschreibung: `maximale Anzahl der Zeilen die aus der Protokoll-Datei dargestellt werden sollen, wenn ein Buffer geöffnet wird (0 = kein Darstellung)`
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 20)
+** Werte: 0 .. 2147483647 (Standardwert: `20`)
 

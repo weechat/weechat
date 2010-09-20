@@ -1,65 +1,65 @@
 * *relay.color.status_active*
-** Beschreibung: Textfarbe für Status: "Verbindung hergestellt"
+** Beschreibung: `Textfarbe für Status: "Verbindung hergestellt"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightblue)
+** Werte: ein Farbname (Standardwert: `lightblue`)
 
 * *relay.color.status_auth_failed*
-** Beschreibung: Textfarbe für Status: "Authentifizierung gescheitert"
+** Beschreibung: `Textfarbe für Status: "Authentifizierung gescheitert"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightred)
+** Werte: ein Farbname (Standardwert: `lightred`)
 
 * *relay.color.status_connecting*
-** Beschreibung: Textfarbe für Status: "verbinde"
+** Beschreibung: `Textfarbe für Status: "verbinde"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: yellow)
+** Werte: ein Farbname (Standardwert: `yellow`)
 
 * *relay.color.status_disconnected*
-** Beschreibung: Textfarbe für Status: "Verbindung getrennt"
+** Beschreibung: `Textfarbe für Status: "Verbindung getrennt"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightred)
+** Werte: ein Farbname (Standardwert: `lightred`)
 
 * *relay.color.status_waiting_auth*
-** Beschreibung: Textfarbe für Status: "warte auf Authentifizierung"
+** Beschreibung: `Textfarbe für Status: "warte auf Authentifizierung"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: brown)
+** Werte: ein Farbname (Standardwert: `brown`)
 
 * *relay.color.text*
-** Beschreibung: Textfarbe
+** Beschreibung: `Textfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: default)
+** Werte: ein Farbname (Standardwert: `default`)
 
 * *relay.color.text_bg*
-** Beschreibung: Hintergrundfarbe
+** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: default)
+** Werte: ein Farbname (Standardwert: `default`)
 
 * *relay.color.text_selected*
-** Beschreibung: Textfarbe für selektierten Client-Linie
+** Beschreibung: `Textfarbe für selektierten Client-Linie`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: white)
+** Werte: ein Farbname (Standardwert: `white`)
 
 * *relay.look.auto_open_buffer*
-** Beschreibung: Öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird
+** Beschreibung: `Öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *relay.look.raw_messages*
-** Beschreibung: number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)
+** Beschreibung: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`
 ** Typ: integer
-** Werte: 0 .. 65535 (Standardwert: 256)
+** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * *relay.network.bind_address*
-** Beschreibung: address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)
+** Beschreibung: `address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "")
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *relay.network.max_clients*
-** Beschreibung: Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen
+** Beschreibung: `Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen`
 ** Typ: integer
-** Werte: 1 .. 1024 (Standardwert: 5)
+** Werte: 1 .. 1024 (Standardwert: `5`)
 
 * *relay.network.password*
-** Beschreibung: password required by clients to access this relay (empty value means no password required)
+** Beschreibung: `password required by clients to access this relay (empty value means no password required)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "")
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

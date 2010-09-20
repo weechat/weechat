@@ -1,125 +1,125 @@
 * *xfer.color.status_aborted*
-** Beschreibung: Textfarbe für Status: "abgebrochen"
+** Beschreibung: `Textfarbe für Status: "abgebrochen"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightred)
+** Werte: ein Farbname (Standardwert: `lightred`)
 
 * *xfer.color.status_active*
-** Beschreibung: Textfarbe für Status: "aktiv"
+** Beschreibung: `Textfarbe für Status: "aktiv"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightblue)
+** Werte: ein Farbname (Standardwert: `lightblue`)
 
 * *xfer.color.status_connecting*
-** Beschreibung: Textfarbe für Status: "verbinde"
+** Beschreibung: `Textfarbe für Status: "verbinde"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: yellow)
+** Werte: ein Farbname (Standardwert: `yellow`)
 
 * *xfer.color.status_done*
-** Beschreibung: Textfarbe für Status: "fertig"
+** Beschreibung: `Textfarbe für Status: "fertig"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightgreen)
+** Werte: ein Farbname (Standardwert: `lightgreen`)
 
 * *xfer.color.status_failed*
-** Beschreibung: Textfarbe für Status: "fehlgeschlagen"
+** Beschreibung: `Textfarbe für Status: "fehlgeschlagen"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightred)
+** Werte: ein Farbname (Standardwert: `lightred`)
 
 * *xfer.color.status_waiting*
-** Beschreibung: Textfarbe für Status: "wartend"
+** Beschreibung: `Textfarbe für Status: "wartend"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: lightcyan)
+** Werte: ein Farbname (Standardwert: `lightcyan`)
 
 * *xfer.color.text*
-** Beschreibung: Textfarbe
+** Beschreibung: `Textfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: default)
+** Werte: ein Farbname (Standardwert: `default`)
 
 * *xfer.color.text_bg*
-** Beschreibung: Hintergrundfarbe
+** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: default)
+** Werte: ein Farbname (Standardwert: `default`)
 
 * *xfer.color.text_selected*
-** Beschreibung: Farbe der selektierten Transfer-Zeile
+** Beschreibung: `Farbe der selektierten Transfer-Zeile`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: white)
+** Werte: ein Farbname (Standardwert: `white`)
 
 * *xfer.file.auto_accept_chats*
-** Beschreibung: Die Annahme einer Chat-Anfrage wird, automatisch, akzeptiert (Vorsicht!)
+** Beschreibung: `Die Annahme einer Chat-Anfrage wird, automatisch, akzeptiert (Vorsicht!)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: off)
+** Werte: on, off (Standardwert: `off`)
 
 * *xfer.file.auto_accept_files*
-** Beschreibung: Die Annahme von Daten wird, automatisch, akzeptiert (Vorsicht!)
+** Beschreibung: `Die Annahme von Daten wird, automatisch, akzeptiert (Vorsicht!)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: off)
+** Werte: on, off (Standardwert: `off`)
 
 * *xfer.file.auto_rename*
-** Beschreibung: Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden (fügt dabei '.1', '.2', ... dem Dateinamen hinzu)
+** Beschreibung: `Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden (fügt dabei '.1', '.2', ... dem Dateinamen hinzu)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.file.auto_resume*
-** Beschreibung: Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung getrennt wurde
+** Beschreibung: `Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung getrennt wurde`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.file.convert_spaces*
-** Beschreibung: Beim Verschicken von Dateien, Leerzeichen in Unterstrich umwandeln
+** Beschreibung: `Beim Verschicken von Dateien, Leerzeichen in Unterstrich umwandeln`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.file.download_path*
-** Beschreibung: Zielpfad für eingehende Dateien
+** Beschreibung: `Zielpfad für eingehende Dateien`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "%h/xfer")
+** Werte: beliebige Zeichenkette (Standardwert: `"%h/xfer"`)
 
 * *xfer.file.upload_path*
-** Beschreibung: Quellpfad, aus dem Dateien standardmäßig gelesen werden (falls keine explizite Angabe für einen Pfad angegeben worden ist)
+** Beschreibung: `Quellpfad, aus dem Dateien standardmäßig gelesen werden (falls keine explizite Angabe für einen Pfad angegeben worden ist)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "~")
+** Werte: beliebige Zeichenkette (Standardwert: `"~"`)
 
 * *xfer.file.use_nick_in_filename*
-** Beschreibung: Nutze den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden
+** Beschreibung: `Nutze den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.look.auto_open_buffer*
-** Beschreibung: öffnet automatisch den Übertragungs-Buffer falls eine neue Übertragung hinzugefügt wird
+** Beschreibung: `öffnet automatisch den Übertragungs-Buffer falls eine neue Übertragung hinzugefügt wird`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.look.progress_bar_size*
-** Beschreibung: Größe des Fortschrittsbalkens, in Zeichen (0, falls Fortschrittsbalken deaktiviert sein soll)
+** Beschreibung: `Größe des Fortschrittsbalkens, in Zeichen (0, falls Fortschrittsbalken deaktiviert sein soll)`
 ** Typ: integer
-** Werte: 0 .. 256 (Standardwert: 20)
+** Werte: 0 .. 256 (Standardwert: `20`)
 
 * *xfer.network.blocksize*
-** Beschreibung: Blockgröße für versendete Pakete (in Bytes)
+** Beschreibung: `Blockgröße für versendete Pakete (in Bytes)`
 ** Typ: integer
-** Werte: 1024 .. 102400 (Standardwert: 65536)
+** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
 * *xfer.network.fast_send*
-** Beschreibung: Warte beim Verschicken von Dateien nicht auf das Bestätigungssignal (ACK)
+** Beschreibung: `Warte beim Verschicken von Dateien nicht auf das Bestätigungssignal (ACK)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: on)
+** Werte: on, off (Standardwert: `on`)
 
 * *xfer.network.own_ip*
-** Beschreibung: IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert angegeben wird, wird die IP des lokalen Interfaces benutzt)
+** Beschreibung: `IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert angegeben wird, wird die IP des lokalen Interfaces benutzt)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "")
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *xfer.network.port_range*
-** Beschreibung: Schränkt ausgehende Daten/Chats auf die ausschließliche Benutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen die Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)
+** Beschreibung: `Schränkt ausgehende Daten/Chats auf die ausschließliche Benutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen die Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: "")
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *xfer.network.speed_limit*
-** Beschreibung: Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilo-Bytes pro Sekunde (0 = keine Begrenzung)
+** Beschreibung: `Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilo-Bytes pro Sekunde (0 = keine Begrenzung)`
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: 0)
+** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
 * *xfer.network.timeout*
-** Beschreibung: Zeitüberschreitung bei Transfer-Anfrage (in Sekunden)
+** Beschreibung: `Zeitüberschreitung bei Transfer-Anfrage (in Sekunden)`
 ** Typ: integer
-** Werte: 5 .. 2147483647 (Standardwert: 300)
+** Werte: 5 .. 2147483647 (Standardwert: `300`)
 

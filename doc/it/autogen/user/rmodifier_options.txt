@@ -1,5 +1,5 @@
 * *rmodifier.look.hide_char*
-** descrizione: char used to hide part of a string
+** descrizione: `char used to hide part of a string`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: "*")
+** valori: qualsiasi stringa (valore predefinito: `"*"`)
 

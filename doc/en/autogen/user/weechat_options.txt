@@ -1,615 +1,615 @@
 * *weechat.color.bar_more*
-** description: text color for '+' when scrolling bars
+** description: `text color for '+' when scrolling bars`
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: `lightmagenta`)
 
 * *weechat.color.chat*
-** description: text color for chat
+** description: `text color for chat`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.chat_bg*
-** description: background color for chat
+** description: `background color for chat`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.chat_buffer*
-** description: text color for buffer names
+** description: `text color for buffer names`
 ** type: color
-** values: a color name (default value: white)
+** values: a color name (default value: `white`)
 
 * *weechat.color.chat_channel*
-** description: text color for channel names
+** description: `text color for channel names`
 ** type: color
-** values: a color name (default value: white)
+** values: a color name (default value: `white`)
 
 * *weechat.color.chat_delimiters*
-** description: text color for delimiters
+** description: `text color for delimiters`
 ** type: color
-** values: a color name (default value: green)
+** values: a color name (default value: `green`)
 
 * *weechat.color.chat_highlight*
-** description: text color for highlighted prefix
+** description: `text color for highlighted prefix`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.chat_highlight_bg*
-** description: background color for highlighted prefix
+** description: `background color for highlighted prefix`
 ** type: color
-** values: a color name (default value: magenta)
+** values: a color name (default value: `magenta`)
 
 * *weechat.color.chat_host*
-** description: text color for hostnames
+** description: `text color for hostnames`
 ** type: color
-** values: a color name (default value: cyan)
+** values: a color name (default value: `cyan`)
 
 * *weechat.color.chat_nick*
-** description: text color for nicks in chat window
+** description: `text color for nicks in chat window`
 ** type: color
-** values: a color name (default value: lightcyan)
+** values: a color name (default value: `lightcyan`)
 
 * *weechat.color.chat_nick_color01*
-** description: text color #1 for nick
+** description: `text color #1 for nick`
 ** type: color
-** values: a color name (default value: cyan)
+** values: a color name (default value: `cyan`)
 
 * *weechat.color.chat_nick_color02*
-** description: text color #2 for nick
+** description: `text color #2 for nick`
 ** type: color
-** values: a color name (default value: magenta)
+** values: a color name (default value: `magenta`)
 
 * *weechat.color.chat_nick_color03*
-** description: text color #3 for nick
+** description: `text color #3 for nick`
 ** type: color
-** values: a color name (default value: green)
+** values: a color name (default value: `green`)
 
 * *weechat.color.chat_nick_color04*
-** description: text color #4 for nick
+** description: `text color #4 for nick`
 ** type: color
-** values: a color name (default value: brown)
+** values: a color name (default value: `brown`)
 
 * *weechat.color.chat_nick_color05*
-** description: text color #5 for nick
+** description: `text color #5 for nick`
 ** type: color
-** values: a color name (default value: lightblue)
+** values: a color name (default value: `lightblue`)
 
 * *weechat.color.chat_nick_color06*
-** description: text color #6 for nick
+** description: `text color #6 for nick`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.chat_nick_color07*
-** description: text color #7 for nick
+** description: `text color #7 for nick`
 ** type: color
-** values: a color name (default value: lightcyan)
+** values: a color name (default value: `lightcyan`)
 
 * *weechat.color.chat_nick_color08*
-** description: text color #8 for nick
+** description: `text color #8 for nick`
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: `lightmagenta`)
 
 * *weechat.color.chat_nick_color09*
-** description: text color #9 for nick
+** description: `text color #9 for nick`
 ** type: color
-** values: a color name (default value: lightgreen)
+** values: a color name (default value: `lightgreen`)
 
 * *weechat.color.chat_nick_color10*
-** description: text color #10 for nick
+** description: `text color #10 for nick`
 ** type: color
-** values: a color name (default value: blue)
+** values: a color name (default value: `blue`)
 
 * *weechat.color.chat_nick_other*
-** description: text color for other nick in private buffer
+** description: `text color for other nick in private buffer`
 ** type: color
-** values: a color name (default value: cyan)
+** values: a color name (default value: `cyan`)
 
 * *weechat.color.chat_nick_self*
-** description: text color for local nick in chat window
+** description: `text color for local nick in chat window`
 ** type: color
-** values: a color name (default value: white)
+** values: a color name (default value: `white`)
 
 * *weechat.color.chat_prefix_action*
-** description: text color for action prefix
+** description: `text color for action prefix`
 ** type: color
-** values: a color name (default value: white)
+** values: a color name (default value: `white`)
 
 * *weechat.color.chat_prefix_buffer*
-** description: text color for buffer name (before prefix, when many buffers are merged with same number)
+** description: `text color for buffer name (before prefix, when many buffers are merged with same number)`
 ** type: color
-** values: a color name (default value: brown)
+** values: a color name (default value: `brown`)
 
 * *weechat.color.chat_prefix_error*
-** description: text color for error prefix
+** description: `text color for error prefix`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.chat_prefix_join*
-** description: text color for join prefix
+** description: `text color for join prefix`
 ** type: color
-** values: a color name (default value: lightgreen)
+** values: a color name (default value: `lightgreen`)
 
 * *weechat.color.chat_prefix_more*
-** description: text color for '+' when prefix is too long
+** description: `text color for '+' when prefix is too long`
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: `lightmagenta`)
 
 * *weechat.color.chat_prefix_network*
-** description: text color for network prefix
+** description: `text color for network prefix`
 ** type: color
-** values: a color name (default value: magenta)
+** values: a color name (default value: `magenta`)
 
 * *weechat.color.chat_prefix_quit*
-** description: text color for quit prefix
+** description: `text color for quit prefix`
 ** type: color
-** values: a color name (default value: lightred)
+** values: a color name (default value: `lightred`)
 
 * *weechat.color.chat_prefix_suffix*
-** description: text color for suffix (after prefix)
+** description: `text color for suffix (after prefix)`
 ** type: color
-** values: a color name (default value: green)
+** values: a color name (default value: `green`)
 
 * *weechat.color.chat_read_marker*
-** description: text color for unread data marker
+** description: `text color for unread data marker`
 ** type: color
-** values: a color name (default value: magenta)
+** values: a color name (default value: `magenta`)
 
 * *weechat.color.chat_read_marker_bg*
-** description: background color for unread data marker
+** description: `background color for unread data marker`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.chat_server*
-** description: text color for server names
+** description: `text color for server names`
 ** type: color
-** values: a color name (default value: brown)
+** values: a color name (default value: `brown`)
 
 * *weechat.color.chat_text_found*
-** description: text color for marker on lines where text sought is found
+** description: `text color for marker on lines where text sought is found`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.chat_text_found_bg*
-** description: background color for marker on lines where text sought is found
+** description: `background color for marker on lines where text sought is found`
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: `lightmagenta`)
 
 * *weechat.color.chat_time*
-** description: text color for time in chat window
+** description: `text color for time in chat window`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.chat_time_delimiters*
-** description: text color for time delimiters
+** description: `text color for time delimiters`
 ** type: color
-** values: a color name (default value: brown)
+** values: a color name (default value: `brown`)
 
 * *weechat.color.chat_value*
-** description: text color for values
+** description: `text color for values`
 ** type: color
-** values: a color name (default value: cyan)
+** values: a color name (default value: `cyan`)
 
 * *weechat.color.input_actions*
-** description: text color for actions in input line
+** description: `text color for actions in input line`
 ** type: color
-** values: a color name (default value: lightgreen)
+** values: a color name (default value: `lightgreen`)
 
 * *weechat.color.input_text_not_found*
-** description: text color for unsucessful text search in input line
+** description: `text color for unsucessful text search in input line`
 ** type: color
-** values: a color name (default value: red)
+** values: a color name (default value: `red`)
 
 * *weechat.color.nicklist_away*
-** description: text color for away nicknames
+** description: `text color for away nicknames`
 ** type: color
-** values: a color name (default value: cyan)
+** values: a color name (default value: `cyan`)
 
 * *weechat.color.nicklist_group*
-** description: text color for groups in nicklist
+** description: `text color for groups in nicklist`
 ** type: color
-** values: a color name (default value: green)
+** values: a color name (default value: `green`)
 
 * *weechat.color.nicklist_offline*
-** description: text color for offline nicknames
+** description: `text color for offline nicknames`
 ** type: color
-** values: a color name (default value: blue)
+** values: a color name (default value: `blue`)
 
 * *weechat.color.separator*
-** description: background color for window separators (when split)
+** description: `background color for window separators (when split)`
 ** type: color
-** values: a color name (default value: blue)
+** values: a color name (default value: `blue`)
 
 * *weechat.color.status_data_highlight*
-** description: text color for buffer with highlight (status bar)
+** description: `text color for buffer with highlight (status bar)`
 ** type: color
-** values: a color name (default value: lightmagenta)
+** values: a color name (default value: `lightmagenta`)
 
 * *weechat.color.status_data_msg*
-** description: text color for buffer with new messages (status bar)
+** description: `text color for buffer with new messages (status bar)`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.status_data_other*
-** description: text color for buffer with new data (not messages) (status bar)
+** description: `text color for buffer with new data (not messages) (status bar)`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.color.status_data_private*
-** description: text color for buffer with private message (status bar)
+** description: `text color for buffer with private message (status bar)`
 ** type: color
-** values: a color name (default value: lightgreen)
+** values: a color name (default value: `lightgreen`)
 
 * *weechat.color.status_filter*
-** description: text color for filter indicator in status bar
+** description: `text color for filter indicator in status bar`
 ** type: color
-** values: a color name (default value: green)
+** values: a color name (default value: `green`)
 
 * *weechat.color.status_more*
-** description: text color for buffer with new data (status bar)
+** description: `text color for buffer with new data (status bar)`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.status_name*
-** description: text color for current buffer name in status bar
+** description: `text color for current buffer name in status bar`
 ** type: color
-** values: a color name (default value: white)
+** values: a color name (default value: `white`)
 
 * *weechat.color.status_name_ssl*
-** description: text color for current buffer name in status bar, if data are secured with a protocol like SSL
+** description: `text color for current buffer name in status bar, if data are secured with a protocol like SSL`
 ** type: color
-** values: a color name (default value: lightgreen)
+** values: a color name (default value: `lightgreen`)
 
 * *weechat.color.status_number*
-** description: text color for current buffer number in status bar
+** description: `text color for current buffer number in status bar`
 ** type: color
-** values: a color name (default value: yellow)
+** values: a color name (default value: `yellow`)
 
 * *weechat.color.status_time*
-** description: text color for time (status bar)
+** description: `text color for time (status bar)`
 ** type: color
-** values: a color name (default value: default)
+** values: a color name (default value: `default`)
 
 * *weechat.completion.default_template*
-** description: default completion template (please see documentation for template codes and values)
+** description: `default completion template (please see documentation for template codes and values)`
 ** type: string
-** values: any string (default value: "%(nicks)|%(irc_channels)")
+** values: any string (default value: `"%(nicks)|%(irc_channels)"`)
 
 * *weechat.completion.nick_add_space*
-** description: add space after nick completion (when nick is not first word on command line)
+** description: `add space after nick completion (when nick is not first word on command line)`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.completion.nick_completer*
-** description: string inserted after nick completion
+** description: `string inserted after nick completion`
 ** type: string
-** values: any string (default value: ":")
+** values: any string (default value: `":"`)
 
 * *weechat.completion.nick_first_only*
-** description: complete only with first nick found
+** description: `complete only with first nick found`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.completion.nick_ignore_chars*
-** description: chars ignored for nick completion
+** description: `chars ignored for nick completion`
 ** type: string
-** values: any string (default value: "[]-^")
+** values: any string (default value: `"[]-^"`)
 
 * *weechat.completion.partial_completion_alert*
-** description: alert user when a partial completion occurs
+** description: `alert user when a partial completion occurs`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.completion.partial_completion_command*
-** description: partially complete command names (stop when many commands found begin with same letters)
+** description: `partially complete command names (stop when many commands found begin with same letters)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.completion.partial_completion_command_arg*
-** description: partially complete command arguments (stop when many arguments found begin with same prefix)
+** description: `partially complete command arguments (stop when many arguments found begin with same prefix)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.completion.partial_completion_count*
-** description: display count for each partial completion in bar item
+** description: `display count for each partial completion in bar item`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.completion.partial_completion_other*
-** description: partially complete outside commands (stop when many words found begin with same letters)
+** description: `partially complete outside commands (stop when many words found begin with same letters)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.history.display_default*
-** description: maximum number of commands to display by default in history listing (0 = unlimited)
+** description: `maximum number of commands to display by default in history listing (0 = unlimited)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: 5)
+** values: 0 .. 2147483647 (default value: `5`)
 
 * *weechat.history.max_commands*
-** description: maximum number of user commands in history (0 = unlimited)
+** description: `maximum number of user commands in history (0 = unlimited)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: 100)
+** values: 0 .. 2147483647 (default value: `100`)
 
 * *weechat.history.max_lines*
-** description: maximum number of lines in history per buffer (0 = unlimited)
+** description: `maximum number of lines in history per buffer (0 = unlimited)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: 4096)
+** values: 0 .. 2147483647 (default value: `4096`)
 
 * *weechat.history.max_visited_buffers*
-** description: maximum number of visited buffers to keep in memory
+** description: `maximum number of visited buffers to keep in memory`
 ** type: integer
-** values: 0 .. 1000 (default value: 50)
+** values: 0 .. 1000 (default value: `50`)
 
 * *weechat.look.align_end_of_lines*
-** description: alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))
+** description: `alignment for end of lines (all lines after the first): they are starting under this data (time, buffer, prefix, suffix, message (default))`
 ** type: integer
-** values: time, buffer, prefix, suffix, message (default value: message)
+** values: time, buffer, prefix, suffix, message (default value: `message`)
 
 * *weechat.look.buffer_notify_default*
-** description: default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist
+** description: `default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist`
 ** type: integer
-** values: none, highlight, message, all (default value: all)
+** values: none, highlight, message, all (default value: `all`)
 
 * *weechat.look.buffer_time_format*
-** description: time format for each line displayed in buffers
+** description: `time format for each line displayed in buffers`
 ** type: string
-** values: any string (default value: "%H:%M:%S")
+** values: any string (default value: `"%H:%M:%S"`)
 
 * *weechat.look.color_nicks_number*
-** description: number of colors to use for nicks colors
+** description: `number of colors to use for nicks colors`
 ** type: integer
-** values: 1 .. 10 (default value: 10)
+** values: 1 .. 10 (default value: `10`)
 
 * *weechat.look.color_real_white*
-** description: if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)
+** description: `if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.look.command_chars*
-** description: chars used to determine if input string is a command or not: input must start with one of these chars; the slash ("/") is always considered as command prefix (example: ".$")
+** description: `chars used to determine if input string is a command or not: input must start with one of these chars; the slash ("/") is always considered as command prefix (example: ".$")`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 
 * *weechat.look.confirm_quit*
-** description: if set, /quit command must be confirmed with extra argument "-yes" (see /help quit)
+** description: `if set, /quit command must be confirmed with extra argument "-yes" (see /help quit)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.look.day_change*
-** description: display special message when day changes
+** description: `display special message when day changes`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.day_change_time_format*
-** description: time format for date displayed when day changed
+** description: `time format for date displayed when day changed`
 ** type: string
-** values: any string (default value: "%a, %d %b %Y")
+** values: any string (default value: `"%a, %d %b %Y"`)
 
 * *weechat.look.highlight*
-** description: comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)
+** description: `comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 
 * *weechat.look.hline_char*
-** description: char used to draw horizontal lines, note that empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals
+** description: `char used to draw horizontal lines, note that empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals`
 ** type: string
-** values: any string (default value: "-")
+** values: any string (default value: `"-"`)
 
 * *weechat.look.hotlist_names_count*
-** description: max number of names in hotlist (0 = no name displayed, only buffer numbers)
+** description: `max number of names in hotlist (0 = no name displayed, only buffer numbers)`
 ** type: integer
-** values: 0 .. 32 (default value: 3)
+** values: 0 .. 32 (default value: `3`)
 
 * *weechat.look.hotlist_names_length*
-** description: max length of names in hotlist (0 = no limit)
+** description: `max length of names in hotlist (0 = no limit)`
 ** type: integer
-** values: 0 .. 32 (default value: 0)
+** values: 0 .. 32 (default value: `0`)
 
 * *weechat.look.hotlist_names_level*
-** description: level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)
+** description: `level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)`
 ** type: integer
-** values: 1 .. 15 (default value: 12)
+** values: 1 .. 15 (default value: `12`)
 
 * *weechat.look.hotlist_names_merged_buffers*
-** description: if set, force display of names in hotlist for merged buffers
+** description: `if set, force display of names in hotlist for merged buffers`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.look.hotlist_short_names*
-** description: if set, uses short names to display buffer names in hotlist (start after first '.' in name)
+** description: `if set, uses short names to display buffer names in hotlist (start after first '.' in name)`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.hotlist_sort*
-** description: hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)
+** description: `hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
 ** type: integer
-** values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (default value: group_time_asc)
+** values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (default value: `group_time_asc`)
 
 * *weechat.look.input_undo_max*
-** description: max number of "undo" for command line, by buffer (0 = undo disabled)
+** description: `max number of "undo" for command line, by buffer (0 = undo disabled)`
 ** type: integer
-** values: 0 .. 65535 (default value: 32)
+** values: 0 .. 65535 (default value: `32`)
 
 * *weechat.look.item_time_format*
-** description: time format for "time" bar item
+** description: `time format for "time" bar item`
 ** type: string
-** values: any string (default value: "%H:%M")
+** values: any string (default value: `"%H:%M"`)
 
 * *weechat.look.jump_current_to_previous_buffer*
-** description: jump to previous buffer displayed when jumping to current buffer number with /buffer *N (where N is a buffer number), to easily switch to another buffer, then come back to current buffer
+** description: `jump to previous buffer displayed when jumping to current buffer number with /buffer *N (where N is a buffer number), to easily switch to another buffer, then come back to current buffer`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.jump_previous_buffer_when_closing*
-** description: jump to previously visited buffer when closing a buffer (if disabled, then jump to buffer number - 1)
+** description: `jump to previously visited buffer when closing a buffer (if disabled, then jump to buffer number - 1)`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.nickmode*
-** description: display nick mode ((half)op/voice) before each nick
+** description: `display nick mode ((half)op/voice) before each nick`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.nickmode_empty*
-** description: display space if nick mode is not (half)op/voice
+** description: `display space if nick mode is not (half)op/voice`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.look.paste_max_lines*
-** description: max number of lines for paste without asking user (0 = disable this feature)
+** description: `max number of lines for paste without asking user (0 = disable this feature)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: 3)
+** values: 0 .. 2147483647 (default value: `3`)
 
 * *weechat.look.prefix_action*
-** description: prefix for action messages
+** description: `prefix for action messages`
 ** type: string
-** values: any string (default value: " *")
+** values: any string (default value: `" *"`)
 
 * *weechat.look.prefix_align*
-** description: prefix alignment (none, left, right (default))
+** description: `prefix alignment (none, left, right (default))`
 ** type: integer
-** values: none, left, right (default value: right)
+** values: none, left, right (default value: `right`)
 
 * *weechat.look.prefix_align_max*
-** description: max size for prefix (0 = no max size)
+** description: `max size for prefix (0 = no max size)`
 ** type: integer
-** values: 0 .. 128 (default value: 0)
+** values: 0 .. 128 (default value: `0`)
 
 * *weechat.look.prefix_align_more*
-** description: display '+' if prefix is truncated
+** description: `display '+' if prefix is truncated`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.prefix_buffer_align*
-** description: prefix alignment for buffer name, when many buffers are merged with same number (none, left, right (default))
+** description: `prefix alignment for buffer name, when many buffers are merged with same number (none, left, right (default))`
 ** type: integer
-** values: none, left, right (default value: right)
+** values: none, left, right (default value: `right`)
 
 * *weechat.look.prefix_buffer_align_max*
-** description: max size for buffer name, when many buffers are merged with same number (0 = no max size)
+** description: `max size for buffer name, when many buffers are merged with same number (0 = no max size)`
 ** type: integer
-** values: 0 .. 128 (default value: 0)
+** values: 0 .. 128 (default value: `0`)
 
 * *weechat.look.prefix_buffer_align_more*
-** description: display '+' if buffer name is truncated (when many buffers are merged with same number)
+** description: `display '+' if buffer name is truncated (when many buffers are merged with same number)`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.prefix_error*
-** description: prefix for error messages
+** description: `prefix for error messages`
 ** type: string
-** values: any string (default value: "=!=")
+** values: any string (default value: `"=!="`)
 
 * *weechat.look.prefix_join*
-** description: prefix for join messages
+** description: `prefix for join messages`
 ** type: string
-** values: any string (default value: "-->")
+** values: any string (default value: `"-->"`)
 
 * *weechat.look.prefix_network*
-** description: prefix for network messages
+** description: `prefix for network messages`
 ** type: string
-** values: any string (default value: "--")
+** values: any string (default value: `"--"`)
 
 * *weechat.look.prefix_quit*
-** description: prefix for quit messages
+** description: `prefix for quit messages`
 ** type: string
-** values: any string (default value: "<--")
+** values: any string (default value: `"<--"`)
 
 * *weechat.look.prefix_suffix*
-** description: string displayed after prefix
+** description: `string displayed after prefix`
 ** type: string
-** values: any string (default value: "|")
+** values: any string (default value: `"|"`)
 
 * *weechat.look.read_marker*
-** description: use a marker (line or char) on buffers to show first unread line
+** description: `use a marker (line or char) on buffers to show first unread line`
 ** type: integer
-** values: none, line, dotted-line, char (default value: dotted-line)
+** values: none, line, dotted-line, char (default value: `dotted-line`)
 
 * *weechat.look.read_marker_always_show*
-** description: always show read marker, even if it is after last buffer line
+** description: `always show read marker, even if it is after last buffer line`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.look.save_config_on_exit*
-** description: save configuration file on exit
+** description: `save configuration file on exit`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.save_layout_on_exit*
-** description: save layout on exit (buffers, windows, or both)
+** description: `save layout on exit (buffers, windows, or both)`
 ** type: integer
-** values: none, buffers, windows, all (default value: none)
+** values: none, buffers, windows, all (default value: `none`)
 
 * *weechat.look.scroll_amount*
-** description: how many lines to scroll by with scroll_up and scroll_down
+** description: `how many lines to scroll by with scroll_up and scroll_down`
 ** type: integer
-** values: 1 .. 2147483647 (default value: 3)
+** values: 1 .. 2147483647 (default value: `3`)
 
 * *weechat.look.scroll_page_percent*
-** description: percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)
+** description: `percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)`
 ** type: integer
-** values: 1 .. 100 (default value: 100)
+** values: 1 .. 100 (default value: `100`)
 
 * *weechat.look.search_text_not_found_alert*
-** description: alert user when text sought is not found in buffer
+** description: `alert user when text sought is not found in buffer`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.set_title*
-** description: set title for window (terminal for Curses GUI) with name and version
+** description: `set title for window (terminal for Curses GUI) with name and version`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.look.time_format*
-** description: time format for dates converted to strings and displayed in messages
+** description: `time format for dates converted to strings and displayed in messages`
 ** type: string
-** values: any string (default value: "%a, %d %b %Y %T")
+** values: any string (default value: `"%a, %d %b %Y %T"`)
 
 * *weechat.network.gnutls_ca_file*
-** description: file containing the certificate authorities
+** description: `file containing the certificate authorities`
 ** type: string
-** values: any string (default value: "%h/ssl/CAs.pem")
+** values: any string (default value: `"%h/ssl/CAs.pem"`)
 
 * *weechat.plugin.autoload*
-** description: comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, names can start or end with "*" to match several plugins (examples: "*" or "*,!lua,!tcl")
+** description: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, names can start or end with "*" to match several plugins (examples: "*" or "*,!lua,!tcl")`
 ** type: string
-** values: any string (default value: "*")
+** values: any string (default value: `"*"`)
 
 * *weechat.plugin.debug*
-** description: enable debug messages by default in all plugins (option disabled by default, which is highly recommended)
+** description: `enable debug messages by default in all plugins (option disabled by default, which is highly recommended)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *weechat.plugin.extension*
-** description: standard plugins extension in filename (for example ".so" under Linux or ".dll" under Microsoft Windows)
+** description: `standard plugins extension in filename (for example ".so" under Linux or ".dll" under Microsoft Windows)`
 ** type: string
-** values: any string (default value: ".so")
+** values: any string (default value: `".so"`)
 
 * *weechat.plugin.path*
-** description: path for searching plugins ("%h" will be replaced by WeeChat home, "~/.weechat" by default)
+** description: `path for searching plugins ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** type: string
-** values: any string (default value: "%h/plugins")
+** values: any string (default value: `"%h/plugins"`)
 
 * *weechat.plugin.save_config_on_unload*
-** description: save configuration files when unloading plugins
+** description: `save configuration files when unloading plugins`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.startup.command_after_plugins*
-** description: command executed when WeeChat starts, after loading plugins
+** description: `command executed when WeeChat starts, after loading plugins`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 
 * *weechat.startup.command_before_plugins*
-** description: command executed when WeeChat starts, before loading plugins
+** description: `command executed when WeeChat starts, before loading plugins`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 
 * *weechat.startup.display_logo*
-** description: display WeeChat logo at startup
+** description: `display WeeChat logo at startup`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 
 * *weechat.startup.display_version*
-** description: display WeeChat version at startup
+** description: `display WeeChat version at startup`
 ** type: boolean
-** values: on, off (default value: on)
+** values: on, off (default value: `on`)
 

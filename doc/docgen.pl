@@ -490,10 +490,10 @@ sub docgen
                             }
                             
                             print FILE "* *".$config.".".$section.".".$option."*\n";
-                            print FILE "** ".weechat_gettext("description").": ".$description."\n";
+                            print FILE "** ".weechat_gettext("description").": `".$description."`\n";
                             print FILE "** ".weechat_gettext("type").": ".$type_nls."\n";
                             print FILE "** ".weechat_gettext("values").": ".$values." "
-                                ."(".weechat_gettext("default value").": ".$default_value.")\n";
+                                ."(".weechat_gettext("default value").": `".$default_value."`)\n";
                             if ($null_value_allowed eq 1)
                             {
                                 print FILE "** ".weechat_gettext("undefined value allowed (null)")."\n";

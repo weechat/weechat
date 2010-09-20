@@ -1,30 +1,30 @@
 * *aspell.check.commands*
-** description: comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)
+** description: `comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)`
 ** type: string
-** values: any string (default value: "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic")
+** values: any string (default value: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
 * *aspell.check.default_dict*
-** description: default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitly enabled it)
+** description: `default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitly enabled it)`
 ** type: string
-** values: any string (default value: "")
+** values: any string (default value: `""`)
 
 * *aspell.check.during_search*
-** description: check words during text search in buffer
+** description: `check words during text search in buffer`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *aspell.check.real_time*
-** description: real-time spell checking of words (slower, disabled by default: words are checked only if there's delimiter after)
+** description: `real-time spell checking of words (slower, disabled by default: words are checked only if there's delimiter after)`
 ** type: boolean
-** values: on, off (default value: off)
+** values: on, off (default value: `off`)
 
 * *aspell.check.word_min_length*
-** description: minimum length for a word to be spell checked (use 0 to check all words)
+** description: `minimum length for a word to be spell checked (use 0 to check all words)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: 2)
+** values: 0 .. 2147483647 (default value: `2`)
 
 * *aspell.look.color*
-** description: color used for misspelled words
+** description: `color used for misspelled words`
 ** type: color
-** values: a color name (default value: lightred)
+** values: a color name (default value: `lightred`)
 
