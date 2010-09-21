@@ -6350,6 +6350,39 @@ weechat_tcl_api_infolist_prev (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_infolist_reset_item_cursor: reset pointer to current item in
+ *                                             infolist
+ */
+
+static int
+weechat_tcl_api_infolist_reset_item_cursor (ClientData clientData,
+                                            Tcl_Interp *interp,
+                                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        TCL_RETURN_ERROR;
+    }
+    
+    weechat_infolist_reset_item_cursor (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* infolist */
+    
+    TCL_RETURN_OK;
+}
+
+/*
  * weechat_tcl_api_infolist_fields: get list of fields for current item of
  *                                  infolist
  */
@@ -7141,6 +7174,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_infolist_next, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_prev",
                           weechat_tcl_api_infolist_prev, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::infolist_reset_item_cursor",
+                          weechat_tcl_api_infolist_reset_item_cursor, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_fields",
                           weechat_tcl_api_infolist_fields, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_integer",

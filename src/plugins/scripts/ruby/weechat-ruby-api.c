@@ -6904,6 +6904,40 @@ weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
 }
 
 /*
+ * weechat_ruby_api_infolist_reset_item_cursor: reset pointer to current item
+ *                                              in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_reset_item_cursor (VALUE class, VALUE infolist)
+{
+    char *c_infolist;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = StringValuePtr (infolist);
+    
+    weechat_infolist_reset_item_cursor (script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_infolist_fields: get list of fields for current item of infolist
  */
 
@@ -7516,6 +7550,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "infolist_get", &weechat_ruby_api_infolist_get, 3);
     rb_define_module_function (ruby_mWeechat, "infolist_next", &weechat_ruby_api_infolist_next, 1);
     rb_define_module_function (ruby_mWeechat, "infolist_prev", &weechat_ruby_api_infolist_prev, 1);
+    rb_define_module_function (ruby_mWeechat, "infolist_reset_item_cursor", &weechat_ruby_api_infolist_reset_item_cursor, 1);
     rb_define_module_function (ruby_mWeechat, "infolist_fields", &weechat_ruby_api_infolist_fields, 1);
     rb_define_module_function (ruby_mWeechat, "infolist_integer", &weechat_ruby_api_infolist_integer, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_string", &weechat_ruby_api_infolist_string, 2);

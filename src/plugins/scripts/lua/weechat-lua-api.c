@@ -6747,6 +6747,43 @@ weechat_lua_api_infolist_prev (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_infolist_reset_item_cursor: reset pointer to current item in
+ *                                             infolist
+ */
+
+static int
+weechat_lua_api_infolist_reset_item_cursor (lua_State *L)
+{
+    const char *infolist;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        LUA_RETURN_ERROR;
+    }
+    
+    infolist = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        LUA_RETURN_ERROR;
+    }
+    
+    infolist = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_infolist_reset_item_cursor (script_str2ptr (infolist));
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_infolist_fields: get list of fields for current item of infolist
  */
 
@@ -7714,6 +7751,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "infolist_get", &weechat_lua_api_infolist_get },
     { "infolist_next", &weechat_lua_api_infolist_next },
     { "infolist_prev", &weechat_lua_api_infolist_prev },
+    { "infolist_reset_item_cursor", &weechat_lua_api_infolist_reset_item_cursor },
     { "infolist_fields", &weechat_lua_api_infolist_fields },
     { "infolist_integer", &weechat_lua_api_infolist_integer },
     { "infolist_string", &weechat_lua_api_infolist_string },

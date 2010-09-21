@@ -5693,6 +5693,35 @@ XS (XS_weechat_api_infolist_prev)
 }
 
 /*
+ * weechat::infolist_reset_item_cursor: reset pointer to current item in
+ *                                      infolist
+ */
+
+XS (XS_weechat_api_infolist_reset_item_cursor)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_infolist_reset_item_cursor (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::infolist_fields: get list of fields for current item of infolist
  */
 
@@ -6215,6 +6244,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::infolist_get", XS_weechat_api_infolist_get, "weechat");
     newXS ("weechat::infolist_next", XS_weechat_api_infolist_next, "weechat");
     newXS ("weechat::infolist_prev", XS_weechat_api_infolist_prev, "weechat");
+    newXS ("weechat::infolist_reset_item_cursor", XS_weechat_api_infolist_reset_item_cursor, "weechat");
     newXS ("weechat::infolist_fields", XS_weechat_api_infolist_fields, "weechat");
     newXS ("weechat::infolist_integer", XS_weechat_api_infolist_integer, "weechat");
     newXS ("weechat::infolist_string", XS_weechat_api_infolist_string, "weechat");

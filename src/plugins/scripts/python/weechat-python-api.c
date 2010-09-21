@@ -6001,6 +6001,38 @@ weechat_python_api_infolist_prev (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_infolist_reset_item_cursor: reset pointer to current item
+ *                                                in infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_reset_item_cursor (PyObject *self, PyObject *args)
+{
+    char *infolist;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    infolist = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_infolist_reset_item_cursor (script_str2ptr (infolist));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_infolist_fields: get list of fields for current item of infolist
  */
 
@@ -6532,6 +6564,7 @@ PyMethodDef weechat_python_funcs[] =
     { "infolist_get", &weechat_python_api_infolist_get, METH_VARARGS, "" },
     { "infolist_next", &weechat_python_api_infolist_next, METH_VARARGS, "" },
     { "infolist_prev", &weechat_python_api_infolist_prev, METH_VARARGS, "" },
+    { "infolist_reset_item_cursor", &weechat_python_api_infolist_reset_item_cursor, METH_VARARGS, "" },
     { "infolist_fields", &weechat_python_api_infolist_fields, METH_VARARGS, "" },
     { "infolist_integer", &weechat_python_api_infolist_integer, METH_VARARGS, "" },
     { "infolist_string", &weechat_python_api_infolist_string, METH_VARARGS, "" },
