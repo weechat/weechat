@@ -44,12 +44,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *relay.look.raw_messages*
-** descrizione: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`
+** descrizione: `numero di messaggi raw da salvare in memoria quando il buffer dei dati raw viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati raw)`
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
 * *relay.network.bind_address*
-** descrizione: `address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)`
+** descrizione: `indirizzo associato (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -59,7 +59,7 @@
 ** valori: 1 .. 1024 (valore predefinito: `5`)
 
 * *relay.network.password*
-** descrizione: `password required by clients to access this relay (empty value means no password required)`
+** descrizione: `password richiesta dai client per accedere a questo relay (un valore nullo corrisponde a nessuna password richiesta)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

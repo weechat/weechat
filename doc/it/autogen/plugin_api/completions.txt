@@ -46,7 +46,7 @@
 
 | relay | relay_relays | protocollo.nome dei relay correnti per il plugin relay
 
-| rmodifier | rmodifier | list of rmodifiers
+| rmodifier | rmodifier | elenco di rmodifier
 
 | ruby | ruby_script | elenco degli script
 

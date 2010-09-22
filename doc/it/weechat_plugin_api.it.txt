@@ -522,8 +522,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_tolower
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -550,8 +549,7 @@ weechat_string_tolower (str); /* str ora è: "abcdé" */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_toupper
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -578,8 +576,7 @@ weechat_string_tolower (str); /* str ora è: "ABCDé" */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_strcasecmp
 ^^^^^^^^^^^^^^^^^^
@@ -614,8 +611,7 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
@@ -651,8 +647,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_strcmp_ignore_chars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -692,8 +687,7 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1); /* == -3 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_strcasestr
 ^^^^^^^^^^^^^^^^^^
@@ -725,8 +719,7 @@ char *pos = weechat_strcasestr ("aBcDeF", "de"); /* risultato: puntatore a "DeF"
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_match
 ^^^^^^^^^^^^^^^^^^^^
@@ -809,8 +802,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -847,8 +839,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_remove_quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -884,8 +875,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_strip
 ^^^^^^^^^^^^^^^^^^^^
@@ -921,8 +911,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_has_highlight
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1091,8 +1080,7 @@ weechat_string_free_split (argv);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_build_with_split_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1132,8 +1120,7 @@ free (str);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1170,8 +1157,7 @@ weechat_free_split_command (argv);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_free_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1200,8 +1186,7 @@ weechat_free_split_command (argv);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_format_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1329,8 +1314,7 @@ weechat_string_encode_base64 (string, strlen (string), result);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1367,8 +1351,7 @@ length = weechat_string_decode_base64 (string, result);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1496,8 +1479,7 @@ if (weechat_utf8_has_8bits (string))
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_is_valid
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1537,8 +1519,7 @@ else
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_normalize
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1566,8 +1547,7 @@ weechat_utf8_normalize (string, '?');
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_prev_char
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1600,8 +1580,7 @@ char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_next_char
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1632,8 +1611,7 @@ char *next_char = weechat_utf8_next_char (string);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_char_int
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1663,8 +1641,7 @@ int char_int = weechat_utf8_char_int ("être"); /* "ê" come intero */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_char_size
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1694,8 +1671,7 @@ int char_size = weechat_utf8_char_size ("être"); /* == 2 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_strlen
 ^^^^^^^^^^^^^^^^^^^
@@ -1725,8 +1701,7 @@ int length = weechat_utf8_strlen ("chêne"); /* == 5 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_strnlen
 ^^^^^^^^^^^^^^^^^^^^
@@ -1758,8 +1733,7 @@ int length = weechat_utf8_strnlen ("chêne", 4); /* == 3 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_strlen_screen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1791,8 +1765,7 @@ int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_charcmp
 ^^^^^^^^^^^^^^^^^^^^
@@ -1826,8 +1799,7 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_charcasecmp
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1861,8 +1833,7 @@ int diff = weechat_utf8_charcasecmp ("aaa", "CCC"); /* == -2 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_char_size_screen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1894,8 +1865,7 @@ int length_on_screen = weechat_utf8_char_size_screen ("é"); /* == 1 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_add_offset
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1927,8 +1897,7 @@ char *str2 = weechat_utf8_add_offset (str, 3); /* points to "ne" */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_real_pos
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1959,8 +1928,7 @@ int pos = weechat_utf8_real_pos ("chêne", 3); /* == 4 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_pos
 ^^^^^^^^^^^^^^^^
@@ -1991,8 +1959,7 @@ int pos = weechat_utf8_pos ("chêne", 4); /* == 3 */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_utf8_strndup
 ^^^^^^^^^^^^^^^^^^^^
@@ -2025,8 +1992,7 @@ free (string);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 [[directories]]
 Cartelle
@@ -2198,8 +2164,7 @@ weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_file_get_content
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2236,8 +2201,7 @@ free (content);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 [[util]]
 Utilità
@@ -2279,8 +2243,7 @@ if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_util_timeval_diff
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2311,8 +2274,7 @@ long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_util_timeval_add
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2339,8 +2301,7 @@ weechat_util_timeval_add (&tv, 2000); /* aggiunge 2 secondi */
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2370,8 +2331,7 @@ weechat_printf (NULL, "date: %s",
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 [[sorted_lists]]
 Elenchi ordinati
@@ -2944,8 +2904,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2987,8 +2946,7 @@ weechat_hashtable_set_with_size (hashtable, "my_key", 0,
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
@@ -3053,8 +3011,7 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
@@ -3099,8 +3056,7 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3136,16 +3092,14 @@ int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hashtable_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-Return string value of a hashtable property.
+Restituisce il valore stringa della proprietà di una tabella hash.
 
 Prototype:
 
@@ -3184,8 +3138,7 @@ const char *type_keys = weechat_hashtable_get_string (hashtable, "type_keys");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3231,8 +3184,7 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3261,8 +3213,7 @@ weechat_hashtable_remove (hashtable, "my_key");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3290,8 +3241,7 @@ weechat_hashtable_remove_all (hashtable);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -3319,8 +3269,7 @@ weechat_hashtable_free (hashtable);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 [[configuration_files]]
 File di configurazione
@@ -3952,8 +3901,7 @@ else
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_config_search_with_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4003,8 +3951,7 @@ else
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_config_string_to_boolean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4385,8 +4332,7 @@ char *description = weechat_config_option_get_pointer (option, "description");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_config_option_is_null
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -5660,8 +5606,7 @@ weechat_printf_date (NULL, time (NULL) - 120, "Ciao, 2 minuti fa");
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_printf_tags
 ^^^^^^^^^^^^^^^^^^^
@@ -5692,8 +5637,7 @@ weechat_printf_tags (NULL, "notify_message",
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_printf_date_tags
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -5821,35 +5765,35 @@ La funzione è chiamata "log_print" negli script.
 Hook
 ~~~~
 
-// TRANSLATION MISSING
 [[hook_priority]]
 [float]
-Hook priority
-^^^^^^^^^^^^^
+Priorità degli hook
+^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-In some hooks, you can set a priority. A hook with higher priority is at the
-beginning of hooks list, so it will be found and executed before other hooks.
-It's useful for modifiers, because execution order is important.
+In alcuni hook è possibile impostare una priorità. Un hook con priorità
+maggiore si trova all'inizio della lista, in modo da poter essere eseguita
+prima di altri. Può risultare utile per i modificatori, data l'importanza
+nell'ordine di esecuzione.
 
-To set a priority, you must use this syntax, for argument where priority is
-allowed: "nnn|name" where "nnn" is nonnegative integer with priority and "name"
-the name for argument (priority does not appear in name, it is automatically
-removed from string).
+Per impostare la priorità, è necessario usare questa sintassi per gli
+argomenti dove è consentita la priorità: "nnn|nome" dove "nnn" è un intero non
+negativo con la priorità e "nome" è il nome per l'argomenti (la priorità non
+compare nel nome, viene rimossa automaticamente dalla stringa).
 
-Default priority is 1000.
+La priorità predefinita è 1000.
 
 Esempio in C:
 
 [source,C]
 ----------------------------------------
-/* hook modifier with priority = 2000 */
+/* hook per il modificatore con priorità = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
-Following hook types allow priority: command, command_run, signal, config,
-completion, modifier, info, infolist.
+I tipi di hook che seguono consentono la priorità: command, command_run,
+signal, config.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -5876,8 +5820,7 @@ struct t_hook *weechat_hook_command (const char *command,
 Argomenti:
 
 * 'command': nome del comando
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (priorità consentita, consultare la nota riguardo la <<hook_priority,priority>>)
 * 'description': descrizione per il comando (visualizzata con `/help comando`)
 * 'args': argomenti per il comando (visualizzati con `/help command`)
 * 'args_description': descrizione degli argomenti (visualizzata con `/help command`)
@@ -6002,8 +5945,8 @@ struct t_hook *weechat_hook_command_run (const char *command,
 Argomenti:
 
 * 'command': comando su cui eseguire l'hook, può iniziare o terminare con "*"
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando il comando è in esecuzione, argomenti:
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il comando
@@ -6534,8 +6477,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Argomenti:
 
 * 'signal': segnale da catturare, può iniziare o terminare con "*"
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>):
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |========================================
@@ -6564,9 +6507,8 @@ Argomenti:
 | irc | xxx,irc_out_yyy ^1^ | string: messaggio |
   messaggio irc inviato al server
 
-// TRANSLATION MISSING
-| irc | xxx,irc_outtags_yyy ^(1)^ | string: tags + ";" + message |
-  tags + irc message sent to server
+| irc | xxx,irc_outtags_yyy ^(1)^ | stringa: tag + ";" + messaggio |
+  tag + messaggio irc inviato al server
 
 | irc | irc_ctcp | string: messaggio |
   CTCP ricevuto
@@ -6643,8 +6585,7 @@ Argomenti:
 | weechat | buffer_type_changed | puntatore: buffer |
   tipo di buffer modificato
 
-// TRANSLATION MISSING
-| weechat | debug_dump | string: plugin name |
+| weechat | debug_dump | stringa: nome plugin |
   richiesta di dump
 
 | weechat | day_changed | string: nuova data, formato: "2010-01-31" |
@@ -6857,13 +6798,14 @@ Argomenti:
 
 * 'option': opzione, il formato è il nome completo, come usato con il comando
   `/set` (ad esempio: `weechat.look.item_time_format`)
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
-* 'callback': function called when configuration option is changed, arguments:
-** 'void *data': pointer
-** 'const char *option': name of option
-** 'const char *value': new value for option
-* 'callback_data': pointer given to callback when it is called by WeeChat
+  (priorità consentita, consultare la note riguardo la
+  <<hook_priority,priority>>)
+* 'callback': funzione chiamata quando l'opzione di configurazione è cambiata,
+  argomenti:
+** 'void *data': puntatore
+** 'const char *option': nome dell'opzione
+** 'const char *value': nuovo valore per l'opzione
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
 
@@ -6923,8 +6865,8 @@ Argomenti:
 
 * 'completion_item': nome dell'elemento del completamento, è possibile usare
   in seguito '%(name)' in un comando con un hook (argomento 'completion')
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando viene usato l'elemento completamento
   (l'utente sta completando qualcosa usando questo elemento), argomenti:
 ** 'void *data': puntatore
@@ -7041,8 +6983,8 @@ Argomenti:
 
 * 'modifier': nome modificatore, lista di modificatori utilizzati da
   Weechat o dai plugin
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>):
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
 
 [width="100%",cols="^1,^2,3,4,4",options="header"]
 |========================================
@@ -7220,8 +7162,7 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 weechat_hook_info
 ^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Hook su una informazione (callback takes and returns a string).
+Hook su una informazione (la callback prende e restituisce una stringa).
 
 Prototipo:
 
@@ -7239,8 +7180,8 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Argomenti:
 
 * 'info_name': nome della info
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
 * 'description': descrizione
 * 'args_description': descrizione degli argomenti
 * 'callback': funzione chiamata alla richiesta di una info, argomenti:
@@ -7286,13 +7227,12 @@ hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
                          "my_info_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hook_info_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-Hook an information (callback takes and returns a hashtable).
+Hook su una informazione (la callback prende e restituisce una tabella hash).
 
 Prototype:
 
@@ -7308,23 +7248,25 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                             void *callback_data);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'info_name': name of info
-  (priority allowed, see note about <<hook_priority,priority>>)
-* 'description': description
-* 'args_description': description of expected hashtable (optional, can be NULL)
-* 'output_description': description of hashtable returned by callback
-  (optional, can be NULL)
-* 'callback': function called when info is asked, arguments:
-** 'void *data': pointer
-** 'const char *info_name': name of info
-** 'struct t_hashtable *hashtable': hashtable, depending on info
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'info_name': nome della info
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
+* 'description': descrizione
+* 'args_description': descrizione della tabella hash attesa (opzionale, può
+  essere NULL)
+* 'output_description': descrizione della tabella hash restituita dalla
+  callback (opzionale, può essere NULL)
+* 'callback': funzione chiamata alla richiesta della info, argomenti:
+** 'void *data': puntatore
+** 'const char *info_name': nome della info
+** 'struct t_hashtable *hashtable': tabella hash, in base alla info
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
-Return value:
+Valore restituito:
 
-* pointer to new hook, NULL if error occured
+* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -7387,8 +7329,8 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Argomenti:
 
 * 'infolist_name': nome della lista info
-// TRANSLATION MISSING
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (priotità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
 * 'description': descrizione
 * 'pointer_description': descrizione del puntatore (opzionale, può essere NULL)
 * 'args_description': descrizione degli argomenti (opzionale, può essere NULL)
@@ -8246,8 +8188,7 @@ weechat_buffer_set_pointer (my_buffer, "close_callback", &my_close_cb);
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_buffer_string_replace_local_var
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -9369,8 +9310,7 @@ else
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_network_connect_to
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -9424,8 +9364,7 @@ else
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 [[infos]]
 Info
@@ -9436,8 +9375,7 @@ Funzioni per ottenere info.
 weechat_info_get
 ^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Return info, as string, from WeeChat or a plugin.
+Restituisce la info, come stringa, da WeeChat o da un plugin.
 
 Prototipo:
 
@@ -9481,15 +9419,14 @@ weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
 weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_info_get_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-Return info, as hashtable, from WeeChat or a plugin.
+Restituisce una info, come tabella hash, da WeeChat o da un plugin.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9499,14 +9436,14 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Arguments:
 
-* 'info_name': name of info to read:
+* 'info_name': nome della info da leggere
 include::autogen/plugin_api/infos_hashtable.txt[]
-* 'hashtable': hashtable with arguments (depends on info asked) (optional, NULL
-  if no argument is needed)
+* 'hashtable': tabella hash con argomenti (dipende dalla info richiesta)
+* (opzionale, NULL se l'argomento non viene richiesto)
 
-Return value:
+Valore restituito:
 
-* hashtable with info asked, NULL if an error occured
+* tabella hash con la info richiesta, NULL in caso di errore
 
 Esempio in C:
 
@@ -9816,8 +9753,7 @@ struct t_infolist_var *var = weechat_infolist_new_variable_buffer (item,
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_infolist_new_var_time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -10251,8 +10187,7 @@ weechat_printf (NULL, "buffer = 0x%lx, size = %d",
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_infolist_time
 ^^^^^^^^^^^^^^^^^^^^^

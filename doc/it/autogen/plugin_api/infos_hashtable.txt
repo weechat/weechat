@@ -1,7 +1,7 @@
 [width="100%",cols="^1,^2,6,6,6",options="header"]
 |========================================
-| Plugin | Nome | Descrizione | Hashtable (input) | Hashtable (output)
+| Plugin | Nome | Descrizione | Tabella hash (input) | Tabella hash (output)
 
-| irc | irc_parse_message | parse an IRC message | "message": IRC message | "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
+| irc | irc_parse_message | controlla un messaggio IRC | "messaggio": messaggio IRC | "nick": nick, "host": nome host, "command": comando, "channel": canale, "arguments": argomenti (include il canale)
 
 |========================================

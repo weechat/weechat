@@ -522,10 +522,9 @@ Tasti per la riga di comando
   viene copiata negli appunti) +
   `/input delete_end_of_line`
 
-// TRANSLATION MISSING
 | Ctrl + R |
   Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto),
-  next/previous occurrences can be found with up and down arrows +
+  ricorrenze successive/precedenti possono essere trovate con le frecce su/giù +
   `/input search_text`
 
 | Ctrl + T |
@@ -950,8 +949,7 @@ I plugin predefiniti sono:
 | fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
 | irc       | protocollo chat per IRC
 | logger    | Registra i buffer su file
-// TRANSLATION MISSING
-| rmodifier | Alter modifier strings with regular expressions
+| rmodifier | Cambia le stringhe del modificatore con espressioni regolari
 | perl      | API per lo scripting in Perl
 | python    | API per lo scripting in Python
 | ruby      | API per lo scripting in Ruby
@@ -1589,65 +1587,67 @@ Si avranno i seguenti file:
             |       #canale2.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[rmodifier_plugin]]
-Rmodifier plugin
+Plugin Rmodifier
 ~~~~~~~~~~~~~~~~
 
-The Rmodifier plugin lets you alter modifier strings using regular expressions.
-Typical use is to hide password when you type them, or when WeeChat saves
-them in command history. For example, it is possible to replace each char in
-these passwords by "*".
+Il plugin Rmodifier consente di cambiare le stringhe del modificatore
+utilizzando le espressioni regolari. Si usa tipicamente per nascondere la
+password quando viene digitata, o quando WeeChat la salva nella cronologia dei
+comandi. Ad esempio, è possibile sostituire ogni carattere in questa password
+con "*".
 
 [[rmodifier_options]]
-Options (rmodifier.conf)
+Opzioni (rmodifier.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/rmodifier_options.txt[]
 
 [[rmodifier_commands]]
-Commands
-^^^^^^^^
+Comandi
+^^^^^^^
 
 include::autogen/user/rmodifier_commands.txt[]
 
 [[rmodifier_creation]]
-Rmodifier creation
-^^^^^^^^^^^^^^^^^^
+Creazione di Rmodifier
+^^^^^^^^^^^^^^^^^^^^^^
 
-A rmodifier consists of three elements:
+Un rmodifier è costituito da tre elementi:
 
-. one or more "modifiers"
-. a regular expression, to capture "groups"
-. a string that describes output using number of "groups" captured in regular
-  expression
+. uno o più "modificatori"
+. un'espressione regolare per catturare i "gruppi"
+. una stringa che descriva l'output facendo uso di "gruppi" catturati nelle
+  espressioni regolari
 
-For list of modifiers used by WeeChat or plugins, see
+Per un elenco di modificatori usati da WeeChat o dai plugin, consultare
 'WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
 
-For each captured group, following actions are possible:
+Per ogni gruppo catturato, sono consentite le seguenti azioni:
 
-* keep group as-is (by using group number)
-* replace all chars in group to hide content (group number + "*")
-* remove group (if group is not used in string)
+* mantenere il gruppo così com'è (usando un numero per gruppo)
+* sostituire tutti i caratteri nel gruppo per nascondere il contenuto (numero
+  del gruppo + "*")
+* rimuovere il gruppo (se il gruppo non viene utilizzato nella stringa)
 
-Example of default rmodifier for command `/oper`:
+Esempio di rmodifier predefinito per il comando `/oper`:
 
-* modifiers: `history_add,input_text_display`
-** `history_add`: called when WeeChat stores command in history
-** `input_text_display`: called when command line has changed
-   (applies only on display, not content of command line)
-* regular expression: `^(/oper +\S+ +)(.*)`
-* groupes: `1,2*`
+* modifier: `history_add,input_text_display`
+** `history_add`: chiamato quando WeeChat conserva il comando nella cronologia
+** `input_text_display`: chiamato quando la riga di comando è cambiata
+   (valida solo a video, non per il contenuto della riga di comando)
+* espressione regolare: `^(/oper +\S+ +)(.*)`
+* gruppi: `1,2*`
 
-Each time modifiers "history_add" or "input_text_display" are called, regular
-expression is checked. If string matches, then it is replaced by captured groups,
-as defined in string with groups.
+Ad ogni chiamata dei modificatori "history_add" o "input_text_display", viene
+verificata l'espressione regolare. Se la stringa coincide, viene sostituita
+dai gruppi catturati, come definito nella stringa con i gruppi.
 
-In this example, we keep number 1 as-is, and we replace all chars of group 2 by
-replacement char defined in configuration (option 'rmodifier.look.hide_char').
+In questo esempio, il numero 1 resta così com'è, e sostituiamo tutti i
+caratteri del gruppo 2 con il carattere di sostituzione definito nella
+configurazione (opzione 'rmodifier.look.hide_char').
 
-If command line contains: `/oper nick password` then display becomes:
+Se la riga di comando contiene: `/oper nick password` allora a video diventa:
 `/oper nick ********`.
 
 [[scripts_plugins]]

@@ -4,7 +4,7 @@
 
 | alias | alias | elenco di alias | puntatore all'alias (opzionale) | nome alias (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | server,channel (channel is optional)
+| irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | server,canale (canale è opzionale)
 
 | irc | irc_ignore | elenco di ignore IRC | puntatore all'ignore (opzionale) | -
 
@@ -22,7 +22,7 @@
 
 | relay | relay | elenco di client relay | puntatore al relay (opzionale) | -
 
-| rmodifier | rmodifier | list of rmodifiers | rmodifier pointer (optional) | rmodifier name (can start or end with "*" as joker) (optional)
+| rmodifier | rmodifier | elenco di rmodifier | puntatore a rmodifier (opzionale) | nome rmodifier (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 

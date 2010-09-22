@@ -204,7 +204,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * *irc.look.raw_messages*
-** descrizione: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`
+** descrizione: `numero di messaggi raw da salvare in memoria quando il buffer dei dati raw viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati raw)`
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 

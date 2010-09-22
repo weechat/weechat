@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-20 22:26+0200\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-09-21 17:29+0200\n"
+"PO-Revision-Date: 2010-09-22 15:27+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -349,7 +349,7 @@ msgstr "un nome colore"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
-msgstr ""
+msgstr "valore non definito consentito (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1008,9 +1008,8 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "attiva debug per core/plugin"
 
-#, fuzzy
 msgid "[list | set plugin level | dump [plugin] | buffer | windows | term]"
-msgstr "[list | set plugin livello | dump | buffer | windows | term]"
+msgstr "[list | set plugin livello | dump [plugin] | buffer | windows | term]"
 
 msgid ""
 "    set: set log level for plugin\n"
@@ -1044,7 +1043,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [nome]] | [add nome plugin.buffer tag regex] "
 "| [del nome|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1109,6 +1107,9 @@ msgstr ""
 "'\\|')\n"
 "               - se l'espressione regolare inizia con '!', il risultato "
 "corrispondente viene invertito (usare '\\!' per iniziare con '!')\n"
+"\n"
+"\t\tnota: vengono create due espressioni regolari: una per il prefisso e "
+"l'altra per il messaggio\n"
 "\n"
 "Il tasto predefinito alt+'=' abilita/disabilita il filtro.\n"
 "\n"
@@ -1495,7 +1496,6 @@ msgstr "aggiorna WeeChat senza disconnettere dai server"
 msgid "[path_to_binary]"
 msgstr "[percorso_del_binario]"
 
-#, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "\n"
@@ -1513,7 +1513,14 @@ msgstr ""
 "\n"
 "Questo comando esegue nuovamente un binario WeeChat, perciò deve essere "
 "stato compilato o installato con un gestore di pacchetti prima di eseguire "
-"questo comando."
+"questo comando.\n"
+"Il processo di aggiornamento è diviso in 4 fasi:\n"
+"  1. salvataggio della sessione in file per il core e i plugin (buffer, "
+"cronologia, ..)\n"
+"  2. disattivazione di tutti i plugin (salvataggio delle configurazioni ."
+"conf)\n"
+"  3. salvataggio della configurazione di WeeChat (weechat.conf)\n"
+"  4. esecuzione del nuovo binario di WeeChat."
 
 msgid "show WeeChat uptime"
 msgstr "mostra l'uptime di WeeChat"
@@ -1723,7 +1730,6 @@ msgstr ""
 "iniziano al di sotto di questi dati (data, buffer, prefissio, suffisso, "
 "messaggio (predefinito))"
 
-#, fuzzy
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
@@ -1732,7 +1738,9 @@ msgid ""
 msgstr ""
 "livello predefinito di notifica per i buffer (utilizzato per comunicare a "
 "WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a "
-"seconda dell'importanza del messaggio)"
+"seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), "
+"message=messaggi+eventi, highlight=solo eventi, none=non viene mai "
+"visualizzato nella hotlist"
 
 msgid "time format for each line displayed in buffers"
 msgstr "formato dell'ora per ogni riga visualizzata nei buffer"
@@ -3237,7 +3245,7 @@ msgstr ""
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
-msgstr ""
+msgstr "Notice"
 
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
@@ -3948,13 +3956,12 @@ msgstr "invia dati grezzi al server senza analisi"
 msgid "[-server server] data"
 msgstr "[-server server] dati"
 
-#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
 "  data: raw data to send"
 msgstr ""
 "server: invia a questo server (nome interno)\n"
-"  dati: dati grezzi da inviare"
+"  dati: dati raw da inviare"
 
 msgid "reconnect to server(s)"
 msgstr "riconnette a uno (o più) server"
@@ -4636,14 +4643,13 @@ msgstr ""
 msgid "close buffer when /part is issued on a channel"
 msgstr "chiude buffer quando viene digitato /part nel canale"
 
-#, fuzzy
 msgid ""
 "number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
-"numero di messaggi grezzi IRC da salvare quando il buffer dei dati grezzi "
-"chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati "
-"grezzi)"
+"numero di messaggi raw da salvare in memoria quando il buffer dei dati raw "
+"viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei "
+"dati raw)"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "
@@ -4916,19 +4922,19 @@ msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr ""
 "valore della caratteristica, se supportata dal servre (dal messaggio IRC 005)"
 
-#, fuzzy
 msgid "parse an IRC message"
-msgstr "messaggio: messaggio da inviare"
+msgstr "controlla un messaggio IRC"
 
-#, fuzzy
 msgid "\"message\": IRC message"
-msgstr "messaggio: messaggio da inviare"
+msgstr "\"messaggio\": messaggio IRC"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
 "\"nick\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel)"
 msgstr ""
+"\"nick\": nick, \"host\": nome host, \"command\": comando, \"channel\": "
+"canale, \"arguments\": argomenti (include il canale)"
 
 msgid "list of IRC servers"
 msgstr "elenco di server IRC"
@@ -4947,9 +4953,8 @@ msgstr "elenco dei canali per un server IRC"
 msgid "channel pointer (optional)"
 msgstr "puntatore al canale (opzionale)"
 
-#, fuzzy
 msgid "server,channel (channel is optional)"
-msgstr "server,canale,nick (canale e nick sono opzionali)"
+msgstr "server,canale (canale è opzionale)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "elenco dei nick per un canale IRC"
@@ -6007,9 +6012,9 @@ msgstr "%s%s[%s%s%s%s] %s (avviato il: %s%s%s%s)"
 msgid "ended on: "
 msgstr "finito il: "
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s protocollo: %s, ricevuti: %s, inviati: %s"
+msgstr "%s%-26s id: %d, protocollo: %s, ricevuti: %s, inviati: %s"
 
 msgid "List of clients for relay"
 msgstr "Elenco dei client per il relay"
@@ -6026,9 +6031,9 @@ msgstr "autenticazione fallita"
 msgid "disconnected"
 msgstr "disconnesso"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
-msgstr "%s: nuovo client da %s%s%s sulla porta %d (relay: %s,%s)"
+msgstr "%s: nuovo client da %s%s%s sulla porta %d (id: %d, relay: %s,%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -6042,13 +6047,13 @@ msgstr "%s%s: autenticazione fallita con il client %s%s%s (%s,%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: disconnesso dal client %s%s%s (%s,%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: memoria non sufficiente per il messaggio ricevuto"
+msgstr "%s%s: memoria non sufficiente per verificare il messaggio"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: errore nell'invio dei dati al client %s"
+msgstr "%s%s: errore durante l'invio dei dati al client: %s"
 
 #, c-format
 msgid "%s%s: error sending data to client %s"
@@ -6057,38 +6062,38 @@ msgstr "%s%s: errore nell'invio dei dati al client %s"
 msgid "Clients for relay:"
 msgstr "Client per relay:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
 "recv, %lu sent"
 msgstr ""
-"%3d, %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %lu "
+"  id: %d, %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %lu "
 "ricevuti, %lu inviati"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  id: %d, %s%s%s, started on: %s"
-msgstr "%3d, %s%s%s, avviato il: %s"
+msgstr "  id: %d, %s%s%s, avviato il: %s"
 
 msgid "No client for relay"
-msgstr "Nessun client per relay"
+msgstr "Nessun client per il relay"
 
 msgid "Listening on ports:"
 msgstr "In ascolto sulle porte:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "%3d, porta %s%d%s, relay: %s%s,%s%s, avviato il: %s"
+msgstr "  porta %s%d%s, relay: %s%s.%s%s, avviato il: %s"
 
 msgid "No server for relay"
-msgstr "Nessun server per relay"
+msgstr "Nessun server per il relay"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (port %s) added"
-msgstr "%s%s: relay \"%s\" non trovato"
+msgstr "%s: relay \"%s\" (porta %s) aggiunto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (port %d) removed"
-msgstr "%s%s: relay \"%s\" non trovato"
+msgstr "%s: relay \"%s\" (porta %d) rimosso"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
@@ -6097,11 +6102,10 @@ msgstr "%s%s: relay \"%s\" non trovato"
 msgid "relay control"
 msgstr "controllo relay"
 
-#, fuzzy
 msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
-msgstr "[list | listfull | add protocollo.nome porta | del protocollo.nome]"
+msgstr ""
+"[list | listfull | add protocollo.nome porta | del protocollo.nome | raw]"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -6122,7 +6126,8 @@ msgstr ""
 "          del: rimuovi relay per un protocollo + nome\n"
 "protocollo.nome: protocollo e nome con cui effettuare il relay\n"
 "               per esempio: irc.freenode\n"
-"         port: porta utilizzata per il relay\n"
+"        porta: porta utilizzata per il relay\n"
+"\t   raw: apre il buffer con dati Relay\n"
 "\n"
 "Senza argomento, il comando apre i buffer con l'elenco dei client relay."
 
@@ -6143,9 +6148,9 @@ msgstr "%s%s: errore: la porta \"%d\" è già utilizzata"
 msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: errore: protocollo \"%s\" sconosciuto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%sErrore: il filtro \"%s\" esiste già"
+msgstr "%s%s: errore: il relay per \"%s\" esiste già"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -6179,6 +6184,9 @@ msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
+"indirizzo associato (se vuoto, la connessione è possibile su tutte le "
+"interfacce, usare \"127.0.0.1\" per consentire le connessioni solo dalla "
+"macchina locale)"
 
 msgid "maximum number of clients connecting to a port"
 msgstr "numero massimo di client connessi ad una porta"
@@ -6187,6 +6195,8 @@ msgid ""
 "password required by clients to access this relay (empty value means no "
 "password required)"
 msgstr ""
+"password richiesta dai client per accedere a questo relay (un valore nullo "
+"corrisponde a nessuna password richiesta)"
 
 msgid "list of relay clients"
 msgstr "elenco di client relay"
@@ -6194,9 +6204,8 @@ msgstr "elenco di client relay"
 msgid "relay pointer (optional)"
 msgstr "puntatore al relay (opzionale)"
 
-#, fuzzy
 msgid "Relay raw messages"
-msgstr "messaggi raw IRC"
+msgstr "messaggi raw Relay"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6218,65 +6227,59 @@ msgstr "%s: in ascolto sulla porta %d (relay: %s,%s, massimo %d client)"
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: memoria non sufficiente per l'ascolto su una nuova porta"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
+msgstr "%s%s: errore nella compilazione dell'espressione regolare \"%s\""
 
-#, fuzzy
 msgid "No rmodifier defined"
-msgstr "Nessun filtro per messaggio definito"
+msgstr "Nessun rmodifier definito"
 
-#, fuzzy
 msgid "List of rmodifiers:"
-msgstr "elenco dei filtri"
+msgstr "Elenco di rmodifier:"
 
-#, fuzzy
 msgid "Default rmodifiers:"
-msgstr "Associazione tasti predefinita ripristinata"
+msgstr "Rmodifier predefiniti:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: errore durante la creazione del server \"%s\""
+msgstr "%s%s: errore nella creazione del rmodifier \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" created"
-msgstr "Barra \"%s\" creata"
+msgstr "Rmodifier \"%s\" creato"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d rmodifiers removed"
-msgstr "    hook sui modificatori:"
+msgstr "%d rmodifier eliminati"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" removed"
-msgstr "Alias \"%s\" eliminato"
+msgstr "Rmodifier \"%s\" eliminato"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sRmodifier \"%s\" not found"
-msgstr "%sErrore: filtro \"%s\" non trovato"
+msgstr "%sRmodifier \"%s\" non trovato"
 
-#, fuzzy
 msgid "Default rmodifiers restored:"
-msgstr "Associazione tasti predefinita ripristinata"
+msgstr "Rmodifier predefiniti ripristinati"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sError: \"-yes\" argument is required for restoring default rmodifiers "
 "(security reason)"
 msgstr ""
-"%sErrore: l'argomento \"-yes\" è richiesto per il reset dei tasti (motivi di "
-"sicurezza)"
+"%sErrore: l'argomento \"-yes\" è richiesto per ripristinare gli rmodifier "
+"predefiniti (motivi di sicurezza)"
 
-#, fuzzy
 msgid "alter modifier strings with regular expressions"
-msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
+msgstr "sostituisce le stringhe del modificatore con le espressioni regolari"
 
-#, fuzzy
 msgid ""
 "[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
 "[name...]] | [default -yes]"
 msgstr ""
-"[list] | [enable|disable|toggle [nome]] | [add nome plugin.buffer tag regex] "
-"| [del nome|-all]"
+"[list] | [listdefault] | [add nome modifiers groups regex] | [del nome|-all "
+"[nome...]] | [default -yes]"
 
 msgid ""
 "       list: list all rmodifiers\n"
@@ -6299,26 +6302,42 @@ msgid ""
 "  delete all rmodifiers:\n"
 "    /rmodifier del -all"
 msgstr ""
+"       list: elenca tutti gli rmodifier\n"
+"listdefault: elenca gli rmodifier predefiniti\n"
+"        add: aggiunge un rmodifier\n"
+"       nome: nome rmodifier\n"
+"  modifiers: elenco separato da virgole di modificatori\n"
+"     groups: azione sul gruppo trovato: elenco separato da virgole di gruppi "
+"(da 1 a 9) con \"*\" opzionale dopo il numero per nascondere il gruppo\n"
+"      regex: espressione regolare\n"
+"        del: elimina rmodifier\n"
+"       -all: elimina tutti gli rmodifier\n"
+"    default: ripristina gli rmodifier predefiniti\n"
+"\n"
+"Esempi:\n"
+"  nasconde ciò che viene digitato dopo il comando /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  elimina rmodifier \"password\":\n"
+"    /rmodifier del password\n"
+"  elimina tutti gli rmodifier:\n"
+"    /rmodifier del -all"
 
-#, fuzzy
 msgid "list of rmodifiers"
-msgstr "elenco dei filtri"
+msgstr "elenco di rmodifier"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: errore nella creazione \"%s\" => \"%s\""
+msgstr "%s%s: errore nella creazione del rmodifier \"%s\" => \"%s\""
 
 msgid "char used to hide part of a string"
-msgstr ""
+msgstr "carattere usato per nascondere parte di una stringa"
 
-#, fuzzy
 msgid "rmodifier pointer (optional)"
-msgstr "puntatore a xfer (opzionale)"
+msgstr "puntatore a rmodifier (opzionale)"
 
-#, fuzzy
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
-"nome filtro (può iniziare o terminare con \"*\" come carattere jolly) "
+"nome rmodifier (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
 
 #, c-format
@@ -6931,10 +6950,10 @@ msgid "Arguments"
 msgstr "Argomenti"
 
 msgid "Hashtable (input)"
-msgstr ""
+msgstr "Tabella hash (input)"
 
 msgid "Hashtable (output)"
-msgstr ""
+msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
