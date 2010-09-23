@@ -445,101 +445,101 @@ Keys for command line
 | Keys | Description and command
 
 | Left arrow +
-  Ctrl + B |
+  Ctrl + `b` |
   Go to previous char in command line +
   `/input move_previous_char`
 
 | Right arrow +
-  Ctrl + F |
+  Ctrl + `f` |
   Go to next char in command line +
   `/input move_next_char`
 
 | Ctrl + left arrow +
-  Alt + B |
+  Alt + `b` |
   Go to previous word in command line +
   `/input move_previous_word`
 
 | Ctrl + right arrow +
-  Alt + F |
+  Alt + `f` |
   Go to next word in command line +
   `/input move_next_word`
 
 | Home +
-  Ctrl + A |
+  Ctrl + `a` |
   Go to the beginning of command line +
   `/input move_beginning_of_line`
 
 | End +
-  Ctrl + E |
+  Ctrl + `e` |
   Go to the end of command line +
   `/input move_end_of_line`
 
-| Ctrl + C then B  |
+| Ctrl + `c` then `b` |
   Insert code for bold text +
   `/input insert \x02`
 
-| Ctrl + C then C |
+| Ctrl + `c` then `c` |
   Insert code for colored text +
   `/input insert \x03`
 
-| Ctrl + C then I |
+| Ctrl + `c` then `i` |
   Insert code for italic text +
   `/input insert \x1D`
 
-| Ctrl + C then O |
+| Ctrl + `c` then `o` |
   Insert code for color reset +
   `/input insert \x0F`
 
-| Ctrl + C then R |
+| Ctrl + `c` then `r` |
   Insert code for reverse color +
   `/input insert \x12`
 
-| Ctrl + C then U |
+| Ctrl + `c` then `u` |
   Insert code for underlined text +
   `/input insert \x15`
 
 | Delete +
-  Ctrl + D |
+  Ctrl + `d` |
   Delete next char in command line +
   `/input delete_next_char`
 
 | Backspace +
-  Ctrl + H |
+  Ctrl + `h` |
   Delete previous char in command line +
   `/input delete_previous_char`
 
-| Ctrl + K |
+| Ctrl + `k` |
   Delete from cursor until end of command line (deleted string is copied to
   clipboard) +
   `/input delete_end_of_line`
 
-| Ctrl + R |
+| Ctrl + `r` |
   Search for text in buffer history (two times: search exact text),
   next/previous occurrences can be found with up and down arrows +
   `/input search_text`
 
-| Ctrl + T |
+| Ctrl + `t` |
   Transpose chars +
   `/input transpose_chars`
 
-| Ctrl + U |
+| Ctrl + `u` |
   Delete from cursor until beginning of command line (deleted string is copied
   to clipboard) +
   `/input delete_beginning_of_line`
 
-| Ctrl + W |
+| Ctrl + `w` |
   Delete previous word of command line (deleted string is copied to clipboard) +
   `/input delete_previous_word`
 
-| Ctrl + Y |
+| Ctrl + `y` |
   Paste clipboard content +
   `/input clipboard_paste`
 
-| Ctrl + _ |
+| Ctrl + `_` |
   Undo last action on command line +
   `/input undo`
 
-| Alt + _ |
+| Alt + `_` |
   Redo last action on command line +
   `/input redo`
 
@@ -556,8 +556,8 @@ Keys for command line
   Insert char at cursor position in command line
 
 | Enter +
-  Ctrl + J +
-  Ctrl + M |
+  Ctrl + `j` +
+  Ctrl + `m` |
   Execute command or send message (in search mode: stop search) +
   `/input return`
 
@@ -577,16 +577,16 @@ Keys for command line
   Call next command/message in global history (common for all buffers) +
   `/input history_global_next`
 
-| Alt + D |
+| Alt + `d` |
   Delete next word in command line (deleted string is copied to clipboard) +
   `/input delete_next_word`
 
-| Alt + K |
+| Alt + `k` |
   Grab a key and insert its code (and command bound if key exists) in command
   line +
   `/input grab_key_command`
 
-| Alt + R |
+| Alt + `r` |
   Delete entire command line +
   `/input delete_line`
 |========================================
@@ -599,15 +599,15 @@ Keys for buffers / windows
 |========================================
 | Keys | Description and command
 
-| Ctrl + L |
+| Ctrl + `l` |
   Redraw whole window +
   `/window refresh`
 
-| Ctrl + S then Ctrl + U |
+| Ctrl + `s` then Ctrl + `u` |
   Set unread marker on all buffers +
   `/input set_unread`
 
-| Ctrl + X |
+| Ctrl + `x` |
   Switch current buffer if buffers are attached with same number +
   `/input switch_active_buffer`
 
@@ -637,14 +637,14 @@ Keys for buffers / windows
 
 | Alt + left arrow +
   Alt + up arrow +
-  Ctrl + P +
+  Ctrl + `p` +
   F5 |
   Switch to previous buffer +
   `/buffer -1`
 
 | Alt + right arrow +
   Alt + down arrow +
-  Ctrl + N +
+  Ctrl + `n` +
   F6 |
   Switch to next buffer +
   `/buffer +1`
@@ -681,20 +681,20 @@ Keys for buffers / windows
   Go to the end of nicklist +
   `/bar scroll nicklist * ye`
 
-| Alt + A |
+| Alt + `a` |
   Switch to next buffer with activity (with priority: highlight, message,
   other) +
   `/input jump_smart`
 
-| Alt + J then Alt + L |
+| Alt + `j` then Alt + `l` |
   Switch to last buffer +
   `/input jump_last_buffer`
 
-| Alt + J then Alt + R |
+| Alt + `j` then Alt + `r` |
   Switch to IRC raw buffer +
   `/server raw`
 
-| Alt + J then Alt + S |
+| Alt + `j` then Alt + `s` |
   Switch to IRC server buffer +
   `/server jump`
 
@@ -702,39 +702,39 @@ Keys for buffers / windows
   Switch to buffer by number (0 = 10) +
   `/buffer *N`
 
-| Alt + J then number (01-99) |
+| Alt + `j` then number (01-99) |
   Switch to buffer by number +
   `/buffer NN`
 
-| Alt + N |
+| Alt + `n` |
   Scroll to next highlight +
   `/window scroll_next_highlight`
 
-| Alt + P |
+| Alt + `p` |
   Scroll to previous highlight +
   `/window scroll_previous_highlight`
 
-| Alt + U |
+| Alt + `u` |
   Scroll to first unread line in buffer +
   `/input scroll_unread`
 
-| Alt + W then Alt + arrow |
+| Alt + `w` then Alt + arrow |
   Switch to window with direction +
   `/window up` +
   `/window down` +
   `/window left` +
   `/window right`
 
-| Alt + Z |
+| Alt + `z` |
   Zoom on current window (Alt + Z again: restore initial windows state, before
   zoom) +
   `/window zoom`
 
-| Alt + < |
+| Alt + `<` |
   Switch to previous buffer in list of visited buffers +
   `/input jump_previously_visited_buffer`
 
-| Alt + > |
+| Alt + `>` |
   Switch to next buffer in list of visited buffers +
   `/input jump_next_visited_buffer`
 |========================================
@@ -747,11 +747,11 @@ Other keys
 |========================================
 | Keys | Description and command
 
-| Alt + H |
+| Alt + `h` |
   Clear hotlist (activity notification on other buffers) +
   `/input hotlist_clear` +
 
-| Alt + = |
+| Alt + `=` |
   Toggle filters on/off +
   `/filter toggle` +
 |========================================

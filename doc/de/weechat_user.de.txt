@@ -444,101 +444,101 @@ Tastenbefehle für die Befehlszeile
 | Taste| Beschreibung und Befehl
 
 | Pfeil links +
-  Ctrl + B |
+  Ctrl + `b` |
   setzt den Cursor eine Position nach links +
   `/input move_previous_char`
 
 | Pfeil rechts +
-  Ctrl + F |
+  Ctrl + `f` |
   setzt den Cursor eine Position nach rechts +
   `/input move_next_char`
 
 | Ctrl + Pfeil links +
-  Alt + B |
+  Alt + `b` |
   springt zum Anfang des vorherigen Wortes in der Befehlszeile +
   `/input move_previous_word`
 
 | Ctrl + Pfeil rechts +
-  Alt + F |
+  Alt + `f` |
   sprint zum Anfang des nächsten Wortes in der Befehlszeile +
   `/input move_next_word`
 
 | Home +
-  Ctrl + A |
+  Ctrl + `a` |
   sprint zum Anfang der Befehlszeile +
   `/input move_beginning_of_line`
 
 | End +
-  Ctrl + E |
+  Ctrl + `e` |
   springt ans Ende der Befehlszeile +
   `/input move_end_of_line`
 
-| Ctrl + C dann B  |
+| Ctrl + `c` dann `b` |
   Fügt Steuerzeichen für fett geschrieben Text ein +
   `/input insert \x02`
 
-| Ctrl + C dann C |
+| Ctrl + `c` dann `c` |
   Fügt Steuerzeichen für Textfarbe ein +
   `/input insert \x03`
 
-| Ctrl + C dann I |
+| Ctrl + `c` dann `i` |
   Fügt Steuerzeichen für kursiven Text ein +
   `/input insert \x1D`
 
-| Ctrl + C dann O |
+| Ctrl + `c` dann `o` |
   Fügt Steuerzeichen für Standardfarbe ein +
   `/input insert \x0F`
 
-| Ctrl + C dann R |
+| Ctrl + `c` dann `r` |
   Fügt Steuerzeichen für Hintergrundfarbe ein +
   `/input insert \x12`
 
-| Ctrl + C dann U |
+| Ctrl + `c` dann `u` |
   Fügt Steuerzeichen für unterstrichenen Text ein +
   `/input insert \x15`
 
 | Delete +
-  Ctrl + D |
+  Ctrl + `d` |
   entfernt nächstes Zeichen in der Befehlszeile +
   `/input delete_next_char`
 
 | Backspace +
-  Ctrl + H |
+  Ctrl + `h` |
   entfernt vorheriges Zeichen in der Befehlszeile +
   `/input delete_previous_char`
 
-| Ctrl + K |
+| Ctrl + `k` |
   entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage
   kopiert) +
   `/input delete_end_of_line`
 
-| Ctrl + R |
+| Ctrl + `r` |
   Sucht in der Protokolldatei nach einem Text (zweimaliges Drücken: sucht nach exaktem Text),
   mittels Pfeiltaste hoch/runter kann zum nächsten/vorherigen Treffer gesprungen werden +
   `/input search_text`
 
-| Ctrl + T |
+| Ctrl + `t` |
   Zeichen austauschen +
   `/input transpose_chars`
 
-| Ctrl + U |
+| Ctrl + `u` |
   entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage
   kopiert) +
   `/input delete_beginning_of_line`
 
-| Ctrl + W |
+| Ctrl + `w` |
   entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) +
   `/input delete_previous_word`
 
-| Ctrl + Y |
+| Ctrl + `y` |
   fügt Zeichenkette aus Zwischenablage ein +
   `/input clipboard_paste`
 
-| Ctrl + _ |
+| Ctrl + `_` |
   Rückgängig machen in Befehlszeile +
   `/input undo`
 
-| Alt + _ |
+| Alt + `_` |
   Wiederherstellen in der Befehlszeile +
   `/input redo`
 
@@ -555,8 +555,8 @@ Tastenbefehle für die Befehlszeile
   schreibt das Zeichen in die Befehlszeile
 
 | Enter +
-  Ctrl + J +
-  Ctrl + M |
+  Ctrl + `j` +
+  Ctrl + `m` |
   führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) +
   `/input return`
 
@@ -576,16 +576,16 @@ Tastenbefehle für die Befehlszeile
   ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
   `/input history_global_next`
 
-| Alt + D |
+| Alt + `d` |
   löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) +
   `/input delete_next_word`
 
-| Alt + K |
+| Alt + `k` |
   zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in
   die Befehlszeile ein +
   `/input grab_key_command`
 
-| Alt + R |
+| Alt + `r` |
   löscht komplette Eingabezeile +
   `/input delete_line`
 |========================================
@@ -598,15 +598,15 @@ Tastenbefehle für Buffer / Fenster
 |========================================
 | Keys | Description and command
 
-| Ctrl + L |
+| Ctrl + `l` |
   zeichnet das Fenster neu +
   `/window refresh`
 
-| Ctrl + S dann Ctrl + U |
+| Ctrl + `s` dann Ctrl + `u` |
   Setzt die ungelesen Markierung für alle Buffer +
   `/input set_unread`
 
-| Ctrl + X |
+| Ctrl + `x` |
   sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch +
   `/input switch_active_buffer`
 
@@ -636,14 +636,14 @@ Tastenbefehle für Buffer / Fenster
 
 | Alt + Pfeil links +
   Alt + Pfeil hoch +
-  Ctrl + P +
+  Ctrl + `p` +
   F5 |
   zum vorherigen Buffer springen +
   `/buffer -1`
 
 | Alt + Pfeil rechts +
   Alt + Pfeil runter +
-  Ctrl + N +
+  Ctrl + `n` +
   F6 |
   zum nächsten Buffer springen +
   `/buffer +1`
@@ -680,20 +680,20 @@ Tastenbefehle für Buffer / Fenster
   springt zum Ende der Nickliste +
   `/bar scroll nicklist * ye`
 
-| Alt + A |
+| Alt + `a` |
   wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht,
   ...) +
   `/input jump_smart`
 
-| Alt + J dann Alt + L |
+| Alt + `j` dann Alt + `l` |
   wechselt zum letzten Buffer +
   `/input jump_last_buffer`
 
-| Alt + J dann Alt + R |
+| Alt + `j` dann Alt + `r` |
   wechselt zum IRC raw Buffer +
   `/server raw`
 
-| Alt + J dann Alt + S |
+| Alt + `j` dann Alt + `s` |
   wechselt zum IRC Server Buffer +
   `/server jump`
 
@@ -701,38 +701,38 @@ Tastenbefehle für Buffer / Fenster
   wechselt zum Buffer mit der Nummer (0 = 10) +
   `/buffer *N`
 
-| Alt + J dann Ziffern (01-99) |
+| Alt + `j` dann Ziffern (01-99) |
   wechselt zum Buffer mit der Nummer +
   `/buffer NN`
 
-| Alt + N |
+| Alt + `n` |
   springe zur nächsten Highlight Nachricht +
   `/window scroll_next_highlight`
 
-| Alt + P |
+| Alt + `p` |
   springe zur vorherigen Highlight Nachricht +
   `/window scroll_previous_highlight`
 
-| Alt + U |
+| Alt + `u` |
   springe zur ersten ungelesenen Zeile im Buffer +
   `/input scroll_unread`
 
-| Alt + W dann Alt + Pfeiltaste |
+| Alt + `w` dann Alt + Pfeiltaste |
   wechselt zum Fenster durch Richtungsanweisung +
   `/window up` +
   `/window down` +
   `/window left` +
   `/window right`
 
-| Alt + Z |
+| Alt + `z` |
   Zoom für aktuelles Fenster (nochmals Alt + Z: stellt die vorherigen Einstellungen wieder her) +
   `/window zoom`
 
-| Alt + < |
+| Alt + `<` |
   wechselt zum vorherigen Buffer der letzten aufgerufenen Buffer +
   `/input jump_previously_visited_buffer`
 
-| Alt + > |
+| Alt + `>` |
   wechselt zum nächsten Buffer der letzten aufgerufenen Buffer +
   `/input jump_next_visited_buffer`
 |========================================
@@ -745,11 +745,11 @@ andere Tastenbefehle
 |========================================
 |Tasten| Beschreibung und Befehl
 
-| Alt + H |
+| Alt + `h` |
   löscht Hotliste (Aktivitätsanzeige für die Buffer) +
   `/input hotlist_clear` +
 
-| Alt + = |
+| Alt + `=` |
   schaltet Filterfunktion an/aus +
   `/filter toggle` +
 |========================================

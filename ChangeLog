@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-09-21
+v0.3.4-dev, 2010-09-23
 
 
 Version 0.3.4 (under dev!)
@@ -26,7 +26,7 @@ Version 0.3.3 (2010-08-07)
 * core: use "!" to reverse a regex in a filter (to keep lines matching regex
   and hide other lines) (task #10032)
 * core: add keys for undo/redo changes on command line
-  (default: ctrl/alt + underscore) (task #9483)
+  (default: ctrl+underscore and alt+underscore) (task #9483)
 * core: add new option weechat.look.align_end_of_lines
 * core: add new option weechat.look.confirm_quit
 * core: add new option weechat.color.status_name_ssl (task #10339)
@@ -176,7 +176,7 @@ Version 0.3.1 (2010-01-23)
 --------------------------
 
 * core: fix bug with script installation on BSD/OSX (patch #6980)
-* core: add option grab_key_command for /input (bound by default to alt-k)
+* core: add option grab_key_command for /input (bound by default to alt+"k")
 * core: fix compilation under Cygwin (patch #6916)
 * core: fix cmake directories: let user customize lib, share, locale and include
   directories (patch #6922)
@@ -279,7 +279,7 @@ Version 0.3.0 (2009-09-06)
 * gui: add buffer merging (task #7404)
 * gui: add custom bars, with custom items
 * gui: add key to zoom a window (task #7470)
-* gui: add keys to move into last visited buffers: alt + "<" and alt + ">"
+* gui: add keys to move into last visited buffers: alt+"<" and alt+">"
 * gui: come back to last visited buffer when closing a buffer
 * gui: add new option scroll_page_percent to choose percent of height to scroll
   with page_up and page_down keys (task #8702)
@@ -338,7 +338,7 @@ Version 0.2.6 (2007-09-06)
 * fix display bug with some special chars in messages (some words were
   truncated on screen) (bug #20944)
 * fix UTF-8 bug with color encoding/decoding
-* fix crash when searching text in buffer with ctrl-R (bug #20938)
+* fix crash when searching text in buffer with ctrl+"r" (bug #20938)
 * add string length limit for setup file options
 * fix bug with flock() when home is on NFS filesystem (bug #20913)
 * add option to align text of messages (except first lines) (task #7246)
@@ -355,22 +355,22 @@ Version 0.2.6 (2007-09-06)
   add option to /server to create temporary server (task #7095)
 * add "copy", "rename" and "keep" options to /server command
 * allow clear of multiple selected buffers with /clear (patch #6112)
-* add key for setting unread marker on all buffers (default: ctrl-S + ctrl-U)
-  (task #7180)
+* add key for setting unread marker on all buffers
+  (default: ctrl+"s" + ctrl+"u") (task #7180)
 * fix nick prefix display on servers that doesn't support all prefixes
   (bug #20025)
 * fix terminal encoding detection when NLS is disabled (bug #20646)
 * fix crash when sending data to channel or pv on disconnected server
   (bug #20524)
 * improve command /server ant its output
-* add 3 default new keys: ctrl-B (left), ctrl-F (right), ctrl-D (delete)
+* add 3 default new keys: ctrl+"b" (left), ctrl+"f" (right), ctrl+"d" (delete)
 * add "buffer_move" event handler to plugins API (task #6708)
 * add key function "jump_previous_buffer" to jump to buffer previously
-  displayed (new key: alt-J + alt-P) (task #7085)
+  displayed (new key: alt+"j" + alt+"p") (task #7085)
 * add "%*" to completion template, to repeat last completion
 * add "-nojoin" option for /connect and /reconnect commands (task #7074)
 * fix bugs with IRC color in messages, now color codes are inserted in command
-  line with ctrl-c, ctrl-b.. instead of %C,%B,.. (bug #20222, task #7060)
+  line with ctrl+"c", ctrl+"b".. instead of %C,%B,.. (bug #20222, task #7060)
 * fix bug with smart nick completion (last speakers first) when a nick is
   changed
 * fix charset bug with channel names in status bar (bug #20400)
@@ -435,7 +435,7 @@ Version 0.2.4 (2007-03-29)
 * fix bug with channel topic after reconnection (not erased) (bug #19384)
 * add current buffer in hotlist when scrolling up in buffer (task #6664)
 * fix bug with explode_string / free_exploded_string when max_items > 0
-* add new key (ctrl-R) for interactive and incremental search in buffer
+* add new key (ctrl+"r") for interactive and incremental search in buffer
   history (task #6628)
 * fix /topic completion when no topic set on current channel (bug #19322)
 * improve password hiding, code cleanup (bug #19229)
@@ -494,7 +494,7 @@ Version 0.2.2 (2007-01-06)
 * /charset command and charset conversions now made by "charset" plugin
 * fix display bug in status bar, wrong length when using UTF-8
 * fix bug with ignore: now any IRC command is allowed
-* fix crash with Ctrl-T (transpose) and one char on line (bug #18153)
+* fix crash with ctrl+"t" (transpose) and one char on line (bug #18153)
 * add filename completion (task #5425)
 * add "modifier" in plugins API
 * improve /plugin command
@@ -658,14 +658,14 @@ Version 0.1.8 (2006-03-18)
 * fix completion problem in private with nicks
 * add missing IRC command (487)
 * add inactivity time, available for plugins via get_info("inactivity")
-* keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll nicklist
+* keys alt+{home|end} to scroll top/bottom, alt+{f11|f12} to scroll nicklist
   top/bottom
 * add special names for plugin message handlers: weechat_pv, weechat_highlight,
   weechat_ctcp, weechat_dcc
 * script plugins now load scripts in WeeChat system share directory
 * /msg command does not open any buffer any more
 * fix crash when using global history (when older entry is removed)
-* add IRC raw data buffer (new key: alt-J + alt-R)
+* add IRC raw data buffer (new key: alt+"j" + alt+"r")
 * fix display bug with /kill command
 * add new plugins functions: add_timer_handler, remove_timer_handler,
   remove_infobar
@@ -712,10 +712,10 @@ Version 0.1.7 (2006-01-14)
 * /nick command is now allowed when not connected to server
 * add server/channel arg to /buffer command for jumping to buffer
 * fix display bug in chat window when a message length equals to window width
-* add new keys for switching to other windows: alt-W followed by alt-{arrow}
-* add new keys for scrolling to previous/next highlight: alt-P / alt-N
+* add new keys for switching to other windows: alt+"w" followed by alt+{arrow}
+* add new keys for scrolling to previous/next highlight: alt+"p" / alt+"n"
 * add "read marker": an indicator for first unread line in a server or channel
-  buffer (new key alt-U to scroll to marker)
+  buffer (new key alt+"u" to scroll to marker)
 * new window maganement: custom size for windows, auto resize when terminal is
   resized
 * fix infinite loop when resizing term to small size
@@ -768,7 +768,7 @@ Version 0.1.5 (2005-09-24)
 * fix look_nicklist_min_size and look_nicklist_max_size options
 * fix refresh bug when changing channel modes
 * jump to next server now saves current channel buffer for each server
-* add keys ctrl-up/ctrl-down to call previous/next command in global history
+* add keys ctrl+{up|down} to call previous/next command in global history
   (common to all buffers)
 
 Version 0.1.4 (2005-07-30)
@@ -789,7 +789,7 @@ Version 0.1.4 (2005-07-30)
 * topic completion now decodes UTF-8 string
 * fix bug with IRC URL on command line (irc://)
 * new keyboard management: keys are setup in config file, add new command /key,
-  add some new default keys, alt-K key is used to grab key (useful for /key
+  add some new default keys, alt+"k" key is used to grab key (useful for /key
   command)
 * add seconds in infobar time (optional thanks to new setting)
 * fix some curses refreshs
@@ -818,7 +818,7 @@ Version 0.1.3 (2005-07-02)
 * fix plugins "print" and "prnt" functions: now ok for writing on server
   buffers
 * fix color problem with new libcurses version
-* fix crash when using alt-S or alt-X on DCC buffer (alt-D)
+* fix crash when using alt+"s" or alt+"x" on DCC buffer (alt+"d")
 * fix startup crash when config file (~/.weechat/weechat.rc) is not found
 * improve Perl/Python libs detection for ./configure script
 
@@ -827,7 +827,7 @@ Version 0.1.2 (2005-05-21)
 
 * add Python plugin support, improve Perl interface (and now Perl/Python
   libraries are checked by configure script)
-* add nicklist scroll keys (alt+{home/end/pgup/pgdn} or F11/F12)
+* add nicklist scroll keys (alt+{home|end|pgup|pgdn} or F11/F12)
 * add transfer rate for DCC files
 * add "-all" option for /nick command
 * buffers timestamp can now be changed (new option in config file)
@@ -903,8 +903,9 @@ Version 0.0.9 (2005-01-01)
 * fix display of nick mode changes
 * new command "/buffer close" (close any server/channel/private buffer)
 * fix /notice command (and display when received from server)
-* new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (= ctrl+Backspace), alt-S
-  (switch to server buffer), alt-X (switch to first channel of next server)
+* new keys: ctrl+"a" (=home), ctrl+"e" (=end), ctrl+"w" (= ctrl+backspace),
+  alt+"s" (switch to server buffer), alt+"x" (switch to first channel of next
+  server)
 * add new config option: "server_command_delay" (delay in seconds after startup
   command for each server)
 
@@ -921,17 +922,17 @@ Version 0.0.8 (2004-10-30)
 * add config option "look_display_away" to announce away in channels
 * fix crash when resizing terminal to very small size
 * "-MORE-" message is now erased when switching to another buffer
-* DCC file receive ok (alt-D for DCC view)
+* DCC file receive ok (alt+"d" for DCC view)
 * /query command now reopens private buffer if already opened
-* add key for redrawing terminal (ctrl-L)
-* add key for clearing hotlist (alt-R)
+* add key for redrawing terminal (ctrl+"l")
+* add key for clearing hotlist (alt+"r")
 
 Version 0.0.7 (2004-08-08)
 --------------------------
 
 * new "col_status_delimiters" config option
 * add command /buffer , buffers ordered by number, auto-jump to active buffers
-  (alt-A), jump to buffers by number (alt-number)
+  (alt+"a"), jump to buffers by number (alt+number)
 * add command /window, split terminal horizontally/vertically
 * unique color for each nick (based on nickname)
 * action messages are now considered as messages, not crappy joins/parts
@@ -979,7 +980,7 @@ Version 0.0.4 (2004-01-01)
 * when private window is created (another user is talking), WeeChat does not
   switch to this window
 * highlight when our nick is written in a channel/private window
-* catch ctrl-C (ignored)
+* catch ctrl+"c" (ignored)
 * debug messages can be enabled via ./configure --enbale-debug option
 
 Version 0.0.3 (2003-11-03)
