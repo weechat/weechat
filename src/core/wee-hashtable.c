@@ -514,6 +514,8 @@ hashtable_remove_item (struct t_hashtable *hashtable,
     if (hashtable->htable[hash] == item)
         hashtable->htable[hash] = item->next_item;
     
+    free (item);
+    
     hashtable->items_count--;
 }
 
@@ -526,6 +528,9 @@ hashtable_remove (struct t_hashtable *hashtable, const void *key)
 {
     struct t_hashtable_item *ptr_item;
     unsigned int hash;
+    
+    if (!hashtable || !key)
+        return;
     
     ptr_item = hashtable_get_item (hashtable, key, &hash);
     if (ptr_item)
@@ -560,6 +565,9 @@ hashtable_remove_all (struct t_hashtable *hashtable)
 void
 hashtable_free (struct t_hashtable *hashtable)
 {
+    if (!hashtable)
+        return;
+    
     hashtable_remove_all (hashtable);
     free (hashtable->htable);
     free (hashtable);
