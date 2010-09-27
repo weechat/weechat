@@ -965,6 +965,8 @@ gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
     }
     
     gui_buffer_set_highlight_words (buffer, words);
+    
+    free (words);
 }
 
 /*
