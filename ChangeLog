@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-09-23
+v0.3.4-dev, 2010-09-27
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add new option weechat.look.input_share (task #9228)
 * core: use similar behaviour for keys bound to local or global history
   (bug #30759)
 * api: add priority for hooks (task #10550)

@@ -240,6 +240,46 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
 }
 
 /*
+ * gui_input_move_to_buffer: move input content and undo data from
+ *                           a buffer to another buffer
+ */
+
+void
+gui_input_move_to_buffer (struct t_gui_buffer *from_buffer,
+                          struct t_gui_buffer *to_buffer)
+{
+    /* only possible for two different buffers */
+    if (!from_buffer || !to_buffer || (from_buffer == to_buffer))
+        return;
+    
+    /* move input_buffer */
+    if (to_buffer->input_buffer)
+        free (to_buffer->input_buffer);
+    to_buffer->input_buffer = from_buffer->input_buffer;
+    to_buffer->input_buffer_alloc = from_buffer->input_buffer_alloc;
+    to_buffer->input_buffer_size = from_buffer->input_buffer_size;
+    to_buffer->input_buffer_length = from_buffer->input_buffer_length;
+    to_buffer->input_buffer_pos = from_buffer->input_buffer_pos;
+    to_buffer->input_buffer_1st_display = from_buffer->input_buffer_1st_display;
+    gui_buffer_input_buffer_init (from_buffer);
+    
+    /* move undo data */
+    gui_buffer_undo_free_all (to_buffer);
+    (to_buffer->input_undo_snap).data = (from_buffer->input_undo_snap).data;
+    (to_buffer->input_undo_snap).pos = (from_buffer->input_undo_snap).pos;
+    to_buffer->input_undo = from_buffer->input_undo;
+    to_buffer->last_input_undo = from_buffer->last_input_undo;
+    to_buffer->ptr_input_undo = from_buffer->ptr_input_undo;
+    to_buffer->input_undo_count = from_buffer->input_undo_count;
+    (from_buffer->input_undo_snap).data = NULL;
+    (from_buffer->input_undo_snap).pos = 0;
+    from_buffer->input_undo = NULL;
+    from_buffer->last_input_undo = NULL;
+    from_buffer->ptr_input_undo = NULL;
+    from_buffer->input_undo_count = 0;
+}
+
+/*
  * gui_input_clipboard_copy: copy string into clipboard
  */
 

@@ -324,6 +324,23 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_input_buffer_init: initialize input_buffer_* variables
+ *                               in a buffer
+ */
+
+void
+gui_buffer_input_buffer_init (struct t_gui_buffer *buffer)
+{
+    buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
+    buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+    buffer->input_buffer[0] = '\0';
+    buffer->input_buffer_size = 0;
+    buffer->input_buffer_length = 0;
+    buffer->input_buffer_pos = 0;
+    buffer->input_buffer_1st_display = 0;
+}
+
+/*
  * gui_buffer_new: create a new buffer in current window
  */
 
@@ -405,13 +422,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input_callback = input_callback;
         new_buffer->input_callback_data = input_callback_data;
         new_buffer->input_get_unknown_commands = 0;
-        new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
-        new_buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
-        new_buffer->input_buffer[0] = '\0';
-        new_buffer->input_buffer_size = 0;
-        new_buffer->input_buffer_length = 0;
-        new_buffer->input_buffer_pos = 0;
-        new_buffer->input_buffer_1st_display = 0;
+        gui_buffer_input_buffer_init (new_buffer);
         
         /* undo for input */
         (new_buffer->input_undo_snap).data = NULL;

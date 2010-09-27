@@ -423,6 +423,11 @@
 ** type: entier
 ** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: `group_time_asc`)
 
+* *weechat.look.input_share*
+** description: `si défini, il y a une seule entrée commune à tous les tampons (mais toujours un historique local sur chaque tampon)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * *weechat.look.input_undo_max*
 ** description: `nombre maximum de "undo" pour la ligne de commande, par tampon (0 = undo désactivé)`
 ** type: entier
