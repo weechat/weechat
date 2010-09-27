@@ -1817,6 +1817,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
                            &buffer->keys_count);
     gui_buffer_local_var_remove_all (buffer);
+    hashtable_free (buffer->local_variables);
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
