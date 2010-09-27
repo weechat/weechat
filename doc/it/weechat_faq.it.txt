@@ -145,6 +145,18 @@ Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
 
+// TRANSLATION MISSING
+[[osx_display_broken]]
+I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you compiled ncursesw yourself, try to use standard ncurses (that comes with
+system).
+
+Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
+manager.
+
+
 [[buffer_vs_window]]
 Ho sentito parlare di "buffer" e "finestre", qual è la differenza?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

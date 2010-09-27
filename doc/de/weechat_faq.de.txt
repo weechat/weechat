@@ -151,6 +151,18 @@ Nutzte stattdessen lieber 'xterm'.
 Falls nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
 
+// TRANSLATION MISSING
+[[osx_display_broken]]
+I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you compiled ncursesw yourself, try to use standard ncurses (that comes with
+system).
+
+Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
+manager.
+
+
 [[buffer_vs_window]]
 Ich habe von "Buffern" und "Fenstern" gehört - Worin besteht der Unterschied?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

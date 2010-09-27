@@ -146,6 +146,17 @@ Par exemple 'xterm-color' provoque ce genre de problèmes, utilisez
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
 
+[[osx_display_broken]]
+J'ai compilé WeeChat sous OS X, et je vois des "(null)" partout sur l'écran, pourquoi ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous avez compilé ncursesw vous-même, essayez avec le ncurses standard (celui
+fourni avec le système).
+
+De plus, sous OS X, il est recommandé d'installer WeeChat avec le gestionnaire
+de paquets Homebrew.
+
+
 [[buffer_vs_window]]
 J'ai entendu parler de "buffer" et "window", quelle est la différence ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
