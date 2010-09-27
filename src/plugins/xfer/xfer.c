@@ -764,7 +764,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
 
     type = xfer_search_type (str_type);
@@ -773,7 +773,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         weechat_printf (NULL,
                         _("%s%s: unknown xfer type \"%s\""),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, str_type);
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     
     if (XFER_IS_FILE(type) && (!filename || !str_protocol))
@@ -781,7 +781,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     
     if (XFER_IS_FILE(type))
@@ -793,7 +793,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                             _("%s%s: unknown xfer protocol \"%s\""),
                             weechat_prefix ("error"), XFER_PLUGIN_NAME,
                             str_protocol);
-            return WEECHAT_RC_ERROR;
+            goto error;
         }
     }
     
@@ -825,7 +825,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
-                return WEECHAT_RC_ERROR;
+                goto error;
             }
             
             weechat_dir = weechat_info_get ("weechat_dir", "");
@@ -836,7 +836,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                                 _("%s%s: not enough memory"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 free (dir1);
-                return WEECHAT_RC_ERROR;
+                goto error;
             }
             filename2 = malloc (strlen (dir2) + strlen (filename) + 4);
             if (!filename2)
@@ -846,7 +846,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 free (dir1);
                 free (dir2);
-                return WEECHAT_RC_ERROR;
+                goto error;
             }
             strcpy (filename2, dir2);
             if (filename2[strlen (filename2) - 1] != DIR_SEPARATOR_CHAR)
@@ -867,7 +867,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                             filename2);
             if (filename2)
                 free (filename2);
-            return WEECHAT_RC_ERROR;
+            goto error;
         }
         file_size = st.st_size;
     }
@@ -924,7 +924,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                             weechat_prefix ("error"), XFER_PLUGIN_NAME);
             if (filename2)
                 free (filename2);
-            return WEECHAT_RC_ERROR;
+            goto error;
         }
         
         /* look for port */
@@ -983,7 +983,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             close (sock);
             if (filename2)
                 free (filename2);
-            return WEECHAT_RC_ERROR;
+            goto error;
         }
     }
     
@@ -1042,8 +1042,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             free (short_filename);
         if (filename2)
             free (filename2);
-        
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     
     /* send signal if type is file or chat "send" */
@@ -1055,7 +1054,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     if (filename2)
         free (filename2);
     
+    weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
+    
+error:
+    weechat_infolist_reset_item_cursor (infolist);
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -1109,7 +1113,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         _("%s%s: missing arguments (%s)"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME,
                         "xfer_start_resume");
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     
     sscanf (str_start_resume, "%lu", &start_resume);
@@ -1134,7 +1138,12 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         port, start_resume);
     }
     
+    weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
+    
+error:
+    weechat_infolist_reset_item_cursor (infolist);
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -1189,7 +1198,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         _("%s%s: missing arguments (%s)"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME,
                         "xfer_accept_resume");
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     
     sscanf (str_start_resume, "%lu", &start_resume);
@@ -1221,7 +1230,12 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         port, start_resume);
     }
     
+    weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
+    
+error:
+    weechat_infolist_reset_item_cursor (infolist);
+    return WEECHAT_RC_ERROR;
 }
 
 /*

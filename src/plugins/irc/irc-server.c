@@ -3584,6 +3584,8 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
         }
     }
     
+    weechat_infolist_reset_item_cursor (infolist);
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3641,6 +3643,8 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
             }
         }
     }
+    
+    weechat_infolist_reset_item_cursor (infolist);
     
     return WEECHAT_RC_OK;
 }
@@ -3700,6 +3704,8 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
             }
         }
     }
+    
+    weechat_infolist_reset_item_cursor (infolist);
     
     return WEECHAT_RC_OK;
 }
