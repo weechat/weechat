@@ -1039,7 +1039,8 @@ int
 config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
-    int value_int, i, rc, new_value_ok, old_value_was_null, num_colors;
+    int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
+    int num_colors;
     long number;
     char *error;
     
@@ -1107,8 +1108,11 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
+                old_value = 0;
                 if (!option->value)
                     option->value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_INTEGER(option);
                 if (option->value)
                 {
                     if (option->string_values)
@@ -1121,7 +1125,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                             if (error && !error[0])
                             {
                                 number = number % (option->max + 1);
-                                value_int = (CONFIG_INTEGER(option) + number) %
+                                value_int = (old_value + number) %
                                     (option->max + 1);
                             }
                         }
@@ -1132,7 +1136,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                             if (error && !error[0])
                             {
                                 number = number % (option->max + 1);
-                                value_int = (CONFIG_INTEGER(option) + (option->max + 1) - number) %
+                                value_int = (old_value + (option->max + 1) - number) %
                                     (option->max + 1);
                             }
                         }
@@ -1150,13 +1154,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         }
                         if (value_int >= 0)
                         {
-                            if (value_int == CONFIG_INTEGER(option))
-                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                            else
+                            if (old_value_was_null
+                                || (value_int != old_value))
                             {
                                 CONFIG_INTEGER(option) = value_int;
                                 rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                             }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         }
                     }
                     else
@@ -1168,7 +1173,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                             number = strtol (value + 2, &error, 10);
                             if (error && !error[0])
                             {
-                                value_int = CONFIG_INTEGER(option) + number;
+                                value_int = old_value + number;
                                 if (value_int <= option->max)
                                     new_value_ok = 1;
                             }
@@ -1179,7 +1184,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                             number = strtol (value + 2, &error, 10);
                             if (error && !error[0])
                             {
-                                value_int = CONFIG_INTEGER(option) - number;
+                                value_int = old_value - number;
                                 if (value_int >= option->min)
                                     new_value_ok = 1;
                             }
@@ -1198,13 +1203,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         }
                         if (new_value_ok)
                         {
-                            if (value_int == CONFIG_INTEGER(option))
-                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                            else
+                            if (old_value_was_null
+                                || (value_int != old_value))
                             {
                                 CONFIG_INTEGER(option) = value_int;
                                 rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                             }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         }
                     }
                 }
@@ -1224,8 +1230,11 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
+                old_value = 0;
                 if (!option->value)
                     option->value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_COLOR(option);
                 if (option->value)
                 {
                     num_colors = gui_color_get_number ();
@@ -1238,7 +1247,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         if (error && !error[0])
                         {
                             number = number % (num_colors + 1);
-                            value_int = (CONFIG_COLOR(option) + number) %
+                            value_int = (old_value + number) %
                                 (num_colors + 1);
                             if (value_int > num_colors - 1)
                                 value_int -= num_colors;
@@ -1253,7 +1262,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         if (error && !error[0])
                         {
                             number = number % (num_colors + 1);
-                            value_int = (CONFIG_COLOR(option) + num_colors - number) %
+                            value_int = (old_value + num_colors - number) %
                                 num_colors;
                             if (value_int < 0)
                                 value_int += num_colors;
@@ -1269,13 +1278,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     if (new_value_ok)
                     {
-                        if (value_int == CONFIG_COLOR(option))
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-                        else
+                        if (old_value_was_null
+                            || (value_int != old_value))
                         {
                             CONFIG_COLOR(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
+                        else
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                     }
                 }
                 break;
