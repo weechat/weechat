@@ -44,12 +44,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *relay.look.raw_messages*
-** Beschreibung: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`
+** Beschreibung: `Anzahl der IRC-RAW-Nachrichten die im Speicher gehalten werden sollen falls der RAW-Daten-Buffer geschlossen ist (die Nachrichten werden umgehend angezeigt sobald der RAW-Daten-Buffer geöffnet wird)`
 ** Typ: integer
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * *relay.network.bind_address*
-** Beschreibung: `address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)`
+** Beschreibung: `Adresse für Bind (falls nicht gesetzt ist eine Verbindung zu allen Interfaces möglich. Wird die Adresse "127.0.0.1" genutzt kann nur eine Verbindung mit dem lokalen Rechner hergestellt werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -59,7 +59,7 @@
 ** Werte: 1 .. 1024 (Standardwert: `5`)
 
 * *relay.network.password*
-** Beschreibung: `password required by clients to access this relay (empty value means no password required)`
+** Beschreibung: `Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten (kein Eintrag bedeutet dass kein Passwort benötigt wird)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

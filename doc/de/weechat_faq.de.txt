@@ -139,8 +139,8 @@ Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 
 [[screen_weird_chars]]
-Wenn ich Weechat unter screen nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wenn ich Weechat mit screen nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell verursacht
 werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
@@ -151,16 +151,14 @@ Nutzte stattdessen lieber 'xterm'.
 Falls nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
 
-// TRANSLATION MISSING
 [[osx_display_broken]]
-I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich habe WeeChat unter OS X kompiliert und erhalte nur "(null)" als Textausgabe. Was läuft da schief?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you compiled ncursesw yourself, try to use standard ncurses (that comes with
-system).
+Wenn Du ncursesw selber kompiliert haben solltest dann probiere einmal die standard ncurses aus, die
+mit dem System ausgeliefert wird.
 
-Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
-manager.
+Darüberhinaus ist es unter OS X ratsam WeeChat mittels dem Homebrew package manager zu installieren.
 
 
 [[buffer_vs_window]]

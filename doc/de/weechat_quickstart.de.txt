@@ -7,9 +7,9 @@ Sébastien Helleu <flashcode@flashtux.org>
 Start von WeeChat
 -----------------
 
-Der bevorzugte Terminal-Emulator für X (aber nicht obligatorisch) ist
-rxvt-unicode (er hat eine gute Unterstützung für UTF-8 und keine Probleme mit der
-Standard Tastaturbelegung).
+Die bevorzugte Terminal-Emulation für X (aber nicht obligatorisch) ist
+rxvt-unicode (es hat eine gute Unterstützung für UTF-8 und keine Probleme
+mit der Standard Tastaturbelegung).
 
 Starte "weechat-curses" aus Deiner shell.
 
@@ -18,8 +18,8 @@ Starte "weechat-curses" aus Deiner shell.
 Online-Hilfe / Optionen
 -----------------------
 
-WeeChat enthält Hilfetexte für alle Befehle, erreichbar über `/help`.
-Um Hilfe zu einen bestimmten Befehl zu bekommen kann man einfach `/help Befehl`
+WeeChat enthält Hilfetexte für alle Befehle. Diese Hilfstexte sind über den Befehl `/help` zu
+erreichen. Um eine Hilfe zu einen bestimmten Befehl zu erhalten kann man einfach `/help Befehl`
 ausführen.
 
 Um Optionen zu setzen benutzt man `/set config.section.option value`.
@@ -27,8 +27,8 @@ Um Optionen zu setzen benutzt man `/set config.section.option value`.
 oder ein Plugin-Name), 'section' ein Abschnitt dieser Konfiguration und 'option'
 der Name der Option).
 
-WeeChat benutzt den neuen Wert sofort (*Niemals* muss WeeChat neu gestartet
-werden nach dem die Konfiguration geändert wurde).
+WeeChat benutzt den neu eingestellten Wert sofort (WeeChat muss also *niemals* neu gestartet
+werden, nach dem die Konfiguration verändert wurde).
 
 Du kannst die Option `/set` mit teilweise ausgeschriebenen Namen und dem
 Platzhalter "*" am Beginn oder Ende verwenden um alle Optionen anzuzeigen, die
@@ -48,27 +48,27 @@ Zum Beispiel:
 Du kannst mit `/help` Hilfe für Optionen auflisten lassen, z.B.:
 `/help weechat.look.highlight`.
 
-Beim beenden von WeeChat werden alle Einstellungen gespeichert (mittels `/save`
-kann das Schreiben der Optionen erzwungen werden).
+Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels `/save`
+kann das Sichern der Optionen erzwungen werden).
 
-Konfigurations-Dateien (*.conf) können auch per Hand editiert und mit dem Befehl
+Konfigurationsdateien (*.conf) können auch per Hand editiert und mit dem Befehl
 `/reload` neu eingelesen werden (falls man z.B. den `/set` Befehl nicht
 verwenden möchte).
 
 
 [[core_vs_plugins]]
-Kern (Core) vs Plugins
-----------------------
+Kern (Core) vs Erweiterungen
+----------------------------
 
-Der Kern (core) von WeeChat ist ausschließlich dazu da, Daten auf dem Bildschirm
-darzustellen um mit dem Benutzer zu interagieren, dies bedeutet, WeeChat an sich
--also nur WeeChat core- ohne jegliche Plugins ist unbrauchbar.
+Der Kern (core) von WeeChat ist ausschließlich dazu da Daten auf dem Bildschirm
+darzustellen um mit dem Benutzer zu interagieren. Dies bedeutet, WeeChat an sich
+-also nur WeeChat core- ohne jegliche Erweiterung ist unbrauchbar.
 (an die treuen User: IRC war ein Teil des Kerns bei Versionen <= 0.2.6)
 
-Alle Netzwerkprotokolle, z.B. IRC, werden als separates Plugin bereit gestellt.
+Alle Netzwerkprotokolle, z.B. IRC, werden als separate Erweiterung bereit gestellt.
 
-Benutze den Befehl `/plugin` um alle Plugins aufzulisten, "irc" sowie andere
-Plugins sollten aufgelistet werden.
+Benutze den Befehl `/plugin` um alle Erweiterungen aufzulisten, "irc" sowie andere
+Erweiterungen sollten aufgelistet werden.
 
 
 [[create_irc_server]]
@@ -146,12 +146,12 @@ sich mit ihm zu verbinden ohne den Befehl `/server` zu benutzen (sollte ich
 wiederholen, dass Du die Hilfe zu diesem Befehl mit `/help connect` aufrufen
 kannst?).
 
-Generell werden die Server-Puffer und der Puffer des Kerns von WeeChat -der
-core-Puffer- zusammengelegt. Um zwischen den core-Puffer und den Server-Puffern
+Standardmäßig werden die Server-Buffer und der Buffer des Kerns von WeeChat -der
+core-Buffer- zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
 umzuschalten kannst Du ctrl-X benutzen.
 
-Es ist möglich das automatische Zusammenlegen der Server-Puffer zu deaktivieren
-um eigenständig Puffer zu haben:
+Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren
+um eigenständige Buffer zu haben:
 
   /set irc.look.server_buffer independent
 
@@ -164,33 +164,33 @@ Betreten/verlassen der IRC-Channel
     Einen Channel betreten
 
 `/part [quit message]`::
-    Einen Channel verlassen (der Puffer bleibt geöffnet)
+    Einen Channel verlassen (der Buffer bleibt geöffnet)
 
 `/close [quit message]`::
-    Schließen eines Server- oder Channel-Puffers (`/close` ist ein Alias für `/buffer close`)
+    Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buffer close`)
 
 
 [[buffer_window]]
-Puffer/Fenster Verwaltung
+Buffer/Fenster Verwaltung
 -------------------------
 
-Ein Puffer ist eine, zu einem Plugin mit einer Nummer, einer Kategorie und einem
-Namen, verbundene Komponente. Ein Puffer beinhaltet die auf dem Bildschirm
+Ein Buffer ist eine, Erweiterung mit einer Nummer, einer Kategorie und einem
+Namen, verbundene Komponente. Ein Buffer beinhaltet die auf dem Bildschirm
 dargestellten Daten.
 
-Ein Fenster ist die Ansicht eines Puffers. Standard ist ein Fenster, das einen
-Puffer darstellt. Wenn Du den Bildschirm aufteilst, wirst Du mehrere Fenster mit
-mehreren Puffer gleichzeitig sehen.
+Ein Fenster ist die Ansicht eines Buffers. Standard ist ein Fenster, das einen
+Buffer darstellt. Wenn Du den Bildschirm aufteilst wirst Du mehrere Fenster mit
+mehreren Buffer gleichzeitig sehen.
 
-Befehle, welche Puffer und Fenster verwalten:
+Befehle, welche Buffer und Fenster verwalten:
 
   /buffer
   /window
 
-(Ich will jetzt nicht wiederholen, dass Du zu diesen Befehlen Hilfe mit /help
-erhalten kannst)
+(Ich muss jetzt nicht wiederholen dass Du zu diesen Befehlen eine Hilfe mit /help
+zu erhalten ist)
 
-Ein Beispiel, um Deinen Bildschirm vertikal in ein kleines Fenster (1/3 Höhe)
+Ein Beispiel: Um Deinen Bildschirm vertikal in ein kleines Fenster (1/3 Höhe)
 und ein großes Fenster (2/3 Höhe) aufzuteilen, benutze diesen Befehl:
 
   /window splitv 33
@@ -200,25 +200,25 @@ und ein großes Fenster (2/3 Höhe) aufzuteilen, benutze diesen Befehl:
 Tastaturbelegung
 ----------------
 
-WeeChat verwendet viele Standardtasten. Alle diese Belegungen sind in der
-Dokumentation beschrieben, doch solltest Du mindestens einige wesentliche
-Belegungen kennen:
+WeeChat verwendet viele Standardtasten. Alle Tastenbelegungen sind in der
+Dokumentation beschrieben. Im folgenden werden die wichtigsten Tastenbelegungen
+kurz erläutert:
 
 - 'alt + linker/rechter Pfeil' (oder 'F5'/'F6'): umschalten zum
-  vorherigen/nächsten Puffer
+  vorherigen/nächsten Buffer
 - 'F7'/'F8': umschalten zum vorherigen/nächsten Fenster (falls der Bildschirm
   aufgeteilt ist)
-- 'F9'/'F10': scrolle die Titleleiste
-- 'F11'/'F12': scrolle die Liste der Nicks
-- 'tab': komplettiere den Text in der Eingabeleiste, ähnlich Deiner shell
-- 'Seite rauf/runter': scrolle den Text im aktiven Puffer
-- 'alt + A': springe zum Puffer mit Aktivität (aus der Hotlist)
+- 'F9'/'F10': scrollt die Titleleiste
+- 'F11'/'F12': scrollt die Liste der Nicks
+- 'tab': komplettiert den Text in der Eingabezeile, ähnlich Deiner shell
+- 'Seite rauf/runter': scrollt den Text im aktiven Buffer
+- 'alt + A': springt zum Buffer mit Aktivität (aus der Hotlist)
 
-Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kannst Du jede Taste mittels
-des Befehls `/key` neu mit einem Befehl belegen.
+Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kann jede Taste mit Hilfe
+des `/key` Befehls durch einen Befehl neu belegt werden.
 Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist meta-k (alt-k).
 
-Beispiel, Belegung von meta-y (alt-y) mit dem Befehl `/buffer close`:
+Beispiel: Belegung von meta-y (alt-y) mit dem Befehl `/buffer close`:
 
   /key bind (drücke meta-k) (drücke meta-y) /buffer close
 
@@ -232,27 +232,27 @@ Entfernen der Belegung:
 
 
 [[plugins_scripts]]
-Plugins/Scripte
----------------
+Erweiterungen/Skripten
+----------------------
 
-Bei einige Distributionen wie Debian, sind Plugins über separate Pakete
+Bei einigen Distributionen wie z.B. Debian, sind die Erweiterungen über separate Pakete
 erhältlich (z.B. weechat-plugins).
-Plugins werden -falls gefunden- automatisch geladen (Bitte beachte die
-Dokumentation zum Laden/Entladen von Plugins oder Skripten).
+Erweiterungen werden -sofern welche gefunden worden sind- automatisch geladen (Bitte beachte
+die Dokumentation zum Laden/Entladen von Erweiterungen oder Skripten).
 
-Einige Plugins ermöglichen die Verwendung von Scripten in WeeChat (in mehreren
-Sprachen wie Perl, Python, Ruby, Lua und TCL). Diese Plugins müssen mit dem
+Einige Erweiterungen ermöglichen die Verwendung von Skripten in WeeChat (unterstützte
+Sprachen sind Perl, Python, Ruby, Lua und TCL). Diese Erweiterungen müssen mit dem
 Befehl `/plugin` geladen werden und verfügen ihrerseits über Befehle wie z.B.
-`/perl` um Scripte zu laden.
+`/perl` um Perl-Skripten zu laden.
 
-Viele externe Plugins/Scripte (der Mitarbeitenden) sind für WeeChat verfügbar,
+Viele externe Erweiterungen/Skripten (der Mitarbeitenden) sind für WeeChat verfügbar,
 siehe: http://www.weechat.org/scripts
 
-Der einfachste Weg um Scripte zu installieren ist die verwendung von 'weeget.py':
-
+Der einfachste Weg um Skripten zu installieren ist die Verwendung von 'weeget.py':
+werden
 . herunterladen und kopieren von 'weeget.py' nach ~/.weechat/python/autoload/
-. laden des  Scriptes: `/python autoload`
-. Liste der Scripte: `/weeget list` (Hilfe mit: `/help weeget`)
+. laden des  Skript: `/python autoload`
+. Liste der Skripten: `/weeget list` (Hilfe mit: `/help weeget`)
 
 
 [[more_doc]]
