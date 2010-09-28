@@ -90,6 +90,7 @@ struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_input_share;
+struct t_config_option *config_look_input_share_overwrite;
 struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
@@ -1347,9 +1348,16 @@ config_weechat_init_options ()
         0, 0, "group_time_asc", NULL, 0, NULL, NULL, &config_change_hotlist, NULL, NULL, NULL);
     config_look_input_share = config_file_new_option (
         weechat_config_file, ptr_section,
-        "input_share", "boolean",
-        N_("if set, there is only one input shared on all buffers (but still "
-           "local history for each buffer)"),
+        "input_share", "integer",
+        N_("share commands, text, or both in input for all buffers (there is "
+           "still local history for each buffer)"),
+        "none|commands|text|all",
+        0, 0, "none", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_input_share_overwrite = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "input_share_overwrite", "boolean",
+        N_("if set and input is shared, always overwrite input in target "
+           "buffer"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_undo_max = config_file_new_option (
         weechat_config_file, ptr_section,

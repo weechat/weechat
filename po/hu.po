@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-09-27 16:01+0200\n"
+"POT-Creation-Date: 2010-09-28 10:52+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1594,8 +1594,11 @@ msgid ""
 msgstr ""
 
 msgid ""
-"if set, there is only one input shared on all buffers (but still local "
+"share commands, text, or both in input for all buffers (there is still local "
 "history for each buffer)"
+msgstr ""
+
+msgid "if set and input is shared, always overwrite input in target buffer"
 msgstr ""
 
 #, fuzzy

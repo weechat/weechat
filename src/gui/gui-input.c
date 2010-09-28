@@ -248,8 +248,35 @@ void
 gui_input_move_to_buffer (struct t_gui_buffer *from_buffer,
                           struct t_gui_buffer *to_buffer)
 {
-    /* only possible for two different buffers */
-    if (!from_buffer || !to_buffer || (from_buffer == to_buffer))
+    int is_command;
+    
+    /*
+     * move of input is allowed if:
+     * - 2 buffers are different
+     * - input_share is not set to "none"
+     * - input buffer in first buffer is not empty
+     */
+    if (!from_buffer || !to_buffer || (from_buffer == to_buffer)
+        || (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_NONE)
+        || !from_buffer->input_buffer || !from_buffer->input_buffer[0])
+        return;
+    
+    /*
+     * if input is command and that only text is allowed,
+     * or if input is text and that only command is allowed,
+     * then do nothing
+     */
+    is_command = (string_input_for_buffer (from_buffer->input_buffer) == NULL) ? 1 : 0;
+    if ((is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_TEXT))
+        || (!is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_COMMANDS)))
+        return;
+    
+    /*
+     * if overwrite is off and that input of target buffer is not empty,
+     * then do nothing
+     */
+    if ((!CONFIG_BOOLEAN(config_look_input_share_overwrite))
+        && to_buffer->input_buffer && to_buffer->input_buffer[0])
         return;
     
     /* move input_buffer */

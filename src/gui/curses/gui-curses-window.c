@@ -576,11 +576,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->buffer->lines->last_read_line = window->buffer->lines->last_line;
     }
     
-    if (CONFIG_BOOLEAN(config_look_input_share)
-        && (old_buffer != window->buffer))
-    {
-        gui_input_move_to_buffer (old_buffer, window->buffer);
-    }
+    gui_input_move_to_buffer (old_buffer, window->buffer);
     
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -615,11 +611,7 @@ gui_window_switch (struct t_gui_window *window)
     gui_window_switch_to_buffer (gui_current_window,
                                  gui_current_window->buffer, 1);
     
-    if (CONFIG_BOOLEAN(config_look_input_share)
-        && (old_window->buffer != window->buffer))
-    {
-        gui_input_move_to_buffer (old_window->buffer, window->buffer);
-    }
+    gui_input_move_to_buffer (old_window->buffer, window->buffer);
 }
 
 /*

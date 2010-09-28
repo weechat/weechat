@@ -1,13 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-09-27
+v0.3.4-dev, 2010-09-28
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
-* core: add new option weechat.look.input_share (task #9228)
+* core: add new options weechat.look.input_share and
+  weechat.look.input_share_overwrite (task #9228)
 * core: fix memory leaks when removing item in hashtable and when setting
   highlight words in buffer
 * core: use similar behaviour for keys bound to local or global history

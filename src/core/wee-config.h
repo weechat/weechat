@@ -68,6 +68,14 @@ enum t_config_look_hotlist_sort
     CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC,
 };
 
+enum t_config_look_input_share
+{
+    CONFIG_LOOK_INPUT_SHARE_NONE = 0,
+    CONFIG_LOOK_INPUT_SHARE_COMMANDS,
+    CONFIG_LOOK_INPUT_SHARE_TEXT,
+    CONFIG_LOOK_INPUT_SHARE_ALL,
+};
+
 enum t_config_look_read_marker
 {
     CONFIG_LOOK_READ_MARKER_NONE = 0,
@@ -112,6 +120,7 @@ extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_input_share;
+extern struct t_config_option *config_look_input_share_overwrite;
 extern struct t_config_option *config_look_input_undo_max;
 extern struct t_config_option *config_look_item_time_format;
 extern struct t_config_option *config_look_jump_current_to_previous_buffer;

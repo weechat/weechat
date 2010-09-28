@@ -424,7 +424,12 @@
 ** values: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (default value: `group_time_asc`)
 
 * *weechat.look.input_share*
-** description: `if set, there is only one input shared on all buffers (but still local history for each buffer)`
+** description: `share commands, text, or both in input for all buffers (there is still local history for each buffer)`
+** type: integer
+** values: none, commands, text, all (default value: `none`)
+
+* *weechat.look.input_share_overwrite*
+** description: `if set and input is shared, always overwrite input in target buffer`
 ** type: boolean
 ** values: on, off (default value: `off`)
 
