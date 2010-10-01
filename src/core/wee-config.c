@@ -52,6 +52,7 @@
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-layout.h"
+#include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -101,6 +102,7 @@ struct t_config_option *config_look_paste_max_lines;
 struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
+struct t_config_option *config_look_prefix_align_min;
 struct t_config_option *config_look_prefix_align_more;
 struct t_config_option *config_look_prefix_buffer_align;
 struct t_config_option *config_look_prefix_buffer_align_max;
@@ -319,6 +321,30 @@ config_change_prefix (void *data, struct t_config_option *option)
     (void) option;
     
     gui_chat_prefix_build ();
+}
+
+/*
+ * config_change_prefix_align_min: called when prefix_align_min is changed
+ */
+
+void
+config_change_prefix_align_min (void *data, struct t_config_option *option)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->own_lines)
+            gui_line_compute_prefix_max_length (ptr_buffer->own_lines);
+        if (ptr_buffer->mixed_lines)
+            gui_line_compute_prefix_max_length (ptr_buffer->mixed_lines);
+    }
+    gui_window_refresh_windows ();
 }
 
 /*
@@ -1434,6 +1460,11 @@ config_weechat_init_options ()
         "prefix_align_max", "integer",
         N_("max size for prefix (0 = no max size)"),
         NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_align_min = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_align_min", "integer",
+        N_("min size for prefix"),
+        NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_prefix_align_min, NULL, NULL, NULL);
     config_look_prefix_align_more = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_align_more", "boolean",

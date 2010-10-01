@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-01 08:04+0200\n"
+"POT-Creation-Date: 2010-10-02 00:26+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1893,6 +1893,10 @@ msgstr "alineación del prefijo (none, left, right) (right por defecto)"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr "tamaño máximo para el prefijo (0 = no hay límite)"
+
+#, fuzzy
+msgid "min size for prefix"
+msgstr "cadena mostrada después del prefijo"
 
 msgid "display '+' if prefix is truncated"
 msgstr "mostrar '+' si el prefijo ha sido truncado"

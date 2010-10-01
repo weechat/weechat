@@ -30,6 +30,7 @@
 #include <regex.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -138,7 +139,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
     
     lines_hidden = 0;
     
-    buffer->lines->prefix_max_length = 0;
+    buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     
     for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-01 08:04+0200\n"
+"POT-Creation-Date: 2010-10-02 00:26+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1897,6 +1897,10 @@ msgstr "wyrównanie przedrostków (none, left, right (domyślne))"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr "maksymalny rozmiar przedrostka (0 = brak maksymalnego rozmiaru)"
+
+#, fuzzy
+msgid "min size for prefix"
+msgstr "ciąg wyświetlany po przedrostku"
 
 msgid "display '+' if prefix is truncated"
 msgstr "wyświetl '+', jeśli przedrostek jest obcięty"

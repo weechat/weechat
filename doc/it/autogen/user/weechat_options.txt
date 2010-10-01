@@ -483,6 +483,11 @@
 ** tipo: intero
 ** valori: 0 .. 128 (valore predefinito: `0`)
 
+* *weechat.look.prefix_align_min*
+** descrizione: `min size for prefix`
+** tipo: intero
+** valori: 0 .. 128 (valore predefinito: `0`)
+
 * *weechat.look.prefix_align_more*
 ** descrizione: `mostra '+' se il prefisso è troncato`
 ** tipo: bool

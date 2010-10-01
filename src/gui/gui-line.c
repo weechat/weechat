@@ -63,7 +63,7 @@ gui_lines_alloc ()
         new_lines->first_line_not_read = 0;
         new_lines->lines_hidden = 0;
         new_lines->buffer_max_length = 0;
-        new_lines->prefix_max_length = 0;
+        new_lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     }
     
     return new_lines;
@@ -483,7 +483,7 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 {
     struct t_gui_line *ptr_line;
     
-    lines->prefix_max_length = 0;
+    lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     for (ptr_line = lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {

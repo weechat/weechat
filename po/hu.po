@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-01 08:04+0200\n"
+"POT-Creation-Date: 2010-10-02 00:26+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1658,6 +1658,10 @@ msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr ""
+
+#, fuzzy
+msgid "min size for prefix"
+msgstr "névkiegészítés után beszúrt szöveg"
 
 msgid "display '+' if prefix is truncated"
 msgstr ""

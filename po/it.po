@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-01 08:04+0200\n"
+"POT-Creation-Date: 2010-10-02 00:26+0200\n"
 "PO-Revision-Date: 2010-09-22 15:27+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1897,6 +1897,10 @@ msgstr "allineamento prefisso (none, left, right (predefinito))"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr "dimensione massima prefisso (0 = nessuna dimensione massima)"
+
+#, fuzzy
+msgid "min size for prefix"
+msgstr "stringa visualizzata dopo il prefisso"
 
 msgid "display '+' if prefix is truncated"
 msgstr "mostra '+' se il prefisso è troncato"

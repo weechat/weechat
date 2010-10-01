@@ -483,6 +483,11 @@
 ** type: entier
 ** valeurs: 0 .. 128 (valeur par défaut: `0`)
 
+* *weechat.look.prefix_align_min*
+** description: `taille minimum pour le préfixe`
+** type: entier
+** valeurs: 0 .. 128 (valeur par défaut: `0`)
+
 * *weechat.look.prefix_align_more*
 ** description: `afficher '+' si le préfixe est tronqué`
 ** type: booléen

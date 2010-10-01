@@ -483,6 +483,11 @@
 ** Typ: integer
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
+* *weechat.look.prefix_align_min*
+** Beschreibung: `min size for prefix`
+** Typ: integer
+** Werte: 0 .. 128 (Standardwert: `0`)
+
 * *weechat.look.prefix_align_more*
 ** Beschreibung: `Anzeige von '+' falls das Präfix abgeschnitten ist`
 ** Typ: boolesch

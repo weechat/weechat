@@ -131,6 +131,7 @@ extern struct t_config_option *config_look_paste_max_lines;
 extern struct t_config_option *config_look_prefix[];
 extern struct t_config_option *config_look_prefix_align;
 extern struct t_config_option *config_look_prefix_align_max;
+extern struct t_config_option *config_look_prefix_align_min;
 extern struct t_config_option *config_look_prefix_align_more;
 extern struct t_config_option *config_look_prefix_buffer_align;
 extern struct t_config_option *config_look_prefix_buffer_align_max;
