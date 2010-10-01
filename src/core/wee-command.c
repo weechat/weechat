@@ -4626,7 +4626,7 @@ command_init ()
                      "and one for message\n\n"
                      "The default key alt+'=' toggles filtering on/off.\n\n"
                      "Tags most commonly used:\n"
-                     "  no_filter, no_highlight, log0..log9 (log level),\n"
+                     "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
                      "  notify_message, notify_private, notify_highlight,\n"
                      "  irc_xxx (xxx is command name or number, see /server "
                      "raw), irc_numeric, irc_error, irc_action, irc_ctcp, "
