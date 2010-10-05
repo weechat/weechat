@@ -14,6 +14,8 @@ Version 0.3.4 (under dev!)
   highlight words in buffer
 * core: use similar behaviour for keys bound to local or global history
   (bug #30759)
+* core: fix signal "buffer_switch" (was sent twice when switching buffer)
+  (bug #31158)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable
