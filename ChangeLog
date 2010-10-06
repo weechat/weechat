@@ -10,6 +10,8 @@ Version 0.3.4 (under dev!)
 * core: add new options weechat.look.input_share and
   weechat.look.input_share_overwrite (task #9228)
 * core: add new option weechat.look.prefix_align_min (task #10650)
+* core: optimize incremental search in buffer: do not search any more
+  when chars are added to a text not found (bug #31167)
 * core: fix memory leaks when removing item in hashtable and when setting
   highlight words in buffer
 * core: use similar behaviour for keys bound to local or global history

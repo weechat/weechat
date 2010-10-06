@@ -350,10 +350,36 @@ gui_keyboard_flush ()
             
             /* incremental text search in buffer */
             if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-                && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
+                && ((input_old == NULL)
+                    || (gui_current_window->buffer->input_buffer == NULL)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
-                gui_window_search_restart (gui_current_window);
+                /*
+                 * if current input is longer than old input, and that
+                 * beginning of current input is exactly equal to old input,
+                 * then do nothing (search will not find any result and can
+                 * take some time on buffer with many lines..)
+                 */
+                if (!gui_current_window->buffer->text_search_found
+                    && (input_old != NULL)
+                    && (input_old[0])
+                    && (gui_current_window->buffer->input_buffer != NULL)
+                    && (gui_current_window->buffer->input_buffer[0])
+                    && (strlen (gui_current_window->buffer->input_buffer) > strlen (input_old))
+                    && (strncmp (gui_current_window->buffer->input_buffer, input_old,
+                                 strlen (input_old)) == 0))
+                {
+                    /*
+                     * do not search text in buffer, just alert about text not
+                     * found
+                     */
+                    if (CONFIG_BOOLEAN(config_look_search_text_not_found_alert))
+                        printf ("\a");
+                }
+                else
+                {
+                    gui_window_search_restart (gui_current_window);
+                }
             }
             
             if (input_old)
