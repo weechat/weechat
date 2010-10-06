@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-02 00:26+0200\n"
+"POT-Creation-Date: 2010-10-06 18:24+0200\n"
 "PO-Revision-Date: 2010-09-22 15:27+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5101,6 +5101,10 @@ msgstr "%s%s%s%s ha cambiato l'argomento per %s%s%s da \"%s%s\" a \"%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
+msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
 msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
 
 #, c-format

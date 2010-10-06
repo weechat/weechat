@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-02 00:26+0200\n"
-"PO-Revision-Date: 2010-10-02 00:26+0200\n"
+"POT-Creation-Date: 2010-10-06 18:24+0200\n"
+"PO-Revision-Date: 2010-10-06 18:24+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -5134,6 +5134,10 @@ msgstr "%s%s%s%s a changé le titre pour %s%s%s de \"%s%s\" en \"%s%s\""
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s a changé le titre pour %s%s%s en \"%s%s\""
+
+#, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+msgstr "%s%s%s%s a retiré le titre pour %s%s%s (ancien titre: \"%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"

@@ -1776,16 +1776,39 @@ IRC_PROTOCOL_CALLBACK(topic)
         }
         else
         {
-            weechat_printf_tags (ptr_buffer,
-                                 irc_protocol_tags (command, NULL),
-                                 _("%s%s%s%s has unset topic for %s%s%s"),
-                                 weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                 nick,
-                                 IRC_COLOR_CHAT,
-                                 IRC_COLOR_CHAT_CHANNEL,
-                                 argv[2],
-                                 IRC_COLOR_CHAT);
+            if (weechat_config_boolean (irc_config_look_display_old_topic))
+            {
+                old_topic_color = irc_color_decode (ptr_channel->topic,
+                                                    weechat_config_boolean (irc_config_network_colors_receive));
+                weechat_printf_tags (ptr_buffer,
+                                     irc_protocol_tags (command, NULL),
+                                     _("%s%s%s%s has unset topic for %s%s%s "
+                                       "(old topic: \"%s%s\")"),
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     argv[2],
+                                     IRC_COLOR_CHAT,
+                                     (old_topic_color) ? old_topic_color : ptr_channel->topic,
+                                     IRC_COLOR_CHAT);
+                if (old_topic_color)
+                    free (old_topic_color);
+            }
+            else
+            {
+                weechat_printf_tags (ptr_buffer,
+                                     irc_protocol_tags (command, NULL),
+                                     _("%s%s%s%s has unset topic for %s%s%s"),
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     argv[2],
+                                     IRC_COLOR_CHAT);
+            }
         }
     }
     
