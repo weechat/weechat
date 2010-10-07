@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-07 12:45+0200\n"
+"POT-Creation-Date: 2010-10-07 14:45+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4277,13 +4277,17 @@ msgstr "цвет ника собеседника в окне привата"
 msgid "merge server buffers"
 msgstr "управление буферами"
 
-#, fuzzy
-msgid "open new channels near server"
-msgstr "открывать новые каналы/приваты рядом с сервером"
+msgid ""
+"force position of new channel in list of buffers (none = default position "
+"(should be last buffer)r, next = current buffer + 1, near_server = after "
+"last channel/pv of server)"
+msgstr ""
 
-#, fuzzy
-msgid "open new privates near server"
-msgstr "открывать новые каналы/приваты рядом с сервером"
+msgid ""
+"force position of new private in list of buffers (none = default position "
+"(should be last buffer)r, next = current buffer + 1, near_server = after "
+"last channel/pv of server)"
+msgstr ""
 
 msgid "text to display before nick in chat window"
 msgstr "текст, который отображать до ника в окне чата"
@@ -6624,6 +6628,14 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "open new channels near server"
+#~ msgstr "открывать новые каналы/приваты рядом с сервером"
+
+#, fuzzy
+#~ msgid "open new privates near server"
+#~ msgstr "открывать новые каналы/приваты рядом с сервером"
 
 #, fuzzy
 #~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""

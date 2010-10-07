@@ -150,8 +150,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
-    int buffer_created;
-    char *buffer_name;
+    int buffer_created, current_buffer_number, buffer_position;
+    char *buffer_name, str_number[32];;
     
     /* alloc memory for new channel */
     if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
@@ -170,6 +170,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_nicklist_remove_all (new_buffer);
     else
     {
+        current_buffer_number = weechat_buffer_get_integer (weechat_current_buffer (),
+                                                            "number");
         new_buffer = weechat_buffer_new (buffer_name,
                                          &irc_input_data_cb, NULL,
                                          &irc_buffer_close_cb, NULL);
@@ -178,12 +180,24 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             free (new_channel);
             return NULL;
         }
-        if (((channel_type == IRC_CHANNEL_TYPE_CHANNEL)
-             && weechat_config_boolean (irc_config_look_open_channel_near_server))
-            || ((channel_type == IRC_CHANNEL_TYPE_PRIVATE)
-                && weechat_config_boolean (irc_config_look_open_pv_near_server)))
+        buffer_position = (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
+            weechat_config_integer (irc_config_look_new_channel_position) :
+            weechat_config_integer (irc_config_look_new_pv_position);
+        switch (buffer_position)
         {
-            irc_channel_move_near_server (server, channel_type, new_buffer);
+            case IRC_CONFIG_LOOK_BUFFER_POSITION_NONE:
+                /* do nothing */
+                break;
+            case IRC_CONFIG_LOOK_BUFFER_POSITION_NEXT:
+                /* move buffer to current number + 1 */
+                snprintf (str_number, sizeof (str_number),
+                          "%d", current_buffer_number + 1);
+                weechat_buffer_set (new_buffer, "number", str_number);
+                break;
+            case IRC_CONFIG_LOOK_BUFFER_POSITION_NEAR_SERVER:
+                /* move buffer after last channel/pv of server */
+                irc_channel_move_near_server (server, channel_type, new_buffer);
+                break;
         }
         buffer_created = 1;
     }

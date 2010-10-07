@@ -163,6 +163,16 @@
 ** Typ: integer
 ** Werte: current, server (Standardwert: `current`)
 
+* *irc.look.new_channel_position*
+** Beschreibung: `force position of new channel in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** Typ: integer
+** Werte: none, next, near_server (Standardwert: `none`)
+
+* *irc.look.new_pv_position*
+** Beschreibung: `force position of new private in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** Typ: integer
+** Werte: none, next, near_server (Standardwert: `none`)
+
 * *irc.look.nick_color_stop_chars*
 ** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt).`
 ** Typ: Zeichenkette
@@ -187,16 +197,6 @@
 ** Beschreibung: `Zeigt Notizen als private Nachricht an (wird die "auto" Option verwendet dann wird ein privater Buffer genutzt, falls vorhanden)`
 ** Typ: integer
 ** Werte: auto, never, always (Standardwert: `auto`)
-
-* *irc.look.open_channel_near_server*
-** Beschreibung: `Öffne neue Channels neben dem Server-Buffer`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
-
-* *irc.look.open_pv_near_server*
-** Beschreibung: `Öffne neue private Channels neben dem Server-Buffer`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
 
 * *irc.look.part_closes_buffer*
 ** Beschreibung: `Schließt den Buffer wenn "/part" im Channel ausgeführt wird`

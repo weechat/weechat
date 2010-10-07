@@ -19,6 +19,8 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable
+* irc: rename options "irc.look.open_{channel|pv}_near_server" to
+  "irc.look.new_{channel|pv}_position" with new values (none, next or near_server)
 * irc: display old channel topic when topic is unset (task #9780)
 * irc: add new info_hashtable "irc_parse_message"
 * irc: fix crash/bug when option "addresses" for a server is unset or changed

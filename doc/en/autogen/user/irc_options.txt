@@ -163,6 +163,16 @@
 ** type: integer
 ** values: current, server (default value: `current`)
 
+* *irc.look.new_channel_position*
+** description: `force position of new channel in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** type: integer
+** values: none, next, near_server (default value: `none`)
+
+* *irc.look.new_pv_position*
+** description: `force position of new private in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** type: integer
+** values: none, next, near_server (default value: `none`)
+
 * *irc.look.nick_color_stop_chars*
 ** description: `chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick")`
 ** type: string
@@ -187,16 +197,6 @@
 ** description: `display notices as private messages (if auto, use private buffer if found)`
 ** type: integer
 ** values: auto, never, always (default value: `auto`)
-
-* *irc.look.open_channel_near_server*
-** description: `open new channels near server`
-** type: boolean
-** values: on, off (default value: `off`)
-
-* *irc.look.open_pv_near_server*
-** description: `open new privates near server`
-** type: boolean
-** values: on, off (default value: `off`)
 
 * *irc.look.part_closes_buffer*
 ** description: `close buffer when /part is issued on a channel`

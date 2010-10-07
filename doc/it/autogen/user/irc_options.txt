@@ -163,6 +163,16 @@
 ** tipo: intero
 ** valori: current, server (valore predefinito: `current`)
 
+* *irc.look.new_channel_position*
+** descrizione: `force position of new channel in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** tipo: intero
+** valori: none, next, near_server (valore predefinito: `none`)
+
+* *irc.look.new_pv_position*
+** descrizione: `force position of new private in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** tipo: intero
+** valori: none, next, near_server (valore predefinito: `none`)
+
 * *irc.look.nick_color_stop_chars*
 ** descrizione: `caratteri usati per fermare il calcolo del colore con le lettere del nick (almeno un carattere al di fuori di questa lista deve essere nella lista prima di fermarlo) (esempio: nick "|nick|away" con "|" nei caratteri restituisce il colore del nick "|nick")`
 ** tipo: stringa
@@ -187,16 +197,6 @@
 ** descrizione: `visualizza notifiche come messaggi privati (se automatico, utilizza il buffer privato se viene trovato)`
 ** tipo: intero
 ** valori: auto, never, always (valore predefinito: `auto`)
-
-* *irc.look.open_channel_near_server*
-** descrizione: `apri nuovi canali vicino al server`
-** tipo: bool
-** valori: on, off (valore predefinito: `off`)
-
-* *irc.look.open_pv_near_server*
-** descrizione: `apri nuovi privati vicino al server`
-** tipo: bool
-** valori: on, off (valore predefinito: `off`)
 
 * *irc.look.part_closes_buffer*
 ** descrizione: `chiude buffer quando viene digitato /part nel canale`

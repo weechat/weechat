@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-07 12:45+0200\n"
+"POT-Creation-Date: 2010-10-07 14:45+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4271,13 +4271,17 @@ msgstr "másik fél nevének színe privát beszélgetésben"
 msgid "merge server buffers"
 msgstr "pufferek kezelése"
 
-#, fuzzy
-msgid "open new channels near server"
-msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
+msgid ""
+"force position of new channel in list of buffers (none = default position "
+"(should be last buffer)r, next = current buffer + 1, near_server = after "
+"last channel/pv of server)"
+msgstr ""
 
-#, fuzzy
-msgid "open new privates near server"
-msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
+msgid ""
+"force position of new private in list of buffers (none = default position "
+"(should be last buffer)r, next = current buffer + 1, near_server = after "
+"last channel/pv of server)"
+msgstr ""
 
 msgid "text to display before nick in chat window"
 msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
@@ -6621,6 +6625,14 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "open new channels near server"
+#~ msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
+
+#, fuzzy
+#~ msgid "open new privates near server"
+#~ msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
 
 #, fuzzy
 #~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""

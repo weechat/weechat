@@ -29,6 +29,13 @@ enum t_irc_config_look_server_buffer
     IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT,
 };
 
+enum t_irc_config_look_buffer_position
+{
+    IRC_CONFIG_LOOK_BUFFER_POSITION_NONE = 0,
+    IRC_CONFIG_LOOK_BUFFER_POSITION_NEXT,
+    IRC_CONFIG_LOOK_BUFFER_POSITION_NEAR_SERVER,
+};
+
 enum t_irc_config_look_item_display_server
 {
     IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN = 0,
@@ -71,8 +78,8 @@ extern struct t_config_section *irc_config_section_server;
 extern struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 extern struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 extern struct t_config_option *irc_config_look_server_buffer;
-extern struct t_config_option *irc_config_look_open_channel_near_server;
-extern struct t_config_option *irc_config_look_open_pv_near_server;
+extern struct t_config_option *irc_config_look_new_channel_position;
+extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
