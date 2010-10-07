@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-06 18:24+0200\n"
+"POT-Creation-Date: 2010-10-07 12:45+0200\n"
 "PO-Revision-Date: 2010-09-22 15:27+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5405,8 +5405,8 @@ msgstr "%s: riconnessione al server tra %d %s"
 msgid "%s: switching address to %s/%d"
 msgstr "%s: cambio indirizzo in %s/%d"
 
-#, c-format
-msgid "%s: connected to %s (%s)"
+#, fuzzy, c-format
+msgid "%s: connected to %s/%d (%s)"
 msgstr "%s: connesso a %s (%s)"
 
 #, c-format
@@ -5531,10 +5531,9 @@ msgstr " - info sul certificato (%s) del client:"
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
-#, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr ""
-"%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
+#, fuzzy, c-format
+msgid "%s%s: unknown address server \"%s\", cannot connect"
+msgstr "%s%s: nick non definiti per il server\"%s\", impossibile connettersi"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
@@ -6974,6 +6973,10 @@ msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
+
+#~ msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+#~ msgstr ""
+#~ "%s%s: indirizzo non definito per il server \"%s\", impossibile connettersi"
 
 #~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
 #~ msgstr "%s%s: buffer non trovato per il server IRC \"%s\", canale \"%s\""

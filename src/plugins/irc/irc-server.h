@@ -119,7 +119,9 @@ struct t_irc_server
     char **addresses_array;         /* addresses (after split)               */
     int *ports_array;               /* ports for addresses                   */
     int index_current_address;      /* current address index in array        */
+    char *current_address;          /* current address                       */
     char *current_ip;               /* current IP address                    */
+    int current_port;               /* current port                          */
     int sock;                       /* socket for server (IPv4 or IPv6)      */
     struct t_hook *hook_connect;    /* connection hook                       */
     struct t_hook *hook_fd;         /* hook for server socket                */

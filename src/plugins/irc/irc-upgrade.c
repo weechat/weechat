@@ -232,7 +232,25 @@ irc_upgrade_read_cb (void *data,
                     }
                     irc_upgrade_current_server->index_current_address =
                         weechat_infolist_integer (infolist, "index_current_address");
-                    
+                    str = weechat_infolist_string (infolist, "current_address");
+                    if (str)
+                    {
+                        irc_upgrade_current_server->current_address = strdup (str);
+                        irc_upgrade_current_server->current_port = weechat_infolist_integer (infolist, "current_port");
+                    }
+                    else
+                    {
+                        if (irc_upgrade_current_server->index_current_address < irc_upgrade_current_server->addresses_count)
+                        {
+                            irc_upgrade_current_server->current_address =
+                                strdup (irc_upgrade_current_server->addresses_array[irc_upgrade_current_server->index_current_address]);
+                            irc_upgrade_current_server->current_port =
+                                irc_upgrade_current_server->ports_array[irc_upgrade_current_server->index_current_address];
+                        }
+                    }
+                    str = weechat_infolist_string (infolist, "current_ip");
+                    if (str)
+                        irc_upgrade_current_server->current_ip = strdup (str);
                     sock = weechat_infolist_integer (infolist, "sock");
                     if (sock >= 0)
                     {

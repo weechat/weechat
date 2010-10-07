@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-06 18:24+0200\n"
+"POT-Creation-Date: 2010-10-07 12:45+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5362,8 +5362,8 @@ msgstr "%s: ponowne połączenie za %d %s"
 msgid "%s: switching address to %s/%d"
 msgstr "%s: zmieniam adres na %s/%d"
 
-#, c-format
-msgid "%s: connected to %s (%s)"
+#, fuzzy, c-format
+msgid "%s: connected to %s/%d (%s)"
 msgstr "%s: połączono z %s (%s)"
 
 #, c-format
@@ -5488,10 +5488,9 @@ msgstr " - informacje o certyfikacie klienta (%s):"
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
 
-#, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr ""
-"%s%s: adres nie zdefiniowany dla serwera \"%s\", nie można się połączyć"
+#, fuzzy, c-format
+msgid "%s%s: unknown address server \"%s\", cannot connect"
+msgstr "%s%s: nie zdefiniowano nicków dla serwera \"%s\", nie można połączyć"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
@@ -6891,6 +6890,10 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+#~ msgstr ""
+#~ "%s%s: adres nie zdefiniowany dla serwera \"%s\", nie można się połączyć"
 
 #~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
 #~ msgstr "%s%s: nie znaleziono bufora dla serwera IRC \"%s\", kanał \"%s\""

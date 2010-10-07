@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-06 18:24+0200\n"
+"POT-Creation-Date: 2010-10-07 12:45+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5116,7 +5116,7 @@ msgid "%s: switching address to %s/%d"
 msgstr "%s IP адрес не найден\n"
 
 #, fuzzy, c-format
-msgid "%s: connected to %s (%s)"
+msgid "%s: connected to %s/%d (%s)"
 msgstr "%s не подключен к серверу \"%s\"!\n"
 
 #, fuzzy, c-format
@@ -5239,9 +5239,9 @@ msgstr ""
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
-#, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: unknown address server \"%s\", cannot connect"
+msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-06 18:24+0200\n"
+"POT-Creation-Date: 2010-10-07 12:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4412,7 +4412,7 @@ msgid "%s: switching address to %s/%d"
 msgstr ""
 
 #, c-format
-msgid "%s: connected to %s (%s)"
+msgid "%s: connected to %s/%d (%s)"
 msgstr ""
 
 #, c-format
@@ -4532,7 +4532,7 @@ msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgid "%s%s: unknown address server \"%s\", cannot connect"
 msgstr ""
 
 #, c-format
