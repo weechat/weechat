@@ -456,9 +456,44 @@ IRC_PROTOCOL_CALLBACK(cap)
 
 IRC_PROTOCOL_CALLBACK(error)
 {
+    char *ptr_args;
+    
+    /*
+     * ERROR message looks like:
+     *   ERROR :Closing Link: irc.server.org (Bad Password)
+     */
+    
+    IRC_PROTOCOL_MIN_ARGS(2);
+    
+    ptr_args = (argv_eol[1][0] == ':') ? argv_eol[1] + 1 : argv_eol[1];
+    
+    weechat_printf_tags (server->buffer,
+                         irc_protocol_tags (command, NULL),
+                         "%s%s",
+                         weechat_prefix ("error"),
+                         ptr_args);
+    
+    if (strncmp (ptr_args, "Closing Link", 12) == 0)
+        irc_server_disconnect (server, 1);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cb_generic_error: generic error (callback used by many error
+ *                                messages, but not for message "ERROR")
+ */
+
+IRC_PROTOCOL_CALLBACK(generic_error)
+{
     int first_arg;
     char *chan_nick, *args;
     struct t_irc_channel *ptr_channel;
+    
+    /*
+     * Example of error:
+     *   :server 404 nick #channel :Cannot send to channel
+     */
     
     IRC_PROTOCOL_MIN_ARGS(4);
     
@@ -482,7 +517,7 @@ IRC_PROTOCOL_CALLBACK(error)
         ptr_channel = irc_channel_search (server, chan_nick);
     
     weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
-                         irc_protocol_tags (command, "irc_error"),
+                         irc_protocol_tags (command, NULL),
                          "%s%s%s%s%s%s",
                          weechat_prefix ("network"),
                          (ptr_channel && chan_nick
@@ -492,9 +527,6 @@ IRC_PROTOCOL_CALLBACK(error)
                          IRC_COLOR_CHAT,
                          (chan_nick) ? ": " : "",
                          args);
-    
-    if (strncmp (args, "Closing Link", 12) == 0)
-        irc_server_disconnect (server, 1);
     
     return WEECHAT_RC_OK;
 }
@@ -3855,9 +3887,9 @@ IRC_PROTOCOL_CALLBACK(432)
      *   :server 432 * mynick :Erroneous Nickname
      */
     
-    irc_protocol_cb_error (server,
-                           nick, address, host, command,
-                           ignored, argc, argv, argv_eol);
+    irc_protocol_cb_generic_error (server,
+                                   nick, address, host, command,
+                                   ignored, argc, argv, argv_eol);
     
     if (!server->is_connected)
     {
@@ -3946,9 +3978,9 @@ IRC_PROTOCOL_CALLBACK(433)
     }
     else
     {
-        return irc_protocol_cb_error (server,
-                                      nick, address, host, command,
-                                      ignored, argc, argv, argv_eol);
+        return irc_protocol_cb_generic_error (server,
+                                              nick, address, host, command,
+                                              ignored, argc, argv, argv_eol);
     }
     
     return WEECHAT_RC_OK;
@@ -3969,9 +4001,9 @@ IRC_PROTOCOL_CALLBACK(437)
      *   :server 437 * mynick :Nick/channel is temporarily unavailable
      */
     
-    irc_protocol_cb_error (server,
-                           nick, address, host, command,
-                           ignored, argc, argv, argv_eol);
+    irc_protocol_cb_generic_error (server,
+                                   nick, address, host, command,
+                                   ignored, argc, argv, argv_eol);
     
     if (!server->is_connected)
     {
@@ -4233,59 +4265,59 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "369", /* whowas (end) */ 1, &irc_protocol_cb_whowas_nick_msg },
           { "378", /* whois (connecting from) */ 1, &irc_protocol_cb_whois_nick_msg },
           { "379", /* whois (using modes) */ 1, &irc_protocol_cb_whois_nick_msg },
-          { "401", /* no such nick/channel */ 1, &irc_protocol_cb_error },
-          { "402", /* no such server */ 1, &irc_protocol_cb_error },
-          { "403", /* no such channel */ 1, &irc_protocol_cb_error },
-          { "404", /* cannot send to channel */ 1, &irc_protocol_cb_error },
-          { "405", /* too many channels */ 1, &irc_protocol_cb_error },
-          { "406", /* was no such nick */ 1, &irc_protocol_cb_error },
-          { "407", /* was no such nick */ 1, &irc_protocol_cb_error },
-          { "409", /* no origin */ 1, &irc_protocol_cb_error },
-          { "410", /* no services */ 1, &irc_protocol_cb_error },
-          { "411", /* no recipient */ 1, &irc_protocol_cb_error },
-          { "412", /* no text to send */ 1, &irc_protocol_cb_error },
-          { "413", /* no toplevel */ 1, &irc_protocol_cb_error },
-          { "414", /* wilcard in toplevel domain */ 1, &irc_protocol_cb_error },
-          { "421", /* unknown command */ 1, &irc_protocol_cb_error },
-          { "422", /* MOTD is missing */ 1, &irc_protocol_cb_error },
-          { "423", /* no administrative info */ 1, &irc_protocol_cb_error },
-          { "424", /* file error */ 1, &irc_protocol_cb_error },
-          { "431", /* no nickname given */ 1, &irc_protocol_cb_error },
+          { "401", /* no such nick/channel */ 1, &irc_protocol_cb_generic_error },
+          { "402", /* no such server */ 1, &irc_protocol_cb_generic_error },
+          { "403", /* no such channel */ 1, &irc_protocol_cb_generic_error },
+          { "404", /* cannot send to channel */ 1, &irc_protocol_cb_generic_error },
+          { "405", /* too many channels */ 1, &irc_protocol_cb_generic_error },
+          { "406", /* was no such nick */ 1, &irc_protocol_cb_generic_error },
+          { "407", /* was no such nick */ 1, &irc_protocol_cb_generic_error },
+          { "409", /* no origin */ 1, &irc_protocol_cb_generic_error },
+          { "410", /* no services */ 1, &irc_protocol_cb_generic_error },
+          { "411", /* no recipient */ 1, &irc_protocol_cb_generic_error },
+          { "412", /* no text to send */ 1, &irc_protocol_cb_generic_error },
+          { "413", /* no toplevel */ 1, &irc_protocol_cb_generic_error },
+          { "414", /* wilcard in toplevel domain */ 1, &irc_protocol_cb_generic_error },
+          { "421", /* unknown command */ 1, &irc_protocol_cb_generic_error },
+          { "422", /* MOTD is missing */ 1, &irc_protocol_cb_generic_error },
+          { "423", /* no administrative info */ 1, &irc_protocol_cb_generic_error },
+          { "424", /* file error */ 1, &irc_protocol_cb_generic_error },
+          { "431", /* no nickname given */ 1, &irc_protocol_cb_generic_error },
           { "432", /* erroneous nickname */ 1, &irc_protocol_cb_432 },
           { "433", /* nickname already in use */ 1, &irc_protocol_cb_433 },
-          { "436", /* nickname collision */ 1, &irc_protocol_cb_error },
+          { "436", /* nickname collision */ 1, &irc_protocol_cb_generic_error },
           { "437", /* nick/channel unavailable */ 1, &irc_protocol_cb_437 },
           { "438", /* not authorized to change nickname */ 1, &irc_protocol_cb_438 },
-          { "441", /* user not in channel */ 1, &irc_protocol_cb_error },
-          { "442", /* not on channel */ 1, &irc_protocol_cb_error },
-          { "443", /* user already on channel */ 1, &irc_protocol_cb_error },
-          { "444", /* user not logged in */ 1, &irc_protocol_cb_error },
-          { "445", /* summon has been disabled */ 1, &irc_protocol_cb_error },
-          { "446", /* users has been disabled */ 1, &irc_protocol_cb_error },
-          { "451", /* you are not registered */ 1, &irc_protocol_cb_error },
-          { "461", /* not enough parameters */ 1, &irc_protocol_cb_error },
-          { "462", /* you may not register */ 1, &irc_protocol_cb_error },
-          { "463", /* your host isn't among the privileged */ 1, &irc_protocol_cb_error },
-          { "464", /* password incorrect */ 1, &irc_protocol_cb_error },
-          { "465", /* you are banned from this server */ 1, &irc_protocol_cb_error },
-          { "467", /* channel key already set */ 1, &irc_protocol_cb_error },
-          { "470", /* forwarding to another channel */ 1, &irc_protocol_cb_error },
-          { "471", /* channel is already full */ 1, &irc_protocol_cb_error },
-          { "472", /* unknown mode char to me */ 1, &irc_protocol_cb_error },
-          { "473", /* cannot join channel (invite only) */ 1, &irc_protocol_cb_error },
-          { "474", /* cannot join channel (banned from channel) */ 1, &irc_protocol_cb_error },
-          { "475", /* cannot join channel (bad channel key) */ 1, &irc_protocol_cb_error },
-          { "476", /* bad channel mask */ 1, &irc_protocol_cb_error },
-          { "477", /* channel doesn't support modes */ 1, &irc_protocol_cb_error },
-          { "481", /* you're not an IRC operator */ 1, &irc_protocol_cb_error },
-          { "482", /* you're not channel operator */ 1, &irc_protocol_cb_error },
-          { "483", /* you can't kill a server! */ 1, &irc_protocol_cb_error },
-          { "484", /* your connection is restricted! */ 1, &irc_protocol_cb_error },
-          { "485", /* user is immune from kick/deop */ 1, &irc_protocol_cb_error },
-          { "487", /* network split */ 1, &irc_protocol_cb_error },
-          { "491", /* no O-lines for your host */ 1, &irc_protocol_cb_error },
-          { "501", /* unknown mode flag */ 1, &irc_protocol_cb_error },
-          { "502", /* can't change mode for other users */ 1, &irc_protocol_cb_error },
+          { "441", /* user not in channel */ 1, &irc_protocol_cb_generic_error },
+          { "442", /* not on channel */ 1, &irc_protocol_cb_generic_error },
+          { "443", /* user already on channel */ 1, &irc_protocol_cb_generic_error },
+          { "444", /* user not logged in */ 1, &irc_protocol_cb_generic_error },
+          { "445", /* summon has been disabled */ 1, &irc_protocol_cb_generic_error },
+          { "446", /* users has been disabled */ 1, &irc_protocol_cb_generic_error },
+          { "451", /* you are not registered */ 1, &irc_protocol_cb_generic_error },
+          { "461", /* not enough parameters */ 1, &irc_protocol_cb_generic_error },
+          { "462", /* you may not register */ 1, &irc_protocol_cb_generic_error },
+          { "463", /* your host isn't among the privileged */ 1, &irc_protocol_cb_generic_error },
+          { "464", /* password incorrect */ 1, &irc_protocol_cb_generic_error },
+          { "465", /* you are banned from this server */ 1, &irc_protocol_cb_generic_error },
+          { "467", /* channel key already set */ 1, &irc_protocol_cb_generic_error },
+          { "470", /* forwarding to another channel */ 1, &irc_protocol_cb_generic_error },
+          { "471", /* channel is already full */ 1, &irc_protocol_cb_generic_error },
+          { "472", /* unknown mode char to me */ 1, &irc_protocol_cb_generic_error },
+          { "473", /* cannot join channel (invite only) */ 1, &irc_protocol_cb_generic_error },
+          { "474", /* cannot join channel (banned from channel) */ 1, &irc_protocol_cb_generic_error },
+          { "475", /* cannot join channel (bad channel key) */ 1, &irc_protocol_cb_generic_error },
+          { "476", /* bad channel mask */ 1, &irc_protocol_cb_generic_error },
+          { "477", /* channel doesn't support modes */ 1, &irc_protocol_cb_generic_error },
+          { "481", /* you're not an IRC operator */ 1, &irc_protocol_cb_generic_error },
+          { "482", /* you're not channel operator */ 1, &irc_protocol_cb_generic_error },
+          { "483", /* you can't kill a server! */ 1, &irc_protocol_cb_generic_error },
+          { "484", /* your connection is restricted! */ 1, &irc_protocol_cb_generic_error },
+          { "485", /* user is immune from kick/deop */ 1, &irc_protocol_cb_generic_error },
+          { "487", /* network split */ 1, &irc_protocol_cb_generic_error },
+          { "491", /* no O-lines for your host */ 1, &irc_protocol_cb_generic_error },
+          { "501", /* unknown mode flag */ 1, &irc_protocol_cb_generic_error },
+          { "502", /* can't change mode for other users */ 1, &irc_protocol_cb_generic_error },
           { "671", /* whois (secure connection) */ 1, &irc_protocol_cb_whois_nick_msg },
           { "900", /* logged in as (SASL) */ 1, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, &irc_protocol_cb_901 },
