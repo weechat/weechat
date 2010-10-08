@@ -474,7 +474,9 @@ IRC_PROTOCOL_CALLBACK(error)
                          ptr_args);
     
     if (strncmp (ptr_args, "Closing Link", 12) == 0)
-        irc_server_disconnect (server, 1);
+    {
+        irc_server_disconnect (server, !server->is_connected, 1);
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -491,7 +493,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     struct t_irc_channel *ptr_channel;
     
     /*
-     * Example of error:
+     * example of error:
      *   :server 404 nick #channel :Cannot send to channel
      */
     
@@ -3910,7 +3912,7 @@ IRC_PROTOCOL_CALLBACK(432)
                               "connection with server"),
                             weechat_prefix ("error"),
                             IRC_PLUGIN_NAME);
-            irc_server_disconnect (server, 1);
+            irc_server_disconnect (server, 0, 1);
             return WEECHAT_RC_OK;
         }
         
@@ -3962,7 +3964,7 @@ IRC_PROTOCOL_CALLBACK(433)
                               "connection with server"),
                             weechat_prefix ("error"),
                             IRC_PLUGIN_NAME);
-            irc_server_disconnect (server, 1);
+            irc_server_disconnect (server, 0, 1);
             return WEECHAT_RC_OK;
         }
         
@@ -4026,7 +4028,7 @@ IRC_PROTOCOL_CALLBACK(437)
                                   "connection with server"),
                                 weechat_prefix ("error"),
                                 IRC_PLUGIN_NAME);
-                irc_server_disconnect (server, 1);
+                irc_server_disconnect (server, 0, 1);
                 return WEECHAT_RC_OK;
             }
             

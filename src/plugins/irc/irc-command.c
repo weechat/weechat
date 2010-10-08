@@ -1322,7 +1322,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
                         IRC_PLUGIN_NAME);
     }
     irc_command_quit_server (server, NULL);
-    irc_server_disconnect (server, 0);
+    irc_server_disconnect (server, 0, 0);
     
     /* disconnect ok */
     return 1;
@@ -2985,7 +2985,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
         return 0;
     }
     irc_command_quit_server (server, NULL);
-    irc_server_disconnect (server, 0);
+    irc_server_disconnect (server, 0, 0);
     server->disable_autojoin = no_join;
     if (irc_server_connect (server))
     {

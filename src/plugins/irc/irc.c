@@ -120,7 +120,7 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                               "can't work for servers connected via SSL"),
                             weechat_prefix ("error"),
                             IRC_PLUGIN_NAME);
-            irc_server_disconnect (ptr_server, 0);
+            irc_server_disconnect (ptr_server, 0, 0);
             /*
              * schedule reconnection: WeeChat will reconnect to this server
              * after restart

@@ -26,6 +26,8 @@ Version 0.3.4 (under dev!)
 * irc: add new info_hashtable "irc_parse_message"
 * irc: fix crash/bug when option "addresses" for a server is unset or changed
   when WeeChat is connected to this server (bug #31268)
+* irc: switch to next server address when IRC error is received after TCP
+  connection but before message 001 (bug #30884)
 * irc: fix bug with hostmasks in command /ignore (bug #30716)
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)

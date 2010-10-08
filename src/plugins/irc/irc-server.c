@@ -1997,7 +1997,7 @@ irc_server_recv_cb (void *data, int fd)
                 weechat_printf (server->buffer,
                                 _("%s: disconnecting from server..."),
                                 IRC_PLUGIN_NAME);
-                irc_server_disconnect (server, 1);
+                irc_server_disconnect (server, !server->is_connected, 1);
             }
         }
         else
@@ -2015,7 +2015,7 @@ irc_server_recv_cb (void *data, int fd)
                 weechat_printf (server->buffer,
                                 _("%s: disconnecting from server..."),
                                 IRC_PLUGIN_NAME);
-                irc_server_disconnect (server, 1);
+                irc_server_disconnect (server, !server->is_connected, 1);
             }
         }
     }
@@ -2049,7 +2049,7 @@ irc_server_timer_connection_cb (void *data, int remaining_calls)
         weechat_printf (server->buffer,
                         _("%s%s: connection timeout (message 001 not received)"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        irc_server_disconnect (server, 1);
+        irc_server_disconnect (server, !server->is_connected, 1);
     }
     
     return WEECHAT_RC_OK;
@@ -2169,7 +2169,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                         _("%s: lag is high, disconnecting "
                                           "from server..."),
                                         IRC_PLUGIN_NAME);
-                        irc_server_disconnect (ptr_server, 1);
+                        irc_server_disconnect (ptr_server, 0, 1);
                     }
                 }
             }
@@ -2277,8 +2277,6 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
 {
     int minutes, seconds;
     
-    irc_server_set_index_current_address (server, 0);
-    
     if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
     {
         /* growing reconnect delay */
@@ -2382,21 +2380,30 @@ irc_server_login (struct t_irc_server *server)
  */
 
 void
-irc_server_switch_address (struct t_irc_server *server)
+irc_server_switch_address (struct t_irc_server *server, int connection)
 {
-    if ((server->addresses_count > 1)
-        && (server->index_current_address < server->addresses_count - 1))
+    if (server->addresses_count > 1)
     {
-        irc_server_set_index_current_address (server, server->index_current_address + 1);
+        irc_server_set_index_current_address (server,
+                                              (server->index_current_address + 1) % server->addresses_count);
         weechat_printf (server->buffer,
                         _("%s: switching address to %s/%d"),
                         IRC_PLUGIN_NAME,
                         server->current_address,
                         server->current_port);
-        irc_server_connect (server);
+        if (connection)
+        {
+            if (server->index_current_address == 0)
+                irc_server_reconnect_schedule (server);
+            else
+                irc_server_connect (server);
+        }
     }
     else
-        irc_server_reconnect_schedule (server);
+    {
+        if (connection)
+            irc_server_reconnect_schedule (server);
+    }
 }
 
 /*
@@ -2450,7 +2457,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
-            irc_server_switch_address (server);
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
             weechat_printf (server->buffer,
@@ -2466,7 +2473,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
-            irc_server_switch_address (server);
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
             weechat_printf (server->buffer,
@@ -2482,7 +2489,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
-            irc_server_switch_address (server);
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_PROXY_ERROR:
             weechat_printf (server->buffer,
@@ -2500,7 +2507,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
-            irc_server_switch_address (server);
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
             weechat_printf (server->buffer,
@@ -2557,7 +2564,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
             (void) gnutls_rc;
 #endif
             irc_server_close_connection (server);
-            irc_server_switch_address (server);
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (server->buffer,
@@ -3182,7 +3189,6 @@ irc_server_reconnect (struct t_irc_server *server)
                     IRC_PLUGIN_NAME);
     
     server->reconnect_start = 0;
-    irc_server_set_index_current_address(server, 0);
     
     if (irc_server_connect (server))
         server->reconnect_join = 1;
@@ -3215,7 +3221,8 @@ irc_server_auto_connect ()
  */
 
 void
-irc_server_disconnect (struct t_irc_server *server, int reconnect)
+irc_server_disconnect (struct t_irc_server *server, int switch_address,
+                       int reconnect)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -3245,7 +3252,11 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
                         IRC_PLUGIN_NAME);
     }
     
-    irc_server_set_index_current_address(server, 0);
+    if (switch_address)
+        irc_server_switch_address (server, 0);
+    else
+        irc_server_set_index_current_address(server, 0);
+    
     if (server->nick_modes)
     {
         free (server->nick_modes);
@@ -3303,7 +3314,7 @@ irc_server_disconnect_all ()
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        irc_server_disconnect (ptr_server, 0);
+        irc_server_disconnect (ptr_server, 0, 0);
     }
 }
 

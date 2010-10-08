@@ -232,7 +232,8 @@ extern void irc_server_set_away (struct t_irc_server *server, const char *nick,
                                  int is_away);
 extern void irc_server_remove_away ();
 extern void irc_server_check_away ();
-extern void irc_server_disconnect (struct t_irc_server *server, int reconnect);
+extern void irc_server_disconnect (struct t_irc_server *server,
+                                   int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();
 extern void irc_server_free (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (void *data, const char *signal,
