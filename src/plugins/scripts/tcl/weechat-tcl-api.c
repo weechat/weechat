@@ -250,7 +250,7 @@ weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "plugin_get_name");
         TCL_RETURN_EMPTY;
@@ -283,7 +283,7 @@ weechat_tcl_api_charset_set (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "charset_set");
         TCL_RETURN_ERROR;
@@ -317,7 +317,7 @@ weechat_tcl_api_iconv_to_internal (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         TCL_RETURN_EMPTY;
@@ -353,7 +353,7 @@ weechat_tcl_api_iconv_from_internal (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         TCL_RETURN_EMPTY;
@@ -388,7 +388,7 @@ weechat_tcl_api_gettext (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "gettext");
         TCL_RETURN_EMPTY;
@@ -421,7 +421,7 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "ngettext");
         TCL_RETURN_EMPTY;
@@ -464,7 +464,7 @@ weechat_tcl_api_string_match (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_match");
         TCL_RETURN_INT(0);
@@ -510,7 +510,7 @@ weechat_tcl_api_string_has_highlight (ClientData clientData,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_has_highlight");
         TCL_RETURN_INT(0);
@@ -549,7 +549,7 @@ weechat_tcl_api_string_mask_to_regex (ClientData clientData,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
         TCL_RETURN_EMPTY;
@@ -583,7 +583,7 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_remove_color");
         TCL_RETURN_EMPTY;
@@ -618,7 +618,7 @@ weechat_tcl_api_string_is_command_char (ClientData clientData, Tcl_Interp *inter
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_is_command_char");
         TCL_RETURN_INT(0);
@@ -652,7 +652,7 @@ weechat_tcl_api_string_input_for_buffer (ClientData clientData, Tcl_Interp *inte
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
         TCL_RETURN_EMPTY;
@@ -683,7 +683,7 @@ weechat_tcl_api_mkdir_home (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "mkdir_home");
         TCL_RETURN_ERROR;
@@ -722,7 +722,7 @@ weechat_tcl_api_mkdir (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "mkdir");
         TCL_RETURN_ERROR;
@@ -762,7 +762,7 @@ weechat_tcl_api_mkdir_parents (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "mkdir_parents");
         TCL_RETURN_ERROR;
@@ -803,7 +803,7 @@ weechat_tcl_api_list_new (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_new");
         TCL_RETURN_EMPTY;
@@ -830,7 +830,7 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
     (void) clientData;
     
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_add");
         TCL_RETURN_EMPTY;
@@ -870,7 +870,7 @@ weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_search");
         TCL_RETURN_EMPTY;
@@ -906,7 +906,7 @@ weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_casesearch");
         TCL_RETURN_EMPTY;
@@ -942,7 +942,7 @@ weechat_tcl_api_list_get (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_get");
         TCL_RETURN_EMPTY;
@@ -981,7 +981,7 @@ weechat_tcl_api_list_set (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_set");
         TCL_RETURN_ERROR;
@@ -1016,7 +1016,7 @@ weechat_tcl_api_list_next (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_next");
         TCL_RETURN_EMPTY;
@@ -1048,7 +1048,7 @@ weechat_tcl_api_list_prev (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_prev");
         TCL_RETURN_EMPTY;
@@ -1080,7 +1080,7 @@ weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_string");
         TCL_RETURN_EMPTY;
@@ -1112,7 +1112,7 @@ weechat_tcl_api_list_size (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_size");
         TCL_RETURN_INT(0);
@@ -1144,7 +1144,7 @@ weechat_tcl_api_list_remove (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_remove");
         TCL_RETURN_ERROR;
@@ -1177,7 +1177,7 @@ weechat_tcl_api_list_remove_all (ClientData clientData, Tcl_Interp *interp,
 
     (void) clientData;
 
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_remove_all");
         TCL_RETURN_ERROR;
@@ -1208,7 +1208,7 @@ weechat_tcl_api_list_free (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_free");
         TCL_RETURN_ERROR;
@@ -1282,7 +1282,7 @@ weechat_tcl_api_config_new (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_new");
         TCL_RETURN_EMPTY;
@@ -1563,7 +1563,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
 
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_new_section");
         TCL_RETURN_EMPTY;
@@ -1635,7 +1635,7 @@ weechat_tcl_api_config_search_section (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_search_section");
         TCL_RETURN_EMPTY;
@@ -1785,7 +1785,7 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_new_option");
         TCL_RETURN_EMPTY;
@@ -1862,7 +1862,7 @@ weechat_tcl_api_config_search_option (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_search_option");
         TCL_RETURN_EMPTY;
@@ -1899,7 +1899,7 @@ weechat_tcl_api_config_string_to_boolean (ClientData clientData, Tcl_Interp *int
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         TCL_RETURN_INT(0);
@@ -1932,7 +1932,7 @@ weechat_tcl_api_config_option_reset (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_reset");
         TCL_RETURN_INT(0);
@@ -1974,7 +1974,7 @@ weechat_tcl_api_config_option_set (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_set");
         TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2018,7 +2018,7 @@ weechat_tcl_api_config_option_set_null (ClientData clientData, Tcl_Interp *inter
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_set_null");
         TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2060,7 +2060,7 @@ weechat_tcl_api_config_option_unset (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_unset");
         TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2094,7 +2094,7 @@ weechat_tcl_api_config_option_rename (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_rename");
         TCL_RETURN_ERROR;
@@ -2129,7 +2129,7 @@ weechat_tcl_api_config_option_is_null (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_is_null");
         TCL_RETURN_INT(1);
@@ -2162,7 +2162,7 @@ weechat_tcl_api_config_option_default_is_null (ClientData clientData,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         TCL_RETURN_INT(1);
@@ -2193,7 +2193,7 @@ weechat_tcl_api_config_boolean (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_boolean");
         TCL_RETURN_INT(0);
@@ -2224,7 +2224,7 @@ weechat_tcl_api_config_boolean_default (ClientData clientData, Tcl_Interp *inter
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_boolean_default");
         TCL_RETURN_INT(0);
@@ -2255,7 +2255,7 @@ weechat_tcl_api_config_integer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_integer");
         TCL_RETURN_INT(0);
@@ -2286,7 +2286,7 @@ weechat_tcl_api_config_integer_default (ClientData clientData, Tcl_Interp *inter
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_integer_default");
         TCL_RETURN_INT(0);
@@ -2318,7 +2318,7 @@ weechat_tcl_api_config_string (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_string");
         TCL_RETURN_EMPTY;
@@ -2350,7 +2350,7 @@ weechat_tcl_api_config_string_default (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_string_default");
         TCL_RETURN_EMPTY;
@@ -2382,7 +2382,7 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_color");
         TCL_RETURN_INT(0);
@@ -2414,7 +2414,7 @@ weechat_tcl_api_config_color_default (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_color_default");
         TCL_RETURN_INT(0);
@@ -2446,7 +2446,7 @@ weechat_tcl_api_config_write_option (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_write_option");
         TCL_RETURN_ERROR;
@@ -2482,7 +2482,7 @@ weechat_tcl_api_config_write_line (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_write_line");
         TCL_RETURN_ERROR;
@@ -2519,7 +2519,7 @@ weechat_tcl_api_config_write (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_write");
         TCL_RETURN_INT(-1);
@@ -2551,7 +2551,7 @@ weechat_tcl_api_config_read (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_read");
         TCL_RETURN_INT(-1);
@@ -2583,7 +2583,7 @@ weechat_tcl_api_config_reload (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_reload");
         TCL_RETURN_INT(-1);
@@ -2614,7 +2614,7 @@ weechat_tcl_api_config_option_free (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_option_free");
         TCL_RETURN_ERROR;
@@ -2648,7 +2648,7 @@ weechat_tcl_api_config_section_free_options (ClientData clientData, Tcl_Interp *
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_section_free_options");
         TCL_RETURN_ERROR;
@@ -2681,7 +2681,7 @@ weechat_tcl_api_config_section_free (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_section_free");
         TCL_RETURN_ERROR;
@@ -2714,7 +2714,7 @@ weechat_tcl_api_config_free (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_free");
         TCL_RETURN_ERROR;
@@ -2748,7 +2748,7 @@ weechat_tcl_api_config_get (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_get");
         TCL_RETURN_EMPTY;
@@ -2780,7 +2780,7 @@ weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_get_plugin");
         TCL_RETURN_EMPTY;
@@ -2814,7 +2814,7 @@ weechat_tcl_api_config_is_set_plugin (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
         TCL_RETURN_INT(0);
@@ -2850,7 +2850,7 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_set_plugin");
         TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2888,7 +2888,7 @@ weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         TCL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2924,7 +2924,7 @@ weechat_tcl_api_prefix (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "prefix");
         TCL_RETURN_EMPTY;
@@ -2956,7 +2956,7 @@ weechat_tcl_api_color (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "color");
         TCL_RETURN_EMPTY;
@@ -2988,7 +2988,7 @@ weechat_tcl_api_print (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "print");
         TCL_RETURN_ERROR;
@@ -3027,7 +3027,7 @@ weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "print_date_tags");
         TCL_RETURN_ERROR;
@@ -3074,7 +3074,7 @@ weechat_tcl_api_print_y (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "print_y");
         TCL_RETURN_ERROR;
@@ -3118,7 +3118,7 @@ weechat_tcl_api_log_print (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
 
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "log_print");
         TCL_RETURN_ERROR;
@@ -3198,7 +3198,7 @@ weechat_tcl_api_hook_command (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_command");
         TCL_RETURN_EMPTY;
@@ -3289,7 +3289,7 @@ weechat_tcl_api_hook_command_run (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_command_run");
         TCL_RETURN_EMPTY;
@@ -3371,7 +3371,7 @@ weechat_tcl_api_hook_timer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_timer");
         TCL_RETURN_EMPTY;
@@ -3459,7 +3459,7 @@ weechat_tcl_api_hook_fd (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_fd");
         TCL_RETURN_EMPTY;
@@ -3553,7 +3553,7 @@ weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_process");
         TCL_RETURN_EMPTY;
@@ -3647,7 +3647,7 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_connect");
         TCL_RETURN_EMPTY;
@@ -3770,7 +3770,7 @@ weechat_tcl_api_hook_print (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_print");
         TCL_RETURN_EMPTY;
@@ -3882,7 +3882,7 @@ weechat_tcl_api_hook_signal (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_signal");
         TCL_RETURN_EMPTY;
@@ -3924,7 +3924,7 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_signal_send");
         TCL_RETURN_ERROR;
@@ -4021,7 +4021,7 @@ weechat_tcl_api_hook_config (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_config");
         TCL_RETURN_EMPTY;
@@ -4108,7 +4108,7 @@ weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_completion");
         TCL_RETURN_EMPTY;
@@ -4151,7 +4151,7 @@ weechat_tcl_api_hook_completion_list_add (ClientData clientData, Tcl_Interp *int
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         TCL_RETURN_ERROR;
@@ -4226,7 +4226,7 @@ weechat_tcl_api_hook_modifier (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_modifier");
         TCL_RETURN_EMPTY;
@@ -4267,7 +4267,7 @@ weechat_tcl_api_hook_modifier_exec (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         TCL_RETURN_EMPTY;
@@ -4332,7 +4332,7 @@ weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_info");
         TCL_RETURN_EMPTY;
@@ -4407,7 +4407,7 @@ weechat_tcl_api_hook_info_hashtable (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
         TCL_RETURN_EMPTY;
@@ -4491,7 +4491,7 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_infolist");
         TCL_RETURN_EMPTY;
@@ -4537,7 +4537,7 @@ weechat_tcl_api_unhook (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "unhook");
         TCL_RETURN_ERROR;
@@ -4571,7 +4571,7 @@ weechat_tcl_api_unhook_all (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "unhook_all");
         TCL_RETURN_ERROR;
@@ -4678,7 +4678,7 @@ weechat_tcl_api_buffer_new (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_new");
         TCL_RETURN_EMPTY;
@@ -4724,7 +4724,7 @@ weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_search");
         TCL_RETURN_EMPTY;
@@ -4760,7 +4760,7 @@ weechat_tcl_api_buffer_search_main (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_search_main");
         TCL_RETURN_EMPTY;
@@ -4787,7 +4787,7 @@ weechat_tcl_api_current_buffer (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "current_buffer");
         TCL_RETURN_EMPTY;
@@ -4812,7 +4812,7 @@ weechat_tcl_api_buffer_clear (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_clear");
         TCL_RETURN_ERROR;
@@ -4843,7 +4843,7 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_close");
         TCL_RETURN_ERROR;
@@ -4876,7 +4876,7 @@ weechat_tcl_api_buffer_merge (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_merge");
         TCL_RETURN_ERROR;
@@ -4909,7 +4909,7 @@ weechat_tcl_api_buffer_unmerge (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
         TCL_RETURN_ERROR;
@@ -4949,7 +4949,7 @@ weechat_tcl_api_buffer_get_integer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         TCL_RETURN_INT(-1);
@@ -4985,7 +4985,7 @@ weechat_tcl_api_buffer_get_string (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_get_string");
         TCL_RETURN_EMPTY;
@@ -5020,7 +5020,7 @@ weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         TCL_RETURN_EMPTY;
@@ -5056,7 +5056,7 @@ weechat_tcl_api_buffer_set (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_set");
         TCL_RETURN_ERROR;
@@ -5093,7 +5093,7 @@ weechat_tcl_api_buffer_string_replace_local_var (ClientData clientData, Tcl_Inte
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
         TCL_RETURN_ERROR;
@@ -5129,7 +5129,7 @@ weechat_tcl_api_current_window (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "current_window");
         TCL_RETURN_EMPTY;
@@ -5156,7 +5156,7 @@ weechat_tcl_api_window_get_integer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_get_integer");
         TCL_RETURN_INT(-1);
@@ -5192,7 +5192,7 @@ weechat_tcl_api_window_get_string (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_get_string");
         TCL_RETURN_EMPTY;
@@ -5227,7 +5227,7 @@ weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_get_pointer");
         TCL_RETURN_EMPTY;
@@ -5263,7 +5263,7 @@ weechat_tcl_api_window_set_title (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_set_title");
         TCL_RETURN_ERROR;
@@ -5297,7 +5297,7 @@ weechat_tcl_api_nicklist_add_group (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         TCL_RETURN_EMPTY;
@@ -5344,7 +5344,7 @@ weechat_tcl_api_nicklist_search_group (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         TCL_RETURN_EMPTY;
@@ -5382,7 +5382,7 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         TCL_RETURN_EMPTY;
@@ -5433,7 +5433,7 @@ weechat_tcl_api_nicklist_search_nick (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         TCL_RETURN_EMPTY;
@@ -5471,7 +5471,7 @@ weechat_tcl_api_nicklist_remove_group (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         TCL_RETURN_ERROR;
@@ -5507,7 +5507,7 @@ weechat_tcl_api_nicklist_remove_nick (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         TCL_RETURN_ERROR;
@@ -5542,7 +5542,7 @@ weechat_tcl_api_nicklist_remove_all (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         TCL_RETURN_ERROR;
@@ -5574,7 +5574,7 @@ weechat_tcl_api_bar_item_search (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_item_search");
         TCL_RETURN_EMPTY;
@@ -5642,7 +5642,7 @@ weechat_tcl_api_bar_item_new (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_item_new");
         TCL_RETURN_EMPTY;
@@ -5682,7 +5682,7 @@ weechat_tcl_api_bar_item_update (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_item_update");
         TCL_RETURN_ERROR;
@@ -5713,7 +5713,7 @@ weechat_tcl_api_bar_item_remove (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_item_remove");
         TCL_RETURN_ERROR;
@@ -5747,7 +5747,7 @@ weechat_tcl_api_bar_search (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_search");
         TCL_RETURN_EMPTY;
@@ -5781,7 +5781,7 @@ weechat_tcl_api_bar_new (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_new");
         TCL_RETURN_EMPTY;
@@ -5843,7 +5843,7 @@ weechat_tcl_api_bar_set (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_set");
         TCL_RETURN_ERROR;
@@ -5878,7 +5878,7 @@ weechat_tcl_api_bar_update (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_update");
         TCL_RETURN_ERROR;
@@ -5909,7 +5909,7 @@ weechat_tcl_api_bar_remove (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "bar_remove");
         TCL_RETURN_ERROR;
@@ -5941,7 +5941,7 @@ weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "command");
         TCL_RETURN_ERROR;
@@ -5979,7 +5979,7 @@ weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "info_get");
         TCL_RETURN_EMPTY;
@@ -6012,7 +6012,7 @@ weechat_tcl_api_info_get_hashtable (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "info_get_hashtable");
         TCL_RETURN_EMPTY;
@@ -6055,7 +6055,7 @@ weechat_tcl_api_infolist_new (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new");
         TCL_RETURN_EMPTY;
@@ -6081,7 +6081,7 @@ weechat_tcl_api_infolist_new_item (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_item");
         TCL_RETURN_INT(0);
@@ -6114,7 +6114,7 @@ weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *int
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         TCL_RETURN_INT(0);
@@ -6155,7 +6155,7 @@ weechat_tcl_api_infolist_new_var_string (ClientData clientData, Tcl_Interp *inte
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         TCL_RETURN_INT(0);
@@ -6189,7 +6189,7 @@ weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *int
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         TCL_RETURN_INT(0);
@@ -6223,7 +6223,7 @@ weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         TCL_RETURN_INT(0);
@@ -6263,7 +6263,7 @@ weechat_tcl_api_infolist_get (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_get");
         TCL_RETURN_EMPTY;
@@ -6300,7 +6300,7 @@ weechat_tcl_api_infolist_next (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_next");
         TCL_RETURN_INT(0);
@@ -6332,7 +6332,7 @@ weechat_tcl_api_infolist_prev (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_prev");
         TCL_RETURN_INT(0);
@@ -6365,7 +6365,7 @@ weechat_tcl_api_infolist_reset_item_cursor (ClientData clientData,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
         TCL_RETURN_ERROR;
@@ -6398,7 +6398,7 @@ weechat_tcl_api_infolist_fields (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_fields");
         TCL_RETURN_EMPTY;
@@ -6431,7 +6431,7 @@ weechat_tcl_api_infolist_integer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_integer");
         TCL_RETURN_INT(0);
@@ -6467,7 +6467,7 @@ weechat_tcl_api_infolist_string (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_string");
         TCL_RETURN_EMPTY;
@@ -6503,7 +6503,7 @@ weechat_tcl_api_infolist_pointer (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_pointer");
         TCL_RETURN_EMPTY;
@@ -6539,7 +6539,7 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_time");
         TCL_RETURN_EMPTY;
@@ -6575,7 +6575,7 @@ weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "infolist_free");
         TCL_RETURN_ERROR;
@@ -6607,7 +6607,7 @@ weechat_tcl_api_upgrade_new (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "upgrade_new");
         TCL_RETURN_EMPTY;
@@ -6647,7 +6647,7 @@ weechat_tcl_api_upgrade_write_object (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         TCL_RETURN_INT(0);
@@ -6739,7 +6739,7 @@ weechat_tcl_api_upgrade_read (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "upgrade_read");
         TCL_RETURN_EMPTY;
@@ -6780,7 +6780,7 @@ weechat_tcl_api_upgrade_close (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script)
+    if (!tcl_current_script || !tcl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "upgrade_close");
         TCL_RETURN_ERROR;

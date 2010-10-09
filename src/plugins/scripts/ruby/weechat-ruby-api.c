@@ -155,7 +155,7 @@ weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "plugin_get_name");
         RUBY_RETURN_EMPTY;
@@ -190,7 +190,7 @@ weechat_ruby_api_charset_set (VALUE class, VALUE charset)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "charset_set");
         RUBY_RETURN_ERROR;
@@ -226,7 +226,7 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         RUBY_RETURN_EMPTY;
@@ -266,7 +266,7 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         RUBY_RETURN_EMPTY;
@@ -305,7 +305,7 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "gettext");
         RUBY_RETURN_EMPTY;
@@ -343,7 +343,7 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "ngettext");
         RUBY_RETURN_EMPTY;
@@ -388,7 +388,7 @@ weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_match");
         RUBY_RETURN_INT(0);
@@ -435,7 +435,7 @@ weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_has_highlight");
         RUBY_RETURN_INT(0);
@@ -477,7 +477,7 @@ weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
         RUBY_RETURN_EMPTY;
@@ -514,7 +514,7 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_remove_color");
         RUBY_RETURN_EMPTY;
@@ -554,7 +554,7 @@ weechat_ruby_api_string_is_command_char (VALUE class, VALUE string)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_is_command_char");
         RUBY_RETURN_INT(0);
@@ -592,7 +592,7 @@ weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
         RUBY_RETURN_EMPTY;
@@ -628,7 +628,7 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir_home");
         RUBY_RETURN_ERROR;
@@ -668,7 +668,7 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir");
         RUBY_RETURN_ERROR;
@@ -709,7 +709,7 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "mkdir_parents");
         RUBY_RETURN_ERROR;
@@ -748,7 +748,7 @@ weechat_ruby_api_list_new (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_new");
         RUBY_RETURN_EMPTY;
@@ -772,7 +772,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_add");
         RUBY_RETURN_EMPTY;
@@ -819,7 +819,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_search");
         RUBY_RETURN_EMPTY;
@@ -858,7 +858,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_casesearch");
         RUBY_RETURN_EMPTY;
@@ -898,7 +898,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_get");
         RUBY_RETURN_EMPTY;
@@ -937,7 +937,7 @@ weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_set");
         RUBY_RETURN_ERROR;
@@ -976,7 +976,7 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_next");
         RUBY_RETURN_EMPTY;
@@ -1011,7 +1011,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_prev");
         RUBY_RETURN_EMPTY;
@@ -1047,7 +1047,7 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_string");
         RUBY_RETURN_EMPTY;
@@ -1083,7 +1083,7 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_size");
         RUBY_RETURN_INT(0);
@@ -1118,7 +1118,7 @@ weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_remove");
         RUBY_RETURN_ERROR;
@@ -1157,7 +1157,7 @@ weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_remove_all");
         RUBY_RETURN_ERROR;
@@ -1192,7 +1192,7 @@ weechat_ruby_api_list_free (VALUE class, VALUE weelist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_free");
         RUBY_RETURN_ERROR;
@@ -1270,7 +1270,7 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new");
         RUBY_RETURN_EMPTY;
@@ -1567,7 +1567,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new_section");
         RUBY_RETURN_EMPTY;
@@ -1668,7 +1668,7 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_search_section");
         RUBY_RETURN_EMPTY;
@@ -1832,7 +1832,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_new_option");
         RUBY_RETURN_EMPTY;
@@ -1943,7 +1943,7 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_search_option");
         RUBY_RETURN_EMPTY;
@@ -1987,7 +1987,7 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         RUBY_RETURN_INT(0);
@@ -2024,7 +2024,7 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_reset");
         RUBY_RETURN_INT(0);
@@ -2065,7 +2065,7 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_set");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2111,7 +2111,7 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_set_null");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2151,7 +2151,7 @@ weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_unset");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2187,7 +2187,7 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_rename");
         RUBY_RETURN_ERROR;
@@ -2227,7 +2227,7 @@ weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_is_null");
         RUBY_RETURN_INT(1);
@@ -2263,7 +2263,7 @@ weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         RUBY_RETURN_INT(1);
@@ -2299,7 +2299,7 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_boolean");
         RUBY_RETURN_INT(0);
@@ -2335,7 +2335,7 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_boolean_default");
         RUBY_RETURN_INT(0);
@@ -2371,7 +2371,7 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_integer");
         RUBY_RETURN_INT(0);
@@ -2407,7 +2407,7 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_integer_default");
         RUBY_RETURN_INT(0);
@@ -2443,7 +2443,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string");
         RUBY_RETURN_EMPTY;
@@ -2479,7 +2479,7 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_string_default");
         RUBY_RETURN_EMPTY;
@@ -2515,7 +2515,7 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_color");
         RUBY_RETURN_INT(0);
@@ -2551,7 +2551,7 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_color_default");
         RUBY_RETURN_INT(0);
@@ -2587,7 +2587,7 @@ weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write_option");
         RUBY_RETURN_ERROR;
@@ -2627,7 +2627,7 @@ weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write_line");
         RUBY_RETURN_ERROR;
@@ -2672,7 +2672,7 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_write");
         RUBY_RETURN_INT(-1);
@@ -2708,7 +2708,7 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_read");
         RUBY_RETURN_INT(-1);
@@ -2744,7 +2744,7 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_reload");
         RUBY_RETURN_INT(-1);
@@ -2779,7 +2779,7 @@ weechat_ruby_api_config_option_free (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_option_free");
         RUBY_RETURN_ERROR;
@@ -2817,7 +2817,7 @@ weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_section_free_options");
         RUBY_RETURN_ERROR;
@@ -2854,7 +2854,7 @@ weechat_ruby_api_config_section_free (VALUE class, VALUE section)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_section_free");
         RUBY_RETURN_ERROR;
@@ -2891,7 +2891,7 @@ weechat_ruby_api_config_free (VALUE class, VALUE config_file)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_free");
         RUBY_RETURN_ERROR;
@@ -2929,7 +2929,7 @@ weechat_ruby_api_config_get (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_get");
         RUBY_RETURN_EMPTY;
@@ -2963,7 +2963,7 @@ weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_get_plugin");
         RUBY_RETURN_EMPTY;
@@ -2999,7 +2999,7 @@ weechat_ruby_api_config_is_set_plugin (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
         RUBY_RETURN_INT(0);
@@ -3035,7 +3035,7 @@ weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_set_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -3074,7 +3074,7 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         RUBY_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -3110,7 +3110,7 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "prefix");
         RUBY_RETURN_EMPTY;
@@ -3146,7 +3146,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "color");
         RUBY_RETURN_EMPTY;
@@ -3219,7 +3219,7 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "print_date_tags");
         RUBY_RETURN_ERROR;
@@ -3269,7 +3269,7 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "print_y");
         RUBY_RETURN_ERROR;
@@ -3314,7 +3314,7 @@ weechat_ruby_api_log_print (VALUE class, VALUE message)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "log_print");
         RUBY_RETURN_ERROR;
@@ -3400,7 +3400,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_command");
         RUBY_RETURN_EMPTY;
@@ -3508,7 +3508,7 @@ weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_command_run");
         RUBY_RETURN_EMPTY;
@@ -3598,7 +3598,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_timer");
         RUBY_RETURN_EMPTY;
@@ -3696,7 +3696,7 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_fd");
         RUBY_RETURN_EMPTY;
@@ -3803,7 +3803,7 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_process");
         RUBY_RETURN_EMPTY;
@@ -3904,7 +3904,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_connect");
         RUBY_RETURN_EMPTY;
@@ -4043,7 +4043,7 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_print");
         RUBY_RETURN_EMPTY;
@@ -4164,7 +4164,7 @@ weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_signal");
         RUBY_RETURN_EMPTY;
@@ -4212,7 +4212,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_signal_send");
         RUBY_RETURN_ERROR;
@@ -4313,7 +4313,7 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_config");
         RUBY_RETURN_EMPTY;
@@ -4408,7 +4408,7 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_completion");
         RUBY_RETURN_EMPTY;
@@ -4462,7 +4462,7 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         RUBY_RETURN_ERROR;
@@ -4542,7 +4542,7 @@ weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier");
         RUBY_RETURN_EMPTY;
@@ -4590,7 +4590,7 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         RUBY_RETURN_EMPTY;
@@ -4663,7 +4663,7 @@ weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_info");
         RUBY_RETURN_EMPTY;
@@ -4754,7 +4754,7 @@ weechat_ruby_api_hook_info_hashtable (VALUE class, VALUE info_name,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
         RUBY_RETURN_EMPTY;
@@ -4854,7 +4854,7 @@ weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_infolist");
         RUBY_RETURN_EMPTY;
@@ -4914,7 +4914,7 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "unhook");
         RUBY_RETURN_ERROR;
@@ -4949,7 +4949,7 @@ weechat_ruby_api_unhook_all (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "unhook_all");
         RUBY_RETURN_ERROR;
@@ -5058,7 +5058,7 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_new");
         RUBY_RETURN_EMPTY;
@@ -5115,7 +5115,7 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_search");
         RUBY_RETURN_EMPTY;
@@ -5154,7 +5154,7 @@ weechat_ruby_api_buffer_search_main (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_search_main");
         RUBY_RETURN_EMPTY;
@@ -5178,7 +5178,7 @@ weechat_ruby_api_current_buffer (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "current_buffer");
         RUBY_RETURN_EMPTY;
@@ -5201,7 +5201,7 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_clear");
         RUBY_RETURN_ERROR;
@@ -5236,7 +5236,7 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_close");
         RUBY_RETURN_ERROR;
@@ -5273,7 +5273,7 @@ weechat_ruby_api_buffer_merge (VALUE class, VALUE buffer, VALUE target_buffer)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_merge");
         RUBY_RETURN_ERROR;
@@ -5314,7 +5314,7 @@ weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_unmerge");
         RUBY_RETURN_ERROR;
@@ -5353,7 +5353,7 @@ weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         RUBY_RETURN_INT(-1);
@@ -5390,7 +5390,7 @@ weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_string");
         RUBY_RETURN_EMPTY;
@@ -5427,7 +5427,7 @@ weechat_ruby_api_buffer_get_pointer (VALUE class, VALUE buffer, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         RUBY_RETURN_EMPTY;
@@ -5464,7 +5464,7 @@ weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_set");
         RUBY_RETURN_ERROR;
@@ -5505,7 +5505,7 @@ weechat_ruby_api_buffer_string_replace_local_var (VALUE class, VALUE buffer, VAL
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
         RUBY_RETURN_ERROR;
@@ -5544,7 +5544,7 @@ weechat_ruby_api_current_window (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "current_window");
         RUBY_RETURN_EMPTY;
@@ -5568,7 +5568,7 @@ weechat_ruby_api_window_get_integer (VALUE class, VALUE window, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_integer");
         RUBY_RETURN_INT(-1);
@@ -5605,7 +5605,7 @@ weechat_ruby_api_window_get_string (VALUE class, VALUE window, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_string");
         RUBY_RETURN_EMPTY;
@@ -5642,7 +5642,7 @@ weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_get_pointer");
         RUBY_RETURN_EMPTY;
@@ -5678,7 +5678,7 @@ weechat_ruby_api_window_set_title (VALUE class, VALUE title)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_set_title");
         RUBY_RETURN_ERROR;
@@ -5715,7 +5715,7 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         RUBY_RETURN_EMPTY;
@@ -5769,7 +5769,7 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         RUBY_RETURN_EMPTY;
@@ -5817,7 +5817,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         RUBY_RETURN_EMPTY;
@@ -5879,7 +5879,7 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         RUBY_RETURN_EMPTY;
@@ -5922,7 +5922,7 @@ weechat_ruby_api_nicklist_remove_group (VALUE class, VALUE buffer, VALUE group)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         RUBY_RETURN_ERROR;
@@ -5958,7 +5958,7 @@ weechat_ruby_api_nicklist_remove_nick (VALUE class, VALUE buffer, VALUE nick)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         RUBY_RETURN_ERROR;
@@ -5994,7 +5994,7 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         RUBY_RETURN_ERROR;
@@ -6028,7 +6028,7 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_search");
         RUBY_RETURN_EMPTY;
@@ -6101,7 +6101,7 @@ weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_new");
         RUBY_RETURN_EMPTY;
@@ -6147,7 +6147,7 @@ weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_update");
         RUBY_RETURN_ERROR;
@@ -6180,7 +6180,7 @@ weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_item_remove");
         RUBY_RETURN_ERROR;
@@ -6216,7 +6216,7 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_search");
         RUBY_RETURN_EMPTY;
@@ -6260,7 +6260,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_new");
         RUBY_RETURN_EMPTY;
@@ -6355,7 +6355,7 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_set");
         RUBY_RETURN_ERROR;
@@ -6394,7 +6394,7 @@ weechat_ruby_api_bar_update (VALUE class, VALUE name)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_update");
         RUBY_RETURN_ERROR;
@@ -6427,7 +6427,7 @@ weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "bar_remove");
         RUBY_RETURN_ERROR;
@@ -6460,7 +6460,7 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "command");
         RUBY_RETURN_ERROR;
@@ -6499,7 +6499,7 @@ weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "info_get");
         RUBY_RETURN_EMPTY;
@@ -6537,7 +6537,7 @@ weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "info_get_hashtable");
         RUBY_RETURN_EMPTY;
@@ -6580,7 +6580,7 @@ weechat_ruby_api_infolist_new (VALUE class)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new");
         RUBY_RETURN_EMPTY;
@@ -6604,7 +6604,7 @@ weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_item");
         RUBY_RETURN_EMPTY;
@@ -6641,7 +6641,7 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         RUBY_RETURN_EMPTY;
@@ -6683,7 +6683,7 @@ weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         RUBY_RETURN_EMPTY;
@@ -6725,7 +6725,7 @@ weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         RUBY_RETURN_EMPTY;
@@ -6767,7 +6767,7 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         RUBY_RETURN_EMPTY;
@@ -6808,7 +6808,7 @@ weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_get");
         RUBY_RETURN_EMPTY;
@@ -6848,7 +6848,7 @@ weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_next");
         RUBY_RETURN_INT(0);
@@ -6882,7 +6882,7 @@ weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_prev");
         RUBY_RETURN_INT(0);
@@ -6916,7 +6916,7 @@ weechat_ruby_api_infolist_reset_item_cursor (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
         RUBY_RETURN_ERROR;
@@ -6950,7 +6950,7 @@ weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_fields");
         RUBY_RETURN_EMPTY;
@@ -6984,7 +6984,7 @@ weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_integer");
         RUBY_RETURN_INT(0);
@@ -7020,7 +7020,7 @@ weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_string");
         RUBY_RETURN_EMPTY;
@@ -7056,7 +7056,7 @@ weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_pointer");
         RUBY_RETURN_EMPTY;
@@ -7093,7 +7093,7 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_time");
         RUBY_RETURN_EMPTY;
@@ -7130,7 +7130,7 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "infolist_free");
         RUBY_RETURN_ERROR;
@@ -7165,7 +7165,7 @@ weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_new");
         RUBY_RETURN_EMPTY;
@@ -7206,7 +7206,7 @@ weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         RUBY_RETURN_INT(0);
@@ -7296,7 +7296,7 @@ weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_read");
         RUBY_RETURN_INT(0);
@@ -7342,7 +7342,7 @@ weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
+    if (!ruby_current_script || !ruby_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "upgrade_close");
         RUBY_RETURN_ERROR;

@@ -137,7 +137,7 @@ weechat_python_api_plugin_get_name (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "plugin_get_name");
         PYTHON_RETURN_EMPTY;
@@ -168,7 +168,7 @@ weechat_python_api_charset_set (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "charset_set");
         PYTHON_RETURN_ERROR;
@@ -201,7 +201,7 @@ weechat_python_api_iconv_to_internal (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         PYTHON_RETURN_EMPTY;
@@ -235,7 +235,7 @@ weechat_python_api_iconv_from_internal (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         PYTHON_RETURN_EMPTY;
@@ -268,7 +268,7 @@ weechat_python_api_gettext (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "gettext");
         PYTHON_RETURN_EMPTY;
@@ -301,7 +301,7 @@ weechat_python_api_ngettext (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "ngettext");
         PYTHON_RETURN_EMPTY;
@@ -337,7 +337,7 @@ weechat_python_api_string_match (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_match");
         PYTHON_RETURN_INT(0);
@@ -375,7 +375,7 @@ weechat_python_api_string_has_highlight (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_has_highlight");
         PYTHON_RETURN_INT(0);
@@ -411,7 +411,7 @@ weechat_python_api_string_mask_to_regex (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
         PYTHON_RETURN_EMPTY;
@@ -444,7 +444,7 @@ weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_remove_color");
         PYTHON_RETURN_EMPTY;
@@ -478,7 +478,7 @@ weechat_python_api_string_is_command_char (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_is_command_char");
         PYTHON_RETURN_INT(0);
@@ -512,7 +512,7 @@ weechat_python_api_string_input_for_buffer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
         PYTHON_RETURN_EMPTY;
@@ -544,7 +544,7 @@ weechat_python_api_mkdir_home (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "mkdir_home");
         PYTHON_RETURN_ERROR;
@@ -578,7 +578,7 @@ weechat_python_api_mkdir (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "mkdir");
         PYTHON_RETURN_ERROR;
@@ -613,7 +613,7 @@ weechat_python_api_mkdir_parents (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "mkdir_parents");
         PYTHON_RETURN_ERROR;
@@ -648,7 +648,7 @@ weechat_python_api_list_new (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_new");
         PYTHON_RETURN_EMPTY;
@@ -672,7 +672,7 @@ weechat_python_api_list_add (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_add");
         PYTHON_RETURN_EMPTY;
@@ -710,7 +710,7 @@ weechat_python_api_list_search (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_search");
         PYTHON_RETURN_EMPTY;
@@ -744,7 +744,7 @@ weechat_python_api_list_casesearch (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_casesearch");
         PYTHON_RETURN_EMPTY;
@@ -779,7 +779,7 @@ weechat_python_api_list_get (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_get");
         PYTHON_RETURN_EMPTY;
@@ -811,7 +811,7 @@ weechat_python_api_list_set (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_set");
         PYTHON_RETURN_ERROR;
@@ -845,7 +845,7 @@ weechat_python_api_list_next (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_next");
         PYTHON_RETURN_EMPTY;
@@ -877,7 +877,7 @@ weechat_python_api_list_prev (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_prev");
         PYTHON_RETURN_EMPTY;
@@ -909,7 +909,7 @@ weechat_python_api_list_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_string");
         PYTHON_RETURN_EMPTY;
@@ -941,7 +941,7 @@ weechat_python_api_list_size (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_size");
         PYTHON_RETURN_INT(0);
@@ -972,7 +972,7 @@ weechat_python_api_list_remove (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_remove");
         PYTHON_RETURN_ERROR;
@@ -1005,7 +1005,7 @@ weechat_python_api_list_remove_all (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_remove_all");
         PYTHON_RETURN_ERROR;
@@ -1036,7 +1036,7 @@ weechat_python_api_list_free (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_free");
         PYTHON_RETURN_ERROR;
@@ -1109,7 +1109,7 @@ weechat_python_api_config_new (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_new");
         PYTHON_RETURN_EMPTY;
@@ -1385,7 +1385,7 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_new_section");
         PYTHON_RETURN_EMPTY;
@@ -1456,7 +1456,7 @@ weechat_python_api_config_search_section (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_search_section");
         PYTHON_RETURN_EMPTY;
@@ -1604,7 +1604,7 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_new_option");
         PYTHON_RETURN_EMPTY;
@@ -1675,7 +1675,7 @@ weechat_python_api_config_search_option (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_search_option");
         PYTHON_RETURN_EMPTY;
@@ -1711,7 +1711,7 @@ weechat_python_api_config_string_to_boolean (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         PYTHON_RETURN_INT(0);
@@ -1743,7 +1743,7 @@ weechat_python_api_config_option_reset (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_reset");
         PYTHON_RETURN_INT(0);
@@ -1777,7 +1777,7 @@ weechat_python_api_config_option_set (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_set");
         PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -1814,7 +1814,7 @@ weechat_python_api_config_option_set_null (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_set_null");
         PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -1848,7 +1848,7 @@ weechat_python_api_config_option_unset (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_unset");
         PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -1879,7 +1879,7 @@ weechat_python_api_config_option_rename (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_rename");
         PYTHON_RETURN_ERROR;
@@ -1913,7 +1913,7 @@ weechat_python_api_config_option_is_null (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_is_null");
         PYTHON_RETURN_INT(1);
@@ -1946,7 +1946,7 @@ weechat_python_api_config_option_default_is_null (PyObject *self, PyObject *args
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         PYTHON_RETURN_INT(1);
@@ -1978,7 +1978,7 @@ weechat_python_api_config_boolean (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_boolean");
         PYTHON_RETURN_INT(0);
@@ -2010,7 +2010,7 @@ weechat_python_api_config_boolean_default (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_boolean_default");
         PYTHON_RETURN_INT(0);
@@ -2042,7 +2042,7 @@ weechat_python_api_config_integer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_integer");
         PYTHON_RETURN_INT(0);
@@ -2074,7 +2074,7 @@ weechat_python_api_config_integer_default (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_integer_default");
         PYTHON_RETURN_INT(0);
@@ -2106,7 +2106,7 @@ weechat_python_api_config_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_string");
         PYTHON_RETURN_EMPTY;
@@ -2138,7 +2138,7 @@ weechat_python_api_config_string_default (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_string_default");
         PYTHON_RETURN_EMPTY;
@@ -2170,7 +2170,7 @@ weechat_python_api_config_color (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_color");
         PYTHON_RETURN_INT(0);
@@ -2202,7 +2202,7 @@ weechat_python_api_config_color_default (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_color_default");
         PYTHON_RETURN_INT(0);
@@ -2233,7 +2233,7 @@ weechat_python_api_config_write_option (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_write_option");
         PYTHON_RETURN_ERROR;
@@ -2266,7 +2266,7 @@ weechat_python_api_config_write_line (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_write_line");
         PYTHON_RETURN_ERROR;
@@ -2303,7 +2303,7 @@ weechat_python_api_config_write (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_write");
         PYTHON_RETURN_INT(-1);
@@ -2335,7 +2335,7 @@ weechat_python_api_config_read (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_read");
         PYTHON_RETURN_INT(-1);
@@ -2367,7 +2367,7 @@ weechat_python_api_config_reload (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_reload");
         PYTHON_RETURN_INT(-1);
@@ -2398,7 +2398,7 @@ weechat_python_api_config_option_free (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_option_free");
         PYTHON_RETURN_ERROR;
@@ -2432,7 +2432,7 @@ weechat_python_api_config_section_free_options (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_section_free_options");
         PYTHON_RETURN_ERROR;
@@ -2465,7 +2465,7 @@ weechat_python_api_config_section_free (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_section_free");
         PYTHON_RETURN_ERROR;
@@ -2498,7 +2498,7 @@ weechat_python_api_config_free (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_free");
         PYTHON_RETURN_ERROR;
@@ -2532,7 +2532,7 @@ weechat_python_api_config_get (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_get");
         PYTHON_RETURN_EMPTY;
@@ -2564,7 +2564,7 @@ weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_get_plugin");
         PYTHON_RETURN_EMPTY;
@@ -2598,7 +2598,7 @@ weechat_python_api_config_is_set_plugin (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
         PYTHON_RETURN_INT(0);
@@ -2632,7 +2632,7 @@ weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_set_plugin");
         PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2668,7 +2668,7 @@ weechat_python_api_config_unset_plugin (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         PYTHON_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2702,7 +2702,7 @@ weechat_python_api_prefix (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "prefix");
         PYTHON_RETURN_EMPTY;
@@ -2734,7 +2734,7 @@ weechat_python_api_color (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "color");
         PYTHON_RETURN_EMPTY;
@@ -2796,7 +2796,7 @@ weechat_python_api_prnt_date_tags (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "prnt_date_tags");
         PYTHON_RETURN_ERROR;
@@ -2836,7 +2836,7 @@ weechat_python_api_prnt_y (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "prnt_y");
         PYTHON_RETURN_ERROR;
@@ -2873,7 +2873,7 @@ weechat_python_api_log_print (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "log_print");
         PYTHON_RETURN_ERROR;
@@ -2953,7 +2953,7 @@ weechat_python_api_hook_command (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_command");
         PYTHON_RETURN_EMPTY;
@@ -3043,7 +3043,7 @@ weechat_python_api_hook_command_run (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_command_run");
         PYTHON_RETURN_EMPTY;
@@ -3124,7 +3124,7 @@ weechat_python_api_hook_timer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_timer");
         PYTHON_RETURN_EMPTY;
@@ -3209,7 +3209,7 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_fd");
         PYTHON_RETURN_EMPTY;
@@ -3301,7 +3301,7 @@ weechat_python_api_hook_process (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_process");
         PYTHON_RETURN_EMPTY;
@@ -3388,7 +3388,7 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_connect");
         PYTHON_RETURN_EMPTY;
@@ -3506,7 +3506,7 @@ weechat_python_api_hook_print (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_print");
         PYTHON_RETURN_EMPTY;
@@ -3612,7 +3612,7 @@ weechat_python_api_hook_signal (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_signal");
         PYTHON_RETURN_EMPTY;
@@ -3651,7 +3651,7 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_signal_send");
         PYTHON_RETURN_ERROR;
@@ -3744,7 +3744,7 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_config");
         PYTHON_RETURN_EMPTY;
@@ -3829,7 +3829,7 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_completion");
         PYTHON_RETURN_EMPTY;
@@ -3871,7 +3871,7 @@ weechat_python_api_hook_completion_list_add (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         PYTHON_RETURN_ERROR;
@@ -3940,7 +3940,7 @@ weechat_python_api_hook_modifier (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_modifier");
         PYTHON_RETURN_EMPTY;
@@ -3979,7 +3979,7 @@ weechat_python_api_hook_modifier_exec (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         PYTHON_RETURN_EMPTY;
@@ -4042,7 +4042,7 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_info");
         PYTHON_RETURN_EMPTY;
@@ -4124,7 +4124,7 @@ weechat_python_api_hook_info_hashtable (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
         PYTHON_RETURN_EMPTY;
@@ -4208,7 +4208,7 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_infolist");
         PYTHON_RETURN_EMPTY;
@@ -4254,7 +4254,7 @@ weechat_python_api_unhook (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "unhook");
         PYTHON_RETURN_ERROR;
@@ -4286,7 +4286,7 @@ weechat_python_api_unhook_all (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "unhook_all");
         PYTHON_RETURN_ERROR;
@@ -4391,7 +4391,7 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_new");
         PYTHON_RETURN_EMPTY;
@@ -4437,7 +4437,7 @@ weechat_python_api_buffer_search (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_search");
         PYTHON_RETURN_EMPTY;
@@ -4471,7 +4471,7 @@ weechat_python_api_buffer_search_main (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_search_main");
         PYTHON_RETURN_EMPTY;
@@ -4496,7 +4496,7 @@ weechat_python_api_current_buffer (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "current_buffer");
         PYTHON_RETURN_EMPTY;
@@ -4519,7 +4519,7 @@ weechat_python_api_buffer_clear (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_clear");
         PYTHON_RETURN_ERROR;
@@ -4550,7 +4550,7 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_close");
         PYTHON_RETURN_ERROR;
@@ -4583,7 +4583,7 @@ weechat_python_api_buffer_merge (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_merge");
         PYTHON_RETURN_ERROR;
@@ -4618,7 +4618,7 @@ weechat_python_api_buffer_unmerge (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_unmerge");
         PYTHON_RETURN_ERROR;
@@ -4651,7 +4651,7 @@ weechat_python_api_buffer_get_integer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         PYTHON_RETURN_INT(-1);
@@ -4684,7 +4684,7 @@ weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_get_string");
         PYTHON_RETURN_ERROR;
@@ -4717,7 +4717,7 @@ weechat_python_api_buffer_get_pointer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         PYTHON_RETURN_EMPTY;
@@ -4750,7 +4750,7 @@ weechat_python_api_buffer_set (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_set");
         PYTHON_RETURN_ERROR;
@@ -4787,7 +4787,7 @@ weechat_python_api_buffer_string_replace_local_var (PyObject *self, PyObject *ar
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
         PYTHON_RETURN_ERROR;
@@ -4821,7 +4821,7 @@ weechat_python_api_current_window (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "current_window");
         PYTHON_RETURN_EMPTY;
@@ -4845,7 +4845,7 @@ weechat_python_api_window_get_integer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_get_integer");
         PYTHON_RETURN_INT(-1);
@@ -4878,7 +4878,7 @@ weechat_python_api_window_get_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_get_string");
         PYTHON_RETURN_EMPTY;
@@ -4911,7 +4911,7 @@ weechat_python_api_window_get_pointer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_get_pointer");
         PYTHON_RETURN_EMPTY;
@@ -4944,7 +4944,7 @@ weechat_python_api_window_set_title (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_set_title");
         PYTHON_RETURN_ERROR;
@@ -4977,7 +4977,7 @@ weechat_python_api_nicklist_add_group (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         PYTHON_RETURN_EMPTY;
@@ -5018,7 +5018,7 @@ weechat_python_api_nicklist_search_group (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         PYTHON_RETURN_EMPTY;
@@ -5055,7 +5055,7 @@ weechat_python_api_nicklist_add_nick (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         PYTHON_RETURN_EMPTY;
@@ -5100,7 +5100,7 @@ weechat_python_api_nicklist_search_nick (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         PYTHON_RETURN_EMPTY;
@@ -5135,7 +5135,7 @@ weechat_python_api_nicklist_remove_group (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         PYTHON_RETURN_ERROR;
@@ -5168,7 +5168,7 @@ weechat_python_api_nicklist_remove_nick (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         PYTHON_RETURN_ERROR;
@@ -5201,7 +5201,7 @@ weechat_python_api_nicklist_remove_all (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         PYTHON_RETURN_ERROR;
@@ -5233,7 +5233,7 @@ weechat_python_api_bar_item_search (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_item_search");
         PYTHON_RETURN_EMPTY;
@@ -5301,7 +5301,7 @@ weechat_python_api_bar_item_new (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_item_new");
         PYTHON_RETURN_EMPTY;
@@ -5339,7 +5339,7 @@ weechat_python_api_bar_item_update (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_item_update");
         PYTHON_RETURN_ERROR;
@@ -5370,7 +5370,7 @@ weechat_python_api_bar_item_remove (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_item_remove");
         PYTHON_RETURN_ERROR;
@@ -5404,7 +5404,7 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_search");
         PYTHON_RETURN_EMPTY;
@@ -5438,7 +5438,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_new");
         PYTHON_RETURN_EMPTY;
@@ -5500,7 +5500,7 @@ weechat_python_api_bar_set (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_set");
         PYTHON_RETURN_ERROR;
@@ -5535,7 +5535,7 @@ weechat_python_api_bar_update (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_item");
         PYTHON_RETURN_ERROR;
@@ -5566,7 +5566,7 @@ weechat_python_api_bar_remove (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "bar_remove");
         PYTHON_RETURN_ERROR;
@@ -5597,7 +5597,7 @@ weechat_python_api_command (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "command");
         PYTHON_RETURN_ERROR;
@@ -5633,7 +5633,7 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "info_get");
         PYTHON_RETURN_EMPTY;
@@ -5666,7 +5666,7 @@ weechat_python_api_info_get_hashtable (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "info_get_hashtable");
         PYTHON_RETURN_EMPTY;
@@ -5707,7 +5707,7 @@ weechat_python_api_infolist_new (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new");
         PYTHON_RETURN_EMPTY;
@@ -5731,7 +5731,7 @@ weechat_python_api_infolist_new_item (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_item");
         PYTHON_RETURN_EMPTY;
@@ -5765,7 +5765,7 @@ weechat_python_api_infolist_new_var_integer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         PYTHON_RETURN_EMPTY;
@@ -5802,7 +5802,7 @@ weechat_python_api_infolist_new_var_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         PYTHON_RETURN_EMPTY;
@@ -5839,7 +5839,7 @@ weechat_python_api_infolist_new_var_pointer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         PYTHON_RETURN_EMPTY;
@@ -5877,7 +5877,7 @@ weechat_python_api_infolist_new_var_time (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         PYTHON_RETURN_EMPTY;
@@ -5913,7 +5913,7 @@ weechat_python_api_infolist_get (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_get");
         PYTHON_RETURN_EMPTY;
@@ -5949,7 +5949,7 @@ weechat_python_api_infolist_next (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_next");
         PYTHON_RETURN_INT(0);
@@ -5981,7 +5981,7 @@ weechat_python_api_infolist_prev (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_prev");
         PYTHON_RETURN_INT(0);
@@ -6013,7 +6013,7 @@ weechat_python_api_infolist_reset_item_cursor (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
         PYTHON_RETURN_ERROR;
@@ -6045,7 +6045,7 @@ weechat_python_api_infolist_fields (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_fields");
         PYTHON_RETURN_EMPTY;
@@ -6077,7 +6077,7 @@ weechat_python_api_infolist_integer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_integer");
         PYTHON_RETURN_INT(0);
@@ -6111,7 +6111,7 @@ weechat_python_api_infolist_string (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_string");
         PYTHON_RETURN_EMPTY;
@@ -6145,7 +6145,7 @@ weechat_python_api_infolist_pointer (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_pointer");
         PYTHON_RETURN_EMPTY;
@@ -6180,7 +6180,7 @@ weechat_python_api_infolist_time (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_time");
         PYTHON_RETURN_EMPTY;
@@ -6215,7 +6215,7 @@ weechat_python_api_infolist_free (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "infolist_free");
         PYTHON_RETURN_ERROR;
@@ -6248,7 +6248,7 @@ weechat_python_api_upgrade_new (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "upgrade_new");
         PYTHON_RETURN_EMPTY;
@@ -6281,7 +6281,7 @@ weechat_python_api_upgrade_write_object (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         PYTHON_RETURN_INT(0);
@@ -6366,7 +6366,7 @@ weechat_python_api_upgrade_read (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "upgrade_read");
         PYTHON_RETURN_INT(0);
@@ -6404,7 +6404,7 @@ weechat_python_api_upgrade_close (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
+    if (!python_current_script || !python_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "upgrade_close");
         PYTHON_RETURN_ERROR;

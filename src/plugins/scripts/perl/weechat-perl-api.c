@@ -148,7 +148,7 @@ XS (XS_weechat_api_plugin_get_name)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "plugin_get_name");
         PERL_RETURN_EMPTY;
@@ -176,7 +176,7 @@ XS (XS_weechat_api_charset_set)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "charset_set");
         PERL_RETURN_ERROR;
@@ -206,7 +206,7 @@ XS (XS_weechat_api_iconv_to_internal)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         PERL_RETURN_EMPTY;
@@ -239,7 +239,7 @@ XS (XS_weechat_api_iconv_from_internal)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         PERL_RETURN_EMPTY;
@@ -271,7 +271,7 @@ XS (XS_weechat_api_gettext)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "gettext");
         PERL_RETURN_EMPTY;
@@ -301,7 +301,7 @@ XS (XS_weechat_api_ngettext)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "ngettext");
         PERL_RETURN_EMPTY;
@@ -336,7 +336,7 @@ XS (XS_weechat_api_string_match)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_match");
         PERL_RETURN_INT(0);
@@ -369,7 +369,7 @@ XS (XS_weechat_api_string_has_highlight)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_has_highlight");
         PERL_RETURN_INT(0);
@@ -401,7 +401,7 @@ XS (XS_weechat_api_string_mask_to_regex)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
         PERL_RETURN_EMPTY;
@@ -430,7 +430,7 @@ XS (XS_weechat_api_string_remove_color)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_remove_color");
         PERL_RETURN_EMPTY;
@@ -463,7 +463,7 @@ XS (XS_weechat_api_string_is_command_char)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_is_command_char");
         PERL_RETURN_INT(0);
@@ -493,7 +493,7 @@ XS (XS_weechat_api_string_input_for_buffer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
         PERL_RETURN_EMPTY;
@@ -521,7 +521,7 @@ XS (XS_weechat_api_mkdir_home)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "mkdir_home");
         PERL_RETURN_ERROR;
@@ -551,7 +551,7 @@ XS (XS_weechat_api_mkdir)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "mkdir");
         PERL_RETURN_ERROR;
@@ -582,7 +582,7 @@ XS (XS_weechat_api_mkdir_parents)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "mkdir_parents");
         PERL_RETURN_ERROR;
@@ -614,7 +614,7 @@ XS (XS_weechat_api_list_new)
     (void) items;
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_new");
         PERL_RETURN_EMPTY;
@@ -637,7 +637,7 @@ XS (XS_weechat_api_list_add)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_add");
         PERL_RETURN_EMPTY;
@@ -674,7 +674,7 @@ XS (XS_weechat_api_list_search)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_search");
         PERL_RETURN_EMPTY;
@@ -707,7 +707,7 @@ XS (XS_weechat_api_list_casesearch)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_casesearch");
         PERL_RETURN_EMPTY;
@@ -740,7 +740,7 @@ XS (XS_weechat_api_list_get)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_get");
         PERL_RETURN_EMPTY;
@@ -770,7 +770,7 @@ XS (XS_weechat_api_list_set)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_set");
         PERL_RETURN_ERROR;
@@ -802,7 +802,7 @@ XS (XS_weechat_api_list_next)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_next");
         PERL_RETURN_EMPTY;
@@ -831,7 +831,7 @@ XS (XS_weechat_api_list_prev)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_prev");
         PERL_RETURN_EMPTY;
@@ -860,7 +860,7 @@ XS (XS_weechat_api_list_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_string");
         PERL_RETURN_EMPTY;
@@ -889,7 +889,7 @@ XS (XS_weechat_api_list_size)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_size");
         PERL_RETURN_INT(0);
@@ -918,7 +918,7 @@ XS (XS_weechat_api_list_remove)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_remove");
         PERL_RETURN_ERROR;
@@ -949,7 +949,7 @@ XS (XS_weechat_api_list_remove_all)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_remove_all");
         PERL_RETURN_ERROR;
@@ -977,7 +977,7 @@ XS (XS_weechat_api_list_free)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_free");
         PERL_RETURN_ERROR;
@@ -1047,7 +1047,7 @@ XS (XS_weechat_api_config_new)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new");
         PERL_RETURN_EMPTY;
@@ -1323,7 +1323,7 @@ XS (XS_weechat_api_config_new_section)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new_section");
         PERL_RETURN_EMPTY;
@@ -1385,7 +1385,7 @@ XS (XS_weechat_api_config_search_section)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_search_section");
         PERL_RETURN_EMPTY;
@@ -1531,7 +1531,7 @@ XS (XS_weechat_api_config_new_option)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_new_option");
         PERL_RETURN_EMPTY;
@@ -1596,7 +1596,7 @@ XS (XS_weechat_api_config_search_option)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_search_option");
         PERL_RETURN_EMPTY;
@@ -1631,7 +1631,7 @@ XS (XS_weechat_api_config_string_to_boolean)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         PERL_RETURN_INT(0);
@@ -1661,7 +1661,7 @@ XS (XS_weechat_api_config_option_reset)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_reset");
         PERL_RETURN_INT(0);
@@ -1694,7 +1694,7 @@ XS (XS_weechat_api_config_option_set)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_set");
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -1729,7 +1729,7 @@ XS (XS_weechat_api_config_option_set_null)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_set_null");
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -1762,7 +1762,7 @@ XS (XS_weechat_api_config_option_unset)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_unset");
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -1793,7 +1793,7 @@ XS (XS_weechat_api_config_option_rename)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_rename");
         PERL_RETURN_ERROR;
@@ -1826,7 +1826,7 @@ XS (XS_weechat_api_config_option_is_null)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_is_null");
         PERL_RETURN_INT(1);
@@ -1856,7 +1856,7 @@ XS (XS_weechat_api_config_option_default_is_null)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         PERL_RETURN_INT(1);
@@ -1885,7 +1885,7 @@ XS (XS_weechat_api_config_boolean)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_boolean");
         PERL_RETURN_INT(0);
@@ -1914,7 +1914,7 @@ XS (XS_weechat_api_config_boolean_default)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_boolean_default");
         PERL_RETURN_INT(0);
@@ -1943,7 +1943,7 @@ XS (XS_weechat_api_config_integer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_integer");
         PERL_RETURN_INT(0);
@@ -1972,7 +1972,7 @@ XS (XS_weechat_api_config_integer_default)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_integer_default");
         PERL_RETURN_INT(0);
@@ -2001,7 +2001,7 @@ XS (XS_weechat_api_config_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string");
         PERL_RETURN_EMPTY;
@@ -2030,7 +2030,7 @@ XS (XS_weechat_api_config_string_default)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_string_default");
         PERL_RETURN_EMPTY;
@@ -2059,7 +2059,7 @@ XS (XS_weechat_api_config_color)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_color");
         PERL_RETURN_INT(0);
@@ -2088,7 +2088,7 @@ XS (XS_weechat_api_config_color_default)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_color_default");
         PERL_RETURN_INT(0);
@@ -2117,7 +2117,7 @@ XS (XS_weechat_api_config_write_option)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write_option");
         PERL_RETURN_ERROR;
@@ -2150,7 +2150,7 @@ XS (XS_weechat_api_config_write_line)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write_line");
         PERL_RETURN_ERROR;
@@ -2184,7 +2184,7 @@ XS (XS_weechat_api_config_write)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_write");
         PERL_RETURN_INT(-1);
@@ -2213,7 +2213,7 @@ XS (XS_weechat_api_config_read)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_read");
         PERL_RETURN_INT(-1);
@@ -2242,7 +2242,7 @@ XS (XS_weechat_api_config_reload)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_reload");
         PERL_RETURN_INT(-1);
@@ -2270,7 +2270,7 @@ XS (XS_weechat_api_config_option_free)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_option_free");
         PERL_RETURN_ERROR;
@@ -2301,7 +2301,7 @@ XS (XS_weechat_api_config_section_free_options)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_section_free_options");
         PERL_RETURN_ERROR;
@@ -2331,7 +2331,7 @@ XS (XS_weechat_api_config_section_free)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_section_free");
         PERL_RETURN_ERROR;
@@ -2361,7 +2361,7 @@ XS (XS_weechat_api_config_free)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_free");
         PERL_RETURN_ERROR;
@@ -2392,7 +2392,7 @@ XS (XS_weechat_api_config_get)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_get");
         PERL_RETURN_EMPTY;
@@ -2421,7 +2421,7 @@ XS (XS_weechat_api_config_get_plugin)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_get_plugin");
         PERL_RETURN_EMPTY;
@@ -2453,7 +2453,7 @@ XS (XS_weechat_api_config_is_set_plugin)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
         PERL_RETURN_INT(0);
@@ -2487,7 +2487,7 @@ XS (XS_weechat_api_config_set_plugin)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_set_plugin");
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2523,7 +2523,7 @@ XS (XS_weechat_api_config_unset_plugin)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2556,7 +2556,7 @@ XS (XS_weechat_api_prefix)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "prefix");
         PERL_RETURN_EMPTY;
@@ -2585,7 +2585,7 @@ XS (XS_weechat_api_color)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "color");
         PERL_RETURN_EMPTY;
@@ -2644,7 +2644,7 @@ XS (XS_weechat_api_print_date_tags)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "print_date_tags");
         PERL_RETURN_ERROR;
@@ -2682,7 +2682,7 @@ XS (XS_weechat_api_print_y)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "print_y");
         PERL_RETURN_ERROR;
@@ -2717,7 +2717,7 @@ XS (XS_weechat_api_log_print)
     /* make C compiler happy */
     (void) cv;
 
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "log_print");
         PERL_RETURN_ERROR;
@@ -2794,7 +2794,7 @@ XS (XS_weechat_api_hook_command)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_command");
         PERL_RETURN_EMPTY;
@@ -2882,7 +2882,7 @@ XS (XS_weechat_api_hook_command_run)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_command_run");
         PERL_RETURN_EMPTY;
@@ -2961,7 +2961,7 @@ XS (XS_weechat_api_hook_timer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_timer");
         PERL_RETURN_EMPTY;
@@ -3037,7 +3037,7 @@ XS (XS_weechat_api_hook_fd)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_fd");
         PERL_RETURN_EMPTY;
@@ -3119,7 +3119,7 @@ XS (XS_weechat_api_hook_process)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_process");
         PERL_RETURN_EMPTY;
@@ -3204,7 +3204,7 @@ XS (XS_weechat_api_hook_connect)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_connect");
         PERL_RETURN_EMPTY;
@@ -3316,7 +3316,7 @@ XS (XS_weechat_api_hook_print)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_print");
         PERL_RETURN_EMPTY;
@@ -3419,7 +3419,7 @@ XS (XS_weechat_api_hook_signal)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_signal");
         PERL_RETURN_EMPTY;
@@ -3458,7 +3458,7 @@ XS (XS_weechat_api_hook_signal_send)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_signal_send");
         PERL_RETURN_ERROR;
@@ -3549,7 +3549,7 @@ XS (XS_weechat_api_hook_config)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_config");
         PERL_RETURN_EMPTY;
@@ -3633,7 +3633,7 @@ XS (XS_weechat_api_hook_completion)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_completion");
         PERL_RETURN_EMPTY;
@@ -3673,7 +3673,7 @@ XS (XS_weechat_api_hook_completion_list_add)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         PERL_RETURN_ERROR;
@@ -3739,7 +3739,7 @@ XS (XS_weechat_api_hook_modifier)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_modifier");
         PERL_RETURN_EMPTY;
@@ -3777,7 +3777,7 @@ XS (XS_weechat_api_hook_modifier_exec)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         PERL_RETURN_EMPTY;
@@ -3839,7 +3839,7 @@ XS (XS_weechat_api_hook_info)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_info");
         PERL_RETURN_EMPTY;
@@ -3911,7 +3911,7 @@ XS (XS_weechat_api_hook_info_hashtable)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
         PERL_RETURN_EMPTY;
@@ -3992,7 +3992,7 @@ XS (XS_weechat_api_hook_infolist)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_infolist");
         PERL_RETURN_EMPTY;
@@ -4035,7 +4035,7 @@ XS (XS_weechat_api_unhook)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "unhook");
         PERL_RETURN_ERROR;
@@ -4066,7 +4066,7 @@ XS (XS_weechat_api_unhook_all)
     (void) cv;
     (void) items;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "unhook_all");
         PERL_RETURN_ERROR;
@@ -4170,7 +4170,7 @@ XS (XS_weechat_api_buffer_new)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_new");
         PERL_RETURN_EMPTY;
@@ -4213,7 +4213,7 @@ XS (XS_weechat_api_buffer_search)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_search");
         PERL_RETURN_EMPTY;
@@ -4246,7 +4246,7 @@ XS (XS_weechat_api_buffer_search_main)
     (void) items;
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_search_main");
         PERL_RETURN_EMPTY;
@@ -4270,7 +4270,7 @@ XS (XS_weechat_api_current_buffer)
     (void) items;
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "current_buffer");
         PERL_RETURN_EMPTY;
@@ -4292,7 +4292,7 @@ XS (XS_weechat_api_buffer_clear)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_clear");
         PERL_RETURN_ERROR;
@@ -4320,7 +4320,7 @@ XS (XS_weechat_api_buffer_close)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_close");
         PERL_RETURN_ERROR;
@@ -4350,7 +4350,7 @@ XS (XS_weechat_api_buffer_merge)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_merge");
         PERL_RETURN_ERROR;
@@ -4379,7 +4379,7 @@ XS (XS_weechat_api_buffer_unmerge)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_unmerge");
         PERL_RETURN_ERROR;
@@ -4410,7 +4410,7 @@ XS (XS_weechat_api_buffer_get_integer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         PERL_RETURN_INT(-1);
@@ -4443,7 +4443,7 @@ XS (XS_weechat_api_buffer_get_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_string");
         PERL_RETURN_EMPTY;
@@ -4475,7 +4475,7 @@ XS (XS_weechat_api_buffer_get_pointer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         PERL_RETURN_EMPTY;
@@ -4508,7 +4508,7 @@ XS (XS_weechat_api_buffer_set)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_set");
         PERL_RETURN_ERROR;
@@ -4542,7 +4542,7 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
         PERL_RETURN_ERROR;
@@ -4575,7 +4575,7 @@ XS (XS_weechat_api_current_window)
     (void) items;
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "current_window");
         PERL_RETURN_EMPTY;
@@ -4599,7 +4599,7 @@ XS (XS_weechat_api_window_get_integer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_integer");
         PERL_RETURN_INT(-1);
@@ -4632,7 +4632,7 @@ XS (XS_weechat_api_window_get_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_string");
         PERL_RETURN_EMPTY;
@@ -4664,7 +4664,7 @@ XS (XS_weechat_api_window_get_pointer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_get_pointer");
         PERL_RETURN_EMPTY;
@@ -4696,7 +4696,7 @@ XS (XS_weechat_api_window_set_title)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_set_title");
         PERL_RETURN_ERROR;
@@ -4725,7 +4725,7 @@ XS (XS_weechat_api_nicklist_add_group)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         PERL_RETURN_EMPTY;
@@ -4763,7 +4763,7 @@ XS (XS_weechat_api_nicklist_search_group)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         PERL_RETURN_EMPTY;
@@ -4798,7 +4798,7 @@ XS (XS_weechat_api_nicklist_add_nick)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         PERL_RETURN_EMPTY;
@@ -4840,7 +4840,7 @@ XS (XS_weechat_api_nicklist_search_nick)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         PERL_RETURN_EMPTY;
@@ -4875,7 +4875,7 @@ XS (XS_weechat_api_nicklist_remove_group)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         PERL_RETURN_ERROR;
@@ -4908,7 +4908,7 @@ XS (XS_weechat_api_nicklist_remove_nick)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         PERL_RETURN_ERROR;
@@ -4940,7 +4940,7 @@ XS (XS_weechat_api_nicklist_remove_all)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         PERL_RETURN_ERROR;
@@ -4969,7 +4969,7 @@ XS (XS_weechat_api_bar_item_search)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_search");
         PERL_RETURN_EMPTY;
@@ -5034,7 +5034,7 @@ XS (XS_weechat_api_bar_item_new)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_new");
         PERL_RETURN_EMPTY;
@@ -5071,7 +5071,7 @@ XS (XS_weechat_api_bar_item_update)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_update");
         PERL_RETURN_ERROR;
@@ -5099,7 +5099,7 @@ XS (XS_weechat_api_bar_item_remove)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_item_remove");
         PERL_RETURN_ERROR;
@@ -5130,7 +5130,7 @@ XS (XS_weechat_api_bar_search)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_search");
         PERL_RETURN_EMPTY;
@@ -5161,7 +5161,7 @@ XS (XS_weechat_api_bar_new)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_new");
         PERL_RETURN_EMPTY;
@@ -5220,7 +5220,7 @@ XS (XS_weechat_api_bar_set)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_set");
         PERL_RETURN_ERROR;
@@ -5252,7 +5252,7 @@ XS (XS_weechat_api_bar_update)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_update");
         PERL_RETURN_ERROR;
@@ -5280,7 +5280,7 @@ XS (XS_weechat_api_bar_remove)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "bar_remove");
         PERL_RETURN_ERROR;
@@ -5309,7 +5309,7 @@ XS (XS_weechat_api_command)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "command");
         PERL_RETURN_ERROR;
@@ -5345,7 +5345,7 @@ XS (XS_weechat_api_info_get)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "info_get");
         PERL_RETURN_EMPTY;
@@ -5379,7 +5379,7 @@ XS (XS_weechat_api_info_get_hashtable)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "info_get_hashtable");
         PERL_RETURN_EMPTY;
@@ -5419,7 +5419,7 @@ XS (XS_weechat_api_infolist_new)
     (void) items;
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new");
         PERL_RETURN_EMPTY;
@@ -5442,7 +5442,7 @@ XS (XS_weechat_api_infolist_new_item)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_item");
         PERL_RETURN_EMPTY;
@@ -5473,7 +5473,7 @@ XS (XS_weechat_api_infolist_new_var_integer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         PERL_RETURN_EMPTY;
@@ -5507,7 +5507,7 @@ XS (XS_weechat_api_infolist_new_var_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         PERL_RETURN_EMPTY;
@@ -5542,7 +5542,7 @@ XS (XS_weechat_api_infolist_new_var_pointer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         PERL_RETURN_EMPTY;
@@ -5577,7 +5577,7 @@ XS (XS_weechat_api_infolist_new_var_time)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         PERL_RETURN_EMPTY;
@@ -5611,7 +5611,7 @@ XS (XS_weechat_api_infolist_get)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_get");
         PERL_RETURN_EMPTY;
@@ -5646,7 +5646,7 @@ XS (XS_weechat_api_infolist_next)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_next");
         PERL_RETURN_INT(0);
@@ -5675,7 +5675,7 @@ XS (XS_weechat_api_infolist_prev)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_prev");
         PERL_RETURN_INT(0);
@@ -5704,7 +5704,7 @@ XS (XS_weechat_api_infolist_reset_item_cursor)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
         PERL_RETURN_ERROR;
@@ -5733,7 +5733,7 @@ XS (XS_weechat_api_infolist_fields)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_fields");
         PERL_RETURN_EMPTY;
@@ -5763,7 +5763,7 @@ XS (XS_weechat_api_infolist_integer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_integer");
         PERL_RETURN_INT(0);
@@ -5796,7 +5796,7 @@ XS (XS_weechat_api_infolist_string)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_string");
         PERL_RETURN_EMPTY;
@@ -5829,7 +5829,7 @@ XS (XS_weechat_api_infolist_pointer)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_pointer");
         PERL_RETURN_EMPTY;
@@ -5862,7 +5862,7 @@ XS (XS_weechat_api_infolist_time)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_time");
         PERL_RETURN_EMPTY;
@@ -5894,7 +5894,7 @@ XS (XS_weechat_api_infolist_free)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "infolist_free");
         PERL_RETURN_ERROR;
@@ -5923,7 +5923,7 @@ XS (XS_weechat_api_upgrade_new)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "upgrade_new");
         PERL_RETURN_EMPTY;
@@ -5956,7 +5956,7 @@ XS (XS_weechat_api_upgrade_write_object)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         PERL_RETURN_INT(0);
@@ -6040,7 +6040,7 @@ XS (XS_weechat_api_upgrade_read)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "upgrade_read");
         PERL_RETURN_INT(0);
@@ -6078,7 +6078,7 @@ XS (XS_weechat_api_upgrade_close)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
+    if (!perl_current_script || !perl_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "upgrade_close");
         PERL_RETURN_ERROR;

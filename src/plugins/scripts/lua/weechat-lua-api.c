@@ -154,7 +154,7 @@ weechat_lua_api_plugin_get_name (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "plugin_get_name");
         LUA_RETURN_EMPTY;
@@ -190,7 +190,7 @@ weechat_lua_api_charset_set (lua_State *L)
     /* make C compiler happy */
     (void) L;
      
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "charset_set");
         LUA_RETURN_ERROR;
@@ -228,7 +228,7 @@ weechat_lua_api_iconv_to_internal (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "iconv_to_internal");
         LUA_RETURN_EMPTY;
@@ -268,7 +268,7 @@ weechat_lua_api_iconv_from_internal (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "iconv_from_internal");
         LUA_RETURN_EMPTY;
@@ -306,7 +306,7 @@ weechat_lua_api_gettext (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "gettext");
         LUA_RETURN_EMPTY;
@@ -342,7 +342,7 @@ weechat_lua_api_ngettext (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "ngettext");
         LUA_RETURN_EMPTY;
@@ -384,7 +384,7 @@ weechat_lua_api_string_match (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_match");
         LUA_RETURN_INT(0);
@@ -428,7 +428,7 @@ weechat_lua_api_string_has_highlight (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_has_highlight");
         LUA_RETURN_INT(0);
@@ -470,7 +470,7 @@ weechat_lua_api_string_mask_to_regex (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_mask_to_regex");
         LUA_RETURN_EMPTY;
@@ -507,7 +507,7 @@ weechat_lua_api_string_remove_color (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_remove_color");
         LUA_RETURN_EMPTY;
@@ -545,7 +545,7 @@ weechat_lua_api_string_is_command_char (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_is_command_char");
         LUA_RETURN_INT(0);
@@ -583,7 +583,7 @@ weechat_lua_api_string_input_for_buffer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_input_for_buffer");
         LUA_RETURN_EMPTY;
@@ -619,7 +619,7 @@ weechat_lua_api_mkdir_home (lua_State *L)
     /* make C compiler happy */
     (void) L;
      
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir_home");
         LUA_RETURN_ERROR;
@@ -658,7 +658,7 @@ weechat_lua_api_mkdir (lua_State *L)
     /* make C compiler happy */
     (void) L;
      
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir");
         LUA_RETURN_ERROR;
@@ -698,7 +698,7 @@ weechat_lua_api_mkdir_parents (lua_State *L)
     /* make C compiler happy */
     (void) L;
      
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "mkdir_parents");
         LUA_RETURN_ERROR;
@@ -736,7 +736,7 @@ weechat_lua_api_list_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_new");
         LUA_RETURN_EMPTY;
@@ -761,7 +761,7 @@ weechat_lua_api_list_add (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_add");
         LUA_RETURN_EMPTY;
@@ -807,7 +807,7 @@ weechat_lua_api_list_search (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_search");
         LUA_RETURN_EMPTY;
@@ -847,7 +847,7 @@ weechat_lua_api_list_casesearch (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_casesearch");
         LUA_RETURN_EMPTY;
@@ -887,7 +887,7 @@ weechat_lua_api_list_get (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_get");
         LUA_RETURN_EMPTY;
@@ -926,7 +926,7 @@ weechat_lua_api_list_set (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_set");
         LUA_RETURN_ERROR;
@@ -966,7 +966,7 @@ weechat_lua_api_list_next (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_next");
         LUA_RETURN_EMPTY;
@@ -1003,7 +1003,7 @@ weechat_lua_api_list_prev (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_prev");
         LUA_RETURN_EMPTY;
@@ -1039,7 +1039,7 @@ weechat_lua_api_list_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_string");
         LUA_RETURN_EMPTY;
@@ -1075,7 +1075,7 @@ weechat_lua_api_list_size (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_size");
         LUA_RETURN_INT(0);
@@ -1111,7 +1111,7 @@ weechat_lua_api_list_remove (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_remove");
         LUA_RETURN_ERROR;
@@ -1150,7 +1150,7 @@ weechat_lua_api_list_remove_all (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_remove_all");
         LUA_RETURN_ERROR;
@@ -1186,7 +1186,7 @@ weechat_lua_api_list_free (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_free");
         LUA_RETURN_ERROR;
@@ -1265,7 +1265,7 @@ weechat_lua_api_config_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new");
         LUA_RETURN_EMPTY;
@@ -1548,7 +1548,7 @@ weechat_lua_api_config_new_section (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new_section");
         LUA_RETURN_EMPTY;
@@ -1631,7 +1631,7 @@ weechat_lua_api_config_search_section (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_search_section");
         LUA_RETURN_EMPTY;
@@ -1784,7 +1784,7 @@ weechat_lua_api_config_new_option (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_new_option");
         LUA_RETURN_EMPTY;
@@ -1874,7 +1874,7 @@ weechat_lua_api_config_search_option (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_search_option");
         LUA_RETURN_EMPTY;
@@ -1916,7 +1916,7 @@ weechat_lua_api_config_string_to_boolean (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string_to_boolean");
         LUA_RETURN_INT(0);
@@ -1952,7 +1952,7 @@ weechat_lua_api_config_option_reset (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_reset");
         LUA_RETURN_INT(0);
@@ -1991,7 +1991,7 @@ weechat_lua_api_config_option_set (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_set");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2034,7 +2034,7 @@ weechat_lua_api_config_option_set_null (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_set_null");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -2073,7 +2073,7 @@ weechat_lua_api_config_option_unset (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_unset");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -2109,7 +2109,7 @@ weechat_lua_api_config_option_rename (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_rename");
         LUA_RETURN_ERROR;
@@ -2148,7 +2148,7 @@ weechat_lua_api_config_option_is_null (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_is_null");
         LUA_RETURN_INT(1);
@@ -2185,7 +2185,7 @@ weechat_lua_api_config_option_default_is_null (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_default_is_null");
         LUA_RETURN_INT(1);
@@ -2221,7 +2221,7 @@ weechat_lua_api_config_boolean (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_boolean");
         LUA_RETURN_INT(0);
@@ -2257,7 +2257,7 @@ weechat_lua_api_config_boolean_default (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_boolean_default");
         LUA_RETURN_INT(0);
@@ -2293,7 +2293,7 @@ weechat_lua_api_config_integer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_integer");
         LUA_RETURN_INT(0);
@@ -2329,7 +2329,7 @@ weechat_lua_api_config_integer_default (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_integer_default");
         LUA_RETURN_INT(0);
@@ -2365,7 +2365,7 @@ weechat_lua_api_config_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string");
         LUA_RETURN_EMPTY;
@@ -2401,7 +2401,7 @@ weechat_lua_api_config_string_default (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_string_default");
         LUA_RETURN_EMPTY;
@@ -2437,7 +2437,7 @@ weechat_lua_api_config_color (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_color");
         LUA_RETURN_INT(0);
@@ -2473,7 +2473,7 @@ weechat_lua_api_config_color_default (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_color_default");
         LUA_RETURN_INT(0);
@@ -2509,7 +2509,7 @@ weechat_lua_api_config_write_option (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write_option");
         LUA_RETURN_ERROR;
@@ -2548,7 +2548,7 @@ weechat_lua_api_config_write_line (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write_line");
         LUA_RETURN_ERROR;
@@ -2591,7 +2591,7 @@ weechat_lua_api_config_write (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_write");
         LUA_RETURN_INT(-1);
@@ -2627,7 +2627,7 @@ weechat_lua_api_config_read (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_read");
         LUA_RETURN_INT(-1);
@@ -2663,7 +2663,7 @@ weechat_lua_api_config_reload (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_reload");
         LUA_RETURN_INT(-1);
@@ -2699,7 +2699,7 @@ weechat_lua_api_config_option_free (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_option_free");
         LUA_RETURN_ERROR;
@@ -2738,7 +2738,7 @@ weechat_lua_api_config_section_free_options (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_section_free_options");
         LUA_RETURN_ERROR;
@@ -2776,7 +2776,7 @@ weechat_lua_api_config_section_free (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_section_free");
         LUA_RETURN_ERROR;
@@ -2814,7 +2814,7 @@ weechat_lua_api_config_free (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_free");
         LUA_RETURN_ERROR;
@@ -2853,7 +2853,7 @@ weechat_lua_api_config_get (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_get");
         LUA_RETURN_EMPTY;
@@ -2889,7 +2889,7 @@ weechat_lua_api_config_get_plugin (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_get_plugin");
         LUA_RETURN_EMPTY;
@@ -2927,7 +2927,7 @@ weechat_lua_api_config_is_set_plugin (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_is_set_plugin");
         LUA_RETURN_INT(0);
@@ -2965,7 +2965,7 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_set_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
@@ -3006,7 +3006,7 @@ weechat_lua_api_config_unset_plugin (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_unset_plugin");
         LUA_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
@@ -3044,7 +3044,7 @@ weechat_lua_api_prefix (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "prefix");
         LUA_RETURN_EMPTY;
@@ -3080,7 +3080,7 @@ weechat_lua_api_color (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "color");
         LUA_RETURN_EMPTY;
@@ -3152,7 +3152,7 @@ weechat_lua_api_print_date_tags (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "print_date_tags");
         LUA_RETURN_ERROR;
@@ -3199,7 +3199,7 @@ weechat_lua_api_print_y (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "print_y");
         LUA_RETURN_ERROR;
@@ -3243,7 +3243,7 @@ weechat_lua_api_log_print (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "log_print");
         LUA_RETURN_ERROR;
@@ -3328,7 +3328,7 @@ weechat_lua_api_hook_command (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_command");
         LUA_RETURN_EMPTY;
@@ -3428,7 +3428,7 @@ weechat_lua_api_hook_command_run (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_command_run");
         LUA_RETURN_EMPTY;
@@ -3515,7 +3515,7 @@ weechat_lua_api_hook_timer (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_timer");
         LUA_RETURN_EMPTY;
@@ -3607,7 +3607,7 @@ weechat_lua_api_hook_fd (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_fd");
         LUA_RETURN_EMPTY;
@@ -3707,7 +3707,7 @@ weechat_lua_api_hook_process (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_process");
         LUA_RETURN_EMPTY;
@@ -3801,7 +3801,7 @@ weechat_lua_api_hook_connect (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_connect");
         LUA_RETURN_EMPTY;
@@ -3929,7 +3929,7 @@ weechat_lua_api_hook_print (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_print");
         LUA_RETURN_EMPTY;
@@ -4044,7 +4044,7 @@ weechat_lua_api_hook_signal (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_signal");
         LUA_RETURN_EMPTY;
@@ -4089,7 +4089,7 @@ weechat_lua_api_hook_signal_send (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_signal_send");
         LUA_RETURN_ERROR;
@@ -4187,7 +4187,7 @@ weechat_lua_api_hook_config (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_config");
         LUA_RETURN_EMPTY;
@@ -4280,7 +4280,7 @@ weechat_lua_api_hook_completion (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_completion");
         LUA_RETURN_EMPTY;
@@ -4328,7 +4328,7 @@ weechat_lua_api_hook_completion_list_add (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_completion_list_add");
         LUA_RETURN_ERROR;
@@ -4405,7 +4405,7 @@ weechat_lua_api_hook_modifier (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_modifier");
         LUA_RETURN_EMPTY;
@@ -4451,7 +4451,7 @@ weechat_lua_api_hook_modifier_exec (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_modifier_exec");
         LUA_RETURN_EMPTY;
@@ -4521,7 +4521,7 @@ weechat_lua_api_hook_info (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_info");
         LUA_RETURN_EMPTY;
@@ -4603,7 +4603,7 @@ weechat_lua_api_hook_info_hashtable (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_info_hashtable");
         LUA_RETURN_EMPTY;
@@ -4695,7 +4695,7 @@ weechat_lua_api_hook_infolist (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_infolist");
         LUA_RETURN_EMPTY;
@@ -4749,7 +4749,7 @@ weechat_lua_api_unhook (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "unhook");
         LUA_RETURN_ERROR;
@@ -4784,7 +4784,7 @@ weechat_lua_api_unhook_all (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "unhook_all");
         LUA_RETURN_ERROR;
@@ -4892,7 +4892,7 @@ weechat_lua_api_buffer_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_new");
         LUA_RETURN_EMPTY;
@@ -4945,7 +4945,7 @@ weechat_lua_api_buffer_search (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_search");
         LUA_RETURN_EMPTY;
@@ -4982,7 +4982,7 @@ weechat_lua_api_buffer_search_main (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_search_main");
         LUA_RETURN_EMPTY;
@@ -5005,7 +5005,7 @@ weechat_lua_api_current_buffer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "current_buffer");
         LUA_RETURN_EMPTY;
@@ -5029,7 +5029,7 @@ weechat_lua_api_buffer_clear (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_clear");
         LUA_RETURN_ERROR;
@@ -5065,7 +5065,7 @@ weechat_lua_api_buffer_close (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_close");
         LUA_RETURN_ERROR;
@@ -5103,7 +5103,7 @@ weechat_lua_api_buffer_merge (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_merge");
         LUA_RETURN_ERROR;
@@ -5143,7 +5143,7 @@ weechat_lua_api_buffer_unmerge (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_unmerge");
         LUA_RETURN_ERROR;
@@ -5181,7 +5181,7 @@ weechat_lua_api_buffer_get_integer (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_integer");
         LUA_RETURN_INT(-1);
@@ -5220,7 +5220,7 @@ weechat_lua_api_buffer_get_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_string");
         LUA_RETURN_EMPTY;
@@ -5260,7 +5260,7 @@ weechat_lua_api_buffer_get_pointer (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         LUA_RETURN_EMPTY;
@@ -5299,7 +5299,7 @@ weechat_lua_api_buffer_set (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_set");
         LUA_RETURN_ERROR;
@@ -5340,7 +5340,7 @@ weechat_lua_api_buffer_string_replace_local_var (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_string_replace_local_var");
         LUA_RETURN_ERROR;
@@ -5377,7 +5377,7 @@ weechat_lua_api_current_window (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "current_window");
         LUA_RETURN_EMPTY;
@@ -5401,7 +5401,7 @@ weechat_lua_api_window_get_integer (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_integer");
         LUA_RETURN_INT(-1);
@@ -5440,7 +5440,7 @@ weechat_lua_api_window_get_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_string");
         LUA_RETURN_EMPTY;
@@ -5480,7 +5480,7 @@ weechat_lua_api_window_get_pointer (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_get_pointer");
         LUA_RETURN_EMPTY;
@@ -5519,7 +5519,7 @@ weechat_lua_api_window_set_title (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_set_title");
         LUA_RETURN_ERROR;
@@ -5556,7 +5556,7 @@ weechat_lua_api_nicklist_add_group (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_group");
         LUA_RETURN_EMPTY;
@@ -5605,7 +5605,7 @@ weechat_lua_api_nicklist_search_group (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_group");
         LUA_RETURN_EMPTY;
@@ -5648,7 +5648,7 @@ weechat_lua_api_nicklist_add_nick (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_add_nick");
         LUA_RETURN_EMPTY;
@@ -5703,7 +5703,7 @@ weechat_lua_api_nicklist_search_nick (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_search_nick");
         LUA_RETURN_EMPTY;
@@ -5745,7 +5745,7 @@ weechat_lua_api_nicklist_remove_group (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_group");
         LUA_RETURN_ERROR;
@@ -5784,7 +5784,7 @@ weechat_lua_api_nicklist_remove_nick (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_nick");
         LUA_RETURN_ERROR;
@@ -5823,7 +5823,7 @@ weechat_lua_api_nicklist_remove_all (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "nicklist_remove_all");
         LUA_RETURN_ERROR;
@@ -5860,7 +5860,7 @@ weechat_lua_api_bar_item_search (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_search");
         LUA_RETURN_EMPTY;
@@ -5933,7 +5933,7 @@ weechat_lua_api_bar_item_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_new");
         LUA_RETURN_EMPTY;
@@ -5978,7 +5978,7 @@ weechat_lua_api_bar_item_update (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_update");
         LUA_RETURN_ERROR;
@@ -6014,7 +6014,7 @@ weechat_lua_api_bar_item_remove (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_item_remove");
         LUA_RETURN_ERROR;
@@ -6053,7 +6053,7 @@ weechat_lua_api_bar_search (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_search");
         LUA_RETURN_EMPTY;
@@ -6092,7 +6092,7 @@ weechat_lua_api_bar_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_new");
         LUA_RETURN_EMPTY;
@@ -6170,7 +6170,7 @@ weechat_lua_api_bar_set (lua_State *L)
     /* make C compiler happy */
     (void) L;
         
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_set");
         LUA_RETURN_ERROR;
@@ -6211,7 +6211,7 @@ weechat_lua_api_bar_update (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_update");
         LUA_RETURN_ERROR;
@@ -6247,7 +6247,7 @@ weechat_lua_api_bar_remove (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "bar_remove");
         LUA_RETURN_ERROR;
@@ -6283,7 +6283,7 @@ weechat_lua_api_command (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "command");
         LUA_RETURN_ERROR;
@@ -6324,7 +6324,7 @@ weechat_lua_api_info_get (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "info_get");
         LUA_RETURN_EMPTY;
@@ -6363,7 +6363,7 @@ weechat_lua_api_info_get_hashtable (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "info_get_hashtable");
         LUA_RETURN_EMPTY;
@@ -6408,7 +6408,7 @@ weechat_lua_api_infolist_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new");
         LUA_RETURN_EMPTY;
@@ -6433,7 +6433,7 @@ weechat_lua_api_infolist_new_item (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_item");
         LUA_RETURN_EMPTY;
@@ -6471,7 +6471,7 @@ weechat_lua_api_infolist_new_var_integer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         LUA_RETURN_EMPTY;
@@ -6515,7 +6515,7 @@ weechat_lua_api_infolist_new_var_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         LUA_RETURN_EMPTY;
@@ -6559,7 +6559,7 @@ weechat_lua_api_infolist_new_var_pointer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         LUA_RETURN_EMPTY;
@@ -6602,7 +6602,7 @@ weechat_lua_api_infolist_new_var_time (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         LUA_RETURN_EMPTY;
@@ -6645,7 +6645,7 @@ weechat_lua_api_infolist_get (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_get");
         LUA_RETURN_EMPTY;
@@ -6687,7 +6687,7 @@ weechat_lua_api_infolist_next (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_next");
         LUA_RETURN_INT(0);
@@ -6723,7 +6723,7 @@ weechat_lua_api_infolist_prev (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_prev");
         LUA_RETURN_INT(0);
@@ -6760,7 +6760,7 @@ weechat_lua_api_infolist_reset_item_cursor (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_reset_item_cursor");
         LUA_RETURN_ERROR;
@@ -6796,7 +6796,7 @@ weechat_lua_api_infolist_fields (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_fields");
         LUA_RETURN_EMPTY;
@@ -6832,7 +6832,7 @@ weechat_lua_api_infolist_integer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_integer");
         LUA_RETURN_INT(0);
@@ -6871,7 +6871,7 @@ weechat_lua_api_infolist_string (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_string");
         LUA_RETURN_EMPTY;
@@ -6911,7 +6911,7 @@ weechat_lua_api_infolist_pointer (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_pointer");
         LUA_RETURN_EMPTY;
@@ -6952,7 +6952,7 @@ weechat_lua_api_infolist_time (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_time");
         LUA_RETURN_EMPTY;
@@ -6993,7 +6993,7 @@ weechat_lua_api_infolist_free (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "infolist_free");
         LUA_RETURN_ERROR;
@@ -7030,7 +7030,7 @@ weechat_lua_api_upgrade_new (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_new");
         LUA_RETURN_EMPTY;
@@ -7068,7 +7068,7 @@ weechat_lua_api_upgrade_write_object (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_write_object");
         LUA_RETURN_INT(0);
@@ -7159,7 +7159,7 @@ weechat_lua_api_upgrade_read (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_read");
         LUA_RETURN_EMPTY;
@@ -7204,7 +7204,7 @@ weechat_lua_api_upgrade_close (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
+    if (!lua_current_script || !lua_current_script->name)
     {
         WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "upgrade_close");
         LUA_RETURN_ERROR;
