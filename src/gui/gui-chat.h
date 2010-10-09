@@ -24,8 +24,6 @@ struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_line;
 
-#define GUI_CHAT_BUFFER_PRINTF_SIZE (128*1024)
-
 #define gui_chat_printf(buffer, argz...)                        \
     gui_chat_printf_date_tags(buffer, 0, NULL, ##argz)
 

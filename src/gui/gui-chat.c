@@ -48,7 +48,6 @@
 #include "gui-window.h"
 
 
-char *gui_chat_buffer = NULL;                   /* buffer for printf        */
 char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];   /* prefixes                 */
 char gui_chat_prefix_empty[] = "";              /* empty prefix             */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
@@ -455,7 +454,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     va_list argptr;
     time_t date_printed;
     int display_time, length, at_least_one_message_printed;
-    char *pos, *pos_prefix, *pos_tab, *pos_end;
+    char strbuf[8192], *pos, *pos_prefix, *pos_tab, *pos_end;
     char *modifier_data, *new_msg, *ptr_msg;
     struct t_gui_line *ptr_line;
     
@@ -486,16 +485,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             && (gui_chat_mute_buffer == buffer)))
         return;
     
-    if (!gui_chat_buffer)
-        gui_chat_buffer = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
-    if (!gui_chat_buffer)
-        return;
-    
     va_start (argptr, message);
-    vsnprintf (gui_chat_buffer, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
+    vsnprintf (strbuf, sizeof (strbuf) - 1, message, argptr);
     va_end (argptr);
     
-    utf8_normalize (gui_chat_buffer, '?');
+    utf8_normalize (strbuf, '?');
     
     date_printed = time (NULL);
     if (date <= 0)
@@ -503,7 +497,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     
     at_least_one_message_printed = 0;
     
-    pos = gui_chat_buffer;
+    pos = strbuf;
     while (pos)
     {
         /* display until next end of line */
@@ -621,6 +615,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 {
     va_list argptr;
     struct t_gui_line *ptr_line;
+    char strbuf[8192];
     
     if (gui_init_ok)
     {
@@ -634,19 +629,14 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             return;
     }
     
-    if (!gui_chat_buffer)
-        gui_chat_buffer = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
-    if (!gui_chat_buffer)
-        return;
-    
     va_start (argptr, message);
-    vsnprintf (gui_chat_buffer, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
+    vsnprintf (strbuf, sizeof (strbuf) - 1, message, argptr);
     va_end (argptr);
     
-    utf8_normalize (gui_chat_buffer, '?');
-
+    utf8_normalize (strbuf, '?');
+    
     /* no message: delete line */
-    if (!gui_chat_buffer[0])
+    if (!strbuf[0])
     {
         if (gui_init_ok)
         {
@@ -667,11 +657,11 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            gui_line_add_y (buffer, y, gui_chat_buffer);
+            gui_line_add_y (buffer, y, strbuf);
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else
-            string_iconv_fprintf (stdout, "%s\n", gui_chat_buffer);
+            string_iconv_fprintf (stdout, "%s\n", strbuf);
     }
 }
 
@@ -683,13 +673,6 @@ void
 gui_chat_end ()
 {
     int i;
-    
-    /* free buffer used by chat functions */
-    if (gui_chat_buffer)
-    {
-        free (gui_chat_buffer);
-        gui_chat_buffer = NULL;
-    }
     
     /* free prefixes */
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
