@@ -105,16 +105,10 @@ struct t_config_option *irc_config_color_reason_quit;
 
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
-struct t_config_option *irc_config_network_connection_timeout;
-struct t_config_option *irc_config_network_default_msg_part;
-struct t_config_option *irc_config_network_default_msg_quit;
-struct t_config_option *irc_config_network_away_check;
-struct t_config_option *irc_config_network_away_check_max_nicks;
 struct t_config_option *irc_config_network_lag_check;
 struct t_config_option *irc_config_network_lag_min_show;
 struct t_config_option *irc_config_network_lag_disconnect;
 struct t_config_option *irc_config_network_lag_refresh_interval;
-struct t_config_option *irc_config_network_anti_flood[2];
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_send_unknown_commands;
@@ -481,50 +475,6 @@ irc_config_change_color_nick_prefix (void *data,
 }
 
 /*
- * irc_config_change_network_away_check: called when away check is changed
- */
-
-void
-irc_config_change_network_away_check (void *data,
-                                      struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    /*
-     * if away check was disabled and is now enabled, check now away for all
-     * servers/channels
-     */
-    if (!irc_hook_timer_check_away
-        && (weechat_config_integer (irc_config_network_away_check) > 0))
-    {
-        irc_server_check_away ();
-    }
-    
-    /* remove old timer */
-    if (irc_hook_timer_check_away)
-    {
-        weechat_unhook (irc_hook_timer_check_away);
-        irc_hook_timer_check_away = NULL;
-    }
-    
-    if (weechat_config_integer (irc_config_network_away_check) > 0)
-    {
-        /* create new timer */
-        irc_hook_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_network_away_check) * 60 * 1000,
-                                                        0, 0,
-                                                        &irc_server_timer_check_away_cb,
-                                                        NULL);
-    }
-    else
-    {
-        /* reset away flag for all servers/channels */
-        irc_server_remove_away ();
-    }
-}
-
-/*
  * irc_config_change_network_lag_check: called when lag check is changed
  */
 
@@ -628,6 +578,11 @@ irc_config_server_default_change_cb (void *data, struct t_config_option *option)
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
+            /*
+             * when default value for a server option is changed, we apply it
+             * on all servers where value is "null" (inherited from default
+             * value)
+             */
             if (weechat_config_option_is_null (ptr_server->options[index_option]))
             {
                 switch (index_option)
@@ -639,6 +594,13 @@ irc_config_server_default_change_cb (void *data, struct t_config_option *option)
                     case IRC_SERVER_OPTION_NICKS:
                         irc_server_set_nicks (ptr_server,
                                               weechat_config_string (option));
+                        break;
+                    case IRC_SERVER_OPTION_AWAY_CHECK:
+                    case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
+                        if (IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                            irc_server_check_away (ptr_server);
+                        else
+                            irc_server_remove_away (ptr_server);
                         break;
                 }
             }
@@ -676,6 +638,12 @@ irc_config_server_change_cb (void *data, struct t_config_option *option)
                                           IRC_SERVER_OPTION_STRING(ptr_server,
                                                                    IRC_SERVER_OPTION_NICKS));
                     break;
+                case IRC_SERVER_OPTION_AWAY_CHECK:
+                case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
+                    if (IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                        irc_server_check_away (ptr_server);
+                    else
+                        irc_server_remove_away (ptr_server);
             }
         }
     }
@@ -1306,6 +1274,101 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_CONNECTION_TIMEOUT:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("timeout (in seconds) between TCP connection to server and "
+                   "message 001 received, if this timeout is reached before "
+                   "001 message is received, WeeChat will disconnect from "
+                   "server"),
+                NULL, 1, 3600,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("anti-flood for high priority queue: number of seconds "
+                   "between two user messages or commands sent to IRC server "
+                   "(0 = no anti-flood)"),
+                NULL, 0, 60,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("anti-flood for low priority queue: number of seconds "
+                   "between two messages sent to IRC server (messages like "
+                   "automatic CTCP replies) (0 = no anti-flood)"),
+                NULL, 0, 60,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_AWAY_CHECK:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("interval between two checks for away (in minutes, "
+                   "0 = never check)"),
+                NULL, 0, 60 * 24 * 7,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("do not check away nicks on channels with high number of "
+                   "nicks (0 = unlimited)"),
+                NULL, 0, 1000000,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_DEFAULT_MSG_PART:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("default part message (leaving channel) (\"%v\" will be "
+                   "replaced by WeeChat version in string)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_DEFAULT_MSG_QUIT:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("default quit message (disconnecting from server) (\"%v\" "
+                   "will be replaced by WeeChat version in string)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                NULL, NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_NUM_OPTIONS:
             break;
     }
@@ -1862,40 +1925,6 @@ irc_config_init ()
         N_("maximum autoreconnect delay to server (in seconds, 0 = no maximum)"),
         NULL, 0, 3600 * 24, "1800", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    irc_config_network_connection_timeout = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "connection_timeout", "integer",
-        N_("timeout (in seconds) between TCP connection to server and message "
-           "001 received, if this timeout is reached before 001 message is "
-           "received, WeeChat will disconnect from server"),
-        NULL, 1, 3600, "60", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
-    irc_config_network_default_msg_part = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "default_msg_part", "string",
-        N_("default part message (leaving channel) (\"%v\" will be replaced "
-           "by WeeChat version in string)"),
-        NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_default_msg_quit = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "default_msg_quit", "string",
-        N_("default quit message (disconnecting from server) (\"%v\" will be "
-           "replaced by WeeChat version in string)"),
-        NULL, 0, 0, "WeeChat %v", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_away_check = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "away_check", "integer",
-        N_("interval between two checks for away (in minutes, 0 = never "
-           "check)"),
-        NULL, 0, 60 * 24 * 7, "0", NULL, 0, NULL, NULL,
-        &irc_config_change_network_away_check, NULL, NULL, NULL);
-    irc_config_network_away_check_max_nicks = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "away_check_max_nicks", "integer",
-        N_("do not check away nicks on channels with high number of nicks "
-           "(0 = unlimited)"),
-        NULL, 0, 1000000, "25", NULL, 0, NULL, NULL,
-        &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_check", "integer",
@@ -1921,19 +1950,6 @@ irc_config_init ()
         N_("interval between two refreshs of lag item, when lag is increasing "
            "(in seconds)"),
         NULL, 1, 3600, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_anti_flood[0] = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "anti_flood_prio_high", "integer",
-        N_("anti-flood for high priority queue: number of seconds between two "
-           "user messages or commands sent to IRC server (0 = no anti-flood)"),
-        NULL, 0, 60, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_anti_flood[1] = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "anti_flood_prio_low", "integer",
-        N_("anti-flood for low priority queue: number of seconds between two "
-           "messages sent to IRC server (messages like automatic CTCP replies) "
-           "(0 = no anti-flood)"),
-        NULL, 0, 60, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_receive", "boolean",
@@ -2037,15 +2053,7 @@ irc_config_init ()
 int
 irc_config_read ()
 {
-    int rc;
-    
-    rc = weechat_config_read (irc_config_file);
-    if (rc == WEECHAT_CONFIG_READ_OK)
-    {
-        irc_config_change_network_away_check (NULL, NULL);
-    }
-    
-    return rc;
+    return weechat_config_read (irc_config_file);
 }
 
 /*

@@ -382,9 +382,9 @@ irc_channel_check_away (struct t_irc_server *server,
 {
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        if ((weechat_config_integer (irc_config_network_away_check) > 0)
-            && ((weechat_config_integer (irc_config_network_away_check_max_nicks) == 0)
-                || (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks))))
+        if ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+            && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
+                || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS))))
         {
             channel->checking_away++;
             irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,

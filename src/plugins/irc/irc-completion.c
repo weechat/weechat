@@ -517,16 +517,19 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
+    const char *msg_part;
+    
+    IRC_BUFFER_GET_SERVER(buffer);
+    
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    (void) buffer;
-
-    if (weechat_config_string (irc_config_network_default_msg_part)
-        && weechat_config_string (irc_config_network_default_msg_part)[0])
+    
+    msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
+                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
+    if (msg_part && msg_part[0])
     {
-        weechat_hook_completion_list_add (completion,
-                                          weechat_config_string (irc_config_network_default_msg_part),
+        weechat_hook_completion_list_add (completion, msg_part,
                                           0, WEECHAT_LIST_POS_SORT);
     }
     

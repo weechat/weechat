@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-07 14:45+0200\n"
+"POT-Creation-Date: 2010-10-09 10:26+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4257,6 +4257,46 @@ msgstr "автоматически перезаходить на каналы п
 msgid "delay (in seconds) before autorejoin (after kick)"
 msgstr "задержка (в секундах) перед повторным соединением с сервером"
 
+msgid ""
+"timeout (in seconds) between TCP connection to server and message 001 "
+"received, if this timeout is reached before 001 message is received, WeeChat "
+"will disconnect from server"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"anti-flood for high priority queue: number of seconds between two user "
+"messages or commands sent to IRC server (0 = no anti-flood)"
+msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
+
+#, fuzzy
+msgid ""
+"anti-flood for low priority queue: number of seconds between two messages "
+"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
+msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
+
+msgid "interval between two checks for away (in minutes, 0 = never check)"
+msgstr ""
+"интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
+
+msgid ""
+"do not check away nicks on channels with high number of nicks (0 = unlimited)"
+msgstr ""
+"не проверять отсутствие на каналах с большим количеством ников (0=не "
+"ограничено)"
+
+#, fuzzy
+msgid ""
+"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
+"version in string)"
+msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
+
+#, fuzzy
+msgid ""
+"default quit message (disconnecting from server) (\"%v\" will be replaced by "
+"WeeChat version in string)"
+msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
+
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -4457,34 +4497,6 @@ msgstr ""
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
 
-msgid ""
-"timeout (in seconds) between TCP connection to server and message 001 "
-"received, if this timeout is reached before 001 message is received, WeeChat "
-"will disconnect from server"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
-"version in string)"
-msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
-
-#, fuzzy
-msgid ""
-"default quit message (disconnecting from server) (\"%v\" will be replaced by "
-"WeeChat version in string)"
-msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
-
-msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr ""
-"интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
-
-msgid ""
-"do not check away nicks on channels with high number of nicks (0 = unlimited)"
-msgstr ""
-"не проверять отсутствие на каналах с большим количеством ников (0=не "
-"ограничено)"
-
 #, fuzzy
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
@@ -4504,18 +4516,6 @@ msgid ""
 "seconds)"
 msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
-
-#, fuzzy
-msgid ""
-"anti-flood for high priority queue: number of seconds between two user "
-"messages or commands sent to IRC server (0 = no anti-flood)"
-msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
-
-#, fuzzy
-msgid ""
-"anti-flood for low priority queue: number of seconds between two messages "
-"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
-msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
@@ -4586,6 +4586,13 @@ msgstr "вкл."
 
 msgid "off"
 msgstr "выкл."
+
+#, fuzzy
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "минута"
+msgstr[1] "минута"
+msgstr[2] "минута"
 
 #, fuzzy
 msgid "channel"
@@ -4859,13 +4866,6 @@ msgid_plural "hours"
 msgstr[0] "час"
 msgstr[1] "час"
 msgstr[2] "час"
-
-#, fuzzy
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "минута"
-msgstr[1] "минута"
-msgstr[2] "минута"
 
 #, fuzzy, c-format
 msgid ""

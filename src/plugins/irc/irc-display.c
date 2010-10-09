@@ -392,6 +392,70 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]),
                             NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY])));
+        /* connection_timeout */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]))
+            weechat_printf (NULL, "  connection_timeout . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT)));
+        else
+            weechat_printf (NULL, "  connection_timeout . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT])));
+        /* anti_flood_prio_high */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
+            weechat_printf (NULL, "  anti_flood_prio_high :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH)));
+        else
+            weechat_printf (NULL, "  anti_flood_prio_high : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH])));
+        /* anti_flood_prio_low */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
+            weechat_printf (NULL, "  anti_flood_prio_low. :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW)));
+        else
+            weechat_printf (NULL, "  anti_flood_prio_low. : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW])));
+        /* away_check */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
+            weechat_printf (NULL, "  away_check . . . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK),
+                            NG_("minute", "minutes", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK)));
+        else
+            weechat_printf (NULL, "  away_check . . . . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK]),
+                            NG_("minute", "minutes", weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK])));
+        /* away_check_max_nicks */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]))
+            weechat_printf (NULL, "  away_check_max_nicks :   (%d)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS));
+        else
+            weechat_printf (NULL, "  away_check_max_nicks : %s%d",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
+        /* default_msg_part */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
+            weechat_printf (NULL, "  default_msg_part . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART));
+        else
+            weechat_printf (NULL, "  default_msg_part . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]));
+        /* default_msg_quit */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]))
+            weechat_printf (NULL, "  default_msg_quit . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT));
+        else
+            weechat_printf (NULL, "  default_msg_quit . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
     }
     else
     {

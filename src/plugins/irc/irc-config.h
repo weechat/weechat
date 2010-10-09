@@ -127,16 +127,10 @@ extern struct t_config_option *irc_config_color_reason_quit;
 
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;
-extern struct t_config_option *irc_config_network_connection_timeout;
-extern struct t_config_option *irc_config_network_default_msg_part;
-extern struct t_config_option *irc_config_network_default_msg_quit;
-extern struct t_config_option *irc_config_network_away_check;
-extern struct t_config_option *irc_config_network_away_check_max_nicks;
 extern struct t_config_option *irc_config_network_lag_check;
 extern struct t_config_option *irc_config_network_lag_min_show;
 extern struct t_config_option *irc_config_network_lag_disconnect;
 extern struct t_config_option *irc_config_network_lag_refresh_interval;
-extern struct t_config_option *irc_config_network_anti_flood[2];
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_send_unknown_commands;

@@ -68,6 +68,10 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
   "autoconnect", "autoreconnect", "autoreconnect_delay",
   "nicks", "username", "realname", "local_hostname",
   "command", "command_delay", "autojoin", "autorejoin", "autorejoin_delay",
+  "connection_timeout",
+  "anti_flood_prio_high", "anti_flood_prio_low",
+  "away_check", "away_check_max_nicks",
+  "default_msg_part", "default_msg_quit",
 };
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
@@ -77,6 +81,10 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "off", "on", "10",
   "", "", "", "",
   "", "0", "", "off", "30",
+  "60",
+  "2", "2",
+  "0", "25",
+  "WeeChat %v", "WeeChat %v",
 };
 
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
@@ -453,6 +461,7 @@ irc_server_alloc (const char *name)
     new_server->lag_last_refresh = 0;
     new_server->cmd_list_regexp = NULL;
     new_server->last_user_message = 0;
+    new_server->last_away_check = 0;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
     {
         new_server->outqueue[i] = NULL;
@@ -1230,7 +1239,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 {
     time_t time_now;
     char *pos, *tags_to_send;
-    int priority;
+    int priority, anti_flood;
     
     time_now = time (NULL);
     
@@ -1240,9 +1249,17 @@ irc_server_outqueue_send (struct t_irc_server *server)
     
     for (priority = 0; priority < IRC_SERVER_NUM_OUTQUEUES_PRIO; priority++)
     {
+        switch (priority)
+        {
+            case 0:
+                anti_flood = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
+                break;
+            default:
+                anti_flood = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW);
+                break;
+        }
         if (server->outqueue[priority]
-            && (time_now >= server->last_user_message +
-                weechat_config_integer (irc_config_network_anti_flood[priority])))
+            && (time_now >= server->last_user_message + anti_flood))
         {
             if (server->outqueue[priority]->message_before_mod)
             {
@@ -1486,7 +1503,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     char *new_msg, *pos, *nick, *command, *channel, *tags_to_send;
     char *ptr_chan_nick, *msg_encoded;
     char str_modifier[64], modifier_data[256];
-    int rc, queue_msg, add_to_queue, first_message;
+    int rc, queue_msg, add_to_queue, first_message, anti_flood;
     time_t time_now;
     
     rc = 1;
@@ -1558,12 +1575,21 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             else if (flags && IRC_SERVER_SEND_OUTQ_PRIO_LOW)
                 queue_msg = 2;
             
+            switch (queue_msg - 1)
+            {
+                case 0:
+                    anti_flood = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
+                    break;
+                default:
+                    anti_flood = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW);
+                    break;
+            }
+            
             add_to_queue = 0;
             if ((queue_msg > 0)
                 && (server->outqueue[queue_msg - 1]
-                    || ((weechat_config_integer (irc_config_network_anti_flood[queue_msg - 1]) > 0)
-                        && (time_now - server->last_user_message <
-                            weechat_config_integer (irc_config_network_anti_flood[queue_msg - 1])))))
+                    || ((anti_flood > 0)
+                        && (time_now - server->last_user_message < anti_flood))))
             {
                 add_to_queue = queue_msg;
             }
@@ -2101,6 +2127,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
     struct t_irc_server *ptr_server;
     time_t new_time;
     static struct timeval tv;
+    int away_check;
     
     /* make C compiler happy */
     (void) data;
@@ -2136,6 +2163,19 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     gettimeofday (&(ptr_server->lag_check_time), NULL);
                     ptr_server->lag = 0;
                     ptr_server->lag_last_refresh = 0;
+                }
+                else
+                {
+                    /* check away (only if lag check was not done) */
+                    away_check = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK);
+                    if (away_check > 0)
+                    {
+                        if ((ptr_server->last_away_check == 0)
+                            || (new_time >= ptr_server->last_away_check + (away_check * 60)))
+                        {
+                            irc_server_check_away (ptr_server);
+                        }
+                    }
                 }
                 
                 /* check if it's time to autojoin channels (after command delay) */
@@ -2175,24 +2215,6 @@ irc_server_timer_cb (void *data, int remaining_calls)
             }
         }
     }
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
- * irc_server_timer_check_away_cb: timer called to check away on servers
- *                                 (according to option "irc_check_away")
- */
-
-int
-irc_server_timer_check_away_cb (void *data, int remaining_calls)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) remaining_calls;
-    
-    if (weechat_config_integer (irc_config_network_away_check) > 0)
-        irc_server_check_away ();
     
     return WEECHAT_RC_OK;
 }
@@ -2368,10 +2390,11 @@ irc_server_login (struct t_irc_server *server)
     
     if (server->hook_timer_connection)
         weechat_unhook (server->hook_timer_connection);
-    server->hook_timer_connection = weechat_hook_timer (weechat_config_integer (irc_config_network_connection_timeout) * 1000,
-                                                        0, 1,
-                                                        &irc_server_timer_connection_cb,
-                                                        server);
+    server->hook_timer_connection = weechat_hook_timer (
+        IRC_SERVER_OPTION_INTEGER (server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT) * 1000,
+        0, 1,
+        &irc_server_timer_connection_cb,
+        server);
 }
 
 /*
@@ -3477,44 +3500,40 @@ irc_server_get_pv_count (struct t_irc_server *server)
  */
 
 void
-irc_server_remove_away ()
+irc_server_remove_away (struct t_irc_server *server)
 {
-    struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     
-    for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+    if (server->is_connected)
     {
-        if (ptr_server->is_connected)
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
         {
-            for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
-            {
-                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                    irc_channel_remove_away (ptr_server, ptr_channel);
-            }
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                irc_channel_remove_away (server, ptr_channel);
         }
+        server->last_away_check = 0;
     }
 }
 
 /*
- * irc_server_check_away: check for away on all channels (for all servers)
+ * irc_server_check_away: check for away on all channels of a server
  */
 
 void
-irc_server_check_away ()
+irc_server_check_away (struct t_irc_server *server)
 {
-    struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     
-    for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+    if (server->is_connected)
     {
-        if (ptr_server->is_connected)
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
         {
-            for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
-            {
-                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                    irc_channel_check_away (ptr_server, ptr_channel);
-            }
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                irc_channel_check_away (server, ptr_channel);
         }
+        server->last_away_check = time (NULL);
     }
 }
 
@@ -3849,6 +3868,27 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin_delay",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "connection_timeout",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "anti_flood_prio_high",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "anti_flood_prio_low",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "away_check",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "away_check_max_nicks",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_part",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART)))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_quit",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
@@ -3900,6 +3940,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", server->lag_last_refresh))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_away_check", server->last_away_check))
         return 0;
     
     return 1;
@@ -4088,6 +4130,55 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  autorejoin_delay . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]));
+        /* connection_timeout */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]))
+            weechat_log_printf ("  connection_timeout . : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT));
+        else
+            weechat_log_printf ("  connection_timeout . : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]));
+        /* anti_flood_prio_high */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
+            weechat_log_printf ("  anti_flood_prio_high : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH));
+        else
+            weechat_log_printf ("  anti_flood_prio_high : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]));
+        /* anti_flood_prio_low */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
+            weechat_log_printf ("  anti_flood_prio_low. : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW));
+        else
+            weechat_log_printf ("  anti_flood_prio_low. : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]));
+        /* away_check */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
+            weechat_log_printf ("  away_check . . . . . : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK));
+        else
+            weechat_log_printf ("  away_check . . . . . : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK]));
+        /* away_check_max_nicks */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]))
+            weechat_log_printf ("  away_check_max_nicks : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS));
+        else
+            weechat_log_printf ("  away_check_max_nicks : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
+        /* default_msg_part */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
+            weechat_log_printf ("  default_msg_part . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_PART));
+        else
+            weechat_log_printf ("  default_msg_part . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]));
+        /* default_msg_quit */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]))
+            weechat_log_printf ("  default_msg_quit . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT));
+        else
+            weechat_log_printf ("  default_msg_quit . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
         /* other server variables */
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
@@ -4133,6 +4224,7 @@ irc_server_print_log ()
         weechat_log_printf ("  lag_last_refresh . . : %ld",   ptr_server->lag_last_refresh);
         weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
         weechat_log_printf ("  last_user_message. . : %ld",   ptr_server->last_user_message);
+        weechat_log_printf ("  last_away_check. . . : %ld",   ptr_server->last_away_check);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
             weechat_log_printf ("  outqueue[%02d] . . . . : 0x%lx", i, ptr_server->outqueue[i]);

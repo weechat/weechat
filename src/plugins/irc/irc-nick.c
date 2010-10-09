@@ -643,9 +643,9 @@ void
 irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
                    struct t_irc_nick *nick, int is_away)
 {
-    if ((weechat_config_integer (irc_config_network_away_check) > 0)
-        && ((weechat_config_integer (irc_config_network_away_check_max_nicks) == 0) ||
-            (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks))))
+    if ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+        && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
+            || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS))))
     {
         if (((is_away) && (!(nick->flags & IRC_NICK_AWAY))) ||
             ((!is_away) && (nick->flags & IRC_NICK_AWAY)))

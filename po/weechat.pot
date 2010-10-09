@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-07 14:45+0200\n"
+"POT-Creation-Date: 2010-10-09 10:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3629,6 +3629,39 @@ msgstr ""
 msgid "delay (in seconds) before autorejoin (after kick)"
 msgstr ""
 
+msgid ""
+"timeout (in seconds) between TCP connection to server and message 001 "
+"received, if this timeout is reached before 001 message is received, WeeChat "
+"will disconnect from server"
+msgstr ""
+
+msgid ""
+"anti-flood for high priority queue: number of seconds between two user "
+"messages or commands sent to IRC server (0 = no anti-flood)"
+msgstr ""
+
+msgid ""
+"anti-flood for low priority queue: number of seconds between two messages "
+"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
+msgstr ""
+
+msgid "interval between two checks for away (in minutes, 0 = never check)"
+msgstr ""
+
+msgid ""
+"do not check away nicks on channels with high number of nicks (0 = unlimited)"
+msgstr ""
+
+msgid ""
+"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
+"version in string)"
+msgstr ""
+
+msgid ""
+"default quit message (disconnecting from server) (\"%v\" will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+
 #, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr ""
@@ -3812,29 +3845,6 @@ msgstr ""
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
 
-msgid ""
-"timeout (in seconds) between TCP connection to server and message 001 "
-"received, if this timeout is reached before 001 message is received, WeeChat "
-"will disconnect from server"
-msgstr ""
-
-msgid ""
-"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
-"version in string)"
-msgstr ""
-
-msgid ""
-"default quit message (disconnecting from server) (\"%v\" will be replaced by "
-"WeeChat version in string)"
-msgstr ""
-
-msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr ""
-
-msgid ""
-"do not check away nicks on channels with high number of nicks (0 = unlimited)"
-msgstr ""
-
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 
@@ -3847,16 +3857,6 @@ msgstr ""
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
 "seconds)"
-msgstr ""
-
-msgid ""
-"anti-flood for high priority queue: number of seconds between two user "
-"messages or commands sent to IRC server (0 = no anti-flood)"
-msgstr ""
-
-msgid ""
-"anti-flood for low priority queue: number of seconds between two messages "
-"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
 msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
@@ -3923,6 +3923,11 @@ msgstr ""
 
 msgid "off"
 msgstr ""
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "channel"
 msgid_plural "channels"
@@ -4170,11 +4175,6 @@ msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "minute"
-msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 

@@ -56,7 +56,14 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
     IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
-    IRC_SERVER_OPTION_AUTOREJOIN_DELAY, /* delay before auto rejoin          */
+    IRC_SERVER_OPTION_AUTOREJOIN_DELAY,     /* delay before auto rejoin      */
+    IRC_SERVER_OPTION_CONNECTION_TIMEOUT,   /* timeout for connection        */
+    IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH, /* anti-flood (high priority)    */
+    IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW,  /* anti-flood (low priority)     */
+    IRC_SERVER_OPTION_AWAY_CHECK,           /* delay between away checks     */
+    IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS, /* max nicks for away check      */
+    IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
+    IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -158,6 +165,7 @@ struct t_irc_server
     time_t lag_last_refresh;        /* last refresh of lag item              */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     time_t last_user_message;       /* time of last user message (anti flood)*/
+    time_t last_away_check;         /* time of last away check on server     */
     struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
     struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
@@ -223,15 +231,14 @@ extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *data, int fd);
 extern int irc_server_timer_sasl_cb (void *data, int remaining_calls);
 extern int irc_server_timer_cb (void *data, int remaining_calls);
-extern int irc_server_timer_check_away_cb (void *data, int remaining_calls);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server,
                                           int priority);
 extern int irc_server_get_channel_count (struct t_irc_server *server);
 extern int irc_server_get_pv_count (struct t_irc_server *server);
 extern void irc_server_set_away (struct t_irc_server *server, const char *nick,
                                  int is_away);
-extern void irc_server_remove_away ();
-extern void irc_server_check_away ();
+extern void irc_server_remove_away (struct t_irc_server *server);
+extern void irc_server_check_away (struct t_irc_server *server);
 extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();

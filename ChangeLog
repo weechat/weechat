@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-07
+v0.3.4-dev, 2010-10-09
 
 
 Version 0.3.4 (under dev!)
@@ -19,6 +19,9 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable
+* irc: move options from network section to server section: connection_timeout,
+  anti_flood_prio_high, anti_flood_prio_low, away_check, away_check_max_nicks,
+  default_msg_part, default_msg_quit (task #10664, task #10668)
 * irc: rename options irc.look.open_channel_near_server and
   irc.look.open_pv_near_server to irc.look.new_channel_position and
   irc.look.new_pv_position with new values (none, next or near_server)

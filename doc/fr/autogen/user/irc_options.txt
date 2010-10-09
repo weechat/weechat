@@ -238,16 +238,6 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
-* *irc.network.anti_flood_prio_high*
-** description: `anti-flood pour la file d'attente haute priorité : nombre de secondes entre deux messages utilisateur ou commandes envoyés au serveur IRC (0 = pas d'anti-flood)`
-** type: entier
-** valeurs: 0 .. 60 (valeur par défaut: `2`)
-
-* *irc.network.anti_flood_prio_low*
-** description: `anti-flood pour la file d'attente basse priorité : nombre de secondes entre deux messages envoyés au serveur IRC (messages comme les réponses automatiques aux CTCP) (0 = pas d'anti-flood)`
-** type: entier
-** valeurs: 0 .. 60 (valeur par défaut: `2`)
-
 * *irc.network.autoreconnect_delay_growing*
 ** description: `facteur de croissance du délai d'autoreconnection au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)`
 ** type: entier
@@ -258,16 +248,6 @@
 ** type: entier
 ** valeurs: 0 .. 86400 (valeur par défaut: `1800`)
 
-* *irc.network.away_check*
-** description: `intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)`
-** type: entier
-** valeurs: 0 .. 10080 (valeur par défaut: `0`)
-
-* *irc.network.away_check_max_nicks*
-** description: `ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)`
-** type: entier
-** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
-
 * *irc.network.colors_receive*
 ** description: `si désactivé, les codes couleurs des messages entrants sont ignorés`
 ** type: booléen
@@ -277,21 +257,6 @@
 ** description: `autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (ctrl-c + un code et une couleur optionnelle: b=gras, cxx=couleur, cxx,yy=couleur+fond, u=souligné, r=inversé)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
-
-* *irc.network.connection_timeout*
-** description: `délai d'attente (en secondes) entre la connexion TCP au serveur et la réception du message 001, si ce délai est atteint avant que le message 001 soit reçu, WeeChat se déconnectera du serveur`
-** type: entier
-** valeurs: 1 .. 3600 (valeur par défaut: `60`)
-
-* *irc.network.default_msg_part*
-** description: `message par défaut pour le part (en quittant un canal) ("%v" sera remplacé par la version de WeeChat dans la chaîne)`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
-
-* *irc.network.default_msg_quit*
-** description: `message de fin par défaut (lors de la déconnexion du serveur) ("%v" sera remplacé par la version de WeeChat dans la chaîne)`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
 
 * *irc.network.lag_check*
 ** description: `intervalle entre deux vérifications du lag (en secondes, 0 = ne jamais vérifier)`
@@ -323,6 +288,16 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* *irc.server_default.anti_flood_prio_high*
+** description: `anti-flood pour la file d'attente haute priorité : nombre de secondes entre deux messages utilisateur ou commandes envoyés au serveur IRC (0 = pas d'anti-flood)`
+** type: entier
+** valeurs: 0 .. 60 (valeur par défaut: `2`)
+
+* *irc.server_default.anti_flood_prio_low*
+** description: `anti-flood pour la file d'attente basse priorité : nombre de secondes entre deux messages envoyés au serveur IRC (messages comme les réponses automatiques aux CTCP) (0 = pas d'anti-flood)`
+** type: entier
+** valeurs: 0 .. 60 (valeur par défaut: `2`)
+
 * *irc.server_default.autoconnect*
 ** description: `connexion automatique au serveur quand WeeChat démarre`
 ** type: booléen
@@ -353,6 +328,16 @@
 ** type: entier
 ** valeurs: 0 .. 86400 (valeur par défaut: `30`)
 
+* *irc.server_default.away_check*
+** description: `intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)`
+** type: entier
+** valeurs: 0 .. 10080 (valeur par défaut: `0`)
+
+* *irc.server_default.away_check_max_nicks*
+** description: `ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)`
+** type: entier
+** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
+
 * *irc.server_default.command*
 ** description: `commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)`
 ** type: chaîne
@@ -362,6 +347,21 @@
 ** description: `délai (en secondes) après exécution de la commande (exemple: donner du temps pour l'authentification)`
 ** type: entier
 ** valeurs: 0 .. 3600 (valeur par défaut: `0`)
+
+* *irc.server_default.connection_timeout*
+** description: `délai d'attente (en secondes) entre la connexion TCP au serveur et la réception du message 001, si ce délai est atteint avant que le message 001 soit reçu, WeeChat se déconnectera du serveur`
+** type: entier
+** valeurs: 1 .. 3600 (valeur par défaut: `60`)
+
+* *irc.server_default.default_msg_part*
+** description: `message par défaut pour le part (en quittant un canal) ("%v" sera remplacé par la version de WeeChat dans la chaîne)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
+
+* *irc.server_default.default_msg_quit*
+** description: `message de fin par défaut (lors de la déconnexion du serveur) ("%v" sera remplacé par la version de WeeChat dans la chaîne)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
 
 * *irc.server_default.ipv6*
 ** description: `utiliser le protocole IPv6 pour la communication avec le serveur`

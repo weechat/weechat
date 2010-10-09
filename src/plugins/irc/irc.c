@@ -52,7 +52,6 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
 struct t_hook *irc_hook_timer = NULL;
-struct t_hook *irc_hook_timer_check_away = NULL;
 
 int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
 
@@ -245,8 +244,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     
     if (irc_hook_timer)
         weechat_unhook (irc_hook_timer);
-    if (irc_hook_timer_check_away)
-        weechat_unhook (irc_hook_timer_check_away);
     
     if (irc_signal_upgrade_received)
     {

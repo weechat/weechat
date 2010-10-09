@@ -907,7 +907,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     char *channel_name, *pos_args, *buf;
-    const char *version, *ptr_arg;
+    const char *version, *ptr_arg, *msg_part;
     char **channels;
     int i, num_channels;
     
@@ -980,10 +980,10 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
         ptr_channel->cycle = 1;
     }
     
+    msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
+                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
     ptr_arg = (pos_args) ? pos_args :
-        (weechat_config_string (irc_config_network_default_msg_part)
-         && weechat_config_string (irc_config_network_default_msg_part)[0]) ?
-        weechat_config_string (irc_config_network_default_msg_part) : NULL;
+        ((msg_part && msg_part[0]) ? msg_part : NULL);
     
     if (ptr_arg)
     {
@@ -1267,7 +1267,7 @@ irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 {
-    const char *ptr_arg, *version;
+    const char *ptr_arg, *version, *msg_quit;
     char *buf;
     
     if (!server)
@@ -1275,10 +1275,10 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
     
     if (server->is_connected)
     {
+        msg_quit = IRC_SERVER_OPTION_STRING(server,
+                                            IRC_SERVER_OPTION_DEFAULT_MSG_QUIT);
         ptr_arg = (arguments) ? arguments :
-            (weechat_config_string (irc_config_network_default_msg_quit)
-             && weechat_config_string (irc_config_network_default_msg_quit)[0]) ?
-            weechat_config_string (irc_config_network_default_msg_quit) : NULL;
+            ((msg_quit && msg_quit[0]) ? msg_quit : NULL);
         
         if (ptr_arg)
         {
@@ -2706,14 +2706,13 @@ void
 irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
                           const char *part_message)
 {
-    const char *ptr_arg;
+    const char *ptr_arg, *version, *msg_part;
     char *buf;
-    const char *version;
     
+    msg_part = IRC_SERVER_OPTION_STRING(server,
+                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
     ptr_arg = (part_message) ? part_message :
-        (weechat_config_string (irc_config_network_default_msg_part)
-         && weechat_config_string (irc_config_network_default_msg_part)[0]) ?
-        weechat_config_string (irc_config_network_default_msg_part) : NULL;
+        ((msg_part && msg_part[0]) ? msg_part : NULL);
     
     if (ptr_arg)
     {
@@ -2742,7 +2741,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
     char *channel_name, *pos_args;
-
+    
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("part", 1);
     
