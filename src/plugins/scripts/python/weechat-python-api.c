@@ -2702,12 +2702,6 @@ weechat_python_api_prefix (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script || !python_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "prefix");
-        PYTHON_RETURN_EMPTY;
-    }
-    
     prefix = NULL;
     
     if (!PyArg_ParseTuple (args, "s", &prefix))
@@ -2733,12 +2727,6 @@ weechat_python_api_color (PyObject *self, PyObject *args)
     
     /* make C compiler happy */
     (void) self;
-    
-    if (!python_current_script || !python_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "color");
-        PYTHON_RETURN_EMPTY;
-    }
     
     color = NULL;
     

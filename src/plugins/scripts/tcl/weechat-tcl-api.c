@@ -2924,12 +2924,6 @@ weechat_tcl_api_prefix (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script || !tcl_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "prefix");
-        TCL_RETURN_EMPTY;
-    }
-    
     if (objc < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "prefix");
@@ -2956,12 +2950,6 @@ weechat_tcl_api_color (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
     
-    if (!tcl_current_script || !tcl_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "color");
-        TCL_RETURN_EMPTY;
-    }
-    
     if (objc < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "color");
@@ -2984,15 +2972,9 @@ weechat_tcl_api_print (ClientData clientData, Tcl_Interp *interp,
     Tcl_Obj* objp;
     char *buffer, *message;
     int i;
-
+    
     /* make C compiler happy */
     (void) clientData;
-    
-    if (!tcl_current_script || !tcl_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "print");
-        TCL_RETURN_ERROR;
-    }
     
     if (objc < 3)
     {

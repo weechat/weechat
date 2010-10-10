@@ -2556,12 +2556,6 @@ XS (XS_weechat_api_prefix)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script || !perl_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "prefix");
-        PERL_RETURN_EMPTY;
-    }
-    
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "prefix");
@@ -2584,12 +2578,6 @@ XS (XS_weechat_api_color)
     
     /* make C compiler happy */
     (void) cv;
-    
-    if (!perl_current_script || !perl_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "color");
-        PERL_RETURN_EMPTY;
-    }
     
     if (items < 1)
     {

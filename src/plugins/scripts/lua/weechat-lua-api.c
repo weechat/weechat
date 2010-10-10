@@ -3044,12 +3044,6 @@ weechat_lua_api_prefix (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script || !lua_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "prefix");
-        LUA_RETURN_EMPTY;
-    }
-    
     prefix = NULL;
     
     n = lua_gettop (lua_current_interpreter);
@@ -3079,12 +3073,6 @@ weechat_lua_api_color (lua_State *L)
     
     /* make C compiler happy */
     (void) L;
-    
-    if (!lua_current_script || !lua_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "color");
-        LUA_RETURN_EMPTY;
-    }
     
     color = NULL;
     

@@ -3110,12 +3110,6 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script || !ruby_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "prefix");
-        RUBY_RETURN_EMPTY;
-    }
-    
     c_prefix = NULL;
     
     if (NIL_P (prefix))
@@ -3145,12 +3139,6 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     
     /* make C compiler happy */
     (void) class;
-    
-    if (!ruby_current_script || !ruby_current_script->name)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "color");
-        RUBY_RETURN_EMPTY;
-    }
     
     c_color = NULL;
     
