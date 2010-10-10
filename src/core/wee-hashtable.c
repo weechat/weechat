@@ -163,13 +163,18 @@ hashtable_alloc_type (enum t_hashtable_type type, void *value, int size_value,
     switch (type)
     {
         case HASHTABLE_INTEGER:
-            *pointer = malloc (sizeof (int));
-            if (*pointer)
-                *((int *)(*pointer)) = *((int *)value);
+            if (value)
+            {
+                *pointer = malloc (sizeof (int));
+                if (*pointer)
+                    *((int *)(*pointer)) = *((int *)value);
+            }
+            else
+                *pointer = NULL;
             *size = (*pointer) ? sizeof (int) : 0;
             break;
         case HASHTABLE_STRING:
-            *pointer = strdup ((const char *)value);
+            *pointer = (value) ? strdup ((const char *)value) : NULL;
             *size = (*pointer) ? strlen (*pointer) + 1 : 0;
             break;
         case HASHTABLE_POINTER:
@@ -177,15 +182,25 @@ hashtable_alloc_type (enum t_hashtable_type type, void *value, int size_value,
             *size = sizeof (void *);
             break;
         case HASHTABLE_BUFFER:
-            *pointer = malloc (size_value);
-            if (*pointer)
-                memcpy (*pointer, value, size_value);
+            if (value)
+            {
+                *pointer = malloc (size_value);
+                if (*pointer)
+                    memcpy (*pointer, value, size_value);
+            }
+            else
+                *pointer = NULL;
             *size = (*pointer) ? size_value : 0;
             break;
         case HASHTABLE_TIME:
-            *pointer = malloc (sizeof (time_t));
-            if (*pointer)
-                *((time_t *)(*pointer)) = *((time_t *)value);
+            if (value)
+            {
+                *pointer = malloc (sizeof (time_t));
+                if (*pointer)
+                    *((time_t *)(*pointer)) = *((time_t *)value);
+            }
+            else
+                *pointer = NULL;
             *size = (*pointer) ? sizeof (time_t) : 0;
             break;
         case HASHTABLE_NUM_TYPES:
@@ -229,7 +244,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     unsigned int hash;
     struct t_hashtable_item *ptr_item, *pos_item, *new_item;
     
-    if (!hashtable
+    if (!hashtable || !key
         || ((hashtable->type_keys == HASHTABLE_BUFFER) && (key_size <= 0))
         || ((hashtable->type_values == HASHTABLE_BUFFER) && (value_size <= 0)))
     {

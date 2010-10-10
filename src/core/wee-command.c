@@ -509,12 +509,21 @@ command_buffer_display_localvar (void *data,
     (void) data;
     (void) hashtable;
     
-    if (key && value)
+    if (key)
     {
-        gui_chat_printf (NULL,
-                         "  %s: \"%s\"",
-                         (const char *)key,
-                         (const char *)value);
+        if (value)
+        {
+            gui_chat_printf (NULL,
+                             "  %s: \"%s\"",
+                             (const char *)key,
+                             (const char *)value);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             "  %s: (null)",
+                             (const char *)key);
+        }
     }
 }
 
