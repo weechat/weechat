@@ -78,7 +78,8 @@ struct t_irc_protocol_msg
 };
 
 extern const char *irc_protocol_get_nick_from_host (const char *host);
-extern const char *irc_protocol_tags (const char *command, const char *tags);
+extern const char *irc_protocol_tags (const char *command, const char *tags,
+                                      const char *nick);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
                                        const char *msg_command,

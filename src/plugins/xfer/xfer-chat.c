@@ -100,6 +100,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
     char *ptr_buf_decoded, *ptr_buf_without_weechat_colors, *ptr_buf_color;
+    char str_tags[256];
     int num_read, length, ctcp_action;
     
     /* make C compiler happy */
@@ -175,8 +176,11 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                                      ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf));
                 if (ctcp_action)
                 {
+                    snprintf (str_tags, sizeof (str_tags),
+                              "irc_privmsg,irc_action,notify_message,nick_%s",
+                              xfer->remote_nick);
                     weechat_printf_tags (xfer->buffer,
-                                         "irc_privmsg,irc_action,notify_message",
+                                         str_tags,
                                          "%s%s%s%s%s%s",
                                          weechat_prefix ("action"),
                                          (xfer->remote_nick_color) ?
@@ -188,8 +192,11 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                 }
                 else
                 {
+                    snprintf (str_tags, sizeof (str_tags),
+                              "irc_privmsg,notify_message,nick_%s",
+                              xfer->remote_nick);
                     weechat_printf_tags (xfer->buffer,
-                                         "irc_privmsg,notify_message",
+                                         str_tags,
                                          "%s%s\t%s",
                                          (xfer->remote_nick_color) ?
                                          xfer->remote_nick_color : weechat_color ("chat_nick_other"),
