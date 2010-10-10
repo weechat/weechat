@@ -324,19 +324,23 @@ For checking away nicks in WeeChat, see question about
 How can I see away nicks in nicklist?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have to set option 'irc.network.away_check' to a positive value (minutes
-between each check of away nicks).
+You have to set option 'irc.server_default.away_check' to a positive value
+(minutes between each check of away nicks).
 
-You can set option 'irc.network.away_check_max_nicks' to limit away check on
-small channels only.
+You can set option 'irc.server_default.away_check_max_nicks' to limit away check
+on small channels only.
 
 For example, check every 5 minutes for away nicks, for channels with max 25
 nicks:
 
 ----------------------------------------
-/set irc.network.away_check 5
-/set irc.network.away_check_max_nicks 25
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
 ----------------------------------------
+
+[NOTE]
+For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+'irc.network.away_check_max_nicks'.
 
 
 [[highlight_notification]]

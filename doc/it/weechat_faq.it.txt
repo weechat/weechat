@@ -334,19 +334,24 @@ relativa a <<color_away_nicks,nick assenti>>.
 Come posso vedere i nick assenti nella lista nick?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-È necessario impostare l'opzione 'irc.network.away_check' su un valore
+È necessario impostare l'opzione 'irc.server_default.away_check' su un valore
 positivo (minuti tra ogni controllo dei nick assenti).
 
-L'opzione 'irc.network.away_check_max_nicks' limita il controllo delle assenze
-solo sui canali più piccoli.
+L'opzione 'irc.server_default.away_check_max_nicks' limita il controllo delle
+assenze solo sui canali più piccoli.
 
 Ad esempio, per controllare ogni 5 minuti per i nick assenti, sui canali con
 massimo 25 nick:
 
 ----------------------------------------
-/set irc.network.away_check 5
-/set irc.network.away_check_max_nicks 25
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
 ----------------------------------------
+
+[NOTE]
+// TRANSLATION MISSING
+For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+'irc.network.away_check_max_nicks'.
 
 
 [[highlight_notification]]

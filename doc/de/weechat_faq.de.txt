@@ -343,20 +343,27 @@ Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 Wie kann ich mir Nicks in der Nickliste anzeigen lassen, die abwesend sind?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dazu musst Du in der Option 'irc.network.away_check' ein Zeitintervall, in Minuten,
-angeben die zwischen zwei Überprüfungen liegen soll.
+Dazu musst Du in der Option 'irc.server_default.away_check' ein Zeitintervall,
+in Minuten, angeben die zwischen zwei Überprüfungen liegen soll.
 
-Mit der Option 'irc.network.away_check_max_nicks' kann festgelegt werden in welchen
-Channels eine Überprüfung stattfinden soll. Hierbei stellt der angegebene Wert die
-maximale Anzahl an Nicks in einem Channel dar, die den Channel gleichzeitig besuchen.
+Mit der Option 'irc.server_default.away_check_max_nicks' kann festgelegt werden
+in welchen Channels eine Überprüfung stattfinden soll. Hierbei stellt der
+angegebene Wert die maximale Anzahl an Nicks in einem Channel dar, die den
+Channel gleichzeitig besuchen.
 
-In folgendem Beispiel wird der Abwesenheitsstatus alle fünf Minuten überprüft. Dabei
-werden aber nur Channels berücksichtigt die nicht mehr als 25 Teilnehmer haben:
+In folgendem Beispiel wird der Abwesenheitsstatus alle fünf Minuten überprüft.
+Dabei werden aber nur Channels berücksichtigt die nicht mehr als 25 Teilnehmer
+haben:
 
 ----------------------------------------
-/set irc.network.away_check 5
-/set irc.network.away_check_max_nicks 25
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
 ----------------------------------------
+
+[NOTE]
+// TRANSLATION MISSING
+For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+'irc.network.away_check_max_nicks'.
 
 
 [[highlight_notification]]

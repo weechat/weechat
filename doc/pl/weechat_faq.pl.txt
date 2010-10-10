@@ -326,19 +326,24 @@ Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie 
 Jak mogę zobaczyć kto jest aktualnie nieobecny ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Należy ustawić opcję 'irc.network.away_check' na wartość większą od zera
+Należy ustawić opcję 'irc.server_default.away_check' na wartość większą od zera
 (minuty pomiędzy sprawdzaniem czy nick jest nieobecny).
 
-Możesz ustawić opcję 'irc.network.away_check_max_nicks' w celu ustalenia
+Możesz ustawić opcję 'irc.server_default.away_check_max_nicks' w celu ustalenia
 sprawdzania nieobecności dla małych kanałów.
 
 Na przykład, aby sprawdzać nieonecność nicków co 5, dla kanałów z maksymalnie 25
 osobami:
 
 ----------------------------------------
-/set irc.network.away_check 5
-/set irc.network.away_check_max_nicks 25
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
 ----------------------------------------
+
+[NOTE]
+// TRANSLATION MISSING
+For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+'irc.network.away_check_max_nicks'.
 
 
 [[highlight_notification]]

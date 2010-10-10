@@ -338,19 +338,23 @@ Pour vérifier les pseudos absents dans WeeChat, voir la question à propos des
 Comment puis-je voir les pseudos absents dans la liste des pseudos ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Vous devez positionner l'option 'irc.network.away_check' avec une valeur
+Vous devez positionner l'option 'irc.server_default.away_check' avec une valeur
 positive (minutes entre chaque vérification des pseudos absents).
 
-Vous pouvez aussi positionner l'option 'irc.network.away_check_max_nicks' pour
-limiter la vérification d'absence sur les petits canaux seulement.
+Vous pouvez aussi positionner l'option 'irc.server_default.away_check_max_nicks'
+pour limiter la vérification d'absence sur les petits canaux seulement.
 
 Par exemple, pour vérifier les pseudos absents toutes les 5 minutes, pour les
 canaux avec maximum 25 pseudos :
 
 ----------------------------------------
-/set irc.network.away_check 5
-/set irc.network.away_check_max_nicks 25
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
 ----------------------------------------
+
+[NOTE]
+Pour WeeChat < = 0.3.3, les options sont 'irc.network.away_check' et
+'irc.network.away_check_max_nicks'.
 
 
 [[highlight_notification]]
