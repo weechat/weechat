@@ -118,7 +118,7 @@
      niveau: niveau de debug pour l'extension
        dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
      buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
-    windows: affiche l'arbre des fenêtres<
+    windows: affiche l'arbre des fenêtres
        term: afficher des infos sur le terminal et les couleurs disponibles
 ........................................
 
