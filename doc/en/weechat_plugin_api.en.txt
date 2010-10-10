@@ -3092,16 +3092,20 @@ Arguments:
 *** 'pointer': pointer
 *** 'buffer': buffer
 *** 'time': time
+** 'keys': string with list of keys (format: "key1,key2,key3")
 
 Return value:
 
 * string value of property
 
-C example:
+C examples:
 
 [source,C]
 ----------------------------------------
-const char *type_keys = weechat_hashtable_get_string (hashtable, "type_keys");
+weechat_printf (NULL, "keys are type: %s",
+                weechat_hashtable_get_string (hashtable, "type_keys"));
+weechat_printf (NULL, "list of keys: %s",
+                weechat_hashtable_get_string (hashtable, "keys"));
 ----------------------------------------
 
 [NOTE]

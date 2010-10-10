@@ -3123,16 +3123,20 @@ Arguments:
 *** 'pointer' : pointeur
 *** 'buffer' : buffer
 *** 'time' : heure
+** 'keys': chaîne avec la liste des clés (format: "clé1,clé2,clé3")
 
 Valeur en retour :
 
 * valeur de la propriété sous forme de chaîne
 
-Exemple en C :
+Exemples en C :
 
 [source,C]
 ----------------------------------------
-const char *type_keys = weechat_hashtable_get_string (hashtable, "type_keys");
+weechat_printf (NULL, "les clés sont de type: %s",
+                weechat_hashtable_get_string (hashtable, "type_keys"));
+weechat_printf (NULL, "liste des clés: %s",
+                weechat_hashtable_get_string (hashtable, "keys"));
 ----------------------------------------
 
 [NOTE]

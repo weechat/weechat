@@ -128,6 +128,7 @@ hashtable_new (int size,
         new_hashtable->type_keys = type_keys_int;
         new_hashtable->type_values = type_values_int;
         new_hashtable->htable = malloc (size * sizeof (*(new_hashtable->htable)));
+        new_hashtable->keys = NULL;
         if (!new_hashtable->htable)
         {
             free (new_hashtable);
@@ -420,6 +421,112 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
+ * hashtable_get_keys_compute_length_cb: compute length of all keys
+ */
+
+void
+hashtable_get_keys_compute_length_cb (void *data,
+                                      struct t_hashtable *hashtable,
+                                      const void *key, const void *value)
+{
+    char str_int[64];
+    int *length;
+    
+    /* make C compiler happy */
+    (void) value;
+    
+    length = (int *)data;
+    
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
+            *length += strlen (str_int) + 1;
+            break;
+        case HASHTABLE_STRING:
+            *length += strlen ((char *)key) + 1;
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_get_keys_build_string_cb: build string with all keys
+ */
+
+void
+hashtable_get_keys_build_string_cb (void *data,
+                                    struct t_hashtable *hashtable,
+                                    const void *key, const void *value)
+{
+    char str_int[64];
+    char *keys;
+    
+    /* make C compiler happy */
+    (void) value;
+    
+    keys = (char *)data;
+    
+    if (keys[0])
+        strcat (keys, ",");
+    
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
+            strcat (keys, str_int);
+            break;
+        case HASHTABLE_STRING:
+            strcat (keys, (char *)key);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_get_keys: get keys of hashtable as string
+ *                     string has format: "key1,key2,key3"
+ *                     Note: this works only if keys have type "integer",
+ *                           or "string"
+ */
+
+const char *
+hashtable_get_keys (struct t_hashtable *hashtable)
+{
+    int length;
+    
+    if (hashtable->keys)
+    {
+        free (hashtable->keys);
+        hashtable->keys = NULL;
+    }
+    
+    /* first compute length of string */
+    length = 0;
+    hashtable_map (hashtable, &hashtable_get_keys_compute_length_cb, &length);
+    if (length == 0)
+        return hashtable->keys;
+    
+    /* build string */
+    hashtable->keys = malloc (length + 1);
+    if (!hashtable->keys)
+        return NULL;
+    hashtable->keys[0] = '\0';
+    hashtable_map (hashtable, &hashtable_get_keys_build_string_cb,
+                   hashtable->keys);
+    
+    return hashtable->keys;
+}
+
+/*
  * hashtable_get_string: get a hashtable property as string
  */
 
@@ -432,6 +539,8 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
             return hashtable_type_string[hashtable->type_keys];
         else if (string_strcasecmp (property, "type_values") == 0)
             return hashtable_type_string[hashtable->type_values];
+        else if (string_strcasecmp (property, "keys") == 0)
+            return hashtable_get_keys (hashtable);
     }
     
     return NULL;
@@ -585,6 +694,8 @@ hashtable_free (struct t_hashtable *hashtable)
     
     hashtable_remove_all (hashtable);
     free (hashtable->htable);
+    if (hashtable->keys)
+        free (hashtable->keys);
     free (hashtable);
 }
 
@@ -665,4 +776,5 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
             log_printf ("      next_item. . . . . : 0x%lx", ptr_item->next_item);
         }
     }
+    log_printf ("  keys . . . . . . . . . : '%s'", hashtable->keys);
 }

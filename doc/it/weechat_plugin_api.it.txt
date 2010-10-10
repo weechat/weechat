@@ -3109,6 +3109,7 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
                                           void *property);
 ----------------------------------------
 
+// TRANSLATION MISSING
 Arguments:
 
 * 'hashtable': hashtable pointer
@@ -3125,6 +3126,7 @@ Arguments:
 *** 'pointer': pointer
 *** 'buffer': buffer
 *** 'time': time
+** 'keys': string with list of keys (format: "key1,key2,key3")
 
 Return value:
 
@@ -3134,7 +3136,10 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-const char *type_keys = weechat_hashtable_get_string (hashtable, "type_keys");
+weechat_printf (NULL, "keys are type: %s",
+                weechat_hashtable_get_string (hashtable, "type_keys"));
+weechat_printf (NULL, "list of keys: %s",
+                weechat_hashtable_get_string (hashtable, "keys"));
 ----------------------------------------
 
 [NOTE]
