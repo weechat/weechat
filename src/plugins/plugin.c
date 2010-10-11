@@ -525,6 +525,7 @@ plugin_load (const char *filename)
         new_plugin->hashtable_set_with_size = &hashtable_set_with_size;
         new_plugin->hashtable_set = &hashtable_set;
         new_plugin->hashtable_get = &hashtable_get;
+        new_plugin->hashtable_has_key = &hashtable_has_key;
         new_plugin->hashtable_map = &hashtable_map;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
         new_plugin->hashtable_get_string = &hashtable_get_string;

@@ -3013,6 +3013,46 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+weechat_hashtable_has_key
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.4._
+
+// TRANSLATION MISSING
+Return 1 if hashtable has key, otherwise 0.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+----------------------------------------
+
+Argomenti:
+
+* 'hashtable': puntatore alla tabella hash
+* 'key': puntatore alla chiave
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* 1 if key is in hashtable, 0 if key is not in hashtable
+
+Esempio in C:
+
+// TRANSLATION MISSING
+[source,C]
+----------------------------------------
+if (weechat_hashtable_has_key (hashtable, "my_key"))
+{
+    /* key is in hashtable */
+    /* ... */
+}
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 

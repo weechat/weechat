@@ -3011,6 +3011,43 @@ void *value = weechat_hashtable_get (hashtable, "ma_cle");
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_hashtable_has_key
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne 1 si la clé est dans la hashtable, sinon 0.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'key' : pointeur vers la clé
+
+Valeur en retour :
+
+* 1 si la clé est dans la hashtable, 0 si la clé n'est pas dans la hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+if (weechat_hashtable_has_key (hashtable, "ma_cle"))
+{
+    /* la clé est dans la hashtable */
+    /* ... */
+}
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 

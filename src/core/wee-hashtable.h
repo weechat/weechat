@@ -113,6 +113,7 @@ extern int hashtable_set_with_size (struct t_hashtable *hashtable,
 extern int hashtable_set (struct t_hashtable *hashtable, void *key,
                           void *value);
 extern void *hashtable_get (struct t_hashtable *hashtable, const void *key);
+extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,
                            t_hashtable_map *callback_map,
                            void *callback_map_data);

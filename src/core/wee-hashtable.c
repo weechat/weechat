@@ -375,6 +375,16 @@ hashtable_get (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
+ * hashtable_has_key: return 1 if key is in hashtable, otherwise 0
+ */
+
+int
+hashtable_has_key (struct t_hashtable *hashtable, const void *key)
+{
+    return (hashtable_get_item (hashtable, key, NULL) != NULL) ? 1 : 0;
+}
+
+/*
  * hashtable_map: call a function on all hashtable entries
  */
 

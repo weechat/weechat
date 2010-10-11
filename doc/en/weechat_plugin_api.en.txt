@@ -2980,6 +2980,43 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 [NOTE]
 This function is not available in scripting API.
 
+weechat_hashtable_has_key
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return 1 if hashtable has key, otherwise 0.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'key': key pointer
+
+Return value:
+
+* 1 if key is in hashtable, 0 if key is not in hashtable
+
+C example:
+
+[source,C]
+----------------------------------------
+if (weechat_hashtable_has_key (hashtable, "my_key"))
+{
+    /* key is in hashtable */
+    /* ... */
+}
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 
