@@ -18,7 +18,7 @@
   
   Beispiele:
     Führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
-      /allchan me Ich teste gerade etwas... 
+      /allchan me Ich teste gerade etwas...
     Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
       /allchan -exclude=#weechat msg * Hallo Welt
     Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
@@ -153,7 +153,7 @@
 
        list: zeigt an, wer/was ignoriert wird
         add: füge eine Ignorierung hinzu
-        del: entferne eine Ignorierung 
+        del: entferne eine Ignorierung
      number: Nummer der Ignorierung die entfernt werden soll (nutze "list" )
        -all: entfernt alle Einträge
   nick/host: Nick oder Host der ignoriert werden soll: Syntax ist "re:regex" oder "mask" (mask ist eine Zeichenkette in der mittels "*" (Joker) ein oder mehrere Zeichen ersetzt werden können)

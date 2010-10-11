@@ -250,7 +250,7 @@ relay_client_weechat_add_to_infolist (struct t_infolist_item *item,
                                       struct t_relay_client *client)
 {
     if (!item || !client)
-        return 0;    
+        return 0;
     
     return 1;
 }

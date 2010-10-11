@@ -157,7 +157,7 @@ relay_client_irc_sendf (struct t_relay_client *client, const char *format, ...)
                         RELAY_PLUGIN_NAME, buffer);
     }
     
-    length = strlen (buffer);    
+    length = strlen (buffer);
     
     pos = strchr (buffer, '\r');
     if (pos)

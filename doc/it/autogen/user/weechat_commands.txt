@@ -365,6 +365,7 @@
   percorso_del_binario: percorso del binario di WeeChat (quello corrente è il predefinito)
   
   Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
+  
   Il processo di aggiornamento è diviso in 4 fasi:
     1. salvataggio della sessione in file per il core e i plugin (buffer, cronologia, ..)
     2. disattivazione di tutti i plugin (salvataggio delle configurazioni .conf)
