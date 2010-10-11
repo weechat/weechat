@@ -162,6 +162,7 @@ struct t_gui_buffer
     int highlight_tags_count;          /* number of tags to highlight       */
                                        /* (if 0, any tag is highlighted)    */
     char **highlight_tags_array;       /* tags to highlight                 */
+    struct t_hashtable *no_highlight_nicks; /* nicks to NOT highlight       */
     
     /* keys associated to buffer */
     struct t_gui_key *keys;            /* keys specific to buffer           */
@@ -231,6 +232,8 @@ extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
 extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                            const char *new_highlight_tags);
+extern void gui_buffer_set_no_highlight_nicks (struct t_gui_buffer *buffer,
+                                               const char *new_no_highlight_nicks);
 extern void gui_buffer_set_unread (struct t_gui_buffer *buffer);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             const char *value);

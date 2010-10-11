@@ -7982,6 +7982,7 @@ Paramètres :
 ** 'text_search_input': texte saisi sauvegardé avant la recherche de texte
 ** 'highlight_words': liste des mots pour le highlight
 ** 'highlight_tags': liste des étiquettes pour le highlight
+** 'no_highlight_nicks': liste des pseudos à NE PAS mettre en valeur (highlight)
 ** 'localvar_xxx' : contenu de la variable locale "xxx" (remplacer "xxx" par le
    nom de la variable locale à lire)
 
@@ -8144,6 +8145,18 @@ Paramètres :
 
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   liste d'étiquettes ("tags") à mettre en valeur pour ce tampon
+
+| no_highlight_nicks | liste de pseudos séparés par des virgules |
+  liste de pseudos à NE PAS mettre en valeur dans ce tampon, par exemple :
+  "joe,mike,robert"
+
+| no_highlight_nicks_add | liste de pseudos séparés par des virgules |
+  liste de pseudos à NE PAS mettre en valeur dans ce tampon, ces mots sont
+  ajoutés aux pseudos existants pour le tampon
+
+| no_highlight_nicks_del | liste de pseudos séparés par des virgules |
+  liste de pseudos à supprimer de la liste des pseudos à ne pas mettre en
+  valeur dans ce tampon
 
 | key_bind_xxx | toute chaîne |
   associe la nouvelle touche 'xxx', spécifique à ce tampon, la valeur est la

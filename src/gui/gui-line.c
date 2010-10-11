@@ -30,6 +30,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -378,6 +379,24 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
 }
 
 /*
+ * gui_line_get_nick_tag: get nick in tags: return "xxx" if tag "nick_xxx"
+ *                        is found
+ */
+
+const char *
+gui_line_get_nick_tag (struct t_gui_line *line)
+{
+    int i;
+    
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
+            return line->data->tags_array[i] + 5;
+    }
+    return NULL;
+}
+
+/*
  * gui_line_has_highlight: return 1 if given message contains highlight (with
  *                         a string in global highlight or buffer highlight)
  */
@@ -387,6 +406,7 @@ gui_line_has_highlight (struct t_gui_line *line)
 {
     int rc, i;
     char *msg_no_color, *highlight_words;
+    const char *nick;
     
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -412,6 +432,17 @@ gui_line_has_highlight (struct t_gui_line *line)
         if (!gui_line_match_tags (line,
                                   line->data->buffer->highlight_tags_count,
                                   line->data->buffer->highlight_tags_array))
+            return 0;
+    }
+
+    /*
+     * if a nick is defined in tags ("nick_xxx"), then check if highlight is
+     * disabled for this nick (using hashtable buffer->no_highlight_nicks)
+     */
+    nick = gui_line_get_nick_tag (line);
+    if (nick)
+    {
+        if (hashtable_has_key (line->data->buffer->no_highlight_nicks, nick))
             return 0;
     }
     

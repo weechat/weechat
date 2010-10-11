@@ -7959,6 +7959,8 @@ Argomenti:
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
 ** 'highlight_tags': elenco di tag da evidenziare
+// TRANSLATION MISSING
+** 'no_highlight_nicks': list of nicks to NOT highlight
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
 
@@ -8123,6 +8125,20 @@ Argomenti:
 
 | highlight_tags | elenco separato da virgole di tag |
   elenco separato da virgole di tag da evidenziare in questo buffer
+
+// TRANSLATION MISSING
+| no_highlight_nicks | comma separated list of nicks |
+  comma separated list of nicks to NOT highlight in this buffer, for example:
+  "joe,mike,robert"
+
+// TRANSLATION MISSING
+| no_highlight_nicks_add | comma separated list of nicks |
+  comma separated list of nicks to NOT highlight in this buffer, these words are
+  added to existing nicks in buffer
+
+// TRANSLATION MISSING
+| no_highlight_nicks_del | comma separated list of nicks |
+  comma separated list of nicks to remove from non highlighted nicks on buffer
 
 | key_bind_xxx | qualsiasi stringa |
   assegna un nuovo tasto 'xxx', specifico per questo buffer, il valore è il

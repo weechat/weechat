@@ -412,6 +412,8 @@ upgrade_weechat_read_cb (void *data,
                                                         infolist_string (infolist, "highlight_words"));
                         gui_buffer_set_highlight_tags (upgrade_current_buffer,
                                                        infolist_string (infolist, "highlight_tags"));
+                        gui_buffer_set_no_highlight_nicks (upgrade_current_buffer,
+                                                           infolist_string (infolist, "no_highlight_nicks"));
                         index = 0;
                         while (1)
                         {

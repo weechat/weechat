@@ -7874,6 +7874,7 @@ Arguments:
 ** 'text_search_input': input saved before text search
 ** 'highlight_words': list of words to highlight
 ** 'highlight_tags': list of tags to highlight
+** 'no_highlight_nicks': list of nicks to NOT highlight
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
    name of variable to read)
 
@@ -8029,6 +8030,17 @@ Arguments:
 
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer
+
+| no_highlight_nicks | comma separated list of nicks |
+  comma separated list of nicks to NOT highlight in this buffer, for example:
+  "joe,mike,robert"
+
+| no_highlight_nicks_add | comma separated list of nicks |
+  comma separated list of nicks to NOT highlight in this buffer, these words are
+  added to existing nicks in buffer
+
+| no_highlight_nicks_del | comma separated list of nicks |
+  comma separated list of nicks to remove from non highlighted nicks on buffer
 
 | key_bind_xxx | any string |
   bind a new key 'xxx', specific to this buffer, value is command to execute

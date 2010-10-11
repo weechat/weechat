@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-09
+v0.3.4-dev, 2010-10-11
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add property "no_highlight_nicks" in buffers to disable highlight
+  for some nicks in buffer
 * core: add new options weechat.look.input_share and
   weechat.look.input_share_overwrite (task #9228)
 * core: add new option weechat.look.prefix_align_min (task #10650)
@@ -19,6 +21,7 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable
+* irc: add tag "nick_xxx" in user messages
 * irc: move options from network section to server section: connection_timeout,
   anti_flood_prio_high, anti_flood_prio_low, away_check, away_check_max_nicks,
   default_msg_part, default_msg_quit (task #10664, task #10668)
