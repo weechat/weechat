@@ -414,7 +414,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * *weechat.look.hotlist_short_names*
-** description: `si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)`
+** description: `si défini, utilise des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -422,6 +422,11 @@
 ** description: `type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
 ** type: entier
 ** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: `group_time_asc`)
+
+* *weechat.look.hotlist_unique_numbers*
+** description: `garde seulement des numéros uniques dans la hotlist (cela s'applique seulement aux éléments de la hotlist où le nom n'est PAS affiché après le numéro)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * *weechat.look.input_share*
 ** description: `partage les commandes, le texte, ou les deux dans la zone de saisie pour tous les tampons (il y a toujours un historique local sur chaque tampon)`

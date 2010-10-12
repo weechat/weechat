@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-12 08:24+0200\n"
+"POT-Creation-Date: 2010-10-12 12:58+0200\n"
 "PO-Revision-Date: 2010-10-11 16:32+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1885,6 +1885,14 @@ msgid ""
 msgstr ""
 "Sortierung der Hotlist (group_time_asc (Standardwert), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
+
+#, fuzzy
+msgid ""
+"keep only unique numbers in hotlist (this applies only on hotlist items "
+"where name is NOT displayed after number)"
+msgstr ""
+"Maximale Anzahl an Namen in der Hotlist (0 = keine Namen, nur die Anzahl der "
+"Buffer)"
 
 #, fuzzy
 msgid ""

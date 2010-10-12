@@ -7,6 +7,7 @@ v0.3.4-dev, 2010-10-12
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add new option weechat.look.hotlist_unique_numbers (task #10691)
 * core: add property "no_highlight_nicks" in buffers to disable highlight
   for some nicks in buffer
 * core: add new options weechat.look.input_share and

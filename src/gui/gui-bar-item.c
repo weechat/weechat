@@ -979,9 +979,9 @@ char *
 gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               struct t_gui_window *window)
 {
-    char buf[1024], format[32];
+    char buf[1024], format[32], *buffer_without_name_displayed;
     struct t_gui_hotlist *ptr_hotlist;
-    int names_count, display_name;
+    int numbers_count, names_count, display_name;
     
     /* make C compiler happy */
     (void) data;
@@ -995,6 +995,15 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
     
     strcat (buf, _("Act: "));
     
+    buffer_without_name_displayed = NULL;
+    if (CONFIG_BOOLEAN(config_look_hotlist_unique_numbers) && last_gui_buffer)
+    {
+        buffer_without_name_displayed = malloc (last_gui_buffer->number);
+        if (buffer_without_name_displayed)
+            memset (buffer_without_name_displayed, 0, last_gui_buffer->number);
+    }
+    
+    numbers_count = 0;
     names_count = 0;
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
@@ -1022,36 +1031,51 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                 break;
         }
         
-        sprintf (buf + strlen (buf), "%d", ptr_hotlist->buffer->number);
+        display_name = ((CONFIG_BOOLEAN(config_look_hotlist_names_merged_buffers)
+                         && (gui_buffer_count_merged_buffers (ptr_hotlist->buffer->number) > 1))
+                        || (display_name
+                            && (CONFIG_INTEGER(config_look_hotlist_names_count) != 0)
+                            && (names_count < CONFIG_INTEGER(config_look_hotlist_names_count))));
         
-        if ((CONFIG_BOOLEAN(config_look_hotlist_names_merged_buffers)
-             && (gui_buffer_count_merged_buffers (ptr_hotlist->buffer->number) > 1))
-            || (display_name
-                && (CONFIG_INTEGER(config_look_hotlist_names_count) != 0)
-                && (names_count < CONFIG_INTEGER(config_look_hotlist_names_count))))
+        if (display_name || !buffer_without_name_displayed
+            || (buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] == 0))
         {
-            names_count++;
+            if (numbers_count > 0)
+                strcat (buf, ",");
             
-            strcat (buf, GUI_COLOR_CUSTOM_BAR_DELIM);
-            strcat (buf, ":");
-            strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
-            if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
-                snprintf (format, sizeof (format) - 1, "%%s");
+            numbers_count++;
+            sprintf (buf + strlen (buf), "%d", ptr_hotlist->buffer->number);
+            
+            if (display_name)
+            {
+                names_count++;
+                
+                strcat (buf, GUI_COLOR_CUSTOM_BAR_DELIM);
+                strcat (buf, ":");
+                strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
+                if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
+                    snprintf (format, sizeof (format) - 1, "%%s");
+                else
+                    snprintf (format, sizeof (format) - 1,
+                              "%%.%ds",
+                              CONFIG_INTEGER(config_look_hotlist_names_length));
+                sprintf (buf + strlen (buf), format,
+                         (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
+                         ptr_hotlist->buffer->short_name : ptr_hotlist->buffer->name);
+            }
             else
-                snprintf (format, sizeof (format) - 1,
-                          "%%.%ds",
-                          CONFIG_INTEGER(config_look_hotlist_names_length));
-            sprintf (buf + strlen (buf), format,
-                     (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
-                     ptr_hotlist->buffer->short_name : ptr_hotlist->buffer->name);
+            {
+                if (buffer_without_name_displayed)
+                    buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] = 1;
+            }
+            
+            if (strlen (buf) > sizeof (buf) - 32)
+                break;
         }
-        
-        if (ptr_hotlist->next_hotlist)
-            strcat (buf, ",");
-
-        if (strlen (buf) > sizeof (buf) - 32)
-            break;
     }
+    
+    if (buffer_without_name_displayed)
+        free (buffer_without_name_displayed);
     
     return strdup (buf);
 }
