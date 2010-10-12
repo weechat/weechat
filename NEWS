@@ -1,13 +1,30 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-08-07
+v0.3.4-dev, 2010-10-12
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
-No release note.
+Important release notes:
+
+* some IRC options have been renamed, before upgrading to this version, note
+  value for old options, and set them again with new name:
+** options moved from 'network' section to servers (with global value, and server
+   value, like other server options):
+*** 'irc.network.connection_timeout' moved to 'irc.server_default.connection_timeout'
+*** 'irc.network.anti_flood_prio_high' moved to 'irc.server_default.anti_flood_prio_high'
+*** 'irc.network.anti_flood_prio_low' moved to 'irc.server_default.anti_flood_prio_low'
+*** 'irc.network.away_check' moved to 'irc.server_default.away_check'
+*** 'irc.network.away_check_max_nicks' moved to 'irc.server_default.away_check_max_nicks'
+*** 'irc.network.default_msg_part' moved to 'irc.server_default.default_msg_part'
+*** 'irc.network.default_msg_quit' moved to 'irc.server_default.default_msg_quit'
+** other IRC options renamed:
+*** 'irc.look.open_channel_near_server' moved to 'irc.look.new_channel_position'
+    (old option was boolean, new is integer with value as string)
+*** 'irc.look.open_pv_near_server' moved to 'irc.look.new_pv_position'
+    (old option was boolean, new is integer with value as string)
 
 Version 0.3.3 (2010-08-07)
 --------------------------
