@@ -133,6 +133,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
 
+* *irc.look.item_away_message*
+** description: `afficher le message d'absence du serveur dans l'objet de barre d'absence`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * *irc.look.item_channel_modes*
 ** description: `affiche les modes du canal dans l'objet de barre "buffer_name"`
 ** type: booléen

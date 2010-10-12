@@ -133,6 +133,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
+* *irc.look.item_away_message*
+** Beschreibung: `display server away message in away bar item`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * *irc.look.item_channel_modes*
 ** Beschreibung: `Zeige die Channel-Modi mittels "buffer_name" in der Bar-Item an`
 ** Typ: boolesch

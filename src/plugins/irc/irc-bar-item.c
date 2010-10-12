@@ -45,12 +45,14 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
 {
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
-    char *buf;
+    char *buf, *message;
     int length;
     
     /* make C compiler happy */
     (void) data;
     (void) item;
+    
+    buf = NULL;
     
     buffer = weechat_window_get_pointer (window, "buffer");
     
@@ -60,19 +62,31 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
         
         if (server && server->is_away)
         {
-            length = strlen (_("away")) + 64 + 1;
-            buf = malloc (length);
-            if (buf)
+            if (weechat_config_boolean (irc_config_look_item_away_message)
+                && server->away_message && server->away_message[0])
             {
-                snprintf (buf, length, "%s%s",
-                          IRC_COLOR_ITEM_AWAY,
-                          _("away"));
-                return buf;
+                message = strdup (server->away_message);
+            }
+            else
+            {
+                message = strdup (_("away"));
+            }
+            if (message)
+            {
+                length = strlen (message) + 64 + 1;
+                buf = malloc (length);
+                if (buf)
+                {
+                    snprintf (buf, length, "%s%s",
+                              IRC_COLOR_ITEM_AWAY,
+                              message);
+                }
+                free (message);
             }
         }
     }
     
-    return NULL;
+    return buf;
 }
 
 /*

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-11
+v0.3.4-dev, 2010-10-12
 
 
 Version 0.3.4 (under dev!)
@@ -21,6 +21,7 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable
+* irc: add new option irc.look.item_away_message
 * irc: add tag "nick_xxx" in user messages
 * irc: move options from network section to server section: connection_timeout,
   anti_flood_prio_high, anti_flood_prio_low, away_check, away_check_max_nicks,

@@ -133,6 +133,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg,irc_notice"`)
 
+* *irc.look.item_away_message*
+** descrizione: `display server away message in away bar item`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * *irc.look.item_channel_modes*
 ** descrizione: `visualizza le modalità canale nell'elemento barra "buffer_name"`
 ** tipo: bool

@@ -67,6 +67,7 @@ struct t_config_option *irc_config_look_display_host_quit;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
+struct t_config_option *irc_config_look_item_away_message;
 struct t_config_option *irc_config_look_item_channel_modes;
 struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 struct t_config_option *irc_config_look_item_nick_modes;
@@ -239,6 +240,22 @@ irc_config_change_look_server_buffer (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_item_away_message: called when the "item
+ *                                           away message" option is changed
+ */
+
+void
+irc_config_change_look_item_away_message (void *data,
+                                          struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_bar_item_update ("away");
 }
 
 /*
@@ -1701,6 +1718,12 @@ irc_config_init ()
         N_("display a message in private when user is back (after quit on "
            "server)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_item_away_message = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_away_message", "boolean",
+        N_("display server away message in away bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_away_message, NULL, NULL, NULL);
     irc_config_look_item_channel_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_channel_modes", "boolean",

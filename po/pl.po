@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-10 17:17+0200\n"
+"POT-Creation-Date: 2010-10-12 08:24+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4619,6 +4619,11 @@ msgstr ""
 
 msgid "display a message in private when user is back (after quit on server)"
 msgstr "pokaż pywatną wiadomość, kiedy użytkownik wróci na serwer"
+
+#, fuzzy
+msgid "display server away message in away bar item"
+msgstr ""
+"pokazuj wiadomości o nieobecności rozmówcy tylko raz w prywatnej rozmiowie"
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""

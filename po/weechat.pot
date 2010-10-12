@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-10 17:17+0200\n"
+"POT-Creation-Date: 2010-10-12 08:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3729,6 +3729,9 @@ msgid "display remote away message only once in private"
 msgstr ""
 
 msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
+msgid "display server away message in away bar item"
 msgstr ""
 
 msgid "display channel modes in \"buffer_name\" bar item"
