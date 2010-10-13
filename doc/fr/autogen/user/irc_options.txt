@@ -33,6 +33,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: `red`)
 
+* *irc.color.nick_prefix*
+** description: `couleur pour le préfixe du pseudo (le préfixe est une chaîne personnalisée affichée avant le pseudo)`
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: `green`)
+
 * *irc.color.nick_prefix_halfop*
 ** description: `couleur pour le préfixe d'un pseudo qui est halfop sur le canal`
 ** type: couleur
@@ -52,6 +57,11 @@
 ** description: `couleur pour le préfixe d'un pseudo qui a le voice sur le canal`
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: `yellow`)
+
+* *irc.color.nick_suffix*
+** description: `couleur pour le suffixe du pseudo (le suffixe est une chaîne personnalisée affichée après le pseudo)`
+** type: couleur
+** valeurs: un nom de couleur (valeur par défaut: `green`)
 
 * *irc.color.notice*
 ** description: `couleur pour le texte "Notice" dans les notices`

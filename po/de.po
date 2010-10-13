@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-12 12:58+0200\n"
+"POT-Creation-Date: 2010-10-13 08:38+0200\n"
 "PO-Revision-Date: 2010-10-11 16:32+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4897,6 +4897,12 @@ msgstr ""
 
 msgid "color for prefix of nick which is user on channel"
 msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
+
+msgid "color for nick prefix (prefix is custom string displayed before nick)"
+msgstr ""
+
+msgid "color for nick suffix (suffix is custom string displayed after nick)"
+msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "Farbe des \"Notice\"-Textes in Notizen"

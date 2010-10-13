@@ -118,6 +118,8 @@ extern struct t_config_option *irc_config_color_nick_prefix_op;
 extern struct t_config_option *irc_config_color_nick_prefix_halfop;
 extern struct t_config_option *irc_config_color_nick_prefix_voice;
 extern struct t_config_option *irc_config_color_nick_prefix_user;
+extern struct t_config_option *irc_config_color_nick_prefix;
+extern struct t_config_option *irc_config_color_nick_suffix;
 extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_input_nick;
 extern struct t_config_option *irc_config_color_item_away;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-12 12:58+0200\n"
+"POT-Creation-Date: 2010-10-13 08:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3821,6 +3821,12 @@ msgid "color for prefix of nick which has voice on channel"
 msgstr ""
 
 msgid "color for prefix of nick which is user on channel"
+msgstr ""
+
+msgid "color for nick prefix (prefix is custom string displayed before nick)"
+msgstr ""
+
+msgid "color for nick suffix (suffix is custom string displayed after nick)"
 msgstr ""
 
 msgid "color for text \"Notice\" in notices"

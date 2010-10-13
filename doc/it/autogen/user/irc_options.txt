@@ -33,6 +33,11 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: `red`)
 
+* *irc.color.nick_prefix*
+** descrizione: `color for nick prefix (prefix is custom string displayed before nick)`
+** tipo: colore
+** valori: un nome colore (valore predefinito: `green`)
+
 * *irc.color.nick_prefix_halfop*
 ** descrizione: `colore per il prefisso del nick che è halfop sul canale`
 ** tipo: colore
@@ -52,6 +57,11 @@
 ** descrizione: `colore per il prefisso del nick che ha il voice sul canale`
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: `yellow`)
+
+* *irc.color.nick_suffix*
+** descrizione: `color for nick suffix (suffix is custom string displayed after nick)`
+** tipo: colore
+** valori: un nome colore (valore predefinito: `green`)
 
 * *irc.color.notice*
 ** descrizione: `colore per il testo "Notifica" nelle notifiche`

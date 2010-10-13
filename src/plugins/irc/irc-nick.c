@@ -698,7 +698,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
     snprintf (result, sizeof (result), "%s%s%s%s%s%s%s%s\t",
               (weechat_config_string (irc_config_look_nick_prefix)
                && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
-              IRC_COLOR_CHAT_DELIMITERS : "",
+              IRC_COLOR_NICK_PREFIX : "",
               (weechat_config_string (irc_config_look_nick_prefix)
                && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
               weechat_config_string (irc_config_look_nick_prefix) : "",
@@ -708,7 +708,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
               (nick) ? nick->name : nickname,
               (weechat_config_string (irc_config_look_nick_suffix)
                && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
-              IRC_COLOR_CHAT_DELIMITERS : "",
+              IRC_COLOR_NICK_SUFFIX : "",
               (weechat_config_string (irc_config_look_nick_suffix)
                && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
               weechat_config_string (irc_config_look_nick_suffix) : "");

@@ -33,6 +33,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: `red`)
 
+* *irc.color.nick_prefix*
+** Beschreibung: `color for nick prefix (prefix is custom string displayed before nick)`
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: `green`)
+
 * *irc.color.nick_prefix_halfop*
 ** Beschreibung: `Textfarbe für den Nick-Präfix des halfop in einem Channel`
 ** Typ: Farbe
@@ -52,6 +57,11 @@
 ** Beschreibung: `Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem Channel`
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: `yellow`)
+
+* *irc.color.nick_suffix*
+** Beschreibung: `color for nick suffix (suffix is custom string displayed after nick)`
+** Typ: Farbe
+** Werte: ein Farbname (Standardwert: `green`)
 
 * *irc.color.notice*
 ** Beschreibung: `Farbe des "Notice"-Textes in Notizen`
