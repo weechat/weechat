@@ -359,7 +359,7 @@
 ** Werte: 1 .. 10 (Standardwert: `10`)
 
 * *weechat.look.color_real_white*
-** Beschreibung: `Falls eingeschaltet, wird echtes weiß als Farbe genutzt. In der Standardeinstellung ist diese Option allerdings deaktiviert damit es zu keinen Problemen mit Terminals kommt die einen weißen Hintergrund nutzen (falls man keinen weißen Hintergrund nutzen sollte dann ist es ratsam diese Option zu aktivieren, andernfalls wird die voreingestellte Vordergrundfarbe des Terminals genutzt)`
+** Beschreibung: `Falls diese Option aktiviert ist, wird echtes weiß als Farbe genutzt. In der Standardeinstellung ist diese Option allerdings deaktiviert damit es zu keinen Problemen mit Terminals kommt die einen weißen Hintergrund nutzen (falls man keinen weißen Hintergrund nutzen sollte dann ist es ratsam diese Option zu aktivieren, andernfalls wird die voreingestellte Vordergrundfarbe des Terminals genutzt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -369,7 +369,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *weechat.look.confirm_quit*
-** Beschreibung: `Falls diese Einstellung aktiviert ist muss der "/quit" Befehl mit der Option "-yes" ausgeführt werden (siehe /help quit)`
+** Beschreibung: `Falls diese Option aktiviert ist muss der "/quit" Befehl mit der Option "-yes" ausgeführt werden (siehe /help quit)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -404,17 +404,17 @@
 ** Werte: 0 .. 32 (Standardwert: `0`)
 
 * *weechat.look.hotlist_names_level*
-** Beschreibung: `Level für Namensanzeige in der Hotlist (Kombination von: 1=join/part, 2=Nachricht, 4=Query, 8=Highlight, z.B. 12=Query+Highlight)`
+** Beschreibung: `Level für Namensanzeige in der Hotlist (Kombination aus: 1=join/part, 2=Nachricht, 4=Query, 8=Highlight, z.B. 12=Query+Highlight)`
 ** Typ: integer
 ** Werte: 1 .. 15 (Standardwert: `12`)
 
 * *weechat.look.hotlist_names_merged_buffers*
-** Beschreibung: `Falls gesetzt, werden die Namen der zusammengefügten Buffer, auf jeden Fall, dargestellt`
+** Beschreibung: `Falls diese Option aktiviert ist, werden die Namen der zusammengefügten Buffer auf jeden Fall dargestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.hotlist_short_names*
-** Beschreibung: `Falls gesetzt, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
+** Beschreibung: `Falls diese Option aktiviert ist, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -424,17 +424,17 @@
 ** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (Standardwert: `group_time_asc`)
 
 * *weechat.look.hotlist_unique_numbers*
-** Beschreibung: `keep only unique numbers in hotlist (this applies only on hotlist items where name is NOT displayed after number)`
+** Beschreibung: `Es wird nur jeweils einmal die Nummer des Buffers in der Hotlist angezeigt (diese Option kommt nur zum Tragen sofern KEINE Buffernamen angezeigt werden)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.input_share*
-** Beschreibung: `share commands, text, or both in input for all buffers (there is still local history for each buffer)`
+** Beschreibung: `Mit dieser Option kann man den Inhalt der Eingabezeile in allen Buffern verwenden. Es können dabei nur Befehle (commands), nur Text (text), beides (all) berücksichtigt werden (Der Befehlsverlauf der einzelnen Buffer bleibt hierbei erhalten)`
 ** Typ: integer
 ** Werte: none, commands, text, all (Standardwert: `none`)
 
 * *weechat.look.input_share_overwrite*
-** Beschreibung: `if set and input is shared, always overwrite input in target buffer`
+** Beschreibung: `Falls diese Option aktiviert ist und die Eingabezeile für alle Buffer genutzt wird dann wird ggf. der Inhalt im Zielbuffer überschrieben`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -484,12 +484,12 @@
 ** Werte: none, left, right (Standardwert: `right`)
 
 * *weechat.look.prefix_align_max*
-** Beschreibung: `maximale Länge für Präfixe (0 = keine maximale Länge)`
+** Beschreibung: `maximale Größe des Präfix (0 = keine maximale Länge)`
 ** Typ: integer
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
 * *weechat.look.prefix_align_min*
-** Beschreibung: `min size for prefix`
+** Beschreibung: `minimale Größe des Präfix`
 ** Typ: integer
 ** Werte: 0 .. 128 (Standardwert: `0`)
 

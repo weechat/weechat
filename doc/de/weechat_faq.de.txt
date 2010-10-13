@@ -361,8 +361,7 @@ haben:
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+Für Weechat < = 0.3.3, lauten die Optionen 'irc.network.away_check' und
 'irc.network.away_check_max_nicks'.
 
 

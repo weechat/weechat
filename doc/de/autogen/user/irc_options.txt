@@ -34,7 +34,7 @@
 ** Werte: ein Farbname (Standardwert: `red`)
 
 * *irc.color.nick_prefix*
-** Beschreibung: `color for nick prefix (prefix is custom string displayed before nick)`
+** Beschreibung: `Farbe für den Nick Präfix (Präfix ist die editierbare Zeichenkette die vor dem Nick steht)`
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: `green`)
 
@@ -59,7 +59,7 @@
 ** Werte: ein Farbname (Standardwert: `yellow`)
 
 * *irc.color.nick_suffix*
-** Beschreibung: `color for nick suffix (suffix is custom string displayed after nick)`
+** Beschreibung: `Farbe für den Nick Suffix (Suffix ist die editierbare Zeichenkette die nach dem Nick steht)`
 ** Typ: Farbe
 ** Werte: ein Farbname (Standardwert: `green`)
 
@@ -144,7 +144,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
 * *irc.look.item_away_message*
-** Beschreibung: `display server away message in away bar item`
+** Beschreibung: `Abwesenheitsnachricht in der Away-Bar-Item anzeigen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -179,12 +179,12 @@
 ** Werte: current, server (Standardwert: `current`)
 
 * *irc.look.new_channel_position*
-** Beschreibung: `force position of new channel in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** Beschreibung: `Ein öffentlicher Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte die letzte Position sein), next = aktueller Buffer + 1, near_server = nach letztem Channel/privaten Buffer des Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * *irc.look.new_pv_position*
-** Beschreibung: `force position of new private in list of buffers (none = default position (should be last buffer)r, next = current buffer + 1, near_server = after last channel/pv of server)`
+** Beschreibung: `Ein privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte die letzte Position sein), next = aktueller Buffer + 1, near_server = nach letztem Channel/privaten Buffer des Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
