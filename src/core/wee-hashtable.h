@@ -98,8 +98,9 @@ struct t_hashtable
     t_hashtable_hash_key *callback_hash_key; /* hash key to integer value   */
     t_hashtable_keycmp *callback_keycmp;     /* compare two keys            */
 
-    /* keys */
-    char *keys;                        /* keys list (NULL if never asked)   */
+    /* keys/values as string */
+    char *keys_values;                 /* keys/values as string (NULL if    */
+                                       /* never asked)                      */
 };
 
 extern struct t_hashtable *hashtable_new (int size,

@@ -128,7 +128,7 @@ hashtable_new (int size,
         new_hashtable->type_keys = type_keys_int;
         new_hashtable->type_values = type_values_int;
         new_hashtable->htable = malloc (size * sizeof (*(new_hashtable->htable)));
-        new_hashtable->keys = NULL;
+        new_hashtable->keys_values = NULL;
         if (!new_hashtable->htable)
         {
             free (new_hashtable);
@@ -431,13 +431,13 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
- * hashtable_get_keys_compute_length_cb: compute length of all keys
+ * hashtable_compute_length_keys_cb: compute length of all keys
  */
 
 void
-hashtable_get_keys_compute_length_cb (void *data,
-                                      struct t_hashtable *hashtable,
-                                      const void *key, const void *value)
+hashtable_compute_length_keys_cb (void *data,
+                                  struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
 {
     char str_int[64];
     int *length;
@@ -465,33 +465,30 @@ hashtable_get_keys_compute_length_cb (void *data,
 }
 
 /*
- * hashtable_get_keys_build_string_cb: build string with all keys
+ * hashtable_compute_length_values_cb: compute length of all values
  */
 
 void
-hashtable_get_keys_build_string_cb (void *data,
+hashtable_compute_length_values_cb (void *data,
                                     struct t_hashtable *hashtable,
                                     const void *key, const void *value)
 {
     char str_int[64];
-    char *keys;
+    int *length;
     
     /* make C compiler happy */
-    (void) value;
+    (void) key;
     
-    keys = (char *)data;
+    length = (int *)data;
     
-    if (keys[0])
-        strcat (keys, ",");
-    
-    switch (hashtable->type_keys)
+    switch (hashtable->type_values)
     {
         case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
-            strcat (keys, str_int);
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+            *length += strlen (str_int) + 1;
             break;
         case HASHTABLE_STRING:
-            strcat (keys, (char *)key);
+            *length += strlen ((char *)value) + 1;
             break;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
@@ -502,38 +499,190 @@ hashtable_get_keys_build_string_cb (void *data,
 }
 
 /*
- * hashtable_get_keys: get keys of hashtable as string
- *                     string has format: "key1,key2,key3"
- *                     Note: this works only if keys have type "integer",
- *                           or "string"
+ * hashtable_compute_length_keys_values_cb: compute length of all keys + values
+ */
+
+void
+hashtable_compute_length_keys_values_cb (void *data,
+                                         struct t_hashtable *hashtable,
+                                         const void *key, const void *value)
+{
+    hashtable_compute_length_keys_cb (data, hashtable, key, value);
+    hashtable_compute_length_values_cb (data, hashtable, key, value);
+}
+
+/*
+ * hashtable_build_string_keys_cb: build string with all keys
+ */
+
+void
+hashtable_build_string_keys_cb (void *data,
+                                struct t_hashtable *hashtable,
+                                const void *key, const void *value)
+{
+    char str_int[64];
+    char *str;
+    
+    /* make C compiler happy */
+    (void) value;
+    
+    str = (char *)data;
+    
+    if (str[0])
+        strcat (str, ",");
+    
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
+            strcat (str, str_int);
+            break;
+        case HASHTABLE_STRING:
+            strcat (str, (char *)key);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_build_string_values_cb: build string with all values
+ */
+
+void
+hashtable_build_string_values_cb (void *data,
+                                  struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    char str_int[64];
+    char *str;
+    
+    /* make C compiler happy */
+    (void) key;
+    
+    str = (char *)data;
+    
+    if (str[0])
+        strcat (str, ",");
+    
+    switch (hashtable->type_values)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+            strcat (str, str_int);
+            break;
+        case HASHTABLE_STRING:
+            strcat (str, (char *)value);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_build_string_keys_values_cb: build string with all keys + values
+ */
+
+void
+hashtable_build_string_keys_values_cb (void *data,
+                                       struct t_hashtable *hashtable,
+                                       const void *key, const void *value)
+{
+    char str_int[64];
+    char *str;
+    
+    /* make C compiler happy */
+    (void) key;
+    
+    str = (char *)data;
+    
+    if (str[0])
+        strcat (str, ",");
+    
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
+            strcat (str, str_int);
+            break;
+        case HASHTABLE_STRING:
+            strcat (str, (char *)key);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+    
+    strcat (str, ":");
+    
+    switch (hashtable->type_values)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+            strcat (str, str_int);
+            break;
+        case HASHTABLE_STRING:
+            strcat (str, (char *)value);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+        case HASHTABLE_TIME:
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_get_keys_values: get keys and/or values of hashtable as string
+ *                            string has format, one of:
+ *                              keys only:     "key1,key2,key3"
+ *                              values only:   "value1,value2,value3"
+ *                              keys + values: "key1:value1,key2:value2,key3:value3"
+ *                            Note: this works only if keys have type "integer",
+ *                                  or "string"
  */
 
 const char *
-hashtable_get_keys (struct t_hashtable *hashtable)
+hashtable_get_keys_values (struct t_hashtable *hashtable, int keys, int values)
 {
     int length;
     
-    if (hashtable->keys)
+    if (hashtable->keys_values)
     {
-        free (hashtable->keys);
-        hashtable->keys = NULL;
+        free (hashtable->keys_values);
+        hashtable->keys_values = NULL;
     }
     
     /* first compute length of string */
     length = 0;
-    hashtable_map (hashtable, &hashtable_get_keys_compute_length_cb, &length);
+    hashtable_map (hashtable,
+                   (keys && values) ? &hashtable_compute_length_keys_values_cb :
+                   ((keys) ? &hashtable_compute_length_keys_cb :
+                    &hashtable_compute_length_values_cb),
+                   &length);
     if (length == 0)
-        return hashtable->keys;
+        return hashtable->keys_values;
     
     /* build string */
-    hashtable->keys = malloc (length + 1);
-    if (!hashtable->keys)
+    hashtable->keys_values = malloc (length + 1);
+    if (!hashtable->keys_values)
         return NULL;
-    hashtable->keys[0] = '\0';
-    hashtable_map (hashtable, &hashtable_get_keys_build_string_cb,
-                   hashtable->keys);
+    hashtable->keys_values[0] = '\0';
+    hashtable_map (hashtable,
+                   (keys && values) ? &hashtable_build_string_keys_values_cb :
+                   ((keys) ? &hashtable_build_string_keys_cb :
+                    &hashtable_build_string_values_cb),
+                   hashtable->keys_values);
     
-    return hashtable->keys;
+    return hashtable->keys_values;
 }
 
 /*
@@ -550,7 +699,11 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
         else if (string_strcasecmp (property, "type_values") == 0)
             return hashtable_type_string[hashtable->type_values];
         else if (string_strcasecmp (property, "keys") == 0)
-            return hashtable_get_keys (hashtable);
+            return hashtable_get_keys_values (hashtable, 1, 0);
+        else if (string_strcasecmp (property, "values") == 0)
+            return hashtable_get_keys_values (hashtable, 0, 1);
+        else if (string_strcasecmp (property, "keys_values") == 0)
+            return hashtable_get_keys_values (hashtable, 1, 1);
     }
     
     return NULL;
@@ -704,8 +857,8 @@ hashtable_free (struct t_hashtable *hashtable)
     
     hashtable_remove_all (hashtable);
     free (hashtable->htable);
-    if (hashtable->keys)
-        free (hashtable->keys);
+    if (hashtable->keys_values)
+        free (hashtable->keys_values);
     free (hashtable);
 }
 
@@ -786,5 +939,5 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
             log_printf ("      next_item. . . . . : 0x%lx", ptr_item->next_item);
         }
     }
-    log_printf ("  keys . . . . . . . . . : '%s'", hashtable->keys);
+    log_printf ("  keys_values. . . . . . : '%s'", hashtable->keys_values);
 }

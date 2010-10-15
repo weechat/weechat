@@ -3130,6 +3130,9 @@ Arguments:
 *** 'buffer': buffer
 *** 'time': time
 ** 'keys': string with list of keys (format: "key1,key2,key3")
+** 'values': string with list of values (format: "value1,value2,value3")
+** 'keys_values': string with list of keys and values
+   (format: "key1:value1,key2:value2,key3:value3")
 
 Return value:
 

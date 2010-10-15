@@ -3161,6 +3161,9 @@ Arguments:
 *** 'buffer' : buffer
 *** 'time' : heure
 ** 'keys': chaîne avec la liste des clés (format: "clé1,clé2,clé3")
+** 'values': chaîne avec la liste des valeurs (format: "valeur1,valeur2,valeur3")
+** 'keys_values': chaîne avec la liste des clés et valeurs
+   (format: "clé1:valeur1,clé2:valeur2,clé3:valeur3")
 
 Valeur en retour :
 
