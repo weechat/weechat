@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-13
+v0.3.4-dev, 2010-10-15
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: fix bug with buffer name in "/bar scroll" command
 * core: add new option weechat.look.hotlist_unique_numbers (task #10691)
 * core: add property "no_highlight_nicks" in buffers to disable highlight
   for some nicks in buffer

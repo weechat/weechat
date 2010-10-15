@@ -1562,6 +1562,34 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
 }
 
 /*
+ * gui_buffer_search_by_full_name: search a buffer by full name
+ *                                 (example: "irc.freenode.#weechat")
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_full_name (const char *full_name)
+{
+    struct t_gui_buffer *ptr_buffer;
+    char *name, *pos;
+    
+    ptr_buffer = NULL;
+    
+    name = strdup (full_name);
+    if (name)
+    {
+        pos = strchr (name, '.');
+        if (pos)
+        {
+            pos[0] = '\0';
+            ptr_buffer = gui_buffer_search_by_name (name, pos + 1);
+        }
+        free (name);
+    }
+    
+    return ptr_buffer;
+}
+
+/*
  * gui_buffer_search_by_partial_name: search a buffer by name (may be partial)
  */
 

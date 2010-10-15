@@ -468,7 +468,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             if (strcmp (argv[3], "*") == 0)
                 ptr_buffer = buffer;
             else
-                ptr_buffer = gui_buffer_search_by_name (NULL, argv[3]);
+                ptr_buffer = gui_buffer_search_by_full_name (argv[3]);
             if (!ptr_buffer)
             {
                 gui_chat_printf (NULL,
@@ -2565,7 +2565,7 @@ command_mute (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     int length, mute_mode;
-    char *command, *ptr_command, *buffer_name, *pos;
+    char *command, *ptr_command;
     struct t_gui_buffer *mute_buffer, *ptr_buffer;
     
     /* make C compiler happy */
@@ -2584,20 +2584,9 @@ command_mute (void *data, struct t_gui_buffer *buffer,
         }
         else if (string_strcasecmp (argv[1], "-buffer") == 0)
         {
-            ptr_buffer = NULL;
             if (argc < 3)
                 return WEECHAT_RC_ERROR;
-            buffer_name = strdup (argv[2]);
-            if (!buffer_name)
-                return WEECHAT_RC_ERROR;
-            pos = strchr (buffer_name, '.');
-            if (pos)
-            {
-                pos[0] = '\0';
-                pos++;
-                ptr_buffer = gui_buffer_search_by_name (buffer_name, pos);
-            }
-            free (buffer_name);
+            ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
             if (ptr_buffer)
                 mute_buffer = ptr_buffer;
             ptr_command = argv_eol[3];
