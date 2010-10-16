@@ -480,21 +480,28 @@ hashtable_compute_length_values_cb (void *data,
     (void) key;
     
     length = (int *)data;
-    
-    switch (hashtable->type_values)
+
+    if (value)
     {
-        case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-            *length += strlen (str_int) + 1;
-            break;
-        case HASHTABLE_STRING:
-            *length += strlen ((char *)value) + 1;
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-        case HASHTABLE_TIME:
-        case HASHTABLE_NUM_TYPES:
-            break;
+        switch (hashtable->type_values)
+        {
+            case HASHTABLE_INTEGER:
+                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+                *length += strlen (str_int) + 1;
+                break;
+            case HASHTABLE_STRING:
+                *length += strlen ((char *)value) + 1;
+                break;
+            case HASHTABLE_POINTER:
+            case HASHTABLE_BUFFER:
+            case HASHTABLE_TIME:
+            case HASHTABLE_NUM_TYPES:
+                break;
+        }
+    }
+    else
+    {
+        *length += strlen ("(null)");
     }
 }
 
@@ -567,21 +574,28 @@ hashtable_build_string_values_cb (void *data,
     
     if (str[0])
         strcat (str, ",");
-    
-    switch (hashtable->type_values)
+
+    if (value)
     {
-        case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-            strcat (str, str_int);
-            break;
-        case HASHTABLE_STRING:
-            strcat (str, (char *)value);
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-        case HASHTABLE_TIME:
-        case HASHTABLE_NUM_TYPES:
-            break;
+        switch (hashtable->type_values)
+        {
+            case HASHTABLE_INTEGER:
+                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+                strcat (str, str_int);
+                break;
+            case HASHTABLE_STRING:
+                strcat (str, (char *)value);
+                break;
+            case HASHTABLE_POINTER:
+            case HASHTABLE_BUFFER:
+            case HASHTABLE_TIME:
+            case HASHTABLE_NUM_TYPES:
+                break;
+        }
+    }
+    else
+    {
+        strcat (str, "(null)");
     }
 }
 
@@ -622,21 +636,28 @@ hashtable_build_string_keys_values_cb (void *data,
     }
     
     strcat (str, ":");
-    
-    switch (hashtable->type_values)
+
+    if (value)
     {
-        case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-            strcat (str, str_int);
-            break;
-        case HASHTABLE_STRING:
-            strcat (str, (char *)value);
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-        case HASHTABLE_TIME:
-        case HASHTABLE_NUM_TYPES:
-            break;
+        switch (hashtable->type_values)
+        {
+            case HASHTABLE_INTEGER:
+                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
+                strcat (str, str_int);
+                break;
+            case HASHTABLE_STRING:
+                strcat (str, (char *)value);
+                break;
+            case HASHTABLE_POINTER:
+            case HASHTABLE_BUFFER:
+            case HASHTABLE_TIME:
+            case HASHTABLE_NUM_TYPES:
+                break;
+        }
+    }
+    else
+    {
+        strcat (str, "(null)");
     }
 }
 
