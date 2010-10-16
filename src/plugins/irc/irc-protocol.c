@@ -1817,7 +1817,8 @@ IRC_PROTOCOL_CALLBACK(topic)
         }
         else
         {
-            if (weechat_config_boolean (irc_config_look_display_old_topic))
+            if (weechat_config_boolean (irc_config_look_display_old_topic)
+                && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
             {
                 old_topic_color = irc_color_decode (ptr_channel->topic,
                                                     weechat_config_boolean (irc_config_network_colors_receive));
