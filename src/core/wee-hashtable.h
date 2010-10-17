@@ -109,10 +109,10 @@ extern struct t_hashtable *hashtable_new (int size,
                                           t_hashtable_hash_key *hash_key_cb,
                                           t_hashtable_keycmp *keycmp_cb);
 extern int hashtable_set_with_size (struct t_hashtable *hashtable,
-                                    void *key, int key_size,
-                                    void *value, int value_size);
-extern int hashtable_set (struct t_hashtable *hashtable, void *key,
-                          void *value);
+                                    const void *key, int key_size,
+                                    const void *value, int value_size);
+extern int hashtable_set (struct t_hashtable *hashtable, const void *key,
+                          const void *value);
 extern void *hashtable_get (struct t_hashtable *hashtable, const void *key);
 extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,

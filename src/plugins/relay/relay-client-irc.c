@@ -114,7 +114,7 @@ relay_client_irc_parse_message (const char *message)
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         goto end;
     }
-    weechat_hashtable_set (hash_msg, "message", (char *)message);
+    weechat_hashtable_set (hash_msg, "message", message);
     hash_parsed = weechat_info_get_hashtable ("irc_parse_message",
                                               hash_msg);
     if (!hash_parsed)

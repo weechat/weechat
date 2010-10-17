@@ -153,8 +153,8 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
         for (; !done ; Tcl_DictObjNext(&search, &key, &value, &done))
         {
             weechat_hashtable_set (hashtable,
-                                   (void *)Tcl_GetString (key),
-                                   (void *)Tcl_GetString (value));
+                                   Tcl_GetString (key),
+                                   Tcl_GetString (value));
         }
     }
     Tcl_DictObjDone(&search);

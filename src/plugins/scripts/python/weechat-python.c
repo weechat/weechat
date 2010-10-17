@@ -148,7 +148,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
     {
         str_key = PyString_AsString (key);
         str_value = PyString_AsString (value);
-        weechat_hashtable_set (hashtable, (void *)str_key, (void *)str_value);
+        weechat_hashtable_set (hashtable, str_key, str_value);
     }
     
     return hashtable;

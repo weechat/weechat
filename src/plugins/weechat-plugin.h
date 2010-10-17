@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101011-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101017-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -260,10 +260,10 @@ struct t_weechat_plugin
                                                                  const void *key1,
                                                                  const void *key2));
     int (*hashtable_set_with_size) (struct t_hashtable *hashtable,
-                                    void *key, int key_size,
-                                    void *value, int value_size);
-    int (*hashtable_set) (struct t_hashtable *hashtable, void *key,
-                          void *value);
+                                    const void *key, int key_size,
+                                    const void *value, int value_size);
+    int (*hashtable_set) (struct t_hashtable *hashtable, const void *key,
+                          const void *value);
     void *(*hashtable_get) (struct t_hashtable *hashtable, const void *key);
     int (*hashtable_has_key) (struct t_hashtable *hashtable, const void *key);
     void (*hashtable_map) (struct t_hashtable *hashtable,

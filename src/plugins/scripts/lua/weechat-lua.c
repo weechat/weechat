@@ -131,8 +131,8 @@ weechat_lua_tohashtable (lua_State *interpreter, int index, int hashtable_size)
     while (lua_next (interpreter, index - 1) != 0)
     {
         weechat_hashtable_set (hashtable,
-                               (char *)lua_tostring (interpreter, -2),
-                               (char *)lua_tostring (interpreter, -1));
+                               lua_tostring (interpreter, -2),
+                               lua_tostring (interpreter, -1));
         /* remove value from stack (keep key for next iteration) */
         lua_pop (interpreter, 1);
     }

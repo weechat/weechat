@@ -158,7 +158,8 @@ hashtable_new (int size,
  */
 
 void
-hashtable_alloc_type (enum t_hashtable_type type, void *value, int size_value,
+hashtable_alloc_type (enum t_hashtable_type type,
+                      const void *value, int size_value,
                       void **pointer, int *size)
 {
     switch (type)
@@ -179,7 +180,7 @@ hashtable_alloc_type (enum t_hashtable_type type, void *value, int size_value,
             *size = (*pointer) ? strlen (*pointer) + 1 : 0;
             break;
         case HASHTABLE_POINTER:
-            *pointer = value;
+            *pointer = (void *)value;
             *size = sizeof (void *);
             break;
         case HASHTABLE_BUFFER:
@@ -239,8 +240,8 @@ hashtable_free_type (enum t_hashtable_type type, void *value)
 
 int
 hashtable_set_with_size (struct t_hashtable *hashtable,
-                         void *key, int key_size,
-                         void *value, int value_size)
+                         const void *key, int key_size,
+                         const void *value, int value_size)
 {
     unsigned int hash;
     struct t_hashtable_item *ptr_item, *pos_item, *new_item;
@@ -319,7 +320,8 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
  */
 
 int
-hashtable_set (struct t_hashtable *hashtable, void *key, void *value)
+hashtable_set (struct t_hashtable *hashtable,
+               const void *key, const void *value)
 {
     return hashtable_set_with_size (hashtable, key, 0, value, 0);
 }

@@ -140,8 +140,7 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
         return;
     
     ptr_value = hashtable_get (buffer->local_variables, name);
-    hashtable_set (buffer->local_variables,
-                   (void *)name, (void *)value);
+    hashtable_set (buffer->local_variables, name, value);
     hook_signal_send ((ptr_value) ?
                       "buffer_localvar_changed" : "buffer_localvar_added",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -478,9 +477,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                                      NULL,
                                                      NULL);
         hashtable_set (new_buffer->local_variables,
-                       "plugin", (void *)plugin_get_name (plugin));
-        hashtable_set (new_buffer->local_variables,
-                       "name", (void *)name);
+                       "plugin", plugin_get_name (plugin));
+        hashtable_set (new_buffer->local_variables, "name", name);
         
         /* add buffer to buffers list */
         first_buffer_creation = (gui_buffers == NULL);

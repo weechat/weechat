@@ -2914,8 +2914,8 @@ Prototype :
 [source,C]
 ----------------------------------------
 int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
-                                     void *key, int key_size,
-                                     void *value, int value_size);
+                                     const void *key, int key_size,
+                                     const void *value, int value_size);
 ----------------------------------------
 
 Paramètres :
@@ -2955,7 +2955,7 @@ Prototype :
 [source,C]
 ----------------------------------------
 int weechat_hashtable_set (struct t_hashtable *hashtable,
-                           void *key, void *value);
+                           const void *key, const void *value);
 ----------------------------------------
 
 Paramètres :
