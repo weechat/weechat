@@ -1010,7 +1010,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             "      if meth.to_s == 'weechat_init'\n"
             "        has_init = true\n"
             "      end\n"
-            "      module_eval('module_function :' + meth)\n"
+            "      module_eval('module_function :' + meth.to_s)\n"
             "    end\n"
             "\n"
             "    unless has_init\n"
