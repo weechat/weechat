@@ -979,7 +979,7 @@ char *
 gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               struct t_gui_window *window)
 {
-    char buf[1024], format[32], *buffer_without_name_displayed;
+    char buf[2048], format[32], *buffer_without_name_displayed;
     struct t_gui_hotlist *ptr_hotlist;
     int numbers_count, names_count, display_name;
     
@@ -1011,19 +1011,15 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
         switch (ptr_hotlist->priority)
         {
             case GUI_HOTLIST_LOW:
-                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_other))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 1) != 0);
                 break;
             case GUI_HOTLIST_MESSAGE:
-                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_msg))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 2) != 0);
                 break;
             case GUI_HOTLIST_PRIVATE:
-                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_private))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 4) != 0);
                 break;
             case GUI_HOTLIST_HIGHLIGHT:
-                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_highlight))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 8) != 0);
                 break;
             default:
@@ -1041,10 +1037,28 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
             || (buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] == 0))
         {
             if (numbers_count > 0)
+            {
+                strcat (buf, GUI_COLOR_CUSTOM_BAR_DELIM);
                 strcat (buf, ",");
+            }
             
-            numbers_count++;
+            switch (ptr_hotlist->priority)
+            {
+                case GUI_HOTLIST_LOW:
+                    strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_other))));
+                    break;
+                case GUI_HOTLIST_MESSAGE:
+                    strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_msg))));
+                    break;
+                case GUI_HOTLIST_PRIVATE:
+                    strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_private))));
+                    break;
+                case GUI_HOTLIST_HIGHLIGHT:
+                    strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_highlight))));
+                    break;
+            }
             sprintf (buf + strlen (buf), "%d", ptr_hotlist->buffer->number);
+            numbers_count++;
             
             if (display_name)
             {
@@ -1069,7 +1083,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                     buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] = 1;
             }
             
-            if (strlen (buf) > sizeof (buf) - 32)
+            if (strlen (buf) > sizeof (buf) - 64)
                 break;
         }
     }
