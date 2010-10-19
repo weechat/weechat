@@ -75,7 +75,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 }
 
 /*
- * irc_input_send_user_message: send a PRIVMSG message, and split it it message
+ * irc_input_send_user_message: send a PRIVMSG message, and split it if message
  *                              size is > 512 bytes
  *                              Warning: this function makes temporarirly
  *                                       changes in "message"
@@ -143,20 +143,16 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
 }
 
 /*
- * irc_input_data_cb: callback for input data in a buffer
+ * irc_input_data: input data in a buffer
  */
 
 int
-irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                   const char *input_data)
+irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
 {
     const char *ptr_data;
     char *data_with_colors, *msg;
     
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
-    /* make C compiler happy */
-    (void) data;
     
     if (buffer == irc_raw_buffer)
     {
@@ -173,9 +169,10 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
             && !weechat_string_input_for_buffer (input_data))
         {
             if (ptr_server)
-                irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+            {
+                irc_server_sendf (ptr_server, flags, NULL,
                                   weechat_utf8_next_char (input_data));
+            }
             return WEECHAT_RC_OK;
         }
         
@@ -190,10 +187,7 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
             msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
             if (msg)
             {
-                irc_input_send_user_message (buffer,
-                                             IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
-                                             NULL,
-                                             msg);
+                irc_input_send_user_message (buffer, flags, NULL, msg);
                 free (msg);
             }
             
@@ -209,6 +203,20 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     }
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_input_data_cb: callback for input data in a buffer
+ */
+
+int
+irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
+                   const char *input_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    return irc_input_data (buffer, input_data, IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
 }
 
 /*
@@ -290,13 +298,13 @@ irc_input_send_cb (void *data, const char *signal,
         }
     }
     
-    flags_value = 0;
+    flags_value = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
     if (flags)
     {
         error = NULL;
         flags_value = strtol (flags, &error, 10);
         if (flags_value < 0)
-            flags_value = 0;
+            flags_value = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
     }
     
     if (server && ptr_message)
@@ -319,7 +327,7 @@ irc_input_send_cb (void *data, const char *signal,
             if (weechat_string_input_for_buffer (ptr_message))
             {
                 /* text as input */
-                irc_input_data_cb (NULL, ptr_buffer, ptr_message);
+                irc_input_data (ptr_buffer, ptr_message, flags_value);
             }
             else
             {
