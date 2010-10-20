@@ -304,8 +304,9 @@ Liste des fonctions de l'API script :
 | infolists                 |
   infolist_new, infolist_new_item, infolist_new_var_integer,
   infolist_new_var_string, infolist_new_var_pointer, infolist_new_var_time, +
-  infolist_get, infolist_next, infolist_prev, infolist_fields, infolist_integer,
-  infolist_string, infolist_pointer, infolist_time, infolist_free
+  infolist_get, infolist_next, infolist_prev, infolist_reset_item_cursor, +
+  infolist_fields, infolist_integer, infolist_string, infolist_pointer, +
+  infolist_time, infolist_free
 | mise à jour               |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================
