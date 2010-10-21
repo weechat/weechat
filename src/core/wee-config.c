@@ -377,6 +377,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 {
     struct timeval tv_time;
     struct tm *local_time;
+    int new_mday;
     char text_time[256], *text_time2;
     struct t_gui_buffer *ptr_buffer;
     
@@ -386,9 +387,10 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     
     gettimeofday (&tv_time, NULL);
     local_time = localtime (&tv_time.tv_sec);
-
+    new_mday = local_time->tm_mday;
+    
     if ((config_day_change_old_day >= 0)
-        && (local_time->tm_mday != config_day_change_old_day))
+        && (new_mday != config_day_change_old_day))
     {
         if (CONFIG_BOOLEAN(config_look_day_change))
         {
@@ -401,10 +403,12 @@ config_day_change_timer_cb (void *data, int remaining_calls)
                  ptr_buffer = ptr_buffer->next_buffer)
             {
                 if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+                {
                     gui_chat_printf (ptr_buffer,
                                      _("\t\tDay changed to %s"),
                                      (text_time2) ?
                                      text_time2 : text_time);
+                }
             }
             if (text_time2)
                 free (text_time2);
@@ -416,7 +420,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
         hook_signal_send ("day_changed", WEECHAT_HOOK_SIGNAL_STRING, text_time);
     }
     
-    config_day_change_old_day = local_time->tm_mday;
+    config_day_change_old_day = new_mday;
     
     return WEECHAT_RC_OK;
 }
